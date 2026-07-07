@@ -54,6 +54,31 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
     return _memberFromRow(row);
   }
 
+  @override
+  Future<Map<String, String>> fetchMemberNames(String workspaceId) async {
+    // members ↔ profiles share auth.users ids but carry no direct FK, so
+    // PostgREST cannot embed — two queries, joined client-side.
+    final memberRows = await _client
+        .from('members')
+        .select('id, user_id')
+        .eq('workspace_id', workspaceId);
+    final userIds =
+        memberRows.map((r) => r['user_id'] as String).toSet().toList();
+    if (userIds.isEmpty) return const {};
+    final profileRows = await _client
+        .from('profiles')
+        .select('id, display_name')
+        .inFilter('id', userIds);
+    final nameByUser = {
+      for (final r in profileRows)
+        r['id'] as String: r['display_name'] as String,
+    };
+    return {
+      for (final r in memberRows)
+        r['id'] as String: nameByUser[r['user_id'] as String] ?? '',
+    };
+  }
+
   Workspace _workspaceFromRow(Map<String, dynamic> row) => Workspace(
         id: row['id'] as String,
         name: row['name'] as String,

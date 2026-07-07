@@ -8,10 +8,13 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
 import 'package:deskilo/features/plan/domain/floor_plan_repository.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
+import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
+import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/misc.dart';
 
 import 'fake_floor_plan_repository.dart';
+import 'fake_reservation_repository.dart';
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
 class FakeAuthRepository implements AuthRepository {
@@ -139,6 +142,13 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   @override
   Future<Member?> fetchMyMember(String workspaceId) async =>
       myMember.copyWith(workspaceId: workspaceId);
+
+  /// memberId → display name; seeded with the default member.
+  Map<String, String> memberNames = {'member-1': 'Flo'};
+
+  @override
+  Future<Map<String, String>> fetchMemberNames(String workspaceId) async =>
+      Map.of(memberNames);
 }
 
 /// Baseline overrides for widget tests: a signed-in user who is the owner
@@ -148,6 +158,7 @@ List<Override> standardTestOverrides({
   AuthRepository? auth,
   WorkspaceRepository? workspace,
   FloorPlanRepository? floorPlan,
+  ReservationRepository? reservations,
 }) {
   return [
     authRepositoryProvider
@@ -157,5 +168,7 @@ List<Override> standardTestOverrides({
     ),
     floorPlanRepositoryProvider
         .overrideWithValue(floorPlan ?? FakeFloorPlanRepository()),
+    reservationRepositoryProvider
+        .overrideWithValue(reservations ?? FakeReservationRepository()),
   ];
 }
