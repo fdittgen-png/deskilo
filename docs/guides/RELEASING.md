@@ -26,15 +26,17 @@ Debug-signed — sideload only. Naming convention for manual drops:
 
 ## Google Play internal testing
 
-Automated half (`play-internal.yml`):
+Automated half (`play-internal.yml`, tankstellen daily-beta pattern):
 
-```bash
-gh workflow run play-internal.yml -f ref=master
-```
-
-builds a signed AAB (always attached as an artifact) and — once
-`PLAY_STORE_SERVICE_ACCOUNT_JSON` exists on this repo — pushes it straight
-to the **internal testing** track with `distribution/whatsnew/` notes.
+- **Daily at 16:00 UTC** and on demand
+  (`gh workflow run play-internal.yml -f track=internal`), master is built
+  with a **wall-clock monotonic versionCode** (minutes since 2025-07-06 UTC
+  on a 1M base), signed, attached as an artifact, uploaded to the chosen
+  Play track by `tools/upload_to_play.py` (resumable upload with retries,
+  per-locale changelogs `fastlane/metadata/android/<locale>/changelogs/<versionCode>.txt`
+  with fallback notes), and tagged `vX.Y.Z+<versionCode>`.
+- Until `PLAY_STORE_SERVICE_ACCOUNT_JSON` exists on this repo the upload is
+  skipped with a warning and only the artifact is produced.
 
 Owner half (Google offers NO API for these):
 

@@ -1,33 +1,68 @@
 name: play-internal
 
-# Builds a signed release AAB and starts an internal-testing release.
-#   gh workflow run play-internal.yml -f ref=master
-# The AAB is always attached as a run artifact. The Play upload step runs
-# only when PLAY_STORE_SERVICE_ACCOUNT_JSON exists AND the app entry has
-# been created in the Play Console (app creation has no API — owner step).
+# Automatic Play publishing (tankstellen daily-beta pattern): builds master
+# daily and on demand, uploads the signed AAB to the chosen Play track via
+# tools/upload_to_play.py, and tags the shipped versionCode.
+#
+# The versionCode is wall-clock monotonic (minutes since 2025-07-06 UTC on a
+# 1_000_000 base — one shared scheme for every release workflow, so parallel
+# workflows can never leapfrog each other and trip Play's no-downgrade rule).
+#
+# Until PLAY_STORE_SERVICE_ACCOUNT_JSON is set on this repo the upload step
+# is skipped with a loud warning and the AAB is still attached as an
+# artifact for manual upload.
 
 on:
+  schedule:
+    - cron: '0 16 * * *'
   workflow_dispatch:
     inputs:
-      ref:
-        description: Branch, tag or SHA to build
+      track:
+        description: Play track
+        required: true
+        type: choice
+        options:
+          - internal
+          - alpha
+          - beta
+          - production
+        default: internal
+      release_notes:
+        description: Release notes (overrides per-version changelog files)
         required: false
-        default: master
+        type: string
+
+concurrency:
+  group: play-internal
+  cancel-in-progress: false
 
 env:
   FLUTTER_VERSION: "3.41.9"
 
 jobs:
-  bundle:
+  build-and-upload:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      # required by the post-upload tag push so every shipped versionCode
+      # maps back to a commit
+      contents: write
     env:
-      # secrets context is not allowed in step-level `if`; bridge via env
       HAS_PLAY_SA: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON != '' }}
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.ref }}
+          ref: master
+
+      - name: Compute build number
+        id: bn
+        run: |
+          # Wall-clock minutes since 2025-07-06 UTC on a 1M base: strictly
+          # monotonic across runs and workflows, unique per minute, ~4000
+          # years of head-room under Android's 2_147_483_647 cap.
+          BN=$(( 1000000 + ( $(date -u +%s) - 1751760000 ) / 60 ))
+          echo "build_number=$BN" >> "$GITHUB_OUTPUT"
+          echo "Build number: $BN"
 
       - uses: actions/setup-java@v4
         with:
@@ -50,6 +85,10 @@ jobs:
           KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "::error::ANDROID_KEYSTORE_* secrets are not configured." >&2
+            exit 1
+          fi
           echo "$KEYSTORE_BASE64" | base64 -d > android/app/upload-keystore.p12
           cat > android/key.properties << EOF
           storeFile=upload-keystore.p12
@@ -62,21 +101,70 @@ jobs:
       - name: Build signed AAB
         run: |
           flutter pub get
-          flutter build appbundle --release
+          flutter build appbundle --release --build-number=${{ steps.bn.outputs.build_number }}
+
+      - name: Clean up keystore
+        if: always()
+        run: rm -f android/app/upload-keystore.p12 android/key.properties
 
       - uses: actions/upload-artifact@v4
         with:
-          name: deskilo-release-aab-${{ github.sha }}
+          name: deskilo-release-aab-${{ steps.bn.outputs.build_number }}
           path: build/app/outputs/bundle/release/app-release.aab
           retention-days: 30
 
-      - name: Upload to Play internal track
+      - name: Warn when Play upload is not configured
+        if: ${{ env.HAS_PLAY_SA != 'true' }}
+        run: echo "::warning::PLAY_STORE_SERVICE_ACCOUNT_JSON is not set — AAB built and attached as artifact, Play upload skipped."
+
+      - uses: actions/setup-python@v5
         if: ${{ env.HAS_PLAY_SA == 'true' }}
-        uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJsonPlainText: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON }}
-          packageName: de.deskilo.app
-          releaseFiles: build/app/outputs/bundle/release/app-release.aab
-          track: internal
-          status: completed
-          whatsNewDirectory: distribution/whatsnew
+          python-version: "3.12"
+
+      - name: Install Python deps
+        if: ${{ env.HAS_PLAY_SA == 'true' }}
+        run: pip install --quiet google-api-python-client google-auth google-auth-httplib2
+
+      - name: Decode service-account key
+        if: ${{ env.HAS_PLAY_SA == 'true' }}
+        env:
+          SA_JSON: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "$SA_JSON" > "$RUNNER_TEMP/play-key.json"
+          echo "PLAY_KEY_PATH=$RUNNER_TEMP/play-key.json" >> "$GITHUB_ENV"
+
+      - name: Upload to Play Store
+        if: ${{ env.HAS_PLAY_SA == 'true' }}
+        run: |
+          python tools/upload_to_play.py \
+            --aab build/app/outputs/bundle/release/app-release.aab \
+            --key "$PLAY_KEY_PATH" \
+            --track "${{ github.event.inputs.track || 'internal' }}" \
+            ${{ github.event.inputs.release_notes && format('--release-notes "{0}"', github.event.inputs.release_notes) || '' }}
+
+      - name: Clean up service-account key
+        if: always()
+        run: rm -f "$PLAY_KEY_PATH"
+
+      - name: Tag the shipped build (vX.Y.Z+BUILD)
+        if: ${{ env.HAS_PLAY_SA == 'true' }}
+        run: |
+          set -euo pipefail
+          VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}' | cut -d+ -f1)
+          TAG="v${VERSION}+${{ steps.bn.outputs.build_number }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "Play build ${{ steps.bn.outputs.build_number }} (track: ${{ github.event.inputs.track || 'internal' }}) — $GITHUB_SHA"
+          git push origin "$TAG"
+          echo "Tagged $TAG"
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Play internal release" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Build number:** ${{ steps.bn.outputs.build_number }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Track:** ${{ github.event.inputs.track || 'internal' }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Play upload:** ${{ env.HAS_PLAY_SA == 'true' && 'attempted' || 'SKIPPED (no service-account secret)' }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Trigger:** ${{ github.event_name }}" >> "$GITHUB_STEP_SUMMARY"
