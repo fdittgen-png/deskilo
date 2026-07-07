@@ -1,0 +1,52 @@
+name: dev-apk
+
+# One-off sideload APK from any ref (tankstellen pattern):
+#   gh workflow run dev-apk.yml -f ref=master
+#   gh run download <run-id> --dir /tmp/dev-apk
+# Signed with the debug key until the release keystore lands in secrets —
+# fine for sideloading, blocked from store upload by design.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch, tag or SHA to build
+        required: false
+        default: master
+
+env:
+  FLUTTER_VERSION: "3.41.9"
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: No-GMS audit (ADR 0003)
+        run: bash scripts/audit_no_gms.sh
+
+      - name: Build arm64 APK
+        run: |
+          flutter pub get
+          flutter build apk --debug --target-platform android-arm64
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deskilo-arm64-${{ inputs.ref }}-${{ github.sha }}
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 14
