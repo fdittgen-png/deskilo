@@ -1,0 +1,11 @@
+DesKilo is a free, privacy-first app for small self-organized coworking communities.
+
+• Draw your workspace on a grid: levels, offices, desks and bookable seats
+• Tap a seat on the live floor plan to check in — walk-ups are conflict-safe
+• Reserve ahead, once or as a recurring series, with a time scroller to browse any moment
+• Calendar of your bookings; admins see everyone's
+• Fair money: membership plans with half-day quotas, one transparent ledger per member
+• Community expenses: buy coffee for the space, get it credited on your next statement
+• Everything an admin does for you needs your confirmation
+
+No Google services, no tracking, no ads. Self-hostable backend. MIT-licensed.
