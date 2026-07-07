@@ -1,0 +1,32 @@
+name: Epic
+description: A piece of work larger than one PR, with a validated breakdown
+labels: ["epic"]
+title: "Epic: "
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What exists when this Epic is done, in user-visible terms. Link the relevant spec section (docs/SPECIFICATION.md §N).
+    validations:
+      required: true
+  - type: textarea
+    id: breakdown
+    attributes:
+      label: Proposed child tasks
+      description: Dependency-ordered list; each child ≈ one PR < 400 lines. Children are filed as issues only after maintainer validation.
+      placeholder: |
+        - [ ] task 1 …
+        - [ ] task 2 …
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks / open questions
+  - type: checkboxes
+    id: gate
+    attributes:
+      label: Validation gate
+      options:
+        - label: Breakdown validated by maintainer — children may be filed

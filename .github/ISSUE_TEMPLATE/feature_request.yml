@@ -1,0 +1,26 @@
+name: Feature request
+description: Propose a new feature or improvement
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What can't you do today, or what is painful?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+    validations:
+      required: true
+  - type: checkboxes
+    id: leitmotiv
+    attributes:
+      label: Leitmotiv check — which goal does this serve?
+      description: A feature serving none of these will be pushed back on.
+      options:
+        - label: Know where you can sit (floor plan, check-in, reservations)
+        - label: Know what you owe / are owed (ledger, billing, expenses)
+        - label: Run the space without a landlord platform (roles, self-hosting, libre)
