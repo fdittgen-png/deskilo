@@ -8,8 +8,11 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
 
-Future<FakeFloorPlanRepository> pumpAsOwner(WidgetTester tester) async {
-  final plans = FakeFloorPlanRepository();
+Future<FakeFloorPlanRepository> pumpAsOwner(
+  WidgetTester tester, {
+  FakeFloorPlanRepository? plans,
+}) async {
+  plans ??= FakeFloorPlanRepository();
   await tester.pumpWidget(
     ProviderScope(
       overrides: standardTestOverrides(floorPlan: plans),
@@ -79,8 +82,9 @@ void main() {
   });
 
   testWidgets('owner renames a level', (tester) async {
-    final plans = await pumpAsOwner(tester);
-    await plans.createLevel('ws-1', 'Old name', 0);
+    final seeded = FakeFloorPlanRepository();
+    await seeded.createLevel('ws-1', 'Old name', 0);
+    final plans = await pumpAsOwner(tester, plans: seeded);
     await tester.tap(find.byIcon(Icons.design_services_outlined));
     await tester.pumpAndSettle();
 
@@ -96,8 +100,9 @@ void main() {
   });
 
   testWidgets('owner deletes a level after confirmation', (tester) async {
-    final plans = await pumpAsOwner(tester);
-    await plans.createLevel('ws-1', 'Doomed floor', 0);
+    final seeded = FakeFloorPlanRepository();
+    await seeded.createLevel('ws-1', 'Doomed floor', 0);
+    final plans = await pumpAsOwner(tester, plans: seeded);
     await tester.tap(find.byIcon(Icons.design_services_outlined));
     await tester.pumpAndSettle();
 
