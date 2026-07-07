@@ -101,6 +101,14 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
   }
 
   @override
+  Future<Map<String, String>> fetchTargetNames(String workspaceId) async => {
+        for (final s in seats.where((s) => s.workspaceId == workspaceId))
+          s.id: s.name,
+        for (final o in offices.where((o) => o.workspaceId == workspaceId))
+          o.id: o.name,
+      };
+
+  @override
   Future<void> reorderLevels(List<String> orderedLevelIds) async {
     for (var i = 0; i < orderedLevelIds.length; i++) {
       final idx = levels.indexWhere((l) => l.id == orderedLevelIds[i]);

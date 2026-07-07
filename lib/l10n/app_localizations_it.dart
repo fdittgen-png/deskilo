@@ -49,6 +49,30 @@ class AppLocalizationsIt extends AppLocalizations {
   String get authSignOut => 'Esci';
 
   @override
+  String get calendarMineTab => 'Le mie';
+
+  @override
+  String get calendarEveryoneTab => 'Tutti';
+
+  @override
+  String get calendarNoReservations => 'Nessuna prenotazione in questo giorno.';
+
+  @override
+  String get calendarCancelOccurrence => 'Annulla questa occorrenza';
+
+  @override
+  String get calendarCancelFollowing => 'Annulla questa e le successive';
+
+  @override
+  String get calendarPreviousMonth => 'Mese precedente';
+
+  @override
+  String get calendarNextMonth => 'Mese successivo';
+
+  @override
+  String get calendarReservationActions => 'Azioni della prenotazione';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override

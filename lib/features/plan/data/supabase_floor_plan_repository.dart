@@ -62,6 +62,22 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   }
 
   @override
+  Future<Map<String, String>> fetchTargetNames(String workspaceId) async {
+    final seatRows = await _client
+        .from('seats')
+        .select('id, name')
+        .eq('workspace_id', workspaceId);
+    final officeRows = await _client
+        .from('offices')
+        .select('id, name')
+        .eq('workspace_id', workspaceId);
+    return {
+      for (final r in [...seatRows, ...officeRows])
+        r['id'] as String: r['name'] as String,
+    };
+  }
+
+  @override
   Future<FloorPlan> fetchPlan(String levelId) async {
     final officeRows =
         await _client.from('offices').select().eq('level_id', levelId);

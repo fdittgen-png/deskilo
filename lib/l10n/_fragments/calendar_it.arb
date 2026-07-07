@@ -1,0 +1,11 @@
+{
+  "@@locale": "it",
+  "calendarMineTab": "Le mie",
+  "calendarEveryoneTab": "Tutti",
+  "calendarNoReservations": "Nessuna prenotazione in questo giorno.",
+  "calendarCancelOccurrence": "Annulla questa occorrenza",
+  "calendarCancelFollowing": "Annulla questa e le successive",
+  "calendarPreviousMonth": "Mese precedente",
+  "calendarNextMonth": "Mese successivo",
+  "calendarReservationActions": "Azioni della prenotazione"
+}

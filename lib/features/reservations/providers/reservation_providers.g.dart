@@ -194,3 +194,95 @@ final class MemberNamesProvider
 }
 
 String _$memberNamesHash() => r'8ff1556b61a23f9f8aa631319aea472451bb2143';
+
+/// Reservations of the active workspace intersecting the given month
+/// (keyed 'yyyy-MM').
+
+@ProviderFor(reservationsForMonth)
+final reservationsForMonthProvider = ReservationsForMonthFamily._();
+
+/// Reservations of the active workspace intersecting the given month
+/// (keyed 'yyyy-MM').
+
+final class ReservationsForMonthProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Reservation>>,
+          List<Reservation>,
+          FutureOr<List<Reservation>>
+        >
+    with
+        $FutureModifier<List<Reservation>>,
+        $FutureProvider<List<Reservation>> {
+  /// Reservations of the active workspace intersecting the given month
+  /// (keyed 'yyyy-MM').
+  ReservationsForMonthProvider._({
+    required ReservationsForMonthFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'reservationsForMonthProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$reservationsForMonthHash();
+
+  @override
+  String toString() {
+    return r'reservationsForMonthProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Reservation>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Reservation>> create(Ref ref) {
+    final argument = this.argument as String;
+    return reservationsForMonth(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ReservationsForMonthProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$reservationsForMonthHash() =>
+    r'03e02f89e7f21311a58ccceeb58991caa64a04cc';
+
+/// Reservations of the active workspace intersecting the given month
+/// (keyed 'yyyy-MM').
+
+final class ReservationsForMonthFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<Reservation>>, String> {
+  ReservationsForMonthFamily._()
+    : super(
+        retry: null,
+        name: r'reservationsForMonthProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// Reservations of the active workspace intersecting the given month
+  /// (keyed 'yyyy-MM').
+
+  ReservationsForMonthProvider call(String monthKey) =>
+      ReservationsForMonthProvider._(argument: monthKey, from: this);
+
+  @override
+  String toString() => r'reservationsForMonthProvider';
+}

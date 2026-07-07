@@ -182,6 +182,54 @@ abstract class AppLocalizations {
   /// **'Sign out'**
   String get authSignOut;
 
+  /// Calendar filter showing only the user's reservations
+  ///
+  /// In en, this message translates to:
+  /// **'Mine'**
+  String get calendarMineTab;
+
+  /// Calendar filter for admins showing all reservations
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone'**
+  String get calendarEveryoneTab;
+
+  /// Empty state under the month grid
+  ///
+  /// In en, this message translates to:
+  /// **'No reservations on this day.'**
+  String get calendarNoReservations;
+
+  /// Series cancel scope: only the tapped instance
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this occurrence'**
+  String get calendarCancelOccurrence;
+
+  /// Series cancel scope: the tapped instance and all later ones
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this and following'**
+  String get calendarCancelFollowing;
+
+  /// Tooltip of the back arrow in the month header
+  ///
+  /// In en, this message translates to:
+  /// **'Previous month'**
+  String get calendarPreviousMonth;
+
+  /// Tooltip of the forward arrow in the month header
+  ///
+  /// In en, this message translates to:
+  /// **'Next month'**
+  String get calendarNextMonth;
+
+  /// Tooltip of the per-reservation overflow button
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation actions'**
+  String get calendarReservationActions;
+
   /// Application name shown in the task switcher and app bar. Brand name — identical in all locales.
   ///
   /// In en, this message translates to:
