@@ -1,20 +1,32 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 import '../l10n/app_localizations.dart';
+import 'router.dart';
 import 'theme.dart';
 
 /// Composition root of DesKilo.
-///
-/// Theme (#14) and router/shell (#15) are wired in here by their respective
-/// Epic-#1 children; until then this boots a placeholder.
-class DeskiloApp extends StatelessWidget {
+class DeskiloApp extends StatefulWidget {
   const DeskiloApp({super.key});
 
   @override
+  State<DeskiloApp> createState() => _DeskiloAppState();
+}
+
+class _DeskiloAppState extends State<DeskiloApp> {
+  late final GoRouter _router = createRouter();
+
+  @override
+  void dispose() {
+    _router.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       onGenerateTitle: (context) =>
           AppLocalizations.of(context)?.appTitle ?? 'DesKilo',
       localizationsDelegates: const [
@@ -26,19 +38,7 @@ class DeskiloApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       theme: DeskiloTheme.light(),
       darkTheme: DeskiloTheme.dark(),
-      home: const _PlaceholderScreen(),
-    );
-  }
-}
-
-class _PlaceholderScreen extends StatelessWidget {
-  const _PlaceholderScreen();
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return Scaffold(
-      body: Center(child: Text(l10n?.appTitle ?? 'DesKilo')),
+      routerConfig: _router,
     );
   }
 }
