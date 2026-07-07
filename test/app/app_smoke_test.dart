@@ -17,7 +17,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Plan'), findsWidgets);
-    expect(find.text('Coming soon'), findsOneWidget);
+    expect(
+      find.text('The workspace has no floor plan yet.'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('signed-out user lands on the auth screen', (tester) async {

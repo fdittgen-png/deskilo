@@ -30,7 +30,6 @@ void main() {
     await tester.tap(find.widgetWithText(FilledButton, 'Sign in'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Coming soon'), findsOneWidget);
     expect(find.byType(NavigationBar), findsOneWidget);
   });
 
