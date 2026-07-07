@@ -19,5 +19,13 @@
   "ledgerCategoryOverage": "Eccedenza",
   "ledgerCategoryExpense": "Rimborso spesa",
   "ledgerCategoryPayment": "Pagamento",
-  "ledgerCategoryAdjustment": "Rettifica"
+  "ledgerCategoryAdjustment": "Rettifica",
+  "moneySubmitExpense": "Invia una spesa",
+  "moneyExpenseCategoryLabel": "Categoria",
+  "moneyDescriptionLabel": "Descrizione",
+  "moneyExpensePending": "Spesa inviata — in attesa di approvazione.",
+  "expenseCategoryCoffee": "Caffè e cucina",
+  "expenseCategorySupplies": "Materiale",
+  "expenseCategoryEquipment": "Attrezzatura",
+  "expenseCategoryOther": "Altro"
 }

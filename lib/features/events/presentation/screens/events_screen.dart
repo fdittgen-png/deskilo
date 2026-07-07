@@ -28,9 +28,12 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     WorkspaceEvent event,
     Map<String, String> names,
     Map<String, String> targets,
+    NumberFormat currency,
   ) {
     final actor = names[event.actorMemberId] ?? '';
     final target = targets[event.payloadTargetId] ?? '';
+    final cents = event.payload['amount_cents'] as int?;
+    final amount = cents == null ? '' : currency.format(cents / 100);
     var line = switch ((event.type, event.action)) {
       (EventType.reservation, EventAction.created) =>
         l10n?.eventReservationCreated(actor, target) ??
@@ -41,6 +44,12 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       (EventType.reservation, EventAction.cancelled) =>
         l10n?.eventReservationCancelled(actor, target) ??
             '$actor cancelled the booking of $target',
+      (EventType.payment, _) =>
+        l10n?.eventPaymentSubmitted(actor, amount) ??
+            '$actor recorded a payment of $amount',
+      (EventType.expense, _) =>
+        l10n?.eventExpenseSubmitted(actor, amount) ??
+            '$actor submitted an expense of $amount',
       _ => '${_typeLabel(l10n, event.type)} · ${event.action.name}',
     };
     if (!event.actorIsSubject) {
@@ -115,6 +124,9 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final targets = ref.watch(targetNamesProvider).value ?? const {};
     final myMemberId = ref.watch(myMemberProvider).value?.id;
+    final currency = NumberFormat.simpleCurrency(
+      name: ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR',
+    );
 
     return switch (eventsAsync) {
       AsyncData(value: final all) => Builder(
@@ -155,7 +167,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(_line(l10n, event, names, targets)),
+                            Text(_line(l10n, event, names, targets, currency)),
                             const SizedBox(height: 4),
                             Text(
                               _when(event),
@@ -209,7 +221,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 for (final event in feed)
                   ListTile(
                     leading: Icon(_icon(event)),
-                    title: Text(_line(l10n, event, names, targets)),
+                    title: Text(_line(l10n, event, names, targets, currency)),
                     subtitle: Text(_when(event)),
                     trailing: event.status == EventStatus.pending
                         ? const Icon(Icons.hourglass_top, size: 18)

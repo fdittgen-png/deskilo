@@ -21,4 +21,13 @@ abstract class MoneyRepository {
 
   /// Active plans of the workspace (member-readable).
   Future<List<Plan>> fetchPlans(String workspaceId);
+
+  /// Submits a community expense (spec §9); another admin must approve
+  /// before the credit exists. Returns the pending event id.
+  Future<String> submitExpense({
+    required String workspaceId,
+    required int amountCents,
+    required String category,
+    String description,
+  });
 }

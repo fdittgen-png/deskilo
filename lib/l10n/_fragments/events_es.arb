@@ -12,5 +12,7 @@
   "eventReservationCreated": "{actor} reservó {target}",
   "eventReservationModified": "{actor} modificó la reserva de {target}",
   "eventReservationCancelled": "{actor} canceló la reserva de {target}",
-  "eventForSubject": "para {name}"
+  "eventForSubject": "para {name}",
+  "eventPaymentSubmitted": "{actor} registró un pago de {amount}",
+  "eventExpenseSubmitted": "{actor} envió un gasto de {amount}"
 }

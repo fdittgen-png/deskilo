@@ -261,6 +261,16 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String eventPaymentSubmitted(String actor, String amount) {
+    return '$actor hat eine Zahlung von $amount erfasst';
+  }
+
+  @override
+  String eventExpenseSubmitted(String actor, String amount) {
+    return '$actor hat eine Ausgabe von $amount eingereicht';
+  }
+
+  @override
   String eventForSubject(String name) {
     return 'für $name';
   }
@@ -334,6 +344,31 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get moneyLedgerEmpty => 'Noch keine Buchungen.';
+
+  @override
+  String get moneySubmitExpense => 'Ausgabe einreichen';
+
+  @override
+  String get moneyExpenseCategoryLabel => 'Kategorie';
+
+  @override
+  String get moneyDescriptionLabel => 'Beschreibung';
+
+  @override
+  String get moneyExpensePending =>
+      'Ausgabe eingereicht — wartet auf Freigabe.';
+
+  @override
+  String get expenseCategoryCoffee => 'Kaffee & Küche';
+
+  @override
+  String get expenseCategorySupplies => 'Verbrauchsmaterial';
+
+  @override
+  String get expenseCategoryEquipment => 'Ausstattung';
+
+  @override
+  String get expenseCategoryOther => 'Sonstiges';
 
   @override
   String get ledgerCategorySubscription => 'Abo';

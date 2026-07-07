@@ -71,6 +71,22 @@ class SupabaseMoneyRepository implements MoneyRepository {
   }
 
   @override
+  Future<String> submitExpense({
+    required String workspaceId,
+    required int amountCents,
+    required String category,
+    String description = '',
+  }) async {
+    final result = await _client.rpc<dynamic>('submit_expense', params: {
+      'p_workspace_id': workspaceId,
+      'p_amount_cents': amountCents,
+      'p_category': category,
+      'p_description': description,
+    });
+    return result as String;
+  }
+
+  @override
   Future<List<Plan>> fetchPlans(String workspaceId) async {
     final rows = await _client
         .from('plans')

@@ -100,6 +100,7 @@ void main() {
 
     expect(find.text('June payment'), findsOneWidget);
     expect(find.textContaining('+'), findsWidgets);
+    await tester.scrollUntilVisible(find.text('Overage'), 100);
     expect(find.text('Overage'), findsOneWidget);
   });
 }
