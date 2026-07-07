@@ -20,4 +20,8 @@ abstract class WorkspaceRepository {
 
   /// The signed-in user's membership in [workspaceId], or null.
   Future<Member?> fetchMyMember(String workspaceId);
+
+  /// member id → display name for everyone in the workspace (floor-plan
+  /// occupant labels, event actor names, …).
+  Future<Map<String, String>> fetchMemberNames(String workspaceId);
 }

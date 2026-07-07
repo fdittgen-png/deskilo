@@ -1,0 +1,86 @@
+// SPDX-License-Identifier: MIT
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../domain/reservation.dart';
+import '../domain/reservation_repository.dart';
+
+class SupabaseReservationRepository implements ReservationRepository {
+  SupabaseReservationRepository(this._client);
+
+  final SupabaseClient _client;
+
+  @override
+  Future<List<Reservation>> fetchWindow(
+    String workspaceId, {
+    required DateTime from,
+    required DateTime to,
+  }) async {
+    final rows = await _client
+        .from('reservations')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .lt('starts_at', to.toUtc().toIso8601String())
+        .gt('ends_at', from.toUtc().toIso8601String())
+        .order('starts_at', ascending: true);
+    return rows.map(_fromRow).toList();
+  }
+
+  @override
+  Future<String> create({
+    required String workspaceId,
+    String? seatId,
+    String? officeId,
+    required DateTime startsAt,
+    required DateTime endsAt,
+    bool checkIn = false,
+  }) async {
+    final result = await _client.rpc<dynamic>('create_reservation', params: {
+      'p_workspace_id': workspaceId,
+      'p_seat_id': seatId,
+      'p_office_id': officeId,
+      'p_starts_at': startsAt.toUtc().toIso8601String(),
+      'p_ends_at': endsAt.toUtc().toIso8601String(),
+      'p_check_in': checkIn,
+    });
+    return result as String;
+  }
+
+  @override
+  Future<void> checkIn(String reservationId) async {
+    await _client.rpc<dynamic>('check_in_reservation', params: {
+      'p_reservation_id': reservationId,
+    });
+  }
+
+  @override
+  Future<void> checkOut(String reservationId) async {
+    await _client.rpc<dynamic>('check_out_reservation', params: {
+      'p_reservation_id': reservationId,
+    });
+  }
+
+  @override
+  Future<void> cancel(String reservationId) async {
+    await _client.rpc<dynamic>('cancel_reservation', params: {
+      'p_reservation_id': reservationId,
+    });
+  }
+
+  Reservation _fromRow(Map<String, dynamic> row) => Reservation(
+        id: row['id'] as String,
+        workspaceId: row['workspace_id'] as String,
+        seatId: row['seat_id'] as String?,
+        officeId: row['office_id'] as String?,
+        memberId: row['member_id'] as String,
+        startsAt: DateTime.parse(row['starts_at'] as String),
+        endsAt: DateTime.parse(row['ends_at'] as String),
+        status: reservationStatusFromDb(row['status'] as String),
+        seriesId: row['series_id'] as String?,
+        checkedInAt: row['checked_in_at'] == null
+            ? null
+            : DateTime.parse(row['checked_in_at'] as String),
+        checkedOutAt: row['checked_out_at'] == null
+            ? null
+            : DateTime.parse(row['checked_out_at'] as String),
+      );
+}
