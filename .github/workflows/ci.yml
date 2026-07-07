@@ -29,6 +29,9 @@ jobs:
       - name: Dependencies
         run: flutter pub get
 
+      - name: No-GMS audit (ADR 0003)
+        run: bash scripts/audit_no_gms.sh
+
       - name: l10n gate — ARB pipeline is clean and committed
         run: |
           dart run tool/build_arb.dart
