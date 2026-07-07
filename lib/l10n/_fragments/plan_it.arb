@@ -14,5 +14,11 @@
   "planUntil": "fino alle {time}",
   "planCappedByNext": "Il posto è prenotato dalle {time}.",
   "planCheckInFailed": "Check-in non riuscito — il posto potrebbe essere appena stato occupato.",
-  "planYourSeat": "Il tuo posto"
+  "planYourSeat": "Il tuo posto",
+  "planListViewTooltip": "Vista elenco",
+  "planMapViewTooltip": "Vista piantina",
+  "planNowButton": "Adesso",
+  "planReserveButton": "Prenota",
+  "planReservationsEmpty": "Nessuna prenotazione per questo giorno.",
+  "planStartsAt": "Inizia alle {time}"
 }

@@ -247,6 +247,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get planYourSeat => 'Your seat';
 
   @override
+  String get planListViewTooltip => 'List view';
+
+  @override
+  String get planMapViewTooltip => 'Plan view';
+
+  @override
+  String get planNowButton => 'Now';
+
+  @override
+  String get planReserveButton => 'Reserve';
+
+  @override
+  String get planReservationsEmpty => 'No reservations for this day.';
+
+  @override
+  String planStartsAt(String time) {
+    return 'Starts at $time';
+  }
+
+  @override
   String get onboardingTitle => 'Welcome to DesKilo';
 
   @override

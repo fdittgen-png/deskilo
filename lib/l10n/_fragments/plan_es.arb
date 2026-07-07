@@ -14,5 +14,11 @@
   "planUntil": "hasta las {time}",
   "planCappedByNext": "El asiento está reservado a partir de las {time}.",
   "planCheckInFailed": "No se pudo registrar — puede que el asiento se acabe de ocupar.",
-  "planYourSeat": "Tu asiento"
+  "planYourSeat": "Tu asiento",
+  "planListViewTooltip": "Vista de lista",
+  "planMapViewTooltip": "Vista de plano",
+  "planNowButton": "Ahora",
+  "planReserveButton": "Reservar",
+  "planReservationsEmpty": "No hay reservas para este día.",
+  "planStartsAt": "Empieza a las {time}"
 }

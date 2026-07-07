@@ -14,5 +14,11 @@
   "planUntil": "bis {time}",
   "planCappedByNext": "Der Platz ist ab {time} reserviert.",
   "planCheckInFailed": "Einchecken nicht möglich — der Platz wurde eventuell gerade belegt.",
-  "planYourSeat": "Dein Platz"
+  "planYourSeat": "Dein Platz",
+  "planListViewTooltip": "Listenansicht",
+  "planMapViewTooltip": "Planansicht",
+  "planNowButton": "Jetzt",
+  "planReserveButton": "Reservieren",
+  "planReservationsEmpty": "Keine Reservierungen für diesen Tag.",
+  "planStartsAt": "Beginnt um {time}"
 }
