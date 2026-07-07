@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  FLUTTER_VERSION: "3.41.9"
+
+jobs:
+  ci:
+    name: analyze · l10n gate · test · coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Dependencies
+        run: flutter pub get
+
+      - name: l10n gate — ARB pipeline is clean and committed
+        run: |
+          dart run tool/build_arb.dart
+          flutter gen-l10n
+          git diff --exit-code -- lib/l10n \
+            || { echo "::error::lib/l10n drift — run 'dart run tool/build_arb.dart && flutter gen-l10n' and commit (HARD RULE #4)"; exit 1; }
+
+      - name: Analyze (lib + test)
+        run: flutter analyze
+
+      - name: Tests with coverage
+        run: flutter test --coverage
+
+      - name: Coverage gate (>= 45%)
+        run: |
+          pct=$(awk '/^LF:/{lf+=substr($0,4)} /^LH:/{lh+=substr($0,4)} END{printf "%.1f", lh*100/lf}' coverage/lcov.info)
+          echo "line coverage: ${pct}%"
+          awk -v p="$pct" 'BEGIN{exit !(p >= 45)}' \
+            || { echo "::error::coverage ${pct}% is below the 45% gate"; exit 1; }
