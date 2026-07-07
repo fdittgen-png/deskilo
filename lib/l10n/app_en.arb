@@ -240,6 +240,86 @@
   "@commonDelete": {
     "description": "Generic delete action in dialogs and menus"
   },
+  "planNoLevels": "The workspace has no floor plan yet.",
+  "@planNoLevels": {
+    "description": "Empty state of the Plan tab before the owner drew levels"
+  },
+  "planLevelLabel": "Level",
+  "@planLevelLabel": {
+    "description": "Label of the level dropdown above the live plan"
+  },
+  "planCheckInTitle": "Check in",
+  "@planCheckInTitle": {
+    "description": "Fallback title of the walk-up check-in sheet"
+  },
+  "planStartNow": "Starts now",
+  "@planStartNow": {
+    "description": "Walk-up check-in: the start time is the current time"
+  },
+  "planUntilLabel": "Until",
+  "@planUntilLabel": {
+    "description": "Label of the adjustable end time in the check-in sheet"
+  },
+  "planCheckInButton": "Check in",
+  "@planCheckInButton": {
+    "description": "Confirm button of the check-in sheet / my-seat sheet"
+  },
+  "planCheckOutButton": "Check out",
+  "@planCheckOutButton": {
+    "description": "Action ending the current presence on a seat"
+  },
+  "planCancelReservationButton": "Cancel reservation",
+  "@planCancelReservationButton": {
+    "description": "Action cancelling one's own reservation"
+  },
+  "planSeatBlocked": "This seat is blocked for maintenance.",
+  "@planSeatBlocked": {
+    "description": "Snackbar when tapping a blocked seat"
+  },
+  "planReservedBy": "Reserved by {name}",
+  "@planReservedBy": {
+    "description": "Snackbar fragment for a seat reserved by someone else",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "planOccupiedBy": "Occupied by {name}",
+  "@planOccupiedBy": {
+    "description": "Snackbar fragment for a seat someone is checked in on",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "planUntil": "until {time}",
+  "@planUntil": {
+    "description": "Suffix showing when the current booking ends",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "planCappedByNext": "The seat is reserved from {time}.",
+  "@planCappedByNext": {
+    "description": "Hint in the check-in sheet when a later reservation caps the stay",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "planCheckInFailed": "Could not check in — the seat may have just been taken.",
+  "@planCheckInFailed": {
+    "description": "Snackbar when the atomic walk-up RPC rejects (race lost)"
+  },
+  "planYourSeat": "Your seat",
+  "@planYourSeat": {
+    "description": "Fallback title of the my-seat sheet for unnamed seats"
+  },
   "onboardingTitle": "Welcome to DesKilo",
   "@onboardingTitle": {
     "description": "App-bar title of the first-run onboarding screen"

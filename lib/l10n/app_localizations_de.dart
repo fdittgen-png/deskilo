@@ -195,6 +195,60 @@ class AppLocalizationsDe extends AppLocalizations {
   String get commonDelete => 'Löschen';
 
   @override
+  String get planNoLevels => 'Der Workspace hat noch keinen Plan.';
+
+  @override
+  String get planLevelLabel => 'Etage';
+
+  @override
+  String get planCheckInTitle => 'Einchecken';
+
+  @override
+  String get planStartNow => 'Beginnt jetzt';
+
+  @override
+  String get planUntilLabel => 'Bis';
+
+  @override
+  String get planCheckInButton => 'Einchecken';
+
+  @override
+  String get planCheckOutButton => 'Auschecken';
+
+  @override
+  String get planCancelReservationButton => 'Reservierung stornieren';
+
+  @override
+  String get planSeatBlocked => 'Dieser Platz ist wegen Wartung gesperrt.';
+
+  @override
+  String planReservedBy(String name) {
+    return 'Reserviert von $name';
+  }
+
+  @override
+  String planOccupiedBy(String name) {
+    return 'Besetzt von $name';
+  }
+
+  @override
+  String planUntil(String time) {
+    return 'bis $time';
+  }
+
+  @override
+  String planCappedByNext(String time) {
+    return 'Der Platz ist ab $time reserviert.';
+  }
+
+  @override
+  String get planCheckInFailed =>
+      'Einchecken nicht möglich — der Platz wurde eventuell gerade belegt.';
+
+  @override
+  String get planYourSeat => 'Dein Platz';
+
+  @override
   String get onboardingTitle => 'Willkommen bei DesKilo';
 
   @override

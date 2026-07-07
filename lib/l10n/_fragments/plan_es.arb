@@ -1,0 +1,18 @@
+{
+  "@@locale": "es",
+  "planNoLevels": "El espacio aún no tiene plano.",
+  "planLevelLabel": "Planta",
+  "planCheckInTitle": "Registrarse",
+  "planStartNow": "Empieza ahora",
+  "planUntilLabel": "Hasta",
+  "planCheckInButton": "Registrarse",
+  "planCheckOutButton": "Salir",
+  "planCancelReservationButton": "Cancelar reserva",
+  "planSeatBlocked": "Este asiento está bloqueado por mantenimiento.",
+  "planReservedBy": "Reservado por {name}",
+  "planOccupiedBy": "Ocupado por {name}",
+  "planUntil": "hasta las {time}",
+  "planCappedByNext": "El asiento está reservado a partir de las {time}.",
+  "planCheckInFailed": "No se pudo registrar — puede que el asiento se acabe de ocupar.",
+  "planYourSeat": "Tu asiento"
+}

@@ -193,6 +193,60 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonDelete => 'Delete';
 
   @override
+  String get planNoLevels => 'The workspace has no floor plan yet.';
+
+  @override
+  String get planLevelLabel => 'Level';
+
+  @override
+  String get planCheckInTitle => 'Check in';
+
+  @override
+  String get planStartNow => 'Starts now';
+
+  @override
+  String get planUntilLabel => 'Until';
+
+  @override
+  String get planCheckInButton => 'Check in';
+
+  @override
+  String get planCheckOutButton => 'Check out';
+
+  @override
+  String get planCancelReservationButton => 'Cancel reservation';
+
+  @override
+  String get planSeatBlocked => 'This seat is blocked for maintenance.';
+
+  @override
+  String planReservedBy(String name) {
+    return 'Reserved by $name';
+  }
+
+  @override
+  String planOccupiedBy(String name) {
+    return 'Occupied by $name';
+  }
+
+  @override
+  String planUntil(String time) {
+    return 'until $time';
+  }
+
+  @override
+  String planCappedByNext(String time) {
+    return 'The seat is reserved from $time.';
+  }
+
+  @override
+  String get planCheckInFailed =>
+      'Could not check in — the seat may have just been taken.';
+
+  @override
+  String get planYourSeat => 'Your seat';
+
+  @override
   String get onboardingTitle => 'Welcome to DesKilo';
 
   @override
