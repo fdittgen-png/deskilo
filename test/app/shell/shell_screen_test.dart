@@ -4,8 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/mock_providers.dart';
+
 Future<void> pumpApp(WidgetTester tester) async {
-  await tester.pumpWidget(const ProviderScope(child: DeskiloApp()));
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: standardTestOverrides(),
+      child: const DeskiloApp(),
+    ),
+  );
   await tester.pumpAndSettle();
 }
 

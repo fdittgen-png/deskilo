@@ -104,6 +104,84 @@ abstract class AppLocalizations {
     Locale('it'),
   ];
 
+  /// Heading on the auth screen in sign-in mode
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get authSignInTitle;
+
+  /// Heading on the auth screen in sign-up mode
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get authSignUpTitle;
+
+  /// Label of the email input field
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get authEmailLabel;
+
+  /// Label of the password input field
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get authPasswordLabel;
+
+  /// Label of the display-name input field (sign-up only)
+  ///
+  /// In en, this message translates to:
+  /// **'Display name'**
+  String get authDisplayNameLabel;
+
+  /// Submit button in sign-in mode
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get authSignInButton;
+
+  /// Submit button in sign-up mode
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get authSignUpButton;
+
+  /// Link switching the auth screen to sign-up mode
+  ///
+  /// In en, this message translates to:
+  /// **'New here? Create an account'**
+  String get authToggleToSignUp;
+
+  /// Link switching the auth screen to sign-in mode
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? Sign in'**
+  String get authToggleToSignIn;
+
+  /// Validation message for an empty mandatory field
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get authFieldRequired;
+
+  /// Validation message for a too-short password
+  ///
+  /// In en, this message translates to:
+  /// **'At least 8 characters'**
+  String get authPasswordTooShort;
+
+  /// Snackbar shown when sign-in/sign-up fails
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication failed. Check your credentials and try again.'**
+  String get authGenericError;
+
+  /// Sign-out action in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get authSignOut;
+
   /// Application name shown in the task switcher and app bar. Brand name — identical in all locales.
   ///
   /// In en, this message translates to:

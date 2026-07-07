@@ -1,18 +1,31 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../auth/providers/auth_providers.dart';
 
-/// App settings (theme, language, workspace switching — filled in later).
-class SettingsScreen extends StatelessWidget {
+/// App settings. Sign-out lives here; more sections arrive with their Epics.
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.settingsTitle ?? 'Settings')),
-      body: Center(child: Text(l10n?.comingSoon ?? 'Coming soon')),
+      body: ListView(
+        children: [
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: Text(l10n?.authSignOut ?? 'Sign out'),
+            onTap: () async {
+              await ref.read(authRepositoryProvider).signOut();
+              // The router's auth redirect takes over from here.
+            },
+          ),
+        ],
+      ),
     );
   }
 }
