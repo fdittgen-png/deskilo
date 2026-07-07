@@ -19,8 +19,10 @@ ios/Flutter/Flutter.podspec
 android/.gradle/
 android/local.properties
 android/key.properties
+key.properties
 *.jks
 *.keystore
+*.p12
 
 # Secrets / local
 .env

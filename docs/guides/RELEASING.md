@@ -13,23 +13,45 @@ gh run download <run-id> --dir /tmp/dev-apk
 Debug-signed — sideload only. Naming convention for manual drops:
 `deskilo-arm64-<ref>-<short-sha>-<UTC-yyyymmdd-hhmmZ>.apk`.
 
-## Release signing (owner action needed)
+## Release signing (DONE 2026-07-07)
 
-1. Generate an upload keystore:
-   `keytool -genkey -v -keystore upload.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload`
-2. Add GitHub secrets `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`,
-   `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD`.
-3. Wire `android/app/build.gradle.kts` release signing to `key.properties`
-   (never commit the keystore; `.gitignore` already excludes `*.jks`).
-4. Switch `dev-apk.yml` to `--release` builds.
+- PKCS12 upload keystore generated with OpenSSL (alias `upload`, 30-year
+  validity). **Master copy + password: `~/keystores/deskilo-upload-keystore.*`
+  on the dev Mac — back both up off-machine.**
+- Repo secrets set: `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`,
+  `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD`.
+- `android/app/build.gradle.kts` signs release builds from
+  `android/key.properties` when present (CI writes it from secrets); local
+  builds without it fall back to debug signing.
 
-## Google Play (owner action needed)
+## Google Play internal testing
 
-- Play Console account, app entry for `de.deskilo.app`, Play App Signing
-  enrolment with the upload key above.
+Automated half (`play-internal.yml`):
+
+```bash
+gh workflow run play-internal.yml -f ref=master
+```
+
+builds a signed AAB (always attached as an artifact) and — once
+`PLAY_STORE_SERVICE_ACCOUNT_JSON` exists on this repo — pushes it straight
+to the **internal testing** track with `distribution/whatsnew/` notes.
+
+Owner half (Google offers NO API for these):
+
+1. Play Console → **Create app**: name *DesKilo*, App, Free; package
+   `de.deskilo.app` is bound on first AAB upload.
+2. Reuse the tankstellen publisher service account: copy the JSON into this
+   repo (`gh secret set PLAY_STORE_SERVICE_ACCOUNT_JSON -R fdittgen-png/deskilo < sa.json`)
+   and, in Play Console → Users & permissions, make sure the service account
+   may manage releases for the new app.
+3. Internal testing → **Testers**: create/attach an email list and share the
+   opt-in link.
+4. Re-run `play-internal.yml` (or upload the artifact AAB manually once —
+   after that the API path works).
+
 - Store listing text lives in `fastlane/metadata/android/<locale>/`
-  (en-US, de-DE, fr-FR, es-ES, it-IT) — used by fastlane `supply` once a
-  service-account JSON exists in secrets.
+  (en-US, de-DE, fr-FR, es-ES, it-IT); internal testing does not require the
+  full listing, production does.
 
 ## F-Droid
 
