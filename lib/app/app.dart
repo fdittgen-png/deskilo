@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../l10n/app_localizations.dart';
+import 'theme.dart';
 
 /// Composition root of DesKilo.
 ///
@@ -23,7 +24,8 @@ class DeskiloApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      theme: ThemeData(useMaterial3: true),
+      theme: DeskiloTheme.light(),
+      darkTheme: DeskiloTheme.dark(),
       home: const _PlaceholderScreen(),
     );
   }
