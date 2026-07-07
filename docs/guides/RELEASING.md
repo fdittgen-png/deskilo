@@ -66,13 +66,34 @@ Owner half (Google offers NO API for these):
 - Caveat carried over from Sparkilo: sideloaded/F-Droid APKs and Play APKs
   are signed differently — devices must uninstall one to install the other.
 
-## iOS / TestFlight (owner action needed)
+## iOS / TestFlight
 
-- Apple Developer Program membership, bundle id `de.deskilo.app`,
-  App Store Connect API key in secrets, signing certificates (fastlane match
-  recommended, as in tankstellen's ios guides).
-- The workflow lands together with the first signing setup — a stub without
-  certificates would only produce red runs.
+Pipeline (`ios-testflight.yml`, tankstellen mirror, dispatch-only to spare
+macOS minutes):
+
+```bash
+gh workflow run ios-testflight.yml -f sync_certs=true   # once: mint the profile
+gh workflow run ios-testflight.yml                      # build + TestFlight
+```
+
+- Signing: **fastlane match** against the shared team repo
+  `tankstellen-ios-certs` (the distribution cert is per-team; DesKilo only
+  adds its own `de.deskilo.app` appstore profile — created by the
+  `sync_certs` run, which also registers the bundle id at Apple).
+- Secrets in place: `APP_STORE_CONNECT_API_KEY_ID` / `_BASE64` (key
+  `CG5N5AKMH9`, .p8 also in `~/Downloads` — back it up, Apple won't
+  re-issue it), `MATCH_DEPLOY_KEY` (write deploy key `deskilo-ci` on the
+  certs repo — may be downgraded to read-only after the first sync).
+- Secrets still owner-provided: `APP_STORE_CONNECT_API_ISSUER_ID`
+  (App Store Connect → Users and Access → Integrations, shown above the key
+  list) and `MATCH_PASSWORD` (the certs-repo passphrase, same as
+  tankstellen's).
+- Owner-only, no API exists: create the **app record** in App Store Connect
+  (My Apps → ＋ → New App → iOS, name *DesKilo*, bundle id `de.deskilo.app`,
+  any SKU) and add internal testers under TestFlight → Internal Testing.
+- Uploads are internal-only (instant, no review, ≤100 testers); external
+  groups + Beta App Review land later by porting tankstellen's
+  `upload_testflight` extras.
 
 ## Release checklist (every release)
 

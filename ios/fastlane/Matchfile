@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: MIT
+
+# DesKilo shares the team-wide certs repo with Sparkilo: the Apple
+# distribution certificate is per-team, so match only adds a provisioning
+# profile for de.deskilo.app next to the tankstellen ones. CI clones via a
+# deploy key (webfactory/ssh-agent in the workflow); local devs use their
+# personal GitHub SSH key.
+git_url("git@github.com:fdittgen-png/tankstellen-ios-certs.git")
+storage_mode("git")
+
+type("appstore")
+app_identifier(["de.deskilo.app"])
+team_id("C4Y5RDF8P9")
+
+# CI must always run match in readonly mode — only the explicit sync/repair
+# lane may mint profiles, since that touches the Apple Developer Portal and
+# writes to the encrypted match repo.
+readonly(ENV["CI"] == "true")
