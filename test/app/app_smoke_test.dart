@@ -4,9 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('DeskiloApp boots inside a ProviderScope', (tester) async {
+  testWidgets('DeskiloApp boots into the shell on the Plan tab',
+      (tester) async {
     await tester.pumpWidget(const ProviderScope(child: DeskiloApp()));
+    await tester.pumpAndSettle();
 
-    expect(find.text('DesKilo'), findsOneWidget);
+    expect(find.text('Plan'), findsWidgets);
+    expect(find.text('Coming soon'), findsOneWidget);
   });
 }
