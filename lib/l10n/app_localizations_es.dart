@@ -96,6 +96,54 @@ class AppLocalizationsEs extends AppLocalizations {
       '¿Eliminar esta planta? Se eliminarán todas las oficinas, mesas y asientos que contiene.';
 
   @override
+  String get editorToolSelect => 'Seleccionar';
+
+  @override
+  String get editorToolOffice => 'Oficina';
+
+  @override
+  String get editorToolDesk => 'Mesa';
+
+  @override
+  String get editorToolErase => 'Borrar';
+
+  @override
+  String get editorNewOffice => 'Nueva oficina';
+
+  @override
+  String get editorOfficeNameLabel => 'Nombre de la oficina';
+
+  @override
+  String get editorOfficeNameDefault => 'Oficina';
+
+  @override
+  String get editorDeskNameDefault => 'Mesa';
+
+  @override
+  String get editorDeskNameLabel => 'Nombre de la mesa';
+
+  @override
+  String get editorPlacementOverlap =>
+      'Se superpone con un elemento existente.';
+
+  @override
+  String get editorPlacementOutside =>
+      'Debe estar completamente dentro de una oficina.';
+
+  @override
+  String get editorOfficeProperties => 'Oficina';
+
+  @override
+  String get editorDeskProperties => 'Mesa';
+
+  @override
+  String get editorBookableAsWhole => 'Reservable en su totalidad';
+
+  @override
+  String get editorDeleteElementConfirm =>
+      '¿Eliminar este elemento? Todo lo colocado sobre él también se eliminará.';
+
+  @override
   String get commonCancel => 'Cancelar';
 
   @override

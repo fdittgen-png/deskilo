@@ -96,6 +96,53 @@ class AppLocalizationsFr extends AppLocalizations {
       'Supprimer cet étage ? Tous les bureaux, tables et places qu\'il contient seront supprimés.';
 
   @override
+  String get editorToolSelect => 'Sélection';
+
+  @override
+  String get editorToolOffice => 'Bureau';
+
+  @override
+  String get editorToolDesk => 'Table';
+
+  @override
+  String get editorToolErase => 'Effacer';
+
+  @override
+  String get editorNewOffice => 'Nouveau bureau';
+
+  @override
+  String get editorOfficeNameLabel => 'Nom du bureau';
+
+  @override
+  String get editorOfficeNameDefault => 'Bureau';
+
+  @override
+  String get editorDeskNameDefault => 'Table';
+
+  @override
+  String get editorDeskNameLabel => 'Nom de la table';
+
+  @override
+  String get editorPlacementOverlap => 'Chevauche un élément existant.';
+
+  @override
+  String get editorPlacementOutside =>
+      'Doit être entièrement à l\'intérieur d\'un bureau.';
+
+  @override
+  String get editorOfficeProperties => 'Bureau';
+
+  @override
+  String get editorDeskProperties => 'Table';
+
+  @override
+  String get editorBookableAsWhole => 'Réservable en entier';
+
+  @override
+  String get editorDeleteElementConfirm =>
+      'Supprimer cet élément ? Tout ce qui y est placé sera aussi supprimé.';
+
+  @override
   String get commonCancel => 'Annuler';
 
   @override
