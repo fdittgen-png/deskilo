@@ -70,6 +70,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get comingSoon => 'Coming soon';
 
   @override
+  String get editorTitle => 'Workspace editor';
+
+  @override
+  String get editorOpenTooltip => 'Edit workspace';
+
+  @override
+  String get editorAddLevel => 'Add level';
+
+  @override
+  String get editorNoLevels =>
+      'No levels yet. Add the first floor of your workspace.';
+
+  @override
+  String get editorLevelNameLabel => 'Level name';
+
+  @override
+  String get editorRenameLevel => 'Rename';
+
+  @override
+  String get editorLevelActions => 'Level actions';
+
+  @override
+  String get editorDeleteLevelConfirm =>
+      'Delete this level? All offices, desks and seats on it are removed.';
+
+  @override
+  String get commonCancel => 'Cancel';
+
+  @override
+  String get commonSave => 'Save';
+
+  @override
+  String get commonDelete => 'Delete';
+
+  @override
   String get onboardingTitle => 'Welcome to DesKilo';
 
   @override

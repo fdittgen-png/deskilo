@@ -70,6 +70,41 @@ class AppLocalizationsIt extends AppLocalizations {
   String get comingSoon => 'Prossimamente';
 
   @override
+  String get editorTitle => 'Editor dello spazio';
+
+  @override
+  String get editorOpenTooltip => 'Modifica spazio';
+
+  @override
+  String get editorAddLevel => 'Aggiungi piano';
+
+  @override
+  String get editorNoLevels =>
+      'Ancora nessun piano. Aggiungi il primo piano del tuo spazio.';
+
+  @override
+  String get editorLevelNameLabel => 'Nome del piano';
+
+  @override
+  String get editorRenameLevel => 'Rinomina';
+
+  @override
+  String get editorLevelActions => 'Azioni del piano';
+
+  @override
+  String get editorDeleteLevelConfirm =>
+      'Eliminare questo piano? Tutti gli uffici, le scrivanie e i posti su di esso verranno rimossi.';
+
+  @override
+  String get commonCancel => 'Annulla';
+
+  @override
+  String get commonSave => 'Salva';
+
+  @override
+  String get commonDelete => 'Elimina';
+
+  @override
   String get onboardingTitle => 'Benvenuto su DesKilo';
 
   @override

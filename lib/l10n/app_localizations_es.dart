@@ -70,6 +70,41 @@ class AppLocalizationsEs extends AppLocalizations {
   String get comingSoon => 'Próximamente';
 
   @override
+  String get editorTitle => 'Editor del espacio';
+
+  @override
+  String get editorOpenTooltip => 'Editar espacio';
+
+  @override
+  String get editorAddLevel => 'Añadir planta';
+
+  @override
+  String get editorNoLevels =>
+      'Aún no hay plantas. Añade la primera planta de tu espacio.';
+
+  @override
+  String get editorLevelNameLabel => 'Nombre de la planta';
+
+  @override
+  String get editorRenameLevel => 'Renombrar';
+
+  @override
+  String get editorLevelActions => 'Acciones de la planta';
+
+  @override
+  String get editorDeleteLevelConfirm =>
+      '¿Eliminar esta planta? Se eliminarán todas las oficinas, mesas y asientos que contiene.';
+
+  @override
+  String get commonCancel => 'Cancelar';
+
+  @override
+  String get commonSave => 'Guardar';
+
+  @override
+  String get commonDelete => 'Eliminar';
+
+  @override
   String get onboardingTitle => 'Bienvenido a DesKilo';
 
   @override

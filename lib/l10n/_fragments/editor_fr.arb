@@ -1,0 +1,14 @@
+{
+  "@@locale": "fr",
+  "editorTitle": "Éditeur d'espace",
+  "editorOpenTooltip": "Modifier l'espace",
+  "editorAddLevel": "Ajouter un étage",
+  "editorNoLevels": "Aucun étage pour l'instant. Ajoutez le premier étage de votre espace.",
+  "editorLevelNameLabel": "Nom de l'étage",
+  "editorRenameLevel": "Renommer",
+  "editorLevelActions": "Actions de l'étage",
+  "editorDeleteLevelConfirm": "Supprimer cet étage ? Tous les bureaux, tables et places qu'il contient seront supprimés.",
+  "commonCancel": "Annuler",
+  "commonSave": "Enregistrer",
+  "commonDelete": "Supprimer"
+}

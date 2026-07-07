@@ -70,6 +70,41 @@ class AppLocalizationsFr extends AppLocalizations {
   String get comingSoon => 'Bientôt disponible';
 
   @override
+  String get editorTitle => 'Éditeur d\'espace';
+
+  @override
+  String get editorOpenTooltip => 'Modifier l\'espace';
+
+  @override
+  String get editorAddLevel => 'Ajouter un étage';
+
+  @override
+  String get editorNoLevels =>
+      'Aucun étage pour l\'instant. Ajoutez le premier étage de votre espace.';
+
+  @override
+  String get editorLevelNameLabel => 'Nom de l\'étage';
+
+  @override
+  String get editorRenameLevel => 'Renommer';
+
+  @override
+  String get editorLevelActions => 'Actions de l\'étage';
+
+  @override
+  String get editorDeleteLevelConfirm =>
+      'Supprimer cet étage ? Tous les bureaux, tables et places qu\'il contient seront supprimés.';
+
+  @override
+  String get commonCancel => 'Annuler';
+
+  @override
+  String get commonSave => 'Enregistrer';
+
+  @override
+  String get commonDelete => 'Supprimer';
+
+  @override
   String get onboardingTitle => 'Bienvenue sur DesKilo';
 
   @override

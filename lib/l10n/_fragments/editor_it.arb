@@ -1,0 +1,14 @@
+{
+  "@@locale": "it",
+  "editorTitle": "Editor dello spazio",
+  "editorOpenTooltip": "Modifica spazio",
+  "editorAddLevel": "Aggiungi piano",
+  "editorNoLevels": "Ancora nessun piano. Aggiungi il primo piano del tuo spazio.",
+  "editorLevelNameLabel": "Nome del piano",
+  "editorRenameLevel": "Rinomina",
+  "editorLevelActions": "Azioni del piano",
+  "editorDeleteLevelConfirm": "Eliminare questo piano? Tutti gli uffici, le scrivanie e i posti su di esso verranno rimossi.",
+  "commonCancel": "Annulla",
+  "commonSave": "Salva",
+  "commonDelete": "Elimina"
+}

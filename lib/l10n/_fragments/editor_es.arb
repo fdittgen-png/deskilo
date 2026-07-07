@@ -1,0 +1,14 @@
+{
+  "@@locale": "es",
+  "editorTitle": "Editor del espacio",
+  "editorOpenTooltip": "Editar espacio",
+  "editorAddLevel": "Añadir planta",
+  "editorNoLevels": "Aún no hay plantas. Añade la primera planta de tu espacio.",
+  "editorLevelNameLabel": "Nombre de la planta",
+  "editorRenameLevel": "Renombrar",
+  "editorLevelActions": "Acciones de la planta",
+  "editorDeleteLevelConfirm": "¿Eliminar esta planta? Se eliminarán todas las oficinas, mesas y asientos que contiene.",
+  "commonCancel": "Cancelar",
+  "commonSave": "Guardar",
+  "commonDelete": "Eliminar"
+}
