@@ -46,6 +46,24 @@ in, not a member of the row's workspace), **worker** (active member),
 `workspace_id` is denormalized onto all four tables so every policy is a
 single helper call.
 
+## Reservations (migration 0005)
+
+| Operation | anon | user | worker | admin | owner | Mechanism |
+|---|---|---|---|---|---|---|
+| select | — | — | ✅ | ✅ | ✅ | `is_member_of(workspace_id)` |
+| create (self) | — | — | RPC | RPC | RPC | `create_reservation` — caller-only; admin-for-others goes through the Epic-#6 confirmation protocol |
+| check-in / check-out / cancel (own) | — | — | RPC | RPC | RPC | ownership verified via `members.user_id = auth.uid()` |
+
+Hard invariants in the database:
+- **No double-booking**: btree_gist exclusion constraints on
+  `(seat_id, tstzrange)` and `(office_id, tstzrange)` for active statuses —
+  the walk-up race (spec §4.2) cannot commit twice.
+- **Guarded deletion**: `on delete restrict` from reservations to
+  seats/offices/members — the editor must resolve reservations first.
+- Business checks in `create_reservation`: active membership, blocked-seat
+  window, office-booked-as-whole vs seat bookings in both directions.
+- Check-out truncates `ends_at` to `now()` so the seat frees immediately.
+
 ## Function grants (migration 0004)
 
 - Trigger functions (`handle_new_user`, `protect_last_owner`) and
