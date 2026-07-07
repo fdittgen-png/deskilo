@@ -179,3 +179,46 @@ final class MyLedgerProvider
 }
 
 String _$myLedgerHash() => r'5d8925eeb1aa748d7505849799c742c10e7e11d8';
+
+/// Active plans of the current workspace.
+
+@ProviderFor(plans)
+final plansProvider = PlansProvider._();
+
+/// Active plans of the current workspace.
+
+final class PlansProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Plan>>,
+          List<Plan>,
+          FutureOr<List<Plan>>
+        >
+    with $FutureModifier<List<Plan>>, $FutureProvider<List<Plan>> {
+  /// Active plans of the current workspace.
+  PlansProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'plansProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$plansHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Plan>> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Plan>> create(Ref ref) {
+    return plans(ref);
+  }
+}
+
+String _$plansHash() => r'e9b404d080c5ce4367016f77585981c7a97db21d';

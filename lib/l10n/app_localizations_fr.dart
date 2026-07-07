@@ -266,6 +266,24 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get membersTitle => 'Membres et forfaits';
+
+  @override
+  String get membersPlanNone => 'Aucun forfait';
+
+  @override
+  String get memberRoleOwner => 'Propriétaire';
+
+  @override
+  String get memberRoleAdmin => 'Admin';
+
+  @override
+  String get memberStatusPaused => 'En pause';
+
+  @override
+  String get memberStatusExited => 'Parti';
+
+  @override
   String get moneyBaseFee => 'Abonnement de base';
 
   @override

@@ -155,6 +155,36 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   @override
   Future<Map<String, String>> fetchMemberNames(String workspaceId) async =>
       Map.of(memberNames);
+
+  /// Extra members beyond [myMember] for the management screen.
+  final List<Member> otherMembers = [];
+
+  @override
+  Future<List<Member>> fetchMembers(String workspaceId) async =>
+      [myMember, ...otherMembers];
+
+  @override
+  Future<void> updateMemberPlan(String memberId, String? planId) async {
+    if (myMember.id == memberId) {
+      myMember = myMember.copyWith(planId: planId);
+      return;
+    }
+    final i = otherMembers.indexWhere((m) => m.id == memberId);
+    if (i >= 0) otherMembers[i] = otherMembers[i].copyWith(planId: planId);
+  }
+
+  @override
+  Future<void> updateMemberStatus(
+    String memberId,
+    MemberStatus status,
+  ) async {
+    if (myMember.id == memberId) {
+      myMember = myMember.copyWith(status: status);
+      return;
+    }
+    final i = otherMembers.indexWhere((m) => m.id == memberId);
+    if (i >= 0) otherMembers[i] = otherMembers[i].copyWith(status: status);
+  }
 }
 
 /// Baseline overrides for widget tests: a signed-in user who is the owner

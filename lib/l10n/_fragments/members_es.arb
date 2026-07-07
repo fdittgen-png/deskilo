@@ -1,0 +1,9 @@
+{
+  "@@locale": "es",
+  "membersTitle": "Miembros y planes",
+  "membersPlanNone": "Sin plan",
+  "memberRoleOwner": "Propietario",
+  "memberRoleAdmin": "Admin",
+  "memberStatusPaused": "En pausa",
+  "memberStatusExited": "Salido"
+}

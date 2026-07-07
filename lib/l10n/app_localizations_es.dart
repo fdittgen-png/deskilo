@@ -267,6 +267,24 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get membersTitle => 'Miembros y planes';
+
+  @override
+  String get membersPlanNone => 'Sin plan';
+
+  @override
+  String get memberRoleOwner => 'Propietario';
+
+  @override
+  String get memberRoleAdmin => 'Admin';
+
+  @override
+  String get memberStatusPaused => 'En pausa';
+
+  @override
+  String get memberStatusExited => 'Salido';
+
+  @override
   String get moneyBaseFee => 'Suscripción base';
 
   @override

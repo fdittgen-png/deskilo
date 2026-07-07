@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import 'ledger_entry.dart';
+import 'plan.dart';
 import 'statement.dart';
 
 /// Money boundary (spec §7). Payments are only *recorded* — the pending
@@ -17,4 +18,7 @@ abstract class MoneyRepository {
     required int amountCents,
     String note,
   });
+
+  /// Active plans of the workspace (member-readable).
+  Future<List<Plan>> fetchPlans(String workspaceId);
 }

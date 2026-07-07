@@ -20,6 +20,7 @@ sealed class Member with _$Member {
     required bool isAdmin,
     required bool isOwner,
     required MemberStatus status,
+    String? planId,
   }) = _Member;
 
   /// Admin capability (owners inherit it, spec §2).

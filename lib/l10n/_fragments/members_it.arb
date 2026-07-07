@@ -1,0 +1,9 @@
+{
+  "@@locale": "it",
+  "membersTitle": "Membri e piani",
+  "membersPlanNone": "Nessun piano",
+  "memberRoleOwner": "Proprietario",
+  "memberRoleAdmin": "Admin",
+  "memberStatusPaused": "In pausa",
+  "memberStatusExited": "Uscito"
+}
