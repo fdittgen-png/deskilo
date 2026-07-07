@@ -1,0 +1,23 @@
+{
+  "@@locale": "de",
+  "moneyBaseFee": "Basis-Abo",
+  "moneyUsage": "{used} von {included} halben Tagen genutzt",
+  "moneyUsageUnlimited": "{used} halbe Tage genutzt",
+  "moneyOverage": "Mehrnutzung ({count} zusätzliche halbe Tage)",
+  "moneyCredits": "Zahlungen & Gutschriften",
+  "moneyBalance": "Saldo",
+  "moneyStatementSettled": "Beglichen",
+  "moneyStatementOpen": "Offen",
+  "moneyRecordPayment": "Zahlung erfassen",
+  "moneyAmountLabel": "Betrag",
+  "moneyNoteLabel": "Notiz (optional)",
+  "moneySubmitPayment": "Zur Bestätigung einreichen",
+  "moneyPaymentPending": "Zahlung eingereicht — wartet auf Bestätigung.",
+  "moneyLedgerHeader": "Kontobuch",
+  "moneyLedgerEmpty": "Noch keine Buchungen.",
+  "ledgerCategorySubscription": "Abo",
+  "ledgerCategoryOverage": "Mehrnutzung",
+  "ledgerCategoryExpense": "Auslagenerstattung",
+  "ledgerCategoryPayment": "Zahlung",
+  "ledgerCategoryAdjustment": "Korrektur"
+}

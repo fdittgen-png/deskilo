@@ -1,0 +1,23 @@
+{
+  "@@locale": "fr",
+  "moneyBaseFee": "Abonnement de base",
+  "moneyUsage": "{used} demi-journées utilisées sur {included}",
+  "moneyUsageUnlimited": "{used} demi-journées utilisées",
+  "moneyOverage": "Dépassement ({count} demi-journées supplémentaires)",
+  "moneyCredits": "Paiements et crédits",
+  "moneyBalance": "Solde",
+  "moneyStatementSettled": "Réglé",
+  "moneyStatementOpen": "À régler",
+  "moneyRecordPayment": "Enregistrer un paiement",
+  "moneyAmountLabel": "Montant",
+  "moneyNoteLabel": "Note (facultatif)",
+  "moneySubmitPayment": "Soumettre pour confirmation",
+  "moneyPaymentPending": "Paiement soumis — en attente de confirmation.",
+  "moneyLedgerHeader": "Grand livre",
+  "moneyLedgerEmpty": "Aucune écriture pour l'instant.",
+  "ledgerCategorySubscription": "Abonnement",
+  "ledgerCategoryOverage": "Dépassement",
+  "ledgerCategoryExpense": "Remboursement de dépense",
+  "ledgerCategoryPayment": "Paiement",
+  "ledgerCategoryAdjustment": "Ajustement"
+}

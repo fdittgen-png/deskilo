@@ -353,6 +353,104 @@
       }
     }
   },
+  "moneyBaseFee": "Base subscription",
+  "@moneyBaseFee": {
+    "description": "Statement line for the plan's monthly fee"
+  },
+  "moneyUsage": "{used} of {included} half-days used",
+  "@moneyUsage": {
+    "description": "Statement usage line for quota plans",
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "included": {
+        "type": "int"
+      }
+    }
+  },
+  "moneyUsageUnlimited": "{used} half-days used",
+  "@moneyUsageUnlimited": {
+    "description": "Statement usage line for unlimited plans",
+    "placeholders": {
+      "used": {
+        "type": "int"
+      }
+    }
+  },
+  "moneyOverage": "Overage ({count} extra half-days)",
+  "@moneyOverage": {
+    "description": "Statement line for usage beyond the included quota",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "moneyCredits": "Payments & credits",
+  "@moneyCredits": {
+    "description": "Statement line summing confirmed payments and credits"
+  },
+  "moneyBalance": "Balance",
+  "@moneyBalance": {
+    "description": "Statement bottom line; negative = member owes"
+  },
+  "moneyStatementSettled": "Settled",
+  "@moneyStatementSettled": {
+    "description": "Chip when the period balance is zero or positive"
+  },
+  "moneyStatementOpen": "Open",
+  "@moneyStatementOpen": {
+    "description": "Chip when the member still owes for the period"
+  },
+  "moneyRecordPayment": "Record a payment",
+  "@moneyRecordPayment": {
+    "description": "Button + sheet title for recording a made payment"
+  },
+  "moneyAmountLabel": "Amount",
+  "@moneyAmountLabel": {
+    "description": "Label of the payment amount input"
+  },
+  "moneyNoteLabel": "Note (optional)",
+  "@moneyNoteLabel": {
+    "description": "Label of the payment note input"
+  },
+  "moneySubmitPayment": "Submit for confirmation",
+  "@moneySubmitPayment": {
+    "description": "Submit button — the payment stays pending until the other side confirms (spec §7.4)"
+  },
+  "moneyPaymentPending": "Payment submitted — waiting for confirmation.",
+  "@moneyPaymentPending": {
+    "description": "Snackbar after recording a payment"
+  },
+  "moneyLedgerHeader": "Ledger",
+  "@moneyLedgerHeader": {
+    "description": "Header above the ledger entry list"
+  },
+  "moneyLedgerEmpty": "No ledger entries yet.",
+  "@moneyLedgerEmpty": {
+    "description": "Empty state of the ledger list"
+  },
+  "ledgerCategorySubscription": "Subscription",
+  "@ledgerCategorySubscription": {
+    "description": "Ledger entry category"
+  },
+  "ledgerCategoryOverage": "Overage",
+  "@ledgerCategoryOverage": {
+    "description": "Ledger entry category"
+  },
+  "ledgerCategoryExpense": "Expense reimbursement",
+  "@ledgerCategoryExpense": {
+    "description": "Ledger entry category"
+  },
+  "ledgerCategoryPayment": "Payment",
+  "@ledgerCategoryPayment": {
+    "description": "Ledger entry category"
+  },
+  "ledgerCategoryAdjustment": "Adjustment",
+  "@ledgerCategoryAdjustment": {
+    "description": "Ledger entry category"
+  },
   "planNoLevels": "The workspace has no floor plan yet.",
   "@planNoLevels": {
     "description": "Empty state of the Plan tab before the owner drew levels"

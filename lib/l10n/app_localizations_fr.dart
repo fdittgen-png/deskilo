@@ -266,6 +266,73 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get moneyBaseFee => 'Abonnement de base';
+
+  @override
+  String moneyUsage(int used, int included) {
+    return '$used demi-journées utilisées sur $included';
+  }
+
+  @override
+  String moneyUsageUnlimited(int used) {
+    return '$used demi-journées utilisées';
+  }
+
+  @override
+  String moneyOverage(int count) {
+    return 'Dépassement ($count demi-journées supplémentaires)';
+  }
+
+  @override
+  String get moneyCredits => 'Paiements et crédits';
+
+  @override
+  String get moneyBalance => 'Solde';
+
+  @override
+  String get moneyStatementSettled => 'Réglé';
+
+  @override
+  String get moneyStatementOpen => 'À régler';
+
+  @override
+  String get moneyRecordPayment => 'Enregistrer un paiement';
+
+  @override
+  String get moneyAmountLabel => 'Montant';
+
+  @override
+  String get moneyNoteLabel => 'Note (facultatif)';
+
+  @override
+  String get moneySubmitPayment => 'Soumettre pour confirmation';
+
+  @override
+  String get moneyPaymentPending =>
+      'Paiement soumis — en attente de confirmation.';
+
+  @override
+  String get moneyLedgerHeader => 'Grand livre';
+
+  @override
+  String get moneyLedgerEmpty => 'Aucune écriture pour l\'instant.';
+
+  @override
+  String get ledgerCategorySubscription => 'Abonnement';
+
+  @override
+  String get ledgerCategoryOverage => 'Dépassement';
+
+  @override
+  String get ledgerCategoryExpense => 'Remboursement de dépense';
+
+  @override
+  String get ledgerCategoryPayment => 'Paiement';
+
+  @override
+  String get ledgerCategoryAdjustment => 'Ajustement';
+
+  @override
   String get planNoLevels => 'L\'espace n\'a pas encore de plan.';
 
   @override

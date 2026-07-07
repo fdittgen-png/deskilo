@@ -267,6 +267,72 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get moneyBaseFee => 'Suscripción base';
+
+  @override
+  String moneyUsage(int used, int included) {
+    return '$used de $included medias jornadas usadas';
+  }
+
+  @override
+  String moneyUsageUnlimited(int used) {
+    return '$used medias jornadas usadas';
+  }
+
+  @override
+  String moneyOverage(int count) {
+    return 'Exceso ($count medias jornadas extra)';
+  }
+
+  @override
+  String get moneyCredits => 'Pagos y créditos';
+
+  @override
+  String get moneyBalance => 'Saldo';
+
+  @override
+  String get moneyStatementSettled => 'Al día';
+
+  @override
+  String get moneyStatementOpen => 'Pendiente';
+
+  @override
+  String get moneyRecordPayment => 'Registrar un pago';
+
+  @override
+  String get moneyAmountLabel => 'Importe';
+
+  @override
+  String get moneyNoteLabel => 'Nota (opcional)';
+
+  @override
+  String get moneySubmitPayment => 'Enviar para confirmación';
+
+  @override
+  String get moneyPaymentPending => 'Pago enviado — esperando confirmación.';
+
+  @override
+  String get moneyLedgerHeader => 'Libro de cuentas';
+
+  @override
+  String get moneyLedgerEmpty => 'Aún no hay movimientos.';
+
+  @override
+  String get ledgerCategorySubscription => 'Suscripción';
+
+  @override
+  String get ledgerCategoryOverage => 'Exceso';
+
+  @override
+  String get ledgerCategoryExpense => 'Reembolso de gasto';
+
+  @override
+  String get ledgerCategoryPayment => 'Pago';
+
+  @override
+  String get ledgerCategoryAdjustment => 'Ajuste';
+
+  @override
   String get planNoLevels => 'El espacio aún no tiene plano.';
 
   @override

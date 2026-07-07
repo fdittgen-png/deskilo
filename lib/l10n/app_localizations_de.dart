@@ -266,6 +266,73 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get moneyBaseFee => 'Basis-Abo';
+
+  @override
+  String moneyUsage(int used, int included) {
+    return '$used von $included halben Tagen genutzt';
+  }
+
+  @override
+  String moneyUsageUnlimited(int used) {
+    return '$used halbe Tage genutzt';
+  }
+
+  @override
+  String moneyOverage(int count) {
+    return 'Mehrnutzung ($count zusätzliche halbe Tage)';
+  }
+
+  @override
+  String get moneyCredits => 'Zahlungen & Gutschriften';
+
+  @override
+  String get moneyBalance => 'Saldo';
+
+  @override
+  String get moneyStatementSettled => 'Beglichen';
+
+  @override
+  String get moneyStatementOpen => 'Offen';
+
+  @override
+  String get moneyRecordPayment => 'Zahlung erfassen';
+
+  @override
+  String get moneyAmountLabel => 'Betrag';
+
+  @override
+  String get moneyNoteLabel => 'Notiz (optional)';
+
+  @override
+  String get moneySubmitPayment => 'Zur Bestätigung einreichen';
+
+  @override
+  String get moneyPaymentPending =>
+      'Zahlung eingereicht — wartet auf Bestätigung.';
+
+  @override
+  String get moneyLedgerHeader => 'Kontobuch';
+
+  @override
+  String get moneyLedgerEmpty => 'Noch keine Buchungen.';
+
+  @override
+  String get ledgerCategorySubscription => 'Abo';
+
+  @override
+  String get ledgerCategoryOverage => 'Mehrnutzung';
+
+  @override
+  String get ledgerCategoryExpense => 'Auslagenerstattung';
+
+  @override
+  String get ledgerCategoryPayment => 'Zahlung';
+
+  @override
+  String get ledgerCategoryAdjustment => 'Korrektur';
+
+  @override
   String get planNoLevels => 'Der Workspace hat noch keinen Plan.';
 
   @override
