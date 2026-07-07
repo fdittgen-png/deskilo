@@ -286,6 +286,6 @@ A dedicated editor space for drawing the physical workspace on a **grid of small
 | Currency & units | **From workspace country** (owner-overridable currency) | ✅ decided |
 | Languages | **English (default/canonical) + FR, DE, ES, IT**; everything translatable | ✅ decided |
 | GitHub | **`fdittgen-png/deskilo`** | ✅ created |
-| Application ID | proposal `de.deskilo.app` | ⏳ confirm before first store/F-Droid metadata |
-| Supabase project | hosted project vs. self-hosted instance | ⏳ needed before backend Epic starts |
+| Application ID | **`de.deskilo.app`** | ✅ decided 2026-07-07 |
+| Supabase project | **Hosted Supabase** for the reference deployment (self-hosting remains supported) | ✅ decided 2026-07-07 |
 | Half-plan default numbers (fee, 22 half-days, overage rate) | per-workspace anyway; defaults TBD | ⏳ before MVP billing Epic |
