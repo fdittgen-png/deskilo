@@ -554,6 +554,42 @@ abstract class AppLocalizations {
   /// **'Your seat'**
   String get planYourSeat;
 
+  /// Tooltip toggling from the plan to the reservation list
+  ///
+  /// In en, this message translates to:
+  /// **'List view'**
+  String get planListViewTooltip;
+
+  /// Tooltip toggling from the reservation list back to the plan
+  ///
+  /// In en, this message translates to:
+  /// **'Plan view'**
+  String get planMapViewTooltip;
+
+  /// Time-scroller button snapping back to live occupancy
+  ///
+  /// In en, this message translates to:
+  /// **'Now'**
+  String get planNowButton;
+
+  /// Confirm button when booking a future slot from the scroller
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve'**
+  String get planReserveButton;
+
+  /// Empty state of the reservation list view
+  ///
+  /// In en, this message translates to:
+  /// **'No reservations for this day.'**
+  String get planReservationsEmpty;
+
+  /// Booking sheet start line for a future reservation
+  ///
+  /// In en, this message translates to:
+  /// **'Starts at {time}'**
+  String planStartsAt(String time);
+
   /// App-bar title of the first-run onboarding screen
   ///
   /// In en, this message translates to:

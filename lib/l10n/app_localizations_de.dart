@@ -249,6 +249,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get planYourSeat => 'Dein Platz';
 
   @override
+  String get planListViewTooltip => 'Listenansicht';
+
+  @override
+  String get planMapViewTooltip => 'Planansicht';
+
+  @override
+  String get planNowButton => 'Jetzt';
+
+  @override
+  String get planReserveButton => 'Reservieren';
+
+  @override
+  String get planReservationsEmpty => 'Keine Reservierungen für diesen Tag.';
+
+  @override
+  String planStartsAt(String time) {
+    return 'Beginnt um $time';
+  }
+
+  @override
   String get onboardingTitle => 'Willkommen bei DesKilo';
 
   @override

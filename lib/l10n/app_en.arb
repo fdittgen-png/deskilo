@@ -320,6 +320,35 @@
   "@planYourSeat": {
     "description": "Fallback title of the my-seat sheet for unnamed seats"
   },
+  "planListViewTooltip": "List view",
+  "@planListViewTooltip": {
+    "description": "Tooltip toggling from the plan to the reservation list"
+  },
+  "planMapViewTooltip": "Plan view",
+  "@planMapViewTooltip": {
+    "description": "Tooltip toggling from the reservation list back to the plan"
+  },
+  "planNowButton": "Now",
+  "@planNowButton": {
+    "description": "Time-scroller button snapping back to live occupancy"
+  },
+  "planReserveButton": "Reserve",
+  "@planReserveButton": {
+    "description": "Confirm button when booking a future slot from the scroller"
+  },
+  "planReservationsEmpty": "No reservations for this day.",
+  "@planReservationsEmpty": {
+    "description": "Empty state of the reservation list view"
+  },
+  "planStartsAt": "Starts at {time}",
+  "@planStartsAt": {
+    "description": "Booking sheet start line for a future reservation",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "onboardingTitle": "Welcome to DesKilo",
   "@onboardingTitle": {
     "description": "App-bar title of the first-run onboarding screen"

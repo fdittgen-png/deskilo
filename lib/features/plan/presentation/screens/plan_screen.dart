@@ -46,6 +46,11 @@ class PlanScreen extends ConsumerStatefulWidget {
 class _PlanScreenState extends ConsumerState<PlanScreen> {
   Timer? _minuteTick;
 
+  /// Time-scroller state (spec §6): null = live "now" mode; otherwise the
+  /// browsed instant whose occupancy is rendered.
+  DateTime? _browse;
+  bool _listView = false;
+
   @override
   void initState() {
     super.initState();
@@ -86,7 +91,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         _snack(l10n?.planSeatBlocked ??
             'This seat is blocked for maintenance.');
       case SeatState.free:
-        await _checkInSheet(plan, seat, reservations, now);
+        await _bookingSheet(plan, seat, reservations, now);
       case SeatState.mine:
         final mine = reservationOnSeatAt(
           plan: plan,
@@ -120,19 +125,25 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       ..showSnackBar(SnackBar(content: Text(message)));
   }
 
-  Future<void> _checkInSheet(
+  /// Live mode: atomic walk-up check-in starting now. Browse mode: punctual
+  /// reservation starting at the browsed instant (spec §5.1).
+  Future<void> _bookingSheet(
     FloorPlan plan,
     Seat seat,
     List<Reservation> reservations,
-    DateTime now,
+    DateTime start,
   ) async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
+    final walkUp = _browse == null;
 
-    final next =
-        nextReservationOnSeat(seat: seat, reservations: reservations, at: now);
-    var end = now.add(_kDefaultStay);
+    final next = nextReservationOnSeat(
+      seat: seat,
+      reservations: reservations,
+      at: start,
+    );
+    var end = start.add(_kDefaultStay);
     var capped = false;
     if (next != null && next.startsAt.isBefore(end)) {
       end = next.startsAt;
@@ -143,10 +154,11 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       context: context,
       builder: (context) => _CheckInSheet(
         seatName: seat.name,
-        start: now,
+        start: start,
         initialEnd: end,
         cap: next?.startsAt,
         capped: capped,
+        walkUp: walkUp,
       ),
     );
     if (confirmedEnd == null) return;
@@ -155,12 +167,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       await ref.read(reservationRepositoryProvider).create(
             workspaceId: workspace.id,
             seatId: seat.id,
-            startsAt: now,
+            startsAt: start,
             endsAt: confirmedEnd,
-            checkIn: true,
+            checkIn: walkUp,
           );
     } catch (e, st) {
-      debugPrint('walk-up check-in failed: $e\n$st');
+      debugPrint('booking failed: $e\n$st');
       if (!mounted) return;
       _snack(l10n?.planCheckInFailed ??
           'Could not check in — the seat may have just been taken.');
@@ -246,16 +258,17 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final level = levels.where((l) => l.id == selectedId).firstOrNull ??
         levels.first;
 
-    final now = DateTime.now();
+    final at = _browse ?? DateTime.now();
     final planAsync = ref.watch(floorPlanProvider(level.id));
     final reservations =
-        ref.watch(reservationsForDayProvider(dayKeyOf(now))).value ??
+        ref.watch(reservationsForDayProvider(dayKeyOf(at))).value ??
             const <Reservation>[];
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     final names = ref.watch(memberNamesProvider).value ?? const {};
 
     return Column(
       children: [
+        _scrollerRow(at),
         if (levels.length > 1)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -283,25 +296,28 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
           ),
         Expanded(
           child: switch (planAsync) {
-            AsyncData(value: final plan) => _LivePlanCanvas(
-                plan: plan,
-                seatStates: {
-                  for (final seat in plan.seats)
-                    seat.id: seatStateAt(
-                      plan: plan,
-                      seat: seat,
-                      reservations: reservations,
-                      myMemberId: myMemberId,
-                      at: now,
-                    ),
-                },
-                seatLabels: {
-                  for (final seat in plan.seats)
-                    seat.id: _labelFor(plan, seat, reservations, names, now),
-                },
-                onSeatTap: (seat) =>
-                    _onSeatTap(plan, seat, reservations, now),
-              ),
+            AsyncData(value: final plan) => _listView
+                ? _reservationList(plan, reservations, names)
+                : _LivePlanCanvas(
+                    plan: plan,
+                    seatStates: {
+                      for (final seat in plan.seats)
+                        seat.id: seatStateAt(
+                          plan: plan,
+                          seat: seat,
+                          reservations: reservations,
+                          myMemberId: myMemberId,
+                          at: at,
+                        ),
+                    },
+                    seatLabels: {
+                      for (final seat in plan.seats)
+                        seat.id:
+                            _labelFor(plan, seat, reservations, names, at),
+                    },
+                    onSeatTap: (seat) =>
+                        _onSeatTap(plan, seat, reservations, at),
+                  ),
             AsyncError() => Center(
                 child: Text(
                   l10n?.workspaceGenericError ??
@@ -312,6 +328,123 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
           },
         ),
       ],
+    );
+  }
+
+  /// The time scroller (spec §6): list/plan toggle · date · time-of-day
+  /// slider · Now.
+  Widget _scrollerRow(DateTime at) {
+    final l10n = AppLocalizations.of(context);
+    final local = at.toLocal();
+    final minutes = local.hour * 60 + local.minute;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Row(
+        children: [
+          IconButton(
+            icon: Icon(_listView ? Icons.map_outlined : Icons.list),
+            tooltip: _listView
+                ? (l10n?.planMapViewTooltip ?? 'Plan view')
+                : (l10n?.planListViewTooltip ?? 'List view'),
+            onPressed: () => setState(() => _listView = !_listView),
+          ),
+          TextButton(
+            onPressed: () async {
+              final picked = await showDatePicker(
+                context: context,
+                initialDate: local,
+                firstDate: DateTime.now().subtract(const Duration(days: 365)),
+                lastDate: DateTime.now().add(const Duration(days: 365)),
+              );
+              if (picked == null) return;
+              setState(() {
+                _browse = DateTime(
+                  picked.year,
+                  picked.month,
+                  picked.day,
+                  local.hour,
+                  local.minute,
+                );
+              });
+            },
+            child: Text(DateFormat.MMMd().format(local)),
+          ),
+          Expanded(
+            child: Slider(
+              value: minutes.toDouble(),
+              max: 24 * 60 - 15,
+              divisions: 24 * 4 - 1,
+              label: DateFormat.Hm().format(local),
+              onChanged: (value) {
+                final m = (value ~/ 15) * 15;
+                setState(() {
+                  _browse = DateTime(
+                    local.year,
+                    local.month,
+                    local.day,
+                    m ~/ 60,
+                    m % 60,
+                  );
+                });
+              },
+            ),
+          ),
+          TextButton(
+            onPressed:
+                _browse == null ? null : () => setState(() => _browse = null),
+            child: Text(l10n?.planNowButton ?? 'Now'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Chronological reservations of the browsed day (spec §6 list view).
+  Widget _reservationList(
+    FloorPlan plan,
+    List<Reservation> reservations,
+    Map<String, String> names,
+  ) {
+    final l10n = AppLocalizations.of(context);
+    final timeFormat = DateFormat.Hm();
+    final active = reservations.where((r) => r.isActive).toList()
+      ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
+    if (active.isEmpty) {
+      return Center(
+        child: Text(
+          l10n?.planReservationsEmpty ?? 'No reservations for this day.',
+        ),
+      );
+    }
+    String targetName(Reservation r) {
+      if (r.seatId != null) {
+        return plan.seats.where((s) => s.id == r.seatId).firstOrNull?.name ??
+            '';
+      }
+      return plan.offices
+              .where((o) => o.id == r.officeId)
+              .firstOrNull
+              ?.name ??
+          '';
+    }
+
+    return ListView.builder(
+      itemCount: active.length,
+      itemBuilder: (context, index) {
+        final r = active[index];
+        return ListTile(
+          leading: Icon(
+            r.status == ReservationStatus.checkedIn
+                ? Icons.event_seat
+                : Icons.schedule,
+          ),
+          title: Text(
+            '${timeFormat.format(r.startsAt.toLocal())} – '
+            '${timeFormat.format(r.endsAt.toLocal())} · ${targetName(r)}',
+          ),
+          subtitle: Text(names[r.memberId] ?? ''),
+        );
+      },
     );
   }
 
@@ -385,6 +518,7 @@ class _CheckInSheet extends StatefulWidget {
     required this.initialEnd,
     required this.cap,
     required this.capped,
+    this.walkUp = true,
   });
 
   final String seatName;
@@ -392,6 +526,9 @@ class _CheckInSheet extends StatefulWidget {
   final DateTime initialEnd;
   final DateTime? cap;
   final bool capped;
+
+  /// True: live walk-up (check in now). False: future punctual reservation.
+  final bool walkUp;
 
   @override
   State<_CheckInSheet> createState() => _CheckInSheetState();
@@ -419,8 +556,14 @@ class _CheckInSheetState extends State<_CheckInSheet> {
             ),
             const SizedBox(height: 8),
             Text(
-              '${l10n?.planStartNow ?? 'Starts now'} · '
-              '${timeFormat.format(widget.start.toLocal())}',
+              widget.walkUp
+                  ? '${l10n?.planStartNow ?? 'Starts now'} · '
+                      '${timeFormat.format(widget.start.toLocal())}'
+                  : (l10n?.planStartsAt(
+                        timeFormat.format(widget.start.toLocal()),
+                      ) ??
+                      'Starts at '
+                          '${timeFormat.format(widget.start.toLocal())}'),
             ),
             ListTile(
               contentPadding: EdgeInsets.zero,
@@ -461,7 +604,11 @@ class _CheckInSheetState extends State<_CheckInSheet> {
             const SizedBox(height: 16),
             FilledButton(
               onPressed: () => Navigator.of(context).pop(_end),
-              child: Text(l10n?.planCheckInButton ?? 'Check in'),
+              child: Text(
+                widget.walkUp
+                    ? (l10n?.planCheckInButton ?? 'Check in')
+                    : (l10n?.planReserveButton ?? 'Reserve'),
+              ),
             ),
           ],
         ),
