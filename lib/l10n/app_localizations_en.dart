@@ -142,6 +142,48 @@ class AppLocalizationsEn extends AppLocalizations {
       'Delete this element? Anything placed on it is removed too.';
 
   @override
+  String get editorToolSeat => 'Seat';
+
+  @override
+  String get editorSeatProperties => 'Seat';
+
+  @override
+  String get editorSeatNameLabel => 'Seat name';
+
+  @override
+  String get editorSeatNameDefault => 'Seat';
+
+  @override
+  String get editorOrientationLabel => 'Sitting direction';
+
+  @override
+  String get editorChairLabel => 'Chair type';
+
+  @override
+  String get editorAmenitiesLabel => 'Amenities';
+
+  @override
+  String get editorBlockedLabel => 'Blocked (maintenance)';
+
+  @override
+  String get editorSeatNoDesk => 'Seats can only be placed on a desk.';
+
+  @override
+  String get amenityMonitor => 'Monitor';
+
+  @override
+  String get amenityStandingDesk => 'Standing desk';
+
+  @override
+  String get amenityWindow => 'Window seat';
+
+  @override
+  String get amenityDock => 'Docking station';
+
+  @override
+  String get amenityErgonomicChair => 'Ergonomic chair';
+
+  @override
   String get commonCancel => 'Cancel';
 
   @override

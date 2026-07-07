@@ -9,12 +9,21 @@ import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/floor_plan_rules.dart';
 import '../../../plan/domain/grid_geometry.dart';
 import '../../../plan/domain/office.dart';
+import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../widgets/floor_plan_painter.dart';
 
-/// Editor tools. `seat` is wired in #35.
-enum EditorTool { select, office, desk, erase }
+enum EditorTool { select, office, desk, seat, erase }
+
+/// Canonical amenity keys stored on seats; display names come from ARB.
+const List<String> kSeatAmenities = [
+  'monitor',
+  'standing_desk',
+  'window',
+  'dock',
+  'ergonomic',
+];
 
 /// Canvas dimensions in grid cells and the logical cell size at scale 1.
 abstract final class GridCanvas {
@@ -127,13 +136,75 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     ref.invalidate(floorPlanProvider(widget.levelId));
   }
 
+  Future<void> _placeSeat(FloorPlan plan, ({int x, int y}) cell) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    final desk = plan.deskAtCell(cell.x, cell.y);
+    if (workspace == null) return;
+    if (desk == null) {
+      ScaffoldMessenger.of(context)
+        ..clearSnackBars()
+        ..showSnackBar(
+          SnackBar(
+            content: Text(
+              l10n?.editorSeatNoDesk ?? 'Seats can only be placed on a desk.',
+            ),
+          ),
+        );
+      return;
+    }
+    const orientation = SeatOrientation.n;
+    final anchor = clampSeatAnchor(desk, cell.x, cell.y, orientation);
+    if (anchor == null) {
+      _showProblem(PlacementProblem.outsideParent);
+      return;
+    }
+    final candidate = Seat(
+      id: '',
+      workspaceId: workspace.id,
+      deskId: desk.id,
+      name: '',
+      x: anchor.x,
+      y: anchor.y,
+      orientation: orientation,
+      chair: '',
+      amenities: const [],
+    );
+    final problem =
+        validateSeatPlacement(candidate, desk, plan.seatsOf(desk.id));
+    if (problem != null) {
+      _showProblem(problem);
+      return;
+    }
+    await ref.read(floorPlanRepositoryProvider).createSeat(
+          workspaceId: workspace.id,
+          deskId: desk.id,
+          name: '${l10n?.editorSeatNameDefault ?? 'Seat'} '
+              '${plan.seatsOf(desk.id).length + 1}',
+          x: anchor.x,
+          y: anchor.y,
+          orientation: orientation,
+        );
+    ref.invalidate(floorPlanProvider(widget.levelId));
+  }
+
   Future<void> _handleTap(FloorPlan plan, Offset position) async {
     final cell = _cellAt(position);
+    final seat = plan.seatAtCell(cell.x, cell.y);
     final desk = plan.deskAtCell(cell.x, cell.y);
     final office = plan.officeAtCell(cell.x, cell.y);
 
+    if (_tool == EditorTool.seat) {
+      await _placeSeat(plan, cell);
+      return;
+    }
+
     if (_tool == EditorTool.erase) {
-      if (desk != null) {
+      if (seat != null) {
+        await _confirmErase(
+          () => ref.read(floorPlanRepositoryProvider).deleteSeat(seat.id),
+        );
+      } else if (desk != null) {
         await _confirmErase(
           () => ref.read(floorPlanRepositoryProvider).deleteDesk(desk.id),
         );
@@ -145,12 +216,149 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       return;
     }
 
-    // Select tool: property sheets.
-    if (desk != null) {
+    // Select tool: property sheets, topmost element first.
+    if (seat != null) {
+      await _showSeatSheet(plan, seat);
+    } else if (desk != null) {
       await _showDeskSheet(desk);
     } else if (office != null) {
       await _showOfficeSheet(office);
     }
+  }
+
+  String _amenityLabel(AppLocalizations? l10n, String key) {
+    return switch (key) {
+      'monitor' => l10n?.amenityMonitor ?? 'Monitor',
+      'standing_desk' => l10n?.amenityStandingDesk ?? 'Standing desk',
+      'window' => l10n?.amenityWindow ?? 'Window seat',
+      'dock' => l10n?.amenityDock ?? 'Docking station',
+      'ergonomic' => l10n?.amenityErgonomicChair ?? 'Ergonomic chair',
+      _ => key,
+    };
+  }
+
+  Future<void> _showSeatSheet(FloorPlan plan, Seat seat) async {
+    final l10n = AppLocalizations.of(context);
+    final name = TextEditingController(text: seat.name);
+    final chair = TextEditingController(text: seat.chair);
+    var orientation = seat.orientation;
+    final amenities = {...seat.amenities};
+    var blocked = seat.isBlockedAt(DateTime.now());
+
+    final saved = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          left: 24,
+          right: 24,
+          top: 24,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+        ),
+        child: StatefulBuilder(
+          builder: (context, setSheetState) => SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  l10n?.editorSeatProperties ?? 'Seat',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: name,
+                  decoration: InputDecoration(
+                    labelText: l10n?.editorSeatNameLabel ?? 'Seat name',
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(l10n?.editorOrientationLabel ?? 'Sitting direction'),
+                const SizedBox(height: 4),
+                SegmentedButton<SeatOrientation>(
+                  segments: const [
+                    ButtonSegment(
+                      value: SeatOrientation.n,
+                      icon: Icon(Icons.arrow_upward),
+                    ),
+                    ButtonSegment(
+                      value: SeatOrientation.e,
+                      icon: Icon(Icons.arrow_forward),
+                    ),
+                    ButtonSegment(
+                      value: SeatOrientation.s,
+                      icon: Icon(Icons.arrow_downward),
+                    ),
+                    ButtonSegment(
+                      value: SeatOrientation.w,
+                      icon: Icon(Icons.arrow_back),
+                    ),
+                  ],
+                  selected: {orientation},
+                  onSelectionChanged: (selection) =>
+                      setSheetState(() => orientation = selection.first),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: chair,
+                  decoration: InputDecoration(
+                    labelText: l10n?.editorChairLabel ?? 'Chair type',
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(l10n?.editorAmenitiesLabel ?? 'Amenities'),
+                const SizedBox(height: 4),
+                Wrap(
+                  spacing: 8,
+                  children: [
+                    for (final key in kSeatAmenities)
+                      FilterChip(
+                        label: Text(_amenityLabel(l10n, key)),
+                        selected: amenities.contains(key),
+                        onSelected: (selected) => setSheetState(() {
+                          selected
+                              ? amenities.add(key)
+                              : amenities.remove(key);
+                        }),
+                      ),
+                  ],
+                ),
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    l10n?.editorBlockedLabel ?? 'Blocked (maintenance)',
+                  ),
+                  value: blocked,
+                  onChanged: (v) => setSheetState(() => blocked = v),
+                ),
+                const SizedBox(height: 12),
+                FilledButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: Text(l10n?.commonSave ?? 'Save'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    if (saved != true) return;
+
+    final updated = seat.copyWith(
+      name: name.text.trim().isEmpty ? seat.name : name.text.trim(),
+      chair: chair.text.trim(),
+      orientation: orientation,
+      amenities: amenities.toList()..sort(),
+      blockedFrom: blocked ? (seat.blockedFrom ?? DateTime.now()) : null,
+      blockedTo: blocked ? seat.blockedTo : null,
+    );
+    final problem = validateSeatInPlan(plan, updated);
+    if (problem != null) {
+      _showProblem(problem);
+      return;
+    }
+    await ref.read(floorPlanRepositoryProvider).updateSeat(updated);
+    ref.invalidate(floorPlanProvider(widget.levelId));
   }
 
   Future<void> _confirmErase(Future<void> Function() action) async {
@@ -316,6 +524,11 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                 value: EditorTool.desk,
                 icon: const Icon(Icons.table_restaurant_outlined),
                 label: Text(l10n?.editorToolDesk ?? 'Desk'),
+              ),
+              ButtonSegment(
+                value: EditorTool.seat,
+                icon: const Icon(Icons.chair_outlined),
+                label: Text(l10n?.editorToolSeat ?? 'Seat'),
               ),
               ButtonSegment(
                 value: EditorTool.erase,

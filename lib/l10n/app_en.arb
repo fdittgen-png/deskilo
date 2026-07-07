@@ -172,6 +172,62 @@
   "@editorDeleteElementConfirm": {
     "description": "Confirmation body for the erase tool"
   },
+  "editorToolSeat": "Seat",
+  "@editorToolSeat": {
+    "description": "Canvas tool: tap a desk to stamp a 6×4 seat footprint"
+  },
+  "editorSeatProperties": "Seat",
+  "@editorSeatProperties": {
+    "description": "Title of the seat property sheet"
+  },
+  "editorSeatNameLabel": "Seat name",
+  "@editorSeatNameLabel": {
+    "description": "Label of the seat-name input"
+  },
+  "editorSeatNameDefault": "Seat",
+  "@editorSeatNameDefault": {
+    "description": "Default seat name prefix; a number is appended"
+  },
+  "editorOrientationLabel": "Sitting direction",
+  "@editorOrientationLabel": {
+    "description": "Label above the seat orientation arrows (n/e/s/w)"
+  },
+  "editorChairLabel": "Chair type",
+  "@editorChairLabel": {
+    "description": "Label of the free-text chair-type input"
+  },
+  "editorAmenitiesLabel": "Amenities",
+  "@editorAmenitiesLabel": {
+    "description": "Label above the amenity filter chips"
+  },
+  "editorBlockedLabel": "Blocked (maintenance)",
+  "@editorBlockedLabel": {
+    "description": "Switch blocking a seat for maintenance"
+  },
+  "editorSeatNoDesk": "Seats can only be placed on a desk.",
+  "@editorSeatNoDesk": {
+    "description": "Snackbar when the seat tool is used outside any desk"
+  },
+  "amenityMonitor": "Monitor",
+  "@amenityMonitor": {
+    "description": "Seat amenity chip"
+  },
+  "amenityStandingDesk": "Standing desk",
+  "@amenityStandingDesk": {
+    "description": "Seat amenity chip"
+  },
+  "amenityWindow": "Window seat",
+  "@amenityWindow": {
+    "description": "Seat amenity chip"
+  },
+  "amenityDock": "Docking station",
+  "@amenityDock": {
+    "description": "Seat amenity chip"
+  },
+  "amenityErgonomicChair": "Ergonomic chair",
+  "@amenityErgonomicChair": {
+    "description": "Seat amenity chip"
+  },
   "commonCancel": "Cancel",
   "@commonCancel": {
     "description": "Generic cancel action in dialogs"

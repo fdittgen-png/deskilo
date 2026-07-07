@@ -63,3 +63,22 @@ PlacementProblem? validateSeatInPlan(FloorPlan plan, Seat seat) {
   if (desk == null) return PlacementProblem.outsideParent;
   return validateSeatPlacement(seat, desk, plan.seatsOf(desk.id));
 }
+
+/// Clamps a seat anchor so the footprint of [orientation] fits on [desk]
+/// as close to the tapped cell as possible. Null when the desk is smaller
+/// than the footprint in that orientation.
+({int x, int y})? clampSeatAnchor(
+  Desk desk,
+  int tappedX,
+  int tappedY,
+  SeatOrientation orientation,
+) {
+  final horizontal =
+      orientation == SeatOrientation.n || orientation == SeatOrientation.s;
+  final w = horizontal ? SeatFootprint.length : SeatFootprint.depth;
+  final h = horizontal ? SeatFootprint.depth : SeatFootprint.length;
+  if (desk.rect.w < w || desk.rect.h < h) return null;
+  final x = tappedX.clamp(desk.rect.x, desk.rect.right - w);
+  final y = tappedY.clamp(desk.rect.y, desk.rect.bottom - h);
+  return (x: x, y: y);
+}

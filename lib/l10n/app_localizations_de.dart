@@ -143,6 +143,49 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieses Element löschen? Alles darauf wird ebenfalls entfernt.';
 
   @override
+  String get editorToolSeat => 'Platz';
+
+  @override
+  String get editorSeatProperties => 'Platz';
+
+  @override
+  String get editorSeatNameLabel => 'Name des Platzes';
+
+  @override
+  String get editorSeatNameDefault => 'Platz';
+
+  @override
+  String get editorOrientationLabel => 'Sitzrichtung';
+
+  @override
+  String get editorChairLabel => 'Stuhltyp';
+
+  @override
+  String get editorAmenitiesLabel => 'Ausstattung';
+
+  @override
+  String get editorBlockedLabel => 'Gesperrt (Wartung)';
+
+  @override
+  String get editorSeatNoDesk =>
+      'Plätze können nur auf einem Tisch platziert werden.';
+
+  @override
+  String get amenityMonitor => 'Monitor';
+
+  @override
+  String get amenityStandingDesk => 'Stehpult';
+
+  @override
+  String get amenityWindow => 'Fensterplatz';
+
+  @override
+  String get amenityDock => 'Dockingstation';
+
+  @override
+  String get amenityErgonomicChair => 'Ergonomischer Stuhl';
+
+  @override
   String get commonCancel => 'Abbrechen';
 
   @override
