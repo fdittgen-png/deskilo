@@ -8,6 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/domain/reservation.dart';
+import '../../../reservations/domain/reservation_repository.dart';
 import '../../../reservations/domain/seat_state_logic.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -150,8 +151,9 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       capped = true;
     }
 
-    final confirmedEnd = await showModalBottomSheet<DateTime>(
+    final choice = await showModalBottomSheet<_BookingChoice>(
       context: context,
+      isScrollControlled: true,
       builder: (context) => _CheckInSheet(
         seatName: seat.name,
         start: start,
@@ -161,16 +163,28 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         walkUp: walkUp,
       ),
     );
-    if (confirmedEnd == null) return;
+    if (choice == null) return;
 
     try {
-      await ref.read(reservationRepositoryProvider).create(
-            workspaceId: workspace.id,
-            seatId: seat.id,
-            startsAt: start,
-            endsAt: confirmedEnd,
-            checkIn: walkUp,
-          );
+      if (choice.pattern == null) {
+        await ref.read(reservationRepositoryProvider).create(
+              workspaceId: workspace.id,
+              seatId: seat.id,
+              startsAt: start,
+              endsAt: choice.end,
+              checkIn: walkUp,
+            );
+      } else {
+        final result = await ref.read(reservationRepositoryProvider).createSeries(
+              workspaceId: workspace.id,
+              seatId: seat.id,
+              firstStart: start,
+              firstEnd: choice.end,
+              pattern: choice.pattern!,
+              until: choice.until!,
+            );
+        if (mounted) await _seriesResultDialog(result);
+      }
     } catch (e, st) {
       debugPrint('booking failed: $e\n$st');
       if (!mounted) return;
@@ -179,6 +193,42 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       return;
     }
     ref.invalidate(reservationsForDayProvider);
+  }
+
+  /// Explicit exception report after booking a series (spec §5.2).
+  Future<void> _seriesResultDialog(SeriesResult result) async {
+    final l10n = AppLocalizations.of(context);
+    final dateFormat = DateFormat.MMMEd();
+    await showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          l10n?.seriesBookedCount(result.booked.length) ??
+              '${result.booked.length} bookings created',
+        ),
+        content: result.skipped.isEmpty
+            ? null
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l10n?.seriesSkippedTitle ??
+                        'Skipped (already taken):',
+                  ),
+                  const SizedBox(height: 8),
+                  for (final d in result.skipped)
+                    Text(dateFormat.format(d.toLocal())),
+                ],
+              ),
+        actions: [
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(l10n?.commonOk ?? 'OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _mySeatSheet(Seat seat, Reservation mine) async {
@@ -511,6 +561,15 @@ class _LivePlanCanvas extends StatelessWidget {
   }
 }
 
+/// What the booking sheet returns: end time plus an optional recurrence.
+class _BookingChoice {
+  const _BookingChoice(this.end, this.pattern, this.until);
+
+  final DateTime end;
+  final SeriesPattern? pattern;
+  final DateTime? until;
+}
+
 class _CheckInSheet extends StatefulWidget {
   const _CheckInSheet({
     required this.seatName,
@@ -536,14 +595,30 @@ class _CheckInSheet extends StatefulWidget {
 
 class _CheckInSheetState extends State<_CheckInSheet> {
   late DateTime _end = widget.initialEnd;
+  SeriesPattern? _pattern;
+  late DateTime _until = widget.start.add(const Duration(days: 28));
+
+  String _patternLabel(AppLocalizations? l10n, SeriesPattern? pattern) {
+    return switch (pattern) {
+      null => l10n?.repeatNone ?? 'Does not repeat',
+      SeriesPattern.daily => l10n?.repeatDaily ?? 'Every day',
+      SeriesPattern.weekdays => l10n?.repeatWeekdays ?? 'Every weekday',
+      SeriesPattern.weekly => l10n?.repeatWeekly ?? 'Weekly',
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final timeFormat = DateFormat.Hm();
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
+      child: SingleChildScrollView(
+        padding: EdgeInsets.only(
+          left: 24,
+          right: 24,
+          top: 24,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -592,6 +667,40 @@ class _CheckInSheetState extends State<_CheckInSheet> {
                 setState(() => _end = end);
               },
             ),
+            if (!widget.walkUp) ...[
+              DropdownButtonFormField<SeriesPattern?>(
+                initialValue: _pattern,
+                decoration: InputDecoration(
+                  labelText: l10n?.planRepeatLabel ?? 'Repeat',
+                ),
+                items: [
+                  for (final p in [null, ...SeriesPattern.values])
+                    DropdownMenuItem(
+                      value: p,
+                      child: Text(_patternLabel(l10n, p)),
+                    ),
+                ],
+                onChanged: (p) => setState(() => _pattern = p),
+              ),
+              if (_pattern != null)
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(l10n?.planUntilDateLabel ?? 'Repeat until'),
+                  trailing:
+                      Text(DateFormat.yMMMd().format(_until.toLocal())),
+                  onTap: () async {
+                    final picked = await showDatePicker(
+                      context: context,
+                      initialDate: _until.toLocal(),
+                      firstDate: widget.start.toLocal(),
+                      lastDate: widget.start
+                          .toLocal()
+                          .add(const Duration(days: 180)),
+                    );
+                    if (picked != null) setState(() => _until = picked);
+                  },
+                ),
+            ],
             if (widget.capped && widget.cap != null)
               Text(
                 l10n?.planCappedByNext(
@@ -603,7 +712,13 @@ class _CheckInSheetState extends State<_CheckInSheet> {
               ),
             const SizedBox(height: 16),
             FilledButton(
-              onPressed: () => Navigator.of(context).pop(_end),
+              onPressed: () => Navigator.of(context).pop(
+                _BookingChoice(
+                  _end,
+                  _pattern,
+                  _pattern == null ? null : _until,
+                ),
+              ),
               child: Text(
                 widget.walkUp
                     ? (l10n?.planCheckInButton ?? 'Check in')

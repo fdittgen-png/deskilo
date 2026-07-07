@@ -590,6 +590,60 @@ abstract class AppLocalizations {
   /// **'Starts at {time}'**
   String planStartsAt(String time);
 
+  /// Label of the recurrence dropdown in the booking sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat'**
+  String get planRepeatLabel;
+
+  /// Recurrence option: single reservation
+  ///
+  /// In en, this message translates to:
+  /// **'Does not repeat'**
+  String get repeatNone;
+
+  /// Recurrence option: daily series
+  ///
+  /// In en, this message translates to:
+  /// **'Every day'**
+  String get repeatDaily;
+
+  /// Recurrence option: Monday–Friday series
+  ///
+  /// In en, this message translates to:
+  /// **'Every weekday'**
+  String get repeatWeekdays;
+
+  /// Recurrence option: same weekday every week
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get repeatWeekly;
+
+  /// Label of the series end-date picker
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat until'**
+  String get planUntilDateLabel;
+
+  /// Title of the series result dialog
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 booking created} other{{count} bookings created}}'**
+  String seriesBookedCount(int count);
+
+  /// Heading above the list of conflicted series instances
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped (already taken):'**
+  String get seriesSkippedTitle;
+
+  /// Generic acknowledge button
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get commonOk;
+
   /// App-bar title of the first-run onboarding screen
   ///
   /// In en, this message translates to:

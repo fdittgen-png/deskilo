@@ -349,6 +349,47 @@
       }
     }
   },
+  "planRepeatLabel": "Repeat",
+  "@planRepeatLabel": {
+    "description": "Label of the recurrence dropdown in the booking sheet"
+  },
+  "repeatNone": "Does not repeat",
+  "@repeatNone": {
+    "description": "Recurrence option: single reservation"
+  },
+  "repeatDaily": "Every day",
+  "@repeatDaily": {
+    "description": "Recurrence option: daily series"
+  },
+  "repeatWeekdays": "Every weekday",
+  "@repeatWeekdays": {
+    "description": "Recurrence option: Monday–Friday series"
+  },
+  "repeatWeekly": "Weekly",
+  "@repeatWeekly": {
+    "description": "Recurrence option: same weekday every week"
+  },
+  "planUntilDateLabel": "Repeat until",
+  "@planUntilDateLabel": {
+    "description": "Label of the series end-date picker"
+  },
+  "seriesBookedCount": "{count, plural, =1{1 booking created} other{{count} bookings created}}",
+  "@seriesBookedCount": {
+    "description": "Title of the series result dialog",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "seriesSkippedTitle": "Skipped (already taken):",
+  "@seriesSkippedTitle": {
+    "description": "Heading above the list of conflicted series instances"
+  },
+  "commonOk": "OK",
+  "@commonOk": {
+    "description": "Generic acknowledge button"
+  },
   "onboardingTitle": "Welcome to DesKilo",
   "@onboardingTitle": {
     "description": "App-bar title of the first-run onboarding screen"
