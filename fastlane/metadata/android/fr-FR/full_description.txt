@@ -1,0 +1,11 @@
+DesKilo est une application libre et respectueuse de la vie privée pour les petites communautés de coworking auto-organisées.
+
+• Dessinez votre espace sur une grille : étages, bureaux, tables et places réservables
+• Touchez une place sur le plan en direct pour vous installer — sans conflit
+• Réservez à l'avance, ponctuellement ou en série, avec un curseur temporel
+• Calendrier de vos réservations ; les admins voient tout
+• Finances équitables : forfaits avec quotas en demi-journées, un grand livre transparent par membre
+• Dépenses communes : achetez du café pour l'espace, crédité sur votre prochaine facture
+• Tout ce qu'un admin fait pour vous demande votre confirmation
+
+Pas de services Google, pas de pistage, pas de pub. Backend auto-hébergeable. Licence MIT.

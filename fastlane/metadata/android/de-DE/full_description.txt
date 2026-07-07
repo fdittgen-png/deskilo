@@ -1,0 +1,11 @@
+DesKilo ist eine freie, datenschutzfreundliche App für kleine selbstorganisierte Coworking-Communities.
+
+• Workspace auf einem Raster zeichnen: Etagen, Büros, Tische und buchbare Plätze
+• Auf dem Live-Plan einen Platz antippen und einchecken — konfliktsicher
+• Im Voraus reservieren, einmalig oder als Serie, mit Zeitregler für jeden Moment
+• Kalender der eigenen Buchungen; Admins sehen alle
+• Faire Finanzen: Tarife mit Halbtags-Kontingenten, ein transparentes Kontobuch pro Mitglied
+• Gemeinschaftsausgaben: Kaffee für den Space kaufen, Gutschrift auf der nächsten Abrechnung
+• Alles, was ein Admin für dich tut, braucht deine Bestätigung
+
+Keine Google-Dienste, kein Tracking, keine Werbung. Selbst hostbares Backend. MIT-lizenziert.
