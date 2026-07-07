@@ -1,0 +1,9 @@
+{
+  "@@locale": "de",
+  "membersTitle": "Mitglieder & Tarife",
+  "membersPlanNone": "Kein Tarif",
+  "memberRoleOwner": "Inhaber",
+  "memberRoleAdmin": "Admin",
+  "memberStatusPaused": "Pausiert",
+  "memberStatusExited": "Ausgetreten"
+}

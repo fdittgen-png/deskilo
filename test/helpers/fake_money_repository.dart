@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
+import 'package:deskilo/features/money/domain/plan.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 
 /// In-memory [MoneyRepository]; recorded payments are captured for
@@ -39,4 +40,36 @@ class FakeMoneyRepository implements MoneyRepository {
     recordedPayments.add((amountCents: amountCents, note: note));
     return 'evt-payment-${recordedPayments.length}';
   }
+
+  final plans = <Plan>[
+    const Plan(
+      id: 'plan-full',
+      workspaceId: 'ws-1',
+      name: 'Full',
+      baseFeeCents: 25000,
+      overageFeeCents: 0,
+      active: true,
+    ),
+    const Plan(
+      id: 'plan-half',
+      workspaceId: 'ws-1',
+      name: 'Half',
+      baseFeeCents: 15000,
+      includedHalfDays: 22,
+      overageFeeCents: 800,
+      active: true,
+    ),
+    const Plan(
+      id: 'plan-flex',
+      workspaceId: 'ws-1',
+      name: 'Flex',
+      baseFeeCents: 0,
+      includedHalfDays: 0,
+      overageFeeCents: 1500,
+      active: true,
+    ),
+  ];
+
+  @override
+  Future<List<Plan>> fetchPlans(String workspaceId) async => List.of(plans);
 }

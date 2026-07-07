@@ -7,6 +7,7 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_money_repository.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
+import '../domain/plan.dart';
 import '../domain/statement.dart';
 
 part 'money_providers.g.dart';
@@ -29,6 +30,14 @@ Future<List<LedgerEntry>> myLedger(Ref ref) async {
   final member = await ref.watch(myMemberProvider.future);
   if (member == null) return const [];
   return ref.watch(moneyRepositoryProvider).fetchLedger(member.id);
+}
+
+/// Active plans of the current workspace.
+@Riverpod(keepAlive: true)
+Future<List<Plan>> plans(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return ref.watch(moneyRepositoryProvider).fetchPlans(workspace.id);
 }
 
 /// Current period key in workspace terms ('yyyy-MM').

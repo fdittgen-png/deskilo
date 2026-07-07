@@ -24,4 +24,11 @@ abstract class WorkspaceRepository {
   /// member id → display name for everyone in the workspace (floor-plan
   /// occupant labels, event actor names, …).
   Future<Map<String, String>> fetchMemberNames(String workspaceId);
+
+  /// All memberships of the workspace (owner management screen).
+  Future<List<Member>> fetchMembers(String workspaceId);
+
+  /// Owner-only (RLS-enforced): assign a plan / change membership status.
+  Future<void> updateMemberPlan(String memberId, String? planId);
+  Future<void> updateMemberStatus(String memberId, MemberStatus status);
 }

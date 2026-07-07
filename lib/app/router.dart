@@ -12,6 +12,7 @@ import '../features/events/presentation/screens/events_screen.dart';
 import '../features/money/presentation/screens/money_screen.dart';
 import '../features/plan/presentation/screens/plan_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
+import '../features/workspace/presentation/screens/members_screen.dart';
 import '../features/workspace/presentation/screens/onboarding_screen.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 import 'shell/shell_screen.dart';
@@ -105,6 +106,14 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/settings',
         builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: '/members',
+        redirect: (context, state) {
+          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          return isOwner ? null : '/plan';
+        },
+        builder: (context, state) => const MembersScreen(),
       ),
       GoRoute(
         path: '/editor',

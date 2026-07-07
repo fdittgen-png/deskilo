@@ -266,6 +266,24 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get membersTitle => 'Mitglieder & Tarife';
+
+  @override
+  String get membersPlanNone => 'Kein Tarif';
+
+  @override
+  String get memberRoleOwner => 'Inhaber';
+
+  @override
+  String get memberRoleAdmin => 'Admin';
+
+  @override
+  String get memberStatusPaused => 'Pausiert';
+
+  @override
+  String get memberStatusExited => 'Ausgetreten';
+
+  @override
   String get moneyBaseFee => 'Basis-Abo';
 
   @override

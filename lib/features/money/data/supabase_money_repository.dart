@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
+import '../domain/plan.dart';
 import '../domain/statement.dart';
 
 class SupabaseMoneyRepository implements MoneyRepository {
@@ -67,5 +68,28 @@ class SupabaseMoneyRepository implements MoneyRepository {
       'p_note': note,
     });
     return result as String;
+  }
+
+  @override
+  Future<List<Plan>> fetchPlans(String workspaceId) async {
+    final rows = await _client
+        .from('plans')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .eq('active', true)
+        .order('base_fee_cents', ascending: false);
+    return rows
+        .map(
+          (row) => Plan(
+            id: row['id'] as String,
+            workspaceId: row['workspace_id'] as String,
+            name: row['name'] as String,
+            baseFeeCents: row['base_fee_cents'] as int,
+            includedHalfDays: row['included_half_days'] as int?,
+            overageFeeCents: row['overage_fee_cents'] as int,
+            active: row['active'] as bool,
+          ),
+        )
+        .toList();
   }
 }

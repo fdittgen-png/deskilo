@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 
 /// App settings. Sign-out lives here; more sections arrive with their Epics.
 class SettingsScreen extends ConsumerWidget {
@@ -12,10 +14,17 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final isOwner = ref.watch(myMemberProvider).value?.isOwner ?? false;
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.settingsTitle ?? 'Settings')),
       body: ListView(
         children: [
+          if (isOwner)
+            ListTile(
+              leading: const Icon(Icons.group_outlined),
+              title: Text(l10n?.membersTitle ?? 'Members & plans'),
+              onTap: () => context.push('/members'),
+            ),
           ListTile(
             leading: const Icon(Icons.logout),
             title: Text(l10n?.authSignOut ?? 'Sign out'),

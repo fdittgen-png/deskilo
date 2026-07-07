@@ -353,6 +353,30 @@
       }
     }
   },
+  "membersTitle": "Members & plans",
+  "@membersTitle": {
+    "description": "Title of the owner-only member management screen + its settings entry"
+  },
+  "membersPlanNone": "No plan",
+  "@membersPlanNone": {
+    "description": "Plan dropdown option for members without a plan"
+  },
+  "memberRoleOwner": "Owner",
+  "@memberRoleOwner": {
+    "description": "Role tag on a member row"
+  },
+  "memberRoleAdmin": "Admin",
+  "@memberRoleAdmin": {
+    "description": "Role tag on a member row"
+  },
+  "memberStatusPaused": "Paused",
+  "@memberStatusPaused": {
+    "description": "Status tag: membership paused (no fee, no access)"
+  },
+  "memberStatusExited": "Exited",
+  "@memberStatusExited": {
+    "description": "Status tag: member left; ledger stays until settled"
+  },
   "moneyBaseFee": "Base subscription",
   "@moneyBaseFee": {
     "description": "Statement line for the plan's monthly fee"

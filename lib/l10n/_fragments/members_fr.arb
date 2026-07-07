@@ -1,0 +1,9 @@
+{
+  "@@locale": "fr",
+  "membersTitle": "Membres et forfaits",
+  "membersPlanNone": "Aucun forfait",
+  "memberRoleOwner": "Propriétaire",
+  "memberRoleAdmin": "Admin",
+  "memberStatusPaused": "En pause",
+  "memberStatusExited": "Parti"
+}

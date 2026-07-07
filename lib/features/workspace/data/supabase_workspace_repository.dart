@@ -88,6 +88,30 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
         inviteCode: row['invite_code'] as String,
       );
 
+  @override
+  Future<List<Member>> fetchMembers(String workspaceId) async {
+    final rows = await _client
+        .from('members')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('joined_at', ascending: true);
+    return rows.map(_memberFromRow).toList();
+  }
+
+  @override
+  Future<void> updateMemberPlan(String memberId, String? planId) async {
+    await _client
+        .from('members')
+        .update({'plan_id': planId}).eq('id', memberId);
+  }
+
+  @override
+  Future<void> updateMemberStatus(String memberId, MemberStatus status) async {
+    await _client
+        .from('members')
+        .update({'status': status.name}).eq('id', memberId);
+  }
+
   Member _memberFromRow(Map<String, dynamic> row) => Member(
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
@@ -95,5 +119,6 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
         isAdmin: row['is_admin'] as bool,
         isOwner: row['is_owner'] as bool,
         status: MemberStatus.values.byName(row['status'] as String),
+        planId: row['plan_id'] as String?,
       );
 }

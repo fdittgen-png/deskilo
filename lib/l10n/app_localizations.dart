@@ -590,6 +590,42 @@ abstract class AppLocalizations {
   /// **'for {name}'**
   String eventForSubject(String name);
 
+  /// Title of the owner-only member management screen + its settings entry
+  ///
+  /// In en, this message translates to:
+  /// **'Members & plans'**
+  String get membersTitle;
+
+  /// Plan dropdown option for members without a plan
+  ///
+  /// In en, this message translates to:
+  /// **'No plan'**
+  String get membersPlanNone;
+
+  /// Role tag on a member row
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get memberRoleOwner;
+
+  /// Role tag on a member row
+  ///
+  /// In en, this message translates to:
+  /// **'Admin'**
+  String get memberRoleAdmin;
+
+  /// Status tag: membership paused (no fee, no access)
+  ///
+  /// In en, this message translates to:
+  /// **'Paused'**
+  String get memberStatusPaused;
+
+  /// Status tag: member left; ledger stays until settled
+  ///
+  /// In en, this message translates to:
+  /// **'Exited'**
+  String get memberStatusExited;
+
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:
