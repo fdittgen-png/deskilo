@@ -12,7 +12,7 @@ import '../../../plan/domain/office.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../widgets/floor_plan_painter.dart';
+import '../../../plan/presentation/widgets/floor_plan_painter.dart';
 
 enum EditorTool { select, office, desk, seat, erase }
 

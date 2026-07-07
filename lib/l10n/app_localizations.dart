@@ -464,6 +464,96 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get commonDelete;
 
+  /// Empty state of the Plan tab before the owner drew levels
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace has no floor plan yet.'**
+  String get planNoLevels;
+
+  /// Label of the level dropdown above the live plan
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get planLevelLabel;
+
+  /// Fallback title of the walk-up check-in sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Check in'**
+  String get planCheckInTitle;
+
+  /// Walk-up check-in: the start time is the current time
+  ///
+  /// In en, this message translates to:
+  /// **'Starts now'**
+  String get planStartNow;
+
+  /// Label of the adjustable end time in the check-in sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Until'**
+  String get planUntilLabel;
+
+  /// Confirm button of the check-in sheet / my-seat sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Check in'**
+  String get planCheckInButton;
+
+  /// Action ending the current presence on a seat
+  ///
+  /// In en, this message translates to:
+  /// **'Check out'**
+  String get planCheckOutButton;
+
+  /// Action cancelling one's own reservation
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel reservation'**
+  String get planCancelReservationButton;
+
+  /// Snackbar when tapping a blocked seat
+  ///
+  /// In en, this message translates to:
+  /// **'This seat is blocked for maintenance.'**
+  String get planSeatBlocked;
+
+  /// Snackbar fragment for a seat reserved by someone else
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved by {name}'**
+  String planReservedBy(String name);
+
+  /// Snackbar fragment for a seat someone is checked in on
+  ///
+  /// In en, this message translates to:
+  /// **'Occupied by {name}'**
+  String planOccupiedBy(String name);
+
+  /// Suffix showing when the current booking ends
+  ///
+  /// In en, this message translates to:
+  /// **'until {time}'**
+  String planUntil(String time);
+
+  /// Hint in the check-in sheet when a later reservation caps the stay
+  ///
+  /// In en, this message translates to:
+  /// **'The seat is reserved from {time}.'**
+  String planCappedByNext(String time);
+
+  /// Snackbar when the atomic walk-up RPC rejects (race lost)
+  ///
+  /// In en, this message translates to:
+  /// **'Could not check in — the seat may have just been taken.'**
+  String get planCheckInFailed;
+
+  /// Fallback title of the my-seat sheet for unnamed seats
+  ///
+  /// In en, this message translates to:
+  /// **'Your seat'**
+  String get planYourSeat;
+
   /// App-bar title of the first-run onboarding screen
   ///
   /// In en, this message translates to:

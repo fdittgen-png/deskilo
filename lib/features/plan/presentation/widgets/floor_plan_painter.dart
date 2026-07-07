@@ -2,17 +2,22 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/office_colors.dart';
-import '../../../plan/domain/floor_plan.dart';
-import '../../../plan/domain/grid_geometry.dart';
-import '../../../plan/domain/seat.dart';
+import '../../../../core/theme/seat_state_colors.dart';
+import '../../domain/floor_plan.dart';
+import '../../domain/grid_geometry.dart';
+import '../../domain/seat.dart';
 
 /// Paints a level's grid, offices, desks and seats. Shared by the editor
-/// canvas (#34/#35) and later the live floor plan (Epic #4).
+/// canvas (#34/#35) and the live floor plan (Epic #4): passing [seatStates]
+/// switches seats to live state colors + occupant labels.
 class FloorPlanPainter extends CustomPainter {
   FloorPlanPainter({
     required this.plan,
     required this.cellSize,
     required this.colorScheme,
+    this.brightness = Brightness.light,
+    this.seatStates,
+    this.seatLabels,
     this.marquee,
     this.marqueeValid = true,
   });
@@ -20,6 +25,13 @@ class FloorPlanPainter extends CustomPainter {
   final FloorPlan plan;
   final double cellSize;
   final ColorScheme colorScheme;
+  final Brightness brightness;
+
+  /// Live mode: seat id → state. Null = editor mode (uniform styling).
+  final Map<String, SeatState>? seatStates;
+
+  /// Live mode: seat id → occupant display name (empty = no label).
+  final Map<String, String>? seatLabels;
 
   /// In-progress drag rectangle (grid cells) while drawing a new element.
   final GridRect? marquee;
@@ -71,18 +83,32 @@ class FloorPlanPainter extends CustomPainter {
 
     for (final seat in plan.seats) {
       final rect = _toPx(seat.footprint).deflate(2);
+      final state = seatStates?[seat.id];
+      final accent = state == null
+          ? colorScheme.primary
+          : SeatStateColors.of(state, brightness: brightness);
       canvas.drawRRect(
         RRect.fromRectAndRadius(rect, const Radius.circular(3)),
-        Paint()..color = colorScheme.primary.withValues(alpha: 0.25),
+        Paint()..color = accent.withValues(alpha: state == null ? 0.25 : 0.45),
       );
       canvas.drawRRect(
         RRect.fromRectAndRadius(rect, const Radius.circular(3)),
         Paint()
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.5
-          ..color = colorScheme.primary,
+          ..color = accent,
       );
-      _orientationArrow(canvas, seat, rect);
+      _orientationArrow(canvas, seat, rect, accent);
+      // State never conveyed by color alone (spec §11): blocked seats get a
+      // cross, occupied/reserved/mine get the occupant label or a dot.
+      if (state == SeatState.blocked) {
+        _label(canvas, '✕', rect, colorScheme.onSurface, center: true);
+      } else {
+        final label = seatLabels?[seat.id] ?? '';
+        if (label.isNotEmpty) {
+          _label(canvas, label, rect, colorScheme.onSurface, center: true);
+        }
+      }
     }
 
     final m = marquee;
@@ -100,7 +126,13 @@ class FloorPlanPainter extends CustomPainter {
     }
   }
 
-  void _label(Canvas canvas, String text, Rect rect, Color color) {
+  void _label(
+    Canvas canvas,
+    String text,
+    Rect rect,
+    Color color, {
+    bool center = false,
+  }) {
     if (text.isEmpty) return;
     final painter = TextPainter(
       text: TextSpan(
@@ -111,11 +143,14 @@ class FloorPlanPainter extends CustomPainter {
       maxLines: 1,
       ellipsis: '…',
     )..layout(maxWidth: rect.width - 6);
-    painter.paint(canvas, rect.topLeft + const Offset(4, 3));
+    final offset = center
+        ? rect.center - Offset(painter.width / 2, painter.height / 2 - 8)
+        : rect.topLeft + const Offset(4, 3);
+    painter.paint(canvas, offset);
   }
 
-  void _orientationArrow(Canvas canvas, Seat seat, Rect rect) {
-    final center = rect.center;
+  void _orientationArrow(Canvas canvas, Seat seat, Rect rect, Color color) {
+    final center = rect.center - const Offset(0, 4);
     const len = 6.0;
     final tip = switch (seat.orientation) {
       SeatOrientation.n => center - const Offset(0, len),
@@ -128,9 +163,9 @@ class FloorPlanPainter extends CustomPainter {
       tip,
       Paint()
         ..strokeWidth = 2
-        ..color = colorScheme.primary,
+        ..color = color,
     );
-    canvas.drawCircle(tip, 2, Paint()..color = colorScheme.primary);
+    canvas.drawCircle(tip, 2, Paint()..color = color);
   }
 
   @override
@@ -138,5 +173,7 @@ class FloorPlanPainter extends CustomPainter {
       oldDelegate.plan != plan ||
       oldDelegate.marquee != marquee ||
       oldDelegate.marqueeValid != marqueeValid ||
+      oldDelegate.seatStates != seatStates ||
+      oldDelegate.seatLabels != seatLabels ||
       oldDelegate.cellSize != cellSize;
 }

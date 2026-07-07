@@ -1,0 +1,18 @@
+{
+  "@@locale": "de",
+  "planNoLevels": "Der Workspace hat noch keinen Plan.",
+  "planLevelLabel": "Etage",
+  "planCheckInTitle": "Einchecken",
+  "planStartNow": "Beginnt jetzt",
+  "planUntilLabel": "Bis",
+  "planCheckInButton": "Einchecken",
+  "planCheckOutButton": "Auschecken",
+  "planCancelReservationButton": "Reservierung stornieren",
+  "planSeatBlocked": "Dieser Platz ist wegen Wartung gesperrt.",
+  "planReservedBy": "Reserviert von {name}",
+  "planOccupiedBy": "Besetzt von {name}",
+  "planUntil": "bis {time}",
+  "planCappedByNext": "Der Platz ist ab {time} reserviert.",
+  "planCheckInFailed": "Einchecken nicht möglich — der Platz wurde eventuell gerade belegt.",
+  "planYourSeat": "Dein Platz"
+}

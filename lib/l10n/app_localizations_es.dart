@@ -196,6 +196,61 @@ class AppLocalizationsEs extends AppLocalizations {
   String get commonDelete => 'Eliminar';
 
   @override
+  String get planNoLevels => 'El espacio aún no tiene plano.';
+
+  @override
+  String get planLevelLabel => 'Planta';
+
+  @override
+  String get planCheckInTitle => 'Registrarse';
+
+  @override
+  String get planStartNow => 'Empieza ahora';
+
+  @override
+  String get planUntilLabel => 'Hasta';
+
+  @override
+  String get planCheckInButton => 'Registrarse';
+
+  @override
+  String get planCheckOutButton => 'Salir';
+
+  @override
+  String get planCancelReservationButton => 'Cancelar reserva';
+
+  @override
+  String get planSeatBlocked =>
+      'Este asiento está bloqueado por mantenimiento.';
+
+  @override
+  String planReservedBy(String name) {
+    return 'Reservado por $name';
+  }
+
+  @override
+  String planOccupiedBy(String name) {
+    return 'Ocupado por $name';
+  }
+
+  @override
+  String planUntil(String time) {
+    return 'hasta las $time';
+  }
+
+  @override
+  String planCappedByNext(String time) {
+    return 'El asiento está reservado a partir de las $time.';
+  }
+
+  @override
+  String get planCheckInFailed =>
+      'No se pudo registrar — puede que el asiento se acabe de ocupar.';
+
+  @override
+  String get planYourSeat => 'Tu asiento';
+
+  @override
   String get onboardingTitle => 'Bienvenido a DesKilo';
 
   @override
