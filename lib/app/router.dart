@@ -10,6 +10,8 @@ import '../features/events/presentation/screens/events_screen.dart';
 import '../features/money/presentation/screens/money_screen.dart';
 import '../features/plan/presentation/screens/plan_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
+import '../features/workspace/presentation/screens/onboarding_screen.dart';
+import '../features/workspace/providers/workspace_providers.dart';
 import 'shell/shell_screen.dart';
 
 part 'router.g.dart';
@@ -27,7 +29,8 @@ GoRouter router(Ref ref) {
   final refresh = ValueNotifier(0);
   ref
     ..onDispose(refresh.dispose)
-    ..listen(authStateProvider, (_, _) => refresh.value++);
+    ..listen(authStateProvider, (_, _) => refresh.value++)
+    ..listen(myWorkspacesProvider, (_, _) => refresh.value++);
 
   final router = GoRouter(
     initialLocation: '/plan',
@@ -39,12 +42,25 @@ GoRouter router(Ref ref) {
       final atAuth = state.matchedLocation == '/auth';
       if (!signedIn) return atAuth ? null : '/auth';
       if (atAuth) return '/plan';
+
+      // Signed in: a user without any workspace lands on onboarding.
+      final workspaces = ref.read(myWorkspacesProvider);
+      final atOnboarding = state.matchedLocation == '/onboarding';
+      final list = workspaces.value;
+      if (list != null) {
+        if (list.isEmpty && !atOnboarding) return '/onboarding';
+        if (list.isNotEmpty && atOnboarding) return '/plan';
+      }
       return null;
     },
     routes: [
       GoRoute(
         path: '/auth',
         builder: (context, state) => const AuthScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding',
+        builder: (context, state) => const OnboardingScreen(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>

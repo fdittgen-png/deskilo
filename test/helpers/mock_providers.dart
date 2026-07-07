@@ -3,6 +3,10 @@ import 'dart:async';
 
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/misc.dart';
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
@@ -58,11 +62,93 @@ class FakeAuthRepository implements AuthRepository {
   Future<void> signOut() async => _setUser(null);
 }
 
-/// Baseline overrides for widget tests: a signed-in user. Always start from
-/// these and add feature-specific overrides on top.
-List<Override> standardTestOverrides({AuthRepository? auth}) {
+/// In-memory [WorkspaceRepository] for tests.
+class FakeWorkspaceRepository implements WorkspaceRepository {
+  FakeWorkspaceRepository({List<Workspace>? workspaces})
+      : workspaces = workspaces ?? [];
+
+  FakeWorkspaceRepository.withWorkspace()
+      : workspaces = [
+          const Workspace(
+            id: 'ws-1',
+            name: 'Test Space',
+            countryCode: 'DE',
+            currencyCode: 'EUR',
+            timezone: 'Europe/Berlin',
+            inviteCode: 'GOODCODE22',
+          ),
+        ];
+
+  final List<Workspace> workspaces;
+
+  /// Membership returned by [fetchMyMember]; owner of ws-1 by default.
+  Member myMember = const Member(
+    id: 'member-1',
+    workspaceId: 'ws-1',
+    userId: 'user-1',
+    isAdmin: true,
+    isOwner: true,
+    status: MemberStatus.active,
+  );
+
+  var _nextId = 1;
+
+  @override
+  Future<List<Workspace>> fetchMyWorkspaces() async => List.of(workspaces);
+
+  @override
+  Future<String> createWorkspace({
+    required String name,
+    required String countryCode,
+    required String currencyCode,
+    required String timezone,
+  }) async {
+    final workspace = Workspace(
+      id: 'ws-created-${_nextId++}',
+      name: name,
+      countryCode: countryCode,
+      currencyCode: currencyCode,
+      timezone: timezone,
+      inviteCode: 'NEWCODE$_nextId',
+    );
+    workspaces.add(workspace);
+    return workspace.id;
+  }
+
+  @override
+  Future<String> joinWorkspace(String inviteCode) async {
+    if (inviteCode != 'GOODCODE22') {
+      throw StateError('invalid invite code');
+    }
+    final workspace = Workspace(
+      id: 'ws-joined-${_nextId++}',
+      name: 'Joined Space',
+      countryCode: 'DE',
+      currencyCode: 'EUR',
+      timezone: 'Europe/Berlin',
+      inviteCode: inviteCode,
+    );
+    workspaces.add(workspace);
+    return workspace.id;
+  }
+
+  @override
+  Future<Member?> fetchMyMember(String workspaceId) async =>
+      myMember.copyWith(workspaceId: workspaceId);
+}
+
+/// Baseline overrides for widget tests: a signed-in user who is the owner
+/// of one workspace. Always start from these and add feature-specific
+/// overrides on top.
+List<Override> standardTestOverrides({
+  AuthRepository? auth,
+  WorkspaceRepository? workspace,
+}) {
   return [
     authRepositoryProvider
         .overrideWithValue(auth ?? FakeAuthRepository.signedIn()),
+    workspaceRepositoryProvider.overrideWithValue(
+      workspace ?? FakeWorkspaceRepository.withWorkspace(),
+    ),
   ];
 }
