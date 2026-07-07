@@ -72,4 +72,24 @@ class FakeMoneyRepository implements MoneyRepository {
 
   @override
   Future<List<Plan>> fetchPlans(String workspaceId) async => List.of(plans);
+
+  final submittedExpenses =
+      <({int amountCents, String category, String description})>[];
+
+  @override
+  Future<String> submitExpense({
+    required String workspaceId,
+    required int amountCents,
+    required String category,
+    String description = '',
+  }) async {
+    submittedExpenses.add(
+      (
+        amountCents: amountCents,
+        category: category,
+        description: description,
+      ),
+    );
+    return 'evt-expense-${submittedExpenses.length}';
+  }
 }

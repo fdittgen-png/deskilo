@@ -584,6 +584,18 @@ abstract class AppLocalizations {
   /// **'{actor} cancelled the booking of {target}'**
   String eventReservationCancelled(String actor, String target);
 
+  /// Feed line for payment events
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} recorded a payment of {amount}'**
+  String eventPaymentSubmitted(String actor, String amount);
+
+  /// Feed line for expense events
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} submitted an expense of {amount}'**
+  String eventExpenseSubmitted(String actor, String amount);
+
   /// Suffix when an admin acted on someone else's behalf
   ///
   /// In en, this message translates to:
@@ -715,6 +727,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No ledger entries yet.'**
   String get moneyLedgerEmpty;
+
+  /// Button + sheet title for community expenses (spec §9)
+  ///
+  /// In en, this message translates to:
+  /// **'Submit an expense'**
+  String get moneySubmitExpense;
+
+  /// Label of the expense category dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get moneyExpenseCategoryLabel;
+
+  /// Label of the expense description input
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get moneyDescriptionLabel;
+
+  /// Snackbar after submitting an expense (another admin approves)
+  ///
+  /// In en, this message translates to:
+  /// **'Expense submitted — waiting for approval.'**
+  String get moneyExpensePending;
+
+  /// Expense category option
+  ///
+  /// In en, this message translates to:
+  /// **'Coffee & kitchen'**
+  String get expenseCategoryCoffee;
+
+  /// Expense category option
+  ///
+  /// In en, this message translates to:
+  /// **'Supplies'**
+  String get expenseCategorySupplies;
+
+  /// Expense category option
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment'**
+  String get expenseCategoryEquipment;
+
+  /// Expense category option
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get expenseCategoryOther;
 
   /// Ledger entry category
   ///

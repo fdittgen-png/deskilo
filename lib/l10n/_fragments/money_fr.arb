@@ -19,5 +19,13 @@
   "ledgerCategoryOverage": "Dépassement",
   "ledgerCategoryExpense": "Remboursement de dépense",
   "ledgerCategoryPayment": "Paiement",
-  "ledgerCategoryAdjustment": "Ajustement"
+  "ledgerCategoryAdjustment": "Ajustement",
+  "moneySubmitExpense": "Soumettre une dépense",
+  "moneyExpenseCategoryLabel": "Catégorie",
+  "moneyDescriptionLabel": "Description",
+  "moneyExpensePending": "Dépense soumise — en attente d'approbation.",
+  "expenseCategoryCoffee": "Café et cuisine",
+  "expenseCategorySupplies": "Fournitures",
+  "expenseCategoryEquipment": "Équipement",
+  "expenseCategoryOther": "Autre"
 }

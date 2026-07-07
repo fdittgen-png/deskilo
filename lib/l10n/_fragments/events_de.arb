@@ -12,5 +12,7 @@
   "eventReservationCreated": "{actor} hat {target} reserviert",
   "eventReservationModified": "{actor} hat die Reservierung von {target} geändert",
   "eventReservationCancelled": "{actor} hat die Reservierung von {target} storniert",
-  "eventForSubject": "für {name}"
+  "eventForSubject": "für {name}",
+  "eventPaymentSubmitted": "{actor} hat eine Zahlung von {amount} erfasst",
+  "eventExpenseSubmitted": "{actor} hat eine Ausgabe von {amount} eingereicht"
 }

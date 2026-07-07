@@ -70,6 +70,38 @@
   "@moneyLedgerEmpty": {
     "description": "Empty state of the ledger list"
   },
+  "moneySubmitExpense": "Submit an expense",
+  "@moneySubmitExpense": {
+    "description": "Button + sheet title for community expenses (spec §9)"
+  },
+  "moneyExpenseCategoryLabel": "Category",
+  "@moneyExpenseCategoryLabel": {
+    "description": "Label of the expense category dropdown"
+  },
+  "moneyDescriptionLabel": "Description",
+  "@moneyDescriptionLabel": {
+    "description": "Label of the expense description input"
+  },
+  "moneyExpensePending": "Expense submitted — waiting for approval.",
+  "@moneyExpensePending": {
+    "description": "Snackbar after submitting an expense (another admin approves)"
+  },
+  "expenseCategoryCoffee": "Coffee & kitchen",
+  "@expenseCategoryCoffee": {
+    "description": "Expense category option"
+  },
+  "expenseCategorySupplies": "Supplies",
+  "@expenseCategorySupplies": {
+    "description": "Expense category option"
+  },
+  "expenseCategoryEquipment": "Equipment",
+  "@expenseCategoryEquipment": {
+    "description": "Expense category option"
+  },
+  "expenseCategoryOther": "Other",
+  "@expenseCategoryOther": {
+    "description": "Expense category option"
+  },
   "ledgerCategorySubscription": "Subscription",
   "@ledgerCategorySubscription": {
     "description": "Ledger entry category"

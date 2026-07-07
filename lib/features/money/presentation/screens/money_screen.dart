@@ -124,6 +124,128 @@ class MoneyScreen extends ConsumerWidget {
     ref.invalidate(eventsProvider);
   }
 
+  Future<void> _submitExpenseSheet(
+    BuildContext context,
+    WidgetRef ref,
+    NumberFormat currency,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+
+    const categories = ['coffee', 'supplies', 'equipment', 'other'];
+    String categoryLabel(String key) => switch (key) {
+          'coffee' => l10n?.expenseCategoryCoffee ?? 'Coffee & kitchen',
+          'supplies' => l10n?.expenseCategorySupplies ?? 'Supplies',
+          'equipment' => l10n?.expenseCategoryEquipment ?? 'Equipment',
+          _ => l10n?.expenseCategoryOther ?? 'Other',
+        };
+
+    final amount = TextEditingController();
+    final description = TextEditingController();
+    var category = categories.first;
+    final submitted = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          left: 24,
+          right: 24,
+          top: 24,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+        ),
+        child: StatefulBuilder(
+          builder: (context, setSheetState) => Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                l10n?.moneySubmitExpense ?? 'Submit an expense',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: amount,
+                decoration: InputDecoration(
+                  labelText: l10n?.moneyAmountLabel ?? 'Amount',
+                  suffixText: currency.currencyName,
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                autofocus: true,
+              ),
+              const SizedBox(height: 12),
+              DropdownButtonFormField<String>(
+                initialValue: category,
+                decoration: InputDecoration(
+                  labelText: l10n?.moneyExpenseCategoryLabel ?? 'Category',
+                ),
+                items: [
+                  for (final key in categories)
+                    DropdownMenuItem(
+                      value: key,
+                      child: Text(categoryLabel(key)),
+                    ),
+                ],
+                onChanged: (v) =>
+                    setSheetState(() => category = v ?? category),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: description,
+                decoration: InputDecoration(
+                  labelText: l10n?.moneyDescriptionLabel ?? 'Description',
+                ),
+              ),
+              const SizedBox(height: 16),
+              FilledButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text(
+                  l10n?.moneySubmitPayment ?? 'Submit for confirmation',
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (submitted != true) return;
+
+    final parsed =
+        double.tryParse(amount.text.trim().replaceAll(',', '.'));
+    if (parsed == null || parsed <= 0) return;
+    try {
+      await ref.read(moneyRepositoryProvider).submitExpense(
+            workspaceId: workspace.id,
+            amountCents: (parsed * 100).round(),
+            category: category,
+            description: description.text.trim(),
+          );
+    } catch (e, st) {
+      debugPrint('submit expense failed: $e\n$st');
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            l10n?.workspaceGenericError ??
+                'Something went wrong. Please try again.',
+          ),
+        ),
+      );
+      return;
+    }
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          l10n?.moneyExpensePending ??
+              'Expense submitted — waiting for approval.',
+        ),
+      ),
+    );
+    ref.invalidate(eventsProvider);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -149,6 +271,12 @@ class MoneyScreen extends ConsumerWidget {
               onPressed: () => _recordPaymentSheet(context, ref, currency),
               icon: const Icon(Icons.payments_outlined),
               label: Text(l10n?.moneyRecordPayment ?? 'Record a payment'),
+            ),
+            const SizedBox(height: 8),
+            OutlinedButton.icon(
+              onPressed: () => _submitExpenseSheet(context, ref, currency),
+              icon: const Icon(Icons.receipt_long_outlined),
+              label: Text(l10n?.moneySubmitExpense ?? 'Submit an expense'),
             ),
             const SizedBox(height: 16),
             Text(

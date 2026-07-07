@@ -19,5 +19,13 @@
   "ledgerCategoryOverage": "Mehrnutzung",
   "ledgerCategoryExpense": "Auslagenerstattung",
   "ledgerCategoryPayment": "Zahlung",
-  "ledgerCategoryAdjustment": "Korrektur"
+  "ledgerCategoryAdjustment": "Korrektur",
+  "moneySubmitExpense": "Ausgabe einreichen",
+  "moneyExpenseCategoryLabel": "Kategorie",
+  "moneyDescriptionLabel": "Beschreibung",
+  "moneyExpensePending": "Ausgabe eingereicht — wartet auf Freigabe.",
+  "expenseCategoryCoffee": "Kaffee & Küche",
+  "expenseCategorySupplies": "Verbrauchsmaterial",
+  "expenseCategoryEquipment": "Ausstattung",
+  "expenseCategoryOther": "Sonstiges"
 }

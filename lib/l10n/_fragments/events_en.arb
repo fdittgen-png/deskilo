@@ -60,6 +60,22 @@
       "target": {"type": "String"}
     }
   },
+  "eventPaymentSubmitted": "{actor} recorded a payment of {amount}",
+  "@eventPaymentSubmitted": {
+    "description": "Feed line for payment events",
+    "placeholders": {
+      "actor": {"type": "String"},
+      "amount": {"type": "String"}
+    }
+  },
+  "eventExpenseSubmitted": "{actor} submitted an expense of {amount}",
+  "@eventExpenseSubmitted": {
+    "description": "Feed line for expense events",
+    "placeholders": {
+      "actor": {"type": "String"},
+      "amount": {"type": "String"}
+    }
+  },
   "eventForSubject": "for {name}",
   "@eventForSubject": {
     "description": "Suffix when an admin acted on someone else's behalf",
