@@ -223,6 +223,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coming soon'**
   String get comingSoon;
+
+  /// App-bar title of the first-run onboarding screen
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to DesKilo'**
+  String get onboardingTitle;
+
+  /// Segmented-button label switching onboarding to create mode
+  ///
+  /// In en, this message translates to:
+  /// **'Create a workspace'**
+  String get onboardingCreateTab;
+
+  /// Segmented-button label switching onboarding to join mode
+  ///
+  /// In en, this message translates to:
+  /// **'Join a workspace'**
+  String get onboardingJoinTab;
+
+  /// Label of the workspace-name input
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace name'**
+  String get workspaceNameLabel;
+
+  /// Label of the country dropdown; the country presets currency and time zone
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get workspaceCountryLabel;
+
+  /// Label of the ISO-4217 currency input
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get workspaceCurrencyLabel;
+
+  /// Label of the IANA time-zone input
+  ///
+  /// In en, this message translates to:
+  /// **'Time zone'**
+  String get workspaceTimezoneLabel;
+
+  /// Submit button creating the workspace (caller becomes owner)
+  ///
+  /// In en, this message translates to:
+  /// **'Create workspace'**
+  String get onboardingCreateButton;
+
+  /// Label of the invite-code input in join mode
+  ///
+  /// In en, this message translates to:
+  /// **'Invite code'**
+  String get workspaceInviteCodeLabel;
+
+  /// Submit button joining a workspace by invite code
+  ///
+  /// In en, this message translates to:
+  /// **'Join'**
+  String get onboardingJoinButton;
+
+  /// Snackbar shown when creating/joining a workspace fails
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get workspaceGenericError;
+
+  /// Country display name (workspace creation dropdown)
+  ///
+  /// In en, this message translates to:
+  /// **'Germany'**
+  String get countryNameDE;
+
+  /// No description provided for @countryNameAT.
+  ///
+  /// In en, this message translates to:
+  /// **'Austria'**
+  String get countryNameAT;
+
+  /// No description provided for @countryNameCH.
+  ///
+  /// In en, this message translates to:
+  /// **'Switzerland'**
+  String get countryNameCH;
+
+  /// No description provided for @countryNameFR.
+  ///
+  /// In en, this message translates to:
+  /// **'France'**
+  String get countryNameFR;
+
+  /// No description provided for @countryNameIT.
+  ///
+  /// In en, this message translates to:
+  /// **'Italy'**
+  String get countryNameIT;
+
+  /// No description provided for @countryNameES.
+  ///
+  /// In en, this message translates to:
+  /// **'Spain'**
+  String get countryNameES;
+
+  /// No description provided for @countryNamePT.
+  ///
+  /// In en, this message translates to:
+  /// **'Portugal'**
+  String get countryNamePT;
+
+  /// No description provided for @countryNameNL.
+  ///
+  /// In en, this message translates to:
+  /// **'Netherlands'**
+  String get countryNameNL;
+
+  /// No description provided for @countryNameBE.
+  ///
+  /// In en, this message translates to:
+  /// **'Belgium'**
+  String get countryNameBE;
+
+  /// No description provided for @countryNameLU.
+  ///
+  /// In en, this message translates to:
+  /// **'Luxembourg'**
+  String get countryNameLU;
+
+  /// No description provided for @countryNameGB.
+  ///
+  /// In en, this message translates to:
+  /// **'United Kingdom'**
+  String get countryNameGB;
+
+  /// No description provided for @countryNameUS.
+  ///
+  /// In en, this message translates to:
+  /// **'United States'**
+  String get countryNameUS;
 }
 
 class _AppLocalizationsDelegate

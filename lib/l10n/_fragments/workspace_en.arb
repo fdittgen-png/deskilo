@@ -1,0 +1,62 @@
+{
+  "@@locale": "en",
+  "onboardingTitle": "Welcome to DesKilo",
+  "@onboardingTitle": {
+    "description": "App-bar title of the first-run onboarding screen"
+  },
+  "onboardingCreateTab": "Create a workspace",
+  "@onboardingCreateTab": {
+    "description": "Segmented-button label switching onboarding to create mode"
+  },
+  "onboardingJoinTab": "Join a workspace",
+  "@onboardingJoinTab": {
+    "description": "Segmented-button label switching onboarding to join mode"
+  },
+  "workspaceNameLabel": "Workspace name",
+  "@workspaceNameLabel": {
+    "description": "Label of the workspace-name input"
+  },
+  "workspaceCountryLabel": "Country",
+  "@workspaceCountryLabel": {
+    "description": "Label of the country dropdown; the country presets currency and time zone"
+  },
+  "workspaceCurrencyLabel": "Currency",
+  "@workspaceCurrencyLabel": {
+    "description": "Label of the ISO-4217 currency input"
+  },
+  "workspaceTimezoneLabel": "Time zone",
+  "@workspaceTimezoneLabel": {
+    "description": "Label of the IANA time-zone input"
+  },
+  "onboardingCreateButton": "Create workspace",
+  "@onboardingCreateButton": {
+    "description": "Submit button creating the workspace (caller becomes owner)"
+  },
+  "workspaceInviteCodeLabel": "Invite code",
+  "@workspaceInviteCodeLabel": {
+    "description": "Label of the invite-code input in join mode"
+  },
+  "onboardingJoinButton": "Join",
+  "@onboardingJoinButton": {
+    "description": "Submit button joining a workspace by invite code"
+  },
+  "workspaceGenericError": "Something went wrong. Please try again.",
+  "@workspaceGenericError": {
+    "description": "Snackbar shown when creating/joining a workspace fails"
+  },
+  "countryNameDE": "Germany",
+  "@countryNameDE": {
+    "description": "Country display name (workspace creation dropdown)"
+  },
+  "countryNameAT": "Austria",
+  "countryNameCH": "Switzerland",
+  "countryNameFR": "France",
+  "countryNameIT": "Italy",
+  "countryNameES": "Spain",
+  "countryNamePT": "Portugal",
+  "countryNameNL": "Netherlands",
+  "countryNameBE": "Belgium",
+  "countryNameLU": "Luxembourg",
+  "countryNameGB": "United Kingdom",
+  "countryNameUS": "United States"
+}

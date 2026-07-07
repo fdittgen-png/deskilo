@@ -68,4 +68,74 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get comingSoon => 'Demnächst verfügbar';
+
+  @override
+  String get onboardingTitle => 'Willkommen bei DesKilo';
+
+  @override
+  String get onboardingCreateTab => 'Workspace erstellen';
+
+  @override
+  String get onboardingJoinTab => 'Workspace beitreten';
+
+  @override
+  String get workspaceNameLabel => 'Name des Workspace';
+
+  @override
+  String get workspaceCountryLabel => 'Land';
+
+  @override
+  String get workspaceCurrencyLabel => 'Währung';
+
+  @override
+  String get workspaceTimezoneLabel => 'Zeitzone';
+
+  @override
+  String get onboardingCreateButton => 'Workspace erstellen';
+
+  @override
+  String get workspaceInviteCodeLabel => 'Einladungscode';
+
+  @override
+  String get onboardingJoinButton => 'Beitreten';
+
+  @override
+  String get workspaceGenericError =>
+      'Etwas ist schiefgelaufen. Bitte erneut versuchen.';
+
+  @override
+  String get countryNameDE => 'Deutschland';
+
+  @override
+  String get countryNameAT => 'Österreich';
+
+  @override
+  String get countryNameCH => 'Schweiz';
+
+  @override
+  String get countryNameFR => 'Frankreich';
+
+  @override
+  String get countryNameIT => 'Italien';
+
+  @override
+  String get countryNameES => 'Spanien';
+
+  @override
+  String get countryNamePT => 'Portugal';
+
+  @override
+  String get countryNameNL => 'Niederlande';
+
+  @override
+  String get countryNameBE => 'Belgien';
+
+  @override
+  String get countryNameLU => 'Luxemburg';
+
+  @override
+  String get countryNameGB => 'Vereinigtes Königreich';
+
+  @override
+  String get countryNameUS => 'Vereinigte Staaten';
 }
