@@ -21,6 +21,9 @@ jobs:
   bundle:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      # secrets context is not allowed in step-level `if`; bridge via env
+      HAS_PLAY_SA: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON != '' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -68,7 +71,7 @@ jobs:
           retention-days: 30
 
       - name: Upload to Play internal track
-        if: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON != '' }}
+        if: ${{ env.HAS_PLAY_SA == 'true' }}
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON }}
