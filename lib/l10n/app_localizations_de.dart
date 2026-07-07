@@ -49,6 +49,30 @@ class AppLocalizationsDe extends AppLocalizations {
   String get authSignOut => 'Abmelden';
 
   @override
+  String get calendarMineTab => 'Meine';
+
+  @override
+  String get calendarEveryoneTab => 'Alle';
+
+  @override
+  String get calendarNoReservations => 'Keine Reservierungen an diesem Tag.';
+
+  @override
+  String get calendarCancelOccurrence => 'Diesen Termin stornieren';
+
+  @override
+  String get calendarCancelFollowing => 'Diesen und folgende stornieren';
+
+  @override
+  String get calendarPreviousMonth => 'Vorheriger Monat';
+
+  @override
+  String get calendarNextMonth => 'Nächster Monat';
+
+  @override
+  String get calendarReservationActions => 'Aktionen zur Reservierung';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override

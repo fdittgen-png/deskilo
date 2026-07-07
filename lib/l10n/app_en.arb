@@ -52,6 +52,38 @@
   "@authSignOut": {
     "description": "Sign-out action in settings"
   },
+  "calendarMineTab": "Mine",
+  "@calendarMineTab": {
+    "description": "Calendar filter showing only the user's reservations"
+  },
+  "calendarEveryoneTab": "Everyone",
+  "@calendarEveryoneTab": {
+    "description": "Calendar filter for admins showing all reservations"
+  },
+  "calendarNoReservations": "No reservations on this day.",
+  "@calendarNoReservations": {
+    "description": "Empty state under the month grid"
+  },
+  "calendarCancelOccurrence": "Cancel this occurrence",
+  "@calendarCancelOccurrence": {
+    "description": "Series cancel scope: only the tapped instance"
+  },
+  "calendarCancelFollowing": "Cancel this and following",
+  "@calendarCancelFollowing": {
+    "description": "Series cancel scope: the tapped instance and all later ones"
+  },
+  "calendarPreviousMonth": "Previous month",
+  "@calendarPreviousMonth": {
+    "description": "Tooltip of the back arrow in the month header"
+  },
+  "calendarNextMonth": "Next month",
+  "@calendarNextMonth": {
+    "description": "Tooltip of the forward arrow in the month header"
+  },
+  "calendarReservationActions": "Reservation actions",
+  "@calendarReservationActions": {
+    "description": "Tooltip of the per-reservation overflow button"
+  },
   "appTitle": "DesKilo",
   "@appTitle": {
     "description": "Application name shown in the task switcher and app bar. Brand name — identical in all locales."

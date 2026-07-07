@@ -17,6 +17,10 @@ abstract class FloorPlanRepository {
   /// Persists a new level order; index in [orderedLevelIds] becomes sort_order.
   Future<void> reorderLevels(List<String> orderedLevelIds);
 
+  /// seat/office id → display name across the whole workspace (calendar and
+  /// event lists label bookings without loading every level's plan).
+  Future<Map<String, String>> fetchTargetNames(String workspaceId);
+
   Future<FloorPlan> fetchPlan(String levelId);
 
   Future<Office> createOffice({

@@ -35,6 +35,26 @@ Future<Map<String, String>> memberNames(Ref ref) async {
   return ref.watch(workspaceRepositoryProvider).fetchMemberNames(workspace.id);
 }
 
+/// Reservations of the active workspace intersecting the given month
+/// (keyed 'yyyy-MM').
+@riverpod
+Future<List<Reservation>> reservationsForMonth(Ref ref, String monthKey) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  final parts = monthKey.split('-').map(int.parse).toList();
+  final from = DateTime.utc(parts[0], parts[1]);
+  final to = DateTime.utc(parts[0], parts[1] + 1);
+  return ref
+      .watch(reservationRepositoryProvider)
+      .fetchWindow(workspace.id, from: from, to: to);
+}
+
+/// Canonical family key for [reservationsForMonth].
+String monthKeyOf(DateTime at) {
+  final utc = at.toUtc();
+  return '${utc.year}-${utc.month.toString().padLeft(2, '0')}';
+}
+
 /// Canonical family key for [reservationsForDay].
 String dayKeyOf(DateTime at) {
   final utc = at.toUtc();
