@@ -66,6 +66,42 @@ class SupabaseReservationRepository implements ReservationRepository {
     });
   }
 
+  @override
+  Future<SeriesResult> createSeries({
+    required String workspaceId,
+    required String seatId,
+    required DateTime firstStart,
+    required DateTime firstEnd,
+    required SeriesPattern pattern,
+    required DateTime until,
+  }) async {
+    final result = await _client.rpc<dynamic>('create_series', params: {
+      'p_workspace_id': workspaceId,
+      'p_seat_id': seatId,
+      'p_first_start': firstStart.toUtc().toIso8601String(),
+      'p_first_end': firstEnd.toUtc().toIso8601String(),
+      'p_pattern': pattern.name,
+      'p_until': until.toUtc().toIso8601String(),
+    }) as Map<String, dynamic>;
+    List<DateTime> dates(String key) => (result[key] as List<dynamic>)
+        .map((v) => DateTime.parse(v as String))
+        .toList();
+    return SeriesResult(
+      seriesId: result['series_id'] as String,
+      booked: dates('booked'),
+      skipped: dates('skipped'),
+    );
+  }
+
+  @override
+  Future<int> cancelSeries(String seriesId, {DateTime? from}) async {
+    final result = await _client.rpc<dynamic>('cancel_series', params: {
+      'p_series_id': seriesId,
+      'p_from': from?.toUtc().toIso8601String(),
+    });
+    return result as int;
+  }
+
   Reservation _fromRow(Map<String, dynamic> row) => Reservation(
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,

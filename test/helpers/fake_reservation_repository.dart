@@ -115,4 +115,64 @@ class FakeReservationRepository implements ReservationRepository {
     if (!r.isActive) throw StateError('not cancellable');
     _replace(r.copyWith(status: ReservationStatus.cancelled));
   }
+
+  @override
+  Future<SeriesResult> createSeries({
+    required String workspaceId,
+    required String seatId,
+    required DateTime firstStart,
+    required DateTime firstEnd,
+    required SeriesPattern pattern,
+    required DateTime until,
+  }) async {
+    final seriesId = 'series-${_nextId++}';
+    final booked = <DateTime>[];
+    final skipped = <DateTime>[];
+    final step = pattern == SeriesPattern.weekly
+        ? const Duration(days: 7)
+        : const Duration(days: 1);
+    var start = firstStart;
+    var end = firstEnd;
+    while (!start.isAfter(until)) {
+      final isWeekday = start.weekday <= DateTime.friday;
+      if (pattern != SeriesPattern.weekdays || isWeekday) {
+        if (_overlapsActive(seatId, null, start, end)) {
+          skipped.add(start);
+        } else {
+          reservations.add(
+            Reservation(
+              id: 'res-${_nextId++}',
+              workspaceId: workspaceId,
+              seatId: seatId,
+              memberId: myMemberId,
+              startsAt: start,
+              endsAt: end,
+              status: ReservationStatus.reserved,
+              seriesId: seriesId,
+            ),
+          );
+          booked.add(start);
+        }
+      }
+      start = start.add(step);
+      end = end.add(step);
+    }
+    return SeriesResult(seriesId: seriesId, booked: booked, skipped: skipped);
+  }
+
+  @override
+  Future<int> cancelSeries(String seriesId, {DateTime? from}) async {
+    var count = 0;
+    for (var i = 0; i < reservations.length; i++) {
+      final r = reservations[i];
+      if (r.seriesId == seriesId &&
+          r.status == ReservationStatus.reserved &&
+          (from == null || !r.startsAt.isBefore(from))) {
+        reservations[i] = r.copyWith(status: ReservationStatus.cancelled);
+        count++;
+      }
+    }
+    if (count == 0) throw StateError('nothing to cancel');
+    return count;
+  }
 }

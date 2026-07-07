@@ -271,6 +271,41 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get planRepeatLabel => 'Repetir';
+
+  @override
+  String get repeatNone => 'No se repite';
+
+  @override
+  String get repeatDaily => 'Cada día';
+
+  @override
+  String get repeatWeekdays => 'Cada día laborable';
+
+  @override
+  String get repeatWeekly => 'Semanalmente';
+
+  @override
+  String get planUntilDateLabel => 'Repetir hasta';
+
+  @override
+  String seriesBookedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count reservas creadas',
+      one: '1 reserva creada',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get seriesSkippedTitle => 'Omitidas (ya ocupadas):';
+
+  @override
+  String get commonOk => 'Aceptar';
+
+  @override
   String get onboardingTitle => 'Bienvenido a DesKilo';
 
   @override

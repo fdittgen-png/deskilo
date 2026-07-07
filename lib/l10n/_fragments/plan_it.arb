@@ -20,5 +20,14 @@
   "planNowButton": "Adesso",
   "planReserveButton": "Prenota",
   "planReservationsEmpty": "Nessuna prenotazione per questo giorno.",
-  "planStartsAt": "Inizia alle {time}"
+  "planStartsAt": "Inizia alle {time}",
+  "planRepeatLabel": "Ripeti",
+  "repeatNone": "Non si ripete",
+  "repeatDaily": "Ogni giorno",
+  "repeatWeekdays": "Ogni giorno feriale",
+  "repeatWeekly": "Ogni settimana",
+  "planUntilDateLabel": "Ripeti fino al",
+  "seriesBookedCount": "{count, plural, =1{1 prenotazione creata} other{{count} prenotazioni create}}",
+  "seriesSkippedTitle": "Saltate (già occupate):",
+  "commonOk": "OK"
 }
