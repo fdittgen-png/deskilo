@@ -12,12 +12,5 @@
   "authFieldRequired": "Obligatoire",
   "authPasswordTooShort": "Au moins 8 caractères",
   "authGenericError": "Échec de l'authentification. Vérifiez vos identifiants et réessayez.",
-  "authSignOut": "Se déconnecter",
-  "appTitle": "DesKilo",
-  "tabPlan": "Plan",
-  "tabCalendar": "Calendrier",
-  "tabEvents": "Événements",
-  "tabMoney": "Finances",
-  "settingsTitle": "Réglages",
-  "comingSoon": "Bientôt disponible"
+  "authSignOut": "Se déconnecter"
 }

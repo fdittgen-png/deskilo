@@ -10,6 +10,6 @@ import '../core/backend/backend_config.dart';
 Future<void> initializeApp() async {
   await Supabase.initialize(
     url: BackendConfig.supabaseUrl,
-    anonKey: BackendConfig.supabaseKey,
+    publishableKey: BackendConfig.supabaseKey,
   );
 }

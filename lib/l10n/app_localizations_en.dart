@@ -9,6 +9,46 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get authSignInTitle => 'Sign in';
+
+  @override
+  String get authSignUpTitle => 'Create account';
+
+  @override
+  String get authEmailLabel => 'Email';
+
+  @override
+  String get authPasswordLabel => 'Password';
+
+  @override
+  String get authDisplayNameLabel => 'Display name';
+
+  @override
+  String get authSignInButton => 'Sign in';
+
+  @override
+  String get authSignUpButton => 'Create account';
+
+  @override
+  String get authToggleToSignUp => 'New here? Create an account';
+
+  @override
+  String get authToggleToSignIn => 'Already have an account? Sign in';
+
+  @override
+  String get authFieldRequired => 'Required';
+
+  @override
+  String get authPasswordTooShort => 'At least 8 characters';
+
+  @override
+  String get authGenericError =>
+      'Authentication failed. Check your credentials and try again.';
+
+  @override
+  String get authSignOut => 'Sign out';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override

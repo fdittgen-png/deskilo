@@ -9,6 +9,46 @@ class AppLocalizationsDe extends AppLocalizations {
   AppLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
+  String get authSignInTitle => 'Anmelden';
+
+  @override
+  String get authSignUpTitle => 'Konto erstellen';
+
+  @override
+  String get authEmailLabel => 'E-Mail';
+
+  @override
+  String get authPasswordLabel => 'Passwort';
+
+  @override
+  String get authDisplayNameLabel => 'Anzeigename';
+
+  @override
+  String get authSignInButton => 'Anmelden';
+
+  @override
+  String get authSignUpButton => 'Konto erstellen';
+
+  @override
+  String get authToggleToSignUp => 'Neu hier? Konto erstellen';
+
+  @override
+  String get authToggleToSignIn => 'Schon ein Konto? Anmelden';
+
+  @override
+  String get authFieldRequired => 'Pflichtfeld';
+
+  @override
+  String get authPasswordTooShort => 'Mindestens 8 Zeichen';
+
+  @override
+  String get authGenericError =>
+      'Anmeldung fehlgeschlagen. Bitte Zugangsdaten prüfen und erneut versuchen.';
+
+  @override
+  String get authSignOut => 'Abmelden';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override

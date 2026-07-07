@@ -9,6 +9,46 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
+  String get authSignInTitle => 'Connexion';
+
+  @override
+  String get authSignUpTitle => 'Créer un compte';
+
+  @override
+  String get authEmailLabel => 'E-mail';
+
+  @override
+  String get authPasswordLabel => 'Mot de passe';
+
+  @override
+  String get authDisplayNameLabel => 'Nom affiché';
+
+  @override
+  String get authSignInButton => 'Se connecter';
+
+  @override
+  String get authSignUpButton => 'Créer le compte';
+
+  @override
+  String get authToggleToSignUp => 'Nouveau ici ? Créez un compte';
+
+  @override
+  String get authToggleToSignIn => 'Déjà un compte ? Connectez-vous';
+
+  @override
+  String get authFieldRequired => 'Obligatoire';
+
+  @override
+  String get authPasswordTooShort => 'Au moins 8 caractères';
+
+  @override
+  String get authGenericError =>
+      'Échec de l\'authentification. Vérifiez vos identifiants et réessayez.';
+
+  @override
+  String get authSignOut => 'Se déconnecter';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
