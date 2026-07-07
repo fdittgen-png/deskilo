@@ -96,6 +96,52 @@ class AppLocalizationsEn extends AppLocalizations {
       'Delete this level? All offices, desks and seats on it are removed.';
 
   @override
+  String get editorToolSelect => 'Select';
+
+  @override
+  String get editorToolOffice => 'Office';
+
+  @override
+  String get editorToolDesk => 'Desk';
+
+  @override
+  String get editorToolErase => 'Erase';
+
+  @override
+  String get editorNewOffice => 'New office';
+
+  @override
+  String get editorOfficeNameLabel => 'Office name';
+
+  @override
+  String get editorOfficeNameDefault => 'Office';
+
+  @override
+  String get editorDeskNameDefault => 'Desk';
+
+  @override
+  String get editorDeskNameLabel => 'Desk name';
+
+  @override
+  String get editorPlacementOverlap => 'Overlaps an existing element.';
+
+  @override
+  String get editorPlacementOutside => 'Must be fully inside an office.';
+
+  @override
+  String get editorOfficeProperties => 'Office';
+
+  @override
+  String get editorDeskProperties => 'Desk';
+
+  @override
+  String get editorBookableAsWhole => 'Bookable as a whole';
+
+  @override
+  String get editorDeleteElementConfirm =>
+      'Delete this element? Anything placed on it is removed too.';
+
+  @override
   String get commonCancel => 'Cancel';
 
   @override

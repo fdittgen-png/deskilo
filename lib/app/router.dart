@@ -7,6 +7,7 @@ import '../features/auth/presentation/screens/auth_screen.dart';
 import '../features/auth/providers/auth_providers.dart';
 import '../features/calendar/presentation/screens/calendar_screen.dart';
 import '../features/editor/presentation/screens/editor_screen.dart';
+import '../features/editor/presentation/screens/level_canvas_screen.dart';
 import '../features/events/presentation/screens/events_screen.dart';
 import '../features/money/presentation/screens/money_screen.dart';
 import '../features/plan/presentation/screens/plan_screen.dart';
@@ -112,6 +113,14 @@ GoRouter router(Ref ref) {
           return isOwner ? null : '/plan';
         },
         builder: (context, state) => const EditorScreen(),
+        routes: [
+          GoRoute(
+            path: 'level/:levelId',
+            builder: (context, state) => LevelCanvasScreen(
+              levelId: state.pathParameters['levelId']!,
+            ),
+          ),
+        ],
       ),
     ],
   );

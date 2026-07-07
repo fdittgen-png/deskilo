@@ -96,6 +96,53 @@ class AppLocalizationsIt extends AppLocalizations {
       'Eliminare questo piano? Tutti gli uffici, le scrivanie e i posti su di esso verranno rimossi.';
 
   @override
+  String get editorToolSelect => 'Seleziona';
+
+  @override
+  String get editorToolOffice => 'Ufficio';
+
+  @override
+  String get editorToolDesk => 'Scrivania';
+
+  @override
+  String get editorToolErase => 'Cancella';
+
+  @override
+  String get editorNewOffice => 'Nuovo ufficio';
+
+  @override
+  String get editorOfficeNameLabel => 'Nome dell\'ufficio';
+
+  @override
+  String get editorOfficeNameDefault => 'Ufficio';
+
+  @override
+  String get editorDeskNameDefault => 'Scrivania';
+
+  @override
+  String get editorDeskNameLabel => 'Nome della scrivania';
+
+  @override
+  String get editorPlacementOverlap => 'Si sovrappone a un elemento esistente.';
+
+  @override
+  String get editorPlacementOutside =>
+      'Deve trovarsi completamente all\'interno di un ufficio.';
+
+  @override
+  String get editorOfficeProperties => 'Ufficio';
+
+  @override
+  String get editorDeskProperties => 'Scrivania';
+
+  @override
+  String get editorBookableAsWhole => 'Prenotabile per intero';
+
+  @override
+  String get editorDeleteElementConfirm =>
+      'Eliminare questo elemento? Anche tutto ciò che vi è posizionato sopra verrà rimosso.';
+
+  @override
   String get commonCancel => 'Annulla';
 
   @override

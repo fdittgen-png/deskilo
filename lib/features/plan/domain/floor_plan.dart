@@ -24,4 +24,13 @@ sealed class FloorPlan with _$FloorPlan {
 
   List<Seat> seatsOf(String deskId) =>
       seats.where((s) => s.deskId == deskId).toList();
+
+  Office? officeAtCell(int x, int y) =>
+      offices.where((o) => o.rect.containsCell(x, y)).firstOrNull;
+
+  Desk? deskAtCell(int x, int y) =>
+      desks.where((d) => d.rect.containsCell(x, y)).firstOrNull;
+
+  Seat? seatAtCell(int x, int y) =>
+      seats.where((s) => s.footprint.containsCell(x, y)).firstOrNull;
 }

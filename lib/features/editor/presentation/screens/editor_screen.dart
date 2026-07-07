@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/level.dart';
@@ -123,9 +124,7 @@ class _LevelList extends ConsumerWidget {
             child: const Icon(Icons.drag_handle),
           ),
           title: Text(level.name),
-          onTap: () {
-            // #34 opens the grid canvas for this level.
-          },
+          onTap: () => context.push('/editor/level/${level.id}'),
           trailing: MenuAnchor(
             builder: (context, controller, child) => IconButton(
               icon: const Icon(Icons.more_vert),

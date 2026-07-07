@@ -272,6 +272,96 @@ abstract class AppLocalizations {
   /// **'Delete this level? All offices, desks and seats on it are removed.'**
   String get editorDeleteLevelConfirm;
 
+  /// Canvas tool: select/inspect elements, pan and zoom
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get editorToolSelect;
+
+  /// Canvas tool: drag to draw an office (room)
+  ///
+  /// In en, this message translates to:
+  /// **'Office'**
+  String get editorToolOffice;
+
+  /// Canvas tool: drag to draw a desk inside an office
+  ///
+  /// In en, this message translates to:
+  /// **'Desk'**
+  String get editorToolDesk;
+
+  /// Canvas tool: tap an element to delete it
+  ///
+  /// In en, this message translates to:
+  /// **'Erase'**
+  String get editorToolErase;
+
+  /// Dialog title after drawing an office rectangle
+  ///
+  /// In en, this message translates to:
+  /// **'New office'**
+  String get editorNewOffice;
+
+  /// Label of the office-name input
+  ///
+  /// In en, this message translates to:
+  /// **'Office name'**
+  String get editorOfficeNameLabel;
+
+  /// Default office name prefix; a number is appended
+  ///
+  /// In en, this message translates to:
+  /// **'Office'**
+  String get editorOfficeNameDefault;
+
+  /// Default desk name prefix; a number is appended
+  ///
+  /// In en, this message translates to:
+  /// **'Desk'**
+  String get editorDeskNameDefault;
+
+  /// Label of the desk-name input
+  ///
+  /// In en, this message translates to:
+  /// **'Desk name'**
+  String get editorDeskNameLabel;
+
+  /// Snackbar when a drawn rectangle collides with a sibling
+  ///
+  /// In en, this message translates to:
+  /// **'Overlaps an existing element.'**
+  String get editorPlacementOverlap;
+
+  /// Snackbar when a desk/seat is not fully inside its parent
+  ///
+  /// In en, this message translates to:
+  /// **'Must be fully inside an office.'**
+  String get editorPlacementOutside;
+
+  /// Title of the office property sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Office'**
+  String get editorOfficeProperties;
+
+  /// Title of the desk property dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Desk'**
+  String get editorDeskProperties;
+
+  /// Switch making the office itself the reservable unit
+  ///
+  /// In en, this message translates to:
+  /// **'Bookable as a whole'**
+  String get editorBookableAsWhole;
+
+  /// Confirmation body for the erase tool
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this element? Anything placed on it is removed too.'**
+  String get editorDeleteElementConfirm;
+
   /// Generic cancel action in dialogs
   ///
   /// In en, this message translates to:

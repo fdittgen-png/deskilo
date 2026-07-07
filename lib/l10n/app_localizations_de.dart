@@ -96,6 +96,53 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Etage löschen? Alle Büros, Tische und Plätze darauf werden entfernt.';
 
   @override
+  String get editorToolSelect => 'Auswahl';
+
+  @override
+  String get editorToolOffice => 'Büro';
+
+  @override
+  String get editorToolDesk => 'Tisch';
+
+  @override
+  String get editorToolErase => 'Löschen';
+
+  @override
+  String get editorNewOffice => 'Neues Büro';
+
+  @override
+  String get editorOfficeNameLabel => 'Name des Büros';
+
+  @override
+  String get editorOfficeNameDefault => 'Büro';
+
+  @override
+  String get editorDeskNameDefault => 'Tisch';
+
+  @override
+  String get editorDeskNameLabel => 'Name des Tisches';
+
+  @override
+  String get editorPlacementOverlap => 'Überschneidet ein vorhandenes Element.';
+
+  @override
+  String get editorPlacementOutside =>
+      'Muss vollständig innerhalb eines Büros liegen.';
+
+  @override
+  String get editorOfficeProperties => 'Büro';
+
+  @override
+  String get editorDeskProperties => 'Tisch';
+
+  @override
+  String get editorBookableAsWhole => 'Als Ganzes buchbar';
+
+  @override
+  String get editorDeleteElementConfirm =>
+      'Dieses Element löschen? Alles darauf wird ebenfalls entfernt.';
+
+  @override
   String get commonCancel => 'Abbrechen';
 
   @override

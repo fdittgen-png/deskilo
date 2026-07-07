@@ -32,6 +32,66 @@
   "@editorDeleteLevelConfirm": {
     "description": "Confirmation body before deleting a level"
   },
+  "editorToolSelect": "Select",
+  "@editorToolSelect": {
+    "description": "Canvas tool: select/inspect elements, pan and zoom"
+  },
+  "editorToolOffice": "Office",
+  "@editorToolOffice": {
+    "description": "Canvas tool: drag to draw an office (room)"
+  },
+  "editorToolDesk": "Desk",
+  "@editorToolDesk": {
+    "description": "Canvas tool: drag to draw a desk inside an office"
+  },
+  "editorToolErase": "Erase",
+  "@editorToolErase": {
+    "description": "Canvas tool: tap an element to delete it"
+  },
+  "editorNewOffice": "New office",
+  "@editorNewOffice": {
+    "description": "Dialog title after drawing an office rectangle"
+  },
+  "editorOfficeNameLabel": "Office name",
+  "@editorOfficeNameLabel": {
+    "description": "Label of the office-name input"
+  },
+  "editorOfficeNameDefault": "Office",
+  "@editorOfficeNameDefault": {
+    "description": "Default office name prefix; a number is appended"
+  },
+  "editorDeskNameDefault": "Desk",
+  "@editorDeskNameDefault": {
+    "description": "Default desk name prefix; a number is appended"
+  },
+  "editorDeskNameLabel": "Desk name",
+  "@editorDeskNameLabel": {
+    "description": "Label of the desk-name input"
+  },
+  "editorPlacementOverlap": "Overlaps an existing element.",
+  "@editorPlacementOverlap": {
+    "description": "Snackbar when a drawn rectangle collides with a sibling"
+  },
+  "editorPlacementOutside": "Must be fully inside an office.",
+  "@editorPlacementOutside": {
+    "description": "Snackbar when a desk/seat is not fully inside its parent"
+  },
+  "editorOfficeProperties": "Office",
+  "@editorOfficeProperties": {
+    "description": "Title of the office property sheet"
+  },
+  "editorDeskProperties": "Desk",
+  "@editorDeskProperties": {
+    "description": "Title of the desk property dialog"
+  },
+  "editorBookableAsWhole": "Bookable as a whole",
+  "@editorBookableAsWhole": {
+    "description": "Switch making the office itself the reservable unit"
+  },
+  "editorDeleteElementConfirm": "Delete this element? Anything placed on it is removed too.",
+  "@editorDeleteElementConfirm": {
+    "description": "Confirmation body for the erase tool"
+  },
   "commonCancel": "Cancel",
   "@commonCancel": {
     "description": "Generic cancel action in dialogs"
