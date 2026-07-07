@@ -36,6 +36,29 @@ in, not a member of the row's workspace), **worker** (active member),
   server-generated, unique; `join_workspace` re-activates an exited membership
   instead of duplicating it.
 
+## Floor-plan tables (levels · offices · desks · seats)
+
+| Operation | anon | user | worker | admin | owner | Mechanism |
+|---|---|---|---|---|---|---|
+| select | — | — | ✅ | ✅ | ✅ | `is_member_of(workspace_id)` |
+| insert / update / delete | — | — | — | — | ✅ | `is_owner_of(workspace_id)` — only owners alter the workspace (spec §2) |
+
+`workspace_id` is denormalized onto all four tables so every policy is a
+single helper call.
+
+## Function grants (migration 0004)
+
+- Trigger functions (`handle_new_user`, `protect_last_owner`) and
+  `gen_invite_code`: EXECUTE revoked from every API role.
+- Helper predicates + RPCs: EXECUTE revoked from `anon`/`public`;
+  `authenticated` keeps EXECUTE.
+- **Accepted advisor warnings**: the linter still notes that `authenticated`
+  can execute the SECURITY DEFINER RPCs and helper predicates — that IS the
+  API surface (RPCs check `auth.uid()`; predicates only answer questions
+  about the caller's own memberships). Do not "fix" these.
+- `btree_gist` lives in the `extensions` schema (kept for future
+  reservation-overlap exclusion constraints).
+
 ## Auditing rule
 
 Every migration that touches a table, policy, or `security definer` function
