@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:intl/intl.dart';
+
+import '../../core/notifications/notification_providers.dart';
 import '../../features/events/providers/event_providers.dart';
+import '../../features/plan/providers/floor_plan_providers.dart';
+import '../../features/reservations/domain/check_in_reminders.dart';
+import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../router.dart';
@@ -37,6 +43,34 @@ class ShellScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final isOwner = ref.watch(myMemberProvider).value?.isOwner ?? false;
+
+    // Keep the local check-in reminders in sync with my upcoming bookings
+    // (spec §4.3). Best-effort; failures never disturb the UI.
+    ref.listen(myUpcomingReservationsProvider, (_, next) async {
+      final upcoming = next.value;
+      if (upcoming == null) return;
+      final member = await ref.read(myMemberProvider.future);
+      if (member == null) return;
+      final targets = await ref.read(targetNamesProvider.future);
+      final timeFormat = DateFormat.Hm();
+      final reminders = upcomingCheckInReminders(
+        reservations: upcoming,
+        myMemberId: member.id,
+        now: DateTime.now(),
+        targetNames: targets,
+        titleOf: (target, startsAt) =>
+            l10n?.reminderTitle ?? 'Check in soon',
+        bodyOf: (target, startsAt) =>
+            l10n?.reminderBody(
+              target,
+              timeFormat.format(startsAt.toLocal()),
+            ) ??
+            '$target starts at ${timeFormat.format(startsAt.toLocal())}',
+      );
+      ref
+          .read(notificationServiceProvider)
+          .rescheduleCheckInReminders(reminders);
+    });
     final tabTitles = [
       l10n?.tabPlan ?? 'Plan',
       l10n?.tabCalendar ?? 'Calendar',

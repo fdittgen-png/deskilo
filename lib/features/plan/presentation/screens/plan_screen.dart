@@ -192,7 +192,9 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
           'Could not check in — the seat may have just been taken.');
       return;
     }
-    ref.invalidate(reservationsForDayProvider);
+    ref
+      ..invalidate(reservationsForDayProvider)
+      ..invalidate(myUpcomingReservationsProvider);
   }
 
   /// Explicit exception report after booking a series (spec §5.2).
@@ -282,7 +284,9 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       case 'cancel':
         await repo.cancel(mine.id);
     }
-    ref.invalidate(reservationsForDayProvider);
+    ref
+      ..invalidate(reservationsForDayProvider)
+      ..invalidate(myUpcomingReservationsProvider);
   }
 
   @override

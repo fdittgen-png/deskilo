@@ -149,6 +149,56 @@ final class ReservationsForDayFamily extends $Family
   String toString() => r'reservationsForDayProvider';
 }
 
+/// My reserved (not yet checked-in) bookings starting within 7 days —
+/// feeds the local check-in reminders (spec §4.3).
+
+@ProviderFor(myUpcomingReservations)
+final myUpcomingReservationsProvider = MyUpcomingReservationsProvider._();
+
+/// My reserved (not yet checked-in) bookings starting within 7 days —
+/// feeds the local check-in reminders (spec §4.3).
+
+final class MyUpcomingReservationsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Reservation>>,
+          List<Reservation>,
+          FutureOr<List<Reservation>>
+        >
+    with
+        $FutureModifier<List<Reservation>>,
+        $FutureProvider<List<Reservation>> {
+  /// My reserved (not yet checked-in) bookings starting within 7 days —
+  /// feeds the local check-in reminders (spec §4.3).
+  MyUpcomingReservationsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myUpcomingReservationsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myUpcomingReservationsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Reservation>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Reservation>> create(Ref ref) {
+    return myUpcomingReservations(ref);
+  }
+}
+
+String _$myUpcomingReservationsHash() =>
+    r'b3d264539d5e931b6be4a1a252fec089cf699ba1';
+
 /// member id → display name for the active workspace.
 
 @ProviderFor(memberNames)

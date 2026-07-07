@@ -1,0 +1,23 @@
+// SPDX-License-Identifier: MIT
+
+/// A scheduled local reminder (spec §4.3 check-in reminder).
+class ReminderRequest {
+  const ReminderRequest({
+    required this.reservationId,
+    required this.remindAt,
+    required this.title,
+    required this.body,
+  });
+
+  final String reservationId;
+  final DateTime remindAt;
+  final String title;
+  final String body;
+}
+
+/// Local-notification boundary. The UnifiedPush transport (#72, v1.1)
+/// will implement the same surface for closed-app delivery.
+abstract class NotificationService {
+  /// Replaces all scheduled check-in reminders with [reminders].
+  Future<void> rescheduleCheckInReminders(List<ReminderRequest> reminders);
+}

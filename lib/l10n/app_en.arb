@@ -681,6 +681,22 @@
   "@commonOk": {
     "description": "Generic acknowledge button"
   },
+  "reminderTitle": "Check in soon",
+  "reminderBody": "{target} starts at {time}",
+  "@reminderTitle": {
+    "description": "Local notification title 15 minutes before a reservation starts"
+  },
+  "@reminderBody": {
+    "description": "Local notification body",
+    "placeholders": {
+      "target": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "onboardingTitle": "Welcome to DesKilo",
   "@onboardingTitle": {
     "description": "App-bar title of the first-run onboarding screen"

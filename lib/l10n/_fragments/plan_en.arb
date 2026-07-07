@@ -40,28 +40,36 @@
   "@planReservedBy": {
     "description": "Snackbar fragment for a seat reserved by someone else",
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "planOccupiedBy": "Occupied by {name}",
   "@planOccupiedBy": {
     "description": "Snackbar fragment for a seat someone is checked in on",
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "planUntil": "until {time}",
   "@planUntil": {
     "description": "Suffix showing when the current booking ends",
     "placeholders": {
-      "time": {"type": "String"}
+      "time": {
+        "type": "String"
+      }
     }
   },
   "planCappedByNext": "The seat is reserved from {time}.",
   "@planCappedByNext": {
     "description": "Hint in the check-in sheet when a later reservation caps the stay",
     "placeholders": {
-      "time": {"type": "String"}
+      "time": {
+        "type": "String"
+      }
     }
   },
   "planCheckInFailed": "Could not check in — the seat may have just been taken.",
@@ -96,7 +104,9 @@
   "@planStartsAt": {
     "description": "Booking sheet start line for a future reservation",
     "placeholders": {
-      "time": {"type": "String"}
+      "time": {
+        "type": "String"
+      }
     }
   },
   "planRepeatLabel": "Repeat",
@@ -127,7 +137,9 @@
   "@seriesBookedCount": {
     "description": "Title of the series result dialog",
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "seriesSkippedTitle": "Skipped (already taken):",
@@ -137,5 +149,21 @@
   "commonOk": "OK",
   "@commonOk": {
     "description": "Generic acknowledge button"
+  },
+  "reminderTitle": "Check in soon",
+  "reminderBody": "{target} starts at {time}",
+  "@reminderTitle": {
+    "description": "Local notification title 15 minutes before a reservation starts"
+  },
+  "@reminderBody": {
+    "description": "Local notification body",
+    "placeholders": {
+      "target": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
   }
 }
