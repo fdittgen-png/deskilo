@@ -96,3 +96,42 @@ final class EventsProvider
 }
 
 String _$eventsHash() => r'94a3ee3da1a3fa5f32571529fc99ab264b9075af';
+
+/// How many events await MY confirmation — drives the Events tab badge.
+
+@ProviderFor(myPendingEventCount)
+final myPendingEventCountProvider = MyPendingEventCountProvider._();
+
+/// How many events await MY confirmation — drives the Events tab badge.
+
+final class MyPendingEventCountProvider
+    extends $FunctionalProvider<AsyncValue<int>, int, FutureOr<int>>
+    with $FutureModifier<int>, $FutureProvider<int> {
+  /// How many events await MY confirmation — drives the Events tab badge.
+  MyPendingEventCountProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myPendingEventCountProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myPendingEventCountHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<int> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<int> create(Ref ref) {
+    return myPendingEventCount(ref);
+  }
+}
+
+String _$myPendingEventCountHash() =>
+    r'1e1e51ec2eb41b6162f2fe37d0c34ab461358ee4';

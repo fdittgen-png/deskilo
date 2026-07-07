@@ -3,9 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/events/providers/event_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../router.dart';
+
+/// Events tab icon with the pending-confirmation badge (spec §8.1).
+class _EventsIcon extends ConsumerWidget {
+  const _EventsIcon({required this.selected});
+
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final count = ref.watch(myPendingEventCountProvider).value ?? 0;
+    final icon = Icon(
+      selected ? Icons.notifications : Icons.notifications_outlined,
+    );
+    if (count == 0) return icon;
+    return Badge.count(count: count, child: icon);
+  }
+}
 
 /// Bottom-navigation shell hosting the four tab branches
 /// Plan · Calendar · Events · Money (spec §13). Settings is not a tab —
@@ -62,8 +80,8 @@ class ShellScreen extends ConsumerWidget {
             label: tabTitles[1],
           ),
           NavigationDestination(
-            icon: const Icon(Icons.notifications_outlined),
-            selectedIcon: const Icon(Icons.notifications),
+            icon: const _EventsIcon(selected: false),
+            selectedIcon: const _EventsIcon(selected: true),
             label: tabTitles[2],
           ),
           NavigationDestination(
