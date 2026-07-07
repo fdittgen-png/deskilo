@@ -1,0 +1,16 @@
+{
+  "@@locale": "fr",
+  "eventsPendingHeader": "En attente de votre confirmation",
+  "eventAccept": "Accepter",
+  "eventReject": "Refuser",
+  "eventsEmpty": "Aucun événement pour l'instant.",
+  "eventsFilterAll": "Tous",
+  "eventTypeReservation": "Réservation",
+  "eventTypePayment": "Paiement",
+  "eventTypeExpense": "Dépense",
+  "eventTypeAdjustment": "Ajustement",
+  "eventReservationCreated": "{actor} a réservé {target}",
+  "eventReservationModified": "{actor} a modifié la réservation de {target}",
+  "eventReservationCancelled": "{actor} a annulé la réservation de {target}",
+  "eventForSubject": "pour {name}"
+}

@@ -220,6 +220,53 @@ class AppLocalizationsEs extends AppLocalizations {
   String get commonDelete => 'Eliminar';
 
   @override
+  String get eventsPendingHeader => 'Esperando tu confirmación';
+
+  @override
+  String get eventAccept => 'Aceptar';
+
+  @override
+  String get eventReject => 'Rechazar';
+
+  @override
+  String get eventsEmpty => 'Aún no hay eventos.';
+
+  @override
+  String get eventsFilterAll => 'Todos';
+
+  @override
+  String get eventTypeReservation => 'Reserva';
+
+  @override
+  String get eventTypePayment => 'Pago';
+
+  @override
+  String get eventTypeExpense => 'Gasto';
+
+  @override
+  String get eventTypeAdjustment => 'Ajuste';
+
+  @override
+  String eventReservationCreated(String actor, String target) {
+    return '$actor reservó $target';
+  }
+
+  @override
+  String eventReservationModified(String actor, String target) {
+    return '$actor modificó la reserva de $target';
+  }
+
+  @override
+  String eventReservationCancelled(String actor, String target) {
+    return '$actor canceló la reserva de $target';
+  }
+
+  @override
+  String eventForSubject(String name) {
+    return 'para $name';
+  }
+
+  @override
   String get planNoLevels => 'El espacio aún no tiene plano.';
 
   @override

@@ -1,0 +1,70 @@
+{
+  "@@locale": "en",
+  "eventsPendingHeader": "Waiting for your confirmation",
+  "@eventsPendingHeader": {
+    "description": "Header above pinned pending-confirmation cards (spec §8)"
+  },
+  "eventAccept": "Accept",
+  "@eventAccept": {
+    "description": "Confirm button on a pending event"
+  },
+  "eventReject": "Decline",
+  "@eventReject": {
+    "description": "Reject button on a pending event; voids what it would apply"
+  },
+  "eventsEmpty": "No events yet.",
+  "@eventsEmpty": {
+    "description": "Empty state of the Events tab"
+  },
+  "eventsFilterAll": "All",
+  "@eventsFilterAll": {
+    "description": "Type filter chip showing every event type"
+  },
+  "eventTypeReservation": "Reservation",
+  "@eventTypeReservation": {
+    "description": "Event type label / filter chip"
+  },
+  "eventTypePayment": "Payment",
+  "@eventTypePayment": {
+    "description": "Event type label / filter chip"
+  },
+  "eventTypeExpense": "Expense",
+  "@eventTypeExpense": {
+    "description": "Event type label / filter chip"
+  },
+  "eventTypeAdjustment": "Adjustment",
+  "@eventTypeAdjustment": {
+    "description": "Event type label / filter chip"
+  },
+  "eventReservationCreated": "{actor} booked {target}",
+  "@eventReservationCreated": {
+    "description": "Feed line for a created reservation",
+    "placeholders": {
+      "actor": {"type": "String"},
+      "target": {"type": "String"}
+    }
+  },
+  "eventReservationModified": "{actor} changed the booking of {target}",
+  "@eventReservationModified": {
+    "description": "Feed line for a modified reservation (incl. check-in/out)",
+    "placeholders": {
+      "actor": {"type": "String"},
+      "target": {"type": "String"}
+    }
+  },
+  "eventReservationCancelled": "{actor} cancelled the booking of {target}",
+  "@eventReservationCancelled": {
+    "description": "Feed line for a cancelled reservation",
+    "placeholders": {
+      "actor": {"type": "String"},
+      "target": {"type": "String"}
+    }
+  },
+  "eventForSubject": "for {name}",
+  "@eventForSubject": {
+    "description": "Suffix when an admin acted on someone else's behalf",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  }
+}

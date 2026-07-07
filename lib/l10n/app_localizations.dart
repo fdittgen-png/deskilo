@@ -512,6 +512,84 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get commonDelete;
 
+  /// Header above pinned pending-confirmation cards (spec §8)
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for your confirmation'**
+  String get eventsPendingHeader;
+
+  /// Confirm button on a pending event
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get eventAccept;
+
+  /// Reject button on a pending event; voids what it would apply
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get eventReject;
+
+  /// Empty state of the Events tab
+  ///
+  /// In en, this message translates to:
+  /// **'No events yet.'**
+  String get eventsEmpty;
+
+  /// Type filter chip showing every event type
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get eventsFilterAll;
+
+  /// Event type label / filter chip
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation'**
+  String get eventTypeReservation;
+
+  /// Event type label / filter chip
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get eventTypePayment;
+
+  /// Event type label / filter chip
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get eventTypeExpense;
+
+  /// Event type label / filter chip
+  ///
+  /// In en, this message translates to:
+  /// **'Adjustment'**
+  String get eventTypeAdjustment;
+
+  /// Feed line for a created reservation
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} booked {target}'**
+  String eventReservationCreated(String actor, String target);
+
+  /// Feed line for a modified reservation (incl. check-in/out)
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} changed the booking of {target}'**
+  String eventReservationModified(String actor, String target);
+
+  /// Feed line for a cancelled reservation
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} cancelled the booking of {target}'**
+  String eventReservationCancelled(String actor, String target);
+
+  /// Suffix when an admin acted on someone else's behalf
+  ///
+  /// In en, this message translates to:
+  /// **'for {name}'**
+  String eventForSubject(String name);
+
   /// Empty state of the Plan tab before the owner drew levels
   ///
   /// In en, this message translates to:

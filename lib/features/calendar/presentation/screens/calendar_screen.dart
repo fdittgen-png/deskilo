@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/theme/app_radius.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -10,18 +9,6 @@ import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-
-part 'calendar_screen.g.dart';
-
-/// seat/office id → display name for the active workspace.
-@Riverpod(keepAlive: true)
-Future<Map<String, String>> targetNames(Ref ref) async {
-  final workspace = await ref.watch(currentWorkspaceProvider.future);
-  if (workspace == null) return const {};
-  return ref
-      .watch(floorPlanRepositoryProvider)
-      .fetchTargetNames(workspace.id);
-}
 
 /// Reservations calendar (spec §6): month grid with markers + day list.
 /// Workers see their own bookings; admins can switch to everyone's.

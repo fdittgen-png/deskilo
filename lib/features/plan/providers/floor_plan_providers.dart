@@ -27,3 +27,14 @@ Future<List<Level>> levels(Ref ref) async {
 Future<FloorPlan> floorPlan(Ref ref, String levelId) {
   return ref.watch(floorPlanRepositoryProvider).fetchPlan(levelId);
 }
+
+/// seat/office id → display name for the active workspace (labels in the
+/// calendar and event feeds without loading every level's plan).
+@Riverpod(keepAlive: true)
+Future<Map<String, String>> targetNames(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const {};
+  return ref
+      .watch(floorPlanRepositoryProvider)
+      .fetchTargetNames(workspace.id);
+}

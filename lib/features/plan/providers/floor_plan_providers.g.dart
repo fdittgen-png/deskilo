@@ -183,3 +183,52 @@ final class FloorPlanFamily extends $Family
   @override
   String toString() => r'floorPlanProvider';
 }
+
+/// seat/office id → display name for the active workspace (labels in the
+/// calendar and event feeds without loading every level's plan).
+
+@ProviderFor(targetNames)
+final targetNamesProvider = TargetNamesProvider._();
+
+/// seat/office id → display name for the active workspace (labels in the
+/// calendar and event feeds without loading every level's plan).
+
+final class TargetNamesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, String>>,
+          Map<String, String>,
+          FutureOr<Map<String, String>>
+        >
+    with
+        $FutureModifier<Map<String, String>>,
+        $FutureProvider<Map<String, String>> {
+  /// seat/office id → display name for the active workspace (labels in the
+  /// calendar and event feeds without loading every level's plan).
+  TargetNamesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'targetNamesProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$targetNamesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, String>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, String>> create(Ref ref) {
+    return targetNames(ref);
+  }
+}
+
+String _$targetNamesHash() => r'df73e2ff7e54720a61304621ca40f9b26abf26b1';
