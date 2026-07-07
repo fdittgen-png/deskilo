@@ -20,3 +20,14 @@ Future<List<WorkspaceEvent>> events(Ref ref) async {
   if (workspace == null) return const [];
   return ref.watch(eventRepositoryProvider).fetchEvents(workspace.id);
 }
+
+/// How many events await MY confirmation — drives the Events tab badge.
+@riverpod
+Future<int> myPendingEventCount(Ref ref) async {
+  final member = await ref.watch(myMemberProvider.future);
+  if (member == null) return 0;
+  final all = await ref.watch(eventsProvider.future);
+  return all
+      .where((e) => e.isPending && e.subjectMemberId == member.id)
+      .length;
+}
