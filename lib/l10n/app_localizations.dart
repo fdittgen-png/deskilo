@@ -224,6 +224,72 @@ abstract class AppLocalizations {
   /// **'Coming soon'**
   String get comingSoon;
 
+  /// App-bar title of the owner-only workspace editor
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace editor'**
+  String get editorTitle;
+
+  /// Tooltip of the app-bar icon opening the editor (owners only)
+  ///
+  /// In en, this message translates to:
+  /// **'Edit workspace'**
+  String get editorOpenTooltip;
+
+  /// FAB label / dialog title for creating a level (floor)
+  ///
+  /// In en, this message translates to:
+  /// **'Add level'**
+  String get editorAddLevel;
+
+  /// Empty state of the editor before any level exists
+  ///
+  /// In en, this message translates to:
+  /// **'No levels yet. Add the first floor of your workspace.'**
+  String get editorNoLevels;
+
+  /// Label of the level-name input in add/rename dialogs
+  ///
+  /// In en, this message translates to:
+  /// **'Level name'**
+  String get editorLevelNameLabel;
+
+  /// Menu action renaming a level
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get editorRenameLevel;
+
+  /// Tooltip of the per-level overflow menu
+  ///
+  /// In en, this message translates to:
+  /// **'Level actions'**
+  String get editorLevelActions;
+
+  /// Confirmation body before deleting a level
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this level? All offices, desks and seats on it are removed.'**
+  String get editorDeleteLevelConfirm;
+
+  /// Generic cancel action in dialogs
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get commonCancel;
+
+  /// Generic save/confirm action in dialogs
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get commonSave;
+
+  /// Generic delete action in dialogs and menus
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get commonDelete;
+
   /// App-bar title of the first-run onboarding screen
   ///
   /// In en, this message translates to:

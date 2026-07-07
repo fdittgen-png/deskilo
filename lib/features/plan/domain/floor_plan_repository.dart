@@ -14,6 +14,9 @@ abstract class FloorPlanRepository {
   Future<void> renameLevel(String levelId, String name);
   Future<void> deleteLevel(String levelId);
 
+  /// Persists a new level order; index in [orderedLevelIds] becomes sort_order.
+  Future<void> reorderLevels(List<String> orderedLevelIds);
+
   Future<FloorPlan> fetchPlan(String levelId);
 
   Future<Office> createOffice({

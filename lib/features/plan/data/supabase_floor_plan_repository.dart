@@ -53,6 +53,15 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   }
 
   @override
+  Future<void> reorderLevels(List<String> orderedLevelIds) async {
+    for (var i = 0; i < orderedLevelIds.length; i++) {
+      await _client
+          .from('levels')
+          .update({'sort_order': i}).eq('id', orderedLevelIds[i]);
+    }
+  }
+
+  @override
   Future<FloorPlan> fetchPlan(String levelId) async {
     final officeRows =
         await _client.from('offices').select().eq('level_id', levelId);

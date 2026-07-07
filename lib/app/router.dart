@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../features/auth/presentation/screens/auth_screen.dart';
 import '../features/auth/providers/auth_providers.dart';
 import '../features/calendar/presentation/screens/calendar_screen.dart';
+import '../features/editor/presentation/screens/editor_screen.dart';
 import '../features/events/presentation/screens/events_screen.dart';
 import '../features/money/presentation/screens/money_screen.dart';
 import '../features/plan/presentation/screens/plan_screen.dart';
@@ -103,6 +104,14 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/settings',
         builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: '/editor',
+        redirect: (context, state) {
+          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          return isOwner ? null : '/plan';
+        },
+        builder: (context, state) => const EditorScreen(),
       ),
     ],
   );

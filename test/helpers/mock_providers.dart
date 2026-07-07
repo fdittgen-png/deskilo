@@ -6,8 +6,12 @@ import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
+import 'package:deskilo/features/plan/domain/floor_plan_repository.dart';
+import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/misc.dart';
+
+import 'fake_floor_plan_repository.dart';
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
 class FakeAuthRepository implements AuthRepository {
@@ -143,6 +147,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 List<Override> standardTestOverrides({
   AuthRepository? auth,
   WorkspaceRepository? workspace,
+  FloorPlanRepository? floorPlan,
 }) {
   return [
     authRepositoryProvider
@@ -150,5 +155,7 @@ List<Override> standardTestOverrides({
     workspaceRepositoryProvider.overrideWithValue(
       workspace ?? FakeWorkspaceRepository.withWorkspace(),
     ),
+    floorPlanRepositoryProvider
+        .overrideWithValue(floorPlan ?? FakeFloorPlanRepository()),
   ];
 }

@@ -1,0 +1,14 @@
+{
+  "@@locale": "de",
+  "editorTitle": "Workspace-Editor",
+  "editorOpenTooltip": "Workspace bearbeiten",
+  "editorAddLevel": "Etage hinzufügen",
+  "editorNoLevels": "Noch keine Etagen. Füge die erste Etage deines Workspace hinzu.",
+  "editorLevelNameLabel": "Name der Etage",
+  "editorRenameLevel": "Umbenennen",
+  "editorLevelActions": "Etagen-Aktionen",
+  "editorDeleteLevelConfirm": "Diese Etage löschen? Alle Büros, Tische und Plätze darauf werden entfernt.",
+  "commonCancel": "Abbrechen",
+  "commonSave": "Speichern",
+  "commonDelete": "Löschen"
+}
