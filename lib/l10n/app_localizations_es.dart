@@ -495,6 +495,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get commonOk => 'Aceptar';
 
   @override
+  String get reminderTitle => 'Regístrate pronto';
+
+  @override
+  String reminderBody(String target, String time) {
+    return '$target empieza a las $time';
+  }
+
+  @override
   String get onboardingTitle => 'Bienvenido a DesKilo';
 
   @override

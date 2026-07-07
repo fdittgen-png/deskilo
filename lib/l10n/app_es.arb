@@ -147,6 +147,8 @@
   "seriesBookedCount": "{count, plural, =1{1 reserva creada} other{{count} reservas creadas}}",
   "seriesSkippedTitle": "Omitidas (ya ocupadas):",
   "commonOk": "Aceptar",
+  "reminderTitle": "Regístrate pronto",
+  "reminderBody": "{target} empieza a las {time}",
   "onboardingTitle": "Bienvenido a DesKilo",
   "onboardingCreateTab": "Crear un espacio",
   "onboardingJoinTab": "Unirse a un espacio",

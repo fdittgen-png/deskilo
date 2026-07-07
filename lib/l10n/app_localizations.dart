@@ -986,6 +986,18 @@ abstract class AppLocalizations {
   /// **'OK'**
   String get commonOk;
 
+  /// Local notification title 15 minutes before a reservation starts
+  ///
+  /// In en, this message translates to:
+  /// **'Check in soon'**
+  String get reminderTitle;
+
+  /// Local notification body
+  ///
+  /// In en, this message translates to:
+  /// **'{target} starts at {time}'**
+  String reminderBody(String target, String time);
+
   /// App-bar title of the first-run onboarding screen
   ///
   /// In en, this message translates to:

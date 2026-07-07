@@ -6,6 +6,8 @@ import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
+import 'package:deskilo/core/notifications/notification_providers.dart';
+import 'package:deskilo/core/notifications/notification_service.dart';
 import 'package:deskilo/features/events/domain/event_repository.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
@@ -20,6 +22,7 @@ import 'package:flutter_riverpod/misc.dart';
 import 'fake_event_repository.dart';
 import 'fake_floor_plan_repository.dart';
 import 'fake_money_repository.dart';
+import 'fake_notification_service.dart';
 import 'fake_reservation_repository.dart';
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
@@ -197,6 +200,7 @@ List<Override> standardTestOverrides({
   ReservationRepository? reservations,
   EventRepository? events,
   MoneyRepository? money,
+  NotificationService? notifications,
 }) {
   return [
     authRepositoryProvider
@@ -212,5 +216,7 @@ List<Override> standardTestOverrides({
         .overrideWithValue(events ?? FakeEventRepository()),
     moneyRepositoryProvider
         .overrideWithValue(money ?? FakeMoneyRepository()),
+    notificationServiceProvider
+        .overrideWithValue(notifications ?? FakeNotificationService()),
   ];
 }

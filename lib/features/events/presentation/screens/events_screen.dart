@@ -114,7 +114,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     ref
       ..invalidate(eventsProvider)
       ..invalidate(reservationsForDayProvider)
-      ..invalidate(reservationsForMonthProvider);
+      ..invalidate(reservationsForMonthProvider)
+      ..invalidate(myUpcomingReservationsProvider);
   }
 
   @override

@@ -29,5 +29,7 @@
   "planUntilDateLabel": "Répéter jusqu'au",
   "seriesBookedCount": "{count, plural, =1{1 réservation créée} other{{count} réservations créées}}",
   "seriesSkippedTitle": "Ignorées (déjà prises) :",
-  "commonOk": "OK"
+  "commonOk": "OK",
+  "reminderTitle": "Arrivée bientôt",
+  "reminderBody": "{target} commence à {time}"
 }

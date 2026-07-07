@@ -147,6 +147,8 @@
   "seriesBookedCount": "{count, plural, =1{1 Reservierung erstellt} other{{count} Reservierungen erstellt}}",
   "seriesSkippedTitle": "Übersprungen (bereits belegt):",
   "commonOk": "OK",
+  "reminderTitle": "Bald einchecken",
+  "reminderBody": "{target} beginnt um {time}",
   "onboardingTitle": "Willkommen bei DesKilo",
   "onboardingCreateTab": "Workspace erstellen",
   "onboardingJoinTab": "Workspace beitreten",

@@ -104,7 +104,8 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     }
     ref
       ..invalidate(reservationsForMonthProvider)
-      ..invalidate(reservationsForDayProvider);
+      ..invalidate(reservationsForDayProvider)
+      ..invalidate(myUpcomingReservationsProvider);
   }
 
   @override
