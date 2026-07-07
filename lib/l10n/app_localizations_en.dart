@@ -264,6 +264,73 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get moneyBaseFee => 'Base subscription';
+
+  @override
+  String moneyUsage(int used, int included) {
+    return '$used of $included half-days used';
+  }
+
+  @override
+  String moneyUsageUnlimited(int used) {
+    return '$used half-days used';
+  }
+
+  @override
+  String moneyOverage(int count) {
+    return 'Overage ($count extra half-days)';
+  }
+
+  @override
+  String get moneyCredits => 'Payments & credits';
+
+  @override
+  String get moneyBalance => 'Balance';
+
+  @override
+  String get moneyStatementSettled => 'Settled';
+
+  @override
+  String get moneyStatementOpen => 'Open';
+
+  @override
+  String get moneyRecordPayment => 'Record a payment';
+
+  @override
+  String get moneyAmountLabel => 'Amount';
+
+  @override
+  String get moneyNoteLabel => 'Note (optional)';
+
+  @override
+  String get moneySubmitPayment => 'Submit for confirmation';
+
+  @override
+  String get moneyPaymentPending =>
+      'Payment submitted — waiting for confirmation.';
+
+  @override
+  String get moneyLedgerHeader => 'Ledger';
+
+  @override
+  String get moneyLedgerEmpty => 'No ledger entries yet.';
+
+  @override
+  String get ledgerCategorySubscription => 'Subscription';
+
+  @override
+  String get ledgerCategoryOverage => 'Overage';
+
+  @override
+  String get ledgerCategoryExpense => 'Expense reimbursement';
+
+  @override
+  String get ledgerCategoryPayment => 'Payment';
+
+  @override
+  String get ledgerCategoryAdjustment => 'Adjustment';
+
+  @override
   String get planNoLevels => 'The workspace has no floor plan yet.';
 
   @override

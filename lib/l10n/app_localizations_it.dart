@@ -266,6 +266,73 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get moneyBaseFee => 'Abbonamento base';
+
+  @override
+  String moneyUsage(int used, int included) {
+    return '$used mezze giornate usate su $included';
+  }
+
+  @override
+  String moneyUsageUnlimited(int used) {
+    return '$used mezze giornate usate';
+  }
+
+  @override
+  String moneyOverage(int count) {
+    return 'Eccedenza ($count mezze giornate extra)';
+  }
+
+  @override
+  String get moneyCredits => 'Pagamenti e crediti';
+
+  @override
+  String get moneyBalance => 'Saldo';
+
+  @override
+  String get moneyStatementSettled => 'Saldato';
+
+  @override
+  String get moneyStatementOpen => 'Aperto';
+
+  @override
+  String get moneyRecordPayment => 'Registra un pagamento';
+
+  @override
+  String get moneyAmountLabel => 'Importo';
+
+  @override
+  String get moneyNoteLabel => 'Nota (facoltativa)';
+
+  @override
+  String get moneySubmitPayment => 'Invia per conferma';
+
+  @override
+  String get moneyPaymentPending =>
+      'Pagamento inviato — in attesa di conferma.';
+
+  @override
+  String get moneyLedgerHeader => 'Registro';
+
+  @override
+  String get moneyLedgerEmpty => 'Ancora nessuna registrazione.';
+
+  @override
+  String get ledgerCategorySubscription => 'Abbonamento';
+
+  @override
+  String get ledgerCategoryOverage => 'Eccedenza';
+
+  @override
+  String get ledgerCategoryExpense => 'Rimborso spesa';
+
+  @override
+  String get ledgerCategoryPayment => 'Pagamento';
+
+  @override
+  String get ledgerCategoryAdjustment => 'Rettifica';
+
+  @override
   String get planNoLevels => 'Lo spazio non ha ancora una piantina.';
 
   @override

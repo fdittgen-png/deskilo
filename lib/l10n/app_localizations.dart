@@ -590,6 +590,126 @@ abstract class AppLocalizations {
   /// **'for {name}'**
   String eventForSubject(String name);
 
+  /// Statement line for the plan's monthly fee
+  ///
+  /// In en, this message translates to:
+  /// **'Base subscription'**
+  String get moneyBaseFee;
+
+  /// Statement usage line for quota plans
+  ///
+  /// In en, this message translates to:
+  /// **'{used} of {included} half-days used'**
+  String moneyUsage(int used, int included);
+
+  /// Statement usage line for unlimited plans
+  ///
+  /// In en, this message translates to:
+  /// **'{used} half-days used'**
+  String moneyUsageUnlimited(int used);
+
+  /// Statement line for usage beyond the included quota
+  ///
+  /// In en, this message translates to:
+  /// **'Overage ({count} extra half-days)'**
+  String moneyOverage(int count);
+
+  /// Statement line summing confirmed payments and credits
+  ///
+  /// In en, this message translates to:
+  /// **'Payments & credits'**
+  String get moneyCredits;
+
+  /// Statement bottom line; negative = member owes
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get moneyBalance;
+
+  /// Chip when the period balance is zero or positive
+  ///
+  /// In en, this message translates to:
+  /// **'Settled'**
+  String get moneyStatementSettled;
+
+  /// Chip when the member still owes for the period
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get moneyStatementOpen;
+
+  /// Button + sheet title for recording a made payment
+  ///
+  /// In en, this message translates to:
+  /// **'Record a payment'**
+  String get moneyRecordPayment;
+
+  /// Label of the payment amount input
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get moneyAmountLabel;
+
+  /// Label of the payment note input
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get moneyNoteLabel;
+
+  /// Submit button — the payment stays pending until the other side confirms (spec §7.4)
+  ///
+  /// In en, this message translates to:
+  /// **'Submit for confirmation'**
+  String get moneySubmitPayment;
+
+  /// Snackbar after recording a payment
+  ///
+  /// In en, this message translates to:
+  /// **'Payment submitted — waiting for confirmation.'**
+  String get moneyPaymentPending;
+
+  /// Header above the ledger entry list
+  ///
+  /// In en, this message translates to:
+  /// **'Ledger'**
+  String get moneyLedgerHeader;
+
+  /// Empty state of the ledger list
+  ///
+  /// In en, this message translates to:
+  /// **'No ledger entries yet.'**
+  String get moneyLedgerEmpty;
+
+  /// Ledger entry category
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get ledgerCategorySubscription;
+
+  /// Ledger entry category
+  ///
+  /// In en, this message translates to:
+  /// **'Overage'**
+  String get ledgerCategoryOverage;
+
+  /// Ledger entry category
+  ///
+  /// In en, this message translates to:
+  /// **'Expense reimbursement'**
+  String get ledgerCategoryExpense;
+
+  /// Ledger entry category
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get ledgerCategoryPayment;
+
+  /// Ledger entry category
+  ///
+  /// In en, this message translates to:
+  /// **'Adjustment'**
+  String get ledgerCategoryAdjustment;
+
   /// Empty state of the Plan tab before the owner drew levels
   ///
   /// In en, this message translates to:
