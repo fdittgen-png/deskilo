@@ -6,6 +6,8 @@ import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
+import 'package:deskilo/features/events/domain/event_repository.dart';
+import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/plan/domain/floor_plan_repository.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
@@ -13,6 +15,7 @@ import 'package:deskilo/features/reservations/providers/reservation_providers.da
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/misc.dart';
 
+import 'fake_event_repository.dart';
 import 'fake_floor_plan_repository.dart';
 import 'fake_reservation_repository.dart';
 
@@ -159,6 +162,7 @@ List<Override> standardTestOverrides({
   WorkspaceRepository? workspace,
   FloorPlanRepository? floorPlan,
   ReservationRepository? reservations,
+  EventRepository? events,
 }) {
   return [
     authRepositoryProvider
@@ -170,5 +174,7 @@ List<Override> standardTestOverrides({
         .overrideWithValue(floorPlan ?? FakeFloorPlanRepository()),
     reservationRepositoryProvider
         .overrideWithValue(reservations ?? FakeReservationRepository()),
+    eventRepositoryProvider
+        .overrideWithValue(events ?? FakeEventRepository()),
   ];
 }
