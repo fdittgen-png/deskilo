@@ -143,6 +143,49 @@ class AppLocalizationsFr extends AppLocalizations {
       'Supprimer cet élément ? Tout ce qui y est placé sera aussi supprimé.';
 
   @override
+  String get editorToolSeat => 'Place';
+
+  @override
+  String get editorSeatProperties => 'Place';
+
+  @override
+  String get editorSeatNameLabel => 'Nom de la place';
+
+  @override
+  String get editorSeatNameDefault => 'Place';
+
+  @override
+  String get editorOrientationLabel => 'Sens d\'assise';
+
+  @override
+  String get editorChairLabel => 'Type de chaise';
+
+  @override
+  String get editorAmenitiesLabel => 'Équipements';
+
+  @override
+  String get editorBlockedLabel => 'Bloquée (maintenance)';
+
+  @override
+  String get editorSeatNoDesk =>
+      'Les places ne peuvent être posées que sur une table.';
+
+  @override
+  String get amenityMonitor => 'Écran';
+
+  @override
+  String get amenityStandingDesk => 'Bureau debout';
+
+  @override
+  String get amenityWindow => 'Côté fenêtre';
+
+  @override
+  String get amenityDock => 'Station d\'accueil';
+
+  @override
+  String get amenityErgonomicChair => 'Chaise ergonomique';
+
+  @override
   String get commonCancel => 'Annuler';
 
   @override

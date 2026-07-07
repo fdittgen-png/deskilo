@@ -143,6 +143,49 @@ class AppLocalizationsIt extends AppLocalizations {
       'Eliminare questo elemento? Anche tutto ciò che vi è posizionato sopra verrà rimosso.';
 
   @override
+  String get editorToolSeat => 'Posto';
+
+  @override
+  String get editorSeatProperties => 'Posto';
+
+  @override
+  String get editorSeatNameLabel => 'Nome del posto';
+
+  @override
+  String get editorSeatNameDefault => 'Posto';
+
+  @override
+  String get editorOrientationLabel => 'Direzione di seduta';
+
+  @override
+  String get editorChairLabel => 'Tipo di sedia';
+
+  @override
+  String get editorAmenitiesLabel => 'Dotazioni';
+
+  @override
+  String get editorBlockedLabel => 'Bloccato (manutenzione)';
+
+  @override
+  String get editorSeatNoDesk =>
+      'I posti possono essere collocati solo su una scrivania.';
+
+  @override
+  String get amenityMonitor => 'Monitor';
+
+  @override
+  String get amenityStandingDesk => 'Scrivania in piedi';
+
+  @override
+  String get amenityWindow => 'Vicino alla finestra';
+
+  @override
+  String get amenityDock => 'Docking station';
+
+  @override
+  String get amenityErgonomicChair => 'Sedia ergonomica';
+
+  @override
   String get commonCancel => 'Annulla';
 
   @override

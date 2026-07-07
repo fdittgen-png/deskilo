@@ -362,6 +362,90 @@ abstract class AppLocalizations {
   /// **'Delete this element? Anything placed on it is removed too.'**
   String get editorDeleteElementConfirm;
 
+  /// Canvas tool: tap a desk to stamp a 6×4 seat footprint
+  ///
+  /// In en, this message translates to:
+  /// **'Seat'**
+  String get editorToolSeat;
+
+  /// Title of the seat property sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Seat'**
+  String get editorSeatProperties;
+
+  /// Label of the seat-name input
+  ///
+  /// In en, this message translates to:
+  /// **'Seat name'**
+  String get editorSeatNameLabel;
+
+  /// Default seat name prefix; a number is appended
+  ///
+  /// In en, this message translates to:
+  /// **'Seat'**
+  String get editorSeatNameDefault;
+
+  /// Label above the seat orientation arrows (n/e/s/w)
+  ///
+  /// In en, this message translates to:
+  /// **'Sitting direction'**
+  String get editorOrientationLabel;
+
+  /// Label of the free-text chair-type input
+  ///
+  /// In en, this message translates to:
+  /// **'Chair type'**
+  String get editorChairLabel;
+
+  /// Label above the amenity filter chips
+  ///
+  /// In en, this message translates to:
+  /// **'Amenities'**
+  String get editorAmenitiesLabel;
+
+  /// Switch blocking a seat for maintenance
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked (maintenance)'**
+  String get editorBlockedLabel;
+
+  /// Snackbar when the seat tool is used outside any desk
+  ///
+  /// In en, this message translates to:
+  /// **'Seats can only be placed on a desk.'**
+  String get editorSeatNoDesk;
+
+  /// Seat amenity chip
+  ///
+  /// In en, this message translates to:
+  /// **'Monitor'**
+  String get amenityMonitor;
+
+  /// Seat amenity chip
+  ///
+  /// In en, this message translates to:
+  /// **'Standing desk'**
+  String get amenityStandingDesk;
+
+  /// Seat amenity chip
+  ///
+  /// In en, this message translates to:
+  /// **'Window seat'**
+  String get amenityWindow;
+
+  /// Seat amenity chip
+  ///
+  /// In en, this message translates to:
+  /// **'Docking station'**
+  String get amenityDock;
+
+  /// Seat amenity chip
+  ///
+  /// In en, this message translates to:
+  /// **'Ergonomic chair'**
+  String get amenityErgonomicChair;
+
   /// Generic cancel action in dialogs
   ///
   /// In en, this message translates to:
