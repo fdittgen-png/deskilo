@@ -1,0 +1,151 @@
+name: ios-testflight
+
+# Build a signed iOS IPA on a macOS runner and upload it to TestFlight
+# (internal testers). Mirror of tankstellen's ios-testflight.yml, trimmed to
+# internal distribution. workflow_dispatch only for now — macOS minutes bill
+# at 10× Linux; add a cron once iOS testing is routine.
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_notes:
+        description: TestFlight changelog (max 4000 chars)
+        required: false
+        type: string
+        default: Internal build.
+      sync_certs:
+        description: >-
+          Repair mode: run write-mode match to (re)generate the de.deskilo.app
+          provisioning profile in the certs repo instead of building. Run this
+          ONCE before the first build, and again after entitlement changes.
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: ios-testflight
+  cancel-in-progress: false
+
+jobs:
+  build-and-upload:
+    # Pinned like tankstellen: macos-latest migrates under our feet.
+    runs-on: macos-15
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compute monotonic build number
+        id: bn
+        run: |
+          # Same wall-clock scheme as play-internal.yml (minutes since
+          # 2025-07-06 UTC on a 1M base): strictly increasing CFBundleVersion
+          # across runs, re-runs and workflows.
+          BN=$(( 1000000 + ( $(date -u +%s) - 1751760000 ) / 60 ))
+          echo "build_number=$BN" >> "$GITHUB_OUTPUT"
+          echo "Build number: $BN"
+
+      - name: Select newest stable Xcode
+        # Apple rejects TestFlight uploads built with SDKs older than the
+        # current major (tankstellen lesson) — always take the newest stable.
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.41.9"
+          channel: stable
+          cache: true
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Cache CocoaPods
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/CocoaPods
+            ios/Pods
+          key: pods-${{ runner.os }}-${{ hashFiles('ios/Podfile.lock') }}
+          restore-keys: pods-${{ runner.os }}-
+
+      - name: Install CocoaPods under active Ruby
+        # ruby/setup-ruby switches Ruby; the system pod's GEM_HOME no longer
+        # matches and flutter reports "CocoaPods is installed but broken".
+        run: gem install cocoapods --no-document
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Pod install
+        run: cd ios && pod install --repo-update
+
+      - name: Decode App Store Connect API key
+        env:
+          ASC_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
+        run: |
+          if [ -z "$ASC_KEY_BASE64" ]; then
+            echo "::error::APP_STORE_CONNECT_API_KEY_BASE64 secret is not set." >&2
+            exit 1
+          fi
+          KEY_PATH="$RUNNER_TEMP/asc-api-key.p8"
+          echo "$ASC_KEY_BASE64" | base64 --decode > "$KEY_PATH"
+          echo "ASC_API_KEY_FILEPATH=$KEY_PATH" >> "$GITHUB_ENV"
+
+      - name: Set up SSH agent with match deploy key
+        # The shared certs repo is fetched via SSH with a deploy key
+        # (PAT-based clones kept 403ing on tankstellen, #1498).
+        uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.MATCH_DEPLOY_KEY }}
+
+      - name: Add github.com to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts
+
+      - name: fastlane
+        working-directory: ios
+        env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          IOS_BUILD_NUMBER: ${{ steps.bn.outputs.build_number }}
+          TESTFLIGHT_CHANGELOG: ${{ github.event.inputs.release_notes || 'Internal build.' }}
+          FASTLANE_DISABLE_COLORS: "1"
+          FASTLANE_HIDE_CHANGELOG: "1"
+        run: |
+          if [ "${{ inputs.sync_certs }}" = "true" ]; then
+            bundle exec fastlane match_sync_appstore
+          else
+            bundle exec fastlane release_testflight build_number:"${IOS_BUILD_NUMBER}" changelog:"${TESTFLIGHT_CHANGELOG}"
+          fi
+
+      - name: Clean up decoded API key
+        if: always()
+        run: rm -f "$ASC_API_KEY_FILEPATH"
+
+      - name: Tag the shipped build (vX.Y.Z+BUILD-ios)
+        if: ${{ inputs.sync_certs != true }}
+        run: |
+          set -euo pipefail
+          VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}' | cut -d+ -f1)
+          TAG="v${VERSION}+${{ steps.bn.outputs.build_number }}-ios"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "TestFlight build ${{ steps.bn.outputs.build_number }} — $GITHUB_SHA"
+          git push origin "$TAG"
+          echo "Tagged $TAG"
+
+      - name: Upload obfuscation symbols
+        if: ${{ always() && inputs.sync_certs != true }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-symbols-${{ steps.bn.outputs.build_number }}
+          path: build/symbols
+          retention-days: 90
+          if-no-files-found: ignore

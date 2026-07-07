@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: MIT
+
+app_identifier("de.deskilo.app")
+team_id("C4Y5RDF8P9")
