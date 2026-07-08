@@ -105,11 +105,7 @@ jobs:
             adb shell am start -W -n de.deskilo.app/.MainActivity
             sleep 15
             adb logcat -d > launch-logcat.txt
-            if ! adb shell pidof de.deskilo.app; then
-              echo "::error::release build crashed at launch (#86 regression) — full logcat in the launch-logcat artifact"
-              grep -iE "AndroidRuntime|FATAL|deskilo|beginning of crash" launch-logcat.txt | tail -80
-              exit 1
-            fi
+            adb shell pidof de.deskilo.app || { echo "::error::release build crashed at launch (#86 regression) - full logcat in the launch-logcat artifact"; grep -iE "AndroidRuntime|FATAL|deskilo" launch-logcat.txt | tail -80; exit 1; }
             echo "release build is alive after launch"
             flutter test integration_test/app_boot_test.dart -d emulator-5554 --timeout 5m
 
