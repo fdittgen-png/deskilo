@@ -205,4 +205,20 @@ void main() {
 
     expect(find.text('Flo booked A1'), findsNothing);
   });
+
+  testWidgets('pull-to-refresh surfaces events created elsewhere (#111)',
+      (tester) async {
+    final repo = await pumpEvents(tester);
+    expect(find.text('No events yet.'), findsOneWidget);
+
+    repo.events.add(event());
+    await tester.fling(
+      find.text('No events yet.'),
+      const Offset(0, 300),
+      1000,
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Flo booked A1'), findsOneWidget);
+  });
 }

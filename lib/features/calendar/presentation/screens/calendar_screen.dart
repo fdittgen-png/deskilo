@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_radius.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../events/providers/event_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -102,10 +103,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
       );
       return;
     }
-    ref
-      ..invalidate(reservationsForMonthProvider)
-      ..invalidate(reservationsForDayProvider)
-      ..invalidate(myUpcomingReservationsProvider);
+    invalidateBookingData(ref);
   }
 
   @override
@@ -185,44 +183,56 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         ),
         const Divider(height: 1),
         Expanded(
-          child: dayReservations.isEmpty
-              ? Center(
-                  child: Text(
-                    l10n?.calendarNoReservations ??
-                        'No reservations on this day.',
+          child: RefreshIndicator(
+            onRefresh: () async => invalidateBookingData(ref),
+            child: dayReservations.isEmpty
+                ? ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 48),
+                        child: Center(
+                          child: Text(
+                            l10n?.calendarNoReservations ??
+                                'No reservations on this day.',
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: dayReservations.length,
+                    itemBuilder: (context, index) {
+                      final r = dayReservations[index];
+                      final own = r.memberId == myMember?.id;
+                      return ListTile(
+                        leading: Icon(
+                          r.seriesId != null
+                              ? Icons.repeat
+                              : (r.status == ReservationStatus.checkedIn
+                                  ? Icons.event_seat
+                                  : Icons.schedule),
+                        ),
+                        title: Text(
+                          '${timeFormat.format(r.startsAt.toLocal())} – '
+                          '${timeFormat.format(r.endsAt.toLocal())} · '
+                          '${targets[r.seatId ?? r.officeId] ?? ''}',
+                        ),
+                        subtitle:
+                            _everyone ? Text(names[r.memberId] ?? '') : null,
+                        trailing: own
+                            ? IconButton(
+                                icon: const Icon(Icons.more_vert),
+                                tooltip: l10n?.calendarReservationActions ??
+                                    'Reservation actions',
+                                onPressed: () => _cancelMenu(r),
+                              )
+                            : null,
+                      );
+                    },
                   ),
-                )
-              : ListView.builder(
-                  itemCount: dayReservations.length,
-                  itemBuilder: (context, index) {
-                    final r = dayReservations[index];
-                    final own = r.memberId == myMember?.id;
-                    return ListTile(
-                      leading: Icon(
-                        r.seriesId != null
-                            ? Icons.repeat
-                            : (r.status == ReservationStatus.checkedIn
-                                ? Icons.event_seat
-                                : Icons.schedule),
-                      ),
-                      title: Text(
-                        '${timeFormat.format(r.startsAt.toLocal())} – '
-                        '${timeFormat.format(r.endsAt.toLocal())} · '
-                        '${targets[r.seatId ?? r.officeId] ?? ''}',
-                      ),
-                      subtitle:
-                          _everyone ? Text(names[r.memberId] ?? '') : null,
-                      trailing: own
-                          ? IconButton(
-                              icon: const Icon(Icons.more_vert),
-                              tooltip: l10n?.calendarReservationActions ??
-                                  'Reservation actions',
-                              onPressed: () => _cancelMenu(r),
-                            )
-                          : null,
-                    );
-                  },
-                ),
+          ),
         ),
       ],
     );
