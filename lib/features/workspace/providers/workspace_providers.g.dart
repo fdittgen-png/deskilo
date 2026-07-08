@@ -193,6 +193,53 @@ final class CurrentWorkspaceProvider
 
 String _$currentWorkspaceHash() => r'e6a8c0bd37a3bab95967196d4286dfc44dc132a6';
 
+/// All memberships of the active workspace (owner management + event
+/// decider computation, #107).
+
+@ProviderFor(workspaceMembers)
+final workspaceMembersProvider = WorkspaceMembersProvider._();
+
+/// All memberships of the active workspace (owner management + event
+/// decider computation, #107).
+
+final class WorkspaceMembersProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Member>>,
+          List<Member>,
+          FutureOr<List<Member>>
+        >
+    with $FutureModifier<List<Member>>, $FutureProvider<List<Member>> {
+  /// All memberships of the active workspace (owner management + event
+  /// decider computation, #107).
+  WorkspaceMembersProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workspaceMembersProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceMembersHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Member>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Member>> create(Ref ref) {
+    return workspaceMembers(ref);
+  }
+}
+
+String _$workspaceMembersHash() => r'22591de7638efc1d8b8ae3991143235e160da403';
+
 /// All my membership rows across workspaces — one per profile (#89).
 
 @ProviderFor(myMemberships)

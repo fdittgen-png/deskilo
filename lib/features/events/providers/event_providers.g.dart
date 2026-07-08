@@ -97,17 +97,20 @@ final class EventsProvider
 
 String _$eventsHash() => r'94a3ee3da1a3fa5f32571529fc99ab264b9075af';
 
-/// How many events await MY confirmation — drives the Events tab badge.
+/// How many pending events I must decide — drives the Events tab badge.
+/// Same decider rule as the pending cards (#107).
 
 @ProviderFor(myPendingEventCount)
 final myPendingEventCountProvider = MyPendingEventCountProvider._();
 
-/// How many events await MY confirmation — drives the Events tab badge.
+/// How many pending events I must decide — drives the Events tab badge.
+/// Same decider rule as the pending cards (#107).
 
 final class MyPendingEventCountProvider
     extends $FunctionalProvider<AsyncValue<int>, int, FutureOr<int>>
     with $FutureModifier<int>, $FutureProvider<int> {
-  /// How many events await MY confirmation — drives the Events tab badge.
+  /// How many pending events I must decide — drives the Events tab badge.
+  /// Same decider rule as the pending cards (#107).
   MyPendingEventCountProvider._()
     : super(
         from: null,
@@ -134,4 +137,4 @@ final class MyPendingEventCountProvider
 }
 
 String _$myPendingEventCountHash() =>
-    r'1e1e51ec2eb41b6162f2fe37d0c34ab461358ee4';
+    r'228fe5cb1618ba424913aeb8e5f2dd4414fa3214';

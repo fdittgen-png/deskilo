@@ -21,13 +21,18 @@ Future<List<WorkspaceEvent>> events(Ref ref) async {
   return ref.watch(eventRepositoryProvider).fetchEvents(workspace.id);
 }
 
-/// How many events await MY confirmation — drives the Events tab badge.
+/// How many pending events I must decide — drives the Events tab badge.
+/// Same decider rule as the pending cards (#107).
 @riverpod
 Future<int> myPendingEventCount(Ref ref) async {
   final member = await ref.watch(myMemberProvider.future);
   if (member == null) return 0;
+  final members = await ref.watch(workspaceMembersProvider.future);
+  final hasOtherActiveAdmin =
+      members.any((m) => m.id != member.id && m.canAdminister);
   final all = await ref.watch(eventsProvider.future);
   return all
-      .where((e) => e.isPending && e.subjectMemberId == member.id)
+      .where((e) =>
+          e.isDecidedBy(member, hasOtherActiveAdmin: hasOtherActiveAdmin))
       .length;
 }

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -60,6 +61,77 @@ Future<FakeEventRepository> pumpEvents(
 }
 
 void main() {
+  testWidgets(
+      'an expense pending card is NOT offered to its submitter (bug #107)',
+      (tester) async {
+    // Viewer member-1 is an admin AND the expense submitter; member-2 is
+    // another active admin → the other admin decides, not the submitter.
+    final events = FakeEventRepository()
+      ..events.add(
+        event(
+          id: 'evt-exp',
+          type: EventType.expense,
+          action: EventAction.submitted,
+          actor: 'member-1',
+          subject: 'member-1',
+          status: EventStatus.pending,
+        ),
+      );
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
+      ..otherMembers.add(
+        const Member(
+          id: 'member-2',
+          workspaceId: 'ws-1',
+          userId: 'user-2',
+          isAdmin: true,
+          isOwner: false,
+          status: MemberStatus.active,
+        ),
+      );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          events: events,
+          workspace: workspace,
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Events'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Waiting for your confirmation'), findsNothing);
+    expect(find.text('Accept'), findsNothing);
+  });
+
+  testWidgets('a solo admin may decide their own expense (escape hatch)',
+      (tester) async {
+    final events = FakeEventRepository()
+      ..events.add(
+        event(
+          id: 'evt-exp',
+          type: EventType.expense,
+          action: EventAction.submitted,
+          actor: 'member-1',
+          subject: 'member-1',
+          status: EventStatus.pending,
+        ),
+      );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(events: events),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Events'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Accept'), findsOneWidget);
+  });
+
   testWidgets('the feed narrates a self-service booking', (tester) async {
     await pumpEvents(tester, seed: [event()]);
 
