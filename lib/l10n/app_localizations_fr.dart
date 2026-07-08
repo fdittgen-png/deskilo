@@ -49,6 +49,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get authSignOut => 'Se déconnecter';
 
   @override
+  String get authNetworkError =>
+      'Impossible de joindre le serveur. Vérifiez votre connexion et réessayez.';
+
+  @override
   String get calendarMineTab => 'Les miennes';
 
   @override

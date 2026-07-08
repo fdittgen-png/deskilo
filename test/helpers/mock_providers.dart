@@ -19,6 +19,7 @@ import 'package:deskilo/features/reservations/domain/reservation_repository.dart
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/misc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
 import 'fake_event_repository.dart';
 import 'fake_floor_plan_repository.dart';
@@ -58,7 +59,7 @@ class FakeAuthRepository implements AuthRepository {
     required String password,
   }) async {
     if (failingEmails.contains(email)) {
-      throw StateError('invalid credentials');
+      throw const AuthException('invalid credentials');
     }
     _setUser('user-1');
   }
@@ -70,7 +71,7 @@ class FakeAuthRepository implements AuthRepository {
     required String displayName,
   }) async {
     if (failingEmails.contains(email)) {
-      throw StateError('sign up failed');
+      throw const AuthException('sign up failed');
     }
     _setUser('user-1');
   }

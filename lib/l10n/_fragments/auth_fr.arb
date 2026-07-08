@@ -12,5 +12,6 @@
   "authFieldRequired": "Obligatoire",
   "authPasswordTooShort": "Au moins 8 caractères",
   "authGenericError": "Échec de l'authentification. Vérifiez vos identifiants et réessayez.",
-  "authSignOut": "Se déconnecter"
+  "authSignOut": "Se déconnecter",
+  "authNetworkError": "Impossible de joindre le serveur. Vérifiez votre connexion et réessayez."
 }

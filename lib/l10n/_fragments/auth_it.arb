@@ -12,5 +12,6 @@
   "authFieldRequired": "Obbligatorio",
   "authPasswordTooShort": "Almeno 8 caratteri",
   "authGenericError": "Autenticazione non riuscita. Controlla le credenziali e riprova.",
-  "authSignOut": "Esci"
+  "authSignOut": "Esci",
+  "authNetworkError": "Impossibile raggiungere il server. Controlla la connessione e riprova."
 }
