@@ -173,7 +173,9 @@ void main() {
       ),
     );
 
-    await tester.tapAt(cellCenter(tester, 10, 10));
+    await tester.tapAt(cellCenter(tester, 10, 10)); // select (#101)
+    await tester.pumpAndSettle();
+    await tester.tapAt(cellCenter(tester, 10, 10)); // open properties
     await tester.pumpAndSettle();
     await tester.tap(find.byType(Switch));
     await tester.pumpAndSettle();
