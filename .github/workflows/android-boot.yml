@@ -96,10 +96,28 @@ jobs:
           # The release-launch aliveness check runs FIRST — it is the #86
           # regression guard and needs only the already-built apk; the
           # slower integration test (its own debug gradle build) follows.
+          # Diagnostics: logcat is cleared right before a deterministic
+          # `am start -W` launch, and the FULL log is saved for the
+          # artifact step on failure (a filtered -t tail lost the crash).
           script: |
             adb install -r build/app/outputs/flutter-apk/app-release.apk
-            adb shell monkey -p de.deskilo.app -c android.intent.category.LAUNCHER 1
+            adb logcat -c
+            adb shell am start -W -n de.deskilo.app/.MainActivity
             sleep 15
-            adb shell pidof de.deskilo.app || { echo "::error::release build crashed at launch (#86 regression)"; adb logcat -d -t 200 | grep -iE "deskilo|androidruntime|fatal" | tail -50; exit 1; }
+            adb logcat -d > launch-logcat.txt
+            if ! adb shell pidof de.deskilo.app; then
+              echo "::error::release build crashed at launch (#86 regression) — full logcat in the launch-logcat artifact"
+              grep -iE "AndroidRuntime|FATAL|deskilo|beginning of crash" launch-logcat.txt | tail -80
+              exit 1
+            fi
             echo "release build is alive after launch"
             flutter test integration_test/app_boot_test.dart -d emulator-5554 --timeout 5m
+
+      - name: Upload launch logcat
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: launch-logcat
+          path: launch-logcat.txt
+          if-no-files-found: ignore
+          retention-days: 7
