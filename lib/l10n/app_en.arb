@@ -717,6 +717,18 @@
       }
     }
   },
+  "planNoSeats": "This level has no seats yet.",
+  "planStateFree": "Free",
+  "planStateYours": "Yours",
+  "@planNoSeats": {
+    "description": "List-view empty state when the level has no seats (#104)"
+  },
+  "@planStateFree": {
+    "description": "Seat state label in the list view"
+  },
+  "@planStateYours": {
+    "description": "Seat state label for the caller's own booking"
+  },
   "onboardingTitle": "Welcome to DesKilo",
   "@onboardingTitle": {
     "description": "App-bar title of the first-run onboarding screen"

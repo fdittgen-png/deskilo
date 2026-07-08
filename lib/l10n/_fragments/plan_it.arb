@@ -31,5 +31,8 @@
   "seriesSkippedTitle": "Saltate (già occupate):",
   "commonOk": "OK",
   "reminderTitle": "Check-in a breve",
-  "reminderBody": "{target} inizia alle {time}"
+  "reminderBody": "{target} inizia alle {time}",
+  "planNoSeats": "Questo piano non ha ancora posti.",
+  "planStateFree": "Libero",
+  "planStateYours": "Tuo"
 }

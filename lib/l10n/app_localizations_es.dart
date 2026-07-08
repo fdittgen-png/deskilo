@@ -519,6 +519,15 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get planNoSeats => 'Esta planta aún no tiene asientos.';
+
+  @override
+  String get planStateFree => 'Libre';
+
+  @override
+  String get planStateYours => 'Tuyo';
+
+  @override
   String get onboardingTitle => 'Bienvenido a DesKilo';
 
   @override

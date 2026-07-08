@@ -31,5 +31,8 @@
   "seriesSkippedTitle": "Ignorées (déjà prises) :",
   "commonOk": "OK",
   "reminderTitle": "Arrivée bientôt",
-  "reminderBody": "{target} commence à {time}"
+  "reminderBody": "{target} commence à {time}",
+  "planNoSeats": "Cet étage n'a pas encore de places.",
+  "planStateFree": "Libre",
+  "planStateYours": "À vous"
 }
