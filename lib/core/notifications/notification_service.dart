@@ -20,6 +20,9 @@ class ReminderRequest {
 abstract class NotificationService {
   /// Replaces all scheduled check-in reminders with [reminders].
   Future<void> rescheduleCheckInReminders(List<ReminderRequest> reminders);
+
+  /// Shows an immediate notification (#72 push pings).
+  Future<void> showNow({required String title, required String body});
 }
 
 /// Fallback when platform notification init fails (#86): the app must boot
@@ -31,4 +34,7 @@ class NoopNotificationService implements NotificationService {
   Future<void> rescheduleCheckInReminders(
     List<ReminderRequest> reminders,
   ) async {}
+
+  @override
+  Future<void> showNow({required String title, required String body}) async {}
 }

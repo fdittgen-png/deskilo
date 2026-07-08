@@ -84,6 +84,8 @@
   "eventForSubject": "für {name}",
   "eventPaymentSubmitted": "{actor} hat eine Zahlung von {amount} erfasst",
   "eventExpenseSubmitted": "{actor} hat eine Ausgabe von {amount} eingereicht",
+  "pushPendingTitle": "DesKilo",
+  "pushPendingBody": "Jemand wartet auf deine Bestätigung.",
   "membersTitle": "Mitglieder & Tarife",
   "membersPlanNone": "Kein Tarif",
   "memberRoleOwner": "Inhaber",

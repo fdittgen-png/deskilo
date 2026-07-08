@@ -608,6 +608,18 @@ abstract class AppLocalizations {
   /// **'for {name}'**
   String eventForSubject(String name);
 
+  /// Push notification title (#72) — brand name, usually untranslated
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo'**
+  String get pushPendingTitle;
+
+  /// Generic push body for a pending confirmation; deliberately carries no personal data
+  ///
+  /// In en, this message translates to:
+  /// **'Someone needs your confirmation.'**
+  String get pushPendingBody;
+
   /// Title of the owner-only member management screen + its settings entry
   ///
   /// In en, this message translates to:

@@ -84,6 +84,8 @@
   "eventForSubject": "pour {name}",
   "eventPaymentSubmitted": "{actor} a enregistré un paiement de {amount}",
   "eventExpenseSubmitted": "{actor} a soumis une dépense de {amount}",
+  "pushPendingTitle": "DesKilo",
+  "pushPendingBody": "Quelqu'un attend votre confirmation.",
   "membersTitle": "Membres et forfaits",
   "membersPlanNone": "Aucun forfait",
   "memberRoleOwner": "Propriétaire",

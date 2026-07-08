@@ -14,4 +14,11 @@ class FakeNotificationService implements NotificationService {
   ) async {
     rescheduleCalls.add(reminders);
   }
+
+  final shown = <({String title, String body})>[];
+
+  @override
+  Future<void> showNow({required String title, required String body}) async {
+    shown.add((title: title, body: body));
+  }
 }

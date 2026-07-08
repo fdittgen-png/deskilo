@@ -13,6 +13,14 @@ class LocalNotificationService implements NotificationService {
 
   final FlutterLocalNotificationsPlugin _plugin;
 
+  static const _pushChannel = AndroidNotificationDetails(
+    'pending_requests',
+    'Pending requests',
+    channelDescription: 'Someone needs your confirmation',
+    importance: Importance.high,
+    priority: Priority.high,
+  );
+
   static const _channel = AndroidNotificationDetails(
     'check_in_reminders',
     'Check-in reminders',
@@ -58,6 +66,20 @@ class LocalNotificationService implements NotificationService {
       // Notifications are best-effort: booking flows must never fail on
       // notification-permission or platform errors.
       debugPrint('reminder scheduling failed: $e\n$st');
+    }
+  }
+
+  @override
+  Future<void> showNow({required String title, required String body}) async {
+    try {
+      await _plugin.show(
+        id: DateTime.now().millisecondsSinceEpoch & 0x3fffffff,
+        title: title,
+        body: body,
+        notificationDetails: const NotificationDetails(android: _pushChannel),
+      );
+    } catch (e, st) {
+      debugPrint('push notification display failed: $e\n$st');
     }
   }
 }

@@ -381,6 +381,14 @@
       }
     }
   },
+  "pushPendingTitle": "DesKilo",
+  "pushPendingBody": "Someone needs your confirmation.",
+  "@pushPendingTitle": {
+    "description": "Push notification title (#72) — brand name, usually untranslated"
+  },
+  "@pushPendingBody": {
+    "description": "Generic push body for a pending confirmation; deliberately carries no personal data"
+  },
   "membersTitle": "Members & plans",
   "@membersTitle": {
     "description": "Title of the owner-only member management screen + its settings entry"
