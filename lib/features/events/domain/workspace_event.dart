@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../workspace/domain/member.dart';
+
 part 'workspace_event.freezed.dart';
 
 /// Event kinds and lifecycle (spec §3/§8). Persisted by name — never rename.
@@ -33,6 +35,25 @@ sealed class WorkspaceEvent with _$WorkspaceEvent {
   bool get isPending => status == EventStatus.pending;
 
   bool get actorIsSubject => actorMemberId == subjectMemberId;
+
+  /// Expenses and self-recorded payments are decided by ANOTHER admin
+  /// (spec §9 no-self-approval); everything else by the subject (§8.2).
+  bool get needsAdminDecider =>
+      type == EventType.expense ||
+      (type == EventType.payment && actorIsSubject);
+
+  /// Whether [me] is the one who must accept/decline this pending event.
+  /// Mirrors respond_to_event exactly (#107), incl. the solo-admin escape
+  /// hatch: when no other active admin exists, the actor may self-decide.
+  bool isDecidedBy(Member me, {required bool hasOtherActiveAdmin}) {
+    if (!isPending) return false;
+    if (needsAdminDecider) {
+      if (!me.canAdminister) return false;
+      if (actorMemberId != me.id) return true;
+      return !hasOtherActiveAdmin;
+    }
+    return subjectMemberId == me.id;
+  }
 
   DateTime? get payloadStart => payload['starts_at'] == null
       ? null

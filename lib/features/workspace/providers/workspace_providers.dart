@@ -46,6 +46,15 @@ Future<Workspace?> currentWorkspace(Ref ref) async {
       workspaces.first;
 }
 
+/// All memberships of the active workspace (owner management + event
+/// decider computation, #107).
+@riverpod
+Future<List<Member>> workspaceMembers(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return ref.watch(workspaceRepositoryProvider).fetchMembers(workspace.id);
+}
+
 /// All my membership rows across workspaces — one per profile (#89).
 @Riverpod(keepAlive: true)
 Future<List<Member>> myMemberships(Ref ref) async {

@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:supabase_flutter/supabase_flutter.dart'
+    show AuthException, PostgrestException;
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
@@ -101,12 +103,18 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     } catch (e, st) {
       debugPrint('respond failed: $e\n$st');
       if (!mounted) return;
+      // Surface the server's reason (#107) — a hidden reason cost a debug
+      // round-trip once already.
+      final detail = switch (e) {
+        PostgrestException(:final message) => message,
+        AuthException(:final message) => message,
+        _ => null,
+      };
+      final base = l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.';
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
-          ),
+          content: Text(detail == null ? base : '$base\n$detail'),
         ),
       );
       return;
@@ -124,7 +132,11 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     final eventsAsync = ref.watch(eventsProvider);
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final targets = ref.watch(targetNamesProvider).value ?? const {};
-    final myMemberId = ref.watch(myMemberProvider).value?.id;
+    final myMember = ref.watch(myMemberProvider).value;
+    final members = ref.watch(workspaceMembersProvider).value ?? const [];
+    final hasOtherActiveAdmin = myMember != null &&
+        members.any((m) =>
+            m.id != myMember.id && m.canAdminister);
     final currency = NumberFormat.simpleCurrency(
       name: ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR',
     );
@@ -133,7 +145,12 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       AsyncData(value: final all) => Builder(
           builder: (context) {
             final pendingForMe = all
-                .where((e) => e.isPending && e.subjectMemberId == myMemberId)
+                .where((e) =>
+                    myMember != null &&
+                    e.isDecidedBy(
+                      myMember,
+                      hasOtherActiveAdmin: hasOtherActiveAdmin,
+                    ))
                 .toList();
             final feed = all
                 .where((e) => !pendingForMe.contains(e))

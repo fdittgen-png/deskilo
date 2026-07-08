@@ -1,23 +1,11 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
 import '../../../../l10n/app_localizations.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/member.dart';
 import '../../providers/workspace_providers.dart';
-
-part 'members_screen.g.dart';
-
-/// All memberships of the active workspace (owner management, spec §2/§7.2).
-@riverpod
-Future<List<Member>> workspaceMembers(Ref ref) async {
-  final workspace = await ref.watch(currentWorkspaceProvider.future);
-  if (workspace == null) return const [];
-  return ref.watch(workspaceRepositoryProvider).fetchMembers(workspace.id);
-}
 
 /// Owner-only member management: role overview, plan assignment,
 /// pause/reactivate (spec §7.2).
