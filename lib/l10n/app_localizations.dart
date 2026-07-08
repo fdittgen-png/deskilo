@@ -1124,6 +1124,24 @@ abstract class AppLocalizations {
   /// **'Yours'**
   String get planStateYours;
 
+  /// Member picker label in the booking sheet (#106, admins only)
+  ///
+  /// In en, this message translates to:
+  /// **'Book for'**
+  String get planBookForLabel;
+
+  /// Booking-sheet button when booking for another member
+  ///
+  /// In en, this message translates to:
+  /// **'Send for confirmation'**
+  String get planSendForConfirmation;
+
+  /// Snackbar after booking for another member
+  ///
+  /// In en, this message translates to:
+  /// **'Sent to {name} for confirmation.'**
+  String planBookedForPending(String name);
+
   /// App-bar title of the first-run onboarding screen
   ///
   /// In en, this message translates to:

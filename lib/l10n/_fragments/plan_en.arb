@@ -177,5 +177,22 @@
   },
   "@planStateYours": {
     "description": "Seat state label for the caller's own booking"
+  },
+  "planBookForLabel": "Book for",
+  "planSendForConfirmation": "Send for confirmation",
+  "planBookedForPending": "Sent to {name} for confirmation.",
+  "@planBookForLabel": {
+    "description": "Member picker label in the booking sheet (#106, admins only)"
+  },
+  "@planSendForConfirmation": {
+    "description": "Booking-sheet button when booking for another member"
+  },
+  "@planBookedForPending": {
+    "description": "Snackbar after booking for another member",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }
