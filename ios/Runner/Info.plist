@@ -66,6 +66,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>DesKilo uses the camera to scan workspace QR codes so you can join a coworking space.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 </dict>

@@ -171,5 +171,15 @@
   "countryNameBE": "Belgique",
   "countryNameLU": "Luxembourg",
   "countryNameGB": "Royaume-Uni",
-  "countryNameUS": "États-Unis"
+  "countryNameUS": "États-Unis",
+  "workspaceCodeTitle": "ID de l'espace et QR",
+  "workspaceCodeLabel": "ID de l'espace",
+  "workspaceCodeHint": "4 à 20 lettres ou chiffres, unique",
+  "workspaceCodeEdit": "Changer l'ID de l'espace",
+  "workspaceCodeRejected": "ID refusé — il doit comporter 4 à 20 lettres ou chiffres et ne pas être déjà pris.",
+  "workspaceCodeExplainer": "Les coworkers scannent ce QR code — ou saisissent l'ID — pour rejoindre cet espace.",
+  "workspaceCodeCopy": "Copier l'ID",
+  "workspaceCodeCopied": "Copié",
+  "scanJoinTitle": "Scanner le QR de l'espace",
+  "onboardingScanButton": "Scanner un QR code"
 }

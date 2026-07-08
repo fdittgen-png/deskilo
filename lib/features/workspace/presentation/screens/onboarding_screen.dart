@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/country/country_catalog.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -235,6 +236,22 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         FilledButton(
                           onPressed: _busy ? null : _join,
                           child: Text(l10n?.onboardingJoinButton ?? 'Join'),
+                        ),
+                        const SizedBox(height: 8),
+                        OutlinedButton.icon(
+                          onPressed: _busy
+                              ? null
+                              : () async {
+                                  final code = await context
+                                      .push<String>('/scan-join');
+                                  if (code == null || code.isEmpty) return;
+                                  _inviteCode.text = code;
+                                  await _join();
+                                },
+                          icon: const Icon(Icons.qr_code_scanner),
+                          label: Text(
+                            l10n?.onboardingScanButton ?? 'Scan QR code',
+                          ),
                         ),
                       ],
                     ),

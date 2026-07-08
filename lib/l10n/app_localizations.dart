@@ -1135,6 +1135,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'United States'**
   String get countryNameUS;
+
+  /// Owner screen + settings entry: workspace ID with QR (#88)
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace ID & QR'**
+  String get workspaceCodeTitle;
+
+  /// No description provided for @workspaceCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace ID'**
+  String get workspaceCodeLabel;
+
+  /// No description provided for @workspaceCodeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'4–20 letters or digits, unique'**
+  String get workspaceCodeHint;
+
+  /// No description provided for @workspaceCodeEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Change workspace ID'**
+  String get workspaceCodeEdit;
+
+  /// No description provided for @workspaceCodeRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'That ID was rejected — it must be 4–20 letters or digits and not already taken.'**
+  String get workspaceCodeRejected;
+
+  /// No description provided for @workspaceCodeExplainer.
+  ///
+  /// In en, this message translates to:
+  /// **'Coworkers scan this QR code — or type the ID — to join this workspace.'**
+  String get workspaceCodeExplainer;
+
+  /// No description provided for @workspaceCodeCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy ID'**
+  String get workspaceCodeCopy;
+
+  /// No description provided for @workspaceCodeCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get workspaceCodeCopied;
+
+  /// App-bar title of the QR scanner screen
+  ///
+  /// In en, this message translates to:
+  /// **'Scan workspace QR'**
+  String get scanJoinTitle;
+
+  /// Join-mode button opening the QR scanner
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR code'**
+  String get onboardingScanButton;
 }
 
 class _AppLocalizationsDelegate

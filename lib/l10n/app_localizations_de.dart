@@ -571,4 +571,36 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get countryNameUS => 'Vereinigte Staaten';
+
+  @override
+  String get workspaceCodeTitle => 'Workspace-ID & QR';
+
+  @override
+  String get workspaceCodeLabel => 'Workspace-ID';
+
+  @override
+  String get workspaceCodeHint => '4–20 Buchstaben oder Ziffern, eindeutig';
+
+  @override
+  String get workspaceCodeEdit => 'Workspace-ID ändern';
+
+  @override
+  String get workspaceCodeRejected =>
+      'ID abgelehnt — sie muss 4–20 Buchstaben oder Ziffern haben und darf nicht vergeben sein.';
+
+  @override
+  String get workspaceCodeExplainer =>
+      'Coworker scannen diesen QR-Code — oder tippen die ID ein — um diesem Workspace beizutreten.';
+
+  @override
+  String get workspaceCodeCopy => 'ID kopieren';
+
+  @override
+  String get workspaceCodeCopied => 'Kopiert';
+
+  @override
+  String get scanJoinTitle => 'Workspace-QR scannen';
+
+  @override
+  String get onboardingScanButton => 'QR-Code scannen';
 }

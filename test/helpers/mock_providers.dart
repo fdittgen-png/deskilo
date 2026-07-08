@@ -177,6 +177,17 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<String> setWorkspaceCode(String workspaceId, String code) async {
+    final normalized = code.trim().toUpperCase();
+    if (!RegExp(r'^[A-Z0-9]{4,20}$').hasMatch(normalized)) {
+      throw StateError('workspace ID must be 4-20 letters or digits');
+    }
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i >= 0) workspaces[i] = workspaces[i].copyWith(inviteCode: normalized);
+    return normalized;
+  }
+
+  @override
   Future<void> updateMemberStatus(
     String memberId,
     MemberStatus status,

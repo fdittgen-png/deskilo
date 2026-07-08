@@ -112,6 +112,15 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
         .update({'status': status.name}).eq('id', memberId);
   }
 
+  @override
+  Future<String> setWorkspaceCode(String workspaceId, String code) async {
+    final result = await _client.rpc<dynamic>('set_workspace_code', params: {
+      'p_workspace_id': workspaceId,
+      'p_code': code,
+    });
+    return result as String;
+  }
+
   Member _memberFromRow(Map<String, dynamic> row) => Member(
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,

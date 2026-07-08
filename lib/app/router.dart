@@ -14,6 +14,8 @@ import '../features/plan/presentation/screens/plan_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
 import '../features/workspace/presentation/screens/members_screen.dart';
 import '../features/workspace/presentation/screens/onboarding_screen.dart';
+import '../features/workspace/presentation/screens/scan_join_screen.dart';
+import '../features/workspace/presentation/screens/workspace_code_screen.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 import 'shell/shell_screen.dart';
 
@@ -106,6 +108,18 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/settings',
         builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: '/workspace-code',
+        redirect: (context, state) {
+          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          return isOwner ? null : '/plan';
+        },
+        builder: (context, state) => const WorkspaceCodeScreen(),
+      ),
+      GoRoute(
+        path: '/scan-join',
+        builder: (context, state) => const ScanJoinScreen(),
       ),
       GoRoute(
         path: '/members',
