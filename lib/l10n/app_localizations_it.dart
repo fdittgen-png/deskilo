@@ -294,6 +294,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get memberStatusExited => 'Uscito';
 
   @override
+  String get profilesTitle => 'Profili';
+
+  @override
+  String get profilesAdd => 'Aggiungi un profilo';
+
+  @override
+  String get profilesActive => 'Profilo attivo';
+
+  @override
+  String get memberRoleMember => 'Membro';
+
+  @override
   String get moneyBaseFee => 'Abbonamento base';
 
   @override

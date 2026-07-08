@@ -61,7 +61,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     try {
       await action();
       ref.invalidate(myWorkspacesProvider);
-      // The router redirect leaves onboarding once workspaces reload.
+      // First-run visits are bounced to /plan by the router redirect; when
+      // opened from Profiles (#89) we pop back to the profile list instead.
+      if (mounted && context.canPop()) context.pop();
     } catch (e, st) {
       debugPrint('onboarding action failed: $e\n$st');
       if (!mounted) return;

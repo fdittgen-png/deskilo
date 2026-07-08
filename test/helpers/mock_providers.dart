@@ -8,6 +8,7 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
 import 'package:deskilo/core/notifications/notification_providers.dart';
 import 'package:deskilo/core/notifications/notification_service.dart';
+import 'package:deskilo/core/storage/active_workspace_store.dart';
 import 'package:deskilo/features/events/domain/event_repository.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
@@ -150,6 +151,9 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   @override
   Future<Member?> fetchMyMember(String workspaceId) async =>
+      [myMember, ...extraMyMemberships]
+          .where((m) => m.workspaceId == workspaceId)
+          .firstOrNull ??
       myMember.copyWith(workspaceId: workspaceId);
 
   /// memberId → display name; seeded with the default member.
@@ -165,6 +169,14 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   @override
   Future<List<Member>> fetchMembers(String workspaceId) async =>
       [myMember, ...otherMembers];
+
+  /// My memberships across workspaces (profiles, #89); defaults to just
+  /// [myMember]. Tests add more for multi-profile scenarios.
+  final List<Member> extraMyMemberships = [];
+
+  @override
+  Future<List<Member>> fetchMyMembers() async =>
+      [myMember, ...extraMyMemberships];
 
   @override
   Future<void> updateMemberPlan(String memberId, String? planId) async {
@@ -212,6 +224,7 @@ List<Override> standardTestOverrides({
   EventRepository? events,
   MoneyRepository? money,
   NotificationService? notifications,
+  ActiveWorkspaceStore? activeWorkspace,
 }) {
   return [
     authRepositoryProvider
@@ -229,5 +242,19 @@ List<Override> standardTestOverrides({
         .overrideWithValue(money ?? FakeMoneyRepository()),
     notificationServiceProvider
         .overrideWithValue(notifications ?? FakeNotificationService()),
+    activeWorkspaceStoreProvider
+        .overrideWithValue(activeWorkspace ?? InMemoryActiveWorkspaceStore()),
   ];
+}
+
+/// In-memory [ActiveWorkspaceStore] so widget tests never touch
+/// SharedPreferences platform channels.
+class InMemoryActiveWorkspaceStore implements ActiveWorkspaceStore {
+  String? value;
+
+  @override
+  Future<String?> read() async => value;
+
+  @override
+  Future<void> write(String? workspaceId) async => value = workspaceId;
 }

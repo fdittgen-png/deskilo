@@ -19,6 +19,11 @@ class SettingsScreen extends ConsumerWidget {
       appBar: AppBar(title: Text(l10n?.settingsTitle ?? 'Settings')),
       body: ListView(
         children: [
+          ListTile(
+            leading: const Icon(Icons.switch_account_outlined),
+            title: Text(l10n?.profilesTitle ?? 'Profiles'),
+            onTap: () => context.push('/profiles'),
+          ),
           if (isOwner)
             ListTile(
               leading: const Icon(Icons.group_outlined),

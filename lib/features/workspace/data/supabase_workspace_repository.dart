@@ -113,6 +113,15 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<List<Member>> fetchMyMembers() async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) return const [];
+    final rows =
+        await _client.from('members').select().eq('user_id', userId);
+    return rows.map(_memberFromRow).toList();
+  }
+
+  @override
   Future<String> setWorkspaceCode(String workspaceId, String code) async {
     final result = await _client.rpc<dynamic>('set_workspace_code', params: {
       'p_workspace_id': workspaceId,

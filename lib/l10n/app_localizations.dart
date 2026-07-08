@@ -638,6 +638,30 @@ abstract class AppLocalizations {
   /// **'Exited'**
   String get memberStatusExited;
 
+  /// Profile switcher screen (#89): one profile per workspace membership
+  ///
+  /// In en, this message translates to:
+  /// **'Profiles'**
+  String get profilesTitle;
+
+  /// FAB opening create/join to add another membership
+  ///
+  /// In en, this message translates to:
+  /// **'Add a profile'**
+  String get profilesAdd;
+
+  /// Semantic label of the active-profile check mark
+  ///
+  /// In en, this message translates to:
+  /// **'Active profile'**
+  String get profilesActive;
+
+  /// Role chip for plain workers
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get memberRoleMember;
+
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:
