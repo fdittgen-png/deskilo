@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
 import '../../../../l10n/app_localizations.dart';
 import '../../providers/auth_providers.dart';
@@ -48,12 +49,31 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           password: _password.text,
         );
       }
-    } catch (e, st) {
-      debugPrint('auth failed: $e\n$st');
+    } on AuthException catch (e, st) {
+      // Real server answer (wrong password, signups disabled, …) — show
+      // the server's message rather than a blanket failure (#99).
+      debugPrint('auth rejected: $e\n$st');
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(l10n?.authGenericError ?? 'Authentication failed.'),
+          content: Text(
+            '${l10n?.authGenericError ?? 'Authentication failed.'}'
+            '\n${e.message}',
+          ),
+        ),
+      );
+    } catch (e, st) {
+      // No server involved: connectivity, DNS, TLS … (#99 was a missing
+      // INTERNET permission surfacing as this generic path).
+      debugPrint('auth failed before reaching the server: $e\n$st');
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            l10n?.authNetworkError ??
+                'Could not reach the server. Check your connection and '
+                    'try again.',
+          ),
         ),
       );
     } finally {

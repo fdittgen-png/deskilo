@@ -182,6 +182,12 @@ abstract class AppLocalizations {
   /// **'Sign out'**
   String get authSignOut;
 
+  /// Snackbar when the auth call fails before reaching the server (connectivity)
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach the server. Check your connection and try again.'**
+  String get authNetworkError;
+
   /// Calendar filter showing only the user's reservations
   ///
   /// In en, this message translates to:

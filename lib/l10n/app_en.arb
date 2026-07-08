@@ -52,6 +52,10 @@
   "@authSignOut": {
     "description": "Sign-out action in settings"
   },
+  "authNetworkError": "Could not reach the server. Check your connection and try again.",
+  "@authNetworkError": {
+    "description": "Snackbar when the auth call fails before reaching the server (connectivity)"
+  },
   "calendarMineTab": "Mine",
   "@calendarMineTab": {
     "description": "Calendar filter showing only the user's reservations"

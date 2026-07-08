@@ -12,5 +12,6 @@
   "authFieldRequired": "Obligatorio",
   "authPasswordTooShort": "Al menos 8 caracteres",
   "authGenericError": "Error de autenticación. Comprueba tus credenciales e inténtalo de nuevo.",
-  "authSignOut": "Cerrar sesión"
+  "authSignOut": "Cerrar sesión",
+  "authNetworkError": "No se pudo contactar con el servidor. Comprueba tu conexión e inténtalo de nuevo."
 }

@@ -49,6 +49,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get authSignOut => 'Cerrar sesión';
 
   @override
+  String get authNetworkError =>
+      'No se pudo contactar con el servidor. Comprueba tu conexión e inténtalo de nuevo.';
+
+  @override
   String get calendarMineTab => 'Mías';
 
   @override

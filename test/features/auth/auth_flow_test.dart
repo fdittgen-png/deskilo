@@ -47,9 +47,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.text('Authentication failed. Check your credentials and try again.'),
+      find.textContaining('Authentication failed.'),
       findsOneWidget,
     );
+    expect(find.textContaining('invalid credentials'), findsOneWidget);
     expect(find.byType(NavigationBar), findsNothing);
   });
 

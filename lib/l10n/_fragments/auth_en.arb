@@ -51,5 +51,9 @@
   "authSignOut": "Sign out",
   "@authSignOut": {
     "description": "Sign-out action in settings"
+  },
+  "authNetworkError": "Could not reach the server. Check your connection and try again.",
+  "@authNetworkError": {
+    "description": "Snackbar when the auth call fails before reaching the server (connectivity)"
   }
 }

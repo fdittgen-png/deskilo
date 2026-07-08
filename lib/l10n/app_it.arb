@@ -13,6 +13,7 @@
   "authPasswordTooShort": "Almeno 8 caratteri",
   "authGenericError": "Autenticazione non riuscita. Controlla le credenziali e riprova.",
   "authSignOut": "Esci",
+  "authNetworkError": "Impossibile raggiungere il server. Controlla la connessione e riprova.",
   "calendarMineTab": "Le mie",
   "calendarEveryoneTab": "Tutti",
   "calendarNoReservations": "Nessuna prenotazione in questo giorno.",

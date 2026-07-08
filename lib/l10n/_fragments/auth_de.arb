@@ -12,5 +12,6 @@
   "authFieldRequired": "Pflichtfeld",
   "authPasswordTooShort": "Mindestens 8 Zeichen",
   "authGenericError": "Anmeldung fehlgeschlagen. Bitte Zugangsdaten prüfen und erneut versuchen.",
-  "authSignOut": "Abmelden"
+  "authSignOut": "Abmelden",
+  "authNetworkError": "Server nicht erreichbar. Prüfe deine Verbindung und versuche es erneut."
 }
