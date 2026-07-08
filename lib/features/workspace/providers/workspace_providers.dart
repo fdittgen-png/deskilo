@@ -2,6 +2,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/storage/active_workspace_store.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../data/supabase_workspace_repository.dart';
 import '../domain/member.dart';
@@ -21,12 +22,36 @@ Future<List<Workspace>> myWorkspaces(Ref ref) async {
   return ref.watch(workspaceRepositoryProvider).fetchMyWorkspaces();
 }
 
-/// The active workspace. Multi-workspace switching arrives later; until
-/// then the first (usually only) workspace is active (spec §2).
+/// The persisted active-profile choice (#89). Falls back to the first
+/// workspace when nothing was chosen yet or the choice no longer exists.
+@Riverpod(keepAlive: true)
+class ActiveWorkspaceId extends _$ActiveWorkspaceId {
+  @override
+  Future<String?> build() =>
+      ref.watch(activeWorkspaceStoreProvider).read();
+
+  Future<void> select(String workspaceId) async {
+    await ref.read(activeWorkspaceStoreProvider).write(workspaceId);
+    state = AsyncData(workspaceId);
+  }
+}
+
+/// The active workspace (profile).
 @Riverpod(keepAlive: true)
 Future<Workspace?> currentWorkspace(Ref ref) async {
   final workspaces = await ref.watch(myWorkspacesProvider.future);
-  return workspaces.isEmpty ? null : workspaces.first;
+  if (workspaces.isEmpty) return null;
+  final chosenId = await ref.watch(activeWorkspaceIdProvider.future);
+  return workspaces.where((w) => w.id == chosenId).firstOrNull ??
+      workspaces.first;
+}
+
+/// All my membership rows across workspaces — one per profile (#89).
+@Riverpod(keepAlive: true)
+Future<List<Member>> myMemberships(Ref ref) async {
+  final signedIn = ref.watch(authStateProvider).value != null;
+  if (!signedIn) return const [];
+  return ref.watch(workspaceRepositoryProvider).fetchMyMembers();
 }
 
 /// The signed-in user's membership (roles!) in the active workspace.

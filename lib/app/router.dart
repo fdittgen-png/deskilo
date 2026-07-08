@@ -11,6 +11,7 @@ import '../features/editor/presentation/screens/level_canvas_screen.dart';
 import '../features/events/presentation/screens/events_screen.dart';
 import '../features/money/presentation/screens/money_screen.dart';
 import '../features/plan/presentation/screens/plan_screen.dart';
+import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
 import '../features/workspace/presentation/screens/members_screen.dart';
 import '../features/workspace/presentation/screens/onboarding_screen.dart';
@@ -48,13 +49,17 @@ GoRouter router(Ref ref) {
       if (!signedIn) return atAuth ? null : '/auth';
       if (atAuth) return '/plan';
 
-      // Signed in: a user without any workspace lands on onboarding.
+      // Signed in: a user without any workspace lands on onboarding. The
+      // `first` flag marks the forced first-run visit — only that visit is
+      // bounced to /plan once a workspace exists, so deliberately opening
+      // onboarding from Profiles (#89 add-a-profile) is never hijacked.
       final workspaces = ref.read(myWorkspacesProvider);
       final atOnboarding = state.matchedLocation == '/onboarding';
+      final firstRun = state.uri.queryParameters['first'] == '1';
       final list = workspaces.value;
       if (list != null) {
-        if (list.isEmpty && !atOnboarding) return '/onboarding';
-        if (list.isNotEmpty && atOnboarding) return '/plan';
+        if (list.isEmpty && !atOnboarding) return '/onboarding?first=1';
+        if (list.isNotEmpty && atOnboarding && firstRun) return '/plan';
       }
       return null;
     },
@@ -108,6 +113,10 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/settings',
         builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: '/profiles',
+        builder: (context, state) => const ProfilesScreen(),
       ),
       GoRoute(
         path: '/workspace-code',

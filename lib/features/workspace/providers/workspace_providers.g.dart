@@ -96,14 +96,66 @@ final class MyWorkspacesProvider
 
 String _$myWorkspacesHash() => r'198c8d5a8c8478df79f3177df2af39d009d2c760';
 
-/// The active workspace. Multi-workspace switching arrives later; until
-/// then the first (usually only) workspace is active (spec §2).
+/// The persisted active-profile choice (#89). Falls back to the first
+/// workspace when nothing was chosen yet or the choice no longer exists.
+
+@ProviderFor(ActiveWorkspaceId)
+final activeWorkspaceIdProvider = ActiveWorkspaceIdProvider._();
+
+/// The persisted active-profile choice (#89). Falls back to the first
+/// workspace when nothing was chosen yet or the choice no longer exists.
+final class ActiveWorkspaceIdProvider
+    extends $AsyncNotifierProvider<ActiveWorkspaceId, String?> {
+  /// The persisted active-profile choice (#89). Falls back to the first
+  /// workspace when nothing was chosen yet or the choice no longer exists.
+  ActiveWorkspaceIdProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'activeWorkspaceIdProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$activeWorkspaceIdHash();
+
+  @$internal
+  @override
+  ActiveWorkspaceId create() => ActiveWorkspaceId();
+}
+
+String _$activeWorkspaceIdHash() => r'e8db64d6d579326d7abb53e0c19a98cb679ebc4f';
+
+/// The persisted active-profile choice (#89). Falls back to the first
+/// workspace when nothing was chosen yet or the choice no longer exists.
+
+abstract class _$ActiveWorkspaceId extends $AsyncNotifier<String?> {
+  FutureOr<String?> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<String?>, String?>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<String?>, String?>,
+              AsyncValue<String?>,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}
+
+/// The active workspace (profile).
 
 @ProviderFor(currentWorkspace)
 final currentWorkspaceProvider = CurrentWorkspaceProvider._();
 
-/// The active workspace. Multi-workspace switching arrives later; until
-/// then the first (usually only) workspace is active (spec §2).
+/// The active workspace (profile).
 
 final class CurrentWorkspaceProvider
     extends
@@ -113,8 +165,7 @@ final class CurrentWorkspaceProvider
           FutureOr<Workspace?>
         >
     with $FutureModifier<Workspace?>, $FutureProvider<Workspace?> {
-  /// The active workspace. Multi-workspace switching arrives later; until
-  /// then the first (usually only) workspace is active (spec §2).
+  /// The active workspace (profile).
   CurrentWorkspaceProvider._()
     : super(
         from: null,
@@ -140,7 +191,51 @@ final class CurrentWorkspaceProvider
   }
 }
 
-String _$currentWorkspaceHash() => r'2988c05a34c9464c47e9d1e7b4246d44a46021a8';
+String _$currentWorkspaceHash() => r'e6a8c0bd37a3bab95967196d4286dfc44dc132a6';
+
+/// All my membership rows across workspaces — one per profile (#89).
+
+@ProviderFor(myMemberships)
+final myMembershipsProvider = MyMembershipsProvider._();
+
+/// All my membership rows across workspaces — one per profile (#89).
+
+final class MyMembershipsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Member>>,
+          List<Member>,
+          FutureOr<List<Member>>
+        >
+    with $FutureModifier<List<Member>>, $FutureProvider<List<Member>> {
+  /// All my membership rows across workspaces — one per profile (#89).
+  MyMembershipsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myMembershipsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myMembershipsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Member>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Member>> create(Ref ref) {
+    return myMemberships(ref);
+  }
+}
+
+String _$myMembershipsHash() => r'addc53f1469bfa1a4b4c485af129c830dd2b49c2';
 
 /// The signed-in user's membership (roles!) in the active workspace.
 

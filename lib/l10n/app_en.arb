@@ -401,6 +401,22 @@
   "@memberStatusExited": {
     "description": "Status tag: member left; ledger stays until settled"
   },
+  "profilesTitle": "Profiles",
+  "profilesAdd": "Add a profile",
+  "profilesActive": "Active profile",
+  "memberRoleMember": "Member",
+  "@profilesTitle": {
+    "description": "Profile switcher screen (#89): one profile per workspace membership"
+  },
+  "@profilesAdd": {
+    "description": "FAB opening create/join to add another membership"
+  },
+  "@profilesActive": {
+    "description": "Semantic label of the active-profile check mark"
+  },
+  "@memberRoleMember": {
+    "description": "Role chip for plain workers"
+  },
   "moneyBaseFee": "Base subscription",
   "@moneyBaseFee": {
     "description": "Statement line for the plan's monthly fee"

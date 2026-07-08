@@ -5,5 +5,9 @@
   "memberRoleOwner": "Proprietario",
   "memberRoleAdmin": "Admin",
   "memberStatusPaused": "In pausa",
-  "memberStatusExited": "Uscito"
+  "memberStatusExited": "Uscito",
+  "profilesTitle": "Profili",
+  "profilesAdd": "Aggiungi un profilo",
+  "profilesActive": "Profilo attivo",
+  "memberRoleMember": "Membro"
 }
