@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_event_repository.dart';
 import '../domain/event_repository.dart';
@@ -35,4 +37,15 @@ Future<int> myPendingEventCount(Ref ref) async {
       .where((e) =>
           e.isDecidedBy(member, hasOtherActiveAdmin: hasOtherActiveAdmin))
       .length;
+}
+
+/// Invalidates every provider that renders bookings or their event trail.
+/// The tab shell keeps all screens alive, so a mutation on one tab must
+/// invalidate the others' caches or they stay frozen pre-mutation (#111).
+void invalidateBookingData(WidgetRef ref) {
+  ref
+    ..invalidate(reservationsForDayProvider)
+    ..invalidate(reservationsForMonthProvider)
+    ..invalidate(myUpcomingReservationsProvider)
+    ..invalidate(eventsProvider);
 }

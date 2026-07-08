@@ -124,4 +124,23 @@ void main() {
       2,
     );
   });
+
+  testWidgets('pull-to-refresh surfaces bookings made elsewhere (#111)',
+      (tester) async {
+    final repo = await pumpCalendar(tester);
+    expect(find.text('No reservations on this day.'), findsOneWidget);
+
+    // A booking lands after the calendar cached its month (e.g. on the
+    // Plan tab of another device) — the user pulls to refresh.
+    repo.reservations.add(todayReservation());
+    await tester.fling(
+      find.text('No reservations on this day.'),
+      const Offset(0, 300),
+      1000,
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('No reservations on this day.'), findsNothing);
+    expect(find.textContaining('09:00'), findsOneWidget);
+  });
 }

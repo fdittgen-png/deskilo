@@ -119,11 +119,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       );
       return;
     }
-    ref
-      ..invalidate(eventsProvider)
-      ..invalidate(reservationsForDayProvider)
-      ..invalidate(reservationsForMonthProvider)
-      ..invalidate(myUpcomingReservationsProvider);
+    invalidateBookingData(ref);
   }
 
   @override
@@ -159,12 +155,26 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 )
                 .toList();
             if (all.isEmpty) {
-              return Center(
-                child: Text(l10n?.eventsEmpty ?? 'No events yet.'),
+              return RefreshIndicator(
+                onRefresh: () async => invalidateBookingData(ref),
+                child: ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 48),
+                      child: Center(
+                        child: Text(l10n?.eventsEmpty ?? 'No events yet.'),
+                      ),
+                    ),
+                  ],
+                ),
               );
             }
-            return ListView(
-              children: [
+            return RefreshIndicator(
+              onRefresh: () async => invalidateBookingData(ref),
+              child: ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                children: [
                 if (pendingForMe.isNotEmpty) ...[
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
@@ -245,7 +255,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                         ? const Icon(Icons.hourglass_top, size: 18)
                         : null,
                   ),
-              ],
+                ],
+              ),
             );
           },
         ),
