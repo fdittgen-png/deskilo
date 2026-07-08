@@ -806,5 +806,9 @@
   },
   "@scanJoinTitle": {
     "description": "App-bar title of the QR scanner screen"
+  },
+  "workspaceCodeSharePng": "Share as PNG",
+  "@workspaceCodeSharePng": {
+    "description": "Button exporting the workspace QR as a PNG via the share sheet (#112)"
   }
 }

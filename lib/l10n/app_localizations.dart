@@ -1243,6 +1243,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Scan QR code'**
   String get onboardingScanButton;
+
+  /// Button exporting the workspace QR as a PNG via the share sheet (#112)
+  ///
+  /// In en, this message translates to:
+  /// **'Share as PNG'**
+  String get workspaceCodeSharePng;
 }
 
 class _AppLocalizationsDelegate
