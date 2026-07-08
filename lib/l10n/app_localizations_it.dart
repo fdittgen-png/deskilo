@@ -280,6 +280,12 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get pushPendingTitle => 'DesKilo';
+
+  @override
+  String get pushPendingBody => 'Qualcuno attende la tua conferma.';
+
+  @override
   String get membersTitle => 'Membri e piani';
 
   @override

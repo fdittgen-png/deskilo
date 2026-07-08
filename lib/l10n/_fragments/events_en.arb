@@ -40,47 +40,77 @@
   "@eventReservationCreated": {
     "description": "Feed line for a created reservation",
     "placeholders": {
-      "actor": {"type": "String"},
-      "target": {"type": "String"}
+      "actor": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
     }
   },
   "eventReservationModified": "{actor} changed the booking of {target}",
   "@eventReservationModified": {
     "description": "Feed line for a modified reservation (incl. check-in/out)",
     "placeholders": {
-      "actor": {"type": "String"},
-      "target": {"type": "String"}
+      "actor": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
     }
   },
   "eventReservationCancelled": "{actor} cancelled the booking of {target}",
   "@eventReservationCancelled": {
     "description": "Feed line for a cancelled reservation",
     "placeholders": {
-      "actor": {"type": "String"},
-      "target": {"type": "String"}
+      "actor": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
     }
   },
   "eventPaymentSubmitted": "{actor} recorded a payment of {amount}",
   "@eventPaymentSubmitted": {
     "description": "Feed line for payment events",
     "placeholders": {
-      "actor": {"type": "String"},
-      "amount": {"type": "String"}
+      "actor": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "eventExpenseSubmitted": "{actor} submitted an expense of {amount}",
   "@eventExpenseSubmitted": {
     "description": "Feed line for expense events",
     "placeholders": {
-      "actor": {"type": "String"},
-      "amount": {"type": "String"}
+      "actor": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
     }
   },
   "eventForSubject": "for {name}",
   "@eventForSubject": {
     "description": "Suffix when an admin acted on someone else's behalf",
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
+  },
+  "pushPendingTitle": "DesKilo",
+  "pushPendingBody": "Someone needs your confirmation.",
+  "@pushPendingTitle": {
+    "description": "Push notification title (#72) — brand name, usually untranslated"
+  },
+  "@pushPendingBody": {
+    "description": "Generic push body for a pending confirmation; deliberately carries no personal data"
   }
 }

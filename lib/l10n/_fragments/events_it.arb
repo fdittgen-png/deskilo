@@ -14,5 +14,7 @@
   "eventReservationCancelled": "{actor} ha annullato la prenotazione di {target}",
   "eventForSubject": "per {name}",
   "eventPaymentSubmitted": "{actor} ha registrato un pagamento di {amount}",
-  "eventExpenseSubmitted": "{actor} ha inviato una spesa di {amount}"
+  "eventExpenseSubmitted": "{actor} ha inviato una spesa di {amount}",
+  "pushPendingTitle": "DesKilo",
+  "pushPendingBody": "Qualcuno attende la tua conferma."
 }

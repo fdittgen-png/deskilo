@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/notifications/notification_providers.dart';
+import '../../core/push/push_providers.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/domain/check_in_reminders.dart';
@@ -43,6 +44,9 @@ class ShellScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final isOwner = ref.watch(myMemberProvider).value?.isOwner ?? false;
+
+    // Fire-and-forget UnifiedPush start (#72); no-op without distributor.
+    ref.watch(pushBootstrapProvider);
 
     // Keep the local check-in reminders in sync with my upcoming bookings
     // (spec §4.3). Best-effort; failures never disturb the UI.
