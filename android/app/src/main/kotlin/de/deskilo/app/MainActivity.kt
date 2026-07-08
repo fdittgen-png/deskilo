@@ -1,4 +1,4 @@
-package de.deskilo.deskilo
+package de.deskilo.app
 
 import io.flutter.embedding.android.FlutterActivity
 
