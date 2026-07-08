@@ -41,6 +41,17 @@ abstract class ReservationRepository {
     bool checkIn = false,
   });
 
+  /// Admin/owner books FOR another member (#106): tentative reservation
+  /// that blocks the seat + pending event the subject must accept.
+  /// Returns the pending event id.
+  Future<String> createFor({
+    required String workspaceId,
+    required String subjectMemberId,
+    required String seatId,
+    required DateTime startsAt,
+    required DateTime endsAt,
+  });
+
   Future<void> checkIn(String reservationId);
   Future<void> checkOut(String reservationId);
   Future<void> cancel(String reservationId);

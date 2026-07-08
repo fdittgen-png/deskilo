@@ -84,6 +84,41 @@ class FakeReservationRepository implements ReservationRepository {
     reservations[i] = updated;
   }
 
+  final bookedForOthers =
+      <({String subjectMemberId, String seatId, DateTime startsAt})>[];
+
+  @override
+  Future<String> createFor({
+    required String workspaceId,
+    required String subjectMemberId,
+    required String seatId,
+    required DateTime startsAt,
+    required DateTime endsAt,
+  }) async {
+    if (_overlapsActive(seatId, null, startsAt, endsAt)) {
+      throw StateError('conflict');
+    }
+    bookedForOthers.add(
+      (
+        subjectMemberId: subjectMemberId,
+        seatId: seatId,
+        startsAt: startsAt,
+      ),
+    );
+    reservations.add(
+      Reservation(
+        id: 'res-${_nextId++}',
+        workspaceId: workspaceId,
+        seatId: seatId,
+        memberId: subjectMemberId,
+        startsAt: startsAt,
+        endsAt: endsAt,
+        status: ReservationStatus.reserved,
+      ),
+    );
+    return 'evt-for-${bookedForOthers.length}';
+  }
+
   @override
   Future<void> checkIn(String reservationId) async {
     final r = _byId(reservationId);

@@ -571,6 +571,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get planStateYours => 'Deiner';
 
   @override
+  String get planBookForLabel => 'Buchen für';
+
+  @override
+  String get planSendForConfirmation => 'Zur Bestätigung senden';
+
+  @override
+  String planBookedForPending(String name) {
+    return 'Zur Bestätigung an $name gesendet.';
+  }
+
+  @override
   String get onboardingTitle => 'Willkommen bei DesKilo';
 
   @override

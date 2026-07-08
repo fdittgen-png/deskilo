@@ -34,5 +34,8 @@
   "reminderBody": "{target} inizia alle {time}",
   "planNoSeats": "Questo piano non ha ancora posti.",
   "planStateFree": "Libero",
-  "planStateYours": "Tuo"
+  "planStateYours": "Tuo",
+  "planBookForLabel": "Prenota per",
+  "planSendForConfirmation": "Invia per conferma",
+  "planBookedForPending": "Inviato a {name} per conferma."
 }

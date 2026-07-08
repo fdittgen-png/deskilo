@@ -46,6 +46,25 @@ class SupabaseReservationRepository implements ReservationRepository {
   }
 
   @override
+  Future<String> createFor({
+    required String workspaceId,
+    required String subjectMemberId,
+    required String seatId,
+    required DateTime startsAt,
+    required DateTime endsAt,
+  }) async {
+    final result =
+        await _client.rpc<dynamic>('admin_create_reservation_for', params: {
+      'p_workspace_id': workspaceId,
+      'p_subject_member_id': subjectMemberId,
+      'p_seat_id': seatId,
+      'p_starts_at': startsAt.toUtc().toIso8601String(),
+      'p_ends_at': endsAt.toUtc().toIso8601String(),
+    });
+    return result as String;
+  }
+
+  @override
   Future<void> checkIn(String reservationId) async {
     await _client.rpc<dynamic>('check_in_reservation', params: {
       'p_reservation_id': reservationId,

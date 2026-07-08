@@ -13,6 +13,7 @@ import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/domain/reservation_repository.dart';
 import '../../../reservations/domain/seat_state_logic.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/floor_plan.dart';
 import '../../domain/level.dart';
@@ -141,6 +142,18 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     if (workspace == null) return;
     final walkUp = _browse == null;
 
+    // Admins and owners book for other members (#106).
+    final myMember = ref.read(myMemberProvider).value;
+    final names = ref.read(memberNamesProvider).value ?? const {};
+    final candidates = (myMember?.canAdminister ?? false)
+        ? [
+            for (final m in (ref.read(workspaceMembersProvider).value ??
+                    const <Member>[])
+                .where((m) => m.status == MemberStatus.active))
+              (id: m.id, name: names[m.id] ?? ''),
+          ]
+        : const <({String id, String name})>[];
+
     final next = nextReservationOnSeat(
       seat: seat,
       reservations: reservations,
@@ -163,12 +176,27 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         cap: next?.startsAt,
         capped: capped,
         walkUp: walkUp,
+        members: candidates,
+        myMemberId: myMember?.id,
       ),
     );
     if (choice == null) return;
 
+    final forOther =
+        choice.forMemberId != null && choice.forMemberId != myMember?.id;
     try {
-      if (choice.pattern == null) {
+      if (forOther) {
+        await ref.read(reservationRepositoryProvider).createFor(
+              workspaceId: workspace.id,
+              subjectMemberId: choice.forMemberId!,
+              seatId: seat.id,
+              startsAt: start,
+              endsAt: choice.end,
+            );
+        final who = names[choice.forMemberId] ?? '';
+        _snack(l10n?.planBookedForPending(who) ??
+            'Sent to $who for confirmation.');
+      } else if (choice.pattern == null) {
         await ref.read(reservationRepositoryProvider).create(
               workspaceId: workspace.id,
               seatId: seat.id,
@@ -614,13 +642,15 @@ class _LivePlanCanvas extends StatelessWidget {
   }
 }
 
-/// What the booking sheet returns: end time plus an optional recurrence.
+/// What the booking sheet returns: end time, an optional recurrence and
+/// who the booking is for (null/self = the caller).
 class _BookingChoice {
-  const _BookingChoice(this.end, this.pattern, this.until);
+  const _BookingChoice(this.end, this.pattern, this.until, this.forMemberId);
 
   final DateTime end;
   final SeriesPattern? pattern;
   final DateTime? until;
+  final String? forMemberId;
 }
 
 class _CheckInSheet extends StatefulWidget {
@@ -631,6 +661,8 @@ class _CheckInSheet extends StatefulWidget {
     required this.cap,
     required this.capped,
     this.walkUp = true,
+    this.members = const [],
+    this.myMemberId,
   });
 
   final String seatName;
@@ -642,6 +674,10 @@ class _CheckInSheet extends StatefulWidget {
   /// True: live walk-up (check in now). False: future punctual reservation.
   final bool walkUp;
 
+  /// Active members an admin can book for (#106); empty for non-admins.
+  final List<({String id, String name})> members;
+  final String? myMemberId;
+
   @override
   State<_CheckInSheet> createState() => _CheckInSheetState();
 }
@@ -650,6 +686,10 @@ class _CheckInSheetState extends State<_CheckInSheet> {
   late DateTime _end = widget.initialEnd;
   SeriesPattern? _pattern;
   late DateTime _until = widget.start.add(const Duration(days: 28));
+  late String? _forMemberId = widget.myMemberId;
+
+  bool get _forOther =>
+      _forMemberId != null && _forMemberId != widget.myMemberId;
 
   String _patternLabel(AppLocalizations? l10n, SeriesPattern? pattern) {
     return switch (pattern) {
@@ -693,6 +733,18 @@ class _CheckInSheetState extends State<_CheckInSheet> {
                       'Starts at '
                           '${timeFormat.format(widget.start.toLocal())}'),
             ),
+            if (widget.members.length > 1)
+              DropdownButtonFormField<String>(
+                initialValue: _forMemberId,
+                decoration: InputDecoration(
+                  labelText: l10n?.planBookForLabel ?? 'Book for',
+                ),
+                items: [
+                  for (final m in widget.members)
+                    DropdownMenuItem(value: m.id, child: Text(m.name)),
+                ],
+                onChanged: (id) => setState(() => _forMemberId = id),
+              ),
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: Text(l10n?.planUntilLabel ?? 'Until'),
@@ -720,7 +772,7 @@ class _CheckInSheetState extends State<_CheckInSheet> {
                 setState(() => _end = end);
               },
             ),
-            if (!widget.walkUp) ...[
+            if (!widget.walkUp && !_forOther) ...[
               DropdownButtonFormField<SeriesPattern?>(
                 initialValue: _pattern,
                 decoration: InputDecoration(
@@ -768,14 +820,18 @@ class _CheckInSheetState extends State<_CheckInSheet> {
               onPressed: () => Navigator.of(context).pop(
                 _BookingChoice(
                   _end,
-                  _pattern,
-                  _pattern == null ? null : _until,
+                  _forOther ? null : _pattern,
+                  _forOther || _pattern == null ? null : _until,
+                  _forMemberId,
                 ),
               ),
               child: Text(
-                widget.walkUp
-                    ? (l10n?.planCheckInButton ?? 'Check in')
-                    : (l10n?.planReserveButton ?? 'Reserve'),
+                _forOther
+                    ? (l10n?.planSendForConfirmation ??
+                        'Send for confirmation')
+                    : widget.walkUp
+                        ? (l10n?.planCheckInButton ?? 'Check in')
+                        : (l10n?.planReserveButton ?? 'Reserve'),
               ),
             ),
           ],
