@@ -1,11 +1,12 @@
 name: android-boot
 
 # App-start validation on a real Android emulator (#86/#87):
-#  1. integration_test cold boot (debug) — exercises the real main() with
-#     Supabase + timezone + notification plugin over platform channels.
-#  2. RELEASE apk launch — installs the shrunk R8 build and asserts the
-#     process stays alive, catching release-only startup crashes that never
-#     reproduce in debug (exactly the #86 failure mode).
+# Installs the R8-shrunk RELEASE apk on an emulator, launches it with
+# am start -W and asserts the process stays alive — the exact #86 failure
+# mode, proven to catch it. (The debug integration test was dropped from CI:
+# its second gradle build + JIT app on a software-rendered emulator blew two
+# job timeouts; integration_test/app_boot_test.dart remains for on-device
+# runs via `flutter test integration_test -d <device>`.)
 
 on:
   push:
@@ -30,8 +31,7 @@ env:
 jobs:
   boot:
     runs-on: ubuntu-latest
-    # Two gradle builds + emulator boot need headroom; 45 min timed out (#93).
-    timeout-minutes: 60
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -107,7 +107,6 @@ jobs:
             adb logcat -d > launch-logcat.txt
             adb shell pidof de.deskilo.app || { echo "::error::release build crashed at launch (#86 regression) - full logcat in the launch-logcat artifact"; grep -iE "AndroidRuntime|FATAL|deskilo" launch-logcat.txt | tail -80; exit 1; }
             echo "release build is alive after launch"
-            flutter test integration_test/app_boot_test.dart -d emulator-5554 --timeout 5m
 
       - name: Upload launch logcat
         if: always()
