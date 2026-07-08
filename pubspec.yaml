@@ -41,6 +41,7 @@ dependencies:
   qr_flutter: ^4.1.0
   flutter_zxing: ^2.3.0
   shared_preferences: ^2.5.5
+  share_plus: ^13.2.0
 
 dev_dependencies:
   flutter_test:

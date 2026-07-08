@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/qr_png.dart';
 import '../../providers/workspace_providers.dart';
 
 /// Owner surface (#88): the workspace ID as text + QR. Another phone scans
@@ -68,6 +70,34 @@ class WorkspaceCodeScreen extends ConsumerWidget {
       return;
     }
     ref.invalidate(myWorkspacesProvider);
+  }
+
+  /// Renders the QR as a PNG and hands it to the system share sheet —
+  /// coworking owners print it or pin it to the wall (#112).
+  Future<void> _sharePng(BuildContext context, String code) async {
+    final l10n = AppLocalizations.of(context);
+    try {
+      final bytes = await buildQrPng(code);
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [
+            XFile.fromData(bytes, mimeType: 'image/png'),
+          ],
+          fileNameOverrides: ['deskilo-$code.png'],
+        ),
+      );
+    } catch (e, st) {
+      debugPrint('QR share failed: $e\n$st');
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            l10n?.workspaceGenericError ??
+                'Something went wrong. Please try again.',
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -148,6 +178,15 @@ class WorkspaceCodeScreen extends ConsumerWidget {
                           ),
                         ),
                       ],
+                    ),
+                    const SizedBox(height: 12),
+                    OutlinedButton.icon(
+                      onPressed: () =>
+                          _sharePng(context, workspace.inviteCode),
+                      icon: const Icon(Icons.image_outlined),
+                      label: Text(
+                        l10n?.workspaceCodeSharePng ?? 'Share as PNG',
+                      ),
                     ),
                   ],
                 ),

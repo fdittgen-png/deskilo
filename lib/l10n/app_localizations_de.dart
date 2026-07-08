@@ -628,4 +628,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get onboardingScanButton => 'QR-Code scannen';
+
+  @override
+  String get workspaceCodeSharePng => 'Als PNG teilen';
 }

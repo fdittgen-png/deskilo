@@ -32,5 +32,6 @@
   "workspaceCodeCopy": "ID kopieren",
   "workspaceCodeCopied": "Kopiert",
   "scanJoinTitle": "Workspace-QR scannen",
-  "onboardingScanButton": "QR-Code scannen"
+  "onboardingScanButton": "QR-Code scannen",
+  "workspaceCodeSharePng": "Als PNG teilen"
 }
