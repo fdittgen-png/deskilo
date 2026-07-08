@@ -61,6 +61,12 @@ android {
             } else {
                 signingConfigs.getByName("debug")
             }
+            // #86: keep rules for flutter_local_notifications' Gson usage —
+            // without them release builds crash before the first frame.
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
     }
 }

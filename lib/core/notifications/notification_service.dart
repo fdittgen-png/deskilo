@@ -21,3 +21,14 @@ abstract class NotificationService {
   /// Replaces all scheduled check-in reminders with [reminders].
   Future<void> rescheduleCheckInReminders(List<ReminderRequest> reminders);
 }
+
+/// Fallback when platform notification init fails (#86): the app must boot
+/// and work fully without reminders rather than not boot at all.
+class NoopNotificationService implements NotificationService {
+  const NoopNotificationService();
+
+  @override
+  Future<void> rescheduleCheckInReminders(
+    List<ReminderRequest> reminders,
+  ) async {}
+}

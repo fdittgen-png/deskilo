@@ -1,0 +1,74 @@
+name: android-boot
+
+# App-start validation on a real Android emulator (#86/#87):
+#  1. integration_test cold boot (debug) — exercises the real main() with
+#     Supabase + timezone + notification plugin over platform channels.
+#  2. RELEASE apk launch — installs the shrunk R8 build and asserts the
+#     process stays alive, catching release-only startup crashes that never
+#     reproduce in debug (exactly the #86 failure mode).
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'lib/main.dart'
+      - 'lib/app/**'
+      - 'lib/core/**'
+      - 'android/**'
+      - 'pubspec.*'
+      - 'integration_test/**'
+      - '.github/workflows/android-boot.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: android-boot-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: "3.41.9"
+
+jobs:
+  boot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enable KVM for hardware acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Build release APK (R8-shrunk, debug-signed fallback)
+        run: |
+          flutter pub get
+          flutter build apk --release --target-platform android-x64
+
+      - name: Boot checks on emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          arch: x86_64
+          target: google_apis
+          profile: pixel_6
+          disable-animations: true
+          script: |
+            flutter test integration_test/app_boot_test.dart -d emulator-5554 --timeout 5m
+            adb install -r build/app/outputs/flutter-apk/app-release.apk
+            adb shell monkey -p de.deskilo.app -c android.intent.category.LAUNCHER 1
+            sleep 15
+            adb shell pidof de.deskilo.app || { echo "::error::release build crashed at launch (#86 regression)"; adb logcat -d -t 200 | grep -iE "deskilo|androidruntime|fatal" | tail -50; exit 1; }
+            echo "release build is alive after launch"
