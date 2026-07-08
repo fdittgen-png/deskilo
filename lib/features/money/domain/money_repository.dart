@@ -19,8 +19,25 @@ abstract class MoneyRepository {
     String note,
   });
 
-  /// Active plans of the workspace (member-readable).
-  Future<List<Plan>> fetchPlans(String workspaceId);
+  /// Plans of the workspace (member-readable). Owners pass
+  /// [includeInactive] for the plan editor (#105).
+  Future<List<Plan>> fetchPlans(
+    String workspaceId, {
+    bool includeInactive = false,
+  });
+
+  /// Owner-only (RLS plans_write): creates a plan. null
+  /// [includedHalfDays] = unlimited.
+  Future<void> createPlan({
+    required String workspaceId,
+    required String name,
+    required int baseFeeCents,
+    int? includedHalfDays,
+    required int overageFeeCents,
+  });
+
+  /// Owner-only: updates name, fees, quota and active flag.
+  Future<void> updatePlan(Plan plan);
 
   /// Submits a community expense (spec §9); another admin must approve
   /// before the credit exists. Returns the pending event id.

@@ -401,6 +401,49 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ledgerCategoryAdjustment => 'Ajuste';
 
   @override
+  String get plansEditorTitle => 'Planes';
+
+  @override
+  String get plansEditorNew => 'Nuevo plan';
+
+  @override
+  String get plansEditorEdit => 'Editar plan';
+
+  @override
+  String get plansEditorInactive => 'Inactivo';
+
+  @override
+  String get plansEditorUnlimited => 'medias jornadas ilimitadas';
+
+  @override
+  String plansEditorQuota(int count) {
+    return '$count medias jornadas';
+  }
+
+  @override
+  String plansEditorPerExtra(String price) {
+    return '$price/media jornada extra';
+  }
+
+  @override
+  String get planNameLabel => 'Nombre';
+
+  @override
+  String get planBaseFeeLabel => 'Cuota mensual base';
+
+  @override
+  String get planIncludedLabel => 'Medias jornadas incluidas';
+
+  @override
+  String get planIncludedHelper => 'Dejar vacío para ilimitado';
+
+  @override
+  String get planOverageLabel => 'Precio por media jornada extra';
+
+  @override
+  String get planActiveLabel => 'Activo';
+
+  @override
   String get planNoLevels => 'El espacio aún no tiene plano.';
 
   @override

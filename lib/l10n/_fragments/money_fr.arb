@@ -27,5 +27,18 @@
   "expenseCategoryCoffee": "Café et cuisine",
   "expenseCategorySupplies": "Fournitures",
   "expenseCategoryEquipment": "Équipement",
-  "expenseCategoryOther": "Autre"
+  "expenseCategoryOther": "Autre",
+  "plansEditorTitle": "Formules",
+  "plansEditorNew": "Nouvelle formule",
+  "plansEditorEdit": "Modifier la formule",
+  "plansEditorInactive": "Inactive",
+  "plansEditorUnlimited": "demi-journées illimitées",
+  "plansEditorQuota": "{count} demi-journées",
+  "plansEditorPerExtra": "{price}/demi-journée suppl.",
+  "planNameLabel": "Nom",
+  "planBaseFeeLabel": "Forfait mensuel",
+  "planIncludedLabel": "Demi-journées incluses",
+  "planIncludedHelper": "Laisser vide pour illimité",
+  "planOverageLabel": "Prix par demi-journée supplémentaire",
+  "planActiveLabel": "Active"
 }

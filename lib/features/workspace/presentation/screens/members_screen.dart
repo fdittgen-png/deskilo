@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -22,6 +23,13 @@ class MembersScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.membersTitle ?? 'Members & plans'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.tune),
+            tooltip: l10n?.plansEditorTitle ?? 'Plans',
+            onPressed: () => context.push('/plans'),
+          ),
+        ],
       ),
       body: switch (membersAsync) {
         AsyncData(value: final members) => ListView(

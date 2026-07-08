@@ -27,5 +27,18 @@
   "expenseCategoryCoffee": "Kaffee & Küche",
   "expenseCategorySupplies": "Verbrauchsmaterial",
   "expenseCategoryEquipment": "Ausstattung",
-  "expenseCategoryOther": "Sonstiges"
+  "expenseCategoryOther": "Sonstiges",
+  "plansEditorTitle": "Tarife",
+  "plansEditorNew": "Neuer Tarif",
+  "plansEditorEdit": "Tarif bearbeiten",
+  "plansEditorInactive": "Inaktiv",
+  "plansEditorUnlimited": "unbegrenzte Halbtage",
+  "plansEditorQuota": "{count} Halbtage",
+  "plansEditorPerExtra": "{price}/zusätzl. Halbtag",
+  "planNameLabel": "Name",
+  "planBaseFeeLabel": "Monatliche Grundgebühr",
+  "planIncludedLabel": "Enthaltene Halbtage",
+  "planIncludedHelper": "Leer lassen für unbegrenzt",
+  "planOverageLabel": "Preis pro zusätzlichem Halbtag",
+  "planActiveLabel": "Aktiv"
 }

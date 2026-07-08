@@ -8,22 +8,30 @@
   "@moneyUsage": {
     "description": "Statement usage line for quota plans",
     "placeholders": {
-      "used": {"type": "int"},
-      "included": {"type": "int"}
+      "used": {
+        "type": "int"
+      },
+      "included": {
+        "type": "int"
+      }
     }
   },
   "moneyUsageUnlimited": "{used} half-days used",
   "@moneyUsageUnlimited": {
     "description": "Statement usage line for unlimited plans",
     "placeholders": {
-      "used": {"type": "int"}
+      "used": {
+        "type": "int"
+      }
     }
   },
   "moneyOverage": "Overage ({count} extra half-days)",
   "@moneyOverage": {
     "description": "Statement line for usage beyond the included quota",
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "moneyCredits": "Payments & credits",
@@ -121,5 +129,67 @@
   "ledgerCategoryAdjustment": "Adjustment",
   "@ledgerCategoryAdjustment": {
     "description": "Ledger entry category"
+  },
+  "plansEditorTitle": "Plans",
+  "plansEditorNew": "New plan",
+  "plansEditorEdit": "Edit plan",
+  "plansEditorInactive": "Inactive",
+  "plansEditorUnlimited": "unlimited half-days",
+  "plansEditorQuota": "{count} half-days",
+  "plansEditorPerExtra": "{price}/extra half-day",
+  "planNameLabel": "Name",
+  "planBaseFeeLabel": "Monthly base fee",
+  "planIncludedLabel": "Included half-days",
+  "planIncludedHelper": "Leave empty for unlimited",
+  "planOverageLabel": "Price per extra half-day",
+  "planActiveLabel": "Active",
+  "@plansEditorTitle": {
+    "description": "Owner plan-editor screen title (#105)"
+  },
+  "@plansEditorNew": {
+    "description": "FAB tooltip / sheet title creating a plan"
+  },
+  "@plansEditorEdit": {
+    "description": "Sheet title editing a plan"
+  },
+  "@plansEditorInactive": {
+    "description": "Trailing label on deactivated plans"
+  },
+  "@plansEditorUnlimited": {
+    "description": "Quota summary when included_half_days is null"
+  },
+  "@plansEditorQuota": {
+    "description": "Quota summary",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@plansEditorPerExtra": {
+    "description": "Overage summary; price is preformatted currency",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "@planNameLabel": {
+    "description": "Plan name field label"
+  },
+  "@planBaseFeeLabel": {
+    "description": "Base fee field label"
+  },
+  "@planIncludedLabel": {
+    "description": "Included half-days field label"
+  },
+  "@planIncludedHelper": {
+    "description": "Helper: empty quota means unlimited"
+  },
+  "@planOverageLabel": {
+    "description": "Overage price field label"
+  },
+  "@planActiveLabel": {
+    "description": "Active switch label"
   }
 }

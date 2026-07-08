@@ -10,6 +10,7 @@ import '../features/editor/presentation/screens/editor_screen.dart';
 import '../features/editor/presentation/screens/level_canvas_screen.dart';
 import '../features/events/presentation/screens/events_screen.dart';
 import '../features/money/presentation/screens/money_screen.dart';
+import '../features/money/presentation/screens/plans_screen.dart';
 import '../features/plan/presentation/screens/plan_screen.dart';
 import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
@@ -129,6 +130,14 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/scan-join',
         builder: (context, state) => const ScanJoinScreen(),
+      ),
+      GoRoute(
+        path: '/plans',
+        redirect: (context, state) {
+          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          return isOwner ? null : '/plan';
+        },
+        builder: (context, state) => const PlansScreen(),
       ),
       GoRoute(
         path: '/members',

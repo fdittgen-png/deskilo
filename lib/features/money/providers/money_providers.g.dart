@@ -222,3 +222,46 @@ final class PlansProvider
 }
 
 String _$plansHash() => r'e9b404d080c5ce4367016f77585981c7a97db21d';
+
+/// Every plan incl. deactivated ones — the owner's plan editor (#105).
+
+@ProviderFor(allPlans)
+final allPlansProvider = AllPlansProvider._();
+
+/// Every plan incl. deactivated ones — the owner's plan editor (#105).
+
+final class AllPlansProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Plan>>,
+          List<Plan>,
+          FutureOr<List<Plan>>
+        >
+    with $FutureModifier<List<Plan>>, $FutureProvider<List<Plan>> {
+  /// Every plan incl. deactivated ones — the owner's plan editor (#105).
+  AllPlansProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'allPlansProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$allPlansHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Plan>> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Plan>> create(Ref ref) {
+    return allPlans(ref);
+  }
+}
+
+String _$allPlansHash() => r'72b7afd67a7e38a6845ac075b565b3b6dcbe66fd';

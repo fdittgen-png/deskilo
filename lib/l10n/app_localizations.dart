@@ -836,6 +836,84 @@ abstract class AppLocalizations {
   /// **'Adjustment'**
   String get ledgerCategoryAdjustment;
 
+  /// Owner plan-editor screen title (#105)
+  ///
+  /// In en, this message translates to:
+  /// **'Plans'**
+  String get plansEditorTitle;
+
+  /// FAB tooltip / sheet title creating a plan
+  ///
+  /// In en, this message translates to:
+  /// **'New plan'**
+  String get plansEditorNew;
+
+  /// Sheet title editing a plan
+  ///
+  /// In en, this message translates to:
+  /// **'Edit plan'**
+  String get plansEditorEdit;
+
+  /// Trailing label on deactivated plans
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get plansEditorInactive;
+
+  /// Quota summary when included_half_days is null
+  ///
+  /// In en, this message translates to:
+  /// **'unlimited half-days'**
+  String get plansEditorUnlimited;
+
+  /// Quota summary
+  ///
+  /// In en, this message translates to:
+  /// **'{count} half-days'**
+  String plansEditorQuota(int count);
+
+  /// Overage summary; price is preformatted currency
+  ///
+  /// In en, this message translates to:
+  /// **'{price}/extra half-day'**
+  String plansEditorPerExtra(String price);
+
+  /// Plan name field label
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get planNameLabel;
+
+  /// Base fee field label
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly base fee'**
+  String get planBaseFeeLabel;
+
+  /// Included half-days field label
+  ///
+  /// In en, this message translates to:
+  /// **'Included half-days'**
+  String get planIncludedLabel;
+
+  /// Helper: empty quota means unlimited
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty for unlimited'**
+  String get planIncludedHelper;
+
+  /// Overage price field label
+  ///
+  /// In en, this message translates to:
+  /// **'Price per extra half-day'**
+  String get planOverageLabel;
+
+  /// Active switch label
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get planActiveLabel;
+
   /// Empty state of the Plan tab before the owner drew levels
   ///
   /// In en, this message translates to:

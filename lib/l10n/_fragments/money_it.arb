@@ -27,5 +27,18 @@
   "expenseCategoryCoffee": "Caffè e cucina",
   "expenseCategorySupplies": "Materiale",
   "expenseCategoryEquipment": "Attrezzatura",
-  "expenseCategoryOther": "Altro"
+  "expenseCategoryOther": "Altro",
+  "plansEditorTitle": "Piani",
+  "plansEditorNew": "Nuovo piano",
+  "plansEditorEdit": "Modifica piano",
+  "plansEditorInactive": "Inattivo",
+  "plansEditorUnlimited": "mezze giornate illimitate",
+  "plansEditorQuota": "{count} mezze giornate",
+  "plansEditorPerExtra": "{price}/mezza giornata extra",
+  "planNameLabel": "Nome",
+  "planBaseFeeLabel": "Canone mensile base",
+  "planIncludedLabel": "Mezze giornate incluse",
+  "planIncludedHelper": "Lascia vuoto per illimitato",
+  "planOverageLabel": "Prezzo per mezza giornata extra",
+  "planActiveLabel": "Attivo"
 }

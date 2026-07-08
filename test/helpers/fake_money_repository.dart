@@ -71,7 +71,39 @@ class FakeMoneyRepository implements MoneyRepository {
   ];
 
   @override
-  Future<List<Plan>> fetchPlans(String workspaceId) async => List.of(plans);
+  Future<List<Plan>> fetchPlans(
+    String workspaceId, {
+    bool includeInactive = false,
+  }) async =>
+      plans.where((p) => includeInactive || p.active).toList();
+
+  @override
+  Future<void> createPlan({
+    required String workspaceId,
+    required String name,
+    required int baseFeeCents,
+    int? includedHalfDays,
+    required int overageFeeCents,
+  }) async {
+    plans.add(
+      Plan(
+        id: 'plan-${plans.length + 1}',
+        workspaceId: workspaceId,
+        name: name,
+        baseFeeCents: baseFeeCents,
+        includedHalfDays: includedHalfDays,
+        overageFeeCents: overageFeeCents,
+        active: true,
+      ),
+    );
+  }
+
+  @override
+  Future<void> updatePlan(Plan plan) async {
+    final i = plans.indexWhere((p) => p.id == plan.id);
+    if (i < 0) throw StateError('unknown plan');
+    plans[i] = plan;
+  }
 
   final submittedExpenses =
       <({int amountCents, String category, String description})>[];

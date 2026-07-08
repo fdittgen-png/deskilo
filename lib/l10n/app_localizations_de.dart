@@ -402,6 +402,49 @@ class AppLocalizationsDe extends AppLocalizations {
   String get ledgerCategoryAdjustment => 'Korrektur';
 
   @override
+  String get plansEditorTitle => 'Tarife';
+
+  @override
+  String get plansEditorNew => 'Neuer Tarif';
+
+  @override
+  String get plansEditorEdit => 'Tarif bearbeiten';
+
+  @override
+  String get plansEditorInactive => 'Inaktiv';
+
+  @override
+  String get plansEditorUnlimited => 'unbegrenzte Halbtage';
+
+  @override
+  String plansEditorQuota(int count) {
+    return '$count Halbtage';
+  }
+
+  @override
+  String plansEditorPerExtra(String price) {
+    return '$price/zusätzl. Halbtag';
+  }
+
+  @override
+  String get planNameLabel => 'Name';
+
+  @override
+  String get planBaseFeeLabel => 'Monatliche Grundgebühr';
+
+  @override
+  String get planIncludedLabel => 'Enthaltene Halbtage';
+
+  @override
+  String get planIncludedHelper => 'Leer lassen für unbegrenzt';
+
+  @override
+  String get planOverageLabel => 'Preis pro zusätzlichem Halbtag';
+
+  @override
+  String get planActiveLabel => 'Aktiv';
+
+  @override
   String get planNoLevels => 'Der Workspace hat noch keinen Plan.';
 
   @override
