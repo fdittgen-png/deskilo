@@ -58,5 +58,24 @@
   "countryNameBE": "Belgium",
   "countryNameLU": "Luxembourg",
   "countryNameGB": "United Kingdom",
-  "countryNameUS": "United States"
+  "countryNameUS": "United States",
+  "workspaceCodeTitle": "Workspace ID & QR",
+  "workspaceCodeLabel": "Workspace ID",
+  "workspaceCodeHint": "4–20 letters or digits, unique",
+  "workspaceCodeEdit": "Change workspace ID",
+  "workspaceCodeRejected": "That ID was rejected — it must be 4–20 letters or digits and not already taken.",
+  "workspaceCodeExplainer": "Coworkers scan this QR code — or type the ID — to join this workspace.",
+  "workspaceCodeCopy": "Copy ID",
+  "workspaceCodeCopied": "Copied",
+  "scanJoinTitle": "Scan workspace QR",
+  "onboardingScanButton": "Scan QR code",
+  "@workspaceCodeTitle": {
+    "description": "Owner screen + settings entry: workspace ID with QR (#88)"
+  },
+  "@onboardingScanButton": {
+    "description": "Join-mode button opening the QR scanner"
+  },
+  "@scanJoinTitle": {
+    "description": "App-bar title of the QR scanner screen"
+  }
 }

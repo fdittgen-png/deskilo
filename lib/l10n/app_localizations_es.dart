@@ -570,4 +570,36 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get countryNameUS => 'Estados Unidos';
+
+  @override
+  String get workspaceCodeTitle => 'ID del espacio y QR';
+
+  @override
+  String get workspaceCodeLabel => 'ID del espacio';
+
+  @override
+  String get workspaceCodeHint => '4–20 letras o dígitos, único';
+
+  @override
+  String get workspaceCodeEdit => 'Cambiar el ID del espacio';
+
+  @override
+  String get workspaceCodeRejected =>
+      'ID rechazado — debe tener 4–20 letras o dígitos y no estar ya en uso.';
+
+  @override
+  String get workspaceCodeExplainer =>
+      'Los coworkers escanean este código QR — o escriben el ID — para unirse a este espacio.';
+
+  @override
+  String get workspaceCodeCopy => 'Copiar ID';
+
+  @override
+  String get workspaceCodeCopied => 'Copiado';
+
+  @override
+  String get scanJoinTitle => 'Escanear QR del espacio';
+
+  @override
+  String get onboardingScanButton => 'Escanear código QR';
 }

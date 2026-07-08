@@ -31,4 +31,9 @@ abstract class WorkspaceRepository {
   /// Owner-only (RLS-enforced): assign a plan / change membership status.
   Future<void> updateMemberPlan(String memberId, String? planId);
   Future<void> updateMemberStatus(String memberId, MemberStatus status);
+
+  /// Owner-only: replace the workspace ID (= invite code, shown in the QR)
+  /// with a memorable alphanumeric one (4–20 A-Z/0-9, unique). Returns the
+  /// normalized code.
+  Future<String> setWorkspaceCode(String workspaceId, String code);
 }
