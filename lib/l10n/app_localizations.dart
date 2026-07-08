@@ -1028,6 +1028,24 @@ abstract class AppLocalizations {
   /// **'{target} starts at {time}'**
   String reminderBody(String target, String time);
 
+  /// List-view empty state when the level has no seats (#104)
+  ///
+  /// In en, this message translates to:
+  /// **'This level has no seats yet.'**
+  String get planNoSeats;
+
+  /// Seat state label in the list view
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get planStateFree;
+
+  /// Seat state label for the caller's own booking
+  ///
+  /// In en, this message translates to:
+  /// **'Yours'**
+  String get planStateYours;
+
   /// App-bar title of the first-run onboarding screen
   ///
   /// In en, this message translates to:

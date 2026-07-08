@@ -31,5 +31,8 @@
   "seriesSkippedTitle": "Omitidas (ya ocupadas):",
   "commonOk": "Aceptar",
   "reminderTitle": "Regístrate pronto",
-  "reminderBody": "{target} empieza a las {time}"
+  "reminderBody": "{target} empieza a las {time}",
+  "planNoSeats": "Esta planta aún no tiene asientos.",
+  "planStateFree": "Libre",
+  "planStateYours": "Tuyo"
 }

@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/domain/reservation_repository.dart';
@@ -351,7 +352,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         Expanded(
           child: switch (planAsync) {
             AsyncData(value: final plan) => _listView
-                ? _reservationList(plan, reservations, names)
+                ? _seatList(plan, reservations, names, at)
                 : _LivePlanCanvas(
                     plan: plan,
                     seatStates: {
@@ -454,49 +455,100 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   }
 
   /// Chronological reservations of the browsed day (spec §6 list view).
-  Widget _reservationList(
+  /// #104: the list view mirrors the plan — every seat of the level with
+  /// its state at the browsed instant, tappable exactly like the canvas.
+  Widget _seatList(
     FloorPlan plan,
     List<Reservation> reservations,
     Map<String, String> names,
+    DateTime at,
   ) {
     final l10n = AppLocalizations.of(context);
     final timeFormat = DateFormat.Hm();
-    final active = reservations.where((r) => r.isActive).toList()
-      ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
-    if (active.isEmpty) {
+    final myMemberId = ref.watch(myMemberProvider).value?.id;
+
+    if (plan.seats.isEmpty) {
       return Center(
-        child: Text(
-          l10n?.planReservationsEmpty ?? 'No reservations for this day.',
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Text(
+            l10n?.planNoSeats ?? 'This level has no seats yet.',
+            textAlign: TextAlign.center,
+          ),
         ),
       );
     }
-    String targetName(Reservation r) {
-      if (r.seatId != null) {
-        return plan.seats.where((s) => s.id == r.seatId).firstOrNull?.name ??
-            '';
-      }
-      return plan.offices
-              .where((o) => o.id == r.officeId)
-              .firstOrNull
-              ?.name ??
-          '';
+
+    String contextOf(Seat seat) {
+      final desk =
+          plan.desks.where((d) => d.id == seat.deskId).firstOrNull;
+      final office = desk == null
+          ? null
+          : plan.offices.where((o) => o.id == desk.officeId).firstOrNull;
+      return [office?.name, desk?.name]
+          .whereType<String>()
+          .where((n) => n.isNotEmpty)
+          .join(' · ');
     }
 
+    final seats = [...plan.seats]..sort((a, b) => a.name.compareTo(b.name));
+
     return ListView.builder(
-      itemCount: active.length,
+      itemCount: seats.length,
       itemBuilder: (context, index) {
-        final r = active[index];
+        final seat = seats[index];
+        final state = seatStateAt(
+          plan: plan,
+          seat: seat,
+          reservations: reservations,
+          myMemberId: myMemberId,
+          at: at,
+        );
+        final covering = reservationOnSeatAt(
+          plan: plan,
+          seat: seat,
+          reservations: reservations,
+          at: at,
+        );
+        final until = covering == null
+            ? null
+            : timeFormat.format(covering.endsAt.toLocal());
+        final who = covering == null
+            ? ''
+            : (names[covering.memberId] ?? '');
+        final stateText = switch (state) {
+          SeatState.free => l10n?.planStateFree ?? 'Free',
+          SeatState.blocked =>
+            l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.',
+          SeatState.mine =>
+            '${l10n?.planStateYours ?? 'Yours'} · ${l10n?.planUntil(until ?? '') ?? 'until $until'}',
+          SeatState.reserved =>
+            '${l10n?.planReservedBy(who) ?? 'Reserved by $who'} · ${l10n?.planUntil(until ?? '') ?? 'until $until'}',
+          SeatState.occupied =>
+            '${l10n?.planOccupiedBy(who) ?? 'Occupied by $who'} · ${l10n?.planUntil(until ?? '') ?? 'until $until'}',
+        };
+        final accent = SeatStateColors.of(
+          state,
+          brightness: Theme.of(context).brightness,
+        );
         return ListTile(
           leading: Icon(
-            r.status == ReservationStatus.checkedIn
-                ? Icons.event_seat
-                : Icons.schedule,
+            switch (state) {
+              SeatState.free => Icons.event_seat_outlined,
+              SeatState.blocked => Icons.block,
+              _ => Icons.event_seat,
+            },
+            color: accent,
           ),
-          title: Text(
-            '${timeFormat.format(r.startsAt.toLocal())} – '
-            '${timeFormat.format(r.endsAt.toLocal())} · ${targetName(r)}',
+          title: Text(seat.name.isEmpty ? contextOf(seat) : seat.name),
+          subtitle: Text(
+            [contextOf(seat), stateText]
+                .where((s) => seat.name.isNotEmpty || s != contextOf(seat))
+                .where((s) => s.isNotEmpty)
+                .join('\n'),
           ),
-          subtitle: Text(names[r.memberId] ?? ''),
+          isThreeLine: seat.name.isNotEmpty && contextOf(seat).isNotEmpty,
+          onTap: () => _onSeatTap(plan, seat, reservations, at),
         );
       },
     );

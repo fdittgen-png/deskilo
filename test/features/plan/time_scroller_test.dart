@@ -39,7 +39,8 @@ void main() {
     expect(find.textContaining('Starts now'), findsOneWidget);
   });
 
-  testWidgets('list view shows the day reservations', (tester) async {
+  testWidgets('list view shows every seat with its live state (#104)',
+      (tester) async {
     await pumpPlan(
       tester,
       seedReservations: (repo) =>
@@ -49,16 +50,18 @@ void main() {
     await tester.tap(find.byIcon(Icons.list));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('A1'), findsOneWidget);
-    expect(find.text('Ana Lima'), findsOneWidget);
+    expect(find.text('A1'), findsOneWidget);
+    expect(find.textContaining('Reserved by Ana Lima'), findsOneWidget);
   });
 
-  testWidgets('list view empty state', (tester) async {
+  testWidgets('list view shows free seats instead of an empty page',
+      (tester) async {
     await pumpPlan(tester);
 
     await tester.tap(find.byIcon(Icons.list));
     await tester.pumpAndSettle();
 
-    expect(find.text('No reservations for this day.'), findsOneWidget);
+    expect(find.text('A1'), findsOneWidget);
+    expect(find.textContaining('Free'), findsOneWidget);
   });
 }
