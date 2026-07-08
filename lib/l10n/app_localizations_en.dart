@@ -399,6 +399,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ledgerCategoryAdjustment => 'Adjustment';
 
   @override
+  String get plansEditorTitle => 'Plans';
+
+  @override
+  String get plansEditorNew => 'New plan';
+
+  @override
+  String get plansEditorEdit => 'Edit plan';
+
+  @override
+  String get plansEditorInactive => 'Inactive';
+
+  @override
+  String get plansEditorUnlimited => 'unlimited half-days';
+
+  @override
+  String plansEditorQuota(int count) {
+    return '$count half-days';
+  }
+
+  @override
+  String plansEditorPerExtra(String price) {
+    return '$price/extra half-day';
+  }
+
+  @override
+  String get planNameLabel => 'Name';
+
+  @override
+  String get planBaseFeeLabel => 'Monthly base fee';
+
+  @override
+  String get planIncludedLabel => 'Included half-days';
+
+  @override
+  String get planIncludedHelper => 'Leave empty for unlimited';
+
+  @override
+  String get planOverageLabel => 'Price per extra half-day';
+
+  @override
+  String get planActiveLabel => 'Active';
+
+  @override
   String get planNoLevels => 'The workspace has no floor plan yet.';
 
   @override

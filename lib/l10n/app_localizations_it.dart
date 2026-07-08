@@ -402,6 +402,49 @@ class AppLocalizationsIt extends AppLocalizations {
   String get ledgerCategoryAdjustment => 'Rettifica';
 
   @override
+  String get plansEditorTitle => 'Piani';
+
+  @override
+  String get plansEditorNew => 'Nuovo piano';
+
+  @override
+  String get plansEditorEdit => 'Modifica piano';
+
+  @override
+  String get plansEditorInactive => 'Inattivo';
+
+  @override
+  String get plansEditorUnlimited => 'mezze giornate illimitate';
+
+  @override
+  String plansEditorQuota(int count) {
+    return '$count mezze giornate';
+  }
+
+  @override
+  String plansEditorPerExtra(String price) {
+    return '$price/mezza giornata extra';
+  }
+
+  @override
+  String get planNameLabel => 'Nome';
+
+  @override
+  String get planBaseFeeLabel => 'Canone mensile base';
+
+  @override
+  String get planIncludedLabel => 'Mezze giornate incluse';
+
+  @override
+  String get planIncludedHelper => 'Lascia vuoto per illimitato';
+
+  @override
+  String get planOverageLabel => 'Prezzo per mezza giornata extra';
+
+  @override
+  String get planActiveLabel => 'Attivo';
+
+  @override
   String get planNoLevels => 'Lo spazio non ha ancora una piantina.';
 
   @override

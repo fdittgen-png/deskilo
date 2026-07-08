@@ -42,3 +42,13 @@ Future<List<Plan>> plans(Ref ref) async {
 
 /// Current period key in workspace terms ('yyyy-MM').
 String currentPeriod() => DateFormat('yyyy-MM').format(DateTime.now());
+
+/// Every plan incl. deactivated ones — the owner's plan editor (#105).
+@riverpod
+Future<List<Plan>> allPlans(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return ref
+      .watch(moneyRepositoryProvider)
+      .fetchPlans(workspace.id, includeInactive: true);
+}

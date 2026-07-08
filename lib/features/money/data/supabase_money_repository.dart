@@ -87,13 +87,14 @@ class SupabaseMoneyRepository implements MoneyRepository {
   }
 
   @override
-  Future<List<Plan>> fetchPlans(String workspaceId) async {
-    final rows = await _client
-        .from('plans')
-        .select()
-        .eq('workspace_id', workspaceId)
-        .eq('active', true)
-        .order('base_fee_cents', ascending: false);
+  Future<List<Plan>> fetchPlans(
+    String workspaceId, {
+    bool includeInactive = false,
+  }) async {
+    var query =
+        _client.from('plans').select().eq('workspace_id', workspaceId);
+    if (!includeInactive) query = query.eq('active', true);
+    final rows = await query.order('base_fee_cents', ascending: false);
     return rows
         .map(
           (row) => Plan(
@@ -107,5 +108,33 @@ class SupabaseMoneyRepository implements MoneyRepository {
           ),
         )
         .toList();
+  }
+
+  @override
+  Future<void> createPlan({
+    required String workspaceId,
+    required String name,
+    required int baseFeeCents,
+    int? includedHalfDays,
+    required int overageFeeCents,
+  }) async {
+    await _client.from('plans').insert({
+      'workspace_id': workspaceId,
+      'name': name,
+      'base_fee_cents': baseFeeCents,
+      'included_half_days': includedHalfDays,
+      'overage_fee_cents': overageFeeCents,
+    });
+  }
+
+  @override
+  Future<void> updatePlan(Plan plan) async {
+    await _client.from('plans').update({
+      'name': plan.name,
+      'base_fee_cents': plan.baseFeeCents,
+      'included_half_days': plan.includedHalfDays,
+      'overage_fee_cents': plan.overageFeeCents,
+      'active': plan.active,
+    }).eq('id', plan.id);
   }
 }

@@ -402,6 +402,49 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ledgerCategoryAdjustment => 'Ajustement';
 
   @override
+  String get plansEditorTitle => 'Formules';
+
+  @override
+  String get plansEditorNew => 'Nouvelle formule';
+
+  @override
+  String get plansEditorEdit => 'Modifier la formule';
+
+  @override
+  String get plansEditorInactive => 'Inactive';
+
+  @override
+  String get plansEditorUnlimited => 'demi-journées illimitées';
+
+  @override
+  String plansEditorQuota(int count) {
+    return '$count demi-journées';
+  }
+
+  @override
+  String plansEditorPerExtra(String price) {
+    return '$price/demi-journée suppl.';
+  }
+
+  @override
+  String get planNameLabel => 'Nom';
+
+  @override
+  String get planBaseFeeLabel => 'Forfait mensuel';
+
+  @override
+  String get planIncludedLabel => 'Demi-journées incluses';
+
+  @override
+  String get planIncludedHelper => 'Laisser vide pour illimité';
+
+  @override
+  String get planOverageLabel => 'Prix par demi-journée supplémentaire';
+
+  @override
+  String get planActiveLabel => 'Active';
+
+  @override
   String get planNoLevels => 'L\'espace n\'a pas encore de plan.';
 
   @override

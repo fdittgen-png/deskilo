@@ -27,5 +27,18 @@
   "expenseCategoryCoffee": "Café y cocina",
   "expenseCategorySupplies": "Material",
   "expenseCategoryEquipment": "Equipamiento",
-  "expenseCategoryOther": "Otro"
+  "expenseCategoryOther": "Otro",
+  "plansEditorTitle": "Planes",
+  "plansEditorNew": "Nuevo plan",
+  "plansEditorEdit": "Editar plan",
+  "plansEditorInactive": "Inactivo",
+  "plansEditorUnlimited": "medias jornadas ilimitadas",
+  "plansEditorQuota": "{count} medias jornadas",
+  "plansEditorPerExtra": "{price}/media jornada extra",
+  "planNameLabel": "Nombre",
+  "planBaseFeeLabel": "Cuota mensual base",
+  "planIncludedLabel": "Medias jornadas incluidas",
+  "planIncludedHelper": "Dejar vacío para ilimitado",
+  "planOverageLabel": "Precio por media jornada extra",
+  "planActiveLabel": "Activo"
 }
