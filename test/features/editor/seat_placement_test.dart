@@ -131,7 +131,10 @@ void main() {
         },
       );
 
-      // Select tool is active by default; tap the seat.
+      // Select tool is active by default: first tap selects (#101),
+      // second opens the property sheet.
+      await tester.tapAt(cellCenter(tester, 5, 5));
+      await tester.pumpAndSettle();
       await tester.tapAt(cellCenter(tester, 5, 5));
       await tester.pumpAndSettle();
       expect(find.text('Sitting direction'), findsOneWidget);
@@ -177,7 +180,9 @@ void main() {
         },
       );
 
-      await tester.tapAt(cellCenter(tester, 5, 5));
+      await tester.tapAt(cellCenter(tester, 5, 5)); // select (#101)
+      await tester.pumpAndSettle();
+      await tester.tapAt(cellCenter(tester, 5, 5)); // open properties
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Icons.arrow_forward));
       await tester.pumpAndSettle();

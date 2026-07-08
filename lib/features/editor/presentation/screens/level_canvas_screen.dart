@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/desk.dart';
 import '../../../plan/domain/floor_plan.dart';
+import '../../../plan/domain/floor_plan_editing.dart';
 import '../../../plan/domain/floor_plan_rules.dart';
 import '../../../plan/domain/grid_geometry.dart';
 import '../../../plan/domain/office.dart';
@@ -48,6 +49,143 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   ({int x, int y})? _dragStart;
   GridRect? _marquee;
   bool _marqueeValid = true;
+
+  // Move/resize state (#101): tap selects, drag inside moves, drag on an
+  // edge/corner resizes; the draft plan previews the change live.
+  ElementKind? _selectedKind;
+  String? _selectedId;
+  FloorPlan? _draft;
+  bool _draftValid = true;
+  ResizeEdges? _dragEdges;
+
+  GridRect? _selectionRect(FloorPlan plan) {
+    final id = _selectedId;
+    return switch (_selectedKind) {
+      ElementKind.office =>
+        plan.offices.where((o) => o.id == id).firstOrNull?.rect,
+      ElementKind.desk =>
+        plan.desks.where((d) => d.id == id).firstOrNull?.rect,
+      ElementKind.seat =>
+        plan.seats.where((s) => s.id == id).firstOrNull?.footprint,
+      null => null,
+    };
+  }
+
+  void _clearSelection() => setState(() {
+        _selectedKind = null;
+        _selectedId = null;
+        _draft = null;
+        _draftValid = true;
+        _dragEdges = null;
+      });
+
+  /// Edge hit-test in canvas pixels (tolerance ~half a cell each side).
+  ResizeEdges _edgesAt(GridRect rect, Offset position) {
+    const tol = GridCanvas.cellSize * 0.55;
+    final px = Rect.fromLTWH(
+      rect.x * GridCanvas.cellSize,
+      rect.y * GridCanvas.cellSize,
+      rect.w * GridCanvas.cellSize,
+      rect.h * GridCanvas.cellSize,
+    );
+    final near = px.inflate(tol).contains(position);
+    if (!near) return const ResizeEdges();
+    return ResizeEdges(
+      left: (position.dx - px.left).abs() <= tol,
+      right: (position.dx - px.right).abs() <= tol,
+      top: (position.dy - px.top).abs() <= tol,
+      bottom: (position.dy - px.bottom).abs() <= tol,
+    );
+  }
+
+  void _onSelectPanStart(FloorPlan plan, Offset position) {
+    final rect = _selectionRect(plan);
+    if (rect == null) return;
+    final edges = _selectedKind == ElementKind.seat
+        ? const ResizeEdges()
+        : _edgesAt(rect, position);
+    final cell = _cellAt(position);
+    final inside = rect.containsCell(cell.x, cell.y);
+    if (edges.isEmpty && !inside) return; // dead drag next to the element
+    setState(() {
+      _dragStart = cell;
+      _dragEdges = edges;
+      _draft = plan;
+      _draftValid = true;
+    });
+  }
+
+  void _onSelectPanUpdate(FloorPlan plan, Offset position) {
+    final start = _dragStart;
+    final edges = _dragEdges;
+    final kind = _selectedKind;
+    final id = _selectedId;
+    if (start == null || edges == null || kind == null || id == null) return;
+    final base = _selectionRect(plan);
+    if (base == null) return;
+    final cell = _cellAt(position);
+    final dx = cell.x - start.x;
+    final dy = cell.y - start.y;
+
+    final FloorPlan draft;
+    if (kind == ElementKind.seat) {
+      final moved = dragRect(base, const ResizeEdges(), dx, dy);
+      draft = applySeatPosition(plan, id, moved.x, moved.y);
+    } else {
+      final next = dragRect(base, edges, dx, dy);
+      draft = kind == ElementKind.office
+          ? applyOfficeRect(plan, id, next)
+          : applyDeskRect(plan, id, next);
+    }
+    setState(() {
+      _draft = draft;
+      _draftValid = validateElement(draft, kind, id) == null;
+    });
+  }
+
+  Future<void> _onSelectPanEnd(FloorPlan plan) async {
+    final draft = _draft;
+    final kind = _selectedKind;
+    final id = _selectedId;
+    setState(() {
+      _dragStart = null;
+      _dragEdges = null;
+    });
+    if (draft == null || kind == null || id == null) return;
+    final problem = validateElement(draft, kind, id);
+    if (problem != null) {
+      setState(() {
+        _draft = null;
+        _draftValid = true;
+      });
+      _showProblem(problem);
+      return;
+    }
+    await _persistDiff(plan, draft);
+    setState(() {
+      _draft = null;
+      _draftValid = true;
+    });
+    ref.invalidate(floorPlanProvider(widget.levelId));
+  }
+
+  /// Persists every element whose geometry changed between [base] and
+  /// [draft] (a moved office drags its desks and seats along).
+  Future<void> _persistDiff(FloorPlan base, FloorPlan draft) async {
+    final repo = ref.read(floorPlanRepositoryProvider);
+    final baseOffices = {for (final o in base.offices) o.id: o};
+    for (final office in draft.offices) {
+      if (baseOffices[office.id] != office) await repo.updateOffice(office);
+    }
+    final baseDesks = {for (final d in base.desks) d.id: d};
+    for (final desk in draft.desks) {
+      if (baseDesks[desk.id] != desk) await repo.updateDesk(desk);
+    }
+    final baseSeats = {for (final s in base.seats) s.id: s};
+    for (final seat in draft.seats) {
+      if (baseSeats[seat.id] != seat) await repo.updateSeat(seat);
+    }
+  }
 
   ({int x, int y}) _cellAt(Offset position) {
     final x = (position.dx / GridCanvas.cellSize)
@@ -216,14 +354,39 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       return;
     }
 
-    // Select tool: property sheets, topmost element first.
-    if (seat != null) {
-      await _showSeatSheet(plan, seat);
-    } else if (desk != null) {
-      await _showDeskSheet(desk);
-    } else if (office != null) {
-      await _showOfficeSheet(office);
+    // Select tool (#101): first tap selects (handles appear, dragging moves
+    // or resizes); tapping the selected element again opens its properties;
+    // tapping empty space deselects.
+    final (ElementKind, String)? hit = seat != null
+        ? (ElementKind.seat, seat.id)
+        : desk != null
+            ? (ElementKind.desk, desk.id)
+            : office != null
+                ? (ElementKind.office, office.id)
+                : null;
+
+    if (hit == null) {
+      _clearSelection();
+      return;
     }
+    final (kind, id) = hit;
+    if (kind == _selectedKind && id == _selectedId) {
+      switch (kind) {
+        case ElementKind.seat:
+          await _showSeatSheet(plan, seat!);
+        case ElementKind.desk:
+          await _showDeskSheet(desk!);
+        case ElementKind.office:
+          await _showOfficeSheet(office!);
+      }
+      return;
+    }
+    setState(() {
+      _selectedKind = kind;
+      _selectedId = id;
+      _draft = null;
+      _draftValid = true;
+    });
   }
 
   String _amenityLabel(AppLocalizations? l10n, String key) {
@@ -537,8 +700,10 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
               ),
             ],
             selected: {_tool},
-            onSelectionChanged: (selection) =>
-                setState(() => _tool = selection.first),
+            onSelectionChanged: (selection) {
+              _clearSelection();
+              setState(() => _tool = selection.first);
+            },
           ),
         ),
       ),
@@ -561,13 +726,17 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       GridCanvas.heightCells * GridCanvas.cellSize,
     );
     final drawing = _tool == EditorTool.office || _tool == EditorTool.desk;
+    // #101: while an element is selected, the drag gesture belongs to
+    // move/resize — deselect (tap empty space) to pan the viewport again.
+    final selecting = _tool == EditorTool.select && _selectedId != null;
+    final shownPlan = _draft ?? plan;
 
     return InteractiveViewer(
       constrained: false,
       minScale: 0.4,
       maxScale: 3,
-      panEnabled: !drawing,
-      scaleEnabled: !drawing,
+      panEnabled: !drawing && !selecting,
+      scaleEnabled: !drawing && !selecting,
       boundaryMargin: const EdgeInsets.all(200),
       child: GestureDetector(
         // `down` so onPanStart reports the touch-down cell, not the position
@@ -583,7 +752,9 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                   _marqueeValid = _validate(plan, _marquee!) == null;
                 });
               }
-            : null,
+            : selecting
+                ? (details) => _onSelectPanStart(plan, details.localPosition)
+                : null,
         onPanUpdate: drawing
             ? (details) {
                 final start = _dragStart;
@@ -595,7 +766,9 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                   _marqueeValid = _validate(plan, rect) == null;
                 });
               }
-            : null,
+            : selecting
+                ? (details) => _onSelectPanUpdate(plan, details.localPosition)
+                : null,
         onPanEnd: drawing
             ? (details) async {
                 final rect = _marquee;
@@ -605,16 +778,21 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                 });
                 if (rect != null) await _commitMarquee(plan, rect);
               }
-            : null,
+            : selecting
+                ? (details) => _onSelectPanEnd(plan)
+                : null,
         child: CustomPaint(
           key: const ValueKey('level-canvas'),
           size: size,
           painter: FloorPlanPainter(
-            plan: plan,
+            plan: shownPlan,
             cellSize: GridCanvas.cellSize,
             colorScheme: Theme.of(context).colorScheme,
             marquee: _marquee,
             marqueeValid: _marqueeValid,
+            selection: _selectionRect(shownPlan),
+            selectionResizable: _selectedKind != ElementKind.seat,
+            selectionValid: _draftValid,
           ),
         ),
       ),

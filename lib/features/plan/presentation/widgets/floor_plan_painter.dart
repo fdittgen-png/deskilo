@@ -20,6 +20,9 @@ class FloorPlanPainter extends CustomPainter {
     this.seatLabels,
     this.marquee,
     this.marqueeValid = true,
+    this.selection,
+    this.selectionResizable = false,
+    this.selectionValid = true,
   });
 
   final FloorPlan plan;
@@ -36,6 +39,12 @@ class FloorPlanPainter extends CustomPainter {
   /// In-progress drag rectangle (grid cells) while drawing a new element.
   final GridRect? marquee;
   final bool marqueeValid;
+
+  /// Editor selection (#101): highlighted rect, resize handles when the
+  /// element kind allows resizing, error tint while a drag breaks rules.
+  final GridRect? selection;
+  final bool selectionResizable;
+  final bool selectionValid;
 
   Rect _toPx(GridRect r) => Rect.fromLTWH(
         r.x * cellSize,
@@ -111,6 +120,37 @@ class FloorPlanPainter extends CustomPainter {
       }
     }
 
+    final sel = selection;
+    if (sel != null) {
+      final rect = _toPx(sel);
+      final color = selectionValid ? colorScheme.primary : colorScheme.error;
+      canvas.drawRect(
+        rect,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 3
+          ..color = color,
+      );
+      if (selectionResizable) {
+        final handlePaint = Paint()..color = color;
+        for (final point in [
+          rect.topLeft,
+          rect.topCenter,
+          rect.topRight,
+          rect.centerLeft,
+          rect.centerRight,
+          rect.bottomLeft,
+          rect.bottomCenter,
+          rect.bottomRight,
+        ]) {
+          canvas.drawRect(
+            Rect.fromCenter(center: point, width: 8, height: 8),
+            handlePaint,
+          );
+        }
+      }
+    }
+
     final m = marquee;
     if (m != null) {
       final rect = _toPx(m);
@@ -173,6 +213,9 @@ class FloorPlanPainter extends CustomPainter {
       oldDelegate.plan != plan ||
       oldDelegate.marquee != marquee ||
       oldDelegate.marqueeValid != marqueeValid ||
+      oldDelegate.selection != selection ||
+      oldDelegate.selectionResizable != selectionResizable ||
+      oldDelegate.selectionValid != selectionValid ||
       oldDelegate.seatStates != seatStates ||
       oldDelegate.seatLabels != seatLabels ||
       oldDelegate.cellSize != cellSize;
