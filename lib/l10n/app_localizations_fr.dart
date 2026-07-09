@@ -1048,4 +1048,24 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get workspaceSettingsCurrencyHelper =>
       'Proposée d\'après le pays — modifiable si votre communauté facture dans une autre devise.';
+
+  @override
+  String get paymentInstructionsTitle => 'Instructions de paiement';
+
+  @override
+  String get paymentInstructionsHelper =>
+      'Affichées aux membres sur un relevé impayé. Laisser vide pour ne rien afficher.';
+
+  @override
+  String get paymentInstructionsPaypalLabel => 'Lien ou identifiant PayPal.me';
+
+  @override
+  String get paymentInstructionsReferenceLabel =>
+      'Indication de référence de paiement';
+
+  @override
+  String get paymentInstructionsIbanTitle => 'IBAN';
+
+  @override
+  String get paymentInstructionsIbanCopied => 'IBAN copié.';
 }

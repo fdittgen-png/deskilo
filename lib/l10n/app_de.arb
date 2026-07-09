@@ -316,5 +316,11 @@
   "workspaceCodeSharePng": "Als PNG teilen",
   "workspaceSettingsTitle": "Workspace",
   "workspaceSettingsSaved": "Workspace gespeichert.",
-  "workspaceSettingsCurrencyHelper": "Wird vom Land vorbelegt — überschreiben, falls eure Community in einer anderen Währung abrechnet."
+  "workspaceSettingsCurrencyHelper": "Wird vom Land vorbelegt — überschreiben, falls eure Community in einer anderen Währung abrechnet.",
+  "paymentInstructionsTitle": "Zahlungshinweise",
+  "paymentInstructionsHelper": "Wird Mitgliedern auf einer offenen Abrechnung angezeigt. Leer lassen, um nichts anzuzeigen.",
+  "paymentInstructionsPaypalLabel": "PayPal.me-Link oder -Name",
+  "paymentInstructionsReferenceLabel": "Hinweis zum Verwendungszweck",
+  "paymentInstructionsIbanTitle": "IBAN",
+  "paymentInstructionsIbanCopied": "IBAN kopiert."
 }

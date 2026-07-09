@@ -5,6 +5,7 @@ import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
 import 'package:deskilo/core/notifications/notification_providers.dart';
@@ -174,6 +175,22 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
         currencyCode: currencyCode,
         timezone: timezone,
       );
+    }
+  }
+
+  /// (#155) The last saved instructions, for assertions.
+  PaymentInstructions? lastPaymentInstructions;
+
+  @override
+  Future<void> setPaymentInstructions(
+    String workspaceId,
+    PaymentInstructions instructions,
+  ) async {
+    lastPaymentInstructions = instructions;
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i != -1) {
+      workspaces[i] =
+          workspaces[i].copyWith(paymentInstructions: instructions.toDb());
     }
   }
 

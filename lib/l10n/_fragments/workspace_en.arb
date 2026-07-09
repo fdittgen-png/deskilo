@@ -93,5 +93,29 @@
   "workspaceSettingsCurrencyHelper": "Defaults from the country — override if your community bills in another currency.",
   "@workspaceSettingsCurrencyHelper": {
     "description": "Helper under the currency field on the workspace settings screen (#153)."
+  },
+  "paymentInstructionsTitle": "Payment instructions",
+  "@paymentInstructionsTitle": {
+    "description": "Section title: owner editor (workspace settings) + the how-to-pay card on an unpaid statement (#155)."
+  },
+  "paymentInstructionsHelper": "Shown to members on an unpaid statement. Leave empty to show nothing.",
+  "@paymentInstructionsHelper": {
+    "description": "Helper under the payment-instructions section of the workspace settings screen (#155)."
+  },
+  "paymentInstructionsPaypalLabel": "PayPal.me link or handle",
+  "@paymentInstructionsPaypalLabel": {
+    "description": "Label of the PayPal.me field in the workspace settings (#155). PayPal.me is a brand name."
+  },
+  "paymentInstructionsReferenceLabel": "Payment reference hint",
+  "@paymentInstructionsReferenceLabel": {
+    "description": "Label of the reference-hint field (settings) and row (statement card) (#155)."
+  },
+  "paymentInstructionsIbanTitle": "IBAN",
+  "@paymentInstructionsIbanTitle": {
+    "description": "Row title for the IBAN on the how-to-pay card — the acronym is identical in every locale (#155)."
+  },
+  "paymentInstructionsIbanCopied": "IBAN copied.",
+  "@paymentInstructionsIbanCopied": {
+    "description": "Snackbar after tapping the IBAN row copied it to the clipboard (#155)."
   }
 }

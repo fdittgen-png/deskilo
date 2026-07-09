@@ -5,6 +5,7 @@ import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
@@ -17,11 +18,16 @@ Future<FakeMoneyRepository> pumpMoney(
   WidgetTester tester, {
   FakeMoneyRepository? money,
   FakeEventRepository? events,
+  FakeWorkspaceRepository? workspace,
 }) async {
   money ??= FakeMoneyRepository();
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(money: money, events: events),
+      overrides: standardTestOverrides(
+        money: money,
+        events: events,
+        workspace: workspace,
+      ),
       child: const DeskiloApp(),
     ),
   );
@@ -29,6 +35,19 @@ Future<FakeMoneyRepository> pumpMoney(
   await tester.tap(find.text('Money'));
   await tester.pumpAndSettle();
   return money;
+}
+
+/// A workspace whose owner configured how-to-pay details (#155).
+FakeWorkspaceRepository workspaceWithInstructions() {
+  final workspace = FakeWorkspaceRepository.withWorkspace();
+  workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+    paymentInstructions: const {
+      'iban': 'DE89 3704 0044 0532 0130 00',
+      'paypal_me': 'deskilo',
+      'reference': 'DesKilo member period',
+    },
+  );
+  return workspace;
 }
 
 /// The period before 'yyyy-MM'.
@@ -260,6 +279,85 @@ void main() {
 
     expect(money.recordedPayments.single.amountCents, 2500);
     expect(money.recordedPayments.single.method, PaymentMethod.paypal);
+  });
+
+  testWidgets(
+      'an outstanding statement shows the how-to-pay card: IBAN copies, '
+      'PayPal.me is a tappable link, the reference hint renders (#155)',
+      (tester) async {
+    tester.view.physicalSize = const Size(600, 2400);
+    tester.view.devicePixelRatio = 1.5;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await pumpMoney(tester, workspace: workspaceWithInstructions());
+
+    expect(find.text('Payment instructions'), findsOneWidget);
+    expect(find.text('DE89 3704 0044 0532 0130 00'), findsOneWidget);
+    expect(find.text('https://paypal.me/deskilo'), findsOneWidget);
+    expect(find.text('DesKilo member period'), findsOneWidget);
+
+    // The PayPal row is tappable (opens externally in production).
+    final paypalTile = tester.widget<ListTile>(
+      find.byKey(const Key('howToPayPaypal')),
+    );
+    expect(paypalTile.onTap, isNotNull);
+
+    // Tapping the IBAN row copies it (scroll it into view first — the
+    // card sits below the balance footer).
+    // Clipboard.setData awaits SystemChannels.platform, which has no
+    // handler in widget tests — mock it so the copy completes.
+    ClipboardData? copied;
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+      SystemChannels.platform,
+      (call) async {
+        if (call.method == 'Clipboard.setData') {
+          copied = ClipboardData(
+            text: (call.arguments as Map<Object?, Object?>)['text']!
+                as String,
+          );
+        }
+        return null;
+      },
+    );
+    addTearDown(
+      () => tester.binding.defaultBinaryMessenger
+          .setMockMethodCallHandler(SystemChannels.platform, null),
+    );
+
+    await tester.ensureVisible(find.byKey(const Key('howToPayIban')));
+    await tester.tap(find.byKey(const Key('howToPayIban')));
+    // One frame, not pumpAndSettle — settling would pump through the
+    // snackbar's whole display duration and it would already be gone.
+    await tester.pump();
+    await tester.pump();
+    expect(find.text('IBAN copied.'), findsOneWidget);
+    expect(copied?.text, 'DE89 3704 0044 0532 0130 00');
+  });
+
+  testWidgets('a settled statement shows NO how-to-pay card (#155)',
+      (tester) async {
+    final money = FakeMoneyRepository();
+    money.statement = money.statement.copyWith(
+      creditsCents: 20000,
+      balanceCents: 3400,
+    );
+    await pumpMoney(
+      tester,
+      money: money,
+      workspace: workspaceWithInstructions(),
+    );
+
+    expect(find.text('Settled'), findsOneWidget);
+    expect(find.text('Payment instructions'), findsNothing);
+  });
+
+  testWidgets('no configured instructions → no how-to-pay card even when '
+      'outstanding (#155)', (tester) async {
+    await pumpMoney(tester);
+
+    expect(find.text('Outstanding'), findsOneWidget);
+    expect(find.text('Payment instructions'), findsNothing);
   });
 
   testWidgets('re-tapping the selected method chip deselects it (#154)',

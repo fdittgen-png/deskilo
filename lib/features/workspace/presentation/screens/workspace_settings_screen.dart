@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/payment_instructions.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
 
@@ -26,6 +27,10 @@ class _WorkspaceSettingsScreenState
   final _formKey = GlobalKey<FormState>();
   final _currency = TextEditingController();
   final _timezone = TextEditingController();
+  // #155 — payment instructions members see on an unpaid statement.
+  final _iban = TextEditingController();
+  final _paypalMe = TextEditingController();
+  final _reference = TextEditingController();
   String? _countryCode;
   bool _busy = false;
 
@@ -37,6 +42,9 @@ class _WorkspaceSettingsScreenState
   void dispose() {
     _currency.dispose();
     _timezone.dispose();
+    _iban.dispose();
+    _paypalMe.dispose();
+    _reference.dispose();
     super.dispose();
   }
 
@@ -59,12 +67,22 @@ class _WorkspaceSettingsScreenState
     final l10n = AppLocalizations.of(context);
     setState(() => _busy = true);
     try {
-      await ref.read(workspaceRepositoryProvider).updateWorkspaceLocale(
-            workspaceId,
-            countryCode: code,
-            currencyCode: _currency.text.trim().toUpperCase(),
-            timezone: _timezone.text.trim(),
-          );
+      final repository = ref.read(workspaceRepositoryProvider);
+      await repository.updateWorkspaceLocale(
+        workspaceId,
+        countryCode: code,
+        currencyCode: _currency.text.trim().toUpperCase(),
+        timezone: _timezone.text.trim(),
+      );
+      // #155 — the how-to-pay blob rides the same Save.
+      await repository.setPaymentInstructions(
+        workspaceId,
+        PaymentInstructions(
+          iban: _iban.text,
+          paypalMe: _paypalMe.text,
+          reference: _reference.text,
+        ),
+      );
       // Every money surface watches the workspace chain — invalidating it
       // re-renders all amounts in the new currency immediately.
       ref.invalidate(myWorkspacesProvider);
@@ -101,6 +119,11 @@ class _WorkspaceSettingsScreenState
       _countryCode = workspace.countryCode;
       _currency.text = workspace.currencyCode;
       _timezone.text = workspace.timezone;
+      final instructions =
+          PaymentInstructions.fromDb(workspace.paymentInstructions);
+      _iban.text = instructions.iban;
+      _paypalMe.text = instructions.paypalMe;
+      _reference.text = instructions.reference;
     }
     return Scaffold(
       appBar: AppBar(
@@ -166,6 +189,52 @@ class _WorkspaceSettingsScreenState
                         (value?.trim().isNotEmpty ?? false)
                             ? null
                             : (l10n?.authFieldRequired ?? 'Required'),
+                  ),
+                  const SizedBox(height: 24),
+                  // #155 — payment instructions members see on an unpaid
+                  // statement. All optional; empty = no card renders.
+                  Text(
+                    l10n?.paymentInstructionsTitle ?? 'Payment instructions',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    l10n?.paymentInstructionsHelper ??
+                        'Shown to members on an unpaid statement. Leave '
+                            'empty to show nothing.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    key: const Key('workspaceSettingsIban'),
+                    controller: _iban,
+                    enabled: !_busy,
+                    decoration: InputDecoration(
+                      // The acronym is identical in every locale; the key
+                      // exists so the parity gate covers the whole set.
+                      labelText:
+                          l10n?.paymentInstructionsIbanTitle ?? 'IBAN',
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    key: const Key('workspaceSettingsPaypalMe'),
+                    controller: _paypalMe,
+                    enabled: !_busy,
+                    decoration: InputDecoration(
+                      labelText: l10n?.paymentInstructionsPaypalLabel ??
+                          'PayPal.me link or handle',
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    key: const Key('workspaceSettingsReference'),
+                    controller: _reference,
+                    enabled: !_busy,
+                    decoration: InputDecoration(
+                      labelText: l10n?.paymentInstructionsReferenceLabel ??
+                          'Payment reference hint',
+                    ),
                   ),
                   const SizedBox(height: 24),
                   FilledButton(
