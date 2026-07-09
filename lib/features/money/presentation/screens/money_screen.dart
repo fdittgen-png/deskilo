@@ -11,6 +11,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/bill_pdf.dart';
 import '../../domain/bill_sections.dart';
@@ -375,6 +376,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       Localizations.maybeLocaleOf(context)?.toString(),
     ).format(_month);
 
+    final features = ref.watch(enabledFeaturesSyncProvider);
     final visibleStatement = statementAsync.value;
     final periodHeader = Row(
       children: [
@@ -393,13 +395,14 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           icon: const Icon(Icons.chevron_right),
           onPressed: _isCurrentPeriod ? null : () => _shiftMonth(1),
         ),
-        IconButton(
-          icon: const Icon(Icons.picture_as_pdf_outlined),
-          tooltip: l10n?.billPdfExport ?? 'Export bill as PDF',
-          onPressed: visibleStatement == null
-              ? null
-              : () => _exportPdf(visibleStatement),
-        ),
+        if (features.contains(WorkspaceFeature.pdfExport))
+          IconButton(
+            icon: const Icon(Icons.picture_as_pdf_outlined),
+            tooltip: l10n?.billPdfExport ?? 'Export bill as PDF',
+            onPressed: visibleStatement == null
+                ? null
+                : () => _exportPdf(visibleStatement),
+          ),
       ],
     );
 
@@ -428,20 +431,23 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               icon: const Icon(Icons.receipt_long_outlined),
               label: Text(l10n?.moneySubmitExpense ?? 'Submit an expense'),
             ),
-            const SizedBox(height: 8),
-            OutlinedButton.icon(
-              onPressed: () {
-                final me = ref.read(myMemberProvider).value;
-                if (me == null) return;
-                showConsumptionSheet(
-                  context,
-                  ref,
-                  subjectMemberId: me.id,
-                );
-              },
-              icon: const Icon(Icons.room_service_outlined),
-              label: Text(l10n?.consumptionAdd ?? 'Add consumption'),
-            ),
+            // Consumption entry points follow the services feature (#146).
+            if (features.contains(WorkspaceFeature.services)) ...[
+              const SizedBox(height: 8),
+              OutlinedButton.icon(
+                onPressed: () {
+                  final me = ref.read(myMemberProvider).value;
+                  if (me == null) return;
+                  showConsumptionSheet(
+                    context,
+                    ref,
+                    subjectMemberId: me.id,
+                  );
+                },
+                icon: const Icon(Icons.room_service_outlined),
+                label: Text(l10n?.consumptionAdd ?? 'Add consumption'),
+              ),
+            ],
           ],
         ),
       AsyncError() => Center(

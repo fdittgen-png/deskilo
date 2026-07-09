@@ -470,6 +470,64 @@ class AppLocalizationsFr extends AppLocalizations {
   String get pushPendingBody => 'Quelqu\'un attend votre confirmation.';
 
   @override
+  String get featuresTitle => 'Fonctionnalités';
+
+  @override
+  String get featureCalendarTab => 'Onglet Calendrier';
+
+  @override
+  String get featureCalendarTabDesc =>
+      'Vue mensuelle des réservations et jours de fermeture.';
+
+  @override
+  String get featureEventsTab => 'Onglet Événements';
+
+  @override
+  String get featureEventsTabDesc =>
+      'Fil d\'activité et confirmations en attente.';
+
+  @override
+  String get featureMoneyTab => 'Onglet Finances';
+
+  @override
+  String get featureMoneyTabDesc =>
+      'Factures mensuelles, paiements et dépenses.';
+
+  @override
+  String get featureServices => 'Services';
+
+  @override
+  String get featureServicesDesc =>
+      'Catalogue de services et suivi des consommations.';
+
+  @override
+  String get featurePdfExport => 'Export PDF';
+
+  @override
+  String get featurePdfExportDesc => 'Exporter la facture mensuelle en PDF.';
+
+  @override
+  String get featureSeriesBooking => 'Réservation en série';
+
+  @override
+  String get featureSeriesBookingDesc =>
+      'Répéter une réservation chaque jour, chaque semaine ou en semaine.';
+
+  @override
+  String get featureBookForOthers => 'Réserver pour d\'autres';
+
+  @override
+  String get featureBookForOthersDesc =>
+      'Les admins et propriétaires réservent des places pour d\'autres membres.';
+
+  @override
+  String get featurePushNotifications => 'Notifications push';
+
+  @override
+  String get featurePushNotificationsDesc =>
+      'Livrer les confirmations en attente sur les appareils des membres.';
+
+  @override
   String get membersTitle => 'Membres et forfaits';
 
   @override

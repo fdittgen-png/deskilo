@@ -1,0 +1,124 @@
+// SPDX-License-Identifier: MIT
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../../core/trace/trace_logger.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../domain/workspace.dart';
+import '../../domain/workspace_feature.dart';
+import '../../providers/workspace_providers.dart';
+
+/// Owner-only feature management (#146): one switch per registry feature.
+/// Toggling writes the full flags map to the workspace row (owner RLS)
+/// and invalidates the workspace chain so the gates apply immediately —
+/// other members pick the flags up on their next connect/refetch.
+class FeaturesScreen extends ConsumerWidget {
+  const FeaturesScreen({super.key});
+
+  String _name(AppLocalizations? l10n, WorkspaceFeature feature) =>
+      switch (feature) {
+        WorkspaceFeature.calendarTab =>
+          l10n?.featureCalendarTab ?? 'Calendar tab',
+        WorkspaceFeature.eventsTab => l10n?.featureEventsTab ?? 'Events tab',
+        WorkspaceFeature.moneyTab => l10n?.featureMoneyTab ?? 'Money tab',
+        WorkspaceFeature.services => l10n?.featureServices ?? 'Services',
+        WorkspaceFeature.pdfExport => l10n?.featurePdfExport ?? 'PDF export',
+        WorkspaceFeature.seriesBooking =>
+          l10n?.featureSeriesBooking ?? 'Series booking',
+        WorkspaceFeature.bookForOthers =>
+          l10n?.featureBookForOthers ?? 'Book for others',
+        WorkspaceFeature.pushNotifications =>
+          l10n?.featurePushNotifications ?? 'Push notifications',
+      };
+
+  String _description(AppLocalizations? l10n, WorkspaceFeature feature) =>
+      switch (feature) {
+        WorkspaceFeature.calendarTab => l10n?.featureCalendarTabDesc ??
+            'Monthly overview of bookings and closures.',
+        WorkspaceFeature.eventsTab => l10n?.featureEventsTabDesc ??
+            'Activity feed and pending confirmations.',
+        WorkspaceFeature.moneyTab => l10n?.featureMoneyTabDesc ??
+            'Bills, payments, expenses and consumptions.',
+        WorkspaceFeature.services => l10n?.featureServicesDesc ??
+            'Service catalog and consumption tracking.',
+        WorkspaceFeature.pdfExport => l10n?.featurePdfExportDesc ??
+            'Export the monthly bill as a PDF.',
+        WorkspaceFeature.seriesBooking => l10n?.featureSeriesBookingDesc ??
+            'Repeat a reservation daily, weekly or on weekdays.',
+        WorkspaceFeature.bookForOthers => l10n?.featureBookForOthersDesc ??
+            'Admins and owners book seats for other members.',
+        WorkspaceFeature.pushNotifications =>
+          l10n?.featurePushNotificationsDesc ??
+              'Deliver pending confirmations to members\' devices.',
+      };
+
+  Future<void> _toggle(
+    BuildContext context,
+    WidgetRef ref,
+    Workspace workspace,
+    Set<WorkspaceFeature> enabled,
+    WorkspaceFeature feature,
+    bool value,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    // Always write the FULL map so the row is self-describing and a later
+    // registry-default change never silently flips an owner's choice.
+    final flags = {
+      for (final f in featureManifest.keys)
+        f.dbKey: f == feature ? value : enabled.contains(f),
+    };
+    try {
+      await ref
+          .read(workspaceRepositoryProvider)
+          .setFeatureFlags(workspace.id, flags);
+    } catch (e, st) {
+      debugPrint('set feature flags failed: $e\n$st');
+      TraceLogger.instance.error('workspace', 'set feature flags failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            l10n?.workspaceGenericError ??
+                'Something went wrong. Please try again.',
+          ),
+        ),
+      );
+      return;
+    }
+    // The workspace chain re-derives enabledFeatures from the new row —
+    // that applies the gates locally right away.
+    ref.invalidate(myWorkspacesProvider);
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.watch(currentWorkspaceProvider).value;
+    final enabled = ref.watch(enabledFeaturesSyncProvider);
+
+    return Scaffold(
+      appBar: AppBar(title: Text(l10n?.featuresTitle ?? 'Features')),
+      body: workspace == null
+          ? const Center(child: CircularProgressIndicator())
+          : ListView(
+              children: [
+                for (final entry in featureManifest.values)
+                  SwitchListTile(
+                    title: Text(_name(l10n, entry.feature)),
+                    subtitle: Text(_description(l10n, entry.feature)),
+                    value: enabled.contains(entry.feature),
+                    onChanged: (value) => _toggle(
+                      context,
+                      ref,
+                      workspace,
+                      enabled,
+                      entry.feature,
+                      value,
+                    ),
+                  ),
+              ],
+            ),
+    );
+  }
+}

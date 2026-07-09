@@ -8,6 +8,7 @@ import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/member.dart';
+import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 
 /// Owner-only member management: role overview, subscription percentage
@@ -104,6 +105,10 @@ class MembersScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final membersAsync = ref.watch(workspaceMembersProvider);
     final names = ref.watch(memberNamesProvider).value ?? const {};
+    // Consumption entry points follow the services feature (#146).
+    final servicesOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.services);
 
     return Scaffold(
       appBar: AppBar(
@@ -153,7 +158,7 @@ class MembersScreen extends ConsumerWidget {
                     children: [
                       // Consumed services land on the member's bill only
                       // after the member confirms (#129).
-                      if (member.status == MemberStatus.active)
+                      if (servicesOn && member.status == MemberStatus.active)
                         IconButton(
                           icon: const Icon(Icons.room_service_outlined),
                           tooltip: l10n?.consumptionAddForMember(

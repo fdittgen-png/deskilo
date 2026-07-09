@@ -950,6 +950,108 @@ abstract class AppLocalizations {
   /// **'Someone needs your confirmation.'**
   String get pushPendingBody;
 
+  /// App-bar title of the owner feature-management screen and its settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Features'**
+  String get featuresTitle;
+
+  /// Feature switch: the Calendar bottom tab
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar tab'**
+  String get featureCalendarTab;
+
+  /// One-line description under the Calendar tab switch
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly overview of bookings and closed days.'**
+  String get featureCalendarTabDesc;
+
+  /// Feature switch: the Events bottom tab
+  ///
+  /// In en, this message translates to:
+  /// **'Events tab'**
+  String get featureEventsTab;
+
+  /// One-line description under the Events tab switch
+  ///
+  /// In en, this message translates to:
+  /// **'Activity feed and pending confirmations.'**
+  String get featureEventsTabDesc;
+
+  /// Feature switch: the Money bottom tab
+  ///
+  /// In en, this message translates to:
+  /// **'Money tab'**
+  String get featureMoneyTab;
+
+  /// One-line description under the Money tab switch
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly bills, payments and expenses.'**
+  String get featureMoneyTabDesc;
+
+  /// Feature switch: service catalog + consumptions
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get featureServices;
+
+  /// One-line description under the Services switch
+  ///
+  /// In en, this message translates to:
+  /// **'Service catalog and consumption tracking.'**
+  String get featureServicesDesc;
+
+  /// Feature switch: bill PDF export
+  ///
+  /// In en, this message translates to:
+  /// **'PDF export'**
+  String get featurePdfExport;
+
+  /// One-line description under the PDF export switch
+  ///
+  /// In en, this message translates to:
+  /// **'Export the monthly bill as a PDF.'**
+  String get featurePdfExportDesc;
+
+  /// Feature switch: recurring reservations
+  ///
+  /// In en, this message translates to:
+  /// **'Series booking'**
+  String get featureSeriesBooking;
+
+  /// One-line description under the series booking switch
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat a reservation daily, weekly or on weekdays.'**
+  String get featureSeriesBookingDesc;
+
+  /// Feature switch: admins/owners booking for other members
+  ///
+  /// In en, this message translates to:
+  /// **'Book for others'**
+  String get featureBookForOthers;
+
+  /// One-line description under the book-for-others switch
+  ///
+  /// In en, this message translates to:
+  /// **'Admins and owners book seats for other members.'**
+  String get featureBookForOthersDesc;
+
+  /// Feature switch: UnifiedPush delivery of confirmations
+  ///
+  /// In en, this message translates to:
+  /// **'Push notifications'**
+  String get featurePushNotifications;
+
+  /// One-line description under the push notifications switch
+  ///
+  /// In en, this message translates to:
+  /// **'Deliver pending confirmations to members\' devices.'**
+  String get featurePushNotificationsDesc;
+
   /// Title of the owner-only member management screen + its settings entry
   ///
   /// In en, this message translates to:

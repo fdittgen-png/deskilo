@@ -11,6 +11,7 @@ import '../../features/events/providers/event_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/domain/check_in_reminders.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
+import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../router.dart';
@@ -82,6 +83,44 @@ class ShellScreen extends ConsumerWidget {
       l10n?.tabMoney ?? 'Money',
     ];
 
+    // Per-workspace feature gating (#146): the router branches stay fixed,
+    // but disabled features drop their destination — so the NavigationBar
+    // position and the branch index diverge and must be mapped both ways.
+    // Plan (and Settings in the app bar) are core and never gated.
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    final visibleBranches = [
+      ShellBranch.plan,
+      if (features.contains(WorkspaceFeature.calendarTab))
+        ShellBranch.calendar,
+      if (features.contains(WorkspaceFeature.eventsTab)) ShellBranch.events,
+      if (features.contains(WorkspaceFeature.moneyTab)) ShellBranch.money,
+    ];
+    final selectedPosition =
+        visibleBranches.indexOf(navigationShell.currentIndex);
+
+    NavigationDestination destinationFor(int branch) => switch (branch) {
+          ShellBranch.calendar => NavigationDestination(
+              icon: const Icon(Icons.calendar_month_outlined),
+              selectedIcon: const Icon(Icons.calendar_month),
+              label: tabTitles[ShellBranch.calendar],
+            ),
+          ShellBranch.events => NavigationDestination(
+              icon: const _EventsIcon(selected: false),
+              selectedIcon: const _EventsIcon(selected: true),
+              label: tabTitles[ShellBranch.events],
+            ),
+          ShellBranch.money => NavigationDestination(
+              icon: const Icon(Icons.account_balance_wallet_outlined),
+              selectedIcon: const Icon(Icons.account_balance_wallet),
+              label: tabTitles[ShellBranch.money],
+            ),
+          _ => NavigationDestination(
+              icon: const Icon(Icons.grid_view_outlined),
+              selectedIcon: const Icon(Icons.grid_view),
+              label: tabTitles[ShellBranch.plan],
+            ),
+        };
+
     return Scaffold(
       appBar: AppBar(
         title: Text(tabTitles[navigationShell.currentIndex]),
@@ -100,35 +139,23 @@ class ShellScreen extends ConsumerWidget {
         ],
       ),
       body: navigationShell,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
-        onDestinationSelected: (index) => navigationShell.goBranch(
-          index,
-          initialLocation: index == navigationShell.currentIndex,
-        ),
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.grid_view_outlined),
-            selectedIcon: const Icon(Icons.grid_view),
-            label: tabTitles[0],
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.calendar_month_outlined),
-            selectedIcon: const Icon(Icons.calendar_month),
-            label: tabTitles[1],
-          ),
-          NavigationDestination(
-            icon: const _EventsIcon(selected: false),
-            selectedIcon: const _EventsIcon(selected: true),
-            label: tabTitles[2],
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.account_balance_wallet_outlined),
-            selectedIcon: const Icon(Icons.account_balance_wallet),
-            label: tabTitles[3],
-          ),
-        ],
-      ),
+      // NavigationBar needs at least two destinations; with everything
+      // gated off only Plan remains and the bar disappears entirely.
+      bottomNavigationBar: visibleBranches.length < 2
+          ? null
+          : NavigationBar(
+              // While the router redirect moves a disabled branch back to
+              // /plan the current branch may not be visible for one frame.
+              selectedIndex: selectedPosition < 0 ? 0 : selectedPosition,
+              onDestinationSelected: (position) => navigationShell.goBranch(
+                visibleBranches[position],
+                initialLocation:
+                    visibleBranches[position] == navigationShell.currentIndex,
+              ),
+              destinations: [
+                for (final branch in visibleBranches) destinationFor(branch),
+              ],
+            ),
     );
   }
 }

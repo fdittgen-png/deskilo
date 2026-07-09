@@ -471,6 +471,63 @@ class AppLocalizationsIt extends AppLocalizations {
   String get pushPendingBody => 'Qualcuno attende la tua conferma.';
 
   @override
+  String get featuresTitle => 'Funzionalità';
+
+  @override
+  String get featureCalendarTab => 'Scheda Calendario';
+
+  @override
+  String get featureCalendarTabDesc =>
+      'Panoramica mensile di prenotazioni e giorni di chiusura.';
+
+  @override
+  String get featureEventsTab => 'Scheda Eventi';
+
+  @override
+  String get featureEventsTabDesc =>
+      'Cronologia delle attività e conferme in sospeso.';
+
+  @override
+  String get featureMoneyTab => 'Scheda Finanze';
+
+  @override
+  String get featureMoneyTabDesc => 'Fatture mensili, pagamenti e spese.';
+
+  @override
+  String get featureServices => 'Servizi';
+
+  @override
+  String get featureServicesDesc =>
+      'Catalogo dei servizi e registrazione dei consumi.';
+
+  @override
+  String get featurePdfExport => 'Esportazione PDF';
+
+  @override
+  String get featurePdfExportDesc => 'Esporta la fattura mensile come PDF.';
+
+  @override
+  String get featureSeriesBooking => 'Prenotazione in serie';
+
+  @override
+  String get featureSeriesBookingDesc =>
+      'Ripeti una prenotazione ogni giorno, ogni settimana o nei giorni feriali.';
+
+  @override
+  String get featureBookForOthers => 'Prenota per altri';
+
+  @override
+  String get featureBookForOthersDesc =>
+      'Admin e proprietari prenotano posti per altri membri.';
+
+  @override
+  String get featurePushNotifications => 'Notifiche push';
+
+  @override
+  String get featurePushNotificationsDesc =>
+      'Consegna le conferme in sospeso sui dispositivi dei membri.';
+
+  @override
   String get membersTitle => 'Membri e piani';
 
   @override

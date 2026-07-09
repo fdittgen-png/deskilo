@@ -1,0 +1,20 @@
+{
+  "@@locale": "es",
+  "featuresTitle": "Funciones",
+  "featureCalendarTab": "Pestaña Calendario",
+  "featureCalendarTabDesc": "Vista mensual de reservas y días de cierre.",
+  "featureEventsTab": "Pestaña Eventos",
+  "featureEventsTabDesc": "Actividad y confirmaciones pendientes.",
+  "featureMoneyTab": "Pestaña Finanzas",
+  "featureMoneyTabDesc": "Facturas mensuales, pagos y gastos.",
+  "featureServices": "Servicios",
+  "featureServicesDesc": "Catálogo de servicios y registro de consumos.",
+  "featurePdfExport": "Exportar PDF",
+  "featurePdfExportDesc": "Exportar la factura mensual como PDF.",
+  "featureSeriesBooking": "Reserva en serie",
+  "featureSeriesBookingDesc": "Repetir una reserva a diario, semanalmente o en días laborables.",
+  "featureBookForOthers": "Reservar para otros",
+  "featureBookForOthersDesc": "Los administradores y propietarios reservan sitios para otros miembros.",
+  "featurePushNotifications": "Notificaciones push",
+  "featurePushNotificationsDesc": "Entregar las confirmaciones pendientes en los dispositivos de los miembros."
+}

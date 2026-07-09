@@ -466,6 +466,61 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pushPendingBody => 'Someone needs your confirmation.';
 
   @override
+  String get featuresTitle => 'Features';
+
+  @override
+  String get featureCalendarTab => 'Calendar tab';
+
+  @override
+  String get featureCalendarTabDesc =>
+      'Monthly overview of bookings and closed days.';
+
+  @override
+  String get featureEventsTab => 'Events tab';
+
+  @override
+  String get featureEventsTabDesc => 'Activity feed and pending confirmations.';
+
+  @override
+  String get featureMoneyTab => 'Money tab';
+
+  @override
+  String get featureMoneyTabDesc => 'Monthly bills, payments and expenses.';
+
+  @override
+  String get featureServices => 'Services';
+
+  @override
+  String get featureServicesDesc => 'Service catalog and consumption tracking.';
+
+  @override
+  String get featurePdfExport => 'PDF export';
+
+  @override
+  String get featurePdfExportDesc => 'Export the monthly bill as a PDF.';
+
+  @override
+  String get featureSeriesBooking => 'Series booking';
+
+  @override
+  String get featureSeriesBookingDesc =>
+      'Repeat a reservation daily, weekly or on weekdays.';
+
+  @override
+  String get featureBookForOthers => 'Book for others';
+
+  @override
+  String get featureBookForOthersDesc =>
+      'Admins and owners book seats for other members.';
+
+  @override
+  String get featurePushNotifications => 'Push notifications';
+
+  @override
+  String get featurePushNotificationsDesc =>
+      'Deliver pending confirmations to members\' devices.';
+
+  @override
   String get membersTitle => 'Members & plans';
 
   @override
