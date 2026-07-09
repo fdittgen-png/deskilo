@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
@@ -115,6 +116,8 @@ class ValidationSettingsScreen extends ConsumerWidget {
       await ref.read(eventRepositoryProvider).upsertValidationPolicy(result);
     } catch (e, st) {
       debugPrint('upsert validation policy failed: $e\n$st');
+      TraceLogger.instance.error('events', 'upsert validation policy failed',
+          error: e, stackTrace: st);
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

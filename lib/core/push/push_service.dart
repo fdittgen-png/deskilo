@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import '../notifications/notification_service.dart';
+import '../trace/trace_logger.dart';
 import 'push_connector.dart';
 import 'push_endpoint_repository.dart';
 
@@ -56,6 +57,8 @@ class PushService {
       );
     } catch (e, st) {
       debugPrint('push endpoint save failed: $e\n$st');
+      TraceLogger.instance.error('push', 'push endpoint save failed',
+          error: e, stackTrace: st);
     }
   }
 
@@ -67,6 +70,8 @@ class PushService {
       await _repository.removeEndpoint(endpoint);
     } catch (e, st) {
       debugPrint('push endpoint removal failed: $e\n$st');
+      TraceLogger.instance.error('push', 'push endpoint removal failed',
+          error: e, stackTrace: st);
     }
   }
 
@@ -83,6 +88,10 @@ class PushService {
       }
     } catch (e, st) {
       debugPrint('push payload undecodable, generic ping kept: $e\n$st');
+      // Tolerated by design: the generic pending ping still fires below.
+      TraceLogger.instance.warn(
+          'push', 'push payload undecodable, generic ping kept',
+          error: e, stackTrace: st);
     }
     if (kind != 'pending_request') return;
     await _notifications.showNow(title: _pendingTitle, body: _pendingBody);

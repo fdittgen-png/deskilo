@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/theme/seat_state_colors.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../reservations/domain/reservation.dart';
@@ -217,6 +218,8 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       }
     } catch (e, st) {
       debugPrint('booking failed: $e\n$st');
+      TraceLogger.instance
+          .error('plan', 'booking failed', error: e, stackTrace: st);
       if (!mounted) return;
       _snack(l10n?.planCheckInFailed ??
           'Could not check in — the seat may have just been taken.');

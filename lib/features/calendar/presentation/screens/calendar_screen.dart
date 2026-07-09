@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_radius.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
@@ -92,6 +93,8 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
       }
     } catch (e, st) {
       debugPrint('cancel failed: $e\n$st');
+      TraceLogger.instance.error('calendar', 'reservation cancel failed',
+          error: e, stackTrace: st);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

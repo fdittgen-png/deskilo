@@ -131,7 +131,6 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       );
     } catch (e, st) {
       debugPrint('bill PDF export failed: $e\n$st');
-      // Trace exemplar (#144) — the full catch sweep is #145.
       TraceLogger.instance
           .error('money', 'bill PDF export failed', error: e, stackTrace: st);
       if (!context.mounted) return;

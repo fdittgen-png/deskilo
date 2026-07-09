@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/closure_day.dart';
 import '../../providers/workspace_providers.dart';
@@ -43,6 +44,8 @@ class AvailabilityScreen extends ConsumerWidget {
           .setOpenWeekdays(workspace.id, updated.toList()..sort());
     } catch (e, st) {
       debugPrint('set open weekdays failed: $e\n$st');
+      TraceLogger.instance.error('workspace', 'set open weekdays failed',
+          error: e, stackTrace: st);
       if (!context.mounted) return;
       _showGenericError(context, l10n);
       return;
@@ -75,6 +78,8 @@ class AvailabilityScreen extends ConsumerWidget {
           .addClosureDay(workspace.id, day, reason.trim());
     } catch (e, st) {
       debugPrint('add closure day failed: $e\n$st');
+      TraceLogger.instance.error('workspace', 'add closure day failed',
+          error: e, stackTrace: st);
       if (!context.mounted) return;
       _showGenericError(context, l10n);
       return;
@@ -92,6 +97,8 @@ class AvailabilityScreen extends ConsumerWidget {
       await ref.read(workspaceRepositoryProvider).removeClosureDay(closure.id);
     } catch (e, st) {
       debugPrint('remove closure day failed: $e\n$st');
+      TraceLogger.instance.error('workspace', 'remove closure day failed',
+          error: e, stackTrace: st);
       if (!context.mounted) return;
       _showGenericError(context, l10n);
       return;

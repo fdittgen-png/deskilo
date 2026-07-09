@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/fee_band.dart';
@@ -189,6 +190,8 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           .replaceFeeBands(workspace.id, bands);
     } catch (e, st) {
       debugPrint('fee band save failed: $e\n$st');
+      TraceLogger.instance
+          .error('money', 'fee band save failed', error: e, stackTrace: st);
       if (!mounted) return;
       await _showError();
       return;
@@ -229,6 +232,8 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           .setSubscriptionLevels(workspace.id, levels);
     } catch (e, st) {
       debugPrint('subscription levels save failed: $e\n$st');
+      TraceLogger.instance.error('money', 'subscription levels save failed',
+          error: e, stackTrace: st);
       if (!mounted) return;
       await _showError();
       return;
