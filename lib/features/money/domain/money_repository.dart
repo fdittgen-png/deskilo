@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'ledger_entry.dart';
 import 'plan.dart';
+import 'service_item.dart';
 import 'statement.dart';
 
 /// Money boundary (spec §7). Payments are only *recorded* — the pending
@@ -38,6 +39,30 @@ abstract class MoneyRepository {
 
   /// Owner-only: updates name, fees, quota and active flag.
   Future<void> updatePlan(Plan plan);
+
+  /// Consumable services of the workspace, name-ordered (member-readable).
+  /// Owners pass [includeInactive] for the catalog editor (#123).
+  Future<List<ServiceItem>> fetchServices(
+    String workspaceId, {
+    bool includeInactive = false,
+  });
+
+  /// Owner-only (RLS services_write): creates a service.
+  Future<ServiceItem> createService(
+    String workspaceId, {
+    required String name,
+    required int priceCents,
+  });
+
+  /// Owner-only: partial update of name, price and active flag.
+  /// Deactivate = `updateService(active: false)` — services are never
+  /// deleted (bill lines reference them).
+  Future<ServiceItem> updateService(
+    String serviceId, {
+    String? name,
+    int? priceCents,
+    bool? active,
+  });
 
   /// Submits a community expense (spec §9); another admin must approve
   /// before the credit exists. Returns the pending event id.

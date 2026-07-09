@@ -2,6 +2,7 @@
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
 import 'package:deskilo/features/money/domain/plan.dart';
+import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 
 /// In-memory [MoneyRepository]; recorded payments are captured for
@@ -103,6 +104,73 @@ class FakeMoneyRepository implements MoneyRepository {
     final i = plans.indexWhere((p) => p.id == plan.id);
     if (i < 0) throw StateError('unknown plan');
     plans[i] = plan;
+  }
+
+  final services = <ServiceItem>[
+    const ServiceItem(
+      id: 'service-coffee',
+      workspaceId: 'ws-1',
+      name: 'Coffee',
+      priceCents: 150,
+      active: true,
+    ),
+    const ServiceItem(
+      id: 'service-locker',
+      workspaceId: 'ws-1',
+      name: 'Locker',
+      priceCents: 500,
+      active: false,
+    ),
+    const ServiceItem(
+      id: 'service-printing',
+      workspaceId: 'ws-1',
+      name: 'Printing',
+      priceCents: 20,
+      active: true,
+    ),
+  ];
+
+  @override
+  Future<List<ServiceItem>> fetchServices(
+    String workspaceId, {
+    bool includeInactive = false,
+  }) async =>
+      services.where((s) => includeInactive || s.active).toList()
+        ..sort((a, b) => a.name.compareTo(b.name));
+
+  @override
+  Future<ServiceItem> createService(
+    String workspaceId, {
+    required String name,
+    required int priceCents,
+  }) async {
+    final service = ServiceItem(
+      id: 'service-${services.length + 1}',
+      workspaceId: workspaceId,
+      name: name,
+      priceCents: priceCents,
+      active: true,
+    );
+    services.add(service);
+    return service;
+  }
+
+  @override
+  Future<ServiceItem> updateService(
+    String serviceId, {
+    String? name,
+    int? priceCents,
+    bool? active,
+  }) async {
+    final i = services.indexWhere((s) => s.id == serviceId);
+    if (i < 0) throw StateError('unknown service');
+    final updated = services[i].copyWith(
+      name: name ?? services[i].name,
+      priceCents: priceCents ?? services[i].priceCents,
+      active: active ?? services[i].active,
+    );
+    services[i] = updated;
+    return updated;
   }
 
   final submittedExpenses =

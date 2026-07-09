@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
 import '../domain/plan.dart';
+import '../domain/service_item.dart';
 import '../domain/statement.dart';
 
 class SupabaseMoneyRepository implements MoneyRepository {
@@ -136,5 +137,63 @@ class SupabaseMoneyRepository implements MoneyRepository {
       'overage_fee_cents': plan.overageFeeCents,
       'active': plan.active,
     }).eq('id', plan.id);
+  }
+
+  ServiceItem _serviceFromRow(Map<String, dynamic> row) => ServiceItem(
+        id: row['id'] as String,
+        workspaceId: row['workspace_id'] as String,
+        name: row['name'] as String,
+        priceCents: row['price_cents'] as int,
+        active: row['active'] as bool,
+      );
+
+  @override
+  Future<List<ServiceItem>> fetchServices(
+    String workspaceId, {
+    bool includeInactive = false,
+  }) async {
+    var query =
+        _client.from('services').select().eq('workspace_id', workspaceId);
+    if (!includeInactive) query = query.eq('active', true);
+    final rows = await query.order('name', ascending: true);
+    return rows.map(_serviceFromRow).toList();
+  }
+
+  @override
+  Future<ServiceItem> createService(
+    String workspaceId, {
+    required String name,
+    required int priceCents,
+  }) async {
+    final row = await _client
+        .from('services')
+        .insert({
+          'workspace_id': workspaceId,
+          'name': name,
+          'price_cents': priceCents,
+        })
+        .select()
+        .single();
+    return _serviceFromRow(row);
+  }
+
+  @override
+  Future<ServiceItem> updateService(
+    String serviceId, {
+    String? name,
+    int? priceCents,
+    bool? active,
+  }) async {
+    final row = await _client
+        .from('services')
+        .update({
+          'name': ?name,
+          'price_cents': ?priceCents,
+          'active': ?active,
+        })
+        .eq('id', serviceId)
+        .select()
+        .single();
+    return _serviceFromRow(row);
   }
 }

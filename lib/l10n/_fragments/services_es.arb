@@ -1,0 +1,11 @@
+{
+  "@@locale": "es",
+  "servicesTitle": "Servicios",
+  "servicesEmpty": "Aún no hay servicios.",
+  "servicesNew": "Nuevo servicio",
+  "servicesEdit": "Editar servicio",
+  "servicesName": "Nombre",
+  "servicesPrice": "Precio",
+  "servicesInactive": "Inactivo",
+  "servicesActive": "Activo"
+}

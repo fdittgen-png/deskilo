@@ -610,6 +610,30 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get servicesTitle => 'Services';
+
+  @override
+  String get servicesEmpty => 'Aucun service pour l’instant.';
+
+  @override
+  String get servicesNew => 'Nouveau service';
+
+  @override
+  String get servicesEdit => 'Modifier le service';
+
+  @override
+  String get servicesName => 'Nom';
+
+  @override
+  String get servicesPrice => 'Prix';
+
+  @override
+  String get servicesInactive => 'Inactif';
+
+  @override
+  String get servicesActive => 'Actif';
+
+  @override
   String get onboardingTitle => 'Bienvenue sur DesKilo';
 
   @override
