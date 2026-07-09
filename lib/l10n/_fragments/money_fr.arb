@@ -41,5 +41,11 @@
   "planIncludedLabel": "Demi-journées incluses",
   "planIncludedHelper": "Laisser vide pour illimité",
   "planOverageLabel": "Prix par demi-journée supplémentaire",
-  "planActiveLabel": "Active"
+  "planActiveLabel": "Active",
+  "paymentMethodBankTransfer": "Virement",
+  "paymentMethodCash": "Espèces",
+  "paymentMethodPaypal": "PayPal",
+  "paymentMethodTwint": "TWINT",
+  "paymentMethodCard": "Carte",
+  "paymentMethodOther": "Autre"
 }

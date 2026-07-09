@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../domain/fee_band.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
+import '../domain/payment_method.dart';
 import '../domain/service_item.dart';
 import '../domain/statement.dart';
 import '../domain/subscription_levels.dart';
@@ -63,12 +64,14 @@ class SupabaseMoneyRepository implements MoneyRepository {
     required String memberId,
     required int amountCents,
     String note = '',
+    PaymentMethod? method,
   }) async {
     final result = await _client.rpc<dynamic>('record_payment', params: {
       'p_workspace_id': workspaceId,
       'p_member_id': memberId,
       'p_amount_cents': amountCents,
       'p_note': note,
+      'p_method': method?.wireName ?? '',
     });
     return result as String;
   }

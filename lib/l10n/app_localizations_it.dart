@@ -702,6 +702,24 @@ class AppLocalizationsIt extends AppLocalizations {
   String get planActiveLabel => 'Attivo';
 
   @override
+  String get paymentMethodBankTransfer => 'Bonifico';
+
+  @override
+  String get paymentMethodCash => 'Contanti';
+
+  @override
+  String get paymentMethodPaypal => 'PayPal';
+
+  @override
+  String get paymentMethodTwint => 'TWINT';
+
+  @override
+  String get paymentMethodCard => 'Carta';
+
+  @override
+  String get paymentMethodOther => 'Altro';
+
+  @override
   String get planNoLevels => 'Lo spazio non ha ancora una piantina.';
 
   @override

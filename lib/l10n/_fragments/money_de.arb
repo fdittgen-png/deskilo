@@ -41,5 +41,11 @@
   "planIncludedLabel": "Enthaltene Halbtage",
   "planIncludedHelper": "Leer lassen für unbegrenzt",
   "planOverageLabel": "Preis pro zusätzlichem Halbtag",
-  "planActiveLabel": "Aktiv"
+  "planActiveLabel": "Aktiv",
+  "paymentMethodBankTransfer": "Überweisung",
+  "paymentMethodCash": "Bar",
+  "paymentMethodPaypal": "PayPal",
+  "paymentMethodTwint": "TWINT",
+  "paymentMethodCard": "Karte",
+  "paymentMethodOther": "Sonstiges"
 }

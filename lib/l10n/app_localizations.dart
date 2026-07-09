@@ -1376,6 +1376,42 @@ abstract class AppLocalizations {
   /// **'Active'**
   String get planActiveLabel;
 
+  /// Payment-method chip/label: SEPA/bank transfer (#154).
+  ///
+  /// In en, this message translates to:
+  /// **'Bank transfer'**
+  String get paymentMethodBankTransfer;
+
+  /// Payment-method chip/label: cash (#154).
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get paymentMethodCash;
+
+  /// Payment-method chip/label: PayPal — brand name, identical in every locale (#154).
+  ///
+  /// In en, this message translates to:
+  /// **'PayPal'**
+  String get paymentMethodPaypal;
+
+  /// Payment-method chip/label: TWINT — brand name, identical in every locale (#154).
+  ///
+  /// In en, this message translates to:
+  /// **'TWINT'**
+  String get paymentMethodTwint;
+
+  /// Payment-method chip/label: debit/credit card (#154).
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get paymentMethodCard;
+
+  /// Payment-method chip/label: anything else (#154).
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get paymentMethodOther;
+
   /// Empty state of the Plan tab before the owner drew levels
   ///
   /// In en, this message translates to:

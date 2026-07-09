@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'fee_band.dart';
 import 'ledger_entry.dart';
+import 'payment_method.dart';
 import 'service_item.dart';
 import 'statement.dart';
 import 'subscription_levels.dart';
@@ -13,12 +14,15 @@ abstract class MoneyRepository {
 
   Future<List<LedgerEntry>> fetchLedger(String memberId);
 
-  /// Returns the pending event id.
+  /// Returns the pending event id. [method] is how the money moved
+  /// (#154); null = not specified (renders method-less, like pre-#154
+  /// events).
   Future<String> recordPayment({
     required String workspaceId,
     required String memberId,
     required int amountCents,
     String note,
+    PaymentMethod? method,
   });
 
   /// Fee bands of the workspace ordered by [FeeBand.fromPct]

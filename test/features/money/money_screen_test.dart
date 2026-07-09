@@ -2,6 +2,7 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo/features/money/domain/payment_method.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -233,10 +234,53 @@ void main() {
 
     expect(money.recordedPayments.single.amountCents, 15050);
     expect(money.recordedPayments.single.note, 'July rent');
+    expect(money.recordedPayments.single.method, isNull,
+        reason: 'no chip tapped → method not specified (#154)');
     expect(
       find.text('Payment submitted — waiting for confirmation.'),
       findsOneWidget,
     );
+  });
+
+  testWidgets('tapping a method chip records the payment method (#154)',
+      (tester) async {
+    final money = await pumpMoney(tester);
+
+    await tester.scrollUntilVisible(find.text('Record a payment'), 100);
+    await tester.tap(find.text('Record a payment'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Amount'),
+      '25',
+    );
+    await tester.tap(find.text('PayPal'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Submit for confirmation'));
+    await tester.pumpAndSettle();
+
+    expect(money.recordedPayments.single.amountCents, 2500);
+    expect(money.recordedPayments.single.method, PaymentMethod.paypal);
+  });
+
+  testWidgets('re-tapping the selected method chip deselects it (#154)',
+      (tester) async {
+    final money = await pumpMoney(tester);
+
+    await tester.scrollUntilVisible(find.text('Record a payment'), 100);
+    await tester.tap(find.text('Record a payment'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Amount'),
+      '25',
+    );
+    await tester.tap(find.text('Cash'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Cash'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Submit for confirmation'));
+    await tester.pumpAndSettle();
+
+    expect(money.recordedPayments.single.method, isNull);
   });
 
   testWidgets(

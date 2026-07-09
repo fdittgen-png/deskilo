@@ -699,6 +699,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get planActiveLabel => 'Activo';
 
   @override
+  String get paymentMethodBankTransfer => 'Transferencia';
+
+  @override
+  String get paymentMethodCash => 'Efectivo';
+
+  @override
+  String get paymentMethodPaypal => 'PayPal';
+
+  @override
+  String get paymentMethodTwint => 'TWINT';
+
+  @override
+  String get paymentMethodCard => 'Tarjeta';
+
+  @override
+  String get paymentMethodOther => 'Otro';
+
+  @override
   String get planNoLevels => 'El espacio aún no tiene plano.';
 
   @override

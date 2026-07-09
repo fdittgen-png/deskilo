@@ -41,5 +41,11 @@
   "planIncludedLabel": "Medias jornadas incluidas",
   "planIncludedHelper": "Dejar vacío para ilimitado",
   "planOverageLabel": "Precio por media jornada extra",
-  "planActiveLabel": "Activo"
+  "planActiveLabel": "Activo",
+  "paymentMethodBankTransfer": "Transferencia",
+  "paymentMethodCash": "Efectivo",
+  "paymentMethodPaypal": "PayPal",
+  "paymentMethodTwint": "TWINT",
+  "paymentMethodCard": "Tarjeta",
+  "paymentMethodOther": "Otro"
 }

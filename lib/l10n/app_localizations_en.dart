@@ -694,6 +694,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get planActiveLabel => 'Active';
 
   @override
+  String get paymentMethodBankTransfer => 'Bank transfer';
+
+  @override
+  String get paymentMethodCash => 'Cash';
+
+  @override
+  String get paymentMethodPaypal => 'PayPal';
+
+  @override
+  String get paymentMethodTwint => 'TWINT';
+
+  @override
+  String get paymentMethodCard => 'Card';
+
+  @override
+  String get paymentMethodOther => 'Other';
+
+  @override
   String get planNoLevels => 'The workspace has no floor plan yet.';
 
   @override

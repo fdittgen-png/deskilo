@@ -10,6 +10,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../../money/domain/payment_method.dart';
+import '../../../money/presentation/payment_method_labels.dart';
 import '../../domain/event_decision.dart';
 import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
@@ -127,6 +129,17 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     final accepts = decisions.where((d) => d.accept).length;
     return l10n?.eventValidations(accepts, required) ??
         '$accepts/$required validations';
+  }
+
+  /// #154 — the localized payment-method line for a payment event, or
+  /// null when the payload carries no known method (pre-#154 events, ''
+  /// = not specified, or a wire name from a newer app version).
+  String? _methodLine(AppLocalizations? l10n, WorkspaceEvent event) {
+    if (event.type != EventType.payment) return null;
+    final method =
+        PaymentMethod.fromWire(event.payload['method'] as String?);
+    if (method == null) return null;
+    return paymentMethodLabel(l10n, method);
   }
 
   String _when(WorkspaceEvent event) {
@@ -331,6 +344,9 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                     subtitle: Text(
                       [
                         _when(event),
+                        // #154 — how the money moved; absent / pre-#154
+                        // payloads render no method line.
+                        ?_methodLine(l10n, event),
                         for (final decision
                             in decisions[event.id] ??
                                 const <EventDecision>[])
