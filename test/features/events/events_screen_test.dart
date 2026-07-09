@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/events/domain/event_decision.dart';
+import 'package:deskilo/features/events/domain/validation_policy.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
@@ -62,14 +64,30 @@ WorkspaceEvent serviceChargeEvent({
   );
 }
 
+Member adminMember(String id) => Member(
+      id: id,
+      workspaceId: 'ws-1',
+      userId: 'user-$id',
+      isAdmin: true,
+      isOwner: false,
+      status: MemberStatus.active,
+    );
+
 Future<FakeEventRepository> pumpEvents(
   WidgetTester tester, {
   List<WorkspaceEvent> seed = const [],
+  List<EventDecision> decisions = const [],
+  List<ValidationPolicy> policies = const [],
+  List<Member> otherMembers = const [],
 }) async {
-  final events = FakeEventRepository()..events.addAll(seed);
+  final events = FakeEventRepository()
+    ..events.addAll(seed)
+    ..decisions.addAll(decisions)
+    ..policies.addAll(policies);
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   final workspace = FakeWorkspaceRepository.withWorkspace()
-    ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'};
+    ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana', 'member-3': 'Bo'}
+    ..otherMembers.addAll(otherMembers);
   await tester.pumpWidget(
     ProviderScope(
       overrides: standardTestOverrides(
@@ -268,6 +286,125 @@ void main() {
     expect(find.text('Accept'), findsNothing);
     // The charge still appears in the feed, marked as pending.
     expect(find.text('Coffee ×2 — €3.00 for Flo'), findsOneWidget);
+  });
+
+  testWidgets(
+      'a pending card shows validator checkmarks and quorum progress (#130)',
+      (tester) async {
+    // Ana (member-2) submitted an expense; the workspace default policy
+    // wants 2 accepts and admin Bo (member-3) already gave one. Viewer
+    // Flo (owner) is the missing validator.
+    await pumpEvents(
+      tester,
+      seed: [
+        event(
+          id: 'evt-exp',
+          type: EventType.expense,
+          action: EventAction.submitted,
+          actor: 'member-2',
+          subject: 'member-2',
+          status: EventStatus.pending,
+        ),
+      ],
+      policies: [
+        const ValidationPolicy(
+          workspaceId: 'ws-1',
+          requiredCount: 2,
+          adminsMayValidate: true,
+          eligibleAdminIds: [],
+          ownerRequired: false,
+        ),
+      ],
+      decisions: [
+        EventDecision(
+          id: 'dec-1',
+          eventId: 'evt-exp',
+          memberId: 'member-3',
+          accept: true,
+          decidedBySystem: false,
+          decidedAt: DateTime.now(),
+        ),
+      ],
+      otherMembers: [adminMember('member-2'), adminMember('member-3')],
+    );
+
+    expect(find.text('Waiting for your confirmation'), findsOneWidget);
+    expect(find.textContaining('✓ Validated by Bo'), findsOneWidget);
+    expect(find.textContaining('1/2 validations'), findsOneWidget);
+  });
+
+  testWidgets(
+      'an accept below the quorum keeps the event pending and moves it '
+      'off my pile (#130)', (tester) async {
+    final repo = await pumpEvents(
+      tester,
+      seed: [
+        event(
+          id: 'evt-exp',
+          type: EventType.expense,
+          action: EventAction.submitted,
+          actor: 'member-2',
+          subject: 'member-2',
+          status: EventStatus.pending,
+        ),
+      ],
+      policies: [
+        const ValidationPolicy(
+          workspaceId: 'ws-1',
+          requiredCount: 2,
+          adminsMayValidate: true,
+          eligibleAdminIds: [],
+          ownerRequired: false,
+        ),
+      ],
+      otherMembers: [adminMember('member-2'), adminMember('member-3')],
+    );
+
+    await tester.tap(find.text('Accept'));
+    await tester.pumpAndSettle();
+
+    // 1 of 2 accepts: still pending server-side, no longer offered to me,
+    // and the feed narrates my decision plus the quorum progress.
+    expect(repo.events.single.status, EventStatus.pending);
+    expect(find.text('Accept'), findsNothing);
+    expect(find.textContaining('✓ Validated by Flo'), findsOneWidget);
+    expect(find.textContaining('1/2 validations'), findsOneWidget);
+  });
+
+  testWidgets(
+      'a confirmed feed card lists who validated, including a System '
+      'sweep row (#130)', (tester) async {
+    await pumpEvents(
+      tester,
+      seed: [
+        event(
+          actor: 'member-2',
+          subject: 'member-1',
+          status: EventStatus.confirmed,
+        ),
+      ],
+      decisions: [
+        EventDecision(
+          id: 'dec-1',
+          eventId: 'evt-1',
+          memberId: 'member-1',
+          accept: true,
+          decidedBySystem: false,
+          decidedAt: DateTime.utc(2026, 7, 8, 9),
+        ),
+        EventDecision(
+          id: 'dec-2',
+          eventId: 'evt-1',
+          memberId: null,
+          accept: true,
+          decidedBySystem: true,
+          decidedAt: DateTime.utc(2026, 7, 9, 3),
+        ),
+      ],
+    );
+
+    expect(find.textContaining('✓ Validated by Flo'), findsOneWidget);
+    expect(find.textContaining('✓ Validated by System'), findsOneWidget);
   });
 
   testWidgets('type filter narrows the feed', (tester) async {

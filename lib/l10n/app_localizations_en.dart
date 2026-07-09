@@ -725,6 +725,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get servicesActive => 'Active';
 
   @override
+  String eventValidations(int current, int required) {
+    return '$current/$required validations';
+  }
+
+  @override
+  String eventValidatedBy(String name, String when) {
+    return 'Validated by $name · $when';
+  }
+
+  @override
+  String eventRejectedBy(String name, String when) {
+    return 'Declined by $name · $when';
+  }
+
+  @override
+  String get eventSystemDecider => 'System';
+
+  @override
   String get onboardingTitle => 'Welcome to DesKilo';
 
   @override

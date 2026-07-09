@@ -2,6 +2,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../workspace/domain/member.dart';
+import 'validation_policy.dart';
 
 part 'workspace_event.freezed.dart';
 
@@ -61,18 +62,54 @@ sealed class WorkspaceEvent with _$WorkspaceEvent {
       ((type == EventType.payment || type == EventType.serviceCharge) &&
           actorIsSubject);
 
-  /// Whether [me] is the one who must accept/decline this pending event.
-  /// Mirrors respond_to_event exactly (#107), incl. the solo-admin escape
-  /// hatch: when no other active admin exists, the actor may self-decide.
-  bool isDecidedBy(Member me, {required bool hasOtherActiveAdmin}) {
-    if (!isPending) return false;
-    if (needsAdminDecider) {
-      if (!me.canAdminister) return false;
-      if (actorMemberId != me.id) return true;
-      return !hasOtherActiveAdmin;
-    }
-    return subjectMemberId == me.id;
+  /// Whether the server would accept a decision from [me] right now
+  /// (#107, #130 quorum). Mirrors respond_to_event (migration 0017):
+  ///  - the subject of an admin-initiated event decides (and must accept);
+  ///  - owners always validate; admins per [policy] eligibility;
+  ///  - never the actor or subject — except the solo escape hatch (#107):
+  ///    when no other eligible validator exists, the actor self-decides;
+  ///  - never someone who [alreadyDecided] (one decision per validator).
+  bool isDecidedBy(
+    Member me, {
+    required ValidationPolicy policy,
+    required bool hasOtherEligibleValidator,
+    bool alreadyDecided = false,
+  }) {
+    if (!isPending || alreadyDecided) return false;
+    if (me.status != MemberStatus.active) return false;
+    // (a) subject of an admin-initiated event.
+    if (!needsAdminDecider && subjectMemberId == me.id) return true;
+    // (b) owners always, (c) admins per policy.
+    final eligibleAdmin = me.isAdmin &&
+        policy.adminsMayValidate &&
+        (policy.eligibleAdminIds.isEmpty ||
+            policy.eligibleAdminIds.contains(me.id));
+    if (!me.isOwner && !eligibleAdmin) return false;
+    // The subject never validates what someone else did to them (their
+    // say is rule (a) above, when they have one).
+    if (me.id == subjectMemberId && me.id != actorMemberId) return false;
+    // No self-approval — unless the pool collapses to the actor (#107).
+    if (me.id == actorMemberId) return !hasOtherEligibleValidator;
+    return true;
   }
+
+  /// Whether any eligible validator besides the actor/subject exists among
+  /// [members] — the pool respond_to_event sizes for the #107 escape hatch.
+  bool hasOtherEligibleValidator(
+    List<Member> members,
+    ValidationPolicy policy,
+  ) =>
+      members.any(
+        (m) =>
+            m.status == MemberStatus.active &&
+            m.id != actorMemberId &&
+            m.id != subjectMemberId &&
+            (m.isOwner ||
+                (m.isAdmin &&
+                    policy.adminsMayValidate &&
+                    (policy.eligibleAdminIds.isEmpty ||
+                        policy.eligibleAdminIds.contains(m.id)))),
+      );
 
   DateTime? get payloadStart => payload['starts_at'] == null
       ? null
