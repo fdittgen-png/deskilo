@@ -181,13 +181,16 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       [myMember, ...extraMyMemberships];
 
   @override
-  Future<void> updateMemberPlan(String memberId, String? planId) async {
+  Future<void> updateMemberSubscription(String memberId, int pct) async {
+    if (pct < 1 || pct > 100) throw StateError('pct out of range');
     if (myMember.id == memberId) {
-      myMember = myMember.copyWith(planId: planId);
+      myMember = myMember.copyWith(subscriptionPct: pct);
       return;
     }
     final i = otherMembers.indexWhere((m) => m.id == memberId);
-    if (i >= 0) otherMembers[i] = otherMembers[i].copyWith(planId: planId);
+    if (i >= 0) {
+      otherMembers[i] = otherMembers[i].copyWith(subscriptionPct: pct);
+    }
   }
 
   @override

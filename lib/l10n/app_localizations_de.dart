@@ -75,6 +75,67 @@ class AppLocalizationsDe extends AppLocalizations {
   String get availabilityNoClosures => 'Keine Schließtage.';
 
   @override
+  String get billingTitle => 'Abrechnung';
+
+  @override
+  String get billingFeeBands => 'Gebührenbänder';
+
+  @override
+  String billingBandFrom(int from) {
+    return 'ab $from %';
+  }
+
+  @override
+  String get billingBandTo => 'Bis %';
+
+  @override
+  String get billingBandFee => 'Monatsgebühr';
+
+  @override
+  String get billingBandOverage => 'Mehrverbrauch';
+
+  @override
+  String get billingAddBand => 'Band hinzufügen';
+
+  @override
+  String get billingRemoveBand => 'Band entfernen';
+
+  @override
+  String get billingBandsInvalid =>
+      'Die Bänder müssen ansteigen und bei 100 % enden.';
+
+  @override
+  String get billingSaved => 'Gespeichert.';
+
+  @override
+  String get billingLevels => 'Abo-Stufen';
+
+  @override
+  String get billingAddLevel => 'Stufe hinzufügen';
+
+  @override
+  String get billingLevelValue => 'Stufe (1–100)';
+
+  @override
+  String get billingAllowCustom => 'Individuell verhandelten Wert erlauben';
+
+  @override
+  String get memberSubscriptionLabel => 'Abo';
+
+  @override
+  String get memberSubscriptionCustom => 'Individuell (1–100)';
+
+  @override
+  String moneySubscriptionPct(int pct) {
+    return 'Abo $pct %';
+  }
+
+  @override
+  String percentValue(int value) {
+    return '$value %';
+  }
+
+  @override
   String get calendarMineTab => 'Meine';
 
   @override

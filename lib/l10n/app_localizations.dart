@@ -230,6 +230,114 @@ abstract class AppLocalizations {
   /// **'No closure days.'**
   String get availabilityNoClosures;
 
+  /// Owner billing editor (#128): fee bands + subscription levels; screen title and settings entry
+  ///
+  /// In en, this message translates to:
+  /// **'Billing'**
+  String get billingTitle;
+
+  /// Section header of the fee-band editor
+  ///
+  /// In en, this message translates to:
+  /// **'Fee bands'**
+  String get billingFeeBands;
+
+  /// Derived lower boundary of a band row (exclusive)
+  ///
+  /// In en, this message translates to:
+  /// **'from {from}%'**
+  String billingBandFrom(int from);
+
+  /// Label of a band's upper boundary field (inclusive)
+  ///
+  /// In en, this message translates to:
+  /// **'To %'**
+  String get billingBandTo;
+
+  /// Label of a band's monthly fee field
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly fee'**
+  String get billingBandFee;
+
+  /// Label of a band's price-per-extra-half-day field
+  ///
+  /// In en, this message translates to:
+  /// **'Overage'**
+  String get billingBandOverage;
+
+  /// Button splitting the last band into two
+  ///
+  /// In en, this message translates to:
+  /// **'Add band'**
+  String get billingAddBand;
+
+  /// Tooltip of the per-row remove button; the range merges into the next band
+  ///
+  /// In en, this message translates to:
+  /// **'Remove band'**
+  String get billingRemoveBand;
+
+  /// Validation error blocking the band save
+  ///
+  /// In en, this message translates to:
+  /// **'Bands must increase and end at 100%.'**
+  String get billingBandsInvalid;
+
+  /// Snackbar after a successful billing save
+  ///
+  /// In en, this message translates to:
+  /// **'Saved.'**
+  String get billingSaved;
+
+  /// Section header of the offered-levels editor
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription levels'**
+  String get billingLevels;
+
+  /// Tooltip of the add-level button
+  ///
+  /// In en, this message translates to:
+  /// **'Add level'**
+  String get billingAddLevel;
+
+  /// Label of the new-level percentage input
+  ///
+  /// In en, this message translates to:
+  /// **'Level (1–100)'**
+  String get billingLevelValue;
+
+  /// Switch: members may hold a per-person negotiated percentage
+  ///
+  /// In en, this message translates to:
+  /// **'Allow negotiated custom value'**
+  String get billingAllowCustom;
+
+  /// Title of the per-member subscription picker dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get memberSubscriptionLabel;
+
+  /// Label of the owner-override custom percentage field
+  ///
+  /// In en, this message translates to:
+  /// **'Custom (1–100)'**
+  String get memberSubscriptionCustom;
+
+  /// Statement line for the band fee of the member's percentage
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription {pct}%'**
+  String moneySubscriptionPct(int pct);
+
+  /// A plain percentage value (level chips, member rows)
+  ///
+  /// In en, this message translates to:
+  /// **'{value}%'**
+  String percentValue(int value);
+
   /// Calendar filter showing only the user's reservations
   ///
   /// In en, this message translates to:

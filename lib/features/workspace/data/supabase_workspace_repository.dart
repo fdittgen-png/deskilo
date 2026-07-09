@@ -100,10 +100,10 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
-  Future<void> updateMemberPlan(String memberId, String? planId) async {
+  Future<void> updateMemberSubscription(String memberId, int pct) async {
     await _client
         .from('members')
-        .update({'plan_id': planId}).eq('id', memberId);
+        .update({'subscription_pct': pct}).eq('id', memberId);
   }
 
   @override
@@ -214,6 +214,6 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
         isAdmin: row['is_admin'] as bool,
         isOwner: row['is_owner'] as bool,
         status: MemberStatus.values.byName(row['status'] as String),
-        planId: row['plan_id'] as String?,
+        subscriptionPct: row['subscription_pct'] as int? ?? 100,
       );
 }

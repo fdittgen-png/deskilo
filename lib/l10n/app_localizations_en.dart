@@ -74,6 +74,66 @@ class AppLocalizationsEn extends AppLocalizations {
   String get availabilityNoClosures => 'No closure days.';
 
   @override
+  String get billingTitle => 'Billing';
+
+  @override
+  String get billingFeeBands => 'Fee bands';
+
+  @override
+  String billingBandFrom(int from) {
+    return 'from $from%';
+  }
+
+  @override
+  String get billingBandTo => 'To %';
+
+  @override
+  String get billingBandFee => 'Monthly fee';
+
+  @override
+  String get billingBandOverage => 'Overage';
+
+  @override
+  String get billingAddBand => 'Add band';
+
+  @override
+  String get billingRemoveBand => 'Remove band';
+
+  @override
+  String get billingBandsInvalid => 'Bands must increase and end at 100%.';
+
+  @override
+  String get billingSaved => 'Saved.';
+
+  @override
+  String get billingLevels => 'Subscription levels';
+
+  @override
+  String get billingAddLevel => 'Add level';
+
+  @override
+  String get billingLevelValue => 'Level (1–100)';
+
+  @override
+  String get billingAllowCustom => 'Allow negotiated custom value';
+
+  @override
+  String get memberSubscriptionLabel => 'Subscription';
+
+  @override
+  String get memberSubscriptionCustom => 'Custom (1–100)';
+
+  @override
+  String moneySubscriptionPct(int pct) {
+    return 'Subscription $pct%';
+  }
+
+  @override
+  String percentValue(int value) {
+    return '$value%';
+  }
+
+  @override
   String get calendarMineTab => 'Mine';
 
   @override

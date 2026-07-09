@@ -5,11 +5,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_money_repository.dart';
+import '../domain/fee_band.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
-import '../domain/plan.dart';
 import '../domain/service_item.dart';
 import '../domain/statement.dart';
+import '../domain/subscription_levels.dart';
 
 part 'money_providers.g.dart';
 
@@ -33,26 +34,26 @@ Future<List<LedgerEntry>> myLedger(Ref ref) async {
   return ref.watch(moneyRepositoryProvider).fetchLedger(member.id);
 }
 
-/// Active plans of the current workspace.
+/// Fee bands of the current workspace, ordered by from_pct (#128).
 @Riverpod(keepAlive: true)
-Future<List<Plan>> plans(Ref ref) async {
+Future<List<FeeBand>> feeBands(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.watch(moneyRepositoryProvider).fetchPlans(workspace.id);
+  return ref.watch(moneyRepositoryProvider).fetchFeeBands(workspace.id);
+}
+
+/// Offered subscription levels of the current workspace (#128).
+@Riverpod(keepAlive: true)
+Future<SubscriptionLevels> subscriptionLevels(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const SubscriptionLevels();
+  return ref
+      .watch(moneyRepositoryProvider)
+      .fetchSubscriptionLevels(workspace.id);
 }
 
 /// Current period key in workspace terms ('yyyy-MM').
 String currentPeriod() => DateFormat('yyyy-MM').format(DateTime.now());
-
-/// Every plan incl. deactivated ones — the owner's plan editor (#105).
-@riverpod
-Future<List<Plan>> allPlans(Ref ref) async {
-  final workspace = await ref.watch(currentWorkspaceProvider.future);
-  if (workspace == null) return const [];
-  return ref
-      .watch(moneyRepositoryProvider)
-      .fetchPlans(workspace.id, includeInactive: true);
-}
 
 /// Active consumable services of the current workspace (#123).
 @Riverpod(keepAlive: true)

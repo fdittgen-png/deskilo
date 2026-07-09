@@ -14,7 +14,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Member {
 
- String get id; String get workspaceId; String get userId; bool get isAdmin; bool get isOwner; MemberStatus get status; String? get planId;
+ String get id; String get workspaceId; String get userId; bool get isAdmin; bool get isOwner; MemberStatus get status;/// Subscription percentage 1–100 (ADR 0008): the membership level the
+/// fee band and the half-day entitlement derive from.
+ int get subscriptionPct;
 /// Create a copy of Member
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +27,16 @@ $MemberCopyWith<Member> get copyWith => _$MemberCopyWithImpl<Member>(this as Mem
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Member&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner)&&(identical(other.status, status) || other.status == status)&&(identical(other.planId, planId) || other.planId == planId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Member&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner)&&(identical(other.status, status) || other.status == status)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,userId,isAdmin,isOwner,status,planId);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,userId,isAdmin,isOwner,status,subscriptionPct);
 
 @override
 String toString() {
-  return 'Member(id: $id, workspaceId: $workspaceId, userId: $userId, isAdmin: $isAdmin, isOwner: $isOwner, status: $status, planId: $planId)';
+  return 'Member(id: $id, workspaceId: $workspaceId, userId: $userId, isAdmin: $isAdmin, isOwner: $isOwner, status: $status, subscriptionPct: $subscriptionPct)';
 }
 
 
@@ -45,7 +47,7 @@ abstract mixin class $MemberCopyWith<$Res>  {
   factory $MemberCopyWith(Member value, $Res Function(Member) _then) = _$MemberCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, String userId, bool isAdmin, bool isOwner, MemberStatus status, String? planId
+ String id, String workspaceId, String userId, bool isAdmin, bool isOwner, MemberStatus status, int subscriptionPct
 });
 
 
@@ -62,7 +64,7 @@ class _$MemberCopyWithImpl<$Res>
 
 /// Create a copy of Member
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? userId = null,Object? isAdmin = null,Object? isOwner = null,Object? status = null,Object? planId = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? userId = null,Object? isAdmin = null,Object? isOwner = null,Object? status = null,Object? subscriptionPct = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -70,8 +72,8 @@ as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullabl
 as String,isAdmin: null == isAdmin ? _self.isAdmin : isAdmin // ignore: cast_nullable_to_non_nullable
 as bool,isOwner: null == isOwner ? _self.isOwner : isOwner // ignore: cast_nullable_to_non_nullable
 as bool,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as MemberStatus,planId: freezed == planId ? _self.planId : planId // ignore: cast_nullable_to_non_nullable
-as String?,
+as MemberStatus,subscriptionPct: null == subscriptionPct ? _self.subscriptionPct : subscriptionPct // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
@@ -153,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  String? planId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  int subscriptionPct)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Member() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.planId);case _:
+return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.subscriptionPct);case _:
   return orElse();
 
 }
@@ -174,10 +176,10 @@ return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOw
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  String? planId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  int subscriptionPct)  $default,) {final _that = this;
 switch (_that) {
 case _Member():
-return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.planId);}
+return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.subscriptionPct);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -191,10 +193,10 @@ return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOw
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  String? planId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  int subscriptionPct)?  $default,) {final _that = this;
 switch (_that) {
 case _Member() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.planId);case _:
+return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.subscriptionPct);case _:
   return null;
 
 }
@@ -206,7 +208,7 @@ return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOw
 
 
 class _Member extends Member {
-  const _Member({required this.id, required this.workspaceId, required this.userId, required this.isAdmin, required this.isOwner, required this.status, this.planId}): super._();
+  const _Member({required this.id, required this.workspaceId, required this.userId, required this.isAdmin, required this.isOwner, required this.status, this.subscriptionPct = 100}): super._();
   
 
 @override final  String id;
@@ -215,7 +217,9 @@ class _Member extends Member {
 @override final  bool isAdmin;
 @override final  bool isOwner;
 @override final  MemberStatus status;
-@override final  String? planId;
+/// Subscription percentage 1–100 (ADR 0008): the membership level the
+/// fee band and the half-day entitlement derive from.
+@override@JsonKey() final  int subscriptionPct;
 
 /// Create a copy of Member
 /// with the given fields replaced by the non-null parameter values.
@@ -227,16 +231,16 @@ _$MemberCopyWith<_Member> get copyWith => __$MemberCopyWithImpl<_Member>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Member&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner)&&(identical(other.status, status) || other.status == status)&&(identical(other.planId, planId) || other.planId == planId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Member&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner)&&(identical(other.status, status) || other.status == status)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,userId,isAdmin,isOwner,status,planId);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,userId,isAdmin,isOwner,status,subscriptionPct);
 
 @override
 String toString() {
-  return 'Member(id: $id, workspaceId: $workspaceId, userId: $userId, isAdmin: $isAdmin, isOwner: $isOwner, status: $status, planId: $planId)';
+  return 'Member(id: $id, workspaceId: $workspaceId, userId: $userId, isAdmin: $isAdmin, isOwner: $isOwner, status: $status, subscriptionPct: $subscriptionPct)';
 }
 
 
@@ -247,7 +251,7 @@ abstract mixin class _$MemberCopyWith<$Res> implements $MemberCopyWith<$Res> {
   factory _$MemberCopyWith(_Member value, $Res Function(_Member) _then) = __$MemberCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, String userId, bool isAdmin, bool isOwner, MemberStatus status, String? planId
+ String id, String workspaceId, String userId, bool isAdmin, bool isOwner, MemberStatus status, int subscriptionPct
 });
 
 
@@ -264,7 +268,7 @@ class __$MemberCopyWithImpl<$Res>
 
 /// Create a copy of Member
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? userId = null,Object? isAdmin = null,Object? isOwner = null,Object? status = null,Object? planId = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? userId = null,Object? isAdmin = null,Object? isOwner = null,Object? status = null,Object? subscriptionPct = null,}) {
   return _then(_Member(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -272,8 +276,8 @@ as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullabl
 as String,isAdmin: null == isAdmin ? _self.isAdmin : isAdmin // ignore: cast_nullable_to_non_nullable
 as bool,isOwner: null == isOwner ? _self.isOwner : isOwner // ignore: cast_nullable_to_non_nullable
 as bool,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as MemberStatus,planId: freezed == planId ? _self.planId : planId // ignore: cast_nullable_to_non_nullable
-as String?,
+as MemberStatus,subscriptionPct: null == subscriptionPct ? _self.subscriptionPct : subscriptionPct // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

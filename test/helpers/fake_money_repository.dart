@@ -1,18 +1,20 @@
 // SPDX-License-Identifier: MIT
+import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
-import 'package:deskilo/features/money/domain/plan.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
+import 'package:deskilo/features/money/domain/subscription_levels.dart';
 
 /// In-memory [MoneyRepository]; recorded payments are captured for
 /// assertions (they only become ledger credits after confirmation).
 class FakeMoneyRepository implements MoneyRepository {
   Statement statement = const Statement(
     period: '2026-07',
-    planName: 'Half',
-    baseFeeCents: 15000,
+    subscriptionPct: 50,
+    feeCents: 15000,
     includedHalfDays: 22,
+    openDays: 22,
     usedHalfDays: 24,
     extraHalfDays: 2,
     overageCents: 1600,
@@ -42,68 +44,74 @@ class FakeMoneyRepository implements MoneyRepository {
     return 'evt-payment-${recordedPayments.length}';
   }
 
-  final plans = <Plan>[
-    const Plan(
-      id: 'plan-full',
+  /// Mirrors the migration's default seed: (0,25] Flex-like, (25,50]
+  /// Half-like, (50,100] Full-like (#128).
+  final feeBands = <FeeBand>[
+    const FeeBand(
+      id: 'band-1',
       workspaceId: 'ws-1',
-      name: 'Full',
-      baseFeeCents: 25000,
-      overageFeeCents: 0,
-      active: true,
-    ),
-    const Plan(
-      id: 'plan-half',
-      workspaceId: 'ws-1',
-      name: 'Half',
-      baseFeeCents: 15000,
-      includedHalfDays: 22,
-      overageFeeCents: 800,
-      active: true,
-    ),
-    const Plan(
-      id: 'plan-flex',
-      workspaceId: 'ws-1',
-      name: 'Flex',
-      baseFeeCents: 0,
-      includedHalfDays: 0,
+      fromPct: 0,
+      toPct: 25,
+      feeCents: 0,
       overageFeeCents: 1500,
-      active: true,
+    ),
+    const FeeBand(
+      id: 'band-2',
+      workspaceId: 'ws-1',
+      fromPct: 25,
+      toPct: 50,
+      feeCents: 15000,
+      overageFeeCents: 800,
+    ),
+    const FeeBand(
+      id: 'band-3',
+      workspaceId: 'ws-1',
+      fromPct: 50,
+      toPct: 100,
+      feeCents: 25000,
+      overageFeeCents: 0,
     ),
   ];
 
   @override
-  Future<List<Plan>> fetchPlans(
-    String workspaceId, {
-    bool includeInactive = false,
-  }) async =>
-      plans.where((p) => includeInactive || p.active).toList();
+  Future<List<FeeBand>> fetchFeeBands(String workspaceId) async =>
+      List.of(feeBands)..sort((a, b) => a.fromPct.compareTo(b.fromPct));
 
   @override
-  Future<void> createPlan({
-    required String workspaceId,
-    required String name,
-    required int baseFeeCents,
-    int? includedHalfDays,
-    required int overageFeeCents,
-  }) async {
-    plans.add(
-      Plan(
-        id: 'plan-${plans.length + 1}',
-        workspaceId: workspaceId,
-        name: name,
-        baseFeeCents: baseFeeCents,
-        includedHalfDays: includedHalfDays,
-        overageFeeCents: overageFeeCents,
-        active: true,
-      ),
-    );
+  Future<void> replaceFeeBands(
+    String workspaceId,
+    List<FeeBand> bands,
+  ) async {
+    // Same contiguity contract as the replace_fee_bands RPC.
+    var expected = 0;
+    for (final band in bands.toList()
+      ..sort((a, b) => a.fromPct.compareTo(b.fromPct))) {
+      if (band.fromPct != expected) throw StateError('bands not contiguous');
+      expected = band.toPct;
+    }
+    if (expected != 100) throw StateError('bands must cover up to 100');
+    feeBands
+      ..clear()
+      ..addAll([
+        for (final (i, band) in bands.indexed)
+          band.copyWith(id: 'band-${i + 1}', workspaceId: workspaceId),
+      ]);
   }
 
+  SubscriptionLevels subscriptionLevels = const SubscriptionLevels();
+
   @override
-  Future<void> updatePlan(Plan plan) async {
-    final i = plans.indexWhere((p) => p.id == plan.id);
-    if (i < 0) throw StateError('unknown plan');
-    plans[i] = plan;
+  Future<SubscriptionLevels> fetchSubscriptionLevels(
+    String workspaceId,
+  ) async =>
+      subscriptionLevels;
+
+  @override
+  Future<void> setSubscriptionLevels(
+    String workspaceId,
+    SubscriptionLevels levels,
+  ) async {
+    subscriptionLevels = levels;
   }
 
   final services = <ServiceItem>[

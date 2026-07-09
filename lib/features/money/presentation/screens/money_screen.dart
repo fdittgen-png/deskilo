@@ -336,15 +336,12 @@ class _StatementCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final usage = statement.includedHalfDays == null
-        ? (l10n?.moneyUsageUnlimited(statement.usedHalfDays) ??
-            '${statement.usedHalfDays} half-days used')
-        : (l10n?.moneyUsage(
-              statement.usedHalfDays,
-              statement.includedHalfDays!,
-            ) ??
-            '${statement.usedHalfDays} of ${statement.includedHalfDays} '
-                'half-days used');
+    final usage = l10n?.moneyUsage(
+          statement.usedHalfDays,
+          statement.includedHalfDays,
+        ) ??
+        '${statement.usedHalfDays} of ${statement.includedHalfDays} '
+            'half-days used';
 
     return Card(
       child: Padding(
@@ -356,7 +353,7 @@ class _StatementCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    '${statement.period} · ${statement.planName}',
+                    statement.period,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
@@ -372,8 +369,9 @@ class _StatementCard extends StatelessWidget {
             const SizedBox(height: 8),
             _line(
               context,
-              l10n?.moneyBaseFee ?? 'Base subscription',
-              '−${money(statement.baseFeeCents)}',
+              l10n?.moneySubscriptionPct(statement.subscriptionPct) ??
+                  'Subscription ${statement.subscriptionPct}%',
+              '−${money(statement.feeCents)}',
             ),
             _line(context, usage, ''),
             if (statement.overageCents > 0)

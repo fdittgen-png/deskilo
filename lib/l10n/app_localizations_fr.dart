@@ -75,6 +75,67 @@ class AppLocalizationsFr extends AppLocalizations {
   String get availabilityNoClosures => 'Aucun jour de fermeture.';
 
   @override
+  String get billingTitle => 'Facturation';
+
+  @override
+  String get billingFeeBands => 'Paliers tarifaires';
+
+  @override
+  String billingBandFrom(int from) {
+    return 'dès $from %';
+  }
+
+  @override
+  String get billingBandTo => 'Jusqu\'à %';
+
+  @override
+  String get billingBandFee => 'Tarif mensuel';
+
+  @override
+  String get billingBandOverage => 'Dépassement';
+
+  @override
+  String get billingAddBand => 'Ajouter un palier';
+
+  @override
+  String get billingRemoveBand => 'Supprimer le palier';
+
+  @override
+  String get billingBandsInvalid =>
+      'Les paliers doivent croître et se terminer à 100 %.';
+
+  @override
+  String get billingSaved => 'Enregistré.';
+
+  @override
+  String get billingLevels => 'Niveaux d\'abonnement';
+
+  @override
+  String get billingAddLevel => 'Ajouter un niveau';
+
+  @override
+  String get billingLevelValue => 'Niveau (1–100)';
+
+  @override
+  String get billingAllowCustom => 'Autoriser une valeur libre négociée';
+
+  @override
+  String get memberSubscriptionLabel => 'Abonnement';
+
+  @override
+  String get memberSubscriptionCustom => 'Personnalisé (1–100)';
+
+  @override
+  String moneySubscriptionPct(int pct) {
+    return 'Abonnement $pct %';
+  }
+
+  @override
+  String percentValue(int value) {
+    return '$value %';
+  }
+
+  @override
   String get calendarMineTab => 'Les miennes';
 
   @override

@@ -26,11 +26,12 @@ Future<FakeMoneyRepository> pumpMoney(
 }
 
 void main() {
-  testWidgets('statement card shows plan, usage, overage and open balance',
+  testWidgets(
+      'statement card shows subscription, usage, overage and open balance',
       (tester) async {
     await pumpMoney(tester);
 
-    expect(find.textContaining('Half'), findsOneWidget);
+    expect(find.text('Subscription 50%'), findsOneWidget);
     expect(find.text('24 of 22 half-days used'), findsOneWidget);
     expect(find.text('Overage (2 extra half-days)'), findsOneWidget);
     expect(find.text('Open'), findsOneWidget);

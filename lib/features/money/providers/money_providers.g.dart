@@ -180,91 +180,96 @@ final class MyLedgerProvider
 
 String _$myLedgerHash() => r'5d8925eeb1aa748d7505849799c742c10e7e11d8';
 
-/// Active plans of the current workspace.
+/// Fee bands of the current workspace, ordered by from_pct (#128).
 
-@ProviderFor(plans)
-final plansProvider = PlansProvider._();
+@ProviderFor(feeBands)
+final feeBandsProvider = FeeBandsProvider._();
 
-/// Active plans of the current workspace.
+/// Fee bands of the current workspace, ordered by from_pct (#128).
 
-final class PlansProvider
+final class FeeBandsProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<Plan>>,
-          List<Plan>,
-          FutureOr<List<Plan>>
+          AsyncValue<List<FeeBand>>,
+          List<FeeBand>,
+          FutureOr<List<FeeBand>>
         >
-    with $FutureModifier<List<Plan>>, $FutureProvider<List<Plan>> {
-  /// Active plans of the current workspace.
-  PlansProvider._()
+    with $FutureModifier<List<FeeBand>>, $FutureProvider<List<FeeBand>> {
+  /// Fee bands of the current workspace, ordered by from_pct (#128).
+  FeeBandsProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'plansProvider',
+        name: r'feeBandsProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$plansHash();
+  String debugGetCreateSourceHash() => _$feeBandsHash();
 
   @$internal
   @override
-  $FutureProviderElement<List<Plan>> $createElement($ProviderPointer pointer) =>
-      $FutureProviderElement(pointer);
+  $FutureProviderElement<List<FeeBand>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<List<Plan>> create(Ref ref) {
-    return plans(ref);
+  FutureOr<List<FeeBand>> create(Ref ref) {
+    return feeBands(ref);
   }
 }
 
-String _$plansHash() => r'e9b404d080c5ce4367016f77585981c7a97db21d';
+String _$feeBandsHash() => r'890f538fdbc1ecdb8a3ed467f858c6ca6ec07705';
 
-/// Every plan incl. deactivated ones — the owner's plan editor (#105).
+/// Offered subscription levels of the current workspace (#128).
 
-@ProviderFor(allPlans)
-final allPlansProvider = AllPlansProvider._();
+@ProviderFor(subscriptionLevels)
+final subscriptionLevelsProvider = SubscriptionLevelsProvider._();
 
-/// Every plan incl. deactivated ones — the owner's plan editor (#105).
+/// Offered subscription levels of the current workspace (#128).
 
-final class AllPlansProvider
+final class SubscriptionLevelsProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<Plan>>,
-          List<Plan>,
-          FutureOr<List<Plan>>
+          AsyncValue<SubscriptionLevels>,
+          SubscriptionLevels,
+          FutureOr<SubscriptionLevels>
         >
-    with $FutureModifier<List<Plan>>, $FutureProvider<List<Plan>> {
-  /// Every plan incl. deactivated ones — the owner's plan editor (#105).
-  AllPlansProvider._()
+    with
+        $FutureModifier<SubscriptionLevels>,
+        $FutureProvider<SubscriptionLevels> {
+  /// Offered subscription levels of the current workspace (#128).
+  SubscriptionLevelsProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'allPlansProvider',
-        isAutoDispose: true,
+        name: r'subscriptionLevelsProvider',
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$allPlansHash();
+  String debugGetCreateSourceHash() => _$subscriptionLevelsHash();
 
   @$internal
   @override
-  $FutureProviderElement<List<Plan>> $createElement($ProviderPointer pointer) =>
-      $FutureProviderElement(pointer);
+  $FutureProviderElement<SubscriptionLevels> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<List<Plan>> create(Ref ref) {
-    return allPlans(ref);
+  FutureOr<SubscriptionLevels> create(Ref ref) {
+    return subscriptionLevels(ref);
   }
 }
 
-String _$allPlansHash() => r'72b7afd67a7e38a6845ac075b565b3b6dcbe66fd';
+String _$subscriptionLevelsHash() =>
+    r'ed43338c2ac179bb8e793c3a9b7f6cc1d3da0bf3';
 
 /// Active consumable services of the current workspace (#123).
 

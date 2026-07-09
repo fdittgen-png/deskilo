@@ -9,8 +9,8 @@ import '../features/calendar/presentation/screens/calendar_screen.dart';
 import '../features/editor/presentation/screens/editor_screen.dart';
 import '../features/editor/presentation/screens/level_canvas_screen.dart';
 import '../features/events/presentation/screens/events_screen.dart';
+import '../features/money/presentation/screens/billing_screen.dart';
 import '../features/money/presentation/screens/money_screen.dart';
-import '../features/money/presentation/screens/plans_screen.dart';
 import '../features/money/presentation/screens/services_screen.dart';
 import '../features/plan/presentation/screens/plan_screen.dart';
 import '../features/profile/presentation/screens/profiles_screen.dart';
@@ -134,12 +134,12 @@ GoRouter router(Ref ref) {
         builder: (context, state) => const ScanJoinScreen(),
       ),
       GoRoute(
-        path: '/plans',
+        path: '/billing',
         redirect: (context, state) {
           final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
           return isOwner ? null : '/plan';
         },
-        builder: (context, state) => const PlansScreen(),
+        builder: (context, state) => const BillingScreen(),
       ),
       GoRoute(
         path: '/services',

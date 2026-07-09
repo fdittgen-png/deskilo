@@ -44,6 +44,12 @@ class SettingsScreen extends ConsumerWidget {
             ),
           if (isOwner)
             ListTile(
+              leading: const Icon(Icons.payments_outlined),
+              title: Text(l10n?.billingTitle ?? 'Billing'),
+              onTap: () => context.push('/billing'),
+            ),
+          if (isOwner)
+            ListTile(
               leading: const Icon(Icons.qr_code_2),
               title: Text(l10n?.workspaceCodeTitle ?? 'Workspace ID & QR'),
               onTap: () => context.push('/workspace-code'),
