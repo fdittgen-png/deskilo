@@ -56,6 +56,34 @@
   "@authNetworkError": {
     "description": "Snackbar when the auth call fails before reaching the server (connectivity)"
   },
+  "availabilityTitle": "Availability",
+  "@availabilityTitle": {
+    "description": "App-bar title of the owner availability editor and its settings tile"
+  },
+  "availabilityOpenWeekdays": "Open weekdays",
+  "@availabilityOpenWeekdays": {
+    "description": "Section header above the seven weekday chips"
+  },
+  "availabilityClosureDays": "Closure days",
+  "@availabilityClosureDays": {
+    "description": "Section header above the list of one-off closure days"
+  },
+  "availabilityAddClosure": "Add closure day",
+  "@availabilityAddClosure": {
+    "description": "FAB tooltip and reason-dialog title for adding a closure day"
+  },
+  "availabilityClosureReason": "Reason (optional)",
+  "@availabilityClosureReason": {
+    "description": "Label of the optional reason field when adding a closure day"
+  },
+  "availabilityLastOpenDay": "At least one weekday must stay open.",
+  "@availabilityLastOpenDay": {
+    "description": "Snackbar shown when the owner tries to uncheck the last open weekday"
+  },
+  "availabilityNoClosures": "No closure days.",
+  "@availabilityNoClosures": {
+    "description": "Empty state under the closure-days section header"
+  },
   "calendarMineTab": "Mine",
   "@calendarMineTab": {
     "description": "Calendar filter showing only the user's reservations"

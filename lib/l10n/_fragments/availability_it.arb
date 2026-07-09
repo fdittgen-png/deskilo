@@ -1,0 +1,10 @@
+{
+  "@@locale": "it",
+  "availabilityTitle": "Disponibilità",
+  "availabilityOpenWeekdays": "Giorni di apertura",
+  "availabilityClosureDays": "Giorni di chiusura",
+  "availabilityAddClosure": "Aggiungi giorno di chiusura",
+  "availabilityClosureReason": "Motivo (facoltativo)",
+  "availabilityLastOpenDay": "Almeno un giorno della settimana deve restare aperto.",
+  "availabilityNoClosures": "Nessun giorno di chiusura."
+}

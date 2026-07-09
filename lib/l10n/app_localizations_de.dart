@@ -53,6 +53,28 @@ class AppLocalizationsDe extends AppLocalizations {
       'Server nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.';
 
   @override
+  String get availabilityTitle => 'Verfügbarkeit';
+
+  @override
+  String get availabilityOpenWeekdays => 'Geöffnete Wochentage';
+
+  @override
+  String get availabilityClosureDays => 'Schließtage';
+
+  @override
+  String get availabilityAddClosure => 'Schließtag hinzufügen';
+
+  @override
+  String get availabilityClosureReason => 'Grund (optional)';
+
+  @override
+  String get availabilityLastOpenDay =>
+      'Mindestens ein Wochentag muss geöffnet bleiben.';
+
+  @override
+  String get availabilityNoClosures => 'Keine Schließtage.';
+
+  @override
   String get calendarMineTab => 'Meine';
 
   @override

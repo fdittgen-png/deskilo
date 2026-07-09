@@ -1,0 +1,10 @@
+{
+  "@@locale": "de",
+  "availabilityTitle": "Verfügbarkeit",
+  "availabilityOpenWeekdays": "Geöffnete Wochentage",
+  "availabilityClosureDays": "Schließtage",
+  "availabilityAddClosure": "Schließtag hinzufügen",
+  "availabilityClosureReason": "Grund (optional)",
+  "availabilityLastOpenDay": "Mindestens ein Wochentag muss geöffnet bleiben.",
+  "availabilityNoClosures": "Keine Schließtage."
+}

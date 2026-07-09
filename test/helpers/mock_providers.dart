@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
+import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
@@ -198,6 +199,47 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
     if (i >= 0) workspaces[i] = workspaces[i].copyWith(inviteCode: normalized);
     return normalized;
+  }
+
+  /// ISO open weekdays (1=Mon..7=Sun) per workspace; Mon–Fri when unseeded.
+  final Map<String, List<int>> openWeekdays = {};
+
+  @override
+  Future<List<int>> fetchOpenWeekdays(String workspaceId) async =>
+      List.of(openWeekdays[workspaceId] ?? const [1, 2, 3, 4, 5]);
+
+  @override
+  Future<void> setOpenWeekdays(String workspaceId, List<int> weekdays) async {
+    openWeekdays[workspaceId] = List.of(weekdays);
+  }
+
+  /// One-off closure days across workspaces (#127).
+  final List<ClosureDay> closureDays = [];
+
+  @override
+  Future<List<ClosureDay>> fetchClosureDays(String workspaceId) async =>
+      closureDays.where((c) => c.workspaceId == workspaceId).toList()
+        ..sort((a, b) => a.day.compareTo(b.day));
+
+  @override
+  Future<ClosureDay> addClosureDay(
+    String workspaceId,
+    DateTime day,
+    String reason,
+  ) async {
+    final closure = ClosureDay(
+      id: 'closure-${_nextId++}',
+      workspaceId: workspaceId,
+      day: DateTime(day.year, day.month, day.day),
+      reason: reason,
+    );
+    closureDays.add(closure);
+    return closure;
+  }
+
+  @override
+  Future<void> removeClosureDay(String closureDayId) async {
+    closureDays.removeWhere((c) => c.id == closureDayId);
   }
 
   @override

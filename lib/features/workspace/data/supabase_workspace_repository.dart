@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../domain/closure_day.dart';
 import '../domain/member.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_repository.dart';
@@ -129,6 +130,82 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
     });
     return result as String;
   }
+
+  @override
+  Future<List<int>> fetchOpenWeekdays(String workspaceId) async {
+    final row = await _client
+        .from('workspaces')
+        .select('booking_rules')
+        .eq('id', workspaceId)
+        .single();
+    final rules = row['booking_rules'] as Map<String, dynamic>? ?? const {};
+    final raw = rules['open_weekdays'] as List<dynamic>?;
+    if (raw == null) return const [1, 2, 3, 4, 5];
+    return raw.map((e) => (e as num).toInt()).toList();
+  }
+
+  @override
+  Future<void> setOpenWeekdays(String workspaceId, List<int> weekdays) async {
+    // booking_rules is one jsonb column; merge client-side so the other
+    // keys (horizon, durations, …) survive the write.
+    final row = await _client
+        .from('workspaces')
+        .select('booking_rules')
+        .eq('id', workspaceId)
+        .single();
+    final rules = <String, dynamic>{
+      ...?row['booking_rules'] as Map<String, dynamic>?,
+      'open_weekdays': weekdays,
+    };
+    await _client
+        .from('workspaces')
+        .update({'booking_rules': rules}).eq('id', workspaceId);
+  }
+
+  @override
+  Future<List<ClosureDay>> fetchClosureDays(String workspaceId) async {
+    final rows = await _client
+        .from('closure_days')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('day', ascending: true);
+    return rows.map(_closureDayFromRow).toList();
+  }
+
+  @override
+  Future<ClosureDay> addClosureDay(
+    String workspaceId,
+    DateTime day,
+    String reason,
+  ) async {
+    final row = await _client
+        .from('closure_days')
+        .insert({
+          'workspace_id': workspaceId,
+          'day': _isoDate(day),
+          'reason': reason,
+        })
+        .select()
+        .single();
+    return _closureDayFromRow(row);
+  }
+
+  @override
+  Future<void> removeClosureDay(String closureDayId) async {
+    await _client.from('closure_days').delete().eq('id', closureDayId);
+  }
+
+  /// Postgres `date` wire format for [day]'s date part.
+  String _isoDate(DateTime day) => '${day.year.toString().padLeft(4, '0')}-'
+      '${day.month.toString().padLeft(2, '0')}-'
+      '${day.day.toString().padLeft(2, '0')}';
+
+  ClosureDay _closureDayFromRow(Map<String, dynamic> row) => ClosureDay(
+        id: row['id'] as String,
+        workspaceId: row['workspace_id'] as String,
+        day: DateTime.parse(row['day'] as String),
+        reason: row['reason'] as String? ?? '',
+      );
 
   Member _memberFromRow(Map<String, dynamic> row) => Member(
         id: row['id'] as String,

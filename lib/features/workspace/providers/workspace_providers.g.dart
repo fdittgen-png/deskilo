@@ -284,6 +284,93 @@ final class MyMembershipsProvider
 
 String _$myMembershipsHash() => r'addc53f1469bfa1a4b4c485af129c830dd2b49c2';
 
+/// ISO weekdays (1=Mon..7=Sun) the active workspace is open on (#127).
+
+@ProviderFor(openWeekdays)
+final openWeekdaysProvider = OpenWeekdaysProvider._();
+
+/// ISO weekdays (1=Mon..7=Sun) the active workspace is open on (#127).
+
+final class OpenWeekdaysProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<int>>,
+          List<int>,
+          FutureOr<List<int>>
+        >
+    with $FutureModifier<List<int>>, $FutureProvider<List<int>> {
+  /// ISO weekdays (1=Mon..7=Sun) the active workspace is open on (#127).
+  OpenWeekdaysProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'openWeekdaysProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$openWeekdaysHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<int>> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<int>> create(Ref ref) {
+    return openWeekdays(ref);
+  }
+}
+
+String _$openWeekdaysHash() => r'a009dd9b0d56fe04f6fd083a0511371e97097a80';
+
+/// One-off closure days of the active workspace, ordered by day (#127).
+
+@ProviderFor(closureDays)
+final closureDaysProvider = ClosureDaysProvider._();
+
+/// One-off closure days of the active workspace, ordered by day (#127).
+
+final class ClosureDaysProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<ClosureDay>>,
+          List<ClosureDay>,
+          FutureOr<List<ClosureDay>>
+        >
+    with $FutureModifier<List<ClosureDay>>, $FutureProvider<List<ClosureDay>> {
+  /// One-off closure days of the active workspace, ordered by day (#127).
+  ClosureDaysProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'closureDaysProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$closureDaysHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<ClosureDay>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<ClosureDay>> create(Ref ref) {
+    return closureDays(ref);
+  }
+}
+
+String _$closureDaysHash() => r'b4ec3e79a97e7a47c0340ece344f8b12625f590a';
+
 /// The signed-in user's membership (roles!) in the active workspace.
 
 @ProviderFor(myMember)

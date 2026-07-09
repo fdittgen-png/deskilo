@@ -53,6 +53,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not reach the server. Check your connection and try again.';
 
   @override
+  String get availabilityTitle => 'Availability';
+
+  @override
+  String get availabilityOpenWeekdays => 'Open weekdays';
+
+  @override
+  String get availabilityClosureDays => 'Closure days';
+
+  @override
+  String get availabilityAddClosure => 'Add closure day';
+
+  @override
+  String get availabilityClosureReason => 'Reason (optional)';
+
+  @override
+  String get availabilityLastOpenDay => 'At least one weekday must stay open.';
+
+  @override
+  String get availabilityNoClosures => 'No closure days.';
+
+  @override
   String get calendarMineTab => 'Mine';
 
   @override

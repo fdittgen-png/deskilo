@@ -53,6 +53,28 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible de joindre le serveur. Vérifiez votre connexion et réessayez.';
 
   @override
+  String get availabilityTitle => 'Disponibilité';
+
+  @override
+  String get availabilityOpenWeekdays => 'Jours d\'ouverture';
+
+  @override
+  String get availabilityClosureDays => 'Jours de fermeture';
+
+  @override
+  String get availabilityAddClosure => 'Ajouter un jour de fermeture';
+
+  @override
+  String get availabilityClosureReason => 'Motif (facultatif)';
+
+  @override
+  String get availabilityLastOpenDay =>
+      'Au moins un jour de la semaine doit rester ouvert.';
+
+  @override
+  String get availabilityNoClosures => 'Aucun jour de fermeture.';
+
+  @override
   String get calendarMineTab => 'Les miennes';
 
   @override

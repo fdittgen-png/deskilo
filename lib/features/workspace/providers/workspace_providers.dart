@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/storage/active_workspace_store.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../data/supabase_workspace_repository.dart';
+import '../domain/closure_day.dart';
 import '../domain/member.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_repository.dart';
@@ -61,6 +62,26 @@ Future<List<Member>> myMemberships(Ref ref) async {
   final signedIn = ref.watch(authStateProvider).value != null;
   if (!signedIn) return const [];
   return ref.watch(workspaceRepositoryProvider).fetchMyMembers();
+}
+
+/// ISO weekdays (1=Mon..7=Sun) the active workspace is open on (#127).
+@riverpod
+Future<List<int>> openWeekdays(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [1, 2, 3, 4, 5];
+  return ref
+      .watch(workspaceRepositoryProvider)
+      .fetchOpenWeekdays(workspace.id);
+}
+
+/// One-off closure days of the active workspace, ordered by day (#127).
+@riverpod
+Future<List<ClosureDay>> closureDays(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return ref
+      .watch(workspaceRepositoryProvider)
+      .fetchClosureDays(workspace.id);
 }
 
 /// The signed-in user's membership (roles!) in the active workspace.
