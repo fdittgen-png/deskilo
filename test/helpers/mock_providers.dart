@@ -155,6 +155,28 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     return workspace.id;
   }
 
+  /// (#153) Arguments of the last [updateWorkspaceLocale] call, for
+  /// assertions: `[workspaceId, countryCode, currencyCode, timezone]`.
+  List<String>? lastLocaleUpdate;
+
+  @override
+  Future<void> updateWorkspaceLocale(
+    String workspaceId, {
+    required String countryCode,
+    required String currencyCode,
+    required String timezone,
+  }) async {
+    lastLocaleUpdate = [workspaceId, countryCode, currencyCode, timezone];
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i != -1) {
+      workspaces[i] = workspaces[i].copyWith(
+        countryCode: countryCode,
+        currencyCode: currencyCode,
+        timezone: timezone,
+      );
+    }
+  }
+
   @override
   Future<Member?> fetchMyMember(String workspaceId) async =>
       [myMember, ...extraMyMemberships]

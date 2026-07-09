@@ -1018,4 +1018,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get workspaceCodeSharePng => 'Als PNG teilen';
+
+  @override
+  String get workspaceSettingsTitle => 'Workspace';
+
+  @override
+  String get workspaceSettingsSaved => 'Workspace gespeichert.';
+
+  @override
+  String get workspaceSettingsCurrencyHelper =>
+      'Wird vom Land vorbelegt — überschreiben, falls eure Community in einer anderen Währung abrechnet.';
 }

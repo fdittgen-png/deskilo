@@ -19,6 +19,16 @@ abstract class WorkspaceRepository {
   /// Joins via invite code. Returns the workspace id.
   Future<String> joinWorkspace(String inviteCode);
 
+  /// Owner-only (workspaces_update RLS): change the workspace locale —
+  /// country, currency and time zone (#153). Currency defaults from the
+  /// country in the UI but any ISO 4217 override is persisted verbatim.
+  Future<void> updateWorkspaceLocale(
+    String workspaceId, {
+    required String countryCode,
+    required String currencyCode,
+    required String timezone,
+  });
+
   /// The signed-in user's membership in [workspaceId], or null.
   Future<Member?> fetchMyMember(String workspaceId);
 

@@ -8,6 +8,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../country_names.dart';
 
 /// First-run screen for a signed-in user without a workspace: create one
 /// (become owner) or join via invite code (spec §11 onboarding).
@@ -36,24 +37,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     _timezone.dispose();
     _inviteCode.dispose();
     super.dispose();
-  }
-
-  String _countryName(AppLocalizations? l10n, String code) {
-    return switch (code) {
-      'DE' => l10n?.countryNameDE ?? 'Germany',
-      'AT' => l10n?.countryNameAT ?? 'Austria',
-      'CH' => l10n?.countryNameCH ?? 'Switzerland',
-      'FR' => l10n?.countryNameFR ?? 'France',
-      'IT' => l10n?.countryNameIT ?? 'Italy',
-      'ES' => l10n?.countryNameES ?? 'Spain',
-      'PT' => l10n?.countryNamePT ?? 'Portugal',
-      'NL' => l10n?.countryNameNL ?? 'Netherlands',
-      'BE' => l10n?.countryNameBE ?? 'Belgium',
-      'LU' => l10n?.countryNameLU ?? 'Luxembourg',
-      'GB' => l10n?.countryNameGB ?? 'United Kingdom',
-      'US' => l10n?.countryNameUS ?? 'United States',
-      _ => code,
-    };
   }
 
   Future<void> _run(Future<void> Function() action) async {
@@ -173,7 +156,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                               DropdownMenuItem(
                                 value: country.code,
                                 child:
-                                    Text(_countryName(l10n, country.code)),
+                                    Text(
+                                      localizedCountryName(
+                                          l10n, country.code),
+                                    ),
                               ),
                           ],
                           onChanged: (code) {

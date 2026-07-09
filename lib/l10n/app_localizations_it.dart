@@ -1019,4 +1019,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get workspaceCodeSharePng => 'Condividi come PNG';
+
+  @override
+  String get workspaceSettingsTitle => 'Spazio di coworking';
+
+  @override
+  String get workspaceSettingsSaved => 'Spazio salvato.';
+
+  @override
+  String get workspaceSettingsCurrencyHelper =>
+      'Proposta in base al paese — modificala se la tua community fattura in un’altra valuta.';
 }
