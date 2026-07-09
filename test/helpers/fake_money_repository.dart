@@ -3,6 +3,7 @@ import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
+import 'package:deskilo/features/money/domain/payment_method.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
@@ -41,7 +42,8 @@ class FakeMoneyRepository implements MoneyRepository {
   final fetchedPeriods = <String>[];
 
   final ledger = <LedgerEntry>[];
-  final recordedPayments = <({int amountCents, String note})>[];
+  final recordedPayments =
+      <({int amountCents, String note, PaymentMethod? method})>[];
 
   @override
   Future<Statement> fetchStatement(String memberId, String period) async {
@@ -59,8 +61,10 @@ class FakeMoneyRepository implements MoneyRepository {
     required String memberId,
     required int amountCents,
     String note = '',
+    PaymentMethod? method,
   }) async {
-    recordedPayments.add((amountCents: amountCents, note: note));
+    recordedPayments
+        .add((amountCents: amountCents, note: note, method: method));
     return 'evt-payment-${recordedPayments.length}';
   }
 

@@ -41,5 +41,11 @@
   "planIncludedLabel": "Mezze giornate incluse",
   "planIncludedHelper": "Lascia vuoto per illimitato",
   "planOverageLabel": "Prezzo per mezza giornata extra",
-  "planActiveLabel": "Attivo"
+  "planActiveLabel": "Attivo",
+  "paymentMethodBankTransfer": "Bonifico",
+  "paymentMethodCash": "Contanti",
+  "paymentMethodPaypal": "PayPal",
+  "paymentMethodTwint": "TWINT",
+  "paymentMethodCard": "Carta",
+  "paymentMethodOther": "Altro"
 }

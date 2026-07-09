@@ -195,5 +195,29 @@
   },
   "@planActiveLabel": {
     "description": "Active switch label"
+  },
+  "paymentMethodBankTransfer": "Bank transfer",
+  "@paymentMethodBankTransfer": {
+    "description": "Payment-method chip/label: SEPA/bank transfer (#154)."
+  },
+  "paymentMethodCash": "Cash",
+  "@paymentMethodCash": {
+    "description": "Payment-method chip/label: cash (#154)."
+  },
+  "paymentMethodPaypal": "PayPal",
+  "@paymentMethodPaypal": {
+    "description": "Payment-method chip/label: PayPal — brand name, identical in every locale (#154)."
+  },
+  "paymentMethodTwint": "TWINT",
+  "@paymentMethodTwint": {
+    "description": "Payment-method chip/label: TWINT — brand name, identical in every locale (#154)."
+  },
+  "paymentMethodCard": "Card",
+  "@paymentMethodCard": {
+    "description": "Payment-method chip/label: debit/credit card (#154)."
+  },
+  "paymentMethodOther": "Other",
+  "@paymentMethodOther": {
+    "description": "Payment-method chip/label: anything else (#154)."
   }
 }

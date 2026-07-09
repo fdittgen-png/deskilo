@@ -16,8 +16,10 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/bill_pdf.dart';
 import '../../domain/bill_sections.dart';
 import '../../domain/ledger_entry.dart';
+import '../../domain/payment_method.dart';
 import '../../domain/statement.dart';
 import '../../providers/money_providers.dart';
+import '../payment_method_labels.dart';
 import '../widgets/bill_view.dart';
 import '../widgets/consumption_sheet.dart';
 
@@ -155,50 +157,73 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
 
     final amount = TextEditingController();
     final note = TextEditingController();
+    // #154 — how the money moved. Survives sheet rebuilds via the
+    // StatefulBuilder below; null = not specified (kept valid so old
+    // habits keep working).
+    PaymentMethod? method;
     final submitted = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      builder: (context) => Padding(
-        padding: EdgeInsets.only(
-          left: 24,
-          right: 24,
-          top: 24,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 24,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              l10n?.moneyRecordPayment ?? 'Record a payment',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: amount,
-              decoration: InputDecoration(
-                labelText: l10n?.moneyAmountLabel ?? 'Amount',
-                suffixText: currency.currencyName,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setSheetState) => Padding(
+          padding: EdgeInsets.only(
+            left: 24,
+            right: 24,
+            top: 24,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                l10n?.moneyRecordPayment ?? 'Record a payment',
+                style: Theme.of(context).textTheme.titleMedium,
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              autofocus: true,
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: note,
-              decoration: InputDecoration(
-                labelText: l10n?.moneyNoteLabel ?? 'Note (optional)',
+              const SizedBox(height: 12),
+              TextField(
+                controller: amount,
+                decoration: InputDecoration(
+                  labelText: l10n?.moneyAmountLabel ?? 'Amount',
+                  suffixText: currency.currencyName,
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                autofocus: true,
               ),
-            ),
-            const SizedBox(height: 16),
-            FilledButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              child: Text(
-                l10n?.moneySubmitPayment ?? 'Submit for confirmation',
+              const SizedBox(height: 12),
+              // #154 — payment method chips (spec §7: amount + date +
+              // method + note). Tapping the selected chip deselects it.
+              Wrap(
+                spacing: 8,
+                runSpacing: 4,
+                children: [
+                  for (final candidate in PaymentMethod.values)
+                    ChoiceChip(
+                      label: Text(paymentMethodLabel(l10n, candidate)),
+                      selected: method == candidate,
+                      onSelected: (selected) => setSheetState(
+                        () => method = selected ? candidate : null,
+                      ),
+                    ),
+                ],
               ),
-            ),
-          ],
+              const SizedBox(height: 12),
+              TextField(
+                controller: note,
+                decoration: InputDecoration(
+                  labelText: l10n?.moneyNoteLabel ?? 'Note (optional)',
+                ),
+              ),
+              const SizedBox(height: 16),
+              FilledButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text(
+                  l10n?.moneySubmitPayment ?? 'Submit for confirmation',
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -213,6 +238,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             memberId: member.id,
             amountCents: (parsed * 100).round(),
             note: note.text.trim(),
+            method: method,
           );
     } catch (e, st) {
       debugPrint('record payment failed: $e\n$st');

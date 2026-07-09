@@ -702,6 +702,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get planActiveLabel => 'Active';
 
   @override
+  String get paymentMethodBankTransfer => 'Virement';
+
+  @override
+  String get paymentMethodCash => 'Espèces';
+
+  @override
+  String get paymentMethodPaypal => 'PayPal';
+
+  @override
+  String get paymentMethodTwint => 'TWINT';
+
+  @override
+  String get paymentMethodCard => 'Carte';
+
+  @override
+  String get paymentMethodOther => 'Autre';
+
+  @override
   String get planNoLevels => 'L\'espace n\'a pas encore de plan.';
 
   @override
