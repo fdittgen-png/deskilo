@@ -20,6 +20,7 @@
   "ledgerCategoryExpense": "Remboursement de dépense",
   "ledgerCategoryPayment": "Paiement",
   "ledgerCategoryAdjustment": "Ajustement",
+  "ledgerCategoryService": "Service",
   "moneySubmitExpense": "Soumettre une dépense",
   "moneyExpenseCategoryLabel": "Catégorie",
   "moneyDescriptionLabel": "Description",

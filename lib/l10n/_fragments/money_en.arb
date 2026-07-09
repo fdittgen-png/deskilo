@@ -130,6 +130,10 @@
   "@ledgerCategoryAdjustment": {
     "description": "Ledger entry category"
   },
+  "ledgerCategoryService": "Service",
+  "@ledgerCategoryService": {
+    "description": "Ledger entry category for confirmed service charges (#129)"
+  },
   "plansEditorTitle": "Plans",
   "plansEditorNew": "New plan",
   "plansEditorEdit": "Edit plan",

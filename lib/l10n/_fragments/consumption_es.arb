@@ -1,0 +1,12 @@
+{
+  "@@locale": "es",
+  "consumptionAdd": "Añadir consumo",
+  "consumptionAddForMember": "Añadir servicio para {name}",
+  "consumptionService": "Servicio",
+  "consumptionQuantity": "Cantidad",
+  "consumptionPeriodLabel": "Período de facturación (AAAA-MM)",
+  "consumptionNoServices": "No hay servicios activos que registrar.",
+  "consumptionRecorded": "Consumo registrado — pendiente de confirmación.",
+  "eventTypeServiceCharge": "Servicio",
+  "eventServiceChargeTitle": "{name} ×{quantity} — {amount}"
+}

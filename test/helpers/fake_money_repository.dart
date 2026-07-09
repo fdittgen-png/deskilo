@@ -181,6 +181,43 @@ class FakeMoneyRepository implements MoneyRepository {
     return updated;
   }
 
+  /// Captured like [recordedPayments]: the real RPC only creates a pending
+  /// event — nothing hits [ledger] until confirmation.
+  final recordedServiceCharges = <({
+    String workspaceId,
+    String subjectMemberId,
+    String serviceId,
+    int quantity,
+    String? period,
+  })>[];
+
+  @override
+  Future<void> recordServiceCharge({
+    required String workspaceId,
+    required String subjectMemberId,
+    required String serviceId,
+    required int quantity,
+    String? period,
+  }) async {
+    final service = services.firstWhere(
+      (s) => s.id == serviceId,
+      orElse: () => throw StateError('unknown service'),
+    );
+    if (!service.active) throw StateError('service is inactive');
+    if (quantity < 1 || quantity > 999) {
+      throw StateError('quantity must be between 1 and 999');
+    }
+    recordedServiceCharges.add(
+      (
+        workspaceId: workspaceId,
+        subjectMemberId: subjectMemberId,
+        serviceId: serviceId,
+        quantity: quantity,
+        period: period,
+      ),
+    );
+  }
+
   final submittedExpenses =
       <({int amountCents, String category, String description})>[];
 

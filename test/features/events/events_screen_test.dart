@@ -36,6 +36,32 @@ WorkspaceEvent event({
   );
 }
 
+WorkspaceEvent serviceChargeEvent({
+  String id = 'evt-svc',
+  String actor = 'member-1',
+  String subject = 'member-1',
+  EventStatus status = EventStatus.pending,
+}) {
+  return WorkspaceEvent(
+    id: id,
+    workspaceId: 'ws-1',
+    type: EventType.serviceCharge,
+    action: EventAction.submitted,
+    actorMemberId: actor,
+    subjectMemberId: subject,
+    payload: const {
+      'service_id': 'service-coffee',
+      'name': 'Coffee',
+      'price_cents': 150,
+      'quantity': 2,
+      'amount_cents': 300,
+      'period': '2026-07',
+    },
+    status: status,
+    createdAt: DateTime.now(),
+  );
+}
+
 Future<FakeEventRepository> pumpEvents(
   WidgetTester tester, {
   List<WorkspaceEvent> seed = const [],
@@ -187,6 +213,61 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repo.events.single.status, EventStatus.rejected);
+  });
+
+  testWidgets(
+      'a pending service charge added by an admin is pinned for the '
+      'subject with name, quantity and amount (#129)', (tester) async {
+    final repo = await pumpEvents(
+      tester,
+      seed: [serviceChargeEvent(actor: 'member-2', subject: 'member-1')],
+    );
+
+    expect(find.text('Waiting for your confirmation'), findsOneWidget);
+    expect(find.text('Coffee ×2 — €3.00 for Flo'), findsOneWidget);
+
+    await tester.tap(find.text('Accept'));
+    await tester.pumpAndSettle();
+
+    expect(repo.events.single.status, EventStatus.confirmed);
+  });
+
+  testWidgets(
+      'a self-reported service charge is NOT offered to its reporter '
+      'while another admin exists (#129)', (tester) async {
+    // Viewer member-1 is an admin AND the reporter; member-2 is another
+    // active admin → the other admin decides, not the reporter.
+    final events = FakeEventRepository()
+      ..events.add(serviceChargeEvent());
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
+      ..otherMembers.add(
+        const Member(
+          id: 'member-2',
+          workspaceId: 'ws-1',
+          userId: 'user-2',
+          isAdmin: true,
+          isOwner: false,
+          status: MemberStatus.active,
+        ),
+      );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          events: events,
+          workspace: workspace,
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Events'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Waiting for your confirmation'), findsNothing);
+    expect(find.text('Accept'), findsNothing);
+    // The charge still appears in the feed, marked as pending.
+    expect(find.text('Coffee ×2 — €3.00 for Flo'), findsOneWidget);
   });
 
   testWidgets('type filter narrows the feed', (tester) async {

@@ -179,6 +179,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get comingSoon => 'Coming soon';
 
   @override
+  String get consumptionAdd => 'Add consumption';
+
+  @override
+  String consumptionAddForMember(String name) {
+    return 'Add service for $name';
+  }
+
+  @override
+  String get consumptionService => 'Service';
+
+  @override
+  String get consumptionQuantity => 'Quantity';
+
+  @override
+  String get consumptionPeriodLabel => 'Billing period (YYYY-MM)';
+
+  @override
+  String get consumptionNoServices => 'No active services to record.';
+
+  @override
+  String get consumptionRecorded =>
+      'Consumption recorded — waiting for confirmation.';
+
+  @override
+  String get eventTypeServiceCharge => 'Service';
+
+  @override
+  String eventServiceChargeTitle(String name, int quantity, String amount) {
+    return '$name ×$quantity — $amount';
+  }
+
+  @override
   String get editorTitle => 'Workspace editor';
 
   @override
@@ -484,6 +516,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ledgerCategoryAdjustment => 'Adjustment';
+
+  @override
+  String get ledgerCategoryService => 'Service';
 
   @override
   String get plansEditorTitle => 'Plans';

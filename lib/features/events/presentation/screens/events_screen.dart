@@ -52,9 +52,18 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       (EventType.expense, _) =>
         l10n?.eventExpenseSubmitted(actor, amount) ??
             '$actor submitted an expense of $amount',
+      (EventType.serviceCharge, _) => l10n?.eventServiceChargeTitle(
+            event.payload['name'] as String? ?? '',
+            (event.payload['quantity'] as num?)?.toInt() ?? 0,
+            amount,
+          ) ??
+          '${event.payload['name']} '
+              '×${event.payload['quantity']} — $amount',
       _ => '${_typeLabel(l10n, event.type)} · ${event.action.name}',
     };
-    if (!event.actorIsSubject) {
+    // Service charges name no actor in the title, so always say whose bill
+    // it lands on; other types only when an admin acted for someone else.
+    if (!event.actorIsSubject || event.type == EventType.serviceCharge) {
       final subject = names[event.subjectMemberId] ?? '';
       line = '$line ${l10n?.eventForSubject(subject) ?? 'for $subject'}';
     }
@@ -67,6 +76,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.payment => l10n?.eventTypePayment ?? 'Payment',
       EventType.expense => l10n?.eventTypeExpense ?? 'Expense',
       EventType.adjustment => l10n?.eventTypeAdjustment ?? 'Adjustment',
+      EventType.serviceCharge =>
+        l10n?.eventTypeServiceCharge ?? 'Service',
     };
   }
 
@@ -78,6 +89,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.payment => Icons.payments_outlined,
       EventType.expense => Icons.receipt_long_outlined,
       EventType.adjustment => Icons.tune,
+      EventType.serviceCharge => Icons.room_service_outlined,
     };
   }
 

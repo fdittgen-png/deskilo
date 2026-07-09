@@ -5,8 +5,25 @@ import '../../workspace/domain/member.dart';
 
 part 'workspace_event.freezed.dart';
 
-/// Event kinds and lifecycle (spec §3/§8). Persisted by name — never rename.
-enum EventType { reservation, payment, expense, adjustment }
+/// Event kinds and lifecycle (spec §3/§8). Persisted by [dbName] — never
+/// rename a stored value.
+enum EventType {
+  reservation,
+  payment,
+  expense,
+  adjustment,
+  serviceCharge('service_charge');
+
+  const EventType([String? dbName]) : _dbName = dbName;
+
+  final String? _dbName;
+
+  /// The value stored in events.type (snake_case where Dart camelCases).
+  String get dbName => _dbName ?? name;
+
+  static EventType fromDb(String value) =>
+      values.firstWhere((t) => t.dbName == value);
+}
 
 enum EventAction { created, modified, cancelled, submitted, approved, rejected }
 
@@ -36,11 +53,13 @@ sealed class WorkspaceEvent with _$WorkspaceEvent {
 
   bool get actorIsSubject => actorMemberId == subjectMemberId;
 
-  /// Expenses and self-recorded payments are decided by ANOTHER admin
-  /// (spec §9 no-self-approval); everything else by the subject (§8.2).
+  /// Expenses, self-recorded payments and self-reported service charges
+  /// are decided by ANOTHER admin (spec §9 no-self-approval, #129);
+  /// everything else by the subject (§8.2).
   bool get needsAdminDecider =>
       type == EventType.expense ||
-      (type == EventType.payment && actorIsSubject);
+      ((type == EventType.payment || type == EventType.serviceCharge) &&
+          actorIsSubject);
 
   /// Whether [me] is the one who must accept/decline this pending event.
   /// Mirrors respond_to_event exactly (#107), incl. the solo-admin escape

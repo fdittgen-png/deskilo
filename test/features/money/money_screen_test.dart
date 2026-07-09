@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -71,6 +72,58 @@ void main() {
       find.text('Payment submitted — waiting for confirmation.'),
       findsOneWidget,
     );
+  });
+
+  testWidgets(
+      'adding consumption records service, quantity and period (#129)',
+      (tester) async {
+    final money = await pumpMoney(tester);
+
+    await tester.scrollUntilVisible(find.text('Add consumption'), 100);
+    await tester.tap(find.text('Add consumption'));
+    await tester.pumpAndSettle();
+
+    // Coffee is the first active service (name-ordered); bump quantity.
+    expect(find.text('Coffee — €1.50'), findsOneWidget);
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
+    await tester.tap(find.text('Submit for confirmation'));
+    await tester.pumpAndSettle();
+
+    final recorded = money.recordedServiceCharges.single;
+    expect(recorded.workspaceId, 'ws-1');
+    expect(recorded.subjectMemberId, 'member-1');
+    expect(recorded.serviceId, 'service-coffee');
+    expect(recorded.quantity, 2);
+    expect(recorded.period, currentPeriod());
+    expect(
+      find.text('Consumption recorded — waiting for confirmation.'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('the consumption sheet offers only active services',
+      (tester) async {
+    final money = await pumpMoney(tester);
+
+    await tester.scrollUntilVisible(find.text('Add consumption'), 100);
+    await tester.tap(find.text('Add consumption'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Coffee — €1.50'));
+    await tester.pumpAndSettle();
+    // Locker is inactive and must not be offered.
+    expect(find.textContaining('Locker'), findsNothing);
+    await tester.tap(find.text('Printing — €0.20').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Submit for confirmation'));
+    await tester.pumpAndSettle();
+
+    expect(
+      money.recordedServiceCharges.single.serviceId,
+      'service-printing',
+    );
+    expect(money.recordedServiceCharges.single.quantity, 1);
   });
 
   testWidgets('ledger entries render with signs', (tester) async {
