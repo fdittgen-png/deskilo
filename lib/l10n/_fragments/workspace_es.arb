@@ -33,5 +33,8 @@
   "workspaceCodeCopied": "Copiado",
   "scanJoinTitle": "Escanear QR del espacio",
   "onboardingScanButton": "Escanear código QR",
-  "workspaceCodeSharePng": "Compartir como PNG"
+  "workspaceCodeSharePng": "Compartir como PNG",
+  "workspaceSettingsTitle": "Espacio de coworking",
+  "workspaceSettingsSaved": "Espacio guardado.",
+  "workspaceSettingsCurrencyHelper": "Se propone según el país — cámbiala si tu comunidad factura en otra moneda."
 }

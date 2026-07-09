@@ -81,5 +81,17 @@
   "workspaceCodeSharePng": "Share as PNG",
   "@workspaceCodeSharePng": {
     "description": "Button exporting the workspace QR as a PNG via the share sheet (#112)"
+  },
+  "workspaceSettingsTitle": "Workspace",
+  "@workspaceSettingsTitle": {
+    "description": "Owner settings entry + screen title for editing the workspace country/currency/time zone (#153)."
+  },
+  "workspaceSettingsSaved": "Workspace saved.",
+  "@workspaceSettingsSaved": {
+    "description": "Snackbar after the workspace locale settings were persisted (#153)."
+  },
+  "workspaceSettingsCurrencyHelper": "Defaults from the country — override if your community bills in another currency.",
+  "@workspaceSettingsCurrencyHelper": {
+    "description": "Helper under the currency field on the workspace settings screen (#153)."
   }
 }
