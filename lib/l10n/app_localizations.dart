@@ -188,6 +188,48 @@ abstract class AppLocalizations {
   /// **'Could not reach the server. Check your connection and try again.'**
   String get authNetworkError;
 
+  /// App-bar title of the owner availability editor and its settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Availability'**
+  String get availabilityTitle;
+
+  /// Section header above the seven weekday chips
+  ///
+  /// In en, this message translates to:
+  /// **'Open weekdays'**
+  String get availabilityOpenWeekdays;
+
+  /// Section header above the list of one-off closure days
+  ///
+  /// In en, this message translates to:
+  /// **'Closure days'**
+  String get availabilityClosureDays;
+
+  /// FAB tooltip and reason-dialog title for adding a closure day
+  ///
+  /// In en, this message translates to:
+  /// **'Add closure day'**
+  String get availabilityAddClosure;
+
+  /// Label of the optional reason field when adding a closure day
+  ///
+  /// In en, this message translates to:
+  /// **'Reason (optional)'**
+  String get availabilityClosureReason;
+
+  /// Snackbar shown when the owner tries to uncheck the last open weekday
+  ///
+  /// In en, this message translates to:
+  /// **'At least one weekday must stay open.'**
+  String get availabilityLastOpenDay;
+
+  /// Empty state under the closure-days section header
+  ///
+  /// In en, this message translates to:
+  /// **'No closure days.'**
+  String get availabilityNoClosures;
+
   /// Calendar filter showing only the user's reservations
   ///
   /// In en, this message translates to:

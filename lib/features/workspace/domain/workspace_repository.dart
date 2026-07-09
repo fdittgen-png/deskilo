@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import 'closure_day.dart';
 import 'member.dart';
 import 'workspace.dart';
 
@@ -39,4 +40,25 @@ abstract class WorkspaceRepository {
   /// with a memorable alphanumeric one (4–20 A-Z/0-9, unique). Returns the
   /// normalized code.
   Future<String> setWorkspaceCode(String workspaceId, String code);
+
+  /// ISO weekdays (1=Mon..7=Sun) the workspace is open on (#127); read
+  /// from booking_rules, defaults to Mon–Fri when the key is absent.
+  Future<List<int>> fetchOpenWeekdays(String workspaceId);
+
+  /// Owner-only (RLS-enforced): persist the open weekdays inside
+  /// booking_rules without clobbering its other keys.
+  Future<void> setOpenWeekdays(String workspaceId, List<int> weekdays);
+
+  /// One-off closure days of the workspace, ordered by day (#127).
+  Future<List<ClosureDay>> fetchClosureDays(String workspaceId);
+
+  /// Owner-only: add a closure day. Returns the created row.
+  Future<ClosureDay> addClosureDay(
+    String workspaceId,
+    DateTime day,
+    String reason,
+  );
+
+  /// Owner-only: remove a closure day.
+  Future<void> removeClosureDay(String closureDayId);
 }

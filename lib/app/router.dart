@@ -14,6 +14,7 @@ import '../features/money/presentation/screens/plans_screen.dart';
 import '../features/plan/presentation/screens/plan_screen.dart';
 import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
+import '../features/workspace/presentation/screens/availability_screen.dart';
 import '../features/workspace/presentation/screens/members_screen.dart';
 import '../features/workspace/presentation/screens/onboarding_screen.dart';
 import '../features/workspace/presentation/screens/scan_join_screen.dart';
@@ -138,6 +139,14 @@ GoRouter router(Ref ref) {
           return isOwner ? null : '/plan';
         },
         builder: (context, state) => const PlansScreen(),
+      ),
+      GoRoute(
+        path: '/availability',
+        redirect: (context, state) {
+          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          return isOwner ? null : '/plan';
+        },
+        builder: (context, state) => const AvailabilityScreen(),
       ),
       GoRoute(
         path: '/members',
