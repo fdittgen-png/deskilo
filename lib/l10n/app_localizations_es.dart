@@ -527,6 +527,12 @@ class AppLocalizationsEs extends AppLocalizations {
       'Entregar las confirmaciones pendientes en los dispositivos de los miembros.';
 
   @override
+  String get languageTitle => 'Idioma';
+
+  @override
+  String get languageSystemDefault => 'Predeterminado del sistema';
+
+  @override
   String get membersTitle => 'Miembros y planes';
 
   @override

@@ -521,6 +521,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'Deliver pending confirmations to members\' devices.';
 
   @override
+  String get languageTitle => 'Language';
+
+  @override
+  String get languageSystemDefault => 'System default';
+
+  @override
   String get membersTitle => 'Members & plans';
 
   @override

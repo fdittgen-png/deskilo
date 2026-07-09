@@ -60,6 +60,10 @@ Future<void> pumpSettings(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  // The settings list outgrew the test viewport (#147): bring the
+  // developer section at the bottom into view.
+  await tester.scrollUntilVisible(find.text('Developer mode'), 100);
+  await tester.pumpAndSettle();
 }
 
 Future<void> pumpDeveloper(

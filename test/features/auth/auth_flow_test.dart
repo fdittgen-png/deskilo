@@ -85,6 +85,8 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
+    // The settings list outgrew the test viewport (#147): scroll down.
+    await tester.scrollUntilVisible(find.text('Sign out'), 100);
     await tester.tap(find.text('Sign out'));
     await tester.pumpAndSettle();
 

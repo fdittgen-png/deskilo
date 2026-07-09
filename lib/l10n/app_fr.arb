@@ -158,6 +158,8 @@
   "featureBookForOthersDesc": "Les admins et propriétaires réservent des places pour d'autres membres.",
   "featurePushNotifications": "Notifications push",
   "featurePushNotificationsDesc": "Livrer les confirmations en attente sur les appareils des membres.",
+  "languageTitle": "Langue",
+  "languageSystemDefault": "Par défaut du système",
   "membersTitle": "Membres et forfaits",
   "membersPlanNone": "Aucun forfait",
   "memberRoleOwner": "Propriétaire",
