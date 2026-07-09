@@ -748,6 +748,42 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eventSystemDecider => 'Système';
 
   @override
+  String get validationTitle => 'Règles de validation';
+
+  @override
+  String get validationDefaultPolicy => 'Règle par défaut';
+
+  @override
+  String get validationInherited => 'Hérite de la règle par défaut';
+
+  @override
+  String get validationCustomized => 'Personnalisée';
+
+  @override
+  String get validationRequiredCount => 'Validations requises';
+
+  @override
+  String get validationAdminsMay => 'Les admins peuvent valider';
+
+  @override
+  String get validationOwnerOnly => 'Propriétaire uniquement';
+
+  @override
+  String get validationAllAdmins => 'Tous les admins';
+
+  @override
+  String get validationSpecificAdmins => 'Admins spécifiques';
+
+  @override
+  String get validationOwnerRequired => 'Le propriétaire doit toujours valider';
+
+  @override
+  String get validationNotEnough => 'Pas assez de validateurs éligibles.';
+
+  @override
+  String get validationSaved => 'Règle de validation enregistrée.';
+
+  @override
   String get onboardingTitle => 'Bienvenue sur DesKilo';
 
   @override

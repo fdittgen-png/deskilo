@@ -1436,6 +1436,78 @@ abstract class AppLocalizations {
   /// **'System'**
   String get eventSystemDecider;
 
+  /// App-bar title of the owner validation-policy editor and its settings tile (#131)
+  ///
+  /// In en, this message translates to:
+  /// **'Validation rules'**
+  String get validationTitle;
+
+  /// Card title of the workspace-wide default validation policy (event types without their own rule inherit it)
+  ///
+  /// In en, this message translates to:
+  /// **'Default policy'**
+  String get validationDefaultPolicy;
+
+  /// Card indicator when the event type has no rule of its own and follows the default policy
+  ///
+  /// In en, this message translates to:
+  /// **'Inherits default'**
+  String get validationInherited;
+
+  /// Card indicator when a stored rule of its own governs the card (default card or event type)
+  ///
+  /// In en, this message translates to:
+  /// **'Customized'**
+  String get validationCustomized;
+
+  /// Label of the 1–10 stepper for how many accepts confirm a pending event; also prefixes the count in the card summary
+  ///
+  /// In en, this message translates to:
+  /// **'Required validations'**
+  String get validationRequiredCount;
+
+  /// Switch label: whether admins may validate at all (off = owner only)
+  ///
+  /// In en, this message translates to:
+  /// **'Admins may validate'**
+  String get validationAdminsMay;
+
+  /// Shown when admins may not validate: switch subtitle in the editor and card summary
+  ///
+  /// In en, this message translates to:
+  /// **'Owner only'**
+  String get validationOwnerOnly;
+
+  /// Picker chip and card summary: every admin is an eligible validator
+  ///
+  /// In en, this message translates to:
+  /// **'All admins'**
+  String get validationAllAdmins;
+
+  /// Card summary when only selected admins may validate; the count follows in parentheses
+  ///
+  /// In en, this message translates to:
+  /// **'Specific admins'**
+  String get validationSpecificAdmins;
+
+  /// Switch label: one of the accepts must come from an owner
+  ///
+  /// In en, this message translates to:
+  /// **'Owner must always validate'**
+  String get validationOwnerRequired;
+
+  /// Save-blocking error when the required count exceeds what owners + eligible admins (+ the subject) could ever provide
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough eligible validators.'**
+  String get validationNotEnough;
+
+  /// Snackbar after a policy row was stored successfully
+  ///
+  /// In en, this message translates to:
+  /// **'Validation rule saved.'**
+  String get validationSaved;
+
   /// App-bar title of the first-run onboarding screen
   ///
   /// In en, this message translates to:
