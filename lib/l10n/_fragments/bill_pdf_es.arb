@@ -1,0 +1,5 @@
+{
+  "@@locale": "es",
+  "billPdfTitle": "Factura mensual",
+  "billPdfExport": "Exportar la factura como PDF"
+}

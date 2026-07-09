@@ -296,6 +296,18 @@ abstract class AppLocalizations {
   /// **'Outstanding'**
   String get billOutstanding;
 
+  /// Document title on the exported bill PDF (#133)
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly bill'**
+  String get billPdfTitle;
+
+  /// Tooltip of the PDF export button next to the period header on the money tab
+  ///
+  /// In en, this message translates to:
+  /// **'Export bill as PDF'**
+  String get billPdfExport;
+
   /// Owner billing editor (#128): fee bands + subscription levels; screen title and settings entry
   ///
   /// In en, this message translates to:

@@ -1,12 +1,20 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:share_plus/share_plus.dart';
 
+import '../../../../core/share/share_launcher.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
+import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/bill_pdf.dart';
+import '../../domain/bill_sections.dart';
 import '../../domain/ledger_entry.dart';
+import '../../domain/statement.dart';
 import '../../providers/money_providers.dart';
 import '../widgets/bill_view.dart';
 import '../widgets/consumption_sheet.dart';
@@ -39,6 +47,99 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
 
   void _shiftMonth(int delta) {
     setState(() => _month = DateTime(_month.year, _month.month + delta));
+  }
+
+  /// Renders the visible period's bill as a PDF — the exact sections
+  /// [BillView] shows via [buildBillSections] — and hands it to the system
+  /// share sheet (#133, ADR 0008).
+  Future<void> _exportPdf(Statement statement) async {
+    final context = this.context;
+    final l10n = AppLocalizations.of(context);
+    final locale = Localizations.maybeLocaleOf(context)?.toString();
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    final member = ref.read(myMemberProvider).value;
+    if (workspace == null || member == null) return;
+    final ledger = ref.read(myLedgerProvider).value ?? const <LedgerEntry>[];
+    final pendingEvents = ref.read(eventsProvider).value ?? const [];
+    final memberName =
+        ref.read(memberNamesProvider).value?[member.id] ?? '';
+    final monthLabel = DateFormat.yMMMM(locale).format(_month);
+    final share = ref.read(shareLauncherProvider);
+
+    final strings = BillPdfStrings(
+      title: l10n?.billPdfTitle ?? 'Monthly bill',
+      subscription: l10n?.billSubscription(statement.subscriptionPct) ??
+          'Subscription ${statement.subscriptionPct}%',
+      entitlement: l10n?.billEntitlement(
+            statement.usedHalfDays,
+            statement.includedHalfDays,
+            statement.openDays,
+          ) ??
+          '${statement.usedHalfDays} of '
+              '${statement.includedHalfDays} half-days used '
+              '(${statement.openDays} open days)',
+      overage: l10n?.billOverage(statement.extraHalfDays) ??
+          '${statement.extraHalfDays} extra half-days',
+      services: l10n?.billServices ?? 'Consumed services',
+      servicesTotal: l10n?.billServicesTotal ?? 'Services total',
+      serviceFallback: l10n?.ledgerCategoryService ?? 'Service',
+      openPositions: l10n?.billOpenPositions ?? 'Open positions',
+      pendingBadge: l10n?.billPendingBadge ?? 'pending validation',
+      paymentsCredits: l10n?.billPaymentsCredits ?? 'Payments & credits',
+      paymentFallback: l10n?.ledgerCategoryPayment ?? 'Payment',
+      expenseFallback:
+          l10n?.ledgerCategoryExpense ?? 'Expense reimbursement',
+      adjustmentFallback: l10n?.ledgerCategoryAdjustment ?? 'Adjustment',
+      eventPayment: l10n?.eventTypePayment ?? 'Payment',
+      eventExpense: l10n?.eventTypeExpense ?? 'Expense',
+      eventAdjustment: l10n?.eventTypeAdjustment ?? 'Adjustment',
+      balance: l10n?.billBalance ?? 'Balance',
+      settled: l10n?.billSettled ?? 'Settled',
+      outstanding: l10n?.billOutstanding ?? 'Outstanding',
+    );
+
+    try {
+      final sections = buildBillSections(
+        period: statement.period,
+        memberId: member.id,
+        ledger: ledger,
+        pendingEvents: pendingEvents,
+      );
+      // Embedded Roboto: base-14 PDF fonts cannot encode '€'/'−' (#133).
+      final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
+      final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
+      final bytes = await buildBillPdf(
+        statement: statement,
+        sections: sections,
+        currencyCode: workspace.currencyCode,
+        workspaceName: workspace.name,
+        memberName: memberName,
+        periodLabel: monthLabel,
+        strings: strings,
+        baseFont: pw.Font.ttf(regular),
+        boldFont: pw.Font.ttf(bold),
+        locale: locale,
+      );
+      await share(
+        ShareParams(
+          files: [
+            XFile.fromData(bytes, mimeType: 'application/pdf'),
+          ],
+          fileNameOverrides: ['deskilo-bill-${statement.period}.pdf'],
+        ),
+      );
+    } catch (e, st) {
+      debugPrint('bill PDF export failed: $e\n$st');
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            l10n?.workspaceGenericError ??
+                'Something went wrong. Please try again.',
+          ),
+        ),
+      );
+    }
   }
 
   Future<void> _recordPaymentSheet(NumberFormat currency) async {
@@ -267,6 +368,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       Localizations.maybeLocaleOf(context)?.toString(),
     ).format(_month);
 
+    final visibleStatement = statementAsync.value;
     final periodHeader = Row(
       children: [
         IconButton(
@@ -283,6 +385,13 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         IconButton(
           icon: const Icon(Icons.chevron_right),
           onPressed: _isCurrentPeriod ? null : () => _shiftMonth(1),
+        ),
+        IconButton(
+          icon: const Icon(Icons.picture_as_pdf_outlined),
+          tooltip: l10n?.billPdfExport ?? 'Export bill as PDF',
+          onPressed: visibleStatement == null
+              ? null
+              : () => _exportPdf(visibleStatement),
         ),
       ],
     );
