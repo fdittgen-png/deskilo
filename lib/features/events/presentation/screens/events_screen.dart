@@ -150,7 +150,6 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
           .respond(event.id, accept: accept);
     } catch (e, st) {
       debugPrint('respond failed: $e\n$st');
-      // Trace exemplar (#144) — the full catch sweep is #145.
       TraceLogger.instance
           .error('events', 'respond failed', error: e, stackTrace: st);
       if (!mounted) return;

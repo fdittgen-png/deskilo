@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -141,6 +142,8 @@ Future<void> showConsumptionSheet(
         );
   } catch (e, st) {
     debugPrint('record service charge failed: $e\n$st');
+    TraceLogger.instance.error('money', 'record service charge failed',
+        error: e, stackTrace: st);
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

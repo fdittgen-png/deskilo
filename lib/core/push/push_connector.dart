@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:unifiedpush/unifiedpush.dart';
 
+import '../trace/trace_logger.dart';
+
 /// Thin seam over the UnifiedPush static API so [PushService] is testable
 /// and non-Android platforms degrade to local notifications only (#72).
 abstract class PushConnector {
@@ -40,6 +42,8 @@ class UnifiedPushConnector implements PushConnector {
       // Push is best-effort (#86 boot doctrine): never let a missing
       // platform plugin disturb the app.
       debugPrint('UnifiedPush init failed: $e\n$st');
+      TraceLogger.instance.warn('push', 'UnifiedPush init failed',
+          error: e, stackTrace: st);
       return false;
     }
   }
@@ -50,6 +54,10 @@ class UnifiedPushConnector implements PushConnector {
       return await UnifiedPush.tryUseCurrentOrDefaultDistributor();
     } catch (e, st) {
       debugPrint('UnifiedPush distributor lookup failed: $e\n$st');
+      // Benign on devices without any distributor installed — the app
+      // simply stays local-notifications-only.
+      TraceLogger.instance.warn('push', 'UnifiedPush distributor lookup failed',
+          error: e, stackTrace: st);
       return false;
     }
   }
@@ -60,6 +68,8 @@ class UnifiedPushConnector implements PushConnector {
       await UnifiedPush.register();
     } catch (e, st) {
       debugPrint('UnifiedPush register failed: $e\n$st');
+      TraceLogger.instance.error('push', 'UnifiedPush register failed',
+          error: e, stackTrace: st);
     }
   }
 }

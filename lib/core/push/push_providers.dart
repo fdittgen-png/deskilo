@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../notifications/notification_providers.dart';
+import '../trace/trace_logger.dart';
 import 'push_connector.dart';
 import 'push_endpoint_repository.dart';
 import 'push_service.dart';
@@ -28,6 +29,9 @@ Future<void> pushBootstrap(Ref ref) async {
     l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
   } catch (e, st) {
     debugPrint('push l10n lookup failed, using fallback: $e\n$st');
+    // Benign: the hard-coded English fallback strings below take over.
+    TraceLogger.instance.warn('push', 'l10n lookup failed, using fallback',
+        error: e, stackTrace: st);
   }
   final service = PushService(
     connector: ref.watch(pushConnectorProvider),

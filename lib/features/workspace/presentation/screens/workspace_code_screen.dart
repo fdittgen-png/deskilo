@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/qr_png.dart';
 import '../../providers/workspace_providers.dart';
@@ -57,6 +58,8 @@ class WorkspaceCodeScreen extends ConsumerWidget {
           .setWorkspaceCode(workspace.id, code);
     } catch (e, st) {
       debugPrint('set workspace code failed: $e\n$st');
+      TraceLogger.instance.error('workspace', 'set workspace code failed',
+          error: e, stackTrace: st);
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -88,6 +91,8 @@ class WorkspaceCodeScreen extends ConsumerWidget {
       );
     } catch (e, st) {
       debugPrint('QR share failed: $e\n$st');
+      TraceLogger.instance.error('workspace', 'QR share failed',
+          error: e, stackTrace: st);
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

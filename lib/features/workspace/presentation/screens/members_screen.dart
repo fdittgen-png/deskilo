@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/providers/money_providers.dart';
@@ -81,6 +82,9 @@ class MembersScreen extends ConsumerWidget {
           .updateMemberSubscription(member.id, pct);
     } catch (e, st) {
       debugPrint('subscription update failed: $e\n$st');
+      TraceLogger.instance.error(
+          'workspace', 'member subscription update failed',
+          error: e, stackTrace: st);
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

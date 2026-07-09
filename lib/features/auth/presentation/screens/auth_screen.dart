@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../providers/auth_providers.dart';
 
@@ -53,6 +54,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       // Real server answer (wrong password, signups disabled, …) — show
       // the server's message rather than a blanket failure (#99).
       debugPrint('auth rejected: $e\n$st');
+      // Expected user errors (wrong password, …) — warn, not error; the
+      // server message is surfaced in the snackbar below.
+      TraceLogger.instance.warn('auth', 'auth rejected by server',
+          error: e, stackTrace: st);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -66,6 +71,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       // No server involved: connectivity, DNS, TLS … (#99 was a missing
       // INTERNET permission surfacing as this generic path).
       debugPrint('auth failed before reaching the server: $e\n$st');
+      TraceLogger.instance.error(
+          'auth', 'auth failed before reaching the server',
+          error: e, stackTrace: st);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

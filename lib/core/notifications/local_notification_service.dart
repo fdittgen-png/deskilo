@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../trace/trace_logger.dart';
 import 'notification_service.dart';
 
 /// flutter_local_notifications implementation. Scheduling converts absolute
@@ -66,6 +67,8 @@ class LocalNotificationService implements NotificationService {
       // Notifications are best-effort: booking flows must never fail on
       // notification-permission or platform errors.
       debugPrint('reminder scheduling failed: $e\n$st');
+      TraceLogger.instance.error('notifications', 'reminder scheduling failed',
+          error: e, stackTrace: st);
     }
   }
 
@@ -80,6 +83,9 @@ class LocalNotificationService implements NotificationService {
       );
     } catch (e, st) {
       debugPrint('push notification display failed: $e\n$st');
+      TraceLogger.instance.error(
+          'notifications', 'push notification display failed',
+          error: e, stackTrace: st);
     }
   }
 }

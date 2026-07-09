@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/service_item.dart';
@@ -48,6 +49,8 @@ class ServicesScreen extends ConsumerWidget {
       }
     } catch (e, st) {
       debugPrint('service save failed: $e\n$st');
+      TraceLogger.instance
+          .error('money', 'service save failed', error: e, stackTrace: st);
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

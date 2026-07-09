@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/country/country_catalog.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../providers/workspace_providers.dart';
@@ -66,6 +67,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       if (mounted && context.canPop()) context.pop();
     } catch (e, st) {
       debugPrint('onboarding action failed: $e\n$st');
+      TraceLogger.instance.error('workspace', 'onboarding action failed',
+          error: e, stackTrace: st);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
