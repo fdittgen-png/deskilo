@@ -560,6 +560,54 @@ abstract class AppLocalizations {
   /// **'{name} ×{quantity} — {amount}'**
   String eventServiceChargeTitle(String name, int quantity, String amount);
 
+  /// Settings toggle enabling the local diagnostics screen
+  ///
+  /// In en, this message translates to:
+  /// **'Developer mode'**
+  String get developerMode;
+
+  /// App-bar title and settings entry of the trace viewer
+  ///
+  /// In en, this message translates to:
+  /// **'Developer'**
+  String get developerTitle;
+
+  /// App-bar action sharing the trace log as a file
+  ///
+  /// In en, this message translates to:
+  /// **'Export trace'**
+  String get developerExport;
+
+  /// App-bar action emptying the trace buffer and file
+  ///
+  /// In en, this message translates to:
+  /// **'Clear trace'**
+  String get developerClear;
+
+  /// Placeholder when the trace list is empty
+  ///
+  /// In en, this message translates to:
+  /// **'No trace entries yet.'**
+  String get developerEmpty;
+
+  /// Filter chip showing every trace level
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get developerFilterAll;
+
+  /// Filter chip showing only error-level entries
+  ///
+  /// In en, this message translates to:
+  /// **'Errors'**
+  String get developerFilterErrors;
+
+  /// Filter chip showing warnings and errors
+  ///
+  /// In en, this message translates to:
+  /// **'Warnings+'**
+  String get developerFilterWarnings;
+
   /// App-bar title of the owner-only workspace editor
   ///
   /// In en, this message translates to:

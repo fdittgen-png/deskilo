@@ -47,6 +47,7 @@ dependencies:
   # Bill PDF export (#133) — pure Dart, F-Droid clean. Deliberately NOT the
   # `printing` package: it pulls platform channels we don't need.
   pdf: ^3.12.0
+  path_provider: ^2.1.6
 
 dev_dependencies:
   flutter_test:

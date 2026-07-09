@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show AuthException, PostgrestException;
 
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -149,6 +150,9 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
           .respond(event.id, accept: accept);
     } catch (e, st) {
       debugPrint('respond failed: $e\n$st');
+      // Trace exemplar (#144) — the full catch sweep is #145.
+      TraceLogger.instance
+          .error('events', 'respond failed', error: e, stackTrace: st);
       if (!mounted) return;
       // Surface the server's reason (#107) — a hidden reason cost a debug
       // round-trip once already.

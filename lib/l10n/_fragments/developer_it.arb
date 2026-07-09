@@ -1,0 +1,11 @@
+{
+  "@@locale": "it",
+  "developerMode": "Modalità sviluppatore",
+  "developerTitle": "Sviluppatore",
+  "developerExport": "Esporta registro",
+  "developerClear": "Svuota registro",
+  "developerEmpty": "Ancora nessuna voce nel registro.",
+  "developerFilterAll": "Tutto",
+  "developerFilterErrors": "Errori",
+  "developerFilterWarnings": "Avvisi+"
+}

@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "developerMode": "Mode développeur",
+  "developerTitle": "Développeur",
+  "developerExport": "Exporter le journal",
+  "developerClear": "Vider le journal",
+  "developerEmpty": "Aucune entrée de journal pour l'instant.",
+  "developerFilterAll": "Tout",
+  "developerFilterErrors": "Erreurs",
+  "developerFilterWarnings": "Avertissements+"
+}

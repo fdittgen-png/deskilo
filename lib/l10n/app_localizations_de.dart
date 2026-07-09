@@ -258,6 +258,30 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get developerMode => 'Entwicklermodus';
+
+  @override
+  String get developerTitle => 'Entwickler';
+
+  @override
+  String get developerExport => 'Protokoll exportieren';
+
+  @override
+  String get developerClear => 'Protokoll leeren';
+
+  @override
+  String get developerEmpty => 'Noch keine Protokolleinträge.';
+
+  @override
+  String get developerFilterAll => 'Alle';
+
+  @override
+  String get developerFilterErrors => 'Fehler';
+
+  @override
+  String get developerFilterWarnings => 'Warnungen+';
+
+  @override
   String get editorTitle => 'Workspace-Editor';
 
   @override

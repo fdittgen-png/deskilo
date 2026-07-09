@@ -1,0 +1,11 @@
+{
+  "@@locale": "de",
+  "developerMode": "Entwicklermodus",
+  "developerTitle": "Entwickler",
+  "developerExport": "Protokoll exportieren",
+  "developerClear": "Protokoll leeren",
+  "developerEmpty": "Noch keine Protokolleinträge.",
+  "developerFilterAll": "Alle",
+  "developerFilterErrors": "Fehler",
+  "developerFilterWarnings": "Warnungen+"
+}

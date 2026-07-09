@@ -258,6 +258,30 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get developerMode => 'Mode développeur';
+
+  @override
+  String get developerTitle => 'Développeur';
+
+  @override
+  String get developerExport => 'Exporter le journal';
+
+  @override
+  String get developerClear => 'Vider le journal';
+
+  @override
+  String get developerEmpty => 'Aucune entrée de journal pour l\'instant.';
+
+  @override
+  String get developerFilterAll => 'Tout';
+
+  @override
+  String get developerFilterErrors => 'Erreurs';
+
+  @override
+  String get developerFilterWarnings => 'Avertissements+';
+
+  @override
   String get editorTitle => 'Éditeur d\'espace';
 
   @override

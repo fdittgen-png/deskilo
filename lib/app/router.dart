@@ -14,6 +14,7 @@ import '../features/money/presentation/screens/billing_screen.dart';
 import '../features/money/presentation/screens/money_screen.dart';
 import '../features/money/presentation/screens/services_screen.dart';
 import '../features/plan/presentation/screens/plan_screen.dart';
+import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
 import '../features/workspace/presentation/screens/availability_screen.dart';
@@ -121,6 +122,12 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/profiles',
         builder: (context, state) => const ProfilesScreen(),
+      ),
+      GoRoute(
+        // No owner guard (#144): developer mode is local diagnostics,
+        // available to every member.
+        path: '/developer',
+        builder: (context, state) => const DeveloperScreen(),
       ),
       GoRoute(
         path: '/workspace-code',
