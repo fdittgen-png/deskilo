@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
@@ -6,9 +7,18 @@ import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
 
+import 'fake_event_repository.dart';
+
 /// In-memory [MoneyRepository]; recorded payments are captured for
 /// assertions (they only become ledger credits after confirmation).
 class FakeMoneyRepository implements MoneyRepository {
+  FakeMoneyRepository({FakeEventRepository? events}) : _events = events;
+
+  /// When wired, [recordServiceCharge] also files the pending
+  /// service_charge event the real RPC creates (#134), so tests can drive
+  /// the record → validate → bill flow through both fakes.
+  final FakeEventRepository? _events;
+
   Statement statement = const Statement(
     period: '2026-07',
     subscriptionPct: 50,
@@ -226,6 +236,35 @@ class FakeMoneyRepository implements MoneyRepository {
         period: period,
       ),
     );
+    // Mirror the record_service_charge RPC: it only files a PENDING
+    // service_charge event — the ledger charge appears on confirmation.
+    final events = _events;
+    if (events != null) {
+      final now = DateTime.now();
+      events.events.add(
+        WorkspaceEvent(
+          id: 'evt-service-${recordedServiceCharges.length}',
+          workspaceId: workspaceId,
+          type: EventType.serviceCharge,
+          action: EventAction.submitted,
+          // The signed-in viewer records the charge, exactly like the RPC
+          // stamps auth.uid()'s member as the actor.
+          actorMemberId: events.respondingMemberId,
+          subjectMemberId: subjectMemberId,
+          payload: {
+            'service_id': serviceId,
+            'name': service.name,
+            'price_cents': service.priceCents,
+            'quantity': quantity,
+            'amount_cents': service.priceCents * quantity,
+            'period': period ??
+                '${now.year}-${now.month.toString().padLeft(2, '0')}',
+          },
+          status: EventStatus.pending,
+          createdAt: now,
+        ),
+      );
+    }
   }
 
   final submittedExpenses =

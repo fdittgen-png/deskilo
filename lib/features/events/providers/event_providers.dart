@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../money/providers/money_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_event_repository.dart';
@@ -75,11 +76,15 @@ Future<int> myPendingEventCount(Ref ref) async {
 /// invalidate the others' caches or they stay frozen pre-mutation (#111).
 /// Decisions refresh too: with a quorum an event may STAY pending after my
 /// accept, and only the fresh decision row moves it off my pending pile.
+/// The bill refreshes as well: confirming a payment/expense/service charge
+/// posts a ledger entry, so statement + ledger must refetch (#134).
 void invalidateBookingData(WidgetRef ref) {
   ref
     ..invalidate(reservationsForDayProvider)
     ..invalidate(reservationsForMonthProvider)
     ..invalidate(myUpcomingReservationsProvider)
     ..invalidate(eventsProvider)
-    ..invalidate(eventDecisionsProvider);
+    ..invalidate(eventDecisionsProvider)
+    ..invalidate(myStatementProvider)
+    ..invalidate(myLedgerProvider);
 }
