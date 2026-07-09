@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "billPdfTitle": "Monthly bill",
+  "@billPdfTitle": {
+    "description": "Document title on the exported bill PDF (#133)"
+  },
+  "billPdfExport": "Export bill as PDF",
+  "@billPdfExport": {
+    "description": "Tooltip of the PDF export button next to the period header on the money tab"
+  }
+}

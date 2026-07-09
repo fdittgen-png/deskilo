@@ -113,6 +113,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get billOutstanding => 'Outstanding';
 
   @override
+  String get billPdfTitle => 'Monthly bill';
+
+  @override
+  String get billPdfExport => 'Export bill as PDF';
+
+  @override
   String get billingTitle => 'Billing';
 
   @override

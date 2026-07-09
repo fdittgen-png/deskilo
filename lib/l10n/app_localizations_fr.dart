@@ -114,6 +114,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get billOutstanding => 'À régler';
 
   @override
+  String get billPdfTitle => 'Facture mensuelle';
+
+  @override
+  String get billPdfExport => 'Exporter la facture en PDF';
+
+  @override
   String get billingTitle => 'Facturation';
 
   @override

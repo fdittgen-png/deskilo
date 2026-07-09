@@ -32,6 +32,8 @@
   "billBalance": "Saldo",
   "billSettled": "Al día",
   "billOutstanding": "Pendiente",
+  "billPdfTitle": "Factura mensual",
+  "billPdfExport": "Exportar la factura como PDF",
   "billingTitle": "Facturación",
   "billingFeeBands": "Tramos de tarifas",
   "billingBandFrom": "desde {from} %",

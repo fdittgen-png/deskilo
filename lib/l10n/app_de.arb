@@ -32,6 +32,8 @@
   "billBalance": "Saldo",
   "billSettled": "Beglichen",
   "billOutstanding": "Offen",
+  "billPdfTitle": "Monatsrechnung",
+  "billPdfExport": "Rechnung als PDF exportieren",
   "billingTitle": "Abrechnung",
   "billingFeeBands": "Gebührenbänder",
   "billingBandFrom": "ab {from} %",

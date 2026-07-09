@@ -114,6 +114,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get billOutstanding => 'Aperto';
 
   @override
+  String get billPdfTitle => 'Fattura mensile';
+
+  @override
+  String get billPdfExport => 'Esporta la fattura come PDF';
+
+  @override
   String get billingTitle => 'Fatturazione';
 
   @override

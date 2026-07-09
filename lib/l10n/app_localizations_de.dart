@@ -114,6 +114,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get billOutstanding => 'Offen';
 
   @override
+  String get billPdfTitle => 'Monatsrechnung';
+
+  @override
+  String get billPdfExport => 'Rechnung als PDF exportieren';
+
+  @override
   String get billingTitle => 'Abrechnung';
 
   @override

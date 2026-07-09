@@ -44,6 +44,10 @@ dependencies:
   share_plus: ^13.2.0
   unifiedpush: ^6.2.0
 
+  # Bill PDF export (#133) — pure Dart, F-Droid clean. Deliberately NOT the
+  # `printing` package: it pulls platform channels we don't need.
+  pdf: ^3.12.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -61,3 +65,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  assets:
+    # Roboto (Apache-2.0, copied from the Flutter SDK) embedded into the
+    # bill PDF: base-14 PDF fonts cannot encode '€'/'−' (#133).
+    - assets/fonts/

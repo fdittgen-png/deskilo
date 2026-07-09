@@ -149,6 +149,14 @@
   "@billOutstanding": {
     "description": "Footer state when the member still owes for the period"
   },
+  "billPdfTitle": "Monthly bill",
+  "@billPdfTitle": {
+    "description": "Document title on the exported bill PDF (#133)"
+  },
+  "billPdfExport": "Export bill as PDF",
+  "@billPdfExport": {
+    "description": "Tooltip of the PDF export button next to the period header on the money tab"
+  },
   "billingTitle": "Billing",
   "@billingTitle": {
     "description": "Owner billing editor (#128): fee bands + subscription levels; screen title and settings entry"
