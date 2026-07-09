@@ -7,34 +7,42 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/ledger_entry.dart';
-import '../../domain/statement.dart';
 import '../../providers/money_providers.dart';
+import '../widgets/bill_view.dart';
 import '../widgets/consumption_sheet.dart';
 
-/// Money tab (spec §7.3): current-period statement, payment recording,
-/// ledger history. Amounts render in the workspace currency.
-class MoneyScreen extends ConsumerWidget {
+/// Money tab (spec §7.3, #132): a structured monthly bill per period —
+/// subscription, consumed services, open positions awaiting validation,
+/// payments & credits, balance — plus payment/expense/consumption actions.
+/// Amounts render in the workspace currency.
+class MoneyScreen extends ConsumerStatefulWidget {
   const MoneyScreen({super.key});
 
-  String _categoryLabel(AppLocalizations? l10n, LedgerCategory category) {
-    return switch (category) {
-      LedgerCategory.subscription =>
-        l10n?.ledgerCategorySubscription ?? 'Subscription',
-      LedgerCategory.overage => l10n?.ledgerCategoryOverage ?? 'Overage',
-      LedgerCategory.expense =>
-        l10n?.ledgerCategoryExpense ?? 'Expense reimbursement',
-      LedgerCategory.payment => l10n?.ledgerCategoryPayment ?? 'Payment',
-      LedgerCategory.adjustment =>
-        l10n?.ledgerCategoryAdjustment ?? 'Adjustment',
-      LedgerCategory.service => l10n?.ledgerCategoryService ?? 'Service',
-    };
+  @override
+  ConsumerState<MoneyScreen> createState() => _MoneyScreenState();
+}
+
+class _MoneyScreenState extends ConsumerState<MoneyScreen> {
+  /// First day of the visible month; the bill shows this period.
+  late DateTime _month;
+
+  @override
+  void initState() {
+    super.initState();
+    final now = DateTime.now();
+    _month = DateTime(now.year, now.month);
   }
 
-  Future<void> _recordPaymentSheet(
-    BuildContext context,
-    WidgetRef ref,
-    NumberFormat currency,
-  ) async {
+  String get _period => DateFormat('yyyy-MM').format(_month);
+
+  bool get _isCurrentPeriod => _period == currentPeriod();
+
+  void _shiftMonth(int delta) {
+    setState(() => _month = DateTime(_month.year, _month.month + delta));
+  }
+
+  Future<void> _recordPaymentSheet(NumberFormat currency) async {
+    final context = this.context;
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     final member = ref.read(myMemberProvider).value;
@@ -126,11 +134,8 @@ class MoneyScreen extends ConsumerWidget {
     ref.invalidate(eventsProvider);
   }
 
-  Future<void> _submitExpenseSheet(
-    BuildContext context,
-    WidgetRef ref,
-    NumberFormat currency,
-  ) async {
+  Future<void> _submitExpenseSheet(NumberFormat currency) async {
+    final context = this.context;
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
@@ -249,87 +254,78 @@ class MoneyScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final statementAsync = ref.watch(myStatementProvider(currentPeriod()));
+    final member = ref.watch(myMemberProvider).value;
+    final statementAsync = ref.watch(myStatementProvider(_period));
     final ledger = ref.watch(myLedgerProvider).value ?? const <LedgerEntry>[];
-    final currency = NumberFormat.simpleCurrency(
-      name: workspace?.currencyCode ?? 'EUR',
+    final pendingEvents = ref.watch(eventsProvider).value ?? const [];
+    final currencyCode = workspace?.currencyCode ?? 'EUR';
+    final currency = NumberFormat.simpleCurrency(name: currencyCode);
+    final monthLabel = DateFormat.yMMMM(
+      Localizations.maybeLocaleOf(context)?.toString(),
+    ).format(_month);
+
+    final periodHeader = Row(
+      children: [
+        IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () => _shiftMonth(-1),
+        ),
+        Expanded(
+          child: Text(
+            monthLabel,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.chevron_right),
+          onPressed: _isCurrentPeriod ? null : () => _shiftMonth(1),
+        ),
+      ],
     );
-    String money(int cents) => currency.format(cents / 100);
 
     return switch (statementAsync) {
       AsyncData(value: final statement) => ListView(
           padding: const EdgeInsets.all(12),
           children: [
+            periodHeader,
             if (statement != null)
-              _StatementCard(
+              BillView(
                 statement: statement,
-                money: money,
+                ledger: ledger,
+                pendingMoneyEvents: pendingEvents,
+                currencyCode: currencyCode,
+                memberId: member?.id ?? '',
               ),
             const SizedBox(height: 8),
             FilledButton.icon(
-              onPressed: () => _recordPaymentSheet(context, ref, currency),
+              onPressed: () => _recordPaymentSheet(currency),
               icon: const Icon(Icons.payments_outlined),
               label: Text(l10n?.moneyRecordPayment ?? 'Record a payment'),
             ),
             const SizedBox(height: 8),
             OutlinedButton.icon(
-              onPressed: () => _submitExpenseSheet(context, ref, currency),
+              onPressed: () => _submitExpenseSheet(currency),
               icon: const Icon(Icons.receipt_long_outlined),
               label: Text(l10n?.moneySubmitExpense ?? 'Submit an expense'),
             ),
             const SizedBox(height: 8),
             OutlinedButton.icon(
               onPressed: () {
-                final member = ref.read(myMemberProvider).value;
-                if (member == null) return;
+                final me = ref.read(myMemberProvider).value;
+                if (me == null) return;
                 showConsumptionSheet(
                   context,
                   ref,
-                  subjectMemberId: member.id,
+                  subjectMemberId: me.id,
                 );
               },
               icon: const Icon(Icons.room_service_outlined),
               label: Text(l10n?.consumptionAdd ?? 'Add consumption'),
             ),
-            const SizedBox(height: 16),
-            Text(
-              l10n?.moneyLedgerHeader ?? 'Ledger',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            if (ledger.isEmpty)
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  l10n?.moneyLedgerEmpty ?? 'No ledger entries yet.',
-                  textAlign: TextAlign.center,
-                ),
-              )
-            else
-              for (final entry in ledger)
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: Icon(
-                    entry.kind == LedgerKind.credit
-                        ? Icons.add_circle_outline
-                        : Icons.remove_circle_outline,
-                  ),
-                  title: Text(_categoryLabel(l10n, entry.category)),
-                  subtitle: Text(
-                    entry.description.isEmpty
-                        ? DateFormat.yMMMd()
-                            .format(entry.createdAt.toLocal())
-                        : entry.description,
-                  ),
-                  trailing: Text(
-                    entry.kind == LedgerKind.credit
-                        ? '+${money(entry.amountCents)}'
-                        : '−${money(entry.amountCents)}',
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                ),
           ],
         ),
       AsyncError() => Center(
@@ -340,98 +336,5 @@ class MoneyScreen extends ConsumerWidget {
         ),
       _ => const Center(child: CircularProgressIndicator()),
     };
-  }
-}
-
-class _StatementCard extends StatelessWidget {
-  const _StatementCard({required this.statement, required this.money});
-
-  final Statement statement;
-  final String Function(int cents) money;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final usage = l10n?.moneyUsage(
-          statement.usedHalfDays,
-          statement.includedHalfDays,
-        ) ??
-        '${statement.usedHalfDays} of ${statement.includedHalfDays} '
-            'half-days used';
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    statement.period,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-                Chip(
-                  label: Text(
-                    statement.isSettled
-                        ? (l10n?.moneyStatementSettled ?? 'Settled')
-                        : (l10n?.moneyStatementOpen ?? 'Open'),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            _line(
-              context,
-              l10n?.moneySubscriptionPct(statement.subscriptionPct) ??
-                  'Subscription ${statement.subscriptionPct}%',
-              '−${money(statement.feeCents)}',
-            ),
-            _line(context, usage, ''),
-            if (statement.overageCents > 0)
-              _line(
-                context,
-                l10n?.moneyOverage(statement.extraHalfDays) ??
-                    'Overage (${statement.extraHalfDays} extra half-days)',
-                '−${money(statement.overageCents)}',
-              ),
-            _line(
-              context,
-              l10n?.moneyCredits ?? 'Payments & credits',
-              '+${money(statement.creditsCents)}',
-            ),
-            const Divider(),
-            _line(
-              context,
-              l10n?.moneyBalance ?? 'Balance',
-              money(statement.balanceCents),
-              emphasized: true,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _line(
-    BuildContext context,
-    String label,
-    String value, {
-    bool emphasized = false,
-  }) {
-    final style = emphasized
-        ? Theme.of(context).textTheme.titleMedium
-        : Theme.of(context).textTheme.bodyMedium;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Row(
-        children: [
-          Expanded(child: Text(label, style: style)),
-          Text(value, style: style),
-        ],
-      ),
-    );
   }
 }

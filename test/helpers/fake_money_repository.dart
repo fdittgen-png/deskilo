@@ -22,12 +22,22 @@ class FakeMoneyRepository implements MoneyRepository {
     balanceCents: -1600,
   );
 
+  /// Per-period statements (#132); unseeded periods fall back to
+  /// [statement] re-labelled with the requested period.
+  final statements = <String, Statement>{};
+
+  /// Every period the screen asked for, in order — lets tests assert the
+  /// period chevrons change the query (#132).
+  final fetchedPeriods = <String>[];
+
   final ledger = <LedgerEntry>[];
   final recordedPayments = <({int amountCents, String note})>[];
 
   @override
-  Future<Statement> fetchStatement(String memberId, String period) async =>
-      statement;
+  Future<Statement> fetchStatement(String memberId, String period) async {
+    fetchedPeriods.add(period);
+    return statements[period] ?? statement.copyWith(period: period);
+  }
 
   @override
   Future<List<LedgerEntry>> fetchLedger(String memberId) async =>

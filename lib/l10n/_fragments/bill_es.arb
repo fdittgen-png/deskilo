@@ -1,0 +1,14 @@
+{
+  "@@locale": "es",
+  "billSubscription": "Suscripción {pct} %",
+  "billEntitlement": "{used} de {included} medias jornadas usadas ({openDays} días de apertura)",
+  "billOverage": "{extra} medias jornadas extra",
+  "billServices": "Servicios consumidos",
+  "billServicesTotal": "Total de servicios",
+  "billOpenPositions": "Partidas pendientes",
+  "billPendingBadge": "pendiente de validación",
+  "billPaymentsCredits": "Pagos y créditos",
+  "billBalance": "Saldo",
+  "billSettled": "Al día",
+  "billOutstanding": "Pendiente"
+}

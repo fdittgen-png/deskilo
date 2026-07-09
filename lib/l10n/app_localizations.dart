@@ -230,6 +230,72 @@ abstract class AppLocalizations {
   /// **'No closure days.'**
   String get availabilityNoClosures;
 
+  /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription {pct}%'**
+  String billSubscription(int pct);
+
+  /// Entitlement line under the subscription header
+  ///
+  /// In en, this message translates to:
+  /// **'{used} of {included} half-days used ({openDays} open days)'**
+  String billEntitlement(int used, int included, int openDays);
+
+  /// Overage line, shown only when extra half-days exist; the amount renders trailing
+  ///
+  /// In en, this message translates to:
+  /// **'{extra} extra half-days'**
+  String billOverage(int extra);
+
+  /// Bill section header for confirmed service consumptions of the period
+  ///
+  /// In en, this message translates to:
+  /// **'Consumed services'**
+  String get billServices;
+
+  /// Total line closing the consumed-services section
+  ///
+  /// In en, this message translates to:
+  /// **'Services total'**
+  String get billServicesTotal;
+
+  /// Bill section header for pending money events that are not on the bill yet
+  ///
+  /// In en, this message translates to:
+  /// **'Open positions'**
+  String get billOpenPositions;
+
+  /// Badge on the open-positions section: these amounts await confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'pending validation'**
+  String get billPendingBadge;
+
+  /// Bill section header for confirmed credits of the period
+  ///
+  /// In en, this message translates to:
+  /// **'Payments & credits'**
+  String get billPaymentsCredits;
+
+  /// Bill footer label; the bold period total renders trailing
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get billBalance;
+
+  /// Footer state when the period balance is zero or positive
+  ///
+  /// In en, this message translates to:
+  /// **'Settled'**
+  String get billSettled;
+
+  /// Footer state when the member still owes for the period
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding'**
+  String get billOutstanding;
+
   /// Owner billing editor (#128): fee bands + subscription levels; screen title and settings entry
   ///
   /// In en, this message translates to:
