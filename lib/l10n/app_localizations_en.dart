@@ -1011,4 +1011,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get workspaceCodeSharePng => 'Share as PNG';
+
+  @override
+  String get workspaceSettingsTitle => 'Workspace';
+
+  @override
+  String get workspaceSettingsSaved => 'Workspace saved.';
+
+  @override
+  String get workspaceSettingsCurrencyHelper =>
+      'Defaults from the country — override if your community bills in another currency.';
 }

@@ -24,6 +24,7 @@ import '../features/workspace/presentation/screens/members_screen.dart';
 import '../features/workspace/presentation/screens/onboarding_screen.dart';
 import '../features/workspace/presentation/screens/scan_join_screen.dart';
 import '../features/workspace/presentation/screens/workspace_code_screen.dart';
+import '../features/workspace/presentation/screens/workspace_settings_screen.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 import 'shell/shell_screen.dart';
 
@@ -190,6 +191,14 @@ GoRouter router(Ref ref) {
           return isOwner ? null : '/plan';
         },
         builder: (context, state) => const FeaturesScreen(),
+      ),
+      GoRoute(
+        path: '/workspace-settings',
+        redirect: (context, state) {
+          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          return isOwner ? null : '/plan';
+        },
+        builder: (context, state) => const WorkspaceSettingsScreen(),
       ),
       GoRoute(
         path: '/validation',

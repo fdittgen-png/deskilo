@@ -307,5 +307,8 @@
   "workspaceCodeCopied": "Kopiert",
   "scanJoinTitle": "Workspace-QR scannen",
   "onboardingScanButton": "QR-Code scannen",
-  "workspaceCodeSharePng": "Als PNG teilen"
+  "workspaceCodeSharePng": "Als PNG teilen",
+  "workspaceSettingsTitle": "Workspace",
+  "workspaceSettingsSaved": "Workspace gespeichert.",
+  "workspaceSettingsCurrencyHelper": "Wird vom Land vorbelegt — überschreiben, falls eure Community in einer anderen Währung abrechnet."
 }

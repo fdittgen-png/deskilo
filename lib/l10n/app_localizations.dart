@@ -1951,6 +1951,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Share as PNG'**
   String get workspaceCodeSharePng;
+
+  /// Owner settings entry + screen title for editing the workspace country/currency/time zone (#153).
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace'**
+  String get workspaceSettingsTitle;
+
+  /// Snackbar after the workspace locale settings were persisted (#153).
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace saved.'**
+  String get workspaceSettingsSaved;
+
+  /// Helper under the currency field on the workspace settings screen (#153).
+  ///
+  /// In en, this message translates to:
+  /// **'Defaults from the country — override if your community bills in another currency.'**
+  String get workspaceSettingsCurrencyHelper;
 }
 
 class _AppLocalizationsDelegate

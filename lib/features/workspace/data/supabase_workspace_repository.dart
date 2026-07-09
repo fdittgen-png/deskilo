@@ -42,6 +42,22 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> updateWorkspaceLocale(
+    String workspaceId, {
+    required String countryCode,
+    required String currencyCode,
+    required String timezone,
+  }) async {
+    // Direct row update — workspaces_update RLS restricts it to owners,
+    // and the 0001 column checks re-validate the ISO shapes (#153).
+    await _client.from('workspaces').update({
+      'country_code': countryCode.toUpperCase(),
+      'currency_code': currencyCode.toUpperCase(),
+      'timezone': timezone,
+    }).eq('id', workspaceId);
+  }
+
+  @override
   Future<Member?> fetchMyMember(String workspaceId) async {
     final userId = _client.auth.currentUser?.id;
     if (userId == null) return null;
