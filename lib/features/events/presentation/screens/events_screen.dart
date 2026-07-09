@@ -9,6 +9,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/event_decision.dart';
+import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
 import '../../providers/event_providers.dart';
 
@@ -93,6 +95,39 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     };
   }
 
+  /// One audit-trail row: "✓/✗ who · when" (#130). Sweep rows carry no
+  /// member and are attributed to the system.
+  String _decisionLine(
+    AppLocalizations? l10n,
+    EventDecision decision,
+    Map<String, String> names,
+  ) {
+    final name = decision.memberId == null || decision.decidedBySystem
+        ? (l10n?.eventSystemDecider ?? 'System')
+        : (names[decision.memberId] ?? '');
+    final when =
+        DateFormat.MMMd().add_Hm().format(decision.decidedAt.toLocal());
+    return decision.accept
+        ? '✓ ${l10n?.eventValidatedBy(name, when) ?? 'Validated by $name · $when'}'
+        : '✗ ${l10n?.eventRejectedBy(name, when) ?? 'Declined by $name · $when'}';
+  }
+
+  /// Quorum progress ("1/2 validations") for pending events whose policy
+  /// wants more than one accept; null otherwise.
+  String? _quorumProgress(
+    AppLocalizations? l10n,
+    WorkspaceEvent event,
+    List<EventDecision> decisions,
+    List<ValidationPolicy> policies,
+  ) {
+    if (!event.isPending) return null;
+    final required = policyFor(event.type.dbName, policies).requiredCount;
+    if (required < 2) return null;
+    final accepts = decisions.where((d) => d.accept).length;
+    return l10n?.eventValidations(accepts, required) ??
+        '$accepts/$required validations';
+  }
+
   String _when(WorkspaceEvent event) {
     final start = event.payloadStart;
     final end = event.payloadEnd;
@@ -142,9 +177,10 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     final targets = ref.watch(targetNamesProvider).value ?? const {};
     final myMember = ref.watch(myMemberProvider).value;
     final members = ref.watch(workspaceMembersProvider).value ?? const [];
-    final hasOtherActiveAdmin = myMember != null &&
-        members.any((m) =>
-            m.id != myMember.id && m.canAdminister);
+    final decisions = ref.watch(eventDecisionsProvider).value ??
+        const <String, List<EventDecision>>{};
+    final policies =
+        ref.watch(validationPoliciesProvider).value ?? const [];
     final currency = NumberFormat.simpleCurrency(
       name: ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR',
     );
@@ -152,14 +188,18 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     return switch (eventsAsync) {
       AsyncData(value: final all) => Builder(
           builder: (context) {
-            final pendingForMe = all
-                .where((e) =>
-                    myMember != null &&
-                    e.isDecidedBy(
-                      myMember,
-                      hasOtherActiveAdmin: hasOtherActiveAdmin,
-                    ))
-                .toList();
+            final pendingForMe = all.where((e) {
+              if (myMember == null) return false;
+              final policy = policyFor(e.type.dbName, policies);
+              return e.isDecidedBy(
+                myMember,
+                policy: policy,
+                hasOtherEligibleValidator:
+                    e.hasOtherEligibleValidator(members, policy),
+                alreadyDecided: (decisions[e.id] ?? const [])
+                    .any((d) => d.memberId == myMember.id),
+              );
+            }).toList();
             final feed = all
                 .where((e) => !pendingForMe.contains(e))
                 .where(
@@ -213,6 +253,29 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                               _when(event),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
+                            for (final decision
+                                in decisions[event.id] ??
+                                    const <EventDecision>[]) ...[
+                              const SizedBox(height: 2),
+                              Text(
+                                _decisionLine(l10n, decision, names),
+                                style:
+                                    Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ],
+                            if (_quorumProgress(
+                              l10n,
+                              event,
+                              decisions[event.id] ?? const [],
+                              policies,
+                            ) case final progress?) ...[
+                              const SizedBox(height: 4),
+                              Text(
+                                progress,
+                                style:
+                                    Theme.of(context).textTheme.labelSmall,
+                              ),
+                            ],
                             const SizedBox(height: 8),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
@@ -262,7 +325,21 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                   ListTile(
                     leading: Icon(_icon(event)),
                     title: Text(_line(l10n, event, names, targets, currency)),
-                    subtitle: Text(_when(event)),
+                    subtitle: Text(
+                      [
+                        _when(event),
+                        for (final decision
+                            in decisions[event.id] ??
+                                const <EventDecision>[])
+                          _decisionLine(l10n, decision, names),
+                        ?_quorumProgress(
+                          l10n,
+                          event,
+                          decisions[event.id] ?? const [],
+                          policies,
+                        ),
+                      ].join('\n'),
+                    ),
                     trailing: event.status == EventStatus.pending
                         ? const Icon(Icons.hourglass_top, size: 18)
                         : null,

@@ -1,0 +1,7 @@
+{
+  "@@locale": "de",
+  "eventValidations": "{current}/{required} Bestätigungen",
+  "eventValidatedBy": "Bestätigt von {name} · {when}",
+  "eventRejectedBy": "Abgelehnt von {name} · {when}",
+  "eventSystemDecider": "System"
+}

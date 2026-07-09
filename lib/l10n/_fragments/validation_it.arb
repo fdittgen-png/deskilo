@@ -1,0 +1,7 @@
+{
+  "@@locale": "it",
+  "eventValidations": "{current}/{required} convalide",
+  "eventValidatedBy": "Convalidato da {name} · {when}",
+  "eventRejectedBy": "Rifiutato da {name} · {when}",
+  "eventSystemDecider": "Sistema"
+}

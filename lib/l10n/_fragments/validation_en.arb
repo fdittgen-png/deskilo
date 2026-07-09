@@ -1,0 +1,43 @@
+{
+  "@@locale": "en",
+  "eventValidations": "{current}/{required} validations",
+  "@eventValidations": {
+    "description": "Quorum progress on a pending event (#130): accepts so far / accepts required",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "required": {
+        "type": "int"
+      }
+    }
+  },
+  "eventValidatedBy": "Validated by {name} · {when}",
+  "@eventValidatedBy": {
+    "description": "Audit-trail row for an accept decision (prefixed by a ✓ in code)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "eventRejectedBy": "Declined by {name} · {when}",
+  "@eventRejectedBy": {
+    "description": "Audit-trail row for a reject decision (prefixed by a ✗ in code)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "eventSystemDecider": "System",
+  "@eventSystemDecider": {
+    "description": "Validator name shown when the timeout sweep decided, not a member"
+  }
+}

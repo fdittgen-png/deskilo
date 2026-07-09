@@ -1412,6 +1412,30 @@ abstract class AppLocalizations {
   /// **'Active'**
   String get servicesActive;
 
+  /// Quorum progress on a pending event (#130): accepts so far / accepts required
+  ///
+  /// In en, this message translates to:
+  /// **'{current}/{required} validations'**
+  String eventValidations(int current, int required);
+
+  /// Audit-trail row for an accept decision (prefixed by a ✓ in code)
+  ///
+  /// In en, this message translates to:
+  /// **'Validated by {name} · {when}'**
+  String eventValidatedBy(String name, String when);
+
+  /// Audit-trail row for a reject decision (prefixed by a ✗ in code)
+  ///
+  /// In en, this message translates to:
+  /// **'Declined by {name} · {when}'**
+  String eventRejectedBy(String name, String when);
+
+  /// Validator name shown when the timeout sweep decided, not a member
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get eventSystemDecider;
+
   /// App-bar title of the first-run onboarding screen
   ///
   /// In en, this message translates to:
