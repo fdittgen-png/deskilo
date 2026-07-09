@@ -1,0 +1,57 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: MIT
+#
+# Sync the Play Store listing (texts + icon + feature graphic + screenshots)
+# from fastlane/metadata/android via tools/upload_listing.py. Manual dispatch
+# only — the listing changes when the metadata changes, not on a schedule.
+
+name: Play Listing Sync
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Validate the edit without committing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  sync-listing:
+    runs-on: ubuntu-latest
+    env:
+      HAS_PLAY_SA: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fail when Play upload is not configured
+        if: ${{ env.HAS_PLAY_SA != 'true' }}
+        run: |
+          echo "::error::PLAY_STORE_SERVICE_ACCOUNT_JSON is not set — cannot sync the listing."
+          exit 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python deps
+        run: pip install --quiet google-api-python-client google-auth google-auth-httplib2
+
+      - name: Decode service-account key
+        env:
+          SA_JSON: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "$SA_JSON" > "$RUNNER_TEMP/play-key.json"
+          echo "PLAY_KEY_PATH=$RUNNER_TEMP/play-key.json" >> "$GITHUB_ENV"
+
+      - name: Sync listing
+        run: |
+          python tools/upload_listing.py \
+            --key "$PLAY_KEY_PATH" \
+            ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      - name: Clean up service-account key
+        if: always()
+        run: rm -f "$PLAY_KEY_PATH"

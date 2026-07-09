@@ -55,6 +55,24 @@ Owner half (Google offers NO API for these):
   (en-US, de-DE, fr-FR, es-ES, it-IT); internal testing does not require the
   full listing, production does.
 
+### Store listing sync (texts + images)
+
+- Brand images live once under `fastlane/metadata/android/en-US/images/`:
+  `icon.png` (512×512, derived from `assets/icon/icon_full.png`) and
+  `featureGraphic.png` (1024×500). F-Droid reads the same paths; other Play
+  locales fall back to en-US at upload time.
+- Regenerate the feature graphic after a brand change:
+  `flutter test tool/store_assets/feature_graphic_test.dart` (draws it with
+  the canvas API; not part of the CI test run).
+- Sync everything to the Play listing:
+  `gh workflow run play-listing.yml` (add `-f dry_run=true` to validate
+  without committing). The workflow runs `tools/upload_listing.py`, which
+  updates title/short/full description for every locale and re-uploads the
+  icon, feature graphic, and any `images/phoneScreenshots/*.png`.
+- Still missing for a production listing: at least 2 phone screenshots
+  (drop PNGs into `fastlane/metadata/android/en-US/images/phoneScreenshots/`),
+  plus Console-only forms (content rating, data safety, contact details).
+
 ## F-Droid
 
 - The GMS-free guarantee is enforced by `scripts/audit_no_gms.sh` in CI
