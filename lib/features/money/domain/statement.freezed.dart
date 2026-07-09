@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Statement {
 
- String get period; String get planName; int get baseFeeCents; int? get includedHalfDays; int get usedHalfDays; int get extraHalfDays; int get overageCents; int get creditsCents; int get balanceCents;
+ String get period; int get subscriptionPct; int get feeCents; int get includedHalfDays; int get openDays; int get usedHalfDays; int get extraHalfDays; int get overageCents; int get creditsCents; int get balanceCents;
 /// Create a copy of Statement
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $StatementCopyWith<Statement> get copyWith => _$StatementCopyWithImpl<Statement>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Statement&&(identical(other.period, period) || other.period == period)&&(identical(other.planName, planName) || other.planName == planName)&&(identical(other.baseFeeCents, baseFeeCents) || other.baseFeeCents == baseFeeCents)&&(identical(other.includedHalfDays, includedHalfDays) || other.includedHalfDays == includedHalfDays)&&(identical(other.usedHalfDays, usedHalfDays) || other.usedHalfDays == usedHalfDays)&&(identical(other.extraHalfDays, extraHalfDays) || other.extraHalfDays == extraHalfDays)&&(identical(other.overageCents, overageCents) || other.overageCents == overageCents)&&(identical(other.creditsCents, creditsCents) || other.creditsCents == creditsCents)&&(identical(other.balanceCents, balanceCents) || other.balanceCents == balanceCents));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Statement&&(identical(other.period, period) || other.period == period)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct)&&(identical(other.feeCents, feeCents) || other.feeCents == feeCents)&&(identical(other.includedHalfDays, includedHalfDays) || other.includedHalfDays == includedHalfDays)&&(identical(other.openDays, openDays) || other.openDays == openDays)&&(identical(other.usedHalfDays, usedHalfDays) || other.usedHalfDays == usedHalfDays)&&(identical(other.extraHalfDays, extraHalfDays) || other.extraHalfDays == extraHalfDays)&&(identical(other.overageCents, overageCents) || other.overageCents == overageCents)&&(identical(other.creditsCents, creditsCents) || other.creditsCents == creditsCents)&&(identical(other.balanceCents, balanceCents) || other.balanceCents == balanceCents));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,period,planName,baseFeeCents,includedHalfDays,usedHalfDays,extraHalfDays,overageCents,creditsCents,balanceCents);
+int get hashCode => Object.hash(runtimeType,period,subscriptionPct,feeCents,includedHalfDays,openDays,usedHalfDays,extraHalfDays,overageCents,creditsCents,balanceCents);
 
 @override
 String toString() {
-  return 'Statement(period: $period, planName: $planName, baseFeeCents: $baseFeeCents, includedHalfDays: $includedHalfDays, usedHalfDays: $usedHalfDays, extraHalfDays: $extraHalfDays, overageCents: $overageCents, creditsCents: $creditsCents, balanceCents: $balanceCents)';
+  return 'Statement(period: $period, subscriptionPct: $subscriptionPct, feeCents: $feeCents, includedHalfDays: $includedHalfDays, openDays: $openDays, usedHalfDays: $usedHalfDays, extraHalfDays: $extraHalfDays, overageCents: $overageCents, creditsCents: $creditsCents, balanceCents: $balanceCents)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $StatementCopyWith<$Res>  {
   factory $StatementCopyWith(Statement value, $Res Function(Statement) _then) = _$StatementCopyWithImpl;
 @useResult
 $Res call({
- String period, String planName, int baseFeeCents, int? includedHalfDays, int usedHalfDays, int extraHalfDays, int overageCents, int creditsCents, int balanceCents
+ String period, int subscriptionPct, int feeCents, int includedHalfDays, int openDays, int usedHalfDays, int extraHalfDays, int overageCents, int creditsCents, int balanceCents
 });
 
 
@@ -62,13 +62,14 @@ class _$StatementCopyWithImpl<$Res>
 
 /// Create a copy of Statement
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? period = null,Object? planName = null,Object? baseFeeCents = null,Object? includedHalfDays = freezed,Object? usedHalfDays = null,Object? extraHalfDays = null,Object? overageCents = null,Object? creditsCents = null,Object? balanceCents = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? period = null,Object? subscriptionPct = null,Object? feeCents = null,Object? includedHalfDays = null,Object? openDays = null,Object? usedHalfDays = null,Object? extraHalfDays = null,Object? overageCents = null,Object? creditsCents = null,Object? balanceCents = null,}) {
   return _then(_self.copyWith(
 period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
-as String,planName: null == planName ? _self.planName : planName // ignore: cast_nullable_to_non_nullable
-as String,baseFeeCents: null == baseFeeCents ? _self.baseFeeCents : baseFeeCents // ignore: cast_nullable_to_non_nullable
-as int,includedHalfDays: freezed == includedHalfDays ? _self.includedHalfDays : includedHalfDays // ignore: cast_nullable_to_non_nullable
-as int?,usedHalfDays: null == usedHalfDays ? _self.usedHalfDays : usedHalfDays // ignore: cast_nullable_to_non_nullable
+as String,subscriptionPct: null == subscriptionPct ? _self.subscriptionPct : subscriptionPct // ignore: cast_nullable_to_non_nullable
+as int,feeCents: null == feeCents ? _self.feeCents : feeCents // ignore: cast_nullable_to_non_nullable
+as int,includedHalfDays: null == includedHalfDays ? _self.includedHalfDays : includedHalfDays // ignore: cast_nullable_to_non_nullable
+as int,openDays: null == openDays ? _self.openDays : openDays // ignore: cast_nullable_to_non_nullable
+as int,usedHalfDays: null == usedHalfDays ? _self.usedHalfDays : usedHalfDays // ignore: cast_nullable_to_non_nullable
 as int,extraHalfDays: null == extraHalfDays ? _self.extraHalfDays : extraHalfDays // ignore: cast_nullable_to_non_nullable
 as int,overageCents: null == overageCents ? _self.overageCents : overageCents // ignore: cast_nullable_to_non_nullable
 as int,creditsCents: null == creditsCents ? _self.creditsCents : creditsCents // ignore: cast_nullable_to_non_nullable
@@ -155,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String period,  String planName,  int baseFeeCents,  int? includedHalfDays,  int usedHalfDays,  int extraHalfDays,  int overageCents,  int creditsCents,  int balanceCents)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String period,  int subscriptionPct,  int feeCents,  int includedHalfDays,  int openDays,  int usedHalfDays,  int extraHalfDays,  int overageCents,  int creditsCents,  int balanceCents)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Statement() when $default != null:
-return $default(_that.period,_that.planName,_that.baseFeeCents,_that.includedHalfDays,_that.usedHalfDays,_that.extraHalfDays,_that.overageCents,_that.creditsCents,_that.balanceCents);case _:
+return $default(_that.period,_that.subscriptionPct,_that.feeCents,_that.includedHalfDays,_that.openDays,_that.usedHalfDays,_that.extraHalfDays,_that.overageCents,_that.creditsCents,_that.balanceCents);case _:
   return orElse();
 
 }
@@ -176,10 +177,10 @@ return $default(_that.period,_that.planName,_that.baseFeeCents,_that.includedHal
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String period,  String planName,  int baseFeeCents,  int? includedHalfDays,  int usedHalfDays,  int extraHalfDays,  int overageCents,  int creditsCents,  int balanceCents)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String period,  int subscriptionPct,  int feeCents,  int includedHalfDays,  int openDays,  int usedHalfDays,  int extraHalfDays,  int overageCents,  int creditsCents,  int balanceCents)  $default,) {final _that = this;
 switch (_that) {
 case _Statement():
-return $default(_that.period,_that.planName,_that.baseFeeCents,_that.includedHalfDays,_that.usedHalfDays,_that.extraHalfDays,_that.overageCents,_that.creditsCents,_that.balanceCents);}
+return $default(_that.period,_that.subscriptionPct,_that.feeCents,_that.includedHalfDays,_that.openDays,_that.usedHalfDays,_that.extraHalfDays,_that.overageCents,_that.creditsCents,_that.balanceCents);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -193,10 +194,10 @@ return $default(_that.period,_that.planName,_that.baseFeeCents,_that.includedHal
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String period,  String planName,  int baseFeeCents,  int? includedHalfDays,  int usedHalfDays,  int extraHalfDays,  int overageCents,  int creditsCents,  int balanceCents)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String period,  int subscriptionPct,  int feeCents,  int includedHalfDays,  int openDays,  int usedHalfDays,  int extraHalfDays,  int overageCents,  int creditsCents,  int balanceCents)?  $default,) {final _that = this;
 switch (_that) {
 case _Statement() when $default != null:
-return $default(_that.period,_that.planName,_that.baseFeeCents,_that.includedHalfDays,_that.usedHalfDays,_that.extraHalfDays,_that.overageCents,_that.creditsCents,_that.balanceCents);case _:
+return $default(_that.period,_that.subscriptionPct,_that.feeCents,_that.includedHalfDays,_that.openDays,_that.usedHalfDays,_that.extraHalfDays,_that.overageCents,_that.creditsCents,_that.balanceCents);case _:
   return null;
 
 }
@@ -208,13 +209,14 @@ return $default(_that.period,_that.planName,_that.baseFeeCents,_that.includedHal
 
 
 class _Statement extends Statement {
-  const _Statement({required this.period, required this.planName, required this.baseFeeCents, this.includedHalfDays, required this.usedHalfDays, required this.extraHalfDays, required this.overageCents, required this.creditsCents, required this.balanceCents}): super._();
+  const _Statement({required this.period, required this.subscriptionPct, required this.feeCents, required this.includedHalfDays, required this.openDays, required this.usedHalfDays, required this.extraHalfDays, required this.overageCents, required this.creditsCents, required this.balanceCents}): super._();
   
 
 @override final  String period;
-@override final  String planName;
-@override final  int baseFeeCents;
-@override final  int? includedHalfDays;
+@override final  int subscriptionPct;
+@override final  int feeCents;
+@override final  int includedHalfDays;
+@override final  int openDays;
 @override final  int usedHalfDays;
 @override final  int extraHalfDays;
 @override final  int overageCents;
@@ -231,16 +233,16 @@ _$StatementCopyWith<_Statement> get copyWith => __$StatementCopyWithImpl<_Statem
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Statement&&(identical(other.period, period) || other.period == period)&&(identical(other.planName, planName) || other.planName == planName)&&(identical(other.baseFeeCents, baseFeeCents) || other.baseFeeCents == baseFeeCents)&&(identical(other.includedHalfDays, includedHalfDays) || other.includedHalfDays == includedHalfDays)&&(identical(other.usedHalfDays, usedHalfDays) || other.usedHalfDays == usedHalfDays)&&(identical(other.extraHalfDays, extraHalfDays) || other.extraHalfDays == extraHalfDays)&&(identical(other.overageCents, overageCents) || other.overageCents == overageCents)&&(identical(other.creditsCents, creditsCents) || other.creditsCents == creditsCents)&&(identical(other.balanceCents, balanceCents) || other.balanceCents == balanceCents));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Statement&&(identical(other.period, period) || other.period == period)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct)&&(identical(other.feeCents, feeCents) || other.feeCents == feeCents)&&(identical(other.includedHalfDays, includedHalfDays) || other.includedHalfDays == includedHalfDays)&&(identical(other.openDays, openDays) || other.openDays == openDays)&&(identical(other.usedHalfDays, usedHalfDays) || other.usedHalfDays == usedHalfDays)&&(identical(other.extraHalfDays, extraHalfDays) || other.extraHalfDays == extraHalfDays)&&(identical(other.overageCents, overageCents) || other.overageCents == overageCents)&&(identical(other.creditsCents, creditsCents) || other.creditsCents == creditsCents)&&(identical(other.balanceCents, balanceCents) || other.balanceCents == balanceCents));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,period,planName,baseFeeCents,includedHalfDays,usedHalfDays,extraHalfDays,overageCents,creditsCents,balanceCents);
+int get hashCode => Object.hash(runtimeType,period,subscriptionPct,feeCents,includedHalfDays,openDays,usedHalfDays,extraHalfDays,overageCents,creditsCents,balanceCents);
 
 @override
 String toString() {
-  return 'Statement(period: $period, planName: $planName, baseFeeCents: $baseFeeCents, includedHalfDays: $includedHalfDays, usedHalfDays: $usedHalfDays, extraHalfDays: $extraHalfDays, overageCents: $overageCents, creditsCents: $creditsCents, balanceCents: $balanceCents)';
+  return 'Statement(period: $period, subscriptionPct: $subscriptionPct, feeCents: $feeCents, includedHalfDays: $includedHalfDays, openDays: $openDays, usedHalfDays: $usedHalfDays, extraHalfDays: $extraHalfDays, overageCents: $overageCents, creditsCents: $creditsCents, balanceCents: $balanceCents)';
 }
 
 
@@ -251,7 +253,7 @@ abstract mixin class _$StatementCopyWith<$Res> implements $StatementCopyWith<$Re
   factory _$StatementCopyWith(_Statement value, $Res Function(_Statement) _then) = __$StatementCopyWithImpl;
 @override @useResult
 $Res call({
- String period, String planName, int baseFeeCents, int? includedHalfDays, int usedHalfDays, int extraHalfDays, int overageCents, int creditsCents, int balanceCents
+ String period, int subscriptionPct, int feeCents, int includedHalfDays, int openDays, int usedHalfDays, int extraHalfDays, int overageCents, int creditsCents, int balanceCents
 });
 
 
@@ -268,13 +270,14 @@ class __$StatementCopyWithImpl<$Res>
 
 /// Create a copy of Statement
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? period = null,Object? planName = null,Object? baseFeeCents = null,Object? includedHalfDays = freezed,Object? usedHalfDays = null,Object? extraHalfDays = null,Object? overageCents = null,Object? creditsCents = null,Object? balanceCents = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? period = null,Object? subscriptionPct = null,Object? feeCents = null,Object? includedHalfDays = null,Object? openDays = null,Object? usedHalfDays = null,Object? extraHalfDays = null,Object? overageCents = null,Object? creditsCents = null,Object? balanceCents = null,}) {
   return _then(_Statement(
 period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
-as String,planName: null == planName ? _self.planName : planName // ignore: cast_nullable_to_non_nullable
-as String,baseFeeCents: null == baseFeeCents ? _self.baseFeeCents : baseFeeCents // ignore: cast_nullable_to_non_nullable
-as int,includedHalfDays: freezed == includedHalfDays ? _self.includedHalfDays : includedHalfDays // ignore: cast_nullable_to_non_nullable
-as int?,usedHalfDays: null == usedHalfDays ? _self.usedHalfDays : usedHalfDays // ignore: cast_nullable_to_non_nullable
+as String,subscriptionPct: null == subscriptionPct ? _self.subscriptionPct : subscriptionPct // ignore: cast_nullable_to_non_nullable
+as int,feeCents: null == feeCents ? _self.feeCents : feeCents // ignore: cast_nullable_to_non_nullable
+as int,includedHalfDays: null == includedHalfDays ? _self.includedHalfDays : includedHalfDays // ignore: cast_nullable_to_non_nullable
+as int,openDays: null == openDays ? _self.openDays : openDays // ignore: cast_nullable_to_non_nullable
+as int,usedHalfDays: null == usedHalfDays ? _self.usedHalfDays : usedHalfDays // ignore: cast_nullable_to_non_nullable
 as int,extraHalfDays: null == extraHalfDays ? _self.extraHalfDays : extraHalfDays // ignore: cast_nullable_to_non_nullable
 as int,overageCents: null == overageCents ? _self.overageCents : overageCents // ignore: cast_nullable_to_non_nullable
 as int,creditsCents: null == creditsCents ? _self.creditsCents : creditsCents // ignore: cast_nullable_to_non_nullable

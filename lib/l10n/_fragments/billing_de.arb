@@ -1,0 +1,21 @@
+{
+  "@@locale": "de",
+  "billingTitle": "Abrechnung",
+  "billingFeeBands": "Gebührenbänder",
+  "billingBandFrom": "ab {from} %",
+  "billingBandTo": "Bis %",
+  "billingBandFee": "Monatsgebühr",
+  "billingBandOverage": "Mehrverbrauch",
+  "billingAddBand": "Band hinzufügen",
+  "billingRemoveBand": "Band entfernen",
+  "billingBandsInvalid": "Die Bänder müssen ansteigen und bei 100 % enden.",
+  "billingSaved": "Gespeichert.",
+  "billingLevels": "Abo-Stufen",
+  "billingAddLevel": "Stufe hinzufügen",
+  "billingLevelValue": "Stufe (1–100)",
+  "billingAllowCustom": "Individuell verhandelten Wert erlauben",
+  "memberSubscriptionLabel": "Abo",
+  "memberSubscriptionCustom": "Individuell (1–100)",
+  "moneySubscriptionPct": "Abo {pct} %",
+  "percentValue": "{value} %"
+}

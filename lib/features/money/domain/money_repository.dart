@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT
+import 'fee_band.dart';
 import 'ledger_entry.dart';
-import 'plan.dart';
 import 'service_item.dart';
 import 'statement.dart';
+import 'subscription_levels.dart';
 
 /// Money boundary (spec §7). Payments are only *recorded* — the pending
 /// event created by [recordPayment] must be confirmed by the other side
@@ -20,25 +21,23 @@ abstract class MoneyRepository {
     String note,
   });
 
-  /// Plans of the workspace (member-readable). Owners pass
-  /// [includeInactive] for the plan editor (#105).
-  Future<List<Plan>> fetchPlans(
-    String workspaceId, {
-    bool includeInactive = false,
-  });
+  /// Fee bands of the workspace ordered by [FeeBand.fromPct]
+  /// (member-readable, ADR 0008 / #128).
+  Future<List<FeeBand>> fetchFeeBands(String workspaceId);
 
-  /// Owner-only (RLS plans_write): creates a plan. null
-  /// [includedHalfDays] = unlimited.
-  Future<void> createPlan({
-    required String workspaceId,
-    required String name,
-    required int baseFeeCents,
-    int? includedHalfDays,
-    required int overageFeeCents,
-  });
+  /// Owner-only (RPC `replace_fee_bands`): atomically replaces the whole
+  /// band set. Bands must tile (0, 100] contiguously — validated
+  /// server-side too.
+  Future<void> replaceFeeBands(String workspaceId, List<FeeBand> bands);
 
-  /// Owner-only: updates name, fees, quota and active flag.
-  Future<void> updatePlan(Plan plan);
+  /// The owner-curated subscription levels of the workspace (#128).
+  Future<SubscriptionLevels> fetchSubscriptionLevels(String workspaceId);
+
+  /// Owner-only (RLS on workspaces): persists the offered levels.
+  Future<void> setSubscriptionLevels(
+    String workspaceId,
+    SubscriptionLevels levels,
+  );
 
   /// Consumable services of the workspace, name-ordered (member-readable).
   /// Owners pass [includeInactive] for the catalog editor (#123).

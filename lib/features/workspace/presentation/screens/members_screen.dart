@@ -8,17 +8,97 @@ import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/member.dart';
 import '../../providers/workspace_providers.dart';
 
-/// Owner-only member management: role overview, plan assignment,
-/// pause/reactivate (spec §7.2).
+/// Owner-only member management: role overview, subscription percentage
+/// assignment (#128, ADR 0008), pause/reactivate (spec §7.2).
 class MembersScreen extends ConsumerWidget {
   const MembersScreen({super.key});
+
+  Future<void> _pickSubscription(
+    BuildContext context,
+    WidgetRef ref,
+    Member member,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final offered =
+        (await ref.read(subscriptionLevelsProvider.future)).offeredLevels;
+    if (!context.mounted) return;
+
+    final custom = TextEditingController();
+    final pct = await showDialog<int>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n?.memberSubscriptionLabel ?? 'Subscription'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              children: [
+                for (final level in offered)
+                  ChoiceChip(
+                    label: Text(l10n?.percentValue(level) ?? '$level%'),
+                    selected: member.subscriptionPct == level,
+                    onSelected: (_) => Navigator.of(context).pop(level),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            // The owner may always negotiate a free value, even when
+            // allow_custom hides it from member-facing pickers.
+            TextField(
+              controller: custom,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: l10n?.memberSubscriptionCustom ?? 'Custom (1–100)',
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(l10n?.commonCancel ?? 'Cancel'),
+          ),
+          FilledButton(
+            onPressed: () {
+              final value = int.tryParse(custom.text.trim());
+              if (value == null || value < 1 || value > 100) return;
+              Navigator.of(context).pop(value);
+            },
+            child: Text(l10n?.commonSave ?? 'Save'),
+          ),
+        ],
+      ),
+    );
+    if (pct == null || pct == member.subscriptionPct) return;
+
+    try {
+      await ref
+          .read(workspaceRepositoryProvider)
+          .updateMemberSubscription(member.id, pct);
+    } catch (e, st) {
+      debugPrint('subscription update failed: $e\n$st');
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            l10n?.workspaceGenericError ??
+                'Something went wrong. Please try again.',
+          ),
+        ),
+      );
+      return;
+    }
+    ref.invalidate(workspaceMembersProvider);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final membersAsync = ref.watch(workspaceMembersProvider);
     final names = ref.watch(memberNamesProvider).value ?? const {};
-    final plans = ref.watch(plansProvider).value ?? const [];
 
     return Scaffold(
       appBar: AppBar(
@@ -26,8 +106,8 @@ class MembersScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.tune),
-            tooltip: l10n?.plansEditorTitle ?? 'Plans',
-            onPressed: () => context.push('/plans'),
+            tooltip: l10n?.billingTitle ?? 'Billing',
+            onPressed: () => context.push('/billing'),
           ),
         ],
       ),
@@ -49,6 +129,10 @@ class MembersScreen extends ConsumerWidget {
                   subtitle: Wrap(
                     spacing: 6,
                     children: [
+                      Text(
+                        l10n?.percentValue(member.subscriptionPct) ??
+                            '${member.subscriptionPct}%',
+                      ),
                       if (member.isOwner)
                         Text(l10n?.memberRoleOwner ?? 'Owner'),
                       if (member.isAdmin && !member.isOwner)
@@ -59,32 +143,10 @@ class MembersScreen extends ConsumerWidget {
                         Text(l10n?.memberStatusExited ?? 'Exited'),
                     ],
                   ),
-                  trailing: SizedBox(
-                    width: 130,
-                    child: DropdownButton<String?>(
-                      value: plans.any((p) => p.id == member.planId)
-                          ? member.planId
-                          : null,
-                      isExpanded: true,
-                      hint: Text(l10n?.membersPlanNone ?? 'No plan'),
-                      items: [
-                        DropdownMenuItem<String?>(
-                          value: null,
-                          child: Text(l10n?.membersPlanNone ?? 'No plan'),
-                        ),
-                        for (final plan in plans)
-                          DropdownMenuItem<String?>(
-                            value: plan.id,
-                            child: Text(plan.name),
-                          ),
-                      ],
-                      onChanged: (planId) async {
-                        await ref
-                            .read(workspaceRepositoryProvider)
-                            .updateMemberPlan(member.id, planId);
-                        ref.invalidate(workspaceMembersProvider);
-                      },
-                    ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.percent),
+                    tooltip: l10n?.memberSubscriptionLabel ?? 'Subscription',
+                    onPressed: () => _pickSubscription(context, ref, member),
                   ),
                   onLongPress: member.status == MemberStatus.exited
                       ? null

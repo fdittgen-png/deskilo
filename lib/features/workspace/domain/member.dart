@@ -20,7 +20,9 @@ sealed class Member with _$Member {
     required bool isAdmin,
     required bool isOwner,
     required MemberStatus status,
-    String? planId,
+    /// Subscription percentage 1–100 (ADR 0008): the membership level the
+    /// fee band and the half-day entitlement derive from.
+    @Default(100) int subscriptionPct,
   }) = _Member;
 
   /// Admin capability (owners inherit it, spec §2).

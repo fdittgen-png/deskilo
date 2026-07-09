@@ -1,0 +1,21 @@
+{
+  "@@locale": "it",
+  "billingTitle": "Fatturazione",
+  "billingFeeBands": "Fasce tariffarie",
+  "billingBandFrom": "da {from}%",
+  "billingBandTo": "Fino a %",
+  "billingBandFee": "Canone mensile",
+  "billingBandOverage": "Eccedenza",
+  "billingAddBand": "Aggiungi fascia",
+  "billingRemoveBand": "Rimuovi fascia",
+  "billingBandsInvalid": "Le fasce devono crescere e terminare al 100%.",
+  "billingSaved": "Salvato.",
+  "billingLevels": "Livelli di abbonamento",
+  "billingAddLevel": "Aggiungi livello",
+  "billingLevelValue": "Livello (1–100)",
+  "billingAllowCustom": "Consenti un valore personalizzato concordato",
+  "memberSubscriptionLabel": "Abbonamento",
+  "memberSubscriptionCustom": "Personalizzato (1–100)",
+  "moneySubscriptionPct": "Abbonamento {pct} %",
+  "percentValue": "{value}%"
+}

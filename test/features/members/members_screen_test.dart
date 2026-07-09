@@ -35,25 +35,45 @@ Future<FakeWorkspaceRepository> pumpMembers(WidgetTester tester) async {
 }
 
 void main() {
-  testWidgets('owner reaches the members screen and sees roles',
+  testWidgets('owner reaches the members screen and sees roles + levels',
       (tester) async {
     await pumpMembers(tester);
 
     expect(find.text('Flo'), findsOneWidget);
     expect(find.text('Ana'), findsOneWidget);
     expect(find.text('Owner'), findsOneWidget);
+    // Both members hold the migrated default of 100%.
+    expect(find.text('100%'), findsNWidgets(2));
   });
 
-  testWidgets('assigning a plan updates the member', (tester) async {
+  testWidgets('picking an offered level updates the member (#128)',
+      (tester) async {
     final workspace = await pumpMembers(tester);
 
-    // Ana's dropdown is the second one.
-    await tester.tap(find.text('No plan').last);
+    // Ana's row is the second one.
+    await tester.tap(find.byIcon(Icons.percent).last);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Half').last);
+    await tester.tap(find.text('50%').last);
     await tester.pumpAndSettle();
 
-    expect(workspace.otherMembers.single.planId, 'plan-half');
+    expect(workspace.otherMembers.single.subscriptionPct, 50);
+    expect(find.text('50%'), findsOneWidget);
+  });
+
+  testWidgets('the owner can assign a negotiated custom percentage',
+      (tester) async {
+    final workspace = await pumpMembers(tester);
+
+    await tester.tap(find.byIcon(Icons.percent).last);
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Custom (1–100)'),
+      '37',
+    );
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    expect(workspace.otherMembers.single.subscriptionPct, 37);
   });
 
   testWidgets('long-press pauses an active membership', (tester) async {

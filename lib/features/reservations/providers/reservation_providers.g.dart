@@ -57,14 +57,16 @@ final class ReservationRepositoryProvider
 String _$reservationRepositoryHash() =>
     r'3e7e1c9b286d791bf252ab662e2454c870f11c65';
 
-/// Reservations of the active workspace intersecting the given UTC day
-/// (keyed by 'yyyy-MM-dd' to keep family keys canonical).
+/// Reservations of the active workspace intersecting the given LOCAL day
+/// (keyed 'yyyy-MM-dd'). Local, not UTC: the user thinks in wall-clock
+/// days, and a UTC window shifts the visible day east/west of UTC (#119).
 
 @ProviderFor(reservationsForDay)
 final reservationsForDayProvider = ReservationsForDayFamily._();
 
-/// Reservations of the active workspace intersecting the given UTC day
-/// (keyed by 'yyyy-MM-dd' to keep family keys canonical).
+/// Reservations of the active workspace intersecting the given LOCAL day
+/// (keyed 'yyyy-MM-dd'). Local, not UTC: the user thinks in wall-clock
+/// days, and a UTC window shifts the visible day east/west of UTC (#119).
 
 final class ReservationsForDayProvider
     extends
@@ -76,8 +78,9 @@ final class ReservationsForDayProvider
     with
         $FutureModifier<List<Reservation>>,
         $FutureProvider<List<Reservation>> {
-  /// Reservations of the active workspace intersecting the given UTC day
-  /// (keyed by 'yyyy-MM-dd' to keep family keys canonical).
+  /// Reservations of the active workspace intersecting the given LOCAL day
+  /// (keyed 'yyyy-MM-dd'). Local, not UTC: the user thinks in wall-clock
+  /// days, and a UTC window shifts the visible day east/west of UTC (#119).
   ReservationsForDayProvider._({
     required ReservationsForDayFamily super.from,
     required String super.argument,
@@ -123,10 +126,11 @@ final class ReservationsForDayProvider
 }
 
 String _$reservationsForDayHash() =>
-    r'a7f247339c0645ca251e642b0110bee6e64ac12a';
+    r'dd2474ececfead1ef7a55f022045539f7e84b5c9';
 
-/// Reservations of the active workspace intersecting the given UTC day
-/// (keyed by 'yyyy-MM-dd' to keep family keys canonical).
+/// Reservations of the active workspace intersecting the given LOCAL day
+/// (keyed 'yyyy-MM-dd'). Local, not UTC: the user thinks in wall-clock
+/// days, and a UTC window shifts the visible day east/west of UTC (#119).
 
 final class ReservationsForDayFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<Reservation>>, String> {
@@ -139,8 +143,9 @@ final class ReservationsForDayFamily extends $Family
         isAutoDispose: true,
       );
 
-  /// Reservations of the active workspace intersecting the given UTC day
-  /// (keyed by 'yyyy-MM-dd' to keep family keys canonical).
+  /// Reservations of the active workspace intersecting the given LOCAL day
+  /// (keyed 'yyyy-MM-dd'). Local, not UTC: the user thinks in wall-clock
+  /// days, and a UTC window shifts the visible day east/west of UTC (#119).
 
   ReservationsForDayProvider call(String dayKey) =>
       ReservationsForDayProvider._(argument: dayKey, from: this);
@@ -245,14 +250,16 @@ final class MemberNamesProvider
 
 String _$memberNamesHash() => r'8ff1556b61a23f9f8aa631319aea472451bb2143';
 
-/// Reservations of the active workspace intersecting the given month
-/// (keyed 'yyyy-MM').
+/// Reservations of the active workspace intersecting the given LOCAL
+/// month (keyed 'yyyy-MM'). See [reservationsForDay] for why local (#119):
+/// a UTC key turned the July calendar into a June query east of UTC.
 
 @ProviderFor(reservationsForMonth)
 final reservationsForMonthProvider = ReservationsForMonthFamily._();
 
-/// Reservations of the active workspace intersecting the given month
-/// (keyed 'yyyy-MM').
+/// Reservations of the active workspace intersecting the given LOCAL
+/// month (keyed 'yyyy-MM'). See [reservationsForDay] for why local (#119):
+/// a UTC key turned the July calendar into a June query east of UTC.
 
 final class ReservationsForMonthProvider
     extends
@@ -264,8 +271,9 @@ final class ReservationsForMonthProvider
     with
         $FutureModifier<List<Reservation>>,
         $FutureProvider<List<Reservation>> {
-  /// Reservations of the active workspace intersecting the given month
-  /// (keyed 'yyyy-MM').
+  /// Reservations of the active workspace intersecting the given LOCAL
+  /// month (keyed 'yyyy-MM'). See [reservationsForDay] for why local (#119):
+  /// a UTC key turned the July calendar into a June query east of UTC.
   ReservationsForMonthProvider._({
     required ReservationsForMonthFamily super.from,
     required String super.argument,
@@ -311,10 +319,11 @@ final class ReservationsForMonthProvider
 }
 
 String _$reservationsForMonthHash() =>
-    r'03e02f89e7f21311a58ccceeb58991caa64a04cc';
+    r'b00f5c11b7eb515f11dee1943ca482036556746a';
 
-/// Reservations of the active workspace intersecting the given month
-/// (keyed 'yyyy-MM').
+/// Reservations of the active workspace intersecting the given LOCAL
+/// month (keyed 'yyyy-MM'). See [reservationsForDay] for why local (#119):
+/// a UTC key turned the July calendar into a June query east of UTC.
 
 final class ReservationsForMonthFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<Reservation>>, String> {
@@ -327,8 +336,9 @@ final class ReservationsForMonthFamily extends $Family
         isAutoDispose: true,
       );
 
-  /// Reservations of the active workspace intersecting the given month
-  /// (keyed 'yyyy-MM').
+  /// Reservations of the active workspace intersecting the given LOCAL
+  /// month (keyed 'yyyy-MM'). See [reservationsForDay] for why local (#119):
+  /// a UTC key turned the July calendar into a June query east of UTC.
 
   ReservationsForMonthProvider call(String monthKey) =>
       ReservationsForMonthProvider._(argument: monthKey, from: this);

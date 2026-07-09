@@ -1,0 +1,90 @@
+{
+  "@@locale": "en",
+  "billingTitle": "Billing",
+  "@billingTitle": {
+    "description": "Owner billing editor (#128): fee bands + subscription levels; screen title and settings entry"
+  },
+  "billingFeeBands": "Fee bands",
+  "@billingFeeBands": {
+    "description": "Section header of the fee-band editor"
+  },
+  "billingBandFrom": "from {from}%",
+  "@billingBandFrom": {
+    "description": "Derived lower boundary of a band row (exclusive)",
+    "placeholders": {
+      "from": {
+        "type": "int"
+      }
+    }
+  },
+  "billingBandTo": "To %",
+  "@billingBandTo": {
+    "description": "Label of a band's upper boundary field (inclusive)"
+  },
+  "billingBandFee": "Monthly fee",
+  "@billingBandFee": {
+    "description": "Label of a band's monthly fee field"
+  },
+  "billingBandOverage": "Overage",
+  "@billingBandOverage": {
+    "description": "Label of a band's price-per-extra-half-day field"
+  },
+  "billingAddBand": "Add band",
+  "@billingAddBand": {
+    "description": "Button splitting the last band into two"
+  },
+  "billingRemoveBand": "Remove band",
+  "@billingRemoveBand": {
+    "description": "Tooltip of the per-row remove button; the range merges into the next band"
+  },
+  "billingBandsInvalid": "Bands must increase and end at 100%.",
+  "@billingBandsInvalid": {
+    "description": "Validation error blocking the band save"
+  },
+  "billingSaved": "Saved.",
+  "@billingSaved": {
+    "description": "Snackbar after a successful billing save"
+  },
+  "billingLevels": "Subscription levels",
+  "@billingLevels": {
+    "description": "Section header of the offered-levels editor"
+  },
+  "billingAddLevel": "Add level",
+  "@billingAddLevel": {
+    "description": "Tooltip of the add-level button"
+  },
+  "billingLevelValue": "Level (1–100)",
+  "@billingLevelValue": {
+    "description": "Label of the new-level percentage input"
+  },
+  "billingAllowCustom": "Allow negotiated custom value",
+  "@billingAllowCustom": {
+    "description": "Switch: members may hold a per-person negotiated percentage"
+  },
+  "memberSubscriptionLabel": "Subscription",
+  "@memberSubscriptionLabel": {
+    "description": "Title of the per-member subscription picker dialog"
+  },
+  "memberSubscriptionCustom": "Custom (1–100)",
+  "@memberSubscriptionCustom": {
+    "description": "Label of the owner-override custom percentage field"
+  },
+  "moneySubscriptionPct": "Subscription {pct}%",
+  "@moneySubscriptionPct": {
+    "description": "Statement line for the band fee of the member's percentage",
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "percentValue": "{value}%",
+  "@percentValue": {
+    "description": "A plain percentage value (level chips, member rows)",
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  }
+}

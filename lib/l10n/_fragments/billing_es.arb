@@ -1,0 +1,21 @@
+{
+  "@@locale": "es",
+  "billingTitle": "Facturación",
+  "billingFeeBands": "Tramos de tarifas",
+  "billingBandFrom": "desde {from} %",
+  "billingBandTo": "Hasta %",
+  "billingBandFee": "Cuota mensual",
+  "billingBandOverage": "Exceso",
+  "billingAddBand": "Añadir tramo",
+  "billingRemoveBand": "Eliminar tramo",
+  "billingBandsInvalid": "Los tramos deben ser crecientes y terminar en 100 %.",
+  "billingSaved": "Guardado.",
+  "billingLevels": "Niveles de suscripción",
+  "billingAddLevel": "Añadir nivel",
+  "billingLevelValue": "Nivel (1–100)",
+  "billingAllowCustom": "Permitir un valor personalizado negociado",
+  "memberSubscriptionLabel": "Suscripción",
+  "memberSubscriptionCustom": "Personalizado (1–100)",
+  "moneySubscriptionPct": "Suscripción {pct} %",
+  "percentValue": "{value} %"
+}

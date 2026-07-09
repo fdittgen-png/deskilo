@@ -3,7 +3,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'statement.freezed.dart';
 
-/// One member's monthly statement (spec §7.3), computed server-side.
+/// One member's monthly statement (ADR 0008), computed server-side: the
+/// band fee of the subscription percentage plus overage beyond the
+/// availability-scaled entitlement, minus confirmed credits.
 /// Negative [balanceCents] = the member owes the community.
 @freezed
 sealed class Statement with _$Statement {
@@ -11,9 +13,10 @@ sealed class Statement with _$Statement {
 
   const factory Statement({
     required String period,
-    required String planName,
-    required int baseFeeCents,
-    int? includedHalfDays,
+    required int subscriptionPct,
+    required int feeCents,
+    required int includedHalfDays,
+    required int openDays,
     required int usedHalfDays,
     required int extraHalfDays,
     required int overageCents,

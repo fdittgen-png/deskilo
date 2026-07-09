@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../domain/fee_band.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
-import '../domain/plan.dart';
 import '../domain/service_item.dart';
 import '../domain/statement.dart';
+import '../domain/subscription_levels.dart';
 
 class SupabaseMoneyRepository implements MoneyRepository {
   SupabaseMoneyRepository(this._client);
@@ -20,9 +21,10 @@ class SupabaseMoneyRepository implements MoneyRepository {
     }) as Map<String, dynamic>;
     return Statement(
       period: result['period'] as String,
-      planName: result['plan_name'] as String,
-      baseFeeCents: result['base_fee_cents'] as int,
-      includedHalfDays: result['included_half_days'] as int?,
+      subscriptionPct: result['subscription_pct'] as int,
+      feeCents: result['fee_cents'] as int,
+      includedHalfDays: result['included_half_days'] as int,
+      openDays: result['open_days'] as int,
       usedHalfDays: result['used_half_days'] as int,
       extraHalfDays: result['extra_half_days'] as int,
       overageCents: result['overage_cents'] as int,
@@ -88,55 +90,70 @@ class SupabaseMoneyRepository implements MoneyRepository {
   }
 
   @override
-  Future<List<Plan>> fetchPlans(
-    String workspaceId, {
-    bool includeInactive = false,
-  }) async {
-    var query =
-        _client.from('plans').select().eq('workspace_id', workspaceId);
-    if (!includeInactive) query = query.eq('active', true);
-    final rows = await query.order('base_fee_cents', ascending: false);
+  Future<List<FeeBand>> fetchFeeBands(String workspaceId) async {
+    final rows = await _client
+        .from('fee_bands')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('from_pct', ascending: true);
     return rows
         .map(
-          (row) => Plan(
+          (row) => FeeBand(
             id: row['id'] as String,
             workspaceId: row['workspace_id'] as String,
-            name: row['name'] as String,
-            baseFeeCents: row['base_fee_cents'] as int,
-            includedHalfDays: row['included_half_days'] as int?,
+            fromPct: row['from_pct'] as int,
+            toPct: row['to_pct'] as int,
+            feeCents: row['fee_cents'] as int,
             overageFeeCents: row['overage_fee_cents'] as int,
-            active: row['active'] as bool,
           ),
         )
         .toList();
   }
 
   @override
-  Future<void> createPlan({
-    required String workspaceId,
-    required String name,
-    required int baseFeeCents,
-    int? includedHalfDays,
-    required int overageFeeCents,
-  }) async {
-    await _client.from('plans').insert({
-      'workspace_id': workspaceId,
-      'name': name,
-      'base_fee_cents': baseFeeCents,
-      'included_half_days': includedHalfDays,
-      'overage_fee_cents': overageFeeCents,
+  Future<void> replaceFeeBands(
+    String workspaceId,
+    List<FeeBand> bands,
+  ) async {
+    await _client.rpc<dynamic>('replace_fee_bands', params: {
+      'p_workspace_id': workspaceId,
+      'p_bands': [
+        for (final band in bands)
+          {
+            'from_pct': band.fromPct,
+            'to_pct': band.toPct,
+            'fee_cents': band.feeCents,
+            'overage_fee_cents': band.overageFeeCents,
+          },
+      ],
     });
   }
 
   @override
-  Future<void> updatePlan(Plan plan) async {
-    await _client.from('plans').update({
-      'name': plan.name,
-      'base_fee_cents': plan.baseFeeCents,
-      'included_half_days': plan.includedHalfDays,
-      'overage_fee_cents': plan.overageFeeCents,
-      'active': plan.active,
-    }).eq('id', plan.id);
+  Future<SubscriptionLevels> fetchSubscriptionLevels(
+    String workspaceId,
+  ) async {
+    final row = await _client
+        .from('workspaces')
+        .select('subscription_levels')
+        .eq('id', workspaceId)
+        .single();
+    return SubscriptionLevels.fromDb(
+      row['subscription_levels'] as Map<String, dynamic>? ?? const {},
+    );
+  }
+
+  @override
+  Future<void> setSubscriptionLevels(
+    String workspaceId,
+    SubscriptionLevels levels,
+  ) async {
+    await _client
+        .from('workspaces')
+        .update({'subscription_levels': levels.toDb()}).eq(
+      'id',
+      workspaceId,
+    );
   }
 
   ServiceItem _serviceFromRow(Map<String, dynamic> row) => ServiceItem(

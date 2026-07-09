@@ -32,8 +32,9 @@ abstract class WorkspaceRepository {
   /// All of MY membership rows across workspaces — one per profile (#89).
   Future<List<Member>> fetchMyMembers();
 
-  /// Owner-only (RLS-enforced): assign a plan / change membership status.
-  Future<void> updateMemberPlan(String memberId, String? planId);
+  /// Owner-only (RLS-enforced): set the subscription percentage (1–100,
+  /// ADR 0008) / change membership status.
+  Future<void> updateMemberSubscription(String memberId, int pct);
   Future<void> updateMemberStatus(String memberId, MemberStatus status);
 
   /// Owner-only: replace the workspace ID (= invite code, shown in the QR)
