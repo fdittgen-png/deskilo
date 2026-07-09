@@ -1196,6 +1196,54 @@ abstract class AppLocalizations {
   /// **'Sent to {name} for confirmation.'**
   String planBookedForPending(String name);
 
+  /// App-bar title of the owner service-catalog editor and its settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get servicesTitle;
+
+  /// Empty state of the service-catalog editor
+  ///
+  /// In en, this message translates to:
+  /// **'No services yet.'**
+  String get servicesEmpty;
+
+  /// FAB tooltip and sheet title when creating a service
+  ///
+  /// In en, this message translates to:
+  /// **'New service'**
+  String get servicesNew;
+
+  /// Sheet title when editing an existing service
+  ///
+  /// In en, this message translates to:
+  /// **'Edit service'**
+  String get servicesEdit;
+
+  /// Label of the service name field
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get servicesName;
+
+  /// Label of the service price field (major currency units)
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get servicesPrice;
+
+  /// Trailing badge on deactivated services in the catalog list
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get servicesInactive;
+
+  /// Label of the activate/deactivate switch in the edit sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get servicesActive;
+
   /// App-bar title of the first-run onboarding screen
   ///
   /// In en, this message translates to:

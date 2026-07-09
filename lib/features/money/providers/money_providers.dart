@@ -8,6 +8,7 @@ import '../data/supabase_money_repository.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
 import '../domain/plan.dart';
+import '../domain/service_item.dart';
 import '../domain/statement.dart';
 
 part 'money_providers.g.dart';
@@ -51,4 +52,22 @@ Future<List<Plan>> allPlans(Ref ref) async {
   return ref
       .watch(moneyRepositoryProvider)
       .fetchPlans(workspace.id, includeInactive: true);
+}
+
+/// Active consumable services of the current workspace (#123).
+@Riverpod(keepAlive: true)
+Future<List<ServiceItem>> services(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return ref.watch(moneyRepositoryProvider).fetchServices(workspace.id);
+}
+
+/// Every service incl. deactivated ones — the owner's catalog editor (#123).
+@riverpod
+Future<List<ServiceItem>> allServices(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return ref
+      .watch(moneyRepositoryProvider)
+      .fetchServices(workspace.id, includeInactive: true);
 }

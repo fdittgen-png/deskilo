@@ -1,0 +1,35 @@
+{
+  "@@locale": "en",
+  "servicesTitle": "Services",
+  "@servicesTitle": {
+    "description": "App-bar title of the owner service-catalog editor and its settings tile"
+  },
+  "servicesEmpty": "No services yet.",
+  "@servicesEmpty": {
+    "description": "Empty state of the service-catalog editor"
+  },
+  "servicesNew": "New service",
+  "@servicesNew": {
+    "description": "FAB tooltip and sheet title when creating a service"
+  },
+  "servicesEdit": "Edit service",
+  "@servicesEdit": {
+    "description": "Sheet title when editing an existing service"
+  },
+  "servicesName": "Name",
+  "@servicesName": {
+    "description": "Label of the service name field"
+  },
+  "servicesPrice": "Price",
+  "@servicesPrice": {
+    "description": "Label of the service price field (major currency units)"
+  },
+  "servicesInactive": "Inactive",
+  "@servicesInactive": {
+    "description": "Trailing badge on deactivated services in the catalog list"
+  },
+  "servicesActive": "Active",
+  "@servicesActive": {
+    "description": "Label of the activate/deactivate switch in the edit sheet"
+  }
+}

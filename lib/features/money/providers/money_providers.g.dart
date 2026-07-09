@@ -265,3 +265,95 @@ final class AllPlansProvider
 }
 
 String _$allPlansHash() => r'72b7afd67a7e38a6845ac075b565b3b6dcbe66fd';
+
+/// Active consumable services of the current workspace (#123).
+
+@ProviderFor(services)
+final servicesProvider = ServicesProvider._();
+
+/// Active consumable services of the current workspace (#123).
+
+final class ServicesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<ServiceItem>>,
+          List<ServiceItem>,
+          FutureOr<List<ServiceItem>>
+        >
+    with
+        $FutureModifier<List<ServiceItem>>,
+        $FutureProvider<List<ServiceItem>> {
+  /// Active consumable services of the current workspace (#123).
+  ServicesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'servicesProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$servicesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<ServiceItem>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<ServiceItem>> create(Ref ref) {
+    return services(ref);
+  }
+}
+
+String _$servicesHash() => r'35f3295248b134e975fa8fd5ea2d56f83c713b54';
+
+/// Every service incl. deactivated ones — the owner's catalog editor (#123).
+
+@ProviderFor(allServices)
+final allServicesProvider = AllServicesProvider._();
+
+/// Every service incl. deactivated ones — the owner's catalog editor (#123).
+
+final class AllServicesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<ServiceItem>>,
+          List<ServiceItem>,
+          FutureOr<List<ServiceItem>>
+        >
+    with
+        $FutureModifier<List<ServiceItem>>,
+        $FutureProvider<List<ServiceItem>> {
+  /// Every service incl. deactivated ones — the owner's catalog editor (#123).
+  AllServicesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'allServicesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$allServicesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<ServiceItem>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<ServiceItem>> create(Ref ref) {
+    return allServices(ref);
+  }
+}
+
+String _$allServicesHash() => r'7d69290d13259c4f3e0695c2de5a978939c5017c';
