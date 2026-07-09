@@ -1,0 +1,15 @@
+{
+  "@@locale": "it",
+  "validationTitle": "Regole di validazione",
+  "validationDefaultPolicy": "Regola predefinita",
+  "validationInherited": "Eredita la predefinita",
+  "validationCustomized": "Personalizzata",
+  "validationRequiredCount": "Validazioni richieste",
+  "validationAdminsMay": "Gli admin possono validare",
+  "validationOwnerOnly": "Solo il proprietario",
+  "validationAllAdmins": "Tutti gli admin",
+  "validationSpecificAdmins": "Admin specifici",
+  "validationOwnerRequired": "Il proprietario deve sempre validare",
+  "validationNotEnough": "Validatori idonei insufficienti.",
+  "validationSaved": "Regola di validazione salvata."
+}

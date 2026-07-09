@@ -1,0 +1,15 @@
+{
+  "@@locale": "de",
+  "validationTitle": "Validierungsregeln",
+  "validationDefaultPolicy": "Standardregel",
+  "validationInherited": "Erbt den Standard",
+  "validationCustomized": "Angepasst",
+  "validationRequiredCount": "Erforderliche Validierungen",
+  "validationAdminsMay": "Admins dürfen validieren",
+  "validationOwnerOnly": "Nur Inhaber",
+  "validationAllAdmins": "Alle Admins",
+  "validationSpecificAdmins": "Bestimmte Admins",
+  "validationOwnerRequired": "Inhaber muss immer validieren",
+  "validationNotEnough": "Nicht genügend berechtigte Validierer.",
+  "validationSaved": "Validierungsregel gespeichert."
+}

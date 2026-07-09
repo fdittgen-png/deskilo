@@ -1059,6 +1059,54 @@
   "@eventSystemDecider": {
     "description": "Validator name shown when the timeout sweep decided, not a member"
   },
+  "validationTitle": "Validation rules",
+  "@validationTitle": {
+    "description": "App-bar title of the owner validation-policy editor and its settings tile (#131)"
+  },
+  "validationDefaultPolicy": "Default policy",
+  "@validationDefaultPolicy": {
+    "description": "Card title of the workspace-wide default validation policy (event types without their own rule inherit it)"
+  },
+  "validationInherited": "Inherits default",
+  "@validationInherited": {
+    "description": "Card indicator when the event type has no rule of its own and follows the default policy"
+  },
+  "validationCustomized": "Customized",
+  "@validationCustomized": {
+    "description": "Card indicator when a stored rule of its own governs the card (default card or event type)"
+  },
+  "validationRequiredCount": "Required validations",
+  "@validationRequiredCount": {
+    "description": "Label of the 1–10 stepper for how many accepts confirm a pending event; also prefixes the count in the card summary"
+  },
+  "validationAdminsMay": "Admins may validate",
+  "@validationAdminsMay": {
+    "description": "Switch label: whether admins may validate at all (off = owner only)"
+  },
+  "validationOwnerOnly": "Owner only",
+  "@validationOwnerOnly": {
+    "description": "Shown when admins may not validate: switch subtitle in the editor and card summary"
+  },
+  "validationAllAdmins": "All admins",
+  "@validationAllAdmins": {
+    "description": "Picker chip and card summary: every admin is an eligible validator"
+  },
+  "validationSpecificAdmins": "Specific admins",
+  "@validationSpecificAdmins": {
+    "description": "Card summary when only selected admins may validate; the count follows in parentheses"
+  },
+  "validationOwnerRequired": "Owner must always validate",
+  "@validationOwnerRequired": {
+    "description": "Switch label: one of the accepts must come from an owner"
+  },
+  "validationNotEnough": "Not enough eligible validators.",
+  "@validationNotEnough": {
+    "description": "Save-blocking error when the required count exceeds what owners + eligible admins (+ the subject) could ever provide"
+  },
+  "validationSaved": "Validation rule saved.",
+  "@validationSaved": {
+    "description": "Snackbar after a policy row was stored successfully"
+  },
   "onboardingTitle": "Welcome to DesKilo",
   "@onboardingTitle": {
     "description": "App-bar title of the first-run onboarding screen"
