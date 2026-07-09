@@ -17,7 +17,9 @@ import '../features/plan/presentation/screens/plan_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
+import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/presentation/screens/availability_screen.dart';
+import '../features/workspace/presentation/screens/features_screen.dart';
 import '../features/workspace/presentation/screens/members_screen.dart';
 import '../features/workspace/presentation/screens/onboarding_screen.dart';
 import '../features/workspace/presentation/screens/scan_join_screen.dart';
@@ -41,7 +43,17 @@ GoRouter router(Ref ref) {
   ref
     ..onDispose(refresh.dispose)
     ..listen(authStateProvider, (_, _) => refresh.value++)
-    ..listen(myWorkspacesProvider, (_, _) => refresh.value++);
+    ..listen(myWorkspacesProvider, (_, _) => refresh.value++)
+    // Feature flags follow the ACTIVE workspace (#146): switching
+    // profiles must re-evaluate the redirects even when the workspace
+    // list itself did not change.
+    ..listen(enabledFeaturesProvider, (_, _) => refresh.value++);
+
+  /// Whether [feature] is enabled for the active workspace (#146).
+  /// Defaults (everything ON) while the workspace is still loading, so
+  /// deep links are never bounced during startup.
+  bool featureEnabled(WorkspaceFeature feature) =>
+      ref.read(enabledFeaturesSyncProvider).contains(feature);
 
   final router = GoRouter(
     initialLocation: '/plan',
@@ -93,6 +105,10 @@ GoRouter router(Ref ref) {
             routes: [
               GoRoute(
                 path: '/calendar',
+                redirect: (context, state) =>
+                    featureEnabled(WorkspaceFeature.calendarTab)
+                        ? null
+                        : '/plan',
                 builder: (context, state) => const CalendarScreen(),
               ),
             ],
@@ -101,6 +117,10 @@ GoRouter router(Ref ref) {
             routes: [
               GoRoute(
                 path: '/events',
+                redirect: (context, state) =>
+                    featureEnabled(WorkspaceFeature.eventsTab)
+                        ? null
+                        : '/plan',
                 builder: (context, state) => const EventsScreen(),
               ),
             ],
@@ -109,6 +129,10 @@ GoRouter router(Ref ref) {
             routes: [
               GoRoute(
                 path: '/money',
+                redirect: (context, state) =>
+                    featureEnabled(WorkspaceFeature.moneyTab)
+                        ? null
+                        : '/plan',
                 builder: (context, state) => const MoneyScreen(),
               ),
             ],
@@ -153,9 +177,19 @@ GoRouter router(Ref ref) {
         path: '/services',
         redirect: (context, state) {
           final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
-          return isOwner ? null : '/plan';
+          return isOwner && featureEnabled(WorkspaceFeature.services)
+              ? null
+              : '/plan';
         },
         builder: (context, state) => const ServicesScreen(),
+      ),
+      GoRoute(
+        path: '/features',
+        redirect: (context, state) {
+          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          return isOwner ? null : '/plan';
+        },
+        builder: (context, state) => const FeaturesScreen(),
       ),
       GoRoute(
         path: '/validation',

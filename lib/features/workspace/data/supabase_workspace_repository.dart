@@ -87,7 +87,22 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
         currencyCode: row['currency_code'] as String,
         timezone: row['timezone'] as String,
         inviteCode: row['invite_code'] as String,
+        featureFlags:
+            row['feature_flags'] as Map<String, dynamic>? ?? const {},
       );
+
+  @override
+  Future<void> setFeatureFlags(
+    String workspaceId,
+    Map<String, bool> flags,
+  ) async {
+    // The whole jsonb is replaced (unlike booking_rules there are no
+    // foreign keys inside it): the Features screen always writes the
+    // full current map.
+    await _client
+        .from('workspaces')
+        .update({'feature_flags': flags}).eq('id', workspaceId);
+  }
 
   @override
   Future<List<Member>> fetchMembers(String workspaceId) async {

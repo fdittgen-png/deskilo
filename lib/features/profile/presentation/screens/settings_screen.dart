@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/trace/dev_mode.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 
 /// App settings. Sign-out lives here; more sections arrive with their Epics.
@@ -17,6 +18,7 @@ class SettingsScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final isOwner = ref.watch(myMemberProvider).value?.isOwner ?? false;
     final devMode = ref.watch(devModeProvider).value ?? false;
+    final features = ref.watch(enabledFeaturesSyncProvider);
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.settingsTitle ?? 'Settings')),
       body: ListView(
@@ -38,7 +40,7 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l10n?.availabilityTitle ?? 'Availability'),
               onTap: () => context.push('/availability'),
             ),
-          if (isOwner)
+          if (isOwner && features.contains(WorkspaceFeature.services))
             ListTile(
               leading: const Icon(Icons.local_cafe_outlined),
               title: Text(l10n?.servicesTitle ?? 'Services'),
@@ -49,6 +51,12 @@ class SettingsScreen extends ConsumerWidget {
               leading: const Icon(Icons.payments_outlined),
               title: Text(l10n?.billingTitle ?? 'Billing'),
               onTap: () => context.push('/billing'),
+            ),
+          if (isOwner)
+            ListTile(
+              leading: const Icon(Icons.toggle_on_outlined),
+              title: Text(l10n?.featuresTitle ?? 'Features'),
+              onTap: () => context.push('/features'),
             ),
           if (isOwner)
             ListTile(

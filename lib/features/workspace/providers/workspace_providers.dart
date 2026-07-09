@@ -8,6 +8,7 @@ import '../data/supabase_workspace_repository.dart';
 import '../domain/closure_day.dart';
 import '../domain/member.dart';
 import '../domain/workspace.dart';
+import '../domain/workspace_feature.dart';
 import '../domain/workspace_repository.dart';
 
 part 'workspace_providers.g.dart';
@@ -83,6 +84,25 @@ Future<List<ClosureDay>> closureDays(Ref ref) async {
       .watch(workspaceRepositoryProvider)
       .fetchClosureDays(workspace.id);
 }
+
+/// Features enabled for the active workspace (#146). Deriving from
+/// [currentWorkspace] is what makes flags "apply on connect": switching
+/// profiles (#89) or refetching workspaces recomputes the set with the
+/// new workspace's flags — no extra plumbing. No workspace = defaults.
+@Riverpod(keepAlive: true)
+Future<Set<WorkspaceFeature>> enabledFeatures(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  return resolveEnabledFeatures(workspace?.featureFlags ?? const {});
+}
+
+/// Sync convenience over [enabledFeatures] for build methods and router
+/// redirects. While the workspace is still loading it falls back to ALL
+/// registry defaults (everything ON) so the shell never flashes a
+/// reduced tab bar.
+@Riverpod(keepAlive: true)
+Set<WorkspaceFeature> enabledFeaturesSync(Ref ref) =>
+    ref.watch(enabledFeaturesProvider).value ??
+    resolveEnabledFeatures(const {});
 
 /// The signed-in user's membership (roles!) in the active workspace.
 @Riverpod(keepAlive: true)

@@ -661,6 +661,74 @@
   "@pushPendingBody": {
     "description": "Generic push body for a pending confirmation; deliberately carries no personal data"
   },
+  "featuresTitle": "Features",
+  "@featuresTitle": {
+    "description": "App-bar title of the owner feature-management screen and its settings tile"
+  },
+  "featureCalendarTab": "Calendar tab",
+  "@featureCalendarTab": {
+    "description": "Feature switch: the Calendar bottom tab"
+  },
+  "featureCalendarTabDesc": "Monthly overview of bookings and closed days.",
+  "@featureCalendarTabDesc": {
+    "description": "One-line description under the Calendar tab switch"
+  },
+  "featureEventsTab": "Events tab",
+  "@featureEventsTab": {
+    "description": "Feature switch: the Events bottom tab"
+  },
+  "featureEventsTabDesc": "Activity feed and pending confirmations.",
+  "@featureEventsTabDesc": {
+    "description": "One-line description under the Events tab switch"
+  },
+  "featureMoneyTab": "Money tab",
+  "@featureMoneyTab": {
+    "description": "Feature switch: the Money bottom tab"
+  },
+  "featureMoneyTabDesc": "Monthly bills, payments and expenses.",
+  "@featureMoneyTabDesc": {
+    "description": "One-line description under the Money tab switch"
+  },
+  "featureServices": "Services",
+  "@featureServices": {
+    "description": "Feature switch: service catalog + consumptions"
+  },
+  "featureServicesDesc": "Service catalog and consumption tracking.",
+  "@featureServicesDesc": {
+    "description": "One-line description under the Services switch"
+  },
+  "featurePdfExport": "PDF export",
+  "@featurePdfExport": {
+    "description": "Feature switch: bill PDF export"
+  },
+  "featurePdfExportDesc": "Export the monthly bill as a PDF.",
+  "@featurePdfExportDesc": {
+    "description": "One-line description under the PDF export switch"
+  },
+  "featureSeriesBooking": "Series booking",
+  "@featureSeriesBooking": {
+    "description": "Feature switch: recurring reservations"
+  },
+  "featureSeriesBookingDesc": "Repeat a reservation daily, weekly or on weekdays.",
+  "@featureSeriesBookingDesc": {
+    "description": "One-line description under the series booking switch"
+  },
+  "featureBookForOthers": "Book for others",
+  "@featureBookForOthers": {
+    "description": "Feature switch: admins/owners booking for other members"
+  },
+  "featureBookForOthersDesc": "Admins and owners book seats for other members.",
+  "@featureBookForOthersDesc": {
+    "description": "One-line description under the book-for-others switch"
+  },
+  "featurePushNotifications": "Push notifications",
+  "@featurePushNotifications": {
+    "description": "Feature switch: UnifiedPush delivery of confirmations"
+  },
+  "featurePushNotificationsDesc": "Deliver pending confirmations to members' devices.",
+  "@featurePushNotificationsDesc": {
+    "description": "One-line description under the push notifications switch"
+  },
   "membersTitle": "Members & plans",
   "@membersTitle": {
     "description": "Title of the owner-only member management screen + its settings entry"

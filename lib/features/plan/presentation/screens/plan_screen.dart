@@ -15,6 +15,7 @@ import '../../../reservations/domain/reservation_repository.dart';
 import '../../../reservations/domain/seat_state_logic.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/floor_plan.dart';
 import '../../domain/level.dart';
@@ -143,10 +144,14 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     if (workspace == null) return;
     final walkUp = _browse == null;
 
-    // Admins and owners book for other members (#106).
+    final features = ref.read(enabledFeaturesSyncProvider);
+
+    // Admins and owners book for other members (#106) — when the owner
+    // left the feature on (#146). No candidates = no "Book for" picker.
     final myMember = ref.read(myMemberProvider).value;
     final names = ref.read(memberNamesProvider).value ?? const {};
-    final candidates = (myMember?.canAdminister ?? false)
+    final candidates = (features.contains(WorkspaceFeature.bookForOthers) &&
+            (myMember?.canAdminister ?? false))
         ? [
             for (final m in (ref.read(workspaceMembersProvider).value ??
                     const <Member>[])
@@ -179,6 +184,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         walkUp: walkUp,
         members: candidates,
         myMemberId: myMember?.id,
+        allowSeries: features.contains(WorkspaceFeature.seriesBooking),
       ),
     );
     if (choice == null) return;
@@ -666,6 +672,7 @@ class _CheckInSheet extends StatefulWidget {
     this.walkUp = true,
     this.members = const [],
     this.myMemberId,
+    this.allowSeries = true,
   });
 
   final String seatName;
@@ -677,9 +684,13 @@ class _CheckInSheet extends StatefulWidget {
   /// True: live walk-up (check in now). False: future punctual reservation.
   final bool walkUp;
 
-  /// Active members an admin can book for (#106); empty for non-admins.
+  /// Active members an admin can book for (#106); empty for non-admins
+  /// or when the bookForOthers feature is off (#146).
   final List<({String id, String name})> members;
   final String? myMemberId;
+
+  /// Series booking feature gate (#146): false hides the repeat picker.
+  final bool allowSeries;
 
   @override
   State<_CheckInSheet> createState() => _CheckInSheetState();
@@ -775,7 +786,7 @@ class _CheckInSheetState extends State<_CheckInSheet> {
                 setState(() => _end = end);
               },
             ),
-            if (!widget.walkUp && !_forOther) ...[
+            if (!widget.walkUp && !_forOther && widget.allowSeries) ...[
               DropdownButtonFormField<SeriesPattern?>(
                 initialValue: _pattern,
                 decoration: InputDecoration(

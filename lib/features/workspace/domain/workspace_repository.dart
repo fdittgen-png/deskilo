@@ -42,6 +42,10 @@ abstract class WorkspaceRepository {
   /// normalized code.
   Future<String> setWorkspaceCode(String workspaceId, String code);
 
+  /// Owner-only (RLS-enforced): replace the workspace's feature_flags
+  /// jsonb wholesale (#146). Keys are WorkspaceFeature enum names.
+  Future<void> setFeatureFlags(String workspaceId, Map<String, bool> flags);
+
   /// ISO weekdays (1=Mon..7=Sun) the workspace is open on (#127); read
   /// from booking_rules, defaults to Mon–Fri when the key is absent.
   Future<List<int>> fetchOpenWeekdays(String workspaceId);

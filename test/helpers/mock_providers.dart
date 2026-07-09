@@ -86,15 +86,19 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   FakeWorkspaceRepository({List<Workspace>? workspaces})
       : workspaces = workspaces ?? [];
 
-  FakeWorkspaceRepository.withWorkspace()
-      : workspaces = [
-          const Workspace(
+  /// One seeded workspace; [featureFlags] seeds its feature overrides
+  /// (#146) — absent keys keep their registry default (ON).
+  FakeWorkspaceRepository.withWorkspace({
+    Map<String, dynamic> featureFlags = const {},
+  }) : workspaces = [
+          Workspace(
             id: 'ws-1',
             name: 'Test Space',
             countryCode: 'DE',
             currencyCode: 'EUR',
             timezone: 'Europe/Berlin',
             inviteCode: 'GOODCODE22',
+            featureFlags: featureFlags,
           ),
         ];
 
@@ -202,6 +206,17 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
     if (i >= 0) workspaces[i] = workspaces[i].copyWith(inviteCode: normalized);
     return normalized;
+  }
+
+  @override
+  Future<void> setFeatureFlags(
+    String workspaceId,
+    Map<String, bool> flags,
+  ) async {
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i < 0) throw StateError('unknown workspace $workspaceId');
+    workspaces[i] = workspaces[i]
+        .copyWith(featureFlags: Map<String, dynamic>.of(flags));
   }
 
   /// ISO open weekdays (1=Mon..7=Sun) per workspace; Mon–Fri when unseeded.

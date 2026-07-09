@@ -371,6 +371,123 @@ final class ClosureDaysProvider
 
 String _$closureDaysHash() => r'b4ec3e79a97e7a47c0340ece344f8b12625f590a';
 
+/// Features enabled for the active workspace (#146). Deriving from
+/// [currentWorkspace] is what makes flags "apply on connect": switching
+/// profiles (#89) or refetching workspaces recomputes the set with the
+/// new workspace's flags — no extra plumbing. No workspace = defaults.
+
+@ProviderFor(enabledFeatures)
+final enabledFeaturesProvider = EnabledFeaturesProvider._();
+
+/// Features enabled for the active workspace (#146). Deriving from
+/// [currentWorkspace] is what makes flags "apply on connect": switching
+/// profiles (#89) or refetching workspaces recomputes the set with the
+/// new workspace's flags — no extra plumbing. No workspace = defaults.
+
+final class EnabledFeaturesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Set<WorkspaceFeature>>,
+          Set<WorkspaceFeature>,
+          FutureOr<Set<WorkspaceFeature>>
+        >
+    with
+        $FutureModifier<Set<WorkspaceFeature>>,
+        $FutureProvider<Set<WorkspaceFeature>> {
+  /// Features enabled for the active workspace (#146). Deriving from
+  /// [currentWorkspace] is what makes flags "apply on connect": switching
+  /// profiles (#89) or refetching workspaces recomputes the set with the
+  /// new workspace's flags — no extra plumbing. No workspace = defaults.
+  EnabledFeaturesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'enabledFeaturesProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$enabledFeaturesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Set<WorkspaceFeature>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Set<WorkspaceFeature>> create(Ref ref) {
+    return enabledFeatures(ref);
+  }
+}
+
+String _$enabledFeaturesHash() => r'e00f205c90b700b3e55fd58ecb417ad0ed1b03fb';
+
+/// Sync convenience over [enabledFeatures] for build methods and router
+/// redirects. While the workspace is still loading it falls back to ALL
+/// registry defaults (everything ON) so the shell never flashes a
+/// reduced tab bar.
+
+@ProviderFor(enabledFeaturesSync)
+final enabledFeaturesSyncProvider = EnabledFeaturesSyncProvider._();
+
+/// Sync convenience over [enabledFeatures] for build methods and router
+/// redirects. While the workspace is still loading it falls back to ALL
+/// registry defaults (everything ON) so the shell never flashes a
+/// reduced tab bar.
+
+final class EnabledFeaturesSyncProvider
+    extends
+        $FunctionalProvider<
+          Set<WorkspaceFeature>,
+          Set<WorkspaceFeature>,
+          Set<WorkspaceFeature>
+        >
+    with $Provider<Set<WorkspaceFeature>> {
+  /// Sync convenience over [enabledFeatures] for build methods and router
+  /// redirects. While the workspace is still loading it falls back to ALL
+  /// registry defaults (everything ON) so the shell never flashes a
+  /// reduced tab bar.
+  EnabledFeaturesSyncProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'enabledFeaturesSyncProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$enabledFeaturesSyncHash();
+
+  @$internal
+  @override
+  $ProviderElement<Set<WorkspaceFeature>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  Set<WorkspaceFeature> create(Ref ref) {
+    return enabledFeaturesSync(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Set<WorkspaceFeature> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Set<WorkspaceFeature>>(value),
+    );
+  }
+}
+
+String _$enabledFeaturesSyncHash() =>
+    r'e00a472e646ad2f10612458cdd9653fa46b4e429';
+
 /// The signed-in user's membership (roles!) in the active workspace.
 
 @ProviderFor(myMember)

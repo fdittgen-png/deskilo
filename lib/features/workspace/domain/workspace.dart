@@ -14,5 +14,10 @@ sealed class Workspace with _$Workspace {
     required String currencyCode,
     required String timezone,
     required String inviteCode,
+
+    /// Per-workspace feature overrides (#146): WorkspaceFeature.name →
+    /// bool. Absent key = the feature's registry default (ON); resolve
+    /// with [resolveEnabledFeatures].
+    @Default(<String, dynamic>{}) Map<String, dynamic> featureFlags,
   }) = _Workspace;
 }
