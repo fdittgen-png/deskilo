@@ -158,6 +158,8 @@
   "featureBookForOthersDesc": "Los administradores y propietarios reservan sitios para otros miembros.",
   "featurePushNotifications": "Notificaciones push",
   "featurePushNotificationsDesc": "Entregar las confirmaciones pendientes en los dispositivos de los miembros.",
+  "languageTitle": "Idioma",
+  "languageSystemDefault": "Predeterminado del sistema",
   "membersTitle": "Miembros y planes",
   "membersPlanNone": "Sin plan",
   "memberRoleOwner": "Propietario",

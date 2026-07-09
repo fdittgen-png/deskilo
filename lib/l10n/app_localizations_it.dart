@@ -528,6 +528,12 @@ class AppLocalizationsIt extends AppLocalizations {
       'Consegna le conferme in sospeso sui dispositivi dei membri.';
 
   @override
+  String get languageTitle => 'Lingua';
+
+  @override
+  String get languageSystemDefault => 'Predefinita di sistema';
+
+  @override
   String get membersTitle => 'Membri e piani';
 
   @override

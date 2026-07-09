@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "languageTitle": "Language",
+  "@languageTitle": {
+    "description": "Settings entry and dialog title for the in-app language selection"
+  },
+  "languageSystemDefault": "System default",
+  "@languageSystemDefault": {
+    "description": "Language option that follows the device locale instead of an override"
+  }
+}

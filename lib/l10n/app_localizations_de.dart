@@ -526,6 +526,12 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ausstehende Bestätigungen auf die Geräte der Mitglieder zustellen.';
 
   @override
+  String get languageTitle => 'Sprache';
+
+  @override
+  String get languageSystemDefault => 'Systemstandard';
+
+  @override
   String get membersTitle => 'Mitglieder & Tarife';
 
   @override

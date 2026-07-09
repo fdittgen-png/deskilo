@@ -1052,6 +1052,18 @@ abstract class AppLocalizations {
   /// **'Deliver pending confirmations to members\' devices.'**
   String get featurePushNotificationsDesc;
 
+  /// Settings entry and dialog title for the in-app language selection
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageTitle;
+
+  /// Language option that follows the device locale instead of an override
+  ///
+  /// In en, this message translates to:
+  /// **'System default'**
+  String get languageSystemDefault;
+
   /// Title of the owner-only member management screen + its settings entry
   ///
   /// In en, this message translates to:

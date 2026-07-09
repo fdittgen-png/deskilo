@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/locale/locale_controller.dart';
 import '../l10n/app_localizations.dart';
 import 'router.dart';
 import 'theme.dart';
@@ -24,6 +25,8 @@ class DeskiloApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
+      // null keeps the standard system-locale resolution (#147).
+      locale: ref.watch(localeControllerProvider).value,
       theme: DeskiloTheme.light(),
       darkTheme: DeskiloTheme.dark(),
       routerConfig: router,

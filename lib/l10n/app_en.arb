@@ -729,6 +729,14 @@
   "@featurePushNotificationsDesc": {
     "description": "One-line description under the push notifications switch"
   },
+  "languageTitle": "Language",
+  "@languageTitle": {
+    "description": "Settings entry and dialog title for the in-app language selection"
+  },
+  "languageSystemDefault": "System default",
+  "@languageSystemDefault": {
+    "description": "Language option that follows the device locale instead of an override"
+  },
   "membersTitle": "Members & plans",
   "@membersTitle": {
     "description": "Title of the owner-only member management screen + its settings entry"

@@ -528,6 +528,12 @@ class AppLocalizationsFr extends AppLocalizations {
       'Livrer les confirmations en attente sur les appareils des membres.';
 
   @override
+  String get languageTitle => 'Langue';
+
+  @override
+  String get languageSystemDefault => 'Par défaut du système';
+
+  @override
   String get membersTitle => 'Membres et forfaits';
 
   @override

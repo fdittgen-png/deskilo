@@ -158,6 +158,8 @@
   "featureBookForOthersDesc": "Admin e proprietari prenotano posti per altri membri.",
   "featurePushNotifications": "Notifiche push",
   "featurePushNotificationsDesc": "Consegna le conferme in sospeso sui dispositivi dei membri.",
+  "languageTitle": "Lingua",
+  "languageSystemDefault": "Predefinita di sistema",
   "membersTitle": "Membri e piani",
   "membersPlanNone": "Nessun piano",
   "memberRoleOwner": "Proprietario",

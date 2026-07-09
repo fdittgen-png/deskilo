@@ -158,6 +158,8 @@
   "featureBookForOthersDesc": "Admins und Inhaber buchen Plätze für andere Mitglieder.",
   "featurePushNotifications": "Push-Benachrichtigungen",
   "featurePushNotificationsDesc": "Ausstehende Bestätigungen auf die Geräte der Mitglieder zustellen.",
+  "languageTitle": "Sprache",
+  "languageSystemDefault": "Systemstandard",
   "membersTitle": "Mitglieder & Tarife",
   "membersPlanNone": "Kein Tarif",
   "memberRoleOwner": "Inhaber",
