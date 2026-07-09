@@ -1,0 +1,14 @@
+{
+  "@@locale": "it",
+  "billSubscription": "Abbonamento {pct} %",
+  "billEntitlement": "{used} mezze giornate usate su {included} ({openDays} giorni di apertura)",
+  "billOverage": "{extra} mezze giornate extra",
+  "billServices": "Servizi consumati",
+  "billServicesTotal": "Totale servizi",
+  "billOpenPositions": "Voci in sospeso",
+  "billPendingBadge": "in attesa di convalida",
+  "billPaymentsCredits": "Pagamenti e crediti",
+  "billBalance": "Saldo",
+  "billSettled": "Saldato",
+  "billOutstanding": "Aperto"
+}

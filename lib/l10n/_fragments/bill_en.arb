@@ -1,0 +1,68 @@
+{
+  "@@locale": "en",
+  "billSubscription": "Subscription {pct}%",
+  "@billSubscription": {
+    "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount",
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "billEntitlement": "{used} of {included} half-days used ({openDays} open days)",
+  "@billEntitlement": {
+    "description": "Entitlement line under the subscription header",
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "included": {
+        "type": "int"
+      },
+      "openDays": {
+        "type": "int"
+      }
+    }
+  },
+  "billOverage": "{extra} extra half-days",
+  "@billOverage": {
+    "description": "Overage line, shown only when extra half-days exist; the amount renders trailing",
+    "placeholders": {
+      "extra": {
+        "type": "int"
+      }
+    }
+  },
+  "billServices": "Consumed services",
+  "@billServices": {
+    "description": "Bill section header for confirmed service consumptions of the period"
+  },
+  "billServicesTotal": "Services total",
+  "@billServicesTotal": {
+    "description": "Total line closing the consumed-services section"
+  },
+  "billOpenPositions": "Open positions",
+  "@billOpenPositions": {
+    "description": "Bill section header for pending money events that are not on the bill yet"
+  },
+  "billPendingBadge": "pending validation",
+  "@billPendingBadge": {
+    "description": "Badge on the open-positions section: these amounts await confirmation"
+  },
+  "billPaymentsCredits": "Payments & credits",
+  "@billPaymentsCredits": {
+    "description": "Bill section header for confirmed credits of the period"
+  },
+  "billBalance": "Balance",
+  "@billBalance": {
+    "description": "Bill footer label; the bold period total renders trailing"
+  },
+  "billSettled": "Settled",
+  "@billSettled": {
+    "description": "Footer state when the period balance is zero or positive"
+  },
+  "billOutstanding": "Outstanding",
+  "@billOutstanding": {
+    "description": "Footer state when the member still owes for the period"
+  }
+}

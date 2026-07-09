@@ -1,0 +1,14 @@
+{
+  "@@locale": "de",
+  "billSubscription": "Abo {pct} %",
+  "billEntitlement": "{used} von {included} halben Tagen genutzt ({openDays} Öffnungstage)",
+  "billOverage": "{extra} zusätzliche halbe Tage",
+  "billServices": "Bezogene Leistungen",
+  "billServicesTotal": "Summe Leistungen",
+  "billOpenPositions": "Offene Posten",
+  "billPendingBadge": "Bestätigung ausstehend",
+  "billPaymentsCredits": "Zahlungen & Gutschriften",
+  "billBalance": "Saldo",
+  "billSettled": "Beglichen",
+  "billOutstanding": "Offen"
+}

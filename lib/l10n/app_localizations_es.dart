@@ -75,6 +75,45 @@ class AppLocalizationsEs extends AppLocalizations {
   String get availabilityNoClosures => 'No hay días de cierre.';
 
   @override
+  String billSubscription(int pct) {
+    return 'Suscripción $pct %';
+  }
+
+  @override
+  String billEntitlement(int used, int included, int openDays) {
+    return '$used de $included medias jornadas usadas ($openDays días de apertura)';
+  }
+
+  @override
+  String billOverage(int extra) {
+    return '$extra medias jornadas extra';
+  }
+
+  @override
+  String get billServices => 'Servicios consumidos';
+
+  @override
+  String get billServicesTotal => 'Total de servicios';
+
+  @override
+  String get billOpenPositions => 'Partidas pendientes';
+
+  @override
+  String get billPendingBadge => 'pendiente de validación';
+
+  @override
+  String get billPaymentsCredits => 'Pagos y créditos';
+
+  @override
+  String get billBalance => 'Saldo';
+
+  @override
+  String get billSettled => 'Al día';
+
+  @override
+  String get billOutstanding => 'Pendiente';
+
+  @override
   String get billingTitle => 'Facturación';
 
   @override
