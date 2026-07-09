@@ -19,5 +19,9 @@ sealed class Workspace with _$Workspace {
     /// bool. Absent key = the feature's registry default (ON); resolve
     /// with [resolveEnabledFeatures].
     @Default(<String, dynamic>{}) Map<String, dynamic> featureFlags,
+
+    /// Owner-configured payment instructions (#155) as stored — decode
+    /// with [PaymentInstructions.fromDb]. Empty = none configured.
+    @Default(<String, dynamic>{}) Map<String, dynamic> paymentInstructions,
   }) = _Workspace;
 }

@@ -17,7 +17,9 @@ mixin _$Workspace {
  String get id; String get name; String get countryCode; String get currencyCode; String get timezone; String get inviteCode;/// Per-workspace feature overrides (#146): WorkspaceFeature.name →
 /// bool. Absent key = the feature's registry default (ON); resolve
 /// with [resolveEnabledFeatures].
- Map<String, dynamic> get featureFlags;
+ Map<String, dynamic> get featureFlags;/// Owner-configured payment instructions (#155) as stored — decode
+/// with [PaymentInstructions.fromDb]. Empty = none configured.
+ Map<String, dynamic> get paymentInstructions;
 /// Create a copy of Workspace
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +30,16 @@ $WorkspaceCopyWith<Workspace> get copyWith => _$WorkspaceCopyWithImpl<Workspace>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Workspace&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.currencyCode, currencyCode) || other.currencyCode == currencyCode)&&(identical(other.timezone, timezone) || other.timezone == timezone)&&(identical(other.inviteCode, inviteCode) || other.inviteCode == inviteCode)&&const DeepCollectionEquality().equals(other.featureFlags, featureFlags));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Workspace&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.currencyCode, currencyCode) || other.currencyCode == currencyCode)&&(identical(other.timezone, timezone) || other.timezone == timezone)&&(identical(other.inviteCode, inviteCode) || other.inviteCode == inviteCode)&&const DeepCollectionEquality().equals(other.featureFlags, featureFlags)&&const DeepCollectionEquality().equals(other.paymentInstructions, paymentInstructions));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,countryCode,currencyCode,timezone,inviteCode,const DeepCollectionEquality().hash(featureFlags));
+int get hashCode => Object.hash(runtimeType,id,name,countryCode,currencyCode,timezone,inviteCode,const DeepCollectionEquality().hash(featureFlags),const DeepCollectionEquality().hash(paymentInstructions));
 
 @override
 String toString() {
-  return 'Workspace(id: $id, name: $name, countryCode: $countryCode, currencyCode: $currencyCode, timezone: $timezone, inviteCode: $inviteCode, featureFlags: $featureFlags)';
+  return 'Workspace(id: $id, name: $name, countryCode: $countryCode, currencyCode: $currencyCode, timezone: $timezone, inviteCode: $inviteCode, featureFlags: $featureFlags, paymentInstructions: $paymentInstructions)';
 }
 
 
@@ -48,7 +50,7 @@ abstract mixin class $WorkspaceCopyWith<$Res>  {
   factory $WorkspaceCopyWith(Workspace value, $Res Function(Workspace) _then) = _$WorkspaceCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String countryCode, String currencyCode, String timezone, String inviteCode, Map<String, dynamic> featureFlags
+ String id, String name, String countryCode, String currencyCode, String timezone, String inviteCode, Map<String, dynamic> featureFlags, Map<String, dynamic> paymentInstructions
 });
 
 
@@ -65,7 +67,7 @@ class _$WorkspaceCopyWithImpl<$Res>
 
 /// Create a copy of Workspace
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? countryCode = null,Object? currencyCode = null,Object? timezone = null,Object? inviteCode = null,Object? featureFlags = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? countryCode = null,Object? currencyCode = null,Object? timezone = null,Object? inviteCode = null,Object? featureFlags = null,Object? paymentInstructions = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -74,6 +76,7 @@ as String,currencyCode: null == currencyCode ? _self.currencyCode : currencyCode
 as String,timezone: null == timezone ? _self.timezone : timezone // ignore: cast_nullable_to_non_nullable
 as String,inviteCode: null == inviteCode ? _self.inviteCode : inviteCode // ignore: cast_nullable_to_non_nullable
 as String,featureFlags: null == featureFlags ? _self.featureFlags : featureFlags // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>,paymentInstructions: null == paymentInstructions ? _self.paymentInstructions : paymentInstructions // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>,
   ));
 }
@@ -156,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags,  Map<String, dynamic> paymentInstructions)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Workspace() when $default != null:
-return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags);case _:
+return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags,_that.paymentInstructions);case _:
   return orElse();
 
 }
@@ -177,10 +180,10 @@ return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags,  Map<String, dynamic> paymentInstructions)  $default,) {final _that = this;
 switch (_that) {
 case _Workspace():
-return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags);}
+return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags,_that.paymentInstructions);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -194,10 +197,10 @@ return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags,  Map<String, dynamic> paymentInstructions)?  $default,) {final _that = this;
 switch (_that) {
 case _Workspace() when $default != null:
-return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags);case _:
+return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags,_that.paymentInstructions);case _:
   return null;
 
 }
@@ -209,7 +212,7 @@ return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.t
 
 
 class _Workspace implements Workspace {
-  const _Workspace({required this.id, required this.name, required this.countryCode, required this.currencyCode, required this.timezone, required this.inviteCode, final  Map<String, dynamic> featureFlags = const <String, dynamic>{}}): _featureFlags = featureFlags;
+  const _Workspace({required this.id, required this.name, required this.countryCode, required this.currencyCode, required this.timezone, required this.inviteCode, final  Map<String, dynamic> featureFlags = const <String, dynamic>{}, final  Map<String, dynamic> paymentInstructions = const <String, dynamic>{}}): _featureFlags = featureFlags,_paymentInstructions = paymentInstructions;
   
 
 @override final  String id;
@@ -231,6 +234,17 @@ class _Workspace implements Workspace {
   return EqualUnmodifiableMapView(_featureFlags);
 }
 
+/// Owner-configured payment instructions (#155) as stored — decode
+/// with [PaymentInstructions.fromDb]. Empty = none configured.
+ final  Map<String, dynamic> _paymentInstructions;
+/// Owner-configured payment instructions (#155) as stored — decode
+/// with [PaymentInstructions.fromDb]. Empty = none configured.
+@override@JsonKey() Map<String, dynamic> get paymentInstructions {
+  if (_paymentInstructions is EqualUnmodifiableMapView) return _paymentInstructions;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_paymentInstructions);
+}
+
 
 /// Create a copy of Workspace
 /// with the given fields replaced by the non-null parameter values.
@@ -242,16 +256,16 @@ _$WorkspaceCopyWith<_Workspace> get copyWith => __$WorkspaceCopyWithImpl<_Worksp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Workspace&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.currencyCode, currencyCode) || other.currencyCode == currencyCode)&&(identical(other.timezone, timezone) || other.timezone == timezone)&&(identical(other.inviteCode, inviteCode) || other.inviteCode == inviteCode)&&const DeepCollectionEquality().equals(other._featureFlags, _featureFlags));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Workspace&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.currencyCode, currencyCode) || other.currencyCode == currencyCode)&&(identical(other.timezone, timezone) || other.timezone == timezone)&&(identical(other.inviteCode, inviteCode) || other.inviteCode == inviteCode)&&const DeepCollectionEquality().equals(other._featureFlags, _featureFlags)&&const DeepCollectionEquality().equals(other._paymentInstructions, _paymentInstructions));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,countryCode,currencyCode,timezone,inviteCode,const DeepCollectionEquality().hash(_featureFlags));
+int get hashCode => Object.hash(runtimeType,id,name,countryCode,currencyCode,timezone,inviteCode,const DeepCollectionEquality().hash(_featureFlags),const DeepCollectionEquality().hash(_paymentInstructions));
 
 @override
 String toString() {
-  return 'Workspace(id: $id, name: $name, countryCode: $countryCode, currencyCode: $currencyCode, timezone: $timezone, inviteCode: $inviteCode, featureFlags: $featureFlags)';
+  return 'Workspace(id: $id, name: $name, countryCode: $countryCode, currencyCode: $currencyCode, timezone: $timezone, inviteCode: $inviteCode, featureFlags: $featureFlags, paymentInstructions: $paymentInstructions)';
 }
 
 
@@ -262,7 +276,7 @@ abstract mixin class _$WorkspaceCopyWith<$Res> implements $WorkspaceCopyWith<$Re
   factory _$WorkspaceCopyWith(_Workspace value, $Res Function(_Workspace) _then) = __$WorkspaceCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String countryCode, String currencyCode, String timezone, String inviteCode, Map<String, dynamic> featureFlags
+ String id, String name, String countryCode, String currencyCode, String timezone, String inviteCode, Map<String, dynamic> featureFlags, Map<String, dynamic> paymentInstructions
 });
 
 
@@ -279,7 +293,7 @@ class __$WorkspaceCopyWithImpl<$Res>
 
 /// Create a copy of Workspace
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? countryCode = null,Object? currencyCode = null,Object? timezone = null,Object? inviteCode = null,Object? featureFlags = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? countryCode = null,Object? currencyCode = null,Object? timezone = null,Object? inviteCode = null,Object? featureFlags = null,Object? paymentInstructions = null,}) {
   return _then(_Workspace(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -288,6 +302,7 @@ as String,currencyCode: null == currencyCode ? _self.currencyCode : currencyCode
 as String,timezone: null == timezone ? _self.timezone : timezone // ignore: cast_nullable_to_non_nullable
 as String,inviteCode: null == inviteCode ? _self.inviteCode : inviteCode // ignore: cast_nullable_to_non_nullable
 as String,featureFlags: null == featureFlags ? _self._featureFlags : featureFlags // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>,paymentInstructions: null == paymentInstructions ? _self._paymentInstructions : paymentInstructions // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>,
   ));
 }

@@ -9,6 +9,12 @@ import '../../helpers/mock_providers.dart';
 Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   WidgetTester tester,
 ) async {
+  // The settings form grew past the default 800px test viewport (#155);
+  // a taller view keeps every field + Save built without scrolling.
+  tester.view.physicalSize = const Size(800, 2400);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.resetPhysicalSize);
+  addTearDown(tester.view.resetDevicePixelRatio);
   final workspace = FakeWorkspaceRepository.withWorkspace();
   await tester.pumpWidget(
     ProviderScope(
@@ -42,7 +48,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('CHF'), findsOneWidget);
     expect(find.text('Europe/Zurich'), findsOneWidget);
-
     await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
     await tester.pumpAndSettle();
 
@@ -81,6 +86,33 @@ void main() {
 
     expect(workspace.lastLocaleUpdate, isNull);
     expect(find.text('Required'), findsOneWidget);
+  });
+
+  testWidgets(
+      'the payment-instructions fields save through the repository and '
+      'ride the same Save button (#155)', (tester) async {
+    final workspace = await pumpWorkspaceSettings(tester);
+    await tester.enterText(
+      find.byKey(const Key('workspaceSettingsIban')),
+      'DE89 3704 0044 0532 0130 00',
+    );
+    await tester.enterText(
+      find.byKey(const Key('workspaceSettingsPaypalMe')),
+      'deskilo',
+    );
+    await tester.enterText(
+      find.byKey(const Key('workspaceSettingsReference')),
+      'DesKilo member period',
+    );
+    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+    await tester.pumpAndSettle();
+
+    final saved = workspace.lastPaymentInstructions;
+    expect(saved, isNotNull);
+    expect(saved!.iban, 'DE89 3704 0044 0532 0130 00');
+    expect(saved.paypalMe, 'deskilo');
+    expect(saved.reference, 'DesKilo member period');
+    expect(saved.paypalMeUri.toString(), 'https://paypal.me/deskilo');
   });
 
   testWidgets('non-owners see no Workspace entry in settings',

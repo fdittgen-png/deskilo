@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/theme/app_radius.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
+import '../../../workspace/domain/payment_instructions.dart';
 import '../../domain/bill_sections.dart';
 import '../../domain/ledger_entry.dart';
 import '../../domain/statement.dart';
@@ -21,6 +25,7 @@ class BillView extends StatelessWidget {
     required this.pendingMoneyEvents,
     required this.currencyCode,
     required this.memberId,
+    this.paymentInstructions = const PaymentInstructions(),
   });
 
   final Statement statement;
@@ -28,6 +33,10 @@ class BillView extends StatelessWidget {
   final List<WorkspaceEvent> pendingMoneyEvents;
   final String currencyCode;
   final String memberId;
+
+  /// #155 — the workspace's how-to-pay details; rendered below the
+  /// balance footer only while the statement is outstanding.
+  final PaymentInstructions paymentInstructions;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +68,102 @@ class BillView extends StatelessWidget {
         ],
         const SizedBox(height: 8),
         _BalanceFooter(statement: statement, money: money),
+        // #155 — how to pay, only while something is owed (spec §7:
+        // "shown on unpaid statements") and only when the owner
+        // configured anything at all.
+        if (!statement.isSettled && !paymentInstructions.isEmpty) ...[
+          const SizedBox(height: 8),
+          _HowToPayCard(instructions: paymentInstructions),
+        ],
       ],
+    );
+  }
+}
+
+/// The workspace's payment instructions (#155): IBAN copies to the
+/// clipboard, the PayPal.me link opens externally, the reference hint is
+/// plain text. Purely informational — recording a payment stays the
+/// separate spec §8 confirmation flow.
+class _HowToPayCard extends StatelessWidget {
+  const _HowToPayCard({required this.instructions});
+
+  final PaymentInstructions instructions;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final paypalUri = instructions.paypalMeUri;
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              child: Text(
+                l10n?.paymentInstructionsTitle ?? 'Payment instructions',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            if (instructions.iban.trim().isNotEmpty)
+              ListTile(
+                key: const Key('howToPayIban'),
+                leading: const Icon(Icons.account_balance_outlined),
+                // IBAN is a language-neutral banking acronym — the key
+                // carries it verbatim in every locale.
+                title: Text(l10n?.paymentInstructionsIbanTitle ?? 'IBAN'),
+                subtitle: Text(instructions.iban.trim()),
+                trailing: const Icon(Icons.copy_outlined, size: 18),
+                onTap: () async {
+                  await Clipboard.setData(
+                    ClipboardData(text: instructions.iban.trim()),
+                  );
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        l10n?.paymentInstructionsIbanCopied ??
+                            'IBAN copied.',
+                      ),
+                    ),
+                  );
+                },
+              ),
+            if (paypalUri != null)
+              ListTile(
+                key: const Key('howToPayPaypal'),
+                leading: const Icon(Icons.open_in_new),
+                // Brand name — reuses the #154 method label key.
+                title: Text(l10n?.paymentMethodPaypal ?? 'PayPal'),
+                subtitle: Text(paypalUri.toString()),
+                onTap: () async {
+                  try {
+                    await launchUrl(
+                      paypalUri,
+                      mode: LaunchMode.externalApplication,
+                    );
+                  } catch (e, st) {
+                    debugPrint('paypal launch failed: $e\n$st');
+                    TraceLogger.instance.error(
+                        'money', 'paypal launch failed',
+                        error: e, stackTrace: st);
+                  }
+                },
+              ),
+            if (instructions.reference.trim().isNotEmpty)
+              ListTile(
+                key: const Key('howToPayReference'),
+                leading: const Icon(Icons.tag_outlined),
+                title: Text(
+                  l10n?.paymentInstructionsReferenceLabel ??
+                      'Payment reference hint',
+                ),
+                subtitle: Text(instructions.reference.trim()),
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

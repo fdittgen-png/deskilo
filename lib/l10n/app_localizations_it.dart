@@ -1047,4 +1047,23 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get workspaceSettingsCurrencyHelper =>
       'Proposta in base al paese — modificala se la tua community fattura in un’altra valuta.';
+
+  @override
+  String get paymentInstructionsTitle => 'Istruzioni di pagamento';
+
+  @override
+  String get paymentInstructionsHelper =>
+      'Mostrate ai membri su un estratto non saldato. Lascia vuoto per non mostrare nulla.';
+
+  @override
+  String get paymentInstructionsPaypalLabel => 'Link o nome PayPal.me';
+
+  @override
+  String get paymentInstructionsReferenceLabel => 'Indicazione della causale';
+
+  @override
+  String get paymentInstructionsIbanTitle => 'IBAN';
+
+  @override
+  String get paymentInstructionsIbanCopied => 'IBAN copiato.';
 }

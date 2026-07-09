@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/closure_day.dart';
 import '../domain/member.dart';
+import '../domain/payment_instructions.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_repository.dart';
 
@@ -58,6 +59,17 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setPaymentInstructions(
+    String workspaceId,
+    PaymentInstructions instructions,
+  ) async {
+    // Wholesale jsonb replace, like feature_flags (#155): the settings
+    // form always writes the full three-field blob.
+    await _client.from('workspaces').update(
+        {'payment_instructions': instructions.toDb()}).eq('id', workspaceId);
+  }
+
+  @override
   Future<Member?> fetchMyMember(String workspaceId) async {
     final userId = _client.auth.currentUser?.id;
     if (userId == null) return null;
@@ -105,6 +117,8 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
         inviteCode: row['invite_code'] as String,
         featureFlags:
             row['feature_flags'] as Map<String, dynamic>? ?? const {},
+        paymentInstructions:
+            row['payment_instructions'] as Map<String, dynamic>? ?? const {},
       );
 
   @override

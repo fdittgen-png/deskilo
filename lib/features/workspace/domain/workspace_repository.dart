@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'closure_day.dart';
 import 'member.dart';
+import 'payment_instructions.dart';
 import 'workspace.dart';
 
 /// Pure-Dart workspace boundary. Supabase impl in data/, fake in tests.
@@ -28,6 +29,14 @@ abstract class WorkspaceRepository {
     required String currencyCode,
     required String timezone,
   });
+
+  /// Owner-only (workspaces_update RLS): replace the workspace's payment
+  /// instructions wholesale (#155). Shown to members on unpaid
+  /// statements.
+  Future<void> setPaymentInstructions(
+    String workspaceId,
+    PaymentInstructions instructions,
+  );
 
   /// The signed-in user's membership in [workspaceId], or null.
   Future<Member?> fetchMyMember(String workspaceId);

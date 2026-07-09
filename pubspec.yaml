@@ -43,6 +43,9 @@ dependencies:
   shared_preferences: ^2.5.5
   share_plus: ^13.2.0
   unifiedpush: ^6.2.0
+  # #155 — opens the workspace's PayPal.me link from an unpaid statement.
+  # Flutter-official, BSD-3, no GMS — F-Droid clean.
+  url_launcher: ^6.3.1
 
   # Bill PDF export (#133) — pure Dart, F-Droid clean. Deliberately NOT the
   # `printing` package: it pulls platform channels we don't need.

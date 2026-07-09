@@ -2005,6 +2005,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Defaults from the country — override if your community bills in another currency.'**
   String get workspaceSettingsCurrencyHelper;
+
+  /// Section title: owner editor (workspace settings) + the how-to-pay card on an unpaid statement (#155).
+  ///
+  /// In en, this message translates to:
+  /// **'Payment instructions'**
+  String get paymentInstructionsTitle;
+
+  /// Helper under the payment-instructions section of the workspace settings screen (#155).
+  ///
+  /// In en, this message translates to:
+  /// **'Shown to members on an unpaid statement. Leave empty to show nothing.'**
+  String get paymentInstructionsHelper;
+
+  /// Label of the PayPal.me field in the workspace settings (#155). PayPal.me is a brand name.
+  ///
+  /// In en, this message translates to:
+  /// **'PayPal.me link or handle'**
+  String get paymentInstructionsPaypalLabel;
+
+  /// Label of the reference-hint field (settings) and row (statement card) (#155).
+  ///
+  /// In en, this message translates to:
+  /// **'Payment reference hint'**
+  String get paymentInstructionsReferenceLabel;
+
+  /// Row title for the IBAN on the how-to-pay card — the acronym is identical in every locale (#155).
+  ///
+  /// In en, this message translates to:
+  /// **'IBAN'**
+  String get paymentInstructionsIbanTitle;
+
+  /// Snackbar after tapping the IBAN row copied it to the clipboard (#155).
+  ///
+  /// In en, this message translates to:
+  /// **'IBAN copied.'**
+  String get paymentInstructionsIbanCopied;
 }
 
 class _AppLocalizationsDelegate

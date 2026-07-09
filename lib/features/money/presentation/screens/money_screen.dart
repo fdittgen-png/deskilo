@@ -11,6 +11,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../../workspace/domain/payment_instructions.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/bill_pdf.dart';
@@ -444,6 +445,10 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 pendingMoneyEvents: pendingEvents,
                 currencyCode: currencyCode,
                 memberId: member?.id ?? '',
+                // #155 — how-to-pay card on an outstanding balance.
+                paymentInstructions: PaymentInstructions.fromDb(
+                  workspace?.paymentInstructions ?? const {},
+                ),
               ),
             const SizedBox(height: 8),
             FilledButton.icon(

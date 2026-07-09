@@ -316,5 +316,11 @@
   "workspaceCodeSharePng": "Compartir como PNG",
   "workspaceSettingsTitle": "Espacio de coworking",
   "workspaceSettingsSaved": "Espacio guardado.",
-  "workspaceSettingsCurrencyHelper": "Se propone según el país — cámbiala si tu comunidad factura en otra moneda."
+  "workspaceSettingsCurrencyHelper": "Se propone según el país — cámbiala si tu comunidad factura en otra moneda.",
+  "paymentInstructionsTitle": "Instrucciones de pago",
+  "paymentInstructionsHelper": "Se muestran a los miembros en un extracto pendiente. Déjalo vacío para no mostrar nada.",
+  "paymentInstructionsPaypalLabel": "Enlace o usuario de PayPal.me",
+  "paymentInstructionsReferenceLabel": "Indicación de referencia del pago",
+  "paymentInstructionsIbanTitle": "IBAN",
+  "paymentInstructionsIbanCopied": "IBAN copiado."
 }
