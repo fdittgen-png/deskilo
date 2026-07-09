@@ -13,15 +13,16 @@ part 'reservation_providers.g.dart';
 ReservationRepository reservationRepository(Ref ref) =>
     SupabaseReservationRepository(Supabase.instance.client);
 
-/// Reservations of the active workspace intersecting the given UTC day
-/// (keyed by 'yyyy-MM-dd' to keep family keys canonical).
+/// Reservations of the active workspace intersecting the given LOCAL day
+/// (keyed 'yyyy-MM-dd'). Local, not UTC: the user thinks in wall-clock
+/// days, and a UTC window shifts the visible day east/west of UTC (#119).
 @riverpod
 Future<List<Reservation>> reservationsForDay(Ref ref, String dayKey) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   final parts = dayKey.split('-').map(int.parse).toList();
-  final from = DateTime.utc(parts[0], parts[1], parts[2]);
-  final to = from.add(const Duration(days: 1));
+  final from = DateTime(parts[0], parts[1], parts[2]);
+  final to = DateTime(parts[0], parts[1], parts[2] + 1);
   return ref
       .watch(reservationRepositoryProvider)
       .fetchWindow(workspace.id, from: from, to: to);
@@ -56,30 +57,32 @@ Future<Map<String, String>> memberNames(Ref ref) async {
   return ref.watch(workspaceRepositoryProvider).fetchMemberNames(workspace.id);
 }
 
-/// Reservations of the active workspace intersecting the given month
-/// (keyed 'yyyy-MM').
+/// Reservations of the active workspace intersecting the given LOCAL
+/// month (keyed 'yyyy-MM'). See [reservationsForDay] for why local (#119):
+/// a UTC key turned the July calendar into a June query east of UTC.
 @riverpod
 Future<List<Reservation>> reservationsForMonth(Ref ref, String monthKey) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   final parts = monthKey.split('-').map(int.parse).toList();
-  final from = DateTime.utc(parts[0], parts[1]);
-  final to = DateTime.utc(parts[0], parts[1] + 1);
+  final from = DateTime(parts[0], parts[1]);
+  final to = DateTime(parts[0], parts[1] + 1);
   return ref
       .watch(reservationRepositoryProvider)
       .fetchWindow(workspace.id, from: from, to: to);
 }
 
-/// Canonical family key for [reservationsForMonth].
+/// Canonical family key for [reservationsForMonth] — LOCAL wall-clock
+/// month of [at], never UTC (#119).
 String monthKeyOf(DateTime at) {
-  final utc = at.toUtc();
-  return '${utc.year}-${utc.month.toString().padLeft(2, '0')}';
+  final local = at.toLocal();
+  return '${local.year}-${local.month.toString().padLeft(2, '0')}';
 }
 
-/// Canonical family key for [reservationsForDay].
+/// Canonical family key for [reservationsForDay] — LOCAL wall-clock day.
 String dayKeyOf(DateTime at) {
-  final utc = at.toUtc();
-  final m = utc.month.toString().padLeft(2, '0');
-  final d = utc.day.toString().padLeft(2, '0');
-  return '${utc.year}-$m-$d';
+  final local = at.toLocal();
+  final m = local.month.toString().padLeft(2, '0');
+  final d = local.day.toString().padLeft(2, '0');
+  return '${local.year}-$m-$d';
 }
