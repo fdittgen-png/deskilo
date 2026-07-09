@@ -258,6 +258,30 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get developerMode => 'Modo desarrollador';
+
+  @override
+  String get developerTitle => 'Desarrollador';
+
+  @override
+  String get developerExport => 'Exportar registro';
+
+  @override
+  String get developerClear => 'Vaciar registro';
+
+  @override
+  String get developerEmpty => 'Aún no hay entradas de registro.';
+
+  @override
+  String get developerFilterAll => 'Todo';
+
+  @override
+  String get developerFilterErrors => 'Errores';
+
+  @override
+  String get developerFilterWarnings => 'Avisos+';
+
+  @override
   String get editorTitle => 'Editor del espacio';
 
   @override

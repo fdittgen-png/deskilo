@@ -1,0 +1,35 @@
+{
+  "@@locale": "en",
+  "developerMode": "Developer mode",
+  "@developerMode": {
+    "description": "Settings toggle enabling the local diagnostics screen"
+  },
+  "developerTitle": "Developer",
+  "@developerTitle": {
+    "description": "App-bar title and settings entry of the trace viewer"
+  },
+  "developerExport": "Export trace",
+  "@developerExport": {
+    "description": "App-bar action sharing the trace log as a file"
+  },
+  "developerClear": "Clear trace",
+  "@developerClear": {
+    "description": "App-bar action emptying the trace buffer and file"
+  },
+  "developerEmpty": "No trace entries yet.",
+  "@developerEmpty": {
+    "description": "Placeholder when the trace list is empty"
+  },
+  "developerFilterAll": "All",
+  "@developerFilterAll": {
+    "description": "Filter chip showing every trace level"
+  },
+  "developerFilterErrors": "Errors",
+  "@developerFilterErrors": {
+    "description": "Filter chip showing only error-level entries"
+  },
+  "developerFilterWarnings": "Warnings+",
+  "@developerFilterWarnings": {
+    "description": "Filter chip showing warnings and errors"
+  }
+}

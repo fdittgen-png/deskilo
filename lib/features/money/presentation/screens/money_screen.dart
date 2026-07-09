@@ -7,6 +7,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/share/share_launcher.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -130,6 +131,9 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       );
     } catch (e, st) {
       debugPrint('bill PDF export failed: $e\n$st');
+      // Trace exemplar (#144) — the full catch sweep is #145.
+      TraceLogger.instance
+          .error('money', 'bill PDF export failed', error: e, stackTrace: st);
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -212,6 +216,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           );
     } catch (e, st) {
       debugPrint('record payment failed: $e\n$st');
+      TraceLogger.instance
+          .error('money', 'record payment failed', error: e, stackTrace: st);
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -331,6 +337,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           );
     } catch (e, st) {
       debugPrint('submit expense failed: $e\n$st');
+      TraceLogger.instance
+          .error('money', 'submit expense failed', error: e, stackTrace: st);
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

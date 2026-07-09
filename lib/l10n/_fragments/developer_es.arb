@@ -1,0 +1,11 @@
+{
+  "@@locale": "es",
+  "developerMode": "Modo desarrollador",
+  "developerTitle": "Desarrollador",
+  "developerExport": "Exportar registro",
+  "developerClear": "Vaciar registro",
+  "developerEmpty": "Aún no hay entradas de registro.",
+  "developerFilterAll": "Todo",
+  "developerFilterErrors": "Errores",
+  "developerFilterWarnings": "Avisos+"
+}

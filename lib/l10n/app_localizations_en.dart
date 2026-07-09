@@ -256,6 +256,30 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get developerMode => 'Developer mode';
+
+  @override
+  String get developerTitle => 'Developer';
+
+  @override
+  String get developerExport => 'Export trace';
+
+  @override
+  String get developerClear => 'Clear trace';
+
+  @override
+  String get developerEmpty => 'No trace entries yet.';
+
+  @override
+  String get developerFilterAll => 'All';
+
+  @override
+  String get developerFilterErrors => 'Errors';
+
+  @override
+  String get developerFilterWarnings => 'Warnings+';
+
+  @override
   String get editorTitle => 'Workspace editor';
 
   @override
