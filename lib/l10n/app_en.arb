@@ -231,6 +231,58 @@
   "@comingSoon": {
     "description": "Placeholder body shown on tabs whose feature is not yet implemented"
   },
+  "consumptionAdd": "Add consumption",
+  "@consumptionAdd": {
+    "description": "Button + sheet title recording my own consumed services (#129)"
+  },
+  "consumptionAddForMember": "Add service for {name}",
+  "@consumptionAddForMember": {
+    "description": "Sheet title / tooltip when an admin records for another member",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "consumptionService": "Service",
+  "@consumptionService": {
+    "description": "Label of the service dropdown in the consumption sheet"
+  },
+  "consumptionQuantity": "Quantity",
+  "@consumptionQuantity": {
+    "description": "Label of the quantity stepper (1–999)"
+  },
+  "consumptionPeriodLabel": "Billing period (YYYY-MM)",
+  "@consumptionPeriodLabel": {
+    "description": "Label of the billing-period input; prefilled with the current month"
+  },
+  "consumptionNoServices": "No active services to record.",
+  "@consumptionNoServices": {
+    "description": "Snackbar when the workspace offers no active services"
+  },
+  "consumptionRecorded": "Consumption recorded — waiting for confirmation.",
+  "@consumptionRecorded": {
+    "description": "Snackbar after submitting; the charge stays pending until confirmed"
+  },
+  "eventTypeServiceCharge": "Service",
+  "@eventTypeServiceCharge": {
+    "description": "Event type label / filter chip for service charges"
+  },
+  "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
+  "@eventServiceChargeTitle": {
+    "description": "Feed/card line for a service charge, e.g. 'Coffee ×2 — €3.00'; amount is preformatted currency",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "editorTitle": "Workspace editor",
   "@editorTitle": {
     "description": "App-bar title of the owner-only workspace editor"
@@ -673,6 +725,10 @@
   "ledgerCategoryAdjustment": "Adjustment",
   "@ledgerCategoryAdjustment": {
     "description": "Ledger entry category"
+  },
+  "ledgerCategoryService": "Service",
+  "@ledgerCategoryService": {
+    "description": "Ledger entry category for confirmed service charges (#129)"
   },
   "plansEditorTitle": "Plans",
   "plansEditorNew": "New plan",

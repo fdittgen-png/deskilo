@@ -20,6 +20,7 @@
   "ledgerCategoryExpense": "Auslagenerstattung",
   "ledgerCategoryPayment": "Zahlung",
   "ledgerCategoryAdjustment": "Korrektur",
+  "ledgerCategoryService": "Leistung",
   "moneySubmitExpense": "Ausgabe einreichen",
   "moneyExpenseCategoryLabel": "Kategorie",
   "moneyDescriptionLabel": "Beschreibung",

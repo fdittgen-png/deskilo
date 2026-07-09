@@ -5,9 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 
-Future<FakeWorkspaceRepository> pumpMembers(WidgetTester tester) async {
+Future<FakeWorkspaceRepository> pumpMembers(
+  WidgetTester tester, {
+  FakeMoneyRepository? money,
+}) async {
   final workspace = FakeWorkspaceRepository.withWorkspace()
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
     ..otherMembers.add(
@@ -22,7 +26,7 @@ Future<FakeWorkspaceRepository> pumpMembers(WidgetTester tester) async {
     );
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(workspace: workspace),
+      overrides: standardTestOverrides(workspace: workspace, money: money),
       child: const DeskiloApp(),
     ),
   );
@@ -74,6 +78,26 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(workspace.otherMembers.single.subscriptionPct, 37);
+  });
+
+  testWidgets('the owner records a service onto another member\'s bill (#129)',
+      (tester) async {
+    final money = FakeMoneyRepository();
+    await pumpMembers(tester, money: money);
+
+    // Ana's row is the second one.
+    await tester.tap(find.byIcon(Icons.room_service_outlined).last);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Add service for Ana'), findsOneWidget);
+    await tester.tap(find.text('Submit for confirmation'));
+    await tester.pumpAndSettle();
+
+    final recorded = money.recordedServiceCharges.single;
+    expect(recorded.workspaceId, 'ws-1');
+    expect(recorded.subjectMemberId, 'member-2');
+    expect(recorded.serviceId, 'service-coffee');
+    expect(recorded.quantity, 1);
   });
 
   testWidgets('long-press pauses an active membership', (tester) async {

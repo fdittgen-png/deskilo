@@ -5,7 +5,14 @@ part 'ledger_entry.freezed.dart';
 
 enum LedgerKind { charge, credit }
 
-enum LedgerCategory { subscription, overage, expense, payment, adjustment }
+enum LedgerCategory {
+  subscription,
+  overage,
+  expense,
+  payment,
+  adjustment,
+  service,
+}
 
 /// One line on a member's ledger (spec §7.3).
 @freezed

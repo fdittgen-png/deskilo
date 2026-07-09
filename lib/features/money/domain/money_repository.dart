@@ -63,6 +63,19 @@ abstract class MoneyRepository {
     bool? active,
   });
 
+  /// Records consumed services onto the monthly bill (#129, ADR 0008).
+  /// Creates a PENDING service_charge event with a name+price snapshot —
+  /// the ledger charge posts only on confirmation. Members self-report
+  /// (subject = self); admins/owner may record for any member. [period]
+  /// is 'yyyy-MM' and defaults server-side to the current month.
+  Future<void> recordServiceCharge({
+    required String workspaceId,
+    required String subjectMemberId,
+    required String serviceId,
+    required int quantity,
+    String? period,
+  });
+
   /// Submits a community expense (spec §9); another admin must approve
   /// before the credit exists. Returns the pending event id.
   Future<String> submitExpense({

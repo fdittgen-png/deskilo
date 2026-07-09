@@ -38,7 +38,7 @@ class SupabaseEventRepository implements EventRepository {
   WorkspaceEvent _fromRow(Map<String, dynamic> row) => WorkspaceEvent(
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
-        type: EventType.values.byName(row['type'] as String),
+        type: EventType.fromDb(row['type'] as String),
         action: EventAction.values.byName(row['action'] as String),
         actorMemberId: row['actor_member_id'] as String,
         subjectMemberId: row['subject_member_id'] as String,

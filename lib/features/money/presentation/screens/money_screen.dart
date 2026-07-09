@@ -9,6 +9,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/ledger_entry.dart';
 import '../../domain/statement.dart';
 import '../../providers/money_providers.dart';
+import '../widgets/consumption_sheet.dart';
 
 /// Money tab (spec §7.3): current-period statement, payment recording,
 /// ledger history. Amounts render in the workspace currency.
@@ -25,6 +26,7 @@ class MoneyScreen extends ConsumerWidget {
       LedgerCategory.payment => l10n?.ledgerCategoryPayment ?? 'Payment',
       LedgerCategory.adjustment =>
         l10n?.ledgerCategoryAdjustment ?? 'Adjustment',
+      LedgerCategory.service => l10n?.ledgerCategoryService ?? 'Service',
     };
   }
 
@@ -277,6 +279,20 @@ class MoneyScreen extends ConsumerWidget {
               onPressed: () => _submitExpenseSheet(context, ref, currency),
               icon: const Icon(Icons.receipt_long_outlined),
               label: Text(l10n?.moneySubmitExpense ?? 'Submit an expense'),
+            ),
+            const SizedBox(height: 8),
+            OutlinedButton.icon(
+              onPressed: () {
+                final member = ref.read(myMemberProvider).value;
+                if (member == null) return;
+                showConsumptionSheet(
+                  context,
+                  ref,
+                  subjectMemberId: member.id,
+                );
+              },
+              icon: const Icon(Icons.room_service_outlined),
+              label: Text(l10n?.consumptionAdd ?? 'Add consumption'),
             ),
             const SizedBox(height: 16),
             Text(

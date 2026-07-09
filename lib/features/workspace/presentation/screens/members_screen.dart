@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/member.dart';
@@ -143,10 +144,33 @@ class MembersScreen extends ConsumerWidget {
                         Text(l10n?.memberStatusExited ?? 'Exited'),
                     ],
                   ),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.percent),
-                    tooltip: l10n?.memberSubscriptionLabel ?? 'Subscription',
-                    onPressed: () => _pickSubscription(context, ref, member),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Consumed services land on the member's bill only
+                      // after the member confirms (#129).
+                      if (member.status == MemberStatus.active)
+                        IconButton(
+                          icon: const Icon(Icons.room_service_outlined),
+                          tooltip: l10n?.consumptionAddForMember(
+                                names[member.id] ?? '',
+                              ) ??
+                              'Add service for ${names[member.id] ?? ''}',
+                          onPressed: () => showConsumptionSheet(
+                            context,
+                            ref,
+                            subjectMemberId: member.id,
+                            subjectName: names[member.id] ?? '',
+                          ),
+                        ),
+                      IconButton(
+                        icon: const Icon(Icons.percent),
+                        tooltip:
+                            l10n?.memberSubscriptionLabel ?? 'Subscription',
+                        onPressed: () =>
+                            _pickSubscription(context, ref, member),
+                      ),
+                    ],
                   ),
                   onLongPress: member.status == MemberStatus.exited
                       ? null

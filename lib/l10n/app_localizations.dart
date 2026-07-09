@@ -428,6 +428,60 @@ abstract class AppLocalizations {
   /// **'Coming soon'**
   String get comingSoon;
 
+  /// Button + sheet title recording my own consumed services (#129)
+  ///
+  /// In en, this message translates to:
+  /// **'Add consumption'**
+  String get consumptionAdd;
+
+  /// Sheet title / tooltip when an admin records for another member
+  ///
+  /// In en, this message translates to:
+  /// **'Add service for {name}'**
+  String consumptionAddForMember(String name);
+
+  /// Label of the service dropdown in the consumption sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get consumptionService;
+
+  /// Label of the quantity stepper (1–999)
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get consumptionQuantity;
+
+  /// Label of the billing-period input; prefilled with the current month
+  ///
+  /// In en, this message translates to:
+  /// **'Billing period (YYYY-MM)'**
+  String get consumptionPeriodLabel;
+
+  /// Snackbar when the workspace offers no active services
+  ///
+  /// In en, this message translates to:
+  /// **'No active services to record.'**
+  String get consumptionNoServices;
+
+  /// Snackbar after submitting; the charge stays pending until confirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Consumption recorded — waiting for confirmation.'**
+  String get consumptionRecorded;
+
+  /// Event type label / filter chip for service charges
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get eventTypeServiceCharge;
+
+  /// Feed/card line for a service charge, e.g. 'Coffee ×2 — €3.00'; amount is preformatted currency
+  ///
+  /// In en, this message translates to:
+  /// **'{name} ×{quantity} — {amount}'**
+  String eventServiceChargeTitle(String name, int quantity, String amount);
+
   /// App-bar title of the owner-only workspace editor
   ///
   /// In en, this message translates to:
@@ -997,6 +1051,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Adjustment'**
   String get ledgerCategoryAdjustment;
+
+  /// Ledger entry category for confirmed service charges (#129)
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get ledgerCategoryService;
 
   /// Owner plan-editor screen title (#105)
   ///

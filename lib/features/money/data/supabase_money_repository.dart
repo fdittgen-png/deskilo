@@ -74,6 +74,23 @@ class SupabaseMoneyRepository implements MoneyRepository {
   }
 
   @override
+  Future<void> recordServiceCharge({
+    required String workspaceId,
+    required String subjectMemberId,
+    required String serviceId,
+    required int quantity,
+    String? period,
+  }) async {
+    await _client.rpc<dynamic>('record_service_charge', params: {
+      'p_workspace_id': workspaceId,
+      'p_subject_member_id': subjectMemberId,
+      'p_service_id': serviceId,
+      'p_quantity': quantity,
+      'p_period': ?period,
+    });
+  }
+
+  @override
   Future<String> submitExpense({
     required String workspaceId,
     required int amountCents,

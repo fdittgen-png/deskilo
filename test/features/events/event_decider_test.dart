@@ -83,6 +83,33 @@ void main() {
       expect(e.isDecidedBy(admin, hasOtherActiveAdmin: true), isFalse);
     });
 
+    test('self-reported service charge is decided by another admin (#129)',
+        () {
+      final e = event(type: EventType.serviceCharge);
+      expect(e.isDecidedBy(submitterAdmin, hasOtherActiveAdmin: true),
+          isFalse);
+      expect(e.isDecidedBy(admin, hasOtherActiveAdmin: true), isTrue);
+      expect(e.isDecidedBy(worker, hasOtherActiveAdmin: true), isFalse);
+    });
+
+    test('solo admin may decide their own service charge (escape hatch)', () {
+      final e = event(type: EventType.serviceCharge);
+      expect(
+        e.isDecidedBy(submitterAdmin, hasOtherActiveAdmin: false),
+        isTrue,
+      );
+    });
+
+    test('admin-added service charge is decided by the subject member', () {
+      final e = event(
+        type: EventType.serviceCharge,
+        actor: 'm-flo',
+        subject: 'm-worker',
+      );
+      expect(e.isDecidedBy(worker, hasOtherActiveAdmin: true), isTrue);
+      expect(e.isDecidedBy(admin, hasOtherActiveAdmin: true), isFalse);
+    });
+
     test('decided events are nobody to decide', () {
       expect(
         event(status: EventStatus.confirmed)

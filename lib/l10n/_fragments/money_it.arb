@@ -20,6 +20,7 @@
   "ledgerCategoryExpense": "Rimborso spesa",
   "ledgerCategoryPayment": "Pagamento",
   "ledgerCategoryAdjustment": "Rettifica",
+  "ledgerCategoryService": "Servizio",
   "moneySubmitExpense": "Invia una spesa",
   "moneyExpenseCategoryLabel": "Categoria",
   "moneyDescriptionLabel": "Descrizione",

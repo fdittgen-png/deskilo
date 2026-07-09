@@ -182,6 +182,38 @@ class AppLocalizationsIt extends AppLocalizations {
   String get comingSoon => 'Prossimamente';
 
   @override
+  String get consumptionAdd => 'Aggiungi consumo';
+
+  @override
+  String consumptionAddForMember(String name) {
+    return 'Aggiungi servizio per $name';
+  }
+
+  @override
+  String get consumptionService => 'Servizio';
+
+  @override
+  String get consumptionQuantity => 'Quantità';
+
+  @override
+  String get consumptionPeriodLabel => 'Periodo di fatturazione (AAAA-MM)';
+
+  @override
+  String get consumptionNoServices => 'Nessun servizio attivo da registrare.';
+
+  @override
+  String get consumptionRecorded =>
+      'Consumo registrato — in attesa di conferma.';
+
+  @override
+  String get eventTypeServiceCharge => 'Servizio';
+
+  @override
+  String eventServiceChargeTitle(String name, int quantity, String amount) {
+    return '$name ×$quantity — $amount';
+  }
+
+  @override
   String get editorTitle => 'Editor dello spazio';
 
   @override
@@ -490,6 +522,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get ledgerCategoryAdjustment => 'Rettifica';
+
+  @override
+  String get ledgerCategoryService => 'Servizio';
 
   @override
   String get plansEditorTitle => 'Piani';
