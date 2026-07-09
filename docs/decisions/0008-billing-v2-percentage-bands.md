@@ -11,9 +11,15 @@ Owners need pricing that is fully configurable instead of the fixed three-plan s
 ### Percentage subscriptions replace plans
 
 - A member's subscription is an **integer percentage 1–100** (`members.subscription_pct`), the membership level. Plans and `members.plan_id` are retired; existing members migrate Full→100, Half→50, Flex→lowest offered level.
-- The owner curates which levels are offered: the preset steps **25 / 50 / 75 / 100** plus a **free-value** entry, each individually shown or hidden (`workspaces.subscription_levels jsonb` — list of enabled presets + `allow_custom bool`). Members can hold a level that is later hidden; hiding only limits new picks.
+- The owner curates which levels are offered (`workspaces.subscription_levels jsonb`): the preset steps **25 / 50 / 75 / 100**, each individually enabled or hidden; **additional owner-defined levels** (any integer 1–100); and an **optional free-value option** (`allow_custom bool`) where the level is negotiated per person. Members can hold a level that is later hidden; hiding only limits new picks.
 - **Fee bands** (`fee_bands`: `workspace_id`, `from_pct`, `to_pct`, `fee_cents`, `overage_fee_cents`) price the subscription: the monthly fee is the band the member's percentage falls into. Bands are **(from, to] inclusive-upper**, integer percents, and must be **contiguous and non-overlapping covering 1–100** — enforced by a DB constraint trigger and by the band editor.
-- The percentage also scales **entitlement**: 100% = every half-day the workspace month offers; a member's included half-days = `ceil(month_half_days × pct / 100)`. Usage beyond it bills at the band's `overage_fee_cents` per half-day. *(Defaulted decision — flagged for veto on epic #121; the alternative "percentage is a price level only, unlimited usage" was rejected as unfair to low-percentage pricing.)*
+- The percentage scales **entitlement** *(owner-confirmed 2026-07-09)*: 100% = every half-day the workspace offers that month; a member's included half-days = `ceil(open_days × 2 × pct / 100)`. A day splits into at most **2 × 0.5 — never more than 100% of a day** (already the half-day grain of ADR 0006). Usage beyond the entitlement bills at the band's `overage_fee_cents` per half-day.
+
+### Workspace availability defines the month
+
+- `booking_rules.open_weekdays` (ISO weekday array, default **Mon–Fri**) — the owner picks which weekdays the workspace is open.
+- `closure_days` table (`workspace_id`, `day date` workspace-local, `reason text`) — owner-defined non-available days (holidays, maintenance). Closed days are **rejected for reservation and check-in**: enforced in `enforce_booking_rules` (the shared chokepoint of `create_reservation`, `create_series`, `admin_create_reservation_for`) and in the walk-up check-in RPC; series expansion skips them like conflicts.
+- The entitlement basis `open_days` = days in the month matching `open_weekdays` minus that month's `closure_days`.
 
 ### Priced consumable services
 
@@ -34,4 +40,4 @@ Owners need pricing that is fully configurable instead of the fixed three-plan s
 
 ## Consequences
 
-One pricing model instead of two; the plans editor becomes the band + level editor. All enforcement stays server-side (RLS + security-definer RPCs); client role checks remain cosmetic. Quorum applies uniformly to payments, expenses, and service charges, so #108's decider rule generalizes to "eligible validators minus actor/subject". Reshaped epic tasks 2 and 4–9 on #121 can now be filed against this schema.
+One pricing model instead of two; the plans editor becomes the band + level editor. Availability (open weekdays + closure days) becomes a first-class owner setting that both gates booking/check-in and defines the entitlement denominator, so "50% membership" always means half of what the workspace actually offers that month. All enforcement stays server-side (RLS + security-definer RPCs); client role checks remain cosmetic. Quorum applies uniformly to payments, expenses, and service charges, so #108's decider rule generalizes to "eligible validators minus actor/subject". Reshaped epic tasks on #121 can now be filed against this schema.
