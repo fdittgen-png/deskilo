@@ -39,5 +39,7 @@
   "amenityErgonomicChair": "Ergonomischer Stuhl",
   "commonCancel": "Abbrechen",
   "commonSave": "Speichern",
-  "commonDelete": "Löschen"
+  "commonDelete": "Löschen",
+  "editorAccessoriesLabel": "Zubehör",
+  "editorNoAccessories": "Noch kein Zubehör — lege es unter Einstellungen → Zubehör an."
 }

@@ -109,7 +109,8 @@ void main() {
       );
     });
 
-    testWidgets('seat sheet edits chair, amenities and block', (tester) async {
+    testWidgets('seat sheet edits chair and block, never amenities',
+        (tester) async {
       final plans = await pumpCanvas(
         tester,
         seed: (plans, levelId) async {
@@ -143,8 +144,6 @@ void main() {
         find.widgetWithText(TextField, 'Chair type'),
         'Aeron',
       );
-      await tester.tap(find.text('Monitor'));
-      await tester.tap(find.text('Window seat'));
       await tester.tap(find.byType(Switch));
       await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(FilledButton, 'Save'));
@@ -152,7 +151,9 @@ void main() {
 
       final saved = plans.seats.single;
       expect(saved.chair, 'Aeron');
-      expect(saved.amenities, containsAll(['monitor', 'window']));
+      // #168: the editor no longer writes seat.amenities — accessory
+      // joins are the write path (see seat_accessories_test.dart).
+      expect(saved.amenities, isEmpty);
       expect(saved.isBlockedAt(DateTime.now()), isTrue);
     });
 

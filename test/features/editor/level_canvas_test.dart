@@ -6,22 +6,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/fake_accessory_repository.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
 
 /// Seeds a level (and whatever [seed] adds) BEFORE navigating into the
 /// canvas — the plan provider fetches on entry, so all fixtures must exist
-/// beforehand.
+/// beforehand. Pass [accessories] to seed the workspace accessory catalog
+/// consumed by the seat sheet (#168).
 Future<FakeFloorPlanRepository> pumpCanvas(
   WidgetTester tester, {
   Future<void> Function(FakeFloorPlanRepository plans, String levelId)? seed,
+  FakeAccessoryRepository? accessories,
 }) async {
   final plans = FakeFloorPlanRepository();
   final level = await plans.createLevel('ws-1', 'Ground floor', 0);
   await seed?.call(plans, level.id);
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(floorPlan: plans),
+      overrides: standardTestOverrides(
+        floorPlan: plans,
+        accessories: accessories,
+      ),
       child: const DeskiloApp(),
     ),
   );

@@ -159,5 +159,13 @@
   "commonDelete": "Delete",
   "@commonDelete": {
     "description": "Generic delete action in dialogs and menus"
+  },
+  "editorAccessoriesLabel": "Accessories",
+  "@editorAccessoriesLabel": {
+    "description": "Label above the seat sheet's accessory chips (workspace catalog)"
+  },
+  "editorNoAccessories": "No accessories yet — add them in Settings → Accessories.",
+  "@editorNoAccessories": {
+    "description": "Hint in the seat sheet when the workspace accessory catalog is empty"
   }
 }

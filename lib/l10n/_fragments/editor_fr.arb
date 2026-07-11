@@ -39,5 +39,7 @@
   "amenityErgonomicChair": "Chaise ergonomique",
   "commonCancel": "Annuler",
   "commonSave": "Enregistrer",
-  "commonDelete": "Supprimer"
+  "commonDelete": "Supprimer",
+  "editorAccessoriesLabel": "Accessoires",
+  "editorNoAccessories": "Aucun accessoire pour l'instant — ajoutez-les dans Réglages → Accessoires."
 }
