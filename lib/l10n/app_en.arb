@@ -729,6 +729,14 @@
   "@featurePushNotificationsDesc": {
     "description": "One-line description under the push notifications switch"
   },
+  "featureAdminSeatBlocking": "Admins can block seats",
+  "@featureAdminSeatBlocking": {
+    "description": "Feature switch: admins may mark seats not reservable (#161)"
+  },
+  "featureAdminSeatBlockingDesc": "Admins mark seats not reservable for maintenance. The owner always can.",
+  "@featureAdminSeatBlockingDesc": {
+    "description": "One-line description under the admin-seat-blocking switch (#161)"
+  },
   "languageTitle": "Language",
   "@languageTitle": {
     "description": "Settings entry and dialog title for the in-app language selection"
@@ -1191,6 +1199,14 @@
         "type": "String"
       }
     }
+  },
+  "planMakeNotReservable": "Make not reservable",
+  "@planMakeNotReservable": {
+    "description": "Booking-sheet action starting an open-ended maintenance block on the seat (#161, owner/admin only)"
+  },
+  "planMakeReservable": "Make reservable",
+  "@planMakeReservable": {
+    "description": "Blocked-seat sheet action clearing the maintenance block (#161, owner/admin only)"
   },
   "servicesTitle": "Services",
   "@servicesTitle": {

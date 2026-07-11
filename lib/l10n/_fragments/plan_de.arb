@@ -37,5 +37,7 @@
   "planStateYours": "Deiner",
   "planBookForLabel": "Buchen für",
   "planSendForConfirmation": "Zur Bestätigung senden",
-  "planBookedForPending": "Zur Bestätigung an {name} gesendet."
+  "planBookedForPending": "Zur Bestätigung an {name} gesendet.",
+  "planMakeNotReservable": "Nicht reservierbar machen",
+  "planMakeReservable": "Reservierbar machen"
 }

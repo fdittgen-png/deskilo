@@ -526,6 +526,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ausstehende Bestätigungen auf die Geräte der Mitglieder zustellen.';
 
   @override
+  String get featureAdminSeatBlocking => 'Admins können Plätze sperren';
+
+  @override
+  String get featureAdminSeatBlockingDesc =>
+      'Admins markieren Plätze als nicht reservierbar für Wartung. Der Inhaber kann es immer.';
+
+  @override
   String get languageTitle => 'Sprache';
 
   @override
@@ -853,6 +860,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String planBookedForPending(String name) {
     return 'Zur Bestätigung an $name gesendet.';
   }
+
+  @override
+  String get planMakeNotReservable => 'Nicht reservierbar machen';
+
+  @override
+  String get planMakeReservable => 'Reservierbar machen';
 
   @override
   String get servicesTitle => 'Leistungen';

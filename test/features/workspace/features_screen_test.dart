@@ -29,6 +29,11 @@ Future<FakeWorkspaceRepository> pumpFeatures(
   WidgetTester tester, {
   Map<String, dynamic> featureFlags = const {},
 }) async {
+  // Nine manifest features no longer fit the default 800×600 surface and
+  // the lazy list drops off-screen tiles; keep every switch mounted.
+  tester.view.physicalSize = const Size(800, 1600);
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
   final workspace =
       await pumpSettings(tester, featureFlags: featureFlags);
   await tester.tap(find.text('Features'));
@@ -53,11 +58,14 @@ void main() {
       find.byType(SwitchListTile),
       findsNWidgets(featureManifest.length),
     );
-    // Everything defaults ON.
-    for (final tile
-        in tester.widgetList<SwitchListTile>(find.byType(SwitchListTile))) {
-      expect(tile.value, isTrue);
-    }
+    // Everything defaults ON — except adminSeatBlocking (#161), which the
+    // owner must explicitly delegate.
+    expect(switchTitled(tester, 'Admins can block seats').value, isFalse);
+    final onCount = tester
+        .widgetList<SwitchListTile>(find.byType(SwitchListTile))
+        .where((t) => t.value)
+        .length;
+    expect(onCount, featureManifest.length - 1);
   });
 
   testWidgets('toggling a feature persists the full map and flips the switch',
@@ -67,13 +75,14 @@ void main() {
     await tester.tap(find.text('Money tab'));
     await tester.pumpAndSettle();
 
-    // The fake row now carries the FULL map with only moneyTab off.
+    // The fake row now carries the FULL map with moneyTab off (and the
+    // default-OFF adminSeatBlocking, #161, still off).
     final flags = workspace.workspaces.single.featureFlags;
     expect(flags['moneyTab'], isFalse);
     expect(flags.length, WorkspaceFeature.values.length);
     expect(
       flags.entries.where((e) => e.value == false).map((e) => e.key),
-      ['moneyTab'],
+      unorderedEquals(['moneyTab', 'adminSeatBlocking']),
     );
     expect(switchTitled(tester, 'Money tab').value, isFalse);
 

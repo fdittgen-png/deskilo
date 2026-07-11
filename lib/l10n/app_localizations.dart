@@ -1052,6 +1052,18 @@ abstract class AppLocalizations {
   /// **'Deliver pending confirmations to members\' devices.'**
   String get featurePushNotificationsDesc;
 
+  /// Feature switch: admins may mark seats not reservable (#161)
+  ///
+  /// In en, this message translates to:
+  /// **'Admins can block seats'**
+  String get featureAdminSeatBlocking;
+
+  /// One-line description under the admin-seat-blocking switch (#161)
+  ///
+  /// In en, this message translates to:
+  /// **'Admins mark seats not reservable for maintenance. The owner always can.'**
+  String get featureAdminSeatBlockingDesc;
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:
@@ -1639,6 +1651,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sent to {name} for confirmation.'**
   String planBookedForPending(String name);
+
+  /// Booking-sheet action starting an open-ended maintenance block on the seat (#161, owner/admin only)
+  ///
+  /// In en, this message translates to:
+  /// **'Make not reservable'**
+  String get planMakeNotReservable;
+
+  /// Blocked-seat sheet action clearing the maintenance block (#161, owner/admin only)
+  ///
+  /// In en, this message translates to:
+  /// **'Make reservable'**
+  String get planMakeReservable;
 
   /// App-bar title of the owner service-catalog editor and its settings tile
   ///

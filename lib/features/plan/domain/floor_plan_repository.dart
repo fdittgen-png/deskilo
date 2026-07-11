@@ -53,4 +53,10 @@ abstract class FloorPlanRepository {
   });
   Future<void> updateSeat(Seat seat);
   Future<void> deleteSeat(String seatId);
+
+  /// Sets or clears the seat's maintenance block (#161). [from] set with
+  /// [to] null blocks open-endedly; both null makes the seat reservable
+  /// again. Permission (owner, or admin with the adminSeatBlocking
+  /// feature) is enforced server-side by the set_seat_block RPC.
+  Future<void> setSeatBlock(String seatId, {DateTime? from, DateTime? to});
 }

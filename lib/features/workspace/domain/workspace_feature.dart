@@ -13,7 +13,8 @@ enum WorkspaceFeature {
   pdfExport,
   seriesBooking,
   bookForOthers,
-  pushNotifications;
+  pushNotifications,
+  adminSeatBlocking;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -33,7 +34,8 @@ class FeatureManifestEntry {
   final bool defaultOn;
 }
 
-/// The declarative feature registry: every feature ships enabled.
+/// The declarative feature registry: every feature ships enabled, except
+/// adminSeatBlocking (#161) which the owner must explicitly activate.
 const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.calendarTab:
       FeatureManifestEntry(feature: WorkspaceFeature.calendarTab),
@@ -51,6 +53,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
       FeatureManifestEntry(feature: WorkspaceFeature.bookForOthers),
   WorkspaceFeature.pushNotifications:
       FeatureManifestEntry(feature: WorkspaceFeature.pushNotifications),
+  // Seat blocking is owner-only until the owner delegates it (#161).
+  WorkspaceFeature.adminSeatBlocking: FeatureManifestEntry(
+    feature: WorkspaceFeature.adminSeatBlocking,
+    defaultOn: false,
+  ),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start

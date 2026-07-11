@@ -19,6 +19,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/floor_plan.dart';
 import '../../domain/level.dart';
 import '../../domain/seat.dart';
+import '../../domain/seat_block_policy.dart';
 import '../../providers/default_level_controller.dart';
 import '../../providers/floor_plan_providers.dart';
 import '../widgets/floor_plan_painter.dart';
@@ -83,8 +84,14 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
 
     switch (state) {
       case SeatState.blocked:
-        _snack(l10n?.planSeatBlocked ??
-            'This seat is blocked for maintenance.');
+        // Owners (and delegated admins, #161) can lift the block; everyone
+        // else just gets the explanation.
+        if (_canManageSeatBlocks) {
+          await _blockedSeatSheet(seat);
+        } else {
+          _snack(l10n?.planSeatBlocked ??
+              'This seat is blocked for maintenance.');
+        }
       case SeatState.free:
         await _bookingSheet(plan, seat, reservations, now);
       case SeatState.mine:
@@ -120,6 +127,64 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       ..showSnackBar(SnackBar(content: Text(message)));
   }
 
+  /// Whether the signed-in member may toggle seat maintenance blocks
+  /// (#161): owner always, admins with the adminSeatBlocking feature.
+  bool get _canManageSeatBlocks => canManageSeatBlocks(
+        member: ref.read(myMemberProvider).value,
+        features: ref.read(enabledFeaturesSyncProvider),
+      );
+
+  /// Writes the seat's maintenance block via the set_seat_block RPC and
+  /// refreshes the plan so the new state renders immediately (#161).
+  Future<void> _setSeatBlock(Seat seat, {DateTime? from, DateTime? to}) async {
+    final l10n = AppLocalizations.of(context);
+    try {
+      await ref
+          .read(floorPlanRepositoryProvider)
+          .setSeatBlock(seat.id, from: from, to: to);
+    } catch (e, st) {
+      debugPrint('set seat block failed: $e\n$st');
+      TraceLogger.instance
+          .error('plan', 'set seat block failed', error: e, stackTrace: st);
+      if (!mounted) return;
+      _snack(l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.');
+      return;
+    }
+    if (!mounted) return;
+    ref.invalidate(floorPlanProvider);
+  }
+
+  /// Sheet on a blocked seat for owners/delegated admins (#161): explains
+  /// the block and offers to make the seat reservable again.
+  Future<void> _blockedSeatSheet(Seat seat) async {
+    final l10n = AppLocalizations.of(context);
+    final blockedText =
+        l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.';
+    final unblock = await showModalBottomSheet<bool>(
+      context: context,
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: Text(seat.name.isEmpty ? blockedText : seat.name),
+              subtitle: seat.name.isEmpty ? null : Text(blockedText),
+            ),
+            ListTile(
+              leading: const Icon(Icons.event_seat_outlined),
+              title: Text(l10n?.planMakeReservable ?? 'Make reservable'),
+              onTap: () => Navigator.of(context).pop(true),
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+    if (unblock != true || !mounted) return;
+    await _setSeatBlock(seat);
+  }
+
   /// Live mode: atomic walk-up check-in starting now. Browse mode: punctual
   /// reservation starting at the browsed instant (spec §5.1).
   Future<void> _bookingSheet(
@@ -131,6 +196,13 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
+    // Defense in depth (#161): the tap handler never routes blocked seats
+    // here, but a stale plan could — the RPCs reject them anyway.
+    if (seat.isBlockedAt(start)) {
+      _snack(l10n?.planSeatBlocked ??
+          'This seat is blocked for maintenance.');
+      return;
+    }
     final walkUp = _browse == null;
 
     final features = ref.read(enabledFeaturesSyncProvider);
@@ -174,9 +246,16 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         members: candidates,
         myMemberId: myMember?.id,
         allowSeries: features.contains(WorkspaceFeature.seriesBooking),
+        allowBlocking: _canManageSeatBlocks,
       ),
     );
     if (choice == null) return;
+
+    // Not a booking at all: start an open-ended maintenance block (#161).
+    if (choice.block) {
+      await _setSeatBlock(seat, from: DateTime.now().toUtc());
+      return;
+    }
 
     final forOther =
         choice.forMemberId != null && choice.forMemberId != myMember?.id;
@@ -649,12 +728,22 @@ class _LivePlanCanvas extends StatelessWidget {
 /// What the booking sheet returns: end time, an optional recurrence and
 /// who the booking is for (null/self = the caller).
 class _BookingChoice {
-  const _BookingChoice(this.end, this.pattern, this.until, this.forMemberId);
+  const _BookingChoice(
+    this.end,
+    this.pattern,
+    this.until,
+    this.forMemberId, {
+    this.block = false,
+  });
 
   final DateTime end;
   final SeriesPattern? pattern;
   final DateTime? until;
   final String? forMemberId;
+
+  /// True: block the seat for maintenance instead of booking it (#161).
+  /// Every other field is ignored then.
+  final bool block;
 }
 
 class _CheckInSheet extends StatefulWidget {
@@ -668,6 +757,7 @@ class _CheckInSheet extends StatefulWidget {
     this.members = const [],
     this.myMemberId,
     this.allowSeries = true,
+    this.allowBlocking = false,
   });
 
   final String seatName;
@@ -686,6 +776,10 @@ class _CheckInSheet extends StatefulWidget {
 
   /// Series booking feature gate (#146): false hides the repeat picker.
   final bool allowSeries;
+
+  /// Seat-blocking affordance (#161): true adds "Make not reservable" for
+  /// owners and delegated admins.
+  final bool allowBlocking;
 
   @override
   State<_CheckInSheet> createState() => _CheckInSheetState();
@@ -843,6 +937,20 @@ class _CheckInSheetState extends State<_CheckInSheet> {
                         : (l10n?.planReserveButton ?? 'Reserve'),
               ),
             ),
+            if (widget.allowBlocking) ...[
+              const SizedBox(height: 8),
+              // Owner/delegated-admin maintenance block (#161): open-ended,
+              // lifted again from the blocked-seat sheet.
+              TextButton.icon(
+                icon: const Icon(Icons.block),
+                label: Text(
+                  l10n?.planMakeNotReservable ?? 'Make not reservable',
+                ),
+                onPressed: () => Navigator.of(context).pop(
+                  _BookingChoice(_end, null, null, null, block: true),
+                ),
+              ),
+            ],
           ],
         ),
       ),

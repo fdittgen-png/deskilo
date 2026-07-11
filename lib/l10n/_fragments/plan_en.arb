@@ -194,5 +194,13 @@
         "type": "String"
       }
     }
+  },
+  "planMakeNotReservable": "Make not reservable",
+  "@planMakeNotReservable": {
+    "description": "Booking-sheet action starting an open-ended maintenance block on the seat (#161, owner/admin only)"
+  },
+  "planMakeReservable": "Make reservable",
+  "@planMakeReservable": {
+    "description": "Blocked-seat sheet action clearing the maintenance block (#161, owner/admin only)"
   }
 }

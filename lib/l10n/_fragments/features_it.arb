@@ -16,5 +16,7 @@
   "featureBookForOthers": "Prenota per altri",
   "featureBookForOthersDesc": "Admin e proprietari prenotano posti per altri membri.",
   "featurePushNotifications": "Notifiche push",
-  "featurePushNotificationsDesc": "Consegna le conferme in sospeso sui dispositivi dei membri."
+  "featurePushNotificationsDesc": "Consegna le conferme in sospeso sui dispositivi dei membri.",
+  "featureAdminSeatBlocking": "Gli admin possono bloccare i posti",
+  "featureAdminSeatBlockingDesc": "Gli admin contrassegnano i posti come non prenotabili per manutenzione. Il proprietario può sempre."
 }

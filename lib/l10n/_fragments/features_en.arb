@@ -67,5 +67,13 @@
   "featurePushNotificationsDesc": "Deliver pending confirmations to members' devices.",
   "@featurePushNotificationsDesc": {
     "description": "One-line description under the push notifications switch"
+  },
+  "featureAdminSeatBlocking": "Admins can block seats",
+  "@featureAdminSeatBlocking": {
+    "description": "Feature switch: admins may mark seats not reservable (#161)"
+  },
+  "featureAdminSeatBlockingDesc": "Admins mark seats not reservable for maintenance. The owner always can.",
+  "@featureAdminSeatBlockingDesc": {
+    "description": "One-line description under the admin-seat-blocking switch (#161)"
   }
 }

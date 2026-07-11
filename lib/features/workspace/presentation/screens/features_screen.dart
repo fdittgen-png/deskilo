@@ -29,6 +29,8 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureBookForOthers ?? 'Book for others',
         WorkspaceFeature.pushNotifications =>
           l10n?.featurePushNotifications ?? 'Push notifications',
+        WorkspaceFeature.adminSeatBlocking =>
+          l10n?.featureAdminSeatBlocking ?? 'Admins can block seats',
       };
 
   String _description(AppLocalizations? l10n, WorkspaceFeature feature) =>
@@ -50,6 +52,10 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.pushNotifications =>
           l10n?.featurePushNotificationsDesc ??
               'Deliver pending confirmations to members\' devices.',
+        WorkspaceFeature.adminSeatBlocking =>
+          l10n?.featureAdminSeatBlockingDesc ??
+              'Admins mark seats not reservable for maintenance. '
+                  'The owner always can.',
       };
 
   Future<void> _toggle(
