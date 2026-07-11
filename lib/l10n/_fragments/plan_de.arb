@@ -40,5 +40,8 @@
   "planBookedForPending": "Zur Bestätigung an {name} gesendet.",
   "planMakeNotReservable": "Nicht reservierbar machen",
   "planMakeReservable": "Reservierbar machen",
-  "planAccessorySupplementHint": "Aufpreise gelten pro halbem Tag."
+  "planAccessorySupplementHint": "Aufpreise gelten pro halbem Tag.",
+  "planFromLabel": "Von",
+  "planToLabel": "Bis",
+  "planEndBeforeStart": "Das Ende muss nach dem Beginn liegen."
 }

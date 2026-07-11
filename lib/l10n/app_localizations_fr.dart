@@ -927,6 +927,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les suppléments s\'appliquent par demi-journée.';
 
   @override
+  String get planFromLabel => 'De';
+
+  @override
+  String get planToLabel => 'À';
+
+  @override
+  String get planEndBeforeStart => 'La fin doit être après le début.';
+
+  @override
   String get servicesTitle => 'Services';
 
   @override

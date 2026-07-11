@@ -40,5 +40,8 @@
   "planBookedForPending": "Inviato a {name} per conferma.",
   "planMakeNotReservable": "Rendi non prenotabile",
   "planMakeReservable": "Rendi prenotabile",
-  "planAccessorySupplementHint": "I supplementi si applicano per mezza giornata."
+  "planAccessorySupplementHint": "I supplementi si applicano per mezza giornata.",
+  "planFromLabel": "Dalle",
+  "planToLabel": "Alle",
+  "planEndBeforeStart": "La fine deve essere successiva all'inizio."
 }
