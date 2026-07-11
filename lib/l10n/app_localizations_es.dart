@@ -527,6 +527,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Entregar las confirmaciones pendientes en los dispositivos de los miembros.';
 
   @override
+  String get featureAdminSeatBlocking =>
+      'Los administradores pueden bloquear sitios';
+
+  @override
+  String get featureAdminSeatBlockingDesc =>
+      'Los administradores marcan sitios como no reservables por mantenimiento. El propietario siempre puede.';
+
+  @override
   String get languageTitle => 'Idioma';
 
   @override
@@ -853,6 +861,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String planBookedForPending(String name) {
     return 'Enviado a $name para confirmación.';
   }
+
+  @override
+  String get planMakeNotReservable => 'Hacer no reservable';
+
+  @override
+  String get planMakeReservable => 'Hacer reservable';
 
   @override
   String get servicesTitle => 'Servicios';

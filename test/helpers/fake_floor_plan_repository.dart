@@ -232,4 +232,19 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
   Future<void> deleteSeat(String seatId) async {
     seats.removeWhere((s) => s.id == seatId);
   }
+
+  /// Arguments of the last [setSeatBlock] call, for assertions (#161).
+  ({String seatId, DateTime? from, DateTime? to})? lastSeatBlock;
+
+  @override
+  Future<void> setSeatBlock(
+    String seatId, {
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    lastSeatBlock = (seatId: seatId, from: from, to: to);
+    final i = seats.indexWhere((s) => s.id == seatId);
+    if (i < 0) throw StateError('unknown seat $seatId');
+    seats[i] = seats[i].copyWith(blockedFrom: from, blockedTo: to);
+  }
 }

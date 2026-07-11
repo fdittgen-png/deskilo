@@ -234,6 +234,19 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     await _client.from('seats').delete().eq('id', seatId);
   }
 
+  @override
+  Future<void> setSeatBlock(
+    String seatId, {
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    await _client.rpc<dynamic>('set_seat_block', params: {
+      'p_seat_id': seatId,
+      'p_blocked_from': from?.toUtc().toIso8601String(),
+      'p_blocked_to': to?.toUtc().toIso8601String(),
+    });
+  }
+
   Level _levelFromRow(Map<String, dynamic> row) => Level(
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,

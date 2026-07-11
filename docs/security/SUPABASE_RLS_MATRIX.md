@@ -42,6 +42,11 @@ in, not a member of the row's workspace), **worker** (active member),
 |---|---|---|---|---|---|---|
 | select | — | — | ✅ | ✅ | ✅ | `is_member_of(workspace_id)` |
 | insert / update / delete | — | — | — | — | ✅ | `is_owner_of(workspace_id)` — only owners alter the workspace (spec §2) |
+| seat block / unblock (#161) | — | — | — | RPC¹ | RPC | `set_seat_block` (migration 0021) writes `seats.blocked_from/blocked_to` |
+
+¹ Admins only when the workspace's `feature_flags` carry
+`adminSeatBlocking = true` (owner-managed registry, #146); the RPC raises
+otherwise.
 
 `workspace_id` is denormalized onto all four tables so every policy is a
 single helper call.
@@ -62,6 +67,11 @@ Hard invariants in the database:
   seats/offices/members — the editor must resolve reservations first.
 - Business checks in `create_reservation`: active membership, blocked-seat
   window, office-booked-as-whole vs seat bookings in both directions.
+- Since migration 0021 the blocked-seat window is also enforced in
+  `admin_create_reservation_for` and per-instance in `create_series`
+  (blocked instances land in the skipped report) via
+  `assert_seat_not_blocked` (internal helper, EXECUTE revoked from all
+  API roles).
 - Check-out truncates `ends_at` to `now()` so the seat frees immediately.
 
 ## Function grants (migration 0004)

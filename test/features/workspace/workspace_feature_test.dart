@@ -2,17 +2,27 @@
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+/// Every feature ships ON except adminSeatBlocking (#161), which the
+/// owner must explicitly delegate.
+final Set<WorkspaceFeature> registryDefaults =
+    WorkspaceFeature.values.toSet()
+      ..remove(WorkspaceFeature.adminSeatBlocking);
+
 void main() {
-  test('manifest covers every feature and everything defaults ON', () {
+  test('manifest covers every feature; only adminSeatBlocking defaults OFF',
+      () {
     expect(featureManifest.keys, containsAll(WorkspaceFeature.values));
-    expect(featureManifest.values.every((e) => e.defaultOn), isTrue);
+    for (final entry in featureManifest.values) {
+      expect(
+        entry.defaultOn,
+        entry.feature != WorkspaceFeature.adminSeatBlocking,
+        reason: '${entry.feature} default',
+      );
+    }
   });
 
   test('empty flags resolve to all registry defaults', () {
-    expect(
-      resolveEnabledFeatures(const {}),
-      WorkspaceFeature.values.toSet(),
-    );
+    expect(resolveEnabledFeatures(const {}), registryDefaults);
   });
 
   test('a stored false override disables exactly that feature', () {
@@ -21,8 +31,16 @@ void main() {
     expect(enabled.contains(WorkspaceFeature.moneyTab), isFalse);
     expect(
       enabled,
-      WorkspaceFeature.values.toSet()..remove(WorkspaceFeature.moneyTab),
+      registryDefaults.toSet()..remove(WorkspaceFeature.moneyTab),
     );
+  });
+
+  test('a stored true override enables the default-OFF feature (#161)', () {
+    final enabled =
+        resolveEnabledFeatures(const {'adminSeatBlocking': true});
+
+    expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);
+    expect(enabled, WorkspaceFeature.values.toSet());
   });
 
   test('an explicit true override keeps the feature on', () {
@@ -43,6 +61,9 @@ void main() {
 
     expect(enabled.contains(WorkspaceFeature.pdfExport), isTrue);
     expect(enabled.contains(WorkspaceFeature.eventsTab), isFalse);
-    expect(enabled.length, WorkspaceFeature.values.length - 1);
+    expect(
+      enabled,
+      registryDefaults.toSet()..remove(WorkspaceFeature.eventsTab),
+    );
   });
 }

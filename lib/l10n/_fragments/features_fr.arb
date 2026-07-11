@@ -16,5 +16,7 @@
   "featureBookForOthers": "Réserver pour d'autres",
   "featureBookForOthersDesc": "Les admins et propriétaires réservent des places pour d'autres membres.",
   "featurePushNotifications": "Notifications push",
-  "featurePushNotificationsDesc": "Livrer les confirmations en attente sur les appareils des membres."
+  "featurePushNotificationsDesc": "Livrer les confirmations en attente sur les appareils des membres.",
+  "featureAdminSeatBlocking": "Les admins peuvent bloquer des places",
+  "featureAdminSeatBlockingDesc": "Les admins marquent des places comme non réservables pour maintenance. Le propriétaire le peut toujours."
 }
