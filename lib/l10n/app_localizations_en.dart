@@ -1139,4 +1139,68 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get workspaceXmlExportSubtitle =>
       'Settings and floor plan as a shareable file. No members, bookings or money data.';
+
+  @override
+  String get workspaceXmlImport => 'Import workspace (XML)';
+
+  @override
+  String get workspaceXmlImportSubtitle =>
+      'Restore settings and floor plan from an exported file. Replaces the current floor plan.';
+
+  @override
+  String get workspaceXmlFileTypeLabel => 'XML';
+
+  @override
+  String get workspaceXmlImportPreviewTitle => 'Replace floor plan?';
+
+  @override
+  String workspaceXmlImportPreviewCounts(
+    int levels,
+    int offices,
+    int desks,
+    int seats,
+  ) {
+    return 'Levels: $levels · Offices: $offices · Desks: $desks · Seats: $seats';
+  }
+
+  @override
+  String get workspaceXmlImportPreviewWarning =>
+      'The current floor plan will be deleted and replaced, and the workspace settings will be overwritten. This cannot be undone.';
+
+  @override
+  String get workspaceXmlImportConfirm => 'Replace and import';
+
+  @override
+  String get workspaceXmlImportSuccess => 'Workspace imported.';
+
+  @override
+  String get workspaceXmlErrorMalformed => 'The file is not readable XML.';
+
+  @override
+  String get workspaceXmlErrorWrongRoot =>
+      'This is not a DesKilo workspace file.';
+
+  @override
+  String get workspaceXmlErrorUnsupportedVersion =>
+      'The file was exported by a newer version of DesKilo and cannot be imported.';
+
+  @override
+  String get workspaceXmlErrorMissingElement =>
+      'The file is incomplete — a required section is missing.';
+
+  @override
+  String get workspaceXmlErrorMissingAttribute =>
+      'The file is incomplete — a required value is missing.';
+
+  @override
+  String get workspaceXmlErrorInvalidValue =>
+      'The file contains an invalid value and cannot be imported.';
+
+  @override
+  String get workspaceXmlErrorInvalidPlan =>
+      'The floor plan in the file is invalid: rooms, desks or seats overlap or extend outside their parent.';
+
+  @override
+  String get workspaceXmlImportReservationsError =>
+      'This workspace already has reservations, so its floor plan cannot be replaced. Imports are only possible before the first booking.';
 }

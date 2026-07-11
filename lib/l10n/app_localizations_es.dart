@@ -1147,4 +1147,68 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get workspaceXmlExportSubtitle =>
       'Ajustes y plano del espacio en un archivo para compartir. Sin miembros, reservas ni datos financieros.';
+
+  @override
+  String get workspaceXmlImport => 'Importar el espacio (XML)';
+
+  @override
+  String get workspaceXmlImportSubtitle =>
+      'Restaurar los ajustes y el plano desde un archivo exportado. Sustituye el plano actual.';
+
+  @override
+  String get workspaceXmlFileTypeLabel => 'XML';
+
+  @override
+  String get workspaceXmlImportPreviewTitle => '¿Sustituir el plano?';
+
+  @override
+  String workspaceXmlImportPreviewCounts(
+    int levels,
+    int offices,
+    int desks,
+    int seats,
+  ) {
+    return 'Plantas: $levels · Salas: $offices · Mesas: $desks · Puestos: $seats';
+  }
+
+  @override
+  String get workspaceXmlImportPreviewWarning =>
+      'El plano actual se eliminará y sustituirá, y los ajustes del espacio se sobrescribirán. Esta acción no se puede deshacer.';
+
+  @override
+  String get workspaceXmlImportConfirm => 'Sustituir e importar';
+
+  @override
+  String get workspaceXmlImportSuccess => 'Espacio importado.';
+
+  @override
+  String get workspaceXmlErrorMalformed => 'El archivo no es un XML legible.';
+
+  @override
+  String get workspaceXmlErrorWrongRoot =>
+      'Este no es un archivo de espacio de DesKilo.';
+
+  @override
+  String get workspaceXmlErrorUnsupportedVersion =>
+      'El archivo fue exportado por una versión más reciente de DesKilo y no se puede importar.';
+
+  @override
+  String get workspaceXmlErrorMissingElement =>
+      'El archivo está incompleto — falta una sección obligatoria.';
+
+  @override
+  String get workspaceXmlErrorMissingAttribute =>
+      'El archivo está incompleto — falta un valor obligatorio.';
+
+  @override
+  String get workspaceXmlErrorInvalidValue =>
+      'El archivo contiene un valor no válido y no se puede importar.';
+
+  @override
+  String get workspaceXmlErrorInvalidPlan =>
+      'El plano del archivo no es válido: hay salas, mesas o puestos que se superponen o quedan fuera de su zona.';
+
+  @override
+  String get workspaceXmlImportReservationsError =>
+      'Este espacio ya tiene reservas, por lo que su plano no se puede sustituir. Solo se puede importar antes de la primera reserva.';
 }
