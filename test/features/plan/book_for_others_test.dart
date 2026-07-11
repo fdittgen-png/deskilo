@@ -30,7 +30,10 @@ Future<({FakeReservationRepository reservations, FakeWorkspaceRepository workspa
   final reservations = FakeReservationRepository();
   final workspace = FakeWorkspaceRepository.withWorkspace()
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana Lima'}
-    ..otherMembers.add(ana);
+    ..otherMembers.add(ana)
+    // Open every weekday so the closed-day gating (#186) never trips
+    // when the suite runs on a weekend.
+    ..openWeekdays['ws-1'] = const [1, 2, 3, 4, 5, 6, 7];
   if (!viewerIsOwner) {
     workspace.myMember =
         workspace.myMember.copyWith(isOwner: false, isAdmin: false);

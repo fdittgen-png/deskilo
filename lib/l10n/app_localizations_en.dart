@@ -926,6 +926,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get planEndBeforeStart => 'End must be after start.';
 
   @override
+  String get planClosedDay => 'Closed on this day';
+
+  @override
+  String get planClosedDayError => 'The workspace is closed on that day.';
+
+  @override
   String get servicesTitle => 'Services';
 
   @override

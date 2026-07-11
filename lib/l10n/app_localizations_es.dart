@@ -934,6 +934,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get planEndBeforeStart => 'El fin debe ser posterior al inicio.';
 
   @override
+  String get planClosedDay => 'Cerrado este día';
+
+  @override
+  String get planClosedDayError => 'El espacio está cerrado ese día.';
+
+  @override
   String get servicesTitle => 'Servicios';
 
   @override

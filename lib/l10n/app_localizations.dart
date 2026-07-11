@@ -1784,6 +1784,18 @@ abstract class AppLocalizations {
   /// **'End must be after start.'**
   String get planEndBeforeStart;
 
+  /// Banner under the plan header and seat-tap snackbar when the browsed/live day is a closed day of the workspace (#186)
+  ///
+  /// In en, this message translates to:
+  /// **'Closed on this day'**
+  String get planClosedDay;
+
+  /// Snackbar when the server rejects a booking or check-in because the workspace is closed on a touched day (#186)
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace is closed on that day.'**
+  String get planClosedDayError;
+
   /// App-bar title of the owner service-catalog editor and its settings tile
   ///
   /// In en, this message translates to:

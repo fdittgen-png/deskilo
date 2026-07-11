@@ -4,7 +4,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:supabase_flutter/supabase_flutter.dart'
+    show PostgrestException;
 
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -14,6 +17,7 @@ import '../../../reservations/domain/reservation_repository.dart';
 import '../../../reservations/domain/seat_state_logic.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
+import '../../../workspace/domain/workspace_availability.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/floor_plan.dart';
@@ -188,6 +192,33 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   String _firstName(String name) =>
       name.split(' ').firstOrNull ?? name;
 
+  /// Whether the workspace is open on the local day of [at] (#186): open
+  /// weekday and no closure day. Unknown (providers still loading or
+  /// errored) counts as open — the server guard stays the authority, the
+  /// error mapping below explains its refusals.
+  bool _isWorkspaceOpenAt(DateTime at) {
+    final openWeekdays = ref.read(openWeekdaysProvider).value;
+    final closures = ref.read(closureDaysProvider).value;
+    if (openWeekdays == null || closures == null) return true;
+    return isWorkspaceOpenOn(at.toLocal(), openWeekdays, closures);
+  }
+
+  /// Booking failure snackbar text (#186): the server's closed-day
+  /// refusal (`assert_workspace_open`, migration 0013) gets its own
+  /// explanation instead of [fallback]'s misleading generic one.
+  String _bookingErrorText(
+    AppLocalizations? l10n,
+    Object error,
+    String fallback,
+  ) {
+    if (error is PostgrestException &&
+        error.message.contains(WorkspaceClosedError.serverSubstring)) {
+      return l10n?.planClosedDayError ??
+          'The workspace is closed on that day.';
+    }
+    return fallback;
+  }
+
   Future<void> _onSeatTap(
     FloorPlan plan,
     Seat seat,
@@ -199,6 +230,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       setState(() => _highlightedSeatId = null);
     }
     final l10n = AppLocalizations.of(context);
+    // Closed day (#186): no sheet at all — the server would reject any
+    // booking touching it (`assert_workspace_open`, migration 0013).
+    if (!_isWorkspaceOpenAt(now)) {
+      _snack(l10n?.planClosedDay ?? 'Closed on this day');
+      return;
+    }
     final myMemberId = ref.read(myMemberProvider).value?.id;
     // Browsing a time frame (#184): the whole window must be free; live
     // mode keeps the instant semantics.
@@ -444,8 +481,15 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       TraceLogger.instance
           .error('plan', 'booking failed', error: e, stackTrace: st);
       if (!mounted) return;
-      _snack(l10n?.planCheckInFailed ??
-          'Could not check in — the seat may have just been taken.');
+      // #186: a closed-day refusal is not "the seat was taken" — every
+      // booking path here (walk-up, future reserve, series, book-for-
+      // other) shares this catch, so all four get the mapping.
+      _snack(_bookingErrorText(
+        l10n,
+        e,
+        l10n?.planCheckInFailed ??
+            'Could not check in — the seat may have just been taken.',
+      ));
       return;
     }
     invalidateBookingData(ref);
@@ -530,13 +574,29 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     );
     if (action == null) return;
     final repo = ref.read(reservationRepositoryProvider);
-    switch (action) {
-      case 'checkout':
-        await repo.checkOut(mine.id);
-      case 'checkin':
-        await repo.checkIn(mine.id);
-      case 'cancel':
-        await repo.cancel(mine.id);
+    try {
+      switch (action) {
+        case 'checkout':
+          await repo.checkOut(mine.id);
+        case 'checkin':
+          await repo.checkIn(mine.id);
+        case 'cancel':
+          await repo.cancel(mine.id);
+      }
+    } catch (e, st) {
+      debugPrint('reservation $action failed: $e\n$st');
+      TraceLogger.instance.error('plan', 'reservation $action failed',
+          error: e, stackTrace: st);
+      if (!mounted) return;
+      // #186: the check-in RPC also asserts the workspace is open
+      // (migration 0013) — map its refusal like the booking paths.
+      _snack(_bookingErrorText(
+        l10n,
+        e,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      ));
+      return;
     }
     invalidateBookingData(ref);
   }
@@ -588,9 +648,19 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     final names = ref.watch(memberNamesProvider).value ?? const {};
 
+    // Closed day (#186): banner + muted seats + gated taps instead of
+    // green "bookable" seats the server would reject. Watched (not the
+    // read-based [_isWorkspaceOpenAt]) so the plan reacts to availability
+    // edits; unknown while loading counts as open.
+    final openWeekdays = ref.watch(openWeekdaysProvider).value;
+    final closures = ref.watch(closureDaysProvider).value;
+    final dayOpen = openWeekdays == null || closures == null ||
+        isWorkspaceOpenOn(at.toLocal(), openWeekdays, closures);
+
     return Column(
       children: [
         _scrollerRow(at),
+        if (!dayOpen) _closedDayBanner(l10n),
         // One tap per level (#159): compact scrollable chips instead of a
         // dropdown; the choice persists as this member's default here.
         if (levels.length > 1)
@@ -623,27 +693,31 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         Expanded(
           child: switch (planAsync) {
             AsyncData(value: final plan) => _listView
-                ? _seatList(plan, reservations, names, at)
+                ? _seatList(plan, reservations, names, at, dayOpen: dayOpen)
                 : _LivePlanCanvas(
                     plan: plan,
                     seatStates: {
+                      // Closed day (#186): every seat renders in the
+                      // muted blocked state — nothing looks bookable.
                       for (final seat in plan.seats)
-                        seat.id: windowEnd == null
-                            ? seatStateAt(
-                                plan: plan,
-                                seat: seat,
-                                reservations: reservations,
-                                myMemberId: myMemberId,
-                                at: at,
-                              )
-                            : seatStateInRange(
-                                plan: plan,
-                                seat: seat,
-                                reservations: reservations,
-                                myMemberId: myMemberId,
-                                from: at,
-                                to: windowEnd,
-                              ),
+                        seat.id: !dayOpen
+                            ? SeatState.blocked
+                            : windowEnd == null
+                                ? seatStateAt(
+                                    plan: plan,
+                                    seat: seat,
+                                    reservations: reservations,
+                                    myMemberId: myMemberId,
+                                    at: at,
+                                  )
+                                : seatStateInRange(
+                                    plan: plan,
+                                    seat: seat,
+                                    reservations: reservations,
+                                    myMemberId: myMemberId,
+                                    from: at,
+                                    to: windowEnd,
+                                  ),
                     },
                     seatLabels: {
                       for (final seat in plan.seats)
@@ -772,6 +846,39 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     );
   }
 
+  /// Closed-day banner under the header row (#186): the workspace is not
+  /// open on the browsed/live day (weekday not open or closure day), so
+  /// nothing below is bookable.
+  Widget _closedDayBanner(AppLocalizations? l10n) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Container(
+      key: const ValueKey('plan-closed-banner'),
+      width: double.infinity,
+      margin: const EdgeInsets.fromLTRB(12, 4, 12, 4),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: colorScheme.errorContainer,
+        borderRadius: AppRadius.mdAll,
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.event_busy,
+            size: 18,
+            color: colorScheme.onErrorContainer,
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              l10n?.planClosedDay ?? 'Closed on this day',
+              style: TextStyle(color: colorScheme.onErrorContainer),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   /// From-chip tap (#184): clock-dial pick of the window start. Live mode
   /// enters browsing with the picked start and a default-length window;
   /// browse mode moves the start, keeping the duration where the day
@@ -847,8 +954,9 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     FloorPlan plan,
     List<Reservation> reservations,
     Map<String, String> names,
-    DateTime at,
-  ) {
+    DateTime at, {
+    required bool dayOpen,
+  }) {
     final l10n = AppLocalizations.of(context);
     final timeFormat = DateFormat.Hm();
     final myMemberId = ref.watch(myMemberProvider).value?.id;
@@ -884,24 +992,27 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       itemBuilder: (context, index) {
         final seat = seats[index];
         // Browsing (#184): the row mirrors the canvas — occupancy over the
-        // whole window, instant-based in live mode.
+        // whole window, instant-based in live mode. Closed day (#186):
+        // every row muted like the canvas, tap gated in [_onSeatTap].
         final windowEnd = _browseEnd;
-        final state = windowEnd == null
-            ? seatStateAt(
-                plan: plan,
-                seat: seat,
-                reservations: reservations,
-                myMemberId: myMemberId,
-                at: at,
-              )
-            : seatStateInRange(
-                plan: plan,
-                seat: seat,
-                reservations: reservations,
-                myMemberId: myMemberId,
-                from: at,
-                to: windowEnd,
-              );
+        final state = !dayOpen
+            ? SeatState.blocked
+            : windowEnd == null
+                ? seatStateAt(
+                    plan: plan,
+                    seat: seat,
+                    reservations: reservations,
+                    myMemberId: myMemberId,
+                    at: at,
+                  )
+                : seatStateInRange(
+                    plan: plan,
+                    seat: seat,
+                    reservations: reservations,
+                    myMemberId: myMemberId,
+                    from: at,
+                    to: windowEnd,
+                  );
         final covering = windowEnd == null
             ? reservationOnSeatAt(
                 plan: plan,
@@ -922,17 +1033,21 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         final who = covering == null
             ? ''
             : (names[covering.memberId] ?? '');
-        final stateText = switch (state) {
-          SeatState.free => l10n?.planStateFree ?? 'Free',
-          SeatState.blocked =>
-            l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.',
-          SeatState.mine =>
-            '${l10n?.planStateYours ?? 'Yours'} · ${l10n?.planUntil(until ?? '') ?? 'until $until'}',
-          SeatState.reserved =>
-            '${l10n?.planReservedBy(who) ?? 'Reserved by $who'} · ${l10n?.planUntil(until ?? '') ?? 'until $until'}',
-          SeatState.occupied =>
-            '${l10n?.planOccupiedBy(who) ?? 'Occupied by $who'} · ${l10n?.planUntil(until ?? '') ?? 'until $until'}',
-        };
+        // Closed day (#186): the muted state is the day's, not the
+        // seat's — say so instead of the maintenance-block text.
+        final stateText = !dayOpen
+            ? (l10n?.planClosedDay ?? 'Closed on this day')
+            : switch (state) {
+                SeatState.free => l10n?.planStateFree ?? 'Free',
+                SeatState.blocked => l10n?.planSeatBlocked ??
+                    'This seat is blocked for maintenance.',
+                SeatState.mine =>
+                  '${l10n?.planStateYours ?? 'Yours'} · ${l10n?.planUntil(until ?? '') ?? 'until $until'}',
+                SeatState.reserved =>
+                  '${l10n?.planReservedBy(who) ?? 'Reserved by $who'} · ${l10n?.planUntil(until ?? '') ?? 'until $until'}',
+                SeatState.occupied =>
+                  '${l10n?.planOccupiedBy(who) ?? 'Occupied by $who'} · ${l10n?.planUntil(until ?? '') ?? 'until $until'}',
+              };
         final accent = SeatStateColors.of(
           state,
           brightness: Theme.of(context).brightness,

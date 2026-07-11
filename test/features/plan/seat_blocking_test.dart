@@ -25,7 +25,10 @@ Future<FakeFloorPlanRepository> pumpPlanForBlocking(
     );
   }
   final workspace =
-      FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags);
+      FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags)
+        // Open every weekday so the closed-day gating (#186) never trips
+        // when the suite runs on a weekend.
+        ..openWeekdays['ws-1'] = const [1, 2, 3, 4, 5, 6, 7];
   if (viewerIsAdminOnly) {
     workspace.myMember = workspace.myMember.copyWith(isOwner: false);
   }
