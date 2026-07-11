@@ -6,6 +6,7 @@ import 'package:deskilo/features/plan/domain/grid_geometry.dart';
 import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/plan/domain/office.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
+import 'package:deskilo/features/plan/domain/seat_context.dart';
 
 /// In-memory [FloorPlanRepository] (fakes over mocks).
 class FakeFloorPlanRepository implements FloorPlanRepository {
@@ -107,6 +108,36 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
         for (final o in offices.where((o) => o.workspaceId == workspaceId))
           o.id: o.name,
       };
+
+  @override
+  Future<SeatContext?> fetchSeatContext(String seatId) async {
+    final seat = seats.where((s) => s.id == seatId).firstOrNull;
+    if (seat == null) return null;
+    final desk = desks.where((d) => d.id == seat.deskId).firstOrNull;
+    if (desk == null) return null;
+    final officeContext = await fetchOfficeContext(desk.officeId);
+    if (officeContext == null) return null;
+    return SeatContext(
+      levelId: officeContext.levelId,
+      levelName: officeContext.levelName,
+      officeName: officeContext.officeName,
+      deskName: desk.name,
+      seatName: seat.name,
+    );
+  }
+
+  @override
+  Future<SeatContext?> fetchOfficeContext(String officeId) async {
+    final office = offices.where((o) => o.id == officeId).firstOrNull;
+    if (office == null) return null;
+    final level = levels.where((l) => l.id == office.levelId).firstOrNull;
+    if (level == null) return null;
+    return SeatContext(
+      levelId: level.id,
+      levelName: level.name,
+      officeName: office.name,
+    );
+  }
 
   @override
   Future<void> reorderLevels(List<String> orderedLevelIds) async {

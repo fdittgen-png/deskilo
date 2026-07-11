@@ -18,6 +18,7 @@ class FloorPlanPainter extends CustomPainter {
     this.brightness = Brightness.light,
     this.seatStates,
     this.seatLabels,
+    this.highlightedSeatId,
     this.marquee,
     this.marqueeValid = true,
     this.selection,
@@ -35,6 +36,10 @@ class FloorPlanPainter extends CustomPainter {
 
   /// Live mode: seat id → occupant display name (empty = no label).
   final Map<String, String>? seatLabels;
+
+  /// Seat to ring with a thick tertiary outline (#182): the calendar's
+  /// "Show on plan" jump points at the reserved seat. Null = no highlight.
+  final String? highlightedSeatId;
 
   /// In-progress drag rectangle (grid cells) while drawing a new element.
   final GridRect? marquee;
@@ -107,6 +112,17 @@ class FloorPlanPainter extends CustomPainter {
           ..strokeWidth = 1.5
           ..color = accent,
       );
+      if (seat.id == highlightedSeatId) {
+        // #182: ring around the focused seat; tertiary so it stands out
+        // against both the primary editor accent and the state colors.
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(rect.inflate(2), const Radius.circular(5)),
+          Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 3
+            ..color = colorScheme.tertiary,
+        );
+      }
       _orientationArrow(canvas, seat, rect, accent);
       // State never conveyed by color alone (spec §11): blocked seats get a
       // cross, occupied/reserved/mine get the occupant label or a dot.
@@ -218,5 +234,6 @@ class FloorPlanPainter extends CustomPainter {
       oldDelegate.selectionValid != selectionValid ||
       oldDelegate.seatStates != seatStates ||
       oldDelegate.seatLabels != seatLabels ||
+      oldDelegate.highlightedSeatId != highlightedSeatId ||
       oldDelegate.cellSize != cellSize;
 }

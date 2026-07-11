@@ -22,6 +22,7 @@ import '../../domain/seat.dart';
 import '../../domain/seat_block_policy.dart';
 import '../../providers/default_level_controller.dart';
 import '../../providers/floor_plan_providers.dart';
+import '../../providers/plan_focus_controller.dart';
 import '../widgets/floor_plan_painter.dart';
 import '../widgets/seat_accessory_row.dart';
 
@@ -48,6 +49,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   DateTime? _browse;
   bool _listView = false;
 
+  /// Seat ringed on the canvas after a calendar "Show on plan" jump
+  /// (#182). Cleared again by the next interaction that changes what the
+  /// canvas shows: a seat tap, a level-chip tap, or any time-scroller
+  /// change (slider, date pick, Now).
+  String? _highlightedSeatId;
+
   @override
   void initState() {
     super.initState();
@@ -56,6 +63,34 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       const Duration(minutes: 1),
       (_) => setState(() {}),
     );
+    // #182: a focus request may already be pending when this screen is
+    // first built (the ref.listen in build only catches later changes).
+    // Post-frame so applying it never mutates providers during build.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final pending = ref.read(planFocusControllerProvider);
+      if (pending != null) _applyFocus(pending);
+    });
+  }
+
+  /// Consumes a calendar "Show on plan" request (#182): switch the level
+  /// transiently (never persisting the member's default), browse to the
+  /// reservation start when it is still ahead (otherwise stay live), leave
+  /// list view, ring the seat — then clear the one-shot signal.
+  void _applyFocus(PlanFocus focus) {
+    ref.read(selectedLevelIdProvider.notifier).showTransient(focus.levelId);
+    setState(() {
+      _listView = false;
+      _highlightedSeatId = focus.seatId;
+      final at = focus.at;
+      _browse = (at != null && at.isAfter(DateTime.now())) ? at : null;
+    });
+    // Clear after the frame: mutating the provider inside its own change
+    // notification would re-enter the listeners.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      ref.read(planFocusControllerProvider.notifier).clear();
+    });
   }
 
   @override
@@ -73,6 +108,10 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     List<Reservation> reservations,
     DateTime now,
   ) async {
+    // Any seat interaction dismisses the calendar-jump ring (#182).
+    if (_highlightedSeatId != null) {
+      setState(() => _highlightedSeatId = null);
+    }
     final l10n = AppLocalizations.of(context);
     final myMemberId = ref.read(myMemberProvider).value?.id;
     final state = seatStateAt(
@@ -396,6 +435,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // #182: the calendar's "Show on plan" jump. This screen stays alive in
+    // the shell's indexed stack, so the listener survives tab switches.
+    ref.listen(planFocusControllerProvider, (_, focus) {
+      if (focus != null) _applyFocus(focus);
+    });
+
     final l10n = AppLocalizations.of(context);
     final levels = ref.watch(levelsProvider).value;
     if (levels == null) {
@@ -451,9 +496,14 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                       label: Text(l.name),
                       selected: l.id == level.id,
                       visualDensity: VisualDensity.compact,
-                      onSelected: (_) => ref
-                          .read(selectedLevelIdProvider.notifier)
-                          .select(l.id),
+                      onSelected: (_) {
+                        // Deliberate level choice: drop the jump highlight
+                        // (#182), then persist as before (#159).
+                        setState(() => _highlightedSeatId = null);
+                        ref
+                            .read(selectedLevelIdProvider.notifier)
+                            .select(l.id);
+                      },
                     ),
                   ),
               ],
@@ -480,6 +530,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                         seat.id:
                             _labelFor(plan, seat, reservations, names, at),
                     },
+                    highlightedSeatId: _highlightedSeatId,
                     onSeatTap: (seat) =>
                         _onSeatTap(plan, seat, reservations, at),
                   ),
@@ -523,6 +574,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
               );
               if (picked == null) return;
               setState(() {
+                _highlightedSeatId = null;
                 _browse = DateTime(
                   picked.year,
                   picked.month,
@@ -543,6 +595,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
               onChanged: (value) {
                 final m = (value ~/ 15) * 15;
                 setState(() {
+                  _highlightedSeatId = null;
                   _browse = DateTime(
                     local.year,
                     local.month,
@@ -555,8 +608,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             ),
           ),
           TextButton(
-            onPressed:
-                _browse == null ? null : () => setState(() => _browse = null),
+            onPressed: _browse == null
+                ? null
+                : () => setState(() {
+                      _highlightedSeatId = null;
+                      _browse = null;
+                    }),
             child: Text(l10n?.planNowButton ?? 'Now'),
           ),
         ],
@@ -688,12 +745,16 @@ class _LivePlanCanvas extends StatelessWidget {
     required this.seatStates,
     required this.seatLabels,
     required this.onSeatTap,
+    this.highlightedSeatId,
   });
 
   final FloorPlan plan;
   final Map<String, SeatState> seatStates;
   final Map<String, String> seatLabels;
   final ValueChanged<Seat> onSeatTap;
+
+  /// Seat ringed by the painter after a calendar jump (#182).
+  final String? highlightedSeatId;
 
   @override
   Widget build(BuildContext context) {
@@ -720,6 +781,7 @@ class _LivePlanCanvas extends StatelessWidget {
             brightness: Theme.of(context).brightness,
             seatStates: seatStates,
             seatLabels: seatLabels,
+            highlightedSeatId: highlightedSeatId,
           ),
         ),
       ),

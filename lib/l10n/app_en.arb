@@ -325,6 +325,10 @@
   "@calendarReservationActions": {
     "description": "Tooltip of the per-reservation overflow button"
   },
+  "calendarShowOnPlan": "Show on plan",
+  "@calendarShowOnPlan": {
+    "description": "Reservation detail sheet button jumping to the Plan tab with the seat's level shown and the seat highlighted (#182)"
+  },
   "appTitle": "DesKilo",
   "@appTitle": {
     "description": "Application name shown in the task switcher and app bar. Brand name — identical in all locales."

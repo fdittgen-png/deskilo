@@ -530,6 +530,12 @@ abstract class AppLocalizations {
   /// **'Reservation actions'**
   String get calendarReservationActions;
 
+  /// Reservation detail sheet button jumping to the Plan tab with the seat's level shown and the seat highlighted (#182)
+  ///
+  /// In en, this message translates to:
+  /// **'Show on plan'**
+  String get calendarShowOnPlan;
+
   /// Application name shown in the task switcher and app bar. Brand name — identical in all locales.
   ///
   /// In en, this message translates to:

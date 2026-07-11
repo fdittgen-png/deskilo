@@ -8,6 +8,7 @@ import '../domain/grid_geometry.dart';
 import '../domain/level.dart';
 import '../domain/office.dart';
 import '../domain/seat.dart';
+import '../domain/seat_context.dart';
 
 class SupabaseFloorPlanRepository implements FloorPlanRepository {
   SupabaseFloorPlanRepository(this._client);
@@ -75,6 +76,57 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       for (final r in [...seatRows, ...officeRows])
         r['id'] as String: r['name'] as String,
     };
+  }
+
+  // #182: four small keyed reads along seats → desks → offices → levels
+  // instead of one PostgREST FK-embedded select — the plain form is
+  // obviously covered by the existing is_member_of RLS selects and needs
+  // no assumptions about the embed syntax of the postgrest version.
+  @override
+  Future<SeatContext?> fetchSeatContext(String seatId) async {
+    final seatRow = await _client
+        .from('seats')
+        .select('name, desk_id')
+        .eq('id', seatId)
+        .maybeSingle();
+    if (seatRow == null) return null;
+    final deskRow = await _client
+        .from('desks')
+        .select('name, office_id')
+        .eq('id', seatRow['desk_id'] as String)
+        .maybeSingle();
+    if (deskRow == null) return null;
+    final officeContext =
+        await fetchOfficeContext(deskRow['office_id'] as String);
+    if (officeContext == null) return null;
+    return SeatContext(
+      levelId: officeContext.levelId,
+      levelName: officeContext.levelName,
+      officeName: officeContext.officeName,
+      deskName: deskRow['name'] as String,
+      seatName: seatRow['name'] as String,
+    );
+  }
+
+  @override
+  Future<SeatContext?> fetchOfficeContext(String officeId) async {
+    final officeRow = await _client
+        .from('offices')
+        .select('name, level_id')
+        .eq('id', officeId)
+        .maybeSingle();
+    if (officeRow == null) return null;
+    final levelRow = await _client
+        .from('levels')
+        .select('id, name')
+        .eq('id', officeRow['level_id'] as String)
+        .maybeSingle();
+    if (levelRow == null) return null;
+    return SeatContext(
+      levelId: levelRow['id'] as String,
+      levelName: levelRow['name'] as String,
+      officeName: officeRow['name'] as String,
+    );
   }
 
   @override
