@@ -881,6 +881,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get servicesActive => 'Actif';
 
   @override
+  String get themeTitle => 'Thème';
+
+  @override
+  String get themeSystem => 'Par défaut du système';
+
+  @override
+  String get themeLight => 'Clair';
+
+  @override
+  String get themeDark => 'Sombre';
+
+  @override
   String eventValidations(int current, int required) {
     return '$current/$required validations';
   }

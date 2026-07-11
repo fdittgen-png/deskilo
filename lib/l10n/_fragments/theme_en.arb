@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "themeTitle": "Theme",
+  "@themeTitle": {
+    "description": "Settings entry and dialog title for the in-app theme selection"
+  },
+  "themeSystem": "System default",
+  "@themeSystem": {
+    "description": "Theme option that follows the device light/dark setting instead of an override"
+  },
+  "themeLight": "Light",
+  "@themeLight": {
+    "description": "Theme option forcing the light appearance"
+  },
+  "themeDark": "Dark",
+  "@themeDark": {
+    "description": "Theme option forcing the dark appearance"
+  }
+}
