@@ -1766,6 +1766,24 @@ abstract class AppLocalizations {
   /// **'Supplements are per half-day.'**
   String get planAccessorySupplementHint;
 
+  /// Tooltip of the browse-window start time chip in the plan header (#184)
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get planFromLabel;
+
+  /// Tooltip of the browse-window end time chip in the plan header (#184)
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get planToLabel;
+
+  /// Snackbar when the picked browse-window end is not after its start (#184)
+  ///
+  /// In en, this message translates to:
+  /// **'End must be after start.'**
+  String get planEndBeforeStart;
+
   /// App-bar title of the owner service-catalog editor and its settings tile
   ///
   /// In en, this message translates to:

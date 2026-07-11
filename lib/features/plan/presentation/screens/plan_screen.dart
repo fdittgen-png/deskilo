@@ -33,6 +33,16 @@ const double _kCellSize = 14;
 /// becomes a workspace setting with the Epic-#5 rules engine).
 const Duration _kDefaultStay = Duration(hours: 4);
 
+/// Snapping of the header's from/to time chips (#184): 15-minute steps,
+/// matching the old slider's granularity.
+const int _kSnapMinutes = 15;
+const Duration _kTimeSnap = Duration(minutes: _kSnapMinutes);
+
+/// Latest selectable browse-window end within a day (#184): 23:45 — the
+/// last 15-minute slot, so the default window never rolls past midnight.
+const int _kLastSlotHour = 23;
+const int _kLastSlotMinute = 45;
+
 /// Live floor plan: seat states now, walk-up check-in, check-out (spec §4).
 class PlanScreen extends ConsumerStatefulWidget {
   const PlanScreen({super.key});
@@ -44,15 +54,21 @@ class PlanScreen extends ConsumerStatefulWidget {
 class _PlanScreenState extends ConsumerState<PlanScreen> {
   Timer? _minuteTick;
 
-  /// Time-scroller state (spec §6): null = live "now" mode; otherwise the
-  /// browsed instant whose occupancy is rendered.
+  /// Browse-window state (spec §6, #184): null = live "now" mode;
+  /// otherwise the start of the browsed time frame whose occupancy is
+  /// rendered. [_browseEnd] is null exactly when [_browse] is null;
+  /// otherwise it is always after [_browse] (invariant kept by every
+  /// setter in this file).
   DateTime? _browse;
+
+  /// End of the browsed window; see [_browse].
+  DateTime? _browseEnd;
   bool _listView = false;
 
   /// Seat ringed on the canvas after a calendar "Show on plan" jump
   /// (#182). Cleared again by the next interaction that changes what the
   /// canvas shows: a seat tap, a level-chip tap, or any time-scroller
-  /// change (slider, date pick, Now).
+  /// change (from/to chip pick, date pick, Now).
   String? _highlightedSeatId;
 
   @override
@@ -79,18 +95,88 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   /// list view, ring the seat — then clear the one-shot signal.
   void _applyFocus(PlanFocus focus) {
     ref.read(selectedLevelIdProvider.notifier).showTransient(focus.levelId);
+    final at = focus.at;
+    final from =
+        (at != null && at.isAfter(DateTime.now())) ? at.toLocal() : null;
     setState(() {
       _listView = false;
       _highlightedSeatId = focus.seatId;
-      final at = focus.at;
-      _browse = (at != null && at.isAfter(DateTime.now())) ? at : null;
+      _browse = from;
+      // Provisional default window (#184); refined to the reservation's own
+      // end once the day's reservations are in.
+      _browseEnd = from == null ? null : _defaultEndFor(from);
     });
+    if (from != null) unawaited(_resolveFocusWindowEnd(focus, from));
     // Clear after the frame: mutating the provider inside its own change
     // notification would re-enter the listeners.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       ref.read(planFocusControllerProvider.notifier).clear();
     });
+  }
+
+  /// #184: widen/narrow the focus window to the jumped-to reservation's own
+  /// `[startsAt, endsAt)` once the browsed day's reservations resolve. The
+  /// end is clamped to the day's last slot when the reservation crosses
+  /// midnight. Whole-office jumps (no seatId) keep the default window.
+  Future<void> _resolveFocusWindowEnd(PlanFocus focus, DateTime from) async {
+    final seatId = focus.seatId;
+    if (seatId == null) return;
+    List<Reservation> reservations;
+    try {
+      reservations =
+          await ref.read(reservationsForDayProvider(dayKeyOf(from)).future);
+    } catch (e, st) {
+      debugPrint('focus window resolution failed: $e\n$st');
+      TraceLogger.instance.error('plan', 'focus window resolution failed',
+          error: e, stackTrace: st);
+      return;
+    }
+    // The user may have moved on while the day was loading.
+    if (!mounted || _browse != from) return;
+    final covering = reservations
+        .where((r) => r.seatId == seatId && r.coversInstant(from))
+        .firstOrNull;
+    if (covering == null) return;
+    var end = covering.endsAt.toLocal();
+    final last = _lastSlotOf(from);
+    if (end.isAfter(last)) end = last;
+    if (!end.isAfter(from)) return;
+    setState(() => _browseEnd = end);
+  }
+
+  /// The day's last selectable slot (#184): 23:45 local of [day].
+  DateTime _lastSlotOf(DateTime day) {
+    final local = day.toLocal();
+    return DateTime(
+      local.year,
+      local.month,
+      local.day,
+      _kLastSlotHour,
+      _kLastSlotMinute,
+    );
+  }
+
+  /// Default window end for a start at [from] (#184): the default stay,
+  /// clamped to the day's last slot — and never at/before [from] (a start
+  /// on the last slot spills 15 minutes into the next day as the only
+  /// remaining valid window).
+  DateTime _defaultEndFor(DateTime from) {
+    final local = from.toLocal();
+    var end = local.add(_kDefaultStay);
+    final last = _lastSlotOf(local);
+    if (end.isAfter(last)) end = last;
+    if (!end.isAfter(local)) end = local.add(_kTimeSnap);
+    return end;
+  }
+
+  /// Snaps [t] down to the previous 15-minute slot (#184), like the old
+  /// slider did.
+  DateTime _snapToSlot(DateTime t) {
+    final local = t.toLocal();
+    final m =
+        (local.hour * 60 + local.minute) ~/ _kSnapMinutes * _kSnapMinutes;
+    return DateTime(local.year, local.month, local.day, m ~/ 60, m % 60);
   }
 
   @override
@@ -114,13 +200,39 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     }
     final l10n = AppLocalizations.of(context);
     final myMemberId = ref.read(myMemberProvider).value?.id;
-    final state = seatStateAt(
-      plan: plan,
-      seat: seat,
-      reservations: reservations,
-      myMemberId: myMemberId,
-      at: now,
-    );
+    // Browsing a time frame (#184): the whole window must be free; live
+    // mode keeps the instant semantics.
+    final windowEnd = _browseEnd;
+    final state = windowEnd == null
+        ? seatStateAt(
+            plan: plan,
+            seat: seat,
+            reservations: reservations,
+            myMemberId: myMemberId,
+            at: now,
+          )
+        : seatStateInRange(
+            plan: plan,
+            seat: seat,
+            reservations: reservations,
+            myMemberId: myMemberId,
+            from: now,
+            to: windowEnd,
+          );
+    Reservation? coveringReservation() => windowEnd == null
+        ? reservationOnSeatAt(
+            plan: plan,
+            seat: seat,
+            reservations: reservations,
+            at: now,
+          )
+        : reservationOnSeatInRange(
+            plan: plan,
+            seat: seat,
+            reservations: reservations,
+            from: now,
+            to: windowEnd,
+          );
 
     switch (state) {
       case SeatState.blocked:
@@ -135,21 +247,11 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       case SeatState.free:
         await _bookingSheet(plan, seat, reservations, now);
       case SeatState.mine:
-        final mine = reservationOnSeatAt(
-          plan: plan,
-          seat: seat,
-          reservations: reservations,
-          at: now,
-        );
+        final mine = coveringReservation();
         if (mine != null) await _mySeatSheet(seat, mine);
       case SeatState.reserved:
       case SeatState.occupied:
-        final other = reservationOnSeatAt(
-          plan: plan,
-          seat: seat,
-          reservations: reservations,
-          at: now,
-        );
+        final other = coveringReservation();
         if (other == null) return;
         final names = ref.read(memberNamesProvider).value ?? const {};
         final name = names[other.memberId] ?? '';
@@ -226,7 +328,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   }
 
   /// Live mode: atomic walk-up check-in starting now. Browse mode: punctual
-  /// reservation starting at the browsed instant (spec §5.1).
+  /// reservation over the browsed window (spec §5.1, #184).
   Future<void> _bookingSheet(
     FloorPlan plan,
     Seat seat,
@@ -266,7 +368,13 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       reservations: reservations,
       at: start,
     );
-    var end = start.add(_kDefaultStay);
+    // Browse mode (#184): the sheet opens on the browsed window's end.
+    // Walk-up keeps the default stay. Both stay capped by the next
+    // reservation as a safety net (a range-filtered free seat cannot be
+    // capped below the window, but a stale plan could).
+    var end = walkUp
+        ? start.add(_kDefaultStay)
+        : (_browseEnd ?? start.add(_kDefaultStay));
     var capped = false;
     if (next != null && next.startsAt.isBefore(end)) {
       end = next.startsAt;
@@ -470,6 +578,9 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         levels.first;
 
     final at = _browse ?? DateTime.now();
+    // Browsing (#184): occupancy over the whole [at, windowEnd) frame;
+    // null in live mode, where the instant semantics apply.
+    final windowEnd = _browseEnd;
     final planAsync = ref.watch(floorPlanProvider(level.id));
     final reservations =
         ref.watch(reservationsForDayProvider(dayKeyOf(at))).value ??
@@ -517,13 +628,22 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                     plan: plan,
                     seatStates: {
                       for (final seat in plan.seats)
-                        seat.id: seatStateAt(
-                          plan: plan,
-                          seat: seat,
-                          reservations: reservations,
-                          myMemberId: myMemberId,
-                          at: at,
-                        ),
+                        seat.id: windowEnd == null
+                            ? seatStateAt(
+                                plan: plan,
+                                seat: seat,
+                                reservations: reservations,
+                                myMemberId: myMemberId,
+                                at: at,
+                              )
+                            : seatStateInRange(
+                                plan: plan,
+                                seat: seat,
+                                reservations: reservations,
+                                myMemberId: myMemberId,
+                                from: at,
+                                to: windowEnd,
+                              ),
                     },
                     seatLabels: {
                       for (final seat in plan.seats)
@@ -547,12 +667,21 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     );
   }
 
-  /// The time scroller (spec §6): list/plan toggle · date · time-of-day
-  /// slider · Now.
+  /// The time scroller (spec §6, #184): list/plan toggle · date · from→to
+  /// time chips (Material clock dial) · Now.
   Widget _scrollerRow(DateTime at) {
     final l10n = AppLocalizations.of(context);
     final local = at.toLocal();
-    final minutes = local.hour * 60 + local.minute;
+    final live = _browse == null;
+    final endLocal = (_browseEnd ?? _defaultEndFor(local)).toLocal();
+    final timeFormat = DateFormat.Hm();
+    // Live mode de-emphasizes the chips: they only preview the window a
+    // tap would browse.
+    final chipStyle = live
+        ? TextButton.styleFrom(
+            foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
+          )
+        : null;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
@@ -573,46 +702,68 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                 lastDate: DateTime.now().add(const Duration(days: 365)),
               );
               if (picked == null) return;
+              if (!mounted) return;
               setState(() {
                 _highlightedSeatId = null;
-                _browse = DateTime(
+                // Keep the window's times on the newly picked day (#184).
+                final from = DateTime(
                   picked.year,
                   picked.month,
                   picked.day,
                   local.hour,
                   local.minute,
                 );
+                var end = DateTime(
+                  picked.year,
+                  picked.month,
+                  picked.day,
+                  endLocal.hour,
+                  endLocal.minute,
+                );
+                if (!end.isAfter(from)) end = _defaultEndFor(from);
+                _browse = from;
+                _browseEnd = end;
               });
             },
             child: Text(DateFormat.MMMd().format(local)),
           ),
           Expanded(
-            child: Slider(
-              value: minutes.toDouble(),
-              max: 24 * 60 - 15,
-              divisions: 24 * 4 - 1,
-              label: DateFormat.Hm().format(local),
-              onChanged: (value) {
-                final m = (value ~/ 15) * 15;
-                setState(() {
-                  _highlightedSeatId = null;
-                  _browse = DateTime(
-                    local.year,
-                    local.month,
-                    local.day,
-                    m ~/ 60,
-                    m % 60,
-                  );
-                });
-              },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Tooltip(
+                  message: l10n?.planFromLabel ?? 'From',
+                  child: TextButton(
+                    key: const ValueKey('plan-from-chip'),
+                    style: chipStyle,
+                    onPressed: _pickFrom,
+                    child: Text(timeFormat.format(local)),
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_right_alt,
+                  size: 16,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+                Tooltip(
+                  message: l10n?.planToLabel ?? 'To',
+                  child: TextButton(
+                    key: const ValueKey('plan-to-chip'),
+                    style: chipStyle,
+                    onPressed: _pickTo,
+                    child: Text(timeFormat.format(endLocal)),
+                  ),
+                ),
+              ],
             ),
           ),
           TextButton(
-            onPressed: _browse == null
+            onPressed: live
                 ? null
                 : () => setState(() {
                       _highlightedSeatId = null;
                       _browse = null;
+                      _browseEnd = null;
                     }),
             child: Text(l10n?.planNowButton ?? 'Now'),
           ),
@@ -621,9 +772,77 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     );
   }
 
+  /// From-chip tap (#184): clock-dial pick of the window start. Live mode
+  /// enters browsing with the picked start and a default-length window;
+  /// browse mode moves the start, keeping the duration where the day
+  /// allows it.
+  Future<void> _pickFrom() async {
+    final current = (_browse ?? DateTime.now()).toLocal();
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(current),
+    );
+    if (picked == null) return;
+    if (!mounted) return;
+    final wasLive = _browse == null;
+    final duration =
+        wasLive ? _kDefaultStay : _browseEnd!.difference(_browse!);
+    final from = _snapToSlot(DateTime(
+      current.year,
+      current.month,
+      current.day,
+      picked.hour,
+      picked.minute,
+    ));
+    var end = from.add(duration);
+    final last = _lastSlotOf(from);
+    if (end.isAfter(last)) end = last;
+    if (!end.isAfter(from)) end = from.add(_kTimeSnap);
+    setState(() {
+      _highlightedSeatId = null;
+      _browse = from;
+      _browseEnd = end;
+    });
+  }
+
+  /// To-chip tap (#184): clock-dial pick of the window end. Live mode
+  /// enters browsing with the start snapped to "now"; a pick at/before the
+  /// start is rejected with a snackbar instead of silently rolling over to
+  /// the next day (the booking sheet's own "Until" keeps its roll-over).
+  Future<void> _pickTo() async {
+    final now = DateTime.now();
+    final from = _browse?.toLocal() ?? _snapToSlot(now);
+    final currentEnd =
+        (_browseEnd ?? _defaultEndFor(_browse ?? now)).toLocal();
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(currentEnd),
+    );
+    if (picked == null) return;
+    if (!mounted) return;
+    final l10n = AppLocalizations.of(context);
+    final end = _snapToSlot(DateTime(
+      from.year,
+      from.month,
+      from.day,
+      picked.hour,
+      picked.minute,
+    ));
+    if (!end.isAfter(from)) {
+      _snack(l10n?.planEndBeforeStart ?? 'End must be after start.');
+      return;
+    }
+    setState(() {
+      _highlightedSeatId = null;
+      _browse = from;
+      _browseEnd = end;
+    });
+  }
+
   /// Chronological reservations of the browsed day (spec §6 list view).
   /// #104: the list view mirrors the plan — every seat of the level with
-  /// its state at the browsed instant, tappable exactly like the canvas.
+  /// its state over the browsed window (live: at this instant), tappable
+  /// exactly like the canvas.
   Widget _seatList(
     FloorPlan plan,
     List<Reservation> reservations,
@@ -664,19 +883,39 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       itemCount: seats.length,
       itemBuilder: (context, index) {
         final seat = seats[index];
-        final state = seatStateAt(
-          plan: plan,
-          seat: seat,
-          reservations: reservations,
-          myMemberId: myMemberId,
-          at: at,
-        );
-        final covering = reservationOnSeatAt(
-          plan: plan,
-          seat: seat,
-          reservations: reservations,
-          at: at,
-        );
+        // Browsing (#184): the row mirrors the canvas — occupancy over the
+        // whole window, instant-based in live mode.
+        final windowEnd = _browseEnd;
+        final state = windowEnd == null
+            ? seatStateAt(
+                plan: plan,
+                seat: seat,
+                reservations: reservations,
+                myMemberId: myMemberId,
+                at: at,
+              )
+            : seatStateInRange(
+                plan: plan,
+                seat: seat,
+                reservations: reservations,
+                myMemberId: myMemberId,
+                from: at,
+                to: windowEnd,
+              );
+        final covering = windowEnd == null
+            ? reservationOnSeatAt(
+                plan: plan,
+                seat: seat,
+                reservations: reservations,
+                at: at,
+              )
+            : reservationOnSeatInRange(
+                plan: plan,
+                seat: seat,
+                reservations: reservations,
+                from: at,
+                to: windowEnd,
+              );
         final until = covering == null
             ? null
             : timeFormat.format(covering.endsAt.toLocal());
@@ -728,12 +967,22 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     Map<String, String> names,
     DateTime now,
   ) {
-    final r = reservationOnSeatAt(
-      plan: plan,
-      seat: seat,
-      reservations: reservations,
-      at: now,
-    );
+    // Browsing (#184): label with whoever overlaps the window.
+    final windowEnd = _browseEnd;
+    final r = windowEnd == null
+        ? reservationOnSeatAt(
+            plan: plan,
+            seat: seat,
+            reservations: reservations,
+            at: now,
+          )
+        : reservationOnSeatInRange(
+            plan: plan,
+            seat: seat,
+            reservations: reservations,
+            from: now,
+            to: windowEnd,
+          );
     if (r == null) return '';
     return _firstName(names[r.memberId] ?? '');
   }

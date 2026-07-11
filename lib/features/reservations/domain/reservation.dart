@@ -50,4 +50,10 @@ sealed class Reservation with _$Reservation {
   /// Active and covering the instant [at] (start inclusive, end exclusive).
   bool coversInstant(DateTime at) =>
       isActive && !at.isBefore(startsAt) && at.isBefore(endsAt);
+
+  /// Active and overlapping the half-open window `[from, to)` (#184): a
+  /// reservation ending exactly at [from] or starting exactly at [to] does
+  /// NOT overlap — mirroring [coversInstant]'s end-exclusive semantics.
+  bool coversRange(DateTime from, DateTime to) =>
+      isActive && from.isBefore(endsAt) && startsAt.isBefore(to);
 }

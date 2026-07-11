@@ -923,6 +923,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get planAccessorySupplementHint => 'Aufpreise gelten pro halbem Tag.';
 
   @override
+  String get planFromLabel => 'Von';
+
+  @override
+  String get planToLabel => 'Bis';
+
+  @override
+  String get planEndBeforeStart => 'Das Ende muss nach dem Beginn liegen.';
+
+  @override
   String get servicesTitle => 'Leistungen';
 
   @override

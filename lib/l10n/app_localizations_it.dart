@@ -926,6 +926,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'I supplementi si applicano per mezza giornata.';
 
   @override
+  String get planFromLabel => 'Dalle';
+
+  @override
+  String get planToLabel => 'Alle';
+
+  @override
+  String get planEndBeforeStart =>
+      'La fine deve essere successiva all\'inizio.';
+
+  @override
   String get servicesTitle => 'Servizi';
 
   @override

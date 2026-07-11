@@ -188,10 +188,19 @@ void main() {
     await tester.tap(find.text('Show on plan'));
     await tester.pumpAndSettle();
 
-    // The time scroller browses the reservation start: its date on the
-    // date button, its time on the slider.
+    // The time scroller browses the reservation's own window (#184): its
+    // date on the date button, [startsAt, endsAt) on the from/to chips.
     expect(find.text(DateFormat.MMMd().format(start)), findsOneWidget);
-    expect(tester.widget<Slider>(find.byType(Slider)).value, 9 * 60);
+    final fromChip = find.byKey(const ValueKey('plan-from-chip'));
+    expect(
+      find.descendant(of: fromChip, matching: find.text('09:00')),
+      findsOneWidget,
+    );
+    final toChip = find.byKey(const ValueKey('plan-to-chip'));
+    expect(
+      find.descendant(of: toChip, matching: find.text('11:00')),
+      findsOneWidget,
+    );
     expect(planPainter(tester).highlightedSeatId, 'seat-4');
   });
 }

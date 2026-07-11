@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'plan_screen_test.dart' show pumpPlan, seatCenter;
+import 'time_scroller_test.dart' show pickChipTime;
 
 Future<void> openFutureBookingSheet(WidgetTester tester) async {
-  await tester.drag(find.byType(Slider), const Offset(600, 0));
-  await tester.pumpAndSettle();
+  // Browse to 20:00 via the from chip (#184) — the clock-dial picker in
+  // keyboard input mode — then open the booking sheet on the seat.
+  await pickChipTime(tester, 'plan-from-chip', hour: '20', minute: '00');
   await tester.tapAt(seatCenter(tester));
   await tester.pumpAndSettle();
 }
@@ -46,8 +48,8 @@ void main() {
     final env = await pumpPlan(
       tester,
       seedReservations: (repo) {
-        // Block the whole day one week out — whatever time the slider picks,
-        // the second weekly instance collides.
+        // Block the whole day one week out — whatever time the window
+        // starts at, the second weekly instance collides.
         final dayStart = DateTime(now.year, now.month, now.day)
             .add(const Duration(days: 7));
         repo.reservations.add(

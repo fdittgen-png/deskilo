@@ -917,6 +917,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get planAccessorySupplementHint => 'Supplements are per half-day.';
 
   @override
+  String get planFromLabel => 'From';
+
+  @override
+  String get planToLabel => 'To';
+
+  @override
+  String get planEndBeforeStart => 'End must be after start.';
+
+  @override
   String get servicesTitle => 'Services';
 
   @override

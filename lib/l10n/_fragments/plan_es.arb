@@ -40,5 +40,8 @@
   "planBookedForPending": "Enviado a {name} para confirmación.",
   "planMakeNotReservable": "Hacer no reservable",
   "planMakeReservable": "Hacer reservable",
-  "planAccessorySupplementHint": "Los suplementos se aplican por media jornada."
+  "planAccessorySupplementHint": "Los suplementos se aplican por media jornada.",
+  "planFromLabel": "Desde",
+  "planToLabel": "Hasta",
+  "planEndBeforeStart": "El fin debe ser posterior al inicio."
 }

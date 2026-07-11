@@ -1281,6 +1281,18 @@
   "@planAccessorySupplementHint": {
     "description": "Unit hint under the booking sheet's accessory chips when the accessorySupplements toggle shows (+price) suffixes (#169)"
   },
+  "planFromLabel": "From",
+  "@planFromLabel": {
+    "description": "Tooltip of the browse-window start time chip in the plan header (#184)"
+  },
+  "planToLabel": "To",
+  "@planToLabel": {
+    "description": "Tooltip of the browse-window end time chip in the plan header (#184)"
+  },
+  "planEndBeforeStart": "End must be after start.",
+  "@planEndBeforeStart": {
+    "description": "Snackbar when the picked browse-window end is not after its start (#184)"
+  },
   "servicesTitle": "Services",
   "@servicesTitle": {
     "description": "App-bar title of the owner service-catalog editor and its settings tile"
