@@ -1754,6 +1754,12 @@ abstract class AppLocalizations {
   /// **'Make reservable'**
   String get planMakeReservable;
 
+  /// Unit hint under the booking sheet's accessory chips when the accessorySupplements toggle shows (+price) suffixes (#169)
+  ///
+  /// In en, this message translates to:
+  /// **'Supplements are per half-day.'**
+  String get planAccessorySupplementHint;
+
   /// App-bar title of the owner service-catalog editor and its settings tile
   ///
   /// In en, this message translates to:

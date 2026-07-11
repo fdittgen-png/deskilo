@@ -39,5 +39,6 @@
   "planSendForConfirmation": "Zur Bestätigung senden",
   "planBookedForPending": "Zur Bestätigung an {name} gesendet.",
   "planMakeNotReservable": "Nicht reservierbar machen",
-  "planMakeReservable": "Reservierbar machen"
+  "planMakeReservable": "Reservierbar machen",
+  "planAccessorySupplementHint": "Aufpreise gelten pro halbem Tag."
 }

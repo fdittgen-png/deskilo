@@ -275,6 +275,7 @@
   "planBookedForPending": "Inviato a {name} per conferma.",
   "planMakeNotReservable": "Rendi non prenotabile",
   "planMakeReservable": "Rendi prenotabile",
+  "planAccessorySupplementHint": "I supplementi si applicano per mezza giornata.",
   "servicesTitle": "Servizi",
   "servicesEmpty": "Ancora nessun servizio.",
   "servicesNew": "Nuovo servizio",

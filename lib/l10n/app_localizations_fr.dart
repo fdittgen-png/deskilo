@@ -920,6 +920,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get planMakeReservable => 'Rendre réservable';
 
   @override
+  String get planAccessorySupplementHint =>
+      'Les suppléments s\'appliquent par demi-journée.';
+
+  @override
   String get servicesTitle => 'Services';
 
   @override
