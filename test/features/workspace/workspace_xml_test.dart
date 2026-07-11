@@ -23,6 +23,10 @@ const _workspace = Workspace(
     'iban': 'DE89 3704 0044 0532 0130 00',
     'paypal_me': 'deskilo',
     'reference': '',
+    // #192 — the codec is map-driven: new keys must flow through the
+    // round trip with no schema change.
+    'wero': '+49 170 0000000',
+    'wise': '@deskilo',
   },
 );
 
@@ -111,10 +115,13 @@ void main() {
             currencyCode: 'EUR',
             timezone: 'Europe/Berlin',
             featureFlags: {'events': true, 'money': false},
-            // The empty reference is dropped on export.
+            // The empty reference is dropped on export; the #192 keys
+            // ride the map-driven <payment-instruction key value/>.
             paymentInstructions: {
               'iban': 'DE89 3704 0044 0532 0130 00',
               'paypal_me': 'deskilo',
+              'wero': '+49 170 0000000',
+              'wise': '@deskilo',
             },
           ),
           levels: [

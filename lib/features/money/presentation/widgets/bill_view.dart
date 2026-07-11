@@ -107,28 +107,15 @@ class _HowToPayCard extends StatelessWidget {
               ),
             ),
             if (instructions.iban.trim().isNotEmpty)
-              ListTile(
+              _CopyTile(
                 key: const Key('howToPayIban'),
-                leading: const Icon(Icons.account_balance_outlined),
+                icon: Icons.account_balance_outlined,
                 // IBAN is a language-neutral banking acronym — the key
                 // carries it verbatim in every locale.
-                title: Text(l10n?.paymentInstructionsIbanTitle ?? 'IBAN'),
-                subtitle: Text(instructions.iban.trim()),
-                trailing: const Icon(Icons.copy_outlined, size: 18),
-                onTap: () async {
-                  await Clipboard.setData(
-                    ClipboardData(text: instructions.iban.trim()),
-                  );
-                  if (!context.mounted) return;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        l10n?.paymentInstructionsIbanCopied ??
-                            'IBAN copied.',
-                      ),
-                    ),
-                  );
-                },
+                title: l10n?.paymentInstructionsIbanTitle ?? 'IBAN',
+                value: instructions.iban.trim(),
+                copiedMessage:
+                    l10n?.paymentInstructionsIbanCopied ?? 'IBAN copied.',
               ),
             if (paypalUri != null)
               ListTile(
@@ -151,6 +138,36 @@ class _HowToPayCard extends StatelessWidget {
                   }
                 },
               ),
+            // #192 — Wero / Lydia / Wise: phone number, phone/username,
+            // Wisetag or link. All copy to the clipboard like the IBAN;
+            // the titles reuse the #154 method labels (brand names).
+            if (instructions.wero.trim().isNotEmpty)
+              _CopyTile(
+                key: const Key('howToPayWero'),
+                icon: Icons.smartphone_outlined,
+                title: l10n?.paymentMethodWero ?? 'Wero',
+                value: instructions.wero.trim(),
+                copiedMessage: l10n?.paymentInstructionsValueCopied ??
+                    'Copied to clipboard.',
+              ),
+            if (instructions.lydia.trim().isNotEmpty)
+              _CopyTile(
+                key: const Key('howToPayLydia'),
+                icon: Icons.smartphone_outlined,
+                title: l10n?.paymentMethodLydia ?? 'Lydia',
+                value: instructions.lydia.trim(),
+                copiedMessage: l10n?.paymentInstructionsValueCopied ??
+                    'Copied to clipboard.',
+              ),
+            if (instructions.wise.trim().isNotEmpty)
+              _CopyTile(
+                key: const Key('howToPayWise'),
+                icon: Icons.alternate_email,
+                title: l10n?.paymentMethodWise ?? 'Wise',
+                value: instructions.wise.trim(),
+                copiedMessage: l10n?.paymentInstructionsValueCopied ??
+                    'Copied to clipboard.',
+              ),
             if (instructions.reference.trim().isNotEmpty)
               ListTile(
                 key: const Key('howToPayReference'),
@@ -164,6 +181,40 @@ class _HowToPayCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// A how-to-pay row whose value copies to the clipboard on tap (#155
+/// IBAN pattern, shared with the #192 Wero/Lydia/Wise rows).
+class _CopyTile extends StatelessWidget {
+  const _CopyTile({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.value,
+    required this.copiedMessage,
+  });
+
+  final IconData icon;
+  final String title;
+  final String value;
+  final String copiedMessage;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(title),
+      subtitle: Text(value),
+      trailing: const Icon(Icons.copy_outlined, size: 18),
+      onTap: () async {
+        await Clipboard.setData(ClipboardData(text: value));
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(copiedMessage)),
+        );
+      },
     );
   }
 }

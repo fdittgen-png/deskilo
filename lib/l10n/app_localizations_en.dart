@@ -790,6 +790,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentMethodOther => 'Other';
 
   @override
+  String get paymentMethodWero => 'Wero';
+
+  @override
+  String get paymentMethodLydia => 'Lydia';
+
+  @override
+  String get paymentMethodWise => 'Wise';
+
+  @override
   String get planNoLevels => 'The workspace has no floor plan yet.';
 
   @override
@@ -1172,6 +1181,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paymentInstructionsIbanCopied => 'IBAN copied.';
+
+  @override
+  String get paymentInstructionsWeroLabel => 'Wero phone number';
+
+  @override
+  String get paymentInstructionsLydiaLabel => 'Lydia phone number or username';
+
+  @override
+  String get paymentInstructionsWiseLabel => 'Wisetag or Wise payment link';
+
+  @override
+  String get paymentInstructionsValueCopied => 'Copied to clipboard.';
 
   @override
   String get workspaceXmlExport => 'Export workspace (XML)';

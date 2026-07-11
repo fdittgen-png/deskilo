@@ -9,9 +9,10 @@ import '../../helpers/mock_providers.dart';
 Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   WidgetTester tester,
 ) async {
-  // The settings form grew past the default 800px test viewport (#155);
-  // a taller view keeps every field + Save built without scrolling.
-  tester.view.physicalSize = const Size(800, 2400);
+  // The settings form grew past the default 800px test viewport (#155,
+  // three more payment fields in #192); a taller view keeps every field
+  // + Save built without scrolling.
+  tester.view.physicalSize = const Size(800, 3200);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
@@ -104,6 +105,19 @@ void main() {
       find.byKey(const Key('workspaceSettingsReference')),
       'DesKilo member period',
     );
+    // #192 — Wero / Lydia / Wise ride the same blob and Save.
+    await tester.enterText(
+      find.byKey(const Key('workspaceSettingsWero')),
+      '+49 170 0000000',
+    );
+    await tester.enterText(
+      find.byKey(const Key('workspaceSettingsLydia')),
+      '+33 6 00 00 00 00',
+    );
+    await tester.enterText(
+      find.byKey(const Key('workspaceSettingsWise')),
+      '@deskilo',
+    );
     await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
     await tester.pumpAndSettle();
 
@@ -113,6 +127,28 @@ void main() {
     expect(saved.paypalMe, 'deskilo');
     expect(saved.reference, 'DesKilo member period');
     expect(saved.paypalMeUri.toString(), 'https://paypal.me/deskilo');
+    expect(saved.wero, '+49 170 0000000');
+    expect(saved.lydia, '+33 6 00 00 00 00');
+    expect(saved.wise, '@deskilo');
+  });
+
+  testWidgets(
+      'saved #192 instructions re-seed the form fields on reload',
+      (tester) async {
+    final workspace = await pumpWorkspaceSettings(tester);
+    await tester.enterText(
+      find.byKey(const Key('workspaceSettingsWero')),
+      '+49 170 0000000',
+    );
+    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+    await tester.pumpAndSettle();
+
+    // The fake writes the blob back onto the workspace — the saved value
+    // must round-trip through toDb/fromDb into the seeded controller.
+    expect(
+      workspace.workspaces[0].paymentInstructions['wero'],
+      '+49 170 0000000',
+    );
   });
 
   testWidgets('non-owners see no Workspace entry in settings',

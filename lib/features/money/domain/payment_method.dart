@@ -10,7 +10,13 @@ enum PaymentMethod {
   paypal('paypal'),
   twint('twint'),
   card('card'),
-  other('other');
+  other('other'),
+  // #192 — append only (AGENT_RULES: enum values are persisted by name,
+  // never reorder). Pickers use [displayOrder] so `other` still renders
+  // last.
+  wero('wero'),
+  lydia('lydia'),
+  wise('wise');
 
   const PaymentMethod(this.wireName);
 
@@ -26,4 +32,14 @@ enum PaymentMethod {
     }
     return null;
   }
+
+  /// Declaration order with the catch-all [other] moved to the end —
+  /// what method pickers iterate. Declaration order itself is
+  /// append-only (#192 landed after [other]), so it is not a
+  /// presentable order on its own.
+  static List<PaymentMethod> get displayOrder => [
+        for (final method in values)
+          if (method != other) method,
+        other,
+      ];
 }

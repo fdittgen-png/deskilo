@@ -42,5 +42,9 @@
   "paymentInstructionsPaypalLabel": "PayPal.me-Link oder -Name",
   "paymentInstructionsReferenceLabel": "Hinweis zum Verwendungszweck",
   "paymentInstructionsIbanTitle": "IBAN",
-  "paymentInstructionsIbanCopied": "IBAN kopiert."
+  "paymentInstructionsIbanCopied": "IBAN kopiert.",
+  "paymentInstructionsWeroLabel": "Wero-Telefonnummer",
+  "paymentInstructionsLydiaLabel": "Lydia-Telefonnummer oder -Nutzername",
+  "paymentInstructionsWiseLabel": "Wisetag oder Wise-Zahlungslink",
+  "paymentInstructionsValueCopied": "In die Zwischenablage kopiert."
 }

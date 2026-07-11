@@ -201,7 +201,10 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 spacing: 8,
                 runSpacing: 4,
                 children: [
-                  for (final candidate in PaymentMethod.values)
+                  // displayOrder, not values: the enum is append-only
+                  // (#192 added methods after `other`), but the catch-all
+                  // chip must stay last.
+                  for (final candidate in PaymentMethod.displayOrder)
                     ChoiceChip(
                       label: Text(paymentMethodLabel(l10n, candidate)),
                       selected: method == candidate,

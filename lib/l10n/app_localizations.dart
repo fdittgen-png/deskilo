@@ -1556,6 +1556,24 @@ abstract class AppLocalizations {
   /// **'Other'**
   String get paymentMethodOther;
 
+  /// Payment-method chip/label: Wero — brand name, identical in every locale (#192).
+  ///
+  /// In en, this message translates to:
+  /// **'Wero'**
+  String get paymentMethodWero;
+
+  /// Payment-method chip/label: Lydia — brand name, identical in every locale (#192).
+  ///
+  /// In en, this message translates to:
+  /// **'Lydia'**
+  String get paymentMethodLydia;
+
+  /// Payment-method chip/label: Wise — brand name, identical in every locale (#192).
+  ///
+  /// In en, this message translates to:
+  /// **'Wise'**
+  String get paymentMethodWise;
+
   /// Empty state of the Plan tab before the owner drew levels
   ///
   /// In en, this message translates to:
@@ -2257,6 +2275,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'IBAN copied.'**
   String get paymentInstructionsIbanCopied;
+
+  /// Label of the Wero field in the workspace settings — the phone number the workspace receives Wero payments on (#192). Wero is a brand name.
+  ///
+  /// In en, this message translates to:
+  /// **'Wero phone number'**
+  String get paymentInstructionsWeroLabel;
+
+  /// Label of the Lydia field in the workspace settings (#192). Lydia is a brand name.
+  ///
+  /// In en, this message translates to:
+  /// **'Lydia phone number or username'**
+  String get paymentInstructionsLydiaLabel;
+
+  /// Label of the Wise field in the workspace settings (#192). Wise and Wisetag are brand names.
+  ///
+  /// In en, this message translates to:
+  /// **'Wisetag or Wise payment link'**
+  String get paymentInstructionsWiseLabel;
+
+  /// Snackbar after tapping a Wero/Lydia/Wise row copied its value to the clipboard (#192).
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard.'**
+  String get paymentInstructionsValueCopied;
 
   /// Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)
   ///

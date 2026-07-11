@@ -47,5 +47,8 @@
   "paymentMethodPaypal": "PayPal",
   "paymentMethodTwint": "TWINT",
   "paymentMethodCard": "Tarjeta",
-  "paymentMethodOther": "Otro"
+  "paymentMethodOther": "Otro",
+  "paymentMethodWero": "Wero",
+  "paymentMethodLydia": "Lydia",
+  "paymentMethodWise": "Wise"
 }

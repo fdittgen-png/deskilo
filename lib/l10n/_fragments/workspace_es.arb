@@ -42,5 +42,9 @@
   "paymentInstructionsPaypalLabel": "Enlace o usuario de PayPal.me",
   "paymentInstructionsReferenceLabel": "Indicación de referencia del pago",
   "paymentInstructionsIbanTitle": "IBAN",
-  "paymentInstructionsIbanCopied": "IBAN copiado."
+  "paymentInstructionsIbanCopied": "IBAN copiado.",
+  "paymentInstructionsWeroLabel": "Número de teléfono de Wero",
+  "paymentInstructionsLydiaLabel": "Número de teléfono o usuario de Lydia",
+  "paymentInstructionsWiseLabel": "Wisetag o enlace de pago de Wise",
+  "paymentInstructionsValueCopied": "Copiado al portapapeles."
 }

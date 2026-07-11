@@ -37,7 +37,7 @@ Future<FakeMoneyRepository> pumpMoney(
   return money;
 }
 
-/// A workspace whose owner configured how-to-pay details (#155).
+/// A workspace whose owner configured how-to-pay details (#155, #192).
 FakeWorkspaceRepository workspaceWithInstructions() {
   final workspace = FakeWorkspaceRepository.withWorkspace();
   workspace.workspaces[0] = workspace.workspaces[0].copyWith(
@@ -45,6 +45,9 @@ FakeWorkspaceRepository workspaceWithInstructions() {
       'iban': 'DE89 3704 0044 0532 0130 00',
       'paypal_me': 'deskilo',
       'reference': 'DesKilo member period',
+      'wero': '+49 170 0000000',
+      'lydia': '+33 6 00 00 00 00',
+      'wise': '@deskilo',
     },
   );
   return workspace;
@@ -349,6 +352,89 @@ void main() {
     await tester.pump();
     expect(find.text('IBAN copied.'), findsOneWidget);
     expect(copied?.text, 'DE89 3704 0044 0532 0130 00');
+  });
+
+  testWidgets(
+      'the how-to-pay card renders Wero, Lydia and Wise rows and tapping '
+      'the Wero row copies its phone number (#192)', (tester) async {
+    tester.view.physicalSize = const Size(600, 2800);
+    tester.view.devicePixelRatio = 1.5;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await pumpMoney(tester, workspace: workspaceWithInstructions());
+
+    expect(find.text('Wero'), findsOneWidget);
+    expect(find.text('+49 170 0000000'), findsOneWidget);
+    expect(find.text('Lydia'), findsOneWidget);
+    expect(find.text('+33 6 00 00 00 00'), findsOneWidget);
+    expect(find.text('Wise'), findsOneWidget);
+    expect(find.text('@deskilo'), findsOneWidget);
+
+    // Clipboard.setData awaits SystemChannels.platform, which has no
+    // handler in widget tests — mock it so the copy completes.
+    ClipboardData? copied;
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+      SystemChannels.platform,
+      (call) async {
+        if (call.method == 'Clipboard.setData') {
+          copied = ClipboardData(
+            text: (call.arguments as Map<Object?, Object?>)['text']!
+                as String,
+          );
+        }
+        return null;
+      },
+    );
+    addTearDown(
+      () => tester.binding.defaultBinaryMessenger
+          .setMockMethodCallHandler(SystemChannels.platform, null),
+    );
+
+    await tester.ensureVisible(find.byKey(const Key('howToPayWero')));
+    await tester.tap(find.byKey(const Key('howToPayWero')));
+    await tester.pump();
+    await tester.pump();
+    expect(find.text('Copied to clipboard.'), findsOneWidget);
+    expect(copied?.text, '+49 170 0000000');
+  });
+
+  testWidgets(
+      'recording a payment with the Wero chip submits the wero method '
+      'end-to-end (#192)', (tester) async {
+    final money = await pumpMoney(tester);
+
+    await tester.scrollUntilVisible(find.text('Record a payment'), 100);
+    await tester.tap(find.text('Record a payment'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Amount'),
+      '12',
+    );
+    await tester.tap(find.text('Wero'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Submit for confirmation'));
+    await tester.pumpAndSettle();
+
+    expect(money.recordedPayments.single.amountCents, 1200);
+    expect(money.recordedPayments.single.method, PaymentMethod.wero);
+  });
+
+  testWidgets(
+      'the method picker keeps the catch-all chip last even though the '
+      'enum is append-only (#192)', (tester) async {
+    await pumpMoney(tester);
+
+    await tester.scrollUntilVisible(find.text('Record a payment'), 100);
+    await tester.tap(find.text('Record a payment'));
+    await tester.pumpAndSettle();
+
+    final chipLabels = [
+      for (final chip in tester.widgetList<ChoiceChip>(find.byType(ChoiceChip)))
+        ((chip.label) as Text).data,
+    ];
+    expect(chipLabels.last, 'Other');
+    expect(chipLabels, containsAll(['Wero', 'Lydia', 'Wise']));
   });
 
   testWidgets('a settled statement shows NO how-to-pay card (#155)',
