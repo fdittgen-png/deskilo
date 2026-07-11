@@ -32,6 +32,7 @@ const _strings = BillPdfStrings(
   subscription: 'Subscription 50%',
   entitlement: '24 of 22 half-days used (22 open days)',
   overage: '2 extra half-days',
+  accessorySupplements: 'Accessory supplements',
   services: 'Consumed services',
   servicesTotal: 'Services total',
   serviceFallback: 'Service',
@@ -106,10 +107,13 @@ BillSections _sections({int serviceCount = 1}) => buildBillSections(
 
 Future<Uint8List> _build({
   int serviceCount = 1,
+  int accessorySupplementCents = 0,
   String? locale,
 }) =>
     buildBillPdf(
-      statement: _statement,
+      statement: _statement.copyWith(
+        accessorySupplementCents: accessorySupplementCents,
+      ),
       sections: _sections(serviceCount: serviceCount),
       currencyCode: 'EUR',
       workspaceName: 'Test Space',
@@ -149,6 +153,16 @@ void main() {
     final large = await _build(serviceCount: 12);
 
     expect(large.length, greaterThan(small.length));
+  });
+
+  test('a non-zero accessory supplement adds its line (#170)', () async {
+    // Zero supplement renders no line — same guard as the on-screen bill;
+    // the extra line makes the document strictly larger.
+    final without = await _build();
+    final withSupplement = await _build(accessorySupplementCents: 900);
+
+    expect(withSupplement.length, greaterThan(without.length));
+    expect(String.fromCharCodes(withSupplement.sublist(0, 5)), '%PDF-');
   });
 
   test('buildBillPdf works in all five launch locales', () async {

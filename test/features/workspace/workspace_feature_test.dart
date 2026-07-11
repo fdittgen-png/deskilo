@@ -2,20 +2,26 @@
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// Every feature ships ON except adminSeatBlocking (#161), which the
-/// owner must explicitly delegate.
+/// The features the owner must explicitly activate: adminSeatBlocking
+/// (#161) and accessorySupplements (#170).
+const Set<WorkspaceFeature> defaultOffFeatures = {
+  WorkspaceFeature.adminSeatBlocking,
+  WorkspaceFeature.accessorySupplements,
+};
+
+/// Every other feature ships ON.
 final Set<WorkspaceFeature> registryDefaults =
-    WorkspaceFeature.values.toSet()
-      ..remove(WorkspaceFeature.adminSeatBlocking);
+    WorkspaceFeature.values.toSet()..removeAll(defaultOffFeatures);
 
 void main() {
-  test('manifest covers every feature; only adminSeatBlocking defaults OFF',
-      () {
+  test(
+      'manifest covers every feature; only adminSeatBlocking and '
+      'accessorySupplements default OFF', () {
     expect(featureManifest.keys, containsAll(WorkspaceFeature.values));
     for (final entry in featureManifest.values) {
       expect(
         entry.defaultOn,
-        entry.feature != WorkspaceFeature.adminSeatBlocking,
+        !defaultOffFeatures.contains(entry.feature),
         reason: '${entry.feature} default',
       );
     }
@@ -35,11 +41,15 @@ void main() {
     );
   });
 
-  test('a stored true override enables the default-OFF feature (#161)', () {
-    final enabled =
-        resolveEnabledFeatures(const {'adminSeatBlocking': true});
+  test('a stored true override enables the default-OFF features (#161, #170)',
+      () {
+    final enabled = resolveEnabledFeatures(const {
+      'adminSeatBlocking': true,
+      'accessorySupplements': true,
+    });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);
+    expect(enabled.contains(WorkspaceFeature.accessorySupplements), isTrue);
     expect(enabled, WorkspaceFeature.values.toSet());
   });
 

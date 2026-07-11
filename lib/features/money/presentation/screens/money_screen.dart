@@ -85,6 +85,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               '(${statement.openDays} open days)',
       overage: l10n?.billOverage(statement.extraHalfDays) ??
           '${statement.extraHalfDays} extra half-days',
+      accessorySupplements:
+          l10n?.billAccessorySupplements ?? 'Accessory supplements',
       services: l10n?.billServices ?? 'Consumed services',
       servicesTotal: l10n?.billServicesTotal ?? 'Services total',
       serviceFallback: l10n?.ledgerCategoryService ?? 'Service',

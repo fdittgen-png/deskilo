@@ -20,18 +20,9 @@ class SupabaseMoneyRepository implements MoneyRepository {
       'p_member_id': memberId,
       'p_period': period,
     }) as Map<String, dynamic>;
-    return Statement(
-      period: result['period'] as String,
-      subscriptionPct: result['subscription_pct'] as int,
-      feeCents: result['fee_cents'] as int,
-      includedHalfDays: result['included_half_days'] as int,
-      openDays: result['open_days'] as int,
-      usedHalfDays: result['used_half_days'] as int,
-      extraHalfDays: result['extra_half_days'] as int,
-      overageCents: result['overage_cents'] as int,
-      creditsCents: result['credits_cents'] as int,
-      balanceCents: result['balance_cents'] as int,
-    );
+    // Parsing lives in the domain (Statement.fromRpc) so the #170
+    // supplement-field tolerance is pure-Dart testable.
+    return Statement.fromRpc(result);
   }
 
   @override

@@ -356,6 +356,12 @@ abstract class AppLocalizations {
   /// **'Outstanding'**
   String get billOutstanding;
 
+  /// Bill line for priced seat accessories charged per booked half-day (#170), shown only when the amount is non-zero; the amount renders trailing
+  ///
+  /// In en, this message translates to:
+  /// **'Accessory supplements'**
+  String get billAccessorySupplements;
+
   /// Document title on the exported bill PDF (#133)
   ///
   /// In en, this message translates to:
@@ -1135,6 +1141,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Admins mark seats not reservable for maintenance. The owner always can.'**
   String get featureAdminSeatBlockingDesc;
+
+  /// Feature switch: bill priced seat accessories on monthly statements (#170)
+  ///
+  /// In en, this message translates to:
+  /// **'Accessory supplements'**
+  String get featureAccessorySupplements;
+
+  /// One-line description under the accessory-supplements switch (#170); no retroactive charging
+  ///
+  /// In en, this message translates to:
+  /// **'Bill priced seat accessories per booked half-day. Applies to bookings from activation on.'**
+  String get featureAccessorySupplementsDesc;
 
   /// Settings entry and dialog title for the in-app language selection
   ///

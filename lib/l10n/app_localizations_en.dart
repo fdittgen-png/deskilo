@@ -145,6 +145,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get billOutstanding => 'Outstanding';
 
   @override
+  String get billAccessorySupplements => 'Accessory supplements';
+
+  @override
   String get billPdfTitle => 'Monthly bill';
 
   @override
@@ -565,6 +568,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureAdminSeatBlockingDesc =>
       'Admins mark seats not reservable for maintenance. The owner always can.';
+
+  @override
+  String get featureAccessorySupplements => 'Accessory supplements';
+
+  @override
+  String get featureAccessorySupplementsDesc =>
+      'Bill priced seat accessories per booked half-day. Applies to bookings from activation on.';
 
   @override
   String get languageTitle => 'Language';

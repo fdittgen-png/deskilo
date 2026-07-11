@@ -64,5 +64,9 @@
   "billOutstanding": "Outstanding",
   "@billOutstanding": {
     "description": "Footer state when the member still owes for the period"
+  },
+  "billAccessorySupplements": "Accessory supplements",
+  "@billAccessorySupplements": {
+    "description": "Bill line for priced seat accessories charged per booked half-day (#170), shown only when the amount is non-zero; the amount renders trailing"
   }
 }

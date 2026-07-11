@@ -146,6 +146,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get billOutstanding => 'À régler';
 
   @override
+  String get billAccessorySupplements => 'Suppléments d\'accessoires';
+
+  @override
   String get billPdfTitle => 'Facture mensuelle';
 
   @override
@@ -573,6 +576,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureAdminSeatBlockingDesc =>
       'Les admins marquent des places comme non réservables pour maintenance. Le propriétaire le peut toujours.';
+
+  @override
+  String get featureAccessorySupplements => 'Suppléments d\'accessoires';
+
+  @override
+  String get featureAccessorySupplementsDesc =>
+      'Facturer les accessoires de place tarifés par demi-journée réservée. S\'applique aux réservations à partir de l\'activation.';
 
   @override
   String get languageTitle => 'Langue';

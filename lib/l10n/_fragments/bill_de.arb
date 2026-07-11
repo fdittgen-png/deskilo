@@ -10,5 +10,6 @@
   "billPaymentsCredits": "Zahlungen & Gutschriften",
   "billBalance": "Saldo",
   "billSettled": "Beglichen",
-  "billOutstanding": "Offen"
+  "billOutstanding": "Offen",
+  "billAccessorySupplements": "Zubehör-Aufpreise"
 }

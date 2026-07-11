@@ -31,6 +31,8 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featurePushNotifications ?? 'Push notifications',
         WorkspaceFeature.adminSeatBlocking =>
           l10n?.featureAdminSeatBlocking ?? 'Admins can block seats',
+        WorkspaceFeature.accessorySupplements =>
+          l10n?.featureAccessorySupplements ?? 'Accessory supplements',
       };
 
   String _description(AppLocalizations? l10n, WorkspaceFeature feature) =>
@@ -56,6 +58,10 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureAdminSeatBlockingDesc ??
               'Admins mark seats not reservable for maintenance. '
                   'The owner always can.',
+        WorkspaceFeature.accessorySupplements =>
+          l10n?.featureAccessorySupplementsDesc ??
+              'Bill priced seat accessories per booked half-day. '
+                  'Applies to bookings from activation on.',
       };
 
   Future<void> _toggle(

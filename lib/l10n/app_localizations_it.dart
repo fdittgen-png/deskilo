@@ -146,6 +146,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get billOutstanding => 'Aperto';
 
   @override
+  String get billAccessorySupplements => 'Supplementi accessori';
+
+  @override
   String get billPdfTitle => 'Fattura mensile';
 
   @override
@@ -572,6 +575,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featureAdminSeatBlockingDesc =>
       'Gli admin contrassegnano i posti come non prenotabili per manutenzione. Il proprietario può sempre.';
+
+  @override
+  String get featureAccessorySupplements => 'Supplementi accessori';
+
+  @override
+  String get featureAccessorySupplementsDesc =>
+      'Fattura gli accessori del posto con prezzo per mezza giornata prenotata. Vale per le prenotazioni dall\'attivazione in poi.';
 
   @override
   String get languageTitle => 'Lingua';
