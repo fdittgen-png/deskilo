@@ -51,6 +51,26 @@ otherwise.
 `workspace_id` is denormalized onto all four tables so every policy is a
 single helper call.
 
+## Accessories (migration 0022 — accessories · seat_accessories)
+
+| Operation | anon | user | worker | admin | owner | Mechanism |
+|---|---|---|---|---|---|---|
+| select | — | — | ✅ | ✅ | ✅ | `is_member_of(workspace_id)` |
+| insert / update / delete | — | — | — | ✅ | ✅ | `is_admin_of(workspace_id)` — maintainer decision on epic #163: admins co-manage the accessory catalog and seat assignments |
+
+Invariants enforced in the database:
+- **Same-workspace guard**: the `seat_accessories_same_workspace` BEFORE
+  trigger derives `seat_accessories.workspace_id` from the seat and raises
+  if the accessory belongs to another workspace — clients cannot spoof the
+  denormalized `workspace_id` the policies check.
+- `unique (workspace_id, name)` on `accessories`;
+  `supplement_cents >= 0` (per half-day, summed per accessory on a seat).
+- Accessories are deactivated (`active = false`), never deleted — seat
+  assignments and future bill lines (#170) reference them.
+- Data migration: catalogs were seeded from the legacy `seats.amenities`
+  keys (English display names, pinned by `AccessorySeed`); the column
+  itself is untouched until #168 retires it.
+
 ## Reservations (migration 0005)
 
 | Operation | anon | user | worker | admin | owner | Mechanism |
