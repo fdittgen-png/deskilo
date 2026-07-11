@@ -14,7 +14,8 @@ enum WorkspaceFeature {
   seriesBooking,
   bookForOthers,
   pushNotifications,
-  adminSeatBlocking;
+  adminSeatBlocking,
+  accessorySupplements;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -35,7 +36,8 @@ class FeatureManifestEntry {
 }
 
 /// The declarative feature registry: every feature ships enabled, except
-/// adminSeatBlocking (#161) which the owner must explicitly activate.
+/// adminSeatBlocking (#161) and accessorySupplements (#170) which the
+/// owner must explicitly activate.
 const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.calendarTab:
       FeatureManifestEntry(feature: WorkspaceFeature.calendarTab),
@@ -56,6 +58,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // Seat blocking is owner-only until the owner delegates it (#161).
   WorkspaceFeature.adminSeatBlocking: FeatureManifestEntry(
     feature: WorkspaceFeature.adminSeatBlocking,
+    defaultOn: false,
+  ),
+  // Accessory supplements bill seat accessories per half-day (#170);
+  // charging members money must be an explicit owner decision, and the
+  // server only bills reservations starting after the activation.
+  WorkspaceFeature.accessorySupplements: FeatureManifestEntry(
+    feature: WorkspaceFeature.accessorySupplements,
     defaultOn: false,
   ),
 };

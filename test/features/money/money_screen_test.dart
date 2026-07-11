@@ -75,6 +75,22 @@ void main() {
     expect(find.text('2 extra half-days'), findsOneWidget);
     expect(find.text('Balance'), findsOneWidget);
     expect(find.text('Outstanding'), findsOneWidget);
+    // No accessory supplements on the statement (#170) — no line.
+    expect(find.text('Accessory supplements'), findsNothing);
+  });
+
+  testWidgets(
+      'a non-zero accessory supplement (#170) renders its own bill line '
+      'with the amount', (tester) async {
+    final money = FakeMoneyRepository();
+    money.statement = money.statement.copyWith(
+      accessorySupplementCents: 900,
+      balanceCents: -2500,
+    );
+    await pumpMoney(tester, money: money);
+
+    expect(find.text('Accessory supplements'), findsOneWidget);
+    expect(find.text('−€9.00'), findsOneWidget);
   });
 
   testWidgets('a settled statement shows the settled state', (tester) async {

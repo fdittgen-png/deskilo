@@ -194,6 +194,10 @@
   "@billOutstanding": {
     "description": "Footer state when the member still owes for the period"
   },
+  "billAccessorySupplements": "Accessory supplements",
+  "@billAccessorySupplements": {
+    "description": "Bill line for priced seat accessories charged per booked half-day (#170), shown only when the amount is non-zero; the amount renders trailing"
+  },
   "billPdfTitle": "Monthly bill",
   "@billPdfTitle": {
     "description": "Document title on the exported bill PDF (#133)"
@@ -789,6 +793,14 @@
   "featureAdminSeatBlockingDesc": "Admins mark seats not reservable for maintenance. The owner always can.",
   "@featureAdminSeatBlockingDesc": {
     "description": "One-line description under the admin-seat-blocking switch (#161)"
+  },
+  "featureAccessorySupplements": "Accessory supplements",
+  "@featureAccessorySupplements": {
+    "description": "Feature switch: bill priced seat accessories on monthly statements (#170)"
+  },
+  "featureAccessorySupplementsDesc": "Bill priced seat accessories per booked half-day. Applies to bookings from activation on.",
+  "@featureAccessorySupplementsDesc": {
+    "description": "One-line description under the accessory-supplements switch (#170); no retroactive charging"
   },
   "languageTitle": "Language",
   "@languageTitle": {

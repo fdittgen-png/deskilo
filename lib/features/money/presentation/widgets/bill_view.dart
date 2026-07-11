@@ -206,6 +206,15 @@ class _SubscriptionCard extends StatelessWidget {
                     '${statement.extraHalfDays} extra half-days',
                 value: '−${money(statement.overageCents)}',
               ),
+            // #170 — priced seat accessories per booked half-day; the
+            // server only emits a non-zero amount while the owner has the
+            // accessorySupplements feature on.
+            if (statement.accessorySupplementCents > 0)
+              _BillLine(
+                label: l10n?.billAccessorySupplements ??
+                    'Accessory supplements',
+                value: '−${money(statement.accessorySupplementCents)}',
+              ),
           ],
         ),
       ),

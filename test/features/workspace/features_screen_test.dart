@@ -29,7 +29,7 @@ Future<FakeWorkspaceRepository> pumpFeatures(
   WidgetTester tester, {
   Map<String, dynamic> featureFlags = const {},
 }) async {
-  // Nine manifest features no longer fit the default 800×600 surface and
+  // Ten manifest features no longer fit the default 800×600 surface and
   // the lazy list drops off-screen tiles; keep every switch mounted.
   tester.view.physicalSize = const Size(800, 1600);
   tester.view.devicePixelRatio = 1;
@@ -58,14 +58,16 @@ void main() {
       find.byType(SwitchListTile),
       findsNWidgets(featureManifest.length),
     );
-    // Everything defaults ON — except adminSeatBlocking (#161), which the
-    // owner must explicitly delegate.
+    // Everything defaults ON — except adminSeatBlocking (#161) and
+    // accessorySupplements (#170), which the owner must explicitly
+    // activate.
     expect(switchTitled(tester, 'Admins can block seats').value, isFalse);
+    expect(switchTitled(tester, 'Accessory supplements').value, isFalse);
     final onCount = tester
         .widgetList<SwitchListTile>(find.byType(SwitchListTile))
         .where((t) => t.value)
         .length;
-    expect(onCount, featureManifest.length - 1);
+    expect(onCount, featureManifest.length - 2);
   });
 
   testWidgets('toggling a feature persists the full map and flips the switch',
@@ -76,13 +78,16 @@ void main() {
     await tester.pumpAndSettle();
 
     // The fake row now carries the FULL map with moneyTab off (and the
-    // default-OFF adminSeatBlocking, #161, still off).
+    // default-OFF adminSeatBlocking #161 and accessorySupplements #170
+    // still off).
     final flags = workspace.workspaces.single.featureFlags;
     expect(flags['moneyTab'], isFalse);
     expect(flags.length, WorkspaceFeature.values.length);
     expect(
       flags.entries.where((e) => e.value == false).map((e) => e.key),
-      unorderedEquals(['moneyTab', 'adminSeatBlocking']),
+      unorderedEquals(
+        ['moneyTab', 'adminSeatBlocking', 'accessorySupplements'],
+      ),
     );
     expect(switchTitled(tester, 'Money tab').value, isFalse);
 
@@ -94,6 +99,21 @@ void main() {
       isTrue,
     );
     expect(switchTitled(tester, 'Money tab').value, isTrue);
+  });
+
+  testWidgets(
+      'the owner activates accessory supplements (#170): the full map '
+      'persists with the flag true', (tester) async {
+    final workspace = await pumpFeatures(tester);
+
+    await tester.tap(find.text('Accessory supplements'));
+    await tester.pumpAndSettle();
+
+    final flags = workspace.workspaces.single.featureFlags;
+    expect(flags['accessorySupplements'], isTrue);
+    expect(switchTitled(tester, 'Accessory supplements').value, isTrue);
+    // The other default-OFF feature stays off.
+    expect(flags['adminSeatBlocking'], isFalse);
   });
 
   testWidgets('stored overrides seed the switches', (tester) async {

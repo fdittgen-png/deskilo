@@ -157,6 +157,7 @@ const pdfStrings = BillPdfStrings(
   subscription: 'Subscription 50%',
   entitlement: '24 of 22 half-days used (22 open days)',
   overage: '2 extra half-days',
+  accessorySupplements: 'Accessory supplements',
   services: 'Consumed services',
   servicesTotal: 'Services total',
   serviceFallback: 'Service',
@@ -449,6 +450,9 @@ void main() {
         overageCents: 1600,
         creditsCents: 16700,
         balanceCents: -3300,
+        // #170 — the maximal bill also carries an accessory supplement,
+        // so every subscription-card line renders in every locale.
+        accessorySupplementCents: 900,
       );
       final sections = buildBillSections(
         period: period,

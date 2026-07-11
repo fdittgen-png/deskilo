@@ -18,5 +18,7 @@
   "featurePushNotifications": "Notifications push",
   "featurePushNotificationsDesc": "Livrer les confirmations en attente sur les appareils des membres.",
   "featureAdminSeatBlocking": "Les admins peuvent bloquer des places",
-  "featureAdminSeatBlockingDesc": "Les admins marquent des places comme non réservables pour maintenance. Le propriétaire le peut toujours."
+  "featureAdminSeatBlockingDesc": "Les admins marquent des places comme non réservables pour maintenance. Le propriétaire le peut toujours.",
+  "featureAccessorySupplements": "Suppléments d'accessoires",
+  "featureAccessorySupplementsDesc": "Facturer les accessoires de place tarifés par demi-journée réservée. S'applique aux réservations à partir de l'activation."
 }

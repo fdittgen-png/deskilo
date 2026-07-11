@@ -18,5 +18,7 @@
   "featurePushNotifications": "Push-Benachrichtigungen",
   "featurePushNotificationsDesc": "Ausstehende Bestätigungen auf die Geräte der Mitglieder zustellen.",
   "featureAdminSeatBlocking": "Admins können Plätze sperren",
-  "featureAdminSeatBlockingDesc": "Admins markieren Plätze als nicht reservierbar für Wartung. Der Inhaber kann es immer."
+  "featureAdminSeatBlockingDesc": "Admins markieren Plätze als nicht reservierbar für Wartung. Der Inhaber kann es immer.",
+  "featureAccessorySupplements": "Zubehör-Aufpreise",
+  "featureAccessorySupplementsDesc": "Bepreistes Platz-Zubehör pro gebuchtem Halbtag berechnen. Gilt für Buchungen ab der Aktivierung."
 }

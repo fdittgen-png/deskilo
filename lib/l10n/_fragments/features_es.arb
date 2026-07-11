@@ -18,5 +18,7 @@
   "featurePushNotifications": "Notificaciones push",
   "featurePushNotificationsDesc": "Entregar las confirmaciones pendientes en los dispositivos de los miembros.",
   "featureAdminSeatBlocking": "Los administradores pueden bloquear sitios",
-  "featureAdminSeatBlockingDesc": "Los administradores marcan sitios como no reservables por mantenimiento. El propietario siempre puede."
+  "featureAdminSeatBlockingDesc": "Los administradores marcan sitios como no reservables por mantenimiento. El propietario siempre puede.",
+  "featureAccessorySupplements": "Suplementos de accesorios",
+  "featureAccessorySupplementsDesc": "Facturar los accesorios de sitio con precio por media jornada reservada. Se aplica a las reservas desde la activación."
 }

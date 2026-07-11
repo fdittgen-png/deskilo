@@ -10,5 +10,6 @@
   "billPaymentsCredits": "Pagos y créditos",
   "billBalance": "Saldo",
   "billSettled": "Al día",
-  "billOutstanding": "Pendiente"
+  "billOutstanding": "Pendiente",
+  "billAccessorySupplements": "Suplementos de accesorios"
 }

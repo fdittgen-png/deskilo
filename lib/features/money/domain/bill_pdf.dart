@@ -20,6 +20,7 @@ class BillPdfStrings {
     required this.subscription,
     required this.entitlement,
     required this.overage,
+    required this.accessorySupplements,
     required this.services,
     required this.servicesTotal,
     required this.serviceFallback,
@@ -48,6 +49,10 @@ class BillPdfStrings {
 
   /// Pre-resolved overage line; only rendered when extra half-days exist.
   final String overage;
+
+  /// Accessory-supplements line (#170); only rendered when the statement
+  /// carries a non-zero supplement.
+  final String accessorySupplements;
 
   final String services;
   final String servicesTotal;
@@ -124,6 +129,13 @@ Future<Uint8List> buildBillPdf({
           _line(strings.entitlement, ''),
           if (statement.extraHalfDays > 0)
             _line(strings.overage, charge(statement.overageCents)),
+          // #170 — priced seat accessories per booked half-day, mirrors
+          // the on-screen subscription card.
+          if (statement.accessorySupplementCents > 0)
+            _line(
+              strings.accessorySupplements,
+              charge(statement.accessorySupplementCents),
+            ),
         ]),
         if (sections.serviceEntries.isNotEmpty)
           _section([

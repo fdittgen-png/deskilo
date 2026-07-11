@@ -146,6 +146,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get billOutstanding => 'Offen';
 
   @override
+  String get billAccessorySupplements => 'Zubehör-Aufpreise';
+
+  @override
   String get billPdfTitle => 'Monatsrechnung';
 
   @override
@@ -570,6 +573,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureAdminSeatBlockingDesc =>
       'Admins markieren Plätze als nicht reservierbar für Wartung. Der Inhaber kann es immer.';
+
+  @override
+  String get featureAccessorySupplements => 'Zubehör-Aufpreise';
+
+  @override
+  String get featureAccessorySupplementsDesc =>
+      'Bepreistes Platz-Zubehör pro gebuchtem Halbtag berechnen. Gilt für Buchungen ab der Aktivierung.';
 
   @override
   String get languageTitle => 'Sprache';
