@@ -35,5 +35,17 @@
   "calendarShowOnPlan": "Show on plan",
   "@calendarShowOnPlan": {
     "description": "Reservation detail sheet button jumping to the Plan tab with the seat's level shown and the seat highlighted (#182)"
+  },
+  "calendarListView": "List view",
+  "@calendarListView": {
+    "description": "Tooltip of the calendar toggle switching the selected-day area to the plain reservation list (#187)"
+  },
+  "calendarTimelineView": "Timeline view",
+  "@calendarTimelineView": {
+    "description": "Tooltip of the calendar toggle switching the selected-day area to the per-seat 24h timeline (#187)"
+  },
+  "calendarTimelineEmpty": "No reservations on this level for this day.",
+  "@calendarTimelineEmpty": {
+    "description": "Empty state of the day timeline: the selected level has no seats or no visible reservations that day (#187)"
   }
 }

@@ -8,5 +8,8 @@
   "calendarPreviousMonth": "Mes anterior",
   "calendarNextMonth": "Mes siguiente",
   "calendarReservationActions": "Acciones de la reserva",
-  "calendarShowOnPlan": "Ver en el plano"
+  "calendarShowOnPlan": "Ver en el plano",
+  "calendarListView": "Vista de lista",
+  "calendarTimelineView": "Vista de cronología",
+  "calendarTimelineEmpty": "No hay reservas en esta planta ese día."
 }

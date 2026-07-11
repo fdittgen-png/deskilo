@@ -243,6 +243,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get calendarShowOnPlan => 'Ver en el plano';
 
   @override
+  String get calendarListView => 'Vista de lista';
+
+  @override
+  String get calendarTimelineView => 'Vista de cronología';
+
+  @override
+  String get calendarTimelineEmpty => 'No hay reservas en esta planta ese día.';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
