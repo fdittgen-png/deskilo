@@ -879,6 +879,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get servicesActive => 'Aktiv';
 
   @override
+  String get themeTitle => 'Design';
+
+  @override
+  String get themeSystem => 'Systemstandard';
+
+  @override
+  String get themeLight => 'Hell';
+
+  @override
+  String get themeDark => 'Dunkel';
+
+  @override
   String eventValidations(int current, int required) {
     return '$current/$required Bestätigungen';
   }
@@ -1066,16 +1078,4 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get paymentInstructionsIbanCopied => 'IBAN kopiert.';
-
-  @override
-  String get themeTitle => 'Design';
-
-  @override
-  String get themeSystem => 'Systemstandard';
-
-  @override
-  String get themeLight => 'Hell';
-
-  @override
-  String get themeDark => 'Dunkel';
 }

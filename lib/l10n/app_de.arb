@@ -264,6 +264,10 @@
   "servicesPrice": "Preis",
   "servicesInactive": "Inaktiv",
   "servicesActive": "Aktiv",
+  "themeTitle": "Design",
+  "themeSystem": "Systemstandard",
+  "themeLight": "Hell",
+  "themeDark": "Dunkel",
   "eventValidations": "{current}/{required} Bestätigungen",
   "eventValidatedBy": "Bestätigt von {name} · {when}",
   "eventRejectedBy": "Abgelehnt von {name} · {when}",
@@ -322,9 +326,5 @@
   "paymentInstructionsPaypalLabel": "PayPal.me-Link oder -Name",
   "paymentInstructionsReferenceLabel": "Hinweis zum Verwendungszweck",
   "paymentInstructionsIbanTitle": "IBAN",
-  "paymentInstructionsIbanCopied": "IBAN kopiert.",
-  "themeTitle": "Design",
-  "themeSystem": "Systemstandard",
-  "themeLight": "Hell",
-  "themeDark": "Dunkel"
+  "paymentInstructionsIbanCopied": "IBAN kopiert."
 }
