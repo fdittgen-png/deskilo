@@ -41,10 +41,13 @@ class _WorkspaceSettingsScreenState
   final _formKey = GlobalKey<FormState>();
   final _currency = TextEditingController();
   final _timezone = TextEditingController();
-  // #155 — payment instructions members see on an unpaid statement.
+  // #155/#192 — payment instructions members see on an unpaid statement.
   final _iban = TextEditingController();
   final _paypalMe = TextEditingController();
   final _reference = TextEditingController();
+  final _wero = TextEditingController();
+  final _lydia = TextEditingController();
+  final _wise = TextEditingController();
   String? _countryCode;
   bool _busy = false;
 
@@ -59,6 +62,9 @@ class _WorkspaceSettingsScreenState
     _iban.dispose();
     _paypalMe.dispose();
     _reference.dispose();
+    _wero.dispose();
+    _lydia.dispose();
+    _wise.dispose();
     super.dispose();
   }
 
@@ -95,6 +101,9 @@ class _WorkspaceSettingsScreenState
           iban: _iban.text,
           paypalMe: _paypalMe.text,
           reference: _reference.text,
+          wero: _wero.text,
+          lydia: _lydia.text,
+          wise: _wise.text,
         ),
       );
       // Every money surface watches the workspace chain — invalidating it
@@ -364,6 +373,9 @@ class _WorkspaceSettingsScreenState
       _iban.text = instructions.iban;
       _paypalMe.text = instructions.paypalMe;
       _reference.text = instructions.reference;
+      _wero.text = instructions.wero;
+      _lydia.text = instructions.lydia;
+      _wise.text = instructions.wise;
     }
     return Scaffold(
       appBar: AppBar(
@@ -464,6 +476,39 @@ class _WorkspaceSettingsScreenState
                     decoration: InputDecoration(
                       labelText: l10n?.paymentInstructionsPaypalLabel ??
                           'PayPal.me link or handle',
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  // #192 — Wero / Lydia / Wise ride the same blob; the
+                  // labels carry the expected value shape (phone number,
+                  // username, Wisetag/link).
+                  TextFormField(
+                    key: const Key('workspaceSettingsWero'),
+                    controller: _wero,
+                    enabled: !_busy,
+                    decoration: InputDecoration(
+                      labelText: l10n?.paymentInstructionsWeroLabel ??
+                          'Wero phone number',
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    key: const Key('workspaceSettingsLydia'),
+                    controller: _lydia,
+                    enabled: !_busy,
+                    decoration: InputDecoration(
+                      labelText: l10n?.paymentInstructionsLydiaLabel ??
+                          'Lydia phone number or username',
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    key: const Key('workspaceSettingsWise'),
+                    controller: _wise,
+                    enabled: !_busy,
+                    decoration: InputDecoration(
+                      labelText: l10n?.paymentInstructionsWiseLabel ??
+                          'Wisetag or Wise payment link',
                     ),
                   ),
                   const SizedBox(height: 12),

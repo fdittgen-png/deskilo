@@ -219,5 +219,17 @@
   "paymentMethodOther": "Other",
   "@paymentMethodOther": {
     "description": "Payment-method chip/label: anything else (#154)."
+  },
+  "paymentMethodWero": "Wero",
+  "@paymentMethodWero": {
+    "description": "Payment-method chip/label: Wero — brand name, identical in every locale (#192)."
+  },
+  "paymentMethodLydia": "Lydia",
+  "@paymentMethodLydia": {
+    "description": "Payment-method chip/label: Lydia — brand name, identical in every locale (#192)."
+  },
+  "paymentMethodWise": "Wise",
+  "@paymentMethodWise": {
+    "description": "Payment-method chip/label: Wise — brand name, identical in every locale (#192)."
   }
 }

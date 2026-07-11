@@ -1098,6 +1098,18 @@
   "@paymentMethodOther": {
     "description": "Payment-method chip/label: anything else (#154)."
   },
+  "paymentMethodWero": "Wero",
+  "@paymentMethodWero": {
+    "description": "Payment-method chip/label: Wero — brand name, identical in every locale (#192)."
+  },
+  "paymentMethodLydia": "Lydia",
+  "@paymentMethodLydia": {
+    "description": "Payment-method chip/label: Lydia — brand name, identical in every locale (#192)."
+  },
+  "paymentMethodWise": "Wise",
+  "@paymentMethodWise": {
+    "description": "Payment-method chip/label: Wise — brand name, identical in every locale (#192)."
+  },
   "planNoLevels": "The workspace has no floor plan yet.",
   "@planNoLevels": {
     "description": "Empty state of the Plan tab before the owner drew levels"
@@ -1578,6 +1590,22 @@
   "paymentInstructionsIbanCopied": "IBAN copied.",
   "@paymentInstructionsIbanCopied": {
     "description": "Snackbar after tapping the IBAN row copied it to the clipboard (#155)."
+  },
+  "paymentInstructionsWeroLabel": "Wero phone number",
+  "@paymentInstructionsWeroLabel": {
+    "description": "Label of the Wero field in the workspace settings — the phone number the workspace receives Wero payments on (#192). Wero is a brand name."
+  },
+  "paymentInstructionsLydiaLabel": "Lydia phone number or username",
+  "@paymentInstructionsLydiaLabel": {
+    "description": "Label of the Lydia field in the workspace settings (#192). Lydia is a brand name."
+  },
+  "paymentInstructionsWiseLabel": "Wisetag or Wise payment link",
+  "@paymentInstructionsWiseLabel": {
+    "description": "Label of the Wise field in the workspace settings (#192). Wise and Wisetag are brand names."
+  },
+  "paymentInstructionsValueCopied": "Copied to clipboard.",
+  "@paymentInstructionsValueCopied": {
+    "description": "Snackbar after tapping a Wero/Lydia/Wise row copied its value to the clipboard (#192)."
   },
   "workspaceXmlExport": "Export workspace (XML)",
   "@workspaceXmlExport": {
