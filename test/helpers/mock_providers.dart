@@ -15,7 +15,9 @@ import 'package:deskilo/features/events/domain/event_repository.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/plan/domain/accessory_repository.dart';
 import 'package:deskilo/features/plan/domain/floor_plan_repository.dart';
+import 'package:deskilo/features/plan/providers/accessory_providers.dart';
 import 'package:deskilo/features/plan/providers/default_level_controller.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
@@ -24,6 +26,7 @@ import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
+import 'fake_accessory_repository.dart';
 import 'fake_event_repository.dart';
 import 'fake_floor_plan_repository.dart';
 import 'fake_money_repository.dart';
@@ -322,6 +325,7 @@ List<Override> standardTestOverrides({
   AuthRepository? auth,
   WorkspaceRepository? workspace,
   FloorPlanRepository? floorPlan,
+  AccessoryRepository? accessories,
   ReservationRepository? reservations,
   EventRepository? events,
   MoneyRepository? money,
@@ -337,6 +341,8 @@ List<Override> standardTestOverrides({
     ),
     floorPlanRepositoryProvider
         .overrideWithValue(floorPlan ?? FakeFloorPlanRepository()),
+    accessoryRepositoryProvider
+        .overrideWithValue(accessories ?? FakeAccessoryRepository()),
     reservationRepositoryProvider
         .overrideWithValue(reservations ?? FakeReservationRepository()),
     eventRepositoryProvider
