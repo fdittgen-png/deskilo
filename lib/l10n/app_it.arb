@@ -322,5 +322,9 @@
   "paymentInstructionsPaypalLabel": "Link o nome PayPal.me",
   "paymentInstructionsReferenceLabel": "Indicazione della causale",
   "paymentInstructionsIbanTitle": "IBAN",
-  "paymentInstructionsIbanCopied": "IBAN copiato."
+  "paymentInstructionsIbanCopied": "IBAN copiato.",
+  "themeTitle": "Tema",
+  "themeSystem": "Predefinito di sistema",
+  "themeLight": "Chiaro",
+  "themeDark": "Scuro"
 }

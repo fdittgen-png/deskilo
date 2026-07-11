@@ -1068,4 +1068,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get paymentInstructionsIbanCopied => 'IBAN copié.';
+
+  @override
+  String get themeTitle => 'Thème';
+
+  @override
+  String get themeSystem => 'Par défaut du système';
+
+  @override
+  String get themeLight => 'Clair';
+
+  @override
+  String get themeDark => 'Sombre';
 }

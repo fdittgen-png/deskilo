@@ -2041,6 +2041,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'IBAN copied.'**
   String get paymentInstructionsIbanCopied;
+
+  /// Settings entry and dialog title for the in-app theme selection (#160)
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get themeTitle;
+
+  /// Theme option that follows the device light/dark setting instead of an override (#160)
+  ///
+  /// In en, this message translates to:
+  /// **'System default'**
+  String get themeSystem;
+
+  /// Theme option forcing the light theme (#160)
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// Theme option forcing the dark theme (#160)
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
 }
 
 class _AppLocalizationsDelegate

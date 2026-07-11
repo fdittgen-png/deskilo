@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/locale/locale_controller.dart';
+import '../core/theme/theme_controller.dart';
 import '../l10n/app_localizations.dart';
 import 'router.dart';
 import 'theme.dart';
@@ -29,6 +30,9 @@ class DeskiloApp extends ConsumerWidget {
       locale: ref.watch(localeControllerProvider).value,
       theme: DeskiloTheme.light(),
       darkTheme: DeskiloTheme.dark(),
+      // null follows the system brightness (#160).
+      themeMode:
+          ref.watch(themeControllerProvider).value ?? ThemeMode.system,
       routerConfig: router,
     );
   }

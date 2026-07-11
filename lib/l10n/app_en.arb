@@ -1429,5 +1429,21 @@
   "paymentInstructionsIbanCopied": "IBAN copied.",
   "@paymentInstructionsIbanCopied": {
     "description": "Snackbar after tapping the IBAN row copied it to the clipboard (#155)."
+  },
+  "themeTitle": "Theme",
+  "@themeTitle": {
+    "description": "Settings entry and dialog title for the in-app theme selection (#160)"
+  },
+  "themeSystem": "System default",
+  "@themeSystem": {
+    "description": "Theme option that follows the device light/dark setting instead of an override (#160)"
+  },
+  "themeLight": "Light",
+  "@themeLight": {
+    "description": "Theme option forcing the light theme (#160)"
+  },
+  "themeDark": "Dark",
+  "@themeDark": {
+    "description": "Theme option forcing the dark theme (#160)"
   }
 }

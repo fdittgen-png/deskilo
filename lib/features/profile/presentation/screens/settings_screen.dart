@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/locale/locale_controller.dart';
+import '../../../../core/theme/theme_controller.dart';
 import '../../../../core/trace/dev_mode.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
@@ -34,6 +35,7 @@ class SettingsScreen extends ConsumerWidget {
     final isOwner = ref.watch(myMemberProvider).value?.isOwner ?? false;
     final devMode = ref.watch(devModeProvider).value ?? false;
     final localeOverride = ref.watch(localeControllerProvider).value;
+    final themeOverride = ref.watch(themeControllerProvider).value;
     final features = ref.watch(enabledFeaturesSyncProvider);
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.settingsTitle ?? 'Settings')),
@@ -107,6 +109,20 @@ class SettingsScreen extends ConsumerWidget {
               builder: (_) => const _LanguageDialog(),
             ),
           ),
+          // In-app theme override (#160); null follows the system.
+          ListTile(
+            leading: const Icon(Icons.brightness_6_outlined),
+            title: Text(l10n?.themeTitle ?? 'Theme'),
+            subtitle: Text(switch (themeOverride) {
+              ThemeMode.light => l10n?.themeLight ?? 'Light',
+              ThemeMode.dark => l10n?.themeDark ?? 'Dark',
+              _ => l10n?.themeSystem ?? 'System default',
+            }),
+            onTap: () => showDialog<void>(
+              context: context,
+              builder: (_) => const _ThemeDialog(),
+            ),
+          ),
           // Local diagnostics (#144) — deliberately visible to ALL users,
           // not just owners: the trace never leaves the device unless the
           // user exports it.
@@ -176,6 +192,52 @@ class _LanguageDialog extends ConsumerWidget {
                   // Render each endonym under its own locale.
                   title: Text(entry.value, locale: Locale(entry.key)),
                 ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Radio picker for the app theme (#160). Selecting an option applies it
+/// instantly (the MaterialApp rebuilds via [themeControllerProvider])
+/// and persists it locally. [ThemeMode.system] doubles as the radio
+/// sentinel for "no override" (the override itself is null).
+class _ThemeDialog extends ConsumerWidget {
+  const _ThemeDialog();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final current =
+        ref.watch(themeControllerProvider).value ?? ThemeMode.system;
+    return SimpleDialog(
+      title: Text(l10n?.themeTitle ?? 'Theme'),
+      children: [
+        RadioGroup<ThemeMode>(
+          groupValue: current,
+          onChanged: (mode) {
+            ref.read(themeControllerProvider.notifier).set(
+                  mode == null || mode == ThemeMode.system ? null : mode,
+                );
+            Navigator.of(context).pop();
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RadioListTile<ThemeMode>(
+                value: ThemeMode.system,
+                title: Text(l10n?.themeSystem ?? 'System default'),
+              ),
+              RadioListTile<ThemeMode>(
+                value: ThemeMode.light,
+                title: Text(l10n?.themeLight ?? 'Light'),
+              ),
+              RadioListTile<ThemeMode>(
+                value: ThemeMode.dark,
+                title: Text(l10n?.themeDark ?? 'Dark'),
+              ),
             ],
           ),
         ),
