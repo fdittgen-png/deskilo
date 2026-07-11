@@ -330,5 +330,7 @@
   "paymentInstructionsPaypalLabel": "Enlace o usuario de PayPal.me",
   "paymentInstructionsReferenceLabel": "Indicación de referencia del pago",
   "paymentInstructionsIbanTitle": "IBAN",
-  "paymentInstructionsIbanCopied": "IBAN copiado."
+  "paymentInstructionsIbanCopied": "IBAN copiado.",
+  "workspaceXmlExport": "Exportar el espacio (XML)",
+  "workspaceXmlExportSubtitle": "Ajustes y plano del espacio en un archivo para compartir. Sin miembros, reservas ni datos financieros."
 }

@@ -1083,4 +1083,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paymentInstructionsIbanCopied => 'IBAN copied.';
+
+  @override
+  String get workspaceXmlExport => 'Export workspace (XML)';
+
+  @override
+  String get workspaceXmlExportSubtitle =>
+      'Settings and floor plan as a shareable file. No members, bookings or money data.';
 }

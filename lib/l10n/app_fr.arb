@@ -330,5 +330,7 @@
   "paymentInstructionsPaypalLabel": "Lien ou identifiant PayPal.me",
   "paymentInstructionsReferenceLabel": "Indication de référence de paiement",
   "paymentInstructionsIbanTitle": "IBAN",
-  "paymentInstructionsIbanCopied": "IBAN copié."
+  "paymentInstructionsIbanCopied": "IBAN copié.",
+  "workspaceXmlExport": "Exporter l'espace (XML)",
+  "workspaceXmlExportSubtitle": "Paramètres et plan des locaux dans un fichier partageable. Sans membres, réservations ni données financières."
 }

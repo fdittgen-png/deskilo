@@ -2089,6 +2089,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'IBAN copied.'**
   String get paymentInstructionsIbanCopied;
+
+  /// Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)
+  ///
+  /// In en, this message translates to:
+  /// **'Export workspace (XML)'**
+  String get workspaceXmlExport;
+
+  /// Subtitle under the XML export tile explaining what the file contains and what it deliberately omits (#164)
+  ///
+  /// In en, this message translates to:
+  /// **'Settings and floor plan as a shareable file. No members, bookings or money data.'**
+  String get workspaceXmlExportSubtitle;
 }
 
 class _AppLocalizationsDelegate

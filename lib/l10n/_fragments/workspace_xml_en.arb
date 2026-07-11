@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "workspaceXmlExport": "Export workspace (XML)",
+  "@workspaceXmlExport": {
+    "description": "Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)"
+  },
+  "workspaceXmlExportSubtitle": "Settings and floor plan as a shareable file. No members, bookings or money data.",
+  "@workspaceXmlExportSubtitle": {
+    "description": "Subtitle under the XML export tile explaining what the file contains and what it deliberately omits (#164)"
+  }
+}

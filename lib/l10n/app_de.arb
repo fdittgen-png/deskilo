@@ -330,5 +330,7 @@
   "paymentInstructionsPaypalLabel": "PayPal.me-Link oder -Name",
   "paymentInstructionsReferenceLabel": "Hinweis zum Verwendungszweck",
   "paymentInstructionsIbanTitle": "IBAN",
-  "paymentInstructionsIbanCopied": "IBAN kopiert."
+  "paymentInstructionsIbanCopied": "IBAN kopiert.",
+  "workspaceXmlExport": "Workspace exportieren (XML)",
+  "workspaceXmlExportSubtitle": "Einstellungen und Raumplan als teilbare Datei. Ohne Mitglieder, Buchungen oder Finanzdaten."
 }

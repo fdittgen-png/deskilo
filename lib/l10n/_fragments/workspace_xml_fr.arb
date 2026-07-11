@@ -1,0 +1,5 @@
+{
+  "@@locale": "fr",
+  "workspaceXmlExport": "Exporter l'espace (XML)",
+  "workspaceXmlExportSubtitle": "Paramètres et plan des locaux dans un fichier partageable. Sans membres, réservations ni données financières."
+}
