@@ -86,7 +86,11 @@ void main() {
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
     // The settings list outgrew the test viewport (#147): scroll down.
+    // scrollUntilVisible stops once the tile is BUILT (cache extent), which
+    // can leave it a few px off-screen — ensureVisible finishes the job.
     await tester.scrollUntilVisible(find.text('Sign out'), 100);
+    await tester.ensureVisible(find.text('Sign out'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Sign out'));
     await tester.pumpAndSettle();
 

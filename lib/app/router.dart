@@ -13,6 +13,7 @@ import '../features/events/presentation/screens/validation_settings_screen.dart'
 import '../features/money/presentation/screens/billing_screen.dart';
 import '../features/money/presentation/screens/money_screen.dart';
 import '../features/money/presentation/screens/services_screen.dart';
+import '../features/plan/presentation/screens/accessories_screen.dart';
 import '../features/plan/presentation/screens/plan_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/profile/presentation/screens/profiles_screen.dart';
@@ -183,6 +184,17 @@ GoRouter router(Ref ref) {
               : '/plan';
         },
         builder: (context, state) => const ServicesScreen(),
+      ),
+      GoRoute(
+        // Owner AND admins (#167, epic decision): catalog management is a
+        // canAdminister capability, not owner-only.
+        path: '/accessories',
+        redirect: (context, state) {
+          final canAdminister =
+              ref.read(myMemberProvider).value?.canAdminister ?? false;
+          return canAdminister ? null : '/plan';
+        },
+        builder: (context, state) => const AccessoriesScreen(),
       ),
       GoRoute(
         path: '/features',

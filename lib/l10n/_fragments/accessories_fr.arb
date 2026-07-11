@@ -1,0 +1,13 @@
+{
+  "@@locale": "fr",
+  "accessoriesTitle": "Accessoires",
+  "accessoriesEmpty": "Aucun accessoire pour l’instant.",
+  "accessoriesNew": "Nouvel accessoire",
+  "accessoriesEdit": "Modifier l’accessoire",
+  "accessoriesName": "Nom",
+  "accessoriesSupplement": "Supplément par demi-journée",
+  "accessoriesPerHalfDay": "{amount} / demi-journée",
+  "accessoriesNoSupplement": "Sans supplément",
+  "accessoriesInactive": "Inactif",
+  "accessoriesActive": "Actif"
+}

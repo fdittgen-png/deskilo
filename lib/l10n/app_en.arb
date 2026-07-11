@@ -1,5 +1,50 @@
 {
   "@@locale": "en",
+  "accessoriesTitle": "Accessories",
+  "@accessoriesTitle": {
+    "description": "App-bar title of the owner/admin accessory-catalog editor and its settings tile (#167)"
+  },
+  "accessoriesEmpty": "No accessories yet.",
+  "@accessoriesEmpty": {
+    "description": "Empty state of the accessory-catalog editor"
+  },
+  "accessoriesNew": "New accessory",
+  "@accessoriesNew": {
+    "description": "FAB tooltip and sheet title when creating an accessory"
+  },
+  "accessoriesEdit": "Edit accessory",
+  "@accessoriesEdit": {
+    "description": "Sheet title when editing an existing accessory"
+  },
+  "accessoriesName": "Name",
+  "@accessoriesName": {
+    "description": "Label of the accessory name field"
+  },
+  "accessoriesSupplement": "Supplement per half-day",
+  "@accessoriesSupplement": {
+    "description": "Label of the accessory supplement field (major currency units, per half-day billing unit)"
+  },
+  "accessoriesPerHalfDay": "{amount} / half-day",
+  "@accessoriesPerHalfDay": {
+    "description": "List subtitle for a priced accessory; the amount is pre-formatted in the workspace currency",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "accessoriesNoSupplement": "No supplement",
+  "@accessoriesNoSupplement": {
+    "description": "List subtitle for an accessory with a zero supplement"
+  },
+  "accessoriesInactive": "Inactive",
+  "@accessoriesInactive": {
+    "description": "Trailing badge on deactivated accessories in the catalog list"
+  },
+  "accessoriesActive": "Active",
+  "@accessoriesActive": {
+    "description": "Label of the activate/deactivate switch in the edit sheet"
+  },
   "authSignInTitle": "Sign in",
   "@authSignInTitle": {
     "description": "Heading on the auth screen in sign-in mode"

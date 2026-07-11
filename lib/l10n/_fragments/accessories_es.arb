@@ -1,0 +1,13 @@
+{
+  "@@locale": "es",
+  "accessoriesTitle": "Accesorios",
+  "accessoriesEmpty": "Aún no hay accesorios.",
+  "accessoriesNew": "Nuevo accesorio",
+  "accessoriesEdit": "Editar accesorio",
+  "accessoriesName": "Nombre",
+  "accessoriesSupplement": "Suplemento por media jornada",
+  "accessoriesPerHalfDay": "{amount} / media jornada",
+  "accessoriesNoSupplement": "Sin suplemento",
+  "accessoriesInactive": "Inactivo",
+  "accessoriesActive": "Activo"
+}

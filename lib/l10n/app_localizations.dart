@@ -104,6 +104,66 @@ abstract class AppLocalizations {
     Locale('it'),
   ];
 
+  /// App-bar title of the owner/admin accessory-catalog editor and its settings tile (#167)
+  ///
+  /// In en, this message translates to:
+  /// **'Accessories'**
+  String get accessoriesTitle;
+
+  /// Empty state of the accessory-catalog editor
+  ///
+  /// In en, this message translates to:
+  /// **'No accessories yet.'**
+  String get accessoriesEmpty;
+
+  /// FAB tooltip and sheet title when creating an accessory
+  ///
+  /// In en, this message translates to:
+  /// **'New accessory'**
+  String get accessoriesNew;
+
+  /// Sheet title when editing an existing accessory
+  ///
+  /// In en, this message translates to:
+  /// **'Edit accessory'**
+  String get accessoriesEdit;
+
+  /// Label of the accessory name field
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get accessoriesName;
+
+  /// Label of the accessory supplement field (major currency units, per half-day billing unit)
+  ///
+  /// In en, this message translates to:
+  /// **'Supplement per half-day'**
+  String get accessoriesSupplement;
+
+  /// List subtitle for a priced accessory; the amount is pre-formatted in the workspace currency
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} / half-day'**
+  String accessoriesPerHalfDay(String amount);
+
+  /// List subtitle for an accessory with a zero supplement
+  ///
+  /// In en, this message translates to:
+  /// **'No supplement'**
+  String get accessoriesNoSupplement;
+
+  /// Trailing badge on deactivated accessories in the catalog list
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get accessoriesInactive;
+
+  /// Label of the activate/deactivate switch in the edit sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get accessoriesActive;
+
   /// Heading on the auth screen in sign-in mode
   ///
   /// In en, this message translates to:
