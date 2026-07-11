@@ -911,6 +911,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get planMakeReservable => 'Make reservable';
 
   @override
+  String get planAccessorySupplementHint => 'Supplements are per half-day.';
+
+  @override
   String get servicesTitle => 'Services';
 
   @override

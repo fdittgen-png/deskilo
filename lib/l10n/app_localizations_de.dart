@@ -917,6 +917,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get planMakeReservable => 'Reservierbar machen';
 
   @override
+  String get planAccessorySupplementHint => 'Aufpreise gelten pro halbem Tag.';
+
+  @override
   String get servicesTitle => 'Leistungen';
 
   @override

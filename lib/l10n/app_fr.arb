@@ -275,6 +275,7 @@
   "planBookedForPending": "Envoyé à {name} pour confirmation.",
   "planMakeNotReservable": "Rendre non réservable",
   "planMakeReservable": "Rendre réservable",
+  "planAccessorySupplementHint": "Les suppléments s'appliquent par demi-journée.",
   "servicesTitle": "Services",
   "servicesEmpty": "Aucun service pour l’instant.",
   "servicesNew": "Nouveau service",

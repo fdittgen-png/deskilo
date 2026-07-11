@@ -1273,6 +1273,10 @@
   "@planMakeReservable": {
     "description": "Blocked-seat sheet action clearing the maintenance block (#161, owner/admin only)"
   },
+  "planAccessorySupplementHint": "Supplements are per half-day.",
+  "@planAccessorySupplementHint": {
+    "description": "Unit hint under the booking sheet's accessory chips when the accessorySupplements toggle shows (+price) suffixes (#169)"
+  },
   "servicesTitle": "Services",
   "@servicesTitle": {
     "description": "App-bar title of the owner service-catalog editor and its settings tile"

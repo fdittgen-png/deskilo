@@ -275,6 +275,7 @@
   "planBookedForPending": "Zur Bestätigung an {name} gesendet.",
   "planMakeNotReservable": "Nicht reservierbar machen",
   "planMakeReservable": "Reservierbar machen",
+  "planAccessorySupplementHint": "Aufpreise gelten pro halbem Tag.",
   "servicesTitle": "Leistungen",
   "servicesEmpty": "Noch keine Leistungen.",
   "servicesNew": "Neue Leistung",

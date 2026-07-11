@@ -23,6 +23,7 @@ import '../../domain/seat_block_policy.dart';
 import '../../providers/default_level_controller.dart';
 import '../../providers/floor_plan_providers.dart';
 import '../widgets/floor_plan_painter.dart';
+import '../widgets/seat_accessory_row.dart';
 
 /// Cell size of the live plan (denser than the editor).
 const double _kCellSize = 14;
@@ -237,6 +238,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       context: context,
       isScrollControlled: true,
       builder: (context) => _CheckInSheet(
+        seatId: seat.id,
         seatName: seat.name,
         start: start,
         initialEnd: end,
@@ -748,6 +750,7 @@ class _BookingChoice {
 
 class _CheckInSheet extends StatefulWidget {
   const _CheckInSheet({
+    required this.seatId,
     required this.seatName,
     required this.start,
     required this.initialEnd,
@@ -760,6 +763,7 @@ class _CheckInSheet extends StatefulWidget {
     this.allowBlocking = false,
   });
 
+  final String seatId;
   final String seatName;
   final DateTime start;
   final DateTime initialEnd;
@@ -836,6 +840,10 @@ class _CheckInSheetState extends State<_CheckInSheet> {
                       'Starts at '
                           '${timeFormat.format(widget.start.toLocal())}'),
             ),
+            // The seat's active accessories (#169): self-loading, renders
+            // nothing when the seat has none. Both booking flows (walk-up
+            // and browsed-time) share this sheet, so both get the row.
+            SeatAccessoryRow(seatId: widget.seatId),
             if (widget.members.length > 1)
               DropdownButtonFormField<String>(
                 initialValue: _forMemberId,

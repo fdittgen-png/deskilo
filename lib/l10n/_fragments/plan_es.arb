@@ -39,5 +39,6 @@
   "planSendForConfirmation": "Enviar para confirmación",
   "planBookedForPending": "Enviado a {name} para confirmación.",
   "planMakeNotReservable": "Hacer no reservable",
-  "planMakeReservable": "Hacer reservable"
+  "planMakeReservable": "Hacer reservable",
+  "planAccessorySupplementHint": "Los suplementos se aplican por media jornada."
 }
