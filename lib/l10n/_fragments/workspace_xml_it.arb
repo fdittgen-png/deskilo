@@ -1,5 +1,21 @@
 {
   "@@locale": "it",
   "workspaceXmlExport": "Esporta lo spazio (XML)",
-  "workspaceXmlExportSubtitle": "Impostazioni e planimetria in un file condivisibile. Senza membri, prenotazioni o dati finanziari."
+  "workspaceXmlExportSubtitle": "Impostazioni e planimetria in un file condivisibile. Senza membri, prenotazioni o dati finanziari.",
+  "workspaceXmlImport": "Importa lo spazio (XML)",
+  "workspaceXmlImportSubtitle": "Ripristina impostazioni e planimetria da un file esportato. Sostituisce la planimetria attuale.",
+  "workspaceXmlFileTypeLabel": "XML",
+  "workspaceXmlImportPreviewTitle": "Sostituire la planimetria?",
+  "workspaceXmlImportPreviewCounts": "Piani: {levels} · Stanze: {offices} · Scrivanie: {desks} · Postazioni: {seats}",
+  "workspaceXmlImportPreviewWarning": "La planimetria attuale verrà eliminata e sostituita e le impostazioni dello spazio verranno sovrascritte. L'operazione non può essere annullata.",
+  "workspaceXmlImportConfirm": "Sostituisci e importa",
+  "workspaceXmlImportSuccess": "Spazio importato.",
+  "workspaceXmlErrorMalformed": "Il file non è un XML leggibile.",
+  "workspaceXmlErrorWrongRoot": "Questo non è un file di spazio DesKilo.",
+  "workspaceXmlErrorUnsupportedVersion": "Il file è stato esportato da una versione più recente di DesKilo e non può essere importato.",
+  "workspaceXmlErrorMissingElement": "Il file è incompleto — manca una sezione obbligatoria.",
+  "workspaceXmlErrorMissingAttribute": "Il file è incompleto — manca un valore obbligatorio.",
+  "workspaceXmlErrorInvalidValue": "Il file contiene un valore non valido e non può essere importato.",
+  "workspaceXmlErrorInvalidPlan": "La planimetria nel file non è valida: stanze, scrivanie o postazioni si sovrappongono o escono dalla loro area.",
+  "workspaceXmlImportReservationsError": "Questo spazio ha già delle prenotazioni, quindi la planimetria non può essere sostituita. L'importazione è possibile solo prima della prima prenotazione."
 }

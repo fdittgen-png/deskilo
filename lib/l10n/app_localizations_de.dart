@@ -1147,4 +1147,68 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get workspaceXmlExportSubtitle =>
       'Einstellungen und Raumplan als teilbare Datei. Ohne Mitglieder, Buchungen oder Finanzdaten.';
+
+  @override
+  String get workspaceXmlImport => 'Workspace importieren (XML)';
+
+  @override
+  String get workspaceXmlImportSubtitle =>
+      'Einstellungen und Raumplan aus einer exportierten Datei wiederherstellen. Ersetzt den aktuellen Raumplan.';
+
+  @override
+  String get workspaceXmlFileTypeLabel => 'XML';
+
+  @override
+  String get workspaceXmlImportPreviewTitle => 'Raumplan ersetzen?';
+
+  @override
+  String workspaceXmlImportPreviewCounts(
+    int levels,
+    int offices,
+    int desks,
+    int seats,
+  ) {
+    return 'Etagen: $levels · Räume: $offices · Tische: $desks · Plätze: $seats';
+  }
+
+  @override
+  String get workspaceXmlImportPreviewWarning =>
+      'Der aktuelle Raumplan wird gelöscht und ersetzt, die Workspace-Einstellungen werden überschrieben. Das kann nicht rückgängig gemacht werden.';
+
+  @override
+  String get workspaceXmlImportConfirm => 'Ersetzen und importieren';
+
+  @override
+  String get workspaceXmlImportSuccess => 'Workspace importiert.';
+
+  @override
+  String get workspaceXmlErrorMalformed => 'Die Datei ist kein lesbares XML.';
+
+  @override
+  String get workspaceXmlErrorWrongRoot =>
+      'Das ist keine DesKilo-Workspace-Datei.';
+
+  @override
+  String get workspaceXmlErrorUnsupportedVersion =>
+      'Die Datei wurde von einer neueren DesKilo-Version exportiert und kann nicht importiert werden.';
+
+  @override
+  String get workspaceXmlErrorMissingElement =>
+      'Die Datei ist unvollständig — ein erforderlicher Abschnitt fehlt.';
+
+  @override
+  String get workspaceXmlErrorMissingAttribute =>
+      'Die Datei ist unvollständig — ein erforderlicher Wert fehlt.';
+
+  @override
+  String get workspaceXmlErrorInvalidValue =>
+      'Die Datei enthält einen ungültigen Wert und kann nicht importiert werden.';
+
+  @override
+  String get workspaceXmlErrorInvalidPlan =>
+      'Der Raumplan in der Datei ist ungültig: Räume, Tische oder Plätze überlappen sich oder liegen außerhalb ihres Bereichs.';
+
+  @override
+  String get workspaceXmlImportReservationsError =>
+      'Dieser Workspace hat bereits Reservierungen, daher kann sein Raumplan nicht ersetzt werden. Ein Import ist nur vor der ersten Buchung möglich.';
 }

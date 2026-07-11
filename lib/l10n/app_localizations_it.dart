@@ -1147,4 +1147,68 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get workspaceXmlExportSubtitle =>
       'Impostazioni e planimetria in un file condivisibile. Senza membri, prenotazioni o dati finanziari.';
+
+  @override
+  String get workspaceXmlImport => 'Importa lo spazio (XML)';
+
+  @override
+  String get workspaceXmlImportSubtitle =>
+      'Ripristina impostazioni e planimetria da un file esportato. Sostituisce la planimetria attuale.';
+
+  @override
+  String get workspaceXmlFileTypeLabel => 'XML';
+
+  @override
+  String get workspaceXmlImportPreviewTitle => 'Sostituire la planimetria?';
+
+  @override
+  String workspaceXmlImportPreviewCounts(
+    int levels,
+    int offices,
+    int desks,
+    int seats,
+  ) {
+    return 'Piani: $levels · Stanze: $offices · Scrivanie: $desks · Postazioni: $seats';
+  }
+
+  @override
+  String get workspaceXmlImportPreviewWarning =>
+      'La planimetria attuale verrà eliminata e sostituita e le impostazioni dello spazio verranno sovrascritte. L\'operazione non può essere annullata.';
+
+  @override
+  String get workspaceXmlImportConfirm => 'Sostituisci e importa';
+
+  @override
+  String get workspaceXmlImportSuccess => 'Spazio importato.';
+
+  @override
+  String get workspaceXmlErrorMalformed => 'Il file non è un XML leggibile.';
+
+  @override
+  String get workspaceXmlErrorWrongRoot =>
+      'Questo non è un file di spazio DesKilo.';
+
+  @override
+  String get workspaceXmlErrorUnsupportedVersion =>
+      'Il file è stato esportato da una versione più recente di DesKilo e non può essere importato.';
+
+  @override
+  String get workspaceXmlErrorMissingElement =>
+      'Il file è incompleto — manca una sezione obbligatoria.';
+
+  @override
+  String get workspaceXmlErrorMissingAttribute =>
+      'Il file è incompleto — manca un valore obbligatorio.';
+
+  @override
+  String get workspaceXmlErrorInvalidValue =>
+      'Il file contiene un valore non valido e non può essere importato.';
+
+  @override
+  String get workspaceXmlErrorInvalidPlan =>
+      'La planimetria nel file non è valida: stanze, scrivanie o postazioni si sovrappongono o escono dalla loro area.';
+
+  @override
+  String get workspaceXmlImportReservationsError =>
+      'Questo spazio ha già delle prenotazioni, quindi la planimetria non può essere sostituita. L\'importazione è possibile solo prima della prima prenotazione.';
 }

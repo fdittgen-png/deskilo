@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: MIT
 import 'dart:convert';
 
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../../core/country/country_catalog.dart';
+import '../../../../core/files/file_picker.dart';
 import '../../../../core/share/share_launcher.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -14,7 +17,9 @@ import '../../../plan/domain/level.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/payment_instructions.dart';
 import '../../domain/workspace.dart';
+import '../../domain/workspace_import.dart';
 import '../../domain/workspace_xml.dart';
+import '../../providers/workspace_import_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
 
@@ -157,6 +162,189 @@ class _WorkspaceSettingsScreenState
           ),
         ),
       );
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  /// User-facing message for a typed parse failure (#164/#165). The
+  /// technical [WorkspaceXmlException.detail] goes to the trace log only.
+  String _xmlErrorMessage(AppLocalizations? l10n, WorkspaceXmlError error) =>
+      switch (error) {
+        WorkspaceXmlError.malformed =>
+          l10n?.workspaceXmlErrorMalformed ?? 'The file is not readable XML.',
+        WorkspaceXmlError.wrongRoot => l10n?.workspaceXmlErrorWrongRoot ??
+            'This is not a DesKilo workspace file.',
+        WorkspaceXmlError.unsupportedVersion =>
+          l10n?.workspaceXmlErrorUnsupportedVersion ??
+              'The file was exported by a newer version of DesKilo and '
+                  'cannot be imported.',
+        WorkspaceXmlError.missingElement =>
+          l10n?.workspaceXmlErrorMissingElement ??
+              'The file is incomplete — a required section is missing.',
+        WorkspaceXmlError.missingAttribute =>
+          l10n?.workspaceXmlErrorMissingAttribute ??
+              'The file is incomplete — a required value is missing.',
+        WorkspaceXmlError.invalidValue =>
+          l10n?.workspaceXmlErrorInvalidValue ??
+              'The file contains an invalid value and cannot be imported.',
+      };
+
+  void _showSnack(String message) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  /// Owner-only XML import (#165): pick file → parse (typed errors) →
+  /// client-side placement validation → preview + destructive confirm →
+  /// transactional replace via the import RPC, settings via the existing
+  /// owner writers.
+  Future<void> _importXml(Workspace workspace) async {
+    final l10n = AppLocalizations.of(context);
+    setState(() => _busy = true);
+    try {
+      final pick = ref.read(filePickerProvider);
+      final file = await pick(XTypeGroup(
+        // Acronym identical in every locale (IBAN precedent, #155); the
+        // key exists so the parity gate covers the whole set.
+        label: l10n?.workspaceXmlFileTypeLabel ?? 'XML',
+        extensions: const ['xml'],
+        mimeTypes: const ['application/xml', 'text/xml'],
+      ));
+      if (file == null) return; // cancelled
+      // Explicit UTF-8 decode: the export declares UTF-8 (#164), and
+      // XFile.readAsString is not UTF-8-safe for data-backed files.
+      final content = utf8.decode(await file.readAsBytes());
+      if (!mounted) return;
+
+      final WorkspaceXmlData data;
+      try {
+        data = parseWorkspaceXml(content);
+      } on WorkspaceXmlException catch (e, st) {
+        TraceLogger.instance.error(
+            'workspace', 'workspace XML import rejected: ${e.detail}',
+            error: e, stackTrace: st);
+        if (!mounted) return;
+        _showSnack(_xmlErrorMessage(l10n, e.error));
+        return;
+      }
+
+      // The editor's placement rules (spec §10) gate the preview: a file
+      // whose plan the editor could never have drawn is rejected here.
+      final invalid = validateWorkspaceXmlPlan(data);
+      if (invalid != null) {
+        TraceLogger.instance.error(
+            'workspace',
+            'workspace XML import plan invalid '
+            '(${invalid.problem.name}): ${invalid.detail}');
+        if (!mounted) return;
+        _showSnack(l10n?.workspaceXmlErrorInvalidPlan ??
+            'The floor plan in the file is invalid: rooms, desks or seats '
+                'overlap or extend outside their parent.');
+        return;
+      }
+
+      final counts = workspaceXmlPlanCounts(data);
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (dialogContext) {
+          final theme = Theme.of(dialogContext);
+          return AlertDialog(
+            title: Text(l10n?.workspaceXmlImportPreviewTitle ??
+                'Replace floor plan?'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n?.workspaceXmlImportPreviewCounts(counts.levels,
+                          counts.offices, counts.desks, counts.seats) ??
+                      'Levels: ${counts.levels} · '
+                          'Offices: ${counts.offices} · '
+                          'Desks: ${counts.desks} · '
+                          'Seats: ${counts.seats}',
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  l10n?.workspaceXmlImportPreviewWarning ??
+                      'The current floor plan will be deleted and replaced, '
+                          'and the workspace settings will be overwritten. '
+                          'This cannot be undone.',
+                  style: theme.textTheme.bodyMedium
+                      ?.copyWith(color: theme.colorScheme.error),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                key: const Key('workspaceXmlImportCancel'),
+                onPressed: () => Navigator.of(dialogContext).pop(false),
+                child: Text(l10n?.commonCancel ?? 'Cancel'),
+              ),
+              FilledButton(
+                key: const Key('workspaceXmlImportConfirm'),
+                style: FilledButton.styleFrom(
+                  backgroundColor: theme.colorScheme.error,
+                  foregroundColor: theme.colorScheme.onError,
+                ),
+                onPressed: () => Navigator.of(dialogContext).pop(true),
+                child: Text(
+                    l10n?.workspaceXmlImportConfirm ?? 'Replace and import'),
+              ),
+            ],
+          );
+        },
+      );
+      if (confirmed != true) return;
+      if (!mounted) return;
+
+      // Floor plan first — the RPC is the step that can refuse (owner
+      // check, reservations); nothing else is touched when it does.
+      await ref
+          .read(workspaceImportRepositoryProvider)
+          .importFloorPlan(workspace.id, data);
+      // Settings ride the EXISTING owner writers (#153/#155/#146). The
+      // workspace NAME has no update path yet and is deliberately skipped.
+      final repository = ref.read(workspaceRepositoryProvider);
+      await repository.updateWorkspaceLocale(
+        workspace.id,
+        countryCode: data.settings.countryCode,
+        currencyCode: data.settings.currencyCode,
+        timezone: data.settings.timezone,
+      );
+      await repository.setPaymentInstructions(
+        workspace.id,
+        PaymentInstructions.fromDb(data.settings.paymentInstructions),
+      );
+      await repository.setFeatureFlags(workspace.id, data.settings.featureFlags);
+
+      ref.invalidate(myWorkspacesProvider);
+      ref.invalidate(levelsProvider);
+      ref.invalidate(floorPlanProvider);
+      ref.invalidate(targetNamesProvider);
+      if (!mounted) return;
+      // Re-seed the form so the imported settings show immediately.
+      setState(() => _seeded = false);
+      _showSnack(l10n?.workspaceXmlImportSuccess ?? 'Workspace imported.');
+    } on PostgrestException catch (e, st) {
+      debugPrint('workspace XML import failed: $e\n$st');
+      TraceLogger.instance.error('workspace', 'workspace XML import failed',
+          error: e, stackTrace: st);
+      if (!mounted) return;
+      _showSnack(e.message.contains(kWorkspaceHasReservationsError)
+          ? (l10n?.workspaceXmlImportReservationsError ??
+              'This workspace already has reservations, so its floor plan '
+                  'cannot be replaced. Imports are only possible before '
+                  'the first booking.')
+          : (l10n?.workspaceGenericError ??
+              'Something went wrong. Please try again.'));
+    } catch (e, st) {
+      debugPrint('workspace XML import failed: $e\n$st');
+      TraceLogger.instance.error('workspace', 'workspace XML import failed',
+          error: e, stackTrace: st);
+      if (!mounted) return;
+      _showSnack(l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.');
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -312,6 +500,24 @@ class _WorkspaceSettingsScreenState
                     ),
                     enabled: !_busy,
                     onTap: () => _exportXml(workspace),
+                  ),
+                  // #165 — restore from an exported file. Replaces the
+                  // floor plan (guarded by preview + destructive confirm);
+                  // the whole screen is owner-only already.
+                  ListTile(
+                    key: const Key('workspaceSettingsImportXml'),
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.file_open_outlined),
+                    title: Text(
+                      l10n?.workspaceXmlImport ?? 'Import workspace (XML)',
+                    ),
+                    subtitle: Text(
+                      l10n?.workspaceXmlImportSubtitle ??
+                          'Restore settings and floor plan from an exported '
+                              'file. Replaces the current floor plan.',
+                    ),
+                    enabled: !_busy,
+                    onTap: () => _importXml(workspace),
                   ),
                 ],
               ),

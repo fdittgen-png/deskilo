@@ -1150,4 +1150,69 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get workspaceXmlExportSubtitle =>
       'Paramètres et plan des locaux dans un fichier partageable. Sans membres, réservations ni données financières.';
+
+  @override
+  String get workspaceXmlImport => 'Importer l\'espace (XML)';
+
+  @override
+  String get workspaceXmlImportSubtitle =>
+      'Restaurer les paramètres et le plan des locaux depuis un fichier exporté. Remplace le plan actuel.';
+
+  @override
+  String get workspaceXmlFileTypeLabel => 'XML';
+
+  @override
+  String get workspaceXmlImportPreviewTitle => 'Remplacer le plan des locaux ?';
+
+  @override
+  String workspaceXmlImportPreviewCounts(
+    int levels,
+    int offices,
+    int desks,
+    int seats,
+  ) {
+    return 'Étages : $levels · Salles : $offices · Bureaux : $desks · Places : $seats';
+  }
+
+  @override
+  String get workspaceXmlImportPreviewWarning =>
+      'Le plan actuel sera supprimé et remplacé, et les paramètres de l\'espace seront écrasés. Cette action est irréversible.';
+
+  @override
+  String get workspaceXmlImportConfirm => 'Remplacer et importer';
+
+  @override
+  String get workspaceXmlImportSuccess => 'Espace importé.';
+
+  @override
+  String get workspaceXmlErrorMalformed =>
+      'Le fichier n\'est pas un XML lisible.';
+
+  @override
+  String get workspaceXmlErrorWrongRoot =>
+      'Ce n\'est pas un fichier d\'espace DesKilo.';
+
+  @override
+  String get workspaceXmlErrorUnsupportedVersion =>
+      'Le fichier a été exporté par une version plus récente de DesKilo et ne peut pas être importé.';
+
+  @override
+  String get workspaceXmlErrorMissingElement =>
+      'Le fichier est incomplet — une section requise est manquante.';
+
+  @override
+  String get workspaceXmlErrorMissingAttribute =>
+      'Le fichier est incomplet — une valeur requise est manquante.';
+
+  @override
+  String get workspaceXmlErrorInvalidValue =>
+      'Le fichier contient une valeur invalide et ne peut pas être importé.';
+
+  @override
+  String get workspaceXmlErrorInvalidPlan =>
+      'Le plan des locaux du fichier est invalide : des salles, bureaux ou places se chevauchent ou dépassent de leur zone.';
+
+  @override
+  String get workspaceXmlImportReservationsError =>
+      'Cet espace a déjà des réservations, son plan des locaux ne peut donc pas être remplacé. L\'import n\'est possible qu\'avant la première réservation.';
 }

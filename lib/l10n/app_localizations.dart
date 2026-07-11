@@ -2191,6 +2191,107 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings and floor plan as a shareable file. No members, bookings or money data.'**
   String get workspaceXmlExportSubtitle;
+
+  /// Owner settings tile starting the XML import flow: file pick, preview, destructive confirm (#165)
+  ///
+  /// In en, this message translates to:
+  /// **'Import workspace (XML)'**
+  String get workspaceXmlImport;
+
+  /// Subtitle under the XML import tile warning that the current floor plan is replaced (#165)
+  ///
+  /// In en, this message translates to:
+  /// **'Restore settings and floor plan from an exported file. Replaces the current floor plan.'**
+  String get workspaceXmlImportSubtitle;
+
+  /// File-type filter label in the platform file picker. The acronym is identical in every locale; the key exists so the parity gate covers the whole set (#165)
+  ///
+  /// In en, this message translates to:
+  /// **'XML'**
+  String get workspaceXmlFileTypeLabel;
+
+  /// Title of the import preview dialog shown before anything is applied (#165)
+  ///
+  /// In en, this message translates to:
+  /// **'Replace floor plan?'**
+  String get workspaceXmlImportPreviewTitle;
+
+  /// Summary line in the import preview dialog counting what the picked file contains (#165)
+  ///
+  /// In en, this message translates to:
+  /// **'Levels: {levels} · Offices: {offices} · Desks: {desks} · Seats: {seats}'**
+  String workspaceXmlImportPreviewCounts(
+    int levels,
+    int offices,
+    int desks,
+    int seats,
+  );
+
+  /// Destructive-styled warning in the import preview dialog (#165)
+  ///
+  /// In en, this message translates to:
+  /// **'The current floor plan will be deleted and replaced, and the workspace settings will be overwritten. This cannot be undone.'**
+  String get workspaceXmlImportPreviewWarning;
+
+  /// Destructive confirm button of the import preview dialog (#165)
+  ///
+  /// In en, this message translates to:
+  /// **'Replace and import'**
+  String get workspaceXmlImportConfirm;
+
+  /// Snackbar after a successful XML import (#165)
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace imported.'**
+  String get workspaceXmlImportSuccess;
+
+  /// Snackbar when the picked file is not well-formed XML at all (WorkspaceXmlError.malformed, #165)
+  ///
+  /// In en, this message translates to:
+  /// **'The file is not readable XML.'**
+  String get workspaceXmlErrorMalformed;
+
+  /// Snackbar when the XML root element is not deskilo-workspace (WorkspaceXmlError.wrongRoot, #165)
+  ///
+  /// In en, this message translates to:
+  /// **'This is not a DesKilo workspace file.'**
+  String get workspaceXmlErrorWrongRoot;
+
+  /// Snackbar when the file's schema version is newer than this app understands (WorkspaceXmlError.unsupportedVersion, #165)
+  ///
+  /// In en, this message translates to:
+  /// **'The file was exported by a newer version of DesKilo and cannot be imported.'**
+  String get workspaceXmlErrorUnsupportedVersion;
+
+  /// Snackbar when a required XML element is missing (WorkspaceXmlError.missingElement, #165)
+  ///
+  /// In en, this message translates to:
+  /// **'The file is incomplete — a required section is missing.'**
+  String get workspaceXmlErrorMissingElement;
+
+  /// Snackbar when a required XML attribute is missing (WorkspaceXmlError.missingAttribute, #165)
+  ///
+  /// In en, this message translates to:
+  /// **'The file is incomplete — a required value is missing.'**
+  String get workspaceXmlErrorMissingAttribute;
+
+  /// Snackbar when an XML attribute value fails validation (WorkspaceXmlError.invalidValue, #165)
+  ///
+  /// In en, this message translates to:
+  /// **'The file contains an invalid value and cannot be imported.'**
+  String get workspaceXmlErrorInvalidValue;
+
+  /// Snackbar when the parsed plan fails the editor's placement rules client-side (#165)
+  ///
+  /// In en, this message translates to:
+  /// **'The floor plan in the file is invalid: rooms, desks or seats overlap or extend outside their parent.'**
+  String get workspaceXmlErrorInvalidPlan;
+
+  /// Snackbar when the import RPC refuses because reservation history references the seats that would be deleted (#165)
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace already has reservations, so its floor plan cannot be replaced. Imports are only possible before the first booking.'**
+  String get workspaceXmlImportReservationsError;
 }
 
 class _AppLocalizationsDelegate
