@@ -16,6 +16,7 @@ import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/plan/domain/floor_plan_repository.dart';
+import 'package:deskilo/features/plan/providers/default_level_controller.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
@@ -28,6 +29,7 @@ import 'fake_floor_plan_repository.dart';
 import 'fake_money_repository.dart';
 import 'fake_notification_service.dart';
 import 'fake_reservation_repository.dart';
+import 'in_memory_default_level_store.dart';
 
 /// In-memory [AuthRepository] for widget/unit tests (fakes over mocks).
 class FakeAuthRepository implements AuthRepository {
@@ -325,6 +327,7 @@ List<Override> standardTestOverrides({
   MoneyRepository? money,
   NotificationService? notifications,
   ActiveWorkspaceStore? activeWorkspace,
+  DefaultLevelStore? defaultLevel,
 }) {
   return [
     authRepositoryProvider
@@ -344,6 +347,8 @@ List<Override> standardTestOverrides({
         .overrideWithValue(notifications ?? FakeNotificationService()),
     activeWorkspaceStoreProvider
         .overrideWithValue(activeWorkspace ?? InMemoryActiveWorkspaceStore()),
+    defaultLevelStoreProvider
+        .overrideWithValue(defaultLevel ?? InMemoryDefaultLevelStore()),
   ];
 }
 

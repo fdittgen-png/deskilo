@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -20,19 +19,9 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/floor_plan.dart';
 import '../../domain/level.dart';
 import '../../domain/seat.dart';
+import '../../providers/default_level_controller.dart';
 import '../../providers/floor_plan_providers.dart';
 import '../widgets/floor_plan_painter.dart';
-
-part 'plan_screen.g.dart';
-
-/// The level shown on the Plan tab (defaults to the first level).
-@Riverpod(keepAlive: true)
-class SelectedLevelId extends _$SelectedLevelId {
-  @override
-  String? build() => null;
-
-  void select(String id) => state = id;
-}
 
 /// Cell size of the live plan (denser than the editor).
 const double _kCellSize = 14;
@@ -343,7 +332,14 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       );
     }
 
-    final selectedId = ref.watch(selectedLevelIdProvider);
+    // Stored per-workspace default (#159); wait for the one-time read so
+    // the plan opens directly on the member's level, no flash of level 1.
+    // A failed read falls through to the first level instead of spinning.
+    final selectedAsync = ref.watch(selectedLevelIdProvider);
+    if (selectedAsync.isLoading && !selectedAsync.hasValue) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    final selectedId = selectedAsync.value;
     final level = levels.where((l) => l.id == selectedId).firstOrNull ??
         levels.first;
 
@@ -358,28 +354,27 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     return Column(
       children: [
         _scrollerRow(at),
+        // One tap per level (#159): compact scrollable chips instead of a
+        // dropdown; the choice persists as this member's default here.
         if (levels.length > 1)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            child: Row(
+          SizedBox(
+            height: 40,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               children: [
-                Text(l10n?.planLevelLabel ?? 'Level'),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: DropdownButton<String>(
-                    value: level.id,
-                    isExpanded: true,
-                    items: [
-                      for (final Level l in levels)
-                        DropdownMenuItem(value: l.id, child: Text(l.name)),
-                    ],
-                    onChanged: (id) {
-                      if (id != null) {
-                        ref.read(selectedLevelIdProvider.notifier).select(id);
-                      }
-                    },
+                for (final Level l in levels)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: ChoiceChip(
+                      label: Text(l.name),
+                      selected: l.id == level.id,
+                      visualDensity: VisualDensity.compact,
+                      onSelected: (_) => ref
+                          .read(selectedLevelIdProvider.notifier)
+                          .select(l.id),
+                    ),
                   ),
-                ),
               ],
             ),
           ),
