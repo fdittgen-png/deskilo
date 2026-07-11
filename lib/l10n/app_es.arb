@@ -280,6 +280,8 @@
   "planFromLabel": "Desde",
   "planToLabel": "Hasta",
   "planEndBeforeStart": "El fin debe ser posterior al inicio.",
+  "planClosedDay": "Cerrado este día",
+  "planClosedDayError": "El espacio está cerrado ese día.",
   "servicesTitle": "Servicios",
   "servicesEmpty": "Aún no hay servicios.",
   "servicesNew": "Nuevo servicio",

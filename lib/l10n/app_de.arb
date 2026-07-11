@@ -280,6 +280,8 @@
   "planFromLabel": "Von",
   "planToLabel": "Bis",
   "planEndBeforeStart": "Das Ende muss nach dem Beginn liegen.",
+  "planClosedDay": "An diesem Tag geschlossen",
+  "planClosedDayError": "Der Workspace ist an diesem Tag geschlossen.",
   "servicesTitle": "Leistungen",
   "servicesEmpty": "Noch keine Leistungen.",
   "servicesNew": "Neue Leistung",

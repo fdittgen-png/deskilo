@@ -25,7 +25,10 @@ Future<
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   final reservations = FakeReservationRepository();
   final workspace = FakeWorkspaceRepository.withWorkspace()
-    ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana Lima'};
+    ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana Lima'}
+    // Open every weekday: booking tests must not hit the closed-day
+    // gating (#186) when the suite runs on a weekend.
+    ..openWeekdays['ws-1'] = const [1, 2, 3, 4, 5, 6, 7];
   seedReservations?.call(reservations);
   await tester.pumpWidget(
     ProviderScope(
@@ -162,9 +165,14 @@ void main() {
     plans.seats[0] = seat.copyWith(
       blockedFrom: DateTime.now().subtract(const Duration(days: 1)),
     );
+    // Open every weekday: this test is about seat blocking, and on a
+    // weekend run the closed-day gate (#186) would otherwise fire first.
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..openWeekdays['ws-1'] = const [1, 2, 3, 4, 5, 6, 7];
     await tester.pumpWidget(
       ProviderScope(
-        overrides: standardTestOverrides(floorPlan: plans),
+        overrides:
+            standardTestOverrides(floorPlan: plans, workspace: workspace),
         child: const DeskiloApp(),
       ),
     );

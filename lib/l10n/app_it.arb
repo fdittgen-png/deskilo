@@ -280,6 +280,8 @@
   "planFromLabel": "Dalle",
   "planToLabel": "Alle",
   "planEndBeforeStart": "La fine deve essere successiva all'inizio.",
+  "planClosedDay": "Chiuso in questo giorno",
+  "planClosedDayError": "Lo spazio è chiuso quel giorno.",
   "servicesTitle": "Servizi",
   "servicesEmpty": "Ancora nessun servizio.",
   "servicesNew": "Nuovo servizio",

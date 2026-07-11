@@ -43,5 +43,7 @@
   "planAccessorySupplementHint": "Los suplementos se aplican por media jornada.",
   "planFromLabel": "Desde",
   "planToLabel": "Hasta",
-  "planEndBeforeStart": "El fin debe ser posterior al inicio."
+  "planEndBeforeStart": "El fin debe ser posterior al inicio.",
+  "planClosedDay": "Cerrado este día",
+  "planClosedDayError": "El espacio está cerrado ese día."
 }

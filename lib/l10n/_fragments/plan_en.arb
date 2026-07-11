@@ -218,5 +218,13 @@
   "planEndBeforeStart": "End must be after start.",
   "@planEndBeforeStart": {
     "description": "Snackbar when the picked browse-window end is not after its start (#184)"
+  },
+  "planClosedDay": "Closed on this day",
+  "@planClosedDay": {
+    "description": "Banner under the plan header and seat-tap snackbar when the browsed/live day is a closed day of the workspace (#186)"
+  },
+  "planClosedDayError": "The workspace is closed on that day.",
+  "@planClosedDayError": {
+    "description": "Snackbar when the server rejects a booking or check-in because the workspace is closed on a touched day (#186)"
   }
 }

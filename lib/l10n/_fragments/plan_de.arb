@@ -43,5 +43,7 @@
   "planAccessorySupplementHint": "Aufpreise gelten pro halbem Tag.",
   "planFromLabel": "Von",
   "planToLabel": "Bis",
-  "planEndBeforeStart": "Das Ende muss nach dem Beginn liegen."
+  "planEndBeforeStart": "Das Ende muss nach dem Beginn liegen.",
+  "planClosedDay": "An diesem Tag geschlossen",
+  "planClosedDayError": "Der Workspace ist an diesem Tag geschlossen."
 }
