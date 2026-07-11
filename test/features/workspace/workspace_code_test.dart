@@ -19,6 +19,16 @@ Future<FakeWorkspaceRepository> pumpWorkspaceCode(WidgetTester tester) async {
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  // The sectioned settings list (#188) pushes this last admin entry below
+  // the 800×600 fold; scrollUntilVisible stops once the tile is BUILT
+  // (cache extent), ensureVisible finishes the job.
+  await tester.scrollUntilVisible(
+    find.text('Workspace ID & QR'),
+    100,
+    scrollable: find.byType(Scrollable).first,
+  );
+  await tester.ensureVisible(find.text('Workspace ID & QR'));
+  await tester.pumpAndSettle();
   await tester.tap(find.text('Workspace ID & QR'));
   await tester.pumpAndSettle();
   return workspace;

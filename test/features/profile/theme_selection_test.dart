@@ -72,6 +72,10 @@ Future<void> revealThemeTile(WidgetTester tester) async {
     80,
     scrollable: find.byType(Scrollable).first,
   );
+  // scrollUntilVisible stops once the tile is BUILT (cache extent), which
+  // can leave it a few px off-screen — ensureVisible finishes the job
+  // (the #188 section headers push the tile further down).
+  await tester.ensureVisible(find.text('Theme'));
   await tester.pumpAndSettle();
 }
 

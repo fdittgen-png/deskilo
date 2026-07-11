@@ -6,5 +6,8 @@
   "tabEvents": "Eventos",
   "tabMoney": "Finanzas",
   "settingsTitle": "Ajustes",
+  "settingsSectionAdministration": "Administración",
+  "settingsSectionPreferences": "Preferencias",
+  "settingsSectionAdvanced": "Avanzado",
   "comingSoon": "Próximamente"
 }

@@ -39,6 +39,11 @@ class SettingsScreen extends ConsumerWidget {
     final localeOverride = ref.watch(localeControllerProvider).value;
     final themeOverride = ref.watch(themeControllerProvider).value;
     final features = ref.watch(enabledFeaturesSyncProvider);
+    // The administration section header is hidden when the member would see
+    // none of its entries (#188). All entries are owner-only except
+    // Accessories, which is canAdminister (#167).
+    final showAdminSection = isOwner || canAdminister;
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.settingsTitle ?? 'Settings')),
       body: ListView(
@@ -48,6 +53,12 @@ class SettingsScreen extends ConsumerWidget {
             title: Text(l10n?.profilesTitle ?? 'Profiles'),
             onTap: () => context.push('/profiles'),
           ),
+          if (showAdminSection) ...[
+            const Divider(),
+            _SectionHeader(
+              l10n?.settingsSectionAdministration ?? 'Administration',
+            ),
+          ],
           if (isOwner)
             ListTile(
               leading: const Icon(Icons.business_outlined),
@@ -104,6 +115,8 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l10n?.workspaceCodeTitle ?? 'Workspace ID & QR'),
               onTap: () => context.push('/workspace-code'),
             ),
+          const Divider(),
+          _SectionHeader(l10n?.settingsSectionPreferences ?? 'Preferences'),
           // In-app language override (#147); null follows the system locale.
           ListTile(
             leading: const Icon(Icons.language),
@@ -133,6 +146,10 @@ class SettingsScreen extends ConsumerWidget {
               builder: (_) => const _ThemeDialog(),
             ),
           ),
+          // The dev-mode switch below is visible to everyone, so this
+          // section header is never empty and needs no gating.
+          const Divider(),
+          _SectionHeader(l10n?.settingsSectionAdvanced ?? 'Advanced'),
           // Local diagnostics (#144) — deliberately visible to ALL users,
           // not just owners: the trace never leaves the device unless the
           // user exports it.
@@ -149,15 +166,43 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l10n?.developerTitle ?? 'Developer'),
               onTap: () => context.push('/developer'),
             ),
+          // Sign out sits apart from the sections, with the destructive
+          // foreground treatment used elsewhere (colorScheme.error, as in
+          // the billing validation message).
+          const Divider(),
           ListTile(
-            leading: const Icon(Icons.logout),
-            title: Text(l10n?.authSignOut ?? 'Sign out'),
+            leading: Icon(Icons.logout, color: colorScheme.error),
+            title: Text(
+              l10n?.authSignOut ?? 'Sign out',
+              style: TextStyle(color: colorScheme.error),
+            ),
             onTap: () async {
               await ref.read(authRepositoryProvider).signOut();
               // The router's auth redirect takes over from here.
             },
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Material list-subheader for a titled settings section (#188). Matches
+/// the ListTile content inset so headers align with the tiles below them.
+class _SectionHeader extends StatelessWidget {
+  const _SectionHeader(this.label);
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+      child: Text(
+        label,
+        style: theme.textTheme.titleSmall
+            ?.copyWith(color: theme.colorScheme.primary),
       ),
     );
   }

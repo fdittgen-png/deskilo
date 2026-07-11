@@ -60,9 +60,12 @@ Future<void> pumpSettings(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
-  // The settings list outgrew the test viewport (#147): bring the
-  // developer section at the bottom into view.
+  // The settings list outgrew the test viewport (#147) and the section
+  // headers (#188) push the Advanced section further down: bring it into
+  // view. scrollUntilVisible stops once the tile is BUILT (cache extent),
+  // ensureVisible finishes the job.
   await tester.scrollUntilVisible(find.text('Developer mode'), 100);
+  await tester.ensureVisible(find.text('Developer mode'));
   await tester.pumpAndSettle();
 }
 
@@ -77,6 +80,11 @@ Future<void> pumpDeveloper(
     devMode: InMemoryDevModeStore(enabled: true),
     launcher: launcher,
   );
+  // The Developer tile sits below the dev-mode switch, which may rest at
+  // the bottom edge after the scroll above — reveal it before tapping.
+  await tester.scrollUntilVisible(find.text('Developer'), 100);
+  await tester.ensureVisible(find.text('Developer'));
+  await tester.pumpAndSettle();
   await tester.tap(find.text('Developer'));
   await tester.pumpAndSettle();
 }
