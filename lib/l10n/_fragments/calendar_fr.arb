@@ -7,5 +7,6 @@
   "calendarCancelFollowing": "Annuler celle-ci et les suivantes",
   "calendarPreviousMonth": "Mois précédent",
   "calendarNextMonth": "Mois suivant",
-  "calendarReservationActions": "Actions de la réservation"
+  "calendarReservationActions": "Actions de la réservation",
+  "calendarShowOnPlan": "Voir sur le plan"
 }

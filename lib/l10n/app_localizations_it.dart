@@ -241,6 +241,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get calendarReservationActions => 'Azioni della prenotazione';
 
   @override
+  String get calendarShowOnPlan => 'Mostra sulla pianta';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override

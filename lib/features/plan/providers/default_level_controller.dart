@@ -58,4 +58,13 @@ class SelectedLevelId extends _$SelectedLevelId {
     if (workspace == null) return;
     await ref.read(defaultLevelStoreProvider).write(workspace.id, levelId);
   }
+
+  /// Shows [levelId] WITHOUT writing the store (#182): the calendar's
+  /// "Show on plan" jump is a one-off navigation — it must not silently
+  /// overwrite the default level the member chose deliberately via
+  /// [select]. The transient choice lasts until the next [select] or
+  /// until this notifier rebuilds (e.g. workspace switch).
+  void showTransient(String levelId) {
+    state = AsyncData(levelId);
+  }
 }

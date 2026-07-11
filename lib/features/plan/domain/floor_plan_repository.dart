@@ -5,6 +5,7 @@ import 'grid_geometry.dart';
 import 'level.dart';
 import 'office.dart';
 import 'seat.dart';
+import 'seat_context.dart';
 
 /// Pure-Dart floor-plan boundary. Writes are owner-only (enforced by RLS;
 /// the UI additionally hides editor affordances from non-owners).
@@ -20,6 +21,15 @@ abstract class FloorPlanRepository {
   /// seat/office id → display name across the whole workspace (calendar and
   /// event lists label bookings without loading every level's plan).
   Future<Map<String, String>> fetchTargetNames(String workspaceId);
+
+  /// Resolves where [seatId] lives (#182): level · office · desk · seat
+  /// names for the reservation detail sheet. Null when the seat (or any
+  /// link of its chain) no longer exists.
+  Future<SeatContext?> fetchSeatContext(String seatId);
+
+  /// [fetchSeatContext] for a whole-office reservation: level + office
+  /// names only ([SeatContext.deskName]/[SeatContext.seatName] null).
+  Future<SeatContext?> fetchOfficeContext(String officeId);
 
   Future<FloorPlan> fetchPlan(String levelId);
 
