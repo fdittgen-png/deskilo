@@ -33,6 +33,8 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final isOwner = ref.watch(myMemberProvider).value?.isOwner ?? false;
+    final canAdminister =
+        ref.watch(myMemberProvider).value?.canAdminister ?? false;
     final devMode = ref.watch(devModeProvider).value ?? false;
     final localeOverride = ref.watch(localeControllerProvider).value;
     final themeOverride = ref.watch(themeControllerProvider).value;
@@ -69,6 +71,14 @@ class SettingsScreen extends ConsumerWidget {
               leading: const Icon(Icons.local_cafe_outlined),
               title: Text(l10n?.servicesTitle ?? 'Services'),
               onTap: () => context.push('/services'),
+            ),
+          // Accessory catalog (#167): owner AND admins, per the epic #163
+          // decision — deliberately canAdminister, not owner-only.
+          if (canAdminister)
+            ListTile(
+              leading: const Icon(Icons.devices_other_outlined),
+              title: Text(l10n?.accessoriesTitle ?? 'Accessories'),
+              onTap: () => context.push('/accessories'),
             ),
           if (isOwner)
             ListTile(

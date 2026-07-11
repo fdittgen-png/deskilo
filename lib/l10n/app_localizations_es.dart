@@ -9,6 +9,38 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
+  String get accessoriesTitle => 'Accesorios';
+
+  @override
+  String get accessoriesEmpty => 'Aún no hay accesorios.';
+
+  @override
+  String get accessoriesNew => 'Nuevo accesorio';
+
+  @override
+  String get accessoriesEdit => 'Editar accesorio';
+
+  @override
+  String get accessoriesName => 'Nombre';
+
+  @override
+  String get accessoriesSupplement => 'Suplemento por media jornada';
+
+  @override
+  String accessoriesPerHalfDay(String amount) {
+    return '$amount / media jornada';
+  }
+
+  @override
+  String get accessoriesNoSupplement => 'Sin suplemento';
+
+  @override
+  String get accessoriesInactive => 'Inactivo';
+
+  @override
+  String get accessoriesActive => 'Activo';
+
+  @override
   String get authSignInTitle => 'Iniciar sesión';
 
   @override

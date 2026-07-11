@@ -51,19 +51,42 @@ Future<void> pumpSettings(
   await tester.pumpAndSettle();
 }
 
+/// The settings list outgrew the 800×600 test viewport; the Language tile
+/// can sit below the fold (lazy list) or be only partially on-screen.
+Future<void> revealTile(WidgetTester tester, String title) async {
+  await tester.scrollUntilVisible(
+    find.text(title),
+    80,
+    scrollable: find.byType(Scrollable).first,
+  );
+  await tester.ensureVisible(find.text(title));
+  await tester.pumpAndSettle();
+}
+
+Finder languageTile(String title) =>
+    find.ancestor(of: find.text(title), matching: find.byType(ListTile));
+
 void main() {
   testWidgets(
       'settings shows the Language tile with the current selection — '
       'system default when no override is stored', (tester) async {
     await pumpSettings(tester, store: InMemoryLocaleStore());
+    await revealTile(tester, 'Language');
 
     expect(find.byIcon(Icons.language), findsOneWidget);
-    expect(find.text('Language'), findsOneWidget);
-    expect(find.text('System default'), findsOneWidget);
+    // Scoped: the Theme tile's subtitle also reads "System default".
+    expect(
+      find.descendant(
+        of: languageTile('Language'),
+        matching: find.text('System default'),
+      ),
+      findsOneWidget,
+    );
   });
 
   testWidgets('a stored override is shown as its endonym', (tester) async {
     await pumpSettings(tester, store: InMemoryLocaleStore(code: 'fr'));
+    await revealTile(tester, 'Langue');
 
     // The whole app already runs in French, tile included.
     expect(find.text('Langue'), findsOneWidget);
@@ -77,11 +100,16 @@ void main() {
     await pumpSettings(tester, store: store);
     expect(find.text('Settings'), findsOneWidget);
 
+    await revealTile(tester, 'Language');
     await tester.tap(find.text('Language'));
     await tester.pumpAndSettle();
 
-    // The dialog offers system default plus all five endonyms.
-    expect(find.text('System default'), findsNWidgets(2));
+    // The dialog offers system default plus all five endonyms (scoped to
+    // the radio — tile subtitles behind the dialog also carry the text).
+    expect(
+      find.widgetWithText(RadioListTile<String>, 'System default'),
+      findsOneWidget,
+    );
     for (final endonym in [
       'Deutsch',
       'English',
@@ -110,9 +138,13 @@ void main() {
     await pumpSettings(tester, store: store);
     expect(find.text('Einstellungen'), findsOneWidget);
 
+    await revealTile(tester, 'Sprache');
     await tester.tap(find.text('Sprache'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Systemstandard'));
+    // Scoped: the Theme tile's subtitle also reads "Systemstandard".
+    await tester.tap(
+      find.widgetWithText(RadioListTile<String>, 'Systemstandard'),
+    );
     await tester.pumpAndSettle();
 
     // The test platform locale is en_US, so English is back.

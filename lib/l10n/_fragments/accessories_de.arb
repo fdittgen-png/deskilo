@@ -1,0 +1,13 @@
+{
+  "@@locale": "de",
+  "accessoriesTitle": "Zubehör",
+  "accessoriesEmpty": "Noch kein Zubehör.",
+  "accessoriesNew": "Neues Zubehör",
+  "accessoriesEdit": "Zubehör bearbeiten",
+  "accessoriesName": "Name",
+  "accessoriesSupplement": "Aufpreis pro halbem Tag",
+  "accessoriesPerHalfDay": "{amount} / halber Tag",
+  "accessoriesNoSupplement": "Kein Aufpreis",
+  "accessoriesInactive": "Inaktiv",
+  "accessoriesActive": "Aktiv"
+}

@@ -9,6 +9,38 @@ class AppLocalizationsIt extends AppLocalizations {
   AppLocalizationsIt([String locale = 'it']) : super(locale);
 
   @override
+  String get accessoriesTitle => 'Accessori';
+
+  @override
+  String get accessoriesEmpty => 'Ancora nessun accessorio.';
+
+  @override
+  String get accessoriesNew => 'Nuovo accessorio';
+
+  @override
+  String get accessoriesEdit => 'Modifica accessorio';
+
+  @override
+  String get accessoriesName => 'Nome';
+
+  @override
+  String get accessoriesSupplement => 'Supplemento per mezza giornata';
+
+  @override
+  String accessoriesPerHalfDay(String amount) {
+    return '$amount / mezza giornata';
+  }
+
+  @override
+  String get accessoriesNoSupplement => 'Nessun supplemento';
+
+  @override
+  String get accessoriesInactive => 'Inattivo';
+
+  @override
+  String get accessoriesActive => 'Attivo';
+
+  @override
   String get authSignInTitle => 'Accedi';
 
   @override
