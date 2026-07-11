@@ -1,0 +1,5 @@
+{
+  "@@locale": "de",
+  "workspaceXmlExport": "Workspace exportieren (XML)",
+  "workspaceXmlExportSubtitle": "Einstellungen und Raumplan als teilbare Datei. Ohne Mitglieder, Buchungen oder Finanzdaten."
+}

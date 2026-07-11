@@ -1,11 +1,20 @@
 // SPDX-License-Identifier: MIT
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/country/country_catalog.dart';
+import '../../../../core/share/share_launcher.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../plan/domain/floor_plan.dart';
+import '../../../plan/domain/level.dart';
+import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/payment_instructions.dart';
+import '../../domain/workspace.dart';
+import '../../domain/workspace_xml.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
 
@@ -95,6 +104,49 @@ class _WorkspaceSettingsScreenState
     } catch (e, st) {
       debugPrint('update workspace locale failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'update workspace locale failed',
+          error: e, stackTrace: st);
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            l10n?.workspaceGenericError ??
+                'Something went wrong. Please try again.',
+          ),
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  /// Serializes the workspace settings + every level's floor plan to the
+  /// versioned XML format (#164) and hands it to the system share sheet
+  /// as a `.xml` file — same seam the bill PDF export uses (#133).
+  Future<void> _exportXml(Workspace workspace) async {
+    final l10n = AppLocalizations.of(context);
+    setState(() => _busy = true);
+    try {
+      final levels = await ref.read(levelsProvider.future);
+      final plans = <({Level level, FloorPlan plan})>[];
+      for (final level in levels) {
+        plans.add((
+          level: level,
+          plan: await ref.read(floorPlanProvider(level.id).future),
+        ));
+      }
+      final xml = buildWorkspaceXml(workspace: workspace, levels: plans);
+      final share = ref.read(shareLauncherProvider);
+      await share(
+        ShareParams(
+          files: [
+            XFile.fromData(utf8.encode(xml), mimeType: 'application/xml'),
+          ],
+          fileNameOverrides: [workspaceXmlFileName(workspace.name)],
+        ),
+      );
+    } catch (e, st) {
+      debugPrint('workspace XML export failed: $e\n$st');
+      TraceLogger.instance.error('workspace', 'workspace XML export failed',
           error: e, stackTrace: st);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -241,6 +293,25 @@ class _WorkspaceSettingsScreenState
                     key: const Key('workspaceSettingsSave'),
                     onPressed: _busy ? null : () => _save(workspace.id),
                     child: Text(l10n?.commonSave ?? 'Save'),
+                  ),
+                  const SizedBox(height: 24),
+                  const Divider(),
+                  // #164 — versioned XML snapshot of settings + floor
+                  // plan; the whole screen is owner-only already.
+                  ListTile(
+                    key: const Key('workspaceSettingsExportXml'),
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.upload_file_outlined),
+                    title: Text(
+                      l10n?.workspaceXmlExport ?? 'Export workspace (XML)',
+                    ),
+                    subtitle: Text(
+                      l10n?.workspaceXmlExportSubtitle ??
+                          'Settings and floor plan as a shareable file. '
+                              'No members, bookings or money data.',
+                    ),
+                    enabled: !_busy,
+                    onTap: () => _exportXml(workspace),
                   ),
                 ],
               ),

@@ -1,0 +1,5 @@
+{
+  "@@locale": "es",
+  "workspaceXmlExport": "Exportar el espacio (XML)",
+  "workspaceXmlExportSubtitle": "Ajustes y plano del espacio en un archivo para compartir. Sin miembros, reservas ni datos financieros."
+}
