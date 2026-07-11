@@ -536,6 +536,24 @@ abstract class AppLocalizations {
   /// **'Show on plan'**
   String get calendarShowOnPlan;
 
+  /// Tooltip of the calendar toggle switching the selected-day area to the plain reservation list (#187)
+  ///
+  /// In en, this message translates to:
+  /// **'List view'**
+  String get calendarListView;
+
+  /// Tooltip of the calendar toggle switching the selected-day area to the per-seat 24h timeline (#187)
+  ///
+  /// In en, this message translates to:
+  /// **'Timeline view'**
+  String get calendarTimelineView;
+
+  /// Empty state of the day timeline: the selected level has no seats or no visible reservations that day (#187)
+  ///
+  /// In en, this message translates to:
+  /// **'No reservations on this level for this day.'**
+  String get calendarTimelineEmpty;
+
   /// Application name shown in the task switcher and app bar. Brand name — identical in all locales.
   ///
   /// In en, this message translates to:

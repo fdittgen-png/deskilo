@@ -16,6 +16,7 @@ import '../../../plan/providers/seat_context_providers.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../widgets/day_timeline.dart';
 
 /// Reservations calendar (spec §6): month grid with markers + day list.
 /// Workers see their own bookings; admins can switch to everyone's.
@@ -30,6 +31,10 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   late DateTime _month;
   late DateTime _selectedDay;
   bool _everyone = false;
+
+  /// #187: selected-day area as timeline instead of list. Session-only —
+  /// deliberately a plain State field, no persistence.
+  bool _timeline = false;
 
   @override
   void initState() {
@@ -182,25 +187,48 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
             ],
           ),
         ),
-        if (myMember?.canAdminister ?? false)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: SegmentedButton<bool>(
-              segments: [
-                ButtonSegment(
-                  value: false,
-                  label: Text(l10n?.calendarMineTab ?? 'Mine'),
-                ),
-                ButtonSegment(
-                  value: true,
-                  label: Text(l10n?.calendarEveryoneTab ?? 'Everyone'),
-                ),
-              ],
-              selected: {_everyone},
-              onSelectionChanged: (selection) =>
-                  setState(() => _everyone = selection.first),
-            ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            children: [
+              if (myMember?.canAdminister ?? false)
+                Expanded(
+                  child: SegmentedButton<bool>(
+                    segments: [
+                      ButtonSegment(
+                        value: false,
+                        label: Text(l10n?.calendarMineTab ?? 'Mine'),
+                      ),
+                      ButtonSegment(
+                        value: true,
+                        label: Text(l10n?.calendarEveryoneTab ?? 'Everyone'),
+                      ),
+                    ],
+                    selected: {_everyone},
+                    onSelectionChanged: (selection) =>
+                        setState(() => _everyone = selection.first),
+                  ),
+                )
+              else
+                const Spacer(),
+              // #187: list vs. timeline for the selected-day area.
+              IconButton(
+                icon: const Icon(Icons.view_list_outlined),
+                isSelected: !_timeline,
+                visualDensity: VisualDensity.compact,
+                tooltip: l10n?.calendarListView ?? 'List view',
+                onPressed: () => setState(() => _timeline = false),
+              ),
+              IconButton(
+                icon: const Icon(Icons.view_timeline_outlined),
+                isSelected: _timeline,
+                visualDensity: VisualDensity.compact,
+                tooltip: l10n?.calendarTimelineView ?? 'Timeline view',
+                onPressed: () => setState(() => _timeline = true),
+              ),
+            ],
           ),
+        ),
         _MonthGrid(
           month: _month,
           selectedDay: _selectedDay,
@@ -213,7 +241,15 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         Expanded(
           child: RefreshIndicator(
             onRefresh: () async => invalidateBookingData(ref),
-            child: dayReservations.isEmpty
+            child: _timeline
+                ? DayTimeline(
+                    day: _selectedDay,
+                    reservations: visible,
+                    everyone: _everyone,
+                    myMemberId: myMember?.id,
+                    onReservationTap: _detailSheet,
+                  )
+                : dayReservations.isEmpty
                 ? ListView(
                     physics: const AlwaysScrollableScrollPhysics(),
                     children: [

@@ -8,5 +8,8 @@
   "calendarPreviousMonth": "Mois précédent",
   "calendarNextMonth": "Mois suivant",
   "calendarReservationActions": "Actions de la réservation",
-  "calendarShowOnPlan": "Voir sur le plan"
+  "calendarShowOnPlan": "Voir sur le plan",
+  "calendarListView": "Vue liste",
+  "calendarTimelineView": "Vue chronologique",
+  "calendarTimelineEmpty": "Aucune réservation à cet étage ce jour-là."
 }
