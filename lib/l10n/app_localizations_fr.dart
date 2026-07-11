@@ -261,6 +261,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsTitle => 'Réglages';
 
   @override
+  String get settingsSectionAdministration => 'Administration';
+
+  @override
+  String get settingsSectionPreferences => 'Préférences';
+
+  @override
+  String get settingsSectionAdvanced => 'Avancé';
+
+  @override
   String get comingSoon => 'Bientôt disponible';
 
   @override

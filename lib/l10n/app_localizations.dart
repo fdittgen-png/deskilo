@@ -572,6 +572,24 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get settingsTitle;
 
+  /// Settings section header grouping the owner/admin workspace-management entries (workspace, members, billing, …)
+  ///
+  /// In en, this message translates to:
+  /// **'Administration'**
+  String get settingsSectionAdministration;
+
+  /// Settings section header grouping the personal preference entries (language, theme)
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get settingsSectionPreferences;
+
+  /// Settings section header grouping the developer/diagnostics entries
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get settingsSectionAdvanced;
+
   /// Placeholder body shown on tabs whose feature is not yet implemented
   ///
   /// In en, this message translates to:

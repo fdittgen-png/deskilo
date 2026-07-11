@@ -6,5 +6,8 @@
   "tabEvents": "Ereignisse",
   "tabMoney": "Finanzen",
   "settingsTitle": "Einstellungen",
+  "settingsSectionAdministration": "Verwaltung",
+  "settingsSectionPreferences": "Präferenzen",
+  "settingsSectionAdvanced": "Erweitert",
   "comingSoon": "Demnächst verfügbar"
 }
