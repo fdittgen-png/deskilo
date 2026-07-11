@@ -2,8 +2,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../plan/domain/accessory.dart';
 import '../../../plan/domain/desk.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/floor_plan_editing.dart';
@@ -11,20 +13,12 @@ import '../../../plan/domain/floor_plan_rules.dart';
 import '../../../plan/domain/grid_geometry.dart';
 import '../../../plan/domain/office.dart';
 import '../../../plan/domain/seat.dart';
+import '../../../plan/providers/accessory_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../../plan/presentation/widgets/floor_plan_painter.dart';
 
 enum EditorTool { select, office, desk, seat, erase }
-
-/// Canonical amenity keys stored on seats; display names come from ARB.
-const List<String> kSeatAmenities = [
-  'monitor',
-  'standing_desk',
-  'window',
-  'dock',
-  'ergonomic',
-];
 
 /// Canvas dimensions in grid cells and the logical cell size at scale 1.
 abstract final class GridCanvas {
@@ -389,23 +383,30 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     });
   }
 
-  String _amenityLabel(AppLocalizations? l10n, String key) {
-    return switch (key) {
-      'monitor' => l10n?.amenityMonitor ?? 'Monitor',
-      'standing_desk' => l10n?.amenityStandingDesk ?? 'Standing desk',
-      'window' => l10n?.amenityWindow ?? 'Window seat',
-      'dock' => l10n?.amenityDock ?? 'Docking station',
-      'ergonomic' => l10n?.amenityErgonomicChair ?? 'Ergonomic chair',
-      _ => key,
-    };
+  /// Chip label: accessory name, plus its per-half-day supplement (in the
+  /// workspace currency) when one is set.
+  String _accessoryLabel(Accessory accessory, NumberFormat currency) {
+    if (accessory.supplementCents <= 0) return accessory.name;
+    final supplement = currency.format(accessory.supplementCents / 100);
+    return '${accessory.name} (+$supplement)';
   }
 
   Future<void> _showSeatSheet(FloorPlan plan, Seat seat) async {
     final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    // #168: the seat's equipment comes from the workspace accessory
+    // catalog (active entries, catalog order), not a hard-coded list.
+    final catalog = await ref.read(accessoriesProvider().future);
+    final assignments = await ref.read(seatAccessoriesProvider.future);
+    if (!mounted) return;
+    final initialAccessories = assignments[seat.id] ?? const <String>{};
+    final selectedAccessories = {...initialAccessories};
+    final currency =
+        NumberFormat.simpleCurrency(name: workspace?.currencyCode);
+
     final name = TextEditingController(text: seat.name);
     final chair = TextEditingController(text: seat.chair);
     var orientation = seat.orientation;
-    final amenities = {...seat.amenities};
     var blocked = seat.isBlockedAt(DateTime.now());
 
     final saved = await showModalBottomSheet<bool>(
@@ -469,23 +470,32 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                Text(l10n?.editorAmenitiesLabel ?? 'Amenities'),
+                Text(l10n?.editorAccessoriesLabel ?? 'Accessories'),
                 const SizedBox(height: 4),
-                Wrap(
-                  spacing: 8,
-                  children: [
-                    for (final key in kSeatAmenities)
-                      FilterChip(
-                        label: Text(_amenityLabel(l10n, key)),
-                        selected: amenities.contains(key),
-                        onSelected: (selected) => setSheetState(() {
-                          selected
-                              ? amenities.add(key)
-                              : amenities.remove(key);
-                        }),
-                      ),
-                  ],
-                ),
+                if (catalog.isEmpty)
+                  Text(
+                    l10n?.editorNoAccessories ??
+                        'No accessories yet — add them in '
+                            'Settings → Accessories.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  )
+                else
+                  Wrap(
+                    spacing: 8,
+                    children: [
+                      for (final accessory in catalog)
+                        FilterChip(
+                          label: Text(_accessoryLabel(accessory, currency)),
+                          selected:
+                              selectedAccessories.contains(accessory.id),
+                          onSelected: (selected) => setSheetState(() {
+                            selected
+                                ? selectedAccessories.add(accessory.id)
+                                : selectedAccessories.remove(accessory.id);
+                          }),
+                        ),
+                    ],
+                  ),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Text(
@@ -507,11 +517,12 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     );
     if (saved != true) return;
 
+    // #168: `seat.amenities` is intentionally NOT written anymore — the
+    // seat_accessories joins are the write path for seat equipment.
     final updated = seat.copyWith(
       name: name.text.trim().isEmpty ? seat.name : name.text.trim(),
       chair: chair.text.trim(),
       orientation: orientation,
-      amenities: amenities.toList()..sort(),
       blockedFrom: blocked ? (seat.blockedFrom ?? DateTime.now()) : null,
       blockedTo: blocked ? seat.blockedTo : null,
     );
@@ -521,6 +532,15 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       return;
     }
     await ref.read(floorPlanRepositoryProvider).updateSeat(updated);
+    final accessoriesChanged =
+        selectedAccessories.length != initialAccessories.length ||
+            !selectedAccessories.containsAll(initialAccessories);
+    if (accessoriesChanged) {
+      await ref
+          .read(accessoryRepositoryProvider)
+          .setSeatAccessories(seat.id, selectedAccessories);
+      ref.invalidate(seatAccessoriesProvider);
+    }
     ref.invalidate(floorPlanProvider(widget.levelId));
   }
 

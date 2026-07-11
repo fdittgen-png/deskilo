@@ -439,6 +439,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonDelete => 'Supprimer';
 
   @override
+  String get editorAccessoriesLabel => 'Accessoires';
+
+  @override
+  String get editorNoAccessories =>
+      'Aucun accessoire pour l\'instant — ajoutez-les dans Réglages → Accessoires.';
+
+  @override
   String get eventsPendingHeader => 'En attente de votre confirmation';
 
   @override

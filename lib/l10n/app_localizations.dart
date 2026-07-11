@@ -908,6 +908,18 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get commonDelete;
 
+  /// Label above the seat sheet's accessory chips (workspace catalog)
+  ///
+  /// In en, this message translates to:
+  /// **'Accessories'**
+  String get editorAccessoriesLabel;
+
+  /// Hint in the seat sheet when the workspace accessory catalog is empty
+  ///
+  /// In en, this message translates to:
+  /// **'No accessories yet — add them in Settings → Accessories.'**
+  String get editorNoAccessories;
+
   /// Header above pinned pending-confirmation cards (spec §8)
   ///
   /// In en, this message translates to:

@@ -439,6 +439,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get commonDelete => 'Löschen';
 
   @override
+  String get editorAccessoriesLabel => 'Zubehör';
+
+  @override
+  String get editorNoAccessories =>
+      'Noch kein Zubehör — lege es unter Einstellungen → Zubehör an.';
+
+  @override
   String get eventsPendingHeader => 'Wartet auf deine Bestätigung';
 
   @override

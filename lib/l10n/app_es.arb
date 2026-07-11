@@ -134,6 +134,8 @@
   "commonCancel": "Cancelar",
   "commonSave": "Guardar",
   "commonDelete": "Eliminar",
+  "editorAccessoriesLabel": "Accesorios",
+  "editorNoAccessories": "Todavía no hay accesorios — añádelos en Ajustes → Accesorios.",
   "eventsPendingHeader": "Esperando tu confirmación",
   "eventAccept": "Aceptar",
   "eventReject": "Rechazar",
