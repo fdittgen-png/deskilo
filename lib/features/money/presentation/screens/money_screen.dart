@@ -7,6 +7,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/share/share_launcher.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -169,10 +170,10 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       builder: (context) => StatefulBuilder(
         builder: (context, setSheetState) => Padding(
           padding: EdgeInsets.only(
-            left: 24,
-            right: 24,
-            top: 24,
-            bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+            left: AppSpacing.xl,
+            right: AppSpacing.xl,
+            top: AppSpacing.xl,
+            bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -288,10 +289,10 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       isScrollControlled: true,
       builder: (context) => Padding(
         padding: EdgeInsets.only(
-          left: 24,
-          right: 24,
-          top: 24,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+          left: AppSpacing.xl,
+          right: AppSpacing.xl,
+          top: AppSpacing.xl,
+          bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
         ),
         child: StatefulBuilder(
           builder: (context, setSheetState) => Column(
@@ -427,7 +428,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
 
     return switch (statementAsync) {
       AsyncData(value: final statement) => ListView(
-          padding: const EdgeInsets.all(12),
+          padding: AppSpacing.mdAll,
           children: [
             periodHeader,
             if (statement != null)

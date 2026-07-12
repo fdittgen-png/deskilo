@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/share/share_launcher.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -87,7 +88,10 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.sm,
+            ),
             child: Wrap(
               spacing: 8,
               children: [
@@ -202,7 +206,12 @@ class _TraceTile extends StatelessWidget {
       leading: leading,
       title: title,
       subtitle: subtitle,
-      childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+      childrenPadding: const EdgeInsets.fromLTRB(
+        AppSpacing.lg,
+        0,
+        AppSpacing.lg,
+        AppSpacing.md,
+      ),
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (entry.error != null) SelectableText(entry.error!, style: mono),

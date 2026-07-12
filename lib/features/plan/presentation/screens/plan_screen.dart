@@ -7,11 +7,12 @@ import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
 
-import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/motion.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -721,11 +722,11 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             height: 40,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: AppSpacing.mdH,
               children: [
                 for (final Level l in levels)
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    padding: AppSpacing.xsH,
                     child: ChoiceChip(
                       label: Text(l.name),
                       selected: l.id == level.id,
@@ -825,7 +826,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
           )
         : null;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: AppSpacing.smH,
       child: Row(
         children: [
           IconButton(
@@ -1011,34 +1012,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
 
   /// Closed-day banner under the header row (#186): the workspace is not
   /// open on the browsed/live day (weekday not open or closure day), so
-  /// nothing below is bookable.
+  /// nothing below is bookable. Shared [InlineBanner] since #210.
   Widget _closedDayBanner(AppLocalizations? l10n) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Container(
+    return InlineBanner(
       key: const ValueKey('plan-closed-banner'),
-      width: double.infinity,
-      margin: const EdgeInsets.fromLTRB(12, 4, 12, 4),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: colorScheme.errorContainer,
-        borderRadius: AppRadius.mdAll,
-      ),
-      child: Row(
-        children: [
-          Icon(
-            Icons.event_busy,
-            size: 18,
-            color: colorScheme.onErrorContainer,
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              l10n?.planClosedDay ?? 'Closed on this day',
-              style: TextStyle(color: colorScheme.onErrorContainer),
-            ),
-          ),
-        ],
-      ),
+      icon: Icons.event_busy,
+      text: l10n?.planClosedDay ?? 'Closed on this day',
     );
   }
 

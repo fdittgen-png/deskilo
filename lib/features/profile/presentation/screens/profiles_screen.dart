@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -34,7 +35,7 @@ class ProfilesScreen extends ConsumerWidget {
         label: Text(l10n?.profilesAdd ?? 'Add a profile'),
       ),
       body: ListView(
-        padding: const EdgeInsets.all(12),
+        padding: AppSpacing.mdAll,
         children: [
           for (final workspace in workspaces)
             Builder(

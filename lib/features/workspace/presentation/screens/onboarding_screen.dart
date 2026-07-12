@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/country/country_catalog.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -101,7 +102,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       ),
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: AppSpacing.xlAll,
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 480),
             child: Column(

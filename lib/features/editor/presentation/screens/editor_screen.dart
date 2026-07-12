@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/level.dart';
@@ -77,7 +78,7 @@ class EditorScreen extends ConsumerWidget {
       body: switch (levelsAsync) {
         AsyncData(value: final levels) when levels.isEmpty => Center(
             child: Padding(
-              padding: const EdgeInsets.all(24),
+              padding: AppSpacing.xlAll,
               child: Text(
                 l10n?.editorNoLevels ??
                     'No levels yet. Add the first floor of your workspace.',

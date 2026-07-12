@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -114,7 +115,7 @@ class WorkspaceCodeScreen extends ConsumerWidget {
           ? const LoadingView()
           : Center(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(24),
+                padding: AppSpacing.xlAll,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -125,7 +126,7 @@ class WorkspaceCodeScreen extends ConsumerWidget {
                     const SizedBox(height: 24),
                     Container(
                       color: Colors.white,
-                      padding: const EdgeInsets.all(16),
+                      padding: AppSpacing.lgAll,
                       child: QrImageView(
                         data: workspace.inviteCode,
                         size: 240,

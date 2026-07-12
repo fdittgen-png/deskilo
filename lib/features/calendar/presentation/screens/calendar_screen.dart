@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -159,7 +160,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          padding: AppSpacing.smH,
           child: Row(
             children: [
               IconButton(
@@ -187,7 +188,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: AppSpacing.lgH,
           child: Row(
             children: [
               if (myMember?.canAdminister ?? false)
@@ -343,7 +344,7 @@ class _MonthGrid extends StatelessWidget {
     final weekdayFormat = DateFormat.E();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: AppSpacing.smH,
       child: Column(
         children: [
           Row(

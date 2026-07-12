@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show AuthException, PostgrestException;
 
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -229,7 +230,12 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 children: [
                 if (pendingForMe.isNotEmpty) ...[
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.lg,
+                      AppSpacing.md,
+                      AppSpacing.lg,
+                      AppSpacing.xs,
+                    ),
                     child: Text(
                       l10n?.eventsPendingHeader ??
                           'Waiting for your confirmation',
@@ -239,11 +245,11 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                   for (final event in pendingForMe)
                     Card(
                       margin: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 4,
+                        horizontal: AppSpacing.md,
+                        vertical: AppSpacing.xs,
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(12),
+                        padding: AppSpacing.mdAll,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -320,7 +326,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                   const Divider(),
                 ],
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: AppSpacing.mdH,
                   child: Wrap(
                     spacing: 8,
                     children: [
