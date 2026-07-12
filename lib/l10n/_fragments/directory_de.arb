@@ -1,0 +1,13 @@
+{
+  "@@locale": "de",
+  "directoryTitle": "Mitglieder",
+  "directoryEmpty": "Noch keine Mitglieder.",
+  "directoryCheckedIn": "Eingecheckt",
+  "directoryCheckedInSeat": "Eingecheckt · {seat}",
+  "directoryOnline": "Online",
+  "directoryReservedToday": "Heute reserviert",
+  "directoryLastSeenMinutes": "{minutes} Min.",
+  "directoryLastSeenHours": "{hours} Std.",
+  "directoryLastSeenDays": "{days} T.",
+  "directoryWhatsapp": "Auf WhatsApp schreiben"
+}

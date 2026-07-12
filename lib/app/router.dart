@@ -7,6 +7,7 @@ import '../features/auth/presentation/screens/auth_screen.dart';
 import '../features/auth/providers/auth_providers.dart';
 import '../features/calendar/presentation/screens/calendar_screen.dart';
 import '../features/editor/presentation/screens/editor_screen.dart';
+import '../features/members/presentation/screens/directory_screen.dart';
 import '../features/editor/presentation/screens/level_canvas_screen.dart';
 import '../features/events/presentation/screens/events_screen.dart';
 import '../features/events/presentation/screens/validation_settings_screen.dart';
@@ -161,6 +162,12 @@ GoRouter router(Ref ref) {
         // available to every member.
         path: '/developer',
         builder: (context, state) => const DeveloperScreen(),
+      ),
+      GoRoute(
+        // Member directory (#224): open to EVERY member, deliberately no
+        // role gate — unlike /members (owner management) below.
+        path: '/directory',
+        builder: (context, state) => const DirectoryScreen(),
       ),
       GoRoute(
         path: '/workspace-code',
