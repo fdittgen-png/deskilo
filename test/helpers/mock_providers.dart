@@ -203,6 +203,18 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     }
   }
 
+  /// (#231) The last saved WhatsApp group link, for assertions.
+  String? lastWhatsappGroup;
+
+  @override
+  Future<void> setWhatsappGroup(String workspaceId, String link) async {
+    lastWhatsappGroup = link;
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i != -1) {
+      workspaces[i] = workspaces[i].copyWith(whatsappGroup: link);
+    }
+  }
+
   @override
   Future<Member?> fetchMyMember(String workspaceId) async =>
       [myMember, ...extraMyMemberships]

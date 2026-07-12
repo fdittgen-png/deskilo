@@ -82,6 +82,22 @@ class SettingsScreen extends ConsumerWidget {
               builder: (_) => const _WhatsappDialog(),
             ),
           ),
+          // Self-set status line on my profile (#231): shown next to me
+          // in the member directory (#232). Sits with WhatsApp in the
+          // ungrouped personal area on top.
+          ListTile(
+            leading: const Icon(Icons.mood_outlined),
+            title: Text(l10n?.profileStatusTitle ?? 'Status'),
+            subtitle: Text(
+              (myProfile?.hasStatus ?? false)
+                  ? myProfile!.statusText
+                  : (l10n?.profileStatusNone ?? 'No status'),
+            ),
+            onTap: () => showDialog<void>(
+              context: context,
+              builder: (_) => const _StatusDialog(),
+            ),
+          ),
           if (showAdminSection) ...[
             const Divider(),
             _SectionHeader(
@@ -360,6 +376,97 @@ class _WhatsappDialogState extends ConsumerState<_WhatsappDialog> {
           helperText: l10n?.whatsappHelper ??
               'Optional. Visible to members of your workspaces. '
                   'Leave empty to stop sharing it.',
+          helperMaxLines: 3,
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed:
+              _saving ? null : () => Navigator.of(context).pop(),
+          child: Text(l10n?.commonCancel ?? 'Cancel'),
+        ),
+        FilledButton(
+          onPressed: _saving ? null : _save,
+          child: Text(l10n?.commonSave ?? 'Save'),
+        ),
+      ],
+    );
+  }
+}
+
+/// Editor for the self-set status line on my profile (#231). The raw
+/// input is trimmed + hard-capped by [normalizeStatusText] on save (the
+/// field's maxLength already blocks typing past the cap); an emptied
+/// field clears the status. Follows the settings dialog pattern
+/// (_WhatsappDialog) with an explicit Save.
+class _StatusDialog extends ConsumerStatefulWidget {
+  const _StatusDialog();
+
+  @override
+  ConsumerState<_StatusDialog> createState() => _StatusDialogState();
+}
+
+class _StatusDialogState extends ConsumerState<_StatusDialog> {
+  late final TextEditingController _controller;
+  bool _saving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: ref.read(myProfileProvider).value?.statusText ?? '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _save() async {
+    final l10n = AppLocalizations.of(context);
+    setState(() => _saving = true);
+    try {
+      await ref
+          .read(profileRepositoryProvider)
+          .updateStatusText(normalizeStatusText(_controller.text));
+      ref.invalidate(myProfileProvider);
+      if (!mounted) return;
+      Navigator.of(context).pop();
+      AppSnack.success(
+        context,
+        l10n?.profileStatusSaved ?? 'Status saved',
+      );
+    } catch (e, st) {
+      debugPrint('status save failed: $e\n$st');
+      TraceLogger.instance.error('profile', 'status save failed',
+          error: e, stackTrace: st);
+      if (!mounted) return;
+      setState(() => _saving = false);
+      AppSnack.error(
+        context,
+        l10n?.profileStatusSaveFailed ?? 'Could not save the status',
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return AlertDialog(
+      title: Text(l10n?.profileStatusTitle ?? 'Status'),
+      content: TextField(
+        controller: _controller,
+        autofocus: true,
+        maxLength: StatusTextRules.maxLength,
+        decoration: InputDecoration(
+          labelText: l10n?.profileStatusFieldLabel ?? 'Status',
+          hintText:
+              l10n?.profileStatusHint ?? 'In a call · back at 14:00',
+          helperText: l10n?.profileStatusHelper ??
+              'Optional. Visible to members of your workspaces in the '
+                  'member directory. Leave empty to clear it.',
           helperMaxLines: 3,
         ),
       ),

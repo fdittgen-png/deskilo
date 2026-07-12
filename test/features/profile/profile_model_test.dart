@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 //
-// Profile model round-trip (#223) plus the WhatsApp normalization rule:
-// keep digits, fold a leading 00 into +, prepend +; blank clears.
+// Profile model round-trip (#223, status_text since #231) plus the
+// normalization rules: WhatsApp (keep digits, fold a leading 00 into +,
+// prepend +; blank clears) and the status line (trim + hard cap at
+// StatusTextRules.maxLength; blank clears).
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -12,6 +14,7 @@ void main() {
         'id': 'user-1',
         'display_name': 'Ada',
         'whatsapp': '+33612345678',
+        'status_text': 'In a call · back at 14:00',
         'last_seen_at': '2026-07-11T09:30:00.000Z',
       };
       final profile = Profile.fromDb(db);
@@ -19,11 +22,13 @@ void main() {
       expect(profile.id, 'user-1');
       expect(profile.displayName, 'Ada');
       expect(profile.whatsapp, '+33612345678');
+      expect(profile.statusText, 'In a call · back at 14:00');
+      expect(profile.hasStatus, isTrue);
       expect(profile.lastSeenAt, DateTime.utc(2026, 7, 11, 9, 30));
       expect(profile.toDb(), db);
     });
 
-    test('tolerates a pre-0028 row (columns absent) and null heartbeat',
+    test('tolerates a pre-0028/0029 row (columns absent) and null heartbeat',
         () {
       final profile = Profile.fromDb(const {
         'id': 'user-2',
@@ -32,6 +37,8 @@ void main() {
 
       expect(profile.whatsapp, '');
       expect(profile.sharesWhatsapp, isFalse);
+      expect(profile.statusText, '');
+      expect(profile.hasStatus, isFalse);
       expect(profile.lastSeenAt, isNull);
       expect(profile.toDb()['last_seen_at'], isNull);
     });
@@ -70,6 +77,49 @@ void main() {
       expect(normalizeWhatsapp(''), '');
       expect(normalizeWhatsapp('   '), '');
       expect(normalizeWhatsapp('none'), '');
+    });
+  });
+
+  group('normalizeStatusText (#231)', () {
+    test('pins the 40-char cap the editor, normalizer and 0029 check share',
+        () {
+      expect(StatusTextRules.maxLength, 40);
+    });
+
+    test('trims surrounding whitespace', () {
+      expect(
+        normalizeStatusText('  In a call · back at 14:00  '),
+        'In a call · back at 14:00',
+      );
+    });
+
+    test('hard-caps over-long input at exactly maxLength', () {
+      final over = 'x' * (StatusTextRules.maxLength + 15);
+      final capped = normalizeStatusText(over);
+
+      expect(capped.length, StatusTextRules.maxLength);
+      expect(capped, 'x' * StatusTextRules.maxLength);
+      // At or under the cap passes through untouched.
+      final exact = 'y' * StatusTextRules.maxLength;
+      expect(normalizeStatusText(exact), exact);
+    });
+
+    test('caps by code points (Postgres char_length semantics), not '
+        'UTF-16 units', () {
+      // 25 astral-plane emoji = 25 code points but 50 UTF-16 units; the
+      // 0029 check counts 25, so nothing may be cut off.
+      final emoji = '\u{1F600}' * 25;
+      expect(normalizeStatusText(emoji), emoji);
+      // 45 of them exceed the cap by code points → exactly 40 survive.
+      expect(
+        normalizeStatusText('\u{1F600}' * 45),
+        '\u{1F600}' * StatusTextRules.maxLength,
+      );
+    });
+
+    test('blank input normalizes to empty (clears)', () {
+      expect(normalizeStatusText(''), '');
+      expect(normalizeStatusText('   '), '');
     });
   });
 }

@@ -52,6 +52,8 @@ class _WorkspaceSettingsScreenState
   final _wero = TextEditingController();
   final _lydia = TextEditingController();
   final _wise = TextEditingController();
+  // #231 — the community's WhatsApp group invite link (directory, #232).
+  final _whatsappGroup = TextEditingController();
   String? _countryCode;
   bool _busy = false;
 
@@ -69,6 +71,7 @@ class _WorkspaceSettingsScreenState
     _wero.dispose();
     _lydia.dispose();
     _wise.dispose();
+    _whatsappGroup.dispose();
     super.dispose();
   }
 
@@ -109,6 +112,12 @@ class _WorkspaceSettingsScreenState
           lydia: _lydia.text,
           wise: _wise.text,
         ),
+      );
+      // #231 — the WhatsApp group link rides the same Save through its
+      // own setter (setPaymentInstructions shape); '' clears it.
+      await repository.setWhatsappGroup(
+        workspaceId,
+        _whatsappGroup.text.trim(),
       );
       // Every money surface watches the workspace chain — invalidating it
       // re-renders all amounts in the new currency immediately.
@@ -401,6 +410,7 @@ class _WorkspaceSettingsScreenState
       _wero.text = instructions.wero;
       _lydia.text = instructions.lydia;
       _wise.text = instructions.wise;
+      _whatsappGroup.text = workspace.whatsappGroup;
     }
     return Scaffold(
       appBar: AppBar(
@@ -545,6 +555,43 @@ class _WorkspaceSettingsScreenState
                       labelText: l10n?.paymentInstructionsReferenceLabel ??
                           'Payment reference hint',
                     ),
+                  ),
+                  const SizedBox(height: 24),
+                  // #231 — the community's WhatsApp group. Own small
+                  // section (mirrors the payment-instructions block);
+                  // the link is shown to members in the directory (#232).
+                  Text(
+                    l10n?.workspaceWhatsappGroupTitle ?? 'WhatsApp group',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    l10n?.workspaceWhatsappGroupHelper ??
+                        'Shown to members so they can join the '
+                            'community\'s WhatsApp group. Paste the '
+                            'group\'s invite link '
+                            '(https://chat.whatsapp.com/…). Leave empty '
+                            'to show nothing.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    key: const Key('workspaceSettingsWhatsappGroup'),
+                    controller: _whatsappGroup,
+                    enabled: !_busy,
+                    keyboardType: TextInputType.url,
+                    decoration: InputDecoration(
+                      labelText: l10n?.workspaceWhatsappGroupLabel ??
+                          'WhatsApp group link',
+                    ),
+                    // Same prefix check as the 0029 column constraint
+                    // (WhatsappGroupRules cross-pins both); empty is
+                    // valid and clears the link.
+                    validator: (value) =>
+                        WhatsappGroupRules.isValid(value?.trim() ?? '')
+                            ? null
+                            : (l10n?.workspaceWhatsappGroupInvalid ??
+                                'Must be a chat.whatsapp.com invite link'),
                   ),
                   const SizedBox(height: 24),
                   FilledButton(

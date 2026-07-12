@@ -46,6 +46,13 @@ class FakeProfileRepository implements ProfileRepository {
   }
 
   @override
+  Future<void> updateStatusText(String statusText) async {
+    if (failing) throw StateError('updateStatusText failing (test)');
+    final mine = _mine ?? Profile(id: myUserId);
+    _replaceMine(mine.copyWith(statusText: statusText));
+  }
+
+  @override
   Future<void> touchLastSeen() async {
     if (failing) throw StateError('touchLastSeen failing (test)');
     touchCount += 1;

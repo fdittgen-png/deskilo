@@ -2024,6 +2024,48 @@ abstract class AppLocalizations {
   /// **'Could not save the WhatsApp number'**
   String get whatsappSaveFailed;
 
+  /// Settings tile and dialog title of the self-set status line on my profile (#231)
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get profileStatusTitle;
+
+  /// Settings tile subtitle when no status line is set
+  ///
+  /// In en, this message translates to:
+  /// **'No status'**
+  String get profileStatusNone;
+
+  /// Label of the status-line input (max 40 characters)
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get profileStatusFieldLabel;
+
+  /// Example status line in the input; localized to a plausible local example
+  ///
+  /// In en, this message translates to:
+  /// **'In a call · back at 14:00'**
+  String get profileStatusHint;
+
+  /// Helper text under the status input explaining visibility and how to clear
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. Visible to members of your workspaces in the member directory. Leave empty to clear it.'**
+  String get profileStatusHelper;
+
+  /// Success snackbar after saving or clearing the status line
+  ///
+  /// In en, this message translates to:
+  /// **'Status saved'**
+  String get profileStatusSaved;
+
+  /// Error snackbar when saving the status line fails
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the status'**
+  String get profileStatusSaveFailed;
+
   /// Reserve hub view segment showing the selected day's per-seat timeline (#208)
   ///
   /// In en, this message translates to:
@@ -2503,6 +2545,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Copied to clipboard.'**
   String get paymentInstructionsValueCopied;
+
+  /// Section title of the WhatsApp-group block on the workspace settings screen (#231). WhatsApp is a brand name.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp group'**
+  String get workspaceWhatsappGroupTitle;
+
+  /// Helper under the WhatsApp-group section of the workspace settings screen (#231); the chat.whatsapp.com URL is a fixed technical shape.
+  ///
+  /// In en, this message translates to:
+  /// **'Shown to members so they can join the community\'s WhatsApp group. Paste the group\'s invite link (https://chat.whatsapp.com/…). Leave empty to show nothing.'**
+  String get workspaceWhatsappGroupHelper;
+
+  /// Label of the WhatsApp-group invite-link field in the workspace settings (#231).
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp group link'**
+  String get workspaceWhatsappGroupLabel;
+
+  /// Validation error when the entered group link does not start with https://chat.whatsapp.com/ (#231).
+  ///
+  /// In en, this message translates to:
+  /// **'Must be a chat.whatsapp.com invite link'**
+  String get workspaceWhatsappGroupInvalid;
 
   /// Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)
   ///

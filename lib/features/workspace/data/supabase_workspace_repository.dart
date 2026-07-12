@@ -71,6 +71,16 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setWhatsappGroup(String workspaceId, String link) async {
+    // Direct row update like setPaymentInstructions — workspaces_update
+    // RLS restricts it to owners, and the 0029 column check re-validates
+    // the chat.whatsapp.com prefix.
+    await _client
+        .from('workspaces')
+        .update({'whatsapp_group': link.trim()}).eq('id', workspaceId);
+  }
+
+  @override
   Future<Member?> fetchMyMember(String workspaceId) async {
     final userId = _client.auth.currentUser?.id;
     if (userId == null) return null;
@@ -120,6 +130,7 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
             row['feature_flags'] as Map<String, dynamic>? ?? const {},
         paymentInstructions:
             row['payment_instructions'] as Map<String, dynamic>? ?? const {},
+        whatsappGroup: row['whatsapp_group'] as String? ?? '',
       );
 
   @override

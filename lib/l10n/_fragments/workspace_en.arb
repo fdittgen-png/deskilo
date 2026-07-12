@@ -133,5 +133,21 @@
   "paymentInstructionsValueCopied": "Copied to clipboard.",
   "@paymentInstructionsValueCopied": {
     "description": "Snackbar after tapping a Wero/Lydia/Wise row copied its value to the clipboard (#192)."
+  },
+  "workspaceWhatsappGroupTitle": "WhatsApp group",
+  "@workspaceWhatsappGroupTitle": {
+    "description": "Section title of the WhatsApp-group block on the workspace settings screen (#231). WhatsApp is a brand name."
+  },
+  "workspaceWhatsappGroupHelper": "Shown to members so they can join the community's WhatsApp group. Paste the group's invite link (https://chat.whatsapp.com/…). Leave empty to show nothing.",
+  "@workspaceWhatsappGroupHelper": {
+    "description": "Helper under the WhatsApp-group section of the workspace settings screen (#231); the chat.whatsapp.com URL is a fixed technical shape."
+  },
+  "workspaceWhatsappGroupLabel": "WhatsApp group link",
+  "@workspaceWhatsappGroupLabel": {
+    "description": "Label of the WhatsApp-group invite-link field in the workspace settings (#231)."
+  },
+  "workspaceWhatsappGroupInvalid": "Must be a chat.whatsapp.com invite link",
+  "@workspaceWhatsappGroupInvalid": {
+    "description": "Validation error when the entered group link does not start with https://chat.whatsapp.com/ (#231)."
   }
 }

@@ -6,5 +6,12 @@
   "whatsappHint": "+34 612 34 56 78",
   "whatsappHelper": "Opcional. Visible para los miembros de tus espacios para que puedan contactarte por WhatsApp. Déjalo vacío para dejar de compartirlo.",
   "whatsappSaved": "Número de WhatsApp guardado",
-  "whatsappSaveFailed": "No se pudo guardar el número de WhatsApp"
+  "whatsappSaveFailed": "No se pudo guardar el número de WhatsApp",
+  "profileStatusTitle": "Estado",
+  "profileStatusNone": "Sin estado",
+  "profileStatusFieldLabel": "Estado",
+  "profileStatusHint": "En una llamada · vuelvo a las 14:00",
+  "profileStatusHelper": "Opcional. Visible para los miembros de tus espacios en el directorio de miembros. Déjalo vacío para borrarlo.",
+  "profileStatusSaved": "Estado guardado",
+  "profileStatusSaveFailed": "No se pudo guardar el estado"
 }

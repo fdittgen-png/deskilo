@@ -39,6 +39,12 @@ abstract class WorkspaceRepository {
     PaymentInstructions instructions,
   );
 
+  /// Owner-only (workspaces_update RLS): set the community's WhatsApp
+  /// group invite link (#231) — trimmed, '' clears it. Must satisfy
+  /// [WhatsappGroupRules.isValid]; the 0029 column check re-validates
+  /// the chat.whatsapp.com prefix server-side.
+  Future<void> setWhatsappGroup(String workspaceId, String link);
+
   /// The signed-in user's membership in [workspaceId], or null.
   Future<Member?> fetchMyMember(String workspaceId);
 

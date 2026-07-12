@@ -1473,6 +1473,34 @@
   "@whatsappSaveFailed": {
     "description": "Error snackbar when saving the WhatsApp number fails"
   },
+  "profileStatusTitle": "Status",
+  "@profileStatusTitle": {
+    "description": "Settings tile and dialog title of the self-set status line on my profile (#231)"
+  },
+  "profileStatusNone": "No status",
+  "@profileStatusNone": {
+    "description": "Settings tile subtitle when no status line is set"
+  },
+  "profileStatusFieldLabel": "Status",
+  "@profileStatusFieldLabel": {
+    "description": "Label of the status-line input (max 40 characters)"
+  },
+  "profileStatusHint": "In a call · back at 14:00",
+  "@profileStatusHint": {
+    "description": "Example status line in the input; localized to a plausible local example"
+  },
+  "profileStatusHelper": "Optional. Visible to members of your workspaces in the member directory. Leave empty to clear it.",
+  "@profileStatusHelper": {
+    "description": "Helper text under the status input explaining visibility and how to clear"
+  },
+  "profileStatusSaved": "Status saved",
+  "@profileStatusSaved": {
+    "description": "Success snackbar after saving or clearing the status line"
+  },
+  "profileStatusSaveFailed": "Could not save the status",
+  "@profileStatusSaveFailed": {
+    "description": "Error snackbar when saving the status line fails"
+  },
   "reserveDayView": "Day",
   "@reserveDayView": {
     "description": "Reserve hub view segment showing the selected day's per-seat timeline (#208)"
@@ -1762,6 +1790,22 @@
   "paymentInstructionsValueCopied": "Copied to clipboard.",
   "@paymentInstructionsValueCopied": {
     "description": "Snackbar after tapping a Wero/Lydia/Wise row copied its value to the clipboard (#192)."
+  },
+  "workspaceWhatsappGroupTitle": "WhatsApp group",
+  "@workspaceWhatsappGroupTitle": {
+    "description": "Section title of the WhatsApp-group block on the workspace settings screen (#231). WhatsApp is a brand name."
+  },
+  "workspaceWhatsappGroupHelper": "Shown to members so they can join the community's WhatsApp group. Paste the group's invite link (https://chat.whatsapp.com/…). Leave empty to show nothing.",
+  "@workspaceWhatsappGroupHelper": {
+    "description": "Helper under the WhatsApp-group section of the workspace settings screen (#231); the chat.whatsapp.com URL is a fixed technical shape."
+  },
+  "workspaceWhatsappGroupLabel": "WhatsApp group link",
+  "@workspaceWhatsappGroupLabel": {
+    "description": "Label of the WhatsApp-group invite-link field in the workspace settings (#231)."
+  },
+  "workspaceWhatsappGroupInvalid": "Must be a chat.whatsapp.com invite link",
+  "@workspaceWhatsappGroupInvalid": {
+    "description": "Validation error when the entered group link does not start with https://chat.whatsapp.com/ (#231)."
   },
   "workspaceXmlExport": "Export workspace (XML)",
   "@workspaceXmlExport": {
