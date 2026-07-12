@@ -5,8 +5,10 @@
 // chips (half-day Morning/Afternoon/Full day per #201, from→to clock
 // chips otherwise), and the Plan · Day · Week views. Plan mirrors the
 // live-plan canvas for the selected window and books free seats via the
-// shared BookingSheet (#206); Day/Week reuse DayTimeline in everyone
-// mode; closed days (#186) gate booking with the banner.
+// shared BookingSheet (#206); Day reuses DayTimeline in everyone mode;
+// Week is the seat × day occupancy grid of the selected day's ISO week
+// (#236) with AM/PM half-slots and tappable day headers; closed days
+// (#186) gate booking with the banner.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/theme/seat_state_colors.dart';
 import 'package:deskilo/features/calendar/presentation/widgets/day_timeline.dart';
@@ -15,6 +17,7 @@ import 'package:deskilo/features/plan/presentation/widgets/floor_plan_painter.da
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/screens/reserve_screen.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
+import 'package:deskilo/features/reservations/presentation/widgets/week_grid.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,10 +46,12 @@ Future<FakeReservationRepository> pumpHub(
   BookingGranularity? granularity,
   List<int> openWeekdays = const [1, 2, 3, 4, 5, 6, 7],
   bool twoLevels = false,
+  FakeReservationRepository? repo,
 }) async {
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   if (twoLevels) addSecondLevel(plans);
-  final reservations = FakeReservationRepository()..reservations.addAll(seed);
+  final reservations = (repo ?? FakeReservationRepository())
+    ..reservations.addAll(seed);
   final workspace = FakeWorkspaceRepository.withWorkspace()
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
     ..openWeekdays['ws-1'] = openWeekdays;
@@ -94,6 +99,53 @@ DateTime get _today {
   return DateTime(now.year, now.month, now.day);
 }
 
+/// Day [index] (0 = Monday … 6 = Sunday) of today's ISO week — the
+/// columns the Week grid shows when the hub opens.
+DateTime _weekDay(int index) {
+  final monday = WeekGrid.weekStartOf(_today);
+  return DateTime(monday.year, monday.month, monday.day + index);
+}
+
+/// Fill color of one half-slot cell (null = empty outline slot).
+Color? _cellFill(WidgetTester tester, Key key) {
+  final container = tester.widget<Container>(find.byKey(key));
+  return (container.decoration as BoxDecoration?)?.color;
+}
+
+/// Theme brightness the grid renders under (drives SeatStateColors.of).
+Brightness _gridBrightness(WidgetTester tester) => Theme.of(
+      tester.element(find.byKey(const ValueKey('reserve-week-grid'))),
+    ).brightness;
+
+/// Whether [day]'s ISO week straddles a month boundary.
+bool _weekStraddlesMonth(DateTime day) {
+  final monday = WeekGrid.weekStartOf(day);
+  final sunday = DateTime(monday.year, monday.month, monday.day + 6);
+  return monday.month != sunday.month;
+}
+
+/// [FakeReservationRepository] logging every month-shaped fetch window
+/// (first-of-month → first-of-next-month) — asserts that the Week grid
+/// watches BOTH month providers when its week straddles a boundary.
+class _LoggingReservationRepository extends FakeReservationRepository {
+  final monthFetches = <DateTime>[];
+
+  @override
+  Future<List<Reservation>> fetchWindow(
+    String workspaceId, {
+    required DateTime from,
+    required DateTime to,
+  }) {
+    if (from.day == 1 &&
+        from.hour == 0 &&
+        from.minute == 0 &&
+        to == DateTime(from.year, from.month + 1, 1)) {
+      monthFetches.add(from);
+    }
+    return super.fetchWindow(workspaceId, from: from, to: to);
+  }
+}
+
 /// A reservation on the seeded seat covering [day] [startHour]–[endHour].
 Reservation reservationOn(
   DateTime day, {
@@ -128,6 +180,18 @@ void main() {
     expect(ReserveHubMetrics.defaultStay, const Duration(hours: 4));
     expect(ReserveHubMetrics.lastSlotHour, 23);
     expect(ReserveHubMetrics.lastSlotMinute, 45);
+  });
+
+  test('week grid metrics are pinned (contract of #236)', () {
+    expect(WeekGridMetrics.daysPerWeek, 7);
+    expect(WeekGridMetrics.leadingWidth, 112.0);
+    expect(WeekGridMetrics.headerHeight, 40.0);
+    expect(WeekGridMetrics.rowHeight, 36.0);
+    expect(WeekGridMetrics.groupHeaderRowHeight, 28.0);
+    expect(WeekGridMetrics.levelHeaderRowHeight, 32.0);
+    expect(WeekGridMetrics.minDayWidth, 44.0);
+    expect(WeekGridMetrics.cellInset, 3.0);
+    expect(WeekGridMetrics.halfSlotGap, 2.0);
   });
 
   testWidgets(
@@ -276,77 +340,273 @@ void main() {
   });
 
   testWidgets(
-      'Week view: a swipe moves the selected day pill (two-way sync) and '
-      "tomorrow's page shows tomorrow's reservation; a pill tap moves the "
-      'pager', (tester) async {
-    final today = _today;
-    final tomorrow = DateTime(today.year, today.month, today.day + 1);
-    final later = DateTime(today.year, today.month, today.day + 2);
+      'Week view is the seat × day grid (#236): seven tappable day headers '
+      "Mon–Sun of the selected day's ISO week, a half-slot pair per day on "
+      'the seat row, and no pager', (tester) async {
+    await pumpHub(tester);
+
+    await tester.tap(find.text('Week'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('reserve-week-grid')), findsOneWidget);
+    expect(find.byKey(const ValueKey('reserve-week-pager')), findsNothing);
+    expect(find.byType(DayTimeline), findsNothing);
+
+    expect(_weekDay(0).weekday, DateTime.monday);
+    expect(_weekDay(6).weekday, DateTime.sunday);
+    for (var i = 0; i < 7; i++) {
+      expect(find.byKey(WeekGrid.dayHeaderKey(_weekDay(i))), findsOneWidget);
+      expect(
+        find.byKey(WeekGrid.cellKey('seat-4', _weekDay(i), morning: true)),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(WeekGrid.cellKey('seat-4', _weekDay(i), morning: false)),
+        findsOneWidget,
+      );
+    }
+  });
+
+  testWidgets(
+      'half-slot occupancy: a 01:15–05:15 booking of mine colors that '
+      "day's AM half in the mine tone and leaves PM an empty outline",
+      (tester) async {
+    // Tuesday of the current week — past days still render occupancy.
+    final tuesday = _weekDay(1);
     await pumpHub(
       tester,
       seed: [
-        reservationOn(tomorrow, id: 'res-tmrw'),
-        reservationOn(later, id: 'res-later', startHour: 14, endHour: 16),
+        Reservation(
+          id: 'res-am',
+          workspaceId: 'ws-1',
+          seatId: 'seat-4',
+          memberId: 'member-1',
+          startsAt: DateTime(tuesday.year, tuesday.month, tuesday.day, 1, 15),
+          endsAt: DateTime(tuesday.year, tuesday.month, tuesday.day, 5, 15),
+          status: ReservationStatus.reserved,
+        ),
       ],
     );
 
     await tester.tap(find.text('Week'));
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('reserve-week-pager')), findsOneWidget);
 
-    // Swipe to tomorrow: pager → strip sync.
-    await tester.drag(
-      find.byKey(const ValueKey('reserve-week-pager')),
-      const Offset(-500, 0),
+    final brightness = _gridBrightness(tester);
+    expect(
+      _cellFill(tester, WeekGrid.cellKey('seat-4', tuesday, morning: true)),
+      SeatStateColors.of(SeatState.mine, brightness: brightness),
     );
-    await tester.pumpAndSettle();
-
-    expect(chipSelected(tester, ReserveScreen.dayPillKey(tomorrow)), isTrue);
-    expect(chipSelected(tester, ReserveScreen.dayPillKey(today)), isFalse);
-    expect(find.byKey(DayTimeline.blockKey('res-tmrw')), findsOneWidget);
-
-    // Tap the day-after-tomorrow pill: strip → pager sync.
-    await tester.tap(find.byKey(ReserveScreen.dayPillKey(later)));
-    await tester.pumpAndSettle();
-
-    expect(chipSelected(tester, ReserveScreen.dayPillKey(later)), isTrue);
-    expect(find.byKey(DayTimeline.blockKey('res-later')), findsOneWidget);
-    expect(find.byKey(DayTimeline.blockKey('res-tmrw')), findsNothing);
+    expect(
+      _cellFill(tester, WeekGrid.cellKey('seat-4', tuesday, morning: false)),
+      isNull,
+    );
   });
 
   testWidgets(
-      'Week view with All levels selected still swipes to the next day '
-      '(#221)', (tester) async {
-    final today = _today;
-    final tomorrow = DateTime(today.year, today.month, today.day + 1);
+      "half-slot occupancy: another member's 15:00–19:00 colors PM only in "
+      'the occupied tone; a full-day booking colors both halves',
+      (tester) async {
+    final wednesday = _weekDay(2);
+    final thursday = _weekDay(3);
     await pumpHub(
       tester,
-      twoLevels: true,
-      seed: [reservationOn(tomorrow, id: 'res-tmrw')],
+      seed: [
+        reservationOn(
+          wednesday,
+          id: 'res-pm',
+          memberId: 'member-2',
+          startHour: 15,
+          endHour: 19,
+        ),
+        Reservation(
+          id: 'res-full',
+          workspaceId: 'ws-1',
+          seatId: 'seat-4',
+          memberId: 'member-2',
+          startsAt: DateTime(thursday.year, thursday.month, thursday.day),
+          endsAt: DateTime(thursday.year, thursday.month, thursday.day + 1),
+          status: ReservationStatus.reserved,
+        ),
+      ],
     );
+
+    await tester.tap(find.text('Week'));
+    await tester.pumpAndSettle();
+
+    final brightness = _gridBrightness(tester);
+    final occupied =
+        SeatStateColors.of(SeatState.reserved, brightness: brightness);
+    expect(
+      _cellFill(tester, WeekGrid.cellKey('seat-4', wednesday, morning: true)),
+      isNull,
+    );
+    expect(
+      _cellFill(
+        tester,
+        WeekGrid.cellKey('seat-4', wednesday, morning: false),
+      ),
+      occupied,
+    );
+    expect(
+      _cellFill(tester, WeekGrid.cellKey('seat-4', thursday, morning: true)),
+      occupied,
+    );
+    expect(
+      _cellFill(tester, WeekGrid.cellKey('seat-4', thursday, morning: false)),
+      occupied,
+    );
+  });
+
+  testWidgets(
+      'tapping a day header selects that day AND switches the hub to the '
+      'Day view', (tester) async {
+    await pumpHub(tester);
+
+    await tester.tap(find.text('Week'));
+    await tester.pumpAndSettle();
+
+    // A neighbouring day inside the same ISO week (Sundays step back).
+    final today = _today;
+    final target = today.weekday < DateTime.sunday
+        ? DateTime(today.year, today.month, today.day + 1)
+        : DateTime(today.year, today.month, today.day - 1);
+    await tester.tap(find.byKey(WeekGrid.dayHeaderKey(target)));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('reserve-day-view')), findsOneWidget);
+    expect(find.byKey(const ValueKey('reserve-week-grid')), findsNothing);
+    final timeline = tester.widget<DayTimeline>(find.byType(DayTimeline));
+    expect(DateUtils.isSameDay(timeline.day, target), isTrue);
+    // The strip follows too (only future days have a pill — the strip
+    // starts today).
+    if (!target.isBefore(today)) {
+      expect(chipSelected(tester, ReserveScreen.dayPillKey(target)), isTrue);
+    }
+  });
+
+  testWidgets(
+      'tapping an occupied cell lists that seat/day\'s reservations '
+      '("09:00 – 11:00 · Flo" in everyone mode) with tap-through to my '
+      'detail sheet', (tester) async {
+    final today = _today;
+    await pumpHub(
+      tester,
+      seed: [
+        reservationOn(today, id: 'res-own'),
+        reservationOn(
+          today,
+          id: 'res-ana',
+          memberId: 'member-2',
+          startHour: 12,
+          endHour: 14,
+        ),
+      ],
+    );
+
+    await tester.tap(find.text('Week'));
+    await tester.pumpAndSettle();
+    await tester
+        .tap(find.byKey(WeekGrid.cellKey('seat-4', today, morning: true)));
+    await tester.pumpAndSettle();
+
+    // The whole day's occupants, times + names (everyone mode).
+    expect(find.text('09:00 – 11:00 · Flo'), findsOneWidget);
+    expect(find.text('12:00 – 14:00 · Ana'), findsOneWidget);
+
+    // Tap-through on MY reservation opens the shared detail sheet.
+    await tester.tap(find.byKey(WeekGrid.sheetItemKey('res-own')));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Ground floor · Main room · Window desk · A1'),
+      findsOneWidget,
+    );
+    expect(find.text('Show on plan'), findsOneWidget);
+  });
+
+  testWidgets(
+      "Week view with All levels stacks every level's seat rows under "
+      'level headers (#221 semantics)', (tester) async {
+    await pumpHub(tester, twoLevels: true);
 
     await tester.tap(find.text('Week'));
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(ChoiceChip, 'All levels').first);
     await tester.pumpAndSettle();
 
-    // All-levels mode is live on today's (empty) page.
+    expect(find.byKey(WeekGrid.levelHeaderKey('level-1')), findsOneWidget);
+    expect(find.byKey(WeekGrid.levelHeaderKey('level-9')), findsOneWidget);
+    final monday = _weekDay(0);
     expect(
-      find.text('No reservations on any level for this day.'),
+      find.byKey(WeekGrid.cellKey('seat-4', monday, morning: true)),
       findsOneWidget,
     );
-
-    // The pager still swipes with All selected (like the empty-page swipe
-    // above — a page WITH timeline content owns horizontal drags either
-    // way, all-levels or not).
-    await tester.drag(
-      find.byKey(const ValueKey('reserve-week-pager')),
-      const Offset(-500, 0),
+    expect(
+      find.byKey(WeekGrid.cellKey('seat-9', monday, morning: true)),
+      findsOneWidget,
     );
+  });
+
+  testWidgets(
+      'a week straddling a month boundary fetches BOTH month windows and '
+      'renders the cross-month reservation', (tester) async {
+    // First day from today whose ISO week straddles a month boundary
+    // (always within ~2 months of any run date).
+    var target = _today;
+    while (!_weekStraddlesMonth(target)) {
+      target = DateTime(target.year, target.month, target.day + 1);
+    }
+    final monday = WeekGrid.weekStartOf(target);
+    final sunday = DateTime(monday.year, monday.month, monday.day + 6);
+    // The week day on the OTHER side of the boundary from [target].
+    final crossDay = monday.month == target.month ? sunday : monday;
+    final repo = _LoggingReservationRepository();
+    await pumpHub(
+      tester,
+      repo: repo,
+      seed: [reservationOn(crossDay, id: 'res-cross')],
+    );
+
+    // Steer the hub to [target] via the calendar icon (it may lie beyond
+    // the strip and in a later month).
+    await tester.tap(find.byKey(const ValueKey('reserve-date-button')));
+    await tester.pumpAndSettle();
+    var monthsAhead = (target.year - _today.year) * 12 +
+        target.month -
+        _today.month;
+    while (monthsAhead-- > 0) {
+      await tester.tap(find.descendant(
+        of: find.byType(DatePickerDialog),
+        matching: find.byTooltip('Next month'),
+      ));
+      await tester.pumpAndSettle();
+    }
+    await tester.tap(find.descendant(
+      of: find.byType(DatePickerDialog),
+      matching: find.text('${target.day}'),
+    ));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
 
-    expect(chipSelected(tester, ReserveScreen.dayPillKey(tomorrow)), isTrue);
-    expect(find.byKey(DayTimeline.blockKey('res-tmrw')), findsOneWidget);
+    await tester.tap(find.text('Week'));
+    await tester.pumpAndSettle();
+
+    // Both months around the boundary were fetched (month providers).
+    expect(
+      repo.monthFetches.toSet(),
+      containsAll({
+        DateTime(monday.year, monday.month),
+        DateTime(sunday.year, sunday.month),
+      }),
+    );
+    // And the reservation on the other month's side is drawn.
+    expect(
+      _cellFill(tester, WeekGrid.cellKey('seat-4', crossDay, morning: true)),
+      SeatStateColors.of(
+        SeatState.mine,
+        brightness: _gridBrightness(tester),
+      ),
+    );
   });
 
   testWidgets(
