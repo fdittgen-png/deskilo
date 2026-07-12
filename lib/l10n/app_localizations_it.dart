@@ -402,6 +402,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get directoryWhatsapp => 'Chatta su WhatsApp';
 
   @override
+  String get directoryOpenGroup => 'Apri il gruppo WhatsApp';
+
+  @override
+  String get directoryClose => 'Chiudi';
+
+  @override
   String get editorTitle => 'Editor dello spazio';
 
   @override

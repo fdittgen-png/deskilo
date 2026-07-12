@@ -812,11 +812,23 @@ abstract class AppLocalizations {
   /// **'{days} d'**
   String directoryLastSeenDays(int days);
 
-  /// Tooltip of the wa.me contact button on a directory row (#223 opt-in)
+  /// Tooltip of the wa.me contact button on a directory row (#223 opt-in); also the swipe-right background label and the contact button in the member detail sheet (#232)
   ///
   /// In en, this message translates to:
   /// **'Chat on WhatsApp'**
   String get directoryWhatsapp;
+
+  /// Tile above the directory list opening the owner-configured WhatsApp group invite link (#231/#232); shown to every member, hidden when no link is set
+  ///
+  /// In en, this message translates to:
+  /// **'Open WhatsApp group'**
+  String get directoryOpenGroup;
+
+  /// Dismiss button of the member detail sheet (#232)
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get directoryClose;
 
   /// App-bar title of the owner-only workspace editor
   ///

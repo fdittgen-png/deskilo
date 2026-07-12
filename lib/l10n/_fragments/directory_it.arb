@@ -9,5 +9,7 @@
   "directoryLastSeenMinutes": "{minutes} min",
   "directoryLastSeenHours": "{hours} h",
   "directoryLastSeenDays": "{days} g",
-  "directoryWhatsapp": "Chatta su WhatsApp"
+  "directoryWhatsapp": "Chatta su WhatsApp",
+  "directoryOpenGroup": "Apri il gruppo WhatsApp",
+  "directoryClose": "Chiudi"
 }

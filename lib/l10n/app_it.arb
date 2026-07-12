@@ -119,6 +119,8 @@
   "directoryLastSeenHours": "{hours} h",
   "directoryLastSeenDays": "{days} g",
   "directoryWhatsapp": "Chatta su WhatsApp",
+  "directoryOpenGroup": "Apri il gruppo WhatsApp",
+  "directoryClose": "Chiudi",
   "editorTitle": "Editor dello spazio",
   "editorOpenTooltip": "Modifica spazio",
   "editorAddLevel": "Aggiungi piano",

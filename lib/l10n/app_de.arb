@@ -119,6 +119,8 @@
   "directoryLastSeenHours": "{hours} Std.",
   "directoryLastSeenDays": "{days} T.",
   "directoryWhatsapp": "Auf WhatsApp schreiben",
+  "directoryOpenGroup": "WhatsApp-Gruppe öffnen",
+  "directoryClose": "Schließen",
   "editorTitle": "Workspace-Editor",
   "editorOpenTooltip": "Workspace bearbeiten",
   "editorAddLevel": "Etage hinzufügen",

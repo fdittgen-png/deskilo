@@ -401,6 +401,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get directoryWhatsapp => 'Auf WhatsApp schreiben';
 
   @override
+  String get directoryOpenGroup => 'WhatsApp-Gruppe öffnen';
+
+  @override
+  String get directoryClose => 'Schließen';
+
+  @override
   String get editorTitle => 'Workspace-Editor';
 
   @override

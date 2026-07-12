@@ -551,7 +551,15 @@
   },
   "directoryWhatsapp": "Chat on WhatsApp",
   "@directoryWhatsapp": {
-    "description": "Tooltip of the wa.me contact button on a directory row (#223 opt-in)"
+    "description": "Tooltip of the wa.me contact button on a directory row (#223 opt-in); also the swipe-right background label and the contact button in the member detail sheet (#232)"
+  },
+  "directoryOpenGroup": "Open WhatsApp group",
+  "@directoryOpenGroup": {
+    "description": "Tile above the directory list opening the owner-configured WhatsApp group invite link (#231/#232); shown to every member, hidden when no link is set"
+  },
+  "directoryClose": "Close",
+  "@directoryClose": {
+    "description": "Dismiss button of the member detail sheet (#232)"
   },
   "editorTitle": "Workspace editor",
   "@editorTitle": {
