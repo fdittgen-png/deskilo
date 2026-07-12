@@ -1069,6 +1069,28 @@ class AppLocalizationsIt extends AppLocalizations {
   String get whatsappSaveFailed => 'Impossibile salvare il numero WhatsApp';
 
   @override
+  String get profileStatusTitle => 'Stato';
+
+  @override
+  String get profileStatusNone => 'Nessuno stato';
+
+  @override
+  String get profileStatusFieldLabel => 'Stato';
+
+  @override
+  String get profileStatusHint => 'In chiamata · torno alle 14:00';
+
+  @override
+  String get profileStatusHelper =>
+      'Facoltativo. Visibile ai membri dei tuoi spazi nell\'elenco dei membri. Lascia vuoto per cancellarlo.';
+
+  @override
+  String get profileStatusSaved => 'Stato salvato';
+
+  @override
+  String get profileStatusSaveFailed => 'Impossibile salvare lo stato';
+
+  @override
   String get reserveDayView => 'Giorno';
 
   @override
@@ -1319,6 +1341,20 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get paymentInstructionsValueCopied => 'Copiato negli appunti.';
+
+  @override
+  String get workspaceWhatsappGroupTitle => 'Gruppo WhatsApp';
+
+  @override
+  String get workspaceWhatsappGroupHelper =>
+      'Mostrato ai membri perché possano unirsi al gruppo WhatsApp della community. Incolla il link di invito del gruppo (https://chat.whatsapp.com/…). Lascia vuoto per non mostrare nulla.';
+
+  @override
+  String get workspaceWhatsappGroupLabel => 'Link del gruppo WhatsApp';
+
+  @override
+  String get workspaceWhatsappGroupInvalid =>
+      'Deve essere un link di invito chat.whatsapp.com';
 
   @override
   String get workspaceXmlExport => 'Esporta lo spazio (XML)';

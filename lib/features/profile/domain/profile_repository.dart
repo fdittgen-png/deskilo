@@ -15,6 +15,11 @@ abstract class ProfileRepository {
   /// [normalizeWhatsapp]; '' clears it. Throws [StateError] signed out.
   Future<void> updateWhatsapp(String whatsapp);
 
+  /// Writes my status line (#231), already trimmed + hard-capped by
+  /// [normalizeStatusText]; '' clears it. Throws [StateError] signed
+  /// out.
+  Future<void> updateStatusText(String statusText);
+
   /// Foreground heartbeat: stamps my `last_seen_at` via the self-scoped
   /// `touch_last_seen` RPC (0028).
   Future<void> touchLastSeen();

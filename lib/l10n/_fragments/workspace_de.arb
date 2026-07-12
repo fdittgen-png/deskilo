@@ -46,5 +46,9 @@
   "paymentInstructionsWeroLabel": "Wero-Telefonnummer",
   "paymentInstructionsLydiaLabel": "Lydia-Telefonnummer oder -Nutzername",
   "paymentInstructionsWiseLabel": "Wisetag oder Wise-Zahlungslink",
-  "paymentInstructionsValueCopied": "In die Zwischenablage kopiert."
+  "paymentInstructionsValueCopied": "In die Zwischenablage kopiert.",
+  "workspaceWhatsappGroupTitle": "WhatsApp-Gruppe",
+  "workspaceWhatsappGroupHelper": "Wird Mitgliedern angezeigt, damit sie der WhatsApp-Gruppe der Community beitreten können. Einladungslink der Gruppe einfügen (https://chat.whatsapp.com/…). Leer lassen, um nichts anzuzeigen.",
+  "workspaceWhatsappGroupLabel": "Link zur WhatsApp-Gruppe",
+  "workspaceWhatsappGroupInvalid": "Muss ein chat.whatsapp.com-Einladungslink sein"
 }

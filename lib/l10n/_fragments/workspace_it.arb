@@ -46,5 +46,9 @@
   "paymentInstructionsWeroLabel": "Numero di telefono Wero",
   "paymentInstructionsLydiaLabel": "Numero di telefono o nome utente Lydia",
   "paymentInstructionsWiseLabel": "Wisetag o link di pagamento Wise",
-  "paymentInstructionsValueCopied": "Copiato negli appunti."
+  "paymentInstructionsValueCopied": "Copiato negli appunti.",
+  "workspaceWhatsappGroupTitle": "Gruppo WhatsApp",
+  "workspaceWhatsappGroupHelper": "Mostrato ai membri perché possano unirsi al gruppo WhatsApp della community. Incolla il link di invito del gruppo (https://chat.whatsapp.com/…). Lascia vuoto per non mostrare nulla.",
+  "workspaceWhatsappGroupLabel": "Link del gruppo WhatsApp",
+  "workspaceWhatsappGroupInvalid": "Deve essere un link di invito chat.whatsapp.com"
 }

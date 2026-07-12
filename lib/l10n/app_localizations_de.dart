@@ -1067,6 +1067,29 @@ class AppLocalizationsDe extends AppLocalizations {
       'WhatsApp-Nummer konnte nicht gespeichert werden';
 
   @override
+  String get profileStatusTitle => 'Status';
+
+  @override
+  String get profileStatusNone => 'Kein Status';
+
+  @override
+  String get profileStatusFieldLabel => 'Status';
+
+  @override
+  String get profileStatusHint => 'Im Call · zurück um 14:00';
+
+  @override
+  String get profileStatusHelper =>
+      'Optional. Für Mitglieder deiner Workspaces im Mitgliederverzeichnis sichtbar. Leer lassen, um den Status zu löschen.';
+
+  @override
+  String get profileStatusSaved => 'Status gespeichert';
+
+  @override
+  String get profileStatusSaveFailed =>
+      'Status konnte nicht gespeichert werden';
+
+  @override
   String get reserveDayView => 'Tag';
 
   @override
@@ -1319,6 +1342,20 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get paymentInstructionsValueCopied => 'In die Zwischenablage kopiert.';
+
+  @override
+  String get workspaceWhatsappGroupTitle => 'WhatsApp-Gruppe';
+
+  @override
+  String get workspaceWhatsappGroupHelper =>
+      'Wird Mitgliedern angezeigt, damit sie der WhatsApp-Gruppe der Community beitreten können. Einladungslink der Gruppe einfügen (https://chat.whatsapp.com/…). Leer lassen, um nichts anzuzeigen.';
+
+  @override
+  String get workspaceWhatsappGroupLabel => 'Link zur WhatsApp-Gruppe';
+
+  @override
+  String get workspaceWhatsappGroupInvalid =>
+      'Muss ein chat.whatsapp.com-Einladungslink sein';
 
   @override
   String get workspaceXmlExport => 'Workspace exportieren (XML)';

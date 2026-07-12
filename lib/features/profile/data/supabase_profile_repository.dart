@@ -44,6 +44,22 @@ class SupabaseProfileRepository implements ProfileRepository {
   }
 
   @override
+  Future<void> updateStatusText(String statusText) async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) {
+      throw StateError('cannot update the profile while signed out');
+    }
+    // Direct row update — profiles_update RLS (0002) restricts it to
+    // self, and the 0029 column check re-validates the 40-char cap.
+    // Defensive re-normalization: the cap must hold even for a caller
+    // that skipped normalizeStatusText.
+    await _client
+        .from('profiles')
+        .update({'status_text': normalizeStatusText(statusText)})
+        .eq('id', userId);
+  }
+
+  @override
   Future<void> touchLastSeen() async {
     await _client.rpc<dynamic>('touch_last_seen');
   }

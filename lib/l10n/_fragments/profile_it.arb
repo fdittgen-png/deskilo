@@ -6,5 +6,12 @@
   "whatsappHint": "+39 333 123 4567",
   "whatsappHelper": "Facoltativo. Visibile ai membri dei tuoi spazi per contattarti su WhatsApp. Lascia vuoto per smettere di condividerlo.",
   "whatsappSaved": "Numero WhatsApp salvato",
-  "whatsappSaveFailed": "Impossibile salvare il numero WhatsApp"
+  "whatsappSaveFailed": "Impossibile salvare il numero WhatsApp",
+  "profileStatusTitle": "Stato",
+  "profileStatusNone": "Nessuno stato",
+  "profileStatusFieldLabel": "Stato",
+  "profileStatusHint": "In chiamata · torno alle 14:00",
+  "profileStatusHelper": "Facoltativo. Visibile ai membri dei tuoi spazi nell'elenco dei membri. Lascia vuoto per cancellarlo.",
+  "profileStatusSaved": "Stato salvato",
+  "profileStatusSaveFailed": "Impossibile salvare lo stato"
 }

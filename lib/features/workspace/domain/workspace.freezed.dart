@@ -19,7 +19,10 @@ mixin _$Workspace {
 /// with [resolveEnabledFeatures].
  Map<String, dynamic> get featureFlags;/// Owner-configured payment instructions (#155) as stored — decode
 /// with [PaymentInstructions.fromDb]. Empty = none configured.
- Map<String, dynamic> get paymentInstructions;
+ Map<String, dynamic> get paymentInstructions;/// Owner-set WhatsApp group invite link (#231), shown to members in
+/// the directory (#232); '' = no group configured. Shape-checked
+/// against [WhatsappGroupRules.linkPrefix] (0029 column check).
+ String get whatsappGroup;
 /// Create a copy of Workspace
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,16 +33,16 @@ $WorkspaceCopyWith<Workspace> get copyWith => _$WorkspaceCopyWithImpl<Workspace>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Workspace&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.currencyCode, currencyCode) || other.currencyCode == currencyCode)&&(identical(other.timezone, timezone) || other.timezone == timezone)&&(identical(other.inviteCode, inviteCode) || other.inviteCode == inviteCode)&&const DeepCollectionEquality().equals(other.featureFlags, featureFlags)&&const DeepCollectionEquality().equals(other.paymentInstructions, paymentInstructions));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Workspace&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.currencyCode, currencyCode) || other.currencyCode == currencyCode)&&(identical(other.timezone, timezone) || other.timezone == timezone)&&(identical(other.inviteCode, inviteCode) || other.inviteCode == inviteCode)&&const DeepCollectionEquality().equals(other.featureFlags, featureFlags)&&const DeepCollectionEquality().equals(other.paymentInstructions, paymentInstructions)&&(identical(other.whatsappGroup, whatsappGroup) || other.whatsappGroup == whatsappGroup));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,countryCode,currencyCode,timezone,inviteCode,const DeepCollectionEquality().hash(featureFlags),const DeepCollectionEquality().hash(paymentInstructions));
+int get hashCode => Object.hash(runtimeType,id,name,countryCode,currencyCode,timezone,inviteCode,const DeepCollectionEquality().hash(featureFlags),const DeepCollectionEquality().hash(paymentInstructions),whatsappGroup);
 
 @override
 String toString() {
-  return 'Workspace(id: $id, name: $name, countryCode: $countryCode, currencyCode: $currencyCode, timezone: $timezone, inviteCode: $inviteCode, featureFlags: $featureFlags, paymentInstructions: $paymentInstructions)';
+  return 'Workspace(id: $id, name: $name, countryCode: $countryCode, currencyCode: $currencyCode, timezone: $timezone, inviteCode: $inviteCode, featureFlags: $featureFlags, paymentInstructions: $paymentInstructions, whatsappGroup: $whatsappGroup)';
 }
 
 
@@ -50,7 +53,7 @@ abstract mixin class $WorkspaceCopyWith<$Res>  {
   factory $WorkspaceCopyWith(Workspace value, $Res Function(Workspace) _then) = _$WorkspaceCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String countryCode, String currencyCode, String timezone, String inviteCode, Map<String, dynamic> featureFlags, Map<String, dynamic> paymentInstructions
+ String id, String name, String countryCode, String currencyCode, String timezone, String inviteCode, Map<String, dynamic> featureFlags, Map<String, dynamic> paymentInstructions, String whatsappGroup
 });
 
 
@@ -67,7 +70,7 @@ class _$WorkspaceCopyWithImpl<$Res>
 
 /// Create a copy of Workspace
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? countryCode = null,Object? currencyCode = null,Object? timezone = null,Object? inviteCode = null,Object? featureFlags = null,Object? paymentInstructions = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? countryCode = null,Object? currencyCode = null,Object? timezone = null,Object? inviteCode = null,Object? featureFlags = null,Object? paymentInstructions = null,Object? whatsappGroup = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -77,7 +80,8 @@ as String,timezone: null == timezone ? _self.timezone : timezone // ignore: cast
 as String,inviteCode: null == inviteCode ? _self.inviteCode : inviteCode // ignore: cast_nullable_to_non_nullable
 as String,featureFlags: null == featureFlags ? _self.featureFlags : featureFlags // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>,paymentInstructions: null == paymentInstructions ? _self.paymentInstructions : paymentInstructions // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,
+as Map<String, dynamic>,whatsappGroup: null == whatsappGroup ? _self.whatsappGroup : whatsappGroup // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -159,10 +163,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags,  Map<String, dynamic> paymentInstructions)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags,  Map<String, dynamic> paymentInstructions,  String whatsappGroup)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Workspace() when $default != null:
-return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags,_that.paymentInstructions);case _:
+return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags,_that.paymentInstructions,_that.whatsappGroup);case _:
   return orElse();
 
 }
@@ -180,10 +184,10 @@ return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags,  Map<String, dynamic> paymentInstructions)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags,  Map<String, dynamic> paymentInstructions,  String whatsappGroup)  $default,) {final _that = this;
 switch (_that) {
 case _Workspace():
-return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags,_that.paymentInstructions);}
+return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags,_that.paymentInstructions,_that.whatsappGroup);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -197,10 +201,10 @@ return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags,  Map<String, dynamic> paymentInstructions)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags,  Map<String, dynamic> paymentInstructions,  String whatsappGroup)?  $default,) {final _that = this;
 switch (_that) {
 case _Workspace() when $default != null:
-return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags,_that.paymentInstructions);case _:
+return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags,_that.paymentInstructions,_that.whatsappGroup);case _:
   return null;
 
 }
@@ -211,8 +215,8 @@ return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.t
 /// @nodoc
 
 
-class _Workspace implements Workspace {
-  const _Workspace({required this.id, required this.name, required this.countryCode, required this.currencyCode, required this.timezone, required this.inviteCode, final  Map<String, dynamic> featureFlags = const <String, dynamic>{}, final  Map<String, dynamic> paymentInstructions = const <String, dynamic>{}}): _featureFlags = featureFlags,_paymentInstructions = paymentInstructions;
+class _Workspace extends Workspace {
+  const _Workspace({required this.id, required this.name, required this.countryCode, required this.currencyCode, required this.timezone, required this.inviteCode, final  Map<String, dynamic> featureFlags = const <String, dynamic>{}, final  Map<String, dynamic> paymentInstructions = const <String, dynamic>{}, this.whatsappGroup = ''}): _featureFlags = featureFlags,_paymentInstructions = paymentInstructions,super._();
   
 
 @override final  String id;
@@ -245,6 +249,10 @@ class _Workspace implements Workspace {
   return EqualUnmodifiableMapView(_paymentInstructions);
 }
 
+/// Owner-set WhatsApp group invite link (#231), shown to members in
+/// the directory (#232); '' = no group configured. Shape-checked
+/// against [WhatsappGroupRules.linkPrefix] (0029 column check).
+@override@JsonKey() final  String whatsappGroup;
 
 /// Create a copy of Workspace
 /// with the given fields replaced by the non-null parameter values.
@@ -256,16 +264,16 @@ _$WorkspaceCopyWith<_Workspace> get copyWith => __$WorkspaceCopyWithImpl<_Worksp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Workspace&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.currencyCode, currencyCode) || other.currencyCode == currencyCode)&&(identical(other.timezone, timezone) || other.timezone == timezone)&&(identical(other.inviteCode, inviteCode) || other.inviteCode == inviteCode)&&const DeepCollectionEquality().equals(other._featureFlags, _featureFlags)&&const DeepCollectionEquality().equals(other._paymentInstructions, _paymentInstructions));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Workspace&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.currencyCode, currencyCode) || other.currencyCode == currencyCode)&&(identical(other.timezone, timezone) || other.timezone == timezone)&&(identical(other.inviteCode, inviteCode) || other.inviteCode == inviteCode)&&const DeepCollectionEquality().equals(other._featureFlags, _featureFlags)&&const DeepCollectionEquality().equals(other._paymentInstructions, _paymentInstructions)&&(identical(other.whatsappGroup, whatsappGroup) || other.whatsappGroup == whatsappGroup));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,countryCode,currencyCode,timezone,inviteCode,const DeepCollectionEquality().hash(_featureFlags),const DeepCollectionEquality().hash(_paymentInstructions));
+int get hashCode => Object.hash(runtimeType,id,name,countryCode,currencyCode,timezone,inviteCode,const DeepCollectionEquality().hash(_featureFlags),const DeepCollectionEquality().hash(_paymentInstructions),whatsappGroup);
 
 @override
 String toString() {
-  return 'Workspace(id: $id, name: $name, countryCode: $countryCode, currencyCode: $currencyCode, timezone: $timezone, inviteCode: $inviteCode, featureFlags: $featureFlags, paymentInstructions: $paymentInstructions)';
+  return 'Workspace(id: $id, name: $name, countryCode: $countryCode, currencyCode: $currencyCode, timezone: $timezone, inviteCode: $inviteCode, featureFlags: $featureFlags, paymentInstructions: $paymentInstructions, whatsappGroup: $whatsappGroup)';
 }
 
 
@@ -276,7 +284,7 @@ abstract mixin class _$WorkspaceCopyWith<$Res> implements $WorkspaceCopyWith<$Re
   factory _$WorkspaceCopyWith(_Workspace value, $Res Function(_Workspace) _then) = __$WorkspaceCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String countryCode, String currencyCode, String timezone, String inviteCode, Map<String, dynamic> featureFlags, Map<String, dynamic> paymentInstructions
+ String id, String name, String countryCode, String currencyCode, String timezone, String inviteCode, Map<String, dynamic> featureFlags, Map<String, dynamic> paymentInstructions, String whatsappGroup
 });
 
 
@@ -293,7 +301,7 @@ class __$WorkspaceCopyWithImpl<$Res>
 
 /// Create a copy of Workspace
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? countryCode = null,Object? currencyCode = null,Object? timezone = null,Object? inviteCode = null,Object? featureFlags = null,Object? paymentInstructions = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? countryCode = null,Object? currencyCode = null,Object? timezone = null,Object? inviteCode = null,Object? featureFlags = null,Object? paymentInstructions = null,Object? whatsappGroup = null,}) {
   return _then(_Workspace(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -303,7 +311,8 @@ as String,timezone: null == timezone ? _self.timezone : timezone // ignore: cast
 as String,inviteCode: null == inviteCode ? _self.inviteCode : inviteCode // ignore: cast_nullable_to_non_nullable
 as String,featureFlags: null == featureFlags ? _self._featureFlags : featureFlags // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>,paymentInstructions: null == paymentInstructions ? _self._paymentInstructions : paymentInstructions // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,
+as Map<String, dynamic>,whatsappGroup: null == whatsappGroup ? _self.whatsappGroup : whatsappGroup // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

@@ -1059,6 +1059,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get whatsappSaveFailed => 'Could not save the WhatsApp number';
 
   @override
+  String get profileStatusTitle => 'Status';
+
+  @override
+  String get profileStatusNone => 'No status';
+
+  @override
+  String get profileStatusFieldLabel => 'Status';
+
+  @override
+  String get profileStatusHint => 'In a call · back at 14:00';
+
+  @override
+  String get profileStatusHelper =>
+      'Optional. Visible to members of your workspaces in the member directory. Leave empty to clear it.';
+
+  @override
+  String get profileStatusSaved => 'Status saved';
+
+  @override
+  String get profileStatusSaveFailed => 'Could not save the status';
+
+  @override
   String get reserveDayView => 'Day';
 
   @override
@@ -1308,6 +1330,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paymentInstructionsValueCopied => 'Copied to clipboard.';
+
+  @override
+  String get workspaceWhatsappGroupTitle => 'WhatsApp group';
+
+  @override
+  String get workspaceWhatsappGroupHelper =>
+      'Shown to members so they can join the community\'s WhatsApp group. Paste the group\'s invite link (https://chat.whatsapp.com/…). Leave empty to show nothing.';
+
+  @override
+  String get workspaceWhatsappGroupLabel => 'WhatsApp group link';
+
+  @override
+  String get workspaceWhatsappGroupInvalid =>
+      'Must be a chat.whatsapp.com invite link';
 
   @override
   String get workspaceXmlExport => 'Export workspace (XML)';

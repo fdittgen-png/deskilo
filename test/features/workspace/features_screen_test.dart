@@ -128,6 +128,11 @@ void main() {
 
   testWidgets('settings hides the Services tile when services is disabled',
       (tester) async {
+    // The personal tiles above the admin section keep growing (#223/#231
+    // WhatsApp + Status) — keep every asserted tile mounted.
+    tester.view.physicalSize = const Size(800, 1600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
     await pumpSettings(tester, featureFlags: const {'services': false});
 
     expect(find.text('Services'), findsNothing);

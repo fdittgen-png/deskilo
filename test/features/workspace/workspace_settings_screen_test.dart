@@ -10,9 +10,10 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   WidgetTester tester,
 ) async {
   // The settings form grew past the default 800px test viewport (#155,
-  // three more payment fields in #192); a taller view keeps every field
-  // + Save built without scrolling.
-  tester.view.physicalSize = const Size(800, 3200);
+  // three more payment fields in #192, the WhatsApp-group section in
+  // #231); a taller view keeps every field + Save built without
+  // scrolling.
+  tester.view.physicalSize = const Size(800, 3600);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
@@ -148,6 +149,51 @@ void main() {
     expect(
       workspace.workspaces[0].paymentInstructions['wero'],
       '+49 170 0000000',
+    );
+  });
+
+  testWidgets(
+      'a valid WhatsApp group link rides the same Save through the '
+      'repository (#231)', (tester) async {
+    final workspace = await pumpWorkspaceSettings(tester);
+    await tester.enterText(
+      find.byKey(const Key('workspaceSettingsWhatsappGroup')),
+      'https://chat.whatsapp.com/AbCdEf123456',
+    );
+    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+    await tester.pumpAndSettle();
+
+    expect(
+      workspace.lastWhatsappGroup,
+      'https://chat.whatsapp.com/AbCdEf123456',
+    );
+    // The fake writes it back onto the workspace — the saved link
+    // re-seeds the field on reload.
+    expect(
+      workspace.workspaces[0].whatsappGroup,
+      'https://chat.whatsapp.com/AbCdEf123456',
+    );
+    expect(find.text('Workspace saved.'), findsOneWidget);
+  });
+
+  testWidgets(
+      'a non-chat.whatsapp.com link is rejected client-side and blocks '
+      'the whole save (#231)', (tester) async {
+    final workspace = await pumpWorkspaceSettings(tester);
+    await tester.enterText(
+      find.byKey(const Key('workspaceSettingsWhatsappGroup')),
+      'https://example.com/not-a-group',
+    );
+    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+    await tester.pumpAndSettle();
+
+    // The form validator (same prefix rule as the 0029 check) blocked
+    // the save — nothing was written.
+    expect(workspace.lastWhatsappGroup, isNull);
+    expect(workspace.lastLocaleUpdate, isNull);
+    expect(
+      find.text('Must be a chat.whatsapp.com invite link'),
+      findsOneWidget,
     );
   });
 

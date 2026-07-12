@@ -27,5 +27,33 @@
   "whatsappSaveFailed": "Could not save the WhatsApp number",
   "@whatsappSaveFailed": {
     "description": "Error snackbar when saving the WhatsApp number fails"
+  },
+  "profileStatusTitle": "Status",
+  "@profileStatusTitle": {
+    "description": "Settings tile and dialog title of the self-set status line on my profile (#231)"
+  },
+  "profileStatusNone": "No status",
+  "@profileStatusNone": {
+    "description": "Settings tile subtitle when no status line is set"
+  },
+  "profileStatusFieldLabel": "Status",
+  "@profileStatusFieldLabel": {
+    "description": "Label of the status-line input (max 40 characters)"
+  },
+  "profileStatusHint": "In a call · back at 14:00",
+  "@profileStatusHint": {
+    "description": "Example status line in the input; localized to a plausible local example"
+  },
+  "profileStatusHelper": "Optional. Visible to members of your workspaces in the member directory. Leave empty to clear it.",
+  "@profileStatusHelper": {
+    "description": "Helper text under the status input explaining visibility and how to clear"
+  },
+  "profileStatusSaved": "Status saved",
+  "@profileStatusSaved": {
+    "description": "Success snackbar after saving or clearing the status line"
+  },
+  "profileStatusSaveFailed": "Could not save the status",
+  "@profileStatusSaveFailed": {
+    "description": "Error snackbar when saving the status line fails"
   }
 }
