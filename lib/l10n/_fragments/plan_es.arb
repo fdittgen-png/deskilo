@@ -45,5 +45,9 @@
   "planToLabel": "Hasta",
   "planEndBeforeStart": "El fin debe ser posterior al inicio.",
   "planClosedDay": "Cerrado este día",
-  "planClosedDayError": "El espacio está cerrado ese día."
+  "planClosedDayError": "El espacio está cerrado ese día.",
+  "planMorningChip": "Mañana",
+  "planAfternoonChip": "Tarde",
+  "planFullDayChip": "Día",
+  "planHalfDayError": "Aquí las reservas son por media jornada."
 }

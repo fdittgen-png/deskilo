@@ -45,5 +45,9 @@
   "planToLabel": "Bis",
   "planEndBeforeStart": "Das Ende muss nach dem Beginn liegen.",
   "planClosedDay": "An diesem Tag geschlossen",
-  "planClosedDayError": "Der Workspace ist an diesem Tag geschlossen."
+  "planClosedDayError": "Der Workspace ist an diesem Tag geschlossen.",
+  "planMorningChip": "Vormittag",
+  "planAfternoonChip": "Nachmittag",
+  "planFullDayChip": "Ganzer Tag",
+  "planHalfDayError": "Buchungen erfolgen hier pro halbem Tag."
 }
