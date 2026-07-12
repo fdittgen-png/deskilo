@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/booking_granularity.dart';
 import '../../domain/closure_day.dart';
 import '../../providers/workspace_providers.dart';
 
@@ -51,6 +52,30 @@ class AvailabilityScreen extends ConsumerWidget {
       return;
     }
     ref.invalidate(openWeekdaysProvider);
+  }
+
+  Future<void> _setGranularity(
+    BuildContext context,
+    WidgetRef ref,
+    BookingGranularity? granularity,
+  ) async {
+    if (granularity == null) return;
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    try {
+      await ref
+          .read(workspaceRepositoryProvider)
+          .setBookingGranularity(workspace.id, granularity);
+    } catch (e, st) {
+      debugPrint('set booking granularity failed: $e\n$st');
+      TraceLogger.instance.error('workspace', 'set booking granularity failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      _showGenericError(context, l10n);
+      return;
+    }
+    ref.invalidate(bookingGranularityProvider);
   }
 
   Future<void> _addClosure(BuildContext context, WidgetRef ref) async {
@@ -122,6 +147,7 @@ class AvailabilityScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final locale = Localizations.localeOf(context).toString();
     final weekdaysAsync = ref.watch(openWeekdaysProvider);
+    final granularityAsync = ref.watch(bookingGranularityProvider);
     final closuresAsync = ref.watch(closureDaysProvider);
 
     return Scaffold(
@@ -133,9 +159,10 @@ class AvailabilityScreen extends ConsumerWidget {
         onPressed: () => _addClosure(context, ref),
         child: const Icon(Icons.add),
       ),
-      body: switch ((weekdaysAsync, closuresAsync)) {
+      body: switch ((weekdaysAsync, granularityAsync, closuresAsync)) {
         (
           AsyncData(value: final open),
+          AsyncData(value: final granularity),
           AsyncData(value: final closures),
         ) =>
           ListView(
@@ -169,6 +196,41 @@ class AvailabilityScreen extends ConsumerWidget {
                 ),
               ),
               _SectionHeader(
+                l10n?.availabilityGranularityTitle ?? 'Booking granularity',
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  l10n?.availabilityGranularityDescription ??
+                      'Half days: bookings cover the morning (until 13:00), '
+                          'the afternoon (from 13:00) or the whole day.',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+              RadioGroup<BookingGranularity>(
+                groupValue: granularity,
+                onChanged: (value) => _setGranularity(context, ref, value),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    RadioListTile<BookingGranularity>(
+                      value: BookingGranularity.flexible,
+                      title: Text(
+                        l10n?.availabilityGranularityFlexible ??
+                            'Free time period',
+                      ),
+                    ),
+                    RadioListTile<BookingGranularity>(
+                      value: BookingGranularity.halfDay,
+                      title: Text(
+                        l10n?.availabilityGranularityHalfDay ??
+                            'Half days (morning & afternoon)',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              _SectionHeader(
                 l10n?.availabilityClosureDays ?? 'Closure days',
               ),
               if (closures.isEmpty)
@@ -195,7 +257,10 @@ class AvailabilityScreen extends ConsumerWidget {
               const SizedBox(height: 80), // keep the FAB off the last row
             ],
           ),
-        (AsyncError(), _) || (_, AsyncError()) => Center(
+        (AsyncError(), _, _) ||
+        (_, AsyncError(), _) ||
+        (_, _, AsyncError()) =>
+          Center(
             child: Text(
               l10n?.workspaceGenericError ??
                   'Something went wrong. Please try again.',

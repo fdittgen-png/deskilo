@@ -6,5 +6,9 @@
   "availabilityAddClosure": "Ajouter un jour de fermeture",
   "availabilityClosureReason": "Motif (facultatif)",
   "availabilityLastOpenDay": "Au moins un jour de la semaine doit rester ouvert.",
-  "availabilityNoClosures": "Aucun jour de fermeture."
+  "availabilityNoClosures": "Aucun jour de fermeture.",
+  "availabilityGranularityTitle": "Granularité des réservations",
+  "availabilityGranularityDescription": "Demi-journées : les réservations couvrent le matin (jusqu'à 13 h), l'après-midi (à partir de 13 h) ou la journée entière.",
+  "availabilityGranularityFlexible": "Plage horaire libre",
+  "availabilityGranularityHalfDay": "Demi-journées (matin et après-midi)"
 }

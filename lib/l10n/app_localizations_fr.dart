@@ -107,6 +107,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get availabilityNoClosures => 'Aucun jour de fermeture.';
 
   @override
+  String get availabilityGranularityTitle => 'Granularité des réservations';
+
+  @override
+  String get availabilityGranularityDescription =>
+      'Demi-journées : les réservations couvrent le matin (jusqu\'à 13 h), l\'après-midi (à partir de 13 h) ou la journée entière.';
+
+  @override
+  String get availabilityGranularityFlexible => 'Plage horaire libre';
+
+  @override
+  String get availabilityGranularityHalfDay =>
+      'Demi-journées (matin et après-midi)';
+
+  @override
   String billSubscription(int pct) {
     return 'Abonnement $pct %';
   }

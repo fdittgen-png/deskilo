@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
+import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
@@ -273,6 +274,24 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   @override
   Future<void> setOpenWeekdays(String workspaceId, List<int> weekdays) async {
     openWeekdays[workspaceId] = List.of(weekdays);
+  }
+
+  /// Booking granularity per workspace (#200); flexible when unseeded —
+  /// stored beside [openWeekdays] like the separate booking_rules keys.
+  final Map<String, BookingGranularity> bookingGranularities = {};
+
+  @override
+  Future<BookingGranularity> fetchBookingGranularity(
+    String workspaceId,
+  ) async =>
+      bookingGranularities[workspaceId] ?? BookingGranularity.flexible;
+
+  @override
+  Future<void> setBookingGranularity(
+    String workspaceId,
+    BookingGranularity granularity,
+  ) async {
+    bookingGranularities[workspaceId] = granularity;
   }
 
   /// One-off closure days across workspaces (#127).

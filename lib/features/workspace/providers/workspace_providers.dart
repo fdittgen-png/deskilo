@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/storage/active_workspace_store.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../data/supabase_workspace_repository.dart';
+import '../domain/booking_granularity.dart';
 import '../domain/closure_day.dart';
 import '../domain/member.dart';
 import '../domain/workspace.dart';
@@ -73,6 +74,17 @@ Future<List<int>> openWeekdays(Ref ref) async {
   return ref
       .watch(workspaceRepositoryProvider)
       .fetchOpenWeekdays(workspace.id);
+}
+
+/// Booking-granularity rule of the active workspace (#200); flexible
+/// while no workspace is selected or the key is absent.
+@riverpod
+Future<BookingGranularity> bookingGranularity(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return BookingGranularity.flexible;
+  return ref
+      .watch(workspaceRepositoryProvider)
+      .fetchBookingGranularity(workspace.id);
 }
 
 /// One-off closure days of the active workspace, ordered by day (#127).

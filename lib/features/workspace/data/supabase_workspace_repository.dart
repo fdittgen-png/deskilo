@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../domain/booking_granularity.dart';
 import '../domain/closure_day.dart';
 import '../domain/member.dart';
 import '../domain/payment_instructions.dart';
@@ -201,6 +202,42 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
     final rules = <String, dynamic>{
       ...?row['booking_rules'] as Map<String, dynamic>?,
       'open_weekdays': weekdays,
+    };
+    await _client
+        .from('workspaces')
+        .update({'booking_rules': rules}).eq('id', workspaceId);
+  }
+
+  @override
+  Future<BookingGranularity> fetchBookingGranularity(
+    String workspaceId,
+  ) async {
+    final row = await _client
+        .from('workspaces')
+        .select('booking_rules')
+        .eq('id', workspaceId)
+        .single();
+    final rules = row['booking_rules'] as Map<String, dynamic>? ?? const {};
+    return BookingGranularity.fromWire(
+      rules[BookingRulesKeys.granularity] as String?,
+    );
+  }
+
+  @override
+  Future<void> setBookingGranularity(
+    String workspaceId,
+    BookingGranularity granularity,
+  ) async {
+    // booking_rules is one jsonb column; merge client-side so the other
+    // keys (open_weekdays, horizon, durations, …) survive the write.
+    final row = await _client
+        .from('workspaces')
+        .select('booking_rules')
+        .eq('id', workspaceId)
+        .single();
+    final rules = <String, dynamic>{
+      ...?row['booking_rules'] as Map<String, dynamic>?,
+      BookingRulesKeys.granularity: granularity.wireName,
     };
     await _client
         .from('workspaces')

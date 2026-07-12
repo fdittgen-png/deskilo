@@ -107,6 +107,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get availabilityNoClosures => 'No hay días de cierre.';
 
   @override
+  String get availabilityGranularityTitle => 'Granularidad de las reservas';
+
+  @override
+  String get availabilityGranularityDescription =>
+      'Medios días: las reservas cubren la mañana (hasta las 13:00), la tarde (desde las 13:00) o el día completo.';
+
+  @override
+  String get availabilityGranularityFlexible => 'Franja horaria libre';
+
+  @override
+  String get availabilityGranularityHalfDay => 'Medios días (mañana y tarde)';
+
+  @override
   String billSubscription(int pct) {
     return 'Suscripción $pct %';
   }

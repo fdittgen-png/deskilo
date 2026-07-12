@@ -106,6 +106,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get availabilityNoClosures => 'No closure days.';
 
   @override
+  String get availabilityGranularityTitle => 'Booking granularity';
+
+  @override
+  String get availabilityGranularityDescription =>
+      'Half days: bookings cover the morning (until 13:00), the afternoon (from 13:00) or the whole day.';
+
+  @override
+  String get availabilityGranularityFlexible => 'Free time period';
+
+  @override
+  String get availabilityGranularityHalfDay =>
+      'Half days (morning & afternoon)';
+
+  @override
   String billSubscription(int pct) {
     return 'Subscription $pct%';
   }

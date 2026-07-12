@@ -6,5 +6,9 @@
   "availabilityAddClosure": "Añadir día de cierre",
   "availabilityClosureReason": "Motivo (opcional)",
   "availabilityLastOpenDay": "Al menos un día de la semana debe permanecer abierto.",
-  "availabilityNoClosures": "No hay días de cierre."
+  "availabilityNoClosures": "No hay días de cierre.",
+  "availabilityGranularityTitle": "Granularidad de las reservas",
+  "availabilityGranularityDescription": "Medios días: las reservas cubren la mañana (hasta las 13:00), la tarde (desde las 13:00) o el día completo.",
+  "availabilityGranularityFlexible": "Franja horaria libre",
+  "availabilityGranularityHalfDay": "Medios días (mañana y tarde)"
 }
