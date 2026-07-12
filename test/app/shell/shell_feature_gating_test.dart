@@ -44,12 +44,6 @@ List<String> tabLabels(WidgetTester tester) => tester
     .map((t) => t.destination.label)
     .toList();
 
-Finder tabLabeled(WidgetTester tester, String label) => find.byWidget(
-      tester
-          .widgetList<ShellBarTab>(find.byType(ShellBarTab))
-          .firstWhere((t) => t.destination.label == label),
-    );
-
 void main() {
   testWidgets('disabled Money and Calendar features drop their tabs',
       (tester) async {
@@ -58,32 +52,33 @@ void main() {
       const {'moneyTab': false, 'calendarTab': false},
     );
 
-    expect(tabLabels(tester), ['Plan', 'Events']);
+    expect(tabLabels(tester), ['Plan', 'Members']);
   });
 
   testWidgets('all features on keeps the four tabs', (tester) async {
     await pumpWithFlags(tester, const {});
 
-    expect(tabLabels(tester), ['Plan', 'Calendar', 'Events', 'Money']);
+    expect(tabLabels(tester), ['Plan', 'Calendar', 'Members', 'Money']);
   });
 
   testWidgets(
-      'with Calendar disabled the pending badge still lands on Events '
-      'and tapping it opens the Events branch', (tester) async {
+      'with Calendar disabled the pending badge still lands on the '
+      'app-bar bell and tapping it opens the events feed (#230)',
+      (tester) async {
     final events = FakeEventRepository()
       ..events.addAll([pendingForMe('e1'), pendingForMe('e2')]);
     await pumpWithFlags(tester, const {'calendarTab': false}, events: events);
 
-    // The badge renders inside the Events destination, not a neighbor.
+    // The badge renders inside the bell action, not a neighbor.
     expect(
       find.descendant(
-        of: tabLabeled(tester, 'Events'),
+        of: find.byTooltip('Events'),
         matching: find.text('2'),
       ),
-      findsWidgets,
+      findsOneWidget,
     );
 
-    await tester.tap(find.text('Events'));
+    await tester.tap(find.byTooltip('Events'));
     await tester.pumpAndSettle();
 
     final appBarTitle = find.descendant(
@@ -93,14 +88,17 @@ void main() {
     expect(appBarTitle, findsOneWidget);
   });
 
-  testWidgets('everything gated off leaves Plan without a bottom bar',
-      (tester) async {
+  testWidgets(
+      'everything gated off keeps Plan and the ungated Members tab — the '
+      'bar stays, the bell goes (#230)', (tester) async {
     await pumpWithFlags(
       tester,
       const {'calendarTab': false, 'eventsTab': false, 'moneyTab': false},
     );
 
-    expect(find.byType(ShellBottomBar), findsNothing);
+    expect(find.byType(ShellBottomBar), findsOneWidget);
+    expect(tabLabels(tester), ['Plan', 'Members']);
+    expect(find.byTooltip('Events'), findsNothing);
     final appBarTitle = find.descendant(
       of: find.byType(AppBar),
       matching: find.text('Plan'),

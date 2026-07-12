@@ -22,9 +22,25 @@ void main() {
     await pumpApp(tester);
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
-    for (final label in ['Plan', 'Calendar', 'Events', 'Money']) {
+    // #230: Members took the events feed's slot; Events lives behind the
+    // app-bar bell.
+    for (final label in ['Plan', 'Calendar', 'Members', 'Money']) {
       expect(find.text(label), findsWidgets, reason: 'missing tab "$label"');
     }
+  });
+
+  testWidgets('tapping Members switches to the directory branch (#230)',
+      (tester) async {
+    await pumpApp(tester);
+
+    await tester.tap(find.text('Members'));
+    await tester.pumpAndSettle();
+
+    final appBarTitle = find.descendant(
+      of: find.byType(AppBar),
+      matching: find.text('Members'),
+    );
+    expect(appBarTitle, findsOneWidget);
   });
 
   testWidgets('tapping a destination switches the branch and app-bar title',

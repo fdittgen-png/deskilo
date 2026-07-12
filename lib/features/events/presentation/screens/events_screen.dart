@@ -24,7 +24,9 @@ import '../../providers/event_providers.dart';
 
 /// The Events space (spec §8.1): pending confirmations pinned on top,
 /// audited feed below. Server RLS scopes workers to their own events and
-/// admins to everything.
+/// admins to everything. Since #230 it is no longer a shell tab but a
+/// pushed route behind the app-bar bell, so it carries its own Scaffold
+/// and app bar.
 class EventsScreen extends ConsumerStatefulWidget {
   const EventsScreen({super.key});
 
@@ -185,7 +187,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       name: ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR',
     );
 
-    return switch (eventsAsync) {
+    final body = switch (eventsAsync) {
       AsyncData(value: final all) => Builder(
           builder: (context) {
             final pendingForMe = all.where((e) {
@@ -410,6 +412,10 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         ),
       _ => const LoadingView(),
     };
+    return Scaffold(
+      appBar: AppBar(title: Text(l10n?.tabEvents ?? 'Events')),
+      body: body,
+    );
   }
 }
 

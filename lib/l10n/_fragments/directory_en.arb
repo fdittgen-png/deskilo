@@ -2,7 +2,7 @@
   "@@locale": "en",
   "directoryTitle": "Members",
   "@directoryTitle": {
-    "description": "Member directory screen title + its settings entry (#224), visible to every member"
+    "description": "Member directory title: bottom-tab label and app-bar title of the Members tab (#230) plus its settings entry (#224), visible to every member. Keep it short — it must fit a bottom-bar tab."
   },
   "directoryEmpty": "No members yet.",
   "@directoryEmpty": {

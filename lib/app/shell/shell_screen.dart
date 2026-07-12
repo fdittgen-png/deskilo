@@ -17,26 +17,25 @@ import '../../l10n/app_localizations.dart';
 import '../router.dart';
 import 'shell_bottom_bar.dart';
 
-/// Events tab icon with the pending-confirmation badge (spec §8.1).
-class _EventsIcon extends ConsumerWidget {
-  const _EventsIcon({required this.selected});
-
-  final bool selected;
+/// App-bar events bell with the pending-confirmation badge (spec §8.1).
+/// #230 moved the events feed off the bottom bar; the badge that used to
+/// decorate the Events tab now decorates this bell on every tab.
+class _EventsBellIcon extends ConsumerWidget {
+  const _EventsBellIcon();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final count = ref.watch(myPendingEventCountProvider).value ?? 0;
-    final icon = Icon(
-      selected ? Icons.notifications : Icons.notifications_outlined,
-    );
+    const icon = Icon(Icons.notifications_outlined);
     if (count == 0) return icon;
     return Badge.count(count: count, child: icon);
   }
 }
 
 /// Bottom-navigation shell hosting the four tab branches
-/// Plan · Calendar · Events · Money (spec §13). Settings is not a tab —
-/// it is the top-right app-bar action, as in Sparkilo.
+/// Plan · Calendar · Members · Money (spec §13, members since #230).
+/// Settings is not a tab — it is the top-right app-bar action, as in
+/// Sparkilo; the events feed sits behind the app-bar bell beside it.
 class ShellScreen extends ConsumerWidget {
   const ShellScreen({required this.navigationShell, super.key});
 
@@ -80,7 +79,7 @@ class ShellScreen extends ConsumerWidget {
     final tabTitles = [
       l10n?.tabPlan ?? 'Plan',
       l10n?.tabCalendar ?? 'Calendar',
-      l10n?.tabEvents ?? 'Events',
+      l10n?.directoryTitle ?? 'Members',
       l10n?.tabMoney ?? 'Money',
     ];
 
@@ -93,7 +92,9 @@ class ShellScreen extends ConsumerWidget {
       ShellBranch.plan,
       if (features.contains(WorkspaceFeature.calendarTab))
         ShellBranch.calendar,
-      if (features.contains(WorkspaceFeature.eventsTab)) ShellBranch.events,
+      // The member directory (#230) is core like Plan — never gated. The
+      // eventsTab feature now gates the app-bar bell instead.
+      ShellBranch.directory,
       if (features.contains(WorkspaceFeature.moneyTab)) ShellBranch.money,
     ];
     final selectedPosition =
@@ -105,10 +106,10 @@ class ShellScreen extends ConsumerWidget {
               selectedIcon: const Icon(Icons.calendar_month),
               label: tabTitles[ShellBranch.calendar],
             ),
-          ShellBranch.events => ShellDestination(
-              icon: const _EventsIcon(selected: false),
-              selectedIcon: const _EventsIcon(selected: true),
-              label: tabTitles[ShellBranch.events],
+          ShellBranch.directory => ShellDestination(
+              icon: const Icon(Icons.people_outline),
+              selectedIcon: const Icon(Icons.people),
+              label: tabTitles[ShellBranch.directory],
             ),
           ShellBranch.money => ShellDestination(
               icon: const Icon(Icons.account_balance_wallet_outlined),
@@ -132,6 +133,15 @@ class ShellScreen extends ConsumerWidget {
               tooltip: l10n?.editorOpenTooltip ?? 'Edit workspace',
               onPressed: () => context.push('/editor'),
             ),
+          // Events bell (#230): pushes the feed that used to be a tab,
+          // carrying its pending-count badge. Hidden entirely when the
+          // workspace gated the events feature off.
+          if (features.contains(WorkspaceFeature.eventsTab))
+            IconButton(
+              icon: const _EventsBellIcon(),
+              tooltip: l10n?.tabEvents ?? 'Events',
+              onPressed: () => context.push('/events'),
+            ),
           IconButton(
             icon: const Icon(Icons.settings_outlined),
             tooltip: l10n?.settingsTitle ?? 'Settings',
@@ -140,9 +150,10 @@ class ShellScreen extends ConsumerWidget {
         ],
       ),
       body: navigationShell,
-      // The bar needs at least two destinations to flank the notch; with
-      // everything gated off only Plan remains and the bar disappears
-      // entirely (pre-#207 behaviour, preserved).
+      // The bar needs at least two destinations to flank the notch. Since
+      // #230 the ungated Members tab guarantees Plan + Members even with
+      // everything gated off; the guard stays as a safety net should a
+      // branch ever become gated again.
       bottomNavigationBar: visibleBranches.length < 2
           ? null
           : ShellBottomBar(

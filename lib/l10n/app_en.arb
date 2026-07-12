@@ -379,7 +379,7 @@
   },
   "tabEvents": "Events",
   "@tabEvents": {
-    "description": "Bottom-navigation label for the events feed tab"
+    "description": "Tooltip of the app-bar events bell and title of the events feed screen it pushes (#230; formerly the bottom-tab label)"
   },
   "tabMoney": "Money",
   "@tabMoney": {
@@ -495,7 +495,7 @@
   },
   "directoryTitle": "Members",
   "@directoryTitle": {
-    "description": "Member directory screen title + its settings entry (#224), visible to every member"
+    "description": "Member directory title: bottom-tab label and app-bar title of the Members tab (#230) plus its settings entry (#224), visible to every member. Keep it short — it must fit a bottom-bar tab."
   },
   "directoryEmpty": "No members yet.",
   "@directoryEmpty": {

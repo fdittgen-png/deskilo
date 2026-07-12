@@ -42,8 +42,9 @@ abstract final class ShellBarMetrics {
 /// One flat tab of the [ShellBottomBar] — icon, label, selected state.
 ///
 /// Mirrors [NavigationDestination] so [ShellScreen] keeps its per-branch
-/// feature gating untouched; icons are widgets so badged icons (Events)
-/// keep working.
+/// feature gating untouched; icons are widgets so badged icons keep
+/// working (the Events tab carried one until #230 moved the feed to the
+/// app-bar bell).
 class ShellDestination {
   final Widget icon;
   final Widget selectedIcon;

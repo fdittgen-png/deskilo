@@ -382,12 +382,16 @@ void main() {
       expect(find.text('Consumed services'), findsNothing);
 
       // Solo owner: the #107 escape hatch lets the reporter validate.
-      await tester.tap(find.text('Events'));
+      // #230: the events feed is pushed by the app-bar bell, no longer a
+      // tab — validate there, then pop back to the shell.
+      await tester.tap(find.byTooltip('Events'));
       await tester.pumpAndSettle();
       expect(find.text('Coffee ×2 — €3.00 for Flo'), findsOneWidget);
       await tester.tap(find.text('Accept'));
       await tester.pumpAndSettle();
       expect(events.events.single.status, EventStatus.confirmed);
+      await tester.pageBack();
+      await tester.pumpAndSettle();
 
       // Confirmation posts the ledger charge (the SQL trigger's job —
       // mirrored here by seeding what it would write).
@@ -403,8 +407,15 @@ void main() {
       );
 
       // Back on Money the accept's invalidation chain has already removed
-      // the open position — the charge is no longer pending.
-      await tester.tap(find.text('Money'));
+      // the open position — the charge is no longer pending. (Popping the
+      // feed landed on the Money tab whose title duplicates the nav label,
+      // so tap the nav destination itself.)
+      await tester.tap(
+        find.descendant(
+          of: find.byType(ShellBottomBar),
+          matching: find.text('Money'),
+        ),
+      );
       await tester.pumpAndSettle();
       expect(find.text('Open positions'), findsNothing);
 

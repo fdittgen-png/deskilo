@@ -34,10 +34,12 @@ import 'shell/shell_screen.dart';
 part 'router.g.dart';
 
 /// Branch indices of the stateful shell (order = bottom-bar order).
+/// #230 swapped the third slot: the member directory took the bottom-bar
+/// place of the events feed, which moved to the app-bar bell.
 abstract final class ShellBranch {
   static const int plan = 0;
   static const int calendar = 1;
-  static const int events = 2;
+  static const int directory = 2;
   static const int money = 3;
 }
 
@@ -120,12 +122,11 @@ GoRouter router(Ref ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/events',
-                redirect: (context, state) =>
-                    featureEnabled(WorkspaceFeature.eventsTab)
-                        ? null
-                        : '/plan',
-                builder: (context, state) => const EventsScreen(),
+                // Member directory (#224, tab since #230): open to EVERY
+                // member and deliberately ungated (core, like Plan) —
+                // unlike /members (owner management).
+                path: '/directory',
+                builder: (context, state) => const DirectoryScreen(),
               ),
             ],
           ),
@@ -164,10 +165,13 @@ GoRouter router(Ref ref) {
         builder: (context, state) => const DeveloperScreen(),
       ),
       GoRoute(
-        // Member directory (#224): open to EVERY member, deliberately no
-        // role gate — unlike /members (owner management) below.
-        path: '/directory',
-        builder: (context, state) => const DirectoryScreen(),
+        // Events feed (#230): moved off the bottom bar — the app-bar bell
+        // pushes it over the shell like /settings. The feature redirect
+        // keeps deep links of gated workspaces safe.
+        path: '/events',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.eventsTab) ? null : '/plan',
+        builder: (context, state) => const EventsScreen(),
       ),
       GoRoute(
         path: '/workspace-code',
