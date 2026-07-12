@@ -14,7 +14,7 @@
   },
   "eventValidatedBy": "Validated by {name} · {when}",
   "@eventValidatedBy": {
-    "description": "Audit-trail row for an accept decision (prefixed by a ✓ in code)",
+    "description": "Audit-trail row for an accept decision",
     "placeholders": {
       "name": {
         "type": "String"
@@ -26,7 +26,7 @@
   },
   "eventRejectedBy": "Declined by {name} · {when}",
   "@eventRejectedBy": {
-    "description": "Audit-trail row for a reject decision (prefixed by a ✗ in code)",
+    "description": "Audit-trail row for a reject decision",
     "placeholders": {
       "name": {
         "type": "String"
