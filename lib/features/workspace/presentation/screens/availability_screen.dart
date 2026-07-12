@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/booking_granularity.dart';
 import '../../domain/closure_day.dart';
@@ -25,13 +27,10 @@ class AvailabilityScreen extends ConsumerWidget {
   }) async {
     final l10n = AppLocalizations.of(context);
     if (!selected && open.length <= 1) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            l10n?.availabilityLastOpenDay ??
-                'At least one weekday must stay open.',
-          ),
-        ),
+      AppSnack.error(
+        context,
+        l10n?.availabilityLastOpenDay ??
+            'At least one weekday must stay open.',
       );
       return;
     }
@@ -132,13 +131,10 @@ class AvailabilityScreen extends ConsumerWidget {
   }
 
   void _showGenericError(BuildContext context, AppLocalizations? l10n) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          l10n?.workspaceGenericError ??
-              'Something went wrong. Please try again.',
-        ),
-      ),
+    AppSnack.error(
+      context,
+      l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
     );
   }
 
@@ -266,7 +262,7 @@ class AvailabilityScreen extends ConsumerWidget {
                   'Something went wrong. Please try again.',
             ),
           ),
-        _ => const Center(child: CircularProgressIndicator()),
+        _ => const LoadingView(),
       },
     );
   }

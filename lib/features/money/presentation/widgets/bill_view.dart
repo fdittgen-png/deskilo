@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../workspace/domain/payment_instructions.dart';
@@ -211,9 +212,7 @@ class _CopyTile extends StatelessWidget {
       onTap: () async {
         await Clipboard.setData(ClipboardData(text: value));
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(copiedMessage)),
-        );
+        AppSnack.success(context, copiedMessage);
       },
     );
   }

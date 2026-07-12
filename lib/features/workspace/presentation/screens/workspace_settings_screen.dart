@@ -11,6 +11,8 @@ import '../../../../core/country/country_catalog.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/share/share_launcher.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
@@ -110,23 +112,19 @@ class _WorkspaceSettingsScreenState
       // re-renders all amounts in the new currency immediately.
       ref.invalidate(myWorkspacesProvider);
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l10n?.workspaceSettingsSaved ?? 'Workspace saved.'),
-        ),
+      AppSnack.success(
+        context,
+        l10n?.workspaceSettingsSaved ?? 'Workspace saved.',
       );
     } catch (e, st) {
       debugPrint('update workspace locale failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'update workspace locale failed',
           error: e, stackTrace: st);
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
-          ),
-        ),
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
       );
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -163,13 +161,10 @@ class _WorkspaceSettingsScreenState
       TraceLogger.instance.error('workspace', 'workspace XML export failed',
           error: e, stackTrace: st);
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
-          ),
-        ),
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
       );
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -198,11 +193,6 @@ class _WorkspaceSettingsScreenState
           l10n?.workspaceXmlErrorInvalidValue ??
               'The file contains an invalid value and cannot be imported.',
       };
-
-  void _showSnack(String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
-  }
 
   /// Owner-only XML import (#165): pick file → parse (typed errors) →
   /// client-side placement validation → preview + destructive confirm →
@@ -234,7 +224,7 @@ class _WorkspaceSettingsScreenState
             'workspace', 'workspace XML import rejected: ${e.detail}',
             error: e, stackTrace: st);
         if (!mounted) return;
-        _showSnack(_xmlErrorMessage(l10n, e.error));
+        AppSnack.error(context, _xmlErrorMessage(l10n, e.error));
         return;
       }
 
@@ -247,9 +237,12 @@ class _WorkspaceSettingsScreenState
             'workspace XML import plan invalid '
             '(${invalid.problem.name}): ${invalid.detail}');
         if (!mounted) return;
-        _showSnack(l10n?.workspaceXmlErrorInvalidPlan ??
-            'The floor plan in the file is invalid: rooms, desks or seats '
-                'overlap or extend outside their parent.');
+        AppSnack.error(
+          context,
+          l10n?.workspaceXmlErrorInvalidPlan ??
+              'The floor plan in the file is invalid: rooms, desks or seats '
+                  'overlap or extend outside their parent.',
+        );
         return;
       }
 
@@ -334,26 +327,35 @@ class _WorkspaceSettingsScreenState
       if (!mounted) return;
       // Re-seed the form so the imported settings show immediately.
       setState(() => _seeded = false);
-      _showSnack(l10n?.workspaceXmlImportSuccess ?? 'Workspace imported.');
+      AppSnack.success(
+        context,
+        l10n?.workspaceXmlImportSuccess ?? 'Workspace imported.',
+      );
     } on PostgrestException catch (e, st) {
       debugPrint('workspace XML import failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'workspace XML import failed',
           error: e, stackTrace: st);
       if (!mounted) return;
-      _showSnack(e.message.contains(kWorkspaceHasReservationsError)
-          ? (l10n?.workspaceXmlImportReservationsError ??
-              'This workspace already has reservations, so its floor plan '
-                  'cannot be replaced. Imports are only possible before '
-                  'the first booking.')
-          : (l10n?.workspaceGenericError ??
-              'Something went wrong. Please try again.'));
+      AppSnack.error(
+        context,
+        e.message.contains(kWorkspaceHasReservationsError)
+            ? (l10n?.workspaceXmlImportReservationsError ??
+                'This workspace already has reservations, so its floor plan '
+                    'cannot be replaced. Imports are only possible before '
+                    'the first booking.')
+            : (l10n?.workspaceGenericError ??
+                'Something went wrong. Please try again.'),
+      );
     } catch (e, st) {
       debugPrint('workspace XML import failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'workspace XML import failed',
           error: e, stackTrace: st);
       if (!mounted) return;
-      _showSnack(l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.');
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -382,7 +384,7 @@ class _WorkspaceSettingsScreenState
         title: Text(l10n?.workspaceSettingsTitle ?? 'Workspace'),
       ),
       body: workspace == null
-          ? const Center(child: CircularProgressIndicator())
+          ? const LoadingView()
           : Form(
               key: _formKey,
               child: ListView(

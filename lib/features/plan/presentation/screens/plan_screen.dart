@@ -10,6 +10,10 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/motion.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../reservations/domain/reservation.dart';
@@ -249,7 +253,11 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     // Closed day (#186): no sheet at all — the server would reject any
     // booking touching it (`assert_workspace_open`, migration 0013).
     if (!_isWorkspaceOpenAt(now)) {
-      _snack(l10n?.planClosedDay ?? 'Closed on this day');
+      AppSnack.info(
+        context,
+        l10n?.planClosedDay ?? 'Closed on this day',
+        replace: true,
+      );
       return;
     }
     final myMemberId = ref.read(myMemberProvider).value?.id;
@@ -294,8 +302,11 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         if (_canManageSeatBlocks) {
           await _blockedSeatSheet(seat);
         } else {
-          _snack(l10n?.planSeatBlocked ??
-              'This seat is blocked for maintenance.');
+          AppSnack.info(
+            context,
+            l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.',
+            replace: true,
+          );
         }
       case SeatState.free:
         await _bookingSheet(plan, seat, reservations, now);
@@ -312,14 +323,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             ? (l10n?.planOccupiedBy(name) ?? 'Occupied by $name')
             : (l10n?.planReservedBy(name) ?? 'Reserved by $name');
         final until = DateFormat.Hm().format(other.endsAt.toLocal());
-        _snack('$template · ${l10n?.planUntil(until) ?? 'until $until'}');
+        AppSnack.info(
+          context,
+          '$template · ${l10n?.planUntil(until) ?? 'until $until'}',
+          replace: true,
+        );
     }
-  }
-
-  void _snack(String message) {
-    ScaffoldMessenger.of(context)
-      ..clearSnackBars()
-      ..showSnackBar(SnackBar(content: Text(message)));
   }
 
   /// Whether the signed-in member may toggle seat maintenance blocks
@@ -342,8 +351,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       TraceLogger.instance
           .error('plan', 'set seat block failed', error: e, stackTrace: st);
       if (!mounted) return;
-      _snack(l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.');
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+        replace: true,
+      );
       return;
     }
     if (!mounted) return;
@@ -394,8 +407,11 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     // Defense in depth (#161): the tap handler never routes blocked seats
     // here, but a stale plan could — the RPCs reject them anyway.
     if (seat.isBlockedAt(start)) {
-      _snack(l10n?.planSeatBlocked ??
-          'This seat is blocked for maintenance.');
+      AppSnack.info(
+        context,
+        l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.',
+        replace: true,
+      );
       return;
     }
     final walkUp = _browse == null;
@@ -478,8 +494,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
               endsAt: choice.end,
             );
         final who = names[choice.forMemberId] ?? '';
-        _snack(l10n?.planBookedForPending(who) ??
-            'Sent to $who for confirmation.');
+        if (!mounted) return;
+        AppSnack.success(
+          context,
+          l10n?.planBookedForPending(who) ?? 'Sent to $who for confirmation.',
+          replace: true,
+        );
       } else if (choice.pattern == null) {
         await ref.read(reservationRepositoryProvider).create(
               workspaceId: workspace.id,
@@ -507,12 +527,16 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       // #186: a closed-day refusal is not "the seat was taken" — every
       // booking path here (walk-up, future reserve, series, book-for-
       // other) shares this catch, so all four get the mapping.
-      _snack(_bookingErrorText(
-        l10n,
-        e,
-        l10n?.planCheckInFailed ??
-            'Could not check in — the seat may have just been taken.',
-      ));
+      AppSnack.error(
+        context,
+        _bookingErrorText(
+          l10n,
+          e,
+          l10n?.planCheckInFailed ??
+              'Could not check in — the seat may have just been taken.',
+        ),
+        replace: true,
+      );
       return;
     }
     invalidateBookingData(ref);
@@ -613,12 +637,16 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       if (!mounted) return;
       // #186: the check-in RPC also asserts the workspace is open
       // (migration 0013) — map its refusal like the booking paths.
-      _snack(_bookingErrorText(
-        l10n,
-        e,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      ));
+      AppSnack.error(
+        context,
+        _bookingErrorText(
+          l10n,
+          e,
+          l10n?.workspaceGenericError ??
+              'Something went wrong. Please try again.',
+        ),
+        replace: true,
+      );
       return;
     }
     invalidateBookingData(ref);
@@ -635,17 +663,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final l10n = AppLocalizations.of(context);
     final levels = ref.watch(levelsProvider).value;
     if (levels == null) {
-      return const Center(child: CircularProgressIndicator());
+      return const LoadingView();
     }
     if (levels.isEmpty) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Text(
-            l10n?.planNoLevels ?? 'The workspace has no floor plan yet.',
-            textAlign: TextAlign.center,
-          ),
-        ),
+      return EmptyState(
+        icon: Icons.map_outlined,
+        title: l10n?.planNoLevels ?? 'The workspace has no floor plan yet.',
       );
     }
 
@@ -654,7 +677,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     // A failed read falls through to the first level instead of spinning.
     final selectedAsync = ref.watch(selectedLevelIdProvider);
     if (selectedAsync.isLoading && !selectedAsync.hasValue) {
-      return const Center(child: CircularProgressIndicator());
+      return const LoadingView();
     }
     final selectedId = selectedAsync.value;
     final level = levels.where((l) => l.id == selectedId).firstOrNull ??
@@ -721,10 +744,21 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             ),
           ),
         Expanded(
-          child: switch (planAsync) {
+          // #209: cross-fade the list/canvas toggle (and the transitions
+          // out of loading/error). Distinct subtree keys make the switcher
+          // treat the two views as different children; the fade stays
+          // OUTSIDE the InteractiveViewer, so pan/zoom is untouched.
+          child: AnimatedSwitcher(
+            duration: AppMotion.viewSwitch,
+            child: switch (planAsync) {
             AsyncData(value: final plan) => _listView
-                ? _seatList(plan, reservations, names, at, dayOpen: dayOpen)
+                ? KeyedSubtree(
+                    key: const ValueKey('plan-list-view'),
+                    child: _seatList(plan, reservations, names, at,
+                        dayOpen: dayOpen),
+                  )
                 : _LivePlanCanvas(
+                    key: const ValueKey('plan-canvas-view'),
                     plan: plan,
                     seatStates: {
                       // Closed day (#186): every seat renders in the
@@ -764,8 +798,9 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                       'Something went wrong. Please try again.',
                 ),
               ),
-            _ => const Center(child: CircularProgressIndicator()),
-          },
+            _ => const LoadingView(),
+            },
+          ),
         ),
       ],
     );
@@ -1064,7 +1099,11 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       picked.minute,
     ));
     if (!end.isAfter(from)) {
-      _snack(l10n?.planEndBeforeStart ?? 'End must be after start.');
+      AppSnack.error(
+        context,
+        l10n?.planEndBeforeStart ?? 'End must be after start.',
+        replace: true,
+      );
       return;
     }
     setState(() {
@@ -1090,14 +1129,9 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final myMemberId = ref.watch(myMemberProvider).value?.id;
 
     if (plan.seats.isEmpty) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Text(
-            l10n?.planNoSeats ?? 'This level has no seats yet.',
-            textAlign: TextAlign.center,
-          ),
-        ),
+      return EmptyState(
+        icon: Icons.event_seat_outlined,
+        title: l10n?.planNoSeats ?? 'This level has no seats yet.',
       );
     }
 
@@ -1233,6 +1267,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
 
 class _LivePlanCanvas extends StatelessWidget {
   const _LivePlanCanvas({
+    super.key,
     required this.plan,
     required this.seatStates,
     required this.seatLabels,

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
@@ -88,13 +90,10 @@ class FeaturesScreen extends ConsumerWidget {
       TraceLogger.instance.error('workspace', 'set feature flags failed',
           error: e, stackTrace: st);
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
-          ),
-        ),
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
       );
       return;
     }
@@ -112,7 +111,7 @@ class FeaturesScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.featuresTitle ?? 'Features')),
       body: workspace == null
-          ? const Center(child: CircularProgressIndicator())
+          ? const LoadingView()
           : ListView(
               children: [
                 for (final entry in featureManifest.values)

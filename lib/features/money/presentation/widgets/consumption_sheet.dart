@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -30,12 +31,9 @@ Future<void> showConsumptionSheet(
   final services = await ref.read(servicesProvider.future);
   if (!context.mounted) return;
   if (services.isEmpty) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          l10n?.consumptionNoServices ?? 'No active services to record.',
-        ),
-      ),
+    AppSnack.info(
+      context,
+      l10n?.consumptionNoServices ?? 'No active services to record.',
     );
     return;
   }
@@ -145,24 +143,18 @@ Future<void> showConsumptionSheet(
     TraceLogger.instance.error('money', 'record service charge failed',
         error: e, stackTrace: st);
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          l10n?.workspaceGenericError ??
-              'Something went wrong. Please try again.',
-        ),
-      ),
+    AppSnack.error(
+      context,
+      l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
     );
     return;
   }
   if (!context.mounted) return;
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(
-        l10n?.consumptionRecorded ??
-            'Consumption recorded — waiting for confirmation.',
-      ),
-    ),
+  AppSnack.success(
+    context,
+    l10n?.consumptionRecorded ??
+        'Consumption recorded — waiting for confirmation.',
   );
   ref.invalidate(eventsProvider);
 }

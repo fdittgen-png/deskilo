@@ -133,8 +133,15 @@ void main() {
     // A booking lands after the calendar cached its month (e.g. on the
     // Plan tab of another device) — the user pulls to refresh.
     repo.reservations.add(todayReservation());
+    // The EmptyState (#209) centers the text; its center can sit outside
+    // the viewport — fling the day list's scrollable itself instead.
     await tester.fling(
-      find.text('No reservations on this day.'),
+      find
+          .descendant(
+            of: find.byType(RefreshIndicator),
+            matching: find.byType(Scrollable),
+          )
+          .first,
       const Offset(0, 300),
       1000,
     );
