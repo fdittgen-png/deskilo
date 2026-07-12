@@ -106,6 +106,77 @@ void main() {
   });
 
   testWidgets(
+      "editing a boundary refreshes the next row's from-label (#194)",
+      (tester) async {
+    await pumpBilling(tester);
+
+    // Raise the first band's upper boundary 25 → 30: the second row's
+    // derived lower boundary must follow immediately, before any save.
+    await tester.enterText(find.widgetWithText(TextFormField, '25'), '30');
+    await tester.pump();
+
+    expect(find.text('from 30%'), findsOneWidget);
+    expect(find.text('from 25%'), findsNothing);
+    expect(find.text('from 0%'), findsOneWidget);
+    expect(find.text('from 50%'), findsOneWidget);
+  });
+
+  testWidgets('removing the first band deletes exactly that range (#194)',
+      (tester) async {
+    final money = await pumpBilling(tester);
+
+    await tester.tap(find.byIcon(Icons.remove_circle_outline).first);
+    await tester.pumpAndSettle();
+
+    // (0,25] is gone; the former second band now starts at 0.
+    expect(find.text('from 0%'), findsOneWidget);
+    expect(find.text('from 50%'), findsOneWidget);
+    expect(find.text('from 25%'), findsNothing);
+    expect(find.widgetWithText(TextFormField, '25'), findsNothing);
+    // The survivors keep their own prices; the removed band's overage 15
+    // vanishes with it.
+    expect(find.widgetWithText(TextFormField, '150'), findsOneWidget);
+    expect(find.widgetWithText(TextFormField, '250'), findsOneWidget);
+    expect(find.widgetWithText(TextFormField, '15'), findsNothing);
+
+    await tester.tap(find.text('Save').first);
+    await tester.pumpAndSettle();
+    expect(money.feeBands, hasLength(2));
+    expect(money.feeBands.first.fromPct, 0);
+    expect(money.feeBands.first.toPct, 50);
+    expect(money.feeBands.first.feeCents, 15000);
+  });
+
+  testWidgets('removing the middle band deletes exactly that range (#194)',
+      (tester) async {
+    await pumpBilling(tester);
+
+    await tester.tap(find.byIcon(Icons.remove_circle_outline).at(1));
+    await tester.pumpAndSettle();
+
+    // (25,50] is gone; the last band now starts at 25.
+    expect(find.text('from 0%'), findsOneWidget);
+    expect(find.text('from 25%'), findsOneWidget);
+    expect(find.text('from 50%'), findsNothing);
+    expect(find.widgetWithText(TextFormField, '50'), findsNothing);
+    // The removed band's prices (fee 150, overage 8) go with it; its
+    // neighbours keep theirs.
+    expect(find.widgetWithText(TextFormField, '150'), findsNothing);
+    expect(find.widgetWithText(TextFormField, '8'), findsNothing);
+    expect(find.widgetWithText(TextFormField, '15'), findsOneWidget);
+    expect(find.widgetWithText(TextFormField, '250'), findsOneWidget);
+  });
+
+  testWidgets('the last band row shows no remove button (#194)',
+      (tester) async {
+    await pumpBilling(tester);
+
+    // Three bands, but only the two non-last rows are removable — the
+    // last one has no minus icon at all instead of a disabled one.
+    expect(find.byIcon(Icons.remove_circle_outline), findsNWidgets(2));
+  });
+
+  testWidgets(
       'level toggles, an added level and allow-custom persist (#128)',
       (tester) async {
     final money = await pumpBilling(tester);

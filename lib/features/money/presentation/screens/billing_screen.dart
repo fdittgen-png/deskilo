@@ -269,7 +269,12 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               decoration: InputDecoration(
                 labelText: l10n?.billingBandTo ?? 'To %',
               ),
-              onChanged: (raw) => draft.toPct = int.tryParse(raw.trim()),
+              // setState so the following rows' derived "from X %" labels
+              // track the boundary immediately (#194). The keyed rows keep
+              // their field edit state: initialValue is only read on the
+              // element's first build.
+              onChanged: (raw) =>
+                  setState(() => draft.toPct = int.tryParse(raw.trim())),
             ),
           ),
           const SizedBox(width: 8),
@@ -296,12 +301,17 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               onChanged: (raw) => draft.overageCents = _parseCents(raw),
             ),
           ),
-          IconButton(
-            icon: const Icon(Icons.remove_circle_outline),
-            tooltip: l10n?.billingRemoveBand ?? 'Remove band',
-            onPressed:
-                _bands.length > 1 && !isLast ? () => _removeBand(draft) : null,
-          ),
+          if (isLast)
+            // The last band always ends at 100% and cannot be removed; hide
+            // the button instead of disabling it (#194) but keep the row
+            // columns aligned with the IconButton's footprint.
+            const SizedBox(width: 48)
+          else
+            IconButton(
+              icon: const Icon(Icons.remove_circle_outline),
+              tooltip: l10n?.billingRemoveBand ?? 'Remove band',
+              onPressed: () => _removeBand(draft),
+            ),
         ],
       ),
     );
