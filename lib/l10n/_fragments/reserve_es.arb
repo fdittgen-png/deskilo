@@ -1,0 +1,8 @@
+{
+  "@@locale": "es",
+  "reserveDayView": "Día",
+  "reserveWeekView": "Semana",
+  "reserveFullDayChip": "Día completo",
+  "reservePickDateTooltip": "Elegir una fecha",
+  "reserveBookingFailed": "No se pudo reservar — puede que el asiento se acabe de ocupar."
+}

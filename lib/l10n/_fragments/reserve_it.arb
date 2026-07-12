@@ -1,0 +1,8 @@
+{
+  "@@locale": "it",
+  "reserveDayView": "Giorno",
+  "reserveWeekView": "Settimana",
+  "reserveFullDayChip": "Giornata intera",
+  "reservePickDateTooltip": "Scegli una data",
+  "reserveBookingFailed": "Prenotazione non riuscita — il posto potrebbe essere appena stato occupato."
+}

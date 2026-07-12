@@ -1,0 +1,8 @@
+{
+  "@@locale": "de",
+  "reserveDayView": "Tag",
+  "reserveWeekView": "Woche",
+  "reserveFullDayChip": "Ganzer Tag",
+  "reservePickDateTooltip": "Datum wählen",
+  "reserveBookingFailed": "Reservieren nicht möglich — der Platz wurde eventuell gerade belegt."
+}

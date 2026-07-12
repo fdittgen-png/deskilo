@@ -998,6 +998,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get planHalfDayError => 'Aquí las reservas son por media jornada.';
 
   @override
+  String get reserveDayView => 'Día';
+
+  @override
+  String get reserveWeekView => 'Semana';
+
+  @override
+  String get reserveFullDayChip => 'Día completo';
+
+  @override
+  String get reservePickDateTooltip => 'Elegir una fecha';
+
+  @override
+  String get reserveBookingFailed =>
+      'No se pudo reservar — puede que el asiento se acabe de ocupar.';
+
+  @override
   String get servicesTitle => 'Servicios';
 
   @override

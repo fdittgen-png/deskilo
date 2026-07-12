@@ -1910,6 +1910,36 @@ abstract class AppLocalizations {
   /// **'Bookings here are per half day.'**
   String get planHalfDayError;
 
+  /// Reserve hub view segment showing the selected day's per-seat timeline (#208)
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get reserveDayView;
+
+  /// Reserve hub view segment paging one day timeline per day, synced with the date strip (#208)
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get reserveWeekView;
+
+  /// Reserve hub window chip selecting the canonical 00:00–24:00 window under half-day granularity (#208)
+  ///
+  /// In en, this message translates to:
+  /// **'Full day'**
+  String get reserveFullDayChip;
+
+  /// Tooltip of the calendar icon at the end of the Reserve hub's date strip, opening a date picker for days beyond the pills (#208)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a date'**
+  String get reservePickDateTooltip;
+
+  /// Snackbar when creating a reservation from the Reserve hub fails for a generic reason (#208)
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reserve — the seat may have just been taken.'**
+  String get reserveBookingFailed;
+
   /// App-bar title of the owner service-catalog editor and its settings tile
   ///
   /// In en, this message translates to:

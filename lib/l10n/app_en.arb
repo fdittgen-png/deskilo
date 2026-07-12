@@ -1377,6 +1377,26 @@
   "@planHalfDayError": {
     "description": "Snackbar when the server rejects a booking for violating the half-day granularity (enforce_booking_rules, migration 0025, #201)"
   },
+  "reserveDayView": "Day",
+  "@reserveDayView": {
+    "description": "Reserve hub view segment showing the selected day's per-seat timeline (#208)"
+  },
+  "reserveWeekView": "Week",
+  "@reserveWeekView": {
+    "description": "Reserve hub view segment paging one day timeline per day, synced with the date strip (#208)"
+  },
+  "reserveFullDayChip": "Full day",
+  "@reserveFullDayChip": {
+    "description": "Reserve hub window chip selecting the canonical 00:00–24:00 window under half-day granularity (#208)"
+  },
+  "reservePickDateTooltip": "Choose a date",
+  "@reservePickDateTooltip": {
+    "description": "Tooltip of the calendar icon at the end of the Reserve hub's date strip, opening a date picker for days beyond the pills (#208)"
+  },
+  "reserveBookingFailed": "Could not reserve — the seat may have just been taken.",
+  "@reserveBookingFailed": {
+    "description": "Snackbar when creating a reservation from the Reserve hub fails for a generic reason (#208)"
+  },
   "servicesTitle": "Services",
   "@servicesTitle": {
     "description": "App-bar title of the owner service-catalog editor and its settings tile"

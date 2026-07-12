@@ -1,0 +1,8 @@
+{
+  "@@locale": "fr",
+  "reserveDayView": "Jour",
+  "reserveWeekView": "Semaine",
+  "reserveFullDayChip": "Journée entière",
+  "reservePickDateTooltip": "Choisir une date",
+  "reserveBookingFailed": "Réservation impossible — la place vient peut-être d'être prise."
+}
