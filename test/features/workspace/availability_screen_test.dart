@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -80,6 +81,49 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(workspace.openWeekdays['ws-1'], [3]);
+  });
+
+  testWidgets('granularity renders both options with flexible preselected',
+      (tester) async {
+    await pumpAvailability(tester);
+
+    expect(find.text('Booking granularity'), findsOneWidget);
+    expect(find.text('Free time period'), findsOneWidget);
+    expect(find.text('Half days (morning & afternoon)'), findsOneWidget);
+    final group = tester.widget<RadioGroup<BookingGranularity>>(
+      find.byType(RadioGroup<BookingGranularity>),
+    );
+    expect(group.groupValue, BookingGranularity.flexible);
+  });
+
+  testWidgets(
+      'switching to half days persists it and keeps the open weekdays',
+      (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..openWeekdays['ws-1'] = [1, 3, 5];
+    await pumpAvailability(tester, workspace: workspace);
+
+    await tester.tap(find.text('Half days (morning & afternoon)'));
+    await tester.pumpAndSettle();
+
+    expect(
+      workspace.bookingGranularities['ws-1'],
+      BookingGranularity.halfDay,
+    );
+    // The granularity write must not clobber the other booking_rules keys.
+    expect(workspace.openWeekdays['ws-1'], [1, 3, 5]);
+    final group = tester.widget<RadioGroup<BookingGranularity>>(
+      find.byType(RadioGroup<BookingGranularity>),
+    );
+    expect(group.groupValue, BookingGranularity.halfDay);
+
+    // And back to flexible.
+    await tester.tap(find.text('Free time period'));
+    await tester.pumpAndSettle();
+    expect(
+      workspace.bookingGranularities['ws-1'],
+      BookingGranularity.flexible,
+    );
   });
 
   testWidgets('closure days render with localized date and reason',

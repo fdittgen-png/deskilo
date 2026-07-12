@@ -290,6 +290,30 @@ abstract class AppLocalizations {
   /// **'No closure days.'**
   String get availabilityNoClosures;
 
+  /// Section header above the booking-granularity radio options
+  ///
+  /// In en, this message translates to:
+  /// **'Booking granularity'**
+  String get availabilityGranularityTitle;
+
+  /// One-line explanation of the half-day granularity under the section header
+  ///
+  /// In en, this message translates to:
+  /// **'Half days: bookings cover the morning (until 13:00), the afternoon (from 13:00) or the whole day.'**
+  String get availabilityGranularityDescription;
+
+  /// Radio option: members book any start and end time
+  ///
+  /// In en, this message translates to:
+  /// **'Free time period'**
+  String get availabilityGranularityFlexible;
+
+  /// Radio option: bookings must cover a half day or the full day
+  ///
+  /// In en, this message translates to:
+  /// **'Half days (morning & afternoon)'**
+  String get availabilityGranularityHalfDay;
+
   /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount
   ///
   /// In en, this message translates to:

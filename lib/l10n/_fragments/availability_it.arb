@@ -6,5 +6,9 @@
   "availabilityAddClosure": "Aggiungi giorno di chiusura",
   "availabilityClosureReason": "Motivo (facoltativo)",
   "availabilityLastOpenDay": "Almeno un giorno della settimana deve restare aperto.",
-  "availabilityNoClosures": "Nessun giorno di chiusura."
+  "availabilityNoClosures": "Nessun giorno di chiusura.",
+  "availabilityGranularityTitle": "Granularità delle prenotazioni",
+  "availabilityGranularityDescription": "Mezze giornate: le prenotazioni coprono la mattina (fino alle 13), il pomeriggio (dalle 13) o l'intera giornata.",
+  "availabilityGranularityFlexible": "Fascia oraria libera",
+  "availabilityGranularityHalfDay": "Mezze giornate (mattina e pomeriggio)"
 }

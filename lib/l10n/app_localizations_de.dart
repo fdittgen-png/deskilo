@@ -107,6 +107,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get availabilityNoClosures => 'Keine Schließtage.';
 
   @override
+  String get availabilityGranularityTitle => 'Buchungsraster';
+
+  @override
+  String get availabilityGranularityDescription =>
+      'Halbe Tage: Buchungen umfassen den Vormittag (bis 13 Uhr), den Nachmittag (ab 13 Uhr) oder den ganzen Tag.';
+
+  @override
+  String get availabilityGranularityFlexible => 'Freier Zeitraum';
+
+  @override
+  String get availabilityGranularityHalfDay =>
+      'Halbe Tage (Vormittag & Nachmittag)';
+
+  @override
   String billSubscription(int pct) {
     return 'Abo $pct %';
   }

@@ -129,6 +129,22 @@
   "@availabilityNoClosures": {
     "description": "Empty state under the closure-days section header"
   },
+  "availabilityGranularityTitle": "Booking granularity",
+  "@availabilityGranularityTitle": {
+    "description": "Section header above the booking-granularity radio options"
+  },
+  "availabilityGranularityDescription": "Half days: bookings cover the morning (until 13:00), the afternoon (from 13:00) or the whole day.",
+  "@availabilityGranularityDescription": {
+    "description": "One-line explanation of the half-day granularity under the section header"
+  },
+  "availabilityGranularityFlexible": "Free time period",
+  "@availabilityGranularityFlexible": {
+    "description": "Radio option: members book any start and end time"
+  },
+  "availabilityGranularityHalfDay": "Half days (morning & afternoon)",
+  "@availabilityGranularityHalfDay": {
+    "description": "Radio option: bookings must cover a half day or the full day"
+  },
   "billSubscription": "Subscription {pct}%",
   "@billSubscription": {
     "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount",

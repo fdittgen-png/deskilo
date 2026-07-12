@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import 'booking_granularity.dart';
 import 'closure_day.dart';
 import 'member.dart';
 import 'payment_instructions.dart';
@@ -72,6 +73,17 @@ abstract class WorkspaceRepository {
   /// Owner-only (RLS-enforced): persist the open weekdays inside
   /// booking_rules without clobbering its other keys.
   Future<void> setOpenWeekdays(String workspaceId, List<int> weekdays);
+
+  /// The workspace's booking-granularity rule (#200); read from
+  /// booking_rules, [BookingGranularity.flexible] when absent.
+  Future<BookingGranularity> fetchBookingGranularity(String workspaceId);
+
+  /// Owner-only (RLS-enforced): persist the granularity inside
+  /// booking_rules without clobbering its other keys.
+  Future<void> setBookingGranularity(
+    String workspaceId,
+    BookingGranularity granularity,
+  );
 
   /// One-off closure days of the workspace, ordered by day (#127).
   Future<List<ClosureDay>> fetchClosureDays(String workspaceId);

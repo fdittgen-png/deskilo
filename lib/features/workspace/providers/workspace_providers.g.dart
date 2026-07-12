@@ -327,6 +327,56 @@ final class OpenWeekdaysProvider
 
 String _$openWeekdaysHash() => r'a009dd9b0d56fe04f6fd083a0511371e97097a80';
 
+/// Booking-granularity rule of the active workspace (#200); flexible
+/// while no workspace is selected or the key is absent.
+
+@ProviderFor(bookingGranularity)
+final bookingGranularityProvider = BookingGranularityProvider._();
+
+/// Booking-granularity rule of the active workspace (#200); flexible
+/// while no workspace is selected or the key is absent.
+
+final class BookingGranularityProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<BookingGranularity>,
+          BookingGranularity,
+          FutureOr<BookingGranularity>
+        >
+    with
+        $FutureModifier<BookingGranularity>,
+        $FutureProvider<BookingGranularity> {
+  /// Booking-granularity rule of the active workspace (#200); flexible
+  /// while no workspace is selected or the key is absent.
+  BookingGranularityProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'bookingGranularityProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$bookingGranularityHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<BookingGranularity> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<BookingGranularity> create(Ref ref) {
+    return bookingGranularity(ref);
+  }
+}
+
+String _$bookingGranularityHash() =>
+    r'bf5e00802791de2482d6dd476a2a5ab5c4a698b2';
+
 /// One-off closure days of the active workspace, ordered by day (#127).
 
 @ProviderFor(closureDays)
