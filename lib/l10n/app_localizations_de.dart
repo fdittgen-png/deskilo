@@ -267,6 +267,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Keine Reservierungen auf dieser Etage an diesem Tag.';
 
   @override
+  String get calendarAllLevels => 'Alle Etagen';
+
+  @override
+  String get calendarTimelineAllEmpty =>
+      'Auf keiner Etage gibt es an diesem Tag Reservierungen.';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override

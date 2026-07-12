@@ -38,6 +38,9 @@ abstract final class TimelineAxis {
   /// Height of an `office · desk` group header row.
   static const double headerRowHeight = 28;
 
+  /// Height of a level-name header row in all-levels mode (#221).
+  static const double levelHeaderRowHeight = 32;
+
   /// Height of the hour ruler above the tracks.
   static const double rulerHeight = 24;
 
@@ -102,6 +105,8 @@ class DayTimeline extends ConsumerStatefulWidget {
   static Key blockKey(String reservationId) =>
       ValueKey('timeline-block-$reservationId');
   static Key trackKey(String seatId) => ValueKey('timeline-track-$seatId');
+  static Key levelHeaderKey(String levelId) =>
+      ValueKey('timeline-level-header-$levelId');
   static const Key nowLineKey = ValueKey('timeline-now-line');
 
   @override
@@ -109,9 +114,14 @@ class DayTimeline extends ConsumerStatefulWidget {
 }
 
 class _DayTimelineState extends ConsumerState<DayTimeline> {
+  /// Sentinel value of [_levelId] for the "All levels" chip (#221) — never
+  /// a real level id (real ids are UUIDs / seeded `level-N` ids).
+  static const String _allLevelsId = '__all-levels__';
+
   final ScrollController _axisController = ScrollController();
 
   /// Level chip choice — local, never the plan's persisted default.
+  /// [_allLevelsId] stacks every level on one shared axis.
   String? _levelId;
 
   /// Day the axis was last auto-scrolled for.
@@ -193,11 +203,13 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
       return const LoadingView();
     }
     if (levels.isEmpty) {
-      return _emptyHint(l10n);
+      return _emptyHint(l10n, allLevels: false);
     }
-    final level =
-        levels.where((l) => l.id == _levelId).firstOrNull ?? levels.first;
-    final planAsync = ref.watch(floorPlanProvider(level.id));
+    // Default stays the FIRST real level; "All levels" is opt-in per view.
+    final allSelected = levels.length > 1 && _levelId == _allLevelsId;
+    final level = allSelected
+        ? null
+        : levels.where((l) => l.id == _levelId).firstOrNull ?? levels.first;
     final names = ref.watch(memberNamesProvider).value ?? const {};
 
     return Column(
@@ -213,12 +225,23 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
               scrollDirection: Axis.horizontal,
               padding: AppSpacing.mdH,
               children: [
+                // Sentinel chip FIRST: stack every level on one axis (#221).
+                Padding(
+                  padding: AppSpacing.xsH,
+                  child: ChoiceChip(
+                    label: Text(l10n?.calendarAllLevels ?? 'All levels'),
+                    selected: allSelected,
+                    materialTapTargetSize: MaterialTapTargetSize.padded,
+                    onSelected: (_) =>
+                        setState(() => _levelId = _allLevelsId),
+                  ),
+                ),
                 for (final Level l in levels)
                   Padding(
                     padding: AppSpacing.xsH,
                     child: ChoiceChip(
                       label: Text(l.name),
-                      selected: l.id == level.id,
+                      selected: !allSelected && l.id == level?.id,
                       materialTapTargetSize: MaterialTapTargetSize.padded,
                       onSelected: (_) => setState(() => _levelId = l.id),
                     ),
@@ -227,19 +250,63 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
             ),
           ),
         Expanded(
-          child: switch (planAsync) {
-            AsyncData(value: final plan) => _grid(context, plan, names),
-            AsyncError() => _emptyHint(l10n),
-            _ => const LoadingView(),
-          },
+          child: allSelected
+              ? _allLevelsBody(context, levels, names)
+              : _singleLevelBody(context, level!, names),
         ),
       ],
     );
   }
 
-  Widget _emptyHint(AppLocalizations? l10n) {
-    final hint = l10n?.calendarTimelineEmpty ??
-        'No reservations on this level for this day.';
+  Widget _singleLevelBody(
+    BuildContext context,
+    Level level,
+    Map<String, String> names,
+  ) {
+    final l10n = AppLocalizations.of(context);
+    final planAsync = ref.watch(floorPlanProvider(level.id));
+    return switch (planAsync) {
+      AsyncData(value: final plan) => _grid(context, [(null, plan)], names),
+      AsyncError() => _emptyHint(l10n, allLevels: false),
+      _ => const LoadingView(),
+    };
+  }
+
+  /// All-levels mode loads WAIT-ALL: every level's plan is watched up
+  /// front (they fetch in parallel) and nothing renders until each one
+  /// resolved — a single consistent layout instead of rows reflowing as
+  /// plans stream in. A level whose plan errored is skipped like an empty
+  /// level.
+  Widget _allLevelsBody(
+    BuildContext context,
+    List<Level> levels,
+    Map<String, String> names,
+  ) {
+    // levelsProvider returns the levels sorted by sortOrder — the stacking
+    // order below is that same order.
+    final entries = <(Level, AsyncValue<FloorPlan>)>[
+      for (final l in levels) (l, ref.watch(floorPlanProvider(l.id))),
+    ];
+    final plans = <(Level?, FloorPlan)>[];
+    for (final (level, planAsync) in entries) {
+      switch (planAsync) {
+        case AsyncData(value: final plan):
+          plans.add((level, plan));
+        case AsyncError():
+          break; // Skipped, like a level with nothing to show.
+        default:
+          return const LoadingView();
+      }
+    }
+    return _grid(context, plans, names);
+  }
+
+  Widget _emptyHint(AppLocalizations? l10n, {required bool allLevels}) {
+    final hint = allLevels
+        ? (l10n?.calendarTimelineAllEmpty ??
+            'No reservations on any level for this day.')
+        : (l10n?.calendarTimelineEmpty ??
+            'No reservations on this level for this day.');
     // Stays a scrollable so an enclosing RefreshIndicator keeps working.
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
@@ -255,61 +322,85 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     );
   }
 
+  /// Renders the given plans stacked on one shared axis. Single-level mode
+  /// passes one `(null, plan)` entry (no level-header row); all-levels mode
+  /// passes every level's plan in [levelsProvider]'s sortOrder.
   Widget _grid(
     BuildContext context,
-    FloorPlan plan,
+    List<(Level?, FloorPlan)> plans,
     Map<String, String> names,
   ) {
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     final brightness = Theme.of(context).brightness;
+    final allLevels = plans.any((e) => e.$1 != null);
 
     final dayReservations = widget.reservations
         .where((r) => r.coversRange(_dayStart, _dayEnd))
         .toList()
       ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
 
-    // Only what lives on this level.
-    final seatIds = {for (final s in plan.seats) s.id};
-    final officeIds = {for (final o in plan.offices) o.id};
-    final levelReservations = dayReservations
-        .where((r) =>
-            (r.seatId != null && seatIds.contains(r.seatId)) ||
-            (r.officeId != null && officeIds.contains(r.officeId)))
-        .toList();
-
-    if (plan.seats.isEmpty || levelReservations.isEmpty) {
-      return _emptyHint(l10n);
-    }
-    _scheduleAutoScroll(levelReservations);
-
     final leadingCells = <Widget>[
       const SizedBox(height: TimelineAxis.rulerHeight),
     ];
     final tracks = <Widget>[_ruler(context)];
-    for (final office in plan.offices) {
-      final officeReservations = levelReservations
-          .where((r) => r.officeId == office.id)
+    final visibleReservations = <Reservation>[];
+    for (final (level, plan) in plans) {
+      // Only what lives on this level.
+      final seatIds = {for (final s in plan.seats) s.id};
+      final officeIds = {for (final o in plan.offices) o.id};
+      final levelReservations = dayReservations
+          .where((r) =>
+              (r.seatId != null && seatIds.contains(r.seatId)) ||
+              (r.officeId != null && officeIds.contains(r.officeId)))
           .toList();
-      for (final desk in plan.desksOf(office.id)) {
-        final seats = plan.seatsOf(desk.id);
-        if (seats.isEmpty) continue;
-        final header = '${office.name} · ${desk.name}';
-        leadingCells.add(_headerCell(context, header));
+
+      // Same per-level rule as single-level mode: nothing to show without
+      // seats or without a visible reservation that day. In all-levels
+      // mode such a level is skipped entirely (#221); the overall empty
+      // hint below fires only when EVERY level came up empty.
+      if (plan.seats.isEmpty || levelReservations.isEmpty) continue;
+      visibleReservations.addAll(levelReservations);
+
+      if (level != null) {
+        leadingCells.add(_levelHeaderCell(context, level));
         tracks.add(const SizedBox(
-          height: TimelineAxis.headerRowHeight,
+          height: TimelineAxis.levelHeaderRowHeight,
           width: TimelineAxis.trackWidth,
         ));
-        for (final Seat seat in seats) {
-          final blocks = <Reservation>[
-            ...officeReservations,
-            ...levelReservations.where((r) => r.seatId == seat.id),
-          ];
-          leadingCells.add(_seatCell(context, seat, brightness));
-          tracks.add(_track(context, seat, blocks, names, brightness));
+      }
+      for (final office in plan.offices) {
+        final officeReservations = levelReservations
+            .where((r) => r.officeId == office.id)
+            .toList();
+        for (final desk in plan.desksOf(office.id)) {
+          final seats = plan.seatsOf(desk.id);
+          if (seats.isEmpty) continue;
+          final header = '${office.name} · ${desk.name}';
+          leadingCells.add(_headerCell(context, header));
+          tracks.add(const SizedBox(
+            height: TimelineAxis.headerRowHeight,
+            width: TimelineAxis.trackWidth,
+          ));
+          for (final Seat seat in seats) {
+            final blocks = <Reservation>[
+              ...officeReservations,
+              ...levelReservations.where((r) => r.seatId == seat.id),
+            ];
+            leadingCells.add(_seatCell(context, seat, brightness));
+            tracks.add(_track(context, seat, blocks, names, brightness));
+          }
         }
       }
     }
+
+    if (visibleReservations.isEmpty) {
+      return _emptyHint(l10n, allLevels: allLevels);
+    }
+    // Concatenating per-level lists loses the global start order the
+    // auto-scroll relies on — restore it.
+    visibleReservations.sort((a, b) => a.startsAt.compareTo(b.startsAt));
+    _scheduleAutoScroll(visibleReservations);
 
     final now = DateTime.now();
     final isToday = DateUtils.isSameDay(now, widget.day);
@@ -390,6 +481,29 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
               ),
             ),
         ],
+      ),
+    );
+  }
+
+  /// Level-name header in all-levels mode — deliberately distinct from the
+  /// muted `office · desk` group headers: titleSmall in the primary color.
+  Widget _levelHeaderCell(BuildContext context, Level level) {
+    return SizedBox(
+      key: DayTimeline.levelHeaderKey(level.id),
+      height: TimelineAxis.levelHeaderRowHeight,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          left: AppSpacing.sm,
+          top: AppSpacing.md,
+        ),
+        child: Text(
+          level.name,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+        ),
       ),
     );
   }

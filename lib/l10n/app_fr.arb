@@ -79,6 +79,8 @@
   "calendarListView": "Vue liste",
   "calendarTimelineView": "Vue chronologique",
   "calendarTimelineEmpty": "Aucune réservation à cet étage ce jour-là.",
+  "calendarAllLevels": "Tous les étages",
+  "calendarTimelineAllEmpty": "Aucune réservation à aucun étage ce jour-là.",
   "appTitle": "DesKilo",
   "tabPlan": "Plan",
   "tabCalendar": "Calendrier",

@@ -23,6 +23,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../calendar/day_timeline_test.dart' show addSecondLevel;
 import '../plan/time_scroller_test.dart' show pickChipTime;
 
 const _amChip = ValueKey('reserve-am-chip');
@@ -41,8 +42,10 @@ Future<FakeReservationRepository> pumpHub(
   List<Reservation> seed = const [],
   BookingGranularity? granularity,
   List<int> openWeekdays = const [1, 2, 3, 4, 5, 6, 7],
+  bool twoLevels = false,
 }) async {
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
+  if (twoLevels) addSecondLevel(plans);
   final reservations = FakeReservationRepository()..reservations.addAll(seed);
   final workspace = FakeWorkspaceRepository.withWorkspace()
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
@@ -309,6 +312,41 @@ void main() {
     expect(chipSelected(tester, ReserveScreen.dayPillKey(later)), isTrue);
     expect(find.byKey(DayTimeline.blockKey('res-later')), findsOneWidget);
     expect(find.byKey(DayTimeline.blockKey('res-tmrw')), findsNothing);
+  });
+
+  testWidgets(
+      'Week view with All levels selected still swipes to the next day '
+      '(#221)', (tester) async {
+    final today = _today;
+    final tomorrow = DateTime(today.year, today.month, today.day + 1);
+    await pumpHub(
+      tester,
+      twoLevels: true,
+      seed: [reservationOn(tomorrow, id: 'res-tmrw')],
+    );
+
+    await tester.tap(find.text('Week'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(ChoiceChip, 'All levels').first);
+    await tester.pumpAndSettle();
+
+    // All-levels mode is live on today's (empty) page.
+    expect(
+      find.text('No reservations on any level for this day.'),
+      findsOneWidget,
+    );
+
+    // The pager still swipes with All selected (like the empty-page swipe
+    // above — a page WITH timeline content owns horizontal drags either
+    // way, all-levels or not).
+    await tester.drag(
+      find.byKey(const ValueKey('reserve-week-pager')),
+      const Offset(-500, 0),
+    );
+    await tester.pumpAndSettle();
+
+    expect(chipSelected(tester, ReserveScreen.dayPillKey(tomorrow)), isTrue);
+    expect(find.byKey(DayTimeline.blockKey('res-tmrw')), findsOneWidget);
   });
 
   testWidgets(

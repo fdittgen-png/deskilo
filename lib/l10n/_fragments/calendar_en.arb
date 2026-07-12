@@ -47,5 +47,13 @@
   "calendarTimelineEmpty": "No reservations on this level for this day.",
   "@calendarTimelineEmpty": {
     "description": "Empty state of the day timeline: the selected level has no seats or no visible reservations that day (#187)"
+  },
+  "calendarAllLevels": "All levels",
+  "@calendarAllLevels": {
+    "description": "First chip of the timeline level selector: stacks every level's rows under level-name headers on one shared axis (#221)"
+  },
+  "calendarTimelineAllEmpty": "No reservations on any level for this day.",
+  "@calendarTimelineAllEmpty": {
+    "description": "Empty state of the day timeline in all-levels mode: no level has seats with a visible reservation that day (#221)"
   }
 }

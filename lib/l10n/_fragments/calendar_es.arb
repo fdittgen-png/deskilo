@@ -11,5 +11,7 @@
   "calendarShowOnPlan": "Ver en el plano",
   "calendarListView": "Vista de lista",
   "calendarTimelineView": "Vista de cronología",
-  "calendarTimelineEmpty": "No hay reservas en esta planta ese día."
+  "calendarTimelineEmpty": "No hay reservas en esta planta ese día.",
+  "calendarAllLevels": "Todas las plantas",
+  "calendarTimelineAllEmpty": "No hay reservas en ninguna planta ese día."
 }
