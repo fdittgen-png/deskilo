@@ -33,6 +33,7 @@ import '../../domain/seat_state_logic.dart';
 import '../../providers/reservation_providers.dart';
 import '../widgets/booking_sheet.dart';
 import '../widgets/reservation_detail_sheet.dart';
+import '../widgets/week_grid.dart';
 
 /// Geometry and ranges of the Reserve hub (#208). Pinned by test — treat
 /// these as part of the visual/behavioural contract, not free-floating
@@ -47,8 +48,9 @@ abstract final class ReserveHubMetrics {
   /// Furthest day (from today) reachable via the strip's calendar icon.
   static const int datePickerRangeDays = 365;
 
-  /// Pages of the Week view's pager — one local day per page, page 0 =
-  /// today, matching the calendar icon's range.
+  /// Historical page count of the Week view's former day pager. #236
+  /// replaced the pager with the seat × day [WeekGrid]; the constant stays
+  /// pinned so the metrics contract only ever grows.
   static const int weekPageCount = 365;
 
   /// Cell size of the hub's plan canvas (matches the live plan's).
@@ -72,7 +74,8 @@ abstract final class ReserveHubMetrics {
   static const int lastSlotHour = 23;
   static const int lastSlotMinute = 45;
 
-  /// Week pager animation when a date pill drives the page.
+  /// Historical Week-pager animation (see [weekPageCount]) — pinned, no
+  /// longer driving anything since the grid replaced the pager (#236).
   static const Duration pageAnimation = Duration(milliseconds: 250);
 }
 
@@ -86,8 +89,9 @@ enum _ReserveView { plan, day, week }
 /// #201, else from→to clock chips per #184/#185); and a Plan · Day · Week
 /// switch. Plan mirrors the live plan canvas for the selected window (free
 /// seat tap books via the shared [BookingSheet], #206); Day shows the
-/// everyone-mode [DayTimeline]; Week pages one timeline per day, synced
-/// two-way with the date strip.
+/// everyone-mode [DayTimeline]; Week shows the selected day's whole ISO
+/// week as a seat × day occupancy grid (#236) — tapping a day header
+/// selects that day and jumps to its Day view.
 ///
 /// Deliberately forward-looking reserve + visibility only: no walk-up
 /// check-in, no check-out, no seat blocking and no series booking here —
@@ -108,11 +112,11 @@ class ReserveScreen extends ConsumerStatefulWidget {
 typedef ReservePlaceholderScreen = ReserveScreen;
 
 class _ReserveScreenState extends ConsumerState<ReserveScreen> {
-  /// Local midnight of the day the hub opened on — page 0 of the week
-  /// pager and the first pill of the date strip.
+  /// Local midnight of the day the hub opened on — the first pill of the
+  /// date strip.
   late final DateTime _today;
 
-  /// Local midnight of the browsed day (date strip / week pager).
+  /// Local midnight of the browsed day (date strip / week-grid headers).
   late DateTime _selectedDay;
 
   /// Explicit window choice on [_selectedDay]; null until the user picks
@@ -127,20 +131,12 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
   /// plan tab's persisted default (DayTimeline pattern, #187).
   String? _levelId;
 
-  PageController? _weekController;
-
   @override
   void initState() {
     super.initState();
     final now = DateTime.now();
     _today = DateTime(now.year, now.month, now.day);
     _selectedDay = _today;
-  }
-
-  @override
-  void dispose() {
-    _weekController?.dispose();
-    super.dispose();
   }
 
   // ── window derivation (mirrors plan_screen's #184/#201 mechanics) ──
@@ -221,72 +217,54 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     return null;
   }
 
-  // ── day selection (strip · calendar icon · week pager) ──
+  // ── day selection (strip · calendar icon · week-grid headers) ──
 
-  int _pageOf(DateTime day) =>
-      (day.difference(_today).inHours / Duration.hoursPerDay).round();
-
-  DateTime _dayOfPage(int index) =>
+  DateTime _stripDay(int index) =>
       DateTime(_today.year, _today.month, _today.day + index);
 
   /// Central day switch: re-maps the window onto the new day (canonical
   /// half re-derived under half-day granularity, times of day kept under
-  /// flexible — plan's date-button behaviour, #184/#201) and keeps the
-  /// week pager in sync unless the pager itself drove the change.
-  void _selectDay(DateTime day, {bool fromPager = false}) {
+  /// flexible — plan's date-button behaviour, #184/#201). The week grid
+  /// needs no syncing: it re-derives its week from [_selectedDay].
+  void _selectDay(DateTime day) {
     final dayOnly = DateTime(day.year, day.month, day.day);
-    if (!DateUtils.isSameDay(dayOnly, _selectedDay)) {
-      final granularity = _granularity;
-      final window = _effectiveWindow(granularity);
-      DateTime? from;
-      DateTime? to;
-      if (_windowStart != null && _windowEnd != null) {
-        if (granularity == BookingGranularity.halfDay) {
-          final builder =
-              _matchingHalfDayBuilder(_selectedDay, window) ??
-                  HalfDayWindows.fullDay;
-          final moved = builder(dayOnly);
-          from = moved.start;
-          to = moved.end;
-        } else {
-          from = DateTime(
-            dayOnly.year,
-            dayOnly.month,
-            dayOnly.day,
-            window.start.hour,
-            window.start.minute,
-          );
-          var kept = DateTime(
-            dayOnly.year,
-            dayOnly.month,
-            dayOnly.day,
-            window.end.hour,
-            window.end.minute,
-          );
-          if (!kept.isAfter(from)) kept = _defaultEndFor(from);
-          to = kept;
-        }
-      }
-      setState(() {
-        _selectedDay = dayOnly;
-        _windowStart = from;
-        _windowEnd = to;
-      });
-    }
-    if (fromPager) return;
-    final controller = _weekController;
-    if (_view == _ReserveView.week &&
-        controller != null &&
-        controller.hasClients) {
-      final target = _pageOf(dayOnly);
-      if (controller.page?.round() != target) {
-        controller.animateToPage(
-          target,
-          duration: ReserveHubMetrics.pageAnimation,
-          curve: Curves.easeInOut,
+    if (DateUtils.isSameDay(dayOnly, _selectedDay)) return;
+    final granularity = _granularity;
+    final window = _effectiveWindow(granularity);
+    DateTime? from;
+    DateTime? to;
+    if (_windowStart != null && _windowEnd != null) {
+      if (granularity == BookingGranularity.halfDay) {
+        final builder =
+            _matchingHalfDayBuilder(_selectedDay, window) ??
+                HalfDayWindows.fullDay;
+        final moved = builder(dayOnly);
+        from = moved.start;
+        to = moved.end;
+      } else {
+        from = DateTime(
+          dayOnly.year,
+          dayOnly.month,
+          dayOnly.day,
+          window.start.hour,
+          window.start.minute,
         );
+        var kept = DateTime(
+          dayOnly.year,
+          dayOnly.month,
+          dayOnly.day,
+          window.end.hour,
+          window.end.minute,
+        );
+        if (!kept.isAfter(from)) kept = _defaultEndFor(from);
+        to = kept;
       }
     }
+    setState(() {
+      _selectedDay = dayOnly;
+      _windowStart = from;
+      _windowEnd = to;
+    });
   }
 
   Future<void> _pickDate() async {
@@ -633,21 +611,9 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                 ),
               ],
               selected: _view,
-              onChanged: (view) {
-                setState(() => _view = view);
-                // Re-entering Week with a day picked elsewhere: bring the
-                // pager (which kept its old page) back under the strip.
-                if (_view != _ReserveView.week) return;
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (!mounted) return;
-                  final controller = _weekController;
-                  if (controller == null || !controller.hasClients) return;
-                  final target = _pageOf(_selectedDay);
-                  if (controller.page?.round() != target) {
-                    controller.jumpToPage(target);
-                  }
-                });
-              },
+              // No re-entry syncing needed since #236: the week grid
+              // derives its week from the selected day on every build.
+              onChanged: (view) => setState(() => _view = view),
             ),
           ),
           Expanded(
@@ -692,7 +658,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               padding: AppSpacing.smH,
               itemCount: ReserveHubMetrics.stripDayCount,
               itemBuilder: (context, index) {
-                final day = _dayOfPage(index);
+                final day = _stripDay(index);
                 return Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 2,
@@ -952,47 +918,41 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     );
   }
 
-  /// Week view: one day timeline per page, two-way synced with the date
-  /// strip (a swipe moves the selected pill, a pill tap moves the page).
+  /// Week view (#236): the whole ISO week around the selected day as a
+  /// seat × day grid. Reservations come from the month provider(s)
+  /// covering the week — BOTH months when the week straddles a boundary —
+  /// and the grid slices them per day itself (never seven per-day
+  /// fetches). Tapping a day header selects the day and switches to the
+  /// Day view.
   Widget _weekView() {
-    final controller =
-        _weekController ??= PageController(initialPage: _pageOf(_selectedDay));
-    return PageView.builder(
-      key: const ValueKey('reserve-week-pager'),
-      controller: controller,
-      itemCount: ReserveHubMetrics.weekPageCount,
-      onPageChanged: (index) {
-        final day = _dayOfPage(index);
-        if (!DateUtils.isSameDay(day, _selectedDay)) {
-          _selectDay(day, fromPager: true);
-        }
-      },
-      itemBuilder: (context, index) =>
-          _WeekDayPage(day: _dayOfPage(index), onReservationTap: _detailSheet),
-    );
-  }
-}
-
-/// One page of the Week view: the day's timeline, self-loading via the
-/// per-day provider so month boundaries never need a double fetch.
-class _WeekDayPage extends ConsumerWidget {
-  const _WeekDayPage({required this.day, required this.onReservationTap});
-
-  final DateTime day;
-  final void Function(Reservation reservation) onReservationTap;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
     final myMemberId = ref.watch(myMemberProvider).value?.id;
-    final reservations =
-        ref.watch(reservationsForDayProvider(dayKeyOf(day))).value ??
-            const <Reservation>[];
-    return DayTimeline(
-      day: day,
-      reservations: [for (final r in reservations) if (r.isActive) r],
+    final monday = WeekGrid.weekStartOf(_selectedDay);
+    final sunday = DateTime(monday.year, monday.month, monday.day + 6);
+    final monthKeys = {monthKeyOf(monday), monthKeyOf(sunday)};
+    // De-duplicated by id: a reservation crossing the month boundary is
+    // returned by both month windows.
+    final byId = <String, Reservation>{};
+    for (final key in monthKeys) {
+      final month = ref.watch(reservationsForMonthProvider(key)).value ??
+          const <Reservation>[];
+      for (final r in month) {
+        byId[r.id] = r;
+      }
+    }
+    return WeekGrid(
+      key: const ValueKey('reserve-week-grid'),
+      selectedDay: _selectedDay,
+      reservations: [
+        for (final r in byId.values)
+          if (r.isActive) r,
+      ],
       everyone: true,
       myMemberId: myMemberId,
-      onReservationTap: onReservationTap,
+      onDaySelected: (day) {
+        _selectDay(day);
+        setState(() => _view = _ReserveView.day);
+      },
+      onReservationTap: _detailSheet,
     );
   }
 }
