@@ -35,7 +35,9 @@ class LocalNotificationService implements NotificationService {
     final plugin = FlutterLocalNotificationsPlugin();
     await plugin.initialize(
       settings: const InitializationSettings(
-        android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+        // Status-bar small icons are alpha-masked: the full-color launcher
+        // mipmap rendered as a grey square (#219). Dedicated white glyph.
+        android: AndroidInitializationSettings('@drawable/ic_stat_deskilo'),
         iOS: DarwinInitializationSettings(),
       ),
     );
