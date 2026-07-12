@@ -13,6 +13,7 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/motion.dart';
+import '../../../../core/ui/view_toggle.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../calendar/presentation/widgets/day_timeline.dart';
 import '../../../events/providers/event_providers.dart';
@@ -609,26 +610,31 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               horizontal: AppSpacing.lg,
               vertical: AppSpacing.xs,
             ),
-            child: SegmentedButton<_ReserveView>(
+            // #211: the shared toggle idiom — same key, same labels and
+            // behaviour as the original SegmentedButton, plus the shared
+            // icon set (map/timeline/week).
+            child: ViewToggle<_ReserveView>(
               key: const ValueKey('reserve-view-switch'),
-              showSelectedIcon: false,
-              segments: [
-                ButtonSegment(
+              options: [
+                ViewToggleOption(
                   value: _ReserveView.plan,
-                  label: Text(l10n?.tabPlan ?? 'Plan'),
+                  icon: Icons.map_outlined,
+                  label: l10n?.tabPlan ?? 'Plan',
                 ),
-                ButtonSegment(
+                ViewToggleOption(
                   value: _ReserveView.day,
-                  label: Text(l10n?.reserveDayView ?? 'Day'),
+                  icon: Icons.view_timeline_outlined,
+                  label: l10n?.reserveDayView ?? 'Day',
                 ),
-                ButtonSegment(
+                ViewToggleOption(
                   value: _ReserveView.week,
-                  label: Text(l10n?.reserveWeekView ?? 'Week'),
+                  icon: Icons.view_week_outlined,
+                  label: l10n?.reserveWeekView ?? 'Week',
                 ),
               ],
-              selected: {_view},
-              onSelectionChanged: (selection) {
-                setState(() => _view = selection.first);
+              selected: _view,
+              onChanged: (view) {
+                setState(() => _view = view);
                 // Re-entering Week with a day picked elsewhere: bring the
                 // pager (which kept its old page) back under the strip.
                 if (_view != _ReserveView.week) return;
@@ -705,7 +711,9 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                       ],
                     ),
                     selected: DateUtils.isSameDay(day, _selectedDay),
-                    visualDensity: VisualDensity.compact,
+                    // 48dp Material tap minimum (#211): the padded target
+                    // keeps the pill's hit area honest inside the strip.
+                    materialTapTargetSize: MaterialTapTargetSize.padded,
                     onSelected: (_) => _selectDay(day),
                   ),
                 );
@@ -744,7 +752,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
             key: ValueKey(key),
             label: Text(label),
             selected: selectedBuilder == windowOf,
-            visualDensity: VisualDensity.compact,
+            materialTapTargetSize: MaterialTapTargetSize.padded,
             onSelected: (_) => setState(() {
               final chosen = windowOf(_selectedDay);
               _windowStart = chosen.start;
@@ -754,28 +762,33 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
         );
       }
 
-      // scaleDown keeps the three chips on one row on narrow screens.
-      return FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            chip(
-              'reserve-am-chip',
-              l10n?.planMorningChip ?? 'Morning',
-              HalfDayWindows.morning,
-            ),
-            chip(
-              'reserve-pm-chip',
-              l10n?.planAfternoonChip ?? 'Afternoon',
-              HalfDayWindows.afternoon,
-            ),
-            chip(
-              'reserve-day-chip',
-              l10n?.reserveFullDayChip ?? 'Full day',
-              HalfDayWindows.fullDay,
-            ),
-          ],
+      // scaleDown keeps the three chips on one row on narrow screens. The
+      // 48dp-tall box centers the chips and preserves their padded tap
+      // targets (#211).
+      return SizedBox(
+        height: kMinInteractiveDimension,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              chip(
+                'reserve-am-chip',
+                l10n?.planMorningChip ?? 'Morning',
+                HalfDayWindows.morning,
+              ),
+              chip(
+                'reserve-pm-chip',
+                l10n?.planAfternoonChip ?? 'Afternoon',
+                HalfDayWindows.afternoon,
+              ),
+              chip(
+                'reserve-day-chip',
+                l10n?.reserveFullDayChip ?? 'Full day',
+                HalfDayWindows.fullDay,
+              ),
+            ],
+          ),
         ),
       );
     }
@@ -862,10 +875,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     return Column(
       children: [
         // One tap per level — hub-local chips like the day timeline
-        // (#187), never the plan tab's persisted default (#159).
+        // (#187), never the plan tab's persisted default (#159). Row
+        // height and tap target meet the 48dp Material minimum (#211).
         if (levels.length > 1)
           SizedBox(
-            height: 40,
+            height: kMinInteractiveDimension,
             child: ListView(
               scrollDirection: Axis.horizontal,
               padding: AppSpacing.mdH,
@@ -876,7 +890,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                     child: ChoiceChip(
                       label: Text(l.name),
                       selected: l.id == level.id,
-                      visualDensity: VisualDensity.compact,
+                      materialTapTargetSize: MaterialTapTargetSize.padded,
                       onSelected: (_) => setState(() => _levelId = l.id),
                     ),
                   ),

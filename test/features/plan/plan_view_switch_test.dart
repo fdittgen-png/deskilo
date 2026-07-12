@@ -2,7 +2,9 @@
 //
 // #209: the plan's list/canvas toggle cross-fades via AnimatedSwitcher —
 // mid-transition both branch subtrees are in the tree; after settling
-// only the target branch remains.
+// only the target branch remains. Since #211 the toggle is the shared
+// ViewToggle (segmented, both icons always present) — taps target the
+// segment icons instead of the old flipping IconButton.
 import 'package:deskilo/core/ui/motion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,7 +23,7 @@ void main() {
     expect(find.byKey(_canvasKey), findsOneWidget);
     expect(find.byKey(_listKey), findsNothing);
 
-    await tester.tap(find.byIcon(Icons.list));
+    await tester.tap(find.byIcon(Icons.view_list_outlined));
     await tester.pump();
     // Halfway through the fade both children are mounted.
     await tester.pump(AppMotion.viewSwitch ~/ 2);

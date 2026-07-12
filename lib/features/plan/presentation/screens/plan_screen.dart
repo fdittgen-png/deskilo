@@ -15,6 +15,7 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/motion.dart';
+import '../../../../core/ui/view_toggle.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../reservations/domain/reservation.dart';
@@ -717,9 +718,10 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         if (!dayOpen) _closedDayBanner(l10n),
         // One tap per level (#159): compact scrollable chips instead of a
         // dropdown; the choice persists as this member's default here.
+        // Row height and tap target meet the 48dp Material minimum (#211).
         if (levels.length > 1)
           SizedBox(
-            height: 40,
+            height: kMinInteractiveDimension,
             child: ListView(
               scrollDirection: Axis.horizontal,
               padding: AppSpacing.mdH,
@@ -730,7 +732,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                     child: ChoiceChip(
                       label: Text(l.name),
                       selected: l.id == level.id,
-                      visualDensity: VisualDensity.compact,
+                      materialTapTargetSize: MaterialTapTargetSize.padded,
                       onSelected: (_) {
                         // Deliberate level choice: drop the jump highlight
                         // (#182), then persist as before (#159).
@@ -829,12 +831,24 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       padding: AppSpacing.smH,
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(_listView ? Icons.map_outlined : Icons.list),
-            tooltip: _listView
-                ? (l10n?.planMapViewTooltip ?? 'Plan view')
-                : (l10n?.planListViewTooltip ?? 'List view'),
-            onPressed: () => setState(() => _listView = !_listView),
+          // #211: the shared canvas/list toggle idiom (icon segments with
+          // tooltips) instead of a lone flipping IconButton.
+          ViewToggle<bool>(
+            key: const ValueKey('plan-view-switch'),
+            options: [
+              ViewToggleOption(
+                value: false,
+                icon: Icons.map_outlined,
+                tooltip: l10n?.planMapViewTooltip ?? 'Plan view',
+              ),
+              ViewToggleOption(
+                value: true,
+                icon: Icons.view_list_outlined,
+                tooltip: l10n?.planListViewTooltip ?? 'List view',
+              ),
+            ],
+            selected: _listView,
+            onChanged: (listView) => setState(() => _listView = listView),
           ),
           TextButton(
             key: const ValueKey('plan-date-button'),
@@ -888,35 +902,45 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             child: Text(DateFormat.MMMd().format(local)),
           ),
           Expanded(
+            // The 48dp box + scaleDown mirror the half-day branch (#211):
+            // the header never overflows on narrow screens, the chips stay
+            // centred at full tap height where there is room.
             child: halfDay
                 ? _halfDayChips(l10n, local)
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Tooltip(
-                        message: l10n?.planFromLabel ?? 'From',
-                        child: TextButton(
-                          key: const ValueKey('plan-from-chip'),
-                          style: chipStyle,
-                          onPressed: _pickFrom,
-                          child: Text(timeFormat.format(local)),
-                        ),
+                : SizedBox(
+                    height: kMinInteractiveDimension,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Tooltip(
+                            message: l10n?.planFromLabel ?? 'From',
+                            child: TextButton(
+                              key: const ValueKey('plan-from-chip'),
+                              style: chipStyle,
+                              onPressed: _pickFrom,
+                              child: Text(timeFormat.format(local)),
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_right_alt,
+                            size: 16,
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
+                          Tooltip(
+                            message: l10n?.planToLabel ?? 'To',
+                            child: TextButton(
+                              key: const ValueKey('plan-to-chip'),
+                              style: chipStyle,
+                              onPressed: _pickTo,
+                              child: Text(timeFormat.format(endLocal)),
+                            ),
+                          ),
+                        ],
                       ),
-                      Icon(
-                        Icons.arrow_right_alt,
-                        size: 16,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                      Tooltip(
-                        message: l10n?.planToLabel ?? 'To',
-                        child: TextButton(
-                          key: const ValueKey('plan-to-chip'),
-                          style: chipStyle,
-                          onPressed: _pickTo,
-                          child: Text(timeFormat.format(endLocal)),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
           ),
           TextButton(
@@ -971,7 +995,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
           key: ValueKey(key),
           label: Text(label),
           selected: _browse == window.start && _browseEnd == window.end,
-          visualDensity: VisualDensity.compact,
+          materialTapTargetSize: MaterialTapTargetSize.padded,
           onSelected: (_) => setState(() {
             // Window change: drop the #182 jump highlight like every
             // other time-scroller interaction.
@@ -984,28 +1008,32 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     }
 
     // scaleDown keeps the three chips on one row on narrow screens
-    // without letting the header scroll horizontally.
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          chip(
-            'plan-am-chip',
-            l10n?.planMorningChip ?? 'Morning',
-            HalfDayWindows.morning,
-          ),
-          chip(
-            'plan-pm-chip',
-            l10n?.planAfternoonChip ?? 'Afternoon',
-            HalfDayWindows.afternoon,
-          ),
-          chip(
-            'plan-day-chip',
-            l10n?.planFullDayChip ?? 'Day',
-            HalfDayWindows.fullDay,
-          ),
-        ],
+    // without letting the header scroll horizontally. The 48dp-tall box
+    // centers the chips and preserves their padded tap targets (#211).
+    return SizedBox(
+      height: kMinInteractiveDimension,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            chip(
+              'plan-am-chip',
+              l10n?.planMorningChip ?? 'Morning',
+              HalfDayWindows.morning,
+            ),
+            chip(
+              'plan-pm-chip',
+              l10n?.planAfternoonChip ?? 'Afternoon',
+              HalfDayWindows.afternoon,
+            ),
+            chip(
+              'plan-day-chip',
+              l10n?.planFullDayChip ?? 'Day',
+              HalfDayWindows.fullDay,
+            ),
+          ],
+        ),
       ),
     );
   }

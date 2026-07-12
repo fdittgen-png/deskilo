@@ -182,7 +182,7 @@ void main() {
           repo.reservations.add(foreignReservation()),
     );
 
-    await tester.tap(find.byIcon(Icons.list));
+    await tester.tap(find.byIcon(Icons.view_list_outlined));
     await tester.pumpAndSettle();
 
     expect(find.text('A1'), findsOneWidget);
@@ -193,7 +193,7 @@ void main() {
       (tester) async {
     await pumpPlan(tester);
 
-    await tester.tap(find.byIcon(Icons.list));
+    await tester.tap(find.byIcon(Icons.view_list_outlined));
     await tester.pumpAndSettle();
 
     expect(find.text('A1'), findsOneWidget);
