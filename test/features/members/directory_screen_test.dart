@@ -136,7 +136,8 @@ Member _member(
 }
 
 /// Pumps the app signed in, opens settings and navigates into the
-/// directory via its settings tile (the every-member entry point).
+/// directory via its settings tile (kept as an every-member discovery
+/// entry point; since #230 it switches to the Members shell tab).
 Future<void> _pumpDirectory(
   WidgetTester tester, {
   required FakeWorkspaceRepository workspace,

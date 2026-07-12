@@ -76,68 +76,67 @@ class DirectoryScreen extends ConsumerWidget {
     final targets = ref.watch(targetNamesProvider).value ?? const {};
     final myMemberId = ref.watch(myMemberProvider).value?.id;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n?.directoryTitle ?? 'Members')),
-      body: switch (membersAsync) {
-        AsyncData(value: final members) => Builder(builder: (context) {
-            final active = members
-                .where((m) => m.status == MemberStatus.active)
-                .toList()
-              ..sort((a, b) => (names[a.id] ?? '')
-                  .toLowerCase()
-                  .compareTo((names[b.id] ?? '').toLowerCase()));
-            if (active.isEmpty) {
-              return RefreshIndicator(
-                onRefresh: () => _refresh(ref),
-                child: ListView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 48),
-                      child: EmptyState(
-                        icon: Icons.people_outline,
-                        title: l10n?.directoryEmpty ?? 'No members yet.',
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
+    // No own Scaffold since #230: the directory is a shell branch — the
+    // shell's app bar already shows the localized Members title.
+    return switch (membersAsync) {
+      AsyncData(value: final members) => Builder(builder: (context) {
+          final active = members
+              .where((m) => m.status == MemberStatus.active)
+              .toList()
+            ..sort((a, b) => (names[a.id] ?? '')
+                .toLowerCase()
+                .compareTo((names[b.id] ?? '').toLowerCase()));
+          if (active.isEmpty) {
             return RefreshIndicator(
               onRefresh: () => _refresh(ref),
               child: ListView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 children: [
-                  for (final member in active)
-                    _MemberRow(
-                      member: member,
-                      name: names[member.id] ?? '',
-                      isSelf: member.id == myMemberId,
-                      profile: profiles[member.userId],
-                      status: resolveDirectoryStatus(
-                        memberId: member.id,
-                        profile: profiles[member.userId],
-                        todayReservations: today,
-                        targetNames: targets,
-                        now: now,
-                      ),
-                      now: now,
-                      onWhatsapp: (uri) =>
-                          _openWhatsapp(context, ref, uri),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 48),
+                    child: EmptyState(
+                      icon: Icons.people_outline,
+                      title: l10n?.directoryEmpty ?? 'No members yet.',
                     ),
+                  ),
                 ],
               ),
             );
-          }),
-        AsyncError() => Center(
-            child: Text(
-              l10n?.workspaceGenericError ??
-                  'Something went wrong. Please try again.',
+          }
+          return RefreshIndicator(
+            onRefresh: () => _refresh(ref),
+            child: ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              children: [
+                for (final member in active)
+                  _MemberRow(
+                    member: member,
+                    name: names[member.id] ?? '',
+                    isSelf: member.id == myMemberId,
+                    profile: profiles[member.userId],
+                    status: resolveDirectoryStatus(
+                      memberId: member.id,
+                      profile: profiles[member.userId],
+                      todayReservations: today,
+                      targetNames: targets,
+                      now: now,
+                    ),
+                    now: now,
+                    onWhatsapp: (uri) =>
+                        _openWhatsapp(context, ref, uri),
+                  ),
+              ],
             ),
+          );
+        }),
+      AsyncError() => Center(
+          child: Text(
+            l10n?.workspaceGenericError ??
+                'Something went wrong. Please try again.',
           ),
-        _ => const LoadingView(),
-      },
-    );
+        ),
+      _ => const LoadingView(),
+    };
   }
 }
 

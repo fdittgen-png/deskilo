@@ -95,7 +95,8 @@ Future<FakeEventRepository> pumpEvents(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Events'));
+  // #230: the events feed is behind the app-bar bell, no longer a tab.
+  await tester.tap(find.byTooltip('Events'));
   await tester.pumpAndSettle();
   return events;
 }

@@ -57,14 +57,14 @@ void main() {
     expect(ShellBarMetrics.notchRadius, 56 / 2 + 6);
   });
 
-  testWidgets('four tabs split 2+2 around the raised Reserve button',
+  testWidgets('four tabs split 2+2 around the raised Reserve button (#230)',
       (tester) async {
     await pumpApp(tester);
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
     final (left, right) = splitAroundButton(tester);
     expect(left, ['Plan', 'Calendar']);
-    expect(right, ['Events', 'Money']);
+    expect(right, ['Members', 'Money']);
   });
 
   testWidgets('three visible tabs split 2+1 (index halving)', (tester) async {
@@ -72,14 +72,14 @@ void main() {
 
     final (left, right) = splitAroundButton(tester);
     expect(left, ['Plan', 'Calendar']);
-    expect(right, ['Events']);
+    expect(right, ['Members']);
   });
 
   testWidgets('a feature-disabled workspace still hides its tab',
       (tester) async {
     await pumpApp(tester, featureFlags: const {'calendarTab': false});
 
-    expect(tabLabels(tester), ['Plan', 'Events', 'Money']);
+    expect(tabLabels(tester), ['Plan', 'Members', 'Money']);
   });
 
   testWidgets('tapping Reserve pushes the placeholder reservation screen',
@@ -104,14 +104,14 @@ void main() {
       (tester) async {
     await pumpApp(tester, featureFlags: const {'calendarTab': false});
 
-    // 'Events' is at visible position 1 but branch index 2 — the tap must
-    // land on the Events branch, not Calendar.
-    await tester.tap(find.text('Events'));
+    // 'Members' is at visible position 1 but branch index 2 — the tap must
+    // land on the directory branch, not Calendar.
+    await tester.tap(find.text('Members'));
     await tester.pumpAndSettle();
 
     final appBarTitle = find.descendant(
       of: find.byType(AppBar),
-      matching: find.text('Events'),
+      matching: find.text('Members'),
     );
     expect(appBarTitle, findsOneWidget);
   });

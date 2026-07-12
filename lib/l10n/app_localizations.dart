@@ -608,7 +608,7 @@ abstract class AppLocalizations {
   /// **'Calendar'**
   String get tabCalendar;
 
-  /// Bottom-navigation label for the events feed tab
+  /// Tooltip of the app-bar events bell and title of the events feed screen it pushes (#230; formerly the bottom-tab label)
   ///
   /// In en, this message translates to:
   /// **'Events'**
@@ -758,7 +758,7 @@ abstract class AppLocalizations {
   /// **'Warnings+'**
   String get developerFilterWarnings;
 
-  /// Member directory screen title + its settings entry (#224), visible to every member
+  /// Member directory title: bottom-tab label and app-bar title of the Members tab (#230) plus its settings entry (#224), visible to every member. Keep it short — it must fit a bottom-bar tab.
   ///
   /// In en, this message translates to:
   /// **'Members'**
