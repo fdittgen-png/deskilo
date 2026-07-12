@@ -265,6 +265,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get calendarTimelineEmpty => 'No hay reservas en esta planta ese día.';
 
   @override
+  String get calendarAllLevels => 'Todas las plantas';
+
+  @override
+  String get calendarTimelineAllEmpty =>
+      'No hay reservas en ninguna planta ese día.';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override

@@ -268,6 +268,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessuna prenotazione su questo piano in questo giorno.';
 
   @override
+  String get calendarAllLevels => 'Tutti i piani';
+
+  @override
+  String get calendarTimelineAllEmpty =>
+      'Nessuna prenotazione su nessun piano in questo giorno.';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override

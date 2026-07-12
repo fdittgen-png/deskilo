@@ -11,5 +11,7 @@
   "calendarShowOnPlan": "Auf dem Plan anzeigen",
   "calendarListView": "Listenansicht",
   "calendarTimelineView": "Zeitleistenansicht",
-  "calendarTimelineEmpty": "Keine Reservierungen auf dieser Etage an diesem Tag."
+  "calendarTimelineEmpty": "Keine Reservierungen auf dieser Etage an diesem Tag.",
+  "calendarAllLevels": "Alle Etagen",
+  "calendarTimelineAllEmpty": "Auf keiner Etage gibt es an diesem Tag Reservierungen."
 }

@@ -79,6 +79,8 @@
   "calendarListView": "Vista elenco",
   "calendarTimelineView": "Vista cronologia",
   "calendarTimelineEmpty": "Nessuna prenotazione su questo piano in questo giorno.",
+  "calendarAllLevels": "Tutti i piani",
+  "calendarTimelineAllEmpty": "Nessuna prenotazione su nessun piano in questo giorno.",
   "appTitle": "DesKilo",
   "tabPlan": "Piantina",
   "tabCalendar": "Calendario",

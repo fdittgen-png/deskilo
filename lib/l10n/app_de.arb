@@ -79,6 +79,8 @@
   "calendarListView": "Listenansicht",
   "calendarTimelineView": "Zeitleistenansicht",
   "calendarTimelineEmpty": "Keine Reservierungen auf dieser Etage an diesem Tag.",
+  "calendarAllLevels": "Alle Etagen",
+  "calendarTimelineAllEmpty": "Auf keiner Etage gibt es an diesem Tag Reservierungen.",
   "appTitle": "DesKilo",
   "tabPlan": "Plan",
   "tabCalendar": "Kalender",

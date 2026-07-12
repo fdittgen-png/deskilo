@@ -578,6 +578,18 @@ abstract class AppLocalizations {
   /// **'No reservations on this level for this day.'**
   String get calendarTimelineEmpty;
 
+  /// First chip of the timeline level selector: stacks every level's rows under level-name headers on one shared axis (#221)
+  ///
+  /// In en, this message translates to:
+  /// **'All levels'**
+  String get calendarAllLevels;
+
+  /// Empty state of the day timeline in all-levels mode: no level has seats with a visible reservation that day (#221)
+  ///
+  /// In en, this message translates to:
+  /// **'No reservations on any level for this day.'**
+  String get calendarTimelineAllEmpty;
+
   /// Application name shown in the task switcher and app bar. Brand name — identical in all locales.
   ///
   /// In en, this message translates to:

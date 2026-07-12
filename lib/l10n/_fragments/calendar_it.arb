@@ -11,5 +11,7 @@
   "calendarShowOnPlan": "Mostra sulla pianta",
   "calendarListView": "Vista elenco",
   "calendarTimelineView": "Vista cronologia",
-  "calendarTimelineEmpty": "Nessuna prenotazione su questo piano in questo giorno."
+  "calendarTimelineEmpty": "Nessuna prenotazione su questo piano in questo giorno.",
+  "calendarAllLevels": "Tutti i piani",
+  "calendarTimelineAllEmpty": "Nessuna prenotazione su nessun piano in questo giorno."
 }
