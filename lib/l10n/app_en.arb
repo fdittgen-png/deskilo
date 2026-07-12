@@ -862,6 +862,10 @@
   "@memberStatusExited": {
     "description": "Status tag: member left; ledger stays until settled"
   },
+  "membersInvite": "Invite a member",
+  "@membersInvite": {
+    "description": "App-bar action on the members screen linking to the workspace ID & QR invite surface (#195)"
+  },
   "profilesTitle": "Profiles",
   "profilesAdd": "Add a profile",
   "profilesActive": "Active profile",

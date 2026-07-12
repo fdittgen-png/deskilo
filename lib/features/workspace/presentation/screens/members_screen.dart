@@ -114,6 +114,15 @@ class MembersScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(l10n?.membersTitle ?? 'Members & plans'),
         actions: [
+          // Invite entry point (#195): the members list is where owners
+          // notice someone is missing. Links to the workspace ID & QR
+          // surface; both routes share the same owner-only redirect, so no
+          // extra role check is needed here.
+          IconButton(
+            icon: const Icon(Icons.person_add_outlined),
+            tooltip: l10n?.membersInvite ?? 'Invite a member',
+            onPressed: () => context.push('/workspace-code'),
+          ),
           IconButton(
             icon: const Icon(Icons.tune),
             tooltip: l10n?.billingTitle ?? 'Billing',

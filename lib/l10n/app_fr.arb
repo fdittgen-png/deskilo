@@ -190,6 +190,7 @@
   "memberRoleAdmin": "Admin",
   "memberStatusPaused": "En pause",
   "memberStatusExited": "Parti",
+  "membersInvite": "Inviter un membre",
   "profilesTitle": "Profils",
   "profilesAdd": "Ajouter un profil",
   "profilesActive": "Profil actif",

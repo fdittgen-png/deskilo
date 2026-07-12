@@ -629,6 +629,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get memberStatusExited => 'Salido';
 
   @override
+  String get membersInvite => 'Invitar a un miembro';
+
+  @override
   String get profilesTitle => 'Perfiles';
 
   @override
