@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -13,6 +14,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../profile/domain/profile.dart';
+import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -20,10 +22,15 @@ import '../../domain/directory_status.dart';
 import '../../providers/directory_providers.dart';
 
 /// Member directory (#224, epic #222): every member sees the workspace's
-/// ACTIVE members (alphabetical) with a live status chip — checked in
-/// (with seat name) > online > reserved today > offline (relative
-/// last-seen; no chip when never seen) — and a WhatsApp button for
-/// members who opted into sharing their number (#223).
+/// ACTIVE members (alphabetical) with live indicators, and a WhatsApp
+/// button for members who opted into sharing their number (#223).
+///
+/// Since #237 every row (and the detail sheet) carries TWO independent
+/// chips side by side: a reservation chip — checked in (filled, with
+/// seat name) > reserved now (outlined primary) > next upcoming booking
+/// within 14 days (outlined neutral, "{weekday} {day} · {HH:mm} ·
+/// {seat}") — and the presence chip — online (outlined) > relative
+/// last-seen (muted text; no chip when never seen).
 ///
 /// Directory v2 (#232, epic #229) adds the self-set status line (#231)
 /// under the name, a tap-to-open public-profile sheet, swipe-right to
@@ -41,7 +48,8 @@ class DirectoryScreen extends ConsumerWidget {
       ..invalidate(workspaceMembersProvider)
       ..invalidate(memberNamesProvider)
       ..invalidate(memberProfilesProvider)
-      ..invalidate(reservationsForDayProvider)
+      ..invalidate(reservationsForMonthProvider)
+      ..invalidate(directoryReservationsProvider)
       ..invalidate(targetNamesProvider);
     await ref.read(workspaceMembersProvider.future);
   }
@@ -75,8 +83,8 @@ class DirectoryScreen extends ConsumerWidget {
     final membersAsync = ref.watch(workspaceMembersProvider);
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final profiles = ref.watch(memberProfilesProvider).value ?? const {};
-    final today =
-        ref.watch(reservationsForDayProvider(dayKeyOf(now))).value ?? const [];
+    final reservations =
+        ref.watch(directoryReservationsProvider).value ?? const <Reservation>[];
     final targets = ref.watch(targetNamesProvider).value ?? const {};
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     // The owner-set group link (#231) shows the tile for ALL members.
@@ -119,13 +127,16 @@ class DirectoryScreen extends ConsumerWidget {
                       name: names[member.id] ?? '',
                       isSelf: member.id == myMemberId,
                       profile: profiles[member.userId],
-                      status: resolveDirectoryStatus(
-                        memberId: member.id,
-                        profile: profiles[member.userId],
-                        todayReservations: today,
-                        targetNames: targets,
+                      presence: resolveDirectoryPresence(
+                        lastSeenAt: profiles[member.userId]?.lastSeenAt,
                         now: now,
                       ),
+                      reservationInfo: resolveReservationInfo(
+                        memberId: member.id,
+                        reservations: reservations,
+                        now: now,
+                      ),
+                      targetNames: targets,
                       now: now,
                       onWhatsapp: (uri) => _openLink(context, ref, uri),
                     ),
@@ -162,65 +173,111 @@ String _relativeLastSeen(
   return l10n?.directoryLastSeenDays(diff.inDays) ?? '${diff.inDays} d';
 }
 
-/// The automatic status chip for [status], or null when the member was
-/// never seen (offline without a heartbeat renders no chip at all).
-/// Shared by the row and the detail sheet — [keyPrefix] keeps their
-/// [ValueKey]s distinct so tests can target each surface.
-Widget? _statusChip(
+/// The presence chip for [presence] — unchanged rendering from #224 —
+/// or null when the member was never seen (offline without a heartbeat
+/// renders no presence chip at all). Shared by the row and the detail
+/// sheet — [keyPrefix] keeps their [ValueKey]s distinct so tests can
+/// target each surface.
+Widget? _presenceChip(
   BuildContext context, {
   required AppLocalizations? l10n,
   required String memberId,
-  required DirectoryStatus status,
+  required DirectoryPresence presence,
   required DateTime now,
   String keyPrefix = 'directory-status',
 }) {
   final theme = Theme.of(context);
-  final brightness = theme.brightness;
-  final success = AppStatusColors.successOf(brightness);
-  return switch (status.kind) {
-    DirectoryStatusKind.checkedIn => _StatusChip(
-      chipKey: ValueKey('$keyPrefix-$memberId'),
-      label: status.seatName.isEmpty
-          ? (l10n?.directoryCheckedIn ?? 'Checked in')
-          : (l10n?.directoryCheckedInSeat(status.seatName) ??
-                'Checked in · ${status.seatName}'),
-      foreground: AppStatusColors.onSuccessOf(brightness),
-      background: success,
-    ),
-    DirectoryStatusKind.online => _StatusChip(
+  return switch (presence.kind) {
+    DirectoryPresenceKind.online => _StatusChip(
       chipKey: ValueKey('$keyPrefix-$memberId'),
       label: l10n?.directoryOnline ?? 'Online',
-      foreground: success,
+      foreground: AppStatusColors.successOf(theme.brightness),
       outlined: true,
     ),
-    DirectoryStatusKind.reservedToday => _StatusChip(
-      chipKey: ValueKey('$keyPrefix-$memberId'),
-      label: l10n?.directoryReservedToday ?? 'Reserved today',
-      foreground: theme.colorScheme.primary,
-      outlined: true,
-    ),
-    DirectoryStatusKind.offline =>
-      status.lastSeenAt == null
+    DirectoryPresenceKind.offline =>
+      presence.lastSeenAt == null
           ? null
           : _StatusChip(
               chipKey: ValueKey('$keyPrefix-$memberId'),
-              label: _relativeLastSeen(l10n, now, status.lastSeenAt!),
+              label: _relativeLastSeen(l10n, now, presence.lastSeenAt!),
               foreground: theme.colorScheme.onSurfaceVariant,
             ),
   };
 }
 
+/// Label of the upcoming-reservation chip (#237): localized weekday +
+/// day and start time in the calendar's house style ([DateFormat.E] /
+/// [DateFormat.d] / [DateFormat.Hm]) plus the seat name when the plan
+/// knows one — "Tue 21 · 09:00 · A1".
+String _upcomingLabel(Reservation reservation, String seatName) {
+  final local = reservation.startsAt.toLocal();
+  final day =
+      '${DateFormat.E().format(local)} ${DateFormat.d().format(local)}';
+  final when = '$day · ${DateFormat.Hm().format(local)}';
+  return seatName.isEmpty ? when : '$when · $seatName';
+}
+
+/// The reservation chip for [info] (#237), or null without one. Styles
+/// mirror the resolver priority: checked in keeps the filled success
+/// style from #224, reserved-now is outlined primary, an upcoming
+/// booking is outlined neutral so it visually ranks below both.
+/// [keyPrefix] keeps row and sheet [ValueKey]s distinct.
+Widget? _reservationChip(
+  BuildContext context, {
+  required AppLocalizations? l10n,
+  required String memberId,
+  required ReservationInfo? info,
+  required Map<String, String> targetNames,
+  String keyPrefix = 'directory-res',
+}) {
+  if (info == null) return null;
+  final theme = Theme.of(context);
+  final brightness = theme.brightness;
+  final reservation = info.reservation;
+  final seatName =
+      targetNames[reservation.seatId ?? reservation.officeId] ?? '';
+  return switch (info) {
+    CheckedInNow() => _StatusChip(
+      chipKey: ValueKey('$keyPrefix-$memberId'),
+      label: seatName.isEmpty
+          ? (l10n?.directoryCheckedIn ?? 'Checked in')
+          : (l10n?.directoryCheckedInSeat(seatName) ??
+                'Checked in · $seatName'),
+      foreground: AppStatusColors.onSuccessOf(brightness),
+      background: AppStatusColors.successOf(brightness),
+    ),
+    ReservedNow() => _StatusChip(
+      chipKey: ValueKey('$keyPrefix-$memberId'),
+      label: seatName.isEmpty
+          ? (l10n?.directoryReservedNow ?? 'Reserved now')
+          : (l10n?.directoryReservedNowSeat(seatName) ??
+                'Reserved now · $seatName'),
+      foreground: theme.colorScheme.primary,
+      outlined: true,
+    ),
+    UpcomingReservation() => _StatusChip(
+      chipKey: ValueKey('$keyPrefix-$memberId'),
+      label: _upcomingLabel(reservation, seatName),
+      foreground: theme.colorScheme.onSurfaceVariant,
+      outlined: true,
+    ),
+  };
+}
+
 /// The member's public-profile bottom sheet (#232): avatar, name, role
 /// (roles are additive flags, spec §2 — owner wins the single label),
-/// the automatic status chip, the self-set status line (#231) and the
-/// WhatsApp contact button when the member shared a number (#223).
+/// the automatic reservation + presence chips (#237), the self-set
+/// status line (#231) and the WhatsApp contact button when the member
+/// shared a number (#223).
 Future<void> _showMemberSheet(
   BuildContext context, {
   required Member member,
   required String name,
   required bool isSelf,
   required Profile? profile,
-  required DirectoryStatus status,
+  required DirectoryPresence presence,
+  required ReservationInfo? reservationInfo,
+  required Map<String, String> targetNames,
   required DateTime now,
   required void Function(Uri uri) onWhatsapp,
 }) {
@@ -237,14 +294,24 @@ Future<void> _showMemberSheet(
           : member.isAdmin
           ? (l10n?.memberRoleAdmin ?? 'Admin')
           : (l10n?.memberRoleMember ?? 'Member');
-      final chip = _statusChip(
-        sheetContext,
-        l10n: l10n,
-        memberId: member.id,
-        status: status,
-        now: now,
-        keyPrefix: 'directory-sheet-status',
-      );
+      final chips = <Widget>[
+        ?_reservationChip(
+          sheetContext,
+          l10n: l10n,
+          memberId: member.id,
+          info: reservationInfo,
+          targetNames: targetNames,
+          keyPrefix: 'directory-sheet-res',
+        ),
+        ?_presenceChip(
+          sheetContext,
+          l10n: l10n,
+          memberId: member.id,
+          presence: presence,
+          now: now,
+          keyPrefix: 'directory-sheet-status',
+        ),
+      ];
       final statusText = profile?.statusText ?? '';
       final whatsappUri = profile?.whatsappUri;
       return Padding(
@@ -288,9 +355,13 @@ Future<void> _showMemberSheet(
                   ),
                 ],
               ),
-              if (chip != null) ...[
+              if (chips.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.md),
-                Wrap(children: [chip]),
+                Wrap(
+                  spacing: AppSpacing.xs,
+                  runSpacing: AppSpacing.xs,
+                  children: chips,
+                ),
               ],
               if (statusText.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.md),
@@ -348,17 +419,20 @@ class _GroupTile extends StatelessWidget {
 }
 
 /// One directory row: avatar initial, name (bold when it is me), the
-/// self-set status line when present, status chip, trailing WhatsApp
-/// button when the member shared a number. Tap opens the detail sheet;
-/// rows of sharing members additionally swipe right to WhatsApp — no
-/// swipe affordance exists at all without a number.
+/// self-set status line when present, the reservation + presence chips
+/// (#237) flowing in a [Wrap], trailing WhatsApp button when the member
+/// shared a number. Tap opens the detail sheet; rows of sharing members
+/// additionally swipe right to WhatsApp — no swipe affordance exists at
+/// all without a number.
 class _MemberRow extends StatelessWidget {
   const _MemberRow({
     required this.member,
     required this.name,
     required this.isSelf,
     required this.profile,
-    required this.status,
+    required this.presence,
+    required this.reservationInfo,
+    required this.targetNames,
     required this.now,
     required this.onWhatsapp,
   });
@@ -367,7 +441,9 @@ class _MemberRow extends StatelessWidget {
   final String name;
   final bool isSelf;
   final Profile? profile;
-  final DirectoryStatus status;
+  final DirectoryPresence presence;
+  final ReservationInfo? reservationInfo;
+  final Map<String, String> targetNames;
   final DateTime now;
   final void Function(Uri uri) onWhatsapp;
 
@@ -377,13 +453,22 @@ class _MemberRow extends StatelessWidget {
     final theme = Theme.of(context);
     final brightness = theme.brightness;
 
-    final chip = _statusChip(
-      context,
-      l10n: l10n,
-      memberId: member.id,
-      status: status,
-      now: now,
-    );
+    final chips = <Widget>[
+      ?_reservationChip(
+        context,
+        l10n: l10n,
+        memberId: member.id,
+        info: reservationInfo,
+        targetNames: targetNames,
+      ),
+      ?_presenceChip(
+        context,
+        l10n: l10n,
+        memberId: member.id,
+        presence: presence,
+        now: now,
+      ),
+    ];
     final statusText = profile?.statusText ?? '';
     final whatsappUri = profile?.whatsappUri;
 
@@ -395,7 +480,7 @@ class _MemberRow extends StatelessWidget {
         name,
         style: isSelf ? const TextStyle(fontWeight: FontWeight.bold) : null,
       ),
-      subtitle: chip == null && statusText.isEmpty
+      subtitle: chips.isEmpty && statusText.isEmpty
           ? null
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -409,14 +494,14 @@ class _MemberRow extends StatelessWidget {
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
                   ),
-                if (chip != null)
-                  Wrap(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: AppSpacing.xs),
-                        child: chip,
-                      ),
-                    ],
+                if (chips.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: AppSpacing.xs),
+                    child: Wrap(
+                      spacing: AppSpacing.xs,
+                      runSpacing: AppSpacing.xs,
+                      children: chips,
+                    ),
                   ),
               ],
             ),
@@ -434,7 +519,9 @@ class _MemberRow extends StatelessWidget {
         name: name,
         isSelf: isSelf,
         profile: profile,
-        status: status,
+        presence: presence,
+        reservationInfo: reservationInfo,
+        targetNames: targetNames,
         now: now,
         onWhatsapp: onWhatsapp,
       ),

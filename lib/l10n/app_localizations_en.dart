@@ -405,6 +405,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get directoryClose => 'Close';
 
   @override
+  String get directoryReservedNow => 'Reserved now';
+
+  @override
+  String directoryReservedNowSeat(String seat) {
+    return 'Reserved now · $seat';
+  }
+
+  @override
   String get editorTitle => 'Workspace editor';
 
   @override

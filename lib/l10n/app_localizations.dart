@@ -830,6 +830,18 @@ abstract class AppLocalizations {
   /// **'Close'**
   String get directoryClose;
 
+  /// Directory reservation chip (#237): an active reservation covers now but the member has not checked in (seat name unknown)
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved now'**
+  String get directoryReservedNow;
+
+  /// Directory reservation chip (#237): an active reservation on the named seat/office covers now but the member has not checked in
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved now · {seat}'**
+  String directoryReservedNowSeat(String seat);
+
   /// App-bar title of the owner-only workspace editor
   ///
   /// In en, this message translates to:

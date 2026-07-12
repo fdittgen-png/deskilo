@@ -11,5 +11,7 @@
   "directoryLastSeenDays": "{days} T.",
   "directoryWhatsapp": "Auf WhatsApp schreiben",
   "directoryOpenGroup": "WhatsApp-Gruppe öffnen",
-  "directoryClose": "Schließen"
+  "directoryClose": "Schließen",
+  "directoryReservedNow": "Jetzt reserviert",
+  "directoryReservedNowSeat": "Jetzt reserviert · {seat}"
 }

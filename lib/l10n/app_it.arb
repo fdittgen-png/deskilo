@@ -121,6 +121,8 @@
   "directoryWhatsapp": "Chatta su WhatsApp",
   "directoryOpenGroup": "Apri il gruppo WhatsApp",
   "directoryClose": "Chiudi",
+  "directoryReservedNow": "Prenotato ora",
+  "directoryReservedNowSeat": "Prenotato ora · {seat}",
   "editorTitle": "Editor dello spazio",
   "editorOpenTooltip": "Modifica spazio",
   "editorAddLevel": "Aggiungi piano",

@@ -408,6 +408,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get directoryClose => 'Chiudi';
 
   @override
+  String get directoryReservedNow => 'Prenotato ora';
+
+  @override
+  String directoryReservedNowSeat(String seat) {
+    return 'Prenotato ora · $seat';
+  }
+
+  @override
   String get editorTitle => 'Editor dello spazio';
 
   @override

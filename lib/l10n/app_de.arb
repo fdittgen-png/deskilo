@@ -121,6 +121,8 @@
   "directoryWhatsapp": "Auf WhatsApp schreiben",
   "directoryOpenGroup": "WhatsApp-Gruppe öffnen",
   "directoryClose": "Schließen",
+  "directoryReservedNow": "Jetzt reserviert",
+  "directoryReservedNowSeat": "Jetzt reserviert · {seat}",
   "editorTitle": "Workspace-Editor",
   "editorOpenTooltip": "Workspace bearbeiten",
   "editorAddLevel": "Etage hinzufügen",

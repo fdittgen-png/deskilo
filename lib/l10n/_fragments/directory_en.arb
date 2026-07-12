@@ -67,5 +67,18 @@
   "directoryClose": "Close",
   "@directoryClose": {
     "description": "Dismiss button of the member detail sheet (#232)"
+  },
+  "directoryReservedNow": "Reserved now",
+  "@directoryReservedNow": {
+    "description": "Directory reservation chip (#237): an active reservation covers now but the member has not checked in (seat name unknown)"
+  },
+  "directoryReservedNowSeat": "Reserved now · {seat}",
+  "@directoryReservedNowSeat": {
+    "description": "Directory reservation chip (#237): an active reservation on the named seat/office covers now but the member has not checked in",
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      }
+    }
   }
 }
