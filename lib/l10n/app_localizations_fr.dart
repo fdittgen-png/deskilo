@@ -401,6 +401,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get directoryWhatsapp => 'Discuter sur WhatsApp';
 
   @override
+  String get directoryOpenGroup => 'Ouvrir le groupe WhatsApp';
+
+  @override
+  String get directoryClose => 'Fermer';
+
+  @override
   String get editorTitle => 'Éditeur d\'espace';
 
   @override

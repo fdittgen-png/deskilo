@@ -37,21 +37,24 @@ class _InMemoryDevModeStore implements DevModeStore {
 Member _member(
   int n, {
   MemberStatus status = MemberStatus.active,
+  bool isAdmin = false,
+  bool isOwner = false,
 }) =>
     Member(
       id: 'member-$n',
       workspaceId: 'ws-1',
       userId: 'user-$n',
-      isAdmin: false,
-      isOwner: false,
+      isAdmin: isAdmin,
+      isOwner: isOwner,
       status: status,
     );
 
 /// Seeds the canonical directory workspace: I am a PLAIN member (no owner
 /// or admin role — the directory and its settings entry are open to
-/// everyone). Anna is checked in on seat A1, Ben is online and shares
-/// WhatsApp, Cara has a reservation later today, Dora was last seen ~2 h
-/// ago, Eve was never seen, Paula is paused (hidden).
+/// everyone). Anna is the OWNER and checked in on seat A1, Ben is online,
+/// shares WhatsApp and set a custom status line (#231), Cara has a
+/// reservation later today, Dora was last seen ~2 h ago, Eve was never
+/// seen, Paula is paused (hidden).
 ({
   FakeWorkspaceRepository workspace,
   FakeReservationRepository reservations,
@@ -62,7 +65,7 @@ Member _member(
   final workspace = FakeWorkspaceRepository.withWorkspace()
     ..myMember = _member(1)
     ..otherMembers.addAll([
-      _member(2),
+      _member(2, isOwner: true),
       _member(3),
       _member(4),
       _member(5),
@@ -116,6 +119,7 @@ Member _member(
       id: 'user-3',
       displayName: 'Ben',
       whatsapp: '+491701234567',
+      statusText: 'In a call · back at 14:00',
       lastSeenAt: now.subtract(const Duration(minutes: 1)),
     ),
     const Profile(id: 'user-4', displayName: 'Cara'),
@@ -272,5 +276,190 @@ void main() {
 
     expect(find.byType(EmptyState), findsOneWidget);
     expect(find.text('No members yet.'), findsOneWidget);
+  });
+
+  testWidgets(
+      'the custom status line renders on the row; without a configured '
+      'group the group tile stays absent', (tester) async {
+    final seeded = _seed();
+    await _pumpDirectory(
+      tester,
+      workspace: seeded.workspace,
+      reservations: seeded.reservations,
+      floorPlan: seeded.floorPlan,
+      profile: seeded.profile,
+    );
+
+    // Ben's self-set status line (#231) sits on his row next to the
+    // automatic chip; both coexist.
+    expect(find.text('In a call · back at 14:00'), findsOneWidget);
+    expect(_chipText(tester, 'member-3'), 'Online');
+
+    // No WhatsApp group configured: no tile above the list.
+    expect(find.byKey(const ValueKey('directory-group')), findsNothing);
+  });
+
+  testWidgets(
+      'swipe right on a sharing member launches wa.me and the row '
+      'survives; non-sharing rows carry no swipe affordance at all',
+      (tester) async {
+    final seeded = _seed();
+    final launched = <Uri>[];
+    await _pumpDirectory(
+      tester,
+      workspace: seeded.workspace,
+      reservations: seeded.reservations,
+      floorPlan: seeded.floorPlan,
+      profile: seeded.profile,
+      linkLauncher: (uri) async {
+        launched.add(uri);
+        return true;
+      },
+    );
+
+    // Only Ben (shared number) is wrapped in a Dismissible; Anna's row
+    // has no swipe affordance whatsoever.
+    expect(
+      find.byKey(const ValueKey('directory-swipe-member-3')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('directory-swipe-member-2')),
+      findsNothing,
+    );
+    expect(
+      find.ancestor(
+        of: find.text('Anna'),
+        matching: find.byType(Dismissible),
+      ),
+      findsNothing,
+    );
+
+    // Swipe right past the dismiss threshold: confirmDismiss launches
+    // wa.me and resolves false, so the row snaps back instead of being
+    // dismissed.
+    await tester.drag(find.text('Ben'), const Offset(600, 0));
+    await tester.pumpAndSettle();
+
+    expect(launched.single.toString(), 'https://wa.me/491701234567');
+    expect(find.text('Ben'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('directory-swipe-member-3')),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets(
+      'tapping a row opens the public-profile sheet: role line, automatic '
+      'status, custom status, and the WhatsApp button only when shared',
+      (tester) async {
+    final seeded = _seed();
+    final launched = <Uri>[];
+    await _pumpDirectory(
+      tester,
+      workspace: seeded.workspace,
+      reservations: seeded.reservations,
+      floorPlan: seeded.floorPlan,
+      profile: seeded.profile,
+      linkLauncher: (uri) async {
+        launched.add(uri);
+        return true;
+      },
+    );
+
+    // Ben: plain member, online, custom status, shared number.
+    await tester.tap(find.text('Ben'));
+    await tester.pumpAndSettle();
+    final sheet = find.byType(BottomSheet);
+    expect(sheet, findsOneWidget);
+    expect(
+      find.descendant(of: sheet, matching: find.text('Member')),
+      findsOneWidget,
+    );
+    final benChip = find.byKey(
+      const ValueKey('directory-sheet-status-member-3'),
+    );
+    expect(
+      tester
+          .widget<Text>(
+            find.descendant(of: benChip, matching: find.byType(Text)),
+          )
+          .data,
+      'Online',
+    );
+    expect(
+      find.descendant(
+        of: sheet,
+        matching: find.text('In a call · back at 14:00'),
+      ),
+      findsOneWidget,
+    );
+
+    // The sheet's WhatsApp button launches wa.me and closes the sheet.
+    await tester.tap(
+      find.byKey(const ValueKey('directory-sheet-wa-member-3')),
+    );
+    await tester.pumpAndSettle();
+    expect(launched.single.toString(), 'https://wa.me/491701234567');
+    expect(find.byType(BottomSheet), findsNothing);
+
+    // Anna: owner, checked in on A1, no shared number — no WhatsApp
+    // button in her sheet.
+    await tester.tap(find.text('Anna'));
+    await tester.pumpAndSettle();
+    final annaSheet = find.byType(BottomSheet);
+    expect(
+      find.descendant(of: annaSheet, matching: find.text('Owner')),
+      findsOneWidget,
+    );
+    final annaChip = find.byKey(
+      const ValueKey('directory-sheet-status-member-2'),
+    );
+    expect(
+      tester
+          .widget<Text>(
+            find.descendant(of: annaChip, matching: find.byType(Text)),
+          )
+          .data,
+      'Checked in · A1',
+    );
+    expect(
+      find.byKey(const ValueKey('directory-sheet-wa-member-2')),
+      findsNothing,
+    );
+
+    // Close dismisses the sheet.
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
+    expect(find.byType(BottomSheet), findsNothing);
+  });
+
+  testWidgets(
+      'the group tile appears when the workspace has a WhatsApp group '
+      'link and opens it through the link seam', (tester) async {
+    final seeded = _seed();
+    await seeded.workspace
+        .setWhatsappGroup('ws-1', 'https://chat.whatsapp.com/AbCdEf123');
+    final launched = <Uri>[];
+    await _pumpDirectory(
+      tester,
+      workspace: seeded.workspace,
+      reservations: seeded.reservations,
+      floorPlan: seeded.floorPlan,
+      profile: seeded.profile,
+      linkLauncher: (uri) async {
+        launched.add(uri);
+        return true;
+      },
+    );
+
+    expect(find.text('Open WhatsApp group'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('directory-group')));
+    await tester.pumpAndSettle();
+
+    expect(
+      launched.single.toString(),
+      'https://chat.whatsapp.com/AbCdEf123',
+    );
   });
 }
