@@ -1291,6 +1291,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String workspaceXmlImportPreviewAccessories(int count) {
+    return 'Accessori: $count';
+  }
+
+  @override
   String get workspaceXmlImportPreviewWarning =>
       'La planimetria attuale verrà eliminata e sostituita e le impostazioni dello spazio verranno sovrascritte. L\'operazione non può essere annullata.';
 

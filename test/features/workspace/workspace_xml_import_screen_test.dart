@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_picker.dart';
+import 'package:deskilo/features/plan/domain/accessory.dart';
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
@@ -110,6 +111,27 @@ String importableXml() {
       amenities: [],
     ),
   ];
+  // v2 (#180): a two-entry catalog (one inactive) with B1 carrying the
+  // Monitor, so the preview's accessory count and the repo payload are
+  // observable.
+  const accessories = [
+    Accessory(
+      id: 'accessory-x1',
+      workspaceId: 'ws-import',
+      name: 'Monitor',
+      supplementCents: 100,
+      active: true,
+      sortOrder: 0,
+    ),
+    Accessory(
+      id: 'accessory-x2',
+      workspaceId: 'ws-import',
+      name: 'Docking station',
+      supplementCents: 50,
+      active: false,
+      sortOrder: 1,
+    ),
+  ];
   return buildWorkspaceXml(
     workspace: workspace,
     levels: [
@@ -123,6 +145,10 @@ String importableXml() {
         ),
       ),
     ],
+    accessories: accessories,
+    seatAccessories: const {
+      'seat-x1': {'accessory-x1'},
+    },
   );
 }
 
@@ -202,12 +228,14 @@ void main() {
     // The picker was filtered to XML files.
     expect(requestedTypeGroups.single.extensions, ['xml']);
 
-    // Preview dialog: counts + destructive warning, nothing applied yet.
+    // Preview dialog: counts (incl. the v2 accessory catalog, #180) +
+    // destructive warning, nothing applied yet.
     expect(find.text('Replace floor plan?'), findsOneWidget);
     expect(
       find.text('Levels: 1 · Offices: 1 · Desks: 1 · Seats: 2'),
       findsOneWidget,
     );
+    expect(find.text('Accessories: 2'), findsOneWidget);
     expect(importRepository.calls, isEmpty);
 
     await tester.tap(find.byKey(const Key('workspaceXmlImportConfirm')));
@@ -218,6 +246,16 @@ void main() {
     expect(workspaceId, 'ws-1');
     expect(data.levels.single.name, 'First floor');
     expect(data.levels.single.offices.single.desks.single.seats, hasLength(2));
+    // ...carrying the accessory catalog and B1's by-name reference (#180)...
+    expect(
+      data.accessories.map((a) => a.name),
+      ['Monitor', 'Docking station'],
+    );
+    expect(
+      data.levels.single.offices.single.desks.single.seats.first
+          .accessoryNames,
+      ['Monitor'],
+    );
 
     // ...settings through the EXISTING owner writers (#153/#155/#146)...
     expect(

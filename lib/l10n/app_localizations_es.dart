@@ -1288,6 +1288,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String workspaceXmlImportPreviewAccessories(int count) {
+    return 'Accesorios: $count';
+  }
+
+  @override
   String get workspaceXmlImportPreviewWarning =>
       'El plano actual se eliminará y sustituirá, y los ajustes del espacio se sobrescribirán. Esta acción no se puede deshacer.';
 

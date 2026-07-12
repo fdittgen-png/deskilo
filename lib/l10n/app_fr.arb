@@ -390,6 +390,7 @@
   "workspaceXmlFileTypeLabel": "XML",
   "workspaceXmlImportPreviewTitle": "Remplacer le plan des locaux ?",
   "workspaceXmlImportPreviewCounts": "Étages : {levels} · Salles : {offices} · Bureaux : {desks} · Places : {seats}",
+  "workspaceXmlImportPreviewAccessories": "Accessoires : {count}",
   "workspaceXmlImportPreviewWarning": "Le plan actuel sera supprimé et remplacé, et les paramètres de l'espace seront écrasés. Cette action est irréversible.",
   "workspaceXmlImportConfirm": "Remplacer et importer",
   "workspaceXmlImportSuccess": "Espace importé.",

@@ -1290,6 +1290,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String workspaceXmlImportPreviewAccessories(int count) {
+    return 'Zubehör: $count';
+  }
+
+  @override
   String get workspaceXmlImportPreviewWarning =>
       'Der aktuelle Raumplan wird gelöscht und ersetzt, die Workspace-Einstellungen werden überschrieben. Das kann nicht rückgängig gemacht werden.';
 

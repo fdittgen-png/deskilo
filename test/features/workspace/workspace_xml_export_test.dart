@@ -10,12 +10,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../helpers/fake_accessory_repository.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
 
 Future<void> pumpWorkspaceSettings(
   WidgetTester tester, {
   required ShareLauncher launcher,
+  FakeAccessoryRepository? accessories,
 }) async {
   // The settings form outgrew the 800×600 test viewport long ago (#155);
   // the export tile sits below Save, so keep the whole form built.
@@ -24,10 +26,23 @@ Future<void> pumpWorkspaceSettings(
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
   final floorPlan = FakeFloorPlanRepository()..seedSmallPlan();
+  // v2 (#180): the catalog (incl. an inactive entry) and the one seat's
+  // assignments export too.
+  final accessoryRepository = accessories ?? FakeAccessoryRepository();
+  if (accessories == null) {
+    accessoryRepository.seedSmallCatalog();
+    accessoryRepository.seatAccessories[floorPlan.seats.single.id] = {
+      accessoryRepository.accessories.first.id, // Monitor (active)
+      accessoryRepository.accessories.last.id, // Docking station (inactive)
+    };
+  }
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
-        ...standardTestOverrides(floorPlan: floorPlan),
+        ...standardTestOverrides(
+          floorPlan: floorPlan,
+          accessories: accessoryRepository,
+        ),
         shareLauncherProvider.overrideWithValue(launcher),
       ],
       child: const DeskiloApp(),
@@ -61,16 +76,25 @@ void main() {
     final file = captured.single.files!.single;
     expect(file.mimeType, 'application/xml');
 
-    // The payload round-trips through the pinned schema (#164): the
+    // The payload round-trips through the pinned schema (#164/#180): the
     // seeded ws-1 settings + the one-level plan, no ids, no invite code.
     final bytes = await tester.runAsync(() => file.readAsBytes());
     final xml = utf8.decode(bytes!);
     expect(xml, isNot(contains('GOODCODE22')));
+    // v2 is what the app exports now (#180).
+    expect(xml, contains('<deskilo-workspace version="2">'));
     final parsed = parseWorkspaceXml(xml);
     expect(parsed.settings.name, 'Test Space');
     expect(parsed.settings.countryCode, 'DE');
     expect(parsed.settings.currencyCode, 'EUR');
     expect(parsed.settings.timezone, 'Europe/Berlin');
+    // The WHOLE catalog exports — the inactive Docking station included.
+    expect(
+      parsed.accessories.map((a) => a.name),
+      ['Monitor', 'Standing desk', 'Docking station'],
+    );
+    expect(parsed.accessories.first.supplementCents, 100);
+    expect(parsed.accessories.last.active, false);
     expect(parsed.levels, hasLength(1));
     final level = parsed.levels.single;
     expect(level.name, 'Ground floor');
@@ -81,7 +105,9 @@ void main() {
     final seat = desk.seats.single;
     expect(seat.name, 'A1');
     expect(seat.orientation, SeatOrientation.n);
+    // Legacy amenities keep exporting ALONGSIDE the catalog refs (#180).
     expect(seat.amenities, ['monitor']);
+    expect(seat.accessoryNames, ['Monitor', 'Docking station']);
   });
 
   testWidgets('a failing share shows the generic error snackbar',

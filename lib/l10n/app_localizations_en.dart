@@ -1280,6 +1280,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String workspaceXmlImportPreviewAccessories(int count) {
+    return 'Accessories: $count';
+  }
+
+  @override
   String get workspaceXmlImportPreviewWarning =>
       'The current floor plan will be deleted and replaced, and the workspace settings will be overwritten. This cannot be undone.';
 

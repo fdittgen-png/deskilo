@@ -7,6 +7,7 @@
   "workspaceXmlFileTypeLabel": "XML",
   "workspaceXmlImportPreviewTitle": "Raumplan ersetzen?",
   "workspaceXmlImportPreviewCounts": "Etagen: {levels} · Räume: {offices} · Tische: {desks} · Plätze: {seats}",
+  "workspaceXmlImportPreviewAccessories": "Zubehör: {count}",
   "workspaceXmlImportPreviewWarning": "Der aktuelle Raumplan wird gelöscht und ersetzt, die Workspace-Einstellungen werden überschrieben. Das kann nicht rückgängig gemacht werden.",
   "workspaceXmlImportConfirm": "Ersetzen und importieren",
   "workspaceXmlImportSuccess": "Workspace importiert.",

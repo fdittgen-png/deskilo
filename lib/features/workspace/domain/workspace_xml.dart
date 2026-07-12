@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'package:xml/xml.dart';
 
+import '../../plan/domain/accessory.dart';
 import '../../plan/domain/floor_plan.dart';
 import '../../plan/domain/grid_geometry.dart';
 import '../../plan/domain/level.dart';
@@ -12,22 +13,27 @@ import 'workspace.dart';
 /// plan. Deliberately excluded: the invite code (a secret) and all
 /// member / reservation / ledger data. Ids are NOT part of the format —
 /// import (#165) regenerates them; desks belong to offices and seats to
-/// desks purely by nesting.
+/// desks purely by nesting, and seats reference accessories by NAME.
 ///
-/// Schema v1:
+/// Schema v2 (#180 — v1 plus the accessory catalog and per-seat
+/// assignments the editor writes since #168):
 /// ```xml
 /// <?xml version="1.0" encoding="UTF-8"?>
-/// <deskilo-workspace version="1">
+/// <deskilo-workspace version="2">
 ///   <settings name country currency timezone>
 ///     <feature key enabled/>
 ///     <payment-instruction key value/>
 ///   </settings>
+///   <accessories>
+///     <accessory name supplement-cents active sort-order/>
+///   </accessories>
 ///   <floor-plan>
 ///     <level name sort-order>
 ///       <office name color bookable-as-whole x y w h>
 ///         <desk name x y w h>
 ///           <seat name x y orientation chair [blocked-from] [blocked-to]>
 ///             <amenity name/>
+///             <accessory name/>
 ///           </seat>
 ///         </desk>
 ///       </office>
@@ -36,11 +42,23 @@ import 'workspace.dart';
 /// </deskilo-workspace>
 /// ```
 ///
+/// The `<accessories>` catalog is complete — inactive entries included, a
+/// backup must restore everything. A seat's `<accessory name/>` children
+/// reference catalog entries by name (ids regenerate on import); its
+/// legacy `<amenity name/>` children keep mirroring `seats.amenities`
+/// verbatim. A v1 document simply has no `<accessories>` section and no
+/// seat `<accessory>` children — it parses to an empty catalog.
+///
 /// All timestamps are ISO-8601 UTC. Grid coordinates are absolute cells
 /// exactly as stored (ADR 0005); a seat's x/y is its footprint's
 /// top-left cell.
 abstract final class WorkspaceXmlSchema {
-  static const int version = 1;
+  /// The version the app EXPORTS.
+  static const int version = 2;
+
+  /// The versions the parser ACCEPTS: v1 (pre-accessories, #164) and v2
+  /// (#180). Anything else was exported by a newer app → unsupported.
+  static const Set<int> supportedVersions = {1, 2};
 
   static const String rootElement = 'deskilo-workspace';
   static const String versionAttr = 'version';
@@ -74,6 +92,12 @@ abstract final class WorkspaceXmlSchema {
   static const String blockedFromAttr = 'blocked-from';
   static const String blockedToAttr = 'blocked-to';
   static const String amenityElement = 'amenity';
+
+  // v2 (#180): accessory catalog + per-seat references by name.
+  static const String accessoriesElement = 'accessories';
+  static const String accessoryElement = 'accessory';
+  static const String supplementCentsAttr = 'supplement-cents';
+  static const String activeAttr = 'active';
 }
 
 /// Why a document was rejected. #165 maps each value to a localized
@@ -156,6 +180,33 @@ class WorkspaceXmlSettings {
       _mapHash(featureFlags), _mapHash(paymentInstructions));
 }
 
+/// An `<accessory>` catalog entry (v2, #180). Referenced from seats by
+/// [name]; ids regenerate on import like everything else in the format.
+class WorkspaceXmlAccessory {
+  const WorkspaceXmlAccessory({
+    required this.name,
+    this.supplementCents = 0,
+    this.active = true,
+    this.sortOrder = 0,
+  });
+
+  final String name;
+  final int supplementCents;
+  final bool active;
+  final int sortOrder;
+
+  @override
+  bool operator ==(Object other) =>
+      other is WorkspaceXmlAccessory &&
+      other.name == name &&
+      other.supplementCents == supplementCents &&
+      other.active == active &&
+      other.sortOrder == sortOrder;
+
+  @override
+  int get hashCode => Object.hash(name, supplementCents, active, sortOrder);
+}
+
 /// A `<seat>`: THE bookable unit. x/y is the footprint's top-left cell.
 class WorkspaceXmlSeat {
   const WorkspaceXmlSeat({
@@ -165,6 +216,7 @@ class WorkspaceXmlSeat {
     required this.orientation,
     this.chair = '',
     this.amenities = const [],
+    this.accessoryNames = const [],
     this.blockedFrom,
     this.blockedTo,
   });
@@ -175,6 +227,9 @@ class WorkspaceXmlSeat {
   final SeatOrientation orientation;
   final String chair;
   final List<String> amenities;
+
+  /// Catalog references by name (v2, #180) — always empty in a v1 file.
+  final List<String> accessoryNames;
   final DateTime? blockedFrom;
   final DateTime? blockedTo;
 
@@ -187,12 +242,14 @@ class WorkspaceXmlSeat {
       other.orientation == orientation &&
       other.chair == chair &&
       _listEquals(other.amenities, amenities) &&
+      _listEquals(other.accessoryNames, accessoryNames) &&
       other.blockedFrom == blockedFrom &&
       other.blockedTo == blockedTo;
 
   @override
   int get hashCode => Object.hash(name, x, y, orientation, chair,
-      Object.hashAll(amenities), blockedFrom, blockedTo);
+      Object.hashAll(amenities), Object.hashAll(accessoryNames), blockedFrom,
+      blockedTo);
 }
 
 /// A `<desk>` with its seats nested inside.
@@ -271,40 +328,62 @@ class WorkspaceXmlLevel {
   int get hashCode => Object.hash(name, sortOrder, Object.hashAll(offices));
 }
 
-/// The whole parsed document: settings + floor-plan structure, no ids.
+/// The whole parsed document: settings + accessory catalog + floor-plan
+/// structure, no ids. [accessories] is empty for a v1 file (#180).
 class WorkspaceXmlData {
-  const WorkspaceXmlData({required this.settings, this.levels = const []});
+  const WorkspaceXmlData({
+    required this.settings,
+    this.accessories = const [],
+    this.levels = const [],
+  });
 
   final WorkspaceXmlSettings settings;
+  final List<WorkspaceXmlAccessory> accessories;
   final List<WorkspaceXmlLevel> levels;
 
   @override
   bool operator ==(Object other) =>
       other is WorkspaceXmlData &&
       other.settings == settings &&
+      _listEquals(other.accessories, accessories) &&
       _listEquals(other.levels, levels);
 
   @override
-  int get hashCode => Object.hash(settings, Object.hashAll(levels));
+  int get hashCode => Object.hash(
+      settings, Object.hashAll(accessories), Object.hashAll(levels));
 }
 
 // ---------------------------------------------------------------------------
 // Export
 // ---------------------------------------------------------------------------
 
-/// Serializes the workspace configuration to schema-v1 XML. [levels]
+/// Serializes the workspace configuration to schema-v2 XML. [levels]
 /// pairs each level with its drawn plan; desks are nested under the
 /// office whose id they reference and seats under their desk, so the
 /// document carries no ids at all.
+///
+/// [accessories] is the WHOLE catalog (inactive included — a backup must
+/// be complete, #180) and [seatAccessories] the seat id → accessory ids
+/// assignments; both serialize id-free, seats referencing accessories by
+/// name in catalog order.
 String buildWorkspaceXml({
   required Workspace workspace,
   required List<({Level level, FloorPlan plan})> levels,
+  List<Accessory> accessories = const [],
+  Map<String, Set<String>> seatAccessories = const {},
 }) {
   final sortedLevels = List.of(levels)
     ..sort((a, b) => a.level.sortOrder.compareTo(b.level.sortOrder));
-  // Deterministic output: map-backed collections are emitted key-sorted.
+  // Deterministic output: map-backed collections are emitted key-sorted,
+  // the catalog in its display order (sort_order, then name — the order
+  // the repository serves, re-established here for raw inputs).
   final flagKeys = workspace.featureFlags.keys.toList()..sort();
   final paymentKeys = workspace.paymentInstructions.keys.toList()..sort();
+  final sortedAccessories = List.of(accessories)
+    ..sort((a, b) {
+      final bySortOrder = a.sortOrder.compareTo(b.sortOrder);
+      return bySortOrder != 0 ? bySortOrder : a.name.compareTo(b.name);
+    });
 
   final builder = XmlBuilder();
   builder.declaration(encoding: 'UTF-8');
@@ -336,6 +415,19 @@ String buildWorkspaceXml({
         });
       }
     });
+    builder.element(WorkspaceXmlSchema.accessoriesElement, nest: () {
+      for (final accessory in sortedAccessories) {
+        builder.element(WorkspaceXmlSchema.accessoryElement, nest: () {
+          builder.attribute(WorkspaceXmlSchema.nameAttr, accessory.name);
+          builder.attribute(WorkspaceXmlSchema.supplementCentsAttr,
+              '${accessory.supplementCents}');
+          builder.attribute(
+              WorkspaceXmlSchema.activeAttr, '${accessory.active}');
+          builder.attribute(
+              WorkspaceXmlSchema.sortOrderAttr, '${accessory.sortOrder}');
+        });
+      }
+    });
     builder.element(WorkspaceXmlSchema.floorPlanElement, nest: () {
       for (final entry in sortedLevels) {
         builder.element(WorkspaceXmlSchema.levelElement, nest: () {
@@ -355,7 +447,14 @@ String buildWorkspaceXml({
                   builder.attribute(WorkspaceXmlSchema.nameAttr, desk.name);
                   _rectAttributes(builder, desk.rect);
                   for (final seat in entry.plan.seatsOf(desk.id)) {
-                    _seatElement(builder, seat);
+                    // Assigned catalog entries, referenced by NAME in
+                    // catalog order — ids never enter the document.
+                    final assignedIds =
+                        seatAccessories[seat.id] ?? const <String>{};
+                    _seatElement(builder, seat, [
+                      for (final accessory in sortedAccessories)
+                        if (assignedIds.contains(accessory.id)) accessory.name,
+                    ]);
                   }
                 });
               }
@@ -385,7 +484,8 @@ void _rectAttributes(XmlBuilder builder, GridRect rect) {
   builder.attribute(WorkspaceXmlSchema.hAttr, '${rect.h}');
 }
 
-void _seatElement(XmlBuilder builder, Seat seat) {
+void _seatElement(
+    XmlBuilder builder, Seat seat, List<String> accessoryNames) {
   builder.element(WorkspaceXmlSchema.seatElement, nest: () {
     builder.attribute(WorkspaceXmlSchema.nameAttr, seat.name);
     builder.attribute(WorkspaceXmlSchema.xAttr, '${seat.x}');
@@ -403,9 +503,16 @@ void _seatElement(XmlBuilder builder, Seat seat) {
       builder.attribute(
           WorkspaceXmlSchema.blockedToAttr, to.toUtc().toIso8601String());
     }
+    // Legacy amenities keep exporting verbatim (fidelity of the
+    // seats.amenities column) ALONGSIDE the v2 catalog references.
     for (final amenity in seat.amenities) {
       builder.element(WorkspaceXmlSchema.amenityElement, nest: () {
         builder.attribute(WorkspaceXmlSchema.nameAttr, amenity);
+      });
+    }
+    for (final name in accessoryNames) {
+      builder.element(WorkspaceXmlSchema.accessoryElement, nest: () {
+        builder.attribute(WorkspaceXmlSchema.nameAttr, name);
       });
     }
   });
@@ -416,9 +523,11 @@ void _seatElement(XmlBuilder builder, Seat seat) {
 // the import UI is #165)
 // ---------------------------------------------------------------------------
 
-/// Parses and validates a schema-v1 document. Throws
+/// Parses and validates a schema-v1 OR schema-v2 document (#180). Throws
 /// [WorkspaceXmlException] on anything suspicious — never returns a
-/// half-valid structure.
+/// half-valid structure. A v1 document (no `<accessories>`, no seat
+/// `<accessory>` refs) parses to an empty catalog; version 3+ →
+/// [WorkspaceXmlError.unsupportedVersion].
 WorkspaceXmlData parseWorkspaceXml(String input) {
   final XmlElement root;
   try {
@@ -437,27 +546,80 @@ WorkspaceXmlData parseWorkspaceXml(String input) {
     throw WorkspaceXmlException(WorkspaceXmlError.wrongRoot,
         'expected <${WorkspaceXmlSchema.rootElement}>, got <${root.name.local}>');
   }
-  final version =
+  final rawVersion =
       _requireAttribute(root, WorkspaceXmlSchema.versionAttr);
-  if (version != '${WorkspaceXmlSchema.version}') {
+  final version = int.tryParse(rawVersion);
+  if (version == null ||
+      !WorkspaceXmlSchema.supportedVersions.contains(version)) {
     throw WorkspaceXmlException(WorkspaceXmlError.unsupportedVersion,
-        'unsupported ${WorkspaceXmlSchema.versionAttr}="$version"');
+        'unsupported ${WorkspaceXmlSchema.versionAttr}="$rawVersion"');
   }
 
   final settingsElement =
       _requireElement(root, WorkspaceXmlSchema.settingsElement);
   final floorPlanElement =
       _requireElement(root, WorkspaceXmlSchema.floorPlanElement);
+  // Optional in BOTH versions: absent in every v1 file, and a v2 export
+  // of a catalog-less workspace round-trips through an empty element.
+  final accessoriesElement =
+      root.getElement(WorkspaceXmlSchema.accessoriesElement);
 
-  return WorkspaceXmlData(
+  final data = WorkspaceXmlData(
     settings: _parseSettings(settingsElement),
+    accessories: [
+      if (accessoriesElement != null)
+        for (final accessory in accessoriesElement
+            .findElements(WorkspaceXmlSchema.accessoryElement))
+          _parseAccessory(accessory),
+    ],
     levels: [
       for (final level
           in floorPlanElement.findElements(WorkspaceXmlSchema.levelElement))
         _parseLevel(level),
     ],
   );
+  _validateAccessoryRefs(data);
+  return data;
 }
+
+/// Cross-checks the v2 accessory references (#180): catalog names must be
+/// unique (the DB upserts by (workspace_id, name)) and every seat ref
+/// must resolve to a catalog entry — the server would raise 'malformed
+/// plan: unknown accessory', but a typed client error is clearer.
+void _validateAccessoryRefs(WorkspaceXmlData data) {
+  final catalogNames = <String>{};
+  for (final accessory in data.accessories) {
+    if (!catalogNames.add(accessory.name)) {
+      throw WorkspaceXmlException(WorkspaceXmlError.invalidValue,
+          'duplicate <${WorkspaceXmlSchema.accessoryElement}> '
+          '${WorkspaceXmlSchema.nameAttr}="${accessory.name}" in the catalog');
+    }
+  }
+  for (final level in data.levels) {
+    for (final office in level.offices) {
+      for (final desk in office.desks) {
+        for (final seat in desk.seats) {
+          for (final name in seat.accessoryNames) {
+            if (!catalogNames.contains(name)) {
+              throw WorkspaceXmlException(WorkspaceXmlError.invalidValue,
+                  'seat "${seat.name}" references unknown accessory "$name"');
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+WorkspaceXmlAccessory _parseAccessory(XmlElement element) =>
+    WorkspaceXmlAccessory(
+      name: _requireAttribute(element, WorkspaceXmlSchema.nameAttr),
+      supplementCents: _requireInt(
+          element, WorkspaceXmlSchema.supplementCentsAttr, min: 0),
+      active: _requireBool(element, WorkspaceXmlSchema.activeAttr),
+      sortOrder:
+          _requireInt(element, WorkspaceXmlSchema.sortOrderAttr, min: 0),
+    );
 
 WorkspaceXmlSettings _parseSettings(XmlElement element) {
   final featureFlags = <String, bool>{};
@@ -540,6 +702,11 @@ WorkspaceXmlSeat _parseSeat(XmlElement element) {
       for (final amenity
           in element.findElements(WorkspaceXmlSchema.amenityElement))
         _requireAttribute(amenity, WorkspaceXmlSchema.nameAttr),
+    ],
+    accessoryNames: [
+      for (final accessory
+          in element.findElements(WorkspaceXmlSchema.accessoryElement))
+        _requireAttribute(accessory, WorkspaceXmlSchema.nameAttr),
     ],
     blockedFrom: _optionalUtc(element, WorkspaceXmlSchema.blockedFromAttr),
     blockedTo: _optionalUtc(element, WorkspaceXmlSchema.blockedToAttr),

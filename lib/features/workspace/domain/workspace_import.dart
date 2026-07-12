@@ -12,9 +12,12 @@ import 'workspace_xml.dart';
 /// localized explanation instead of the generic error.
 const String kWorkspaceHasReservationsError = 'workspace has reservations';
 
-/// jsonb keys of the `import_floor_plan` payload (migration 0023). The
-/// shape mirrors the XML schema (#164): an array of levels, each nesting
-/// offices[desks[seats[amenities]]] — no ids, import regenerates them.
+/// jsonb keys of the `import_floor_plan_v2` payload (migration 0027,
+/// shape-compatible with 0023's `import_floor_plan`). The plan mirrors
+/// the XML schema (#164/#180): an array of levels, each nesting
+/// offices[desks[seats[amenities, accessories]]] — no ids, import
+/// regenerates them. A seat's `accessories` are catalog NAMES; the
+/// catalog itself travels as the separate `p_accessories` array.
 abstract final class WorkspaceImportPlanKeys {
   static const String name = 'name';
   static const String sortOrder = 'sort_order';
@@ -32,6 +35,11 @@ abstract final class WorkspaceImportPlanKeys {
   static const String amenities = 'amenities';
   static const String blockedFrom = 'blocked_from';
   static const String blockedTo = 'blocked_to';
+
+  // v2 (#180): per-seat catalog references + the p_accessories entries.
+  static const String accessories = 'accessories';
+  static const String supplementCents = 'supplement_cents';
+  static const String active = 'active';
 }
 
 /// Owner-only import boundary (#165). Separate from [WorkspaceRepository]
@@ -39,13 +47,16 @@ abstract final class WorkspaceImportPlanKeys {
 /// data/, fakes in the import tests.
 abstract class WorkspaceImportRepository {
   /// Transactionally replaces the workspace's floor plan with the parsed
-  /// file's levels via the `import_floor_plan` RPC. Throws the backend's
+  /// file's levels and upserts its accessory catalog via the
+  /// `import_floor_plan_v2` RPC (migration 0027). Throws the backend's
   /// [kWorkspaceHasReservationsError] when any reservation exists.
   Future<void> importFloorPlan(String workspaceId, WorkspaceXmlData data);
 }
 
-/// Converts the parsed floor plan to the `import_floor_plan` jsonb
-/// payload. Pure so unit tests can round-trip it against the codec.
+/// Converts the parsed floor plan to the `p_plan` jsonb payload of
+/// `import_floor_plan_v2` (also the exact `import_floor_plan` v1 shape
+/// plus the seats' `accessories` name arrays). Pure so unit tests can
+/// round-trip it against the codec.
 List<Map<String, Object?>> workspaceXmlPlanToJson(
   List<WorkspaceXmlLevel> levels,
 ) {
@@ -82,6 +93,8 @@ List<Map<String, Object?>> workspaceXmlPlanToJson(
                               seat.orientation.name,
                           WorkspaceImportPlanKeys.chair: seat.chair,
                           WorkspaceImportPlanKeys.amenities: seat.amenities,
+                          WorkspaceImportPlanKeys.accessories:
+                              seat.accessoryNames,
                           WorkspaceImportPlanKeys.blockedFrom: seat.blockedFrom
                               ?.toUtc()
                               .toIso8601String(),
@@ -97,11 +110,28 @@ List<Map<String, Object?>> workspaceXmlPlanToJson(
   ];
 }
 
-/// Simple counts for the confirm-dialog summary ("2 levels, 3 offices,
-/// 8 desks, 14 seats").
-({int levels, int offices, int desks, int seats}) workspaceXmlPlanCounts(
-  WorkspaceXmlData data,
+/// Converts the parsed accessory catalog to the `p_accessories` jsonb
+/// payload of `import_floor_plan_v2` (migration 0027). A v1 file has an
+/// empty catalog → empty array → the RPC behaves exactly like the v1
+/// import. Pure so unit tests can round-trip it against the codec.
+List<Map<String, Object?>> workspaceXmlAccessoriesToJson(
+  List<WorkspaceXmlAccessory> accessories,
 ) {
+  return [
+    for (final accessory in accessories)
+      {
+        WorkspaceImportPlanKeys.name: accessory.name,
+        WorkspaceImportPlanKeys.supplementCents: accessory.supplementCents,
+        WorkspaceImportPlanKeys.active: accessory.active,
+        WorkspaceImportPlanKeys.sortOrder: accessory.sortOrder,
+      },
+  ];
+}
+
+/// Simple counts for the confirm-dialog summary ("2 levels, 3 offices,
+/// 8 desks, 14 seats" + "3 accessories", #180).
+({int levels, int offices, int desks, int seats, int accessories})
+    workspaceXmlPlanCounts(WorkspaceXmlData data) {
   var offices = 0;
   var desks = 0;
   var seats = 0;
@@ -119,6 +149,7 @@ List<Map<String, Object?>> workspaceXmlPlanToJson(
     offices: offices,
     desks: desks,
     seats: seats,
+    accessories: data.accessories.length,
   );
 }
 

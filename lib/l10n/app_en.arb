@@ -1717,6 +1717,15 @@
       }
     }
   },
+  "workspaceXmlImportPreviewAccessories": "Accessories: {count}",
+  "@workspaceXmlImportPreviewAccessories": {
+    "description": "Second summary line in the import preview dialog counting the accessory catalog entries the picked file carries (schema v2, #180); 0 for a v1 file",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "workspaceXmlImportPreviewWarning": "The current floor plan will be deleted and replaced, and the workspace settings will be overwritten. This cannot be undone.",
   "@workspaceXmlImportPreviewWarning": {
     "description": "Destructive-styled warning in the import preview dialog (#165)"

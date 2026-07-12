@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import 'package:deskilo/features/plan/domain/accessory.dart';
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
@@ -81,6 +82,41 @@ final _openEndedSeat = Seat(
   blockedFrom: DateTime.utc(2026, 9, 1),
 );
 
+/// The whole catalog (#180): a priced entry, a free one, and an INACTIVE
+/// one — a backup must be complete, so it exports too.
+const _catalog = [
+  Accessory(
+    id: 'accessory-1',
+    workspaceId: 'ws-1',
+    name: 'Monitor',
+    supplementCents: 150,
+    active: true,
+    sortOrder: 0,
+  ),
+  Accessory(
+    id: 'accessory-2',
+    workspaceId: 'ws-1',
+    name: 'Standing desk',
+    supplementCents: 0,
+    active: true,
+    sortOrder: 1,
+  ),
+  Accessory(
+    id: 'accessory-3',
+    workspaceId: 'ws-1',
+    name: 'Docking station',
+    supplementCents: 50,
+    active: false,
+    sortOrder: 2,
+  ),
+];
+
+/// Seat A1 carries two catalog accessories (one of them the inactive
+/// entry) ALONGSIDE its legacy amenities.
+const _seatAssignments = {
+  'seat-1': {'accessory-1', 'accessory-3'},
+};
+
 String _validXml() => buildWorkspaceXml(
       workspace: _workspace,
       levels: [
@@ -99,11 +135,18 @@ String _validXml() => buildWorkspaceXml(
               levelId: 'level-2', offices: [], desks: [], seats: []),
         ),
       ],
+      accessories: _catalog,
+      seatAccessories: _seatAssignments,
     );
 
 void main() {
   group('round trip', () {
-    test('toXml → parse yields the equal id-free structure (#164)', () {
+    test('export writes schema version 2 (#180)', () {
+      expect(WorkspaceXmlSchema.version, 2);
+      expect(_validXml(), contains('<deskilo-workspace version="2">'));
+    });
+
+    test('toXml → parse yields the equal id-free structure (#164/#180)', () {
       final parsed = parseWorkspaceXml(_validXml());
 
       expect(
@@ -124,6 +167,18 @@ void main() {
               'wise': '@deskilo',
             },
           ),
+          // The whole catalog in catalog order, inactive included (#180).
+          accessories: const [
+            WorkspaceXmlAccessory(
+                name: 'Monitor', supplementCents: 150, sortOrder: 0),
+            WorkspaceXmlAccessory(
+                name: 'Standing desk', supplementCents: 0, sortOrder: 1),
+            WorkspaceXmlAccessory(
+                name: 'Docking station',
+                supplementCents: 50,
+                active: false,
+                sortOrder: 2),
+          ],
           levels: [
             WorkspaceXmlLevel(
               name: 'Ground floor',
@@ -146,6 +201,12 @@ void main() {
                           orientation: SeatOrientation.n,
                           chair: 'herman-miller',
                           amenities: const ['monitor', 'dock'],
+                          // By NAME, in catalog order — ids regenerate on
+                          // import (#180).
+                          accessoryNames: const [
+                            'Monitor',
+                            'Docking station',
+                          ],
                           blockedFrom: DateTime.utc(2026, 8, 1, 6),
                           blockedTo: DateTime.utc(2026, 8, 15, 18),
                         ),
@@ -176,6 +237,36 @@ void main() {
       expect(xml, isNot(contains('office-1')));
       expect(xml, isNot(contains('desk-1')));
       expect(xml, isNot(contains('seat-1')));
+      expect(xml, isNot(contains('accessory-1')));
+    });
+
+    test('a v1 document still parses — empty catalog, no seat refs (#180)',
+        () {
+      // Pinned v1 snippet, byte-for-byte what a pre-#180 app exported.
+      const v1 = '<?xml version="1.0" encoding="UTF-8"?>'
+          '<deskilo-workspace version="1">'
+          '<settings name="Old Space" country="DE" currency="EUR" '
+          'timezone="Europe/Berlin">'
+          '<feature key="money" enabled="false"/>'
+          '<payment-instruction key="iban" value="DE89 3704"/>'
+          '</settings>'
+          '<floor-plan><level name="G" sort-order="0">'
+          '<office name="O" color="0" bookable-as-whole="false" '
+          'x="0" y="0" w="30" h="20">'
+          '<desk name="D" x="2" y="2" w="12" h="4">'
+          '<seat name="A1" x="2" y="2" orientation="n" chair="std">'
+          '<amenity name="monitor"/>'
+          '</seat></desk></office></level></floor-plan>'
+          '</deskilo-workspace>';
+
+      final parsed = parseWorkspaceXml(v1);
+      expect(parsed.settings.name, 'Old Space');
+      expect(parsed.settings.featureFlags, {'money': false});
+      expect(parsed.accessories, isEmpty);
+      final seat =
+          parsed.levels.single.offices.single.desks.single.seats.single;
+      expect(seat.amenities, ['monitor']);
+      expect(seat.accessoryNames, isEmpty);
     });
 
     test('levels serialize in sort order regardless of input order', () {
@@ -220,12 +311,60 @@ void main() {
       );
     });
 
-    test('unknown version 2 → unsupportedVersion', () {
+    test('newer version 3 → unsupportedVersion (#180)', () {
       expect(
-        errorOf('<deskilo-workspace version="2">'
+        errorOf('<deskilo-workspace version="3">'
             '<settings name="X" country="DE" currency="EUR" '
             'timezone="Europe/Berlin"/><floor-plan/></deskilo-workspace>'),
         WorkspaceXmlError.unsupportedVersion,
+      );
+    });
+
+    test('non-integer version → unsupportedVersion', () {
+      expect(
+        errorOf('<deskilo-workspace version="2.0">'
+            '<settings name="X" country="DE" currency="EUR" '
+            'timezone="Europe/Berlin"/><floor-plan/></deskilo-workspace>'),
+        WorkspaceXmlError.unsupportedVersion,
+      );
+    });
+
+    test('duplicate accessory name in the catalog → invalidValue (#180)',
+        () {
+      expect(
+        errorOf(_v2Xml(
+            catalogXml: '<accessory name="Monitor" supplement-cents="0" '
+                'active="true" sort-order="0"/>'
+                '<accessory name="Monitor" supplement-cents="50" '
+                'active="true" sort-order="1"/>')),
+        WorkspaceXmlError.invalidValue,
+      );
+    });
+
+    test('seat referencing an accessory missing from the catalog → '
+        'invalidValue (#180)', () {
+      expect(
+        errorOf(_v2Xml(seatChildrenXml: '<accessory name="Hoverboard"/>')),
+        WorkspaceXmlError.invalidValue,
+      );
+    });
+
+    test('negative accessory supplement → invalidValue (#180)', () {
+      expect(
+        errorOf(_v2Xml(
+            catalogXml: '<accessory name="Monitor" supplement-cents="-1" '
+                'active="true" sort-order="0"/>')),
+        WorkspaceXmlError.invalidValue,
+      );
+    });
+
+    test('accessory missing the active attribute → missingAttribute (#180)',
+        () {
+      expect(
+        errorOf(_v2Xml(
+            catalogXml: '<accessory name="Monitor" supplement-cents="0" '
+                'sort-order="0"/>')),
+        WorkspaceXmlError.missingAttribute,
       );
     });
 
@@ -325,4 +464,19 @@ String _planXml(String seatXml) => '<deskilo-workspace version="1">'
     '<office name="O" color="0" bookable-as-whole="false" '
     'x="0" y="0" w="30" h="20">'
     '<desk name="D" x="2" y="2" w="12" h="4">$seatXml</desk>'
+    '</office></level></floor-plan></deskilo-workspace>';
+
+/// A structurally valid v2 document (#180) with [catalogXml] as the
+/// `<accessories>` body and [seatChildrenXml] nested in the only seat.
+String _v2Xml({String catalogXml = '', String seatChildrenXml = ''}) =>
+    '<deskilo-workspace version="2">'
+    '<settings name="X" country="DE" currency="EUR" '
+    'timezone="Europe/Berlin"/>'
+    '<accessories>$catalogXml</accessories>'
+    '<floor-plan><level name="G" sort-order="0">'
+    '<office name="O" color="0" bookable-as-whole="false" '
+    'x="0" y="0" w="30" h="20">'
+    '<desk name="D" x="2" y="2" w="12" h="4">'
+    '<seat name="A1" x="2" y="2" orientation="n" chair="">'
+    '$seatChildrenXml</seat></desk>'
     '</office></level></floor-plan></deskilo-workspace>';

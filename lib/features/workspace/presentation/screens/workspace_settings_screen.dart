@@ -17,6 +17,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
+import '../../../plan/providers/accessory_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/payment_instructions.dart';
 import '../../domain/workspace.dart';
@@ -132,9 +133,10 @@ class _WorkspaceSettingsScreenState
     }
   }
 
-  /// Serializes the workspace settings + every level's floor plan to the
-  /// versioned XML format (#164) and hands it to the system share sheet
-  /// as a `.xml` file — same seam the bill PDF export uses (#133).
+  /// Serializes the workspace settings + every level's floor plan + the
+  /// accessory catalog and seat assignments (v2, #180) to the versioned
+  /// XML format (#164) and hands it to the system share sheet as a `.xml`
+  /// file — same seam the bill PDF export uses (#133).
   Future<void> _exportXml(Workspace workspace) async {
     final l10n = AppLocalizations.of(context);
     setState(() => _busy = true);
@@ -147,7 +149,16 @@ class _WorkspaceSettingsScreenState
           plan: await ref.read(floorPlanProvider(level.id).future),
         ));
       }
-      final xml = buildWorkspaceXml(workspace: workspace, levels: plans);
+      // Inactive entries included — a backup must be complete (#180).
+      final accessories =
+          await ref.read(accessoriesProvider(includeInactive: true).future);
+      final seatAccessories = await ref.read(seatAccessoriesProvider.future);
+      final xml = buildWorkspaceXml(
+        workspace: workspace,
+        levels: plans,
+        accessories: accessories,
+        seatAccessories: seatAccessories,
+      );
       final share = ref.read(shareLauncherProvider);
       await share(
         ShareParams(
@@ -267,6 +278,13 @@ class _WorkspaceSettingsScreenState
                           'Desks: ${counts.desks} · '
                           'Seats: ${counts.seats}',
                 ),
+                // #180 — own additive line: the four-count key keeps its
+                // placeholders untouched across all locales.
+                Text(
+                  l10n?.workspaceXmlImportPreviewAccessories(
+                          counts.accessories) ??
+                      'Accessories: ${counts.accessories}',
+                ),
                 const SizedBox(height: 12),
                 Text(
                   l10n?.workspaceXmlImportPreviewWarning ??
@@ -325,6 +343,10 @@ class _WorkspaceSettingsScreenState
       ref.invalidate(levelsProvider);
       ref.invalidate(floorPlanProvider);
       ref.invalidate(targetNamesProvider);
+      // #180 — the import may have upserted the catalog and re-created
+      // every seat assignment.
+      ref.invalidate(accessoriesProvider);
+      ref.invalidate(seatAccessoriesProvider);
       if (!mounted) return;
       // Re-seed the form so the imported settings show immediately.
       setState(() => _seeded = false);
