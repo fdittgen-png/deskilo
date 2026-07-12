@@ -407,6 +407,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get directoryClose => 'Fermer';
 
   @override
+  String get directoryReservedNow => 'Réservé maintenant';
+
+  @override
+  String directoryReservedNowSeat(String seat) {
+    return 'Réservé maintenant · $seat';
+  }
+
+  @override
   String get editorTitle => 'Éditeur d\'espace';
 
   @override

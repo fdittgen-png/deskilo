@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MIT
 //
 // The member directory (#224, epic #222): every member reaches it from
-// settings; each ACTIVE member renders exactly one status chip resolved in
-// priority order (checked in > online > reserved today > offline with a
-// relative last-seen; never seen = no chip), and the WhatsApp button
-// appears only for members who shared a number, launching wa.me through
-// the injectable link seam.
+// settings; each ACTIVE member renders up to TWO chips side by side
+// (#237) — the reservation chip (checked in now with seat > reserved now
+// > next upcoming booking within 14 days, formatted "{weekday} {day} ·
+// {HH:mm} · {seat}") and the presence chip (online > relative last-seen;
+// never seen = no chip) — and the WhatsApp button appears only for
+// members who shared a number, launching wa.me through the injectable
+// link seam.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/core/theme/status_colors.dart';
@@ -17,6 +19,7 @@ import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/intl.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_profile_repository.dart';
@@ -51,17 +54,32 @@ Member _member(
 
 /// Seeds the canonical directory workspace: I am a PLAIN member (no owner
 /// or admin role — the directory and its settings entry are open to
-/// everyone). Anna is the OWNER and checked in on seat A1, Ben is online,
-/// shares WhatsApp and set a custom status line (#231), Cara has a
-/// reservation later today, Dora was last seen ~2 h ago, Eve was never
-/// seen, Paula is paused (hidden).
+/// everyone). Anna is the OWNER, online AND checked in on seat A1 (both
+/// chips, #237), Ben is online, shares WhatsApp and set a custom status
+/// line (#231), Cara has an unchecked reservation covering now, Dora was
+/// last seen ~2 h ago and holds the next upcoming booking (a Tuesday at
+/// 01:15 on A1, [upcomingStart]), Eve was never seen and her only booking
+/// starts 15 days out (outside the window — no chip at all), Paula is
+/// paused (hidden).
 ({
   FakeWorkspaceRepository workspace,
   FakeReservationRepository reservations,
   FakeFloorPlanRepository floorPlan,
   FakeProfileRepository profile,
+  DateTime upcomingStart,
 }) _seed() {
   final now = DateTime.now();
+
+  // Dora's upcoming booking: the NEXT Tuesday at 01:15 strictly after
+  // now — 1..7 days out, always inside the 14-day window.
+  final daysToTuesday = (DateTime.tuesday - now.weekday + 7) % 7;
+  final upcomingStart = DateTime(
+    now.year,
+    now.month,
+    now.day + (daysToTuesday == 0 ? 7 : daysToTuesday),
+    1,
+    15,
+  );
   final workspace = FakeWorkspaceRepository.withWorkspace()
     ..myMember = _member(1)
     ..otherMembers.addAll([
@@ -98,7 +116,8 @@ Member _member(
       status: ReservationStatus.checkedIn,
       checkedInAt: now.subtract(const Duration(hours: 1)),
     ),
-    // Cara: active reservation still running today, not checked in.
+    // Cara: active reservation covering now, not checked in — the seat
+    // is unknown to the plan, so the chip carries no seat name.
     Reservation(
       id: 'res-cara',
       workspaceId: 'ws-1',
@@ -108,13 +127,35 @@ Member _member(
       endsAt: now.add(const Duration(minutes: 30)),
       status: ReservationStatus.reserved,
     ),
+    // Dora: nothing now, next booking on a Tuesday at 01:15 on A1.
+    Reservation(
+      id: 'res-dora',
+      workspaceId: 'ws-1',
+      seatId: seatId,
+      memberId: 'member-5',
+      startsAt: upcomingStart,
+      endsAt: upcomingStart.add(const Duration(hours: 2)),
+      status: ReservationStatus.reserved,
+    ),
+    // Eve: only a booking 15 days out — beyond the 14-day window, so
+    // her row shows no reservation chip (#237).
+    Reservation(
+      id: 'res-eve',
+      workspaceId: 'ws-1',
+      seatId: seatId,
+      memberId: 'member-6',
+      startsAt: now.add(const Duration(days: 15)),
+      endsAt: now.add(const Duration(days: 15, hours: 2)),
+      status: ReservationStatus.reserved,
+    ),
   ]);
 
   final profile = FakeProfileRepository(profiles: [
     // My own lastSeenAt is stamped "now" by the presence heartbeat on app
     // start anyway (#223) — I render as Online.
     Profile(id: 'user-1', displayName: 'Flo', lastSeenAt: now),
-    const Profile(id: 'user-2', displayName: 'Anna'),
+    // Anna is online AND checked in: both chips coexist (#237).
+    Profile(id: 'user-2', displayName: 'Anna', lastSeenAt: now),
     Profile(
       id: 'user-3',
       displayName: 'Ben',
@@ -136,6 +177,7 @@ Member _member(
     reservations: reservations,
     floorPlan: floorPlan,
     profile: profile,
+    upcomingStart: upcomingStart,
   );
 }
 
@@ -179,20 +221,28 @@ Future<void> _pumpDirectory(
   await tester.pumpAndSettle();
 }
 
-/// Text of the status chip on [memberId]'s row.
-String? _chipText(WidgetTester tester, String memberId) {
-  final chip = find.byKey(ValueKey('directory-status-$memberId'));
+/// Text of the chip under [key], or null when it does not render.
+String? _chipTextByKey(WidgetTester tester, Key key) {
+  final chip = find.byKey(key);
   if (chip.evaluate().isEmpty) return null;
   return tester
       .widget<Text>(find.descendant(of: chip, matching: find.byType(Text)))
       .data;
 }
 
+/// Text of the presence chip on [memberId]'s row.
+String? _chipText(WidgetTester tester, String memberId) =>
+    _chipTextByKey(tester, ValueKey('directory-status-$memberId'));
+
+/// Text of the reservation chip on [memberId]'s row (#237).
+String? _resChipText(WidgetTester tester, String memberId) =>
+    _chipTextByKey(tester, ValueKey('directory-res-$memberId'));
+
 void main() {
   testWidgets(
-      'active members list alphabetically with one status chip each, '
-      'in checked-in > online > reserved-today > offline priority',
-      (tester) async {
+      'active members list alphabetically with independent reservation + '
+      'presence chips (#237): checked-in and reserved-now beat upcoming; '
+      'a booking 15 days out shows nothing', (tester) async {
     final seeded = _seed();
     await _pumpDirectory(
       tester,
@@ -202,23 +252,46 @@ void main() {
       profile: seeded.profile,
     );
 
-    // One chip per member, resolved by priority.
-    expect(_chipText(tester, 'member-2'), 'Checked in · A1');
+    // Anna: checked in AND online — BOTH chips side by side.
+    expect(_resChipText(tester, 'member-2'), 'Checked in · A1');
+    expect(_chipText(tester, 'member-2'), 'Online');
+
+    // Ben: online only, no booking — presence chip alone.
     expect(_chipText(tester, 'member-3'), 'Online');
-    expect(_chipText(tester, 'member-4'), 'Reserved today');
+    expect(_resChipText(tester, 'member-3'), isNull);
+
+    // Cara: unchecked booking covering now (unnamed seat), never seen —
+    // reservation chip alone.
+    expect(_resChipText(tester, 'member-4'), 'Reserved now');
+    expect(_chipText(tester, 'member-4'), isNull);
+
+    // Dora: relative last-seen plus her NEXT upcoming booking, formatted
+    // "{weekday} {day} · {HH:mm} · {seat}".
+    final start = seeded.upcomingStart;
+    expect(
+      _resChipText(tester, 'member-5'),
+      '${DateFormat.E().format(start)} ${DateFormat.d().format(start)}'
+      ' · ${DateFormat.Hm().format(start)} · A1',
+    );
     expect(_chipText(tester, 'member-5'), '2 h');
-    // Never seen: no chip at all.
+
+    // Eve: never seen and her only booking starts 15 days out — outside
+    // the 14-day window, no chip of either kind.
     expect(_chipText(tester, 'member-6'), isNull);
+    expect(_resChipText(tester, 'member-6'), isNull);
     expect(find.text('Eve'), findsOneWidget);
+
     // Myself: the heartbeat stamped me just now — Online.
     expect(_chipText(tester, 'member-1'), 'Online');
 
     // Paused members stay out of the directory.
     expect(find.text('Paula'), findsNothing);
 
-    // Checked-in is the filled success chip; online is outlined success.
+    // Checked-in keeps the filled success style; online stays outlined
+    // success; reserved-now is outlined primary; upcoming is outlined
+    // neutral.
     final checkedIn = tester.widget<Container>(
-      find.byKey(const ValueKey('directory-status-member-2')),
+      find.byKey(const ValueKey('directory-res-member-2')),
     );
     final checkedInDeco = checkedIn.decoration! as BoxDecoration;
     expect(checkedInDeco.color, AppStatusColors.success);
@@ -230,6 +303,28 @@ void main() {
     expect(
       (onlineDeco.border! as Border).top.color,
       AppStatusColors.success,
+    );
+    final caraContext = tester.element(
+      find.byKey(const ValueKey('directory-res-member-4')),
+    );
+    final caraDeco = tester
+        .widget<Container>(find.byKey(const ValueKey('directory-res-member-4')))
+        .decoration! as BoxDecoration;
+    expect(caraDeco.color, isNull);
+    expect(
+      (caraDeco.border! as Border).top.color,
+      Theme.of(caraContext).colorScheme.primary,
+    );
+    final doraContext = tester.element(
+      find.byKey(const ValueKey('directory-res-member-5')),
+    );
+    final doraDeco = tester
+        .widget<Container>(find.byKey(const ValueKey('directory-res-member-5')))
+        .decoration! as BoxDecoration;
+    expect(doraDeco.color, isNull);
+    expect(
+      (doraDeco.border! as Border).top.color,
+      Theme.of(doraContext).colorScheme.onSurfaceVariant,
     );
 
     // Alphabetical by display name.
@@ -376,16 +471,17 @@ void main() {
       find.descendant(of: sheet, matching: find.text('Member')),
       findsOneWidget,
     );
-    final benChip = find.byKey(
-      const ValueKey('directory-sheet-status-member-3'),
-    );
     expect(
-      tester
-          .widget<Text>(
-            find.descendant(of: benChip, matching: find.byType(Text)),
-          )
-          .data,
+      _chipTextByKey(
+        tester,
+        const ValueKey('directory-sheet-status-member-3'),
+      ),
       'Online',
+    );
+    // Ben has no booking: no reservation chip in his sheet either.
+    expect(
+      find.byKey(const ValueKey('directory-sheet-res-member-3')),
+      findsNothing,
     );
     expect(
       find.descendant(
@@ -403,8 +499,9 @@ void main() {
     expect(launched.single.toString(), 'https://wa.me/491701234567');
     expect(find.byType(BottomSheet), findsNothing);
 
-    // Anna: owner, checked in on A1, no shared number — no WhatsApp
-    // button in her sheet.
+    // Anna: owner, online AND checked in on A1 — the sheet shows the
+    // same chip pair as her row (#237) — no shared number, so no
+    // WhatsApp button in her sheet.
     await tester.tap(find.text('Anna'));
     await tester.pumpAndSettle();
     final annaSheet = find.byType(BottomSheet);
@@ -412,16 +509,16 @@ void main() {
       find.descendant(of: annaSheet, matching: find.text('Owner')),
       findsOneWidget,
     );
-    final annaChip = find.byKey(
-      const ValueKey('directory-sheet-status-member-2'),
+    expect(
+      _chipTextByKey(tester, const ValueKey('directory-sheet-res-member-2')),
+      'Checked in · A1',
     );
     expect(
-      tester
-          .widget<Text>(
-            find.descendant(of: annaChip, matching: find.byType(Text)),
-          )
-          .data,
-      'Checked in · A1',
+      _chipTextByKey(
+        tester,
+        const ValueKey('directory-sheet-status-member-2'),
+      ),
+      'Online',
     );
     expect(
       find.byKey(const ValueKey('directory-sheet-wa-member-2')),

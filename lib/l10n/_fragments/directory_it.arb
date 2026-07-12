@@ -11,5 +11,7 @@
   "directoryLastSeenDays": "{days} g",
   "directoryWhatsapp": "Chatta su WhatsApp",
   "directoryOpenGroup": "Apri il gruppo WhatsApp",
-  "directoryClose": "Chiudi"
+  "directoryClose": "Chiudi",
+  "directoryReservedNow": "Prenotato ora",
+  "directoryReservedNowSeat": "Prenotato ora · {seat}"
 }
