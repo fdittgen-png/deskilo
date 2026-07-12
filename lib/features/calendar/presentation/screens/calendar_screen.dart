@@ -10,6 +10,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/motion.dart';
+import '../../../../core/ui/view_toggle.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../plan/domain/seat_context.dart';
@@ -211,20 +212,24 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                 )
               else
                 const Spacer(),
-              // #187: list vs. timeline for the selected-day area.
-              IconButton(
-                icon: const Icon(Icons.view_list_outlined),
-                isSelected: !_timeline,
-                visualDensity: VisualDensity.compact,
-                tooltip: l10n?.calendarListView ?? 'List view',
-                onPressed: () => setState(() => _timeline = false),
-              ),
-              IconButton(
-                icon: const Icon(Icons.view_timeline_outlined),
-                isSelected: _timeline,
-                visualDensity: VisualDensity.compact,
-                tooltip: l10n?.calendarTimelineView ?? 'Timeline view',
-                onPressed: () => setState(() => _timeline = true),
+              // #187: list vs. timeline for the selected-day area — the
+              // shared toggle idiom at full 48dp tap height (#211).
+              ViewToggle<bool>(
+                key: const ValueKey('calendar-view-switch'),
+                options: [
+                  ViewToggleOption(
+                    value: false,
+                    icon: Icons.view_list_outlined,
+                    tooltip: l10n?.calendarListView ?? 'List view',
+                  ),
+                  ViewToggleOption(
+                    value: true,
+                    icon: Icons.view_timeline_outlined,
+                    tooltip: l10n?.calendarTimelineView ?? 'Timeline view',
+                  ),
+                ],
+                selected: _timeline,
+                onChanged: (timeline) => setState(() => _timeline = timeline),
               ),
             ],
           ),

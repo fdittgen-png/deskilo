@@ -171,7 +171,7 @@ void main() {
       openWeekdays: allWeekdaysExceptToday(),
     );
 
-    await tester.tap(find.byIcon(Icons.list));
+    await tester.tap(find.byIcon(Icons.view_list_outlined));
     await tester.pumpAndSettle();
 
     final row = find.widgetWithText(ListTile, 'A1');

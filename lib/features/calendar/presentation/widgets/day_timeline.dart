@@ -205,9 +205,10 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
       children: [
         // Level chips like the plan tab (#159 pattern) — but the selection
         // here is throwaway browsing state, never the persisted default.
+        // Row height and tap target meet the 48dp Material minimum (#211).
         if (levels.length > 1)
           SizedBox(
-            height: 40,
+            height: kMinInteractiveDimension,
             child: ListView(
               scrollDirection: Axis.horizontal,
               padding: AppSpacing.mdH,
@@ -218,7 +219,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
                     child: ChoiceChip(
                       label: Text(l.name),
                       selected: l.id == level.id,
-                      visualDensity: VisualDensity.compact,
+                      materialTapTargetSize: MaterialTapTargetSize.padded,
                       onSelected: (_) => setState(() => _levelId = l.id),
                     ),
                   ),
