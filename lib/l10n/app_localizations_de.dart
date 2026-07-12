@@ -1006,6 +1006,29 @@ class AppLocalizationsDe extends AppLocalizations {
   String get planHalfDayError => 'Buchungen erfolgen hier pro halbem Tag.';
 
   @override
+  String get whatsappTitle => 'WhatsApp';
+
+  @override
+  String get whatsappNotShared => 'Nicht geteilt';
+
+  @override
+  String get whatsappFieldLabel => 'WhatsApp-Nummer';
+
+  @override
+  String get whatsappHint => '+49 151 23456789';
+
+  @override
+  String get whatsappHelper =>
+      'Optional. Für Mitglieder deiner Workspaces sichtbar, damit sie dich über WhatsApp erreichen. Leer lassen, um die Nummer nicht mehr zu teilen.';
+
+  @override
+  String get whatsappSaved => 'WhatsApp-Nummer gespeichert';
+
+  @override
+  String get whatsappSaveFailed =>
+      'WhatsApp-Nummer konnte nicht gespeichert werden';
+
+  @override
   String get reserveDayView => 'Tag';
 
   @override

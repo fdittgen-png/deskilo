@@ -999,6 +999,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get planHalfDayError => 'Bookings here are per half day.';
 
   @override
+  String get whatsappTitle => 'WhatsApp';
+
+  @override
+  String get whatsappNotShared => 'Not shared';
+
+  @override
+  String get whatsappFieldLabel => 'WhatsApp number';
+
+  @override
+  String get whatsappHint => '+44 7912 345678';
+
+  @override
+  String get whatsappHelper =>
+      'Optional. Visible to members of your workspaces so they can reach you on WhatsApp. Leave empty to stop sharing it.';
+
+  @override
+  String get whatsappSaved => 'WhatsApp number saved';
+
+  @override
+  String get whatsappSaveFailed => 'Could not save the WhatsApp number';
+
+  @override
   String get reserveDayView => 'Day';
 
   @override

@@ -21,6 +21,8 @@ import 'package:deskilo/features/plan/domain/floor_plan_repository.dart';
 import 'package:deskilo/features/plan/providers/accessory_providers.dart';
 import 'package:deskilo/features/plan/providers/default_level_controller.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
+import 'package:deskilo/features/profile/domain/profile_repository.dart';
+import 'package:deskilo/features/profile/providers/profile_providers.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -32,6 +34,7 @@ import 'fake_event_repository.dart';
 import 'fake_floor_plan_repository.dart';
 import 'fake_money_repository.dart';
 import 'fake_notification_service.dart';
+import 'fake_profile_repository.dart';
 import 'fake_reservation_repository.dart';
 import 'in_memory_default_level_store.dart';
 
@@ -351,6 +354,7 @@ List<Override> standardTestOverrides({
   NotificationService? notifications,
   ActiveWorkspaceStore? activeWorkspace,
   DefaultLevelStore? defaultLevel,
+  ProfileRepository? profile,
 }) {
   return [
     authRepositoryProvider
@@ -374,6 +378,8 @@ List<Override> standardTestOverrides({
         .overrideWithValue(activeWorkspace ?? InMemoryActiveWorkspaceStore()),
     defaultLevelStoreProvider
         .overrideWithValue(defaultLevel ?? InMemoryDefaultLevelStore()),
+    profileRepositoryProvider
+        .overrideWithValue(profile ?? FakeProfileRepository()),
   ];
 }
 

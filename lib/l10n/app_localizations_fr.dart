@@ -1010,6 +1010,29 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ici, les réservations se font par demi-journée.';
 
   @override
+  String get whatsappTitle => 'WhatsApp';
+
+  @override
+  String get whatsappNotShared => 'Non partagé';
+
+  @override
+  String get whatsappFieldLabel => 'Numéro WhatsApp';
+
+  @override
+  String get whatsappHint => '+33 6 12 34 56 78';
+
+  @override
+  String get whatsappHelper =>
+      'Facultatif. Visible par les membres de vos espaces pour vous joindre sur WhatsApp. Laissez vide pour ne plus le partager.';
+
+  @override
+  String get whatsappSaved => 'Numéro WhatsApp enregistré';
+
+  @override
+  String get whatsappSaveFailed =>
+      'Impossible d\'enregistrer le numéro WhatsApp';
+
+  @override
   String get reserveDayView => 'Jour';
 
   @override

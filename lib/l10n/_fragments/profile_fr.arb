@@ -1,0 +1,10 @@
+{
+  "@@locale": "fr",
+  "whatsappTitle": "WhatsApp",
+  "whatsappNotShared": "Non partagé",
+  "whatsappFieldLabel": "Numéro WhatsApp",
+  "whatsappHint": "+33 6 12 34 56 78",
+  "whatsappHelper": "Facultatif. Visible par les membres de vos espaces pour vous joindre sur WhatsApp. Laissez vide pour ne plus le partager.",
+  "whatsappSaved": "Numéro WhatsApp enregistré",
+  "whatsappSaveFailed": "Impossible d'enregistrer le numéro WhatsApp"
+}

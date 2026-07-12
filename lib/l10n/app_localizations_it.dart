@@ -1009,6 +1009,28 @@ class AppLocalizationsIt extends AppLocalizations {
   String get planHalfDayError => 'Qui le prenotazioni sono per mezza giornata.';
 
   @override
+  String get whatsappTitle => 'WhatsApp';
+
+  @override
+  String get whatsappNotShared => 'Non condiviso';
+
+  @override
+  String get whatsappFieldLabel => 'Numero WhatsApp';
+
+  @override
+  String get whatsappHint => '+39 333 123 4567';
+
+  @override
+  String get whatsappHelper =>
+      'Facoltativo. Visibile ai membri dei tuoi spazi per contattarti su WhatsApp. Lascia vuoto per smettere di condividerlo.';
+
+  @override
+  String get whatsappSaved => 'Numero WhatsApp salvato';
+
+  @override
+  String get whatsappSaveFailed => 'Impossibile salvare il numero WhatsApp';
+
+  @override
   String get reserveDayView => 'Giorno';
 
   @override
