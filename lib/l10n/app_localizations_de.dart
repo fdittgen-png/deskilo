@@ -984,6 +984,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Workspace ist an diesem Tag geschlossen.';
 
   @override
+  String get planMorningChip => 'Vormittag';
+
+  @override
+  String get planAfternoonChip => 'Nachmittag';
+
+  @override
+  String get planFullDayChip => 'Ganzer Tag';
+
+  @override
+  String get planHalfDayError => 'Buchungen erfolgen hier pro halbem Tag.';
+
+  @override
   String get servicesTitle => 'Leistungen';
 
   @override

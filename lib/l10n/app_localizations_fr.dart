@@ -987,6 +987,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get planClosedDayError => 'L\'espace est fermé ce jour-là.';
 
   @override
+  String get planMorningChip => 'Matin';
+
+  @override
+  String get planAfternoonChip => 'Après-midi';
+
+  @override
+  String get planFullDayChip => 'Journée';
+
+  @override
+  String get planHalfDayError =>
+      'Ici, les réservations se font par demi-journée.';
+
+  @override
   String get servicesTitle => 'Services';
 
   @override

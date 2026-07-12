@@ -16,11 +16,13 @@ import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/domain/reservation_repository.dart';
 import '../../../reservations/domain/seat_state_logic.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/domain/workspace_availability.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/floor_plan.dart';
+import '../../domain/half_day_windows.dart';
 import '../../domain/level.dart';
 import '../../domain/seat.dart';
 import '../../domain/seat_block_policy.dart';
@@ -192,6 +194,13 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   String _firstName(String name) =>
       name.split(' ').firstOrNull ?? name;
 
+  /// Booking granularity of the active workspace (#200/#201). Loading or
+  /// unknown reads as [BookingGranularity.flexible] so nothing flashes —
+  /// the header only switches to the half-day chips once the rule is in.
+  BookingGranularity get _granularity =>
+      ref.read(bookingGranularityProvider).value ??
+      BookingGranularity.flexible;
+
   /// Whether the workspace is open on the local day of [at] (#186): open
   /// weekday and no closure day. Unknown (providers still loading or
   /// errored) counts as open — the server guard stays the authority, the
@@ -205,7 +214,10 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
 
   /// Booking failure snackbar text (#186): the server's closed-day
   /// refusal (`assert_workspace_open`, migration 0013) gets its own
-  /// explanation instead of [fallback]'s misleading generic one.
+  /// explanation instead of [fallback]'s misleading generic one. Same for
+  /// the half-day granularity refusal (`enforce_booking_rules`, migration
+  /// 0025, #201) — defensive: the half-day UI only produces the canonical
+  /// windows, but a stale rule or legacy client path can still trip it.
   String _bookingErrorText(
     AppLocalizations? l10n,
     Object error,
@@ -215,6 +227,10 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         error.message.contains(WorkspaceClosedError.serverSubstring)) {
       return l10n?.planClosedDayError ??
           'The workspace is closed on that day.';
+    }
+    if (error is PostgrestException &&
+        error.message.contains(BookingGranularityError.serverSubstring)) {
+      return l10n?.planHalfDayError ?? 'Bookings here are per half day.';
     }
     return fallback;
   }
@@ -406,11 +422,17 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       at: start,
     );
     // Browse mode (#184): the sheet opens on the browsed window's end.
-    // Walk-up keeps the default stay. Both stay capped by the next
-    // reservation as a safety net (a range-filtered free seat cannot be
-    // capped below the window, but a stale plan could).
+    // Walk-up keeps the default stay — under half-day granularity (#201)
+    // it ends at the current half-day boundary instead (before 13:00 →
+    // 13:00, after → next-day 00:00) and the end is not adjustable. Both
+    // stay capped by the next reservation as a safety net (a
+    // range-filtered free seat cannot be capped below the window, but a
+    // stale plan could).
+    final halfDay = _granularity == BookingGranularity.halfDay;
     var end = walkUp
-        ? start.add(_kDefaultStay)
+        ? (halfDay
+            ? HalfDayWindows.windowForNow(start).end
+            : start.add(_kDefaultStay))
         : (_browseEnd ?? start.add(_kDefaultStay));
     var capped = false;
     if (next != null && next.startsAt.isBefore(end)) {
@@ -429,6 +451,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         cap: next?.startsAt,
         capped: capped,
         walkUp: walkUp,
+        fixedEnd: halfDay,
         members: candidates,
         myMemberId: myMember?.id,
         allowSeries: features.contains(WorkspaceFeature.seriesBooking),
@@ -657,9 +680,16 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final dayOpen = openWeekdays == null || closures == null ||
         isWorkspaceOpenOn(at.toLocal(), openWeekdays, closures);
 
+    // Half-day granularity (#201): watched so the header swaps the time
+    // chips for the Morning/Afternoon/Day chips once the rule resolves;
+    // loading/unknown renders the flexible header (no flash of the wrong
+    // affordance — flexible is also the rule's default).
+    final granularity = ref.watch(bookingGranularityProvider).value ??
+        BookingGranularity.flexible;
+
     return Column(
       children: [
-        _scrollerRow(at),
+        _scrollerRow(at, granularity),
         if (!dayOpen) _closedDayBanner(l10n),
         // One tap per level (#159): compact scrollable chips instead of a
         // dropdown; the choice persists as this member's default here.
@@ -742,9 +772,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   }
 
   /// The time scroller (spec §6, #184): list/plan toggle · date · from→to
-  /// time chips (Material clock dial) · Now.
-  Widget _scrollerRow(DateTime at) {
+  /// time chips (Material clock dial) · Now. Under half-day granularity
+  /// (#201) the two time chips give way to the Morning/Afternoon/Day
+  /// choice chips — the only selectable windows there.
+  Widget _scrollerRow(DateTime at, BookingGranularity granularity) {
     final l10n = AppLocalizations.of(context);
+    final halfDay = granularity == BookingGranularity.halfDay;
     final local = at.toLocal();
     final live = _browse == null;
     final endLocal = (_browseEnd ?? _defaultEndFor(local)).toLocal();
@@ -768,6 +801,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             onPressed: () => setState(() => _listView = !_listView),
           ),
           TextButton(
+            key: const ValueKey('plan-date-button'),
             onPressed: () async {
               final picked = await showDatePicker(
                 context: context,
@@ -777,24 +811,40 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
               );
               if (picked == null) return;
               if (!mounted) return;
-              setState(() {
-                _highlightedSeatId = null;
+              final DateTime from;
+              final DateTime end;
+              if (halfDay) {
+                // Half-day mode (#201): re-derive the canonical window on
+                // the picked day — the currently selected half where one
+                // is (live or a non-canonical #182 focus window browses
+                // the whole day).
+                final builder =
+                    _selectedHalfDayBuilder(local) ?? HalfDayWindows.fullDay;
+                final window =
+                    builder(DateTime(picked.year, picked.month, picked.day));
+                from = window.start;
+                end = window.end;
+              } else {
                 // Keep the window's times on the newly picked day (#184).
-                final from = DateTime(
+                from = DateTime(
                   picked.year,
                   picked.month,
                   picked.day,
                   local.hour,
                   local.minute,
                 );
-                var end = DateTime(
+                var kept = DateTime(
                   picked.year,
                   picked.month,
                   picked.day,
                   endLocal.hour,
                   endLocal.minute,
                 );
-                if (!end.isAfter(from)) end = _defaultEndFor(from);
+                if (!kept.isAfter(from)) kept = _defaultEndFor(from);
+                end = kept;
+              }
+              setState(() {
+                _highlightedSeatId = null;
                 _browse = from;
                 _browseEnd = end;
               });
@@ -802,34 +852,36 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             child: Text(DateFormat.MMMd().format(local)),
           ),
           Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Tooltip(
-                  message: l10n?.planFromLabel ?? 'From',
-                  child: TextButton(
-                    key: const ValueKey('plan-from-chip'),
-                    style: chipStyle,
-                    onPressed: _pickFrom,
-                    child: Text(timeFormat.format(local)),
+            child: halfDay
+                ? _halfDayChips(l10n, local)
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Tooltip(
+                        message: l10n?.planFromLabel ?? 'From',
+                        child: TextButton(
+                          key: const ValueKey('plan-from-chip'),
+                          style: chipStyle,
+                          onPressed: _pickFrom,
+                          child: Text(timeFormat.format(local)),
+                        ),
+                      ),
+                      Icon(
+                        Icons.arrow_right_alt,
+                        size: 16,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                      Tooltip(
+                        message: l10n?.planToLabel ?? 'To',
+                        child: TextButton(
+                          key: const ValueKey('plan-to-chip'),
+                          style: chipStyle,
+                          onPressed: _pickTo,
+                          child: Text(timeFormat.format(endLocal)),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Icon(
-                  Icons.arrow_right_alt,
-                  size: 16,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-                Tooltip(
-                  message: l10n?.planToLabel ?? 'To',
-                  child: TextButton(
-                    key: const ValueKey('plan-to-chip'),
-                    style: chipStyle,
-                    onPressed: _pickTo,
-                    child: Text(timeFormat.format(endLocal)),
-                  ),
-                ),
-              ],
-            ),
           ),
           TextButton(
             onPressed: live
@@ -840,6 +892,82 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                       _browseEnd = null;
                     }),
             child: Text(l10n?.planNowButton ?? 'Now'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// The canonical builder whose window on [day] the current browse
+  /// window matches — null when live or browsing a non-canonical window
+  /// (a legacy reservation reached via the #182 focus jump).
+  HalfDayWindow Function(DateTime day)? _selectedHalfDayBuilder(
+    DateTime day,
+  ) {
+    const builders = [
+      HalfDayWindows.morning,
+      HalfDayWindows.afternoon,
+      HalfDayWindows.fullDay,
+    ];
+    for (final builder in builders) {
+      final window = builder(day);
+      if (_browse == window.start && _browseEnd == window.end) {
+        return builder;
+      }
+    }
+    return null;
+  }
+
+  /// Half-day header chips (#201): Morning / Afternoon / Day replace the
+  /// from→to time chips — a tap enters (or moves) browse mode with the
+  /// canonical window on the browsed day (today when live). Live mode
+  /// shows no selection; "Now" resets to live as usual.
+  Widget _halfDayChips(AppLocalizations? l10n, DateTime local) {
+    Widget chip(
+      String key,
+      String label,
+      HalfDayWindow Function(DateTime day) windowOf,
+    ) {
+      final window = windowOf(local);
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 2),
+        child: ChoiceChip(
+          key: ValueKey(key),
+          label: Text(label),
+          selected: _browse == window.start && _browseEnd == window.end,
+          visualDensity: VisualDensity.compact,
+          onSelected: (_) => setState(() {
+            // Window change: drop the #182 jump highlight like every
+            // other time-scroller interaction.
+            _highlightedSeatId = null;
+            _browse = window.start;
+            _browseEnd = window.end;
+          }),
+        ),
+      );
+    }
+
+    // scaleDown keeps the three chips on one row on narrow screens
+    // without letting the header scroll horizontally.
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          chip(
+            'plan-am-chip',
+            l10n?.planMorningChip ?? 'Morning',
+            HalfDayWindows.morning,
+          ),
+          chip(
+            'plan-pm-chip',
+            l10n?.planAfternoonChip ?? 'Afternoon',
+            HalfDayWindows.afternoon,
+          ),
+          chip(
+            'plan-day-chip',
+            l10n?.planFullDayChip ?? 'Day',
+            HalfDayWindows.fullDay,
           ),
         ],
       ),
@@ -1183,6 +1311,7 @@ class _CheckInSheet extends StatefulWidget {
     required this.cap,
     required this.capped,
     this.walkUp = true,
+    this.fixedEnd = false,
     this.members = const [],
     this.myMemberId,
     this.allowSeries = true,
@@ -1198,6 +1327,11 @@ class _CheckInSheet extends StatefulWidget {
 
   /// True: live walk-up (check in now). False: future punctual reservation.
   final bool walkUp;
+
+  /// Half-day granularity (#201): the end is the canonical window's (or
+  /// the current half-day boundary for walk-ups) and not adjustable — the
+  /// "Until" tile is hidden.
+  final bool fixedEnd;
 
   /// Active members an admin can book for (#106); empty for non-admins
   /// or when the bookForOthers feature is off (#146).
@@ -1282,33 +1416,36 @@ class _CheckInSheetState extends State<_CheckInSheet> {
                 ],
                 onChanged: (id) => setState(() => _forMemberId = id),
               ),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(l10n?.planUntilLabel ?? 'Until'),
-              trailing: Text(timeFormat.format(_end.toLocal())),
-              onTap: () async {
-                final picked = await showTimePicker(
-                  context: context,
-                  initialTime: TimeOfDay.fromDateTime(_end.toLocal()),
-                );
-                if (picked == null) return;
-                final local = widget.start.toLocal();
-                var candidate = DateTime(
-                  local.year,
-                  local.month,
-                  local.day,
-                  picked.hour,
-                  picked.minute,
-                );
-                if (!candidate.isAfter(local)) {
-                  candidate = candidate.add(const Duration(days: 1));
-                }
-                var end = candidate;
-                final cap = widget.cap?.toLocal();
-                if (cap != null && end.isAfter(cap)) end = cap;
-                setState(() => _end = end);
-              },
-            ),
+            // Half-day granularity (#201): the end is fixed to the
+            // canonical window boundary — no "Until" affordance.
+            if (!widget.fixedEnd)
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(l10n?.planUntilLabel ?? 'Until'),
+                trailing: Text(timeFormat.format(_end.toLocal())),
+                onTap: () async {
+                  final picked = await showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay.fromDateTime(_end.toLocal()),
+                  );
+                  if (picked == null) return;
+                  final local = widget.start.toLocal();
+                  var candidate = DateTime(
+                    local.year,
+                    local.month,
+                    local.day,
+                    picked.hour,
+                    picked.minute,
+                  );
+                  if (!candidate.isAfter(local)) {
+                    candidate = candidate.add(const Duration(days: 1));
+                  }
+                  var end = candidate;
+                  final cap = widget.cap?.toLocal();
+                  if (cap != null && end.isAfter(cap)) end = cap;
+                  setState(() => _end = end);
+                },
+              ),
             if (!widget.walkUp && !_forOther && widget.allowSeries) ...[
               DropdownButtonFormField<SeriesPattern?>(
                 initialValue: _pattern,

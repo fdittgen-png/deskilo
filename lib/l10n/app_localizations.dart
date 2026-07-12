@@ -1880,6 +1880,30 @@ abstract class AppLocalizations {
   /// **'The workspace is closed on that day.'**
   String get planClosedDayError;
 
+  /// Header chip browsing the 00:00–13:00 half-day window under half-day granularity (#201)
+  ///
+  /// In en, this message translates to:
+  /// **'Morning'**
+  String get planMorningChip;
+
+  /// Header chip browsing the 13:00–24:00 half-day window under half-day granularity (#201)
+  ///
+  /// In en, this message translates to:
+  /// **'Afternoon'**
+  String get planAfternoonChip;
+
+  /// Header chip browsing the full 00:00–24:00 window under half-day granularity (#201)
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get planFullDayChip;
+
+  /// Snackbar when the server rejects a booking for violating the half-day granularity (enforce_booking_rules, migration 0025, #201)
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings here are per half day.'**
+  String get planHalfDayError;
+
   /// App-bar title of the owner service-catalog editor and its settings tile
   ///
   /// In en, this message translates to:

@@ -1357,6 +1357,22 @@
   "@planClosedDayError": {
     "description": "Snackbar when the server rejects a booking or check-in because the workspace is closed on a touched day (#186)"
   },
+  "planMorningChip": "Morning",
+  "@planMorningChip": {
+    "description": "Header chip browsing the 00:00–13:00 half-day window under half-day granularity (#201)"
+  },
+  "planAfternoonChip": "Afternoon",
+  "@planAfternoonChip": {
+    "description": "Header chip browsing the 13:00–24:00 half-day window under half-day granularity (#201)"
+  },
+  "planFullDayChip": "Day",
+  "@planFullDayChip": {
+    "description": "Header chip browsing the full 00:00–24:00 window under half-day granularity (#201)"
+  },
+  "planHalfDayError": "Bookings here are per half day.",
+  "@planHalfDayError": {
+    "description": "Snackbar when the server rejects a booking for violating the half-day granularity (enforce_booking_rules, migration 0025, #201)"
+  },
   "servicesTitle": "Services",
   "@servicesTitle": {
     "description": "App-bar title of the owner service-catalog editor and its settings tile"

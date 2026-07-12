@@ -45,5 +45,9 @@
   "planToLabel": "Alle",
   "planEndBeforeStart": "La fine deve essere successiva all'inizio.",
   "planClosedDay": "Chiuso in questo giorno",
-  "planClosedDayError": "Lo spazio è chiuso quel giorno."
+  "planClosedDayError": "Lo spazio è chiuso quel giorno.",
+  "planMorningChip": "Mattina",
+  "planAfternoonChip": "Pomeriggio",
+  "planFullDayChip": "Giornata",
+  "planHalfDayError": "Qui le prenotazioni sono per mezza giornata."
 }
