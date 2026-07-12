@@ -1003,6 +1003,22 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ici, les réservations se font par demi-journée.';
 
   @override
+  String get reserveDayView => 'Jour';
+
+  @override
+  String get reserveWeekView => 'Semaine';
+
+  @override
+  String get reserveFullDayChip => 'Journée entière';
+
+  @override
+  String get reservePickDateTooltip => 'Choisir une date';
+
+  @override
+  String get reserveBookingFailed =>
+      'Réservation impossible — la place vient peut-être d\'être prise.';
+
+  @override
   String get servicesTitle => 'Services';
 
   @override

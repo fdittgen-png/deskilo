@@ -96,7 +96,8 @@ void main() {
       matching: find.text('Reserve'),
     );
     expect(appBarTitle, findsOneWidget);
-    expect(find.text('Coming soon'), findsOneWidget);
+    // The hub replaced the placeholder body (#208): assert its view switch.
+    expect(find.byKey(const ValueKey('reserve-view-switch')), findsOneWidget);
   });
 
   testWidgets('tab tap still switches the branch through the gating map',
