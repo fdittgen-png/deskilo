@@ -758,6 +758,66 @@ abstract class AppLocalizations {
   /// **'Warnings+'**
   String get developerFilterWarnings;
 
+  /// Member directory screen title + its settings entry (#224), visible to every member
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get directoryTitle;
+
+  /// Empty state of the member directory
+  ///
+  /// In en, this message translates to:
+  /// **'No members yet.'**
+  String get directoryEmpty;
+
+  /// Directory status chip: member is checked in right now (seat name unknown)
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in'**
+  String get directoryCheckedIn;
+
+  /// Directory status chip: member is checked in right now on the named seat/office
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in · {seat}'**
+  String directoryCheckedInSeat(String seat);
+
+  /// Directory status chip: heartbeat younger than the presence window (#223)
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get directoryOnline;
+
+  /// Directory status chip: member has an active reservation later today
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved today'**
+  String get directoryReservedToday;
+
+  /// Directory offline chip: compact relative last-seen, under an hour
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String directoryLastSeenMinutes(int minutes);
+
+  /// Directory offline chip: compact relative last-seen, under a day
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} h'**
+  String directoryLastSeenHours(int hours);
+
+  /// Directory offline chip: compact relative last-seen, a day or more
+  ///
+  /// In en, this message translates to:
+  /// **'{days} d'**
+  String directoryLastSeenDays(int days);
+
+  /// Tooltip of the wa.me contact button on a directory row (#223 opt-in)
+  ///
+  /// In en, this message translates to:
+  /// **'Chat on WhatsApp'**
+  String get directoryWhatsapp;
+
   /// App-bar title of the owner-only workspace editor
   ///
   /// In en, this message translates to:

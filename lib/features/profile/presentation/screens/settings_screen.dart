@@ -59,6 +59,13 @@ class SettingsScreen extends ConsumerWidget {
             title: Text(l10n?.profilesTitle ?? 'Profiles'),
             onTap: () => context.push('/profiles'),
           ),
+          // Member directory (#224): visible to EVERY member — it lives in
+          // the ungrouped personal section, not under Administration.
+          ListTile(
+            leading: const Icon(Icons.people_outline),
+            title: Text(l10n?.directoryTitle ?? 'Members'),
+            onTap: () => context.push('/directory'),
+          ),
           // Opt-in WhatsApp number on my profile (#223): shared with
           // members of my workspaces, consumed by the directory (#224).
           // Sits with Profiles in the ungrouped personal area on top.

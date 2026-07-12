@@ -361,6 +361,44 @@ class AppLocalizationsEs extends AppLocalizations {
   String get developerFilterWarnings => 'Avisos+';
 
   @override
+  String get directoryTitle => 'Miembros';
+
+  @override
+  String get directoryEmpty => 'Aún no hay miembros.';
+
+  @override
+  String get directoryCheckedIn => 'Presente';
+
+  @override
+  String directoryCheckedInSeat(String seat) {
+    return 'Presente · $seat';
+  }
+
+  @override
+  String get directoryOnline => 'En línea';
+
+  @override
+  String get directoryReservedToday => 'Reservado hoy';
+
+  @override
+  String directoryLastSeenMinutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String directoryLastSeenHours(int hours) {
+    return '$hours h';
+  }
+
+  @override
+  String directoryLastSeenDays(int days) {
+    return '$days d';
+  }
+
+  @override
+  String get directoryWhatsapp => 'Chatear por WhatsApp';
+
+  @override
   String get editorTitle => 'Editor del espacio';
 
   @override

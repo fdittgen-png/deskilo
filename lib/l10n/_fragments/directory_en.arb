@@ -1,0 +1,63 @@
+{
+  "@@locale": "en",
+  "directoryTitle": "Members",
+  "@directoryTitle": {
+    "description": "Member directory screen title + its settings entry (#224), visible to every member"
+  },
+  "directoryEmpty": "No members yet.",
+  "@directoryEmpty": {
+    "description": "Empty state of the member directory"
+  },
+  "directoryCheckedIn": "Checked in",
+  "@directoryCheckedIn": {
+    "description": "Directory status chip: member is checked in right now (seat name unknown)"
+  },
+  "directoryCheckedInSeat": "Checked in · {seat}",
+  "@directoryCheckedInSeat": {
+    "description": "Directory status chip: member is checked in right now on the named seat/office",
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      }
+    }
+  },
+  "directoryOnline": "Online",
+  "@directoryOnline": {
+    "description": "Directory status chip: heartbeat younger than the presence window (#223)"
+  },
+  "directoryReservedToday": "Reserved today",
+  "@directoryReservedToday": {
+    "description": "Directory status chip: member has an active reservation later today"
+  },
+  "directoryLastSeenMinutes": "{minutes} min",
+  "@directoryLastSeenMinutes": {
+    "description": "Directory offline chip: compact relative last-seen, under an hour",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "directoryLastSeenHours": "{hours} h",
+  "@directoryLastSeenHours": {
+    "description": "Directory offline chip: compact relative last-seen, under a day",
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "directoryLastSeenDays": "{days} d",
+  "@directoryLastSeenDays": {
+    "description": "Directory offline chip: compact relative last-seen, a day or more",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "directoryWhatsapp": "Chat on WhatsApp",
+  "@directoryWhatsapp": {
+    "description": "Tooltip of the wa.me contact button on a directory row (#223 opt-in)"
+  }
+}
