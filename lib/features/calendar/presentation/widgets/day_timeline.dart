@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -209,11 +210,11 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
             height: 40,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: AppSpacing.mdH,
               children: [
                 for (final Level l in levels)
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    padding: AppSpacing.xsH,
                     child: ChoiceChip(
                       label: Text(l.name),
                       selected: l.id == level.id,
@@ -396,7 +397,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     return SizedBox(
       height: TimelineAxis.headerRowHeight,
       child: Padding(
-        padding: const EdgeInsets.only(left: 12, top: 8),
+        padding: const EdgeInsets.only(left: AppSpacing.md, top: AppSpacing.sm),
         child: Text(
           label,
           maxLines: 1,
@@ -412,7 +413,10 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     return SizedBox(
       height: TimelineAxis.rowHeight,
       child: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 4),
+        padding: const EdgeInsets.only(
+          left: AppSpacing.lg,
+          right: AppSpacing.xs,
+        ),
         child: Row(
           children: [
             Expanded(
@@ -509,7 +513,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
           onTap: () => _onBlockTap(reservation),
           child: widget.everyone
               ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  padding: AppSpacing.xsH,
                   child: Align(
                     alignment: AlignmentDirectional.centerStart,
                     child: Text(

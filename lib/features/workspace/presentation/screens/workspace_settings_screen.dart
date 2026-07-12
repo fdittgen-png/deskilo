@@ -10,6 +10,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/share/share_launcher.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -388,7 +389,7 @@ class _WorkspaceSettingsScreenState
           : Form(
               key: _formKey,
               child: ListView(
-                padding: const EdgeInsets.all(16),
+                padding: AppSpacing.gutterAll,
                 children: [
                   Text(
                     workspace.name,

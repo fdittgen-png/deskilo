@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -410,10 +411,10 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       isScrollControlled: true,
       builder: (context) => Padding(
         padding: EdgeInsets.only(
-          left: 24,
-          right: 24,
-          top: 24,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+          left: AppSpacing.xl,
+          right: AppSpacing.xl,
+          top: AppSpacing.xl,
+          bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
         ),
         child: StatefulBuilder(
           builder: (context, setSheetState) => SingleChildScrollView(
@@ -607,10 +608,10 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       isScrollControlled: true,
       builder: (context) => Padding(
         padding: EdgeInsets.only(
-          left: 24,
-          right: 24,
-          top: 24,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+          left: AppSpacing.xl,
+          right: AppSpacing.xl,
+          top: AppSpacing.xl,
+          bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
         ),
         child: StatefulBuilder(
           builder: (context, setSheetState) => Column(
@@ -686,7 +687,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       appBar: AppBar(title: Text(levelName)),
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: AppSpacing.smAll,
           child: SegmentedButton<EditorTool>(
             segments: [
               ButtonSegment(

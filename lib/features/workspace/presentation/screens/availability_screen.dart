@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -167,7 +168,7 @@ class AvailabilityScreen extends ConsumerWidget {
                 l10n?.availabilityOpenWeekdays ?? 'Open weekdays',
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: AppSpacing.lgH,
                 child: Wrap(
                   spacing: 8,
                   children: [
@@ -195,7 +196,7 @@ class AvailabilityScreen extends ConsumerWidget {
                 l10n?.availabilityGranularityTitle ?? 'Booking granularity',
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: AppSpacing.lgH,
                 child: Text(
                   l10n?.availabilityGranularityDescription ??
                       'Half days: bookings cover the morning (until 13:00), '
@@ -231,7 +232,7 @@ class AvailabilityScreen extends ConsumerWidget {
               ),
               if (closures.isEmpty)
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: AppSpacing.lgH,
                   child: Text(
                     l10n?.availabilityNoClosures ?? 'No closure days.',
                   ),
@@ -275,7 +276,12 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.lg,
+          AppSpacing.xl,
+          AppSpacing.lg,
+          AppSpacing.sm,
+        ),
         child: Text(text, style: Theme.of(context).textTheme.titleMedium),
       );
 }
