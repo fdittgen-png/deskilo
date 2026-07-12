@@ -390,6 +390,7 @@
   "workspaceXmlFileTypeLabel": "XML",
   "workspaceXmlImportPreviewTitle": "Sostituire la planimetria?",
   "workspaceXmlImportPreviewCounts": "Piani: {levels} · Stanze: {offices} · Scrivanie: {desks} · Postazioni: {seats}",
+  "workspaceXmlImportPreviewAccessories": "Accessori: {count}",
   "workspaceXmlImportPreviewWarning": "La planimetria attuale verrà eliminata e sostituita e le impostazioni dello spazio verranno sovrascritte. L'operazione non può essere annullata.",
   "workspaceXmlImportConfirm": "Sostituisci e importa",
   "workspaceXmlImportSuccess": "Spazio importato.",

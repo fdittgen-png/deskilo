@@ -7,6 +7,7 @@
   "workspaceXmlFileTypeLabel": "XML",
   "workspaceXmlImportPreviewTitle": "¿Sustituir el plano?",
   "workspaceXmlImportPreviewCounts": "Plantas: {levels} · Salas: {offices} · Mesas: {desks} · Puestos: {seats}",
+  "workspaceXmlImportPreviewAccessories": "Accesorios: {count}",
   "workspaceXmlImportPreviewWarning": "El plano actual se eliminará y sustituirá, y los ajustes del espacio se sobrescribirán. Esta acción no se puede deshacer.",
   "workspaceXmlImportConfirm": "Sustituir e importar",
   "workspaceXmlImportSuccess": "Espacio importado.",

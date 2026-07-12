@@ -1294,6 +1294,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String workspaceXmlImportPreviewAccessories(int count) {
+    return 'Accessoires : $count';
+  }
+
+  @override
   String get workspaceXmlImportPreviewWarning =>
       'Le plan actuel sera supprimé et remplacé, et les paramètres de l\'espace seront écrasés. Cette action est irréversible.';
 

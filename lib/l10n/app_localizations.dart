@@ -2449,6 +2449,12 @@ abstract class AppLocalizations {
     int seats,
   );
 
+  /// Second summary line in the import preview dialog counting the accessory catalog entries the picked file carries (schema v2, #180); 0 for a v1 file
+  ///
+  /// In en, this message translates to:
+  /// **'Accessories: {count}'**
+  String workspaceXmlImportPreviewAccessories(int count);
+
   /// Destructive-styled warning in the import preview dialog (#165)
   ///
   /// In en, this message translates to:

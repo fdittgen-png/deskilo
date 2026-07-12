@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: MIT
+import 'dart:io';
+
+import 'package:deskilo/features/plan/domain/accessory.dart';
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/floor_plan_rules.dart';
@@ -71,6 +74,26 @@ String _buildFixtureXml() {
       blockedTo: DateTime.utc(2026, 7, 15, 18),
     ),
   ];
+  // v2 (#180): the catalog (incl. an inactive entry) + seat-1's two
+  // assignments ride the same export.
+  const accessories = [
+    Accessory(
+      id: 'accessory-1',
+      workspaceId: 'ws-1',
+      name: 'Monitor',
+      supplementCents: 100,
+      active: true,
+      sortOrder: 0,
+    ),
+    Accessory(
+      id: 'accessory-2',
+      workspaceId: 'ws-1',
+      name: 'Docking station',
+      supplementCents: 50,
+      active: false,
+      sortOrder: 1,
+    ),
+  ];
   return buildWorkspaceXml(
     workspace: workspace,
     levels: [
@@ -84,6 +107,10 @@ String _buildFixtureXml() {
         ),
       ),
     ],
+    accessories: accessories,
+    seatAccessories: const {
+      'seat-1': {'accessory-1', 'accessory-2'},
+    },
   );
 }
 
@@ -122,6 +149,7 @@ void main() {
                       'orientation': 'n',
                       'chair': 'ergonomic',
                       'amenities': ['monitor', 'dock'],
+                      'accessories': ['Monitor', 'Docking station'],
                       'blocked_from': null,
                       'blocked_to': null,
                     },
@@ -132,6 +160,7 @@ void main() {
                       'orientation': 's',
                       'chair': '',
                       'amenities': <String>[],
+                      'accessories': <String>[],
                       'blocked_from': '2026-07-01T08:00:00.000Z',
                       'blocked_to': '2026-07-15T18:00:00.000Z',
                     },
@@ -145,16 +174,101 @@ void main() {
     });
 
     test('the RPC reservation guard message is pinned to the migration', () {
-      // Mirrors the raise in supabase/migrations/0023_import_floor_plan.sql;
-      // the UI matches on it to show the specific explanation.
+      // Mirrors the raise in supabase/migrations/0023_import_floor_plan.sql
+      // and 0027_import_floor_plan_v2.sql; the UI matches on it to show
+      // the specific explanation.
       expect(kWorkspaceHasReservationsError, 'workspace has reservations');
     });
   });
 
+  group('workspaceXmlAccessoriesToJson (#180)', () {
+    test('maps the parsed catalog to the p_accessories jsonb shape', () {
+      final json = workspaceXmlAccessoriesToJson(_parseFixture().accessories);
+
+      expect(json, [
+        {
+          'name': 'Monitor',
+          'supplement_cents': 100,
+          'active': true,
+          'sort_order': 0,
+        },
+        {
+          'name': 'Docking station',
+          'supplement_cents': 50,
+          'active': false,
+          'sort_order': 1,
+        },
+      ]);
+    });
+
+    test('a parsed v1 file maps to an empty array — the v2 RPC then '
+        'behaves exactly like the v1 import', () {
+      expect(workspaceXmlAccessoriesToJson(const []), isEmpty);
+    });
+  });
+
+  group('migration 0027 (import_floor_plan_v2)', () {
+    final sql = File('supabase/migrations/0027_import_floor_plan_v2.sql')
+        .readAsStringSync();
+
+    test('declares the 3-arg v2 function and its grants; 0023 stays', () {
+      expect(
+        sql,
+        contains('create or replace function public.import_floor_plan_v2('),
+      );
+      expect(
+        sql,
+        contains('grant execute on function '
+            'public.import_floor_plan_v2(uuid, jsonb, jsonb) '
+            'to authenticated;'),
+      );
+      expect(
+        sql,
+        contains('revoke execute on function '
+            'public.import_floor_plan_v2(uuid, jsonb, jsonb) '
+            'from public, anon;'),
+      );
+      // The v1 function is NOT touched — older clients keep working.
+      final v1 = File('supabase/migrations/0023_import_floor_plan.sql')
+          .readAsStringSync();
+      expect(
+        v1,
+        contains('create or replace function public.import_floor_plan('),
+      );
+    });
+
+    test('keeps the 0023 guards: owner-only + reservation refusal', () {
+      expect(sql, contains("raise exception 'workspace has reservations'"));
+      expect(
+        sql,
+        contains("raise exception 'only the owner may import a floor plan'"),
+      );
+    });
+
+    test('upserts the catalog by (workspace_id, name) without deleting', () {
+      expect(
+        sql,
+        contains('on conflict (workspace_id, name) do update'),
+      );
+      expect(sql, isNot(contains('delete from public.accessories')));
+    });
+
+    test('raises the pinned error for an unknown seat accessory name', () {
+      expect(
+        sql,
+        contains("raise exception 'malformed plan: unknown accessory'"),
+      );
+    });
+  });
+
   group('workspaceXmlPlanCounts', () {
-    test('counts levels, offices, desks and seats for the preview', () {
+    test('counts levels, offices, desks, seats and accessories for the '
+        'preview', () {
       final counts = workspaceXmlPlanCounts(_parseFixture());
-      expect(counts, (levels: 1, offices: 1, desks: 1, seats: 2));
+      expect(
+        counts,
+        (levels: 1, offices: 1, desks: 1, seats: 2, accessories: 2),
+      );
     });
   });
 
