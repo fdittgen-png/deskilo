@@ -7,6 +7,9 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -159,11 +162,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       };
       final base = l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.';
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(detail == null ? base : '$base\n$detail'),
-        ),
-      );
+      AppSnack.error(context, detail == null ? base : '$base\n$detail');
       return;
     }
     invalidateBookingData(ref);
@@ -214,8 +213,9 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 48),
-                      child: Center(
-                        child: Text(l10n?.eventsEmpty ?? 'No events yet.'),
+                      child: EmptyState(
+                        icon: Icons.notifications_none_outlined,
+                        title: l10n?.eventsEmpty ?? 'No events yet.',
                       ),
                     ),
                   ],
@@ -402,7 +402,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 'Something went wrong. Please try again.',
           ),
         ),
-      _ => const Center(child: CircularProgressIndicator()),
+      _ => const LoadingView(),
     };
   }
 }

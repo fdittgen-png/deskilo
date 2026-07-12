@@ -6,6 +6,8 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/qr_png.dart';
 import '../../providers/workspace_providers.dart';
@@ -61,14 +63,11 @@ class WorkspaceCodeScreen extends ConsumerWidget {
       TraceLogger.instance.error('workspace', 'set workspace code failed',
           error: e, stackTrace: st);
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            l10n?.workspaceCodeRejected ??
-                'That ID was rejected — it must be 4–20 letters or digits '
-                    'and not already taken.',
-          ),
-        ),
+      AppSnack.error(
+        context,
+        l10n?.workspaceCodeRejected ??
+            'That ID was rejected — it must be 4–20 letters or digits '
+                'and not already taken.',
       );
       return;
     }
@@ -94,13 +93,10 @@ class WorkspaceCodeScreen extends ConsumerWidget {
       TraceLogger.instance.error('workspace', 'QR share failed',
           error: e, stackTrace: st);
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
-          ),
-        ),
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
       );
     }
   }
@@ -115,7 +111,7 @@ class WorkspaceCodeScreen extends ConsumerWidget {
         title: Text(l10n?.workspaceCodeTitle ?? 'Workspace ID & QR'),
       ),
       body: workspace == null
-          ? const Center(child: CircularProgressIndicator())
+          ? const LoadingView()
           : Center(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(24),
@@ -161,12 +157,9 @@ class WorkspaceCodeScreen extends ConsumerWidget {
                               ClipboardData(text: workspace.inviteCode),
                             );
                             if (!context.mounted) return;
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  l10n?.workspaceCodeCopied ?? 'Copied',
-                                ),
-                              ),
+                            AppSnack.success(
+                              context,
+                              l10n?.workspaceCodeCopied ?? 'Copied',
                             );
                           },
                           icon: const Icon(Icons.copy),

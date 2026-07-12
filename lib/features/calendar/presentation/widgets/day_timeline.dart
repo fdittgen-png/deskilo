@@ -5,6 +5,9 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/seat_state_colors.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
@@ -152,9 +155,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     final until = DateFormat.Hm().format(reservation.endsAt.toLocal());
     final message = '${l10n?.planOccupiedBy(name) ?? 'Occupied by $name'} · '
         '${l10n?.planUntil(until) ?? 'until $until'}';
-    ScaffoldMessenger.of(context)
-      ..clearSnackBars()
-      ..showSnackBar(SnackBar(content: Text(message)));
+    AppSnack.info(context, message, replace: true);
   }
 
   /// One initial jump per selected day: to just before the first
@@ -188,7 +189,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     final l10n = AppLocalizations.of(context);
     final levels = ref.watch(levelsProvider).value;
     if (levels == null) {
-      return const Center(child: CircularProgressIndicator());
+      return const LoadingView();
     }
     if (levels.isEmpty) {
       return _emptyHint(l10n);
@@ -227,7 +228,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
           child: switch (planAsync) {
             AsyncData(value: final plan) => _grid(context, plan, names),
             AsyncError() => _emptyHint(l10n),
-            _ => const Center(child: CircularProgressIndicator()),
+            _ => const LoadingView(),
           },
         ),
       ],
@@ -237,12 +238,16 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
   Widget _emptyHint(AppLocalizations? l10n) {
     final hint = l10n?.calendarTimelineEmpty ??
         'No reservations on this level for this day.';
+    // Stays a scrollable so an enclosing RefreshIndicator keeps working.
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 48),
-          child: Center(child: Text(hint)),
+          child: EmptyState(
+            icon: Icons.view_timeline_outlined,
+            title: hint,
+          ),
         ),
       ],
     );

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/fee_band.dart';
@@ -32,7 +34,7 @@ class BillingScreen extends ConsumerWidget {
                   'Something went wrong. Please try again.',
             ),
           ),
-        _ => const Center(child: CircularProgressIndicator()),
+        _ => const LoadingView(),
       },
     );
   }
@@ -103,21 +105,16 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
 
   Future<void> _showError() async {
     final l10n = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          l10n?.workspaceGenericError ??
-              'Something went wrong. Please try again.',
-        ),
-      ),
+    AppSnack.error(
+      context,
+      l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
     );
   }
 
   void _showSaved() {
     final l10n = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(l10n?.billingSaved ?? 'Saved.')),
-    );
+    AppSnack.success(context, l10n?.billingSaved ?? 'Saved.');
   }
 
   // ---- fee bands ----------------------------------------------------------

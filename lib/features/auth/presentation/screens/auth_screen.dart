@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../providers/auth_providers.dart';
 
@@ -59,13 +60,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       TraceLogger.instance.warn('auth', 'auth rejected by server',
           error: e, stackTrace: st);
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            '${l10n?.authGenericError ?? 'Authentication failed.'}'
-            '\n${e.message}',
-          ),
-        ),
+      AppSnack.error(
+        context,
+        '${l10n?.authGenericError ?? 'Authentication failed.'}'
+        '\n${e.message}',
       );
     } catch (e, st) {
       // No server involved: connectivity, DNS, TLS … (#99 was a missing
@@ -75,14 +73,11 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           'auth', 'auth failed before reaching the server',
           error: e, stackTrace: st);
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            l10n?.authNetworkError ??
-                'Could not reach the server. Check your connection and '
-                    'try again.',
-          ),
-        ),
+      AppSnack.error(
+        context,
+        l10n?.authNetworkError ??
+            'Could not reach the server. Check your connection and '
+                'try again.',
       );
     } finally {
       if (mounted) setState(() => _busy = false);

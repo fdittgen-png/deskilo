@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/level.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
@@ -91,7 +92,7 @@ class EditorScreen extends ConsumerWidget {
                   'Something went wrong. Please try again.',
             ),
           ),
-        _ => const Center(child: CircularProgressIndicator()),
+        _ => const LoadingView(),
       },
     );
   }

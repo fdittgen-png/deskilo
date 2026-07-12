@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/providers/money_providers.dart';
@@ -87,13 +89,10 @@ class MembersScreen extends ConsumerWidget {
           'workspace', 'member subscription update failed',
           error: e, stackTrace: st);
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
-          ),
-        ),
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
       );
       return;
     }
@@ -214,7 +213,7 @@ class MembersScreen extends ConsumerWidget {
                   'Something went wrong. Please try again.',
             ),
           ),
-        _ => const Center(child: CircularProgressIndicator()),
+        _ => const LoadingView(),
       },
     );
   }

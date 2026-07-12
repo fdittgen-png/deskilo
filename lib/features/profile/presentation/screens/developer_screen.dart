@@ -8,6 +8,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/share/share_launcher.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 
 /// Which trace levels the list shows.
@@ -54,13 +55,10 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
       logger.error('developer', 'trace export failed',
           error: e, stackTrace: st);
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
-          ),
-        ),
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
       );
     }
   }

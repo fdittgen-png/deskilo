@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/accessory.dart';
@@ -64,13 +67,10 @@ class AccessoriesScreen extends ConsumerWidget {
       TraceLogger.instance
           .error('plan', 'accessory save failed', error: e, stackTrace: st);
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
-          ),
-        ),
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
       );
       return;
     }
@@ -105,8 +105,10 @@ class AccessoriesScreen extends ConsumerWidget {
         child: const Icon(Icons.add),
       ),
       body: switch (accessoriesAsync) {
-        AsyncData(value: final accessories) when accessories.isEmpty => Center(
-            child: Text(l10n?.accessoriesEmpty ?? 'No accessories yet.'),
+        AsyncData(value: final accessories) when accessories.isEmpty =>
+          EmptyState(
+            icon: Icons.chair_alt_outlined,
+            title: l10n?.accessoriesEmpty ?? 'No accessories yet.',
           ),
         AsyncData(value: final accessories) => ListView(
             children: [
@@ -139,7 +141,7 @@ class AccessoriesScreen extends ConsumerWidget {
                   'Something went wrong. Please try again.',
             ),
           ),
-        _ => const Center(child: CircularProgressIndicator()),
+        _ => const LoadingView(),
       },
     );
   }

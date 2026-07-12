@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/accessory.dart';
 import '../../../plan/domain/desk.dart';
@@ -222,9 +224,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       PlacementProblem.outsideParent =>
         l10n?.editorPlacementOutside ?? 'Must be fully inside an office.',
     };
-    ScaffoldMessenger.of(context)
-      ..clearSnackBars()
-      ..showSnackBar(SnackBar(content: Text(message)));
+    AppSnack.error(context, message, replace: true);
   }
 
   Future<void> _commitMarquee(FloorPlan plan, GridRect rect) async {
@@ -274,15 +274,11 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     final desk = plan.deskAtCell(cell.x, cell.y);
     if (workspace == null) return;
     if (desk == null) {
-      ScaffoldMessenger.of(context)
-        ..clearSnackBars()
-        ..showSnackBar(
-          SnackBar(
-            content: Text(
-              l10n?.editorSeatNoDesk ?? 'Seats can only be placed on a desk.',
-            ),
-          ),
-        );
+      AppSnack.error(
+        context,
+        l10n?.editorSeatNoDesk ?? 'Seats can only be placed on a desk.',
+        replace: true,
+      );
       return;
     }
     const orientation = SeatOrientation.n;
@@ -735,7 +731,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                   'Something went wrong. Please try again.',
             ),
           ),
-        _ => const Center(child: CircularProgressIndicator()),
+        _ => const LoadingView(),
       },
     );
   }

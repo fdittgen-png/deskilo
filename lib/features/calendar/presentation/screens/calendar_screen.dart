@@ -6,6 +6,9 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/motion.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../plan/domain/seat_context.dart';
@@ -125,13 +128,10 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
       TraceLogger.instance.error('calendar', 'reservation cancel failed',
           error: e, stackTrace: st);
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
-          ),
-        ),
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
       );
       return;
     }
@@ -240,30 +240,43 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         Expanded(
           child: RefreshIndicator(
             onRefresh: () async => invalidateBookingData(ref),
-            child: _timeline
-                ? DayTimeline(
-                    day: _selectedDay,
-                    reservations: visible,
-                    everyone: _everyone,
-                    myMemberId: myMember?.id,
-                    onReservationTap: _detailSheet,
+            // #209: cross-fade the list/timeline toggle. The two branches
+            // carry distinct subtree keys so the switcher animates the
+            // swap; empty vs. populated list share one key (no fade when
+            // only the day's content changes).
+            child: AnimatedSwitcher(
+              duration: AppMotion.viewSwitch,
+              child: _timeline
+                ? KeyedSubtree(
+                    key: const ValueKey('calendar-timeline-view'),
+                    child: DayTimeline(
+                      day: _selectedDay,
+                      reservations: visible,
+                      everyone: _everyone,
+                      myMemberId: myMember?.id,
+                      onReservationTap: _detailSheet,
+                    ),
                   )
                 : dayReservations.isEmpty
-                ? ListView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 48),
-                        child: Center(
-                          child: Text(
-                            l10n?.calendarNoReservations ??
+                ? KeyedSubtree(
+                    key: const ValueKey('calendar-list-view'),
+                    child: ListView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 48),
+                          child: EmptyState(
+                            icon: Icons.event_available_outlined,
+                            title: l10n?.calendarNoReservations ??
                                 'No reservations on this day.',
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   )
-                : ListView.builder(
+                : KeyedSubtree(
+                    key: const ValueKey('calendar-list-view'),
+                    child: ListView.builder(
                     physics: const AlwaysScrollableScrollPhysics(),
                     itemCount: dayReservations.length,
                     itemBuilder: (context, index) {
@@ -297,7 +310,9 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                         onTap: () => _detailSheet(r),
                       );
                     },
+                    ),
                   ),
+            ),
           ),
         ),
       ],

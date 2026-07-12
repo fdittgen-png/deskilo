@@ -8,6 +8,8 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/share/share_launcher.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -140,13 +142,10 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       TraceLogger.instance
           .error('money', 'bill PDF export failed', error: e, stackTrace: st);
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
-          ),
-        ),
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
       );
     }
   }
@@ -251,24 +250,18 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       TraceLogger.instance
           .error('money', 'record payment failed', error: e, stackTrace: st);
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
-          ),
-        ),
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
       );
       return;
     }
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          l10n?.moneyPaymentPending ??
-              'Payment submitted — waiting for confirmation.',
-        ),
-      ),
+    AppSnack.success(
+      context,
+      l10n?.moneyPaymentPending ??
+          'Payment submitted — waiting for confirmation.',
     );
     ref.invalidate(eventsProvider);
   }
@@ -372,24 +365,18 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       TraceLogger.instance
           .error('money', 'submit expense failed', error: e, stackTrace: st);
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
-          ),
-        ),
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
       );
       return;
     }
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          l10n?.moneyExpensePending ??
-              'Expense submitted — waiting for approval.',
-        ),
-      ),
+    AppSnack.success(
+      context,
+      l10n?.moneyExpensePending ??
+          'Expense submitted — waiting for approval.',
     );
     ref.invalidate(eventsProvider);
   }
@@ -492,7 +479,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 'Something went wrong. Please try again.',
           ),
         ),
-      _ => const Center(child: CircularProgressIndicator()),
+      _ => const LoadingView(),
     };
   }
 }

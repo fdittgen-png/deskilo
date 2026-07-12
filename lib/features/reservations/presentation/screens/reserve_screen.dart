@@ -8,6 +8,10 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/motion.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../calendar/presentation/widgets/day_timeline.dart';
 import '../../../events/providers/event_providers.dart';
@@ -345,7 +349,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
       picked.minute,
     ));
     if (!end.isAfter(from)) {
-      _snack(l10n?.planEndBeforeStart ?? 'End must be after start.');
+      AppSnack.error(
+        context,
+        l10n?.planEndBeforeStart ?? 'End must be after start.',
+        replace: true,
+      );
       return;
     }
     setState(() {
@@ -386,12 +394,6 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     return fallback;
   }
 
-  void _snack(String message) {
-    ScaffoldMessenger.of(context)
-      ..clearSnackBars()
-      ..showSnackBar(SnackBar(content: Text(message)));
-  }
-
   // ── Plan view: seat tap → shared booking sheet (#206) ──
 
   String _firstName(String name) => name.split(' ').firstOrNull ?? name;
@@ -406,7 +408,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     // Closed day (#186): no sheet at all — the server would reject any
     // booking touching it (`assert_workspace_open`, migration 0013).
     if (!_isWorkspaceOpenAt(window.start)) {
-      _snack(l10n?.planClosedDay ?? 'Closed on this day');
+      AppSnack.info(
+        context,
+        l10n?.planClosedDay ?? 'Closed on this day',
+        replace: true,
+      );
       return;
     }
     final myMemberId = ref.read(myMemberProvider).value?.id;
@@ -421,8 +427,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     switch (state) {
       case SeatState.blocked:
         // No blocking management here — that stays on the Plan tab (#161).
-        _snack(
+        AppSnack.info(
+          context,
           l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.',
+          replace: true,
         );
       case SeatState.free:
         await _bookingSheet(seat, reservations, window);
@@ -454,7 +462,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
             ? (l10n?.planOccupiedBy(name) ?? 'Occupied by $name')
             : (l10n?.planReservedBy(name) ?? 'Reserved by $name');
         final until = DateFormat.Hm().format(other.endsAt.toLocal());
-        _snack('$template · ${l10n?.planUntil(until) ?? 'until $until'}');
+        AppSnack.info(
+          context,
+          '$template · ${l10n?.planUntil(until) ?? 'until $until'}',
+          replace: true,
+        );
     }
   }
 
@@ -472,8 +484,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     // Defense in depth (#161): the tap handler never routes blocked seats
     // here, but a stale plan could — the RPCs reject them anyway.
     if (seat.isBlockedAt(window.start)) {
-      _snack(
+      AppSnack.info(
+        context,
         l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.',
+        replace: true,
       );
       return;
     }
@@ -527,12 +541,16 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
       TraceLogger.instance
           .error('reserve', 'booking failed', error: e, stackTrace: st);
       if (!mounted) return;
-      _snack(_bookingErrorText(
-        l10n,
-        e,
-        l10n?.reserveBookingFailed ??
-            'Could not reserve — the seat may have just been taken.',
-      ));
+      AppSnack.error(
+        context,
+        _bookingErrorText(
+          l10n,
+          e,
+          l10n?.reserveBookingFailed ??
+              'Could not reserve — the seat may have just been taken.',
+        ),
+        replace: true,
+      );
       return;
     }
     if (!mounted) return;
@@ -623,11 +641,26 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
             ),
           ),
           Expanded(
-            child: switch (_view) {
-              _ReserveView.plan => _planView(l10n, window, dayOpen: dayOpen),
-              _ReserveView.day => _dayView(),
-              _ReserveView.week => _weekView(),
-            },
+            // #209: cross-fade the Plan/Day/Week toggle. Distinct subtree
+            // keys make the switcher animate the swap; the fade stays
+            // OUTSIDE the canvas's InteractiveViewer transform.
+            child: AnimatedSwitcher(
+              duration: AppMotion.viewSwitch,
+              child: switch (_view) {
+                _ReserveView.plan => KeyedSubtree(
+                    key: const ValueKey('reserve-plan-view'),
+                    child: _planView(l10n, window, dayOpen: dayOpen),
+                  ),
+                _ReserveView.day => KeyedSubtree(
+                    key: const ValueKey('reserve-day-view'),
+                    child: _dayView(),
+                  ),
+                _ReserveView.week => KeyedSubtree(
+                    key: const ValueKey('reserve-week-view'),
+                    child: _weekView(),
+                  ),
+              },
+            ),
           ),
         ],
       ),
@@ -813,17 +846,12 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
   }) {
     final levels = ref.watch(levelsProvider).value;
     if (levels == null) {
-      return const Center(child: CircularProgressIndicator());
+      return const LoadingView();
     }
     if (levels.isEmpty) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Text(
-            l10n?.planNoLevels ?? 'The workspace has no floor plan yet.',
-            textAlign: TextAlign.center,
-          ),
-        ),
+      return EmptyState(
+        icon: Icons.map_outlined,
+        title: l10n?.planNoLevels ?? 'The workspace has no floor plan yet.',
       );
     }
     final level =
@@ -903,7 +931,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                       'Something went wrong. Please try again.',
                 ),
               ),
-            _ => const Center(child: CircularProgressIndicator()),
+            _ => const LoadingView(),
           },
         ),
       ],
