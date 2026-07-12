@@ -7,6 +7,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/bill_pdf.dart';
 import 'package:deskilo/features/money/domain/bill_sections.dart';
@@ -421,7 +422,7 @@ void main() {
       // then duplicates the nav label) — tap the nav destination itself.
       await tester.tap(
         find.descendant(
-          of: find.byType(NavigationBar),
+          of: find.byType(ShellBottomBar),
           matching: find.text('Money'),
         ),
       );

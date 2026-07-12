@@ -4,6 +4,7 @@
 // every role defined on the workspace membership (owner / admin / worker),
 // showing exactly the affordances that role grants (spec §2).
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,7 +42,7 @@ void main() {
       (tester) async {
     await bootAs(tester, isAdmin: true, isOwner: true);
 
-    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.byType(ShellBottomBar), findsOneWidget);
     expect(find.byIcon(Icons.design_services_outlined), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.settings_outlined));
@@ -54,7 +55,7 @@ void main() {
       (tester) async {
     await bootAs(tester, isAdmin: true, isOwner: false);
 
-    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.byType(ShellBottomBar), findsOneWidget);
     expect(find.byIcon(Icons.design_services_outlined), findsNothing);
 
     await tester.tap(find.text('Calendar'));
@@ -70,7 +71,7 @@ void main() {
       (tester) async {
     await bootAs(tester, isAdmin: false, isOwner: false);
 
-    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.byType(ShellBottomBar), findsOneWidget);
     expect(find.byIcon(Icons.design_services_outlined), findsNothing);
 
     await tester.tap(find.text('Calendar'));

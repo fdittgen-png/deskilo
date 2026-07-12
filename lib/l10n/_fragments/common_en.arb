@@ -39,5 +39,9 @@
   "comingSoon": "Coming soon",
   "@comingSoon": {
     "description": "Placeholder body shown on tabs whose feature is not yet implemented"
+  },
+  "shellReserveButton": "Reserve",
+  "@shellReserveButton": {
+    "description": "Tooltip of the raised centre Reserve button in the bottom bar, and title of the reservation screen it opens"
   }
 }

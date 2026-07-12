@@ -18,6 +18,7 @@ import '../features/plan/presentation/screens/plan_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
+import '../features/reservations/presentation/screens/reserve_screen.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/presentation/screens/availability_screen.dart';
 import '../features/workspace/presentation/screens/features_screen.dart';
@@ -140,6 +141,12 @@ GoRouter router(Ref ref) {
             ],
           ),
         ],
+      ),
+      GoRoute(
+        // Root-level (outside the shell) like /settings: the reservation
+        // flow covers the bottom bar (#207; #208 fills in the real flow).
+        path: '/reserve',
+        builder: (context, state) => const ReservePlaceholderScreen(),
       ),
       GoRoute(
         path: '/settings',

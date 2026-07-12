@@ -89,6 +89,7 @@
   "settingsSectionPreferences": "Preferenze",
   "settingsSectionAdvanced": "Avanzate",
   "comingSoon": "Prossimamente",
+  "shellReserveButton": "Prenota",
   "consumptionAdd": "Aggiungi consumo",
   "consumptionAddForMember": "Aggiungi servizio per {name}",
   "consumptionService": "Servizio",

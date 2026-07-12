@@ -295,6 +295,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get comingSoon => 'Coming soon';
 
   @override
+  String get shellReserveButton => 'Reserve';
+
+  @override
   String get consumptionAdd => 'Add consumption';
 
   @override

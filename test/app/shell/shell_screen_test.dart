@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -20,7 +21,7 @@ void main() {
   testWidgets('shell shows the four localized destinations', (tester) async {
     await pumpApp(tester);
 
-    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.byType(ShellBottomBar), findsOneWidget);
     for (final label in ['Plan', 'Calendar', 'Events', 'Money']) {
       expect(find.text(label), findsWidgets, reason: 'missing tab "$label"');
     }

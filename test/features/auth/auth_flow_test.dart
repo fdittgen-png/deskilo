@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -30,7 +31,7 @@ void main() {
     await tester.tap(find.widgetWithText(FilledButton, 'Sign in'));
     await tester.pumpAndSettle();
 
-    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.byType(ShellBottomBar), findsOneWidget);
   });
 
   testWidgets('failed sign-in shows the error snackbar and stays put',
@@ -51,7 +52,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.textContaining('invalid credentials'), findsOneWidget);
-    expect(find.byType(NavigationBar), findsNothing);
+    expect(find.byType(ShellBottomBar), findsNothing);
   });
 
   testWidgets('sign-up mode collects a display name and signs in',
@@ -70,7 +71,7 @@ void main() {
     await tester.tap(find.widgetWithText(FilledButton, 'Create account'));
     await tester.pumpAndSettle();
 
-    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.byType(ShellBottomBar), findsOneWidget);
   });
 
   testWidgets('sign-out from settings returns to the auth screen',
