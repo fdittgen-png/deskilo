@@ -1922,6 +1922,48 @@ abstract class AppLocalizations {
   /// **'Bookings here are per half day.'**
   String get planHalfDayError;
 
+  /// Settings tile and dialog title of the opt-in WhatsApp number on my profile (#223)
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get whatsappTitle;
+
+  /// Settings tile subtitle when no WhatsApp number is shared
+  ///
+  /// In en, this message translates to:
+  /// **'Not shared'**
+  String get whatsappNotShared;
+
+  /// Label of the WhatsApp number input
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp number'**
+  String get whatsappFieldLabel;
+
+  /// Example number in international format; localized to a plausible local example
+  ///
+  /// In en, this message translates to:
+  /// **'+44 7912 345678'**
+  String get whatsappHint;
+
+  /// Helper text under the WhatsApp input explaining opt-in visibility and how to clear
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. Visible to members of your workspaces so they can reach you on WhatsApp. Leave empty to stop sharing it.'**
+  String get whatsappHelper;
+
+  /// Success snackbar after saving or clearing the WhatsApp number
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp number saved'**
+  String get whatsappSaved;
+
+  /// Error snackbar when saving the WhatsApp number fails
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the WhatsApp number'**
+  String get whatsappSaveFailed;
+
   /// Reserve hub view segment showing the selected day's per-seat timeline (#208)
   ///
   /// In en, this message translates to:

@@ -7,10 +7,14 @@ import '../../../../core/locale/locale_controller.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/theme_controller.dart';
 import '../../../../core/trace/dev_mode.dart';
+import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/profile.dart';
+import '../../providers/profile_providers.dart';
 
 /// Endonyms are proper nouns, identical in every UI language — deliberately
 /// const strings, not l10n keys (#147). Order matches the issue spec.
@@ -33,6 +37,7 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final myProfile = ref.watch(myProfileProvider).value;
     final isOwner = ref.watch(myMemberProvider).value?.isOwner ?? false;
     final canAdminister =
         ref.watch(myMemberProvider).value?.canAdminister ?? false;
@@ -53,6 +58,22 @@ class SettingsScreen extends ConsumerWidget {
             leading: const Icon(Icons.switch_account_outlined),
             title: Text(l10n?.profilesTitle ?? 'Profiles'),
             onTap: () => context.push('/profiles'),
+          ),
+          // Opt-in WhatsApp number on my profile (#223): shared with
+          // members of my workspaces, consumed by the directory (#224).
+          // Sits with Profiles in the ungrouped personal area on top.
+          ListTile(
+            leading: const Icon(Icons.chat_outlined),
+            title: Text(l10n?.whatsappTitle ?? 'WhatsApp'),
+            subtitle: Text(
+              (myProfile?.sharesWhatsapp ?? false)
+                  ? myProfile!.whatsapp
+                  : (l10n?.whatsappNotShared ?? 'Not shared'),
+            ),
+            onTap: () => showDialog<void>(
+              context: context,
+              builder: (_) => const _WhatsappDialog(),
+            ),
           ),
           if (showAdminSection) ...[
             const Divider(),
@@ -255,6 +276,95 @@ class _LanguageDialog extends ConsumerWidget {
                 ),
             ],
           ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Editor for the opt-in WhatsApp number on my profile (#223). The raw
+/// input is normalized to `+` + digits by [normalizeWhatsapp] on save;
+/// an emptied field clears the number (opt-out). Follows the settings
+/// dialog pattern (_LanguageDialog/_ThemeDialog) with an explicit Save.
+class _WhatsappDialog extends ConsumerStatefulWidget {
+  const _WhatsappDialog();
+
+  @override
+  ConsumerState<_WhatsappDialog> createState() => _WhatsappDialogState();
+}
+
+class _WhatsappDialogState extends ConsumerState<_WhatsappDialog> {
+  late final TextEditingController _controller;
+  bool _saving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: ref.read(myProfileProvider).value?.whatsapp ?? '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _save() async {
+    final l10n = AppLocalizations.of(context);
+    setState(() => _saving = true);
+    try {
+      await ref
+          .read(profileRepositoryProvider)
+          .updateWhatsapp(normalizeWhatsapp(_controller.text));
+      ref.invalidate(myProfileProvider);
+      if (!mounted) return;
+      Navigator.of(context).pop();
+      AppSnack.success(
+        context,
+        l10n?.whatsappSaved ?? 'WhatsApp number saved',
+      );
+    } catch (e, st) {
+      debugPrint('WhatsApp save failed: $e\n$st');
+      TraceLogger.instance.error('profile', 'WhatsApp save failed',
+          error: e, stackTrace: st);
+      if (!mounted) return;
+      setState(() => _saving = false);
+      AppSnack.error(
+        context,
+        l10n?.whatsappSaveFailed ?? 'Could not save the WhatsApp number',
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return AlertDialog(
+      title: Text(l10n?.whatsappTitle ?? 'WhatsApp'),
+      content: TextField(
+        controller: _controller,
+        autofocus: true,
+        keyboardType: TextInputType.phone,
+        decoration: InputDecoration(
+          labelText: l10n?.whatsappFieldLabel ?? 'WhatsApp number',
+          hintText: l10n?.whatsappHint ?? '+33612345678',
+          helperText: l10n?.whatsappHelper ??
+              'Optional. Visible to members of your workspaces. '
+                  'Leave empty to stop sharing it.',
+          helperMaxLines: 3,
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed:
+              _saving ? null : () => Navigator.of(context).pop(),
+          child: Text(l10n?.commonCancel ?? 'Cancel'),
+        ),
+        FilledButton(
+          onPressed: _saving ? null : _save,
+          child: Text(l10n?.commonSave ?? 'Save'),
         ),
       ],
     );

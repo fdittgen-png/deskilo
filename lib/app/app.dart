@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/locale/locale_controller.dart';
+import '../core/presence/presence_providers.dart';
 import '../core/theme/theme_controller.dart';
 import '../l10n/app_localizations.dart';
 import 'router.dart';
@@ -16,6 +17,9 @@ class DeskiloApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
+    // Fire-and-forget last-seen heartbeat (#223): runs while signed in
+    // and foregrounded, pauses otherwise. Failures only hit the trace.
+    ref.watch(presenceBootstrapProvider);
     return MaterialApp.router(
       onGenerateTitle: (context) =>
           AppLocalizations.of(context)?.appTitle ?? 'DesKilo',

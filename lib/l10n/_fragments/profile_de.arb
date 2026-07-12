@@ -1,0 +1,10 @@
+{
+  "@@locale": "de",
+  "whatsappTitle": "WhatsApp",
+  "whatsappNotShared": "Nicht geteilt",
+  "whatsappFieldLabel": "WhatsApp-Nummer",
+  "whatsappHint": "+49 151 23456789",
+  "whatsappHelper": "Optional. Für Mitglieder deiner Workspaces sichtbar, damit sie dich über WhatsApp erreichen. Leer lassen, um die Nummer nicht mehr zu teilen.",
+  "whatsappSaved": "WhatsApp-Nummer gespeichert",
+  "whatsappSaveFailed": "WhatsApp-Nummer konnte nicht gespeichert werden"
+}

@@ -1,0 +1,10 @@
+{
+  "@@locale": "it",
+  "whatsappTitle": "WhatsApp",
+  "whatsappNotShared": "Non condiviso",
+  "whatsappFieldLabel": "Numero WhatsApp",
+  "whatsappHint": "+39 333 123 4567",
+  "whatsappHelper": "Facoltativo. Visibile ai membri dei tuoi spazi per contattarti su WhatsApp. Lascia vuoto per smettere di condividerlo.",
+  "whatsappSaved": "Numero WhatsApp salvato",
+  "whatsappSaveFailed": "Impossibile salvare il numero WhatsApp"
+}

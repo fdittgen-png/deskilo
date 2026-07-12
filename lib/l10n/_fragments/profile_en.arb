@@ -1,0 +1,31 @@
+{
+  "@@locale": "en",
+  "whatsappTitle": "WhatsApp",
+  "@whatsappTitle": {
+    "description": "Settings tile and dialog title of the opt-in WhatsApp number on my profile (#223)"
+  },
+  "whatsappNotShared": "Not shared",
+  "@whatsappNotShared": {
+    "description": "Settings tile subtitle when no WhatsApp number is shared"
+  },
+  "whatsappFieldLabel": "WhatsApp number",
+  "@whatsappFieldLabel": {
+    "description": "Label of the WhatsApp number input"
+  },
+  "whatsappHint": "+44 7912 345678",
+  "@whatsappHint": {
+    "description": "Example number in international format; localized to a plausible local example"
+  },
+  "whatsappHelper": "Optional. Visible to members of your workspaces so they can reach you on WhatsApp. Leave empty to stop sharing it.",
+  "@whatsappHelper": {
+    "description": "Helper text under the WhatsApp input explaining opt-in visibility and how to clear"
+  },
+  "whatsappSaved": "WhatsApp number saved",
+  "@whatsappSaved": {
+    "description": "Success snackbar after saving or clearing the WhatsApp number"
+  },
+  "whatsappSaveFailed": "Could not save the WhatsApp number",
+  "@whatsappSaveFailed": {
+    "description": "Error snackbar when saving the WhatsApp number fails"
+  }
+}

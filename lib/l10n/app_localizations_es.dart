@@ -1005,6 +1005,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String get planHalfDayError => 'Aquí las reservas son por media jornada.';
 
   @override
+  String get whatsappTitle => 'WhatsApp';
+
+  @override
+  String get whatsappNotShared => 'No compartido';
+
+  @override
+  String get whatsappFieldLabel => 'Número de WhatsApp';
+
+  @override
+  String get whatsappHint => '+34 612 34 56 78';
+
+  @override
+  String get whatsappHelper =>
+      'Opcional. Visible para los miembros de tus espacios para que puedan contactarte por WhatsApp. Déjalo vacío para dejar de compartirlo.';
+
+  @override
+  String get whatsappSaved => 'Número de WhatsApp guardado';
+
+  @override
+  String get whatsappSaveFailed => 'No se pudo guardar el número de WhatsApp';
+
+  @override
   String get reserveDayView => 'Día';
 
   @override
