@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/theme/status_colors.dart';
+import 'package:deskilo/core/theme/theme_controller.dart';
 import 'package:deskilo/features/events/domain/event_decision.dart';
 import 'package:deskilo/features/events/domain/validation_policy.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
@@ -64,6 +66,20 @@ WorkspaceEvent serviceChargeEvent({
   );
 }
 
+/// In-memory [ThemeStore] (same seam as theme_selection_test.dart) so the
+/// #196 dark-theme test never touches SharedPreferences.
+class InMemoryThemeStore implements ThemeStore {
+  InMemoryThemeStore({this.mode});
+
+  String? mode;
+
+  @override
+  Future<String?> read() async => mode;
+
+  @override
+  Future<void> write(String? mode) async => this.mode = mode;
+}
+
 Member adminMember(String id) => Member(
       id: id,
       workspaceId: 'ws-1',
@@ -79,6 +95,7 @@ Future<FakeEventRepository> pumpEvents(
   List<EventDecision> decisions = const [],
   List<ValidationPolicy> policies = const [],
   List<Member> otherMembers = const [],
+  String? themeMode,
 }) async {
   final events = FakeEventRepository()
     ..events.addAll(seed)
@@ -90,11 +107,15 @@ Future<FakeEventRepository> pumpEvents(
     ..otherMembers.addAll(otherMembers);
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(
-        events: events,
-        floorPlan: plans,
-        workspace: workspace,
-      ),
+      overrides: [
+        ...standardTestOverrides(
+          events: events,
+          floorPlan: plans,
+          workspace: workspace,
+        ),
+        themeStoreProvider
+            .overrideWithValue(InMemoryThemeStore(mode: themeMode)),
+      ],
       child: const DeskiloApp(),
     ),
   );
@@ -329,7 +350,7 @@ void main() {
     );
 
     expect(find.text('Waiting for your confirmation'), findsOneWidget);
-    expect(find.textContaining('✓ Validated by Bo'), findsOneWidget);
+    expect(find.textContaining('Validated by Bo'), findsOneWidget);
     expect(find.textContaining('1/2 validations'), findsOneWidget);
   });
 
@@ -367,7 +388,7 @@ void main() {
     // and the feed narrates my decision plus the quorum progress.
     expect(repo.events.single.status, EventStatus.pending);
     expect(find.text('Accept'), findsNothing);
-    expect(find.textContaining('✓ Validated by Flo'), findsOneWidget);
+    expect(find.textContaining('Validated by Flo'), findsOneWidget);
     expect(find.textContaining('1/2 validations'), findsOneWidget);
   });
 
@@ -403,8 +424,8 @@ void main() {
       ],
     );
 
-    expect(find.textContaining('✓ Validated by Flo'), findsOneWidget);
-    expect(find.textContaining('✓ Validated by System'), findsOneWidget);
+    expect(find.textContaining('Validated by Flo'), findsOneWidget);
+    expect(find.textContaining('Validated by System'), findsOneWidget);
   });
 
   testWidgets('type filter narrows the feed', (tester) async {
@@ -438,5 +459,170 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Flo booked A1'), findsOneWidget);
+  });
+
+  group('semantic validation colors (#196)', () {
+    EventDecision decision({
+      required String id,
+      required bool accept,
+      String? memberId,
+      String eventId = 'evt-1',
+    }) =>
+        EventDecision(
+          id: id,
+          eventId: eventId,
+          memberId: memberId,
+          accept: accept,
+          decidedBySystem: false,
+          decidedAt: DateTime.utc(2026, 7, 8, 9),
+        );
+
+    testWidgets(
+        'feed decision rows show a green check for accepts and a red '
+        'cross for refusals; a rejected event gets a red cross trailing',
+        (tester) async {
+      // Quorum story: Bo accepted, Flo declined → the event is rejected.
+      await pumpEvents(
+        tester,
+        seed: [
+          event(
+            actor: 'member-2',
+            subject: 'member-1',
+            status: EventStatus.rejected,
+          ),
+        ],
+        decisions: [
+          decision(id: 'dec-1', accept: true, memberId: 'member-3'),
+          decision(id: 'dec-2', accept: false, memberId: 'member-1'),
+        ],
+      );
+
+      // Accepted decision: green outlined check + localized text.
+      final check =
+          tester.widget<Icon>(find.byIcon(Icons.check_circle_outline));
+      expect(check.color, AppStatusColors.success);
+      expect(find.textContaining('Validated by Bo'), findsOneWidget);
+
+      // Refused decision row AND the rejected trailing: red crosses.
+      final error = Theme.of(
+        tester.element(find.byIcon(Icons.check_circle_outline)),
+      ).colorScheme.error;
+      final crosses =
+          tester.widgetList<Icon>(find.byIcon(Icons.cancel_outlined));
+      expect(crosses, hasLength(2));
+      for (final cross in crosses) {
+        expect(cross.color, error);
+      }
+      expect(find.textContaining('Declined by Flo'), findsOneWidget);
+    });
+
+    testWidgets('an applied feed row carries a green check trailing',
+        (tester) async {
+      await pumpEvents(tester, seed: [event()]);
+
+      final check =
+          tester.widget<Icon>(find.byIcon(Icons.check_circle_outline));
+      expect(check.color, AppStatusColors.success);
+      expect(find.byIcon(Icons.hourglass_top), findsNothing);
+    });
+
+    testWidgets(
+        'the pending card colors Accept green and Decline red with their '
+        'check/cross icons', (tester) async {
+      await pumpEvents(
+        tester,
+        seed: [
+          event(
+            actor: 'member-2',
+            subject: 'member-1',
+            status: EventStatus.pending,
+          ),
+        ],
+      );
+
+      // FilledButton.icon / TextButton.icon build private subtypes, so
+      // find.byType (exact runtimeType) misses them — use bySubtype.
+      final acceptFinder = find.ancestor(
+        of: find.text('Accept'),
+        matching: find.bySubtype<FilledButton>(),
+      );
+      final accept = tester.widget<FilledButton>(acceptFinder);
+      expect(
+        accept.style?.backgroundColor?.resolve(const <WidgetState>{}),
+        AppStatusColors.success,
+      );
+      expect(
+        accept.style?.foregroundColor?.resolve(const <WidgetState>{}),
+        AppStatusColors.onSuccess,
+      );
+      expect(
+        find.descendant(of: acceptFinder, matching: find.byIcon(Icons.check)),
+        findsOneWidget,
+      );
+
+      final declineFinder = find.ancestor(
+        of: find.text('Decline'),
+        matching: find.bySubtype<TextButton>(),
+      );
+      final decline = tester.widget<TextButton>(declineFinder);
+      final error =
+          Theme.of(tester.element(declineFinder)).colorScheme.error;
+      expect(
+        decline.style?.foregroundColor?.resolve(const <WidgetState>{}),
+        error,
+      );
+      expect(
+        find.descendant(of: declineFinder, matching: find.byIcon(Icons.close)),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets(
+        'the dark theme uses the lighter success tint on decisions, '
+        'trailing marks and the Accept button', (tester) async {
+      await pumpEvents(
+        tester,
+        themeMode: 'dark',
+        seed: [
+          event(
+            actor: 'member-2',
+            subject: 'member-1',
+            status: EventStatus.pending,
+          ),
+          event(id: 'evt-2', status: EventStatus.confirmed),
+        ],
+        decisions: [
+          decision(
+            id: 'dec-1',
+            accept: true,
+            memberId: 'member-3',
+            eventId: 'evt-2',
+          ),
+        ],
+      );
+
+      final accept = tester.widget<FilledButton>(
+        find.ancestor(
+          of: find.text('Accept'),
+          matching: find.bySubtype<FilledButton>(),
+        ),
+      );
+      expect(
+        accept.style?.backgroundColor?.resolve(const <WidgetState>{}),
+        AppStatusColors.successDark,
+      );
+      expect(
+        accept.style?.foregroundColor?.resolve(const <WidgetState>{}),
+        AppStatusColors.onSuccessDark,
+      );
+
+      // Decision row + confirmed trailing: both carry the dark tint.
+      final checks =
+          tester.widgetList<Icon>(find.byIcon(Icons.check_circle_outline));
+      expect(checks, hasLength(2));
+      for (final icon in checks) {
+        expect(icon.color, AppStatusColors.successDark);
+      }
+    });
   });
 }

@@ -1934,13 +1934,13 @@ abstract class AppLocalizations {
   /// **'{current}/{required} validations'**
   String eventValidations(int current, int required);
 
-  /// Audit-trail row for an accept decision (prefixed by a ✓ in code)
+  /// Audit-trail row for an accept decision
   ///
   /// In en, this message translates to:
   /// **'Validated by {name} · {when}'**
   String eventValidatedBy(String name, String when);
 
-  /// Audit-trail row for a reject decision (prefixed by a ✗ in code)
+  /// Audit-trail row for a reject decision
   ///
   /// In en, this message translates to:
   /// **'Declined by {name} · {when}'**

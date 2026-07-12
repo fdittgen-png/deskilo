@@ -120,8 +120,8 @@ void main() {
 
     expect(repo.events.single.status, EventStatus.confirmed);
     expect(find.text('Waiting for your confirmation'), findsNothing);
-    expect(find.textContaining('✓ Validated by Flo'), findsOneWidget);
-    expect(find.textContaining('✓ Validated by Bo'), findsOneWidget);
+    expect(find.textContaining('Validated by Flo'), findsOneWidget);
+    expect(find.textContaining('Validated by Bo'), findsOneWidget);
   });
 
   testWidgets(
@@ -161,7 +161,7 @@ void main() {
     expect(repo.events.single.status, EventStatus.pending);
     expect(find.text('Waiting for your confirmation'), findsOneWidget);
     expect(find.text('Accept'), findsOneWidget);
-    expect(find.textContaining('✓ Validated by Bo'), findsOneWidget);
+    expect(find.textContaining('Validated by Bo'), findsOneWidget);
     expect(find.textContaining('1/2 validations'), findsOneWidget);
   });
 

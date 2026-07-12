@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show AuthException, PostgrestException;
 
+import '../../../../core/theme/status_colors.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
@@ -96,23 +97,6 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.adjustment => Icons.tune,
       EventType.serviceCharge => Icons.room_service_outlined,
     };
-  }
-
-  /// One audit-trail row: "✓/✗ who · when" (#130). Sweep rows carry no
-  /// member and are attributed to the system.
-  String _decisionLine(
-    AppLocalizations? l10n,
-    EventDecision decision,
-    Map<String, String> names,
-  ) {
-    final name = decision.memberId == null || decision.decidedBySystem
-        ? (l10n?.eventSystemDecider ?? 'System')
-        : (names[decision.memberId] ?? '');
-    final when =
-        DateFormat.MMMd().add_Hm().format(decision.decidedAt.toLocal());
-    return decision.accept
-        ? '✓ ${l10n?.eventValidatedBy(name, when) ?? 'Validated by $name · $when'}'
-        : '✗ ${l10n?.eventRejectedBy(name, when) ?? 'Declined by $name · $when'}';
   }
 
   /// Quorum progress ("1/2 validations") for pending events whose policy
@@ -273,10 +257,9 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                                 in decisions[event.id] ??
                                     const <EventDecision>[]) ...[
                               const SizedBox(height: 2),
-                              Text(
-                                _decisionLine(l10n, decision, names),
-                                style:
-                                    Theme.of(context).textTheme.bodySmall,
+                              _DecisionRow(
+                                decision: decision,
+                                names: names,
                               ),
                             ],
                             if (_quorumProgress(
@@ -296,16 +279,36 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                TextButton(
+                                // #196 — semantic outcome colors: decline
+                                // red (theme error), accept green (the
+                                // AppStatusColors success token).
+                                TextButton.icon(
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Theme.of(context)
+                                        .colorScheme
+                                        .error,
+                                  ),
                                   onPressed: () => _respond(event, false),
-                                  child: Text(
+                                  icon: const Icon(Icons.close, size: 18),
+                                  label: Text(
                                     l10n?.eventReject ?? 'Decline',
                                   ),
                                 ),
                                 const SizedBox(width: 8),
-                                FilledButton(
+                                FilledButton.icon(
+                                  style: FilledButton.styleFrom(
+                                    backgroundColor:
+                                        AppStatusColors.successOf(
+                                      Theme.of(context).brightness,
+                                    ),
+                                    foregroundColor:
+                                        AppStatusColors.onSuccessOf(
+                                      Theme.of(context).brightness,
+                                    ),
+                                  ),
                                   onPressed: () => _respond(event, true),
-                                  child:
+                                  icon: const Icon(Icons.check, size: 18),
+                                  label:
                                       Text(l10n?.eventAccept ?? 'Accept'),
                                 ),
                               ],
@@ -341,27 +344,52 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                   ListTile(
                     leading: Icon(_icon(event)),
                     title: Text(_line(l10n, event, names, targets, currency)),
-                    subtitle: Text(
-                      [
-                        _when(event),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(_when(event)),
                         // #154 — how the money moved; absent / pre-#154
                         // payloads render no method line.
-                        ?_methodLine(l10n, event),
+                        if (_methodLine(l10n, event) case final method?)
+                          Text(method),
                         for (final decision
                             in decisions[event.id] ??
                                 const <EventDecision>[])
-                          _decisionLine(l10n, decision, names),
-                        ?_quorumProgress(
+                          _DecisionRow(decision: decision, names: names),
+                        // Quorum progress stays neutral: it only renders
+                        // while the event is pending, i.e. before the
+                        // quorum is satisfied (#196).
+                        if (_quorumProgress(
                           l10n,
                           event,
                           decisions[event.id] ?? const [],
                           policies,
-                        ),
-                      ].join('\n'),
+                        ) case final progress?)
+                          Text(progress),
+                      ],
                     ),
-                    trailing: event.status == EventStatus.pending
-                        ? const Icon(Icons.hourglass_top, size: 18)
-                        : null,
+                    // #196 — semantic outcome trailing: pending waits,
+                    // applied/confirmed succeeded (green), rejected failed
+                    // (red). Expired events carry no outcome mark.
+                    trailing: switch (event.status) {
+                      EventStatus.pending =>
+                        const Icon(Icons.hourglass_top, size: 18),
+                      EventStatus.applied ||
+                      EventStatus.confirmed =>
+                        Icon(
+                          Icons.check_circle_outline,
+                          size: 18,
+                          color: AppStatusColors.successOf(
+                            Theme.of(context).brightness,
+                          ),
+                        ),
+                      EventStatus.rejected => Icon(
+                          Icons.cancel_outlined,
+                          size: 18,
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      EventStatus.expired => null,
+                    },
                   ),
                 ],
               ),
@@ -376,5 +404,52 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         ),
       _ => const Center(child: CircularProgressIndicator()),
     };
+  }
+}
+
+/// One audit-trail row: check/cross + "who · when" (#130, colored #196).
+/// Accepts show a green check (the [AppStatusColors] success token so the
+/// hue reads on both light and dark surfaces), refusals a red cross
+/// (`colorScheme.error`). Sweep rows carry no member and are attributed to
+/// the system.
+class _DecisionRow extends StatelessWidget {
+  const _DecisionRow({required this.decision, required this.names});
+
+  final EventDecision decision;
+  final Map<String, String> names;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final name = decision.memberId == null || decision.decidedBySystem
+        ? (l10n?.eventSystemDecider ?? 'System')
+        : (names[decision.memberId] ?? '');
+    final when =
+        DateFormat.MMMd().add_Hm().format(decision.decidedAt.toLocal());
+    final color = decision.accept
+        ? AppStatusColors.successOf(theme.brightness)
+        : theme.colorScheme.error;
+    final text = decision.accept
+        ? (l10n?.eventValidatedBy(name, when) ??
+            'Validated by $name · $when')
+        : (l10n?.eventRejectedBy(name, when) ??
+            'Declined by $name · $when');
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          decision.accept
+              ? Icons.check_circle_outline
+              : Icons.cancel_outlined,
+          size: 14,
+          color: color,
+        ),
+        const SizedBox(width: 4),
+        Flexible(
+          child: Text(text, style: theme.textTheme.bodySmall),
+        ),
+      ],
+    );
   }
 }
