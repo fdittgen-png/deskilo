@@ -298,6 +298,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get comingSoon => 'Prossimamente';
 
   @override
+  String get shellReserveButton => 'Prenota';
+
+  @override
   String get consumptionAdd => 'Aggiungi consumo';
 
   @override

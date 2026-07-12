@@ -15,6 +15,7 @@ import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../router.dart';
+import 'shell_bottom_bar.dart';
 
 /// Events tab icon with the pending-confirmation badge (spec §8.1).
 class _EventsIcon extends ConsumerWidget {
@@ -84,7 +85,7 @@ class ShellScreen extends ConsumerWidget {
     ];
 
     // Per-workspace feature gating (#146): the router branches stay fixed,
-    // but disabled features drop their destination — so the NavigationBar
+    // but disabled features drop their destination — so the bottom-bar
     // position and the branch index diverge and must be mapped both ways.
     // Plan (and Settings in the app bar) are core and never gated.
     final features = ref.watch(enabledFeaturesSyncProvider);
@@ -98,23 +99,23 @@ class ShellScreen extends ConsumerWidget {
     final selectedPosition =
         visibleBranches.indexOf(navigationShell.currentIndex);
 
-    NavigationDestination destinationFor(int branch) => switch (branch) {
-          ShellBranch.calendar => NavigationDestination(
+    ShellDestination destinationFor(int branch) => switch (branch) {
+          ShellBranch.calendar => ShellDestination(
               icon: const Icon(Icons.calendar_month_outlined),
               selectedIcon: const Icon(Icons.calendar_month),
               label: tabTitles[ShellBranch.calendar],
             ),
-          ShellBranch.events => NavigationDestination(
+          ShellBranch.events => ShellDestination(
               icon: const _EventsIcon(selected: false),
               selectedIcon: const _EventsIcon(selected: true),
               label: tabTitles[ShellBranch.events],
             ),
-          ShellBranch.money => NavigationDestination(
+          ShellBranch.money => ShellDestination(
               icon: const Icon(Icons.account_balance_wallet_outlined),
               selectedIcon: const Icon(Icons.account_balance_wallet),
               label: tabTitles[ShellBranch.money],
             ),
-          _ => NavigationDestination(
+          _ => ShellDestination(
               icon: const Icon(Icons.grid_view_outlined),
               selectedIcon: const Icon(Icons.grid_view),
               label: tabTitles[ShellBranch.plan],
@@ -139,11 +140,12 @@ class ShellScreen extends ConsumerWidget {
         ],
       ),
       body: navigationShell,
-      // NavigationBar needs at least two destinations; with everything
-      // gated off only Plan remains and the bar disappears entirely.
+      // The bar needs at least two destinations to flank the notch; with
+      // everything gated off only Plan remains and the bar disappears
+      // entirely (pre-#207 behaviour, preserved).
       bottomNavigationBar: visibleBranches.length < 2
           ? null
-          : NavigationBar(
+          : ShellBottomBar(
               // While the router redirect moves a disabled branch back to
               // /plan the current branch may not be visible for one frame.
               selectedIndex: selectedPosition < 0 ? 0 : selectedPosition,
@@ -155,6 +157,8 @@ class ShellScreen extends ConsumerWidget {
               destinations: [
                 for (final branch in visibleBranches) destinationFor(branch),
               ],
+              reserveLabel: l10n?.shellReserveButton ?? 'Reserve',
+              onReservePressed: () => context.push('/reserve'),
             ),
     );
   }

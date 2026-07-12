@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,12 +39,16 @@ WorkspaceEvent pendingForMe(String id) => WorkspaceEvent(
       createdAt: DateTime.now(),
     );
 
-NavigationDestination destinationLabeled(WidgetTester tester, String label) =>
-    tester
-        .widgetList<NavigationDestination>(
-          find.byType(NavigationDestination),
-        )
-        .firstWhere((d) => d.label == label);
+List<String> tabLabels(WidgetTester tester) => tester
+    .widgetList<ShellBarTab>(find.byType(ShellBarTab))
+    .map((t) => t.destination.label)
+    .toList();
+
+Finder tabLabeled(WidgetTester tester, String label) => find.byWidget(
+      tester
+          .widgetList<ShellBarTab>(find.byType(ShellBarTab))
+          .firstWhere((t) => t.destination.label == label),
+    );
 
 void main() {
   testWidgets('disabled Money and Calendar features drop their tabs',
@@ -53,21 +58,13 @@ void main() {
       const {'moneyTab': false, 'calendarTab': false},
     );
 
-    final labels = tester
-        .widgetList<NavigationDestination>(find.byType(NavigationDestination))
-        .map((d) => d.label)
-        .toList();
-    expect(labels, ['Plan', 'Events']);
+    expect(tabLabels(tester), ['Plan', 'Events']);
   });
 
   testWidgets('all features on keeps the four tabs', (tester) async {
     await pumpWithFlags(tester, const {});
 
-    final labels = tester
-        .widgetList<NavigationDestination>(find.byType(NavigationDestination))
-        .map((d) => d.label)
-        .toList();
-    expect(labels, ['Plan', 'Calendar', 'Events', 'Money']);
+    expect(tabLabels(tester), ['Plan', 'Calendar', 'Events', 'Money']);
   });
 
   testWidgets(
@@ -78,11 +75,11 @@ void main() {
     await pumpWithFlags(tester, const {'calendarTab': false}, events: events);
 
     // The badge renders inside the Events destination, not a neighbor.
-    final eventsDestination = find.byWidget(
-      destinationLabeled(tester, 'Events'),
-    );
     expect(
-      find.descendant(of: eventsDestination, matching: find.text('2')),
+      find.descendant(
+        of: tabLabeled(tester, 'Events'),
+        matching: find.text('2'),
+      ),
       findsWidgets,
     );
 
@@ -96,14 +93,14 @@ void main() {
     expect(appBarTitle, findsOneWidget);
   });
 
-  testWidgets('everything gated off leaves Plan without a NavigationBar',
+  testWidgets('everything gated off leaves Plan without a bottom bar',
       (tester) async {
     await pumpWithFlags(
       tester,
       const {'calendarTab': false, 'eventsTab': false, 'moneyTab': false},
     );
 
-    expect(find.byType(NavigationBar), findsNothing);
+    expect(find.byType(ShellBottomBar), findsNothing);
     final appBarTitle = find.descendant(
       of: find.byType(AppBar),
       matching: find.text('Plan'),

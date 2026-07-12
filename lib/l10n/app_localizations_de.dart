@@ -297,6 +297,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get comingSoon => 'Demnächst verfügbar';
 
   @override
+  String get shellReserveButton => 'Reservieren';
+
+  @override
   String get consumptionAdd => 'Verbrauch erfassen';
 
   @override

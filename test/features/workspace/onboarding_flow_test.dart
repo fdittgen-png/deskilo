@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -26,7 +27,7 @@ void main() {
     await pumpWithoutWorkspace(tester);
 
     expect(find.text('Welcome to DesKilo'), findsOneWidget);
-    expect(find.byType(NavigationBar), findsNothing);
+    expect(find.byType(ShellBottomBar), findsNothing);
   });
 
   testWidgets('creating a workspace leads into the shell', (tester) async {
@@ -43,7 +44,7 @@ void main() {
     expect(repo.workspaces.single.name, 'Kraftwerk Coworking');
     expect(repo.workspaces.single.countryCode, 'DE');
     expect(repo.workspaces.single.currencyCode, 'EUR');
-    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.byType(ShellBottomBar), findsOneWidget);
   });
 
   testWidgets('joining with a valid invite code leads into the shell',
@@ -56,7 +57,7 @@ void main() {
     await tester.tap(find.text('Join'));
     await tester.pumpAndSettle();
 
-    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.byType(ShellBottomBar), findsOneWidget);
   });
 
   testWidgets('joining with an invalid code shows the error and stays',
@@ -73,7 +74,7 @@ void main() {
       find.text('Something went wrong. Please try again.'),
       findsOneWidget,
     );
-    expect(find.byType(NavigationBar), findsNothing);
+    expect(find.byType(ShellBottomBar), findsNothing);
   });
 
   testWidgets('member with a workspace never sees onboarding',
@@ -86,7 +87,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.byType(ShellBottomBar), findsOneWidget);
     expect(find.text('Welcome to DesKilo'), findsNothing);
   });
 }

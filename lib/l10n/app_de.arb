@@ -89,6 +89,7 @@
   "settingsSectionPreferences": "Präferenzen",
   "settingsSectionAdvanced": "Erweitert",
   "comingSoon": "Demnächst verfügbar",
+  "shellReserveButton": "Reservieren",
   "consumptionAdd": "Verbrauch erfassen",
   "consumptionAddForMember": "Leistung für {name} erfassen",
   "consumptionService": "Leistung",

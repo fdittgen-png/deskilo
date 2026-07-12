@@ -638,6 +638,12 @@ abstract class AppLocalizations {
   /// **'Coming soon'**
   String get comingSoon;
 
+  /// Tooltip of the raised centre Reserve button in the bottom bar, and title of the reservation screen it opens
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve'**
+  String get shellReserveButton;
+
   /// Button + sheet title recording my own consumed services (#129)
   ///
   /// In en, this message translates to:
