@@ -4,6 +4,7 @@ import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
@@ -107,6 +108,19 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(workspace.otherMembers.single.status, MemberStatus.paused);
+  });
+
+  testWidgets('invite button leads to the workspace ID & QR screen (#195)',
+      (tester) async {
+    await pumpMembers(tester);
+
+    expect(find.byIcon(Icons.person_add_outlined), findsOneWidget);
+    await tester.tap(find.byIcon(Icons.person_add_outlined));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Workspace ID & QR'), findsOneWidget);
+    expect(find.byType(QrImageView), findsOneWidget);
+    expect(find.text('GOODCODE22'), findsOneWidget);
   });
 
   testWidgets('workers have no members entry in settings', (tester) async {

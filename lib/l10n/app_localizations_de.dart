@@ -628,6 +628,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberStatusExited => 'Ausgetreten';
 
   @override
+  String get membersInvite => 'Mitglied einladen';
+
+  @override
   String get profilesTitle => 'Profile';
 
   @override

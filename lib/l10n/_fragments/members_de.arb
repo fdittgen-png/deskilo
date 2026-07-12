@@ -6,6 +6,7 @@
   "memberRoleAdmin": "Admin",
   "memberStatusPaused": "Pausiert",
   "memberStatusExited": "Ausgetreten",
+  "membersInvite": "Mitglied einladen",
   "profilesTitle": "Profile",
   "profilesAdd": "Profil hinzufügen",
   "profilesActive": "Aktives Profil",

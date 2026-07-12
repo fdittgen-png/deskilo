@@ -631,6 +631,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get memberStatusExited => 'Parti';
 
   @override
+  String get membersInvite => 'Inviter un membre';
+
+  @override
   String get profilesTitle => 'Profils';
 
   @override

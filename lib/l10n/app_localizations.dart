@@ -1244,6 +1244,12 @@ abstract class AppLocalizations {
   /// **'Exited'**
   String get memberStatusExited;
 
+  /// App-bar action on the members screen linking to the workspace ID & QR invite surface (#195)
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a member'**
+  String get membersInvite;
+
   /// Profile switcher screen (#89): one profile per workspace membership
   ///
   /// In en, this message translates to:
