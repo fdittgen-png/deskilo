@@ -25,6 +25,7 @@ import '../../../plan/domain/seat_context.dart';
 import '../../../plan/presentation/widgets/floor_plan_painter.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/providers/plan_focus_controller.dart';
+import '../../../money/domain/quota_rules.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_availability.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -362,6 +363,14 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
         error.message.contains(WorkspaceClosedError.serverSubstring)) {
       return l10n?.planClosedDayError ??
           'The workspace is closed on that day.';
+    }
+    // Quota before granularity: 'half-day quota' also contains the
+    // granularity substring 'half-day'.
+    if (error is PostgrestException &&
+        error.message.contains(QuotaExceededError.serverSubstring)) {
+      return l10n?.quotaExceededError ??
+          'Monthly half-day quota reached — request extra half-days '
+              'from the Money tab.';
     }
     if (error is PostgrestException &&
         error.message.contains(BookingGranularityError.serverSubstring)) {

@@ -20,6 +20,7 @@ const _cardTypes = [
   EventType.payment,
   EventType.expense,
   EventType.serviceCharge,
+  EventType.quota,
   EventType.reservation,
   EventType.adjustment,
 ];
@@ -43,6 +44,7 @@ class ValidationSettingsScreen extends ConsumerWidget {
       EventType.expense => l10n?.eventTypeExpense ?? 'Expense',
       EventType.adjustment => l10n?.eventTypeAdjustment ?? 'Adjustment',
       EventType.serviceCharge => l10n?.eventTypeServiceCharge ?? 'Service',
+      EventType.quota => l10n?.eventTypeQuota ?? 'Extra half-days',
     };
   }
 

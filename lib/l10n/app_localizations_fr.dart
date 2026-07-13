@@ -1113,6 +1113,36 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileStatusSaveFailed => 'Impossible d\'enregistrer le statut';
 
   @override
+  String get eventTypeQuota => 'Demi-journées supplémentaires';
+
+  @override
+  String eventQuotaRequested(String actor, int halfDays, String period) {
+    return '$actor demande $halfDays demi-journées supplémentaires pour $period';
+  }
+
+  @override
+  String get quotaExceededError =>
+      'Quota mensuel de demi-journées atteint — demandez des demi-journées supplémentaires depuis l\'onglet Finances.';
+
+  @override
+  String get quotaRequestButton => 'Demander des demi-journées';
+
+  @override
+  String get quotaRequestTitle => 'Demander des demi-journées supplémentaires';
+
+  @override
+  String quotaRequestExplainer(String period) {
+    return 'Vos réservations sont plafonnées par votre abonnement. Les demi-journées supplémentaires pour $period s\'appliquent une fois validées.';
+  }
+
+  @override
+  String get quotaRequestCountLabel => 'Nombre de demi-journées';
+
+  @override
+  String get quotaRequestPending =>
+      'Demande envoyée — en attente de validation.';
+
+  @override
   String get reserveDayView => 'Jour';
 
   @override

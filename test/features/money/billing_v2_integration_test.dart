@@ -284,7 +284,10 @@ void main() {
         find.text('12 of 12 half-days used (23 open days)'),
         findsOneWidget,
       );
-      expect(find.textContaining('extra half-day'), findsNothing);
+      // The overage LINE ('N extra half-days') must be absent — the
+      // Money tab's 'Request extra half-days' button always matches a
+      // bare substring (0031).
+      expect(find.textContaining(RegExp(r'^\d+ extra half-days')), findsNothing);
     });
 
     testWidgets(
@@ -318,7 +321,10 @@ void main() {
         find.text('44 of 44 half-days used (22 open days)'),
         findsOneWidget,
       );
-      expect(find.textContaining('extra half-day'), findsNothing);
+      // The overage LINE ('N extra half-days') must be absent — the
+      // Money tab's 'Request extra half-days' button always matches a
+      // bare substring (0031).
+      expect(find.textContaining(RegExp(r'^\d+ extra half-days')), findsNothing);
 
       await tester.tap(find.byIcon(Icons.chevron_left));
       await tester.pumpAndSettle();

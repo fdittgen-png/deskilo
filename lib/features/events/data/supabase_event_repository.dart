@@ -38,6 +38,21 @@ class SupabaseEventRepository implements EventRepository {
   }
 
   @override
+  Future<String> requestQuotaExtension(
+    String workspaceId, {
+    required String period,
+    required int halfDays,
+  }) async {
+    final result =
+        await _client.rpc<dynamic>('request_quota_extension', params: {
+      'p_workspace_id': workspaceId,
+      'p_period': period,
+      'p_half_days': halfDays,
+    });
+    return result as String;
+  }
+
+  @override
   Future<Map<String, List<EventDecision>>> fetchDecisions(
     String workspaceId,
     List<String> eventIds,

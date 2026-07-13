@@ -489,6 +489,10 @@ void main() {
     final money = await pumpMoney(tester);
 
     await tester.scrollUntilVisible(find.text('Add consumption'), 100);
+    // The quota-request button (0031) pushed this below the fold edge;
+    // scrollUntilVisible stops once BUILT, ensureVisible finishes.
+    await tester.ensureVisible(find.text('Add consumption'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Add consumption'));
     await tester.pumpAndSettle();
 
@@ -516,6 +520,10 @@ void main() {
     final money = await pumpMoney(tester);
 
     await tester.scrollUntilVisible(find.text('Add consumption'), 100);
+    // The quota-request button (0031) pushed this below the fold edge;
+    // scrollUntilVisible stops once BUILT, ensureVisible finishes.
+    await tester.ensureVisible(find.text('Add consumption'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Add consumption'));
     await tester.pumpAndSettle();
 

@@ -1530,6 +1530,54 @@
   "@profileStatusSaveFailed": {
     "description": "Error snackbar when saving the status line fails"
   },
+  "eventTypeQuota": "Extra half-days",
+  "@eventTypeQuota": {
+    "description": "Event-type label for quota-extension requests (0031): feed filter chip + validation policy card"
+  },
+  "eventQuotaRequested": "{actor} requests {halfDays} extra half-days for {period}",
+  "@eventQuotaRequested": {
+    "description": "Feed line of a quota-extension request event",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "halfDays": {
+        "type": "int"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "quotaExceededError": "Monthly half-day quota reached — request extra half-days from the Money tab.",
+  "@quotaExceededError": {
+    "description": "Booking error when assert_member_quota (0031) rejects a reservation beyond the subscription entitlement"
+  },
+  "quotaRequestButton": "Request extra half-days",
+  "@quotaRequestButton": {
+    "description": "Money-tab button opening the quota-extension request sheet"
+  },
+  "quotaRequestTitle": "Request extra half-days",
+  "@quotaRequestTitle": {
+    "description": "Title of the quota-extension request sheet"
+  },
+  "quotaRequestExplainer": "Your reservations are capped by your subscription. Extra half-days for {period} apply once validated.",
+  "@quotaRequestExplainer": {
+    "description": "Explainer in the quota-extension request sheet",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "quotaRequestCountLabel": "Number of half-days",
+  "@quotaRequestCountLabel": {
+    "description": "Label of the half-day count input in the request sheet"
+  },
+  "quotaRequestPending": "Request sent — waiting for validation.",
+  "@quotaRequestPending": {
+    "description": "Snackbar after a quota-extension request was submitted"
+  },
   "reserveDayView": "Day",
   "@reserveDayView": {
     "description": "Reserve hub view segment showing the selected day's per-seat timeline (#208)"

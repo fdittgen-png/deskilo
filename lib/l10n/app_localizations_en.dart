@@ -1101,6 +1101,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileStatusSaveFailed => 'Could not save the status';
 
   @override
+  String get eventTypeQuota => 'Extra half-days';
+
+  @override
+  String eventQuotaRequested(String actor, int halfDays, String period) {
+    return '$actor requests $halfDays extra half-days for $period';
+  }
+
+  @override
+  String get quotaExceededError =>
+      'Monthly half-day quota reached — request extra half-days from the Money tab.';
+
+  @override
+  String get quotaRequestButton => 'Request extra half-days';
+
+  @override
+  String get quotaRequestTitle => 'Request extra half-days';
+
+  @override
+  String quotaRequestExplainer(String period) {
+    return 'Your reservations are capped by your subscription. Extra half-days for $period apply once validated.';
+  }
+
+  @override
+  String get quotaRequestCountLabel => 'Number of half-days';
+
+  @override
+  String get quotaRequestPending => 'Request sent — waiting for validation.';
+
+  @override
   String get reserveDayView => 'Day';
 
   @override

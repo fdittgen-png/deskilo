@@ -85,6 +85,31 @@ class FakeEventRepository implements EventRepository {
   ) async =>
       policies.where((p) => p.workspaceId == workspaceId).toList();
 
+  var _nextEventId = 1;
+
+  @override
+  Future<String> requestQuotaExtension(
+    String workspaceId, {
+    required String period,
+    required int halfDays,
+  }) async {
+    // Mirrors request_quota_extension (0031): a pending self-initiated
+    // 'quota' event that validators decide.
+    final event = WorkspaceEvent(
+      id: 'quota-${_nextEventId++}',
+      workspaceId: workspaceId,
+      type: EventType.quota,
+      action: EventAction.submitted,
+      actorMemberId: respondingMemberId,
+      subjectMemberId: respondingMemberId,
+      payload: {'period': period, 'half_days': halfDays},
+      status: EventStatus.pending,
+      createdAt: DateTime.now(),
+    );
+    events.add(event);
+    return event.id;
+  }
+
   @override
   Future<void> upsertValidationPolicy(ValidationPolicy policy) async {
     final i = policies.indexWhere(

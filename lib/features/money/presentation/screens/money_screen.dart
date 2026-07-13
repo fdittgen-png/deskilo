@@ -382,6 +382,92 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     ref.invalidate(eventsProvider);
   }
 
+  /// Request extra half-days beyond the subscription entitlement (0031):
+  /// lands as a pending 'quota' event that owners/admins validate per the
+  /// owner's policy; once confirmed the booking cap rises for [_period].
+  Future<void> _requestQuotaSheet() async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    final count = TextEditingController();
+    final period = _period;
+    final submitted = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          left: AppSpacing.xl,
+          right: AppSpacing.xl,
+          top: AppSpacing.xl,
+          bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              l10n?.quotaRequestTitle ?? 'Request extra half-days',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              l10n?.quotaRequestExplainer(period) ??
+                  'Your reservations are capped by your subscription. '
+                      'Extra half-days for $period apply once validated.',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              key: const ValueKey('quota-request-count'),
+              controller: count,
+              decoration: InputDecoration(
+                labelText:
+                    l10n?.quotaRequestCountLabel ?? 'Number of half-days',
+              ),
+              keyboardType: TextInputType.number,
+              autofocus: true,
+            ),
+            const SizedBox(height: 16),
+            FilledButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(
+                l10n?.moneySubmitPayment ?? 'Submit for confirmation',
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (submitted != true) return;
+
+    final halfDays = int.tryParse(count.text.trim());
+    if (halfDays == null || halfDays < 1) return;
+    try {
+      await ref.read(eventRepositoryProvider).requestQuotaExtension(
+            workspace.id,
+            period: period,
+            halfDays: halfDays,
+          );
+    } catch (e, st) {
+      debugPrint('quota request failed: $e\n$st');
+      TraceLogger.instance
+          .error('money', 'quota request failed', error: e, stackTrace: st);
+      if (!mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
+      return;
+    }
+    if (!mounted) return;
+    AppSnack.success(
+      context,
+      l10n?.quotaRequestPending ?? 'Request sent — waiting for validation.',
+    );
+    ref.invalidate(eventsProvider);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -454,6 +540,15 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               onPressed: () => _submitExpenseSheet(currency),
               icon: const Icon(Icons.receipt_long_outlined),
               label: Text(l10n?.moneySubmitExpense ?? 'Submit an expense'),
+            ),
+            const SizedBox(height: 8),
+            OutlinedButton.icon(
+              key: const ValueKey('quota-request-button'),
+              onPressed: _requestQuotaSheet,
+              icon: const Icon(Icons.hourglass_top_outlined),
+              label: Text(
+                l10n?.quotaRequestButton ?? 'Request extra half-days',
+              ),
             ),
             // Consumption entry points follow the services feature (#146).
             if (features.contains(WorkspaceFeature.services)) ...[

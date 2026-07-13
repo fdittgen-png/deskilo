@@ -1107,6 +1107,36 @@ class AppLocalizationsEs extends AppLocalizations {
   String get profileStatusSaveFailed => 'No se pudo guardar el estado';
 
   @override
+  String get eventTypeQuota => 'Medias jornadas extra';
+
+  @override
+  String eventQuotaRequested(String actor, int halfDays, String period) {
+    return '$actor solicita $halfDays medias jornadas extra para $period';
+  }
+
+  @override
+  String get quotaExceededError =>
+      'Cuota mensual de medias jornadas alcanzada — solicita medias jornadas extra desde la pestaña Finanzas.';
+
+  @override
+  String get quotaRequestButton => 'Solicitar medias jornadas extra';
+
+  @override
+  String get quotaRequestTitle => 'Solicitar medias jornadas extra';
+
+  @override
+  String quotaRequestExplainer(String period) {
+    return 'Tus reservas están limitadas por tu suscripción. Las medias jornadas extra para $period se aplican una vez validadas.';
+  }
+
+  @override
+  String get quotaRequestCountLabel => 'Número de medias jornadas';
+
+  @override
+  String get quotaRequestPending =>
+      'Solicitud enviada — pendiente de validación.';
+
+  @override
   String get reserveDayView => 'Día';
 
   @override

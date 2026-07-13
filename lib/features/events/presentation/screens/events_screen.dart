@@ -71,6 +71,13 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
           ) ??
           '${event.payload['name']} '
               '×${event.payload['quantity']} — $amount',
+      (EventType.quota, _) => l10n?.eventQuotaRequested(
+            actor,
+            (event.payload['half_days'] as num?)?.toInt() ?? 0,
+            event.payload['period'] as String? ?? '',
+          ) ??
+          '$actor requests ${event.payload['half_days']} extra '
+              'half-days for ${event.payload['period']}',
       _ => '${_typeLabel(l10n, event.type)} · ${event.action.name}',
     };
     // Service charges name no actor in the title, so always say whose bill
@@ -90,6 +97,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.adjustment => l10n?.eventTypeAdjustment ?? 'Adjustment',
       EventType.serviceCharge =>
         l10n?.eventTypeServiceCharge ?? 'Service',
+      EventType.quota => l10n?.eventTypeQuota ?? 'Extra half-days',
     };
   }
 
@@ -102,6 +110,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.expense => Icons.receipt_long_outlined,
       EventType.adjustment => Icons.tune,
       EventType.serviceCharge => Icons.room_service_outlined,
+      EventType.quota => Icons.hourglass_top_outlined,
     };
   }
 
