@@ -87,6 +87,16 @@ void main() {
   testWidgets('walk-up end is capped by the next reservation',
       (tester) async {
     final now = DateTime.now();
+    // The plan looks for "the next reservation" within the live local
+    // day — a seed at now+1h crosses midnight on late-evening runs (bit
+    // CI at 23:14 UTC), so clamp it inside today like #191 clamped the
+    // open weekdays.
+    final endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
+    var nextStart = now.add(const Duration(hours: 1));
+    if (nextStart.isAfter(endOfDay)) nextStart = endOfDay;
+    if (!nextStart.isAfter(now)) {
+      nextStart = now.add(const Duration(seconds: 30));
+    }
     final env = await pumpPlan(
       tester,
       seedReservations: (repo) {
@@ -96,8 +106,8 @@ void main() {
             workspaceId: 'ws-1',
             seatId: 'seat-4',
             memberId: 'member-2',
-            startsAt: now.add(const Duration(hours: 1)),
-            endsAt: now.add(const Duration(hours: 3)),
+            startsAt: nextStart,
+            endsAt: nextStart.add(const Duration(hours: 2)),
             status: ReservationStatus.reserved,
           ),
         );
@@ -113,7 +123,7 @@ void main() {
 
     final mine = env.reservations.reservations
         .firstWhere((r) => r.memberId == 'member-1');
-    expect(mine.endsAt.isAfter(now.add(const Duration(hours: 1))), isFalse);
+    expect(mine.endsAt.isAfter(nextStart), isFalse);
   });
 
   testWidgets('tapping my checked-in seat offers check-out', (tester) async {
