@@ -41,6 +41,11 @@ abstract final class ShellBranch {
   static const int calendar = 1;
   static const int directory = 2;
   static const int money = 3;
+
+  /// The raised centre button's branch — not a bar destination, but a
+  /// branch so the bar stays visible and functional on the hub. Core
+  /// like Plan: never feature-gated, active by default.
+  static const int reserve = 4;
 }
 
 @Riverpod(keepAlive: true)
@@ -142,13 +147,18 @@ GoRouter router(Ref ref) {
               ),
             ],
           ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                // The Reserve hub behind the raised centre button. A
+                // shell branch (not a pushed route) so the bottom bar
+                // stays visible and functional on the hub; ungated.
+                path: '/reserve',
+                builder: (context, state) => const ReserveScreen(),
+              ),
+            ],
+          ),
         ],
-      ),
-      GoRoute(
-        // Root-level (outside the shell) like /settings: the reservation
-        // flow covers the bottom bar (#207; #208 fills in the real flow).
-        path: '/reserve',
-        builder: (context, state) => const ReservePlaceholderScreen(),
       ),
       GoRoute(
         path: '/settings',
