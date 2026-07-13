@@ -421,6 +421,47 @@ final class ClosureDaysProvider
 
 String _$closureDaysHash() => r'b4ec3e79a97e7a47c0340ece344f8b12625f590a';
 
+/// The active workspace's admin invite code — null for non-owners
+/// (owner-only RLS on workspace_admin_invites, 0030).
+
+@ProviderFor(adminInviteCode)
+final adminInviteCodeProvider = AdminInviteCodeProvider._();
+
+/// The active workspace's admin invite code — null for non-owners
+/// (owner-only RLS on workspace_admin_invites, 0030).
+
+final class AdminInviteCodeProvider
+    extends $FunctionalProvider<AsyncValue<String?>, String?, FutureOr<String?>>
+    with $FutureModifier<String?>, $FutureProvider<String?> {
+  /// The active workspace's admin invite code — null for non-owners
+  /// (owner-only RLS on workspace_admin_invites, 0030).
+  AdminInviteCodeProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'adminInviteCodeProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$adminInviteCodeHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<String?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<String?> create(Ref ref) {
+    return adminInviteCode(ref);
+  }
+}
+
+String _$adminInviteCodeHash() => r'ee2c7ab85676a8b6e9a5c4e6e8831fdca40bcdd5';
+
 /// Features enabled for the active workspace (#146). Deriving from
 /// [currentWorkspace] is what makes flags "apply on connect": switching
 /// profiles (#89) or refetching workspaces recomputes the set with the

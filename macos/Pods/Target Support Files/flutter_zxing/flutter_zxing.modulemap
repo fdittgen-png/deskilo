@@ -1,0 +1,6 @@
+framework module flutter_zxing {
+  umbrella header "flutter_zxing-umbrella.h"
+
+  export *
+  module * { export * }
+}

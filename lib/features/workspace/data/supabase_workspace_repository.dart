@@ -44,6 +44,17 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<String?> adminInviteCode(String workspaceId) async {
+    // Owner-only RLS (0030): non-owners simply get no row back.
+    final row = await _client
+        .from('workspace_admin_invites')
+        .select('code')
+        .eq('workspace_id', workspaceId)
+        .maybeSingle();
+    return row?['code'] as String?;
+  }
+
+  @override
   Future<void> updateWorkspaceLocale(
     String workspaceId, {
     required String countryCode,

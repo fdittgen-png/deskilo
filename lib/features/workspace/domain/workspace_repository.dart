@@ -18,8 +18,15 @@ abstract class WorkspaceRepository {
     required String timezone,
   });
 
-  /// Joins via invite code. Returns the workspace id.
+  /// Joins via invite code. Returns the workspace id. The granted role is
+  /// derived server-side from which code matched: the workspace ID joins
+  /// as a plain user, the admin invite code as an admin (0030) — a join
+  /// therefore always carries a role, and never `owner`.
   Future<String> joinWorkspace(String inviteCode);
+
+  /// The workspace's admin invite code, or null when the caller is not
+  /// its owner (owner-only RLS on workspace_admin_invites, 0030).
+  Future<String?> adminInviteCode(String workspaceId);
 
   /// Owner-only (workspaces_update RLS): change the workspace locale —
   /// country, currency and time zone (#153). Currency defaults from the

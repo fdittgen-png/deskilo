@@ -53,6 +53,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authPasswordLabel => 'Password';
 
   @override
+  String get inviteRoleMember => 'Member invite';
+
+  @override
+  String get inviteRoleAdmin => 'Admin invite';
+
+  @override
+  String get inviteAdminExplainer =>
+      'Whoever scans this QR code — or types this code — joins as an admin. Share it only with people who should manage this workspace.';
+
+  @override
+  String get inviteOwnerNote =>
+      'There is no owner invite — only an owner can grant ownership, in Members & plans.';
+
+  @override
   String get authDisplayNameLabel => 'Display name';
 
   @override
