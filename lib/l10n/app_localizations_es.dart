@@ -1308,6 +1308,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get workspaceCodeCopied => 'Copiado';
 
   @override
+  String get inviteRoleMember => 'Invitación de miembro';
+
+  @override
+  String get inviteRoleAdmin => 'Invitación de admin';
+
+  @override
+  String get inviteAdminExplainer =>
+      'Quien escanee este código QR — o escriba este código — se unirá como admin. Compártelo solo con personas que deban gestionar este espacio.';
+
+  @override
+  String get inviteOwnerNote =>
+      'No existe invitación de propietario — solo un propietario puede conceder la propiedad, en Miembros y planes.';
+
+  @override
   String get scanJoinTitle => 'Escanear QR del espacio';
 
   @override

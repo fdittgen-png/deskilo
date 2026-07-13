@@ -124,6 +124,14 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     status: MemberStatus.active,
   );
 
+  /// Admin invite code (0030); like the owner-only RLS, [adminInviteCode]
+  /// only hands it out when [myMember] is an owner.
+  String adminCode = 'ADMINCODE33';
+
+  @override
+  Future<String?> adminInviteCode(String workspaceId) async =>
+      myMember.isOwner ? adminCode : null;
+
   var _nextId = 1;
 
   @override

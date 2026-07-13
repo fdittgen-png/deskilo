@@ -43,9 +43,40 @@ void main() {
     expect(find.text('GOODCODE22'), findsOneWidget);
   });
 
+  testWidgets('the member QR URL carries the user role', (tester) async {
+    await pumpWorkspaceCode(tester);
+
+    final qr = tester.widget<QrImageView>(find.byType(QrImageView));
+    expect(qr.semanticsLabel, 'deskilo://join?role=user&code=GOODCODE22');
+  });
+
+  testWidgets('owner switches to the admin invite — its own code, role in '
+      'the QR URL, no ID editing', (tester) async {
+    await pumpWorkspaceCode(tester);
+
+    await tester.tap(find.text('Admin invite'));
+    await tester.pumpAndSettle();
+
+    final qr = tester.widget<QrImageView>(find.byType(QrImageView));
+    expect(qr.semanticsLabel, 'deskilo://join?role=admin&code=ADMINCODE33');
+    expect(find.text('ADMINCODE33'), findsOneWidget);
+    expect(find.text('Change workspace ID'), findsNothing);
+  });
+
+  testWidgets('no owner invite exists — only member and admin segments',
+      (tester) async {
+    await pumpWorkspaceCode(tester);
+
+    expect(find.text('Member invite'), findsOneWidget);
+    expect(find.text('Admin invite'), findsOneWidget);
+    expect(find.text('Owner invite'), findsNothing);
+  });
+
   testWidgets('owner sets a new alphanumeric ID', (tester) async {
     final workspace = await pumpWorkspaceCode(tester);
 
+    // The role segments (#0030) push this button below the test fold.
+    await tester.ensureVisible(find.text('Change workspace ID'));
     await tester.tap(find.text('Change workspace ID'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), 'KRAFTWERK7');
@@ -60,6 +91,7 @@ void main() {
       (tester) async {
     final workspace = await pumpWorkspaceCode(tester);
 
+    await tester.ensureVisible(find.text('Change workspace ID'));
     await tester.tap(find.text('Change workspace ID'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), 'AB');

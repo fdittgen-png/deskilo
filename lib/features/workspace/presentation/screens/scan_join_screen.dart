@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zxing/flutter_zxing.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/invite_uri.dart';
 
 /// Camera scanner for workspace QR codes (#88). flutter_zxing keeps this
 /// libre / GMS-free (ADR 0003 — same choice as Sparkilo). Pops with the
@@ -29,10 +30,12 @@ class _ScanJoinScreenState extends State<ScanJoinScreen> {
         showGallery: false,
         onScan: (result) {
           if (_done) return;
-          final code = result.text;
-          if (code == null || code.trim().isEmpty) return;
+          // Role-scoped invite URLs and legacy raw-code QRs both resolve
+          // to their code; unrelated QRs resolve to '' and are ignored.
+          final code = InviteUriCodec.decodeCode(result.text ?? '');
+          if (code.isEmpty) return;
           _done = true;
-          Navigator.of(context).pop(code.trim().toUpperCase());
+          Navigator.of(context).pop(code);
         },
       ),
     );

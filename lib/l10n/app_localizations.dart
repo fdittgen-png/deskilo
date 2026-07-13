@@ -2486,6 +2486,30 @@ abstract class AppLocalizations {
   /// **'Copied'**
   String get workspaceCodeCopied;
 
+  /// Segment label: invite QR/code that joins as a plain member
+  ///
+  /// In en, this message translates to:
+  /// **'Member invite'**
+  String get inviteRoleMember;
+
+  /// Segment label: invite QR/code that joins as an admin
+  ///
+  /// In en, this message translates to:
+  /// **'Admin invite'**
+  String get inviteRoleAdmin;
+
+  /// Explainer under the admin invite QR
+  ///
+  /// In en, this message translates to:
+  /// **'Whoever scans this QR code — or types this code — joins as an admin. Share it only with people who should manage this workspace.'**
+  String get inviteAdminExplainer;
+
+  /// Footnote on the invite screen: owner role is never invitable
+  ///
+  /// In en, this message translates to:
+  /// **'There is no owner invite — only an owner can grant ownership, in Members & plans.'**
+  String get inviteOwnerNote;
+
   /// App-bar title of the QR scanner screen
   ///
   /// In en, this message translates to:
