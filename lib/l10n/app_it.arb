@@ -14,6 +14,8 @@
   "authSignUpTitle": "Crea account",
   "authEmailLabel": "E-mail",
   "authPasswordLabel": "Password",
+  "authShowPassword": "Mostra password",
+  "authHidePassword": "Nascondi password",
   "authDisplayNameLabel": "Nome visualizzato",
   "authSignInButton": "Accedi",
   "authSignUpButton": "Crea account",

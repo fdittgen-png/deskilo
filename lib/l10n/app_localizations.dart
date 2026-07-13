@@ -188,6 +188,18 @@ abstract class AppLocalizations {
   /// **'Password'**
   String get authPasswordLabel;
 
+  /// Tooltip of the eye button while the password is hidden
+  ///
+  /// In en, this message translates to:
+  /// **'Show password'**
+  String get authShowPassword;
+
+  /// Tooltip of the eye button while the password is visible
+  ///
+  /// In en, this message translates to:
+  /// **'Hide password'**
+  String get authHidePassword;
+
   /// Label of the display-name input field (sign-up only)
   ///
   /// In en, this message translates to:

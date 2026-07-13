@@ -53,6 +53,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get authPasswordLabel => 'Password';
 
   @override
+  String get authShowPassword => 'Mostra password';
+
+  @override
+  String get authHidePassword => 'Nascondi password';
+
+  @override
   String get authDisplayNameLabel => 'Nome visualizzato';
 
   @override
