@@ -61,6 +61,14 @@
   "@authPasswordLabel": {
     "description": "Label of the password input field"
   },
+  "authShowPassword": "Show password",
+  "@authShowPassword": {
+    "description": "Tooltip of the eye button while the password is hidden"
+  },
+  "authHidePassword": "Hide password",
+  "@authHidePassword": {
+    "description": "Tooltip of the eye button while the password is visible"
+  },
   "authDisplayNameLabel": "Display name",
   "@authDisplayNameLabel": {
     "description": "Label of the display-name input field (sign-up only)"
