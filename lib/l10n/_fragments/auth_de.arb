@@ -4,6 +4,8 @@
   "authSignUpTitle": "Konto erstellen",
   "authEmailLabel": "E-Mail",
   "authPasswordLabel": "Passwort",
+  "authShowPassword": "Passwort anzeigen",
+  "authHidePassword": "Passwort verbergen",
   "authDisplayNameLabel": "Anzeigename",
   "authSignInButton": "Anmelden",
   "authSignUpButton": "Konto erstellen",
