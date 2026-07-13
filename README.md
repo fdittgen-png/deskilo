@@ -1,6 +1,6 @@
 # DesKilo
 
-**Free, privacy-first coworking community app** — visual desk booking plus the community money layer, mobile-first, libre. Android (Play + F-Droid) and iOS. Sibling of [Sparkilo](https://github.com/fdittgen-png/tankstellen).
+**Free, privacy-first coworking community app** — visual desk booking plus the community money layer, mobile-first, libre. Android (Play + F-Droid), iOS, Windows, and macOS. Sibling of [Sparkilo](https://github.com/fdittgen-png/tankstellen).
 
 ## The leitmotiv
 

@@ -238,6 +238,8 @@ A dedicated editor space for drawing the physical workspace on a **grid of small
 
 - **Android** — Google Play *and* a dedicated **F-Droid product flavor** that is 100% Google-services-free (audited by script, as Sparkilo's `audit_no_gms.sh`); official fdroiddata recipe + self-hosted F-Droid repo; per-ABI split APKs; fastlane metadata per locale.
 - **iOS** — App Store via TestFlight; same codebase.
+- **Windows** — Flutter Windows desktop; same codebase, distributed as an installer/MSIX (store or direct download to be decided).
+- **macOS** — Flutter macOS desktop (iMac/MacBook); same codebase, distribution channel (Mac App Store or notarized direct download) to be decided.
 - **License**: MIT, SPDX headers in every file.
 - **No** Google Play Services, **no** Firebase, **no** third-party tracking, **no** GPL dependencies (MIT-compatibility rule).
 
