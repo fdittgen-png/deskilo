@@ -61,22 +61,6 @@
   "@authPasswordLabel": {
     "description": "Label of the password input field"
   },
-  "inviteRoleMember": "Member invite",
-  "@inviteRoleMember": {
-    "description": "Segment label: invite QR/code that joins as a plain member"
-  },
-  "inviteRoleAdmin": "Admin invite",
-  "@inviteRoleAdmin": {
-    "description": "Segment label: invite QR/code that joins as an admin"
-  },
-  "inviteAdminExplainer": "Whoever scans this QR code — or types this code — joins as an admin. Share it only with people who should manage this workspace.",
-  "@inviteAdminExplainer": {
-    "description": "Explainer under the admin invite QR"
-  },
-  "inviteOwnerNote": "There is no owner invite — only an owner can grant ownership, in Members & plans.",
-  "@inviteOwnerNote": {
-    "description": "Footnote on the invite screen: owner role is never invitable"
-  },
   "authDisplayNameLabel": "Display name",
   "@authDisplayNameLabel": {
     "description": "Label of the display-name input field (sign-up only)"
@@ -1761,6 +1745,10 @@
   "workspaceCodeExplainer": "Coworkers scan this QR code — or type the ID — to join this workspace.",
   "workspaceCodeCopy": "Copy ID",
   "workspaceCodeCopied": "Copied",
+  "inviteRoleMember": "Member invite",
+  "inviteRoleAdmin": "Admin invite",
+  "inviteAdminExplainer": "Whoever scans this QR code — or types this code — joins as an admin. Share it only with people who should manage this workspace.",
+  "inviteOwnerNote": "There is no owner invite — only an owner can grant ownership, in Members & plans.",
   "scanJoinTitle": "Scan workspace QR",
   "onboardingScanButton": "Scan QR code",
   "@workspaceCodeTitle": {
@@ -1771,6 +1759,18 @@
   },
   "@scanJoinTitle": {
     "description": "App-bar title of the QR scanner screen"
+  },
+  "@inviteRoleMember": {
+    "description": "Segment label: invite QR/code that joins as a plain member"
+  },
+  "@inviteRoleAdmin": {
+    "description": "Segment label: invite QR/code that joins as an admin"
+  },
+  "@inviteAdminExplainer": {
+    "description": "Explainer under the admin invite QR"
+  },
+  "@inviteOwnerNote": {
+    "description": "Footnote on the invite screen: owner role is never invitable"
   },
   "workspaceCodeSharePng": "Share as PNG",
   "@workspaceCodeSharePng": {

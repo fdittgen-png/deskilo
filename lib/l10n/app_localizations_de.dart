@@ -53,20 +53,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get authPasswordLabel => 'Passwort';
 
   @override
-  String get inviteRoleMember => 'Mitglieder-Einladung';
-
-  @override
-  String get inviteRoleAdmin => 'Admin-Einladung';
-
-  @override
-  String get inviteAdminExplainer =>
-      'Wer diesen QR-Code scannt — oder diesen Code eingibt — tritt als Admin bei. Nur an Personen weitergeben, die diesen Workspace verwalten sollen.';
-
-  @override
-  String get inviteOwnerNote =>
-      'Es gibt keine Eigentümer-Einladung — nur ein Eigentümer kann Eigentum vergeben, unter Mitglieder & Pläne.';
-
-  @override
   String get authDisplayNameLabel => 'Anzeigename';
 
   @override
@@ -1318,6 +1304,20 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get workspaceCodeCopied => 'Kopiert';
+
+  @override
+  String get inviteRoleMember => 'Mitglieder-Einladung';
+
+  @override
+  String get inviteRoleAdmin => 'Admin-Einladung';
+
+  @override
+  String get inviteAdminExplainer =>
+      'Wer diesen QR-Code scannt — oder diesen Code eingibt — tritt als Admin bei. Nur an Personen weitergeben, die diesen Workspace verwalten sollen.';
+
+  @override
+  String get inviteOwnerNote =>
+      'Es gibt keine Eigentümer-Einladung — nur ein Eigentümer kann Eigentum vergeben, unter Mitglieder & Pläne.';
 
   @override
   String get scanJoinTitle => 'Workspace-QR scannen';
