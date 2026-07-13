@@ -39,6 +39,7 @@ class LocalNotificationService implements NotificationService {
         // mipmap rendered as a grey square (#219). Dedicated white glyph.
         android: AndroidInitializationSettings('@drawable/ic_stat_deskilo'),
         iOS: DarwinInitializationSettings(),
+        macOS: DarwinInitializationSettings(),
       ),
     );
     await plugin
