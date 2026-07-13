@@ -98,6 +98,26 @@ void main() {
     expect(find.widgetWithText(FilledButton, 'Sign in'), findsOneWidget);
   });
 
+  testWidgets('password visibility toggle reveals and hides the input',
+      (tester) async {
+    await pumpSignedOut(tester);
+    await tester.enterText(find.byType(TextFormField).at(1), 'secret123');
+
+    bool obscured() => tester
+        .widget<EditableText>(find.byType(EditableText).last)
+        .obscureText;
+
+    expect(obscured(), isTrue);
+
+    await tester.tap(find.byTooltip('Show password'));
+    await tester.pump();
+    expect(obscured(), isFalse);
+
+    await tester.tap(find.byTooltip('Hide password'));
+    await tester.pump();
+    expect(obscured(), isTrue);
+  });
+
   testWidgets('auth screen meets the tap-target guideline', (tester) async {
     final handle = tester.ensureSemantics();
     await pumpSignedOut(tester);

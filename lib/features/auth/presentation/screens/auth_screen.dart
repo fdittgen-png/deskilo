@@ -25,6 +25,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   final _password = TextEditingController();
   bool _isSignUp = false;
   bool _busy = false;
+  bool _obscurePassword = true;
 
   @override
   void dispose() {
@@ -145,8 +146,21 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                     controller: _password,
                     decoration: InputDecoration(
                       labelText: l10n?.authPasswordLabel ?? 'Password',
+                      suffixIcon: IconButton(
+                        tooltip: _obscurePassword
+                            ? (l10n?.authShowPassword ?? 'Show password')
+                            : (l10n?.authHidePassword ?? 'Hide password'),
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                        ),
+                        onPressed: () => setState(
+                          () => _obscurePassword = !_obscurePassword,
+                        ),
+                      ),
                     ),
-                    obscureText: true,
+                    obscureText: _obscurePassword,
                     autofillHints: const [AutofillHints.password],
                     onFieldSubmitted: (_) => _submit(),
                     validator: (v) => (v == null || v.length < 8)
