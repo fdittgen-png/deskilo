@@ -22,6 +22,15 @@ abstract class EventRepository {
 
   Future<List<ValidationPolicy>> fetchValidationPolicies(String workspaceId);
 
+  /// Request [halfDays] extra half-days for [period] ('YYYY-MM') beyond
+  /// the subscription entitlement (0031). Lands as a pending 'quota'
+  /// event that owners/admins validate per policy; returns the event id.
+  Future<String> requestQuotaExtension(
+    String workspaceId, {
+    required String period,
+    required int halfDays,
+  });
+
   /// Insert-or-update on (workspace_id, event_type) — owner-only per RLS.
   Future<void> upsertValidationPolicy(ValidationPolicy policy);
 }

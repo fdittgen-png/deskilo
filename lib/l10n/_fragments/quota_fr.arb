@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "eventTypeQuota": "Demi-journées supplémentaires",
+  "eventQuotaRequested": "{actor} demande {halfDays} demi-journées supplémentaires pour {period}",
+  "quotaExceededError": "Quota mensuel de demi-journées atteint — demandez des demi-journées supplémentaires depuis l'onglet Finances.",
+  "quotaRequestButton": "Demander des demi-journées",
+  "quotaRequestTitle": "Demander des demi-journées supplémentaires",
+  "quotaRequestExplainer": "Vos réservations sont plafonnées par votre abonnement. Les demi-journées supplémentaires pour {period} s'appliquent une fois validées.",
+  "quotaRequestCountLabel": "Nombre de demi-journées",
+  "quotaRequestPending": "Demande envoyée — en attente de validation."
+}

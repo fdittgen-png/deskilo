@@ -1110,6 +1110,35 @@ class AppLocalizationsDe extends AppLocalizations {
       'Status konnte nicht gespeichert werden';
 
   @override
+  String get eventTypeQuota => 'Zusätzliche halbe Tage';
+
+  @override
+  String eventQuotaRequested(String actor, int halfDays, String period) {
+    return '$actor beantragt $halfDays zusätzliche halbe Tage für $period';
+  }
+
+  @override
+  String get quotaExceededError =>
+      'Monatliches Halbtage-Kontingent erreicht — beantrage zusätzliche halbe Tage im Finanzen-Tab.';
+
+  @override
+  String get quotaRequestButton => 'Zusätzliche halbe Tage beantragen';
+
+  @override
+  String get quotaRequestTitle => 'Zusätzliche halbe Tage beantragen';
+
+  @override
+  String quotaRequestExplainer(String period) {
+    return 'Deine Reservierungen sind durch dein Abo begrenzt. Zusätzliche halbe Tage für $period gelten nach der Freigabe.';
+  }
+
+  @override
+  String get quotaRequestCountLabel => 'Anzahl halber Tage';
+
+  @override
+  String get quotaRequestPending => 'Antrag gesendet — wartet auf Freigabe.';
+
+  @override
   String get reserveDayView => 'Tag';
 
   @override

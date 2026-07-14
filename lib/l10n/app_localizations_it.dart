@@ -1111,6 +1111,36 @@ class AppLocalizationsIt extends AppLocalizations {
   String get profileStatusSaveFailed => 'Impossibile salvare lo stato';
 
   @override
+  String get eventTypeQuota => 'Mezze giornate extra';
+
+  @override
+  String eventQuotaRequested(String actor, int halfDays, String period) {
+    return '$actor richiede $halfDays mezze giornate extra per $period';
+  }
+
+  @override
+  String get quotaExceededError =>
+      'Quota mensile di mezze giornate raggiunta — richiedi mezze giornate extra dalla scheda Finanze.';
+
+  @override
+  String get quotaRequestButton => 'Richiedi mezze giornate extra';
+
+  @override
+  String get quotaRequestTitle => 'Richiedi mezze giornate extra';
+
+  @override
+  String quotaRequestExplainer(String period) {
+    return 'Le tue prenotazioni sono limitate dal tuo abbonamento. Le mezze giornate extra per $period si applicano dopo la convalida.';
+  }
+
+  @override
+  String get quotaRequestCountLabel => 'Numero di mezze giornate';
+
+  @override
+  String get quotaRequestPending =>
+      'Richiesta inviata — in attesa di convalida.';
+
+  @override
   String get reserveDayView => 'Giorno';
 
   @override

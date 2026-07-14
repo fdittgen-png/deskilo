@@ -54,15 +54,16 @@ void main() {
     expect(find.text('Payment'), findsOneWidget);
     expect(find.text('Expense'), findsOneWidget);
     expect(find.text('Service'), findsOneWidget);
+    expect(find.text('Extra half-days'), findsOneWidget);
     expect(find.text('Reservation'), findsOneWidget);
     expect(find.text('Adjustment'), findsOneWidget);
 
     // No stored rows: every card shows the built-in defaults and inherits.
     expect(
       find.text('Required validations: 1 · All admins'),
-      findsNWidgets(6),
+      findsNWidgets(7),
     );
-    expect(find.text('Inherits default'), findsNWidgets(6));
+    expect(find.text('Inherits default'), findsNWidgets(7));
     expect(find.text('Customized'), findsNothing);
   });
 
@@ -171,7 +172,7 @@ void main() {
     );
 
     expect(find.text('Customized'), findsOneWidget);
-    expect(find.text('Inherits default'), findsNWidgets(5));
+    expect(find.text('Inherits default'), findsNWidgets(6));
     expect(
       find.text(
         'Required validations: 2 · All admins · Owner must always validate',

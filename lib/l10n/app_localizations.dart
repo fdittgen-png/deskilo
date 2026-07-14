@@ -2102,6 +2102,54 @@ abstract class AppLocalizations {
   /// **'Could not save the status'**
   String get profileStatusSaveFailed;
 
+  /// Event-type label for quota-extension requests (0031): feed filter chip + validation policy card
+  ///
+  /// In en, this message translates to:
+  /// **'Extra half-days'**
+  String get eventTypeQuota;
+
+  /// Feed line of a quota-extension request event
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} requests {halfDays} extra half-days for {period}'**
+  String eventQuotaRequested(String actor, int halfDays, String period);
+
+  /// Booking error when assert_member_quota (0031) rejects a reservation beyond the subscription entitlement
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly half-day quota reached — request extra half-days from the Money tab.'**
+  String get quotaExceededError;
+
+  /// Money-tab button opening the quota-extension request sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Request extra half-days'**
+  String get quotaRequestButton;
+
+  /// Title of the quota-extension request sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Request extra half-days'**
+  String get quotaRequestTitle;
+
+  /// Explainer in the quota-extension request sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Your reservations are capped by your subscription. Extra half-days for {period} apply once validated.'**
+  String quotaRequestExplainer(String period);
+
+  /// Label of the half-day count input in the request sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Number of half-days'**
+  String get quotaRequestCountLabel;
+
+  /// Snackbar after a quota-extension request was submitted
+  ///
+  /// In en, this message translates to:
+  /// **'Request sent — waiting for validation.'**
+  String get quotaRequestPending;
+
   /// Reserve hub view segment showing the selected day's per-seat timeline (#208)
   ///
   /// In en, this message translates to:

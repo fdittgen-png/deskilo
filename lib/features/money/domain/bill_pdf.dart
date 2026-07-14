@@ -256,6 +256,9 @@ String _openPositionLabel(BillPdfStrings strings, WorkspaceEvent event) {
       return strings.eventPayment;
     case EventType.expense:
       return strings.eventExpense;
+    // Quota requests carry no amount, so they never surface as open
+    // positions — the fallback label keeps the switch exhaustive.
+    case EventType.quota:
     case EventType.reservation:
     case EventType.adjustment:
       return strings.eventAdjustment;

@@ -1,0 +1,11 @@
+{
+  "@@locale": "de",
+  "eventTypeQuota": "Zusätzliche halbe Tage",
+  "eventQuotaRequested": "{actor} beantragt {halfDays} zusätzliche halbe Tage für {period}",
+  "quotaExceededError": "Monatliches Halbtage-Kontingent erreicht — beantrage zusätzliche halbe Tage im Finanzen-Tab.",
+  "quotaRequestButton": "Zusätzliche halbe Tage beantragen",
+  "quotaRequestTitle": "Zusätzliche halbe Tage beantragen",
+  "quotaRequestExplainer": "Deine Reservierungen sind durch dein Abo begrenzt. Zusätzliche halbe Tage für {period} gelten nach der Freigabe.",
+  "quotaRequestCountLabel": "Anzahl halber Tage",
+  "quotaRequestPending": "Antrag gesendet — wartet auf Freigabe."
+}

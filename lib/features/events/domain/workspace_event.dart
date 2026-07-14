@@ -13,7 +13,12 @@ enum EventType {
   payment,
   expense,
   adjustment,
-  serviceCharge('service_charge');
+  serviceCharge('service_charge'),
+
+  /// A member's request for extra half-days beyond their subscription
+  /// entitlement (migration 0031). Always self-initiated; validators
+  /// decide per the owner's policy.
+  quota;
 
   const EventType([String? dbName]) : _dbName = dbName;
 
@@ -54,11 +59,13 @@ sealed class WorkspaceEvent with _$WorkspaceEvent {
 
   bool get actorIsSubject => actorMemberId == subjectMemberId;
 
-  /// Expenses, self-recorded payments and self-reported service charges
-  /// are decided by ANOTHER admin (spec §9 no-self-approval, #129);
-  /// everything else by the subject (§8.2).
+  /// Expenses, self-recorded payments, self-reported service charges and
+  /// quota requests are decided by ANOTHER admin (spec §9
+  /// no-self-approval, #129; 0031); everything else by the subject
+  /// (§8.2).
   bool get needsAdminDecider =>
       type == EventType.expense ||
+      type == EventType.quota ||
       ((type == EventType.payment || type == EventType.serviceCharge) &&
           actorIsSubject);
 

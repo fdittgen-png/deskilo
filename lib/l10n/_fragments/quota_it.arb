@@ -1,0 +1,11 @@
+{
+  "@@locale": "it",
+  "eventTypeQuota": "Mezze giornate extra",
+  "eventQuotaRequested": "{actor} richiede {halfDays} mezze giornate extra per {period}",
+  "quotaExceededError": "Quota mensile di mezze giornate raggiunta — richiedi mezze giornate extra dalla scheda Finanze.",
+  "quotaRequestButton": "Richiedi mezze giornate extra",
+  "quotaRequestTitle": "Richiedi mezze giornate extra",
+  "quotaRequestExplainer": "Le tue prenotazioni sono limitate dal tuo abbonamento. Le mezze giornate extra per {period} si applicano dopo la convalida.",
+  "quotaRequestCountLabel": "Numero di mezze giornate",
+  "quotaRequestPending": "Richiesta inviata — in attesa di convalida."
+}
