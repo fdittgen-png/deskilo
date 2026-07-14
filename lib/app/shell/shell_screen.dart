@@ -81,6 +81,9 @@ class ShellScreen extends ConsumerWidget {
       l10n?.tabCalendar ?? 'Calendar',
       l10n?.directoryTitle ?? 'Members',
       l10n?.tabMoney ?? 'Money',
+      // The centre button's branch (#reserve-as-branch): not a bar
+      // destination, but it owns the app-bar title while active.
+      l10n?.shellReserveButton ?? 'Reserve',
     ];
 
     // Per-workspace feature gating (#146): the router branches stay fixed,
@@ -169,7 +172,13 @@ class ShellScreen extends ConsumerWidget {
                 for (final branch in visibleBranches) destinationFor(branch),
               ],
               reserveLabel: l10n?.shellReserveButton ?? 'Reserve',
-              onReservePressed: () => context.push('/reserve'),
+              // A branch switch, not a push — the bar (and this button)
+              // stay visible and functional on the hub.
+              onReservePressed: () => navigationShell.goBranch(
+                ShellBranch.reserve,
+                initialLocation:
+                    navigationShell.currentIndex == ShellBranch.reserve,
+              ),
             ),
     );
   }

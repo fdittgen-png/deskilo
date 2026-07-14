@@ -107,10 +107,6 @@ class ReserveScreen extends ConsumerStatefulWidget {
   ConsumerState<ReserveScreen> createState() => _ReserveScreenState();
 }
 
-/// The router (#207) constructs this screen under its original placeholder
-/// name; the alias keeps the route registration untouched by #208.
-typedef ReservePlaceholderScreen = ReserveScreen;
-
 class _ReserveScreenState extends ConsumerState<ReserveScreen> {
   /// Local midnight of the day the hub opened on — the first pill of the
   /// date strip.
@@ -576,8 +572,9 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
         closures == null ||
         isWorkspaceOpenOn(_selectedDay, openWeekdays, closures);
 
+    // No own AppBar: the hub lives inside the shell (bottom bar always
+    // visible); the shell's app bar carries the 'Reserve' title.
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.shellReserveButton ?? 'Reserve')),
       body: Column(
         children: [
           _dateStrip(l10n),

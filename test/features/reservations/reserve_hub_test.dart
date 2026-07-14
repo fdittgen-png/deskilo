@@ -10,6 +10,7 @@
 // (#236) with AM/PM half-slots and tappable day headers; closed days
 // (#186) gate booking with the banner.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/core/theme/seat_state_colors.dart';
 import 'package:deskilo/features/calendar/presentation/widgets/day_timeline.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
@@ -224,6 +225,26 @@ void main() {
     expect(find.byKey(const ValueKey('reserve-view-switch')), findsOneWidget);
     expect(find.byKey(_canvasKey), findsOneWidget);
     expect(find.byType(DayTimeline), findsNothing);
+  });
+
+  testWidgets(
+      'the bottom bar and its centre button stay visible and active on '
+      'the hub', (tester) async {
+    await pumpHub(tester);
+
+    // The hub is a shell branch — the bar never disappears.
+    expect(find.byType(ShellBottomBar), findsOneWidget);
+    expect(find.byTooltip('Reserve'), findsOneWidget);
+
+    // Bar destinations keep working from the hub…
+    await tester.tap(find.text('Members'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(_canvasKey), findsNothing);
+
+    // …and the centre button brings the hub straight back.
+    await tester.tap(find.byTooltip('Reserve'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(_canvasKey), findsOneWidget);
   });
 
   testWidgets(

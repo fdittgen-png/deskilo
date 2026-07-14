@@ -82,15 +82,16 @@ void main() {
     expect(tabLabels(tester), ['Plan', 'Members', 'Money']);
   });
 
-  testWidgets('tapping Reserve pushes the placeholder reservation screen',
+  testWidgets('tapping Reserve opens the hub with the bar still visible',
       (tester) async {
     await pumpApp(tester);
 
     await tester.tap(find.byTooltip('Reserve'));
     await tester.pumpAndSettle();
 
-    // Root-level route: the placeholder covers the shell (no bottom bar).
-    expect(find.byType(ShellBottomBar), findsNothing);
+    // Shell branch: the bar (and its centre button) never disappears.
+    expect(find.byType(ShellBottomBar), findsOneWidget);
+    expect(find.byTooltip('Reserve'), findsOneWidget);
     final appBarTitle = find.descendant(
       of: find.byType(AppBar),
       matching: find.text('Reserve'),
