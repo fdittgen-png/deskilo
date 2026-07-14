@@ -97,12 +97,47 @@ void main() {
     expect(money.feeBands, hasLength(4));
     expect(money.feeBands[2].toPct, 75);
 
+    // Removing (50,75] takes ITS lower boundary 50: the range merges
+    // into the previous band, (25,50] → (25,75].
     await tester.tap(find.byIcon(Icons.remove_circle_outline).at(2));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Save').first);
     await tester.pumpAndSettle();
     expect(money.feeBands, hasLength(3));
-    expect(money.feeBands.last.fromPct, 50);
+    expect(money.feeBands[1].fromPct, 25);
+    expect(money.feeBands[1].toPct, 75);
+    expect(money.feeBands.last.fromPct, 75);
+  });
+
+  testWidgets(
+      "removing a middle band takes ITS 'from' boundary — the range merges "
+      'into the previous band, not the next (field report: deleting the '
+      '"from 25%" row must not erase the 50 boundary)', (tester) async {
+    final money = await pumpBilling(tester);
+
+    // Row 2 is (25,50] — its remove button deletes boundary 25, not 50.
+    await tester.tap(find.byIcon(Icons.remove_circle_outline).at(1));
+    await tester.pumpAndSettle();
+
+    expect(find.text('from 0%'), findsOneWidget);
+    expect(find.text('from 50%'), findsOneWidget);
+    expect(find.text('from 25%'), findsNothing);
+    // The first band's upper bound extended to the removed row's 50,
+    // keeping ITS prices (overage 15); the removed band's fee 150 and
+    // overage 8 vanish with the row.
+    expect(find.widgetWithText(TextFormField, '50'), findsOneWidget);
+    expect(find.widgetWithText(TextFormField, '25'), findsNothing);
+    expect(find.widgetWithText(TextFormField, '15'), findsOneWidget);
+    expect(find.widgetWithText(TextFormField, '150'), findsNothing);
+    expect(find.widgetWithText(TextFormField, '8'), findsNothing);
+
+    await tester.tap(find.text('Save').first);
+    await tester.pumpAndSettle();
+    expect(money.feeBands, hasLength(2));
+    expect(money.feeBands.first.fromPct, 0);
+    expect(money.feeBands.first.toPct, 50);
+    expect(money.feeBands.first.feeCents, 0);
+    expect(money.feeBands.first.overageFeeCents, 1500);
   });
 
   testWidgets(
@@ -147,25 +182,10 @@ void main() {
     expect(money.feeBands.first.feeCents, 15000);
   });
 
-  testWidgets('removing the middle band deletes exactly that range (#194)',
-      (tester) async {
-    await pumpBilling(tester);
-
-    await tester.tap(find.byIcon(Icons.remove_circle_outline).at(1));
-    await tester.pumpAndSettle();
-
-    // (25,50] is gone; the last band now starts at 25.
-    expect(find.text('from 0%'), findsOneWidget);
-    expect(find.text('from 25%'), findsOneWidget);
-    expect(find.text('from 50%'), findsNothing);
-    expect(find.widgetWithText(TextFormField, '50'), findsNothing);
-    // The removed band's prices (fee 150, overage 8) go with it; its
-    // neighbours keep theirs.
-    expect(find.widgetWithText(TextFormField, '150'), findsNothing);
-    expect(find.widgetWithText(TextFormField, '8'), findsNothing);
-    expect(find.widgetWithText(TextFormField, '15'), findsOneWidget);
-    expect(find.widgetWithText(TextFormField, '250'), findsOneWidget);
-  });
+  // The #194 middle-band test pinned forward-merging (the deleted row's
+  // UPPER boundary vanished, its 'from' label survived) — exactly the
+  // behavior reported as wrong; the merge-into-previous test above is
+  // its replacement.
 
   testWidgets('the last band row shows no remove button (#194)',
       (tester) async {

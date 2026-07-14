@@ -139,10 +139,28 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
   }
 
   void _removeBand(_BandDraft draft) {
-    // The removed range merges into the following band (its lower boundary
-    // is derived from the new previous row).
+    // Deleting a row removes ITS lower boundary (the "from X %" the owner
+    // sees on that row): the range merges into the PREVIOUS band, whose
+    // upper bound extends. Merging forward instead made the NEXT row's
+    // boundary vanish while the deleted row's label survived — reading as
+    // "I deleted 25% but it deleted the 50%". The first row has no
+    // previous band, so it keeps merging forward (its 0% is fixed).
     if (_bands.length <= 1) return;
-    setState(() => _bands.remove(draft));
+    final index = _bands.indexOf(draft);
+    setState(() {
+      if (index > 0) {
+        // Replace (not mutate) the previous draft: the row is keyed by
+        // draft identity, so a fresh object rebuilds its boundary field
+        // with the new initialValue.
+        final previous = _bands[index - 1];
+        _bands[index - 1] = _BandDraft(
+          toPct: draft.toPct,
+          feeCents: previous.feeCents,
+          overageCents: previous.overageCents,
+        );
+      }
+      _bands.remove(draft);
+    });
   }
 
   /// Validates the drafts and returns the full band list, or null when the
