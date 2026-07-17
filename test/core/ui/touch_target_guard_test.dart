@@ -22,6 +22,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../features/calendar/day_timeline_test.dart' show addSecondLevel;
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 /// Pragmatic chip floor — see the header comment for the rationale.
 const double _chipFloor = 44;
@@ -80,6 +81,7 @@ void main() {
       'Plan tab: level chips, half-day chips and the view toggle all meet '
       'the touch-target floors', (tester) async {
     await pumpApp(tester);
+    await switchToPlanTab(tester);
 
     // The audit is only meaningful when the compact controls are there.
     expect(find.byType(ChoiceChip), findsAtLeastNWidgets(5));

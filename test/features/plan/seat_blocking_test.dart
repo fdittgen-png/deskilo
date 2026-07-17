@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 import 'plan_screen_test.dart' show seatCenter;
 
 /// Pumps the Plan tab with the seeded small plan (#161 harness). The
@@ -42,6 +43,7 @@ Future<FakeFloorPlanRepository> pumpPlanForBlocking(
     ),
   );
   await tester.pumpAndSettle();
+  await switchToPlanTab(tester);
   return plans;
 }
 

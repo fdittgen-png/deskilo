@@ -94,10 +94,23 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     // #182: a focus request may already be pending when this screen is
     // first built (the ref.listen in build only catches later changes).
     // Post-frame so applying it never mutates providers during build.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!mounted) return;
       final pending = ref.read(planFocusControllerProvider);
-      if (pending != null) _applyFocus(pending);
+      if (pending == null) return;
+      // Reserve-first boot: on a freshly built Plan branch the level
+      // controller's initial load may still be in flight — applied too
+      // early, its completion would clobber the transient level with
+      // the stored default. Let it settle first.
+      try {
+        await ref.read(selectedLevelIdProvider.future);
+      } catch (e, st) {
+        // trace-exempt: level loading failures surface via the plan's own
+        // error state; the jump still runs on whatever level shows.
+        debugPrint('level preload before focus failed: $e\n$st');
+      }
+      if (!mounted) return;
+      _applyFocus(pending);
     });
   }
 

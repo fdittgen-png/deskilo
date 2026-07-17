@@ -99,9 +99,10 @@ void main() {
     expect(find.byType(ShellBottomBar), findsOneWidget);
     expect(tabLabels(tester), ['Plan', 'Members']);
     expect(find.byTooltip('Events'), findsNothing);
+    // The app boots on the Reserve hub (its branch is never gated).
     final appBarTitle = find.descendant(
       of: find.byType(AppBar),
-      matching: find.text('Plan'),
+      matching: find.text('Reserve'),
     );
     expect(appBarTitle, findsOneWidget);
   });

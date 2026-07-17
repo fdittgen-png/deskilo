@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/in_memory_default_level_store.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 /// Pumps the app on the Plan tab with two levels in ws-1: 'level-1'
 /// (Ground floor, seeded plan) and 'level-upper' (First floor, empty).
@@ -38,6 +39,7 @@ Future<
     ),
   );
   await tester.pumpAndSettle();
+  await switchToPlanTab(tester);
   return (plans: plans, store: store);
 }
 
@@ -95,6 +97,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    await switchToPlanTab(tester);
 
     expect(find.byType(ChoiceChip), findsNothing);
     expect(canvasLevelId(tester), 'level-1');

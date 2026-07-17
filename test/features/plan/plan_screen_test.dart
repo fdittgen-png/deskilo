@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 const _cellSize = 14.0;
 
@@ -41,6 +42,7 @@ Future<
     ),
   );
   await tester.pumpAndSettle();
+  await switchToPlanTab(tester);
   return (plans: plans, reservations: reservations, workspace: workspace);
 }
 
@@ -187,6 +189,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    await switchToPlanTab(tester);
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
