@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/mock_providers.dart';
+import '../helpers/navigation.dart';
 
 Member member({required bool isAdmin, required bool isOwner}) => Member(
       id: 'member-1',
@@ -43,6 +44,8 @@ void main() {
     await bootAs(tester, isAdmin: true, isOwner: true);
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
+    // The app boots on the Reserve hub; the editor icon sits on Plan.
+    await switchToPlanTab(tester);
     expect(find.byIcon(Icons.design_services_outlined), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.settings_outlined));

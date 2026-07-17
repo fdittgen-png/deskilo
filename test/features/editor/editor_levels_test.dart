@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 Future<FakeFloorPlanRepository> pumpAsOwner(
   WidgetTester tester, {
@@ -20,6 +21,7 @@ Future<FakeFloorPlanRepository> pumpAsOwner(
     ),
   );
   await tester.pumpAndSettle();
+  await switchToPlanTab(tester);
   return plans;
 }
 
@@ -40,6 +42,7 @@ Future<void> pumpAsWorker(WidgetTester tester) async {
     ),
   );
   await tester.pumpAndSettle();
+  await switchToPlanTab(tester);
 }
 
 void main() {

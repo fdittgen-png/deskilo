@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 import 'plan_screen_test.dart' show seatCenter;
 
 const ana = Member(
@@ -49,6 +50,7 @@ Future<({FakeReservationRepository reservations, FakeWorkspaceRepository workspa
     ),
   );
   await tester.pumpAndSettle();
+  await switchToPlanTab(tester);
   return (reservations: reservations, workspace: workspace);
 }
 

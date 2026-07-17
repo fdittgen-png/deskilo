@@ -20,6 +20,7 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 import 'plan_closed_day_test.dart' show ThrowingReservationRepository;
 import 'plan_screen_test.dart' show pumpPlan, seatCenter;
 import 'time_scroller_test.dart' show planPainter;
@@ -54,6 +55,7 @@ Future<FakeReservationRepository> pumpHalfDayPlan(
     ),
   );
   await tester.pumpAndSettle();
+  await switchToPlanTab(tester);
   return reservationRepo;
 }
 
