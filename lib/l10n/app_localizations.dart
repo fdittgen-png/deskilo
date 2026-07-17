@@ -326,6 +326,48 @@ abstract class AppLocalizations {
   /// **'Half days (morning & afternoon)'**
   String get availabilityGranularityHalfDay;
 
+  /// Radio option: bookings start and end on the 5-minute grid (0032)
+  ///
+  /// In en, this message translates to:
+  /// **'5-minute slots'**
+  String get availabilityGranularity5;
+
+  /// Radio option: bookings start and end on the 15-minute grid (0032)
+  ///
+  /// In en, this message translates to:
+  /// **'15-minute slots'**
+  String get availabilityGranularity15;
+
+  /// Radio option: bookings start and end on the 30-minute grid (0032)
+  ///
+  /// In en, this message translates to:
+  /// **'30-minute slots'**
+  String get availabilityGranularity30;
+
+  /// Radio option: bookings start and end on the hour grid (0032)
+  ///
+  /// In en, this message translates to:
+  /// **'1-hour slots'**
+  String get availabilityGranularity60;
+
+  /// Radio option: every booking covers the whole day (0032)
+  ///
+  /// In en, this message translates to:
+  /// **'Full days only'**
+  String get availabilityGranularityFullDay;
+
+  /// Booking error when the server rejects a misaligned window under a minute granularity (0032)
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings must start and end on the {minutes}-minute grid.'**
+  String planSlotError(int minutes);
+
+  /// Booking error when the server rejects a non-full-day window under full-day granularity (0032)
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings here cover the full day.'**
+  String get planFullDayError;
+
   /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount
   ///
   /// In en, this message translates to:

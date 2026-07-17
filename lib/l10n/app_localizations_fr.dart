@@ -127,6 +127,30 @@ class AppLocalizationsFr extends AppLocalizations {
       'Demi-journées (matin et après-midi)';
 
   @override
+  String get availabilityGranularity5 => 'Créneaux de 5 minutes';
+
+  @override
+  String get availabilityGranularity15 => 'Créneaux de 15 minutes';
+
+  @override
+  String get availabilityGranularity30 => 'Créneaux de 30 minutes';
+
+  @override
+  String get availabilityGranularity60 => 'Créneaux d\'une heure';
+
+  @override
+  String get availabilityGranularityFullDay => 'Journées entières uniquement';
+
+  @override
+  String planSlotError(int minutes) {
+    return 'Les réservations doivent commencer et finir sur la grille de $minutes minutes.';
+  }
+
+  @override
+  String get planFullDayError =>
+      'Ici, les réservations couvrent la journée entière.';
+
+  @override
   String billSubscription(int pct) {
     return 'Abonnement $pct %';
   }

@@ -127,6 +127,30 @@ class AppLocalizationsIt extends AppLocalizations {
       'Mezze giornate (mattina e pomeriggio)';
 
   @override
+  String get availabilityGranularity5 => 'Slot di 5 minuti';
+
+  @override
+  String get availabilityGranularity15 => 'Slot di 15 minuti';
+
+  @override
+  String get availabilityGranularity30 => 'Slot di 30 minuti';
+
+  @override
+  String get availabilityGranularity60 => 'Slot di 1 ora';
+
+  @override
+  String get availabilityGranularityFullDay => 'Solo giornate intere';
+
+  @override
+  String planSlotError(int minutes) {
+    return 'Le prenotazioni devono iniziare e finire sulla griglia di $minutes minuti.';
+  }
+
+  @override
+  String get planFullDayError =>
+      'Qui le prenotazioni coprono l\'intera giornata.';
+
+  @override
   String billSubscription(int pct) {
     return 'Abbonamento $pct %';
   }

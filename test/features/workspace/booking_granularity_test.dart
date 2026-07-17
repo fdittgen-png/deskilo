@@ -12,7 +12,31 @@ void main() {
         () {
       expect(BookingGranularity.flexible.wireName, 'flexible');
       expect(BookingGranularity.halfDay.wireName, 'half_day');
-      expect(BookingGranularity.values, hasLength(2));
+      expect(BookingGranularity.minutes5.wireName, 'minutes_5');
+      expect(BookingGranularity.minutes15.wireName, 'minutes_15');
+      expect(BookingGranularity.minutes30.wireName, 'minutes_30');
+      expect(BookingGranularity.minutes60.wireName, 'minutes_60');
+      expect(BookingGranularity.fullDay.wireName, 'full_day');
+      expect(BookingGranularity.values, hasLength(7));
+    });
+
+    test('stepMinutes: minute granularities carry their step; legacy '
+        'flexible keeps the 15-minute UI snap; day-based have none', () {
+      expect(BookingGranularity.minutes5.stepMinutes, 5);
+      expect(BookingGranularity.minutes15.stepMinutes, 15);
+      expect(BookingGranularity.minutes30.stepMinutes, 30);
+      expect(BookingGranularity.minutes60.stepMinutes, 60);
+      expect(BookingGranularity.flexible.stepMinutes, 15);
+      expect(BookingGranularity.halfDay.stepMinutes, isNull);
+      expect(BookingGranularity.fullDay.stepMinutes, isNull);
+    });
+
+    test('isDayBased: only half-day and full-day book whole windows', () {
+      expect(BookingGranularity.halfDay.isDayBased, isTrue);
+      expect(BookingGranularity.fullDay.isDayBased, isTrue);
+      expect(BookingGranularity.flexible.isDayBased, isFalse);
+      expect(BookingGranularity.minutes5.isDayBased, isFalse);
+      expect(BookingGranularity.minutes60.isDayBased, isFalse);
     });
 
     test('fromWire falls back to flexible for null / unknown values', () {
@@ -30,8 +54,38 @@ void main() {
       expect(BookingRulesKeys.granularity, 'granularity');
     });
 
-    test('pins the server rejection substring', () {
+    test('pins the server rejection substrings', () {
       expect(BookingGranularityError.serverSubstring, 'half-day');
+      expect(BookingGranularityError.slotServerSubstring, 'minute grid');
+      expect(
+        BookingGranularityError.fullDayServerSubstring,
+        'cover the full day',
+      );
+    });
+
+    test('migration 0032 enforces the new wire values and messages', () {
+      final sql = File(
+        'supabase/migrations/0032_slot_granularities.sql',
+      ).readAsStringSync();
+      for (final granularity in [
+        BookingGranularity.minutes5,
+        BookingGranularity.minutes15,
+        BookingGranularity.minutes30,
+        BookingGranularity.minutes60,
+        BookingGranularity.fullDay,
+      ]) {
+        expect(sql, contains("'${granularity.wireName}'"));
+      }
+      // The raise messages carry the substrings the client error mapping
+      // matches.
+      expect(
+        sql,
+        contains(BookingGranularityError.slotServerSubstring),
+      );
+      expect(
+        sql,
+        contains(BookingGranularityError.fullDayServerSubstring),
+      );
     });
 
     test('migration 0025 enforces the same key, wire value and message', () {

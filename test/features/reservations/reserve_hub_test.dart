@@ -228,6 +228,27 @@ void main() {
   });
 
   testWidgets(
+      'full-day workspace: only the Day chip — no half chips, no clock '
+      'chips (0032)', (tester) async {
+    await pumpHub(tester, granularity: BookingGranularity.fullDay);
+
+    expect(find.byKey(_dayChip), findsOneWidget);
+    expect(find.byKey(_amChip), findsNothing);
+    expect(find.byKey(_pmChip), findsNothing);
+    expect(find.byKey(_fromChip), findsNothing);
+    expect(find.byKey(_toChip), findsNothing);
+  });
+
+  testWidgets('minute-slot workspace books via from→to clock chips (0032)',
+      (tester) async {
+    await pumpHub(tester, granularity: BookingGranularity.minutes30);
+
+    expect(find.byKey(_fromChip), findsOneWidget);
+    expect(find.byKey(_toChip), findsOneWidget);
+    expect(find.byKey(_dayChip), findsNothing);
+  });
+
+  testWidgets(
       'the bottom bar and its centre button stay visible and active on '
       'the hub', (tester) async {
     await pumpHub(tester);

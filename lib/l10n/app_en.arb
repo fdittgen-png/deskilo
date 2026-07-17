@@ -153,6 +153,39 @@
   "@availabilityGranularityHalfDay": {
     "description": "Radio option: bookings must cover a half day or the full day"
   },
+  "availabilityGranularity5": "5-minute slots",
+  "@availabilityGranularity5": {
+    "description": "Radio option: bookings start and end on the 5-minute grid (0032)"
+  },
+  "availabilityGranularity15": "15-minute slots",
+  "@availabilityGranularity15": {
+    "description": "Radio option: bookings start and end on the 15-minute grid (0032)"
+  },
+  "availabilityGranularity30": "30-minute slots",
+  "@availabilityGranularity30": {
+    "description": "Radio option: bookings start and end on the 30-minute grid (0032)"
+  },
+  "availabilityGranularity60": "1-hour slots",
+  "@availabilityGranularity60": {
+    "description": "Radio option: bookings start and end on the hour grid (0032)"
+  },
+  "availabilityGranularityFullDay": "Full days only",
+  "@availabilityGranularityFullDay": {
+    "description": "Radio option: every booking covers the whole day (0032)"
+  },
+  "planSlotError": "Bookings must start and end on the {minutes}-minute grid.",
+  "@planSlotError": {
+    "description": "Booking error when the server rejects a misaligned window under a minute granularity (0032)",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "planFullDayError": "Bookings here cover the full day.",
+  "@planFullDayError": {
+    "description": "Booking error when the server rejects a non-full-day window under full-day granularity (0032)"
+  },
   "billSubscription": "Subscription {pct}%",
   "@billSubscription": {
     "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount",

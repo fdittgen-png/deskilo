@@ -153,13 +153,19 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
         ReserveHubMetrics.lastSlotMinute,
       );
 
-  /// Snaps [t] down to the previous 15-minute slot (#184 pattern).
+  /// Snaps [t] down to the previous slot of the workspace's configured
+  /// step (#184 pattern; 0032 makes the step owner-configurable).
   DateTime _snapToSlot(DateTime t) {
     final local = t.toLocal();
-    const snap = ReserveHubMetrics.snapMinutes;
+    final snap = _granularity.stepMinutes ?? ReserveHubMetrics.snapMinutes;
     final m = (local.hour * 60 + local.minute) ~/ snap * snap;
     return DateTime(local.year, local.month, local.day, m ~/ 60, m % 60);
   }
+
+  /// One configured slot — the minimal booking extension.
+  Duration get _slotStep => Duration(
+        minutes: _granularity.stepMinutes ?? ReserveHubMetrics.snapMinutes,
+      );
 
   /// Default window end for a start at [from]: the default stay, clamped
   /// to the day's last slot — and never at/before [from].
@@ -167,9 +173,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     var end = from.add(ReserveHubMetrics.defaultStay);
     final last = _lastSlotOf(from);
     if (end.isAfter(last)) end = last;
-    if (!end.isAfter(from)) {
-      end = from.add(const Duration(minutes: ReserveHubMetrics.snapMinutes));
-    }
+    if (!end.isAfter(from)) end = from.add(_slotStep);
     return end;
   }
 
@@ -180,7 +184,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     final start = _windowStart;
     final end = _windowEnd;
     if (start != null && end != null) return (start: start, end: end);
-    if (granularity == BookingGranularity.halfDay) {
+    if (granularity.isDayBased) {
       return HalfDayWindows.fullDay(_selectedDay);
     }
     final now = _snapToSlot(DateTime.now());
@@ -231,7 +235,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     DateTime? from;
     DateTime? to;
     if (_windowStart != null && _windowEnd != null) {
-      if (granularity == BookingGranularity.halfDay) {
+      if (granularity.isDayBased) {
         final builder =
             _matchingHalfDayBuilder(_selectedDay, window) ??
                 HalfDayWindows.fullDay;
@@ -299,9 +303,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     var end = from.add(duration);
     final last = _lastSlotOf(from);
     if (end.isAfter(last)) end = last;
-    if (!end.isAfter(from)) {
-      end = from.add(const Duration(minutes: ReserveHubMetrics.snapMinutes));
-    }
+    if (!end.isAfter(from)) end = from.add(_slotStep);
     setState(() {
       _windowStart = from;
       _windowEnd = end;
@@ -375,6 +377,19 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     if (error is PostgrestException &&
         error.message.contains(BookingGranularityError.serverSubstring)) {
       return l10n?.planHalfDayError ?? 'Bookings here are per half day.';
+    }
+    if (error is PostgrestException &&
+        error.message
+            .contains(BookingGranularityError.fullDayServerSubstring)) {
+      return l10n?.planFullDayError ??
+          'Bookings here cover the full day.';
+    }
+    if (error is PostgrestException &&
+        error.message
+            .contains(BookingGranularityError.slotServerSubstring)) {
+      final step = _granularity.stepMinutes ?? 15;
+      return l10n?.planSlotError(step) ??
+          'Bookings must start and end on the $step-minute grid.';
     }
     return fallback;
   }
@@ -477,7 +492,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
       return;
     }
     final myMemberId = ref.read(myMemberProvider).value?.id;
-    final halfDay = _granularity == BookingGranularity.halfDay;
+    final dayBased = _granularity.isDayBased;
     // Cap by the next reservation on the seat (plan parity): a
     // range-filtered free seat cannot be capped below the window, but a
     // stale plan could.
@@ -504,7 +519,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
         cap: next?.startsAt,
         capped: capped,
         walkUp: false,
-        fixedEnd: halfDay,
+        fixedEnd: dayBased,
         members: const [],
         myMemberId: myMemberId,
         allowSeries: false,
@@ -711,7 +726,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     BookingGranularity granularity,
     HalfDayWindow window,
   ) {
-    if (granularity == BookingGranularity.halfDay) {
+    if (granularity.isDayBased) {
       final selectedBuilder = _matchingHalfDayBuilder(_selectedDay, window);
       Widget chip(
         String key,
@@ -744,16 +759,20 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              chip(
-                'reserve-am-chip',
-                l10n?.planMorningChip ?? 'Morning',
-                HalfDayWindows.morning,
-              ),
-              chip(
-                'reserve-pm-chip',
-                l10n?.planAfternoonChip ?? 'Afternoon',
-                HalfDayWindows.afternoon,
-              ),
+              // Full-day granularity (0032) books whole days only — the
+              // half chips exist under half-day granularity alone.
+              if (granularity == BookingGranularity.halfDay) ...[
+                chip(
+                  'reserve-am-chip',
+                  l10n?.planMorningChip ?? 'Morning',
+                  HalfDayWindows.morning,
+                ),
+                chip(
+                  'reserve-pm-chip',
+                  l10n?.planAfternoonChip ?? 'Afternoon',
+                  HalfDayWindows.afternoon,
+                ),
+              ],
               chip(
                 'reserve-day-chip',
                 l10n?.reserveFullDayChip ?? 'Full day',
