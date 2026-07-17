@@ -10,5 +10,12 @@
   "availabilityGranularityTitle": "Buchungsraster",
   "availabilityGranularityDescription": "Halbe Tage: Buchungen umfassen den Vormittag (bis 13 Uhr), den Nachmittag (ab 13 Uhr) oder den ganzen Tag.",
   "availabilityGranularityFlexible": "Freier Zeitraum",
-  "availabilityGranularityHalfDay": "Halbe Tage (Vormittag & Nachmittag)"
+  "availabilityGranularityHalfDay": "Halbe Tage (Vormittag & Nachmittag)",
+  "availabilityGranularity5": "5-Minuten-Slots",
+  "availabilityGranularity15": "15-Minuten-Slots",
+  "availabilityGranularity30": "30-Minuten-Slots",
+  "availabilityGranularity60": "1-Stunden-Slots",
+  "availabilityGranularityFullDay": "Nur ganze Tage",
+  "planSlotError": "Buchungen müssen im {minutes}-Minuten-Raster beginnen und enden.",
+  "planFullDayError": "Buchungen umfassen hier den ganzen Tag."
 }

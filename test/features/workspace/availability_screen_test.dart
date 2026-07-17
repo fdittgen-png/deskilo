@@ -15,6 +15,10 @@ Future<FakeWorkspaceRepository> pumpAvailability(
   FakeWorkspaceRepository? workspace,
 }) async {
   workspace ??= FakeWorkspaceRepository.withWorkspace();
+  // The 0032 granularity radios outgrew the 800×600 default surface;
+  // a taller one keeps the closure-day section hit-testable.
+  await tester.binding.setSurfaceSize(const Size(800, 1800));
+  addTearDown(() => tester.binding.setSurfaceSize(null));
   await tester.pumpWidget(
     ProviderScope(
       overrides: standardTestOverrides(workspace: workspace),
@@ -83,17 +87,47 @@ void main() {
     expect(workspace.openWeekdays['ws-1'], [3]);
   });
 
-  testWidgets('granularity renders both options with flexible preselected',
+  testWidgets(
+      'granularity renders every option (0032) with flexible preselected',
       (tester) async {
     await pumpAvailability(tester);
 
     expect(find.text('Booking granularity'), findsOneWidget);
     expect(find.text('Free time period'), findsOneWidget);
+    expect(find.text('5-minute slots'), findsOneWidget);
+    expect(find.text('15-minute slots'), findsOneWidget);
+    expect(find.text('30-minute slots'), findsOneWidget);
+    expect(find.text('1-hour slots'), findsOneWidget);
     expect(find.text('Half days (morning & afternoon)'), findsOneWidget);
+    expect(find.text('Full days only'), findsOneWidget);
     final group = tester.widget<RadioGroup<BookingGranularity>>(
       find.byType(RadioGroup<BookingGranularity>),
     );
     expect(group.groupValue, BookingGranularity.flexible);
+  });
+
+  testWidgets('picking a minute slot persists that granularity (0032)',
+      (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    await pumpAvailability(tester, workspace: workspace);
+
+    await tester.ensureVisible(find.text('30-minute slots'));
+    await tester.tap(find.text('30-minute slots'));
+    await tester.pumpAndSettle();
+
+    expect(
+      workspace.bookingGranularities['ws-1'],
+      BookingGranularity.minutes30,
+    );
+
+    await tester.ensureVisible(find.text('Full days only'));
+    await tester.tap(find.text('Full days only'));
+    await tester.pumpAndSettle();
+
+    expect(
+      workspace.bookingGranularities['ws-1'],
+      BookingGranularity.fullDay,
+    );
   });
 
   testWidgets(

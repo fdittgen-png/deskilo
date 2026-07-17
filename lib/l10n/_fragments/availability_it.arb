@@ -10,5 +10,12 @@
   "availabilityGranularityTitle": "Granularità delle prenotazioni",
   "availabilityGranularityDescription": "Mezze giornate: le prenotazioni coprono la mattina (fino alle 13), il pomeriggio (dalle 13) o l'intera giornata.",
   "availabilityGranularityFlexible": "Fascia oraria libera",
-  "availabilityGranularityHalfDay": "Mezze giornate (mattina e pomeriggio)"
+  "availabilityGranularityHalfDay": "Mezze giornate (mattina e pomeriggio)",
+  "availabilityGranularity5": "Slot di 5 minuti",
+  "availabilityGranularity15": "Slot di 15 minuti",
+  "availabilityGranularity30": "Slot di 30 minuti",
+  "availabilityGranularity60": "Slot di 1 ora",
+  "availabilityGranularityFullDay": "Solo giornate intere",
+  "planSlotError": "Le prenotazioni devono iniziare e finire sulla griglia di {minutes} minuti.",
+  "planFullDayError": "Qui le prenotazioni coprono l'intera giornata."
 }

@@ -126,6 +126,29 @@ class AppLocalizationsEs extends AppLocalizations {
   String get availabilityGranularityHalfDay => 'Medios días (mañana y tarde)';
 
   @override
+  String get availabilityGranularity5 => 'Franjas de 5 minutos';
+
+  @override
+  String get availabilityGranularity15 => 'Franjas de 15 minutos';
+
+  @override
+  String get availabilityGranularity30 => 'Franjas de 30 minutos';
+
+  @override
+  String get availabilityGranularity60 => 'Franjas de 1 hora';
+
+  @override
+  String get availabilityGranularityFullDay => 'Solo días completos';
+
+  @override
+  String planSlotError(int minutes) {
+    return 'Las reservas deben empezar y terminar en la cuadrícula de $minutes minutos.';
+  }
+
+  @override
+  String get planFullDayError => 'Aquí las reservas cubren el día completo.';
+
+  @override
   String billSubscription(int pct) {
     return 'Suscripción $pct %';
   }

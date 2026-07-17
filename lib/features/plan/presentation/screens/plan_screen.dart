@@ -49,7 +49,6 @@ const Duration _kDefaultStay = Duration(hours: 4);
 /// Snapping of the header's from/to time chips (#184): 15-minute steps,
 /// matching the old slider's granularity.
 const int _kSnapMinutes = 15;
-const Duration _kTimeSnap = Duration(minutes: _kSnapMinutes);
 
 /// Latest selectable browse-window end within a day (#184): 23:45 — the
 /// last 15-minute slot, so the default window never rolls past midnight.
@@ -179,16 +178,20 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     var end = local.add(_kDefaultStay);
     final last = _lastSlotOf(local);
     if (end.isAfter(last)) end = last;
-    if (!end.isAfter(local)) end = local.add(_kTimeSnap);
+    if (!end.isAfter(local)) end = local.add(_timeSnap);
     return end;
   }
 
-  /// Snaps [t] down to the previous 15-minute slot (#184), like the old
-  /// slider did.
+  /// One configured slot (0032) — legacy flexible keeps the 15-minute
+  /// snap of #184.
+  int get _snapMinutes => _granularity.stepMinutes ?? _kSnapMinutes;
+
+  Duration get _timeSnap => Duration(minutes: _snapMinutes);
+
+  /// Snaps [t] down to the previous slot of the configured step (#184).
   DateTime _snapToSlot(DateTime t) {
     final local = t.toLocal();
-    final m =
-        (local.hour * 60 + local.minute) ~/ _kSnapMinutes * _kSnapMinutes;
+    final m = (local.hour * 60 + local.minute) ~/ _snapMinutes * _snapMinutes;
     return DateTime(local.year, local.month, local.day, m ~/ 60, m % 60);
   }
 
@@ -246,6 +249,19 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     if (error is PostgrestException &&
         error.message.contains(BookingGranularityError.serverSubstring)) {
       return l10n?.planHalfDayError ?? 'Bookings here are per half day.';
+    }
+    if (error is PostgrestException &&
+        error.message
+            .contains(BookingGranularityError.fullDayServerSubstring)) {
+      return l10n?.planFullDayError ??
+          'Bookings here cover the full day.';
+    }
+    if (error is PostgrestException &&
+        error.message
+            .contains(BookingGranularityError.slotServerSubstring)) {
+      final step = _granularity.stepMinutes ?? 15;
+      return l10n?.planSlotError(step) ??
+          'Bookings must start and end on the $step-minute grid.';
     }
     return fallback;
   }
@@ -455,11 +471,16 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     // stay capped by the next reservation as a safety net (a
     // range-filtered free seat cannot be capped below the window, but a
     // stale plan could).
-    final halfDay = _granularity == BookingGranularity.halfDay;
+    final granularity = _granularity;
+    final dayBased = granularity.isDayBased;
     var end = walkUp
-        ? (halfDay
+        ? (granularity == BookingGranularity.halfDay
             ? HalfDayWindows.windowForNow(start).end
-            : start.add(_kDefaultStay))
+            // Full-day granularity (0032): the walk-up runs to the next
+            // local midnight; minute grids keep the default stay.
+            : granularity == BookingGranularity.fullDay
+                ? HalfDayWindows.fullDay(start).end
+                : start.add(_kDefaultStay))
         : (_browseEnd ?? start.add(_kDefaultStay));
     var capped = false;
     if (next != null && next.startsAt.isBefore(end)) {
@@ -478,7 +499,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         cap: next?.startsAt,
         capped: capped,
         walkUp: walkUp,
-        fixedEnd: halfDay,
+        fixedEnd: dayBased,
         members: candidates,
         myMemberId: myMember?.id,
         allowSeries: features.contains(WorkspaceFeature.seriesBooking),
@@ -824,7 +845,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   /// choice chips — the only selectable windows there.
   Widget _scrollerRow(DateTime at, BookingGranularity granularity) {
     final l10n = AppLocalizations.of(context);
-    final halfDay = granularity == BookingGranularity.halfDay;
+    final dayBased = granularity.isDayBased;
     final local = at.toLocal();
     final live = _browse == null;
     final endLocal = (_browseEnd ?? _defaultEndFor(local)).toLocal();
@@ -872,7 +893,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
               if (!mounted) return;
               final DateTime from;
               final DateTime end;
-              if (halfDay) {
+              if (dayBased) {
                 // Half-day mode (#201): re-derive the canonical window on
                 // the picked day — the currently selected half where one
                 // is (live or a non-canonical #182 focus window browses
@@ -914,8 +935,8 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             // The 48dp box + scaleDown mirror the half-day branch (#211):
             // the header never overflows on narrow screens, the chips stay
             // centred at full tap height where there is room.
-            child: halfDay
-                ? _halfDayChips(l10n, local)
+            child: dayBased
+                ? _halfDayChips(l10n, local, granularity)
                 : SizedBox(
                     height: kMinInteractiveDimension,
                     child: FittedBox(
@@ -991,7 +1012,11 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   /// from→to time chips — a tap enters (or moves) browse mode with the
   /// canonical window on the browsed day (today when live). Live mode
   /// shows no selection; "Now" resets to live as usual.
-  Widget _halfDayChips(AppLocalizations? l10n, DateTime local) {
+  Widget _halfDayChips(
+    AppLocalizations? l10n,
+    DateTime local,
+    BookingGranularity granularity,
+  ) {
     Widget chip(
       String key,
       String label,
@@ -1026,16 +1051,20 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            chip(
-              'plan-am-chip',
-              l10n?.planMorningChip ?? 'Morning',
-              HalfDayWindows.morning,
-            ),
-            chip(
-              'plan-pm-chip',
-              l10n?.planAfternoonChip ?? 'Afternoon',
-              HalfDayWindows.afternoon,
-            ),
+            // Full-day granularity (0032) books whole days only — the
+            // half chips exist under half-day granularity alone.
+            if (granularity == BookingGranularity.halfDay) ...[
+              chip(
+                'plan-am-chip',
+                l10n?.planMorningChip ?? 'Morning',
+                HalfDayWindows.morning,
+              ),
+              chip(
+                'plan-pm-chip',
+                l10n?.planAfternoonChip ?? 'Afternoon',
+                HalfDayWindows.afternoon,
+              ),
+            ],
             chip(
               'plan-day-chip',
               l10n?.planFullDayChip ?? 'Day',
@@ -1083,7 +1112,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     var end = from.add(duration);
     final last = _lastSlotOf(from);
     if (end.isAfter(last)) end = last;
-    if (!end.isAfter(from)) end = from.add(_kTimeSnap);
+    if (!end.isAfter(from)) end = from.add(_timeSnap);
     setState(() {
       _highlightedSeatId = null;
       _browse = from;

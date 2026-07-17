@@ -10,5 +10,12 @@
   "availabilityGranularityTitle": "Granularité des réservations",
   "availabilityGranularityDescription": "Demi-journées : les réservations couvrent le matin (jusqu'à 13 h), l'après-midi (à partir de 13 h) ou la journée entière.",
   "availabilityGranularityFlexible": "Plage horaire libre",
-  "availabilityGranularityHalfDay": "Demi-journées (matin et après-midi)"
+  "availabilityGranularityHalfDay": "Demi-journées (matin et après-midi)",
+  "availabilityGranularity5": "Créneaux de 5 minutes",
+  "availabilityGranularity15": "Créneaux de 15 minutes",
+  "availabilityGranularity30": "Créneaux de 30 minutes",
+  "availabilityGranularity60": "Créneaux d'une heure",
+  "availabilityGranularityFullDay": "Journées entières uniquement",
+  "planSlotError": "Les réservations doivent commencer et finir sur la grille de {minutes} minutes.",
+  "planFullDayError": "Ici, les réservations couvrent la journée entière."
 }

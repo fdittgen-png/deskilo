@@ -10,5 +10,12 @@
   "availabilityGranularityTitle": "Granularidad de las reservas",
   "availabilityGranularityDescription": "Medios días: las reservas cubren la mañana (hasta las 13:00), la tarde (desde las 13:00) o el día completo.",
   "availabilityGranularityFlexible": "Franja horaria libre",
-  "availabilityGranularityHalfDay": "Medios días (mañana y tarde)"
+  "availabilityGranularityHalfDay": "Medios días (mañana y tarde)",
+  "availabilityGranularity5": "Franjas de 5 minutos",
+  "availabilityGranularity15": "Franjas de 15 minutos",
+  "availabilityGranularity30": "Franjas de 30 minutos",
+  "availabilityGranularity60": "Franjas de 1 hora",
+  "availabilityGranularityFullDay": "Solo días completos",
+  "planSlotError": "Las reservas deben empezar y terminar en la cuadrícula de {minutes} minutos.",
+  "planFullDayError": "Aquí las reservas cubren el día completo."
 }

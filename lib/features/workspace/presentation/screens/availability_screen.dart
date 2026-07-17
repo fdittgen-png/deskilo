@@ -218,10 +218,43 @@ class AvailabilityScreen extends ConsumerWidget {
                       ),
                     ),
                     RadioListTile<BookingGranularity>(
+                      value: BookingGranularity.minutes5,
+                      title: Text(
+                        l10n?.availabilityGranularity5 ?? '5-minute slots',
+                      ),
+                    ),
+                    RadioListTile<BookingGranularity>(
+                      value: BookingGranularity.minutes15,
+                      title: Text(
+                        l10n?.availabilityGranularity15 ??
+                            '15-minute slots',
+                      ),
+                    ),
+                    RadioListTile<BookingGranularity>(
+                      value: BookingGranularity.minutes30,
+                      title: Text(
+                        l10n?.availabilityGranularity30 ??
+                            '30-minute slots',
+                      ),
+                    ),
+                    RadioListTile<BookingGranularity>(
+                      value: BookingGranularity.minutes60,
+                      title: Text(
+                        l10n?.availabilityGranularity60 ?? '1-hour slots',
+                      ),
+                    ),
+                    RadioListTile<BookingGranularity>(
                       value: BookingGranularity.halfDay,
                       title: Text(
                         l10n?.availabilityGranularityHalfDay ??
                             'Half days (morning & afternoon)',
+                      ),
+                    ),
+                    RadioListTile<BookingGranularity>(
+                      value: BookingGranularity.fullDay,
+                      title: Text(
+                        l10n?.availabilityGranularityFullDay ??
+                            'Full days only',
                       ),
                     ),
                   ],

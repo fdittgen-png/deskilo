@@ -126,6 +126,29 @@ class AppLocalizationsEn extends AppLocalizations {
       'Half days (morning & afternoon)';
 
   @override
+  String get availabilityGranularity5 => '5-minute slots';
+
+  @override
+  String get availabilityGranularity15 => '15-minute slots';
+
+  @override
+  String get availabilityGranularity30 => '30-minute slots';
+
+  @override
+  String get availabilityGranularity60 => '1-hour slots';
+
+  @override
+  String get availabilityGranularityFullDay => 'Full days only';
+
+  @override
+  String planSlotError(int minutes) {
+    return 'Bookings must start and end on the $minutes-minute grid.';
+  }
+
+  @override
+  String get planFullDayError => 'Bookings here cover the full day.';
+
+  @override
   String billSubscription(int pct) {
     return 'Subscription $pct%';
   }
