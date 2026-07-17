@@ -10,6 +10,7 @@ import '../../helpers/fake_accessory_repository.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 import 'plan_screen_test.dart' show seatCenter;
 
 /// Pumps the Plan tab (#169 harness): the seeded small plan plus the small
@@ -47,6 +48,7 @@ Future<FakeReservationRepository> pumpPlanWithAccessories(
     ),
   );
   await tester.pumpAndSettle();
+  await switchToPlanTab(tester);
   return reservations;
 }
 

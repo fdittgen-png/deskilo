@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_accessory_repository.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 /// Seeds a level (and whatever [seed] adds) BEFORE navigating into the
 /// canvas — the plan provider fetches on entry, so all fixtures must exist
@@ -32,6 +33,9 @@ Future<FakeFloorPlanRepository> pumpCanvas(
     ),
   );
   await tester.pumpAndSettle();
+  // The editor icon lives on the Plan tab's app bar; the app now boots
+  // on the Reserve hub.
+  await switchToPlanTab(tester);
   await tester.tap(find.byIcon(Icons.design_services_outlined));
   await tester.pumpAndSettle();
   await tester.tap(find.text('Ground floor'));

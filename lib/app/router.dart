@@ -67,7 +67,9 @@ GoRouter router(Ref ref) {
       ref.read(enabledFeaturesSyncProvider).contains(feature);
 
   final router = GoRouter(
-    initialLocation: '/plan',
+    // The Reserve hub is the app's home (the centre button's form): it
+    // is what opens on start, after sign-in and after onboarding.
+    initialLocation: '/reserve',
     refreshListenable: refresh,
     redirect: (context, state) {
       final auth = ref.read(authStateProvider);
@@ -75,7 +77,7 @@ GoRouter router(Ref ref) {
       final signedIn = auth.value != null;
       final atAuth = state.matchedLocation == '/auth';
       if (!signedIn) return atAuth ? null : '/auth';
-      if (atAuth) return '/plan';
+      if (atAuth) return '/reserve';
 
       // Signed in: a user without any workspace lands on onboarding. The
       // `first` flag marks the forced first-run visit — only that visit is
@@ -87,7 +89,7 @@ GoRouter router(Ref ref) {
       final list = workspaces.value;
       if (list != null) {
         if (list.isEmpty && !atOnboarding) return '/onboarding?first=1';
-        if (list.isNotEmpty && atOnboarding && firstRun) return '/plan';
+        if (list.isNotEmpty && atOnboarding && firstRun) return '/reserve';
       }
       return null;
     },
