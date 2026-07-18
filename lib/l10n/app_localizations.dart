@@ -2252,6 +2252,18 @@ abstract class AppLocalizations {
   /// **'Request sent — waiting for validation.'**
   String get quotaRequestPending;
 
+  /// Reserve hub view segment: month availability calendar (#7)
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get reserveMonthView;
+
+  /// Free-desks-of-total label in a month calendar cell (#7)
+  ///
+  /// In en, this message translates to:
+  /// **'{free}/{total}'**
+  String monthFreeCount(int free, int total);
+
   /// Reserve hub view segment showing the selected day's per-seat timeline (#208)
   ///
   /// In en, this message translates to:

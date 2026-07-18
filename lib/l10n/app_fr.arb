@@ -358,6 +358,8 @@
   "quotaRequestExplainer": "Vos réservations sont plafonnées par votre abonnement. Les demi-journées supplémentaires pour {period} s'appliquent une fois validées.",
   "quotaRequestCountLabel": "Nombre de demi-journées",
   "quotaRequestPending": "Demande envoyée — en attente de validation.",
+  "reserveMonthView": "Mois",
+  "monthFreeCount": "{free}/{total}",
   "reserveDayView": "Jour",
   "reserveWeekView": "Semaine",
   "reserveFullDayChip": "Journée entière",

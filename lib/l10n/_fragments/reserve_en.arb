@@ -1,5 +1,17 @@
 {
   "@@locale": "en",
+  "reserveMonthView": "Month",
+  "@reserveMonthView": {
+    "description": "Reserve hub view segment: month availability calendar (#7)"
+  },
+  "monthFreeCount": "{free}/{total}",
+  "@monthFreeCount": {
+    "description": "Free-desks-of-total label in a month calendar cell (#7)",
+    "placeholders": {
+      "free": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
   "reserveDayView": "Day",
   "@reserveDayView": {
     "description": "Reserve hub view segment showing the selected day's per-seat timeline (#208)"

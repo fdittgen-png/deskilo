@@ -18,6 +18,7 @@ import 'package:deskilo/features/plan/presentation/widgets/floor_plan_painter.da
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/screens/reserve_screen.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
+import 'package:deskilo/features/reservations/presentation/widgets/month_grid.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/week_grid.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter/material.dart';
@@ -750,5 +751,71 @@ void main() {
       ),
       findsOneWidget,
     );
+  });
+
+  testWidgets(
+      'Month view: availability calendar shows free desks per day and '
+      'today; a fully-booked day reads 0 free (#7)', (tester) async {
+    // Seeds anchor to the workspace clock (fake workspace = Berlin, which
+    // the shell installs), so the day windows and the seed agree.
+    WorkspaceTime.install('Europe/Berlin');
+    final today = _today;
+    final fullDay = HalfDayWindows.fullDay(today);
+    await pumpHub(
+      tester,
+      seed: [
+        // The one seeded desk is taken all of today → 0 free.
+        Reservation(
+          id: 'res-full',
+          workspaceId: 'ws-1',
+          seatId: 'seat-4',
+          memberId: 'member-2',
+          startsAt: fullDay.start,
+          endsAt: fullDay.end,
+          status: ReservationStatus.reserved,
+        ),
+      ],
+    );
+
+    await tester.tap(find.text('Month'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(MonthGrid), findsOneWidget);
+    // Today's cell: 0 of 1 desk free.
+    final todayCell = find.descendant(
+      of: find.byKey(MonthGrid.cellKey(today)),
+      matching: find.text('0/1'),
+    );
+    expect(todayCell, findsOneWidget);
+    // A free day (tomorrow) shows the full desk count.
+    final tomorrow = DateTime(today.year, today.month, today.day + 1);
+    if (tomorrow.month == today.month) {
+      expect(
+        find.descendant(
+          of: find.byKey(MonthGrid.cellKey(tomorrow)),
+          matching: find.text('1/1'),
+        ),
+        findsOneWidget,
+      );
+    }
+  });
+
+  testWidgets('Month view: tapping a day drops into the Day view (#7)',
+      (tester) async {
+    final today = _today;
+    // Pick an in-month day that is not today.
+    final other = today.day == 1
+        ? DateTime(today.year, today.month, 2)
+        : DateTime(today.year, today.month, 1);
+    await pumpHub(tester);
+
+    await tester.tap(find.text('Month'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(MonthGrid.cellKey(other)));
+    await tester.pumpAndSettle();
+
+    // Landed on the Day view for the tapped day.
+    expect(find.byType(DayTimeline), findsOneWidget);
+    expect(find.byType(MonthGrid), findsNothing);
   });
 }

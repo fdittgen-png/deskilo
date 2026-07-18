@@ -1191,6 +1191,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Solicitud enviada — pendiente de validación.';
 
   @override
+  String get reserveMonthView => 'Mes';
+
+  @override
+  String monthFreeCount(int free, int total) {
+    return '$free/$total';
+  }
+
+  @override
   String get reserveDayView => 'Día';
 
   @override

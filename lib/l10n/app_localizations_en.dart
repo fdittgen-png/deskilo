@@ -1184,6 +1184,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quotaRequestPending => 'Request sent — waiting for validation.';
 
   @override
+  String get reserveMonthView => 'Month';
+
+  @override
+  String monthFreeCount(int free, int total) {
+    return '$free/$total';
+  }
+
+  @override
   String get reserveDayView => 'Day';
 
   @override

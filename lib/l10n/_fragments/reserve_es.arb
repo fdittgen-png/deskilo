@@ -1,5 +1,7 @@
 {
   "@@locale": "es",
+  "reserveMonthView": "Mes",
+  "monthFreeCount": "{free}/{total}",
   "reserveDayView": "Día",
   "reserveWeekView": "Semana",
   "reserveFullDayChip": "Día completo",
