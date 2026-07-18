@@ -206,6 +206,66 @@ abstract class AppLocalizations {
   /// **'Display name'**
   String get authDisplayNameLabel;
 
+  /// Sign-in link opening the reset-password sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get authForgotPassword;
+
+  /// Title of the reset-password sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Reset password'**
+  String get authResetTitle;
+
+  /// Explainer before the reset code is requested
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll email you a one-time code. Use it here to set a new password.'**
+  String get authResetExplainer;
+
+  /// Button requesting the one-time reset code email
+  ///
+  /// In en, this message translates to:
+  /// **'Send code'**
+  String get authResetSendCode;
+
+  /// Explainer after the reset code email went out
+  ///
+  /// In en, this message translates to:
+  /// **'Code sent — check your email.'**
+  String get authResetCodeSent;
+
+  /// Label of the one-time code input
+  ///
+  /// In en, this message translates to:
+  /// **'Code from the email'**
+  String get authResetCodeLabel;
+
+  /// Label of the new-password input in the reset sheet
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get authResetNewPasswordLabel;
+
+  /// Button redeeming the code and setting the new password
+  ///
+  /// In en, this message translates to:
+  /// **'Set new password'**
+  String get authResetSubmit;
+
+  /// Snackbar after a successful password reset
+  ///
+  /// In en, this message translates to:
+  /// **'Password updated — you are signed in.'**
+  String get authResetDone;
+
+  /// Inline error when the server rejects the reset code
+  ///
+  /// In en, this message translates to:
+  /// **'That code is invalid or expired.'**
+  String get authResetInvalidCode;
+
   /// Submit button in sign-in mode
   ///
   /// In en, this message translates to:

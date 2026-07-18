@@ -62,6 +62,37 @@ class AppLocalizationsFr extends AppLocalizations {
   String get authDisplayNameLabel => 'Nom affiché';
 
   @override
+  String get authForgotPassword => 'Mot de passe oublié ?';
+
+  @override
+  String get authResetTitle => 'Réinitialiser le mot de passe';
+
+  @override
+  String get authResetExplainer =>
+      'Nous vous enverrons un code à usage unique par e-mail. Utilisez-le ici pour définir un nouveau mot de passe.';
+
+  @override
+  String get authResetSendCode => 'Envoyer le code';
+
+  @override
+  String get authResetCodeSent => 'Code envoyé — vérifiez vos e-mails.';
+
+  @override
+  String get authResetCodeLabel => 'Code reçu par e-mail';
+
+  @override
+  String get authResetNewPasswordLabel => 'Nouveau mot de passe';
+
+  @override
+  String get authResetSubmit => 'Définir le nouveau mot de passe';
+
+  @override
+  String get authResetDone => 'Mot de passe mis à jour — vous êtes connecté.';
+
+  @override
+  String get authResetInvalidCode => 'Ce code est invalide ou a expiré.';
+
+  @override
   String get authSignInButton => 'Se connecter';
 
   @override

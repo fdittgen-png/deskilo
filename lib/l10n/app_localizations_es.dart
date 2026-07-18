@@ -62,6 +62,37 @@ class AppLocalizationsEs extends AppLocalizations {
   String get authDisplayNameLabel => 'Nombre visible';
 
   @override
+  String get authForgotPassword => '¿Olvidaste la contraseña?';
+
+  @override
+  String get authResetTitle => 'Restablecer contraseña';
+
+  @override
+  String get authResetExplainer =>
+      'Te enviaremos un código de un solo uso por correo. Úsalo aquí para establecer una nueva contraseña.';
+
+  @override
+  String get authResetSendCode => 'Enviar código';
+
+  @override
+  String get authResetCodeSent => 'Código enviado — revisa tu correo.';
+
+  @override
+  String get authResetCodeLabel => 'Código del correo';
+
+  @override
+  String get authResetNewPasswordLabel => 'Nueva contraseña';
+
+  @override
+  String get authResetSubmit => 'Establecer nueva contraseña';
+
+  @override
+  String get authResetDone => 'Contraseña actualizada — has iniciado sesión.';
+
+  @override
+  String get authResetInvalidCode => 'Ese código no es válido o ha caducado.';
+
+  @override
   String get authSignInButton => 'Iniciar sesión';
 
   @override
