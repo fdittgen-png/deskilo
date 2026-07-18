@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: MIT
--- Members edit their own reservations. NOT YET applied to the hosted
--- reference project — the owner applies it after review.
+-- Members edit their own reservations. Applied to the hosted reference
+-- project on 2026-07-19.
 --
 -- The detail sheet gains Edit/Cancel everywhere (hub plan, Day, Week,
 -- calendar timeline); cancel_reservation (0005) already covers delete,
