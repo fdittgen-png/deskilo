@@ -21,4 +21,18 @@ abstract class AuthRepository {
   });
 
   Future<void> signOut();
+
+  /// Emails a one-time recovery code to [email] (Supabase recovery OTP —
+  /// the reset email template must render {{ .Token }}). Deliberately
+  /// code-based, not link-based: nothing depends on Site URL or deep
+  /// links.
+  Future<void> requestPasswordReset(String email);
+
+  /// Redeems the emailed [code] as the temporary credential and sets
+  /// [newPassword]; on success the user is signed in with it.
+  Future<void> confirmPasswordReset({
+    required String email,
+    required String code,
+    required String newPassword,
+  });
 }

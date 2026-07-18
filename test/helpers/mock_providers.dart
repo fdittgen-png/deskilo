@@ -89,6 +89,33 @@ class FakeAuthRepository implements AuthRepository {
 
   @override
   Future<void> signOut() async => _setUser(null);
+
+  /// Emails passed to [requestPasswordReset], in call order.
+  final resetRequests = <String>[];
+
+  /// (email, code, newPassword) tuples of successful confirmations.
+  final confirmedResets = <(String, String, String)>[];
+
+  /// Codes for which [confirmPasswordReset] throws (invalid/expired).
+  final Set<String> failingCodes = {};
+
+  @override
+  Future<void> requestPasswordReset(String email) async {
+    resetRequests.add(email);
+  }
+
+  @override
+  Future<void> confirmPasswordReset({
+    required String email,
+    required String code,
+    required String newPassword,
+  }) async {
+    if (failingCodes.contains(code)) {
+      throw const AuthException('otp_expired');
+    }
+    confirmedResets.add((email, code, newPassword));
+    _setUser('user-1');
+  }
 }
 
 /// In-memory [WorkspaceRepository] for tests.

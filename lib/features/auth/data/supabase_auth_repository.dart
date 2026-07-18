@@ -41,4 +41,24 @@ class SupabaseAuthRepository implements AuthRepository {
 
   @override
   Future<void> signOut() => _client.auth.signOut();
+
+  @override
+  Future<void> requestPasswordReset(String email) =>
+      _client.auth.resetPasswordForEmail(email);
+
+  @override
+  Future<void> confirmPasswordReset({
+    required String email,
+    required String code,
+    required String newPassword,
+  }) async {
+    // The code substitutes the password exactly once (recovery OTP);
+    // redeeming it yields a session, which immediately sets the new one.
+    await _client.auth.verifyOTP(
+      type: OtpType.recovery,
+      email: email,
+      token: code.trim(),
+    );
+    await _client.auth.updateUser(UserAttributes(password: newPassword));
+  }
 }

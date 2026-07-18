@@ -86,6 +86,156 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     }
   }
 
+  /// Forgot-password flow: a one-time recovery code is emailed and,
+  /// entered here, is the temporary credential that sets a brand-new
+  /// password (code-based on purpose — no Site-URL/deep-link fragility).
+  Future<void> _resetPasswordSheet() async {
+    final l10n = AppLocalizations.of(context);
+    final email = TextEditingController(text: _email.text.trim());
+    final code = TextEditingController();
+    final newPassword = TextEditingController();
+    var sent = false;
+    String? fieldError;
+    final repo = ref.read(authRepositoryProvider);
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (sheetContext) => StatefulBuilder(
+        builder: (sheetContext, setSheetState) => Padding(
+          padding: EdgeInsets.only(
+            left: AppSpacing.xl,
+            right: AppSpacing.xl,
+            top: AppSpacing.xl,
+            bottom:
+                MediaQuery.of(sheetContext).viewInsets.bottom + AppSpacing.xl,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                l10n?.authResetTitle ?? 'Reset password',
+                style: Theme.of(sheetContext).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                sent
+                    ? (l10n?.authResetCodeSent ??
+                        'Code sent — check your email.')
+                    : (l10n?.authResetExplainer ??
+                        "We'll email you a one-time code. Use it here to "
+                            'set a new password.'),
+                style: Theme.of(sheetContext).textTheme.bodySmall,
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                key: const ValueKey('reset-email'),
+                controller: email,
+                enabled: !sent,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  labelText: l10n?.authEmailLabel ?? 'Email',
+                ),
+              ),
+              if (sent) ...[
+                const SizedBox(height: 12),
+                TextField(
+                  key: const ValueKey('reset-code'),
+                  controller: code,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText:
+                        l10n?.authResetCodeLabel ?? 'Code from the email',
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  key: const ValueKey('reset-password'),
+                  controller: newPassword,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText:
+                        l10n?.authResetNewPasswordLabel ?? 'New password',
+                  ),
+                ),
+              ],
+              if (fieldError != null) ...[
+                const SizedBox(height: 8),
+                Text(
+                  fieldError!,
+                  style: TextStyle(
+                    color: Theme.of(sheetContext).colorScheme.error,
+                  ),
+                ),
+              ],
+              const SizedBox(height: 16),
+              FilledButton(
+                onPressed: () async {
+                  if (!sent) {
+                    try {
+                      await repo.requestPasswordReset(email.text.trim());
+                    } catch (e, st) {
+                      debugPrint('password reset request failed: $e\n$st');
+                      TraceLogger.instance.error(
+                          'auth', 'password reset request failed',
+                          error: e, stackTrace: st);
+                      if (!sheetContext.mounted) return;
+                      AppSnack.error(
+                        sheetContext,
+                        l10n?.authNetworkError ??
+                            'Could not reach the server. Check your '
+                                'connection and try again.',
+                      );
+                      return;
+                    }
+                    setSheetState(() => sent = true);
+                    return;
+                  }
+                  if (newPassword.text.length < 8) {
+                    setSheetState(() => fieldError =
+                        l10n?.authPasswordTooShort ?? 'At least 8 characters');
+                    return;
+                  }
+                  try {
+                    await repo.confirmPasswordReset(
+                      email: email.text.trim(),
+                      code: code.text.trim(),
+                      newPassword: newPassword.text,
+                    );
+                  } catch (e, st) {
+                    // Expected user error (wrong/expired code) — warn.
+                    debugPrint('password reset rejected: $e\n$st');
+                    TraceLogger.instance.warn(
+                        'auth', 'password reset rejected',
+                        error: e, stackTrace: st);
+                    setSheetState(() => fieldError =
+                        l10n?.authResetInvalidCode ??
+                            'That code is invalid or expired.');
+                    return;
+                  }
+                  if (!sheetContext.mounted) return;
+                  Navigator.of(sheetContext).pop();
+                },
+                child: Text(
+                  sent
+                      ? (l10n?.authResetSubmit ?? 'Set new password')
+                      : (l10n?.authResetSendCode ?? 'Send code'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (!mounted) return;
+    if (ref.read(authRepositoryProvider).currentUserId != null) {
+      AppSnack.success(
+        context,
+        l10n?.authResetDone ?? 'Password updated — you are signed in.',
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -168,6 +318,16 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                             'At least 8 characters')
                         : null,
                   ),
+                  if (!_isSignUp)
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: _busy ? null : _resetPasswordSheet,
+                        child: Text(
+                          l10n?.authForgotPassword ?? 'Forgot password?',
+                        ),
+                      ),
+                    ),
                   const SizedBox(height: 24),
                   FilledButton(
                     onPressed: _busy ? null : _submit,

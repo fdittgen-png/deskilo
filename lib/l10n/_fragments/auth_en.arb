@@ -28,6 +28,46 @@
   "@authDisplayNameLabel": {
     "description": "Label of the display-name input field (sign-up only)"
   },
+  "authForgotPassword": "Forgot password?",
+  "@authForgotPassword": {
+    "description": "Sign-in link opening the reset-password sheet"
+  },
+  "authResetTitle": "Reset password",
+  "@authResetTitle": {
+    "description": "Title of the reset-password sheet"
+  },
+  "authResetExplainer": "We'll email you a one-time code. Use it here to set a new password.",
+  "@authResetExplainer": {
+    "description": "Explainer before the reset code is requested"
+  },
+  "authResetSendCode": "Send code",
+  "@authResetSendCode": {
+    "description": "Button requesting the one-time reset code email"
+  },
+  "authResetCodeSent": "Code sent — check your email.",
+  "@authResetCodeSent": {
+    "description": "Explainer after the reset code email went out"
+  },
+  "authResetCodeLabel": "Code from the email",
+  "@authResetCodeLabel": {
+    "description": "Label of the one-time code input"
+  },
+  "authResetNewPasswordLabel": "New password",
+  "@authResetNewPasswordLabel": {
+    "description": "Label of the new-password input in the reset sheet"
+  },
+  "authResetSubmit": "Set new password",
+  "@authResetSubmit": {
+    "description": "Button redeeming the code and setting the new password"
+  },
+  "authResetDone": "Password updated — you are signed in.",
+  "@authResetDone": {
+    "description": "Snackbar after a successful password reset"
+  },
+  "authResetInvalidCode": "That code is invalid or expired.",
+  "@authResetInvalidCode": {
+    "description": "Inline error when the server rejects the reset code"
+  },
   "authSignInButton": "Sign in",
   "@authSignInButton": {
     "description": "Submit button in sign-in mode"
