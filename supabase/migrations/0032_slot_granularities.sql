@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: MIT
--- Configurable reservation slots. NOT YET applied to the hosted
--- reference project — the owner applies it after review.
+-- Configurable reservation slots. Applied to the hosted reference
+-- project on 2026-07-18.
 --
 -- booking_rules.granularity (owner-set via set_booking_granularity's
 -- merge write under workspaces_update RLS) now accepts, next to the
