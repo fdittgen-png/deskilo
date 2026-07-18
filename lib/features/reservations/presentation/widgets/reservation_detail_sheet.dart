@@ -16,6 +16,7 @@ import '../../../plan/providers/seat_context_providers.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
+import 'booking_range_text.dart';
 import '../../providers/reservation_providers.dart';
 
 /// Where is my reserved seat — and what can I do about it? (#182, edit
@@ -48,7 +49,6 @@ class ReservationDetailSheet extends ConsumerWidget {
             ? ref.watch(officeContextProvider(officeId))
             : const AsyncData<SeatContext?>(null);
     final target = targetAsync.value;
-    final timeFormat = DateFormat.Hm();
 
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     // The actions belong to the owner of a still-upcoming booking; past,
@@ -80,11 +80,27 @@ class ReservationDetailSheet extends ConsumerWidget {
                         ? Icons.event_seat
                         : Icons.schedule),
               ),
+              // Date + the range as humans read it — a full day says
+              // 'Full day', never '00:00 – 00:00' (field report).
               title: Text(
-                '${timeFormat.format(r.startsAt.toLocal())} – '
-                '${timeFormat.format(r.endsAt.toLocal())}',
+                '${DateFormat.MMMEd().format(WorkspaceTime.display(r.startsAt))}'
+                ' · ${bookingRangeText(l10n, r.startsAt, r.endsAt)}',
               ),
-              subtitle: target == null ? null : Text(target.locationLine),
+              subtitle: target == null && r.seriesId == null
+                  ? null
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (target != null) Text(target.locationLine),
+                        // The repetition modality (field report: it was
+                        // invisible everywhere).
+                        if (r.seriesId != null)
+                          Text(
+                            repeatLabelText(l10n, r.seriesPattern),
+                            key: const ValueKey('reservation-repeat'),
+                          ),
+                      ],
+                    ),
             ),
             if (seatId != null) SeatAccessoryRow(seatId: seatId),
             const SizedBox(height: 16),

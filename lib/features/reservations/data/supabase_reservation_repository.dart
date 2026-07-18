@@ -144,6 +144,7 @@ class SupabaseReservationRepository implements ReservationRepository {
         endsAt: DateTime.parse(row['ends_at'] as String),
         status: reservationStatusFromDb(row['status'] as String),
         seriesId: row['series_id'] as String?,
+        seriesPattern: row['series_pattern'] as String?,
         checkedInAt: row['checked_in_at'] == null
             ? null
             : DateTime.parse(row['checked_in_at'] as String),

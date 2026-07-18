@@ -200,6 +200,7 @@ class FakeReservationRepository implements ReservationRepository {
               endsAt: end,
               status: ReservationStatus.reserved,
               seriesId: seriesId,
+              seriesPattern: pattern.name,
             ),
           );
           booked.add(start);

@@ -39,6 +39,10 @@ sealed class Reservation with _$Reservation {
     required DateTime endsAt,
     required ReservationStatus status,
     String? seriesId,
+
+    /// Repetition modality of the series ('daily' / 'weekdays' /
+    /// 'weekly', 0034); null on single bookings and pre-0034 series.
+    String? seriesPattern,
     DateTime? checkedInAt,
     DateTime? checkedOutAt,
   }) = _Reservation;

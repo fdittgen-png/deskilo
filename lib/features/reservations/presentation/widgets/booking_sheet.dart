@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
+import 'booking_range_text.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
 import '../../domain/reservation_repository.dart';
 
@@ -145,8 +146,7 @@ class _BookingSheetState extends State<BookingSheet> {
                 padding: const EdgeInsets.only(top: 2),
                 child: Text(
                   '${DateFormat.MMMEd().format(WorkspaceTime.display(widget.start))}'
-                  ' · ${timeFormat.format(WorkspaceTime.display(widget.start))}'
-                  ' – ${timeFormat.format(WorkspaceTime.display(_end))}',
+                  ' · ${bookingRangeText(l10n, widget.start, _end)}',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color:
                             Theme.of(context).colorScheme.onSurfaceVariant,

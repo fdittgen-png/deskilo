@@ -1202,6 +1202,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get reservationRecurring => 'Wiederkehrende Reservierung';
+
+  @override
   String get reservationEditTimes => 'Zeit ändern';
 
   @override

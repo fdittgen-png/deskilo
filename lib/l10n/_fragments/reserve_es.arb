@@ -2,6 +2,7 @@
   "@@locale": "es",
   "reserveMonthView": "Mes",
   "monthFreeCount": "{free}/{total}",
+  "reservationRecurring": "Reserva recurrente",
   "reservationEditTimes": "Cambiar horario",
   "reservationUpdatedSnack": "Reserva actualizada.",
   "reservationCancelledSnack": "Reserva cancelada.",

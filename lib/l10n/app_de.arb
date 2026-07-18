@@ -360,6 +360,7 @@
   "quotaRequestPending": "Antrag gesendet — wartet auf Freigabe.",
   "reserveMonthView": "Monat",
   "monthFreeCount": "{free}/{total}",
+  "reservationRecurring": "Wiederkehrende Reservierung",
   "reservationEditTimes": "Zeit ändern",
   "reservationUpdatedSnack": "Reservierung aktualisiert.",
   "reservationCancelledSnack": "Reservierung storniert.",
