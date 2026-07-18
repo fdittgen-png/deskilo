@@ -566,11 +566,12 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     Brightness brightness,
   ) {
     final scheme = Theme.of(context).colorScheme;
-    final dayStart = DateTime(day.year, day.month, day.day);
-    final dayEnd = DateTime(day.year, day.month, day.day + 1);
+    // The cell IS the workspace-local day — same clock as the half-slot
+    // windows below, whatever zone the device is in.
+    final dayWindow = HalfDayWindows.fullDay(day);
     final items = [
       for (final r in rowReservations)
-        if (r.coversRange(dayStart, dayEnd)) r,
+        if (r.coversRange(dayWindow.start, dayWindow.end)) r,
     ];
     final selected = DateUtils.isSameDay(day, widget.selectedDay);
     return SizedBox(
