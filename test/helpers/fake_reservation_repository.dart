@@ -152,6 +152,22 @@ class FakeReservationRepository implements ReservationRepository {
   }
 
   @override
+  Future<void> updateTimes(
+    String reservationId, {
+    required DateTime startsAt,
+    required DateTime endsAt,
+  }) async {
+    final i = reservations.indexWhere((r) => r.id == reservationId);
+    if (i < 0) throw StateError('unknown reservation');
+    final r = reservations[i];
+    if (_overlapsActive(r.seatId, r.officeId, startsAt, endsAt,
+        ignoreId: reservationId)) {
+      throw StateError('seat already reserved in that window');
+    }
+    reservations[i] = r.copyWith(startsAt: startsAt, endsAt: endsAt);
+  }
+
+  @override
   Future<SeriesResult> createSeries({
     required String workspaceId,
     required String seatId,

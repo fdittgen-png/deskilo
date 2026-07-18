@@ -2264,6 +2264,24 @@ abstract class AppLocalizations {
   /// **'{free}/{total}'**
   String monthFreeCount(int free, int total);
 
+  /// Detail-sheet action opening the granularity-aware window edit (0033)
+  ///
+  /// In en, this message translates to:
+  /// **'Edit times'**
+  String get reservationEditTimes;
+
+  /// Snackbar after an own reservation's window was edited (0033)
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation updated.'**
+  String get reservationUpdatedSnack;
+
+  /// Snackbar after an own reservation was cancelled from the detail sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation cancelled.'**
+  String get reservationCancelledSnack;
+
   /// Reserve hub view segment showing the selected day's per-seat timeline (#208)
   ///
   /// In en, this message translates to:

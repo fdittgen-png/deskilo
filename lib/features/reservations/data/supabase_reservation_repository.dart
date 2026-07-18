@@ -86,6 +86,19 @@ class SupabaseReservationRepository implements ReservationRepository {
   }
 
   @override
+  Future<void> updateTimes(
+    String reservationId, {
+    required DateTime startsAt,
+    required DateTime endsAt,
+  }) async {
+    await _client.rpc<dynamic>('update_reservation', params: {
+      'p_reservation_id': reservationId,
+      'p_starts_at': startsAt.toUtc().toIso8601String(),
+      'p_ends_at': endsAt.toUtc().toIso8601String(),
+    });
+  }
+
+  @override
   Future<SeriesResult> createSeries({
     required String workspaceId,
     required String seatId,
