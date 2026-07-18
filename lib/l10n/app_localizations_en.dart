@@ -1192,6 +1192,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get reservationRecurring => 'Recurring booking';
+
+  @override
   String get reservationEditTimes => 'Edit times';
 
   @override

@@ -1199,6 +1199,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get reservationRecurring => 'Reserva recurrente';
+
+  @override
   String get reservationEditTimes => 'Cambiar horario';
 
   @override

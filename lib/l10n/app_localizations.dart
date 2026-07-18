@@ -2264,6 +2264,12 @@ abstract class AppLocalizations {
   /// **'{free}/{total}'**
   String monthFreeCount(int free, int total);
 
+  /// Generic repetition label for series bookings whose pattern predates 0034
+  ///
+  /// In en, this message translates to:
+  /// **'Recurring booking'**
+  String get reservationRecurring;
+
   /// Detail-sheet action opening the granularity-aware window edit (0033)
   ///
   /// In en, this message translates to:

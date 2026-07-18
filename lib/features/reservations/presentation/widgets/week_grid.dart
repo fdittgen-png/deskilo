@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/time/workspace_time.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
@@ -16,6 +15,7 @@ import '../../../plan/domain/level.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/reservation.dart';
+import 'booking_range_text.dart';
 import '../../providers/reservation_providers.dart';
 
 /// Geometry of the Reserve hub's Week grid (#236). Pinned by test — treat
@@ -716,7 +716,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     List<Reservation> items,
   ) async {
     final names = ref.read(memberNamesProvider).value ?? const {};
-    final timeFormat = DateFormat.Hm();
+    final l10n = AppLocalizations.of(context);
     final sorted = [...items]
       ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
     final picked = await showModalBottomSheet<Reservation>(
@@ -747,7 +747,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
                         ? Icons.event_seat
                         : Icons.person_outline,
                   ),
-                  title: Text(_occupantLine(r, names, timeFormat)),
+                  title: Text(_occupantLine(r, names, l10n)),
                   trailing: r.memberId == widget.myMemberId
                       ? const Icon(Icons.chevron_right)
                       : null,
@@ -768,11 +768,9 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
   String _occupantLine(
     Reservation r,
     Map<String, String> names,
-    DateFormat timeFormat,
+    AppLocalizations? l10n,
   ) {
-    final range =
-        '${timeFormat.format(WorkspaceTime.display(r.startsAt))} – '
-        '${timeFormat.format(WorkspaceTime.display(r.endsAt))}';
+    final range = bookingRangeText(l10n, r.startsAt, r.endsAt);
     if (!widget.everyone) return range;
     final name = names[r.memberId] ?? '';
     return name.isEmpty ? range : '$range · $name';

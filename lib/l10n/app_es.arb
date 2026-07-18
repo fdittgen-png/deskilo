@@ -360,6 +360,7 @@
   "quotaRequestPending": "Solicitud enviada — pendiente de validación.",
   "reserveMonthView": "Mes",
   "monthFreeCount": "{free}/{total}",
+  "reservationRecurring": "Reserva recurrente",
   "reservationEditTimes": "Cambiar horario",
   "reservationUpdatedSnack": "Reserva actualizada.",
   "reservationCancelledSnack": "Reserva cancelada.",

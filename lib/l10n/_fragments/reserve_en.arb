@@ -12,6 +12,10 @@
       "total": {"type": "int"}
     }
   },
+  "reservationRecurring": "Recurring booking",
+  "@reservationRecurring": {
+    "description": "Generic repetition label for series bookings whose pattern predates 0034"
+  },
   "reservationEditTimes": "Edit times",
   "@reservationEditTimes": {
     "description": "Detail-sheet action opening the granularity-aware window edit (0033)"
