@@ -11,7 +11,6 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../helpers/mock_providers.dart';
 import 'reserve_hub_test.dart' show pumpHub;
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 

@@ -58,7 +58,9 @@ class ReservationDetailSheet extends ConsumerWidget {
         r.status == ReservationStatus.reserved;
 
     return SafeArea(
-      child: Padding(
+      // Scrollable: with the action row the sheet can outgrow small
+      // viewports (the #232 fixed-column lesson).
+      child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(
           AppSpacing.xl,
           AppSpacing.lg,
