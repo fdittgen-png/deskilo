@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/time/workspace_time.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
@@ -77,6 +78,7 @@ class WeekGrid extends ConsumerStatefulWidget {
     required this.myMemberId,
     required this.onDaySelected,
     required this.onReservationTap,
+    this.onFreeSlotTap,
   });
 
   /// The hub's selected local day (any instant within it) — the grid
@@ -103,11 +105,19 @@ class WeekGrid extends ConsumerStatefulWidget {
   /// Tap-through on one of MY reservations in the cell sheet.
   final void Function(Reservation reservation) onReservationTap;
 
+  /// Tap on a FREE half-slot — the hub books that seat for that day's
+  /// half. Null keeps free cells passive.
+  final void Function(Seat seat, DateTime day, {required bool morning})?
+      onFreeSlotTap;
+
   /// Local midnight of the Monday of [day]'s ISO week.
   static DateTime weekStartOf(DateTime day) {
     final local = day.toLocal();
     return DateTime(local.year, local.month, local.day - (local.weekday - 1));
   }
+
+  /// Public day stamp for cell/free-slot keys.
+  static String dayStampOf(DateTime day) => _dayStamp(day);
 
   static String _dayStamp(DateTime day) {
     final m = day.month.toString().padLeft(2, '0');
@@ -639,25 +649,61 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
       }
     }
     Color? fill;
+    String? occupantInitial;
     if (occupied) {
       // The timeline's block tones (#187): mine vs reserved-by-others.
       fill = SeatStateColors.of(
         mine ? SeatState.mine : SeatState.reserved,
         brightness: brightness,
       );
+      if (widget.everyone) {
+        // WHO at a glance (needs analysis: availability + by whom): the
+        // covering occupant's initial, mirroring the plan's seat avatars.
+        final names = ref.watch(memberNamesProvider).value ?? const {};
+        final covering = items.firstWhere(
+          (r) => r.coversRange(half.start, half.end),
+        );
+        final name = names[covering.memberId] ?? '';
+        if (name.trim().isNotEmpty) {
+          occupantInitial = name.trim().characters.first.toUpperCase();
+        }
+      }
     } else if (_blockedDuring(seat, half.start, half.end)) {
       fill = SeatStateColors.of(SeatState.blocked, brightness: brightness)
           .withValues(alpha: 0.3);
     }
+    final free = fill == null;
     return Container(
       key: WeekGrid.cellKey(seat.id, day, morning: morning),
       decoration: BoxDecoration(
         color: fill,
         borderRadius: AppRadius.smAll,
-        border: fill == null
+        border: free
             ? Border.all(color: scheme.outlineVariant.withValues(alpha: 0.6))
             : null,
       ),
+      // A free half-slot is a booking affordance, not dead space.
+      child: free && widget.onFreeSlotTap != null
+          ? InkWell(
+              key: ValueKey(
+                'week-free-${seat.id}-${WeekGrid.dayStampOf(day)}-'
+                '${morning ? 'am' : 'pm'}',
+              ),
+              borderRadius: AppRadius.smAll,
+              onTap: () =>
+                  widget.onFreeSlotTap!(seat, day, morning: morning),
+            )
+          : occupantInitial == null
+              ? null
+              : Center(
+                  child: Text(
+                    occupantInitial,
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                ),
     );
   }
 
@@ -724,8 +770,9 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     Map<String, String> names,
     DateFormat timeFormat,
   ) {
-    final range = '${timeFormat.format(r.startsAt.toLocal())} – '
-        '${timeFormat.format(r.endsAt.toLocal())}';
+    final range =
+        '${timeFormat.format(WorkspaceTime.display(r.startsAt))} – '
+        '${timeFormat.format(WorkspaceTime.display(r.endsAt))}';
     if (!widget.everyone) return range;
     final name = names[r.memberId] ?? '';
     return name.isEmpty ? range : '$range · $name';

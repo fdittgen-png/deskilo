@@ -548,17 +548,31 @@ void main() {
       'tapping an occupied cell lists that seat/day\'s reservations '
       '("09:00 – 11:00 · Flo" in everyone mode) with tap-through to my '
       'detail sheet', (tester) async {
+    // Workspace-clock seeds: one AM booking of mine, one PM of Ana's —
+    // the AM half is OCCUPIED, so its tap lists occupants (a free half
+    // would book instead, see the free-slot test).
+    WorkspaceTime.install('Europe/Berlin');
     final today = _today;
     await pumpHub(
       tester,
       seed: [
-        reservationOn(today, id: 'res-own'),
-        reservationOn(
-          today,
+        Reservation(
+          id: 'res-own',
+          workspaceId: 'ws-1',
+          seatId: 'seat-4',
+          memberId: 'member-1',
+          startsAt: WorkspaceTime.at(today.year, today.month, today.day, 9),
+          endsAt: WorkspaceTime.at(today.year, today.month, today.day, 11),
+          status: ReservationStatus.reserved,
+        ),
+        Reservation(
           id: 'res-ana',
+          workspaceId: 'ws-1',
+          seatId: 'seat-4',
           memberId: 'member-2',
-          startHour: 12,
-          endHour: 14,
+          startsAt: WorkspaceTime.at(today.year, today.month, today.day, 14),
+          endsAt: WorkspaceTime.at(today.year, today.month, today.day, 16),
+          status: ReservationStatus.reserved,
         ),
       ],
     );
@@ -569,9 +583,10 @@ void main() {
         .tap(find.byKey(WeekGrid.cellKey('seat-4', today, morning: true)));
     await tester.pumpAndSettle();
 
-    // The whole day's occupants, times + names (everyone mode).
+    // The whole day's occupants, times + names (everyone mode), on the
+    // workspace wall clock.
     expect(find.text('09:00 – 11:00 · Flo'), findsOneWidget);
-    expect(find.text('12:00 – 14:00 · Ana'), findsOneWidget);
+    expect(find.text('14:00 – 16:00 · Ana'), findsOneWidget);
 
     // Tap-through on MY reservation opens the shared detail sheet.
     await tester.tap(find.byKey(WeekGrid.sheetItemKey('res-own')));
@@ -817,5 +832,117 @@ void main() {
     // Landed on the Day view for the tapped day.
     expect(find.byType(DayTimeline), findsOneWidget);
     expect(find.byType(MonthGrid), findsNothing);
+  });
+
+  testWidgets(
+      'Week view: a FREE half-slot books it — tapping the AM cell under '
+      'half-day granularity reserves exactly the morning window',
+      (tester) async {
+    WorkspaceTime.install('Europe/Berlin');
+    final today = _today;
+    final repo = await pumpHub(
+      tester,
+      granularity: BookingGranularity.halfDay,
+    );
+
+    await tester.tap(find.text('Week'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(ValueKey(
+      'week-free-seat-4-${WeekGrid.dayStampOf(today)}-am',
+    )));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(BookingSheet), findsOneWidget);
+    await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
+    await tester.pumpAndSettle();
+
+    final created = repo.reservations.single;
+    final expected = HalfDayWindows.morning(today);
+    expect(created.startsAt.toUtc(), expected.start.toUtc());
+    expect(created.endsAt.toUtc(), expected.end.toUtc());
+  });
+
+  testWidgets(
+      'Week view: an occupied half-slot names its occupant with an '
+      'initial (everyone mode)', (tester) async {
+    WorkspaceTime.install('Europe/Berlin');
+    final today = _today;
+    await pumpHub(
+      tester,
+      seed: [
+        Reservation(
+          id: 'res-ana',
+          workspaceId: 'ws-1',
+          seatId: 'seat-4',
+          memberId: 'member-2',
+          startsAt: WorkspaceTime.at(today.year, today.month, today.day, 9),
+          endsAt: WorkspaceTime.at(today.year, today.month, today.day, 11),
+          status: ReservationStatus.reserved,
+        ),
+      ],
+    );
+
+    await tester.tap(find.text('Week'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.descendant(
+        of: find.byKey(WeekGrid.cellKey('seat-4', today, morning: true)),
+        matching: find.text('A'),
+      ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets(
+      'Day view is an availability surface: seat rows render on an empty '
+      'day and a free-row tap books the selected window', (tester) async {
+    WorkspaceTime.install('Europe/Berlin');
+    final repo = await pumpHub(
+      tester,
+      granularity: BookingGranularity.halfDay,
+    );
+
+    await tester.tap(find.text('Day'));
+    await tester.pumpAndSettle();
+
+    // No reservations — but the seat row is there, not an empty hint.
+    expect(find.text('A1'), findsOneWidget);
+    expect(
+      find.text('No reservations on this level for this day.'),
+      findsNothing,
+    );
+
+    await tester.tap(find.byKey(const ValueKey('timeline-free-seat-4')));
+    await tester.pumpAndSettle();
+    expect(find.byType(BookingSheet), findsOneWidget);
+    await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
+    await tester.pumpAndSettle();
+
+    // Default hub window under half-day granularity = the full day.
+    final created = repo.reservations.single;
+    final expected = HalfDayWindows.fullDay(_today);
+    expect(created.startsAt.toUtc(), expected.start.toUtc());
+    expect(created.endsAt.toUtc(), expected.end.toUtc());
+  });
+
+  testWidgets(
+      'honest controls: the window chips show on Plan and Day, never on '
+      'Week or Month', (tester) async {
+    await pumpHub(tester, granularity: BookingGranularity.halfDay);
+
+    expect(find.byKey(_amChip), findsOneWidget); // Plan view
+
+    await tester.tap(find.text('Day'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(_amChip), findsOneWidget);
+
+    await tester.tap(find.text('Week'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(_amChip), findsNothing);
+
+    await tester.tap(find.text('Month'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(_amChip), findsNothing);
   });
 }

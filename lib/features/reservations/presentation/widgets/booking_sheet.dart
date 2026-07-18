@@ -137,6 +137,22 @@ class _BookingSheetState extends State<BookingSheet> {
                       'Starts at '
                           '${timeFormat.format(WorkspaceTime.display(widget.start))}'),
             ),
+            // What exactly gets booked (needs analysis: the sheet never
+            // said the window): the date and the full from–to range on
+            // the window's own wall clock.
+            if (!widget.walkUp)
+              Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Text(
+                  '${DateFormat.MMMEd().format(WorkspaceTime.display(widget.start))}'
+                  ' · ${timeFormat.format(WorkspaceTime.display(widget.start))}'
+                  ' – ${timeFormat.format(WorkspaceTime.display(_end))}',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color:
+                            Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                ),
+              ),
             // The seat's active accessories (#169): self-loading, renders
             // nothing when the seat has none. Both booking flows (walk-up
             // and browsed-time) share this sheet, so both get the row.

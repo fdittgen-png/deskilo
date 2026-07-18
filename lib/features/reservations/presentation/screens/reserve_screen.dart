@@ -603,7 +603,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
       body: Column(
         children: [
           _dateStrip(l10n),
-          _windowChips(l10n, granularity, window),
+          // Honest controls: the window chips act on Plan (state filter +
+          // booking window) and Day (the window a free-row tap books).
+          // Week books per tapped half, Month is an overview — no chips.
+          if (_view == _ReserveView.plan || _view == _ReserveView.day)
+            _windowChips(l10n, granularity, window),
           if (!dayOpen) _closedDayBanner(l10n),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -944,12 +948,22 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
             .watch(reservationsForDayProvider(dayKeyOf(_selectedDay)))
             .value ??
         const <Reservation>[];
+    final active = [for (final r in reservations) if (r.isActive) r];
     return DayTimeline(
       day: _selectedDay,
-      reservations: [for (final r in reservations) if (r.isActive) r],
+      reservations: active,
       everyone: true,
       myMemberId: myMemberId,
       onReservationTap: _detailSheet,
+      // The hub's Day view is an AVAILABILITY surface: every seat row
+      // renders, and tapping a row's free area books the selected
+      // window on that seat (no more look-but-can't-book).
+      showFreeSeats: true,
+      onFreeSeatTap: (seat) => _bookingSheet(
+        seat,
+        active,
+        _effectiveWindow(_granularity),
+      ),
     );
   }
 
@@ -988,7 +1002,43 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
         setState(() => _view = _ReserveView.day);
       },
       onReservationTap: _detailSheet,
+      onFreeSlotTap: (seat, day, {required morning}) {
+        final window = _tapWindowOn(day, morning: morning);
+        _bookingSheet(seat, byId.values.toList(), window);
+      },
     );
+  }
+
+  /// The window a Week-cell tap books on [day]: the tapped half under
+  /// half-day granularity, the whole day under full-day, and the hub's
+  /// current from→to times mapped onto [day] otherwise.
+  HalfDayWindow _tapWindowOn(DateTime day, {required bool morning}) {
+    final granularity = _granularity;
+    if (granularity == BookingGranularity.halfDay) {
+      return morning
+          ? HalfDayWindows.morning(day)
+          : HalfDayWindows.afternoon(day);
+    }
+    if (granularity == BookingGranularity.fullDay) {
+      return HalfDayWindows.fullDay(day);
+    }
+    final window = _effectiveWindow(granularity);
+    final from = DateTime(
+      day.year,
+      day.month,
+      day.day,
+      window.start.hour,
+      window.start.minute,
+    );
+    var to = DateTime(
+      day.year,
+      day.month,
+      day.day,
+      window.end.hour,
+      window.end.minute,
+    );
+    if (!to.isAfter(from)) to = _defaultEndFor(from);
+    return (start: from, end: to);
   }
 
   /// Month view (#7): the selected day's month as an availability
