@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 import '../../core/notifications/notification_providers.dart';
 import '../../core/push/push_providers.dart';
+import '../../core/time/workspace_time.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/domain/check_in_reminders.dart';
@@ -48,6 +49,13 @@ class ShellScreen extends ConsumerWidget {
 
     // Fire-and-forget UnifiedPush start (#72); no-op without distributor.
     ref.watch(pushBootstrapProvider);
+
+    // Day-based booking windows anchor to the WORKSPACE clock — install
+    // the active workspace's zone (re-installs on profile switch). A
+    // device hours away must still book the workspace's midnights.
+    WorkspaceTime.install(
+      ref.watch(currentWorkspaceProvider).value?.timezone,
+    );
 
     // Keep the local check-in reminders in sync with my upcoming bookings
     // (spec §4.3). Best-effort; failures never disturb the UI.

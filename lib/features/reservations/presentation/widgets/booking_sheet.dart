@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
+
+import '../../../../core/time/workspace_time.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
@@ -128,12 +130,12 @@ class _BookingSheetState extends State<BookingSheet> {
             Text(
               widget.walkUp
                   ? '${l10n?.planStartNow ?? 'Starts now'} · '
-                      '${timeFormat.format(widget.start.toLocal())}'
+                      '${timeFormat.format(WorkspaceTime.display(widget.start))}'
                   : (l10n?.planStartsAt(
-                        timeFormat.format(widget.start.toLocal()),
+                        timeFormat.format(WorkspaceTime.display(widget.start)),
                       ) ??
                       'Starts at '
-                          '${timeFormat.format(widget.start.toLocal())}'),
+                          '${timeFormat.format(WorkspaceTime.display(widget.start))}'),
             ),
             // The seat's active accessories (#169): self-loading, renders
             // nothing when the seat has none. Both booking flows (walk-up
@@ -157,7 +159,7 @@ class _BookingSheetState extends State<BookingSheet> {
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: Text(l10n?.planUntilLabel ?? 'Until'),
-                trailing: Text(timeFormat.format(_end.toLocal())),
+                trailing: Text(timeFormat.format(WorkspaceTime.display(_end))),
                 onTap: () async {
                   final picked = await showTimePicker(
                     context: context,
@@ -218,10 +220,10 @@ class _BookingSheetState extends State<BookingSheet> {
             if (widget.capped && widget.cap != null)
               Text(
                 l10n?.planCappedByNext(
-                      timeFormat.format(widget.cap!.toLocal()),
+                      timeFormat.format(WorkspaceTime.display(widget.cap!)),
                     ) ??
                     'The seat is reserved from '
-                        '${timeFormat.format(widget.cap!.toLocal())}.',
+                        '${timeFormat.format(WorkspaceTime.display(widget.cap!))}.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             const SizedBox(height: 16),

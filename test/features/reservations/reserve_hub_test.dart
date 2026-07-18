@@ -26,6 +26,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import '../../helpers/mock_providers.dart';
 import '../calendar/day_timeline_test.dart' show addSecondLevel;
 import '../plan/time_scroller_test.dart' show pickChipTime;
@@ -167,6 +168,10 @@ Reservation reservationOn(
 }
 
 void main() {
+  // Half-slot classification anchors to the WORKSPACE clock (the fake
+  // workspace is Europe/Berlin); reset between tests.
+  tearDown(WorkspaceTime.reset);
+
   test('hub metrics are pinned (contract of #208)', () {
     expect(ReserveHubMetrics.stripDayCount, 14);
     expect(ReserveHubMetrics.stripHeight, 76.0);
@@ -338,12 +343,12 @@ void main() {
     await tester.pumpAndSettle();
 
     final created = repo.reservations.single;
-    final today = _today;
-    expect(created.startsAt.toLocal(), today);
-    expect(
-      created.endsAt.toLocal(),
-      DateTime(today.year, today.month, today.day, HalfDayWindows.pivotHour),
-    );
+    // The canonical window anchors to the WORKSPACE clock (the fake
+    // workspace is Europe/Berlin) — assert the instants, not device
+    // wall-clock.
+    final expected = HalfDayWindows.morning(_today);
+    expect(created.startsAt.toUtc(), expected.start.toUtc());
+    expect(created.endsAt.toUtc(), expected.end.toUtc());
   });
 
   testWidgets(
@@ -414,6 +419,9 @@ void main() {
       "day's AM half in the mine tone and leaves PM an empty outline",
       (tester) async {
     // Tuesday of the current week — past days still render occupancy.
+    // Seeds anchor to the workspace clock: the grid classifies halves
+    // against workspace-local windows whatever the device zone.
+    WorkspaceTime.install('Europe/Berlin');
     final tuesday = _weekDay(1);
     await pumpHub(
       tester,
@@ -423,8 +431,10 @@ void main() {
           workspaceId: 'ws-1',
           seatId: 'seat-4',
           memberId: 'member-1',
-          startsAt: DateTime(tuesday.year, tuesday.month, tuesday.day, 1, 15),
-          endsAt: DateTime(tuesday.year, tuesday.month, tuesday.day, 5, 15),
+          startsAt: WorkspaceTime.at(
+              tuesday.year, tuesday.month, tuesday.day, 1, 15),
+          endsAt: WorkspaceTime.at(
+              tuesday.year, tuesday.month, tuesday.day, 5, 15),
           status: ReservationStatus.reserved,
         ),
       ],
@@ -448,25 +458,32 @@ void main() {
       "half-slot occupancy: another member's 15:00–19:00 colors PM only in "
       'the occupied tone; a full-day booking colors both halves',
       (tester) async {
+    WorkspaceTime.install('Europe/Berlin');
     final wednesday = _weekDay(2);
     final thursday = _weekDay(3);
     await pumpHub(
       tester,
       seed: [
-        reservationOn(
-          wednesday,
+        Reservation(
           id: 'res-pm',
+          workspaceId: 'ws-1',
+          seatId: 'seat-4',
           memberId: 'member-2',
-          startHour: 15,
-          endHour: 19,
+          startsAt: WorkspaceTime.at(
+              wednesday.year, wednesday.month, wednesday.day, 15),
+          endsAt: WorkspaceTime.at(
+              wednesday.year, wednesday.month, wednesday.day, 19),
+          status: ReservationStatus.reserved,
         ),
         Reservation(
           id: 'res-full',
           workspaceId: 'ws-1',
           seatId: 'seat-4',
           memberId: 'member-2',
-          startsAt: DateTime(thursday.year, thursday.month, thursday.day),
-          endsAt: DateTime(thursday.year, thursday.month, thursday.day + 1),
+          startsAt: WorkspaceTime.at(
+              thursday.year, thursday.month, thursday.day),
+          endsAt: WorkspaceTime.at(
+              thursday.year, thursday.month, thursday.day + 1),
           status: ReservationStatus.reserved,
         ),
       ],
@@ -602,10 +619,23 @@ void main() {
     // The week day on the OTHER side of the boundary from [target].
     final crossDay = monday.month == target.month ? sunday : monday;
     final repo = _LoggingReservationRepository();
+    WorkspaceTime.install('Europe/Berlin');
     await pumpHub(
       tester,
       repo: repo,
-      seed: [reservationOn(crossDay, id: 'res-cross')],
+      seed: [
+        Reservation(
+          id: 'res-cross',
+          workspaceId: 'ws-1',
+          seatId: 'seat-4',
+          memberId: 'member-1',
+          startsAt: WorkspaceTime.at(
+              crossDay.year, crossDay.month, crossDay.day, 9),
+          endsAt: WorkspaceTime.at(
+              crossDay.year, crossDay.month, crossDay.day, 12),
+          status: ReservationStatus.reserved,
+        ),
+      ],
     );
 
     // Steer the hub to [target] via the calendar icon (it may lie beyond

@@ -19,6 +19,7 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
 import 'plan_closed_day_test.dart' show ThrowingReservationRepository;
@@ -66,19 +67,26 @@ bool chipSelected(WidgetTester tester, Key key) =>
 /// A foreign checked-in reservation on seat-4 covering today's local
 /// [startHour]:00–[endHour]:00.
 Reservation reservationToday({required int startHour, required int endHour}) {
-  final now = DateTime.now();
+  // Workspace-clock instants: the canonical windows the chips browse are
+  // workspace-anchored, so the seeds must be too.
+  final today = WorkspaceTime.dateOf(DateTime.now());
   return Reservation(
     id: 'res-$startHour',
     workspaceId: 'ws-1',
     seatId: 'seat-4',
     memberId: 'member-2',
-    startsAt: DateTime(now.year, now.month, now.day, startHour),
-    endsAt: DateTime(now.year, now.month, now.day, endHour),
+    startsAt: WorkspaceTime.at(today.year, today.month, today.day, startHour),
+    endsAt: WorkspaceTime.at(today.year, today.month, today.day, endHour),
     status: ReservationStatus.checkedIn,
   );
 }
 
 void main() {
+  // Windows anchor to the WORKSPACE clock (fake workspace =
+  // Europe/Berlin) whatever zone the device runs in.
+  setUp(() => WorkspaceTime.install('Europe/Berlin'));
+  tearDown(WorkspaceTime.reset);
+
   testWidgets(
       'half-day workspace: Morning/Afternoon/Day chips replace the '
       'from/to time chips', (tester) async {
@@ -167,14 +175,11 @@ void main() {
     await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
     await tester.pumpAndSettle();
 
-    final now = DateTime.now();
     final created = repo.reservations.single;
     expect(created.status, ReservationStatus.reserved);
-    expect(created.startsAt.toLocal(), DateTime(now.year, now.month, now.day));
-    expect(
-      created.endsAt.toLocal(),
-      DateTime(now.year, now.month, now.day, HalfDayWindows.pivotHour),
-    );
+    final expected = HalfDayWindows.morning(DateTime.now());
+    expect(created.startsAt.toUtc(), expected.start.toUtc());
+    expect(created.endsAt.toUtc(), expected.end.toUtc());
   });
 
   testWidgets(
@@ -197,8 +202,8 @@ void main() {
     // derived from the created start so the assertion is deterministic
     // whenever the suite runs.
     expect(
-      created.endsAt.toLocal(),
-      HalfDayWindows.windowForNow(created.startsAt.toLocal()).end,
+      created.endsAt.toUtc(),
+      HalfDayWindows.windowForNow(created.startsAt).end.toUtc(),
     );
   });
 
@@ -231,14 +236,10 @@ void main() {
     await tester.pumpAndSettle();
 
     final created = repo.reservations.single;
-    expect(
-      created.startsAt.toLocal(),
-      DateTime(now.year, now.month, targetDay, HalfDayWindows.pivotHour),
-    );
-    expect(
-      created.endsAt.toLocal(),
-      DateTime(now.year, now.month, targetDay + 1),
-    );
+    final expected =
+        HalfDayWindows.afternoon(DateTime(now.year, now.month, targetDay));
+    expect(created.startsAt.toUtc(), expected.start.toUtc());
+    expect(created.endsAt.toUtc(), expected.end.toUtc());
   });
 
   testWidgets(

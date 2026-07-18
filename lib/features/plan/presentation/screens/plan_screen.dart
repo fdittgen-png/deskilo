@@ -23,6 +23,7 @@ import '../../../reservations/domain/reservation_repository.dart';
 import '../../../reservations/domain/seat_state_logic.dart';
 import '../../../reservations/presentation/widgets/booking_sheet.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../../../core/time/workspace_time.dart';
 import '../../../money/domain/quota_rules.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/member.dart';
@@ -733,9 +734,27 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     // null in live mode, where the instant semantics apply.
     final windowEnd = _browseEnd;
     final planAsync = ref.watch(floorPlanProvider(level.id));
-    final reservations =
-        ref.watch(reservationsForDayProvider(dayKeyOf(at))).value ??
+    // The window may straddle TWO device-local day keys: workspace-clock
+    // windows (day-based granularities) start on the previous device
+    // date when the device sits west of the workspace. Fetch both ends
+    // and merge, hub cross-month style.
+    final startKey = dayKeyOf(at);
+    final endKey = dayKeyOf(
+      (windowEnd ?? at).subtract(const Duration(microseconds: 1)),
+    );
+    final startDayReservations =
+        ref.watch(reservationsForDayProvider(startKey)).value ??
             const <Reservation>[];
+    final reservations = startKey == endKey
+        ? startDayReservations
+        : {
+            for (final r in [
+              ...startDayReservations,
+              ...ref.watch(reservationsForDayProvider(endKey)).value ??
+                  const <Reservation>[],
+            ])
+              r.id: r,
+          }.values.toList();
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     final names = ref.watch(memberNamesProvider).value ?? const {};
 
@@ -859,7 +878,10 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   Widget _scrollerRow(DateTime at, BookingGranularity granularity) {
     final l10n = AppLocalizations.of(context);
     final dayBased = granularity.isDayBased;
-    final local = at.toLocal();
+    // Day-based chips describe a WORKSPACE-local day: deriving it via
+    // device toLocal() shifts a day whenever the workspace midnight
+    // lands on the previous device date (Pacific device, Paris space).
+    final local = dayBased ? WorkspaceTime.dateOf(at) : at.toLocal();
     final live = _browse == null;
     final endLocal = (_browseEnd ?? _defaultEndFor(local)).toLocal();
     final timeFormat = DateFormat.Hm();
