@@ -77,6 +77,11 @@ class ShellBottomBar extends StatelessWidget {
   /// Localized tooltip / semantic label of the Reserve button.
   final String reserveLabel;
 
+  /// Whether the Reserve hub is the loaded form: the centre button is the
+  /// bar's selection indicator then (filled icon, selected semantics) and
+  /// [selectedIndex] is `-1` so no side tab claims the highlight.
+  final bool reserveSelected;
+
   const ShellBottomBar({
     super.key,
     required this.destinations,
@@ -84,6 +89,7 @@ class ShellBottomBar extends StatelessWidget {
     required this.onDestinationSelected,
     required this.onReservePressed,
     required this.reserveLabel,
+    this.reserveSelected = false,
   });
 
   @override
@@ -151,6 +157,7 @@ class ShellBottomBar extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 child: _ReserveButton(
                   label: reserveLabel,
+                  selected: reserveSelected,
                   onPressed: onReservePressed,
                 ),
               ),
@@ -243,7 +250,15 @@ class _ReserveButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
 
-  const _ReserveButton({required this.label, required this.onPressed});
+  /// The hub is the loaded form: filled seat icon + selected semantics —
+  /// the centre button doubles as the bar's selection indicator.
+  final bool selected;
+
+  const _ReserveButton({
+    required this.label,
+    required this.onPressed,
+    required this.selected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -292,7 +307,7 @@ class _ReserveButton extends StatelessWidget {
               height: ShellBarMetrics.buttonDiameter,
               child: Center(
                 child: Icon(
-                  Icons.event_seat_outlined,
+                  selected ? Icons.event_seat : Icons.event_seat_outlined,
                   size: ShellBarMetrics.buttonIconSize,
                   color: theme.colorScheme.onPrimary,
                 ),
@@ -306,6 +321,7 @@ class _ReserveButton extends StatelessWidget {
     return Semantics(
       label: label,
       button: true,
+      selected: selected,
       excludeSemantics: true,
       child: Tooltip(message: label, child: button),
     );

@@ -160,9 +160,14 @@ class ShellScreen extends ConsumerWidget {
       bottomNavigationBar: visibleBranches.length < 2
           ? null
           : ShellBottomBar(
-              // While the router redirect moves a disabled branch back to
-              // /plan the current branch may not be visible for one frame.
-              selectedIndex: selectedPosition < 0 ? 0 : selectedPosition,
+              // -1 when no side tab matches the active branch — on the
+              // Reserve hub (the centre button carries the indication
+              // instead) and for one redirect frame of a gated branch.
+              // Never coerce to 0: that painted Plan as selected while
+              // the hub was the loaded form.
+              selectedIndex: selectedPosition,
+              reserveSelected:
+                  navigationShell.currentIndex == ShellBranch.reserve,
               onDestinationSelected: (position) => navigationShell.goBranch(
                 visibleBranches[position],
                 initialLocation:
