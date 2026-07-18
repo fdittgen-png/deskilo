@@ -84,52 +84,77 @@ class FloorPlanPainter extends CustomPainter {
       _label(canvas, office.name, rect, colorScheme.onSurface);
     }
 
-    final deskPaint = Paint()..color = colorScheme.surfaceContainerHighest;
+    // Desks: soft rounded tonal surfaces — the furniture the room is
+    // built from, not flat grey boxes. A hairline border and a whisper
+    // of a contact shadow give the plan gentle depth.
+    final deskPaint = Paint()..color = colorScheme.surfaceContainerHigh;
     final deskBorder = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.5
-      ..color = colorScheme.onSurfaceVariant;
+      ..strokeWidth = 1
+      ..color = colorScheme.outlineVariant;
     for (final desk in plan.desks) {
-      final rect = _toPx(desk.rect).deflate(1);
-      canvas.drawRect(rect, deskPaint);
-      canvas.drawRect(rect, deskBorder);
+      final rect = _toPx(desk.rect).deflate(1.5);
+      final rrect = RRect.fromRectAndRadius(rect, const Radius.circular(6));
+      _softShadow(canvas, rrect, alpha: brightness == Brightness.dark ? 0.28 : 0.10);
+      canvas.drawRRect(rrect, deskPaint);
+      canvas.drawRRect(rrect, deskBorder);
     }
 
     for (final seat in plan.seats) {
-      final rect = _toPx(seat.footprint).deflate(2);
+      final rect = _toPx(seat.footprint).deflate(3);
       final state = seatStates?[seat.id];
       final accent = state == null
           ? colorScheme.primary
           : SeatStateColors.of(state, brightness: brightness);
+      // Radius scales with the tile so a seat always reads as a soft,
+      // rounded pad — the signature "living plan" tile.
+      final radius = (rect.shortestSide * 0.24).clamp(4.0, 10.0);
+      final rrect = RRect.fromRectAndRadius(rect, Radius.circular(radius));
+
+      _softShadow(canvas, rrect,
+          alpha: brightness == Brightness.dark ? 0.30 : 0.12);
+      // Calm tint fill: free stays airy, taken seats read a touch fuller.
+      final fillAlpha = switch (state) {
+        null => 0.16,
+        SeatState.free => 0.14,
+        SeatState.blocked => 0.10,
+        _ => 0.22,
+      };
+      canvas.drawRRect(rrect, Paint()..color = accent.withValues(alpha: fillAlpha));
       canvas.drawRRect(
-        RRect.fromRectAndRadius(rect, const Radius.circular(3)),
-        Paint()..color = accent.withValues(alpha: state == null ? 0.25 : 0.45),
-      );
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(rect, const Radius.circular(3)),
+        rrect,
         Paint()
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.5
-          ..color = accent,
+          ..strokeWidth = state == SeatState.mine ? 2 : 1.3
+          ..color = accent.withValues(alpha: 0.9),
       );
       if (seat.id == highlightedSeatId) {
         // #182: ring around the focused seat; tertiary so it stands out
         // against both the primary editor accent and the state colors.
         canvas.drawRRect(
-          RRect.fromRectAndRadius(rect.inflate(2), const Radius.circular(5)),
+          RRect.fromRectAndRadius(
+              rect.inflate(3), Radius.circular(radius + 3)),
           Paint()
             ..style = PaintingStyle.stroke
             ..strokeWidth = 3
             ..color = colorScheme.tertiary,
         );
       }
-      _orientationArrow(canvas, seat, rect, accent);
-      // State never conveyed by color alone (spec §11): blocked seats get a
-      // cross, occupied/reserved/mine get the occupant label or a dot.
+
+      // State never conveyed by colour alone (spec §11).
       if (state == SeatState.blocked) {
-        _label(canvas, '✕', rect, colorScheme.onSurface, center: true);
-      } else {
-        final label = seatLabels?[seat.id] ?? '';
+        _label(canvas, '✕', rect, accent, center: true);
+        continue;
+      }
+      final label = seatLabels?[seat.id] ?? '';
+      if (state != null && label.isNotEmpty) {
+        // Live occupancy: the occupant becomes an avatar right on the
+        // seat — one glance answers "who's here". This is the plan's
+        // signature move.
+        _occupantAvatar(canvas, rect, label, accent);
+      } else if (state == null) {
+        // Editor mode: name + orientation so the owner can place seats.
+        _orientationArrow(canvas, seat, rect, accent);
         if (label.isNotEmpty) {
           _label(canvas, label, rect, colorScheme.onSurface, center: true);
         }
@@ -203,6 +228,44 @@ class FloorPlanPainter extends CustomPainter {
         ? rect.center - Offset(painter.width / 2, painter.height / 2 - 8)
         : rect.topLeft + const Offset(4, 3);
     painter.paint(canvas, offset);
+  }
+
+  /// A soft blurred contact shadow under [rrect] — the depth cue that
+  /// makes seats and desks read as gently lifted, not stamped flat.
+  void _softShadow(Canvas canvas, RRect rrect, {required double alpha}) {
+    canvas.drawRRect(
+      rrect.shift(const Offset(0, 1.5)),
+      Paint()
+        ..color = const Color(0xFF000000).withValues(alpha: alpha)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.5),
+    );
+  }
+
+  /// Occupant chip drawn on a taken seat: a filled disc in the state
+  /// colour with the occupant's initial — the plan's "who's here" glance.
+  void _occupantAvatar(Canvas canvas, Rect rect, String name, Color accent) {
+    final r = (rect.shortestSide * 0.34).clamp(8.0, 16.0);
+    final center = rect.center;
+    canvas.drawCircle(center, r, Paint()..color = accent);
+    final initial = name.trim().isEmpty
+        ? '?'
+        : name.trim().characters.first.toUpperCase();
+    final painter = TextPainter(
+      text: TextSpan(
+        text: initial,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: r * 1.05,
+          fontWeight: FontWeight.w600,
+          height: 1,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    painter.paint(
+      canvas,
+      center - Offset(painter.width / 2, painter.height / 2),
+    );
   }
 
   void _orientationArrow(Canvas canvas, Seat seat, Rect rect, Color color) {
