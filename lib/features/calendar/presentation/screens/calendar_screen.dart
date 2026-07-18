@@ -237,8 +237,16 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         _MonthGrid(
           month: _month,
           selectedDay: _selectedDay,
+          // Mine vs others' markers ('when did I reserve what' first):
+          // my days carry the filled dot, days with only others' bookings
+          // a hollow one.
           markedDays: {
             for (final r in visible) DateUtils.dateOnly(r.startsAt.toLocal()),
+          },
+          myDays: {
+            for (final r in visible)
+              if (r.memberId == myMember?.id)
+                DateUtils.dateOnly(r.startsAt.toLocal()),
           },
           onSelect: (day) => setState(() => _selectedDay = day),
         ),
@@ -331,12 +339,17 @@ class _MonthGrid extends StatelessWidget {
     required this.month,
     required this.selectedDay,
     required this.markedDays,
+    required this.myDays,
     required this.onSelect,
   });
 
   final DateTime month;
   final DateTime selectedDay;
   final Set<DateTime> markedDays;
+
+  /// Days with at least one of MY bookings — filled marker; other marked
+  /// days render hollow.
+  final Set<DateTime> myDays;
   final ValueChanged<DateTime> onSelect;
 
   @override
@@ -414,7 +427,9 @@ class _MonthGrid extends StatelessWidget {
                                   height: 6,
                                   child: marked
                                       ? Icon(
-                                          Icons.circle,
+                                          myDays.contains(day)
+                                              ? Icons.circle
+                                              : Icons.circle_outlined,
                                           size: 5,
                                           color: scheme.primary,
                                         )
