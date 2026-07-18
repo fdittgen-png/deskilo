@@ -1,4 +1,5 @@
 -- SPDX-License-Identifier: MIT
+-- Applied to the hosted reference project on 2026-07-18.
 -- Role-scoped invites: every join carries an explicit role, derived from
 -- WHICH secret code was used — never from a client-supplied parameter.
 --   * workspaces.invite_code stays the member (plain-user) invite and the

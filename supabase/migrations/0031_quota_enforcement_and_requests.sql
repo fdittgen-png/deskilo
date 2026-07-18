@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: MIT
--- Quota enforcement + quota-extension requests. NOT YET applied to the
--- hosted reference project — the owner applies it after review.
+-- Quota enforcement + quota-extension requests. Applied to the hosted
+-- reference project on 2026-07-18.
 --
 -- Reservations must correspond to the subscription: a member's half-days
 -- per month are capped at the entitlement ceil(open_days x 2 x pct / 100)
