@@ -628,12 +628,15 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     Brightness brightness,
   ) {
     final own = reservation.memberId == widget.myMemberId;
-    final color = SeatStateColors.of(
+    final base = SeatStateColors.of(
       own ? SeatState.mine : SeatState.reserved,
       brightness: brightness,
     );
+    // MY bookings carry the full tone; everyone else's step back a
+    // notch, so 'when did I reserve what' reads before any label does.
+    final color = own ? base : base.withValues(alpha: 0.78);
     final onColor =
-        ThemeData.estimateBrightnessForColor(color) == Brightness.dark
+        ThemeData.estimateBrightnessForColor(base) == Brightness.dark
             ? Colors.white
             : Colors.black87;
     final left = _offsetOf(reservation.startsAt);
@@ -642,6 +645,9 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
         ? TimelineAxis.blockMinWidth
         : right - left;
     final occupant = names[reservation.memberId] ?? '';
+    final initial = occupant.trim().isEmpty
+        ? ''
+        : occupant.trim().characters.first.toUpperCase();
     return Positioned(
       left: left,
       width: width,
@@ -649,25 +655,50 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
       bottom: TimelineAxis.blockInset,
       child: Material(
         color: color,
-        borderRadius: AppRadius.smAll,
+        borderRadius: AppRadius.mdAll,
+        clipBehavior: Clip.antiAlias,
         child: InkWell(
           key: DayTimeline.blockKey(reservation.id),
-          borderRadius: AppRadius.smAll,
           onTap: () => _onBlockTap(reservation),
-          child: widget.everyone
+          child: widget.everyone && width > 40
               ? Padding(
                   padding: AppSpacing.xsH,
-                  child: Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: Text(
-                      occupant,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelSmall
-                          ?.copyWith(color: onColor),
-                    ),
+                  child: Row(
+                    children: [
+                      if (initial.isNotEmpty) ...[
+                        // The same avatar language as the plan's seat
+                        // tiles and the week grid's cells.
+                        Container(
+                          width: 16,
+                          height: 16,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: onColor.withValues(alpha: 0.22),
+                          ),
+                          child: Text(
+                            initial,
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w700,
+                              color: onColor,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: AppSpacing.xs),
+                      ],
+                      Expanded(
+                        child: Text(
+                          occupant,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelSmall
+                              ?.copyWith(color: onColor),
+                        ),
+                      ),
+                    ],
                   ),
                 )
               : const SizedBox.expand(),

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/links/link_launcher.dart';
+import '../../../../core/theme/app_elevation.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
@@ -472,9 +473,40 @@ class _MemberRow extends StatelessWidget {
     final statusText = profile?.statusText ?? '';
     final whatsappUri = profile?.whatsappUri;
 
+    final online = presence.kind == DirectoryPresenceKind.online;
+    final onSite = reservationInfo is CheckedInNow;
     final tile = ListTile(
-      leading: CircleAvatar(
-        child: Text(name.isEmpty ? '?' : name.substring(0, 1).toUpperCase()),
+      leading: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          CircleAvatar(
+            backgroundColor: theme.colorScheme.primaryContainer,
+            foregroundColor: theme.colorScheme.onPrimaryContainer,
+            child: Text(
+              name.isEmpty ? '?' : name.substring(0, 1).toUpperCase(),
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
+          // Presence at a glance: a ringed dot on the avatar — green
+          // when online — before any text is read.
+          if (online)
+            Positioned(
+              right: -1,
+              bottom: -1,
+              child: Container(
+                width: 13,
+                height: 13,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppStatusColors.successOf(brightness),
+                  border: Border.all(
+                    color: theme.colorScheme.surface,
+                    width: 2,
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
       title: Text(
         name,
@@ -527,7 +559,33 @@ class _MemberRow extends StatelessWidget {
       ),
     );
 
-    if (whatsappUri == null) return tile;
+    // Presence-forward card: soft elevation for every member, a warm
+    // success-tinted surface for whoever is checked in RIGHT NOW — the
+    // room's live roster pops without reordering the list.
+    final cardColor = onSite
+        ? Color.alphaBlend(
+            AppStatusColors.successOf(brightness).withValues(alpha: 0.10),
+            theme.colorScheme.surfaceContainerLow,
+          )
+        : theme.colorScheme.surfaceContainerLow;
+    final card = Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.screenGutter,
+        vertical: AppSpacing.xs,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: AppRadius.lgAll,
+        boxShadow: AppElevation.low(brightness),
+      ),
+      child: Material(
+        color: cardColor,
+        borderRadius: AppRadius.lgAll,
+        clipBehavior: Clip.antiAlias,
+        child: tile,
+      ),
+    );
+
+    if (whatsappUri == null) return card;
 
     // Swipe right to chat (#232). `confirmDismiss` always resolves false:
     // the launch is a side effect and the row snaps back — Dismissible
@@ -540,7 +598,14 @@ class _MemberRow extends StatelessWidget {
         return false;
       },
       background: Container(
-        color: AppStatusColors.successOf(brightness),
+        margin: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.screenGutter,
+          vertical: AppSpacing.xs,
+        ),
+        decoration: BoxDecoration(
+          color: AppStatusColors.successOf(brightness),
+          borderRadius: AppRadius.lgAll,
+        ),
         alignment: AlignmentDirectional.centerStart,
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.screenGutter,
@@ -557,7 +622,7 @@ class _MemberRow extends StatelessWidget {
           ],
         ),
       ),
-      child: tile,
+      child: card,
     );
   }
 }
