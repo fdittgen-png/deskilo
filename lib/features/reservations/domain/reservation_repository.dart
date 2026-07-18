@@ -56,6 +56,15 @@ abstract class ReservationRepository {
   Future<void> checkOut(String reservationId);
   Future<void> cancel(String reservationId);
 
+  /// Atomically moves MY still-'reserved' booking to a new window on the
+  /// same seat (update_reservation, 0033) — rules, closures, seat blocks
+  /// and quota re-checked server-side.
+  Future<void> updateTimes(
+    String reservationId, {
+    required DateTime startsAt,
+    required DateTime endsAt,
+  });
+
   /// Books a recurring series; the backend expands instances and reports
   /// conflicts as skipped.
   Future<SeriesResult> createSeries({

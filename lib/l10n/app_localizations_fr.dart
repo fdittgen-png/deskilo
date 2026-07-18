@@ -1206,6 +1206,15 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get reservationEditTimes => 'Modifier l\'horaire';
+
+  @override
+  String get reservationUpdatedSnack => 'Réservation mise à jour.';
+
+  @override
+  String get reservationCancelledSnack => 'Réservation annulée.';
+
+  @override
   String get reserveDayView => 'Jour';
 
   @override

@@ -1667,6 +1667,18 @@
       }
     }
   },
+  "reservationEditTimes": "Edit times",
+  "@reservationEditTimes": {
+    "description": "Detail-sheet action opening the granularity-aware window edit (0033)"
+  },
+  "reservationUpdatedSnack": "Reservation updated.",
+  "@reservationUpdatedSnack": {
+    "description": "Snackbar after an own reservation's window was edited (0033)"
+  },
+  "reservationCancelledSnack": "Reservation cancelled.",
+  "@reservationCancelledSnack": {
+    "description": "Snackbar after an own reservation was cancelled from the detail sheet"
+  },
   "reserveDayView": "Day",
   "@reserveDayView": {
     "description": "Reserve hub view segment showing the selected day's per-seat timeline (#208)"

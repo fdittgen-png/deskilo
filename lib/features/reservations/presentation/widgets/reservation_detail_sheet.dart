@@ -4,20 +4,30 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/workspace_time.dart';
+import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../events/providers/event_providers.dart';
+import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/seat_context.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
 import '../../../plan/providers/seat_context_providers.dart';
+import '../../../workspace/domain/booking_granularity.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
+import '../../providers/reservation_providers.dart';
 
-/// Where is my reserved seat? (#182) Time range and status icon (same
-/// formatting as the calendar row), the resolved location chain
-/// "level · office · desk · seat" (level · office for whole-office
-/// bookings), the seat's accessories, and a "Show on plan" jump.
+/// Where is my reserved seat — and what can I do about it? (#182, edit
+/// pass) Time range and status icon, the resolved location chain, the
+/// seat's accessories, a "Show on plan" jump — and for MY still-upcoming
+/// bookings the two actions that were missing on most surfaces: **edit
+/// the window** (granularity-aware) and **cancel** (with the series
+/// occurrence/following choice). One sheet serves the hub's plan, Day,
+/// Week, and the calendar timeline, so every surface gains them at once.
 ///
 /// Pops with the resolved [SeatContext] when the user wants the jump —
-/// the caller then signals the plan tab and navigates. Extracted from the
-/// calendar screen so the Reserve hub (#208) can share it (#206).
+/// the caller then signals the plan tab and navigates.
 class ReservationDetailSheet extends ConsumerWidget {
   const ReservationDetailSheet({super.key, required this.reservation});
 
@@ -40,8 +50,17 @@ class ReservationDetailSheet extends ConsumerWidget {
     final target = targetAsync.value;
     final timeFormat = DateFormat.Hm();
 
+    final myMemberId = ref.watch(myMemberProvider).value?.id;
+    // The actions belong to the owner of a still-upcoming booking; past,
+    // running or foreign ones stay read-only here (check-out and admin
+    // flows live elsewhere).
+    final editable = r.memberId == myMemberId &&
+        r.status == ReservationStatus.reserved;
+
     return SafeArea(
-      child: Padding(
+      // Scrollable: with the action row the sheet can outgrow small
+      // viewports (the #232 fixed-column lesson).
+      child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(
           AppSpacing.xl,
           AppSpacing.lg,
@@ -76,9 +95,235 @@ class ReservationDetailSheet extends ConsumerWidget {
                   : () => Navigator.of(context).pop(target),
               label: Text(l10n?.calendarShowOnPlan ?? 'Show on plan'),
             ),
+            if (editable) ...[
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      key: const ValueKey('reservation-edit'),
+                      icon: const Icon(Icons.edit_calendar_outlined),
+                      onPressed: () => _editTimes(context, ref),
+                      label: Text(
+                        l10n?.reservationEditTimes ?? 'Edit times',
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      key: const ValueKey('reservation-cancel'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor:
+                            Theme.of(context).colorScheme.error,
+                      ),
+                      icon: const Icon(Icons.event_busy_outlined),
+                      onPressed: () => _cancel(context, ref),
+                      label: Text(
+                        l10n?.planCancelReservationButton ??
+                            'Cancel reservation',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ],
         ),
       ),
     );
+  }
+
+  // ── cancel ──
+
+  /// Same choice flow as the calendar's menu (#118): a single booking
+  /// offers one cancel action; a series adds "this and following".
+  Future<void> _cancel(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final r = reservation;
+    final choice = await showModalBottomSheet<String>(
+      context: context,
+      builder: (sheetContext) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.event_busy_outlined),
+              title: Text(
+                r.seriesId == null
+                    ? (l10n?.planCancelReservationButton ??
+                        'Cancel reservation')
+                    : (l10n?.calendarCancelOccurrence ??
+                        'Cancel this occurrence'),
+              ),
+              onTap: () => Navigator.of(sheetContext).pop('single'),
+            ),
+            if (r.seriesId != null)
+              ListTile(
+                leading: const Icon(Icons.fast_forward_outlined),
+                title: Text(
+                  l10n?.calendarCancelFollowing ??
+                      'Cancel this and following',
+                ),
+                onTap: () => Navigator.of(sheetContext).pop('following'),
+              ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+    if (choice == null || !context.mounted) return;
+    try {
+      if (choice == 'single') {
+        await ref.read(reservationRepositoryProvider).cancel(r.id);
+      } else {
+        await ref
+            .read(reservationRepositoryProvider)
+            .cancelSeries(r.seriesId!, from: r.startsAt);
+      }
+    } catch (e, st) {
+      debugPrint('cancel failed: $e\n$st');
+      TraceLogger.instance.error(
+          'reservations', 'reservation cancel failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
+      return;
+    }
+    invalidateBookingData(ref);
+    if (!context.mounted) return;
+    Navigator.of(context).pop();
+    AppSnack.success(
+      context,
+      l10n?.reservationCancelledSnack ?? 'Reservation cancelled.',
+    );
+  }
+
+  // ── edit ──
+
+  /// Granularity-aware window edit on the booking's own (workspace) day:
+  /// half-day offers the three canonical windows, minute grids and
+  /// legacy flexible offer snapped from/to pickers, full-day re-books
+  /// the full day (nothing else exists to pick).
+  Future<void> _editTimes(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final r = reservation;
+    final granularity = ref.read(bookingGranularityProvider).value ??
+        BookingGranularity.flexible;
+    final day = WorkspaceTime.dateOf(r.startsAt);
+
+    HalfDayWindow? window;
+    if (granularity == BookingGranularity.halfDay) {
+      window = await _pickHalfDayWindow(context, l10n, day);
+    } else if (granularity == BookingGranularity.fullDay) {
+      window = HalfDayWindows.fullDay(day);
+    } else {
+      window = await _pickTimes(context, l10n, granularity);
+    }
+    if (window == null || !context.mounted) return;
+
+    try {
+      await ref.read(reservationRepositoryProvider).updateTimes(
+            r.id,
+            startsAt: window.start,
+            endsAt: window.end,
+          );
+    } catch (e, st) {
+      debugPrint('reservation edit failed: $e\n$st');
+      TraceLogger.instance.error(
+          'reservations', 'reservation edit failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.reserveBookingFailed ??
+            'Could not reserve — the seat may have just been taken.',
+      );
+      return;
+    }
+    invalidateBookingData(ref);
+    if (!context.mounted) return;
+    Navigator.of(context).pop();
+    AppSnack.success(
+      context,
+      l10n?.reservationUpdatedSnack ?? 'Reservation updated.',
+    );
+  }
+
+  Future<HalfDayWindow?> _pickHalfDayWindow(
+    BuildContext context,
+    AppLocalizations? l10n,
+    DateTime day,
+  ) {
+    return showModalBottomSheet<HalfDayWindow>(
+      context: context,
+      builder: (sheetContext) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              key: const ValueKey('edit-window-am'),
+              leading: const Icon(Icons.wb_twilight_outlined),
+              title: Text(l10n?.planMorningChip ?? 'Morning'),
+              onTap: () => Navigator.of(sheetContext)
+                  .pop(HalfDayWindows.morning(day)),
+            ),
+            ListTile(
+              key: const ValueKey('edit-window-pm'),
+              leading: const Icon(Icons.wb_sunny_outlined),
+              title: Text(l10n?.planAfternoonChip ?? 'Afternoon'),
+              onTap: () => Navigator.of(sheetContext)
+                  .pop(HalfDayWindows.afternoon(day)),
+            ),
+            ListTile(
+              key: const ValueKey('edit-window-day'),
+              leading: const Icon(Icons.today_outlined),
+              title: Text(l10n?.reserveFullDayChip ?? 'Full day'),
+              onTap: () => Navigator.of(sheetContext)
+                  .pop(HalfDayWindows.fullDay(day)),
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// From/to clock pickers on the booking's device-local day, snapped to
+  /// the granularity's step — the same slot language as the hub's chips.
+  Future<HalfDayWindow?> _pickTimes(
+    BuildContext context,
+    AppLocalizations? l10n,
+    BookingGranularity granularity,
+  ) async {
+    final r = reservation;
+    final snap = granularity.stepMinutes ?? 15;
+    final local = r.startsAt.toLocal();
+    final endLocal = r.endsAt.toLocal();
+    final from = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(local),
+      helpText: l10n?.planFromLabel ?? 'From',
+    );
+    if (from == null || !context.mounted) return null;
+    final to = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(endLocal),
+      helpText: l10n?.planToLabel ?? 'To',
+    );
+    if (to == null) return null;
+    DateTime snapDown(int hour, int minute) {
+      final m = (hour * 60 + minute) ~/ snap * snap;
+      return DateTime(local.year, local.month, local.day, m ~/ 60, m % 60);
+    }
+
+    final start = snapDown(from.hour, from.minute);
+    var end = snapDown(to.hour, to.minute);
+    if (!end.isAfter(start)) end = start.add(Duration(minutes: snap));
+    return (start: start, end: end);
   }
 }
