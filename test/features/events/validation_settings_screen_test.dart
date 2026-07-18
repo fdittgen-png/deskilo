@@ -27,6 +27,11 @@ Future<FakeEventRepository> pumpValidationSettings(
   List<Member>? otherMembers,
 }) async {
   final events = FakeEventRepository()..policies.addAll(policies);
+  // Eight policy cards (0035 added Role change) outgrow the default
+  // 600px fold; a taller surface keeps every card built and hit-testable.
+  tester.view.physicalSize = const Size(1200, 2600);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.reset);
   final workspace = FakeWorkspaceRepository.withWorkspace()
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana', 'member-3': 'Bo'}
     ..otherMembers
@@ -55,15 +60,16 @@ void main() {
     expect(find.text('Expense'), findsOneWidget);
     expect(find.text('Service'), findsOneWidget);
     expect(find.text('Extra half-days'), findsOneWidget);
+    expect(find.text('Role change'), findsOneWidget);
     expect(find.text('Reservation'), findsOneWidget);
     expect(find.text('Adjustment'), findsOneWidget);
 
     // No stored rows: every card shows the built-in defaults and inherits.
     expect(
       find.text('Required validations: 1 · All admins'),
-      findsNWidgets(7),
+      findsNWidgets(8),
     );
-    expect(find.text('Inherits default'), findsNWidgets(7));
+    expect(find.text('Inherits default'), findsNWidgets(8));
     expect(find.text('Customized'), findsNothing);
   });
 
@@ -172,7 +178,7 @@ void main() {
     );
 
     expect(find.text('Customized'), findsOneWidget);
-    expect(find.text('Inherits default'), findsNWidgets(6));
+    expect(find.text('Inherits default'), findsNWidgets(7));
     expect(
       find.text(
         'Required validations: 2 · All admins · Owner must always validate',

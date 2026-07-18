@@ -1161,6 +1161,29 @@ class AppLocalizationsEs extends AppLocalizations {
   String get profileStatusSaveFailed => 'No se pudo guardar el estado';
 
   @override
+  String get eventTypeRoleChange => 'Cambio de rol';
+
+  @override
+  String eventRolePromote(String actor) {
+    return '$actor promueve a un miembro a admin';
+  }
+
+  @override
+  String eventRoleDemote(String actor) {
+    return '$actor degrada a un admin a miembro';
+  }
+
+  @override
+  String get memberMakeAdmin => 'Hacer admin';
+
+  @override
+  String get memberMakeMember => 'Hacer miembro normal';
+
+  @override
+  String get memberRoleChangeRequested =>
+      'Cambio de rol enviado para validación.';
+
+  @override
   String get eventTypeQuota => 'Medias jornadas extra';
 
   @override

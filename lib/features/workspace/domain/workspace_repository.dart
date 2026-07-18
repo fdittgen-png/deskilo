@@ -70,6 +70,16 @@ abstract class WorkspaceRepository {
   Future<void> updateMemberSubscription(String memberId, int pct);
   Future<void> updateMemberStatus(String memberId, MemberStatus status);
 
+  /// Owner-only: request a role change — promote a member to admin
+  /// (make_admin true) or demote an admin to a regular member. Routed
+  /// through the validation quorum (0035): returns the pending event id;
+  /// the flag flips only once validators confirm.
+  Future<void> requestRoleChange(
+    String workspaceId, {
+    required String memberId,
+    required bool makeAdmin,
+  });
+
   /// Owner-only: replace the workspace ID (= invite code, shown in the QR)
   /// with a memorable alphanumeric one (4–20 A-Z/0-9, unique). Returns the
   /// normalized code.

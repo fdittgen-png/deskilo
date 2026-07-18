@@ -2204,6 +2204,42 @@ abstract class AppLocalizations {
   /// **'Could not save the status'**
   String get profileStatusSaveFailed;
 
+  /// Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card
+  ///
+  /// In en, this message translates to:
+  /// **'Role change'**
+  String get eventTypeRoleChange;
+
+  /// Feed line of a role-change event that grants admin
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} promotes a member to admin'**
+  String eventRolePromote(String actor);
+
+  /// Feed line of a role-change event that removes admin
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} demotes an admin to member'**
+  String eventRoleDemote(String actor);
+
+  /// Owner action promoting a member to admin (0035)
+  ///
+  /// In en, this message translates to:
+  /// **'Make admin'**
+  String get memberMakeAdmin;
+
+  /// Owner action demoting an admin to a regular member (0035)
+  ///
+  /// In en, this message translates to:
+  /// **'Make regular member'**
+  String get memberMakeMember;
+
+  /// Snackbar after an owner requested a role change (0035)
+  ///
+  /// In en, this message translates to:
+  /// **'Role change sent for validation.'**
+  String get memberRoleChangeRequested;
+
   /// Event-type label for quota-extension requests (0031): feed filter chip + validation policy card
   ///
   /// In en, this message translates to:

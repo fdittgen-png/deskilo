@@ -1,5 +1,11 @@
 {
   "@@locale": "de",
+  "eventTypeRoleChange": "Rollenwechsel",
+  "eventRolePromote": "{actor} befördert ein Mitglied zum Admin",
+  "eventRoleDemote": "{actor} stuft einen Admin zum Mitglied zurück",
+  "memberMakeAdmin": "Zum Admin machen",
+  "memberMakeMember": "Zum normalen Mitglied machen",
+  "memberRoleChangeRequested": "Rollenwechsel zur Freigabe gesendet.",
   "eventTypeQuota": "Zusätzliche halbe Tage",
   "eventQuotaRequested": "{actor} beantragt {halfDays} zusätzliche halbe Tage für {period}",
   "quotaExceededError": "Monatliches Halbtage-Kontingent erreicht — beantrage zusätzliche halbe Tage im Finanzen-Tab.",
