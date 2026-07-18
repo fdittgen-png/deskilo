@@ -14,9 +14,12 @@ import '../../../plan/domain/seat_context.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
 import '../../../plan/providers/seat_context_providers.dart';
 import '../../../workspace/domain/booking_granularity.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
+import '../../domain/reservation_repository.dart';
 import 'booking_range_text.dart';
+import 'series_result_dialog.dart';
 import '../../providers/reservation_providers.dart';
 
 /// Where is my reserved seat — and what can I do about it? (#182, edit
@@ -242,6 +245,25 @@ class ReservationDetailSheet extends ConsumerWidget {
     }
     if (window == null || !context.mounted) return;
 
+    // Repetition on modification too: a single booking may become a
+    // series here. Only offered when the workspace enables series and
+    // this isn't already a series instance (changing a series' pattern
+    // is out of scope — cancel + rebook for that).
+    final canRepeat = r.seriesId == null &&
+        ref
+            .read(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.seriesBooking);
+    SeriesPattern? pattern;
+    if (canRepeat) {
+      pattern = await _pickPattern(context, l10n);
+      if (!context.mounted) return;
+    }
+
+    if (pattern != null) {
+      await _convertToSeries(context, ref, window, pattern);
+      return;
+    }
+
     try {
       await ref.read(reservationRepositoryProvider).updateTimes(
             r.id,
@@ -268,6 +290,84 @@ class ReservationDetailSheet extends ConsumerWidget {
       context,
       l10n?.reservationUpdatedSnack ?? 'Reservation updated.',
     );
+  }
+
+  /// Repeat-modality picker for the edit flow (spec §5.2): the same
+  /// choices as the booking sheet's Repeat dropdown, as tappable rows.
+  Future<SeriesPattern?> _pickPattern(
+    BuildContext context,
+    AppLocalizations? l10n,
+  ) {
+    Widget row(String key, SeriesPattern? p, String label, IconData icon) =>
+        ListTile(
+          key: ValueKey(key),
+          leading: Icon(icon),
+          title: Text(label),
+          onTap: () => Navigator.of(context).pop(p),
+        );
+    return showModalBottomSheet<SeriesPattern?>(
+      context: context,
+      builder: (sheetContext) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            row('edit-repeat-none', null,
+                l10n?.repeatNone ?? 'Does not repeat', Icons.event_outlined),
+            row('edit-repeat-daily', SeriesPattern.daily,
+                l10n?.repeatDaily ?? 'Every day', Icons.repeat),
+            row('edit-repeat-weekdays', SeriesPattern.weekdays,
+                l10n?.repeatWeekdays ?? 'Every weekday',
+                Icons.work_outline),
+            row('edit-repeat-weekly', SeriesPattern.weekly,
+                l10n?.repeatWeekly ?? 'Weekly', Icons.view_week_outlined),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Turns this single booking into a series from [window]: cancel the
+  /// one, then book the recurrence on the same seat (28-day horizon, the
+  /// booking-sheet default). Cancel-first so the first instance does not
+  /// collide with the reservation being replaced.
+  Future<void> _convertToSeries(
+    BuildContext context,
+    WidgetRef ref,
+    HalfDayWindow window,
+    SeriesPattern pattern,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final r = reservation;
+    final repo = ref.read(reservationRepositoryProvider);
+    final seatId = r.seatId;
+    if (seatId == null) return; // whole-office series unsupported (spec)
+    try {
+      await repo.cancel(r.id);
+      final result = await repo.createSeries(
+        workspaceId: r.workspaceId,
+        seatId: seatId,
+        firstStart: window.start,
+        firstEnd: window.end,
+        pattern: pattern,
+        until: window.start.add(const Duration(days: 28)),
+      );
+      invalidateBookingData(ref);
+      if (!context.mounted) return;
+      Navigator.of(context).pop();
+      await showSeriesResultDialog(context, result);
+    } catch (e, st) {
+      debugPrint('convert to series failed: $e\n$st');
+      TraceLogger.instance.error(
+          'reservations', 'convert to series failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.reserveBookingFailed ??
+            'Could not reserve — the seat may have just been taken.',
+      );
+    }
   }
 
   Future<HalfDayWindow?> _pickHalfDayWindow(

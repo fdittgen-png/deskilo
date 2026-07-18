@@ -512,6 +512,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         initialEnd: end,
         cap: next?.startsAt,
         capped: capped,
+        granularity: granularity,
         walkUp: walkUp,
         fixedEnd: dayBased,
         members: candidates,
@@ -536,7 +537,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
               workspaceId: workspace.id,
               subjectMemberId: choice.forMemberId!,
               seatId: seat.id,
-              startsAt: start,
+              startsAt: walkUp ? start : choice.start,
               endsAt: choice.end,
             );
         final who = names[choice.forMemberId] ?? '';
@@ -550,7 +551,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         await ref.read(reservationRepositoryProvider).create(
               workspaceId: workspace.id,
               seatId: seat.id,
-              startsAt: start,
+              startsAt: walkUp ? start : choice.start,
               endsAt: choice.end,
               checkIn: walkUp,
             );
@@ -558,7 +559,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         final result = await ref.read(reservationRepositoryProvider).createSeries(
               workspaceId: workspace.id,
               seatId: seat.id,
-              firstStart: start,
+              firstStart: choice.start,
               firstEnd: choice.end,
               pattern: choice.pattern!,
               until: choice.until!,

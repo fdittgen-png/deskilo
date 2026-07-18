@@ -288,7 +288,13 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(BookingSheet), findsOneWidget);
-    expect(find.textContaining('Starts at 09:00'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.widgetWithText(ListTile, 'From'),
+        matching: find.text('09:00'),
+      ),
+      findsOneWidget,
+    );
 
     await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
     await tester.pumpAndSettle();
@@ -336,8 +342,9 @@ void main() {
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Starts at 00:00'), findsOneWidget);
-    // Fixed end under half-day granularity (#201): no Until affordance.
+    // The period is editable via the chips (half-day config), no free
+    // 'Until'.
+    expect(find.byKey(const ValueKey('booking-am')), findsOneWidget);
     expect(find.widgetWithText(ListTile, 'Until'), findsNothing);
 
     await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));

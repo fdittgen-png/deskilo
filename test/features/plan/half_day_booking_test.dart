@@ -169,7 +169,9 @@ void main() {
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Starts at 00:00'), findsOneWidget);
+    // The period is editable right in the sheet now (chips fit the
+    // half-day config); Morning is preselected, no free 'Until'.
+    expect(find.byKey(const ValueKey('booking-am')), findsOneWidget);
     expect(find.widgetWithText(ListTile, 'Until'), findsNothing);
 
     await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
@@ -231,7 +233,6 @@ void main() {
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
-    expect(find.textContaining('Starts at 13:00'), findsOneWidget);
     await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
     await tester.pumpAndSettle();
 
