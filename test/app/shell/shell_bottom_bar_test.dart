@@ -82,6 +82,53 @@ void main() {
     expect(tabLabels(tester), ['Plan', 'Members', 'Money']);
   });
 
+  testWidgets(
+      'the bar indicates the loaded form: on the boot hub no side tab is '
+      'highlighted and the centre button reads selected; switching to Plan '
+      'flips both', (tester) async {
+    await pumpApp(tester);
+
+    // Boot lands on the Reserve hub: NO side tab may claim selection —
+    // the centre button is the active indicator (filled seat icon).
+    expect(
+      tester
+          .widgetList<ShellBarTab>(find.byType(ShellBarTab))
+          .where((t) => t.selected),
+      isEmpty,
+    );
+    expect(find.byIcon(Icons.event_seat), findsOneWidget);
+    expect(find.byIcon(Icons.event_seat_outlined), findsNothing);
+
+    // Switching to Plan highlights Plan and demotes the centre button.
+    await tester.tap(
+      find.descendant(
+        of: find.byType(ShellBottomBar),
+        matching: find.text('Plan'),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final selected = tester
+        .widgetList<ShellBarTab>(find.byType(ShellBarTab))
+        .where((t) => t.selected)
+        .toList();
+    expect(selected, hasLength(1));
+    expect(selected.single.destination.label, 'Plan');
+    expect(find.byIcon(Icons.event_seat_outlined), findsOneWidget);
+    expect(find.byIcon(Icons.event_seat), findsNothing);
+
+    // And back: the centre button reclaims the indication.
+    await tester.tap(find.byTooltip('Reserve'));
+    await tester.pumpAndSettle();
+    expect(
+      tester
+          .widgetList<ShellBarTab>(find.byType(ShellBarTab))
+          .where((t) => t.selected),
+      isEmpty,
+    );
+    expect(find.byIcon(Icons.event_seat), findsOneWidget);
+  });
+
   testWidgets('tapping Reserve opens the hub with the bar still visible',
       (tester) async {
     await pumpApp(tester);
