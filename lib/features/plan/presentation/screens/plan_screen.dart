@@ -894,8 +894,11 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         : null;
     return Padding(
       padding: AppSpacing.smH,
-      child: Row(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
+          Row(
+            children: [
           // #211: the shared canvas/list toggle idiom (icon segments with
           // tooltips) instead of a lone flipping IconButton.
           ViewToggle<bool>(
@@ -966,11 +969,25 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             },
             child: Text(DateFormat.MMMd().format(local)),
           ),
-          Expanded(
-            // The 48dp box + scaleDown mirror the half-day branch (#211):
-            // the header never overflows on narrow screens, the chips stay
-            // centred at full tap height where there is room.
-            child: dayBased
+          const Spacer(),
+          TextButton(
+            onPressed: live
+                ? null
+                : () => setState(() {
+                      _highlightedSeatId = null;
+                      _browse = null;
+                      _browseEnd = null;
+                    }),
+            child: Text(l10n?.planNowButton ?? 'Now'),
+          ),
+        ],
+      ),
+      // The window chips get their own full-width row (needs analysis:
+      // squeezed to unreadable on phones inside the leftover header
+      // space). Same builders, honest tap targets.
+      SizedBox(
+        width: double.infinity,
+        child: dayBased
                 ? _halfDayChips(l10n, local, granularity)
                 : SizedBox(
                     height: kMinInteractiveDimension,
@@ -1007,16 +1024,6 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                       ),
                     ),
                   ),
-          ),
-          TextButton(
-            onPressed: live
-                ? null
-                : () => setState(() {
-                      _highlightedSeatId = null;
-                      _browse = null;
-                      _browseEnd = null;
-                    }),
-            child: Text(l10n?.planNowButton ?? 'Now'),
           ),
         ],
       ),

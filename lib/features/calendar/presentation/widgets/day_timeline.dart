@@ -81,6 +81,8 @@ class DayTimeline extends ConsumerStatefulWidget {
     required this.everyone,
     required this.myMemberId,
     required this.onReservationTap,
+    this.showFreeSeats = false,
+    this.onFreeSeatTap,
   });
 
   /// The selected local day (any instant within it).
@@ -101,6 +103,15 @@ class DayTimeline extends ConsumerStatefulWidget {
   /// Tap on one of MY blocks (detail sheet, list parity). Blocks of other
   /// members show an occupant snackbar instead.
   final void Function(Reservation reservation) onReservationTap;
+
+  /// Availability mode (the Reserve hub): every seat row renders even
+  /// without reservations — a free row IS the availability — instead of
+  /// collapsing to the empty hint.
+  final bool showFreeSeats;
+
+  /// Tap on a seat row's free area — the hub books the selected window
+  /// on that seat. Null (the calendar) keeps rows passive.
+  final void Function(Seat seat)? onFreeSeatTap;
 
   static Key blockKey(String reservationId) =>
       ValueKey('timeline-block-$reservationId');
@@ -359,7 +370,10 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
       // seats or without a visible reservation that day. In all-levels
       // mode such a level is skipped entirely (#221); the overall empty
       // hint below fires only when EVERY level came up empty.
-      if (plan.seats.isEmpty || levelReservations.isEmpty) continue;
+      if (plan.seats.isEmpty ||
+          (!widget.showFreeSeats && levelReservations.isEmpty)) {
+        continue;
+      }
       visibleReservations.addAll(levelReservations);
 
       if (level != null) {
@@ -394,13 +408,18 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
       }
     }
 
-    if (visibleReservations.isEmpty) {
+    // Free mode keeps rows even when nothing is booked — the hint only
+    // fires when there are NO rows at all (no seats anywhere).
+    if (visibleReservations.isEmpty &&
+        (!widget.showFreeSeats || tracks.length <= 1)) {
       return _emptyHint(l10n, allLevels: allLevels);
     }
     // Concatenating per-level lists loses the global start order the
     // auto-scroll relies on — restore it.
     visibleReservations.sort((a, b) => a.startsAt.compareTo(b.startsAt));
-    _scheduleAutoScroll(visibleReservations);
+    if (visibleReservations.isNotEmpty) {
+      _scheduleAutoScroll(visibleReservations);
+    }
 
     final now = DateTime.now();
     final isToday = DateUtils.isSameDay(now, widget.day);
@@ -587,6 +606,15 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
       child: Stack(
         clipBehavior: Clip.hardEdge,
         children: [
+          // Free-area tap books this seat (hub); the blocks above keep
+          // their own handlers and win hit-testing.
+          if (widget.onFreeSeatTap != null && !blocked)
+            Positioned.fill(
+              child: InkWell(
+                key: ValueKey('timeline-free-${seat.id}'),
+                onTap: () => widget.onFreeSeatTap!(seat),
+              ),
+            ),
           for (final r in blocks) _block(context, r, names, brightness),
         ],
       ),
