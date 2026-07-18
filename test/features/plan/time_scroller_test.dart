@@ -65,7 +65,14 @@ void main() {
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
-    expect(find.textContaining('Starts at 23:00'), findsOneWidget);
+    // Flexible: start editable in the sheet via the From tile.
+    expect(
+      find.descendant(
+        of: find.widgetWithText(ListTile, 'From'),
+        matching: find.text('23:00'),
+      ),
+      findsOneWidget,
+    );
 
     await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
     await tester.pumpAndSettle();
@@ -106,7 +113,7 @@ void main() {
     // … and a seat tap opens a future reservation, not a walk-up.
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
-    expect(find.textContaining('Starts at'), findsOneWidget);
+    expect(find.widgetWithText(ListTile, 'From'), findsOneWidget);
   });
 
   testWidgets('booking sheet opens on the browsed window end', (tester) async {
@@ -119,7 +126,13 @@ void main() {
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Starts at 09:00'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.widgetWithText(ListTile, 'From'),
+        matching: find.text('09:00'),
+      ),
+      findsOneWidget,
+    );
     final until = find.widgetWithText(ListTile, 'Until');
     expect(
       find.descendant(of: until, matching: find.text('12:00')),

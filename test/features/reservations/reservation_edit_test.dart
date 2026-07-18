@@ -122,12 +122,55 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('edit-window-pm')));
     await tester.pumpAndSettle();
+    // The edit flow now also asks about repetition — keep it a single.
+    await tester.tap(find.byKey(const ValueKey('edit-repeat-none')));
+    await tester.pumpAndSettle();
 
     final updated = repo.reservations.single;
     final expected = HalfDayWindows.afternoon(_today);
     expect(updated.startsAt.toUtc(), expected.start.toUtc());
     expect(updated.endsAt.toUtc(), expected.end.toUtc());
     expect(find.text('Reservation updated.'), findsOneWidget);
+  });
+
+  testWidgets('Edit can turn a single booking into a series: choosing a '
+      'weekly repeat books the recurrence and drops the single',
+      (tester) async {
+    WorkspaceTime.install('Europe/Berlin');
+    final repo = await pumpHub(
+      tester,
+      granularity: BookingGranularity.halfDay,
+      seed: [
+        Reservation(
+          id: 'res-own',
+          workspaceId: 'ws-1',
+          seatId: 'seat-4',
+          memberId: 'member-1',
+          startsAt: HalfDayWindows.morning(_today).start,
+          endsAt: HalfDayWindows.morning(_today).end,
+          status: ReservationStatus.reserved,
+        ),
+      ],
+    );
+
+    await openDetail(tester);
+    await tester.tap(find.byKey(const ValueKey('reservation-edit')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('edit-window-am')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('edit-repeat-weekly')));
+    await tester.pumpAndSettle();
+
+    // The original single is cancelled and a weekly series now exists.
+    final series =
+        repo.reservations.where((r) => r.seriesPattern == 'weekly').toList();
+    expect(series, isNotEmpty);
+    expect(
+      repo.reservations
+          .firstWhere((r) => r.id == 'res-own')
+          .status,
+      ReservationStatus.cancelled,
+    );
   });
 
   testWidgets('a checked-in booking stays read-only in the sheet',

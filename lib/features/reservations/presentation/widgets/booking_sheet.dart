@@ -1,19 +1,21 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
-
-import '../../../../core/time/workspace_time.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/workspace_time.dart';
 import '../../../../l10n/app_localizations.dart';
-import 'booking_range_text.dart';
+import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
+import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/reservation_repository.dart';
+import 'booking_range_text.dart';
 
-/// What the booking sheet returns: end time, an optional recurrence and
-/// who the booking is for (null/self = the caller).
+/// What the booking sheet returns: the chosen window (start + end), an
+/// optional recurrence and who the booking is for (null/self = caller).
 class BookingChoice {
   const BookingChoice(
+    this.start,
     this.end,
     this.pattern,
     this.until,
@@ -21,6 +23,7 @@ class BookingChoice {
     this.block = false,
   });
 
+  final DateTime start;
   final DateTime end;
   final SeriesPattern? pattern;
   final DateTime? until;
@@ -32,13 +35,15 @@ class BookingChoice {
 }
 
 /// Bottom-sheet body for booking a seat (#206): walk-up check-in or a
-/// punctual reservation, with the optional "Book for" picker (#106),
-/// repeat picker (spec §5.2) and owner/admin blocking affordance (#161).
+/// punctual reservation. The **period is editable right here** — a
+/// granularity-aware picker matching the workspace configuration
+/// (Morning/Afternoon/Full day under half-days, From/To under minute
+/// grids and flexible, a locked Full day under full-day granularity) —
+/// alongside the "Book for" picker (#106), the **repeat** picker (spec
+/// §5.2) and the owner/admin blocking affordance (#161).
 ///
 /// Pure presentation: pops with a [BookingChoice] (or null on dismiss);
-/// the caller derives the window, runs the repository calls and maps
-/// errors. Extracted from the plan screen so the Reserve hub (#208) can
-/// share it.
+/// the caller runs the repository calls and maps errors.
 class BookingSheet extends StatefulWidget {
   const BookingSheet({
     super.key,
@@ -48,6 +53,7 @@ class BookingSheet extends StatefulWidget {
     required this.initialEnd,
     required this.cap,
     required this.capped,
+    this.granularity = BookingGranularity.flexible,
     this.walkUp = true,
     this.fixedEnd = false,
     this.members = const [],
@@ -63,12 +69,15 @@ class BookingSheet extends StatefulWidget {
   final DateTime? cap;
   final bool capped;
 
+  /// The workspace booking granularity (#200/0032): drives which period
+  /// picker the sheet shows so the choice always fits the configuration.
+  final BookingGranularity granularity;
+
   /// True: live walk-up (check in now). False: future punctual reservation.
   final bool walkUp;
 
-  /// Half-day granularity (#201): the end is the canonical window's (or
-  /// the current half-day boundary for walk-ups) and not adjustable — the
-  /// "Until" tile is hidden.
+  /// Day-based granularity (#201): the window covers a canonical day
+  /// window, edited via the period chips rather than a free "Until".
   final bool fixedEnd;
 
   /// Active members an admin can book for (#106); empty for non-admins
@@ -88,6 +97,7 @@ class BookingSheet extends StatefulWidget {
 }
 
 class _BookingSheetState extends State<BookingSheet> {
+  late DateTime _start = widget.start;
   late DateTime _end = widget.initialEnd;
   SeriesPattern? _pattern;
   late DateTime _until = widget.start.add(const Duration(days: 28));
@@ -95,6 +105,9 @@ class _BookingSheetState extends State<BookingSheet> {
 
   bool get _forOther =>
       _forMemberId != null && _forMemberId != widget.myMemberId;
+
+  /// The workspace-local day the booking sits on (canonical windows).
+  DateTime get _day => WorkspaceTime.dateOf(widget.start);
 
   String _patternLabel(AppLocalizations? l10n, SeriesPattern? pattern) {
     return switch (pattern) {
@@ -105,10 +118,25 @@ class _BookingSheetState extends State<BookingSheet> {
     };
   }
 
+  bool _isWindow(HalfDayWindow w) =>
+      _start.isAtSameMomentAs(w.start) && _end.isAtSameMomentAs(w.end);
+
+  void _selectWindow(HalfDayWindow w) =>
+      setState(() {
+        _start = w.start;
+        _end = w.end;
+      });
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final timeFormat = DateFormat.Hm();
+    // Half-day granularity offers the three canonical windows; full-day
+    // is a single locked window; a walk-up keeps its computed end.
+    final showHalfDayPicker = !widget.walkUp &&
+        widget.granularity == BookingGranularity.halfDay;
+    final showTimePickers = !widget.walkUp && !widget.fixedEnd;
+
     return SafeArea(
       child: SingleChildScrollView(
         padding: EdgeInsets.only(
@@ -132,31 +160,54 @@ class _BookingSheetState extends State<BookingSheet> {
               widget.walkUp
                   ? '${l10n?.planStartNow ?? 'Starts now'} · '
                       '${timeFormat.format(WorkspaceTime.display(widget.start))}'
-                  : (l10n?.planStartsAt(
-                        timeFormat.format(WorkspaceTime.display(widget.start)),
-                      ) ??
-                      'Starts at '
-                          '${timeFormat.format(WorkspaceTime.display(widget.start))}'),
+                  : '${DateFormat.MMMEd().format(WorkspaceTime.display(_start))}'
+                      ' · ${bookingRangeText(l10n, _start, _end)}',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
             ),
-            // What exactly gets booked (needs analysis: the sheet never
-            // said the window): the date and the full from–to range on
-            // the window's own wall clock.
-            if (!widget.walkUp)
-              Padding(
-                padding: const EdgeInsets.only(top: 2),
-                child: Text(
-                  '${DateFormat.MMMEd().format(WorkspaceTime.display(widget.start))}'
-                  ' · ${bookingRangeText(l10n, widget.start, _end)}',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color:
-                            Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                ),
-              ),
-            // The seat's active accessories (#169): self-loading, renders
-            // nothing when the seat has none. Both booking flows (walk-up
-            // and browsed-time) share this sheet, so both get the row.
             SeatAccessoryRow(seatId: widget.seatId),
+
+            // ── period (fits the workspace granularity) ──
+            if (showHalfDayPicker) ...[
+              const SizedBox(height: AppSpacing.sm),
+              _periodChips(l10n),
+            ],
+            if (showTimePickers) ...[
+              _timeTile(
+                key: const ValueKey('booking-from-tile'),
+                label: l10n?.planFromLabel ?? 'From',
+                value: _start,
+                onPicked: (t) {
+                  final local = _day;
+                  var start = _snap(DateTime(local.year, local.month,
+                      local.day, t.hour, t.minute));
+                  var end = _end;
+                  if (!end.isAfter(start)) end = start.add(_slot);
+                  setState(() {
+                    _start = start;
+                    _end = end;
+                  });
+                },
+              ),
+              _timeTile(
+                key: const ValueKey('booking-until-tile'),
+                label: l10n?.planUntilLabel ?? 'Until',
+                value: _end,
+                onPicked: (t) {
+                  final local = _day;
+                  var end = _snap(DateTime(local.year, local.month,
+                      local.day, t.hour, t.minute));
+                  if (!end.isAfter(_start)) {
+                    end = end.add(const Duration(days: 1));
+                  }
+                  final cap = widget.cap;
+                  if (cap != null && end.isAfter(cap)) end = cap;
+                  setState(() => _end = end);
+                },
+              ),
+            ],
+
             if (widget.members.length > 1)
               DropdownButtonFormField<String>(
                 initialValue: _forMemberId,
@@ -169,38 +220,11 @@ class _BookingSheetState extends State<BookingSheet> {
                 ],
                 onChanged: (id) => setState(() => _forMemberId = id),
               ),
-            // Half-day granularity (#201): the end is fixed to the
-            // canonical window boundary — no "Until" affordance.
-            if (!widget.fixedEnd)
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(l10n?.planUntilLabel ?? 'Until'),
-                trailing: Text(timeFormat.format(WorkspaceTime.display(_end))),
-                onTap: () async {
-                  final picked = await showTimePicker(
-                    context: context,
-                    initialTime: TimeOfDay.fromDateTime(_end.toLocal()),
-                  );
-                  if (picked == null) return;
-                  final local = widget.start.toLocal();
-                  var candidate = DateTime(
-                    local.year,
-                    local.month,
-                    local.day,
-                    picked.hour,
-                    picked.minute,
-                  );
-                  if (!candidate.isAfter(local)) {
-                    candidate = candidate.add(const Duration(days: 1));
-                  }
-                  var end = candidate;
-                  final cap = widget.cap?.toLocal();
-                  if (cap != null && end.isAfter(cap)) end = cap;
-                  setState(() => _end = end);
-                },
-              ),
+
+            // ── repeat (spec §5.2) — available whenever booking for self ──
             if (!widget.walkUp && !_forOther && widget.allowSeries) ...[
               DropdownButtonFormField<SeriesPattern?>(
+                key: const ValueKey('booking-repeat'),
                 initialValue: _pattern,
                 decoration: InputDecoration(
                   labelText: l10n?.planRepeatLabel ?? 'Repeat',
@@ -215,24 +239,13 @@ class _BookingSheetState extends State<BookingSheet> {
                 onChanged: (p) => setState(() => _pattern = p),
               ),
               if (_pattern != null)
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(l10n?.planUntilDateLabel ?? 'Repeat until'),
-                  trailing:
-                      Text(DateFormat.yMMMd().format(_until.toLocal())),
-                  onTap: () async {
-                    final picked = await showDatePicker(
-                      context: context,
-                      initialDate: _until.toLocal(),
-                      firstDate: widget.start.toLocal(),
-                      lastDate: widget.start
-                          .toLocal()
-                          .add(const Duration(days: 180)),
-                    );
-                    if (picked != null) setState(() => _until = picked);
-                  },
+                _dateTile(
+                  label: l10n?.planUntilDateLabel ?? 'Repeat until',
+                  value: _until,
+                  onPicked: (d) => setState(() => _until = d),
                 ),
             ],
+
             if (widget.capped && widget.cap != null)
               Text(
                 l10n?.planCappedByNext(
@@ -246,6 +259,7 @@ class _BookingSheetState extends State<BookingSheet> {
             FilledButton(
               onPressed: () => Navigator.of(context).pop(
                 BookingChoice(
+                  _start,
                   _end,
                   _forOther ? null : _pattern,
                   _forOther || _pattern == null ? null : _until,
@@ -263,21 +277,97 @@ class _BookingSheetState extends State<BookingSheet> {
             ),
             if (widget.allowBlocking) ...[
               const SizedBox(height: 8),
-              // Owner/delegated-admin maintenance block (#161): open-ended,
-              // lifted again from the blocked-seat sheet.
               TextButton.icon(
                 icon: const Icon(Icons.block),
                 label: Text(
                   l10n?.planMakeNotReservable ?? 'Make not reservable',
                 ),
                 onPressed: () => Navigator.of(context).pop(
-                  BookingChoice(_end, null, null, null, block: true),
+                  BookingChoice(_start, _end, null, null, null, block: true),
                 ),
               ),
             ],
           ],
         ),
       ),
+    );
+  }
+
+  Duration get _slot => Duration(
+        minutes: widget.granularity.stepMinutes ?? 15,
+      );
+
+  DateTime _snap(DateTime t) {
+    final step = widget.granularity.stepMinutes ?? 15;
+    final m = (t.hour * 60 + t.minute) ~/ step * step;
+    return DateTime(t.year, t.month, t.day, m ~/ 60, m % 60);
+  }
+
+  /// Morning / Afternoon / Full day under half-day granularity — the same
+  /// language as the hub chips, but here it edits the booking's window.
+  Widget _periodChips(AppLocalizations? l10n) {
+    Widget chip(String key, String label, HalfDayWindow w) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
+          child: ChoiceChip(
+            key: ValueKey(key),
+            label: Text(label),
+            selected: _isWindow(w),
+            onSelected: (_) => _selectWindow(w),
+          ),
+        );
+    return Wrap(
+      spacing: AppSpacing.xs,
+      children: [
+        chip('booking-am', l10n?.planMorningChip ?? 'Morning',
+            HalfDayWindows.morning(_day)),
+        chip('booking-pm', l10n?.planAfternoonChip ?? 'Afternoon',
+            HalfDayWindows.afternoon(_day)),
+        chip('booking-day', l10n?.reserveFullDayChip ?? 'Full day',
+            HalfDayWindows.fullDay(_day)),
+      ],
+    );
+  }
+
+  Widget _timeTile({
+    required Key key,
+    required String label,
+    required DateTime value,
+    required void Function(TimeOfDay) onPicked,
+  }) {
+    final timeFormat = DateFormat.Hm();
+    return ListTile(
+      key: key,
+      contentPadding: EdgeInsets.zero,
+      title: Text(label),
+      trailing: Text(timeFormat.format(WorkspaceTime.display(value))),
+      onTap: () async {
+        final picked = await showTimePicker(
+          context: context,
+          initialTime: TimeOfDay.fromDateTime(WorkspaceTime.display(value)),
+        );
+        if (picked != null) onPicked(picked);
+      },
+    );
+  }
+
+  Widget _dateTile({
+    required String label,
+    required DateTime value,
+    required void Function(DateTime) onPicked,
+  }) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text(label),
+      trailing: Text(DateFormat.yMMMd().format(value.toLocal())),
+      onTap: () async {
+        final picked = await showDatePicker(
+          context: context,
+          initialDate: value.toLocal(),
+          firstDate: widget.start.toLocal(),
+          lastDate: widget.start.toLocal().add(const Duration(days: 180)),
+        );
+        if (picked != null) onPicked(picked);
+      },
     );
   }
 }

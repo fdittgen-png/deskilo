@@ -28,11 +28,13 @@ import '../../../plan/providers/plan_focus_controller.dart';
 import '../../../money/domain/quota_rules.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_availability.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
 import '../../domain/seat_state_logic.dart';
 import '../../providers/reservation_providers.dart';
 import '../widgets/booking_sheet.dart';
+import '../widgets/series_result_dialog.dart';
 import '../widgets/reservation_detail_sheet.dart';
 import '../widgets/month_grid.dart';
 import '../widgets/week_grid.dart';
@@ -519,24 +521,42 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
         initialEnd: end,
         cap: next?.startsAt,
         capped: capped,
+        granularity: _granularity,
         walkUp: false,
         fixedEnd: dayBased,
         members: const [],
         myMemberId: myMemberId,
-        allowSeries: false,
+        // Series is available from the hub too now (was Plan-only): the
+        // repeat picker shows when the workspace enables it.
+        allowSeries: ref
+            .read(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.seriesBooking),
         allowBlocking: false,
       ),
     );
     if (choice == null || !mounted) return;
 
     try {
-      await ref.read(reservationRepositoryProvider).create(
-            workspaceId: workspace.id,
-            seatId: seat.id,
-            startsAt: window.start,
-            endsAt: choice.end,
-            checkIn: false,
-          );
+      if (choice.pattern == null) {
+        await ref.read(reservationRepositoryProvider).create(
+              workspaceId: workspace.id,
+              seatId: seat.id,
+              startsAt: choice.start,
+              endsAt: choice.end,
+              checkIn: false,
+            );
+      } else {
+        final result =
+            await ref.read(reservationRepositoryProvider).createSeries(
+                  workspaceId: workspace.id,
+                  seatId: seat.id,
+                  firstStart: choice.start,
+                  firstEnd: choice.end,
+                  pattern: choice.pattern!,
+                  until: choice.until!,
+                );
+        if (mounted) await showSeriesResultDialog(context, result);
+      }
     } catch (e, st) {
       debugPrint('reserve hub booking failed: $e\n$st');
       TraceLogger.instance
