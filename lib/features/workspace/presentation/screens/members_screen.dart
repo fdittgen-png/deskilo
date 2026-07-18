@@ -12,6 +12,7 @@ import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/member.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import '../../../events/providers/event_providers.dart';
 
 /// Owner-only member management: role overview, subscription percentage
 /// assignment (#128, ADR 0008), pause/reactivate (spec §7.2).
@@ -99,6 +100,45 @@ class MembersScreen extends ConsumerWidget {
     ref.invalidate(workspaceMembersProvider);
   }
 
+  /// Requests promoting/demotoggle the member's admin flag through the
+  /// validation quorum (0035): the change is pending until the
+  /// workspace's validators confirm it.
+  Future<void> _changeRole(
+    BuildContext context,
+    WidgetRef ref,
+    Member member,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    final makeAdmin = !member.isAdmin;
+    try {
+      await ref.read(workspaceRepositoryProvider).requestRoleChange(
+            workspace.id,
+            memberId: member.id,
+            makeAdmin: makeAdmin,
+          );
+    } catch (e, st) {
+      debugPrint('role change request failed: $e\n$st');
+      TraceLogger.instance.error(
+          'workspace', 'role change request failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
+      return;
+    }
+    ref.invalidate(eventsProvider);
+    if (!context.mounted) return;
+    AppSnack.success(
+      context,
+      l10n?.memberRoleChangeRequested ?? 'Role change sent for validation.',
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -179,6 +219,23 @@ class MembersScreen extends ConsumerWidget {
                             subjectMemberId: member.id,
                             subjectName: names[member.id] ?? '',
                           ),
+                        ),
+                      // Promote/demote through the validation quorum (0035):
+                      // owners are excluded (they keep admin), exited
+                      // members can't be re-roled.
+                      if (!member.isOwner &&
+                          member.status == MemberStatus.active)
+                        IconButton(
+                          icon: Icon(
+                            member.isAdmin
+                                ? Icons.remove_moderator_outlined
+                                : Icons.add_moderator_outlined,
+                          ),
+                          tooltip: member.isAdmin
+                              ? (l10n?.memberMakeMember ??
+                                  'Make regular member')
+                              : (l10n?.memberMakeAdmin ?? 'Make admin'),
+                          onPressed: () => _changeRole(context, ref, member),
                         ),
                       IconButton(
                         icon: const Icon(Icons.percent),

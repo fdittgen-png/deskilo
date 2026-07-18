@@ -18,7 +18,11 @@ enum EventType {
   /// A member's request for extra half-days beyond their subscription
   /// entitlement (migration 0031). Always self-initiated; validators
   /// decide per the owner's policy.
-  quota;
+  quota,
+
+  /// An owner-initiated admin promotion/demotion (migration 0035),
+  /// confirmed through the validation quorum before it applies.
+  roleChange('role_change');
 
   const EventType([String? dbName]) : _dbName = dbName;
 
@@ -66,6 +70,7 @@ sealed class WorkspaceEvent with _$WorkspaceEvent {
   bool get needsAdminDecider =>
       type == EventType.expense ||
       type == EventType.quota ||
+      type == EventType.roleChange ||
       ((type == EventType.payment || type == EventType.serviceCharge) &&
           actorIsSubject);
 

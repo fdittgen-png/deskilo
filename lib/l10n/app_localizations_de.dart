@@ -1165,6 +1165,29 @@ class AppLocalizationsDe extends AppLocalizations {
       'Status konnte nicht gespeichert werden';
 
   @override
+  String get eventTypeRoleChange => 'Rollenwechsel';
+
+  @override
+  String eventRolePromote(String actor) {
+    return '$actor befördert ein Mitglied zum Admin';
+  }
+
+  @override
+  String eventRoleDemote(String actor) {
+    return '$actor stuft einen Admin zum Mitglied zurück';
+  }
+
+  @override
+  String get memberMakeAdmin => 'Zum Admin machen';
+
+  @override
+  String get memberMakeMember => 'Zum normalen Mitglied machen';
+
+  @override
+  String get memberRoleChangeRequested =>
+      'Rollenwechsel zur Freigabe gesendet.';
+
+  @override
   String get eventTypeQuota => 'Zusätzliche halbe Tage';
 
   @override

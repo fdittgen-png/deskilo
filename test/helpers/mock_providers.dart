@@ -292,6 +292,18 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     }
   }
 
+  /// (workspaceId, memberId, makeAdmin) of the last role-change request.
+  (String, String, bool)? lastRoleChange;
+
+  @override
+  Future<void> requestRoleChange(
+    String workspaceId, {
+    required String memberId,
+    required bool makeAdmin,
+  }) async {
+    lastRoleChange = (workspaceId, memberId, makeAdmin);
+  }
+
   @override
   Future<String> setWorkspaceCode(String workspaceId, String code) async {
     final normalized = code.trim().toUpperCase();

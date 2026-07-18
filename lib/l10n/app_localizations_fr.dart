@@ -1168,6 +1168,29 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileStatusSaveFailed => 'Impossible d\'enregistrer le statut';
 
   @override
+  String get eventTypeRoleChange => 'Changement de rôle';
+
+  @override
+  String eventRolePromote(String actor) {
+    return '$actor promeut un membre en admin';
+  }
+
+  @override
+  String eventRoleDemote(String actor) {
+    return '$actor rétrograde un admin en membre';
+  }
+
+  @override
+  String get memberMakeAdmin => 'Nommer admin';
+
+  @override
+  String get memberMakeMember => 'Rendre membre simple';
+
+  @override
+  String get memberRoleChangeRequested =>
+      'Changement de rôle envoyé pour validation.';
+
+  @override
   String get eventTypeQuota => 'Demi-journées supplémentaires';
 
   @override

@@ -191,6 +191,19 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> requestRoleChange(
+    String workspaceId, {
+    required String memberId,
+    required bool makeAdmin,
+  }) async {
+    await _client.rpc<dynamic>('request_role_change', params: {
+      'p_workspace_id': workspaceId,
+      'p_target_member_id': memberId,
+      'p_make_admin': makeAdmin,
+    });
+  }
+
+  @override
   Future<String> setWorkspaceCode(String workspaceId, String code) async {
     final result = await _client.rpc<dynamic>('set_workspace_code', params: {
       'p_workspace_id': workspaceId,

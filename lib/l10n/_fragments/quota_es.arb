@@ -1,5 +1,11 @@
 {
   "@@locale": "es",
+  "eventTypeRoleChange": "Cambio de rol",
+  "eventRolePromote": "{actor} promueve a un miembro a admin",
+  "eventRoleDemote": "{actor} degrada a un admin a miembro",
+  "memberMakeAdmin": "Hacer admin",
+  "memberMakeMember": "Hacer miembro normal",
+  "memberRoleChangeRequested": "Cambio de rol enviado para validación.",
   "eventTypeQuota": "Medias jornadas extra",
   "eventQuotaRequested": "{actor} solicita {halfDays} medias jornadas extra para {period}",
   "quotaExceededError": "Cuota mensual de medias jornadas alcanzada — solicita medias jornadas extra desde la pestaña Finanzas.",

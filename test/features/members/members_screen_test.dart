@@ -145,4 +145,55 @@ void main() {
 
     expect(find.text('Members & plans'), findsNothing);
   });
+
+  testWidgets('the owner promotes a regular member — routed through '
+      'validation, not applied immediately (0035)', (tester) async {
+    final workspace = await pumpMembers(tester);
+
+    // Ana (member-2) is a regular member: her row offers "Make admin".
+    await tester.tap(find.byTooltip('Make admin'));
+    await tester.pumpAndSettle();
+
+    expect(workspace.lastRoleChange, ('ws-1', 'member-2', true));
+    expect(
+      find.text('Role change sent for validation.'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('an admin can be demoted; the owner has no role toggle',
+      (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
+      ..otherMembers.add(
+        const Member(
+          id: 'member-2',
+          workspaceId: 'ws-1',
+          userId: 'user-2',
+          isAdmin: true,
+          isOwner: false,
+          status: MemberStatus.active,
+        ),
+      );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(workspace: workspace),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Members & plans'));
+    await tester.pumpAndSettle();
+
+    // The admin offers demotion; the owner (Flo) offers no role toggle.
+    expect(find.byTooltip('Make regular member'), findsOneWidget);
+    expect(find.byTooltip('Make admin'), findsNothing);
+
+    await tester.tap(find.byTooltip('Make regular member'));
+    await tester.pumpAndSettle();
+    expect(workspace.lastRoleChange, ('ws-1', 'member-2', false));
+  });
+
 }

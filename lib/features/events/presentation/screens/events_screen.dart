@@ -78,6 +78,10 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
           ) ??
           '$actor requests ${event.payload['half_days']} extra '
               'half-days for ${event.payload['period']}',
+      (EventType.roleChange, _) => (event.payload['make_admin'] == true
+              ? l10n?.eventRolePromote(actor)
+              : l10n?.eventRoleDemote(actor)) ??
+          '$actor changes a role',
       _ => '${_typeLabel(l10n, event.type)} · ${event.action.name}',
     };
     // Service charges name no actor in the title, so always say whose bill
@@ -98,6 +102,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.serviceCharge =>
         l10n?.eventTypeServiceCharge ?? 'Service',
       EventType.quota => l10n?.eventTypeQuota ?? 'Extra half-days',
+      EventType.roleChange => l10n?.eventTypeRoleChange ?? 'Role change',
     };
   }
 
@@ -111,6 +116,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.adjustment => Icons.tune,
       EventType.serviceCharge => Icons.room_service_outlined,
       EventType.quota => Icons.hourglass_top_outlined,
+      EventType.roleChange => Icons.admin_panel_settings_outlined,
     };
   }
 

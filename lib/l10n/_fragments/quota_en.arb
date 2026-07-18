@@ -1,5 +1,31 @@
 {
   "@@locale": "en",
+  "eventTypeRoleChange": "Role change",
+  "@eventTypeRoleChange": {
+    "description": "Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card"
+  },
+  "eventRolePromote": "{actor} promotes a member to admin",
+  "@eventRolePromote": {
+    "description": "Feed line of a role-change event that grants admin",
+    "placeholders": {"actor": {"type": "String"}}
+  },
+  "eventRoleDemote": "{actor} demotes an admin to member",
+  "@eventRoleDemote": {
+    "description": "Feed line of a role-change event that removes admin",
+    "placeholders": {"actor": {"type": "String"}}
+  },
+  "memberMakeAdmin": "Make admin",
+  "@memberMakeAdmin": {
+    "description": "Owner action promoting a member to admin (0035)"
+  },
+  "memberMakeMember": "Make regular member",
+  "@memberMakeMember": {
+    "description": "Owner action demoting an admin to a regular member (0035)"
+  },
+  "memberRoleChangeRequested": "Role change sent for validation.",
+  "@memberRoleChangeRequested": {
+    "description": "Snackbar after an owner requested a role change (0035)"
+  },
   "eventTypeQuota": "Extra half-days",
   "@eventTypeQuota": {
     "description": "Event-type label for quota-extension requests (0031): feed filter chip + validation policy card"
