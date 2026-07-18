@@ -34,6 +34,7 @@ import '../../domain/seat_state_logic.dart';
 import '../../providers/reservation_providers.dart';
 import '../widgets/booking_sheet.dart';
 import '../widgets/reservation_detail_sheet.dart';
+import '../widgets/month_grid.dart';
 import '../widgets/week_grid.dart';
 
 /// Geometry and ranges of the Reserve hub (#208). Pinned by test — treat
@@ -81,7 +82,7 @@ abstract final class ReserveHubMetrics {
 }
 
 /// The three hub views under the date strip and window chips.
-enum _ReserveView { plan, day, week }
+enum _ReserveView { plan, day, week, month }
 
 /// Reserve hub (#208, epic #204): full-screen route pushed by the bottom
 /// bar's raised centre button (#207). Top→bottom: a horizontal date-pill
@@ -630,6 +631,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                   icon: Icons.view_week_outlined,
                   label: l10n?.reserveWeekView ?? 'Week',
                 ),
+                ViewToggleOption(
+                  value: _ReserveView.month,
+                  icon: Icons.calendar_month_outlined,
+                  label: l10n?.reserveMonthView ?? 'Month',
+                ),
               ],
               selected: _view,
               // No re-entry syncing needed since #236: the week grid
@@ -655,6 +661,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                 _ReserveView.week => KeyedSubtree(
                     key: const ValueKey('reserve-week-view'),
                     child: _weekView(),
+                  ),
+                _ReserveView.month => KeyedSubtree(
+                    key: const ValueKey('reserve-month-view'),
+                    child: _monthView(),
                   ),
               },
             ),
@@ -978,6 +988,25 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
         setState(() => _view = _ReserveView.day);
       },
       onReservationTap: _detailSheet,
+    );
+  }
+
+  /// Month view (#7): the selected day's month as an availability
+  /// calendar — free desks per day across ALL floors. Tapping a day
+  /// selects it and drops into the Day view, where occupants are named.
+  Widget _monthView() {
+    final month = ref.watch(reservationsForMonthProvider(
+          monthKeyOf(_selectedDay),
+        )).value ??
+        const <Reservation>[];
+    return MonthGrid(
+      key: const ValueKey('reserve-month-grid'),
+      selectedDay: _selectedDay,
+      reservations: [for (final r in month) if (r.isActive) r],
+      onDaySelected: (day) {
+        _selectDay(day);
+        setState(() => _view = _ReserveView.day);
+      },
     );
   }
 }

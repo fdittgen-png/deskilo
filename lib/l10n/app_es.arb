@@ -358,6 +358,8 @@
   "quotaRequestExplainer": "Tus reservas están limitadas por tu suscripción. Las medias jornadas extra para {period} se aplican una vez validadas.",
   "quotaRequestCountLabel": "Número de medias jornadas",
   "quotaRequestPending": "Solicitud enviada — pendiente de validación.",
+  "reserveMonthView": "Mes",
+  "monthFreeCount": "{free}/{total}",
   "reserveDayView": "Día",
   "reserveWeekView": "Semana",
   "reserveFullDayChip": "Día completo",

@@ -358,6 +358,8 @@
   "quotaRequestExplainer": "Deine Reservierungen sind durch dein Abo begrenzt. Zusätzliche halbe Tage für {period} gelten nach der Freigabe.",
   "quotaRequestCountLabel": "Anzahl halber Tage",
   "quotaRequestPending": "Antrag gesendet — wartet auf Freigabe.",
+  "reserveMonthView": "Monat",
+  "monthFreeCount": "{free}/{total}",
   "reserveDayView": "Tag",
   "reserveWeekView": "Woche",
   "reserveFullDayChip": "Ganzer Tag",

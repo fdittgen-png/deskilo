@@ -358,6 +358,8 @@
   "quotaRequestExplainer": "Le tue prenotazioni sono limitate dal tuo abbonamento. Le mezze giornate extra per {period} si applicano dopo la convalida.",
   "quotaRequestCountLabel": "Numero di mezze giornate",
   "quotaRequestPending": "Richiesta inviata — in attesa di convalida.",
+  "reserveMonthView": "Mese",
+  "monthFreeCount": "{free}/{total}",
   "reserveDayView": "Giorno",
   "reserveWeekView": "Settimana",
   "reserveFullDayChip": "Giornata intera",

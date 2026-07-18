@@ -1196,6 +1196,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Richiesta inviata — in attesa di convalida.';
 
   @override
+  String get reserveMonthView => 'Mese';
+
+  @override
+  String monthFreeCount(int free, int total) {
+    return '$free/$total';
+  }
+
+  @override
   String get reserveDayView => 'Giorno';
 
   @override

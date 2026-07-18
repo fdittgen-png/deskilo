@@ -1198,6 +1198,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Demande envoyée — en attente de validation.';
 
   @override
+  String get reserveMonthView => 'Mois';
+
+  @override
+  String monthFreeCount(int free, int total) {
+    return '$free/$total';
+  }
+
+  @override
   String get reserveDayView => 'Jour';
 
   @override
