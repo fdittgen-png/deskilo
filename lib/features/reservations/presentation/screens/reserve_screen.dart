@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -926,6 +928,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
           child: switch (planAsync) {
             AsyncData(value: final plan) => _ReservePlanCanvas(
                 plan: plan,
+                background:
+                    ref.watch(levelBackgroundProvider(level.id)).value,
                 seatStates: {
                   for (final seat in plan.seats)
                     // Closed day (#186): every seat renders muted —
@@ -1092,12 +1096,14 @@ class _ReservePlanCanvas extends StatelessWidget {
     required this.seatStates,
     required this.seatLabels,
     required this.onSeatTap,
+    this.background,
   });
 
   final FloorPlan plan;
   final Map<String, SeatState> seatStates;
   final Map<String, String> seatLabels;
   final ValueChanged<Seat> onSeatTap;
+  final ui.Image? background;
 
   @override
   Widget build(BuildContext context) {
@@ -1127,6 +1133,7 @@ class _ReservePlanCanvas extends StatelessWidget {
             cellSize: ReserveHubMetrics.canvasCellSize,
             colorScheme: Theme.of(context).colorScheme,
             brightness: Theme.of(context).brightness,
+            background: background,
             seatStates: seatStates,
             seatLabels: seatLabels,
           ),

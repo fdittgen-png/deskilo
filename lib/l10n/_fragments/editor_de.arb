@@ -1,5 +1,9 @@
 {
   "@@locale": "de",
+  "editorBackgroundImage": "Hintergrundbild",
+  "editorBackgroundSet": "Hintergrundbild festlegen",
+  "editorBackgroundReplace": "Hintergrundbild ersetzen",
+  "editorBackgroundRemove": "Hintergrundbild entfernen",
   "editorTitle": "Workspace-Editor",
   "editorOpenTooltip": "Workspace bearbeiten",
   "editorAddLevel": "Etage hinzufügen",

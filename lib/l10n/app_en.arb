@@ -655,6 +655,22 @@
       }
     }
   },
+  "editorBackgroundImage": "Background image",
+  "@editorBackgroundImage": {
+    "description": "Editor app-bar action opening the level background-image menu (0036)"
+  },
+  "editorBackgroundSet": "Set background image",
+  "@editorBackgroundSet": {
+    "description": "Menu item: pick a photo/blueprint of the real space as the level background"
+  },
+  "editorBackgroundReplace": "Replace background image",
+  "@editorBackgroundReplace": {
+    "description": "Menu item shown when a background is already set"
+  },
+  "editorBackgroundRemove": "Remove background image",
+  "@editorBackgroundRemove": {
+    "description": "Menu item removing the level background image"
+  },
   "editorTitle": "Workspace editor",
   "@editorTitle": {
     "description": "App-bar title of the owner-only workspace editor"

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+import 'dart:typed_data';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/desk.dart';
@@ -60,6 +62,55 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
           .from('levels')
           .update({'sort_order': i}).eq('id', orderedLevelIds[i]);
     }
+  }
+
+  static String _bgPath(String workspaceId, String levelId) =>
+      '$workspaceId/$levelId';
+
+  @override
+  Future<void> setLevelBackground(
+    String workspaceId,
+    String levelId, {
+    required Uint8List bytes,
+    required String contentType,
+  }) async {
+    final path = _bgPath(workspaceId, levelId);
+    await _client.storage.from('floor-plans').uploadBinary(
+          path,
+          bytes,
+          fileOptions: FileOptions(contentType: contentType, upsert: true),
+        );
+    await _client
+        .from('levels')
+        .update({'background_path': path}).eq('id', levelId);
+  }
+
+  @override
+  Future<void> clearLevelBackground(
+    String workspaceId,
+    String levelId,
+  ) async {
+    await _client.storage.from('floor-plans').remove([
+      _bgPath(workspaceId, levelId),
+    ]);
+    await _client
+        .from('levels')
+        .update({'background_path': null}).eq('id', levelId);
+  }
+
+  @override
+  Future<Uint8List?> fetchLevelBackground(
+    String workspaceId,
+    String levelId,
+  ) async {
+    final row = await _client
+        .from('levels')
+        .select('background_path')
+        .eq('id', levelId)
+        .maybeSingle();
+    final path = row?['background_path'] as String?;
+    if (path == null) return null;
+    return _client.storage.from('floor-plans').download(path);
   }
 
   @override
@@ -304,6 +355,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         workspaceId: row['workspace_id'] as String,
         name: row['name'] as String,
         sortOrder: row['sort_order'] as int,
+        backgroundPath: row['background_path'] as String?,
       );
 
   GridRect _rectFromRow(Map<String, dynamic> row) => GridRect(

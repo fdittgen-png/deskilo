@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+import 'dart:typed_data';
+
 import 'desk.dart';
 import 'floor_plan.dart';
 import 'grid_geometry.dart';
@@ -17,6 +19,23 @@ abstract class FloorPlanRepository {
 
   /// Persists a new level order; index in [orderedLevelIds] becomes sort_order.
   Future<void> reorderLevels(List<String> orderedLevelIds);
+
+  /// Owner-only: set a level's background image (0036) — uploads [bytes]
+  /// to the floor-plans bucket at `<workspaceId>/<levelId>` and records
+  /// the path. [contentType] is the image MIME (e.g. image/png).
+  Future<void> setLevelBackground(
+    String workspaceId,
+    String levelId, {
+    required Uint8List bytes,
+    required String contentType,
+  });
+
+  /// Owner-only: remove a level's background image and its stored object.
+  Future<void> clearLevelBackground(String workspaceId, String levelId);
+
+  /// The level's background image bytes (0036), or null when none is set
+  /// or it can't be fetched. Cached by the provider that decodes it.
+  Future<Uint8List?> fetchLevelBackground(String workspaceId, String levelId);
 
   /// seat/office id → display name across the whole workspace (calendar and
   /// event lists label bookings without loading every level's plan).

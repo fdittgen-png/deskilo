@@ -1,5 +1,9 @@
 {
   "@@locale": "es",
+  "editorBackgroundImage": "Imagen de fondo",
+  "editorBackgroundSet": "Establecer imagen de fondo",
+  "editorBackgroundReplace": "Reemplazar imagen de fondo",
+  "editorBackgroundRemove": "Quitar imagen de fondo",
   "editorTitle": "Editor del espacio",
   "editorOpenTooltip": "Editar espacio",
   "editorAddLevel": "Añadir planta",

@@ -14,7 +14,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Level {
 
- String get id; String get workspaceId; String get name; int get sortOrder;
+ String get id; String get workspaceId; String get name; int get sortOrder;/// Storage object path of the level's background image (a photo or
+/// blueprint of the real space, 0036), or null when none is set.
+ String? get backgroundPath;
 /// Create a copy of Level
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +27,16 @@ $LevelCopyWith<Level> get copyWith => _$LevelCopyWithImpl<Level>(this as Level, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Level&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Level&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder)&&(identical(other.backgroundPath, backgroundPath) || other.backgroundPath == backgroundPath));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,name,sortOrder);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,name,sortOrder,backgroundPath);
 
 @override
 String toString() {
-  return 'Level(id: $id, workspaceId: $workspaceId, name: $name, sortOrder: $sortOrder)';
+  return 'Level(id: $id, workspaceId: $workspaceId, name: $name, sortOrder: $sortOrder, backgroundPath: $backgroundPath)';
 }
 
 
@@ -45,7 +47,7 @@ abstract mixin class $LevelCopyWith<$Res>  {
   factory $LevelCopyWith(Level value, $Res Function(Level) _then) = _$LevelCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, String name, int sortOrder
+ String id, String workspaceId, String name, int sortOrder, String? backgroundPath
 });
 
 
@@ -62,13 +64,14 @@ class _$LevelCopyWithImpl<$Res>
 
 /// Create a copy of Level
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? sortOrder = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? sortOrder = null,Object? backgroundPath = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
-as int,
+as int,backgroundPath: freezed == backgroundPath ? _self.backgroundPath : backgroundPath // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -150,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int sortOrder)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int sortOrder,  String? backgroundPath)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Level() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder);case _:
+return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder,_that.backgroundPath);case _:
   return orElse();
 
 }
@@ -171,10 +174,10 @@ return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int sortOrder)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int sortOrder,  String? backgroundPath)  $default,) {final _that = this;
 switch (_that) {
 case _Level():
-return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder);}
+return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder,_that.backgroundPath);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -188,10 +191,10 @@ return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String name,  int sortOrder)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String name,  int sortOrder,  String? backgroundPath)?  $default,) {final _that = this;
 switch (_that) {
 case _Level() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder);case _:
+return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder,_that.backgroundPath);case _:
   return null;
 
 }
@@ -202,14 +205,17 @@ return $default(_that.id,_that.workspaceId,_that.name,_that.sortOrder);case _:
 /// @nodoc
 
 
-class _Level implements Level {
-  const _Level({required this.id, required this.workspaceId, required this.name, required this.sortOrder});
+class _Level extends Level {
+  const _Level({required this.id, required this.workspaceId, required this.name, required this.sortOrder, this.backgroundPath}): super._();
   
 
 @override final  String id;
 @override final  String workspaceId;
 @override final  String name;
 @override final  int sortOrder;
+/// Storage object path of the level's background image (a photo or
+/// blueprint of the real space, 0036), or null when none is set.
+@override final  String? backgroundPath;
 
 /// Create a copy of Level
 /// with the given fields replaced by the non-null parameter values.
@@ -221,16 +227,16 @@ _$LevelCopyWith<_Level> get copyWith => __$LevelCopyWithImpl<_Level>(this, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Level&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Level&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder)&&(identical(other.backgroundPath, backgroundPath) || other.backgroundPath == backgroundPath));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,name,sortOrder);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,name,sortOrder,backgroundPath);
 
 @override
 String toString() {
-  return 'Level(id: $id, workspaceId: $workspaceId, name: $name, sortOrder: $sortOrder)';
+  return 'Level(id: $id, workspaceId: $workspaceId, name: $name, sortOrder: $sortOrder, backgroundPath: $backgroundPath)';
 }
 
 
@@ -241,7 +247,7 @@ abstract mixin class _$LevelCopyWith<$Res> implements $LevelCopyWith<$Res> {
   factory _$LevelCopyWith(_Level value, $Res Function(_Level) _then) = __$LevelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, String name, int sortOrder
+ String id, String workspaceId, String name, int sortOrder, String? backgroundPath
 });
 
 
@@ -258,13 +264,14 @@ class __$LevelCopyWithImpl<$Res>
 
 /// Create a copy of Level
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? sortOrder = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? sortOrder = null,Object? backgroundPath = freezed,}) {
   return _then(_Level(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
-as int,
+as int,backgroundPath: freezed == backgroundPath ? _self.backgroundPath : backgroundPath // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
