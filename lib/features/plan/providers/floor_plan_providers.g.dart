@@ -282,6 +282,89 @@ final class LevelBackgroundFamily extends $Family
   String toString() => r'levelBackgroundProvider';
 }
 
+/// A single plan illustration image decoded (0037), keyed by image id.
+
+@ProviderFor(planImage)
+final planImageProvider = PlanImageFamily._();
+
+/// A single plan illustration image decoded (0037), keyed by image id.
+
+final class PlanImageProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<ui.Image?>,
+          ui.Image?,
+          FutureOr<ui.Image?>
+        >
+    with $FutureModifier<ui.Image?>, $FutureProvider<ui.Image?> {
+  /// A single plan illustration image decoded (0037), keyed by image id.
+  PlanImageProvider._({
+    required PlanImageFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'planImageProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$planImageHash();
+
+  @override
+  String toString() {
+    return r'planImageProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<ui.Image?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<ui.Image?> create(Ref ref) {
+    final argument = this.argument as String;
+    return planImage(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is PlanImageProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$planImageHash() => r'54f4e8a1e4a12a890133e533bed7270008a54287';
+
+/// A single plan illustration image decoded (0037), keyed by image id.
+
+final class PlanImageFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<ui.Image?>, String> {
+  PlanImageFamily._()
+    : super(
+        retry: null,
+        name: r'planImageProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// A single plan illustration image decoded (0037), keyed by image id.
+
+  PlanImageProvider call(String imageId) =>
+      PlanImageProvider._(argument: imageId, from: this);
+
+  @override
+  String toString() => r'planImageProvider';
+}
+
 /// seat/office id → display name for the active workspace (labels in the
 /// calendar and event feeds without loading every level's plan).
 

@@ -9,6 +9,7 @@ import '../domain/floor_plan_repository.dart';
 import '../domain/grid_geometry.dart';
 import '../domain/level.dart';
 import '../domain/office.dart';
+import '../domain/plan_image.dart';
 import '../domain/seat.dart';
 import '../domain/seat_context.dart';
 
@@ -202,13 +203,97 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         seats = seatRows.map(_seatFromRow).toList();
       }
     }
+    final imageRows =
+        await _client.from('plan_images').select().eq('level_id', levelId);
+    final images = imageRows.map(_planImageFromRow).toList();
     return FloorPlan(
       levelId: levelId,
       offices: offices,
       desks: desks,
       seats: seats,
+      images: images,
     );
   }
+
+  static String _imgPath(String workspaceId, String imageId) =>
+      '$workspaceId/img/$imageId';
+
+  @override
+  Future<PlanImage> createPlanImage({
+    required String workspaceId,
+    required String levelId,
+    required GridRect rect,
+    required Uint8List bytes,
+    required String contentType,
+  }) async {
+    final row = await _client
+        .from('plan_images')
+        .insert({
+          'workspace_id': workspaceId,
+          'level_id': levelId,
+          'x': rect.x,
+          'y': rect.y,
+          'w': rect.w,
+          'h': rect.h,
+          'storage_path': 'pending',
+        })
+        .select()
+        .single();
+    final id = row['id'] as String;
+    final path = _imgPath(workspaceId, id);
+    await _client.storage.from('floor-plans').uploadBinary(
+          path,
+          bytes,
+          fileOptions: FileOptions(contentType: contentType, upsert: true),
+        );
+    await _client
+        .from('plan_images')
+        .update({'storage_path': path}).eq('id', id);
+    return _planImageFromRow({...row, 'storage_path': path});
+  }
+
+  @override
+  Future<void> updatePlanImageRect(String imageId, GridRect rect) async {
+    await _client.from('plan_images').update({
+      'x': rect.x,
+      'y': rect.y,
+      'w': rect.w,
+      'h': rect.h,
+    }).eq('id', imageId);
+  }
+
+  @override
+  Future<void> deletePlanImage(String imageId) async {
+    final row = await _client
+        .from('plan_images')
+        .select('storage_path')
+        .eq('id', imageId)
+        .maybeSingle();
+    final path = row?['storage_path'] as String?;
+    if (path != null && path != 'pending') {
+      await _client.storage.from('floor-plans').remove([path]);
+    }
+    await _client.from('plan_images').delete().eq('id', imageId);
+  }
+
+  @override
+  Future<Uint8List?> fetchPlanImageBytes(String imageId) async {
+    final row = await _client
+        .from('plan_images')
+        .select('storage_path')
+        .eq('id', imageId)
+        .maybeSingle();
+    final path = row?['storage_path'] as String?;
+    if (path == null || path == 'pending') return null;
+    return _client.storage.from('floor-plans').download(path);
+  }
+
+  PlanImage _planImageFromRow(Map<String, dynamic> row) => PlanImage(
+        id: row['id'] as String,
+        levelId: row['level_id'] as String,
+        rect: _rectFromRow(row),
+        storagePath: row['storage_path'] as String,
+      );
 
   @override
   Future<Office> createOffice({

@@ -523,6 +523,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get editorToolDesk => 'Table';
 
   @override
+  String get editorToolImage => 'Image';
+
+  @override
   String get editorToolErase => 'Effacer';
 
   @override

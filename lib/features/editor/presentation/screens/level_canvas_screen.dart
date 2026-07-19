@@ -24,7 +24,7 @@ import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../../plan/presentation/widgets/floor_plan_painter.dart';
 
-enum EditorTool { select, office, desk, seat, erase }
+enum EditorTool { select, office, desk, seat, image, erase }
 
 /// Canvas dimensions in grid cells and the logical cell size at scale 1.
 abstract final class GridCanvas {
@@ -67,6 +67,8 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
         plan.desks.where((d) => d.id == id).firstOrNull?.rect,
       ElementKind.seat =>
         plan.seats.where((s) => s.id == id).firstOrNull?.footprint,
+      ElementKind.image =>
+        plan.images.where((i) => i.id == id).firstOrNull?.rect,
       null => null,
     };
   }
@@ -133,9 +135,11 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       draft = applySeatPosition(plan, id, moved.x, moved.y);
     } else {
       final next = dragRect(base, edges, dx, dy);
-      draft = kind == ElementKind.office
-          ? applyOfficeRect(plan, id, next)
-          : applyDeskRect(plan, id, next);
+      draft = switch (kind) {
+        ElementKind.office => applyOfficeRect(plan, id, next),
+        ElementKind.image => applyImageRect(plan, id, next),
+        _ => applyDeskRect(plan, id, next),
+      };
     }
     setState(() {
       _draft = draft;
@@ -184,6 +188,12 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     final baseSeats = {for (final s in base.seats) s.id: s};
     for (final seat in draft.seats) {
       if (baseSeats[seat.id] != seat) await repo.updateSeat(seat);
+    }
+    final baseImages = {for (final i in base.images) i.id: i};
+    for (final image in draft.images) {
+      if (baseImages[image.id] != image) {
+        await repo.updatePlanImageRect(image.id, image.rect);
+      }
     }
   }
 
@@ -331,7 +341,19 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       return;
     }
 
+    if (_tool == EditorTool.image) {
+      await _placeImage(context, cell);
+      return;
+    }
+
+    final image = plan.imageAtCell(cell.x, cell.y);
     if (_tool == EditorTool.erase) {
+      if (image != null && seat == null && desk == null && office == null) {
+        await _confirmErase(
+          () => ref.read(floorPlanRepositoryProvider).deletePlanImage(image.id),
+        );
+        return;
+      }
       if (seat != null) {
         await _confirmErase(
           () => ref.read(floorPlanRepositoryProvider).deleteSeat(seat.id),
@@ -357,7 +379,9 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
             ? (ElementKind.desk, desk.id)
             : office != null
                 ? (ElementKind.office, office.id)
-                : null;
+                : image != null
+                    ? (ElementKind.image, image.id)
+                    : null;
 
     if (hit == null) {
       _clearSelection();
@@ -372,6 +396,10 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
           await _showDeskSheet(desk!);
         case ElementKind.office:
           await _showOfficeSheet(office!);
+        case ElementKind.image:
+          // Images have no properties sheet — a second tap is a no-op
+          // (move/resize via drag handles, remove via the erase tool).
+          break;
       }
       return;
     }
@@ -674,6 +702,54 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     ref.invalidate(floorPlanProvider(widget.levelId));
   }
 
+  /// Adds a resizable illustration image (0037) at [cell]: pick an
+  /// image, upload it, and drop it at a default 16×12 rect anchored near
+  /// the tap. It draws BELOW the offices/tables/seats, so you can then
+  /// place real tables and seats on top of the photo.
+  Future<void> _placeImage(BuildContext context, ({int x, int y}) cell) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    const group = XTypeGroup(
+      label: 'images',
+      extensions: ['png', 'jpg', 'jpeg', 'webp'],
+      mimeTypes: ['image/png', 'image/jpeg', 'image/webp'],
+    );
+    final file = await ref.read(filePickerProvider)(group);
+    if (file == null || !context.mounted) return;
+    const w = 16, h = 12;
+    final x = cell.x.clamp(0, GridCanvas.widthCells - w);
+    final y = cell.y.clamp(0, GridCanvas.heightCells - h);
+    try {
+      final bytes = await file.readAsBytes();
+      final contentType = file.mimeType ??
+          (file.name.toLowerCase().endsWith('.png')
+              ? 'image/png'
+              : 'image/jpeg');
+      await ref.read(floorPlanRepositoryProvider).createPlanImage(
+            workspaceId: workspace.id,
+            levelId: widget.levelId,
+            rect: GridRect(x: x, y: y, w: w, h: h),
+            bytes: bytes,
+            contentType: contentType,
+          );
+    } catch (e, st) {
+      debugPrint('place image failed: $e\n$st');
+      TraceLogger.instance.error(
+          'editor', 'place image failed', error: e, stackTrace: st);
+      if (!context.mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
+      return;
+    }
+    ref.invalidate(floorPlanProvider(widget.levelId));
+    // Back to Select so the fresh image can be moved/resized at once.
+    if (context.mounted) setState(() => _tool = EditorTool.select);
+  }
+
   /// Owner picks a photo/blueprint of the real space as this level's
   /// background (0036); it's uploaded and painted behind the grid.
   Future<void> _pickBackground(BuildContext context) async {
@@ -803,7 +879,9 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: AppSpacing.smAll,
-          child: SegmentedButton<EditorTool>(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SegmentedButton<EditorTool>(
             segments: [
               ButtonSegment(
                 value: EditorTool.select,
@@ -826,6 +904,11 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                 label: Text(l10n?.editorToolSeat ?? 'Seat'),
               ),
               ButtonSegment(
+                value: EditorTool.image,
+                icon: const Icon(Icons.add_photo_alternate_outlined),
+                label: Text(l10n?.editorToolImage ?? 'Image'),
+              ),
+              ButtonSegment(
                 value: EditorTool.erase,
                 icon: const Icon(Icons.backspace_outlined),
                 label: Text(l10n?.editorToolErase ?? 'Erase'),
@@ -836,6 +919,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
               _clearSelection();
               setState(() => _tool = selection.first);
             },
+            ),
           ),
         ),
       ),
@@ -918,6 +1002,11 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
           size: size,
           painter: FloorPlanPainter(
             background: ref.watch(levelBackgroundProvider(widget.levelId)).value,
+            images: {
+              for (final image in shownPlan.images)
+                if (ref.watch(planImageProvider(image.id)).value != null)
+                  image.id: ref.watch(planImageProvider(image.id)).value!,
+            },
             plan: shownPlan,
             cellSize: GridCanvas.cellSize,
             colorScheme: Theme.of(context).colorScheme,

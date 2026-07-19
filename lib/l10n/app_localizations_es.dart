@@ -520,6 +520,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get editorToolDesk => 'Mesa';
 
   @override
+  String get editorToolImage => 'Imagen';
+
+  @override
   String get editorToolErase => 'Borrar';
 
   @override

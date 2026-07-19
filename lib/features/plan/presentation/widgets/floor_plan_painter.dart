@@ -19,6 +19,7 @@ class FloorPlanPainter extends CustomPainter {
     required this.colorScheme,
     this.brightness = Brightness.light,
     this.background,
+    this.images = const {},
     this.seatStates,
     this.seatLabels,
     this.highlightedSeatId,
@@ -38,6 +39,10 @@ class FloorPlanPainter extends CustomPainter {
   /// space, painted behind the grid at reduced opacity so seats stay
   /// legible on top. Null = schematic only.
   final ui.Image? background;
+
+  /// Illustration images (0037): image id → decoded bitmap, drawn at the
+  /// element's grid rect above the background and below the schematic.
+  final Map<String, ui.Image> images;
 
   /// Live mode: seat id → state. Null = editor mode (uniform styling).
   final Map<String, SeatState>? seatStates;
@@ -87,6 +92,18 @@ class FloorPlanPainter extends CustomPainter {
         Paint()..color = Colors.white.withValues(alpha: 0.55),
       );
     }
+    for (final image in plan.images) {
+      final img = images[image.id];
+      if (img == null) continue;
+      final dst = _toPx(image.rect);
+      canvas.drawImageRect(
+        img,
+        Rect.fromLTWH(0, 0, img.width.toDouble(), img.height.toDouble()),
+        dst,
+        Paint()..filterQuality = FilterQuality.medium,
+      );
+    }
+
     final gridPaint = Paint()
       ..color = colorScheme.outlineVariant.withValues(alpha: 0.35)
       ..strokeWidth = 0.5;
@@ -321,6 +338,7 @@ class FloorPlanPainter extends CustomPainter {
   bool shouldRepaint(FloorPlanPainter oldDelegate) =>
       oldDelegate.plan != plan ||
       oldDelegate.background != background ||
+      oldDelegate.images != images ||
       oldDelegate.marquee != marquee ||
       oldDelegate.marqueeValid != marqueeValid ||
       oldDelegate.selection != selection ||

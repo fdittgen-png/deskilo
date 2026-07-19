@@ -1046,6 +1046,12 @@ abstract class AppLocalizations {
   /// **'Desk'**
   String get editorToolDesk;
 
+  /// Editor tool: place a resizable illustration image on the plan (0037)
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get editorToolImage;
+
   /// Canvas tool: tap an element to delete it
   ///
   /// In en, this message translates to:
