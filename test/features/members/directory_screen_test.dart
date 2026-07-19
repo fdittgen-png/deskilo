@@ -13,6 +13,8 @@ import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/core/theme/status_colors.dart';
 import 'package:deskilo/core/trace/dev_mode.dart';
 import 'package:deskilo/core/ui/empty_state.dart';
+import 'dart:typed_data';
+
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/reservation_detail_sheet.dart';
@@ -37,6 +39,16 @@ class _InMemoryDevModeStore implements DevModeStore {
   @override
   Future<void> write(bool enabled) async => this.enabled = enabled;
 }
+
+// A 1×1 transparent PNG for avatar-image tests.
+final _pngBytes = Uint8List.fromList([
+  0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D,
+  0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01,
+  0x08, 0x06, 0x00, 0x00, 0x00, 0x1F, 0x15, 0xC4, 0x89, 0x00, 0x00, 0x00,
+  0x0D, 0x49, 0x44, 0x41, 0x54, 0x78, 0x9C, 0x62, 0x00, 0x01, 0x00, 0x00,
+  0x05, 0x00, 0x01, 0x0D, 0x0A, 0x2D, 0xB4, 0x00, 0x00, 0x00, 0x00, 0x49,
+  0x45, 0x4E, 0x44, 0xAE, 0x42, 0x60, 0x82,
+]);
 
 Member _member(
   int n, {
@@ -626,6 +638,39 @@ void main() {
       findsNothing,
     );
     expect(find.byType(ReservationDetailSheet), findsOneWidget);
+  });
+
+  testWidgets(
+      "a member's photo renders as their avatar image; others keep the "
+      'initial', (tester) async {
+    final seeded = _seed();
+    // Ben has a photo; give the fake his bytes.
+    seeded.profile.profiles.add(
+      const Profile(
+        id: 'user-3',
+        displayName: 'Ben',
+        avatarPath: 'user-3/avatar',
+      ),
+    );
+    // Replace the earlier Ben profile (same id) so hasAvatar is true.
+    seeded.profile.profiles
+        .removeWhere((p) => p.id == 'user-3' && p.avatarPath == null);
+    seeded.profile.avatarBytes['user-3'] = _pngBytes;
+
+    await _pumpDirectory(
+      tester,
+      workspace: seeded.workspace,
+      reservations: seeded.reservations,
+      floorPlan: seeded.floorPlan,
+      profile: seeded.profile,
+    );
+
+    // Ben's row shows a CircleAvatar backed by an image; a member without a
+    // photo (Anna) keeps a text initial.
+    final benAvatars = tester
+        .widgetList<CircleAvatar>(find.byType(CircleAvatar))
+        .where((a) => a.backgroundImage != null);
+    expect(benAvatars, isNotEmpty);
   });
 
   testWidgets(

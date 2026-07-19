@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+import 'dart:typed_data';
+
 import 'profile.dart';
 
 /// Pure-Dart profile boundary (#223). Implemented by Supabase in data/,
@@ -23,4 +25,19 @@ abstract class ProfileRepository {
   /// Foreground heartbeat: stamps my `last_seen_at` via the self-scoped
   /// `touch_last_seen` RPC (0028).
   Future<void> touchLastSeen();
+
+  /// Uploads my profile photo to the private `avatars` bucket (0038) and
+  /// records its path on my profile row. Throws [StateError] signed out.
+  Future<void> setAvatar({
+    required Uint8List bytes,
+    required String contentType,
+  });
+
+  /// Removes my profile photo (storage object + the path column); a no-op
+  /// when none is set. Throws [StateError] signed out.
+  Future<void> clearAvatar();
+
+  /// Bytes of [userId]'s avatar, or null when they have none / it is not
+  /// readable. RLS grants it to self and co-workspace members (0038).
+  Future<Uint8List?> fetchAvatarBytes(String userId);
 }

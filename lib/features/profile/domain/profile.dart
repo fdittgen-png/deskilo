@@ -19,6 +19,7 @@ class Profile {
     this.whatsapp = '',
     this.statusText = '',
     this.lastSeenAt,
+    this.avatarPath,
   });
 
   /// auth.users id (uuid).
@@ -38,6 +39,12 @@ class Profile {
   /// Last foreground heartbeat (UTC); null until the first beat.
   final DateTime? lastSeenAt;
 
+  /// Storage path of the member's photo in the private `avatars` bucket
+  /// (`<user_id>/avatar`, 0038); null = no photo, the initial avatar shows.
+  final String? avatarPath;
+
+  bool get hasAvatar => avatarPath != null && avatarPath!.isNotEmpty;
+
   bool get sharesWhatsapp => whatsapp.isNotEmpty;
 
   /// Chat deep link for the member directory (#224), or null when the
@@ -56,6 +63,7 @@ class Profile {
         lastSeenAt: db['last_seen_at'] == null
             ? null
             : DateTime.parse(db['last_seen_at'] as String).toUtc(),
+        avatarPath: db['avatar_path'] as String?,
       );
 
   Map<String, dynamic> toDb() => {
@@ -64,6 +72,7 @@ class Profile {
         'whatsapp': whatsapp,
         'status_text': statusText,
         'last_seen_at': lastSeenAt?.toUtc().toIso8601String(),
+        'avatar_path': avatarPath,
       };
 
   Profile copyWith({
@@ -71,6 +80,7 @@ class Profile {
     String? whatsapp,
     String? statusText,
     DateTime? lastSeenAt,
+    String? avatarPath,
   }) =>
       Profile(
         id: id,
@@ -78,6 +88,7 @@ class Profile {
         whatsapp: whatsapp ?? this.whatsapp,
         statusText: statusText ?? this.statusText,
         lastSeenAt: lastSeenAt ?? this.lastSeenAt,
+        avatarPath: avatarPath ?? this.avatarPath,
       );
 }
 

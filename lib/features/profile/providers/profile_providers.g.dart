@@ -97,3 +97,101 @@ final class MyProfileProvider
 }
 
 String _$myProfileHash() => r'077a7aa878f6a7c0ba2ef698a526753a881da27b';
+
+/// Bytes of [userId]'s profile photo (0038), or null when they have none.
+/// Kept alive so a member's avatar is fetched once and reused across the
+/// directory, calendar and sheets; callers gate on `Profile.hasAvatar`
+/// before watching this so the download only runs for members who set one.
+
+@ProviderFor(memberAvatar)
+final memberAvatarProvider = MemberAvatarFamily._();
+
+/// Bytes of [userId]'s profile photo (0038), or null when they have none.
+/// Kept alive so a member's avatar is fetched once and reused across the
+/// directory, calendar and sheets; callers gate on `Profile.hasAvatar`
+/// before watching this so the download only runs for members who set one.
+
+final class MemberAvatarProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Uint8List?>,
+          Uint8List?,
+          FutureOr<Uint8List?>
+        >
+    with $FutureModifier<Uint8List?>, $FutureProvider<Uint8List?> {
+  /// Bytes of [userId]'s profile photo (0038), or null when they have none.
+  /// Kept alive so a member's avatar is fetched once and reused across the
+  /// directory, calendar and sheets; callers gate on `Profile.hasAvatar`
+  /// before watching this so the download only runs for members who set one.
+  MemberAvatarProvider._({
+    required MemberAvatarFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'memberAvatarProvider',
+         isAutoDispose: false,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$memberAvatarHash();
+
+  @override
+  String toString() {
+    return r'memberAvatarProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<Uint8List?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Uint8List?> create(Ref ref) {
+    final argument = this.argument as String;
+    return memberAvatar(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is MemberAvatarProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$memberAvatarHash() => r'd5ced693d6d3583cf5ecd7fd61c724042b8027ab';
+
+/// Bytes of [userId]'s profile photo (0038), or null when they have none.
+/// Kept alive so a member's avatar is fetched once and reused across the
+/// directory, calendar and sheets; callers gate on `Profile.hasAvatar`
+/// before watching this so the download only runs for members who set one.
+
+final class MemberAvatarFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<Uint8List?>, String> {
+  MemberAvatarFamily._()
+    : super(
+        retry: null,
+        name: r'memberAvatarProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: false,
+      );
+
+  /// Bytes of [userId]'s profile photo (0038), or null when they have none.
+  /// Kept alive so a member's avatar is fetched once and reused across the
+  /// directory, calendar and sheets; callers gate on `Profile.hasAvatar`
+  /// before watching this so the download only runs for members who set one.
+
+  MemberAvatarProvider call(String userId) =>
+      MemberAvatarProvider._(argument: userId, from: this);
+
+  @override
+  String toString() => r'memberAvatarProvider';
+}

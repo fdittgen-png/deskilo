@@ -13,5 +13,14 @@
   "profileStatusHint": "Im Call · zurück um 14:00",
   "profileStatusHelper": "Optional. Für Mitglieder deiner Workspaces im Mitgliederverzeichnis sichtbar. Leer lassen, um den Status zu löschen.",
   "profileStatusSaved": "Status gespeichert",
-  "profileStatusSaveFailed": "Status konnte nicht gespeichert werden"
+  "profileStatusSaveFailed": "Status konnte nicht gespeichert werden",
+  "profilePhotoTitle": "Foto",
+  "profilePhotoSet": "Zum Ändern tippen",
+  "profilePhotoNone": "Zum Hinzufügen eines Fotos tippen",
+  "profilePhotoChoose": "Foto auswählen",
+  "profilePhotoRemove": "Foto entfernen",
+  "profilePhotoSaved": "Foto aktualisiert",
+  "profilePhotoRemoved": "Foto entfernt",
+  "profilePhotoSaveFailed": "Foto konnte nicht aktualisiert werden",
+  "profilePhotoFileType": "Bild"
 }

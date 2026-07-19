@@ -1196,6 +1196,33 @@ class AppLocalizationsDe extends AppLocalizations {
       'Status konnte nicht gespeichert werden';
 
   @override
+  String get profilePhotoTitle => 'Foto';
+
+  @override
+  String get profilePhotoSet => 'Zum Ändern tippen';
+
+  @override
+  String get profilePhotoNone => 'Zum Hinzufügen eines Fotos tippen';
+
+  @override
+  String get profilePhotoChoose => 'Foto auswählen';
+
+  @override
+  String get profilePhotoRemove => 'Foto entfernen';
+
+  @override
+  String get profilePhotoSaved => 'Foto aktualisiert';
+
+  @override
+  String get profilePhotoRemoved => 'Foto entfernt';
+
+  @override
+  String get profilePhotoSaveFailed => 'Foto konnte nicht aktualisiert werden';
+
+  @override
+  String get profilePhotoFileType => 'Bild';
+
+  @override
   String get eventTypeRoleChange => 'Rollenwechsel';
 
   @override

@@ -13,5 +13,14 @@
   "profileStatusHint": "In chiamata · torno alle 14:00",
   "profileStatusHelper": "Facoltativo. Visibile ai membri dei tuoi spazi nell'elenco dei membri. Lascia vuoto per cancellarlo.",
   "profileStatusSaved": "Stato salvato",
-  "profileStatusSaveFailed": "Impossibile salvare lo stato"
+  "profileStatusSaveFailed": "Impossibile salvare lo stato",
+  "profilePhotoTitle": "Foto",
+  "profilePhotoSet": "Tocca per cambiare",
+  "profilePhotoNone": "Tocca per aggiungere una foto",
+  "profilePhotoChoose": "Scegli una foto",
+  "profilePhotoRemove": "Rimuovi foto",
+  "profilePhotoSaved": "Foto aggiornata",
+  "profilePhotoRemoved": "Foto rimossa",
+  "profilePhotoSaveFailed": "Impossibile aggiornare la foto",
+  "profilePhotoFileType": "Immagine"
 }
