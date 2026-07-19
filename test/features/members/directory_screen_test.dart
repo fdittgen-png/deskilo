@@ -15,6 +15,7 @@ import 'package:deskilo/core/trace/dev_mode.dart';
 import 'package:deskilo/core/ui/empty_state.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/presentation/widgets/reservation_detail_sheet.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -558,5 +559,90 @@ void main() {
       launched.single.toString(),
       'https://chat.whatsapp.com/AbCdEf123',
     );
+  });
+
+  testWidgets(
+      'each row carries a role badge for the owner and admins only; plain '
+      'members get none', (tester) async {
+    final seeded = _seed();
+    // Promote Ben to admin so all three roles are on screen at once.
+    seeded.workspace.otherMembers
+      ..removeWhere((m) => m.id == 'member-3')
+      ..add(_member(3, isAdmin: true));
+    await _pumpDirectory(
+      tester,
+      workspace: seeded.workspace,
+      reservations: seeded.reservations,
+      floorPlan: seeded.floorPlan,
+      profile: seeded.profile,
+    );
+
+    // Anna (owner) and Ben (admin) each get a role badge; Cara (plain
+    // member) and I (plain member) do not.
+    expect(
+      _chipTextByKey(tester, const ValueKey('directory-role-member-2')),
+      'Owner',
+    );
+    expect(
+      _chipTextByKey(tester, const ValueKey('directory-role-member-3')),
+      'Admin',
+    );
+    expect(
+      find.byKey(const ValueKey('directory-role-member-4')),
+      findsNothing,
+    );
+    expect(
+      find.byKey(const ValueKey('directory-role-member-1')),
+      findsNothing,
+    );
+  });
+
+  testWidgets(
+      'tapping a member lists their upcoming reservations; tapping one '
+      'opens its detail sheet', (tester) async {
+    final seeded = _seed();
+    await _pumpDirectory(
+      tester,
+      workspace: seeded.workspace,
+      reservations: seeded.reservations,
+      floorPlan: seeded.floorPlan,
+      profile: seeded.profile,
+    );
+
+    // Dora holds one upcoming booking on A1; her sheet lists it.
+    await tester.tap(find.text('Dora'));
+    await tester.pumpAndSettle();
+    expect(find.text('Reservations'), findsOneWidget);
+    final tile =
+        find.byKey(const ValueKey('directory-sheet-reservation-res-dora'));
+    expect(tile, findsOneWidget);
+
+    // Tapping it swaps the member sheet for the shared reservation
+    // detail sheet (its Cancel action proves which sheet is showing).
+    await tester.tap(tile);
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('directory-sheet-reservation-res-dora')),
+      findsNothing,
+    );
+    expect(find.byType(ReservationDetailSheet), findsOneWidget);
+  });
+
+  testWidgets(
+      'a member with no upcoming booking shows the empty reservations line',
+      (tester) async {
+    final seeded = _seed();
+    await _pumpDirectory(
+      tester,
+      workspace: seeded.workspace,
+      reservations: seeded.reservations,
+      floorPlan: seeded.floorPlan,
+      profile: seeded.profile,
+    );
+
+    // Ben has no booking at all.
+    await tester.tap(find.text('Ben'));
+    await tester.pumpAndSettle();
+    expect(find.text('No upcoming reservations'), findsOneWidget);
   });
 }

@@ -142,6 +142,8 @@
   "directoryClose": "Cerrar",
   "directoryReservedNow": "Reservado ahora",
   "directoryReservedNowSeat": "Reservado ahora · {seat}",
+  "directoryReservationsHeading": "Reservas",
+  "directoryNoUpcoming": "Sin reservas próximas",
   "editorBackgroundImage": "Imagen de fondo",
   "editorBackgroundSet": "Establecer imagen de fondo",
   "editorBackgroundReplace": "Reemplazar imagen de fondo",
