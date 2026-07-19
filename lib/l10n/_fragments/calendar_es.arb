@@ -13,5 +13,7 @@
   "calendarTimelineView": "Vista de cronología",
   "calendarTimelineEmpty": "No hay reservas en esta planta ese día.",
   "calendarAllLevels": "Todas las plantas",
-  "calendarTimelineAllEmpty": "No hay reservas en ninguna planta ese día."
+  "calendarTimelineAllEmpty": "No hay reservas en ninguna planta ese día.",
+  "calendarLevelCollapsed": "{level}, contraído",
+  "calendarLevelExpanded": "{level}, expandido"
 }

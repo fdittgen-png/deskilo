@@ -237,9 +237,10 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         _MonthGrid(
           month: _month,
           selectedDay: _selectedDay,
-          // Mine vs others' markers ('when did I reserve what' first):
-          // my days carry the filled dot, days with only others' bookings
-          // a hollow one.
+          today: DateUtils.dateOnly(DateTime.now()),
+          // Mine vs others' markers ('when did I reserve what' first): a
+          // day with any of MY bookings carries a red dot, a day with only
+          // other members' bookings a blue one.
           markedDays: {
             for (final r in visible) DateUtils.dateOnly(r.startsAt.toLocal()),
           },
@@ -338,17 +339,28 @@ class _MonthGrid extends StatelessWidget {
   const _MonthGrid({
     required this.month,
     required this.selectedDay,
+    required this.today,
     required this.markedDays,
     required this.myDays,
     required this.onSelect,
   });
 
+  /// Reservation-marker dot colours: red for a day carrying MY bookings,
+  /// blue for a day with only other members'. Fixed hues (not scheme
+  /// colours) so "mine vs. theirs" reads the same in light and dark.
+  static const Color _mineDot = Color(0xFFEF5350); // red 400
+  static const Color _otherDot = Color(0xFF42A5F5); // blue 400
+
   final DateTime month;
   final DateTime selectedDay;
+
+  /// Local today — gets a ring so it stays findable when another day is
+  /// selected.
+  final DateTime today;
   final Set<DateTime> markedDays;
 
-  /// Days with at least one of MY bookings — filled marker; other marked
-  /// days render hollow.
+  /// Days with at least one of MY bookings — the red dot; other marked
+  /// days get the blue one.
   final Set<DateTime> myDays;
   final ValueChanged<DateTime> onSelect;
 
@@ -395,7 +407,24 @@ class _MonthGrid extends StatelessWidget {
                             DateTime(month.year, month.month, index + 1);
                         final selected =
                             DateUtils.isSameDay(day, selectedDay);
+                        final isToday = DateUtils.isSameDay(day, today);
                         final marked = markedDays.contains(day);
+                        // Selected wins the filled disc; an unselected today
+                        // keeps a ring so it stays findable.
+                        final decoration = selected
+                            ? BoxDecoration(
+                                color: scheme.primary,
+                                shape: BoxShape.circle,
+                              )
+                            : isToday
+                                ? BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: scheme.primary,
+                                      width: 1.5,
+                                    ),
+                                  )
+                                : null;
                         return InkWell(
                           onTap: () => onSelect(day),
                           borderRadius: AppRadius.mdAll,
@@ -408,18 +437,16 @@ class _MonthGrid extends StatelessWidget {
                                   width: 26,
                                   height: 26,
                                   alignment: Alignment.center,
-                                  decoration: selected
-                                      ? BoxDecoration(
-                                          color: scheme.primary,
-                                          shape: BoxShape.circle,
-                                        )
-                                      : null,
+                                  decoration: decoration,
                                   child: Text(
                                     '${index + 1}',
                                     style: TextStyle(
                                       color: selected
                                           ? scheme.onPrimary
                                           : scheme.onSurface,
+                                      fontWeight: isToday || selected
+                                          ? FontWeight.w700
+                                          : null,
                                     ),
                                   ),
                                 ),
@@ -427,11 +454,11 @@ class _MonthGrid extends StatelessWidget {
                                   height: 6,
                                   child: marked
                                       ? Icon(
-                                          myDays.contains(day)
-                                              ? Icons.circle
-                                              : Icons.circle_outlined,
+                                          Icons.circle,
                                           size: 5,
-                                          color: scheme.primary,
+                                          color: myDays.contains(day)
+                                              ? _mineDot
+                                              : _otherDot,
                                         )
                                       : null,
                                 ),

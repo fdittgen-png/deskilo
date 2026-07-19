@@ -332,6 +332,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'No reservations on any level for this day.';
 
   @override
+  String calendarLevelCollapsed(String level) {
+    return '$level, collapsed';
+  }
+
+  @override
+  String calendarLevelExpanded(String level) {
+    return '$level, expanded';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override

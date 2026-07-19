@@ -264,6 +264,39 @@ void main() {
   });
 
   testWidgets(
+      'tapping a level header in All levels collapses its rows and taps '
+      'again to expand', (tester) async {
+    await pumpTimeline(
+      tester,
+      twoLevels: true,
+      seed: [
+        todayReservation(),
+        todayReservation(id: 'res-2', seatId: 'seat-9', startHour: 10),
+      ],
+    );
+
+    await tester.tap(find.widgetWithText(ChoiceChip, 'All levels'));
+    await tester.pumpAndSettle();
+
+    // Both levels open: their seat rows render.
+    expect(find.byKey(DayTimeline.trackKey('seat-4')), findsOneWidget);
+    expect(find.byKey(DayTimeline.trackKey('seat-9')), findsOneWidget);
+
+    // Collapse Ground floor: its header stays, its rows vanish, the other
+    // level is untouched.
+    await tester.tap(find.byKey(DayTimeline.levelHeaderKey('level-1')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(DayTimeline.levelHeaderKey('level-1')), findsOneWidget);
+    expect(find.byKey(DayTimeline.trackKey('seat-4')), findsNothing);
+    expect(find.byKey(DayTimeline.trackKey('seat-9')), findsOneWidget);
+
+    // Tap again to expand.
+    await tester.tap(find.byKey(DayTimeline.levelHeaderKey('level-1')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(DayTimeline.trackKey('seat-4')), findsOneWidget);
+  });
+
+  testWidgets(
       'All levels skips levels with no seats and levels without a visible '
       'reservation that day (#221)', (tester) async {
     await pumpTimeline(

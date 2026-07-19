@@ -13,5 +13,7 @@
   "calendarTimelineView": "Vue chronologique",
   "calendarTimelineEmpty": "Aucune réservation à cet étage ce jour-là.",
   "calendarAllLevels": "Tous les étages",
-  "calendarTimelineAllEmpty": "Aucune réservation à aucun étage ce jour-là."
+  "calendarTimelineAllEmpty": "Aucune réservation à aucun étage ce jour-là.",
+  "calendarLevelCollapsed": "{level}, réduit",
+  "calendarLevelExpanded": "{level}, déplié"
 }

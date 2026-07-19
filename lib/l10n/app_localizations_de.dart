@@ -335,6 +335,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Auf keiner Etage gibt es an diesem Tag Reservierungen.';
 
   @override
+  String calendarLevelCollapsed(String level) {
+    return '$level, eingeklappt';
+  }
+
+  @override
+  String calendarLevelExpanded(String level) {
+    return '$level, ausgeklappt';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override

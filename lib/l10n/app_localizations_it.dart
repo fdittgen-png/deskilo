@@ -336,6 +336,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessuna prenotazione su nessun piano in questo giorno.';
 
   @override
+  String calendarLevelCollapsed(String level) {
+    return '$level, compresso';
+  }
+
+  @override
+  String calendarLevelExpanded(String level) {
+    return '$level, espanso';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override

@@ -135,6 +135,11 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
   /// [_allLevelsId] stacks every level on one shared axis.
   String? _levelId;
 
+  /// Level ids collapsed in all-levels mode (#221 follow-up): tapping a
+  /// level header hides its rows so a busy multi-floor day stays scannable.
+  /// Session-only browsing state, like [_levelId].
+  final Set<String> _collapsedLevels = {};
+
   /// Day the axis was last auto-scrolled for.
   DateTime? _autoScrolledDay;
 
@@ -376,13 +381,18 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
       }
       visibleReservations.addAll(levelReservations);
 
+      final collapsed = level != null && _collapsedLevels.contains(level.id);
       if (level != null) {
-        leadingCells.add(_levelHeaderCell(context, level));
+        leadingCells
+            .add(_levelHeaderCell(context, level: level, collapsed: collapsed));
         tracks.add(const SizedBox(
           height: TimelineAxis.levelHeaderRowHeight,
           width: TimelineAxis.trackWidth,
         ));
       }
+      // Collapsed: the header stays (a tap re-opens it) but its office /
+      // desk / seat rows are skipped entirely.
+      if (collapsed) continue;
       for (final office in plan.offices) {
         final officeReservations = levelReservations
             .where((r) => r.officeId == office.id)
@@ -506,22 +516,51 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
 
   /// Level-name header in all-levels mode — deliberately distinct from the
   /// muted `office · desk` group headers: titleSmall in the primary color.
-  Widget _levelHeaderCell(BuildContext context, Level level) {
+  /// Tapping it collapses or expands that level's rows; the chevron shows
+  /// which way the tap goes.
+  Widget _levelHeaderCell(
+    BuildContext context, {
+    required Level level,
+    required bool collapsed,
+  }) {
+    final scheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context);
     return SizedBox(
       key: DayTimeline.levelHeaderKey(level.id),
       height: TimelineAxis.levelHeaderRowHeight,
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: AppSpacing.sm,
-          top: AppSpacing.md,
-        ),
-        child: Text(
-          level.name,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
+      child: InkWell(
+        onTap: () => setState(() {
+          if (!_collapsedLevels.remove(level.id)) {
+            _collapsedLevels.add(level.id);
+          }
+        }),
+        child: Padding(
+          padding: const EdgeInsets.only(left: AppSpacing.xs, top: AppSpacing.sm),
+          child: Row(
+            children: [
+              Icon(
+                collapsed ? Icons.chevron_right : Icons.expand_more,
+                size: 18,
+                color: scheme.primary,
               ),
+              const SizedBox(width: 2),
+              Flexible(
+                child: Text(
+                  level.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  semanticsLabel: collapsed
+                      ? (l10n?.calendarLevelCollapsed(level.name) ??
+                          '${level.name}, collapsed')
+                      : (l10n?.calendarLevelExpanded(level.name) ??
+                          '${level.name}, expanded'),
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: scheme.primary,
+                      ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
