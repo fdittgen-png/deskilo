@@ -13,5 +13,14 @@
   "profileStatusHint": "En appel · de retour à 14h00",
   "profileStatusHelper": "Facultatif. Visible par les membres de vos espaces dans l'annuaire des membres. Laissez vide pour l'effacer.",
   "profileStatusSaved": "Statut enregistré",
-  "profileStatusSaveFailed": "Impossible d'enregistrer le statut"
+  "profileStatusSaveFailed": "Impossible d'enregistrer le statut",
+  "profilePhotoTitle": "Photo",
+  "profilePhotoSet": "Toucher pour changer",
+  "profilePhotoNone": "Toucher pour ajouter une photo",
+  "profilePhotoChoose": "Choisir une photo",
+  "profilePhotoRemove": "Supprimer la photo",
+  "profilePhotoSaved": "Photo mise à jour",
+  "profilePhotoRemoved": "Photo supprimée",
+  "profilePhotoSaveFailed": "Impossible de mettre à jour la photo",
+  "profilePhotoFileType": "Image"
 }

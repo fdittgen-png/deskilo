@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/files/file_picker.dart';
 import '../../../../core/locale/locale_controller.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/theme_controller.dart';
@@ -11,10 +13,12 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
+import '../../../members/providers/directory_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/profile.dart';
 import '../../providers/profile_providers.dart';
+import '../widgets/member_avatar.dart';
 
 /// Endonyms are proper nouns, identical in every UI language — deliberately
 /// const strings, not l10n keys (#147). Order matches the issue spec.
@@ -33,6 +37,110 @@ const _systemDefault = 'system';
 /// App settings. Sign-out lives here; more sections arrive with their Epics.
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
+
+  /// Chooser for the profile photo (0038): pick a new one, or remove the
+  /// current one when set.
+  Future<void> _photoSheet(
+    BuildContext context,
+    WidgetRef ref,
+    Profile profile,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final choice = await showModalBottomSheet<String>(
+      context: context,
+      builder: (sheetContext) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.add_a_photo_outlined),
+              title: Text(l10n?.profilePhotoChoose ?? 'Choose a photo'),
+              onTap: () => Navigator.of(sheetContext).pop('choose'),
+            ),
+            if (profile.hasAvatar)
+              ListTile(
+                leading: const Icon(Icons.delete_outline),
+                title: Text(l10n?.profilePhotoRemove ?? 'Remove photo'),
+                onTap: () => Navigator.of(sheetContext).pop('remove'),
+              ),
+            const SizedBox(height: AppSpacing.sm),
+          ],
+        ),
+      ),
+    );
+    if (choice == null || !context.mounted) return;
+    if (choice == 'choose') {
+      await _pickPhoto(context, ref, profile.id);
+    } else {
+      await _removePhoto(context, ref, profile.id);
+    }
+  }
+
+  Future<void> _pickPhoto(
+    BuildContext context,
+    WidgetRef ref,
+    String userId,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    try {
+      final pick = ref.read(filePickerProvider);
+      final file = await pick(XTypeGroup(
+        label: l10n?.profilePhotoFileType ?? 'Image',
+        extensions: const ['jpg', 'jpeg', 'png', 'webp'],
+        mimeTypes: const ['image/jpeg', 'image/png', 'image/webp'],
+      ));
+      if (file == null) return; // cancelled
+      final bytes = await file.readAsBytes();
+      await ref.read(profileRepositoryProvider).setAvatar(
+            bytes: bytes,
+            contentType: file.mimeType ?? 'image/jpeg',
+          );
+      _invalidateAvatar(ref, userId);
+      if (!context.mounted) return;
+      AppSnack.success(context, l10n?.profilePhotoSaved ?? 'Photo updated');
+    } catch (e, st) {
+      debugPrint('profile photo upload failed: $e\n$st');
+      TraceLogger.instance.error('profile', 'profile photo upload failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.profilePhotoSaveFailed ?? 'Could not update the photo',
+      );
+    }
+  }
+
+  Future<void> _removePhoto(
+    BuildContext context,
+    WidgetRef ref,
+    String userId,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    try {
+      await ref.read(profileRepositoryProvider).clearAvatar();
+      _invalidateAvatar(ref, userId);
+      if (!context.mounted) return;
+      AppSnack.success(context, l10n?.profilePhotoRemoved ?? 'Photo removed');
+    } catch (e, st) {
+      debugPrint('profile photo removal failed: $e\n$st');
+      TraceLogger.instance.error('profile', 'profile photo removal failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.profilePhotoSaveFailed ?? 'Could not update the photo',
+      );
+    }
+  }
+
+  /// Refresh every surface that shows the avatar: my profile, the
+  /// directory's profile map, and the cached bytes for this user.
+  void _invalidateAvatar(WidgetRef ref, String userId) {
+    ref
+      ..invalidate(myProfileProvider)
+      ..invalidate(memberProfilesProvider)
+      ..invalidate(memberAvatarProvider(userId));
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -59,6 +167,25 @@ class SettingsScreen extends ConsumerWidget {
             title: Text(l10n?.profilesTitle ?? 'Profiles'),
             onTap: () => context.push('/profiles'),
           ),
+          // Profile photo (0038): shown on my directory row and detail
+          // sheet. Tapping opens a chooser to set or remove it.
+          if (myProfile != null)
+            ListTile(
+              key: const ValueKey('settings-photo'),
+              leading: MemberAvatar(
+                userId: myProfile.id,
+                name: myProfile.displayName,
+                hasAvatar: myProfile.hasAvatar,
+                radius: 20,
+              ),
+              title: Text(l10n?.profilePhotoTitle ?? 'Photo'),
+              subtitle: Text(
+                myProfile.hasAvatar
+                    ? (l10n?.profilePhotoSet ?? 'Tap to change')
+                    : (l10n?.profilePhotoNone ?? 'Tap to add a photo'),
+              ),
+              onTap: () => _photoSheet(context, ref, myProfile),
+            ),
           // Member directory (#224): visible to EVERY member — it lives in
           // the ungrouped personal section, not under Administration. Kept
           // for discovery even though the directory is a bottom tab since

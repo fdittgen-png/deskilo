@@ -13,5 +13,14 @@
   "profileStatusHint": "En una llamada · vuelvo a las 14:00",
   "profileStatusHelper": "Opcional. Visible para los miembros de tus espacios en el directorio de miembros. Déjalo vacío para borrarlo.",
   "profileStatusSaved": "Estado guardado",
-  "profileStatusSaveFailed": "No se pudo guardar el estado"
+  "profileStatusSaveFailed": "No se pudo guardar el estado",
+  "profilePhotoTitle": "Foto",
+  "profilePhotoSet": "Toca para cambiar",
+  "profilePhotoNone": "Toca para añadir una foto",
+  "profilePhotoChoose": "Elegir una foto",
+  "profilePhotoRemove": "Quitar foto",
+  "profilePhotoSaved": "Foto actualizada",
+  "profilePhotoRemoved": "Foto eliminada",
+  "profilePhotoSaveFailed": "No se pudo actualizar la foto",
+  "profilePhotoFileType": "Imagen"
 }

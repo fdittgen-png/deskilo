@@ -143,6 +143,11 @@ void main() {
 
   testWidgets('settings shows the Services tile when services is enabled',
       (tester) async {
+    // The personal tiles above the admin section keep growing (#223/#231
+    // WhatsApp + Status, 0038 Photo) — a taller view keeps Services mounted.
+    tester.view.physicalSize = const Size(800, 1600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
     await pumpSettings(tester);
 
     expect(find.text('Services'), findsOneWidget);

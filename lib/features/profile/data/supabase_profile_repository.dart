@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+import 'dart:typed_data';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/profile.dart';
@@ -8,6 +10,9 @@ class SupabaseProfileRepository implements ProfileRepository {
   SupabaseProfileRepository(this._client);
 
   final SupabaseClient _client;
+
+  /// Storage object path of [userId]'s avatar in the private bucket (0038).
+  static String _avatarPath(String userId) => '$userId/avatar';
 
   @override
   Future<Profile?> fetchMyProfile() async {
@@ -62,5 +67,51 @@ class SupabaseProfileRepository implements ProfileRepository {
   @override
   Future<void> touchLastSeen() async {
     await _client.rpc<dynamic>('touch_last_seen');
+  }
+
+  @override
+  Future<void> setAvatar({
+    required Uint8List bytes,
+    required String contentType,
+  }) async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) {
+      throw StateError('cannot update the profile while signed out');
+    }
+    final path = _avatarPath(userId);
+    // Self-only storage RLS (0038); upsert overwrites a previous photo.
+    await _client.storage.from('avatars').uploadBinary(
+          path,
+          bytes,
+          fileOptions: FileOptions(contentType: contentType, upsert: true),
+        );
+    await _client
+        .from('profiles')
+        .update({'avatar_path': path}).eq('id', userId);
+  }
+
+  @override
+  Future<void> clearAvatar() async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) {
+      throw StateError('cannot update the profile while signed out');
+    }
+    await _client.storage.from('avatars').remove([_avatarPath(userId)]);
+    await _client
+        .from('profiles')
+        .update({'avatar_path': null}).eq('id', userId);
+  }
+
+  @override
+  Future<Uint8List?> fetchAvatarBytes(String userId) async {
+    try {
+      return await _client.storage.from('avatars').download(
+            _avatarPath(userId),
+          );
+    } on StorageException {
+      // No object (never uploaded) or not readable — the initial avatar
+      // shows instead; not an error worth surfacing.
+      return null;
+    }
   }
 }

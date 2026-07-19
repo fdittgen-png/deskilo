@@ -2258,6 +2258,60 @@ abstract class AppLocalizations {
   /// **'Could not save the status'**
   String get profileStatusSaveFailed;
 
+  /// Settings entry: the member's profile photo (0038).
+  ///
+  /// In en, this message translates to:
+  /// **'Photo'**
+  String get profilePhotoTitle;
+
+  /// Subtitle of the Photo entry when the member already has a photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to change'**
+  String get profilePhotoSet;
+
+  /// Subtitle of the Photo entry when the member has no photo yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to add a photo'**
+  String get profilePhotoNone;
+
+  /// Action in the photo sheet: pick an image from the device.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a photo'**
+  String get profilePhotoChoose;
+
+  /// Action in the photo sheet: delete the current profile photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get profilePhotoRemove;
+
+  /// Success snackbar after uploading a new profile photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo updated'**
+  String get profilePhotoSaved;
+
+  /// Success snackbar after removing the profile photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo removed'**
+  String get profilePhotoRemoved;
+
+  /// Error snackbar when uploading or removing the photo fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not update the photo'**
+  String get profilePhotoSaveFailed;
+
+  /// File-picker type label when choosing a profile photo; the word is identical across locales but the key exists for parity.
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get profilePhotoFileType;
+
   /// Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card
   ///
   /// In en, this message translates to:

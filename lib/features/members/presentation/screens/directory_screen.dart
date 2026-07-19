@@ -15,6 +15,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../profile/domain/profile.dart';
+import '../../../profile/presentation/widgets/member_avatar.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -405,10 +406,11 @@ Future<void> _showMemberSheet(
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    child: Text(
-                      name.isEmpty ? '?' : name.substring(0, 1).toUpperCase(),
-                    ),
+                  MemberAvatar(
+                    userId: member.userId,
+                    name: name,
+                    hasAvatar: profile?.hasAvatar ?? false,
+                    radius: 24,
                   ),
                   const SizedBox(width: AppSpacing.md),
                   Expanded(
@@ -584,13 +586,10 @@ class _MemberRow extends StatelessWidget {
       leading: Stack(
         clipBehavior: Clip.none,
         children: [
-          CircleAvatar(
-            backgroundColor: theme.colorScheme.primaryContainer,
-            foregroundColor: theme.colorScheme.onPrimaryContainer,
-            child: Text(
-              name.isEmpty ? '?' : name.substring(0, 1).toUpperCase(),
-              style: const TextStyle(fontWeight: FontWeight.w600),
-            ),
+          MemberAvatar(
+            userId: member.userId,
+            name: name,
+            hasAvatar: profile?.hasAvatar ?? false,
           ),
           // Presence at a glance: a ringed dot on the avatar — green
           // when online — before any text is read.

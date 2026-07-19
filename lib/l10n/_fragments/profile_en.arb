@@ -55,5 +55,41 @@
   "profileStatusSaveFailed": "Could not save the status",
   "@profileStatusSaveFailed": {
     "description": "Error snackbar when saving the status line fails"
+  },
+  "profilePhotoTitle": "Photo",
+  "@profilePhotoTitle": {
+    "description": "Settings entry: the member's profile photo (0038)."
+  },
+  "profilePhotoSet": "Tap to change",
+  "@profilePhotoSet": {
+    "description": "Subtitle of the Photo entry when the member already has a photo."
+  },
+  "profilePhotoNone": "Tap to add a photo",
+  "@profilePhotoNone": {
+    "description": "Subtitle of the Photo entry when the member has no photo yet."
+  },
+  "profilePhotoChoose": "Choose a photo",
+  "@profilePhotoChoose": {
+    "description": "Action in the photo sheet: pick an image from the device."
+  },
+  "profilePhotoRemove": "Remove photo",
+  "@profilePhotoRemove": {
+    "description": "Action in the photo sheet: delete the current profile photo."
+  },
+  "profilePhotoSaved": "Photo updated",
+  "@profilePhotoSaved": {
+    "description": "Success snackbar after uploading a new profile photo."
+  },
+  "profilePhotoRemoved": "Photo removed",
+  "@profilePhotoRemoved": {
+    "description": "Success snackbar after removing the profile photo."
+  },
+  "profilePhotoSaveFailed": "Could not update the photo",
+  "@profilePhotoSaveFailed": {
+    "description": "Error snackbar when uploading or removing the photo fails."
+  },
+  "profilePhotoFileType": "Image",
+  "@profilePhotoFileType": {
+    "description": "File-picker type label when choosing a profile photo; the word is identical across locales but the key exists for parity."
   }
 }
