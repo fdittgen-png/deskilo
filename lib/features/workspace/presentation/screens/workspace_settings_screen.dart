@@ -3,7 +3,10 @@ import 'dart:convert';
 
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:share_plus/share_plus.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
@@ -19,13 +22,19 @@ import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
 import '../../../plan/providers/accessory_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
+import '../../../reservations/providers/reservation_providers.dart';
+import '../../domain/booking_granularity.dart';
+import '../../domain/member.dart';
 import '../../domain/payment_instructions.dart';
 import '../../domain/workspace.dart';
+import '../../domain/workspace_config_pdf.dart';
+import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_import.dart';
 import '../../domain/workspace_xml.dart';
 import '../../providers/workspace_import_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
+import '../feature_names.dart';
 
 /// Owner-only workspace settings (#153): country, currency and time zone
 /// become editable after creation. Picking a country re-defaults the
@@ -180,6 +189,168 @@ class _WorkspaceSettingsScreenState
     } catch (e, st) {
       debugPrint('workspace XML export failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'workspace XML export failed',
+          error: e, stackTrace: st);
+      if (!mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  /// Role label for a member — owner outranks admin outranks member.
+  String _roleLabel(AppLocalizations? l10n, Member member) => member.isOwner
+      ? (l10n?.memberRoleOwner ?? 'Owner')
+      : member.isAdmin
+          ? (l10n?.memberRoleAdmin ?? 'Admin')
+          : (l10n?.memberRoleMember ?? 'Member');
+
+  String _statusLabel(AppLocalizations? l10n, MemberStatus status) =>
+      switch (status) {
+        MemberStatus.active => l10n?.memberStatusActive ?? 'Active',
+        MemberStatus.paused => l10n?.memberStatusPaused ?? 'Paused',
+        MemberStatus.exited => l10n?.memberStatusExited ?? 'Exited',
+      };
+
+  String _granularityLabel(
+    AppLocalizations? l10n,
+    BookingGranularity granularity,
+  ) =>
+      switch (granularity) {
+        BookingGranularity.flexible =>
+          l10n?.availabilityGranularityFlexible ?? 'Flexible',
+        BookingGranularity.halfDay =>
+          l10n?.availabilityGranularityHalfDay ?? 'Half day',
+        BookingGranularity.fullDay =>
+          l10n?.availabilityGranularityFullDay ?? 'Full day',
+        // Minute granularities carry their step in the label itself.
+        BookingGranularity.minutes5 ||
+        BookingGranularity.minutes15 ||
+        BookingGranularity.minutes30 ||
+        BookingGranularity.minutes60 =>
+          '${granularity.stepMinutes} min',
+      };
+
+  /// Renders a complete, human-readable PDF snapshot of the workspace —
+  /// settings, every member with their role and status, enabled features,
+  /// availability and the whole floor plan — and hands it to the system
+  /// share sheet. Unlike the XML export (a machine backup, no members),
+  /// this is the owner's shareable configuration record.
+  Future<void> _exportConfigPdf(Workspace workspace) async {
+    final l10n = AppLocalizations.of(context);
+    final locale = Localizations.maybeLocaleOf(context)?.toString();
+    setState(() => _busy = true);
+    try {
+      final levelsList = await ref.read(levelsProvider.future);
+      final plans = <ConfigPdfLevel>[];
+      for (final level in levelsList) {
+        plans.add((
+          level: level,
+          plan: await ref.read(floorPlanProvider(level.id).future),
+        ));
+      }
+      final members = await ref.read(workspaceMembersProvider.future);
+      final names = await ref.read(memberNamesProvider.future);
+      final granularity = await ref.read(bookingGranularityProvider.future);
+      final features = await ref.read(enabledFeaturesProvider.future);
+      final openWeekdays = await ref.read(openWeekdaysProvider.future);
+      final closures = await ref.read(closureDaysProvider.future);
+
+      // ISO weekday (1=Mon..7=Sun) → localized name via a known Monday.
+      final weekdayFormat = DateFormat.EEEE(locale);
+      String weekdayName(int isoWeekday) =>
+          weekdayFormat.format(DateTime(2026, 6, 1 + (isoWeekday - 1)));
+      final openDaysLabel = (openWeekdays.toList()..sort())
+          .map(weekdayName)
+          .join(', ');
+
+      final dateFormat = DateFormat.yMMMd(locale);
+      final closureLabels = [
+        for (final closure in closures)
+          closure.reason.trim().isEmpty
+              ? dateFormat.format(closure.day.toLocal())
+              : '${dateFormat.format(closure.day.toLocal())} — '
+                  '${closure.reason}',
+      ];
+
+      // Members sorted by name, like the directory.
+      final sortedMembers = [...members]..sort(
+          (a, b) => (names[a.id] ?? '')
+              .toLowerCase()
+              .compareTo((names[b.id] ?? '').toLowerCase()),
+        );
+      final configMembers = <ConfigPdfMember>[
+        for (final member in sortedMembers)
+          (
+            name: names[member.id] ?? '',
+            role: _roleLabel(l10n, member),
+            status: _statusLabel(l10n, member.status),
+          ),
+      ];
+
+      final strings = WorkspaceConfigPdfStrings(
+        title: l10n?.workspaceConfigPdfTitle ?? 'Workspace configuration',
+        overview: l10n?.workspaceConfigOverview ?? 'Overview',
+        country: l10n?.workspaceCountryLabel ?? 'Country',
+        currency: l10n?.workspaceCurrencyLabel ?? 'Currency',
+        timezone: l10n?.workspaceTimezoneLabel ?? 'Time zone',
+        granularity: l10n?.workspaceConfigGranularity ?? 'Booking granularity',
+        members: l10n?.workspaceConfigMembersSection ?? 'Members',
+        colName: l10n?.workspaceConfigColName ?? 'Name',
+        colRole: l10n?.workspaceConfigColRole ?? 'Role',
+        colStatus: l10n?.workspaceConfigColStatus ?? 'Status',
+        features: l10n?.workspaceConfigFeatures ?? 'Enabled features',
+        none: l10n?.workspaceConfigNone ?? 'None',
+        availability: l10n?.workspaceConfigAvailability ?? 'Availability',
+        openDays: l10n?.workspaceConfigOpenDays ?? 'Open days',
+        closures: l10n?.workspaceConfigClosures ?? 'Closures',
+        floorPlan: l10n?.workspaceConfigFloorPlan ?? 'Floor plan',
+        bookableWhole:
+            l10n?.workspaceConfigBookableWhole ?? 'bookable as a whole',
+        seatsLabel: l10n?.workspaceConfigSeats ?? 'Seats',
+        emptyLevel: l10n?.workspaceConfigEmptyLevel ?? 'No rooms',
+      );
+
+      final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
+      final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
+      final bytes = await buildWorkspaceConfigPdf(
+        strings: strings,
+        workspaceName: workspace.name,
+        generatedOnLabel: l10n?.workspaceConfigPdfGeneratedOn(
+              dateFormat.format(DateTime.now()),
+            ) ??
+            'Generated on ${dateFormat.format(DateTime.now())}',
+        countryLabel: localizedCountryName(l10n, workspace.countryCode),
+        currencyCode: workspace.currencyCode,
+        timezone: workspace.timezone,
+        granularityLabel: _granularityLabel(l10n, granularity),
+        members: configMembers,
+        featureLabels: [
+          // Registry order for a stable list.
+          for (final feature in WorkspaceFeature.values)
+            if (features.contains(feature)) featureName(l10n, feature),
+        ],
+        openDaysLabel: openDaysLabel,
+        closureLabels: closureLabels,
+        levels: plans,
+        baseFont: pw.Font.ttf(regular),
+        boldFont: pw.Font.ttf(bold),
+      );
+
+      final share = ref.read(shareLauncherProvider);
+      await share(
+        ShareParams(
+          files: [XFile.fromData(bytes, mimeType: 'application/pdf')],
+          fileNameOverrides: ['${workspace.name}-configuration.pdf'],
+        ),
+      );
+    } catch (e, st) {
+      debugPrint('workspace config PDF export failed: $e\n$st');
+      TraceLogger.instance.error(
+          'workspace', 'workspace config PDF export failed',
           error: e, stackTrace: st);
       if (!mounted) return;
       AppSnack.error(
@@ -617,6 +788,24 @@ class _WorkspaceSettingsScreenState
                     ),
                     enabled: !_busy,
                     onTap: () => _exportXml(workspace),
+                  ),
+                  // Human-readable PDF snapshot — settings + every member +
+                  // the whole floor plan. Owner-only like the rest.
+                  ListTile(
+                    key: const Key('workspaceSettingsExportPdf'),
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.picture_as_pdf_outlined),
+                    title: Text(
+                      l10n?.workspaceConfigPdfExport ??
+                          'Export configuration (PDF)',
+                    ),
+                    subtitle: Text(
+                      l10n?.workspaceConfigPdfExportSubtitle ??
+                          'Complete snapshot: settings, all members and the '
+                              'floor plan.',
+                    ),
+                    enabled: !_busy,
+                    onTap: () => _exportConfigPdf(workspace),
                   ),
                   // #165 — restore from an exported file. Replaces the
                   // floor plan (guarded by preview + destructive confirm);

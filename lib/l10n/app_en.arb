@@ -2085,6 +2085,91 @@
   "@workspaceWhatsappGroupInvalid": {
     "description": "Validation error when the entered group link does not start with https://chat.whatsapp.com/ (#231)."
   },
+  "memberStatusActive": "Active",
+  "@memberStatusActive": {
+    "description": "Member status label: an active member (complements memberStatusPaused / memberStatusExited)."
+  },
+  "workspaceConfigPdfExport": "Export configuration (PDF)",
+  "@workspaceConfigPdfExport": {
+    "description": "Owner settings entry: export a complete human-readable PDF snapshot of the workspace configuration."
+  },
+  "workspaceConfigPdfExportSubtitle": "Complete snapshot: settings, all members and the floor plan.",
+  "@workspaceConfigPdfExportSubtitle": {
+    "description": "Subtitle of the configuration-PDF export entry, contrasting it with the members-free XML export."
+  },
+  "workspaceConfigPdfTitle": "Workspace configuration",
+  "@workspaceConfigPdfTitle": {
+    "description": "Title printed at the top of the configuration PDF."
+  },
+  "workspaceConfigPdfGeneratedOn": "Generated on {date}",
+  "@workspaceConfigPdfGeneratedOn": {
+    "description": "Sub-header of the configuration PDF stating the export date.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceConfigOverview": "Overview",
+  "@workspaceConfigOverview": {
+    "description": "Configuration PDF section: workspace locale and booking settings."
+  },
+  "workspaceConfigMembersSection": "Members",
+  "@workspaceConfigMembersSection": {
+    "description": "Configuration PDF section: the full member roster with roles and statuses."
+  },
+  "workspaceConfigFeatures": "Enabled features",
+  "@workspaceConfigFeatures": {
+    "description": "Configuration PDF section: the workspace's enabled feature flags."
+  },
+  "workspaceConfigAvailability": "Availability",
+  "@workspaceConfigAvailability": {
+    "description": "Configuration PDF section: open weekdays and closure days."
+  },
+  "workspaceConfigFloorPlan": "Floor plan",
+  "@workspaceConfigFloorPlan": {
+    "description": "Configuration PDF section: levels, rooms, desks and seats."
+  },
+  "workspaceConfigGranularity": "Booking granularity",
+  "@workspaceConfigGranularity": {
+    "description": "Configuration PDF overview line: how bookings are timed."
+  },
+  "workspaceConfigColName": "Name",
+  "@workspaceConfigColName": {
+    "description": "Configuration PDF members table: name column header."
+  },
+  "workspaceConfigColRole": "Role",
+  "@workspaceConfigColRole": {
+    "description": "Configuration PDF members table: role column header."
+  },
+  "workspaceConfigColStatus": "Status",
+  "@workspaceConfigColStatus": {
+    "description": "Configuration PDF members table: status column header."
+  },
+  "workspaceConfigOpenDays": "Open days",
+  "@workspaceConfigOpenDays": {
+    "description": "Configuration PDF availability line: the weekdays the workspace is open."
+  },
+  "workspaceConfigClosures": "Closures",
+  "@workspaceConfigClosures": {
+    "description": "Configuration PDF availability line: the configured closure days."
+  },
+  "workspaceConfigBookableWhole": "bookable as a whole",
+  "@workspaceConfigBookableWhole": {
+    "description": "Configuration PDF floor plan: marker next to a room that can be booked as a whole."
+  },
+  "workspaceConfigSeats": "Seats",
+  "@workspaceConfigSeats": {
+    "description": "Configuration PDF floor plan: prefix of a desk's seat list."
+  },
+  "workspaceConfigEmptyLevel": "No rooms",
+  "@workspaceConfigEmptyLevel": {
+    "description": "Configuration PDF floor plan: placeholder for a level with no rooms."
+  },
+  "workspaceConfigNone": "None",
+  "@workspaceConfigNone": {
+    "description": "Configuration PDF: placeholder for an empty section (no members, no features, no closures)."
+  },
   "workspaceXmlExport": "Export workspace (XML)",
   "@workspaceXmlExport": {
     "description": "Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)"
