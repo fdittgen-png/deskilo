@@ -184,6 +184,104 @@ final class FloorPlanFamily extends $Family
   String toString() => r'floorPlanProvider';
 }
 
+/// The level's decoded background image (0036), or null when none is set.
+/// Fetched bytes are decoded once and cached; the plan and editor paint
+/// it behind the grid. Failures degrade to null — the schematic still
+/// renders, the photo is just absent.
+
+@ProviderFor(levelBackground)
+final levelBackgroundProvider = LevelBackgroundFamily._();
+
+/// The level's decoded background image (0036), or null when none is set.
+/// Fetched bytes are decoded once and cached; the plan and editor paint
+/// it behind the grid. Failures degrade to null — the schematic still
+/// renders, the photo is just absent.
+
+final class LevelBackgroundProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<ui.Image?>,
+          ui.Image?,
+          FutureOr<ui.Image?>
+        >
+    with $FutureModifier<ui.Image?>, $FutureProvider<ui.Image?> {
+  /// The level's decoded background image (0036), or null when none is set.
+  /// Fetched bytes are decoded once and cached; the plan and editor paint
+  /// it behind the grid. Failures degrade to null — the schematic still
+  /// renders, the photo is just absent.
+  LevelBackgroundProvider._({
+    required LevelBackgroundFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'levelBackgroundProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$levelBackgroundHash();
+
+  @override
+  String toString() {
+    return r'levelBackgroundProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<ui.Image?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<ui.Image?> create(Ref ref) {
+    final argument = this.argument as String;
+    return levelBackground(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is LevelBackgroundProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$levelBackgroundHash() => r'b1a6eb8debeb208e9b18b304f3fb7bc77f7b2422';
+
+/// The level's decoded background image (0036), or null when none is set.
+/// Fetched bytes are decoded once and cached; the plan and editor paint
+/// it behind the grid. Failures degrade to null — the schematic still
+/// renders, the photo is just absent.
+
+final class LevelBackgroundFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<ui.Image?>, String> {
+  LevelBackgroundFamily._()
+    : super(
+        retry: null,
+        name: r'levelBackgroundProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The level's decoded background image (0036), or null when none is set.
+  /// Fetched bytes are decoded once and cached; the plan and editor paint
+  /// it behind the grid. Failures degrade to null — the schematic still
+  /// renders, the photo is just absent.
+
+  LevelBackgroundProvider call(String levelId) =>
+      LevelBackgroundProvider._(argument: levelId, from: this);
+
+  @override
+  String toString() => r'levelBackgroundProvider';
+}
+
 /// seat/office id → display name for the active workspace (labels in the
 /// calendar and event feeds without loading every level's plan).
 

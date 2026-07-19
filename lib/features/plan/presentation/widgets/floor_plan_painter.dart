@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/office_colors.dart';
@@ -16,6 +18,7 @@ class FloorPlanPainter extends CustomPainter {
     required this.cellSize,
     required this.colorScheme,
     this.brightness = Brightness.light,
+    this.background,
     this.seatStates,
     this.seatLabels,
     this.highlightedSeatId,
@@ -30,6 +33,11 @@ class FloorPlanPainter extends CustomPainter {
   final double cellSize;
   final ColorScheme colorScheme;
   final Brightness brightness;
+
+  /// Optional background image (0036): a photo/blueprint of the real
+  /// space, painted behind the grid at reduced opacity so seats stay
+  /// legible on top. Null = schematic only.
+  final ui.Image? background;
 
   /// Live mode: seat id → state. Null = editor mode (uniform styling).
   final Map<String, SeatState>? seatStates;
@@ -60,6 +68,25 @@ class FloorPlanPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    final bg = background;
+    if (bg != null) {
+      // Contain-fit the photo within the plan bounds, centred, dimmed so
+      // the seat/desk graphics on top stay readable.
+      final src = Rect.fromLTWH(
+          0, 0, bg.width.toDouble(), bg.height.toDouble());
+      final scale =
+          (size.width / bg.width).clamp(0.0, size.height / bg.height);
+      final w = bg.width * scale;
+      final h = bg.height * scale;
+      final dst = Rect.fromLTWH(
+          (size.width - w) / 2, (size.height - h) / 2, w, h);
+      canvas.drawImageRect(
+        bg,
+        src,
+        dst,
+        Paint()..color = Colors.white.withValues(alpha: 0.55),
+      );
+    }
     final gridPaint = Paint()
       ..color = colorScheme.outlineVariant.withValues(alpha: 0.35)
       ..strokeWidth = 0.5;
@@ -114,11 +141,14 @@ class FloorPlanPainter extends CustomPainter {
       _softShadow(canvas, rrect,
           alpha: brightness == Brightness.dark ? 0.30 : 0.12);
       // Calm tint fill: free stays airy, taken seats read a touch fuller.
+      // Over a background photo the zone must still read as a status
+      // colour without hiding the image — a modest bump, never opaque.
+      final overPhoto = background != null;
       final fillAlpha = switch (state) {
-        null => 0.16,
-        SeatState.free => 0.14,
-        SeatState.blocked => 0.10,
-        _ => 0.22,
+        null => overPhoto ? 0.24 : 0.16,
+        SeatState.free => overPhoto ? 0.20 : 0.14,
+        SeatState.blocked => overPhoto ? 0.24 : 0.10,
+        _ => overPhoto ? 0.40 : 0.22,
       };
       canvas.drawRRect(rrect, Paint()..color = accent.withValues(alpha: fillAlpha));
       canvas.drawRRect(
@@ -290,6 +320,7 @@ class FloorPlanPainter extends CustomPainter {
   @override
   bool shouldRepaint(FloorPlanPainter oldDelegate) =>
       oldDelegate.plan != plan ||
+      oldDelegate.background != background ||
       oldDelegate.marquee != marquee ||
       oldDelegate.marqueeValid != marqueeValid ||
       oldDelegate.selection != selection ||

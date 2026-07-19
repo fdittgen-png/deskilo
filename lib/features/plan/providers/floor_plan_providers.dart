@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: MIT
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -26,6 +29,23 @@ Future<List<Level>> levels(Ref ref) async {
 @riverpod
 Future<FloorPlan> floorPlan(Ref ref, String levelId) {
   return ref.watch(floorPlanRepositoryProvider).fetchPlan(levelId);
+}
+
+/// The level's decoded background image (0036), or null when none is set.
+/// Fetched bytes are decoded once and cached; the plan and editor paint
+/// it behind the grid. Failures degrade to null — the schematic still
+/// renders, the photo is just absent.
+@riverpod
+Future<ui.Image?> levelBackground(Ref ref, String levelId) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return null;
+  final Uint8List? bytes = await ref
+      .watch(floorPlanRepositoryProvider)
+      .fetchLevelBackground(workspace.id, levelId);
+  if (bytes == null || bytes.isEmpty) return null;
+  final codec = await ui.instantiateImageCodec(bytes);
+  final frame = await codec.getNextFrame();
+  return frame.image;
 }
 
 /// seat/office id → display name for the active workspace (labels in the

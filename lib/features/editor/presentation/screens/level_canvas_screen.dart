@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: MIT
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/files/file_picker.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/accessory.dart';
@@ -671,6 +674,73 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     ref.invalidate(floorPlanProvider(widget.levelId));
   }
 
+  /// Owner picks a photo/blueprint of the real space as this level's
+  /// background (0036); it's uploaded and painted behind the grid.
+  Future<void> _pickBackground(BuildContext context) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    const group = XTypeGroup(
+      label: 'images',
+      extensions: ['png', 'jpg', 'jpeg', 'webp'],
+      mimeTypes: ['image/png', 'image/jpeg', 'image/webp'],
+    );
+    final file = await ref.read(filePickerProvider)(group);
+    if (file == null || !context.mounted) return;
+    try {
+      final bytes = await file.readAsBytes();
+      final contentType = file.mimeType ??
+          (file.name.toLowerCase().endsWith('.png')
+              ? 'image/png'
+              : 'image/jpeg');
+      await ref.read(floorPlanRepositoryProvider).setLevelBackground(
+            workspace.id,
+            widget.levelId,
+            bytes: bytes,
+            contentType: contentType,
+          );
+    } catch (e, st) {
+      debugPrint('set background failed: $e\n$st');
+      TraceLogger.instance.error(
+          'editor', 'set background failed', error: e, stackTrace: st);
+      if (!context.mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
+      return;
+    }
+    ref
+      ..invalidate(levelsProvider)
+      ..invalidate(levelBackgroundProvider(widget.levelId));
+  }
+
+  Future<void> _removeBackground(BuildContext context) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    try {
+      await ref
+          .read(floorPlanRepositoryProvider)
+          .clearLevelBackground(workspace.id, widget.levelId);
+    } catch (e, st) {
+      debugPrint('remove background failed: $e\n$st');
+      TraceLogger.instance.error(
+          'editor', 'remove background failed', error: e, stackTrace: st);
+      if (!context.mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
+      return;
+    }
+    ref
+      ..invalidate(levelsProvider)
+      ..invalidate(levelBackgroundProvider(widget.levelId));
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -684,7 +754,52 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
         '';
 
     return Scaffold(
-      appBar: AppBar(title: Text(levelName)),
+      appBar: AppBar(
+        title: Text(levelName),
+        actions: [
+          Builder(
+            builder: (context) {
+              final level = ref
+                  .watch(levelsProvider)
+                  .value
+                  ?.where((l) => l.id == widget.levelId)
+                  .firstOrNull;
+              final hasBg = level?.hasBackground ?? false;
+              return PopupMenuButton<String>(
+                icon: const Icon(Icons.image_outlined),
+                tooltip: l10n?.editorBackgroundImage ?? 'Background image',
+                onSelected: (v) {
+                  if (v == 'set') {
+                    _pickBackground(context);
+                  } else {
+                    _removeBackground(context);
+                  }
+                },
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: 'set',
+                    child: Text(
+                      hasBg
+                          ? (l10n?.editorBackgroundReplace ??
+                              'Replace background image')
+                          : (l10n?.editorBackgroundSet ??
+                              'Set background image'),
+                    ),
+                  ),
+                  if (hasBg)
+                    PopupMenuItem(
+                      value: 'remove',
+                      child: Text(
+                        l10n?.editorBackgroundRemove ??
+                            'Remove background image',
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: AppSpacing.smAll,
@@ -802,6 +917,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
           key: const ValueKey('level-canvas'),
           size: size,
           painter: FloorPlanPainter(
+            background: ref.watch(levelBackgroundProvider(widget.levelId)).value,
             plan: shownPlan,
             cellSize: GridCanvas.cellSize,
             colorScheme: Theme.of(context).colorScheme,

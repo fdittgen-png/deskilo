@@ -477,6 +477,18 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get editorBackgroundImage => 'Immagine di sfondo';
+
+  @override
+  String get editorBackgroundSet => 'Imposta immagine di sfondo';
+
+  @override
+  String get editorBackgroundReplace => 'Sostituisci immagine di sfondo';
+
+  @override
+  String get editorBackgroundRemove => 'Rimuovi immagine di sfondo';
+
+  @override
   String get editorTitle => 'Editor dello spazio';
 
   @override

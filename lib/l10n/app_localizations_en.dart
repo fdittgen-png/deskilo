@@ -473,6 +473,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get editorBackgroundImage => 'Background image';
+
+  @override
+  String get editorBackgroundSet => 'Set background image';
+
+  @override
+  String get editorBackgroundReplace => 'Replace background image';
+
+  @override
+  String get editorBackgroundRemove => 'Remove background image';
+
+  @override
   String get editorTitle => 'Workspace editor';
 
   @override

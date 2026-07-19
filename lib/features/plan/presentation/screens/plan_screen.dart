@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import 'dart:async';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -855,6 +856,8 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                             _labelFor(plan, seat, reservations, names, at),
                     },
                     highlightedSeatId: _highlightedSeatId,
+                    background:
+                        ref.watch(levelBackgroundProvider(level.id)).value,
                     onSeatTap: (seat) =>
                         _onSeatTap(plan, seat, reservations, at),
                   ),
@@ -1361,6 +1364,7 @@ class _LivePlanCanvas extends StatelessWidget {
     required this.seatLabels,
     required this.onSeatTap,
     this.highlightedSeatId,
+    this.background,
   });
 
   final FloorPlan plan;
@@ -1370,6 +1374,9 @@ class _LivePlanCanvas extends StatelessWidget {
 
   /// Seat ringed by the painter after a calendar jump (#182).
   final String? highlightedSeatId;
+
+  /// Level background image (0036), painted behind the grid.
+  final ui.Image? background;
 
   @override
   Widget build(BuildContext context) {
@@ -1397,6 +1404,7 @@ class _LivePlanCanvas extends StatelessWidget {
             seatStates: seatStates,
             seatLabels: seatLabels,
             highlightedSeatId: highlightedSeatId,
+            background: background,
           ),
         ),
       ),

@@ -1,5 +1,9 @@
 {
   "@@locale": "it",
+  "editorBackgroundImage": "Immagine di sfondo",
+  "editorBackgroundSet": "Imposta immagine di sfondo",
+  "editorBackgroundReplace": "Sostituisci immagine di sfondo",
+  "editorBackgroundRemove": "Rimuovi immagine di sfondo",
   "editorTitle": "Editor dello spazio",
   "editorOpenTooltip": "Modifica spazio",
   "editorAddLevel": "Aggiungi piano",

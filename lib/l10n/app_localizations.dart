@@ -956,6 +956,30 @@ abstract class AppLocalizations {
   /// **'Reserved now · {seat}'**
   String directoryReservedNowSeat(String seat);
 
+  /// Editor app-bar action opening the level background-image menu (0036)
+  ///
+  /// In en, this message translates to:
+  /// **'Background image'**
+  String get editorBackgroundImage;
+
+  /// Menu item: pick a photo/blueprint of the real space as the level background
+  ///
+  /// In en, this message translates to:
+  /// **'Set background image'**
+  String get editorBackgroundSet;
+
+  /// Menu item shown when a background is already set
+  ///
+  /// In en, this message translates to:
+  /// **'Replace background image'**
+  String get editorBackgroundReplace;
+
+  /// Menu item removing the level background image
+  ///
+  /// In en, this message translates to:
+  /// **'Remove background image'**
+  String get editorBackgroundRemove;
+
   /// App-bar title of the owner-only workspace editor
   ///
   /// In en, this message translates to:

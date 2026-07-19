@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+import 'dart:typed_data';
+
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/floor_plan_repository.dart';
@@ -146,6 +148,43 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
       if (idx >= 0) levels[idx] = levels[idx].copyWith(sortOrder: i);
     }
   }
+
+  /// levelId → background image bytes (0036).
+  final backgrounds = <String, Uint8List>{};
+
+  @override
+  Future<void> setLevelBackground(
+    String workspaceId,
+    String levelId, {
+    required Uint8List bytes,
+    required String contentType,
+  }) async {
+    backgrounds[levelId] = bytes;
+    final idx = levels.indexWhere((l) => l.id == levelId);
+    if (idx >= 0) {
+      levels[idx] =
+          levels[idx].copyWith(backgroundPath: '$workspaceId/$levelId');
+    }
+  }
+
+  @override
+  Future<void> clearLevelBackground(
+    String workspaceId,
+    String levelId,
+  ) async {
+    backgrounds.remove(levelId);
+    final idx = levels.indexWhere((l) => l.id == levelId);
+    if (idx >= 0) {
+      levels[idx] = levels[idx].copyWith(backgroundPath: null);
+    }
+  }
+
+  @override
+  Future<Uint8List?> fetchLevelBackground(
+    String workspaceId,
+    String levelId,
+  ) async =>
+      backgrounds[levelId];
 
   @override
   Future<FloorPlan> fetchPlan(String levelId) async {

@@ -4,6 +4,7 @@ import 'package:deskilo/features/editor/presentation/screens/level_canvas_screen
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_accessory_repository.dart';
@@ -19,16 +20,20 @@ Future<FakeFloorPlanRepository> pumpCanvas(
   WidgetTester tester, {
   Future<void> Function(FakeFloorPlanRepository plans, String levelId)? seed,
   FakeAccessoryRepository? accessories,
+  void Function(List<Override> overrides, FakeFloorPlanRepository plans)?
+      override,
 }) async {
   final plans = FakeFloorPlanRepository();
   final level = await plans.createLevel('ws-1', 'Ground floor', 0);
   await seed?.call(plans, level.id);
+  final overrides = standardTestOverrides(
+    floorPlan: plans,
+    accessories: accessories,
+  );
+  override?.call(overrides, plans);
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(
-        floorPlan: plans,
-        accessories: accessories,
-      ),
+      overrides: overrides,
       child: const DeskiloApp(),
     ),
   );
