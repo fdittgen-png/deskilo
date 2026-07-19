@@ -858,6 +858,13 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                     highlightedSeatId: _highlightedSeatId,
                     background:
                         ref.watch(levelBackgroundProvider(level.id)).value,
+                    images: {
+                      for (final image in plan.images)
+                        if (ref.watch(planImageProvider(image.id)).value
+                            != null)
+                          image.id:
+                              ref.watch(planImageProvider(image.id)).value!,
+                    },
                     onSeatTap: (seat) =>
                         _onSeatTap(plan, seat, reservations, at),
                   ),
@@ -1365,6 +1372,7 @@ class _LivePlanCanvas extends StatelessWidget {
     required this.onSeatTap,
     this.highlightedSeatId,
     this.background,
+    this.images = const {},
   });
 
   final FloorPlan plan;
@@ -1377,6 +1385,9 @@ class _LivePlanCanvas extends StatelessWidget {
 
   /// Level background image (0036), painted behind the grid.
   final ui.Image? background;
+
+  /// Illustration images (0037): id → decoded bitmap.
+  final Map<String, ui.Image> images;
 
   @override
   Widget build(BuildContext context) {
@@ -1405,6 +1416,7 @@ class _LivePlanCanvas extends StatelessWidget {
             seatLabels: seatLabels,
             highlightedSeatId: highlightedSeatId,
             background: background,
+            images: images,
           ),
         ),
       ),

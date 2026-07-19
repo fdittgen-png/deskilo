@@ -520,6 +520,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editorToolDesk => 'Desk';
 
   @override
+  String get editorToolImage => 'Image';
+
+  @override
   String get editorToolErase => 'Erase';
 
   @override

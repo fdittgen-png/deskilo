@@ -930,6 +930,12 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                 plan: plan,
                 background:
                     ref.watch(levelBackgroundProvider(level.id)).value,
+                images: {
+                  for (final image in plan.images)
+                    if (ref.watch(planImageProvider(image.id)).value != null)
+                      image.id:
+                          ref.watch(planImageProvider(image.id)).value!,
+                },
                 seatStates: {
                   for (final seat in plan.seats)
                     // Closed day (#186): every seat renders muted —
@@ -1097,6 +1103,7 @@ class _ReservePlanCanvas extends StatelessWidget {
     required this.seatLabels,
     required this.onSeatTap,
     this.background,
+    this.images = const {},
   });
 
   final FloorPlan plan;
@@ -1104,6 +1111,7 @@ class _ReservePlanCanvas extends StatelessWidget {
   final Map<String, String> seatLabels;
   final ValueChanged<Seat> onSeatTap;
   final ui.Image? background;
+  final Map<String, ui.Image> images;
 
   @override
   Widget build(BuildContext context) {
@@ -1134,6 +1142,7 @@ class _ReservePlanCanvas extends StatelessWidget {
             colorScheme: Theme.of(context).colorScheme,
             brightness: Theme.of(context).brightness,
             background: background,
+            images: images,
             seatStates: seatStates,
             seatLabels: seatLabels,
           ),

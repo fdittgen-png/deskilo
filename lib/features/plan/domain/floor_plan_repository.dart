@@ -6,6 +6,7 @@ import 'floor_plan.dart';
 import 'grid_geometry.dart';
 import 'level.dart';
 import 'office.dart';
+import 'plan_image.dart';
 import 'seat.dart';
 import 'seat_context.dart';
 
@@ -36,6 +37,28 @@ abstract class FloorPlanRepository {
   /// The level's background image bytes (0036), or null when none is set
   /// or it can't be fetched. Cached by the provider that decodes it.
   Future<Uint8List?> fetchLevelBackground(String workspaceId, String levelId);
+
+  // ── illustration images (0037) ──
+
+  /// Owner-only: place a new illustration image on [levelId] at [rect];
+  /// uploads [bytes] to the floor-plans bucket. Returns the created row.
+  Future<PlanImage> createPlanImage({
+    required String workspaceId,
+    required String levelId,
+    required GridRect rect,
+    required Uint8List bytes,
+    required String contentType,
+  });
+
+  /// Owner-only: move/resize an illustration image.
+  Future<void> updatePlanImageRect(String imageId, GridRect rect);
+
+  /// Owner-only: remove an illustration image and its stored object.
+  Future<void> deletePlanImage(String imageId);
+
+  /// The image's bytes (0037), or null when it can't be fetched. Cached
+  /// by the provider that decodes it.
+  Future<Uint8List?> fetchPlanImageBytes(String imageId);
 
   /// seat/office id → display name across the whole workspace (calendar and
   /// event lists label bookings without loading every level's plan).

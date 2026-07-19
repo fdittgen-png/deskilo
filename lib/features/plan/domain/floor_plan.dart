@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'desk.dart';
 import 'office.dart';
+import 'plan_image.dart';
 import 'seat.dart';
 
 part 'floor_plan.freezed.dart';
@@ -17,6 +18,7 @@ sealed class FloorPlan with _$FloorPlan {
     required List<Office> offices,
     required List<Desk> desks,
     required List<Seat> seats,
+    @Default(<PlanImage>[]) List<PlanImage> images,
   }) = _FloorPlan;
 
   List<Desk> desksOf(String officeId) =>
@@ -33,4 +35,8 @@ sealed class FloorPlan with _$FloorPlan {
 
   Seat? seatAtCell(int x, int y) =>
       seats.where((s) => s.footprint.containsCell(x, y)).firstOrNull;
+
+  /// The topmost illustration image covering (x, y), if any (0037).
+  PlanImage? imageAtCell(int x, int y) =>
+      images.where((i) => i.rect.containsCell(x, y)).lastOrNull;
 }

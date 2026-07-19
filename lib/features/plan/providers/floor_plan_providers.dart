@@ -48,6 +48,17 @@ Future<ui.Image?> levelBackground(Ref ref, String levelId) async {
   return frame.image;
 }
 
+/// A single plan illustration image decoded (0037), keyed by image id.
+@riverpod
+Future<ui.Image?> planImage(Ref ref, String imageId) async {
+  final Uint8List? bytes =
+      await ref.watch(floorPlanRepositoryProvider).fetchPlanImageBytes(imageId);
+  if (bytes == null || bytes.isEmpty) return null;
+  final codec = await ui.instantiateImageCodec(bytes);
+  final frame = await codec.getNextFrame();
+  return frame.image;
+}
+
 /// seat/office id → display name for the active workspace (labels in the
 /// calendar and event feeds without loading every level's plan).
 @Riverpod(keepAlive: true)

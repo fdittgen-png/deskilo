@@ -524,6 +524,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get editorToolDesk => 'Scrivania';
 
   @override
+  String get editorToolImage => 'Immagine';
+
+  @override
   String get editorToolErase => 'Cancella';
 
   @override

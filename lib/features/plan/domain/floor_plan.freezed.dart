@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$FloorPlan {
 
- String get levelId; List<Office> get offices; List<Desk> get desks; List<Seat> get seats;
+ String get levelId; List<Office> get offices; List<Desk> get desks; List<Seat> get seats; List<PlanImage> get images;
 /// Create a copy of FloorPlan
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $FloorPlanCopyWith<FloorPlan> get copyWith => _$FloorPlanCopyWithImpl<FloorPlan>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FloorPlan&&(identical(other.levelId, levelId) || other.levelId == levelId)&&const DeepCollectionEquality().equals(other.offices, offices)&&const DeepCollectionEquality().equals(other.desks, desks)&&const DeepCollectionEquality().equals(other.seats, seats));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FloorPlan&&(identical(other.levelId, levelId) || other.levelId == levelId)&&const DeepCollectionEquality().equals(other.offices, offices)&&const DeepCollectionEquality().equals(other.desks, desks)&&const DeepCollectionEquality().equals(other.seats, seats)&&const DeepCollectionEquality().equals(other.images, images));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,levelId,const DeepCollectionEquality().hash(offices),const DeepCollectionEquality().hash(desks),const DeepCollectionEquality().hash(seats));
+int get hashCode => Object.hash(runtimeType,levelId,const DeepCollectionEquality().hash(offices),const DeepCollectionEquality().hash(desks),const DeepCollectionEquality().hash(seats),const DeepCollectionEquality().hash(images));
 
 @override
 String toString() {
-  return 'FloorPlan(levelId: $levelId, offices: $offices, desks: $desks, seats: $seats)';
+  return 'FloorPlan(levelId: $levelId, offices: $offices, desks: $desks, seats: $seats, images: $images)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $FloorPlanCopyWith<$Res>  {
   factory $FloorPlanCopyWith(FloorPlan value, $Res Function(FloorPlan) _then) = _$FloorPlanCopyWithImpl;
 @useResult
 $Res call({
- String levelId, List<Office> offices, List<Desk> desks, List<Seat> seats
+ String levelId, List<Office> offices, List<Desk> desks, List<Seat> seats, List<PlanImage> images
 });
 
 
@@ -62,13 +62,14 @@ class _$FloorPlanCopyWithImpl<$Res>
 
 /// Create a copy of FloorPlan
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? levelId = null,Object? offices = null,Object? desks = null,Object? seats = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? levelId = null,Object? offices = null,Object? desks = null,Object? seats = null,Object? images = null,}) {
   return _then(_self.copyWith(
 levelId: null == levelId ? _self.levelId : levelId // ignore: cast_nullable_to_non_nullable
 as String,offices: null == offices ? _self.offices : offices // ignore: cast_nullable_to_non_nullable
 as List<Office>,desks: null == desks ? _self.desks : desks // ignore: cast_nullable_to_non_nullable
 as List<Desk>,seats: null == seats ? _self.seats : seats // ignore: cast_nullable_to_non_nullable
-as List<Seat>,
+as List<Seat>,images: null == images ? _self.images : images // ignore: cast_nullable_to_non_nullable
+as List<PlanImage>,
   ));
 }
 
@@ -150,10 +151,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String levelId,  List<Office> offices,  List<Desk> desks,  List<Seat> seats)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String levelId,  List<Office> offices,  List<Desk> desks,  List<Seat> seats,  List<PlanImage> images)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FloorPlan() when $default != null:
-return $default(_that.levelId,_that.offices,_that.desks,_that.seats);case _:
+return $default(_that.levelId,_that.offices,_that.desks,_that.seats,_that.images);case _:
   return orElse();
 
 }
@@ -171,10 +172,10 @@ return $default(_that.levelId,_that.offices,_that.desks,_that.seats);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String levelId,  List<Office> offices,  List<Desk> desks,  List<Seat> seats)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String levelId,  List<Office> offices,  List<Desk> desks,  List<Seat> seats,  List<PlanImage> images)  $default,) {final _that = this;
 switch (_that) {
 case _FloorPlan():
-return $default(_that.levelId,_that.offices,_that.desks,_that.seats);}
+return $default(_that.levelId,_that.offices,_that.desks,_that.seats,_that.images);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -188,10 +189,10 @@ return $default(_that.levelId,_that.offices,_that.desks,_that.seats);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String levelId,  List<Office> offices,  List<Desk> desks,  List<Seat> seats)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String levelId,  List<Office> offices,  List<Desk> desks,  List<Seat> seats,  List<PlanImage> images)?  $default,) {final _that = this;
 switch (_that) {
 case _FloorPlan() when $default != null:
-return $default(_that.levelId,_that.offices,_that.desks,_that.seats);case _:
+return $default(_that.levelId,_that.offices,_that.desks,_that.seats,_that.images);case _:
   return null;
 
 }
@@ -203,7 +204,7 @@ return $default(_that.levelId,_that.offices,_that.desks,_that.seats);case _:
 
 
 class _FloorPlan extends FloorPlan {
-  const _FloorPlan({required this.levelId, required final  List<Office> offices, required final  List<Desk> desks, required final  List<Seat> seats}): _offices = offices,_desks = desks,_seats = seats,super._();
+  const _FloorPlan({required this.levelId, required final  List<Office> offices, required final  List<Desk> desks, required final  List<Seat> seats, final  List<PlanImage> images = const <PlanImage>[]}): _offices = offices,_desks = desks,_seats = seats,_images = images,super._();
   
 
 @override final  String levelId;
@@ -228,6 +229,13 @@ class _FloorPlan extends FloorPlan {
   return EqualUnmodifiableListView(_seats);
 }
 
+ final  List<PlanImage> _images;
+@override@JsonKey() List<PlanImage> get images {
+  if (_images is EqualUnmodifiableListView) return _images;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_images);
+}
+
 
 /// Create a copy of FloorPlan
 /// with the given fields replaced by the non-null parameter values.
@@ -239,16 +247,16 @@ _$FloorPlanCopyWith<_FloorPlan> get copyWith => __$FloorPlanCopyWithImpl<_FloorP
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FloorPlan&&(identical(other.levelId, levelId) || other.levelId == levelId)&&const DeepCollectionEquality().equals(other._offices, _offices)&&const DeepCollectionEquality().equals(other._desks, _desks)&&const DeepCollectionEquality().equals(other._seats, _seats));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FloorPlan&&(identical(other.levelId, levelId) || other.levelId == levelId)&&const DeepCollectionEquality().equals(other._offices, _offices)&&const DeepCollectionEquality().equals(other._desks, _desks)&&const DeepCollectionEquality().equals(other._seats, _seats)&&const DeepCollectionEquality().equals(other._images, _images));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,levelId,const DeepCollectionEquality().hash(_offices),const DeepCollectionEquality().hash(_desks),const DeepCollectionEquality().hash(_seats));
+int get hashCode => Object.hash(runtimeType,levelId,const DeepCollectionEquality().hash(_offices),const DeepCollectionEquality().hash(_desks),const DeepCollectionEquality().hash(_seats),const DeepCollectionEquality().hash(_images));
 
 @override
 String toString() {
-  return 'FloorPlan(levelId: $levelId, offices: $offices, desks: $desks, seats: $seats)';
+  return 'FloorPlan(levelId: $levelId, offices: $offices, desks: $desks, seats: $seats, images: $images)';
 }
 
 
@@ -259,7 +267,7 @@ abstract mixin class _$FloorPlanCopyWith<$Res> implements $FloorPlanCopyWith<$Re
   factory _$FloorPlanCopyWith(_FloorPlan value, $Res Function(_FloorPlan) _then) = __$FloorPlanCopyWithImpl;
 @override @useResult
 $Res call({
- String levelId, List<Office> offices, List<Desk> desks, List<Seat> seats
+ String levelId, List<Office> offices, List<Desk> desks, List<Seat> seats, List<PlanImage> images
 });
 
 
@@ -276,13 +284,14 @@ class __$FloorPlanCopyWithImpl<$Res>
 
 /// Create a copy of FloorPlan
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? levelId = null,Object? offices = null,Object? desks = null,Object? seats = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? levelId = null,Object? offices = null,Object? desks = null,Object? seats = null,Object? images = null,}) {
   return _then(_FloorPlan(
 levelId: null == levelId ? _self.levelId : levelId // ignore: cast_nullable_to_non_nullable
 as String,offices: null == offices ? _self._offices : offices // ignore: cast_nullable_to_non_nullable
 as List<Office>,desks: null == desks ? _self._desks : desks // ignore: cast_nullable_to_non_nullable
 as List<Desk>,seats: null == seats ? _self._seats : seats // ignore: cast_nullable_to_non_nullable
-as List<Seat>,
+as List<Seat>,images: null == images ? _self._images : images // ignore: cast_nullable_to_non_nullable
+as List<PlanImage>,
   ));
 }
 

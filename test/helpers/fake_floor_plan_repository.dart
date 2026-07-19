@@ -7,6 +7,7 @@ import 'package:deskilo/features/plan/domain/floor_plan_repository.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
 import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/plan/domain/office.dart';
+import 'package:deskilo/features/plan/domain/plan_image.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/plan/domain/seat_context.dart';
 
@@ -186,6 +187,46 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
   ) async =>
       backgrounds[levelId];
 
+  /// Illustration images (0037) and their bytes.
+  final planImages = <PlanImage>[];
+  final imageBytes = <String, Uint8List>{};
+  var _imgSeq = 1;
+
+  @override
+  Future<PlanImage> createPlanImage({
+    required String workspaceId,
+    required String levelId,
+    required GridRect rect,
+    required Uint8List bytes,
+    required String contentType,
+  }) async {
+    final image = PlanImage(
+      id: 'img-${_imgSeq++}',
+      levelId: levelId,
+      rect: rect,
+      storagePath: '$workspaceId/img/img-$_imgSeq',
+    );
+    planImages.add(image);
+    imageBytes[image.id] = bytes;
+    return image;
+  }
+
+  @override
+  Future<void> updatePlanImageRect(String imageId, GridRect rect) async {
+    final i = planImages.indexWhere((im) => im.id == imageId);
+    if (i >= 0) planImages[i] = planImages[i].copyWith(rect: rect);
+  }
+
+  @override
+  Future<void> deletePlanImage(String imageId) async {
+    planImages.removeWhere((im) => im.id == imageId);
+    imageBytes.remove(imageId);
+  }
+
+  @override
+  Future<Uint8List?> fetchPlanImageBytes(String imageId) async =>
+      imageBytes[imageId];
+
   @override
   Future<FloorPlan> fetchPlan(String levelId) async {
     final levelOffices = offices.where((o) => o.levelId == levelId).toList();
@@ -198,6 +239,8 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
       offices: levelOffices,
       desks: levelDesks,
       seats: seats.where((s) => deskIds.contains(s.deskId)).toList(),
+      images:
+          planImages.where((im) => im.levelId == levelId).toList(),
     );
   }
 

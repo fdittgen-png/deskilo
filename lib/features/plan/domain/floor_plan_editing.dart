@@ -7,7 +7,7 @@ import 'floor_plan.dart';
 import 'floor_plan_rules.dart';
 import 'grid_geometry.dart';
 
-enum ElementKind { office, desk, seat }
+enum ElementKind { office, desk, seat, image }
 
 /// Applies [rect] to an office. A pure translation carries the office's
 /// desks and seats along; a resize leaves the contents in place (they are
@@ -73,6 +73,17 @@ FloorPlan applySeatPosition(FloorPlan plan, String seatId, int x, int y) {
   );
 }
 
+/// Applies [rect] to an illustration image (0037): free move/resize, no
+/// children, no containment — images may overlap anything.
+FloorPlan applyImageRect(FloorPlan plan, String imageId, GridRect rect) {
+  return plan.copyWith(
+    images: [
+      for (final i in plan.images)
+        i.id == imageId ? i.copyWith(rect: rect) : i,
+    ],
+  );
+}
+
 /// Full validation of one element inside [plan] after a move/resize:
 /// sibling overlap plus every child still fully contained.
 PlacementProblem? validateElement(
@@ -116,6 +127,10 @@ PlacementProblem? validateElement(
     case ElementKind.seat:
       final seat = plan.seats.firstWhere((s) => s.id == id);
       return validateSeatInPlan(plan, seat);
+    case ElementKind.image:
+      // Illustrations float freely — the only rule is staying on the
+      // grid (dragRect already clamps to bounds), so nothing to reject.
+      return null;
   }
 }
 

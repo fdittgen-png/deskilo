@@ -60,6 +60,10 @@
   "@editorToolDesk": {
     "description": "Canvas tool: drag to draw a desk inside an office"
   },
+  "editorToolImage": "Image",
+  "@editorToolImage": {
+    "description": "Editor tool: place a resizable illustration image on the plan (0037)"
+  },
   "editorToolErase": "Erase",
   "@editorToolErase": {
     "description": "Canvas tool: tap an element to delete it"
