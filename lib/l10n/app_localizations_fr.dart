@@ -476,6 +476,12 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get directoryReservationsHeading => 'Réservations';
+
+  @override
+  String get directoryNoUpcoming => 'Aucune réservation à venir';
+
+  @override
   String get editorBackgroundImage => 'Image de fond';
 
   @override

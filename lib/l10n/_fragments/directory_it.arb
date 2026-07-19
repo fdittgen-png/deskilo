@@ -13,5 +13,7 @@
   "directoryOpenGroup": "Apri il gruppo WhatsApp",
   "directoryClose": "Chiudi",
   "directoryReservedNow": "Prenotato ora",
-  "directoryReservedNowSeat": "Prenotato ora · {seat}"
+  "directoryReservedNowSeat": "Prenotato ora · {seat}",
+  "directoryReservationsHeading": "Prenotazioni",
+  "directoryNoUpcoming": "Nessuna prenotazione in arrivo"
 }

@@ -80,5 +80,13 @@
         "type": "String"
       }
     }
+  },
+  "directoryReservationsHeading": "Reservations",
+  "@directoryReservationsHeading": {
+    "description": "Section heading in the member detail sheet listing that member's upcoming reservations, each tappable to open its detail"
+  },
+  "directoryNoUpcoming": "No upcoming reservations",
+  "@directoryNoUpcoming": {
+    "description": "Shown under the Reservations heading in the member detail sheet when the member has no active booking ahead"
   }
 }

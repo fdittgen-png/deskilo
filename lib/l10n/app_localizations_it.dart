@@ -477,6 +477,12 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get directoryReservationsHeading => 'Prenotazioni';
+
+  @override
+  String get directoryNoUpcoming => 'Nessuna prenotazione in arrivo';
+
+  @override
   String get editorBackgroundImage => 'Immagine di sfondo';
 
   @override

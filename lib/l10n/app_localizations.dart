@@ -956,6 +956,18 @@ abstract class AppLocalizations {
   /// **'Reserved now · {seat}'**
   String directoryReservedNowSeat(String seat);
 
+  /// Section heading in the member detail sheet listing that member's upcoming reservations, each tappable to open its detail
+  ///
+  /// In en, this message translates to:
+  /// **'Reservations'**
+  String get directoryReservationsHeading;
+
+  /// Shown under the Reservations heading in the member detail sheet when the member has no active booking ahead
+  ///
+  /// In en, this message translates to:
+  /// **'No upcoming reservations'**
+  String get directoryNoUpcoming;
+
   /// Editor app-bar action opening the level background-image menu (0036)
   ///
   /// In en, this message translates to:

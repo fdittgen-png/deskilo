@@ -13,5 +13,7 @@
   "directoryOpenGroup": "WhatsApp-Gruppe öffnen",
   "directoryClose": "Schließen",
   "directoryReservedNow": "Jetzt reserviert",
-  "directoryReservedNowSeat": "Jetzt reserviert · {seat}"
+  "directoryReservedNowSeat": "Jetzt reserviert · {seat}",
+  "directoryReservationsHeading": "Reservierungen",
+  "directoryNoUpcoming": "Keine anstehenden Reservierungen"
 }

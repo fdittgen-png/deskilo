@@ -16,6 +16,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../profile/domain/profile.dart';
 import '../../../reservations/domain/reservation.dart';
+import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -53,6 +54,17 @@ class DirectoryScreen extends ConsumerWidget {
       ..invalidate(directoryReservationsProvider)
       ..invalidate(targetNamesProvider);
     await ref.read(workspaceMembersProvider.future);
+  }
+
+  /// Opens a member's booking in the shared [ReservationDetailSheet] —
+  /// the same surface the calendar uses, so cancel/edit affordances apply
+  /// to one's own upcoming bookings and stay read-only for everyone else.
+  void _openReservation(BuildContext context, Reservation reservation) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => ReservationDetailSheet(reservation: reservation),
+    );
   }
 
   Future<void> _openLink(BuildContext context, WidgetRef ref, Uri uri) async {
@@ -137,9 +149,16 @@ class DirectoryScreen extends ConsumerWidget {
                         reservations: reservations,
                         now: now,
                       ),
+                      memberReservations: _upcomingFor(
+                        member.id,
+                        reservations,
+                        now,
+                      ),
                       targetNames: targets,
                       now: now,
                       onWhatsapp: (uri) => _openLink(context, ref, uri),
+                      onOpenReservation: (reservation) =>
+                          _openReservation(context, reservation),
                     ),
               ],
             ),
@@ -155,6 +174,25 @@ class DirectoryScreen extends ConsumerWidget {
       _ => const LoadingView(),
     };
   }
+}
+
+/// This member's still-active bookings from [now] onward, soonest first
+/// — what the detail sheet lists (#237's [directoryReservations] window,
+/// i.e. up to two weeks out). A booking already running (checked in or
+/// covering now) is included; cancelled/past ones are dropped.
+List<Reservation> _upcomingFor(
+  String memberId,
+  List<Reservation> reservations,
+  DateTime now,
+) {
+  final upcoming = reservations
+      .where(
+        (r) =>
+            r.memberId == memberId && r.isActive && r.endsAt.isAfter(now),
+      )
+      .toList()
+    ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
+  return upcoming;
 }
 
 /// Compact relative last-seen label for the offline chip.
@@ -265,6 +303,42 @@ Widget? _reservationChip(
   };
 }
 
+/// A compact role badge shown after the name on a directory row and in
+/// the detail sheet header — owner (primary, filled) and admin (outlined)
+/// only; a regular member carries the default role and gets no badge, so
+/// the badge itself signals elevated rights at a glance. Roles are
+/// additive flags (spec §2) — owner outranks admin.
+Widget? _roleBadge(
+  BuildContext context, {
+  required AppLocalizations? l10n,
+  required Member member,
+}) {
+  final theme = Theme.of(context);
+  if (member.isOwner) {
+    return Padding(
+      padding: const EdgeInsets.only(left: AppSpacing.xs),
+      child: _StatusChip(
+        chipKey: ValueKey('directory-role-${member.id}'),
+        label: l10n?.memberRoleOwner ?? 'Owner',
+        foreground: theme.colorScheme.onPrimary,
+        background: theme.colorScheme.primary,
+      ),
+    );
+  }
+  if (member.isAdmin) {
+    return Padding(
+      padding: const EdgeInsets.only(left: AppSpacing.xs),
+      child: _StatusChip(
+        chipKey: ValueKey('directory-role-${member.id}'),
+        label: l10n?.memberRoleAdmin ?? 'Admin',
+        foreground: theme.colorScheme.primary,
+        outlined: true,
+      ),
+    );
+  }
+  return null;
+}
+
 /// The member's public-profile bottom sheet (#232): avatar, name, role
 /// (roles are additive flags, spec §2 — owner wins the single label),
 /// the automatic reservation + presence chips (#237), the self-set
@@ -278,9 +352,11 @@ Future<void> _showMemberSheet(
   required Profile? profile,
   required DirectoryPresence presence,
   required ReservationInfo? reservationInfo,
+  required List<Reservation> memberReservations,
   required Map<String, String> targetNames,
   required DateTime now,
   required void Function(Uri uri) onWhatsapp,
+  required void Function(Reservation reservation) onOpenReservation,
 }) {
   return showModalBottomSheet<void>(
     context: context,
@@ -369,6 +445,31 @@ Future<void> _showMemberSheet(
                 Text(statusText, style: theme.textTheme.bodyMedium),
               ],
               const SizedBox(height: AppSpacing.lg),
+              Text(
+                l10n?.directoryReservationsHeading ?? 'Reservations',
+                style: theme.textTheme.titleSmall,
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              if (memberReservations.isEmpty)
+                Text(
+                  l10n?.directoryNoUpcoming ?? 'No upcoming reservations',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                )
+              else
+                for (final reservation in memberReservations)
+                  _ReservationTile(
+                    reservation: reservation,
+                    seatName: targetNames[reservation.seatId ??
+                            reservation.officeId] ??
+                        '',
+                    onTap: () {
+                      Navigator.of(sheetContext).pop();
+                      onOpenReservation(reservation);
+                    },
+                  ),
+              const SizedBox(height: AppSpacing.lg),
               if (whatsappUri != null) ...[
                 FilledButton.icon(
                   key: ValueKey('directory-sheet-wa-${member.id}'),
@@ -433,9 +534,11 @@ class _MemberRow extends StatelessWidget {
     required this.profile,
     required this.presence,
     required this.reservationInfo,
+    required this.memberReservations,
     required this.targetNames,
     required this.now,
     required this.onWhatsapp,
+    required this.onOpenReservation,
   });
 
   final Member member;
@@ -444,9 +547,11 @@ class _MemberRow extends StatelessWidget {
   final Profile? profile;
   final DirectoryPresence presence;
   final ReservationInfo? reservationInfo;
+  final List<Reservation> memberReservations;
   final Map<String, String> targetNames;
   final DateTime now;
   final void Function(Uri uri) onWhatsapp;
+  final void Function(Reservation reservation) onOpenReservation;
 
   @override
   Widget build(BuildContext context) {
@@ -508,9 +613,18 @@ class _MemberRow extends StatelessWidget {
             ),
         ],
       ),
-      title: Text(
-        name,
-        style: isSelf ? const TextStyle(fontWeight: FontWeight.bold) : null,
+      title: Row(
+        children: [
+          Flexible(
+            child: Text(
+              name,
+              overflow: TextOverflow.ellipsis,
+              style:
+                  isSelf ? const TextStyle(fontWeight: FontWeight.bold) : null,
+            ),
+          ),
+          ?_roleBadge(context, l10n: l10n, member: member),
+        ],
       ),
       subtitle: chips.isEmpty && statusText.isEmpty
           ? null
@@ -553,9 +667,11 @@ class _MemberRow extends StatelessWidget {
         profile: profile,
         presence: presence,
         reservationInfo: reservationInfo,
+        memberReservations: memberReservations,
         targetNames: targetNames,
         now: now,
         onWhatsapp: onWhatsapp,
+        onOpenReservation: onOpenReservation,
       ),
     );
 
@@ -623,6 +739,59 @@ class _MemberRow extends StatelessWidget {
         ),
       ),
       child: card,
+    );
+  }
+}
+
+/// One tappable reservation in the member detail sheet: weekday + day,
+/// start time and seat/office name (the [_upcomingLabel] house style),
+/// with a filled marker when the member is already checked in. Tapping
+/// opens the full [ReservationDetailSheet] for that booking.
+class _ReservationTile extends StatelessWidget {
+  const _ReservationTile({
+    required this.reservation,
+    required this.seatName,
+    required this.onTap,
+  });
+
+  final Reservation reservation;
+  final String seatName;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final checkedIn = reservation.status == ReservationStatus.checkedIn;
+    return InkWell(
+      key: ValueKey('directory-sheet-reservation-${reservation.id}'),
+      borderRadius: AppRadius.mdAll,
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+        child: Row(
+          children: [
+            Icon(
+              checkedIn ? Icons.event_available : Icons.event_outlined,
+              size: 20,
+              color: checkedIn
+                  ? AppStatusColors.successOf(theme.brightness)
+                  : theme.colorScheme.onSurfaceVariant,
+            ),
+            const SizedBox(width: AppSpacing.md),
+            Expanded(
+              child: Text(
+                _upcomingLabel(reservation, seatName),
+                style: theme.textTheme.bodyMedium,
+              ),
+            ),
+            Icon(
+              Icons.chevron_right,
+              size: 20,
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
