@@ -1536,6 +1536,69 @@ class AppLocalizationsEn extends AppLocalizations {
       'Must be a chat.whatsapp.com invite link';
 
   @override
+  String get memberStatusActive => 'Active';
+
+  @override
+  String get workspaceConfigPdfExport => 'Export configuration (PDF)';
+
+  @override
+  String get workspaceConfigPdfExportSubtitle =>
+      'Complete snapshot: settings, all members and the floor plan.';
+
+  @override
+  String get workspaceConfigPdfTitle => 'Workspace configuration';
+
+  @override
+  String workspaceConfigPdfGeneratedOn(String date) {
+    return 'Generated on $date';
+  }
+
+  @override
+  String get workspaceConfigOverview => 'Overview';
+
+  @override
+  String get workspaceConfigMembersSection => 'Members';
+
+  @override
+  String get workspaceConfigFeatures => 'Enabled features';
+
+  @override
+  String get workspaceConfigAvailability => 'Availability';
+
+  @override
+  String get workspaceConfigFloorPlan => 'Floor plan';
+
+  @override
+  String get workspaceConfigGranularity => 'Booking granularity';
+
+  @override
+  String get workspaceConfigColName => 'Name';
+
+  @override
+  String get workspaceConfigColRole => 'Role';
+
+  @override
+  String get workspaceConfigColStatus => 'Status';
+
+  @override
+  String get workspaceConfigOpenDays => 'Open days';
+
+  @override
+  String get workspaceConfigClosures => 'Closures';
+
+  @override
+  String get workspaceConfigBookableWhole => 'bookable as a whole';
+
+  @override
+  String get workspaceConfigSeats => 'Seats';
+
+  @override
+  String get workspaceConfigEmptyLevel => 'No rooms';
+
+  @override
+  String get workspaceConfigNone => 'None';
+
+  @override
   String get workspaceXmlExport => 'Export workspace (XML)';
 
   @override

@@ -9,6 +9,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import '../feature_names.dart';
 
 /// Owner-only feature management (#146): one switch per registry feature.
 /// Toggling writes the full flags map to the workspace row (owner RLS)
@@ -18,24 +19,7 @@ class FeaturesScreen extends ConsumerWidget {
   const FeaturesScreen({super.key});
 
   String _name(AppLocalizations? l10n, WorkspaceFeature feature) =>
-      switch (feature) {
-        WorkspaceFeature.calendarTab =>
-          l10n?.featureCalendarTab ?? 'Calendar tab',
-        WorkspaceFeature.eventsTab => l10n?.featureEventsTab ?? 'Events tab',
-        WorkspaceFeature.moneyTab => l10n?.featureMoneyTab ?? 'Money tab',
-        WorkspaceFeature.services => l10n?.featureServices ?? 'Services',
-        WorkspaceFeature.pdfExport => l10n?.featurePdfExport ?? 'PDF export',
-        WorkspaceFeature.seriesBooking =>
-          l10n?.featureSeriesBooking ?? 'Series booking',
-        WorkspaceFeature.bookForOthers =>
-          l10n?.featureBookForOthers ?? 'Book for others',
-        WorkspaceFeature.pushNotifications =>
-          l10n?.featurePushNotifications ?? 'Push notifications',
-        WorkspaceFeature.adminSeatBlocking =>
-          l10n?.featureAdminSeatBlocking ?? 'Admins can block seats',
-        WorkspaceFeature.accessorySupplements =>
-          l10n?.featureAccessorySupplements ?? 'Accessory supplements',
-      };
+      featureName(l10n, feature);
 
   String _description(AppLocalizations? l10n, WorkspaceFeature feature) =>
       switch (feature) {

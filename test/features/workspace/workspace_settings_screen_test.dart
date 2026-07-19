@@ -1,14 +1,19 @@
 // SPDX-License-Identifier: MIT
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/share/share_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:share_plus/share_plus.dart';
 
+import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
 
 Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
-  WidgetTester tester,
-) async {
+  WidgetTester tester, {
+  ShareLauncher? share,
+  FakeFloorPlanRepository? floorPlan,
+}) async {
   // The settings form grew past the default 800px test viewport (#155,
   // three more payment fields in #192, the WhatsApp-group section in
   // #231); a taller view keeps every field + Save built without
@@ -20,7 +25,10 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   final workspace = FakeWorkspaceRepository.withWorkspace();
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(workspace: workspace),
+      overrides: [
+        ...standardTestOverrides(workspace: workspace, floorPlan: floorPlan),
+        if (share != null) shareLauncherProvider.overrideWithValue(share),
+      ],
       child: const DeskiloApp(),
     ),
   );
@@ -213,5 +221,30 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Workspace'), findsNothing);
+  });
+
+  testWidgets(
+      'the owner exports the configuration as a PDF through the share seam',
+      (tester) async {
+    final captured = <ShareParams>[];
+    final floorPlan = FakeFloorPlanRepository()..seedSmallPlan();
+    await pumpWorkspaceSettings(
+      tester,
+      floorPlan: floorPlan,
+      share: (params) async => captured.add(params),
+    );
+
+    final button = find.byKey(const Key('workspaceSettingsExportPdf'));
+    expect(button, findsOneWidget);
+    await tester.tap(button);
+    await tester.pumpAndSettle();
+
+    expect(captured, hasLength(1));
+    expect(
+      captured.single.fileNameOverrides,
+      ['Test Space-configuration.pdf'],
+    );
+    final file = captured.single.files!.single;
+    expect(file.mimeType, 'application/pdf');
   });
 }

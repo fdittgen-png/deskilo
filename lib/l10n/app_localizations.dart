@@ -2906,6 +2906,126 @@ abstract class AppLocalizations {
   /// **'Must be a chat.whatsapp.com invite link'**
   String get workspaceWhatsappGroupInvalid;
 
+  /// Member status label: an active member (complements memberStatusPaused / memberStatusExited).
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get memberStatusActive;
+
+  /// Owner settings entry: export a complete human-readable PDF snapshot of the workspace configuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Export configuration (PDF)'**
+  String get workspaceConfigPdfExport;
+
+  /// Subtitle of the configuration-PDF export entry, contrasting it with the members-free XML export.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete snapshot: settings, all members and the floor plan.'**
+  String get workspaceConfigPdfExportSubtitle;
+
+  /// Title printed at the top of the configuration PDF.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace configuration'**
+  String get workspaceConfigPdfTitle;
+
+  /// Sub-header of the configuration PDF stating the export date.
+  ///
+  /// In en, this message translates to:
+  /// **'Generated on {date}'**
+  String workspaceConfigPdfGeneratedOn(String date);
+
+  /// Configuration PDF section: workspace locale and booking settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get workspaceConfigOverview;
+
+  /// Configuration PDF section: the full member roster with roles and statuses.
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get workspaceConfigMembersSection;
+
+  /// Configuration PDF section: the workspace's enabled feature flags.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled features'**
+  String get workspaceConfigFeatures;
+
+  /// Configuration PDF section: open weekdays and closure days.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability'**
+  String get workspaceConfigAvailability;
+
+  /// Configuration PDF section: levels, rooms, desks and seats.
+  ///
+  /// In en, this message translates to:
+  /// **'Floor plan'**
+  String get workspaceConfigFloorPlan;
+
+  /// Configuration PDF overview line: how bookings are timed.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking granularity'**
+  String get workspaceConfigGranularity;
+
+  /// Configuration PDF members table: name column header.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get workspaceConfigColName;
+
+  /// Configuration PDF members table: role column header.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get workspaceConfigColRole;
+
+  /// Configuration PDF members table: status column header.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get workspaceConfigColStatus;
+
+  /// Configuration PDF availability line: the weekdays the workspace is open.
+  ///
+  /// In en, this message translates to:
+  /// **'Open days'**
+  String get workspaceConfigOpenDays;
+
+  /// Configuration PDF availability line: the configured closure days.
+  ///
+  /// In en, this message translates to:
+  /// **'Closures'**
+  String get workspaceConfigClosures;
+
+  /// Configuration PDF floor plan: marker next to a room that can be booked as a whole.
+  ///
+  /// In en, this message translates to:
+  /// **'bookable as a whole'**
+  String get workspaceConfigBookableWhole;
+
+  /// Configuration PDF floor plan: prefix of a desk's seat list.
+  ///
+  /// In en, this message translates to:
+  /// **'Seats'**
+  String get workspaceConfigSeats;
+
+  /// Configuration PDF floor plan: placeholder for a level with no rooms.
+  ///
+  /// In en, this message translates to:
+  /// **'No rooms'**
+  String get workspaceConfigEmptyLevel;
+
+  /// Configuration PDF: placeholder for an empty section (no members, no features, no closures).
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get workspaceConfigNone;
+
   /// Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)
   ///
   /// In en, this message translates to:
