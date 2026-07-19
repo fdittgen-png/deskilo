@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/theme/app_elevation.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -151,7 +152,6 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     final visible = _visible(reservations, myMember?.id);
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final targets = ref.watch(targetNamesProvider).value ?? const {};
-    final timeFormat = DateFormat.Hm();
 
     final dayReservations = visible
         .where((r) => _sameDay(r.startsAt.toLocal(), _selectedDay))
@@ -234,24 +234,41 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
             ],
           ),
         ),
-        _MonthGrid(
-          month: _month,
-          selectedDay: _selectedDay,
-          today: DateUtils.dateOnly(DateTime.now()),
-          // Mine vs others' markers ('when did I reserve what' first): a
-          // day with any of MY bookings carries a red dot, a day with only
-          // other members' bookings a blue one.
-          markedDays: {
-            for (final r in visible) DateUtils.dateOnly(r.startsAt.toLocal()),
-          },
-          myDays: {
-            for (final r in visible)
-              if (r.memberId == myMember?.id)
+        // The month sits on a soft rounded card — a calmer, more modern
+        // surface than a bare grid on the scaffold.
+        Container(
+          margin: const EdgeInsets.fromLTRB(
+            AppSpacing.screenGutter,
+            AppSpacing.xs,
+            AppSpacing.screenGutter,
+            AppSpacing.sm,
+          ),
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surfaceContainerLow,
+            borderRadius: AppRadius.xlAll,
+            boxShadow: AppElevation.low(Theme.of(context).brightness),
+          ),
+          child: _MonthGrid(
+            month: _month,
+            selectedDay: _selectedDay,
+            today: DateUtils.dateOnly(DateTime.now()),
+            // Mine vs others' markers ('when did I reserve what' first): a
+            // day with any of MY bookings carries a red dot, a day with
+            // only other members' bookings a blue one.
+            markedDays: {
+              for (final r in visible)
                 DateUtils.dateOnly(r.startsAt.toLocal()),
-          },
-          onSelect: (day) => setState(() => _selectedDay = day),
+            },
+            myDays: {
+              for (final r in visible)
+                if (r.memberId == myMember?.id)
+                  DateUtils.dateOnly(r.startsAt.toLocal()),
+            },
+            onSelect: (day) => setState(() => _selectedDay = day),
+          ),
         ),
-        const Divider(height: 1),
+        const SizedBox(height: AppSpacing.xs),
         Expanded(
           child: RefreshIndicator(
             onRefresh: () async => invalidateBookingData(ref),
@@ -293,36 +310,19 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                     key: const ValueKey('calendar-list-view'),
                     child: ListView.builder(
                     physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.sm,
+                    ),
                     itemCount: dayReservations.length,
                     itemBuilder: (context, index) {
                       final r = dayReservations[index];
-                      final own = r.memberId == myMember?.id;
-                      return ListTile(
-                        leading: Icon(
-                          r.seriesId != null
-                              ? Icons.repeat
-                              : (r.status == ReservationStatus.checkedIn
-                                  ? Icons.event_seat
-                                  : Icons.schedule),
-                        ),
-                        title: Text(
-                          '${timeFormat.format(r.startsAt.toLocal())} – '
-                          '${timeFormat.format(r.endsAt.toLocal())} · '
-                          '${targets[r.seatId ?? r.officeId] ?? ''}',
-                        ),
-                        subtitle:
-                            _everyone ? Text(names[r.memberId] ?? '') : null,
-                        trailing: own
-                            ? IconButton(
-                                icon: const Icon(Icons.more_vert),
-                                tooltip: l10n?.calendarReservationActions ??
-                                    'Reservation actions',
-                                onPressed: () => _cancelMenu(r),
-                              )
-                            : null,
-                        // #182: where is this seat? Detail sheet with the
-                        // location chain and a "Show on plan" jump.
+                      return _ReservationCard(
+                        reservation: r,
+                        seatLabel: targets[r.seatId ?? r.officeId] ?? '',
+                        occupant: _everyone ? (names[r.memberId] ?? '') : '',
+                        own: r.memberId == myMember?.id,
                         onTap: () => _detailSheet(r),
+                        onActions: () => _cancelMenu(r),
                       );
                     },
                     ),
@@ -331,6 +331,130 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// One reservation in the day list, as a modern rounded card: a colored
+/// round leading badge (its icon reads series / checked-in / reserved),
+/// the time range in prominent type, the seat/room and — in Everyone mode
+/// — the occupant beneath. Tapping opens the detail sheet; own bookings
+/// carry the actions menu. The badge tint is a stable per-target color so
+/// the same seat reads the same hue across days.
+class _ReservationCard extends StatelessWidget {
+  const _ReservationCard({
+    required this.reservation,
+    required this.seatLabel,
+    required this.occupant,
+    required this.own,
+    required this.onTap,
+    required this.onActions,
+  });
+
+  final Reservation reservation;
+  final String seatLabel;
+  final String occupant;
+  final bool own;
+  final VoidCallback onTap;
+  final VoidCallback onActions;
+
+  /// A calm, on-brand palette; the target id picks a stable index so a
+  /// given seat keeps its hue day to day.
+  static const _palette = <Color>[
+    Color(0xFFE07A5F), // terracotta (brand)
+    Color(0xFF3D8A7D), // teal
+    Color(0xFF5B7DB1), // slate blue
+    Color(0xFFE0A458), // amber
+    Color(0xFF9B6A9E), // mauve
+    Color(0xFF6E9B5B), // sage
+  ];
+
+  Color get _badgeColor {
+    final key = reservation.seatId ?? reservation.officeId ?? reservation.id;
+    return _palette[key.hashCode.abs() % _palette.length];
+  }
+
+  IconData get _icon => reservation.seriesId != null
+      ? Icons.repeat
+      : reservation.status == ReservationStatus.checkedIn
+          ? Icons.event_seat
+          : Icons.schedule;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+    final timeFormat = DateFormat.Hm();
+    final badge = _badgeColor;
+    final start = timeFormat.format(reservation.startsAt.toLocal());
+    final end = timeFormat.format(reservation.endsAt.toLocal());
+    final timeRange = '$start – $end';
+    final location =
+        occupant.isEmpty ? seatLabel : '$seatLabel · $occupant';
+
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.screenGutter,
+        vertical: AppSpacing.xs,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: AppRadius.lgAll,
+        boxShadow: AppElevation.low(theme.brightness),
+      ),
+      child: Material(
+        color: theme.colorScheme.surfaceContainerLow,
+        borderRadius: AppRadius.lgAll,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: badge.withValues(alpha: 0.16),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(_icon, size: 20, color: badge),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        timeRange,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        location,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (own)
+                  IconButton(
+                    icon: const Icon(Icons.more_vert),
+                    tooltip: l10n?.calendarReservationActions ??
+                        'Reservation actions',
+                    onPressed: onActions,
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

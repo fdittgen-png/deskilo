@@ -104,8 +104,10 @@ void main() {
     await tester.tap(find.text('Everyone'));
     await tester.pumpAndSettle();
 
+    // The card's location line carries both the seat and the occupant in
+    // Everyone mode ("A1 · Ana").
     expect(find.textContaining('A1'), findsOneWidget);
-    expect(find.text('Ana'), findsOneWidget);
+    expect(find.textContaining('Ana'), findsOneWidget);
   });
 
   testWidgets('workers get no everyone toggle', (tester) async {

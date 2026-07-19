@@ -146,14 +146,16 @@ void main() {
     expect(find.text('09:00'), findsNothing);
     // The selected day is today → "now" line present.
     expect(find.byKey(DayTimeline.nowLineKey), findsOneWidget);
-    // No ListTile rows in timeline mode.
-    expect(find.byType(ListTile), findsNothing);
+    // No day-list card in timeline mode (the ruler shows 08:00, not the
+    // booking's own 09:00 time range).
+    expect(find.textContaining('09:00'), findsNothing);
 
-    // Back to the (default) list view.
+    // Back to the (default) list view: the modern reservation card shows
+    // the booking's time range.
     await tester.tap(find.byIcon(Icons.view_list_outlined));
     await tester.pumpAndSettle();
     expect(find.byType(DayTimeline), findsNothing);
-    expect(find.byType(ListTile), findsOneWidget);
+    expect(find.textContaining('09:00'), findsOneWidget);
   });
 
   testWidgets('a 09:00–11:00 block sits at 9×hourWidth and spans 2 hours',
