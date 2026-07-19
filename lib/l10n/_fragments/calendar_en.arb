@@ -55,5 +55,23 @@
   "calendarTimelineAllEmpty": "No reservations on any level for this day.",
   "@calendarTimelineAllEmpty": {
     "description": "Empty state of the day timeline in all-levels mode: no level has seats with a visible reservation that day (#221)"
+  },
+  "calendarLevelCollapsed": "{level}, collapsed",
+  "@calendarLevelCollapsed": {
+    "description": "Accessibility label of a collapsed level header in the all-levels timeline; tapping expands it",
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarLevelExpanded": "{level}, expanded",
+  "@calendarLevelExpanded": {
+    "description": "Accessibility label of an expanded level header in the all-levels timeline; tapping collapses it",
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -704,6 +704,18 @@ abstract class AppLocalizations {
   /// **'No reservations on any level for this day.'**
   String get calendarTimelineAllEmpty;
 
+  /// Accessibility label of a collapsed level header in the all-levels timeline; tapping expands it
+  ///
+  /// In en, this message translates to:
+  /// **'{level}, collapsed'**
+  String calendarLevelCollapsed(String level);
+
+  /// Accessibility label of an expanded level header in the all-levels timeline; tapping collapses it
+  ///
+  /// In en, this message translates to:
+  /// **'{level}, expanded'**
+  String calendarLevelExpanded(String level);
+
   /// Application name shown in the task switcher and app bar. Brand name — identical in all locales.
   ///
   /// In en, this message translates to:

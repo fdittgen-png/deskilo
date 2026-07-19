@@ -100,6 +100,8 @@
   "calendarTimelineEmpty": "Keine Reservierungen auf dieser Etage an diesem Tag.",
   "calendarAllLevels": "Alle Etagen",
   "calendarTimelineAllEmpty": "Auf keiner Etage gibt es an diesem Tag Reservierungen.",
+  "calendarLevelCollapsed": "{level}, eingeklappt",
+  "calendarLevelExpanded": "{level}, ausgeklappt",
   "appTitle": "DesKilo",
   "tabPlan": "Plan",
   "tabCalendar": "Kalender",
