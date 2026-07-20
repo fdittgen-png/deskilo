@@ -51,8 +51,10 @@ abstract final class ReserveHubMetrics {
   /// Day pills on the date strip, starting today.
   static const int stripDayCount = 14;
 
-  /// Height of the date-strip row (fits the two-line day pills).
-  static const double stripHeight = 76;
+  /// Height of the date-strip row (fits the two-line day pills). Trimmed
+  /// from 76 (screenshot feedback 2026-07-20) — the compact chips fit the
+  /// weekday + day-number stack in less vertical space.
+  static const double stripHeight = 58;
 
   /// Furthest day (from today) reachable via the strip's calendar icon.
   static const int datePickerRangeDays = 365;
@@ -637,9 +639,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
             _windowChips(l10n, granularity, window),
           if (!dayOpen) _closedDayBanner(l10n),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.lg,
-              vertical: AppSpacing.xs,
+            padding: const EdgeInsets.only(
+              left: AppSpacing.lg,
+              right: AppSpacing.lg,
+              bottom: AppSpacing.xs,
             ),
             // #211: the shared toggle idiom — same key, same labels and
             // behaviour as the original SegmentedButton, plus the shared
@@ -750,7 +753,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 2,
-                    vertical: 8,
+                    vertical: 4,
                   ),
                   child: ChoiceChip(
                     key: ReserveScreen.dayPillKey(day),

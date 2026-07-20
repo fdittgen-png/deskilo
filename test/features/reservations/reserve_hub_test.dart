@@ -194,7 +194,7 @@ void main() {
 
   test('hub metrics are pinned (contract of #208)', () {
     expect(ReserveHubMetrics.stripDayCount, 14);
-    expect(ReserveHubMetrics.stripHeight, 76.0);
+    expect(ReserveHubMetrics.stripHeight, 58.0);
     expect(ReserveHubMetrics.datePickerRangeDays, 365);
     expect(ReserveHubMetrics.weekPageCount, 365);
     expect(ReserveHubMetrics.canvasCellSize, 14.0);
