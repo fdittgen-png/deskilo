@@ -142,6 +142,7 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
         paymentInstructions:
             row['payment_instructions'] as Map<String, dynamic>? ?? const {},
         whatsappGroup: row['whatsapp_group'] as String? ?? '',
+        deskOpacity: (row['desk_opacity'] as num?)?.toInt() ?? 100,
       );
 
   @override
@@ -310,6 +311,13 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   @override
   Future<void> removeClosureDay(String closureDayId) async {
     await _client.from('closure_days').delete().eq('id', closureDayId);
+  }
+
+  @override
+  Future<void> setDeskOpacity(String workspaceId, int opacity) async {
+    await _client
+        .from('workspaces')
+        .update({'desk_opacity': opacity}).eq('id', workspaceId);
   }
 
   @override

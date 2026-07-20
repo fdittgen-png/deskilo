@@ -1640,6 +1640,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get workspaceConfigNone => 'Keine';
 
   @override
+  String get workspaceDeskTransparencyTitle => 'Tisch-Transparenz';
+
+  @override
+  String get workspaceDeskTransparencyHelper =>
+      'Verringere die Deckkraft der Tische, damit das Hintergrundfoto der Etage durchscheint.';
+
+  @override
+  String workspaceDeskOpacityValue(int percent) {
+    return 'Deckkraft: $percent %';
+  }
+
+  @override
   String get workspaceDangerZone => 'Gefahrenzone';
 
   @override

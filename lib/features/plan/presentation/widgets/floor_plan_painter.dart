@@ -23,6 +23,7 @@ class FloorPlanPainter extends CustomPainter {
     this.seatStates,
     this.seatLabels,
     this.highlightedSeatId,
+    this.deskOpacity = 1,
     this.marquee,
     this.marqueeValid = true,
     this.selection,
@@ -53,6 +54,11 @@ class FloorPlanPainter extends CustomPainter {
   /// Seat to ring with a thick tertiary outline (#182): the calendar's
   /// "Show on plan" jump points at the reserved seat. Null = no highlight.
   final String? highlightedSeatId;
+
+  /// Desk fill opacity 0..1 (0040): 1 = solid (default); lower makes desks
+  /// translucent so a background photo shows through. The desk border stays
+  /// opaque so the table is still locatable over the image.
+  final double deskOpacity;
 
   /// In-progress drag rectangle (grid cells) while drawing a new element.
   final GridRect? marquee;
@@ -131,15 +137,22 @@ class FloorPlanPainter extends CustomPainter {
     // Desks: soft rounded tonal surfaces — the furniture the room is
     // built from, not flat grey boxes. A hairline border and a whisper
     // of a contact shadow give the plan gentle depth.
-    final deskPaint = Paint()..color = colorScheme.surfaceContainerHigh;
+    // Configurable desk transparency (0040): fade the fill (and its contact
+    // shadow) by deskOpacity, but keep the border opaque so a translucent
+    // desk stays locatable over a background photo.
+    final deskAlpha = deskOpacity.clamp(0.0, 1.0);
+    final deskPaint = Paint()
+      ..color = colorScheme.surfaceContainerHigh.withValues(alpha: deskAlpha);
     final deskBorder = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1
       ..color = colorScheme.outlineVariant;
+    final deskShadowAlpha =
+        (brightness == Brightness.dark ? 0.28 : 0.10) * deskAlpha;
     for (final desk in plan.desks) {
       final rect = _toPx(desk.rect).deflate(1.5);
       final rrect = RRect.fromRectAndRadius(rect, const Radius.circular(6));
-      _softShadow(canvas, rrect, alpha: brightness == Brightness.dark ? 0.28 : 0.10);
+      _softShadow(canvas, rrect, alpha: deskShadowAlpha);
       canvas.drawRRect(rrect, deskPaint);
       canvas.drawRRect(rrect, deskBorder);
     }
@@ -347,5 +360,6 @@ class FloorPlanPainter extends CustomPainter {
       oldDelegate.seatStates != seatStates ||
       oldDelegate.seatLabels != seatLabels ||
       oldDelegate.highlightedSeatId != highlightedSeatId ||
+      oldDelegate.deskOpacity != deskOpacity ||
       oldDelegate.cellSize != cellSize;
 }

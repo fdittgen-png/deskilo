@@ -857,6 +857,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                             _labelFor(plan, seat, reservations, names, at),
                     },
                     highlightedSeatId: _highlightedSeatId,
+                    deskOpacity: (ref
+                                .watch(currentWorkspaceProvider)
+                                .value
+                                ?.deskOpacity ??
+                            100) /
+                        100,
                     background:
                         ref.watch(levelBackgroundProvider(level.id)).value,
                     images: {
@@ -1372,6 +1378,7 @@ class _LivePlanCanvas extends StatefulWidget {
     required this.seatLabels,
     required this.onSeatTap,
     this.highlightedSeatId,
+    this.deskOpacity = 1,
     this.background,
     this.images = const {},
   });
@@ -1383,6 +1390,9 @@ class _LivePlanCanvas extends StatefulWidget {
 
   /// Seat ringed by the painter after a calendar jump (#182).
   final String? highlightedSeatId;
+
+  /// Desk fill opacity 0..1 (0040).
+  final double deskOpacity;
 
   /// Level background image (0036), painted behind the grid.
   final ui.Image? background;
@@ -1432,6 +1442,7 @@ class _LivePlanCanvasState extends State<_LivePlanCanvas> {
                 seatStates: widget.seatStates,
                 seatLabels: widget.seatLabels,
                 highlightedSeatId: widget.highlightedSeatId,
+                deskOpacity: widget.deskOpacity,
                 background: widget.background,
                 images: widget.images,
               ),

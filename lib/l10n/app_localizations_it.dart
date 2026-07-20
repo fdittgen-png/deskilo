@@ -1640,6 +1640,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get workspaceConfigNone => 'Nessuno';
 
   @override
+  String get workspaceDeskTransparencyTitle => 'Trasparenza dei tavoli';
+
+  @override
+  String get workspaceDeskTransparencyHelper =>
+      'Riduci l\'opacità dei tavoli per far trasparire la foto di sfondo del piano.';
+
+  @override
+  String workspaceDeskOpacityValue(int percent) {
+    return 'Opacità: $percent%';
+  }
+
+  @override
   String get workspaceDangerZone => 'Zona pericolosa';
 
   @override

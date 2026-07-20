@@ -83,5 +83,8 @@
   "workspaceResetConfirmPhrase": "Accetto",
   "workspaceResetConfirmLabel": "Digita «{phrase}» per confermare",
   "workspaceResetConfirmButton": "Reimposta lo spazio",
-  "workspaceResetDone": "Spazio reimpostato."
+  "workspaceResetDone": "Spazio reimpostato.",
+  "workspaceDeskTransparencyTitle": "Trasparenza dei tavoli",
+  "workspaceDeskTransparencyHelper": "Riduci l'opacità dei tavoli per far trasparire la foto di sfondo del piano.",
+  "workspaceDeskOpacityValue": "Opacità: {percent}%"
 }

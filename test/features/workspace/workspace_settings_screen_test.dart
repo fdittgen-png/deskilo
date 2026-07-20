@@ -289,6 +289,25 @@ void main() {
     expect(find.text('Workspace reset.'), findsOneWidget);
   });
 
+  testWidgets('the desk transparency slider saves through the repository',
+      (tester) async {
+    final workspace = await pumpWorkspaceSettings(tester);
+
+    final slider = find.byKey(const Key('workspaceSettingsDeskOpacity'));
+    await tester.ensureVisible(slider);
+    // Drag the thumb left to lower the opacity.
+    await tester.drag(slider, const Offset(-200, 0));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+    await tester.pumpAndSettle();
+
+    // Persisted a lower opacity than the default 100.
+    expect(workspace.lastDeskOpacity, isNotNull);
+    expect(workspace.lastDeskOpacity, lessThan(100));
+    expect(workspace.lastDeskOpacity, greaterThanOrEqualTo(20));
+  });
+
   testWidgets('cancelling the reset dialog does nothing', (tester) async {
     final workspace = await pumpWorkspaceSettings(tester);
     final resetTile = find.byKey(const Key('workspaceSettingsReset'));

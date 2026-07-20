@@ -83,5 +83,8 @@
   "workspaceResetConfirmPhrase": "Acepto",
   "workspaceResetConfirmLabel": "Escribe «{phrase}» para confirmar",
   "workspaceResetConfirmButton": "Restablecer el espacio",
-  "workspaceResetDone": "Espacio restablecido."
+  "workspaceResetDone": "Espacio restablecido.",
+  "workspaceDeskTransparencyTitle": "Transparencia de mesas",
+  "workspaceDeskTransparencyHelper": "Reduce la opacidad de las mesas para que se vea la foto de fondo de la planta.",
+  "workspaceDeskOpacityValue": "Opacidad: {percent} %"
 }

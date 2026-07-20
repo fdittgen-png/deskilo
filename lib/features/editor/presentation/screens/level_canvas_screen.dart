@@ -1042,6 +1042,9 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
             plan: shownPlan,
             cellSize: GridCanvas.cellSize,
             colorScheme: Theme.of(context).colorScheme,
+            deskOpacity: (ref.watch(currentWorkspaceProvider).value?.deskOpacity ??
+                    100) /
+                100,
             marquee: _marquee,
             marqueeValid: _marqueeValid,
             selection: _selectionRect(shownPlan),

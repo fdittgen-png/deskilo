@@ -83,5 +83,8 @@
   "workspaceResetConfirmPhrase": "Ich stimme zu",
   "workspaceResetConfirmLabel": "Tippe „{phrase}“ zum Bestätigen",
   "workspaceResetConfirmButton": "Workspace zurücksetzen",
-  "workspaceResetDone": "Workspace zurückgesetzt."
+  "workspaceResetDone": "Workspace zurückgesetzt.",
+  "workspaceDeskTransparencyTitle": "Tisch-Transparenz",
+  "workspaceDeskTransparencyHelper": "Verringere die Deckkraft der Tische, damit das Hintergrundfoto der Etage durchscheint.",
+  "workspaceDeskOpacityValue": "Deckkraft: {percent} %"
 }

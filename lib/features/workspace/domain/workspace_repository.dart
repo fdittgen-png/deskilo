@@ -121,6 +121,10 @@ abstract class WorkspaceRepository {
   /// Owner-only: remove a closure day.
   Future<void> removeClosureDay(String closureDayId);
 
+  /// Owner-only: set the desk fill opacity percentage (0040), clamped
+  /// 20..100 server-side. Lower = more translucent desks.
+  Future<void> setDeskOpacity(String workspaceId, int opacity);
+
   /// Owner-only, irreversible (0039): wipe all transactions (reservations,
   /// events, ledger, quota extensions) and the entire floor plan (levels,
   /// offices, desks, seats, plan images) while keeping the workspace

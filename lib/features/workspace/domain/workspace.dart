@@ -44,7 +44,15 @@ sealed class Workspace with _$Workspace {
     /// the directory (#232); '' = no group configured. Shape-checked
     /// against [WhatsappGroupRules.linkPrefix] (0029 column check).
     @Default('') String whatsappGroup,
+
+    /// Desk fill opacity percentage (0040): 100 = solid (default), lower
+    /// makes desks translucent so a level's background photo shows through.
+    /// Clamped 20..100 by the column check.
+    @Default(100) int deskOpacity,
   }) = _Workspace;
+
+  /// Desk fill opacity as a 0..1 fraction for the painter.
+  double get deskOpacityFraction => deskOpacity / 100;
 
   /// The group link as a launchable https URI for the directory (#232),
   /// or null when no group is configured.
