@@ -8,15 +8,19 @@ How the DesKilo repository is organized, built, tested, and shipped. The methodo
 android/                  # Android runner (Play + F-Droid flavors)
 ios/                      # iOS runner
 macos/                    # macOS desktop runner
+windows/                  # Windows runner + WiX MSI authoring (installer/deskilo.wxs)
 assets/fonts/             # Roboto, embedded into PDF bills (base-14 fonts can't encode €)
 docs/
   SPECIFICATION.md        # the product spec (source of truth for behavior)
+  wiki/                   # source of the GitHub wiki pages (this site)
   decisions/              # ADRs 0001..0008
   design/                 # design system
   guides/                 # e.g. RELEASING.md
 fastlane/ metadata/       # store metadata per locale
 lib/                      # the app (see Architecture page)
-supabase/migrations/      # 0001..0030 — schema, RLS, RPCs (numbered, immutable)
+supabase/
+  migrations/             # 0001..0043 — schema, RLS, RPCs (numbered, immutable)
+  functions/              # Edge Function scaffolding (online payments)
 test/                     # unit + widget tests, fakes in test/helpers/
 integration_test/         # end-to-end flows
 tool/ tools/ scripts/     # repo tooling
@@ -47,7 +51,7 @@ dart run build_runner build --delete-conflicting-outputs   # riverpod/freezed/js
 | Android APK | `flutter build apk` (per-ABI splits in release CI) |
 | iOS | `flutter run -d <iphone>` / TestFlight via fastlane |
 | macOS | `flutter run -d macos` · release: `flutter build macos`, app at `build/macos/Build/Products/Release/DesKilo.app` |
-| Windows | `flutter build windows` (runner landing; built on a Windows machine or CI) |
+| Windows | `flutter build windows` · MSI: `gh workflow run windows-msi.yml -f ref=master` (WiX v5 on CI; artifact `DesKilo-<version>-windows-msi`, attached to releases on `v*` tags) |
 
 The macOS runner is sandboxed; entitlements already include the network client (Supabase), camera (QR scan), and user-selected file access (XML import/export, PDF save).
 
@@ -61,7 +65,7 @@ The macOS runner is sandboxed; entitlements already include the network client (
 
 ```bash
 flutter analyze          # zero tolerance
-flutter test             # full suite (600+ tests)
+flutter test             # full suite (700+ tests)
 flutter test test/features/<feature>/   # one feature
 ```
 
@@ -71,7 +75,7 @@ flutter test test/features/<feature>/   # one feature
 
 ## CI
 
-Every push/PR runs: **analyze · l10n key-parity gate · full test suite · coverage**. Additional workflows: `dev-apk` sideload build, F-Droid build/publish, TestFlight — added incrementally, mirroring tankstellen.
+Every push/PR runs: **analyze · l10n key-parity gate · full test suite · coverage**. Additional workflows: `dev-apk` sideload build, `android-boot` emulator smoke, `play-internal` / `play-listing` (Google Play), `ios-testflight`, and `windows-msi` (Windows build + MSI packaging; also runs on PRs touching `windows/**`).
 
 Branch protection: direct pushes to `master` are blocked; PRs need green CI; squash-merge only; head branches auto-delete.
 
@@ -80,7 +84,7 @@ Branch protection: direct pushes to `master` are blocked; PRs need green CI; squ
 - Semver + annotated tag after the release PR merges; release notes generated from PR titles.
 - Android: Play (internal → closed → open → production) + a Google-services-free F-Droid flavor audited by script.
 - iOS: TestFlight via fastlane (owner-held App Store Connect secrets).
-- Desktop: macOS/Windows distribution channel is an open decision (spec §12).
+- Desktop: Windows ships as an MSI from the `windows-msi` workflow (per-release asset on `v*` tags); the macOS channel is still an open decision (spec §12).
 
 ## Adding a feature — checklist
 
