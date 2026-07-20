@@ -14,6 +14,7 @@ import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
+import '../../../plan/presentation/widgets/level_chip_row.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 
@@ -234,37 +235,16 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
         // Level chips like the plan tab (#159 pattern) — but the selection
         // here is throwaway browsing state, never the persisted default.
         // Row height and tap target meet the 48dp Material minimum (#211).
-        if (levels.length > 1)
-          SizedBox(
-            height: kMinInteractiveDimension,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: AppSpacing.mdH,
-              children: [
-                // Sentinel chip FIRST: stack every level on one axis (#221).
-                Padding(
-                  padding: AppSpacing.xsH,
-                  child: ChoiceChip(
-                    label: Text(l10n?.calendarAllLevels ?? 'All levels'),
-                    selected: allSelected,
-                    materialTapTargetSize: MaterialTapTargetSize.padded,
-                    onSelected: (_) =>
-                        setState(() => _levelId = _allLevelsId),
-                  ),
-                ),
-                for (final Level l in levels)
-                  Padding(
-                    padding: AppSpacing.xsH,
-                    child: ChoiceChip(
-                      label: Text(l.name),
-                      selected: !allSelected && l.id == level?.id,
-                      materialTapTargetSize: MaterialTapTargetSize.padded,
-                      onSelected: (_) => setState(() => _levelId = l.id),
-                    ),
-                  ),
-              ],
-            ),
-          ),
+        LevelChipRow(
+          levels: levels,
+          selectedLevelId: level?.id,
+          onSelected: (id) => setState(() => _levelId = id),
+          // Sentinel chip FIRST: stack every level on one axis (#221).
+          allLevelsLabel: l10n?.calendarAllLevels ?? 'All levels',
+          allLevelsSelected: allSelected,
+          onAllLevelsSelected: () =>
+              setState(() => _levelId = _allLevelsId),
+        ),
         Expanded(
           child: allSelected
               ? _allLevelsBody(context, levels, names)

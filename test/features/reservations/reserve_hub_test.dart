@@ -12,9 +12,11 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/core/theme/seat_state_colors.dart';
+import 'package:deskilo/core/ui/canvas_controls.dart';
 import 'package:deskilo/features/calendar/presentation/widgets/day_timeline.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/plan/presentation/widgets/floor_plan_painter.dart';
+import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/screens/reserve_screen.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
@@ -88,8 +90,8 @@ Offset seatCenter(WidgetTester tester) {
   final canvas = tester.getTopLeft(find.byKey(_canvasKey));
   return canvas +
       const Offset(
-        5 * ReserveHubMetrics.canvasCellSize,
-        4 * ReserveHubMetrics.canvasCellSize,
+        5 * PlanCanvasMetrics.cellSize,
+        4 * PlanCanvasMetrics.cellSize,
       );
 }
 
@@ -196,12 +198,13 @@ void main() {
     expect(ReserveHubMetrics.stripDayCount, 14);
     expect(ReserveHubMetrics.stripHeight, 58.0);
     expect(ReserveHubMetrics.datePickerRangeDays, 365);
-    expect(ReserveHubMetrics.weekPageCount, 365);
-    expect(ReserveHubMetrics.canvasCellSize, 14.0);
-    expect(ReserveHubMetrics.canvasCells, 120);
-    expect(ReserveHubMetrics.canvasMinScale, 0.4);
-    expect(ReserveHubMetrics.canvasMaxScale, 3.0);
-    expect(ReserveHubMetrics.canvasBoundaryMargin, 200.0);
+    // Canvas geometry now lives in the shared PlanCanvasMetrics (one
+    // source of truth for Plan tab, Reserve hub and editor).
+    expect(PlanCanvasMetrics.cellSize, 14.0);
+    expect(PlanCanvasMetrics.cells, 120);
+    expect(CanvasControls.defaultMinScale, 0.4);
+    expect(CanvasControls.defaultMaxScale, 3.0);
+    expect(CanvasControls.defaultBoundaryMargin, 200.0);
     expect(ReserveHubMetrics.snapMinutes, 15);
     expect(ReserveHubMetrics.defaultStay, const Duration(hours: 4));
     expect(ReserveHubMetrics.lastSlotHour, 23);

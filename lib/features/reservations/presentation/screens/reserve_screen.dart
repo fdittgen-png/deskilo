@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,19 +14,18 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/motion.dart';
-import '../../../../core/ui/canvas_controls.dart';
 import '../../../../core/ui/view_toggle.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../calendar/presentation/widgets/day_timeline.dart';
-import '../../../members/domain/directory_status.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/half_day_windows.dart';
-import '../../../plan/domain/level.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/domain/seat_context.dart';
-import '../../../plan/presentation/widgets/floor_plan_painter.dart';
+import '../../../plan/presentation/seat_occupancy.dart';
+import '../../../plan/presentation/widgets/level_chip_row.dart';
+import '../../../plan/presentation/widgets/plan_canvas.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/providers/plan_focus_controller.dart';
 import '../../../money/domain/quota_rules.dart';
@@ -59,22 +57,6 @@ abstract final class ReserveHubMetrics {
   /// Furthest day (from today) reachable via the strip's calendar icon.
   static const int datePickerRangeDays = 365;
 
-  /// Historical page count of the Week view's former day pager. #236
-  /// replaced the pager with the seat × day [WeekGrid]; the constant stays
-  /// pinned so the metrics contract only ever grows.
-  static const int weekPageCount = 365;
-
-  /// Cell size of the hub's plan canvas (matches the live plan's).
-  static const double canvasCellSize = 14;
-
-  /// Grid cells per canvas side (matches the live plan's canvas).
-  static const int canvasCells = 120;
-
-  /// Zoom limits and pan margin of the canvas host (live-plan parity).
-  static const double canvasMinScale = 0.4;
-  static const double canvasMaxScale = 3;
-  static const double canvasBoundaryMargin = 200;
-
   /// Snapping of the from→to window chips (#184 pattern): 15-minute steps.
   static const int snapMinutes = 15;
 
@@ -84,10 +66,6 @@ abstract final class ReserveHubMetrics {
   /// Latest selectable window end within a day (#184 pattern): 23:45.
   static const int lastSlotHour = 23;
   static const int lastSlotMinute = 45;
-
-  /// Historical Week-pager animation (see [weekPageCount]) — pinned, no
-  /// longer driving anything since the grid replaced the pager (#236).
-  static const Duration pageAnimation = Duration(milliseconds: 250);
 }
 
 /// The three hub views under the date strip and window chips.
@@ -405,8 +383,6 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
   }
 
   // ── Plan view: seat tap → shared booking sheet (#206) ──
-
-  String _firstName(String name) => name.split(' ').firstOrNull ?? name;
 
   Future<void> _onSeatTap(
     FloorPlan plan,
@@ -928,75 +904,31 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     final names = ref.watch(memberNamesProvider).value ?? const {};
 
-    String labelFor(FloorPlan plan, Seat seat) {
-      final r = reservationOnSeatInRange(
-        plan: plan,
-        seat: seat,
-        reservations: reservations,
-        from: window.start,
-        to: window.end,
-      );
-      if (r == null) return '';
-      return _firstName(names[r.memberId] ?? '');
-    }
-
-    // Seats whose occupant is online (presence dot), same rule as the
-    // directory and the Plan tab.
-    final profiles = ref.watch(memberProfilesProvider).value ?? const {};
-    final members = ref.watch(workspaceMembersProvider).value ?? const [];
-    final userIdOf = {for (final m in members) m.id: m.userId};
-    final now = DateTime.now();
-    bool memberOnline(String memberId) {
-      final uid = userIdOf[memberId];
-      final profile = uid == null ? null : profiles[uid];
-      return resolveDirectoryPresence(lastSeenAt: profile?.lastSeenAt, now: now)
-              .kind ==
-          DirectoryPresenceKind.online;
-    }
-
-    Set<String> onlineSeats(FloorPlan plan) => {
-          for (final seat in plan.seats)
-            if (reservationOnSeatInRange(
-                  plan: plan,
-                  seat: seat,
-                  reservations: reservations,
-                  from: window.start,
-                  to: window.end,
-                )
-                case final r?)
-              if (memberOnline(r.memberId)) seat.id,
-        };
-
     return Column(
       children: [
-        // One tap per level — hub-local chips like the day timeline
-        // (#187), never the plan tab's persisted default (#159). Row
-        // height and tap target meet the 48dp Material minimum (#211).
-        if (levels.length > 1)
-          SizedBox(
-            height: kMinInteractiveDimension,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: AppSpacing.mdH,
-              children: [
-                for (final Level l in levels)
-                  Padding(
-                    padding: AppSpacing.xsH,
-                    child: ChoiceChip(
-                      label: Text(l.name),
-                      selected: l.id == level.id,
-                      materialTapTargetSize: MaterialTapTargetSize.padded,
-                      onSelected: (_) => setState(() => _levelId = l.id),
-                    ),
-                  ),
-              ],
-            ),
-          ),
+        // One tap per level — hub-local browsing state like the day
+        // timeline (#187), never the plan tab's persisted default (#159).
+        LevelChipRow(
+          levels: levels,
+          selectedLevelId: level.id,
+          onSelected: (id) => setState(() => _levelId = id),
+        ),
         Expanded(
           child: switch (planAsync) {
-            AsyncData(value: final plan) => _ReservePlanCanvas(
+            AsyncData(value: final plan) => PlanCanvas(
+                paintKey: const ValueKey('reserve-plan-canvas'),
                 plan: plan,
-                onlineSeatIds: onlineSeats(plan),
+                // Presence dots: same rule as the directory and Plan tab.
+                onlineSeatIds: onlineSeatIdsFor(
+                  plan: plan,
+                  reservations: reservations,
+                  members:
+                      ref.watch(workspaceMembersProvider).value ?? const [],
+                  profiles:
+                      ref.watch(memberProfilesProvider).value ?? const {},
+                  from: window.start,
+                  to: window.end,
+                ),
                 deskOpacity: (ref
                             .watch(currentWorkspaceProvider)
                             .value
@@ -1011,23 +943,24 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                       image.id:
                           ref.watch(planImageProvider(image.id)).value!,
                 },
-                seatStates: {
-                  for (final seat in plan.seats)
-                    // Closed day (#186): every seat renders muted —
-                    // nothing looks bookable.
-                    seat.id: !dayOpen
-                        ? SeatState.blocked
-                        : seatStateInRange(
-                            plan: plan,
-                            seat: seat,
-                            reservations: reservations,
-                            myMemberId: myMemberId,
-                            from: window.start,
-                            to: window.end,
-                          ),
-                },
+                seatStates: seatStatesFor(
+                  plan: plan,
+                  reservations: reservations,
+                  myMemberId: myMemberId,
+                  from: window.start,
+                  to: window.end,
+                  dayOpen: dayOpen,
+                ),
                 seatLabels: {
-                  for (final seat in plan.seats) seat.id: labelFor(plan, seat),
+                  for (final seat in plan.seats)
+                    seat.id: occupantLabelFor(
+                      plan: plan,
+                      seat: seat,
+                      reservations: reservations,
+                      names: names,
+                      from: window.start,
+                      to: window.end,
+                    ),
                 },
                 onSeatTap: (seat) =>
                     _onSeatTap(plan, seat, reservations, window),
@@ -1166,101 +1099,3 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
   }
 }
 
-/// Minimal live-plan canvas host, mirrored from the plan screen's private
-/// `_LivePlanCanvas` (#208 keeps plan_screen untouched — smallest diff):
-/// [FloorPlanPainter] inside an InteractiveViewer with a tap handler
-/// resolving cell → seat via [FloorPlan.seatAtCell]. No jump highlight
-/// here — that affordance belongs to the Plan tab (#182).
-class _ReservePlanCanvas extends StatefulWidget {
-  const _ReservePlanCanvas({
-    required this.plan,
-    required this.seatStates,
-    required this.seatLabels,
-    required this.onSeatTap,
-    this.onlineSeatIds = const {},
-    this.deskOpacity = 1,
-    this.background,
-    this.images = const {},
-  });
-
-  final FloorPlan plan;
-  final Map<String, SeatState> seatStates;
-  final Map<String, String> seatLabels;
-  final ValueChanged<Seat> onSeatTap;
-  final Set<String> onlineSeatIds;
-  final double deskOpacity;
-  final ui.Image? background;
-  final Map<String, ui.Image> images;
-
-  @override
-  State<_ReservePlanCanvas> createState() => _ReservePlanCanvasState();
-}
-
-class _ReservePlanCanvasState extends State<_ReservePlanCanvas> {
-  final _viewTransform = TransformationController();
-
-  @override
-  void dispose() {
-    _viewTransform.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    const size = Size(
-      ReserveHubMetrics.canvasCells * ReserveHubMetrics.canvasCellSize,
-      ReserveHubMetrics.canvasCells * ReserveHubMetrics.canvasCellSize,
-    );
-    return Stack(
-      children: [
-        InteractiveViewer(
-          transformationController: _viewTransform,
-          constrained: false,
-          minScale: ReserveHubMetrics.canvasMinScale,
-          maxScale: ReserveHubMetrics.canvasMaxScale,
-          boundaryMargin:
-              const EdgeInsets.all(ReserveHubMetrics.canvasBoundaryMargin),
-          child: GestureDetector(
-            onTapUp: (details) {
-              const cell = ReserveHubMetrics.canvasCellSize;
-              final x = (details.localPosition.dx / cell).floor();
-              final y = (details.localPosition.dy / cell).floor();
-              final seat = widget.plan.seatAtCell(x, y);
-              if (seat != null) widget.onSeatTap(seat);
-            },
-            child: CustomPaint(
-              key: const ValueKey('reserve-plan-canvas'),
-              size: size,
-              painter: FloorPlanPainter(
-                plan: widget.plan,
-                cellSize: ReserveHubMetrics.canvasCellSize,
-                colorScheme: Theme.of(context).colorScheme,
-                brightness: Theme.of(context).brightness,
-                deskOpacity: widget.deskOpacity,
-                background: widget.background,
-                images: widget.images,
-                seatStates: widget.seatStates,
-                seatLabels: widget.seatLabels,
-                onlineSeatIds: widget.onlineSeatIds,
-              ),
-            ),
-          ),
-        ),
-        Positioned.fill(
-          child: CanvasControls(
-            controller: _viewTransform,
-            contentSize: size,
-            minScale: ReserveHubMetrics.canvasMinScale,
-            maxScale: ReserveHubMetrics.canvasMaxScale,
-            boundaryMargin: ReserveHubMetrics.canvasBoundaryMargin,
-            fitBounds: fitRectFromCells(
-              widget.plan.usedBounds,
-              ReserveHubMetrics.canvasCellSize,
-            ),
-            fitKey: widget.plan.levelId,
-          ),
-        ),
-      ],
-    );
-  }
-}

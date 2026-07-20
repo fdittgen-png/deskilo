@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 import 'dart:async';
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,7 +12,6 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/canvas_controls.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -23,7 +21,6 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/domain/reservation_repository.dart';
-import '../../../members/domain/directory_status.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../reservations/domain/seat_state_logic.dart';
 import '../../../reservations/presentation/widgets/booking_sheet.dart';
@@ -43,10 +40,8 @@ import '../../domain/seat_block_policy.dart';
 import '../../providers/default_level_controller.dart';
 import '../../providers/floor_plan_providers.dart';
 import '../../providers/plan_focus_controller.dart';
-import '../widgets/floor_plan_painter.dart';
-
-/// Cell size of the live plan (denser than the editor).
-const double _kCellSize = 14;
+import '../seat_occupancy.dart';
+import '../widgets/plan_canvas.dart';
 
 /// Default walk-up duration when nothing caps it earlier (spec §4.2;
 /// becomes a workspace setting with the Epic-#5 rules engine).
@@ -219,9 +214,6 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     _minuteTick?.cancel();
     super.dispose();
   }
-
-  String _firstName(String name) =>
-      name.split(' ').firstOrNull ?? name;
 
   /// Booking granularity of the active workspace (#200/#201). Loading or
   /// unknown reads as [BookingGranularity.flexible] so nothing flashes —
@@ -804,40 +796,42 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                     child: _seatList(plan, reservations, names, at,
                         dayOpen: dayOpen),
                   )
-                : _LivePlanCanvas(
+                : PlanCanvas(
                     key: const ValueKey('plan-canvas-view'),
+                    paintKey: const ValueKey('live-plan-canvas'),
                     plan: plan,
-                    seatStates: {
-                      // Closed day (#186): every seat renders in the
-                      // muted blocked state — nothing looks bookable.
-                      for (final seat in plan.seats)
-                        seat.id: !dayOpen
-                            ? SeatState.blocked
-                            : windowEnd == null
-                                ? seatStateAt(
-                                    plan: plan,
-                                    seat: seat,
-                                    reservations: reservations,
-                                    myMemberId: myMemberId,
-                                    at: at,
-                                  )
-                                : seatStateInRange(
-                                    plan: plan,
-                                    seat: seat,
-                                    reservations: reservations,
-                                    myMemberId: myMemberId,
-                                    from: at,
-                                    to: windowEnd,
-                                  ),
-                    },
+                    seatStates: seatStatesFor(
+                      plan: plan,
+                      reservations: reservations,
+                      myMemberId: myMemberId,
+                      from: at,
+                      to: windowEnd,
+                      dayOpen: dayOpen,
+                    ),
                     seatLabels: {
                       for (final seat in plan.seats)
-                        seat.id:
-                            _labelFor(plan, seat, reservations, names, at),
+                        seat.id: occupantLabelFor(
+                          plan: plan,
+                          seat: seat,
+                          reservations: reservations,
+                          names: names,
+                          from: at,
+                          to: windowEnd,
+                        ),
                     },
                     highlightedSeatId: _highlightedSeatId,
-                    onlineSeatIds:
-                        _onlineSeatIds(plan, reservations, at, windowEnd),
+                    onlineSeatIds: onlineSeatIdsFor(
+                      plan: plan,
+                      reservations: reservations,
+                      members:
+                          ref.watch(workspaceMembersProvider).value ??
+                              const [],
+                      profiles:
+                          ref.watch(memberProfilesProvider).value ??
+                              const {},
+                      from: at,
+                      to: windowEnd,
+                    ),
                     deskOpacity: (ref
                                 .watch(currentWorkspaceProvider)
                                 .value
@@ -1423,173 +1417,5 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     );
   }
 
-  String _labelFor(
-    FloorPlan plan,
-    Seat seat,
-    List<Reservation> reservations,
-    Map<String, String> names,
-    DateTime now,
-  ) {
-    // Browsing (#184): label with whoever overlaps the window.
-    final windowEnd = _browseEnd;
-    final r = windowEnd == null
-        ? reservationOnSeatAt(
-            plan: plan,
-            seat: seat,
-            reservations: reservations,
-            at: now,
-          )
-        : reservationOnSeatInRange(
-            plan: plan,
-            seat: seat,
-            reservations: reservations,
-            from: now,
-            to: windowEnd,
-          );
-    if (r == null) return '';
-    return _firstName(names[r.memberId] ?? '');
-  }
-
-  /// Seats whose occupant is online right now (presence heartbeat): the
-  /// painter marks them with a green dot. Resolves each taken seat's
-  /// occupant → member → profile last-seen, same rule as the directory.
-  Set<String> _onlineSeatIds(
-    FloorPlan plan,
-    List<Reservation> reservations,
-    DateTime at,
-    DateTime? windowEnd,
-  ) {
-    final profiles = ref.watch(memberProfilesProvider).value ?? const {};
-    final members = ref.watch(workspaceMembersProvider).value ?? const [];
-    if (profiles.isEmpty || members.isEmpty) return const {};
-    final userIdOf = {for (final m in members) m.id: m.userId};
-    final now = DateTime.now();
-    bool online(String memberId) {
-      final uid = userIdOf[memberId];
-      final profile = uid == null ? null : profiles[uid];
-      return resolveDirectoryPresence(
-            lastSeenAt: profile?.lastSeenAt,
-            now: now,
-          ).kind ==
-          DirectoryPresenceKind.online;
-    }
-
-    return {
-      for (final seat in plan.seats)
-        if ((windowEnd == null
-                ? reservationOnSeatAt(
-                    plan: plan,
-                    seat: seat,
-                    reservations: reservations,
-                    at: at,
-                  )
-                : reservationOnSeatInRange(
-                    plan: plan,
-                    seat: seat,
-                    reservations: reservations,
-                    from: at,
-                    to: windowEnd,
-                  ))
-            case final r?)
-          if (online(r.memberId)) seat.id,
-    };
-  }
-}
-
-class _LivePlanCanvas extends StatefulWidget {
-  const _LivePlanCanvas({
-    super.key,
-    required this.plan,
-    required this.seatStates,
-    required this.seatLabels,
-    required this.onSeatTap,
-    this.highlightedSeatId,
-    this.onlineSeatIds = const {},
-    this.deskOpacity = 1,
-    this.background,
-    this.images = const {},
-  });
-
-  final FloorPlan plan;
-  final Map<String, SeatState> seatStates;
-  final Map<String, String> seatLabels;
-  final ValueChanged<Seat> onSeatTap;
-
-  /// Seat ringed by the painter after a calendar jump (#182).
-  final String? highlightedSeatId;
-
-  /// Seats whose occupant is online (presence dot).
-  final Set<String> onlineSeatIds;
-
-  /// Desk fill opacity 0..1 (0040).
-  final double deskOpacity;
-
-  /// Level background image (0036), painted behind the grid.
-  final ui.Image? background;
-
-  /// Illustration images (0037): id → decoded bitmap.
-  final Map<String, ui.Image> images;
-
-  @override
-  State<_LivePlanCanvas> createState() => _LivePlanCanvasState();
-}
-
-class _LivePlanCanvasState extends State<_LivePlanCanvas> {
-  final _viewTransform = TransformationController();
-
-  @override
-  void dispose() {
-    _viewTransform.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    const size = Size(120 * _kCellSize, 120 * _kCellSize);
-    return Stack(
-      children: [
-        InteractiveViewer(
-          transformationController: _viewTransform,
-          constrained: false,
-          minScale: 0.4,
-          maxScale: 3,
-          boundaryMargin: const EdgeInsets.all(200),
-          child: GestureDetector(
-            onTapUp: (details) {
-              final x = (details.localPosition.dx / _kCellSize).floor();
-              final y = (details.localPosition.dy / _kCellSize).floor();
-              final seat = widget.plan.seatAtCell(x, y);
-              if (seat != null) widget.onSeatTap(seat);
-            },
-            child: CustomPaint(
-              key: const ValueKey('live-plan-canvas'),
-              size: size,
-              painter: FloorPlanPainter(
-                plan: widget.plan,
-                cellSize: _kCellSize,
-                colorScheme: Theme.of(context).colorScheme,
-                brightness: Theme.of(context).brightness,
-                seatStates: widget.seatStates,
-                seatLabels: widget.seatLabels,
-                highlightedSeatId: widget.highlightedSeatId,
-                onlineSeatIds: widget.onlineSeatIds,
-                deskOpacity: widget.deskOpacity,
-                background: widget.background,
-                images: widget.images,
-              ),
-            ),
-          ),
-        ),
-        Positioned.fill(
-          child: CanvasControls(
-            controller: _viewTransform,
-            contentSize: size,
-            fitBounds: fitRectFromCells(widget.plan.usedBounds, _kCellSize),
-            fitKey: widget.plan.levelId,
-          ),
-        ),
-      ],
-    );
-  }
 }
 

@@ -14,6 +14,7 @@ import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/level.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
+import '../../../plan/presentation/widgets/level_chip_row.dart';
 import '../../domain/reservation.dart';
 import 'booking_range_text.dart';
 import '../../providers/reservation_providers.dart';
@@ -147,9 +148,7 @@ class WeekGrid extends ConsumerStatefulWidget {
 
 class _WeekGridState extends ConsumerState<WeekGrid> {
   /// Sentinel value of [_levelId] for the "All levels" chip — never a real
-  /// level id. Deliberately a local copy of DayTimeline's selector (#221):
-  /// the two widgets share the chip semantics but none of the row
-  /// rendering, so a shared extraction would couple more than it saves.
+  /// level id. The row itself is the shared [LevelChipRow] (#221).
   static const String _allLevelsId = '__all-levels__';
 
   /// Level chip choice — local browsing state, never the plan tab's
@@ -197,39 +196,17 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // Level chips like the day timeline (#187/#221) — throwaway
-        // browsing state, never the persisted default. Row height and tap
-        // target meet the 48dp Material minimum (#211).
-        if (levels.length > 1)
-          SizedBox(
-            height: kMinInteractiveDimension,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: AppSpacing.mdH,
-              children: [
-                // Sentinel chip FIRST: stack every level in one grid.
-                Padding(
-                  padding: AppSpacing.xsH,
-                  child: ChoiceChip(
-                    label: Text(l10n?.calendarAllLevels ?? 'All levels'),
-                    selected: allSelected,
-                    materialTapTargetSize: MaterialTapTargetSize.padded,
-                    onSelected: (_) =>
-                        setState(() => _levelId = _allLevelsId),
-                  ),
-                ),
-                for (final Level l in levels)
-                  Padding(
-                    padding: AppSpacing.xsH,
-                    child: ChoiceChip(
-                      label: Text(l.name),
-                      selected: !allSelected && l.id == level?.id,
-                      materialTapTargetSize: MaterialTapTargetSize.padded,
-                      onSelected: (_) => setState(() => _levelId = l.id),
-                    ),
-                  ),
-              ],
-            ),
-          ),
+        // browsing state, never the persisted default.
+        LevelChipRow(
+          levels: levels,
+          selectedLevelId: level?.id,
+          onSelected: (id) => setState(() => _levelId = id),
+          // Sentinel chip FIRST: stack every level in one grid.
+          allLevelsLabel: l10n?.calendarAllLevels ?? 'All levels',
+          allLevelsSelected: allSelected,
+          onAllLevelsSelected: () =>
+              setState(() => _levelId = _allLevelsId),
+        ),
         Expanded(
           child: allSelected
               ? _allLevelsBody(context, levels)
