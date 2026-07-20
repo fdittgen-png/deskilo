@@ -93,6 +93,11 @@ Future<FakeReservationRepository> pumpTimeline(
   bool twoLevels = false,
   void Function(FakeFloorPlanRepository plans)? mutatePlans,
 }) async {
+  // Portrait: the timeline behaviour tests run the non-split layout (the
+  // 800×600 default is landscape and would engage the calendar side panel).
+  tester.view.physicalSize = const Size(800, 1400);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.reset);
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   if (twoLevels) addSecondLevel(plans);
   mutatePlans?.call(plans);
