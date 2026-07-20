@@ -47,9 +47,11 @@ class BillSections {
       serviceEntries.fold(0, (sum, e) => sum + e.amountCents);
 }
 
-/// Period key ('yyyy-MM') that payments/expenses would post to if they were
-/// confirmed right now — the RPCs book them to now()'s period.
-String billNowPeriod() => DateFormat('yyyy-MM').format(DateTime.now());
+/// The current month's period key ('yyyy-MM') — where payments/expenses
+/// post when confirmed right now (the RPCs book to now()'s period). The
+/// ONE definition; money_providers re-exports it (a `billNowPeriod` twin
+/// used to live here).
+String currentPeriod() => DateFormat('yyyy-MM').format(DateTime.now());
 
 /// Groups [ledger] entries and [pendingEvents] into the sections of
 /// [memberId]'s bill for [period] ('yyyy-MM').
@@ -70,7 +72,7 @@ BillSections buildBillSections({
   required List<WorkspaceEvent> pendingEvents,
   String? nowPeriod,
 }) {
-  final now = nowPeriod ?? billNowPeriod();
+  final now = nowPeriod ?? currentPeriod();
 
   final services = [
     for (final entry in ledger)

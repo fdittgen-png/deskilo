@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../core/format/cents.dart';
+import '../../../../core/trace/guarded.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/trace_logger.dart';
-import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -34,45 +34,43 @@ class AccessoriesScreen extends ConsumerWidget {
       isScrollControlled: true,
       builder: (context) => _AccessorySheet(accessory: accessory),
     );
-    if (result == null) return;
+    if (result == null || !context.mounted) return;
 
-    try {
-      final repo = ref.read(accessoryRepositoryProvider);
-      if (accessory == null) {
-        // New accessories append to the end of the catalog order.
-        final existing = ref
-                .read(accessoriesProvider(includeInactive: true))
-                .value ??
-            const <Accessory>[];
-        final nextSortOrder = existing.fold<int>(
-              -1,
-              (max, a) => a.sortOrder > max ? a.sortOrder : max,
-            ) +
-            1;
-        await repo.createAccessory(
-          workspace.id,
-          name: result.name,
-          supplementCents: result.supplementCents,
-          sortOrder: nextSortOrder,
-        );
-      } else {
-        await repo.updateAccessory(
-          accessory.id,
-          name: result.name,
-          supplementCents: result.supplementCents,
-          active: result.active,
-        );
-      }
-    } catch (e, st) {
-      debugPrint('accessory save failed: $e\n$st');
-      TraceLogger.instance
-          .error('plan', 'accessory save failed', error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
+    if (!await runGuarded(
+      context,
+      domain: 'plan',
+      message: 'accessory save failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        final repo = ref.read(accessoryRepositoryProvider);
+        if (accessory == null) {
+          // New accessories append to the end of the catalog order.
+          final existing = ref
+                  .read(accessoriesProvider(includeInactive: true))
+                  .value ??
+              const <Accessory>[];
+          final nextSortOrder = existing.fold<int>(
+                -1,
+                (max, a) => a.sortOrder > max ? a.sortOrder : max,
+              ) +
+              1;
+          await repo.createAccessory(
+            workspace.id,
+            name: result.name,
+            supplementCents: result.supplementCents,
+            sortOrder: nextSortOrder,
+          );
+        } else {
+          await repo.updateAccessory(
+            accessory.id,
+            name: result.name,
+            supplementCents: result.supplementCents,
+            active: result.active,
+          );
+        }
+      },
+    )) {
       return;
     }
     ref.invalidate(accessoriesProvider);
@@ -180,7 +178,7 @@ class _AccessorySheetState extends State<_AccessorySheet> {
     final accessory = widget.accessory;
     _name = TextEditingController(text: accessory?.name ?? '');
     _supplement = TextEditingController(
-      text: accessory == null ? '' : _money(accessory.supplementCents),
+      text: accessory == null ? '' : centsToMajor(accessory.supplementCents),
     );
     _active = accessory?.active ?? true;
   }
@@ -192,21 +190,9 @@ class _AccessorySheetState extends State<_AccessorySheet> {
     super.dispose();
   }
 
-  String _money(int cents) =>
-      cents % 100 == 0 ? '${cents ~/ 100}' : (cents / 100).toStringAsFixed(2);
-
-  // Mirrors the services catalog editor's cents parser (it is private
-  // there, hence not importable).
-  int? _parseCents(String raw) {
-    if (raw.trim().isEmpty) return 0;
-    final value = double.tryParse(raw.trim().replaceAll(',', '.'));
-    if (value == null || value < 0) return null;
-    return (value * 100).round();
-  }
-
   void _submit() {
     final name = _name.text.trim();
-    final supplement = _parseCents(_supplement.text);
+    final supplement = parseCentsInput(_supplement.text);
     if (name.isEmpty || supplement == null) return;
     Navigator.of(context).pop(
       _AccessoryDraft(

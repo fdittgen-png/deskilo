@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/format/cents.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -113,22 +114,17 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     super.dispose();
   }
 
-  String _money(int cents) =>
-      cents % 100 == 0 ? '${cents ~/ 100}' : (cents / 100).toStringAsFixed(2);
-
-  int? _parseCents(String raw) {
-    if (raw.trim().isEmpty) return 0;
-    final value = double.tryParse(raw.trim().replaceAll(',', '.'));
-    if (value == null || value < 0) return null;
-    return (value * 100).round();
-  }
-
-  Future<void> _showError() async {
+  /// Shared guard of every editor save: traced failure + generic error
+  /// snackbar; true = proceed to invalidate/confirm.
+  Future<bool> _run(String message, Future<void> Function() action) {
     final l10n = AppLocalizations.of(context);
-    AppSnack.error(
+    return runGuarded(
       context,
-      l10n?.workspaceGenericError ??
+      domain: 'money',
+      message: message,
+      errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
+      action: action,
     );
   }
 
@@ -219,16 +215,12 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
       return;
     }
     setState(() => _bandsInvalid = false);
-    try {
-      await ref
+    if (!await _run(
+      'fee band save failed',
+      () => ref
           .read(moneyRepositoryProvider)
-          .replaceFeeBands(workspace.id, bands);
-    } catch (e, st) {
-      debugPrint('fee band save failed: $e\n$st');
-      TraceLogger.instance
-          .error('money', 'fee band save failed', error: e, stackTrace: st);
-      if (!mounted) return;
-      await _showError();
+          .replaceFeeBands(workspace.id, bands),
+    )) {
       return;
     }
     ref.invalidate(feeBandsProvider);
@@ -261,16 +253,12 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
       extraLevels: List.of(_extraLevels),
       allowCustom: _allowCustom,
     );
-    try {
-      await ref
+    if (!await _run(
+      'subscription levels save failed',
+      () => ref
           .read(moneyRepositoryProvider)
-          .setSubscriptionLevels(workspace.id, levels);
-    } catch (e, st) {
-      debugPrint('subscription levels save failed: $e\n$st');
-      TraceLogger.instance.error('money', 'subscription levels save failed',
-          error: e, stackTrace: st);
-      if (!mounted) return;
-      await _showError();
+          .setSubscriptionLevels(workspace.id, levels),
+    )) {
       return;
     }
     ref.invalidate(subscriptionLevelsProvider);
@@ -285,21 +273,17 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     if (workspace == null) return;
     final name = _pkgName.text.trim();
     final days = int.tryParse(_pkgDays.text.trim());
-    final price = _parseCents(_pkgPrice.text);
+    final price = parseCentsInput(_pkgPrice.text);
     if (name.isEmpty || days == null || days < 1 || price == null) return;
-    try {
-      await ref.read(moneyRepositoryProvider).createPackage(
+    if (!await _run(
+      'package create failed',
+      () => ref.read(moneyRepositoryProvider).createPackage(
             workspace.id,
             name: name,
             days: days,
             priceCents: price,
-          );
-    } catch (e, st) {
-      debugPrint('package create failed: $e\n$st');
-      TraceLogger.instance
-          .error('money', 'package create failed', error: e, stackTrace: st);
-      if (!mounted) return;
-      await _showError();
+          ),
+    )) {
       return;
     }
     _pkgName.clear();
@@ -312,16 +296,12 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
   }
 
   Future<void> _togglePackage(Package package) async {
-    try {
-      await ref
+    if (!await _run(
+      'package toggle failed',
+      () => ref
           .read(moneyRepositoryProvider)
-          .updatePackage(package.id, active: !package.active);
-    } catch (e, st) {
-      debugPrint('package toggle failed: $e\n$st');
-      TraceLogger.instance
-          .error('money', 'package toggle failed', error: e, stackTrace: st);
-      if (!mounted) return;
-      await _showError();
+          .updatePackage(package.id, active: !package.active),
+    )) {
       return;
     }
     ref.invalidate(allPackagesProvider);
@@ -365,25 +345,25 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           const SizedBox(width: 8),
           Expanded(
             child: TextFormField(
-              initialValue: _money(draft.feeCents ?? 0),
+              initialValue: centsToMajor(draft.feeCents ?? 0),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
                 labelText: l10n?.billingBandFee ?? 'Monthly fee',
               ),
-              onChanged: (raw) => draft.feeCents = _parseCents(raw),
+              onChanged: (raw) => draft.feeCents = parseCentsInput(raw),
             ),
           ),
           const SizedBox(width: 8),
           Expanded(
             child: TextFormField(
-              initialValue: _money(draft.overageCents ?? 0),
+              initialValue: centsToMajor(draft.overageCents ?? 0),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
                 labelText: l10n?.billingBandOverage ?? 'Overage',
               ),
-              onChanged: (raw) => draft.overageCents = _parseCents(raw),
+              onChanged: (raw) => draft.overageCents = parseCentsInput(raw),
             ),
           ),
           if (isLast)
@@ -517,8 +497,8 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
             contentPadding: EdgeInsets.zero,
             title: Text(package.name),
             subtitle: Text(
-              l10n?.billingPackageSummary(package.days, _money(package.priceCents)) ??
-                  '${package.days} days · ${_money(package.priceCents)}',
+              l10n?.billingPackageSummary(package.days, centsToMajor(package.priceCents)) ??
+                  '${package.days} days · ${centsToMajor(package.priceCents)}',
             ),
             trailing: Switch(
               value: package.active,

@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT
-import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_money_repository.dart';
+export '../domain/bill_sections.dart' show currentPeriod;
+
 import '../domain/fee_band.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
@@ -54,7 +55,6 @@ Future<SubscriptionLevels> subscriptionLevels(Ref ref) async {
 }
 
 /// Current period key in workspace terms ('yyyy-MM').
-String currentPeriod() => DateFormat('yyyy-MM').format(DateTime.now());
 
 /// Active consumable services of the current workspace (#123).
 @Riverpod(keepAlive: true)

@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../../core/trace/guarded.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
@@ -131,24 +132,21 @@ Future<void> showConsumptionSheet(
 
   final chosenPeriod = period.text.trim();
   if (!RegExp(r'^\d{4}-\d{2}$').hasMatch(chosenPeriod)) return;
-  try {
-    await ref.read(moneyRepositoryProvider).recordServiceCharge(
+  if (!context.mounted) return;
+  if (!await runGuarded(
+    context,
+    domain: 'money',
+    message: 'record service charge failed',
+    errorText: l10n?.workspaceGenericError ??
+        'Something went wrong. Please try again.',
+    action: () => ref.read(moneyRepositoryProvider).recordServiceCharge(
           workspaceId: workspace.id,
           subjectMemberId: subjectMemberId,
           serviceId: service.id,
           quantity: quantity,
           period: chosenPeriod,
-        );
-  } catch (e, st) {
-    debugPrint('record service charge failed: $e\n$st');
-    TraceLogger.instance.error('money', 'record service charge failed',
-        error: e, stackTrace: st);
-    if (!context.mounted) return;
-    AppSnack.error(
-      context,
-      l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-    );
+        ),
+  )) {
     return;
   }
   if (!context.mounted) return;
