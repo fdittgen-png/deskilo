@@ -12,6 +12,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/canvas_controls.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -1363,7 +1364,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   }
 }
 
-class _LivePlanCanvas extends StatelessWidget {
+class _LivePlanCanvas extends StatefulWidget {
   const _LivePlanCanvas({
     super.key,
     required this.plan,
@@ -1390,36 +1391,60 @@ class _LivePlanCanvas extends StatelessWidget {
   final Map<String, ui.Image> images;
 
   @override
+  State<_LivePlanCanvas> createState() => _LivePlanCanvasState();
+}
+
+class _LivePlanCanvasState extends State<_LivePlanCanvas> {
+  final _viewTransform = TransformationController();
+
+  @override
+  void dispose() {
+    _viewTransform.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     const size = Size(120 * _kCellSize, 120 * _kCellSize);
-    return InteractiveViewer(
-      constrained: false,
-      minScale: 0.4,
-      maxScale: 3,
-      boundaryMargin: const EdgeInsets.all(200),
-      child: GestureDetector(
-        onTapUp: (details) {
-          final x = (details.localPosition.dx / _kCellSize).floor();
-          final y = (details.localPosition.dy / _kCellSize).floor();
-          final seat = plan.seatAtCell(x, y);
-          if (seat != null) onSeatTap(seat);
-        },
-        child: CustomPaint(
-          key: const ValueKey('live-plan-canvas'),
-          size: size,
-          painter: FloorPlanPainter(
-            plan: plan,
-            cellSize: _kCellSize,
-            colorScheme: Theme.of(context).colorScheme,
-            brightness: Theme.of(context).brightness,
-            seatStates: seatStates,
-            seatLabels: seatLabels,
-            highlightedSeatId: highlightedSeatId,
-            background: background,
-            images: images,
+    return Stack(
+      children: [
+        InteractiveViewer(
+          transformationController: _viewTransform,
+          constrained: false,
+          minScale: 0.4,
+          maxScale: 3,
+          boundaryMargin: const EdgeInsets.all(200),
+          child: GestureDetector(
+            onTapUp: (details) {
+              final x = (details.localPosition.dx / _kCellSize).floor();
+              final y = (details.localPosition.dy / _kCellSize).floor();
+              final seat = widget.plan.seatAtCell(x, y);
+              if (seat != null) widget.onSeatTap(seat);
+            },
+            child: CustomPaint(
+              key: const ValueKey('live-plan-canvas'),
+              size: size,
+              painter: FloorPlanPainter(
+                plan: widget.plan,
+                cellSize: _kCellSize,
+                colorScheme: Theme.of(context).colorScheme,
+                brightness: Theme.of(context).brightness,
+                seatStates: widget.seatStates,
+                seatLabels: widget.seatLabels,
+                highlightedSeatId: widget.highlightedSeatId,
+                background: widget.background,
+                images: widget.images,
+              ),
+            ),
           ),
         ),
-      ),
+        Positioned.fill(
+          child: CanvasControls(
+            controller: _viewTransform,
+            contentSize: size,
+          ),
+        ),
+      ],
     );
   }
 }
