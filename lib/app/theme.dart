@@ -27,6 +27,12 @@ const FlexSubThemesData _subThemes = FlexSubThemesData(
   bottomSheetRadius: AppRadius.xl,
   inputDecoratorBorderType: FlexInputBorderType.outline,
   inputDecoratorRadius: AppRadius.lg,
+  // Dense, tighter form fields app-wide: every TextField / dropdown reads
+  // more professional and takes less vertical space, so long forms
+  // (settings, booking, editors) fit more on screen without scrolling.
+  inputDecoratorIsDense: true,
+  inputDecoratorContentPadding:
+      EdgeInsets.symmetric(horizontal: 14, vertical: 12),
   snackBarRadius: AppRadius.lg,
 );
 
