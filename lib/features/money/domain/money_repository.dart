@@ -3,6 +3,7 @@ import 'fee_band.dart';
 import 'ledger_entry.dart';
 import 'package.dart';
 import 'payment_method.dart';
+import 'payment_provider.dart';
 import 'service_item.dart';
 import 'statement.dart';
 import 'subscription_levels.dart';
@@ -121,16 +122,23 @@ abstract class MoneyRepository {
   /// quota-extension id.
   Future<String> buyPackage(String workspaceId, String packageId);
 
-  /// Starts an online payment for [amountCents] of the member's bill via
-  /// the server-side payment function (`create-payment-order`, see
-  /// docs/design/payments-integration.md). Returns the payment provider's
-  /// approval URL to open, or null when online payments are not configured
-  /// on this deployment (the function replies `not_configured`). Throws on
-  /// transport/provider errors.
-  Future<Uri?> createPaymentOrder({
+  /// Which online-payment providers this deployment can charge with
+  /// (create-payment-order's config probe) — plus per-provider missing
+  /// server config for the owner diagnostics. An undeployed function maps
+  /// to [PaymentGatewayConfig.notDeployed], never a throw.
+  Future<PaymentGatewayConfig> fetchPaymentConfig();
+
+  /// Starts an online payment with [provider] for [amountCents] of the
+  /// member's bill (docs/design/payments-integration.md). Returns the
+  /// provider's approval URL + order id, or a not-configured result naming
+  /// the missing server env vars. Throws [PaymentGatewayException] on
+  /// provider/auth errors so traces carry the server detail.
+  Future<PaymentOrderStart> createPaymentOrder({
+    required PaymentProvider provider,
     required String workspaceId,
     required String memberId,
     required int amountCents,
+    required String currencyCode,
     required String period,
   });
 }

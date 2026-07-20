@@ -5,6 +5,7 @@ import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
 import 'package:deskilo/features/money/domain/package.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
+import 'package:deskilo/features/money/domain/payment_provider.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
@@ -358,21 +359,39 @@ class FakeMoneyRepository implements MoneyRepository {
     return 'ext-${boughtPackages.length}';
   }
 
-  /// Amounts (cents) passed to createPaymentOrder.
-  final paymentOrders = <int>[];
+  /// Providers the fake deployment offers; empty models "not configured".
+  List<PaymentProvider> paymentProviders = [PaymentProvider.paypal];
 
-  /// Approval URL the fake returns; null models an unconfigured deployment
-  /// (the default), a Uri models a configured one.
+  /// Per-provider missing env vars reported by the config probe.
+  Map<String, List<String>> paymentMissing = const {};
+
+  /// (provider, amountCents) of createPaymentOrder calls.
+  final paymentOrders = <(PaymentProvider, int)>[];
+
+  /// Approval URL the fake returns; null models an unconfigured provider.
   Uri? paymentApprovalUrl;
 
   @override
-  Future<Uri?> createPaymentOrder({
+  Future<PaymentGatewayConfig> fetchPaymentConfig() async =>
+      PaymentGatewayConfig(
+        providers: List.of(paymentProviders),
+        missing: paymentMissing,
+      );
+
+  @override
+  Future<PaymentOrderStart> createPaymentOrder({
+    required PaymentProvider provider,
     required String workspaceId,
     required String memberId,
     required int amountCents,
+    required String currencyCode,
     required String period,
   }) async {
-    paymentOrders.add(amountCents);
-    return paymentApprovalUrl;
+    paymentOrders.add((provider, amountCents));
+    final url = paymentApprovalUrl;
+    if (url == null) {
+      return const PaymentOrderStart(missing: ['PAYPAL_CLIENT_ID']);
+    }
+    return PaymentOrderStart(approveUrl: url, orderId: 'order-1');
   }
 }

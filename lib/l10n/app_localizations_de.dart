@@ -253,11 +253,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String get billPackages => 'Tagespakete';
 
   @override
-  String get payOnlineButton => 'Online mit PayPal bezahlen';
+  String get payOnlineButton => 'Online bezahlen';
 
   @override
   String get payOnlineNotConfigured =>
       'Online-Zahlungen sind noch nicht eingerichtet. Frag die Workspace-Inhaberin.';
+
+  @override
+  String get payOnlineChooseTitle => 'Online bezahlen';
+
+  @override
+  String get paymentProviderStripe => 'Kreditkarte (Stripe)';
+
+  @override
+  String get paymentProviderMollie => 'Mollie — iDEAL, Bancontact…';
+
+  @override
+  String get payOnlineDiagTitle => 'Online-Zahlungen — nicht konfiguriert';
+
+  @override
+  String get payOnlineDiagHint =>
+      'Auf dem Server fehlt diese Konfiguration (docs/design/payments-integration.md):';
 
   @override
   String get billPdfTitle => 'Monatsrechnung';

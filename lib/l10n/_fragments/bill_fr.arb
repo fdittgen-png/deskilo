@@ -19,6 +19,11 @@
   "entitlementPaygRate": "Les jours au-delà de votre forfait sont facturés {rate} chacun.",
   "entitlementPackageFull": "Vous avez utilisé tous vos jours ce mois-ci. Achetez un forfait pour continuer à réserver.",
   "billPackages": "Forfaits de jours",
-  "payOnlineButton": "Payer en ligne avec PayPal",
-  "payOnlineNotConfigured": "Les paiements en ligne ne sont pas encore configurés. Demandez au propriétaire de l'espace."
+  "payOnlineButton": "Payer en ligne",
+  "payOnlineNotConfigured": "Les paiements en ligne ne sont pas encore configurés. Demandez au propriétaire de l'espace.",
+  "payOnlineChooseTitle": "Payer en ligne",
+  "paymentProviderStripe": "Carte bancaire (Stripe)",
+  "paymentProviderMollie": "Mollie — iDEAL, Bancontact…",
+  "payOnlineDiagTitle": "Paiements en ligne — non configurés",
+  "payOnlineDiagHint": "Il manque cette configuration côté serveur (docs/design/payments-integration.md) :"
 }

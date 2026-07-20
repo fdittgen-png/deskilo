@@ -3,6 +3,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
+import 'package:deskilo/features/money/domain/payment_provider.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:flutter/material.dart';
@@ -205,10 +206,50 @@ void main() {
     await tester.tap(find.byKey(const Key('pay-online-button')));
     await tester.pumpAndSettle();
 
-    // The order is started for the owed amount; the fake returns no URL
-    // (unconfigured deployment), so the member is told it isn't set up.
-    expect(money.paymentOrders, [1600]);
-    expect(find.textContaining("aren't set up yet"), findsOneWidget);
+    // Single configured provider (PayPal) → the order starts directly for
+    // the owed amount; the fake returns no URL (secrets missing), so the
+    // OWNER gets the diagnostics dialog naming the missing config.
+    expect(money.paymentOrders, [(PaymentProvider.paypal, 1600)]);
+    expect(
+      find.text('Online payments — not configured'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('PAYPAL_CLIENT_ID'), findsOneWidget);
+  });
+
+  testWidgets(
+      'several configured providers open the chooser; picking the card '
+      'provider starts a Stripe order', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+      featureFlags: const {'onlinePayments': true},
+    );
+    final money = FakeMoneyRepository()
+      ..paymentProviders = [
+        PaymentProvider.paypal,
+        PaymentProvider.stripe,
+        PaymentProvider.mollie,
+      ]
+      ..paymentApprovalUrl = Uri.parse('https://checkout.example/session');
+    await pumpMoney(tester, money: money, workspace: workspace);
+
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('pay-online-button')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.ensureVisible(find.byKey(const Key('pay-online-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('pay-online-button')));
+    await tester.pumpAndSettle();
+
+    // All three providers offered; card goes through Stripe.
+    expect(find.text('Credit card (Stripe)'), findsOneWidget);
+    expect(find.text('Mollie — iDEAL, Bancontact…'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('pay-provider-stripe')));
+    await tester.pumpAndSettle();
+
+    expect(money.paymentOrders, [(PaymentProvider.stripe, 1600)]);
   });
 
   testWidgets('online payments off hides the Pay-online button (0043)',

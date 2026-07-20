@@ -542,10 +542,10 @@ abstract class AppLocalizations {
   /// **'Day packages'**
   String get billPackages;
 
-  /// Button on an outstanding bill that starts an online payment (0043)
+  /// Button on an outstanding bill that starts an online payment (provider chosen next when several are configured)
   ///
   /// In en, this message translates to:
-  /// **'Pay online with PayPal'**
+  /// **'Pay online'**
   String get payOnlineButton;
 
   /// Shown when the member taps Pay online but the deployment has no payment provider configured
@@ -553,6 +553,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Online payments aren\'t set up yet. Ask the workspace owner.'**
   String get payOnlineNotConfigured;
+
+  /// Title of the provider chooser sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Pay online'**
+  String get payOnlineChooseTitle;
+
+  /// Provider button: card payments through Stripe Checkout
+  ///
+  /// In en, this message translates to:
+  /// **'Credit card (Stripe)'**
+  String get paymentProviderStripe;
+
+  /// Provider button: Mollie hosted checkout (iDEAL, Bancontact, cards…)
+  ///
+  /// In en, this message translates to:
+  /// **'Mollie — iDEAL, Bancontact…'**
+  String get paymentProviderMollie;
+
+  /// Title of the admin diagnostics dialog when no provider can charge
+  ///
+  /// In en, this message translates to:
+  /// **'Online payments — not configured'**
+  String get payOnlineDiagTitle;
+
+  /// Hint above the per-provider missing-config lines in the diagnostics dialog
+  ///
+  /// In en, this message translates to:
+  /// **'The server is missing this configuration (docs/design/payments-integration.md):'**
+  String get payOnlineDiagHint;
 
   /// Document title on the exported bill PDF (#133)
   ///

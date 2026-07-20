@@ -6,6 +6,7 @@ import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
 import '../domain/package.dart';
 import '../domain/payment_method.dart';
+import '../domain/payment_provider.dart';
 import '../domain/service_item.dart';
 import '../domain/statement.dart';
 import '../domain/subscription_levels.dart';
@@ -289,32 +290,86 @@ class SupabaseMoneyRepository implements MoneyRepository {
     return result as String;
   }
 
+  /// Invokes the payment Edge Function, mapping an undeployed function
+  /// (404) to a recognisable state instead of a crash.
+  Future<Map<String, dynamic>?> _invokePayments(
+    Map<String, dynamic> body,
+  ) async {
+    try {
+      final response = await _client.functions.invoke(
+        'create-payment-order',
+        body: body,
+      );
+      final data = response.data;
+      return data is Map ? Map<String, dynamic>.from(data) : null;
+    } on FunctionException catch (e, st) {
+      if (e.status == 404) return null; // function not deployed
+      // trace-exempt: not silent — rethrown as PaymentGatewayException via
+      // throwWithStackTrace; the caller's runGuarded traces it.
+      Error.throwWithStackTrace(
+        PaymentGatewayException(
+          e.status,
+          e.details?.toString() ?? e.reasonPhrase ?? 'function error',
+        ),
+        st,
+      );
+    }
+  }
+
   @override
-  Future<Uri?> createPaymentOrder({
+  Future<PaymentGatewayConfig> fetchPaymentConfig() async {
+    final data = await _invokePayments({'action': 'config'});
+    if (data == null) return PaymentGatewayConfig.notDeployed;
+    final providers = [
+      for (final name in (data['providers'] as List? ?? const []))
+        ?PaymentProvider.fromWire(name as String?),
+    ];
+    final missing = {
+      for (final entry
+          in (data['missing'] as Map? ?? const {}).entries)
+        entry.key as String: [
+          for (final v in (entry.value as List? ?? const [])) v as String,
+        ],
+    };
+    return PaymentGatewayConfig(providers: providers, missing: missing);
+  }
+
+  @override
+  Future<PaymentOrderStart> createPaymentOrder({
+    required PaymentProvider provider,
     required String workspaceId,
     required String memberId,
     required int amountCents,
+    required String currencyCode,
     required String period,
   }) async {
-    // The Edge Function holds the PSP secrets and creates the provider
-    // order server-side (docs/design/payments-integration.md). Until a deployment
-    // configures those secrets it replies {status: 'not_configured'}.
-    final response = await _client.functions.invoke(
-      'create-payment-order',
-      body: {
-        'workspace_id': workspaceId,
-        'member_id': memberId,
-        'amount_cents': amountCents,
-        'period': period,
-      },
-    );
-    final data = response.data;
-    if (data is! Map) return null;
-    if (data['status'] == 'not_configured') return null;
-    final approveUrl = data['approve_url'];
-    if (approveUrl is String && approveUrl.isNotEmpty) {
-      return Uri.parse(approveUrl);
+    final data = await _invokePayments({
+      'provider': provider.wireName,
+      'workspace_id': workspaceId,
+      'member_id': memberId,
+      'amount_cents': amountCents,
+      'currency': currencyCode,
+      'period': period,
+    });
+    if (data == null) {
+      return const PaymentOrderStart(
+        missing: ['create-payment-order (not deployed)'],
+      );
     }
-    return null;
+    if (data['status'] == 'not_configured') {
+      return PaymentOrderStart(
+        missing: [
+          for (final v in (data['missing'] as List? ?? const [])) v as String,
+        ],
+      );
+    }
+    final approveUrl = data['approve_url'];
+    if (approveUrl is! String || approveUrl.isEmpty) {
+      throw PaymentGatewayException(500, 'no approve_url in $data');
+    }
+    return PaymentOrderStart(
+      approveUrl: Uri.parse(approveUrl),
+      orderId: data['order_id'] as String?,
+    );
   }
 }
