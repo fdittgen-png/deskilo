@@ -90,7 +90,7 @@ void main() {
     await pumpPlan(tester);
 
     await pickChipTime(tester, 'plan-from-chip', hour: '23', minute: '00');
-    await tester.tap(find.text('Now'));
+    await tester.tap(find.byKey(const ValueKey('plan-now-button')));
     await tester.pumpAndSettle();
 
     await tester.tapAt(seatCenter(tester));
@@ -104,9 +104,10 @@ void main() {
 
     await pickChipTime(tester, 'plan-to-chip', hour: '23', minute: '45');
 
-    // Browse mode entered: the Now button is tappable again …
-    final nowButton =
-        tester.widget<TextButton>(find.widgetWithText(TextButton, 'Now'));
+    // Browse mode entered: the Now button (now an icon) is tappable again …
+    final nowButton = tester.widget<IconButton>(
+      find.byKey(const ValueKey('plan-now-button')),
+    );
     expect(nowButton.onPressed, isNotNull);
     expect(chipText(tester, 'plan-to-chip'), '23:45');
 

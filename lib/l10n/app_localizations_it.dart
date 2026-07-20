@@ -1049,6 +1049,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get planNowButton => 'Adesso';
 
   @override
+  String get planLevelTooltip => 'Piano';
+
+  @override
   String get planReserveButton => 'Prenota';
 
   @override

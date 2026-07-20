@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
 
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -992,40 +993,26 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             },
             child: Text(DateFormat.MMMd().format(local)),
           ),
-          // Level chips share the top row (was a separate 48dp row): one
-          // tap per level, scrollable when many, persisted as this member's
-          // default (#159). Empty spacer keeps 'Now' hard right on single
-          // -level workspaces.
+          const SizedBox(width: AppSpacing.xs),
+          // Quick level picker (#159 chips were unusable squeezed into the
+          // top row): a compact dropdown showing the current level; the menu
+          // opens the full list with one tap, scales to any level count.
+          // Expanded so it absorbs slack (and ellipsizes on a narrow panel).
           if (levels.length > 1)
             Expanded(
-              child: SizedBox(
-                height: kMinInteractiveDimension,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    for (final Level l in levels)
-                      Padding(
-                        padding: AppSpacing.xsH,
-                        child: ChoiceChip(
-                          label: Text(l.name),
-                          selected: l.id == level.id,
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.padded,
-                          onSelected: (_) {
-                            setState(() => _highlightedSeatId = null);
-                            ref
-                                .read(selectedLevelIdProvider.notifier)
-                                .select(l.id);
-                          },
-                        ),
-                      ),
-                  ],
-                ),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: _levelMenu(levels, level),
               ),
             )
           else
             const Spacer(),
-          TextButton(
+          // 'Now' is a symbol to save space: return to the live instant.
+          // Disabled (muted) while already live.
+          IconButton(
+            key: const ValueKey('plan-now-button'),
+            tooltip: l10n?.planNowButton ?? 'Now',
+            icon: const Icon(Icons.schedule_outlined),
             onPressed: live
                 ? null
                 : () => setState(() {
@@ -1033,7 +1020,6 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                       _browse = null;
                       _browseEnd = null;
                     }),
-            child: Text(l10n?.planNowButton ?? 'Now'),
           ),
         ],
       ),
@@ -1081,6 +1067,63 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                   ),
           ),
         ],
+      ),
+    );
+  }
+
+  /// Compact level picker: a chip-styled button showing the current level;
+  /// tapping opens a menu of all levels. Replaces the squeezed inline chips
+  /// so a member can switch floor with one tap regardless of level count.
+  Widget _levelMenu(List<Level> levels, Level current) {
+    final l10n = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    return PopupMenuButton<String>(
+      key: const ValueKey('plan-level-menu'),
+      tooltip: l10n?.planLevelTooltip ?? 'Level',
+      onSelected: (id) {
+        setState(() => _highlightedSeatId = null);
+        ref.read(selectedLevelIdProvider.notifier).select(id);
+      },
+      itemBuilder: (context) => [
+        for (final Level l in levels)
+          PopupMenuItem(
+            value: l.id,
+            child: Row(
+              children: [
+                Icon(
+                  l.id == current.id ? Icons.check : null,
+                  size: 18,
+                  color: scheme.primary,
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Text(l.name),
+              ],
+            ),
+          ),
+      ],
+      child: Container(
+        constraints: const BoxConstraints(minHeight: 40),
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+        decoration: BoxDecoration(
+          color: scheme.secondaryContainer,
+          borderRadius: AppRadius.xlAll,
+          border: Border.all(color: scheme.outlineVariant),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(
+              child: Text(
+                current.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+            ),
+            Icon(Icons.arrow_drop_down, size: 20, color: scheme.onSurfaceVariant),
+          ],
+        ),
       ),
     );
   }

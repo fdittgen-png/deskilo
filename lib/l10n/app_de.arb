@@ -347,6 +347,7 @@
   "planAfternoonChip": "Nachmittag",
   "planFullDayChip": "Ganzer Tag",
   "planHalfDayError": "Buchungen erfolgen hier pro halbem Tag.",
+  "planLevelTooltip": "Etage",
   "whatsappTitle": "WhatsApp",
   "whatsappNotShared": "Nicht geteilt",
   "whatsappFieldLabel": "WhatsApp-Nummer",

@@ -49,5 +49,6 @@
   "planMorningChip": "Vormittag",
   "planAfternoonChip": "Nachmittag",
   "planFullDayChip": "Ganzer Tag",
-  "planHalfDayError": "Buchungen erfolgen hier pro halbem Tag."
+  "planHalfDayError": "Buchungen erfolgen hier pro halbem Tag.",
+  "planLevelTooltip": "Etage"
 }
