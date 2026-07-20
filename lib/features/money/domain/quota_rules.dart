@@ -9,3 +9,11 @@
 abstract final class QuotaExceededError {
   static const String serverSubstring = 'half-day quota';
 }
+
+/// Server-side error text raised by the `enforce_reservation_limit`
+/// trigger (migration 0044) when a booking would exceed the member's cap
+/// on simultaneous open reservations. Pinned by test, like
+/// [QuotaExceededError].
+abstract final class ReservationLimitError {
+  static const String serverSubstring = 'reservation limit';
+}

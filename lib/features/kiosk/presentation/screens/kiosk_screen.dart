@@ -15,6 +15,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../members/providers/directory_providers.dart';
+import '../../../money/domain/quota_rules.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/presentation/seat_occupancy.dart';
@@ -190,16 +191,24 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       TraceLogger.instance
           .error('kiosk', 'kiosk act failed', error: e, stackTrace: st);
       if (!mounted) return;
-      final badge = e is PostgrestException &&
-          e.message.contains(KioskBadgeError.serverSubstring);
-      AppSnack.error(
-        context,
-        badge
-            ? (l10n?.kioskBadgeRejected ?? 'Badge not recognized.')
-            : (l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.'),
-        replace: true,
-      );
+      final message = switch (e) {
+        PostgrestException(:final message)
+            when message.contains(KioskBadgeError.serverSubstring) =>
+          l10n?.kioskBadgeRejected ?? 'Badge not recognized.',
+        PostgrestException(:final message)
+            when message.contains(ReservationLimitError.serverSubstring) =>
+          l10n?.reservationLimitError ??
+              'Reservation limit reached — you already hold the maximum '
+                  'number of open reservations.',
+        PostgrestException(:final message)
+            when message.contains(QuotaExceededError.serverSubstring) =>
+          l10n?.quotaExceededError ??
+              'Monthly half-day quota reached — request extra half-days '
+                  'from the Money tab.',
+        _ => l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      };
+      AppSnack.error(context, message, replace: true);
       return;
     }
     if (!mounted) return;

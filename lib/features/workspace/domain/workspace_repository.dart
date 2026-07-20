@@ -79,6 +79,11 @@ abstract class WorkspaceRepository {
     OveragePolicy policy,
   );
 
+  /// Admin/owner (RPC `set_member_reservation_limit`, migration 0044):
+  /// cap another member's simultaneous open reservations. Null lifts the
+  /// cap. The server refuses self-setting.
+  Future<void> setMemberReservationLimit(String memberId, int? limit);
+
   /// Owner-only (RPC `set_member_kiosk`, migration 0043): flag a member
   /// account as a wall-mounted kiosk device (or back to a regular member).
   Future<void> setMemberKiosk(String memberId, {required bool isKiosk});

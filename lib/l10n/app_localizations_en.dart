@@ -1442,6 +1442,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quotaRequestPending => 'Request sent — waiting for validation.';
 
   @override
+  String get memberReservationLimitTooltip => 'Reservation limit';
+
+  @override
+  String get memberReservationLimitLabel => 'Reservation limit';
+
+  @override
+  String get memberReservationLimitExplainer =>
+      'How many open reservations this member may hold at the same time.';
+
+  @override
+  String get memberReservationLimitNone => 'No limit';
+
+  @override
+  String get memberReservationLimitCustom => 'Custom (1–100)';
+
+  @override
+  String memberReservationLimitChip(int n) {
+    return 'max $n';
+  }
+
+  @override
+  String get reservationLimitError =>
+      'Reservation limit reached — you already hold the maximum number of open reservations.';
+
+  @override
   String get reserveMonthView => 'Month';
 
   @override

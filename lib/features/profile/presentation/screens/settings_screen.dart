@@ -240,7 +240,7 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l10n?.workspaceSettingsTitle ?? 'Workspace'),
               onTap: () => context.push('/workspace-settings'),
             ),
-          if (isOwner)
+          if (showAdminSection)
             ListTile(
               leading: const Icon(Icons.group_outlined),
               title: Text(l10n?.membersTitle ?? 'Members & plans'),

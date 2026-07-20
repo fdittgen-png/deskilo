@@ -310,6 +310,18 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setMemberReservationLimit(String memberId, int? limit) async {
+    if (myMember.id == memberId) {
+      throw StateError('cannot set your own reservation limit');
+    }
+    final i = otherMembers.indexWhere((m) => m.id == memberId);
+    if (i >= 0) {
+      otherMembers[i] =
+          otherMembers[i].copyWith(maxActiveReservations: limit);
+    }
+  }
+
+  @override
   Future<void> setMemberKiosk(String memberId, {required bool isKiosk}) async {
     if (myMember.id == memberId) {
       myMember = myMember.copyWith(isKiosk: isKiosk);

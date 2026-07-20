@@ -167,6 +167,84 @@ void main() {
     expect(find.text('Revoked'), findsOneWidget);
   });
 
+  testWidgets("the owner caps another member's simultaneous reservations "
+      '(0044): preset chip persists, chip shows on the row', (tester) async {
+    final workspace = await pumpMembers(tester);
+
+    // Ana's row (never the own row — the server refuses self-setting).
+    await tester.tap(find.byTooltip('Reservation limit').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('3'));
+    await tester.pumpAndSettle();
+
+    expect(workspace.otherMembers.single.maxActiveReservations, 3);
+    expect(find.text('max 3'), findsOneWidget);
+
+    // "No limit" lifts the cap again.
+    await tester.tap(find.byTooltip('Reservation limit').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('No limit'));
+    await tester.pumpAndSettle();
+    expect(workspace.otherMembers.single.maxActiveReservations, isNull);
+  });
+
+  testWidgets('the reservation-limit button never shows on the own row '
+      '(0044: not for themselves)', (tester) async {
+    await pumpMembers(tester);
+
+    // Two active members on screen (me + Ana) — exactly ONE limit button.
+    expect(find.byTooltip('Reservation limit'), findsOneWidget);
+  });
+
+  testWidgets('an admin reaches Members & plans but sees no owner-only '
+      'controls (0044 widened access)', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
+      ..myMember = const Member(
+        id: 'member-1',
+        workspaceId: 'ws-1',
+        userId: 'user-1',
+        isAdmin: true,
+        isOwner: false,
+        status: MemberStatus.active,
+      )
+      ..otherMembers.add(
+        const Member(
+          id: 'member-2',
+          workspaceId: 'ws-1',
+          userId: 'user-2',
+          isAdmin: false,
+          isOwner: false,
+          status: MemberStatus.active,
+        ),
+      );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(workspace: workspace),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Members & plans'));
+    await tester.pumpAndSettle();
+
+    // Admin sees the limit control for the OTHER member…
+    expect(find.byTooltip('Reservation limit'), findsOneWidget);
+    // …but none of the owner-only knobs.
+    expect(find.byIcon(Icons.percent), findsNothing);
+    expect(find.byTooltip('Make kiosk device'), findsNothing);
+    expect(find.byTooltip('Make admin'), findsNothing);
+    expect(find.byTooltip('Over-consumption'), findsNothing);
+
+    await tester.tap(find.byTooltip('Reservation limit'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('5'));
+    await tester.pumpAndSettle();
+    expect(workspace.otherMembers.single.maxActiveReservations, 5);
+  });
+
   testWidgets('long-press pauses an active membership', (tester) async {
     final workspace = await pumpMembers(tester);
 

@@ -34,6 +34,12 @@ sealed class Member with _$Member {
     /// Wall-mounted tablet account (migration 0043): the app locks to the
     /// plan view; real members act through it by presenting a badge.
     @Default(false) bool isKiosk,
+
+    /// Cap on simultaneous open reservations (migration 0044): at most
+    /// this many bookings with status reserved/checked-in that have not
+    /// ended yet. Null = unlimited. Set by owner/admins for OTHERS only —
+    /// never self-service.
+    int? maxActiveReservations,
   }) = _Member;
 
   /// Admin capability (owners inherit it, spec §2).

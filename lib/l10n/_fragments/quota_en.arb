@@ -7,12 +7,20 @@
   "eventRolePromote": "{actor} promotes a member to admin",
   "@eventRolePromote": {
     "description": "Feed line of a role-change event that grants admin",
-    "placeholders": {"actor": {"type": "String"}}
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
   },
   "eventRoleDemote": "{actor} demotes an admin to member",
   "@eventRoleDemote": {
     "description": "Feed line of a role-change event that removes admin",
-    "placeholders": {"actor": {"type": "String"}}
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
   },
   "memberMakeAdmin": "Make admin",
   "@memberMakeAdmin": {
@@ -34,9 +42,15 @@
   "@eventQuotaRequested": {
     "description": "Feed line of a quota-extension request event",
     "placeholders": {
-      "actor": {"type": "String"},
-      "halfDays": {"type": "int"},
-      "period": {"type": "String"}
+      "actor": {
+        "type": "String"
+      },
+      "halfDays": {
+        "type": "int"
+      },
+      "period": {
+        "type": "String"
+      }
     }
   },
   "quotaExceededError": "Monthly half-day quota reached — request extra half-days from the Money tab.",
@@ -55,7 +69,9 @@
   "@quotaRequestExplainer": {
     "description": "Explainer in the quota-extension request sheet",
     "placeholders": {
-      "period": {"type": "String"}
+      "period": {
+        "type": "String"
+      }
     }
   },
   "quotaRequestCountLabel": "Number of half-days",
@@ -65,5 +81,38 @@
   "quotaRequestPending": "Request sent — waiting for validation.",
   "@quotaRequestPending": {
     "description": "Snackbar after a quota-extension request was submitted"
+  },
+  "memberReservationLimitTooltip": "Reservation limit",
+  "@memberReservationLimitTooltip": {
+    "description": "Tooltip of the members-screen button opening the simultaneous-reservations cap dialog (0044)"
+  },
+  "memberReservationLimitLabel": "Reservation limit",
+  "@memberReservationLimitLabel": {
+    "description": "Title of the reservation-limit picker dialog"
+  },
+  "memberReservationLimitExplainer": "How many open reservations this member may hold at the same time.",
+  "@memberReservationLimitExplainer": {
+    "description": "Explainer in the reservation-limit dialog"
+  },
+  "memberReservationLimitNone": "No limit",
+  "@memberReservationLimitNone": {
+    "description": "Chip lifting the cap (null limit)"
+  },
+  "memberReservationLimitCustom": "Custom (1–100)",
+  "@memberReservationLimitCustom": {
+    "description": "Label of the custom limit input"
+  },
+  "memberReservationLimitChip": "max {n}",
+  "@memberReservationLimitChip": {
+    "description": "Subtitle chip on a member row whose reservation cap is set",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "reservationLimitError": "Reservation limit reached — you already hold the maximum number of open reservations.",
+  "@reservationLimitError": {
+    "description": "Booking error when the enforce_reservation_limit trigger (0044) rejects a reservation beyond the member's cap"
   }
 }

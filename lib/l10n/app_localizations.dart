@@ -2714,6 +2714,48 @@ abstract class AppLocalizations {
   /// **'Request sent — waiting for validation.'**
   String get quotaRequestPending;
 
+  /// Tooltip of the members-screen button opening the simultaneous-reservations cap dialog (0044)
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation limit'**
+  String get memberReservationLimitTooltip;
+
+  /// Title of the reservation-limit picker dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation limit'**
+  String get memberReservationLimitLabel;
+
+  /// Explainer in the reservation-limit dialog
+  ///
+  /// In en, this message translates to:
+  /// **'How many open reservations this member may hold at the same time.'**
+  String get memberReservationLimitExplainer;
+
+  /// Chip lifting the cap (null limit)
+  ///
+  /// In en, this message translates to:
+  /// **'No limit'**
+  String get memberReservationLimitNone;
+
+  /// Label of the custom limit input
+  ///
+  /// In en, this message translates to:
+  /// **'Custom (1–100)'**
+  String get memberReservationLimitCustom;
+
+  /// Subtitle chip on a member row whose reservation cap is set
+  ///
+  /// In en, this message translates to:
+  /// **'max {n}'**
+  String memberReservationLimitChip(int n);
+
+  /// Booking error when the enforce_reservation_limit trigger (0044) rejects a reservation beyond the member's cap
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation limit reached — you already hold the maximum number of open reservations.'**
+  String get reservationLimitError;
+
   /// Reserve hub view segment: month availability calendar (#7)
   ///
   /// In en, this message translates to:
