@@ -10,5 +10,7 @@
   "settingsSectionPreferences": "Präferenzen",
   "settingsSectionAdvanced": "Erweitert",
   "comingSoon": "Demnächst verfügbar",
-  "shellReserveButton": "Reservieren"
+  "shellReserveButton": "Reservieren",
+  "commonSavedTo": "Gespeichert unter {path}",
+  "commonSaveFailed": "Datei konnte nicht gespeichert werden."
 }

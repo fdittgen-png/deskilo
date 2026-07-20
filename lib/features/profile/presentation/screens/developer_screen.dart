@@ -4,9 +4,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:share_plus/share_plus.dart';
 
-import '../../../../core/share/share_launcher.dart';
+import '../../../../core/files/file_saver.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -40,18 +39,23 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
   Future<void> _export() async {
     final l10n = AppLocalizations.of(context);
     final logger = ref.read(traceLoggerProvider);
-    final share = ref.read(shareLauncherProvider);
+    final save = ref.read(fileSaverProvider);
     try {
       final content = await logger.exportContent();
       final stamp = DateFormat('yyyyMMdd-HHmm').format(DateTime.now());
-      await share(
-        ShareParams(
-          files: [
-            XFile.fromData(utf8.encode(content), mimeType: 'text/plain'),
-          ],
-          fileNameOverrides: ['deskilo-trace-$stamp.log'],
-        ),
+      final path = await save(
+        bytes: utf8.encode(content),
+        fileName: 'deskilo-trace-$stamp.log',
       );
+      if (!mounted) return;
+      if (path == null) {
+        AppSnack.error(context, l10n?.commonSaveFailed ?? 'Could not save.');
+      } else {
+        AppSnack.success(
+          context,
+          l10n?.commonSavedTo(path) ?? 'Saved to $path',
+        );
+      }
     } catch (e, st) {
       logger.error('developer', 'trace export failed',
           error: e, stackTrace: st);

@@ -1,17 +1,16 @@
 // SPDX-License-Identifier: MIT
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/core/share/share_launcher.dart';
+import 'package:deskilo/core/files/file_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
 
 Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   WidgetTester tester, {
-  ShareLauncher? share,
+  FileSaver? saver,
   FakeFloorPlanRepository? floorPlan,
 }) async {
   // The settings form grew past the default 800px test viewport (#155,
@@ -27,7 +26,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
     ProviderScope(
       overrides: [
         ...standardTestOverrides(workspace: workspace, floorPlan: floorPlan),
-        if (share != null) shareLauncherProvider.overrideWithValue(share),
+        if (saver != null) fileSaverProvider.overrideWithValue(saver),
       ],
       child: const DeskiloApp(),
     ),
@@ -224,14 +223,18 @@ void main() {
   });
 
   testWidgets(
-      'the owner exports the configuration as a PDF through the share seam',
+      'the owner exports the configuration as a PDF saved locally (not shared)',
       (tester) async {
-    final captured = <ShareParams>[];
+    final saved = <String>[];
     final floorPlan = FakeFloorPlanRepository()..seedSmallPlan();
     await pumpWorkspaceSettings(
       tester,
       floorPlan: floorPlan,
-      share: (params) async => captured.add(params),
+      saver: ({required bytes, required fileName}) async {
+        saved.add(fileName);
+        expect(bytes, isNotEmpty);
+        return '/local/$fileName';
+      },
     );
 
     final button = find.byKey(const Key('workspaceSettingsExportPdf'));
@@ -239,13 +242,12 @@ void main() {
     await tester.tap(button);
     await tester.pumpAndSettle();
 
-    expect(captured, hasLength(1));
+    // Saved to a local path and confirmed — no share sheet.
+    expect(saved, ['Test Space-configuration.pdf']);
     expect(
-      captured.single.fileNameOverrides,
-      ['Test Space-configuration.pdf'],
+      find.textContaining('/local/Test Space-configuration.pdf'),
+      findsOneWidget,
     );
-    final file = captured.single.files!.single;
-    expect(file.mimeType, 'application/pdf');
   });
 
   testWidgets(

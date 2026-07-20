@@ -113,6 +113,8 @@
   "settingsSectionAdvanced": "Avancé",
   "comingSoon": "Bientôt disponible",
   "shellReserveButton": "Réserver",
+  "commonSavedTo": "Enregistré dans {path}",
+  "commonSaveFailed": "Impossible d'enregistrer le fichier.",
   "consumptionAdd": "Ajouter une consommation",
   "consumptionAddForMember": "Ajouter un service pour {name}",
   "consumptionService": "Service",

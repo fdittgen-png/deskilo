@@ -113,6 +113,8 @@
   "settingsSectionAdvanced": "Erweitert",
   "comingSoon": "Demnächst verfügbar",
   "shellReserveButton": "Reservieren",
+  "commonSavedTo": "Gespeichert unter {path}",
+  "commonSaveFailed": "Datei konnte nicht gespeichert werden.",
   "consumptionAdd": "Verbrauch erfassen",
   "consumptionAddForMember": "Leistung für {name} erfassen",
   "consumptionService": "Leistung",

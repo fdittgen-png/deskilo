@@ -1,23 +1,24 @@
 // SPDX-License-Identifier: MIT
+import 'dart:typed_data';
+
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/core/share/share_launcher.dart';
+import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../helpers/mock_providers.dart';
 
 Future<void> pumpMoney(
   WidgetTester tester, {
-  required ShareLauncher launcher,
+  required FileSaver saver,
 }) async {
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
         ...standardTestOverrides(),
-        shareLauncherProvider.overrideWithValue(launcher),
+        fileSaverProvider.overrideWithValue(saver),
       ],
       child: const DeskiloApp(),
     ),
@@ -29,10 +30,16 @@ Future<void> pumpMoney(
 
 void main() {
   testWidgets(
-      'the export button renders the visible bill as a PDF and hands it '
-      'to the share sheet (#133)', (tester) async {
-    final captured = <ShareParams>[];
-    await pumpMoney(tester, launcher: (params) async => captured.add(params));
+      'the export button renders the visible bill as a PDF saved locally '
+      '(#133, not shared)', (tester) async {
+    final saved = <(String, Uint8List)>[];
+    await pumpMoney(
+      tester,
+      saver: ({required bytes, required fileName}) async {
+        saved.add((fileName, bytes));
+        return '/local/$fileName';
+      },
+    );
 
     final button = find.byIcon(Icons.picture_as_pdf_outlined);
     expect(button, findsOneWidget);
@@ -44,22 +51,19 @@ void main() {
     });
     await tester.pumpAndSettle();
 
-    expect(captured, hasLength(1));
-    expect(
-      captured.single.fileNameOverrides,
-      ['deskilo-bill-${currentPeriod()}.pdf'],
-    );
-    final file = captured.single.files!.single;
-    expect(file.mimeType, 'application/pdf');
-    final bytes = await tester.runAsync(() => file.readAsBytes());
-    expect(String.fromCharCodes(bytes!.sublist(0, 5)), '%PDF-');
+    expect(saved, hasLength(1));
+    expect(saved.single.$1, 'deskilo-bill-${currentPeriod()}.pdf');
+    // A real PDF was written locally — no share sheet.
+    expect(String.fromCharCodes(saved.single.$2.sublist(0, 5)), '%PDF-');
+    expect(find.textContaining('/local/deskilo-bill-'), findsOneWidget);
   });
 
-  testWidgets('a failing share shows the generic error snackbar',
+  testWidgets('a failing save shows the generic error snackbar',
       (tester) async {
     await pumpMoney(
       tester,
-      launcher: (params) async => throw Exception('no share target'),
+      saver: ({required bytes, required fileName}) async =>
+          throw Exception('disk full'),
     );
 
     await tester.runAsync(() async {

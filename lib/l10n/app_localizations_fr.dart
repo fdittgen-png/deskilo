@@ -378,6 +378,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shellReserveButton => 'Réserver';
 
   @override
+  String commonSavedTo(String path) {
+    return 'Enregistré dans $path';
+  }
+
+  @override
+  String get commonSaveFailed => 'Impossible d\'enregistrer le fichier.';
+
+  @override
   String get consumptionAdd => 'Ajouter une consommation';
 
   @override

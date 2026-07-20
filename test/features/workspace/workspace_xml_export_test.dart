@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/core/share/share_launcher.dart';
+import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../helpers/fake_accessory_repository.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
@@ -16,7 +16,7 @@ import '../../helpers/mock_providers.dart';
 
 Future<void> pumpWorkspaceSettings(
   WidgetTester tester, {
-  required ShareLauncher launcher,
+  required FileSaver saver,
   FakeAccessoryRepository? accessories,
 }) async {
   // The settings form outgrew the 800×600 test viewport long ago (#155);
@@ -43,7 +43,7 @@ Future<void> pumpWorkspaceSettings(
           floorPlan: floorPlan,
           accessories: accessoryRepository,
         ),
-        shareLauncherProvider.overrideWithValue(launcher),
+        fileSaverProvider.overrideWithValue(saver),
       ],
       child: const DeskiloApp(),
     ),
@@ -57,12 +57,15 @@ Future<void> pumpWorkspaceSettings(
 
 void main() {
   testWidgets(
-      'the export tile serializes settings + floor plan and hands an .xml '
-      'file to the share sheet (#164)', (tester) async {
-    final captured = <ShareParams>[];
+      'the export tile serializes settings + floor plan and saves an .xml '
+      'file locally (#164, not shared)', (tester) async {
+    final saved = <(String, Uint8List)>[];
     await pumpWorkspaceSettings(
       tester,
-      launcher: (params) async => captured.add(params),
+      saver: ({required bytes, required fileName}) async {
+        saved.add((fileName, bytes));
+        return '/local/$fileName';
+      },
     );
 
     final tile = find.byKey(const Key('workspaceSettingsExportXml'));
@@ -71,15 +74,12 @@ void main() {
     await tester.tap(tile);
     await tester.pumpAndSettle();
 
-    expect(captured, hasLength(1));
-    expect(captured.single.fileNameOverrides, ['deskilo-test-space.xml']);
-    final file = captured.single.files!.single;
-    expect(file.mimeType, 'application/xml');
+    expect(saved, hasLength(1));
+    expect(saved.single.$1, 'deskilo-test-space.xml');
 
     // The payload round-trips through the pinned schema (#164/#180): the
     // seeded ws-1 settings + the one-level plan, no ids, no invite code.
-    final bytes = await tester.runAsync(() => file.readAsBytes());
-    final xml = utf8.decode(bytes!);
+    final xml = utf8.decode(saved.single.$2);
     expect(xml, isNot(contains('GOODCODE22')));
     // v2 is what the app exports now (#180).
     expect(xml, contains('<deskilo-workspace version="2">'));
@@ -110,11 +110,12 @@ void main() {
     expect(seat.accessoryNames, ['Monitor', 'Docking station']);
   });
 
-  testWidgets('a failing share shows the generic error snackbar',
+  testWidgets('a failing save shows the generic error snackbar',
       (tester) async {
     await pumpWorkspaceSettings(
       tester,
-      launcher: (params) async => throw Exception('no share target'),
+      saver: ({required bytes, required fileName}) async =>
+          throw Exception('disk full'),
     );
 
     final tile = find.byKey(const Key('workspaceSettingsExportXml'));
