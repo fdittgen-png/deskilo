@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: MIT
+
+  DesKilo Windows installer (WiX v5 authoring, built by the windows-msi
+  workflow with the `wix` dotnet tool):
+
+    wix build windows/installer/deskilo.wxs -arch x64 \
+      -d ProductVersion=<x.y.z> -d PublishDir=<flutter release dir> \
+      -o DesKilo.msi
+
+  The whole Flutter release payload (exe + DLLs + data/) is harvested at
+  build time via the wildcard <Files> element, so nothing here needs
+  updating when assets or plugins change.
+
+  UpgradeCode is the product's PERMANENT identity: never change it, or
+  upgrades stop replacing older installs (MajorUpgrade matches on it).
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="DesKilo"
+           Manufacturer="DesKilo"
+           Version="$(var.ProductVersion)"
+           UpgradeCode="CB5062A7-BF77-4543-B7F1-E88F3FF613F8"
+           Scope="perMachine"
+           Compressed="yes">
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of DesKilo is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Program Files\DesKilo -->
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="DesKilo">
+        <Files Include="$(var.PublishDir)\**" />
+      </Directory>
+    </StandardDirectory>
+
+    <!-- Start-menu shortcut. Non-advertised, so it needs its own HKCU
+         keypath; the registry value doubles as the per-user marker MSI
+         uses to track the component. -->
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Component Id="StartMenuShortcut">
+        <Shortcut Id="AppStartMenuShortcut"
+                  Name="DesKilo"
+                  Description="Coworking desk booking and community ledger"
+                  Target="[INSTALLFOLDER]deskilo.exe"
+                  WorkingDirectory="INSTALLFOLDER" />
+        <RegistryValue Root="HKCU"
+                       Key="Software\DesKilo\DesKilo"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </StandardDirectory>
+  </Package>
+</Wix>

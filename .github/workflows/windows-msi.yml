@@ -1,0 +1,77 @@
+name: windows-msi
+
+# Windows MSI installer (WiX v5, dev-apk pattern):
+#   gh workflow run windows-msi.yml -f ref=master
+#   gh run download <run-id> --dir /tmp/deskilo-msi
+# Also builds on PRs touching the Windows target (validates the packaging
+# before merge) and attaches the MSI to the release on version tags.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch, tag or SHA to build
+        required: false
+        default: master
+  pull_request:
+    paths:
+      - .github/workflows/windows-msi.yml
+      - windows/**
+  push:
+    tags: ["v*"]
+
+env:
+  FLUTTER_VERSION: "3.41.9"
+
+jobs:
+  msi:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Build Windows release
+        run: flutter build windows --release
+
+      - name: Read version from pubspec
+        id: version
+        shell: pwsh
+        run: |
+          $raw = (Select-String -Path pubspec.yaml -Pattern '^version:\s*(\S+)').Matches[0].Groups[1].Value
+          # MSI ProductVersion must be numeric x.y.z — strip the build number.
+          $msi = $raw.Split('+')[0]
+          "raw=$raw" >> $env:GITHUB_OUTPUT
+          "msi=$msi" >> $env:GITHUB_OUTPUT
+
+      - name: Install WiX toolset
+        run: dotnet tool install --global wix
+
+      - name: Package MSI
+        shell: pwsh
+        run: |
+          wix build windows/installer/deskilo.wxs `
+            -arch x64 `
+            -d ProductVersion=${{ steps.version.outputs.msi }} `
+            -d PublishDir=build\windows\x64\runner\Release `
+            -o build\DesKilo-${{ steps.version.outputs.raw }}.msi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DesKilo-${{ steps.version.outputs.raw }}-windows-msi
+          path: build/DesKilo-${{ steps.version.outputs.raw }}.msi
+          if-no-files-found: error
+
+      # Version tags get the MSI attached to their GitHub release.
+      - name: Attach to release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/DesKilo-${{ steps.version.outputs.raw }}.msi
