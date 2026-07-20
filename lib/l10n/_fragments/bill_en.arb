@@ -110,5 +110,9 @@
   "entitlementPackageFull": "You've used all your days this month. Buy a package to keep booking.",
   "@entitlementPackageFull": {
     "description": "Footer of the usage card for a package member who has used their whole cap"
+  },
+  "billPackages": "Day packages",
+  "@billPackages": {
+    "description": "Bill section header for day packages bought this period (migration 0042); charge lines render trailing"
   }
 }

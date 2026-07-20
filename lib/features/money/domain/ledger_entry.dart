@@ -12,6 +12,7 @@ enum LedgerCategory {
   payment,
   adjustment,
   service,
+  package,
 }
 
 /// One line on a member's ledger (spec §7.3).

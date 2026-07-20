@@ -8,6 +8,7 @@ import '../data/supabase_money_repository.dart';
 import '../domain/fee_band.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
+import '../domain/package.dart';
 import '../domain/service_item.dart';
 import '../domain/statement.dart';
 import '../domain/subscription_levels.dart';
@@ -71,4 +72,23 @@ Future<List<ServiceItem>> allServices(Ref ref) async {
   return ref
       .watch(moneyRepositoryProvider)
       .fetchServices(workspace.id, includeInactive: true);
+}
+
+/// Active day packages of the current workspace — the member buy sheet
+/// (migration 0042).
+@riverpod
+Future<List<Package>> packages(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return ref.watch(moneyRepositoryProvider).fetchPackages(workspace.id);
+}
+
+/// Every package incl. deactivated ones — the owner's package editor.
+@riverpod
+Future<List<Package>> allPackages(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return ref
+      .watch(moneyRepositoryProvider)
+      .fetchPackages(workspace.id, includeInactive: true);
 }

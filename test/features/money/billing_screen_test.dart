@@ -244,4 +244,39 @@ void main() {
     expect(find.text('Billing'), findsNothing);
     expect(find.text('Fee bands'), findsNothing);
   });
+
+  testWidgets('the packages editor lists the seeded pack and adds a new one '
+      '(0042)', (tester) async {
+    final money = await pumpBilling(tester);
+
+    // The default fake seeds one 5-day pack at €40.
+    expect(find.text('5-day pack'), findsOneWidget);
+    expect(find.text('5 days · 40'), findsOneWidget);
+
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Name'),
+      '10-day pack',
+    );
+    await tester.enterText(find.widgetWithText(TextField, 'Days'), '10');
+    await tester.enterText(find.widgetWithText(TextField, 'Price'), '70');
+    await tester.tap(find.byTooltip('Add package'));
+    await tester.pumpAndSettle();
+
+    expect(money.packages, hasLength(2));
+    final added = money.packages.last;
+    expect(added.name, '10-day pack');
+    expect(added.days, 10);
+    expect(added.priceCents, 7000);
+    expect(find.text('Saved.'), findsOneWidget);
+  });
+
+  testWidgets('toggling a package off deactivates it (0042)', (tester) async {
+    final money = await pumpBilling(tester);
+
+    expect(money.packages.single.active, isTrue);
+    await tester.tap(find.byType(Switch).last);
+    await tester.pumpAndSettle();
+
+    expect(money.packages.single.active, isFalse);
+  });
 }

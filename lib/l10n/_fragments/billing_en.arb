@@ -106,5 +106,66 @@
   "overagePolicyPackage": "Require buying a package",
   "@overagePolicyPackage": {
     "description": "Over-consumption option: the member must buy a package of days to book past their plan"
+  },
+  "billingPackages": "Day packages",
+  "@billingPackages": {
+    "description": "Section header of the owner's day-package editor (migration 0042)"
+  },
+  "billingPackagesHint": "Members on the package plan buy these when their days run out.",
+  "@billingPackagesHint": {
+    "description": "Sub-header explaining who buys packages"
+  },
+  "billingPackageSummary": "{days} days · {price}",
+  "@billingPackageSummary": {
+    "description": "Summary line under a package name in the editor: day count and formatted price",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "billingPackageName": "Name",
+  "@billingPackageName": {
+    "description": "Label of the new-package name field"
+  },
+  "billingPackageDays": "Days",
+  "@billingPackageDays": {
+    "description": "Label of the new-package day-count field"
+  },
+  "billingPackagePrice": "Price",
+  "@billingPackagePrice": {
+    "description": "Label of the new-package price field"
+  },
+  "billingAddPackage": "Add package",
+  "@billingAddPackage": {
+    "description": "Tooltip of the add-package button"
+  },
+  "buyPackageButton": "Buy a package",
+  "@buyPackageButton": {
+    "description": "Money-tab button opening the package buy sheet (package-plan members)"
+  },
+  "buyPackageTitle": "Buy a package",
+  "@buyPackageTitle": {
+    "description": "Title of the package buy sheet"
+  },
+  "buyPackageDays": "{days} days",
+  "@buyPackageDays": {
+    "description": "Day count of a package row in the buy sheet",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "buyPackageNone": "No packages are available yet.",
+  "@buyPackageNone": {
+    "description": "Snackbar when the owner has defined no packages yet"
+  },
+  "buyPackageDone": "Days added — enjoy the extra time.",
+  "@buyPackageDone": {
+    "description": "Snackbar after a member bought a package"
   }
 }

@@ -25,12 +25,16 @@ class OpenPosition {
 class BillSections {
   const BillSections({
     required this.serviceEntries,
+    required this.packageEntries,
     required this.openPositions,
     required this.creditEntries,
   });
 
   /// Confirmed service consumptions of the period (name ×qty descriptions).
   final List<LedgerEntry> serviceEntries;
+
+  /// Day packages bought this period (migration 0042) — charge lines.
+  final List<LedgerEntry> packageEntries;
 
   /// My pending money events that would land on this period once confirmed.
   final List<OpenPosition> openPositions;
@@ -76,6 +80,14 @@ BillSections buildBillSections({
         entry,
   ];
 
+  final packages = [
+    for (final entry in ledger)
+      if (entry.period == period &&
+          entry.kind == LedgerKind.charge &&
+          entry.category == LedgerCategory.package)
+        entry,
+  ];
+
   final credits = [
     for (final entry in ledger)
       if (entry.period == period &&
@@ -100,6 +112,7 @@ BillSections buildBillSections({
 
   return BillSections(
     serviceEntries: services,
+    packageEntries: packages,
     openPositions: open,
     creditEntries: credits,
   );

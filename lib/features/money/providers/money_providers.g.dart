@@ -362,3 +362,94 @@ final class AllServicesProvider
 }
 
 String _$allServicesHash() => r'7d69290d13259c4f3e0695c2de5a978939c5017c';
+
+/// Active day packages of the current workspace — the member buy sheet
+/// (migration 0042).
+
+@ProviderFor(packages)
+final packagesProvider = PackagesProvider._();
+
+/// Active day packages of the current workspace — the member buy sheet
+/// (migration 0042).
+
+final class PackagesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Package>>,
+          List<Package>,
+          FutureOr<List<Package>>
+        >
+    with $FutureModifier<List<Package>>, $FutureProvider<List<Package>> {
+  /// Active day packages of the current workspace — the member buy sheet
+  /// (migration 0042).
+  PackagesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'packagesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$packagesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Package>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Package>> create(Ref ref) {
+    return packages(ref);
+  }
+}
+
+String _$packagesHash() => r'c963187492353e53cdaed749c53e4c7e9b53e89e';
+
+/// Every package incl. deactivated ones — the owner's package editor.
+
+@ProviderFor(allPackages)
+final allPackagesProvider = AllPackagesProvider._();
+
+/// Every package incl. deactivated ones — the owner's package editor.
+
+final class AllPackagesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Package>>,
+          List<Package>,
+          FutureOr<List<Package>>
+        >
+    with $FutureModifier<List<Package>>, $FutureProvider<List<Package>> {
+  /// Every package incl. deactivated ones — the owner's package editor.
+  AllPackagesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'allPackagesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$allPackagesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Package>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Package>> create(Ref ref) {
+    return allPackages(ref);
+  }
+}
+
+String _$allPackagesHash() => r'9d0f934aac44c544d100dcca18203008e973c47e';

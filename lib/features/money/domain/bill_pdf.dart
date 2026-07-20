@@ -24,6 +24,7 @@ class BillPdfStrings {
     required this.services,
     required this.servicesTotal,
     required this.serviceFallback,
+    required this.packages,
     required this.openPositions,
     required this.pendingBadge,
     required this.paymentsCredits,
@@ -59,6 +60,9 @@ class BillPdfStrings {
 
   /// Fallback description for a service ledger entry without one.
   final String serviceFallback;
+
+  /// Section title for bought day packages (migration 0042).
+  final String packages;
 
   final String openPositions;
   final String pendingBadge;
@@ -153,6 +157,15 @@ Future<Uint8List> buildBillPdf({
               charge(sections.servicesTotalCents),
               bold: true,
             ),
+          ]),
+        if (sections.packageEntries.isNotEmpty)
+          _section([
+            _sectionTitle(strings.packages),
+            for (final entry in sections.packageEntries)
+              _line(
+                entry.description.isEmpty ? strings.packages : entry.description,
+                charge(entry.amountCents),
+              ),
           ]),
         if (sections.openPositions.isNotEmpty)
           // Not part of the balance: visually separated, all grey, with the

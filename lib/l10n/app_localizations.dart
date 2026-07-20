@@ -536,6 +536,12 @@ abstract class AppLocalizations {
   /// **'You\'ve used all your days this month. Buy a package to keep booking.'**
   String get entitlementPackageFull;
 
+  /// Bill section header for day packages bought this period (migration 0042); charge lines render trailing
+  ///
+  /// In en, this message translates to:
+  /// **'Day packages'**
+  String get billPackages;
+
   /// Document title on the exported bill PDF (#133)
   ///
   /// In en, this message translates to:
@@ -685,6 +691,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Require buying a package'**
   String get overagePolicyPackage;
+
+  /// Section header of the owner's day-package editor (migration 0042)
+  ///
+  /// In en, this message translates to:
+  /// **'Day packages'**
+  String get billingPackages;
+
+  /// Sub-header explaining who buys packages
+  ///
+  /// In en, this message translates to:
+  /// **'Members on the package plan buy these when their days run out.'**
+  String get billingPackagesHint;
+
+  /// Summary line under a package name in the editor: day count and formatted price
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days · {price}'**
+  String billingPackageSummary(int days, String price);
+
+  /// Label of the new-package name field
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get billingPackageName;
+
+  /// Label of the new-package day-count field
+  ///
+  /// In en, this message translates to:
+  /// **'Days'**
+  String get billingPackageDays;
+
+  /// Label of the new-package price field
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get billingPackagePrice;
+
+  /// Tooltip of the add-package button
+  ///
+  /// In en, this message translates to:
+  /// **'Add package'**
+  String get billingAddPackage;
+
+  /// Money-tab button opening the package buy sheet (package-plan members)
+  ///
+  /// In en, this message translates to:
+  /// **'Buy a package'**
+  String get buyPackageButton;
+
+  /// Title of the package buy sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Buy a package'**
+  String get buyPackageTitle;
+
+  /// Day count of a package row in the buy sheet
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String buyPackageDays(int days);
+
+  /// Snackbar when the owner has defined no packages yet
+  ///
+  /// In en, this message translates to:
+  /// **'No packages are available yet.'**
+  String get buyPackageNone;
+
+  /// Snackbar after a member bought a package
+  ///
+  /// In en, this message translates to:
+  /// **'Days added — enjoy the extra time.'**
+  String get buyPackageDone;
 
   /// Calendar filter showing only the user's reservations
   ///

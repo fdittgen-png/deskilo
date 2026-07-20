@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../domain/fee_band.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
+import '../domain/package.dart';
 import '../domain/payment_method.dart';
 import '../domain/service_item.dart';
 import '../domain/statement.dart';
@@ -223,5 +224,68 @@ class SupabaseMoneyRepository implements MoneyRepository {
         .select()
         .single();
     return _serviceFromRow(row);
+  }
+
+  @override
+  Future<List<Package>> fetchPackages(
+    String workspaceId, {
+    bool includeInactive = false,
+  }) async {
+    var query =
+        _client.from('packages').select().eq('workspace_id', workspaceId);
+    if (!includeInactive) query = query.eq('active', true);
+    final rows = await query.order('days', ascending: true);
+    return rows.map(Package.fromRow).toList();
+  }
+
+  @override
+  Future<Package> createPackage(
+    String workspaceId, {
+    required String name,
+    required int days,
+    required int priceCents,
+  }) async {
+    final row = await _client
+        .from('packages')
+        .insert({
+          'workspace_id': workspaceId,
+          'name': name,
+          'days': days,
+          'price_cents': priceCents,
+        })
+        .select()
+        .single();
+    return Package.fromRow(row);
+  }
+
+  @override
+  Future<Package> updatePackage(
+    String packageId, {
+    String? name,
+    int? days,
+    int? priceCents,
+    bool? active,
+  }) async {
+    final row = await _client
+        .from('packages')
+        .update({
+          'name': ?name,
+          'days': ?days,
+          'price_cents': ?priceCents,
+          'active': ?active,
+        })
+        .eq('id', packageId)
+        .select()
+        .single();
+    return Package.fromRow(row);
+  }
+
+  @override
+  Future<String> buyPackage(String workspaceId, String packageId) async {
+    final result = await _client.rpc<dynamic>('buy_package', params: {
+      'p_workspace_id': workspaceId,
+      'p_package_id': packageId,
+    });
+    return result as String;
   }
 }

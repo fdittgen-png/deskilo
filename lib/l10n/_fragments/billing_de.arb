@@ -22,5 +22,17 @@
   "memberOveragePolicyTooltip": "Mehrverbrauch",
   "overagePolicyBlocked": "Weitere Buchung sperren",
   "overagePolicyPayg": "Mehrverbrauch berechnen (nach Verbrauch)",
-  "overagePolicyPackage": "Paketkauf verlangen"
+  "overagePolicyPackage": "Paketkauf verlangen",
+  "billingPackages": "Tagespakete",
+  "billingPackagesHint": "Mitglieder im Paket-Tarif kaufen diese, wenn ihre Tage aufgebraucht sind.",
+  "billingPackageSummary": "{days} Tage · {price}",
+  "billingPackageName": "Name",
+  "billingPackageDays": "Tage",
+  "billingPackagePrice": "Preis",
+  "billingAddPackage": "Paket hinzufügen",
+  "buyPackageButton": "Paket kaufen",
+  "buyPackageTitle": "Paket kaufen",
+  "buyPackageDays": "{days} Tage",
+  "buyPackageNone": "Noch keine Pakete verfügbar.",
+  "buyPackageDone": "Tage hinzugefügt — viel Spaß."
 }
