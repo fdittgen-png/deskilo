@@ -35,6 +35,17 @@ void main() {
       final dark = DeskiloTheme.dark();
       expect(dark.colorScheme.brightness, Brightness.dark);
     });
+
+    test('form fields are dense app-wide for compact professional forms', () {
+      for (final theme in [
+        DeskiloTheme.light(),
+        DeskiloTheme.dark(),
+        DeskiloTheme.warm(),
+      ]) {
+        expect(theme.inputDecorationTheme.isDense, isTrue);
+        expect(theme.inputDecorationTheme.contentPadding, isNotNull);
+      }
+    });
   });
 
   group('SeatStateColors', () {
