@@ -9,6 +9,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
+import '../../../workspace/domain/overage_policy.dart';
 import '../../../workspace/domain/payment_instructions.dart';
 import '../../domain/bill_sections.dart';
 import '../../domain/ledger_entry.dart';
@@ -54,6 +55,10 @@ class BillView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // At-a-glance usage for the current month (days included, used and
+        // left) — the member's answer to "how much can I still book?".
+        _EntitlementCard(statement: statement, money: money),
+        const SizedBox(height: 8),
         _SubscriptionCard(statement: statement, money: money),
         if (sections.serviceEntries.isNotEmpty) ...[
           const SizedBox(height: 8),
@@ -214,6 +219,120 @@ class _CopyTile extends StatelessWidget {
         if (!context.mounted) return;
         AppSnack.success(context, copiedMessage);
       },
+    );
+  }
+}
+
+/// The prominent "this month" usage card: the days included in the
+/// subscription, how many are used, and how many are left — plus a
+/// policy-aware footer (pay-as-you-go rate, or a full-cap hint). Days are
+/// half-days ÷ 2, so a single booked morning reads as 0.5 days.
+class _EntitlementCard extends StatelessWidget {
+  const _EntitlementCard({required this.statement, required this.money});
+
+  final Statement statement;
+  final String Function(int cents) money;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context).textTheme;
+    final locale = Localizations.maybeLocaleOf(context)?.toString();
+    final fmt = NumberFormat.decimalPattern(locale)..maximumFractionDigits = 1;
+    String days(int halfDays) => fmt.format(halfDays / 2);
+
+    final cap = statement.capHalfDays;
+    final used = statement.usedHalfDays;
+    final overCap = used > cap;
+    final progress = cap <= 0
+        ? (used > 0 ? 1.0 : 0.0)
+        : (used / cap).clamp(0.0, 1.0);
+    final barColor = overCap ? scheme.error : scheme.primary;
+
+    final usedLabel = l10n?.entitlementDaysUsed(days(used), days(cap)) ??
+        '${days(used)} of ${days(cap)} days used';
+    final leftLabel =
+        l10n?.entitlementDaysLeft(days(statement.remainingHalfDays)) ??
+            '${days(statement.remainingHalfDays)} days left';
+
+    // Policy-aware footer, precomputed to a plain string (keeps the
+    // no-hardcoded-strings lint happy — no interpolation inside Text()).
+    String? footer;
+    switch (statement.overagePolicy) {
+      case OveragePolicy.payg:
+        // The band overage rate is per half-day; a whole extra day is two.
+        final perDay = money(statement.overageRateCents * 2);
+        footer = l10n?.entitlementPaygRate(perDay) ??
+            'Extra days beyond your plan bill at $perDay each.';
+      case OveragePolicy.blocked:
+        if (statement.isCapReached) {
+          footer = l10n?.entitlementBlockedFull ??
+              "You've used all your days this month. Ask an admin for "
+                  'more or request extra half-days below.';
+        }
+      case OveragePolicy.package:
+        if (statement.isCapReached) {
+          footer = l10n?.entitlementPackageFull ??
+              "You've used all your days this month. Buy a package to "
+                  'keep booking.';
+        }
+    }
+
+    return Card(
+      key: const Key('entitlement-card'),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n?.entitlementTitle ?? 'This month',
+              style: theme.labelLarge?.copyWith(
+                color: scheme.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Expanded(
+                  child: Text(
+                    usedLabel,
+                    style: theme.titleMedium
+                        ?.copyWith(fontWeight: FontWeight.w700),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  leftLabel,
+                  style: theme.bodyMedium?.copyWith(color: barColor),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            ClipRRect(
+              borderRadius: AppRadius.smAll,
+              child: LinearProgressIndicator(
+                value: progress,
+                minHeight: 8,
+                backgroundColor: scheme.surfaceContainerHighest,
+                color: barColor,
+              ),
+            ),
+            if (footer != null) ...[
+              const SizedBox(height: 10),
+              Text(
+                footer,
+                style: theme.bodySmall?.copyWith(
+                  color: overCap ? scheme.error : scheme.onSurfaceVariant,
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
     );
   }
 }

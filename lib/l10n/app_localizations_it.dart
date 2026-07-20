@@ -224,6 +224,32 @@ class AppLocalizationsIt extends AppLocalizations {
   String get billAccessorySupplements => 'Supplementi accessori';
 
   @override
+  String get entitlementTitle => 'Questo mese';
+
+  @override
+  String entitlementDaysUsed(String used, String total) {
+    return '$used di $total giorni usati';
+  }
+
+  @override
+  String entitlementDaysLeft(String left) {
+    return '$left giorni rimasti';
+  }
+
+  @override
+  String get entitlementBlockedFull =>
+      'Hai usato tutti i tuoi giorni questo mese. Chiedine altri a un amministratore o richiedi mezze giornate extra qui sotto.';
+
+  @override
+  String entitlementPaygRate(String rate) {
+    return 'I giorni oltre il tuo piano costano $rate ciascuno.';
+  }
+
+  @override
+  String get entitlementPackageFull =>
+      'Hai usato tutti i tuoi giorni questo mese. Acquista un pacchetto per continuare a prenotare.';
+
+  @override
   String get billPdfTitle => 'Fattura mensile';
 
   @override
@@ -290,6 +316,21 @@ class AppLocalizationsIt extends AppLocalizations {
   String percentValue(int value) {
     return '$value%';
   }
+
+  @override
+  String get memberOveragePolicyLabel => 'Quando i giorni finiscono';
+
+  @override
+  String get memberOveragePolicyTooltip => 'Consumo extra';
+
+  @override
+  String get overagePolicyBlocked => 'Blocca ulteriori prenotazioni';
+
+  @override
+  String get overagePolicyPayg => 'Addebita l\'extra (a consumo)';
+
+  @override
+  String get overagePolicyPackage => 'Richiedi l\'acquisto di un pacchetto';
 
   @override
   String get calendarMineTab => 'Le mie';

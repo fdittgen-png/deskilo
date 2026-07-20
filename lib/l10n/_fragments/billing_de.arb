@@ -17,5 +17,10 @@
   "memberSubscriptionLabel": "Abo",
   "memberSubscriptionCustom": "Individuell (1–100)",
   "moneySubscriptionPct": "Abo {pct} %",
-  "percentValue": "{value} %"
+  "percentValue": "{value} %",
+  "memberOveragePolicyLabel": "Wenn die Tage aufgebraucht sind",
+  "memberOveragePolicyTooltip": "Mehrverbrauch",
+  "overagePolicyBlocked": "Weitere Buchung sperren",
+  "overagePolicyPayg": "Mehrverbrauch berechnen (nach Verbrauch)",
+  "overagePolicyPackage": "Paketkauf verlangen"
 }

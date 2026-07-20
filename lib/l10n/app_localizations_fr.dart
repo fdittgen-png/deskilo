@@ -224,6 +224,32 @@ class AppLocalizationsFr extends AppLocalizations {
   String get billAccessorySupplements => 'Suppléments d\'accessoires';
 
   @override
+  String get entitlementTitle => 'Ce mois-ci';
+
+  @override
+  String entitlementDaysUsed(String used, String total) {
+    return '$used sur $total jours utilisés';
+  }
+
+  @override
+  String entitlementDaysLeft(String left) {
+    return '$left jours restants';
+  }
+
+  @override
+  String get entitlementBlockedFull =>
+      'Vous avez utilisé tous vos jours ce mois-ci. Demandez-en plus à un administrateur ou demandez des demi-journées supplémentaires ci-dessous.';
+
+  @override
+  String entitlementPaygRate(String rate) {
+    return 'Les jours au-delà de votre forfait sont facturés $rate chacun.';
+  }
+
+  @override
+  String get entitlementPackageFull =>
+      'Vous avez utilisé tous vos jours ce mois-ci. Achetez un forfait pour continuer à réserver.';
+
+  @override
   String get billPdfTitle => 'Facture mensuelle';
 
   @override
@@ -289,6 +315,21 @@ class AppLocalizationsFr extends AppLocalizations {
   String percentValue(int value) {
     return '$value %';
   }
+
+  @override
+  String get memberOveragePolicyLabel => 'Quand les jours sont épuisés';
+
+  @override
+  String get memberOveragePolicyTooltip => 'Dépassement';
+
+  @override
+  String get overagePolicyBlocked => 'Bloquer toute réservation';
+
+  @override
+  String get overagePolicyPayg => 'Facturer le dépassement (à l\'usage)';
+
+  @override
+  String get overagePolicyPackage => 'Exiger l\'achat d\'un forfait';
 
   @override
   String get calendarMineTab => 'Les miennes';

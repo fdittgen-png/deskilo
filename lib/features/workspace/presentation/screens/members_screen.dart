@@ -10,6 +10,7 @@ import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/member.dart';
+import '../../domain/overage_policy.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 import '../../../events/providers/event_providers.dart';
@@ -88,6 +89,71 @@ class MembersScreen extends ConsumerWidget {
       debugPrint('subscription update failed: $e\n$st');
       TraceLogger.instance.error(
           'workspace', 'member subscription update failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
+      return;
+    }
+    ref.invalidate(workspaceMembersProvider);
+  }
+
+  /// Sets how the member is treated once they have used their whole
+  /// monthly entitlement (migration 0041). Package mode ships with the
+  /// packages feature; the picker offers block vs pay-as-you-go for now.
+  Future<void> _pickOveragePolicy(
+    BuildContext context,
+    WidgetRef ref,
+    Member member,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final options = <(OveragePolicy, String)>[
+      (
+        OveragePolicy.blocked,
+        l10n?.overagePolicyBlocked ?? 'Block further booking'
+      ),
+      (
+        OveragePolicy.payg,
+        l10n?.overagePolicyPayg ?? 'Charge overage (pay-as-you-go)'
+      ),
+    ];
+    final chosen = await showDialog<OveragePolicy>(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: Text(l10n?.memberOveragePolicyLabel ?? 'When days run out'),
+        children: [
+          for (final (policy, label) in options)
+            SimpleDialogOption(
+              onPressed: () => Navigator.of(context).pop(policy),
+              child: Row(
+                children: [
+                  Icon(
+                    member.overagePolicy == policy
+                        ? Icons.radio_button_checked
+                        : Icons.radio_button_unchecked,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(child: Text(label)),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+    if (chosen == null || chosen == member.overagePolicy) return;
+
+    try {
+      await ref
+          .read(workspaceRepositoryProvider)
+          .updateMemberOveragePolicy(member.id, chosen);
+    } catch (e, st) {
+      debugPrint('overage policy update failed: $e\n$st');
+      TraceLogger.instance.error(
+          'workspace', 'member overage policy update failed',
           error: e, stackTrace: st);
       if (!context.mounted) return;
       AppSnack.error(
@@ -244,6 +310,20 @@ class MembersScreen extends ConsumerWidget {
                         onPressed: () =>
                             _pickSubscription(context, ref, member),
                       ),
+                      // Over-consumption policy (0041): block past the plan,
+                      // or bill overage pay-as-you-go.
+                      if (member.status == MemberStatus.active)
+                        IconButton(
+                          icon: Icon(
+                            member.overagePolicy == OveragePolicy.blocked
+                                ? Icons.speed_outlined
+                                : Icons.speed,
+                          ),
+                          tooltip: l10n?.memberOveragePolicyTooltip ??
+                              'Over-consumption',
+                          onPressed: () =>
+                              _pickOveragePolicy(context, ref, member),
+                        ),
                     ],
                   ),
                   onLongPress: member.status == MemberStatus.exited

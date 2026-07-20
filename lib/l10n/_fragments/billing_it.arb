@@ -17,5 +17,10 @@
   "memberSubscriptionLabel": "Abbonamento",
   "memberSubscriptionCustom": "Personalizzato (1–100)",
   "moneySubscriptionPct": "Abbonamento {pct} %",
-  "percentValue": "{value}%"
+  "percentValue": "{value}%",
+  "memberOveragePolicyLabel": "Quando i giorni finiscono",
+  "memberOveragePolicyTooltip": "Consumo extra",
+  "overagePolicyBlocked": "Blocca ulteriori prenotazioni",
+  "overagePolicyPayg": "Addebita l'extra (a consumo)",
+  "overagePolicyPackage": "Richiedi l'acquisto di un pacchetto"
 }

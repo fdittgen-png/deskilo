@@ -11,5 +11,11 @@
   "billBalance": "Saldo",
   "billSettled": "Beglichen",
   "billOutstanding": "Offen",
-  "billAccessorySupplements": "Zubehör-Aufpreise"
+  "billAccessorySupplements": "Zubehör-Aufpreise",
+  "entitlementTitle": "Diesen Monat",
+  "entitlementDaysUsed": "{used} von {total} Tagen genutzt",
+  "entitlementDaysLeft": "Noch {left} Tage",
+  "entitlementBlockedFull": "Du hast diesen Monat alle Tage aufgebraucht. Bitte eine Administratorin um mehr oder beantrage unten zusätzliche Halbtage.",
+  "entitlementPaygRate": "Tage über deinen Tarif hinaus kosten je {rate}.",
+  "entitlementPackageFull": "Du hast diesen Monat alle Tage aufgebraucht. Kaufe ein Paket, um weiter zu buchen."
 }

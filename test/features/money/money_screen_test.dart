@@ -4,6 +4,7 @@ import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -80,6 +81,50 @@ void main() {
     expect(find.text('Outstanding'), findsOneWidget);
     // No accessory supplements on the statement (#170) — no line.
     expect(find.text('Accessory supplements'), findsNothing);
+  });
+
+  testWidgets(
+      'the entitlement card headlines the month in days used and left (0041)',
+      (tester) async {
+    // The default statement: 24 of 22 half-days used → 12 of 11 days, 0 left,
+    // over the cap → the blocked full-cap hint shows.
+    await pumpMoney(tester);
+
+    expect(find.byKey(const Key('entitlement-card')), findsOneWidget);
+    expect(find.text('This month'), findsOneWidget);
+    expect(find.text('12 of 11 days used'), findsOneWidget);
+    expect(find.text('0 days left'), findsOneWidget);
+    expect(
+      find.textContaining("used all your days this month"),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets(
+      'a pay-as-you-go member sees the per-day overage rate on the card '
+      '(0041)', (tester) async {
+    final money = FakeMoneyRepository();
+    money.statement = money.statement.copyWith(
+      includedHalfDays: 20,
+      usedHalfDays: 10,
+      extraHalfDays: 0,
+      overageCents: 0,
+      remainingHalfDays: 10,
+      overagePolicy: OveragePolicy.payg,
+      overageRateCents: 800, // per half-day → €16.00 per day
+    );
+    await pumpMoney(tester, money: money);
+
+    expect(find.text('5 of 10 days used'), findsOneWidget);
+    expect(find.text('5 days left'), findsOneWidget);
+    // The band overage rate is per half-day; a whole extra day bills double.
+    expect(
+      find.descendant(
+        of: find.byKey(const Key('entitlement-card')),
+        matching: find.textContaining('€16.00'),
+      ),
+      findsOneWidget,
+    );
   });
 
   testWidgets(

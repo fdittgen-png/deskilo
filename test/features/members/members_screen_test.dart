@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -99,6 +100,22 @@ void main() {
     expect(recorded.subjectMemberId, 'member-2');
     expect(recorded.serviceId, 'service-coffee');
     expect(recorded.quantity, 1);
+  });
+
+  testWidgets('the owner switches a member to pay-as-you-go overage (0041)',
+      (tester) async {
+    final workspace = await pumpMembers(tester);
+
+    // Members default to the blocked policy.
+    expect(workspace.otherMembers.single.overagePolicy, OveragePolicy.blocked);
+
+    // Ana's row is the second one.
+    await tester.tap(find.byTooltip('Over-consumption').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Charge overage (pay-as-you-go)'));
+    await tester.pumpAndSettle();
+
+    expect(workspace.otherMembers.single.overagePolicy, OveragePolicy.payg);
   });
 
   testWidgets('long-press pauses an active membership', (tester) async {
