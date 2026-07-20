@@ -779,38 +779,10 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
 
     return Column(
       children: [
-        _scrollerRow(at, granularity),
+        // The level chips now share the scroller's top row (#159); the
+        // separate 48dp row is gone, reclaiming header space.
+        _scrollerRow(at, granularity, levels, level),
         if (!dayOpen) _closedDayBanner(l10n),
-        // One tap per level (#159): compact scrollable chips instead of a
-        // dropdown; the choice persists as this member's default here.
-        // Row height and tap target meet the 48dp Material minimum (#211).
-        if (levels.length > 1)
-          SizedBox(
-            height: kMinInteractiveDimension,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: AppSpacing.mdH,
-              children: [
-                for (final Level l in levels)
-                  Padding(
-                    padding: AppSpacing.xsH,
-                    child: ChoiceChip(
-                      label: Text(l.name),
-                      selected: l.id == level.id,
-                      materialTapTargetSize: MaterialTapTargetSize.padded,
-                      onSelected: (_) {
-                        // Deliberate level choice: drop the jump highlight
-                        // (#182), then persist as before (#159).
-                        setState(() => _highlightedSeatId = null);
-                        ref
-                            .read(selectedLevelIdProvider.notifier)
-                            .select(l.id);
-                      },
-                    ),
-                  ),
-              ],
-            ),
-          ),
         Expanded(
           // #209: cross-fade the list/canvas toggle (and the transitions
           // out of loading/error). Distinct subtree keys make the switcher
@@ -893,7 +865,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   /// time chips (Material clock dial) · Now. Under half-day granularity
   /// (#201) the two time chips give way to the Morning/Afternoon/Day
   /// choice chips — the only selectable windows there.
-  Widget _scrollerRow(DateTime at, BookingGranularity granularity) {
+  Widget _scrollerRow(
+    DateTime at,
+    BookingGranularity granularity,
+    List<Level> levels,
+    Level level,
+  ) {
     final l10n = AppLocalizations.of(context);
     final dayBased = granularity.isDayBased;
     // Day-based chips describe a WORKSPACE-local day: deriving it via
@@ -987,7 +964,39 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             },
             child: Text(DateFormat.MMMd().format(local)),
           ),
-          const Spacer(),
+          // Level chips share the top row (was a separate 48dp row): one
+          // tap per level, scrollable when many, persisted as this member's
+          // default (#159). Empty spacer keeps 'Now' hard right on single
+          // -level workspaces.
+          if (levels.length > 1)
+            Expanded(
+              child: SizedBox(
+                height: kMinInteractiveDimension,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    for (final Level l in levels)
+                      Padding(
+                        padding: AppSpacing.xsH,
+                        child: ChoiceChip(
+                          label: Text(l.name),
+                          selected: l.id == level.id,
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.padded,
+                          onSelected: (_) {
+                            setState(() => _highlightedSeatId = null);
+                            ref
+                                .read(selectedLevelIdProvider.notifier)
+                                .select(l.id);
+                          },
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            )
+          else
+            const Spacer(),
           TextButton(
             onPressed: live
                 ? null
