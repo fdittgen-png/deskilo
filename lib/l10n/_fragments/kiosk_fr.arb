@@ -11,5 +11,15 @@
   "badgeDefaultLabel": "Badge",
   "badgeRevoke": "Révoquer",
   "badgeRevoked": "Révoqué",
-  "commonClose": "Fermer"
+  "commonClose": "Fermer",
+  "kioskCheckIn": "Arrivée",
+  "kioskReserve": "Réserver",
+  "kioskCheckOut": "Départ",
+  "kioskPresentBadge": "Présentez votre badge",
+  "kioskBadgeHint": "Scannez le QR de votre badge, ou saisissez son code.",
+  "kioskBadgeFieldLabel": "Code du badge",
+  "kioskBadgeConfirm": "Confirmer",
+  "kioskBadgeRejected": "Badge non reconnu.",
+  "kioskDone": "C'est fait — tout est en ordre.",
+  "kioskTapHint": "Touchez une place pour pointer"
 }

@@ -920,6 +920,37 @@ class AppLocalizationsIt extends AppLocalizations {
   String get commonClose => 'Chiudi';
 
   @override
+  String get kioskCheckIn => 'Check-in';
+
+  @override
+  String get kioskReserve => 'Prenota';
+
+  @override
+  String get kioskCheckOut => 'Check-out';
+
+  @override
+  String get kioskPresentBadge => 'Presenta il tuo badge';
+
+  @override
+  String get kioskBadgeHint =>
+      'Scansiona il QR del badge o digita il suo codice.';
+
+  @override
+  String get kioskBadgeFieldLabel => 'Codice badge';
+
+  @override
+  String get kioskBadgeConfirm => 'Conferma';
+
+  @override
+  String get kioskBadgeRejected => 'Badge non riconosciuto.';
+
+  @override
+  String get kioskDone => 'Fatto — è tutto a posto.';
+
+  @override
+  String get kioskTapHint => 'Tocca un posto per fare check-in';
+
+  @override
   String get languageTitle => 'Lingua';
 
   @override

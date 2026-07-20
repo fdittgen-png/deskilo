@@ -917,6 +917,37 @@ class AppLocalizationsEs extends AppLocalizations {
   String get commonClose => 'Cerrar';
 
   @override
+  String get kioskCheckIn => 'Registrarse';
+
+  @override
+  String get kioskReserve => 'Reservar';
+
+  @override
+  String get kioskCheckOut => 'Salir';
+
+  @override
+  String get kioskPresentBadge => 'Presenta tu credencial';
+
+  @override
+  String get kioskBadgeHint =>
+      'Escanea el QR de tu credencial o escribe su código.';
+
+  @override
+  String get kioskBadgeFieldLabel => 'Código de credencial';
+
+  @override
+  String get kioskBadgeConfirm => 'Confirmar';
+
+  @override
+  String get kioskBadgeRejected => 'Credencial no reconocida.';
+
+  @override
+  String get kioskDone => 'Listo — todo en orden.';
+
+  @override
+  String get kioskTapHint => 'Toca un asiento para registrarte';
+
+  @override
   String get languageTitle => 'Idioma';
 
   @override
