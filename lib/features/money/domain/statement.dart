@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../workspace/domain/overage_policy.dart';
+
 part 'statement.freezed.dart';
 
 /// One member's monthly statement (ADR 0008), computed server-side: the
@@ -29,6 +31,21 @@ sealed class Statement with _$Statement {
     /// accessorySupplements feature — older `member_statement` bodies
     /// omit the field entirely, so it defaults.
     @Default(0) int accessorySupplementCents,
+
+    /// What happens once the entitlement is used up (migration 0041).
+    @Default(OveragePolicy.blocked) OveragePolicy overagePolicy,
+
+    /// The fee band's per-extra-half-day overage rate — what a
+    /// pay-as-you-go half-day beyond the entitlement costs.
+    @Default(0) int overageRateCents,
+
+    /// Confirmed extra half-days this period (quota extensions / packages),
+    /// on top of [includedHalfDays].
+    @Default(0) int grantedHalfDays,
+
+    /// Half-days still bookable within the cap
+    /// (included + granted − used, floored at 0).
+    @Default(0) int remainingHalfDays,
   }) = _Statement;
 
   /// Parses the `member_statement` RPC's jsonb result. Tolerant of the
@@ -47,7 +64,19 @@ sealed class Statement with _$Statement {
         balanceCents: json['balance_cents'] as int,
         accessorySupplementCents:
             (json['accessory_supplement_cents'] as num?)?.toInt() ?? 0,
+        overagePolicy:
+            OveragePolicy.fromName(json['overage_policy'] as String?),
+        overageRateCents: (json['overage_rate_cents'] as num?)?.toInt() ?? 0,
+        grantedHalfDays: (json['granted_half_days'] as num?)?.toInt() ?? 0,
+        remainingHalfDays:
+            (json['remaining_half_days'] as num?)?.toInt() ?? 0,
       );
 
   bool get isSettled => balanceCents >= 0;
+
+  /// The member's monthly cap in half-days (included + confirmed grants).
+  int get capHalfDays => includedHalfDays + grantedHalfDays;
+
+  /// True once the member has consumed their whole cap this month.
+  bool get isCapReached => usedHalfDays >= capHalfDays;
 }

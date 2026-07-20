@@ -2,6 +2,7 @@
 import 'booking_granularity.dart';
 import 'closure_day.dart';
 import 'member.dart';
+import 'overage_policy.dart';
 import 'payment_instructions.dart';
 import 'workspace.dart';
 
@@ -69,6 +70,13 @@ abstract class WorkspaceRepository {
   /// ADR 0008) / change membership status.
   Future<void> updateMemberSubscription(String memberId, int pct);
   Future<void> updateMemberStatus(String memberId, MemberStatus status);
+
+  /// Owner-only: set how the member is treated once they have used their
+  /// whole monthly entitlement (migration 0041).
+  Future<void> updateMemberOveragePolicy(
+    String memberId,
+    OveragePolicy policy,
+  );
 
   /// Owner-only: request a role change — promote a member to admin
   /// (make_admin true) or demote an admin to a regular member. Routed

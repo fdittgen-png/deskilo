@@ -500,6 +500,42 @@ abstract class AppLocalizations {
   /// **'Accessory supplements'**
   String get billAccessorySupplements;
 
+  /// Header of the prominent usage card at the top of the bill: days included, used and left for the current month
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get entitlementTitle;
+
+  /// Usage headline; both values are already formatted as day counts (may be fractional, e.g. 3.5)
+  ///
+  /// In en, this message translates to:
+  /// **'{used} of {total} days used'**
+  String entitlementDaysUsed(String used, String total);
+
+  /// Remaining days within the monthly cap; value already formatted (may be fractional)
+  ///
+  /// In en, this message translates to:
+  /// **'{left} days left'**
+  String entitlementDaysLeft(String left);
+
+  /// Footer of the usage card for a blocked member who has used their whole cap
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve used all your days this month. Ask an admin for more or request extra half-days below.'**
+  String get entitlementBlockedFull;
+
+  /// Footer of the usage card for a pay-as-you-go member; rate is a formatted price per extra day
+  ///
+  /// In en, this message translates to:
+  /// **'Extra days beyond your plan bill at {rate} each.'**
+  String entitlementPaygRate(String rate);
+
+  /// Footer of the usage card for a package member who has used their whole cap
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve used all your days this month. Buy a package to keep booking.'**
+  String get entitlementPackageFull;
+
   /// Document title on the exported bill PDF (#133)
   ///
   /// In en, this message translates to:
@@ -619,6 +655,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{value}%'**
   String percentValue(int value);
+
+  /// Title of the per-member over-consumption policy picker dialog
+  ///
+  /// In en, this message translates to:
+  /// **'When days run out'**
+  String get memberOveragePolicyLabel;
+
+  /// Tooltip of the members-screen button opening the over-consumption policy picker
+  ///
+  /// In en, this message translates to:
+  /// **'Over-consumption'**
+  String get memberOveragePolicyTooltip;
+
+  /// Over-consumption option: the member cannot book past their monthly days
+  ///
+  /// In en, this message translates to:
+  /// **'Block further booking'**
+  String get overagePolicyBlocked;
+
+  /// Over-consumption option: extra days are allowed and billed at the band overage rate
+  ///
+  /// In en, this message translates to:
+  /// **'Charge overage (pay-as-you-go)'**
+  String get overagePolicyPayg;
+
+  /// Over-consumption option: the member must buy a package of days to book past their plan
+  ///
+  /// In en, this message translates to:
+  /// **'Require buying a package'**
+  String get overagePolicyPackage;
 
   /// Calendar filter showing only the user's reservations
   ///

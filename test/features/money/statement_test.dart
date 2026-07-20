@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import 'package:deskilo/features/money/domain/statement.dart';
+import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// The exact jsonb shape the 0015 `member_statement` body returns —
@@ -58,6 +59,45 @@ void main() {
       });
 
       expect(statement.accessorySupplementCents, 0);
+    });
+
+    test('a pre-0041 payload defaults the overage fields', () {
+      final statement = Statement.fromRpc(rpcResult());
+
+      expect(statement.overagePolicy, OveragePolicy.blocked);
+      expect(statement.overageRateCents, 0);
+      expect(statement.grantedHalfDays, 0);
+      expect(statement.remainingHalfDays, 0);
+    });
+
+    test('the 0041 payload carries the policy, grant, cap and remaining', () {
+      final statement = Statement.fromRpc({
+        ...rpcResult(),
+        'used_half_days': 20,
+        'extra_half_days': 0,
+        'overage_cents': 0,
+        'overage_policy': 'payg',
+        'overage_rate_cents': 800,
+        'granted_half_days': 4,
+        'remaining_half_days': 6,
+      });
+
+      expect(statement.overagePolicy, OveragePolicy.payg);
+      expect(statement.overageRateCents, 800);
+      expect(statement.grantedHalfDays, 4);
+      expect(statement.remainingHalfDays, 6);
+      // included 22 + granted 4 = cap 26; used 20 → not yet at the cap.
+      expect(statement.capHalfDays, 26);
+      expect(statement.isCapReached, isFalse);
+    });
+
+    test('an unknown overage_policy falls back to blocked', () {
+      final statement = Statement.fromRpc({
+        ...rpcResult(),
+        'overage_policy': 'something-new',
+      });
+
+      expect(statement.overagePolicy, OveragePolicy.blocked);
     });
   });
 }

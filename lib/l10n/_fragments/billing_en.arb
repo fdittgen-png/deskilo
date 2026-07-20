@@ -86,5 +86,25 @@
         "type": "int"
       }
     }
+  },
+  "memberOveragePolicyLabel": "When days run out",
+  "@memberOveragePolicyLabel": {
+    "description": "Title of the per-member over-consumption policy picker dialog"
+  },
+  "memberOveragePolicyTooltip": "Over-consumption",
+  "@memberOveragePolicyTooltip": {
+    "description": "Tooltip of the members-screen button opening the over-consumption policy picker"
+  },
+  "overagePolicyBlocked": "Block further booking",
+  "@overagePolicyBlocked": {
+    "description": "Over-consumption option: the member cannot book past their monthly days"
+  },
+  "overagePolicyPayg": "Charge overage (pay-as-you-go)",
+  "@overagePolicyPayg": {
+    "description": "Over-consumption option: extra days are allowed and billed at the band overage rate"
+  },
+  "overagePolicyPackage": "Require buying a package",
+  "@overagePolicyPackage": {
+    "description": "Over-consumption option: the member must buy a package of days to book past their plan"
   }
 }

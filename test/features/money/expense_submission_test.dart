@@ -14,6 +14,13 @@ void main() {
       (tester) async {
     final money = await pumpMoney(tester);
 
+    // The prominent entitlement card (0041) pushes the action buttons down
+    // the lazily-built bill list — scroll the expense action into view.
+    await tester.scrollUntilVisible(
+      find.text('Submit an expense'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.tap(find.text('Submit an expense'));
     await tester.pumpAndSettle();
     await tester.enterText(

@@ -6,6 +6,7 @@ import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
@@ -289,6 +290,21 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     final i = otherMembers.indexWhere((m) => m.id == memberId);
     if (i >= 0) {
       otherMembers[i] = otherMembers[i].copyWith(subscriptionPct: pct);
+    }
+  }
+
+  @override
+  Future<void> updateMemberOveragePolicy(
+    String memberId,
+    OveragePolicy policy,
+  ) async {
+    if (myMember.id == memberId) {
+      myMember = myMember.copyWith(overagePolicy: policy);
+      return;
+    }
+    final i = otherMembers.indexWhere((m) => m.id == memberId);
+    if (i >= 0) {
+      otherMembers[i] = otherMembers[i].copyWith(overagePolicy: policy);
     }
   }
 

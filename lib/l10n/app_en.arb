@@ -295,6 +295,48 @@
   "@billAccessorySupplements": {
     "description": "Bill line for priced seat accessories charged per booked half-day (#170), shown only when the amount is non-zero; the amount renders trailing"
   },
+  "entitlementTitle": "This month",
+  "@entitlementTitle": {
+    "description": "Header of the prominent usage card at the top of the bill: days included, used and left for the current month"
+  },
+  "entitlementDaysUsed": "{used} of {total} days used",
+  "@entitlementDaysUsed": {
+    "description": "Usage headline; both values are already formatted as day counts (may be fractional, e.g. 3.5)",
+    "placeholders": {
+      "used": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "entitlementDaysLeft": "{left} days left",
+  "@entitlementDaysLeft": {
+    "description": "Remaining days within the monthly cap; value already formatted (may be fractional)",
+    "placeholders": {
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "entitlementBlockedFull": "You've used all your days this month. Ask an admin for more or request extra half-days below.",
+  "@entitlementBlockedFull": {
+    "description": "Footer of the usage card for a blocked member who has used their whole cap"
+  },
+  "entitlementPaygRate": "Extra days beyond your plan bill at {rate} each.",
+  "@entitlementPaygRate": {
+    "description": "Footer of the usage card for a pay-as-you-go member; rate is a formatted price per extra day",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "entitlementPackageFull": "You've used all your days this month. Buy a package to keep booking.",
+  "@entitlementPackageFull": {
+    "description": "Footer of the usage card for a package member who has used their whole cap"
+  },
   "billPdfTitle": "Monthly bill",
   "@billPdfTitle": {
     "description": "Document title on the exported bill PDF (#133)"
@@ -389,6 +431,26 @@
         "type": "int"
       }
     }
+  },
+  "memberOveragePolicyLabel": "When days run out",
+  "@memberOveragePolicyLabel": {
+    "description": "Title of the per-member over-consumption policy picker dialog"
+  },
+  "memberOveragePolicyTooltip": "Over-consumption",
+  "@memberOveragePolicyTooltip": {
+    "description": "Tooltip of the members-screen button opening the over-consumption policy picker"
+  },
+  "overagePolicyBlocked": "Block further booking",
+  "@overagePolicyBlocked": {
+    "description": "Over-consumption option: the member cannot book past their monthly days"
+  },
+  "overagePolicyPayg": "Charge overage (pay-as-you-go)",
+  "@overagePolicyPayg": {
+    "description": "Over-consumption option: extra days are allowed and billed at the band overage rate"
+  },
+  "overagePolicyPackage": "Require buying a package",
+  "@overagePolicyPackage": {
+    "description": "Over-consumption option: the member must buy a package of days to book past their plan"
   },
   "calendarMineTab": "Mine",
   "@calendarMineTab": {

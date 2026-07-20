@@ -224,6 +224,32 @@ class AppLocalizationsDe extends AppLocalizations {
   String get billAccessorySupplements => 'Zubehör-Aufpreise';
 
   @override
+  String get entitlementTitle => 'Diesen Monat';
+
+  @override
+  String entitlementDaysUsed(String used, String total) {
+    return '$used von $total Tagen genutzt';
+  }
+
+  @override
+  String entitlementDaysLeft(String left) {
+    return 'Noch $left Tage';
+  }
+
+  @override
+  String get entitlementBlockedFull =>
+      'Du hast diesen Monat alle Tage aufgebraucht. Bitte eine Administratorin um mehr oder beantrage unten zusätzliche Halbtage.';
+
+  @override
+  String entitlementPaygRate(String rate) {
+    return 'Tage über deinen Tarif hinaus kosten je $rate.';
+  }
+
+  @override
+  String get entitlementPackageFull =>
+      'Du hast diesen Monat alle Tage aufgebraucht. Kaufe ein Paket, um weiter zu buchen.';
+
+  @override
   String get billPdfTitle => 'Monatsrechnung';
 
   @override
@@ -289,6 +315,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String percentValue(int value) {
     return '$value %';
   }
+
+  @override
+  String get memberOveragePolicyLabel => 'Wenn die Tage aufgebraucht sind';
+
+  @override
+  String get memberOveragePolicyTooltip => 'Mehrverbrauch';
+
+  @override
+  String get overagePolicyBlocked => 'Weitere Buchung sperren';
+
+  @override
+  String get overagePolicyPayg => 'Mehrverbrauch berechnen (nach Verbrauch)';
+
+  @override
+  String get overagePolicyPackage => 'Paketkauf verlangen';
 
   @override
   String get calendarMineTab => 'Meine';

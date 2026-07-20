@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../domain/booking_granularity.dart';
 import '../domain/closure_day.dart';
 import '../domain/member.dart';
+import '../domain/overage_policy.dart';
 import '../domain/payment_instructions.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_repository.dart';
@@ -173,6 +174,16 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
     await _client
         .from('members')
         .update({'subscription_pct': pct}).eq('id', memberId);
+  }
+
+  @override
+  Future<void> updateMemberOveragePolicy(
+    String memberId,
+    OveragePolicy policy,
+  ) async {
+    await _client
+        .from('members')
+        .update({'overage_policy': policy.name}).eq('id', memberId);
   }
 
   @override
@@ -349,5 +360,7 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
         isOwner: row['is_owner'] as bool,
         status: MemberStatus.values.byName(row['status'] as String),
         subscriptionPct: row['subscription_pct'] as int? ?? 100,
+        overagePolicy:
+            OveragePolicy.fromName(row['overage_policy'] as String?),
       );
 }

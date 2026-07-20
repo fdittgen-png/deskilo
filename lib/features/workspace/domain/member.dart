@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'overage_policy.dart';
+
 part 'member.freezed.dart';
 
 /// Membership status (spec §7.2). Enum values are persisted by name —
@@ -23,6 +25,11 @@ sealed class Member with _$Member {
     /// Subscription percentage 1–100 (ADR 0008): the membership level the
     /// fee band and the half-day entitlement derive from.
     @Default(100) int subscriptionPct,
+
+    /// What happens once the member has used their whole monthly
+    /// entitlement (migration 0041): blocked (default), pay-as-you-go, or
+    /// buy-a-package.
+    @Default(OveragePolicy.blocked) OveragePolicy overagePolicy,
   }) = _Member;
 
   /// Admin capability (owners inherit it, spec §2).

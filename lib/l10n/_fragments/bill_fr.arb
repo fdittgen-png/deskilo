@@ -11,5 +11,11 @@
   "billBalance": "Solde",
   "billSettled": "Réglé",
   "billOutstanding": "À régler",
-  "billAccessorySupplements": "Suppléments d'accessoires"
+  "billAccessorySupplements": "Suppléments d'accessoires",
+  "entitlementTitle": "Ce mois-ci",
+  "entitlementDaysUsed": "{used} sur {total} jours utilisés",
+  "entitlementDaysLeft": "{left} jours restants",
+  "entitlementBlockedFull": "Vous avez utilisé tous vos jours ce mois-ci. Demandez-en plus à un administrateur ou demandez des demi-journées supplémentaires ci-dessous.",
+  "entitlementPaygRate": "Les jours au-delà de votre forfait sont facturés {rate} chacun.",
+  "entitlementPackageFull": "Vous avez utilisé tous vos jours ce mois-ci. Achetez un forfait pour continuer à réserver."
 }
