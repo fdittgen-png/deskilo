@@ -3,6 +3,21 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_radius.dart';
 
+/// Content-pixel fit rectangle from a plan's used-cell [bounds] and the
+/// canvas cell size — the box [CanvasControls.fitBounds] auto-fits to view.
+Rect? fitRectFromCells(
+  ({int x, int y, int w, int h})? bounds,
+  double cellSize,
+) {
+  if (bounds == null) return null;
+  return Rect.fromLTWH(
+    bounds.x * cellSize,
+    bounds.y * cellSize,
+    bounds.w * cellSize,
+    bounds.h * cellSize,
+  );
+}
+
 /// Zoom buttons + draggable scrollbars overlaid on an [InteractiveViewer]
 /// that shares [controller]. Drop it in a Stack ABOVE the viewer, filling the
 /// same box. [contentSize] is the child's unscaled size and [boundaryMargin]
@@ -10,7 +25,7 @@ import '../theme/app_radius.dart';
 ///
 /// The viewer keeps its native pinch-zoom / drag-pan; this adds the discrete
 /// controls desktop users expect and a visible sense of position.
-class CanvasControls extends StatelessWidget {
+class CanvasControls extends StatefulWidget {
   const CanvasControls({
     super.key,
     required this.controller,
@@ -19,6 +34,8 @@ class CanvasControls extends StatelessWidget {
     this.maxScale = 3,
     this.boundaryMargin = 200,
     this.zoomStep = 1.4,
+    this.fitBounds,
+    this.fitKey,
   });
 
   final TransformationController controller;
@@ -30,8 +47,28 @@ class CanvasControls extends StatelessWidget {
   /// Multiplier applied per zoom-in tap (its inverse for zoom-out).
   final double zoomStep;
 
+  /// Content-pixel rectangle to auto-fit to the viewport on first layout,
+  /// on a [fitKey] change (a new level) and on a viewport change (rotation).
+  /// The reset button also re-fits to it. Null = no auto-fit (identity).
+  final Rect? fitBounds;
+
+  /// Identity of what [fitBounds] describes (e.g. the level id): the auto-fit
+  /// runs once per key, so panning/zooming — or editing the same level — is
+  /// never yanked back, but switching levels re-fits.
+  final String? fitKey;
+
+  @override
+  State<CanvasControls> createState() => _CanvasControlsState();
+}
+
+class _CanvasControlsState extends State<CanvasControls> {
   static const double _thickness = 8;
   static const double _minThumb = 24;
+
+  /// The (fitKey, viewport) the auto-fit last ran for — so it fires once per
+  /// level and again on rotation, but not on every rebuild.
+  String? _fittedKey;
+  Size? _fittedViewport;
 
   double _scaleOf(Matrix4 m) => m.getMaxScaleOnAxis();
 
@@ -41,47 +78,80 @@ class CanvasControls extends StatelessWidget {
     return Offset(-t.x / s, -t.y / s);
   }
 
-  /// Total pannable span in scene units (content plus the margin on each side).
   Size _sceneSpan() => Size(
-        contentSize.width + boundaryMargin * 2,
-        contentSize.height + boundaryMargin * 2,
+        widget.contentSize.width + widget.boundaryMargin * 2,
+        widget.contentSize.height + widget.boundaryMargin * 2,
       );
 
   Matrix4 _matrixFor(double scale, Offset topLeft, Size viewport) {
-    // Clamp so the visible window stays within [-margin, content + margin].
     final windowW = viewport.width / scale;
     final windowH = viewport.height / scale;
-    final minX = -boundaryMargin;
-    final maxX = contentSize.width + boundaryMargin - windowW;
-    final minY = -boundaryMargin;
-    final maxY = contentSize.height + boundaryMargin - windowH;
+    final minX = -widget.boundaryMargin;
+    final maxX = widget.contentSize.width + widget.boundaryMargin - windowW;
+    final minY = -widget.boundaryMargin;
+    final maxY = widget.contentSize.height + widget.boundaryMargin - windowH;
     final x = maxX < minX ? minX : topLeft.dx.clamp(minX, maxX);
     final y = maxY < minY ? minY : topLeft.dy.clamp(minY, maxY);
-    // A pure scale + translate: scene p → scale*p + t (no rotation), the
-    // exact shape InteractiveViewer keeps.
     return Matrix4.diagonal3Values(scale, scale, 1)
       ..setTranslationRaw(-x * scale, -y * scale, 0);
   }
 
   void _zoomAround(double factor, Offset viewportPoint, Size viewport) {
-    final old = _scaleOf(controller.value);
-    final next = (old * factor).clamp(minScale, maxScale);
+    final old = _scaleOf(widget.controller.value);
+    final next = (old * factor).clamp(widget.minScale, widget.maxScale);
     if (next == old) return;
-    final anchorScene = controller.toScene(viewportPoint);
-    final topLeft = anchorScene - Offset(viewportPoint.dx, viewportPoint.dy) / next;
-    controller.value = _matrixFor(next, topLeft, viewport);
+    final anchorScene = widget.controller.toScene(viewportPoint);
+    final topLeft =
+        anchorScene - Offset(viewportPoint.dx, viewportPoint.dy) / next;
+    widget.controller.value = _matrixFor(next, topLeft, viewport);
   }
 
+  /// Reset = fit the content bounds when known, else identity.
   void _reset(Size viewport) {
-    controller.value = _matrixFor(1, Offset.zero, viewport);
+    if (widget.fitBounds != null) {
+      _applyFit(widget.fitBounds!, viewport);
+    } else {
+      widget.controller.value = _matrixFor(1, Offset.zero, viewport);
+    }
+  }
+
+  /// Scale [bounds] (content px) to fill the viewport with a little breathing
+  /// room, centred — "size the office to the screen". Not clamped to the pan
+  /// bounds so a small office can sit dead-centre.
+  void _applyFit(Rect bounds, Size viewport) {
+    if (bounds.width <= 0 || bounds.height <= 0) return;
+    const pad = 0.92;
+    final scale = (viewport.width / bounds.width)
+        .clamp(0.0, viewport.height / bounds.height);
+    final fitted = (scale * pad).clamp(widget.minScale, widget.maxScale);
+    final topLeft = bounds.center -
+        Offset(viewport.width / 2, viewport.height / 2) / fitted;
+    widget.controller.value = Matrix4.diagonal3Values(fitted, fitted, 1)
+      ..setTranslationRaw(-topLeft.dx * fitted, -topLeft.dy * fitted, 0);
+  }
+
+  /// Fires the auto-fit once per (fitKey, viewport). Called from build; it
+  /// latches synchronously (no setState) and schedules the transform for the
+  /// next frame, when the viewer is laid out.
+  void _maybeFit(Size viewport) {
+    final bounds = widget.fitBounds;
+    if (bounds == null || viewport.isEmpty) return;
+    if (widget.fitKey == _fittedKey && viewport == _fittedViewport) return;
+    _fittedKey = widget.fitKey;
+    _fittedViewport = viewport;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _applyFit(bounds, viewport);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final controller = widget.controller;
     return LayoutBuilder(
       builder: (context, constraints) {
         final viewport = constraints.biggest;
+        _maybeFit(viewport);
         final center = Offset(viewport.width / 2, viewport.height / 2);
         return AnimatedBuilder(
           animation: controller,
@@ -92,26 +162,24 @@ class CanvasControls extends StatelessWidget {
             final windowW = viewport.width / scale;
             final windowH = viewport.height / scale;
 
-            // Track lengths leave room for the perpendicular bar at the corner.
             final hTrack = viewport.width - _thickness - 8;
             final vTrack = viewport.height - _thickness - 8;
 
             final hThumb = _thumb(
               track: hTrack,
-              start: tl.dx - (-boundaryMargin),
+              start: tl.dx - (-widget.boundaryMargin),
               window: windowW,
               span: span.width,
             );
             final vThumb = _thumb(
               track: vTrack,
-              start: tl.dy - (-boundaryMargin),
+              start: tl.dy - (-widget.boundaryMargin),
               window: windowH,
               span: span.height,
             );
 
             return Stack(
               children: [
-                // Horizontal scrollbar along the bottom.
                 Positioned(
                   left: 0,
                   bottom: 0,
@@ -132,7 +200,6 @@ class CanvasControls extends StatelessWidget {
                     },
                   ),
                 ),
-                // Vertical scrollbar along the right edge.
                 Positioned(
                   top: 0,
                   right: 0,
@@ -153,16 +220,16 @@ class CanvasControls extends StatelessWidget {
                     },
                   ),
                 ),
-                // Zoom cluster, clear of both scrollbars.
                 Positioned(
                   right: _thickness + 8,
                   bottom: _thickness + 8,
                   child: _ZoomCluster(
-                    onIn: () => _zoomAround(zoomStep, center, viewport),
-                    onOut: () => _zoomAround(1 / zoomStep, center, viewport),
+                    onIn: () => _zoomAround(widget.zoomStep, center, viewport),
+                    onOut: () =>
+                        _zoomAround(1 / widget.zoomStep, center, viewport),
                     onReset: () => _reset(viewport),
-                    atMax: scale >= maxScale - 1e-6,
-                    atMin: scale <= minScale + 1e-6,
+                    atMax: scale >= widget.maxScale - 1e-6,
+                    atMin: scale <= widget.minScale + 1e-6,
                   ),
                 ),
               ],
@@ -173,8 +240,6 @@ class CanvasControls extends StatelessWidget {
     );
   }
 
-  /// (start px, length px) of a thumb on a track of [track] px, given the
-  /// visible [window] starting at [start] within a total [span] (scene units).
   (double, double) _thumb({
     required double track,
     required double start,
@@ -184,7 +249,8 @@ class CanvasControls extends StatelessWidget {
     if (span <= 0) return (0, track);
     final len = (window / span * track).clamp(_minThumb, track);
     final maxStart = track - len;
-    final pos = (start / span * track).clamp(0.0, maxStart <= 0 ? 0.0 : maxStart);
+    final pos =
+        (start / span * track).clamp(0.0, maxStart <= 0 ? 0.0 : maxStart);
     return (pos, len);
   }
 }

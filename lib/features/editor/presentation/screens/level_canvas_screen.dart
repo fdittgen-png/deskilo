@@ -1054,7 +1054,8 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
         ),
       ),
         ),
-        // Zoom buttons + draggable scrollbars share the viewer's controller.
+        // Zoom buttons + draggable scrollbars share the viewer's controller,
+        // and the plan auto-fits to the screen on open / level switch.
         Positioned.fill(
           child: CanvasControls(
             controller: _viewTransform,
@@ -1062,6 +1063,9 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
               GridCanvas.widthCells * GridCanvas.cellSize,
               GridCanvas.heightCells * GridCanvas.cellSize,
             ),
+            fitBounds:
+                fitRectFromCells(shownPlan.usedBounds, GridCanvas.cellSize),
+            fitKey: widget.levelId,
           ),
         ),
       ],

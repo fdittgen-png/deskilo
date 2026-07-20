@@ -1462,6 +1462,8 @@ class _LivePlanCanvasState extends State<_LivePlanCanvas> {
           child: CanvasControls(
             controller: _viewTransform,
             contentSize: size,
+            fitBounds: fitRectFromCells(widget.plan.usedBounds, _kCellSize),
+            fitKey: widget.plan.levelId,
           ),
         ),
       ],
