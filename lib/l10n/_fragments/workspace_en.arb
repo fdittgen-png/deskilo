@@ -251,6 +251,23 @@
   "@workspaceConfigNone": {
     "description": "Configuration PDF: placeholder for an empty section (no members, no features, no closures)."
   },
+  "workspaceDeskTransparencyTitle": "Desk transparency",
+  "@workspaceDeskTransparencyTitle": {
+    "description": "Workspace settings section: how see-through desks are drawn (0040)."
+  },
+  "workspaceDeskTransparencyHelper": "Lower the desk opacity so a level's background photo shows through the tables.",
+  "@workspaceDeskTransparencyHelper": {
+    "description": "Helper under the desk-transparency slider explaining its effect."
+  },
+  "workspaceDeskOpacityValue": "Opacity: {percent}%",
+  "@workspaceDeskOpacityValue": {
+    "description": "Live value label of the desk-opacity slider.",
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
   "workspaceDangerZone": "Danger zone",
   "@workspaceDangerZone": {
     "description": "Section header for irreversible owner-only actions in workspace settings."

@@ -929,6 +929,12 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
           child: switch (planAsync) {
             AsyncData(value: final plan) => _ReservePlanCanvas(
                 plan: plan,
+                deskOpacity: (ref
+                            .watch(currentWorkspaceProvider)
+                            .value
+                            ?.deskOpacity ??
+                        100) /
+                    100,
                 background:
                     ref.watch(levelBackgroundProvider(level.id)).value,
                 images: {
@@ -1103,6 +1109,7 @@ class _ReservePlanCanvas extends StatefulWidget {
     required this.seatStates,
     required this.seatLabels,
     required this.onSeatTap,
+    this.deskOpacity = 1,
     this.background,
     this.images = const {},
   });
@@ -1111,6 +1118,7 @@ class _ReservePlanCanvas extends StatefulWidget {
   final Map<String, SeatState> seatStates;
   final Map<String, String> seatLabels;
   final ValueChanged<Seat> onSeatTap;
+  final double deskOpacity;
   final ui.Image? background;
   final Map<String, ui.Image> images;
 
@@ -1158,6 +1166,7 @@ class _ReservePlanCanvasState extends State<_ReservePlanCanvas> {
                 cellSize: ReserveHubMetrics.canvasCellSize,
                 colorScheme: Theme.of(context).colorScheme,
                 brightness: Theme.of(context).brightness,
+                deskOpacity: widget.deskOpacity,
                 background: widget.background,
                 images: widget.images,
                 seatStates: widget.seatStates,

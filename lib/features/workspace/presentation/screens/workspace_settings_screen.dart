@@ -64,6 +64,8 @@ class _WorkspaceSettingsScreenState
   final _wise = TextEditingController();
   // #231 — the community's WhatsApp group invite link (directory, #232).
   final _whatsappGroup = TextEditingController();
+  // 0040 — desk fill opacity percentage (20..100); rides the Save button.
+  int _deskOpacity = 100;
   String? _countryCode;
   bool _busy = false;
 
@@ -129,6 +131,8 @@ class _WorkspaceSettingsScreenState
         workspaceId,
         _whatsappGroup.text.trim(),
       );
+      // 0040 — desk transparency rides the same Save.
+      await repository.setDeskOpacity(workspaceId, _deskOpacity);
       // Every money surface watches the workspace chain — invalidating it
       // re-renders all amounts in the new currency immediately.
       ref.invalidate(myWorkspacesProvider);
@@ -629,6 +633,7 @@ class _WorkspaceSettingsScreenState
       _lydia.text = instructions.lydia;
       _wise.text = instructions.wise;
       _whatsappGroup.text = workspace.whatsappGroup;
+      _deskOpacity = workspace.deskOpacity;
     }
     return Scaffold(
       appBar: AppBar(
@@ -810,6 +815,36 @@ class _WorkspaceSettingsScreenState
                             ? null
                             : (l10n?.workspaceWhatsappGroupInvalid ??
                                 'Must be a chat.whatsapp.com invite link'),
+                  ),
+                  const SizedBox(height: 24),
+                  // 0040 — desk transparency. Rides the same Save button.
+                  Text(
+                    l10n?.workspaceDeskTransparencyTitle ?? 'Desk transparency',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    l10n?.workspaceDeskTransparencyHelper ??
+                        'Lower the desk opacity so a level\'s background photo '
+                            'shows through the tables.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  Slider(
+                    key: const Key('workspaceSettingsDeskOpacity'),
+                    min: 20,
+                    max: 100,
+                    divisions: 16,
+                    value: _deskOpacity.toDouble(),
+                    label: l10n?.workspaceDeskOpacityValue(_deskOpacity) ??
+                        'Opacity: $_deskOpacity%',
+                    onChanged: _busy
+                        ? null
+                        : (v) => setState(() => _deskOpacity = v.round()),
+                  ),
+                  Text(
+                    l10n?.workspaceDeskOpacityValue(_deskOpacity) ??
+                        'Opacity: $_deskOpacity%',
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 24),
                   FilledButton(

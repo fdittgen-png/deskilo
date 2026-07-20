@@ -1626,6 +1626,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workspaceConfigNone => 'None';
 
   @override
+  String get workspaceDeskTransparencyTitle => 'Desk transparency';
+
+  @override
+  String get workspaceDeskTransparencyHelper =>
+      'Lower the desk opacity so a level\'s background photo shows through the tables.';
+
+  @override
+  String workspaceDeskOpacityValue(int percent) {
+    return 'Opacity: $percent%';
+  }
+
+  @override
   String get workspaceDangerZone => 'Danger zone';
 
   @override

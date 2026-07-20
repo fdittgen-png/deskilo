@@ -3080,6 +3080,24 @@ abstract class AppLocalizations {
   /// **'None'**
   String get workspaceConfigNone;
 
+  /// Workspace settings section: how see-through desks are drawn (0040).
+  ///
+  /// In en, this message translates to:
+  /// **'Desk transparency'**
+  String get workspaceDeskTransparencyTitle;
+
+  /// Helper under the desk-transparency slider explaining its effect.
+  ///
+  /// In en, this message translates to:
+  /// **'Lower the desk opacity so a level\'s background photo shows through the tables.'**
+  String get workspaceDeskTransparencyHelper;
+
+  /// Live value label of the desk-opacity slider.
+  ///
+  /// In en, this message translates to:
+  /// **'Opacity: {percent}%'**
+  String workspaceDeskOpacityValue(int percent);
+
   /// Section header for irreversible owner-only actions in workspace settings.
   ///
   /// In en, this message translates to:

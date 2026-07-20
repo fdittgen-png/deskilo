@@ -393,6 +393,16 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     resetWorkspaceCalls.add(workspaceId);
   }
 
+  /// Last opacity passed to [setDeskOpacity]; also updates the seeded row.
+  int? lastDeskOpacity;
+
+  @override
+  Future<void> setDeskOpacity(String workspaceId, int opacity) async {
+    lastDeskOpacity = opacity;
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i >= 0) workspaces[i] = workspaces[i].copyWith(deskOpacity: opacity);
+  }
+
   @override
   Future<void> updateMemberStatus(
     String memberId,

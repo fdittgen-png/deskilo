@@ -83,5 +83,8 @@
   "workspaceResetConfirmPhrase": "J'accepte",
   "workspaceResetConfirmLabel": "Saisissez « {phrase} » pour confirmer",
   "workspaceResetConfirmButton": "Réinitialiser l'espace",
-  "workspaceResetDone": "Espace réinitialisé."
+  "workspaceResetDone": "Espace réinitialisé.",
+  "workspaceDeskTransparencyTitle": "Transparence des tables",
+  "workspaceDeskTransparencyHelper": "Réduisez l'opacité des tables pour laisser transparaître la photo de fond de l'étage.",
+  "workspaceDeskOpacityValue": "Opacité : {percent} %"
 }
