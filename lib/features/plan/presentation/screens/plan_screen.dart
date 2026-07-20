@@ -22,6 +22,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/domain/reservation_repository.dart';
+import '../../../members/domain/directory_status.dart';
+import '../../../members/providers/directory_providers.dart';
 import '../../../reservations/domain/seat_state_logic.dart';
 import '../../../reservations/presentation/widgets/booking_sheet.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -829,6 +831,8 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                             _labelFor(plan, seat, reservations, names, at),
                     },
                     highlightedSeatId: _highlightedSeatId,
+                    onlineSeatIds:
+                        _onlineSeatIds(plan, reservations, at, windowEnd),
                     deskOpacity: (ref
                                 .watch(currentWorkspaceProvider)
                                 .value
@@ -1377,6 +1381,51 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     if (r == null) return '';
     return _firstName(names[r.memberId] ?? '');
   }
+
+  /// Seats whose occupant is online right now (presence heartbeat): the
+  /// painter marks them with a green dot. Resolves each taken seat's
+  /// occupant → member → profile last-seen, same rule as the directory.
+  Set<String> _onlineSeatIds(
+    FloorPlan plan,
+    List<Reservation> reservations,
+    DateTime at,
+    DateTime? windowEnd,
+  ) {
+    final profiles = ref.watch(memberProfilesProvider).value ?? const {};
+    final members = ref.watch(workspaceMembersProvider).value ?? const [];
+    if (profiles.isEmpty || members.isEmpty) return const {};
+    final userIdOf = {for (final m in members) m.id: m.userId};
+    final now = DateTime.now();
+    bool online(String memberId) {
+      final uid = userIdOf[memberId];
+      final profile = uid == null ? null : profiles[uid];
+      return resolveDirectoryPresence(
+            lastSeenAt: profile?.lastSeenAt,
+            now: now,
+          ).kind ==
+          DirectoryPresenceKind.online;
+    }
+
+    return {
+      for (final seat in plan.seats)
+        if ((windowEnd == null
+                ? reservationOnSeatAt(
+                    plan: plan,
+                    seat: seat,
+                    reservations: reservations,
+                    at: at,
+                  )
+                : reservationOnSeatInRange(
+                    plan: plan,
+                    seat: seat,
+                    reservations: reservations,
+                    from: at,
+                    to: windowEnd,
+                  ))
+            case final r?)
+          if (online(r.memberId)) seat.id,
+    };
+  }
 }
 
 class _LivePlanCanvas extends StatefulWidget {
@@ -1387,6 +1436,7 @@ class _LivePlanCanvas extends StatefulWidget {
     required this.seatLabels,
     required this.onSeatTap,
     this.highlightedSeatId,
+    this.onlineSeatIds = const {},
     this.deskOpacity = 1,
     this.background,
     this.images = const {},
@@ -1399,6 +1449,9 @@ class _LivePlanCanvas extends StatefulWidget {
 
   /// Seat ringed by the painter after a calendar jump (#182).
   final String? highlightedSeatId;
+
+  /// Seats whose occupant is online (presence dot).
+  final Set<String> onlineSeatIds;
 
   /// Desk fill opacity 0..1 (0040).
   final double deskOpacity;
@@ -1451,6 +1504,7 @@ class _LivePlanCanvasState extends State<_LivePlanCanvas> {
                 seatStates: widget.seatStates,
                 seatLabels: widget.seatLabels,
                 highlightedSeatId: widget.highlightedSeatId,
+                onlineSeatIds: widget.onlineSeatIds,
                 deskOpacity: widget.deskOpacity,
                 background: widget.background,
                 images: widget.images,
