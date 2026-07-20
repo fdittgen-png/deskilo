@@ -779,13 +779,17 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final granularity = ref.watch(bookingGranularityProvider).value ??
         BookingGranularity.flexible;
 
-    return Column(
+    // The level chips share the scroller's top row (#159). In landscape the
+    // header moves into a side panel so the level fills the rest — the plan
+    // gets nearly the whole screen instead of a thin strip under the chips.
+    final header = Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        // The level chips now share the scroller's top row (#159); the
-        // separate 48dp row is gone, reclaiming header space.
         _scrollerRow(at, granularity, levels, level),
         if (!dayOpen) _closedDayBanner(l10n),
-        Expanded(
+      ],
+    );
+    final content = Expanded(
           // #209: cross-fade the list/canvas toggle (and the transitions
           // out of loading/error). Distinct subtree keys make the switcher
           // treat the two views as different children; the fade stays
@@ -860,8 +864,28 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             _ => const LoadingView(),
             },
           ),
-        ),
-      ],
+        );
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Landscape (and wide tablets): controls in a side panel, the level
+        // fills the rest. Portrait: the familiar stacked layout.
+        if (constraints.maxWidth >= 840 &&
+            constraints.maxWidth > constraints.maxHeight) {
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                width: (constraints.maxWidth * 0.4).clamp(280.0, 460.0),
+                child: SingleChildScrollView(child: header),
+              ),
+              const VerticalDivider(width: 1),
+              content,
+            ],
+          );
+        }
+        return Column(children: [header, content]);
+      },
     );
   }
 

@@ -624,9 +624,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
 
     // No own AppBar: the hub lives inside the shell (bottom bar always
     // visible); the shell's app bar carries the 'Reserve' title.
-    return Scaffold(
-      body: Column(
-        children: [
+    // In landscape the controls move to a side panel so the view (level,
+    // week grid, month) fills the rest of the screen.
+    final header = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
           _dateStrip(l10n),
           // Honest controls: the window chips act on Plan (state filter +
           // booking window) and Day (the window a free-row tap books).
@@ -672,7 +674,9 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               onChanged: (view) => setState(() => _view = view),
             ),
           ),
-          Expanded(
+      ],
+    );
+    final content = Expanded(
             // #209: cross-fade the Plan/Day/Week toggle. Distinct subtree
             // keys make the switcher animate the swap; the fade stays
             // OUTSIDE the canvas's InteractiveViewer transform.
@@ -697,8 +701,27 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                   ),
               },
             ),
-          ),
-        ],
+          );
+
+    return Scaffold(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth >= 840 &&
+            constraints.maxWidth > constraints.maxHeight) {
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(
+                  width: (constraints.maxWidth * 0.4).clamp(280.0, 460.0),
+                  child: SingleChildScrollView(child: header),
+                ),
+                const VerticalDivider(width: 1),
+                content,
+              ],
+            );
+          }
+          return Column(children: [header, content]);
+        },
       ),
     );
   }
