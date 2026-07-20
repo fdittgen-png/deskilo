@@ -7,12 +7,11 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:share_plus/share_plus.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/files/file_picker.dart';
-import '../../../../core/share/share_launcher.dart';
+import '../../../../core/files/file_saver.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -182,15 +181,12 @@ class _WorkspaceSettingsScreenState
         accessories: accessories,
         seatAccessories: seatAccessories,
       );
-      final share = ref.read(shareLauncherProvider);
-      await share(
-        ShareParams(
-          files: [
-            XFile.fromData(utf8.encode(xml), mimeType: 'application/xml'),
-          ],
-          fileNameOverrides: [workspaceXmlFileName(workspace.name)],
-        ),
+      final path = await ref.read(fileSaverProvider)(
+        bytes: utf8.encode(xml),
+        fileName: workspaceXmlFileName(workspace.name),
       );
+      if (!mounted) return;
+      _announceSaved(l10n, path);
     } catch (e, st) {
       debugPrint('workspace XML export failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'workspace XML export failed',
@@ -204,6 +200,15 @@ class _WorkspaceSettingsScreenState
     } finally {
       if (mounted) setState(() => _busy = false);
     }
+  }
+
+  /// Confirms a local export saved (or reports failure) — never a share.
+  void _announceSaved(AppLocalizations? l10n, String? path) {
+    if (path == null) {
+      AppSnack.error(context, l10n?.commonSaveFailed ?? 'Could not save.');
+      return;
+    }
+    AppSnack.success(context, l10n?.commonSavedTo(path) ?? 'Saved to $path');
   }
 
   /// Role label for a member — owner outranks admin outranks member.
@@ -345,13 +350,12 @@ class _WorkspaceSettingsScreenState
         boldFont: pw.Font.ttf(bold),
       );
 
-      final share = ref.read(shareLauncherProvider);
-      await share(
-        ShareParams(
-          files: [XFile.fromData(bytes, mimeType: 'application/pdf')],
-          fileNameOverrides: ['${workspace.name}-configuration.pdf'],
-        ),
+      final path = await ref.read(fileSaverProvider)(
+        bytes: bytes,
+        fileName: '${workspace.name}-configuration.pdf',
       );
+      if (!mounted) return;
+      _announceSaved(l10n, path);
     } catch (e, st) {
       debugPrint('workspace config PDF export failed: $e\n$st');
       TraceLogger.instance.error(

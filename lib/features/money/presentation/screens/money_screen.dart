@@ -4,9 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:share_plus/share_plus.dart';
 
-import '../../../../core/share/share_launcher.dart';
+import '../../../../core/files/file_saver.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -72,7 +71,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final memberName =
         ref.read(memberNamesProvider).value?[member.id] ?? '';
     final monthLabel = DateFormat.yMMMM(locale).format(_month);
-    final share = ref.read(shareLauncherProvider);
+    final save = ref.read(fileSaverProvider);
 
     final strings = BillPdfStrings(
       title: l10n?.billPdfTitle ?? 'Monthly bill',
@@ -130,14 +129,19 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         boldFont: pw.Font.ttf(bold),
         locale: locale,
       );
-      await share(
-        ShareParams(
-          files: [
-            XFile.fromData(bytes, mimeType: 'application/pdf'),
-          ],
-          fileNameOverrides: ['deskilo-bill-${statement.period}.pdf'],
-        ),
+      final path = await save(
+        bytes: bytes,
+        fileName: 'deskilo-bill-${statement.period}.pdf',
       );
+      if (!context.mounted) return;
+      if (path == null) {
+        AppSnack.error(context, l10n?.commonSaveFailed ?? 'Could not save.');
+      } else {
+        AppSnack.success(
+          context,
+          l10n?.commonSavedTo(path) ?? 'Saved to $path',
+        );
+      }
     } catch (e, st) {
       debugPrint('bill PDF export failed: $e\n$st');
       TraceLogger.instance

@@ -508,6 +508,19 @@
   "@shellReserveButton": {
     "description": "Tooltip of the raised centre Reserve button in the bottom bar, and title of the reservation screen it opens"
   },
+  "commonSavedTo": "Saved to {path}",
+  "@commonSavedTo": {
+    "description": "Success snackbar after an export is saved locally on the device (not shared); shows the file's full path.",
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "commonSaveFailed": "Could not save the file.",
+  "@commonSaveFailed": {
+    "description": "Error snackbar when a local file export fails."
+  },
   "consumptionAdd": "Add consumption",
   "@consumptionAdd": {
     "description": "Button + sheet title recording my own consumed services (#129)"

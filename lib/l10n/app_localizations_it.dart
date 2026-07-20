@@ -379,6 +379,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get shellReserveButton => 'Prenota';
 
   @override
+  String commonSavedTo(String path) {
+    return 'Salvato in $path';
+  }
+
+  @override
+  String get commonSaveFailed => 'Impossibile salvare il file.';
+
+  @override
   String get consumptionAdd => 'Aggiungi consumo';
 
   @override

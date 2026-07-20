@@ -782,6 +782,18 @@ abstract class AppLocalizations {
   /// **'Reserve'**
   String get shellReserveButton;
 
+  /// Success snackbar after an export is saved locally on the device (not shared); shows the file's full path.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved to {path}'**
+  String commonSavedTo(String path);
+
+  /// Error snackbar when a local file export fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the file.'**
+  String get commonSaveFailed;
+
   /// Button + sheet title recording my own consumed services (#129)
   ///
   /// In en, this message translates to:

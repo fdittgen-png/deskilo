@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/core/share/share_launcher.dart';
+import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/trace/dev_mode.dart';
 import 'package:deskilo/core/trace/trace_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:share_plus/share_plus.dart';
+import 'dart:typed_data';
 
 import '../../helpers/mock_providers.dart';
 
@@ -44,7 +44,7 @@ Future<void> pumpSettings(
   WidgetTester tester, {
   required TraceLogger logger,
   required InMemoryDevModeStore devMode,
-  ShareLauncher? launcher,
+  FileSaver? saver,
 }) async {
   await tester.pumpWidget(
     ProviderScope(
@@ -52,7 +52,8 @@ Future<void> pumpSettings(
         ...standardTestOverrides(),
         traceLoggerProvider.overrideWithValue(logger),
         devModeStoreProvider.overrideWithValue(devMode),
-        shareLauncherProvider.overrideWithValue(launcher ?? (_) async {}),
+        fileSaverProvider.overrideWithValue(
+            saver ?? ({required bytes, required fileName}) async => '/local/f'),
       ],
       child: const DeskiloApp(),
     ),
@@ -72,13 +73,13 @@ Future<void> pumpSettings(
 Future<void> pumpDeveloper(
   WidgetTester tester, {
   required TraceLogger logger,
-  ShareLauncher? launcher,
+  FileSaver? saver,
 }) async {
   await pumpSettings(
     tester,
     logger: logger,
     devMode: InMemoryDevModeStore(enabled: true),
-    launcher: launcher,
+    saver: saver,
   );
   // The Developer tile sits below the dev-mode switch, which may rest at
   // the bottom edge after the scroll above — reveal it before tapping.
@@ -147,26 +148,27 @@ void main() {
   });
 
   testWidgets(
-      'Export shares the full trace as a timestamped text/plain .log file',
+      'Export saves the full trace as a timestamped .log file locally',
       (tester) async {
-    final captured = <ShareParams>[];
+    final saved = <(String, Uint8List)>[];
     await pumpDeveloper(
       tester,
       logger: seededLogger(),
-      launcher: (params) async => captured.add(params),
+      saver: ({required bytes, required fileName}) async {
+        saved.add((fileName, bytes));
+        return '/local/$fileName';
+      },
     );
 
     await tester.tap(find.byIcon(Icons.ios_share));
     await tester.pumpAndSettle();
 
-    expect(captured, hasLength(1));
+    expect(saved, hasLength(1));
     expect(
-      captured.single.fileNameOverrides!.single,
+      saved.single.$1,
       matches(RegExp(r'^deskilo-trace-\d{8}-\d{4}\.log$')),
     );
-    final file = captured.single.files!.single;
-    expect(file.mimeType, 'text/plain');
-    final content = String.fromCharCodes(await file.readAsBytes());
+    final content = String.fromCharCodes(saved.single.$2);
     expect(content, contains('INFO boot: older info entry'));
     expect(content, contains('ERROR money: newest error entry'));
     expect(content, contains(r'#0 first\n#1 second'));
