@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../../../core/files/file_saver.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/trace/guarded.dart';
@@ -25,6 +26,7 @@ import '../../domain/bill_sections.dart';
 import '../../domain/ledger_entry.dart';
 import '../../domain/package.dart';
 import '../../domain/payment_method.dart';
+import '../../domain/payment_provider.dart';
 import '../../domain/statement.dart';
 import '../../providers/money_providers.dart';
 import '../payment_method_labels.dart';
@@ -493,32 +495,27 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
   /// the payment provider's approval URL when the deployment is configured;
   /// otherwise tells the member online payments are not set up. Inert until
   /// the server carries the PSP secrets (docs/design/payments-integration.md).
-  Future<void> _payOnline(int amountCents) async {
-    final l10n = AppLocalizations.of(context);
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    final member = ref.read(myMemberProvider).value;
-    if (workspace == null || member == null || amountCents <= 0) return;
-    Uri? url;
-    if (!await runGuarded(
-      context,
-      domain: 'money',
-      message: 'create payment order failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () async {
-        url = await ref.read(moneyRepositoryProvider).createPaymentOrder(
-              workspaceId: workspace.id,
-              memberId: member.id,
-              amountCents: amountCents,
-              period: _period,
-            );
-      },
-    )) {
-      return;
-    }
-    if (!mounted) return;
-    final approveUrl = url;
-    if (approveUrl == null) {
+  /// Localized label of an online-payment [provider] button.
+  String _providerLabel(AppLocalizations? l10n, PaymentProvider provider) =>
+      switch (provider) {
+        PaymentProvider.paypal => l10n?.paymentMethodPaypal ?? 'PayPal',
+        PaymentProvider.stripe =>
+          l10n?.paymentProviderStripe ?? 'Credit card (Stripe)',
+        PaymentProvider.mollie =>
+          l10n?.paymentProviderMollie ?? 'Mollie — iDEAL, Bancontact…',
+      };
+
+  /// Owner/admin diagnostics when online payments cannot run: names the
+  /// undeployed function or the exact missing server secrets, so "not set
+  /// up" is actionable instead of a mystery. Members get the friendly
+  /// snack instead.
+  Future<void> _paymentDiagnostics(
+    AppLocalizations? l10n,
+    PaymentGatewayConfig config,
+  ) async {
+    final canAdminister =
+        ref.read(myMemberProvider).value?.canAdminister ?? false;
+    if (!canAdminister) {
       AppSnack.info(
         context,
         l10n?.payOnlineNotConfigured ??
@@ -526,8 +523,160 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       );
       return;
     }
+    final lines = [
+      for (final entry in config.missing.entries)
+        if (entry.value.isNotEmpty)
+          '${entry.key}: ${entry.value.join(', ')}',
+    ];
+    await showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          l10n?.payOnlineDiagTitle ?? 'Online payments — not configured',
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n?.payOnlineDiagHint ??
+                  'The server is missing this configuration '
+                      '(docs/design/payments-integration.md):',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 8),
+            for (final line in lines)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Text(
+                  line,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(fontFamily: 'monospace'),
+                ),
+              ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(l10n?.commonClose ?? 'Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _payOnline(int amountCents) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    final member = ref.read(myMemberProvider).value;
+    if (workspace == null || member == null || amountCents <= 0) return;
+    final trace = TraceLogger.instance;
+
+    // 1. What can this deployment charge with?
+    PaymentGatewayConfig? config;
+    if (!await runGuarded(
+      context,
+      domain: 'payments',
+      message: 'payment config probe failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        config = await ref.read(moneyRepositoryProvider).fetchPaymentConfig();
+      },
+    )) {
+      return;
+    }
+    final gateway = config;
+    if (gateway == null || !mounted) return;
+    trace.log(
+      TraceLevel.info,
+      'payments',
+      'config: providers=${gateway.providers.map((p) => p.wireName).toList()} '
+          'missing=${gateway.missing}',
+    );
+    if (gateway.providers.isEmpty) {
+      await _paymentDiagnostics(l10n, gateway);
+      return;
+    }
+
+    // 2. Pick the provider (directly when only one is configured).
+    PaymentProvider? provider = gateway.providers.singleOrNull;
+    provider ??= await showModalBottomSheet<PaymentProvider>(
+      context: context,
+      builder: (context) => SheetShell(
+        title: l10n?.payOnlineChooseTitle ?? 'Pay online',
+        children: [
+          const SizedBox(height: 12),
+          for (final candidate in gateway.providers) ...[
+            FilledButton.tonalIcon(
+              key: ValueKey('pay-provider-${candidate.wireName}'),
+              onPressed: () => Navigator.of(context).pop(candidate),
+              icon: const Icon(Icons.account_balance_wallet_outlined),
+              label: Text(_providerLabel(l10n, candidate)),
+            ),
+            const SizedBox(height: 8),
+          ],
+        ],
+      ),
+    );
+    if (provider == null || !mounted) return;
+    final chosen = provider;
+
+    // 3. Start the order; every step lands in the payments trace.
+    trace.log(
+      TraceLevel.info,
+      'payments',
+      'order start: provider=${chosen.wireName} amountCents=$amountCents '
+          'period=$_period',
+    );
+    PaymentOrderStart? start;
+    if (!await runGuarded(
+      context,
+      domain: 'payments',
+      message: 'create payment order failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        start = await ref.read(moneyRepositoryProvider).createPaymentOrder(
+              provider: chosen,
+              workspaceId: workspace.id,
+              memberId: member.id,
+              amountCents: amountCents,
+              currencyCode:
+                  ref.read(currentWorkspaceProvider).value?.currencyCode ??
+                      'EUR',
+              period: _period,
+            );
+      },
+    )) {
+      return;
+    }
+    final order = start;
+    if (order == null || !mounted) return;
+    if (!order.started) {
+      trace.warn(
+        'payments',
+        'provider ${chosen.wireName} not configured: ${order.missing}',
+      );
+      await _paymentDiagnostics(
+        l10n,
+        PaymentGatewayConfig(
+          providers: const [],
+          missing: {chosen.wireName: order.missing},
+        ),
+      );
+      return;
+    }
+    trace.log(
+      TraceLevel.info,
+      'payments',
+      'order created: provider=${chosen.wireName} orderId=${order.orderId}',
+    );
     // Launch failures are traced inside the shared link seam.
-    await ref.read(linkLauncherProvider)(approveUrl);
+    await ref.read(linkLauncherProvider)(order.approveUrl!);
   }
 
   @override

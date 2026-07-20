@@ -341,13 +341,33 @@
   "@billPackages": {
     "description": "Bill section header for day packages bought this period (migration 0042); charge lines render trailing"
   },
-  "payOnlineButton": "Pay online with PayPal",
+  "payOnlineButton": "Pay online",
   "@payOnlineButton": {
-    "description": "Button on an outstanding bill that starts an online payment (0043)"
+    "description": "Button on an outstanding bill that starts an online payment (provider chosen next when several are configured)"
   },
   "payOnlineNotConfigured": "Online payments aren't set up yet. Ask the workspace owner.",
   "@payOnlineNotConfigured": {
     "description": "Shown when the member taps Pay online but the deployment has no payment provider configured"
+  },
+  "payOnlineChooseTitle": "Pay online",
+  "@payOnlineChooseTitle": {
+    "description": "Title of the provider chooser sheet"
+  },
+  "paymentProviderStripe": "Credit card (Stripe)",
+  "@paymentProviderStripe": {
+    "description": "Provider button: card payments through Stripe Checkout"
+  },
+  "paymentProviderMollie": "Mollie — iDEAL, Bancontact…",
+  "@paymentProviderMollie": {
+    "description": "Provider button: Mollie hosted checkout (iDEAL, Bancontact, cards…)"
+  },
+  "payOnlineDiagTitle": "Online payments — not configured",
+  "@payOnlineDiagTitle": {
+    "description": "Title of the admin diagnostics dialog when no provider can charge"
+  },
+  "payOnlineDiagHint": "The server is missing this configuration (docs/design/payments-integration.md):",
+  "@payOnlineDiagHint": {
+    "description": "Hint above the per-provider missing-config lines in the diagnostics dialog"
   },
   "billPdfTitle": "Monthly bill",
   "@billPdfTitle": {

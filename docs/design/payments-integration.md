@@ -1,10 +1,12 @@
 # Online payments — design & integration guide
 
-Status: **design + scaffolding shipped (0043).** No money moves yet — the
-app records manual payments today. This document describes how to make
-DesKilo *actually* charge (PayPal first, then card / SEPA), what the
-scaffolding already provides, and exactly what an owner/operator must
-supply to switch it on.
+Status: **implemented (migration 0045 + live Edge Functions).** The
+provider calls, webhooks and settlement are fully coded and deployed;
+money moves as soon as the operator supplies the provider secrets below.
+Three providers ship: **PayPal** (Orders v2), **Stripe** (Checkout —
+cards/SEPA), **Mollie** (iDEAL, Bancontact, cards…). Until secrets exist
+the app's Pay-online flow shows an owner diagnostics dialog naming the
+exact missing env vars (`{action:'config'}` probe).
 
 ---
 
@@ -200,13 +202,12 @@ secrets and the `settle_online_payment` migration land.
 
 ## 9. Rollout checklist
 
-- [ ] Write the `payment_intents` + `settle_online_payment` migration.
-- [ ] Implement the PayPal calls in `create-payment-order` (§4 TODOs).
-- [ ] Implement signature verification + settlement in `paypal-webhook`.
-- [ ] Test in **sandbox** end-to-end (sandbox buyer account, test capture).
-- [ ] Verify idempotency: replay a webhook → exactly one credit.
-- [ ] Verify a failed/abandoned approval leaves no credit.
-- [ ] Confirm the F-Droid build still links no proprietary SDK.
-- [ ] Switch `PAYPAL_ENV=live`; enable the feature for one pilot workspace.
+- [x] `payment_intents` + `settle_online_payment` migration (0045).
+- [x] PayPal Orders v2 implemented in `create-payment-order`.
+- [x] Stripe Checkout Sessions + Mollie Payments implemented (same function, `provider` param; `{action:'config'}` lists what's configured).
+- [x] Webhooks implemented + deployed: `paypal-webhook` (signature verification), `stripe-webhook` (HMAC verification + replay window), `mollie-webhook` (fetch-back verification) — all settle via the idempotent service-role RPC.
+- [x] Undeployed/unconfigured states are diagnosable from the app: admins get a dialog naming the missing env vars; every attempt is traced under the `payments` domain (Developer screen).
+- [ ] Operator: create the provider account(s) and `supabase secrets set` the vars in §7, incl. `PAYMENT_RETURN_URL`.
+- [ ] Test in sandbox/test mode end-to-end (sandbox buyer, test capture, webhook replay → exactly one credit).
+- [ ] Switch to live keys; enable the `onlinePayments` feature for a pilot workspace.
 - [ ] Document refunds/disputes handling (out of scope for v1).
-```

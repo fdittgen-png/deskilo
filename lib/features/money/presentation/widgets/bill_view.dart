@@ -167,7 +167,7 @@ class _HowToPayCard extends ConsumerWidget {
                   key: const Key('pay-online-button'),
                   onPressed: onPayOnline,
                   icon: const Icon(Icons.account_balance_wallet_outlined),
-                  label: Text(l10n?.payOnlineButton ?? 'Pay online with PayPal'),
+                  label: Text(l10n?.payOnlineButton ?? 'Pay online'),
                 ),
               ),
             if (instructions.iban.trim().isNotEmpty)
