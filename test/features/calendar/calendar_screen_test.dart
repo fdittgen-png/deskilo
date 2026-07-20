@@ -58,6 +58,23 @@ Future<FakeReservationRepository> pumpCalendar(
 }
 
 void main() {
+  testWidgets(
+      'landscape splits the month + controls into a side panel (no overflow)',
+      (tester) async {
+    // Phone-landscape: the split engages and the day list fills the rest.
+    // A RenderFlex overflow would fail this test.
+    tester.view.physicalSize = const Size(760, 360);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    await pumpCalendar(tester, seed: [todayReservation()]);
+
+    expect(find.byType(VerticalDivider), findsOneWidget);
+    // The month grid and the day's reservation both render.
+    expect(find.text('July 2026'), findsOneWidget);
+    expect(find.textContaining('A1'), findsOneWidget);
+  });
+
   testWidgets('today is preselected and lists my reservation with seat name',
       (tester) async {
     await pumpCalendar(tester, seed: [todayReservation()]);

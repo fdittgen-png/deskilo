@@ -51,6 +51,12 @@ Future<FakeReservationRepository> pumpHub(
   bool twoLevels = false,
   FakeReservationRepository? repo,
 }) async {
+  // Portrait viewport: these tests exercise the hub's feature behaviour,
+  // not the landscape split (which is covered separately). The 800×600
+  // default is landscape and would engage the side-panel layout.
+  tester.view.physicalSize = const Size(800, 1400);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.reset);
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   if (twoLevels) addSecondLevel(plans);
   final reservations = (repo ?? FakeReservationRepository())
@@ -172,6 +178,19 @@ void main() {
   // Half-slot classification anchors to the WORKSPACE clock (the fake
   // workspace is Europe/Berlin); reset between tests.
   tearDown(WorkspaceTime.reset);
+
+  testWidgets(
+      'landscape splits the hub into a side panel + level (no overflow, the '
+      'four-view toggle scales to fit)', (tester) async {
+    await pumpHub(tester);
+    // Rotate to a phone landscape after opening the hub.
+    tester.view.physicalSize = const Size(760, 360);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(VerticalDivider), findsOneWidget);
+    expect(find.byKey(const ValueKey('reserve-view-switch')), findsOneWidget);
+    expect(find.byKey(_canvasKey), findsOneWidget);
+  });
 
   test('hub metrics are pinned (contract of #208)', () {
     expect(ReserveHubMetrics.stripDayCount, 14);

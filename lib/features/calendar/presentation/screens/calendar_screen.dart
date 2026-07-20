@@ -339,8 +339,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth >= 840 &&
-            constraints.maxWidth > constraints.maxHeight) {
+        if (constraints.maxWidth > constraints.maxHeight) {
           return Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

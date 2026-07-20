@@ -871,8 +871,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       builder: (context, constraints) {
         // Landscape (and wide tablets): controls in a side panel, the level
         // fills the rest. Portrait: the familiar stacked layout.
-        if (constraints.maxWidth >= 840 &&
-            constraints.maxWidth > constraints.maxHeight) {
+        if (constraints.maxWidth > constraints.maxHeight) {
           return Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -993,7 +992,6 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             },
             child: Text(DateFormat.MMMd().format(local)),
           ),
-          const SizedBox(width: AppSpacing.xs),
           // Quick level picker (#159 chips were unusable squeezed into the
           // top row): a compact dropdown showing the current level; the menu
           // opens the full list with one tap, scales to any level count.
@@ -1002,7 +1000,10 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             Expanded(
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: _levelMenu(levels, level),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: AppSpacing.xs),
+                  child: _levelMenu(levels, level),
+                ),
               ),
             )
           else
@@ -1102,7 +1103,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
           ),
       ],
       child: Container(
-        constraints: const BoxConstraints(minHeight: 40),
+        constraints: const BoxConstraints(minHeight: kMinInteractiveDimension),
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
         decoration: BoxDecoration(

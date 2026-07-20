@@ -103,9 +103,10 @@ void main() {
 
   testWidgets(
       'landscape splits controls into a side panel so the level fills the '
-      'rest', (tester) async {
-    // A wide, landscape viewport (>= 840, W > H).
-    tester.view.physicalSize = const Size(1200, 700);
+      'rest (phone-landscape width, no overflow)', (tester) async {
+    // A phone in landscape: narrow enough to exercise the side panel and
+    // catch any overflow (a RenderFlex overflow fails the test).
+    tester.view.physicalSize = const Size(760, 360);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
 

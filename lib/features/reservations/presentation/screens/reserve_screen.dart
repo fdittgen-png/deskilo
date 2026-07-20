@@ -643,8 +643,13 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
             ),
             // #211: the shared toggle idiom — same key, same labels and
             // behaviour as the original SegmentedButton, plus the shared
-            // icon set (map/timeline/week).
-            child: ViewToggle<_ReserveView>(
+            // icon set (map/timeline/week). Horizontally scrollable so the
+            // four labelled segments keep their 48dp height (never shrunk
+            // below the tap-target floor) and never overflow the narrow
+            // landscape side panel.
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: ViewToggle<_ReserveView>(
               key: const ValueKey('reserve-view-switch'),
               options: [
                 ViewToggleOption(
@@ -672,6 +677,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               // No re-entry syncing needed since #236: the week grid
               // derives its week from the selected day on every build.
               onChanged: (view) => setState(() => _view = view),
+            ),
             ),
           ),
       ],
@@ -706,8 +712,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
-          if (constraints.maxWidth >= 840 &&
-            constraints.maxWidth > constraints.maxHeight) {
+          if (constraints.maxWidth > constraints.maxHeight) {
             return Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
