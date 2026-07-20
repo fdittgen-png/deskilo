@@ -3,6 +3,7 @@ import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
+import 'package:deskilo/features/money/domain/package.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
@@ -289,5 +290,71 @@ class FakeMoneyRepository implements MoneyRepository {
       ),
     );
     return 'evt-expense-${submittedExpenses.length}';
+  }
+
+  /// Owner-defined packages; seeded with one 5-day pack by default.
+  final packages = <Package>[
+    const Package(
+      id: 'package-5',
+      workspaceId: 'ws-1',
+      name: '5-day pack',
+      days: 5,
+      priceCents: 4000,
+    ),
+  ];
+
+  @override
+  Future<List<Package>> fetchPackages(
+    String workspaceId, {
+    bool includeInactive = false,
+  }) async =>
+      packages.where((p) => includeInactive || p.active).toList()
+        ..sort((a, b) => a.days.compareTo(b.days));
+
+  @override
+  Future<Package> createPackage(
+    String workspaceId, {
+    required String name,
+    required int days,
+    required int priceCents,
+  }) async {
+    final package = Package(
+      id: 'package-${packages.length + 1}',
+      workspaceId: workspaceId,
+      name: name,
+      days: days,
+      priceCents: priceCents,
+    );
+    packages.add(package);
+    return package;
+  }
+
+  @override
+  Future<Package> updatePackage(
+    String packageId, {
+    String? name,
+    int? days,
+    int? priceCents,
+    bool? active,
+  }) async {
+    final i = packages.indexWhere((p) => p.id == packageId);
+    if (i < 0) throw StateError('unknown package');
+    final updated = packages[i].copyWith(
+      name: name ?? packages[i].name,
+      days: days ?? packages[i].days,
+      priceCents: priceCents ?? packages[i].priceCents,
+      active: active ?? packages[i].active,
+    );
+    packages[i] = updated;
+    return updated;
+  }
+
+  /// (workspaceId, packageId) of buy_package calls.
+  final boughtPackages = <(String, String)>[];
+
+  @override
+  Future<String> buyPackage(String workspaceId, String packageId) async {
+    boughtPackages.add((workspaceId, packageId));
+    return 'ext-${boughtPackages.length}';
   }
 }

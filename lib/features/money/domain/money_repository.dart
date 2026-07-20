@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import 'fee_band.dart';
 import 'ledger_entry.dart';
+import 'package.dart';
 import 'payment_method.dart';
 import 'service_item.dart';
 import 'statement.dart';
@@ -88,4 +89,35 @@ abstract class MoneyRepository {
     required String category,
     String description,
   });
+
+  /// Owner-defined day packages (migration 0042). Members read the active
+  /// ones (the buy sheet); owners pass [includeInactive] for the editor.
+  Future<List<Package>> fetchPackages(
+    String workspaceId, {
+    bool includeInactive = false,
+  });
+
+  /// Owner-only (RLS packages_write): creates a package.
+  Future<Package> createPackage(
+    String workspaceId, {
+    required String name,
+    required int days,
+    required int priceCents,
+  });
+
+  /// Owner-only: partial update. Deactivate = `updatePackage(active: false)`
+  /// — packages are never deleted (bill lines reference the purchase).
+  Future<Package> updatePackage(
+    String packageId, {
+    String? name,
+    int? days,
+    int? priceCents,
+    bool? active,
+  });
+
+  /// Buys a package (RPC `buy_package`): raises the caller's cap for the
+  /// current period and posts the price as a charge on their bill. Only a
+  /// member whose over-consumption policy is 'package' may buy. Returns the
+  /// quota-extension id.
+  Future<String> buyPackage(String workspaceId, String packageId);
 }

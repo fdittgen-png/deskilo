@@ -128,6 +128,64 @@ void main() {
   });
 
   testWidgets(
+      'the buy-a-package button shows only for package-plan members and buys '
+      'the chosen package (0042)', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.myMember =
+        workspace.myMember.copyWith(overagePolicy: OveragePolicy.package);
+    final money = FakeMoneyRepository();
+    await pumpMoney(tester, money: money, workspace: workspace);
+
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('buy-package-button')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(const ValueKey('buy-package-button')));
+    await tester.pumpAndSettle();
+
+    // The sheet lists the seeded 5-day pack; buy it.
+    expect(find.text('5-day pack'), findsOneWidget);
+    await tester.tap(find.text('5-day pack'));
+    await tester.pumpAndSettle();
+
+    expect(money.boughtPackages, [('ws-1', 'package-5')]);
+    expect(find.textContaining('Days added'), findsOneWidget);
+  });
+
+  testWidgets('a blocked member sees no buy-a-package button (0042)',
+      (tester) async {
+    // The default member is on the blocked policy.
+    await pumpMoney(tester);
+    expect(
+      find.byKey(const ValueKey('buy-package-button')),
+      findsNothing,
+    );
+  });
+
+  testWidgets('a bought package shows as a Day packages bill line (0042)',
+      (tester) async {
+    final money = FakeMoneyRepository();
+    money.ledger.add(
+      LedgerEntry(
+        id: 'led-pkg',
+        memberId: 'member-1',
+        kind: LedgerKind.charge,
+        category: LedgerCategory.package,
+        amountCents: 4000,
+        description: '5-day pack (5d)',
+        period: money.statement.period,
+        createdAt: DateTime.now(),
+      ),
+    );
+    await pumpMoney(tester, money: money);
+
+    expect(find.byKey(const Key('packages-card')), findsOneWidget);
+    expect(find.text('Day packages'), findsOneWidget);
+    expect(find.text('5-day pack (5d)'), findsOneWidget);
+  });
+
+  testWidgets(
       'a non-zero accessory supplement (#170) renders its own bill line '
       'with the amount', (tester) async {
     final money = FakeMoneyRepository();

@@ -162,6 +162,7 @@ const pdfStrings = BillPdfStrings(
   services: 'Consumed services',
   servicesTotal: 'Services total',
   serviceFallback: 'Service',
+  packages: 'Day packages',
   openPositions: 'Open positions',
   pendingBadge: 'pending validation',
   paymentsCredits: 'Payments & credits',

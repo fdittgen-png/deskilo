@@ -64,6 +64,10 @@ class BillView extends StatelessWidget {
           const SizedBox(height: 8),
           _ServicesCard(sections: sections, money: money),
         ],
+        if (sections.packageEntries.isNotEmpty) ...[
+          const SizedBox(height: 8),
+          _PackagesCard(entries: sections.packageEntries, money: money),
+        ],
         if (sections.openPositions.isNotEmpty) ...[
           const SizedBox(height: 8),
           _OpenPositionsCard(positions: sections.openPositions, money: money),
@@ -424,6 +428,41 @@ class _ServicesCard extends StatelessWidget {
               value: '−${money(sections.servicesTotalCents)}',
               emphasized: true,
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PackagesCard extends StatelessWidget {
+  const _PackagesCard({required this.entries, required this.money});
+
+  final List<LedgerEntry> entries;
+  final String Function(int cents) money;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Card(
+      key: const Key('packages-card'),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n?.billPackages ?? 'Day packages',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            const SizedBox(height: 4),
+            for (final entry in entries)
+              _BillLine(
+                label: entry.description.isEmpty
+                    ? (l10n?.billPackages ?? 'Day packages')
+                    : entry.description,
+                value: '−${money(entry.amountCents)}',
+              ),
           ],
         ),
       ),

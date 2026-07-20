@@ -22,5 +22,17 @@
   "memberOveragePolicyTooltip": "Dépassement",
   "overagePolicyBlocked": "Bloquer toute réservation",
   "overagePolicyPayg": "Facturer le dépassement (à l'usage)",
-  "overagePolicyPackage": "Exiger l'achat d'un forfait"
+  "overagePolicyPackage": "Exiger l'achat d'un forfait",
+  "billingPackages": "Forfaits de jours",
+  "billingPackagesHint": "Les membres au plan forfait les achètent quand leurs jours sont épuisés.",
+  "billingPackageSummary": "{days} jours · {price}",
+  "billingPackageName": "Nom",
+  "billingPackageDays": "Jours",
+  "billingPackagePrice": "Prix",
+  "billingAddPackage": "Ajouter un forfait",
+  "buyPackageButton": "Acheter un forfait",
+  "buyPackageTitle": "Acheter un forfait",
+  "buyPackageDays": "{days} jours",
+  "buyPackageNone": "Aucun forfait disponible pour l'instant.",
+  "buyPackageDone": "Jours ajoutés — profitez-en."
 }

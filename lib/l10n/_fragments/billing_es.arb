@@ -22,5 +22,17 @@
   "memberOveragePolicyTooltip": "Exceso de consumo",
   "overagePolicyBlocked": "Bloquear más reservas",
   "overagePolicyPayg": "Cobrar el exceso (pago por uso)",
-  "overagePolicyPackage": "Exigir comprar un paquete"
+  "overagePolicyPackage": "Exigir comprar un paquete",
+  "billingPackages": "Paquetes de días",
+  "billingPackagesHint": "Los miembros con plan de paquetes los compran cuando se les acaban los días.",
+  "billingPackageSummary": "{days} días · {price}",
+  "billingPackageName": "Nombre",
+  "billingPackageDays": "Días",
+  "billingPackagePrice": "Precio",
+  "billingAddPackage": "Añadir paquete",
+  "buyPackageButton": "Comprar un paquete",
+  "buyPackageTitle": "Comprar un paquete",
+  "buyPackageDays": "{days} días",
+  "buyPackageNone": "Aún no hay paquetes disponibles.",
+  "buyPackageDone": "Días añadidos — disfruta del tiempo extra."
 }

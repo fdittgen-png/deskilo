@@ -102,8 +102,8 @@ class MembersScreen extends ConsumerWidget {
   }
 
   /// Sets how the member is treated once they have used their whole
-  /// monthly entitlement (migration 0041). Package mode ships with the
-  /// packages feature; the picker offers block vs pay-as-you-go for now.
+  /// monthly entitlement (migration 0041): block, pay-as-you-go, or buy a
+  /// pre-defined day package (0042).
   Future<void> _pickOveragePolicy(
     BuildContext context,
     WidgetRef ref,
@@ -118,6 +118,10 @@ class MembersScreen extends ConsumerWidget {
       (
         OveragePolicy.payg,
         l10n?.overagePolicyPayg ?? 'Charge overage (pay-as-you-go)'
+      ),
+      (
+        OveragePolicy.package,
+        l10n?.overagePolicyPackage ?? 'Require buying a package'
       ),
     ];
     final chosen = await showDialog<OveragePolicy>(

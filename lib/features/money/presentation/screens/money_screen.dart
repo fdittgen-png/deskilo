@@ -13,12 +13,14 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../../workspace/domain/overage_policy.dart';
 import '../../../workspace/domain/payment_instructions.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/bill_pdf.dart';
 import '../../domain/bill_sections.dart';
 import '../../domain/ledger_entry.dart';
+import '../../domain/package.dart';
 import '../../domain/payment_method.dart';
 import '../../domain/statement.dart';
 import '../../providers/money_providers.dart';
@@ -92,6 +94,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       services: l10n?.billServices ?? 'Consumed services',
       servicesTotal: l10n?.billServicesTotal ?? 'Services total',
       serviceFallback: l10n?.ledgerCategoryService ?? 'Service',
+      packages: l10n?.billPackages ?? 'Day packages',
       openPositions: l10n?.billOpenPositions ?? 'Open positions',
       pendingBadge: l10n?.billPendingBadge ?? 'pending validation',
       paymentsCredits: l10n?.billPaymentsCredits ?? 'Payments & credits',
@@ -472,6 +475,81 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     ref.invalidate(eventsProvider);
   }
 
+  /// Self-serve package purchase (0042): pick an owner-defined package; the
+  /// cap rises immediately and the price posts to this month's bill.
+  Future<void> _buyPackageSheet(NumberFormat currency) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    final packages = await ref.read(packagesProvider.future);
+    if (!mounted) return;
+    if (packages.isEmpty) {
+      AppSnack.info(
+        context,
+        l10n?.buyPackageNone ?? 'No packages are available yet.',
+      );
+      return;
+    }
+    final chosen = await showModalBottomSheet<Package>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => Padding(
+        padding: const EdgeInsets.all(AppSpacing.xl),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              l10n?.buyPackageTitle ?? 'Buy a package',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 8),
+            for (final package in packages)
+              Card(
+                child: ListTile(
+                  title: Text(package.name),
+                  subtitle: Text(
+                    l10n?.buyPackageDays(package.days) ??
+                        '${package.days} days',
+                  ),
+                  trailing: Text(currency.format(package.priceCents / 100)),
+                  onTap: () => Navigator.of(context).pop(package),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+    if (chosen == null || !mounted) return;
+    try {
+      await ref.read(moneyRepositoryProvider).buyPackage(
+            workspace.id,
+            chosen.id,
+          );
+    } catch (e, st) {
+      debugPrint('buy package failed: $e\n$st');
+      TraceLogger.instance
+          .error('money', 'buy package failed', error: e, stackTrace: st);
+      if (!mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
+      return;
+    }
+    if (!mounted) return;
+    AppSnack.success(
+      context,
+      l10n?.buyPackageDone ?? 'Days added — enjoy the extra time.',
+    );
+    // The bill (new charge + higher cap) and every booking surface (the
+    // guard now allows more) must refresh.
+    ref.invalidate(myStatementProvider);
+    ref.invalidate(myLedgerProvider);
+    invalidateBookingData(ref);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -554,6 +632,17 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 l10n?.quotaRequestButton ?? 'Request extra half-days',
               ),
             ),
+            // Buy-a-package entry point (0042): only for members the owner
+            // put on the package plan.
+            if (member?.overagePolicy == OveragePolicy.package) ...[
+              const SizedBox(height: 8),
+              FilledButton.tonalIcon(
+                key: const ValueKey('buy-package-button'),
+                onPressed: () => _buyPackageSheet(currency),
+                icon: const Icon(Icons.shopping_bag_outlined),
+                label: Text(l10n?.buyPackageButton ?? 'Buy a package'),
+              ),
+            ],
             // Consumption entry points follow the services feature (#146).
             if (features.contains(WorkspaceFeature.services)) ...[
               const SizedBox(height: 8),

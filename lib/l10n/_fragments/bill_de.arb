@@ -17,5 +17,6 @@
   "entitlementDaysLeft": "Noch {left} Tage",
   "entitlementBlockedFull": "Du hast diesen Monat alle Tage aufgebraucht. Bitte eine Administratorin um mehr oder beantrage unten zusätzliche Halbtage.",
   "entitlementPaygRate": "Tage über deinen Tarif hinaus kosten je {rate}.",
-  "entitlementPackageFull": "Du hast diesen Monat alle Tage aufgebraucht. Kaufe ein Paket, um weiter zu buchen."
+  "entitlementPackageFull": "Du hast diesen Monat alle Tage aufgebraucht. Kaufe ein Paket, um weiter zu buchen.",
+  "billPackages": "Tagespakete"
 }

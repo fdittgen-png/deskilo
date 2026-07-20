@@ -250,6 +250,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vous avez utilisé tous vos jours ce mois-ci. Achetez un forfait pour continuer à réserver.';
 
   @override
+  String get billPackages => 'Forfaits de jours';
+
+  @override
   String get billPdfTitle => 'Facture mensuelle';
 
   @override
@@ -330,6 +333,47 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get overagePolicyPackage => 'Exiger l\'achat d\'un forfait';
+
+  @override
+  String get billingPackages => 'Forfaits de jours';
+
+  @override
+  String get billingPackagesHint =>
+      'Les membres au plan forfait les achètent quand leurs jours sont épuisés.';
+
+  @override
+  String billingPackageSummary(int days, String price) {
+    return '$days jours · $price';
+  }
+
+  @override
+  String get billingPackageName => 'Nom';
+
+  @override
+  String get billingPackageDays => 'Jours';
+
+  @override
+  String get billingPackagePrice => 'Prix';
+
+  @override
+  String get billingAddPackage => 'Ajouter un forfait';
+
+  @override
+  String get buyPackageButton => 'Acheter un forfait';
+
+  @override
+  String get buyPackageTitle => 'Acheter un forfait';
+
+  @override
+  String buyPackageDays(int days) {
+    return '$days jours';
+  }
+
+  @override
+  String get buyPackageNone => 'Aucun forfait disponible pour l\'instant.';
+
+  @override
+  String get buyPackageDone => 'Jours ajoutés — profitez-en.';
 
   @override
   String get calendarMineTab => 'Les miennes';

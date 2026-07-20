@@ -8,6 +8,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/fee_band.dart';
+import '../../domain/package.dart';
 import '../../domain/subscription_levels.dart';
 import '../../providers/money_providers.dart';
 
@@ -22,13 +23,19 @@ class BillingScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final bandsAsync = ref.watch(feeBandsProvider);
     final levelsAsync = ref.watch(subscriptionLevelsProvider);
+    final packagesAsync = ref.watch(allPackagesProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.billingTitle ?? 'Billing')),
-      body: switch ((bandsAsync, levelsAsync)) {
-        (AsyncData(value: final bands), AsyncData(value: final levels)) =>
-          _BillingEditor(bands: bands, levels: levels),
-        (AsyncError(), _) || (_, AsyncError()) => Center(
+      body: switch ((bandsAsync, levelsAsync, packagesAsync)) {
+        (
+          AsyncData(value: final bands),
+          AsyncData(value: final levels),
+          AsyncData(value: final packages)
+        ) =>
+          _BillingEditor(bands: bands, levels: levels, packages: packages),
+        (AsyncError(), _, _) || (_, AsyncError(), _) || (_, _, AsyncError()) =>
+          Center(
             child: Text(
               l10n?.workspaceGenericError ??
                   'Something went wrong. Please try again.',
@@ -52,10 +59,15 @@ class _BandDraft {
 }
 
 class _BillingEditor extends ConsumerStatefulWidget {
-  const _BillingEditor({required this.bands, required this.levels});
+  const _BillingEditor({
+    required this.bands,
+    required this.levels,
+    required this.packages,
+  });
 
   final List<FeeBand> bands;
   final SubscriptionLevels levels;
+  final List<Package> packages;
 
   @override
   ConsumerState<_BillingEditor> createState() => _BillingEditorState();
@@ -68,6 +80,11 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
   late bool _allowCustom;
   final _newLevel = TextEditingController();
   bool _bandsInvalid = false;
+
+  // New-package form (0042).
+  final _pkgName = TextEditingController();
+  final _pkgDays = TextEditingController();
+  final _pkgPrice = TextEditingController();
 
   @override
   void initState() {
@@ -90,6 +107,9 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
   @override
   void dispose() {
     _newLevel.dispose();
+    _pkgName.dispose();
+    _pkgDays.dispose();
+    _pkgPrice.dispose();
     super.dispose();
   }
 
@@ -256,6 +276,56 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     ref.invalidate(subscriptionLevelsProvider);
     if (!mounted) return;
     _showSaved();
+  }
+
+  // ---- packages (0042) ----------------------------------------------------
+
+  Future<void> _addPackage() async {
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    final name = _pkgName.text.trim();
+    final days = int.tryParse(_pkgDays.text.trim());
+    final price = _parseCents(_pkgPrice.text);
+    if (name.isEmpty || days == null || days < 1 || price == null) return;
+    try {
+      await ref.read(moneyRepositoryProvider).createPackage(
+            workspace.id,
+            name: name,
+            days: days,
+            priceCents: price,
+          );
+    } catch (e, st) {
+      debugPrint('package create failed: $e\n$st');
+      TraceLogger.instance
+          .error('money', 'package create failed', error: e, stackTrace: st);
+      if (!mounted) return;
+      await _showError();
+      return;
+    }
+    _pkgName.clear();
+    _pkgDays.clear();
+    _pkgPrice.clear();
+    ref.invalidate(allPackagesProvider);
+    ref.invalidate(packagesProvider);
+    if (!mounted) return;
+    _showSaved();
+  }
+
+  Future<void> _togglePackage(Package package) async {
+    try {
+      await ref
+          .read(moneyRepositoryProvider)
+          .updatePackage(package.id, active: !package.active);
+    } catch (e, st) {
+      debugPrint('package toggle failed: $e\n$st');
+      TraceLogger.instance
+          .error('money', 'package toggle failed', error: e, stackTrace: st);
+      if (!mounted) return;
+      await _showError();
+      return;
+    }
+    ref.invalidate(allPackagesProvider);
+    ref.invalidate(packagesProvider);
   }
 
   // ---- build --------------------------------------------------------------
@@ -428,6 +498,73 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
             onPressed: _saveLevels,
             child: Text(l10n?.commonSave ?? 'Save'),
           ),
+        ),
+        const Divider(height: 32),
+        Text(
+          l10n?.billingPackages ?? 'Day packages',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        Text(
+          l10n?.billingPackagesHint ??
+              'Members on the package plan buy these when their days run '
+                  'out.',
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+        const SizedBox(height: 8),
+        for (final package in widget.packages)
+          ListTile(
+            key: ValueKey('package-${package.id}'),
+            contentPadding: EdgeInsets.zero,
+            title: Text(package.name),
+            subtitle: Text(
+              l10n?.billingPackageSummary(package.days, _money(package.priceCents)) ??
+                  '${package.days} days · ${_money(package.priceCents)}',
+            ),
+            trailing: Switch(
+              value: package.active,
+              onChanged: (_) => _togglePackage(package),
+            ),
+          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 3,
+              child: TextField(
+                controller: _pkgName,
+                decoration: InputDecoration(
+                  labelText: l10n?.billingPackageName ?? 'Name',
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: TextField(
+                controller: _pkgDays,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: l10n?.billingPackageDays ?? 'Days',
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              flex: 2,
+              child: TextField(
+                controller: _pkgPrice,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                decoration: InputDecoration(
+                  labelText: l10n?.billingPackagePrice ?? 'Price',
+                ),
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.add_circle_outline),
+              tooltip: l10n?.billingAddPackage ?? 'Add package',
+              onPressed: _addPackage,
+            ),
+          ],
         ),
       ],
     );

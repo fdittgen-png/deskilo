@@ -250,6 +250,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Hai usato tutti i tuoi giorni questo mese. Acquista un pacchetto per continuare a prenotare.';
 
   @override
+  String get billPackages => 'Pacchetti di giorni';
+
+  @override
   String get billPdfTitle => 'Fattura mensile';
 
   @override
@@ -331,6 +334,47 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get overagePolicyPackage => 'Richiedi l\'acquisto di un pacchetto';
+
+  @override
+  String get billingPackages => 'Pacchetti di giorni';
+
+  @override
+  String get billingPackagesHint =>
+      'I membri con piano a pacchetto li acquistano quando finiscono i giorni.';
+
+  @override
+  String billingPackageSummary(int days, String price) {
+    return '$days giorni · $price';
+  }
+
+  @override
+  String get billingPackageName => 'Nome';
+
+  @override
+  String get billingPackageDays => 'Giorni';
+
+  @override
+  String get billingPackagePrice => 'Prezzo';
+
+  @override
+  String get billingAddPackage => 'Aggiungi pacchetto';
+
+  @override
+  String get buyPackageButton => 'Acquista un pacchetto';
+
+  @override
+  String get buyPackageTitle => 'Acquista un pacchetto';
+
+  @override
+  String buyPackageDays(int days) {
+    return '$days giorni';
+  }
+
+  @override
+  String get buyPackageNone => 'Nessun pacchetto disponibile al momento.';
+
+  @override
+  String get buyPackageDone => 'Giorni aggiunti — goditi il tempo extra.';
 
   @override
   String get calendarMineTab => 'Le mie';
