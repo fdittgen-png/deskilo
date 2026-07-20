@@ -77,9 +77,6 @@ FloorPlanPainter planPainter(WidgetTester tester) {
   return paint.painter! as FloorPlanPainter;
 }
 
-bool chipSelected(WidgetTester tester, String name) =>
-    tester.widget<ChoiceChip>(find.widgetWithText(ChoiceChip, name)).selected;
-
 void main() {
   testWidgets(
       'tapping a seat reservation opens the detail sheet with the full '
@@ -153,9 +150,9 @@ void main() {
     await tester.tap(find.text('Show on plan'));
     await tester.pumpAndSettle();
 
-    // Plan tab, switched to the seat's level (not the stored default) …
-    expect(chipSelected(tester, 'Ground floor'), isTrue);
-    expect(chipSelected(tester, 'First floor'), isFalse);
+    // Plan tab, switched to the seat's level (not the stored default) — the
+    // level picker shows Ground floor …
+    expect(find.text('Ground floor'), findsOneWidget);
     expect(planPainter(tester).plan.levelId, 'level-1');
     // … with the reserved seat ringed on the canvas …
     expect(planPainter(tester).highlightedSeatId, 'seat-4');

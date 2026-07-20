@@ -1045,6 +1045,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get planNowButton => 'Ahora';
 
   @override
+  String get planLevelTooltip => 'Planta';
+
+  @override
   String get planReserveButton => 'Reservar';
 
   @override

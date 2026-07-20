@@ -49,5 +49,6 @@
   "planMorningChip": "Mattina",
   "planAfternoonChip": "Pomeriggio",
   "planFullDayChip": "Giornata",
-  "planHalfDayError": "Qui le prenotazioni sono per mezza giornata."
+  "planHalfDayError": "Qui le prenotazioni sono per mezza giornata.",
+  "planLevelTooltip": "Piano"
 }

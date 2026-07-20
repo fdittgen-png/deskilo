@@ -78,14 +78,16 @@ void expectTouchTargets(WidgetTester tester, {required String surface}) {
 
 void main() {
   testWidgets(
-      'Plan tab: level chips, half-day chips and the view toggle all meet '
-      'the touch-target floors', (tester) async {
+      'Plan tab: half-day chips, the level picker and the view toggle all '
+      'meet the touch-target floors', (tester) async {
     await pumpApp(tester);
     await switchToPlanTab(tester);
 
-    // The audit is only meaningful when the compact controls are there.
-    expect(find.byType(ChoiceChip), findsAtLeastNWidgets(5));
+    // The half-day window chips are ChoiceChips; the level picker is now a
+    // compact dropdown (was inline chips) — both must be reachable.
+    expect(find.byType(ChoiceChip), findsAtLeastNWidgets(3));
     expect(find.byKey(const ValueKey('plan-view-switch')), findsOneWidget);
+    expect(find.byKey(const ValueKey('plan-level-menu')), findsOneWidget);
 
     expectTouchTargets(tester, surface: 'plan');
   });

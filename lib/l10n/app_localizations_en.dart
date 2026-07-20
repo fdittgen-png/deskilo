@@ -1040,6 +1040,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get planNowButton => 'Now';
 
   @override
+  String get planLevelTooltip => 'Level';
+
+  @override
   String get planReserveButton => 'Reserve';
 
   @override

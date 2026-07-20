@@ -347,6 +347,7 @@
   "planAfternoonChip": "Pomeriggio",
   "planFullDayChip": "Giornata",
   "planHalfDayError": "Qui le prenotazioni sono per mezza giornata.",
+  "planLevelTooltip": "Piano",
   "whatsappTitle": "WhatsApp",
   "whatsappNotShared": "Non condiviso",
   "whatsappFieldLabel": "Numero WhatsApp",

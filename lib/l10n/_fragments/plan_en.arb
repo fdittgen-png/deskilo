@@ -92,6 +92,10 @@
   "@planNowButton": {
     "description": "Time-scroller button snapping back to live occupancy"
   },
+  "planLevelTooltip": "Level",
+  "@planLevelTooltip": {
+    "description": "Tooltip of the compact level-picker dropdown in the plan header"
+  },
   "planReserveButton": "Reserve",
   "@planReserveButton": {
     "description": "Confirm button when booking a future slot from the scroller"

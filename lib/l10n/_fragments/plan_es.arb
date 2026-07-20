@@ -49,5 +49,6 @@
   "planMorningChip": "Mañana",
   "planAfternoonChip": "Tarde",
   "planFullDayChip": "Día",
-  "planHalfDayError": "Aquí las reservas son por media jornada."
+  "planHalfDayError": "Aquí las reservas son por media jornada.",
+  "planLevelTooltip": "Planta"
 }

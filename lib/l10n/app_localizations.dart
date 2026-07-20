@@ -1994,6 +1994,12 @@ abstract class AppLocalizations {
   /// **'Now'**
   String get planNowButton;
 
+  /// Tooltip of the compact level-picker dropdown in the plan header
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get planLevelTooltip;
+
   /// Confirm button when booking a future slot from the scroller
   ///
   /// In en, this message translates to:

@@ -50,24 +50,22 @@ String canvasLevelId(WidgetTester tester) {
   return (paint.painter! as FloorPlanPainter).plan.levelId;
 }
 
-bool chipSelected(WidgetTester tester, String name) =>
-    tester.widget<ChoiceChip>(find.widgetWithText(ChoiceChip, name)).selected;
-
 void main() {
-  testWidgets('tapping a level chip switches the plan and persists it',
+  testWidgets('the level dropdown switches the plan and persists it',
       (tester) async {
     final env = await pumpTwoLevelPlan(tester);
 
-    // Both levels are chips; the first level is selected by default.
-    expect(chipSelected(tester, 'Ground floor'), isTrue);
-    expect(chipSelected(tester, 'First floor'), isFalse);
+    // The picker shows the current level; the first is selected by default.
+    expect(find.text('Ground floor'), findsOneWidget);
     expect(canvasLevelId(tester), 'level-1');
 
-    await tester.tap(find.widgetWithText(ChoiceChip, 'First floor'));
+    // Open the menu and pick the other floor.
+    await tester.tap(find.byKey(const ValueKey('plan-level-menu')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('First floor').last);
     await tester.pumpAndSettle();
 
-    expect(chipSelected(tester, 'First floor'), isTrue);
-    expect(chipSelected(tester, 'Ground floor'), isFalse);
+    expect(find.text('First floor'), findsOneWidget);
     expect(canvasLevelId(tester), 'level-upper');
     expect(env.store.values['ws-1'], 'level-upper');
   });
@@ -76,7 +74,7 @@ void main() {
       (tester) async {
     await pumpTwoLevelPlan(tester, storedLevelId: 'level-upper');
 
-    expect(chipSelected(tester, 'First floor'), isTrue);
+    expect(find.text('First floor'), findsOneWidget);
     expect(canvasLevelId(tester), 'level-upper');
   });
 
@@ -84,11 +82,11 @@ void main() {
       (tester) async {
     await pumpTwoLevelPlan(tester, storedLevelId: 'level-gone');
 
-    expect(chipSelected(tester, 'Ground floor'), isTrue);
+    expect(find.text('Ground floor'), findsOneWidget);
     expect(canvasLevelId(tester), 'level-1');
   });
 
-  testWidgets('a single level renders no chips', (tester) async {
+  testWidgets('a single level renders no level picker', (tester) async {
     final plans = FakeFloorPlanRepository()..seedSmallPlan();
     await tester.pumpWidget(
       ProviderScope(
@@ -99,7 +97,7 @@ void main() {
     await tester.pumpAndSettle();
     await switchToPlanTab(tester);
 
-    expect(find.byType(ChoiceChip), findsNothing);
+    expect(find.byKey(const ValueKey('plan-level-menu')), findsNothing);
     expect(canvasLevelId(tester), 'level-1');
   });
 
@@ -117,7 +115,7 @@ void main() {
     // and the plan canvas still renders (and its controls are reachable).
     expect(find.byType(VerticalDivider), findsOneWidget);
     expect(find.byKey(const ValueKey('live-plan-canvas')), findsOneWidget);
-    expect(find.widgetWithText(ChoiceChip, 'Ground floor'), findsOneWidget);
+    expect(find.byKey(const ValueKey('plan-level-menu')), findsOneWidget);
   });
 
   testWidgets('portrait keeps the single-column layout (no split)',
