@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart' show setEquals;
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/office_colors.dart';
 import '../../../../core/theme/seat_state_colors.dart';
+import '../../../../core/theme/status_colors.dart';
 import '../../domain/floor_plan.dart';
 import '../../domain/grid_geometry.dart';
 import '../../domain/seat.dart';
@@ -24,6 +26,7 @@ class FloorPlanPainter extends CustomPainter {
     this.seatLabels,
     this.highlightedSeatId,
     this.deskOpacity = 1,
+    this.onlineSeatIds = const {},
     this.marquee,
     this.marqueeValid = true,
     this.selection,
@@ -59,6 +62,10 @@ class FloorPlanPainter extends CustomPainter {
   /// translucent so a background photo shows through. The desk border stays
   /// opaque so the table is still locatable over the image.
   final double deskOpacity;
+
+  /// Seat ids whose occupant is currently online (presence heartbeat): the
+  /// seat avatar gets a green online dot. Live mode only.
+  final Set<String> onlineSeatIds;
 
   /// In-progress drag rectangle (grid cells) while drawing a new element.
   final GridRect? marquee;
@@ -210,8 +217,16 @@ class FloorPlanPainter extends CustomPainter {
       if (state != null && label.isNotEmpty) {
         // Live occupancy: the occupant becomes an avatar right on the
         // seat — one glance answers "who's here". This is the plan's
-        // signature move.
-        _occupantAvatar(canvas, rect, label, accent);
+        // signature move. A check badge marks someone physically checked
+        // in; a green dot marks them online (presence).
+        _occupantAvatar(
+          canvas,
+          rect,
+          label,
+          accent,
+          checkedIn: state == SeatState.occupied,
+          online: onlineSeatIds.contains(seat.id),
+        );
       } else if (state == null) {
         // Editor mode: name + orientation so the owner can place seats.
         _orientationArrow(canvas, seat, rect, accent);
@@ -303,7 +318,14 @@ class FloorPlanPainter extends CustomPainter {
 
   /// Occupant chip drawn on a taken seat: a filled disc in the state
   /// colour with the occupant's initial — the plan's "who's here" glance.
-  void _occupantAvatar(Canvas canvas, Rect rect, String name, Color accent) {
+  void _occupantAvatar(
+    Canvas canvas,
+    Rect rect,
+    String name,
+    Color accent, {
+    bool checkedIn = false,
+    bool online = false,
+  }) {
     final r = (rect.shortestSide * 0.34).clamp(8.0, 16.0);
     final center = rect.center;
     canvas.drawCircle(center, r, Paint()..color = accent);
@@ -326,6 +348,43 @@ class FloorPlanPainter extends CustomPainter {
       canvas,
       center - Offset(painter.width / 2, painter.height / 2),
     );
+
+    // Corner badges — a small radius keeps them legible on tiny seats.
+    final badgeR = (r * 0.42).clamp(4.0, 7.0);
+    final diag = r * 0.72; // offset toward the corner along the 45° diagonal
+
+    // Online (top-right): a green dot with a white ring, the same presence
+    // language as the member directory.
+    if (online) {
+      final at = center + Offset(diag, -diag);
+      canvas.drawCircle(at, badgeR + 1.4, Paint()..color = Colors.white);
+      canvas.drawCircle(
+        at,
+        badgeR,
+        Paint()..color = AppStatusColors.successOf(brightness),
+      );
+    }
+
+    // Checked in (bottom-right): a white-ringed accent disc with a check —
+    // "physically here", distinct from a mere reservation.
+    if (checkedIn) {
+      final at = center + Offset(diag, diag);
+      canvas.drawCircle(at, badgeR + 1.4, Paint()..color = Colors.white);
+      canvas.drawCircle(at, badgeR, Paint()..color = accent);
+      final check = Path()
+        ..moveTo(at.dx - badgeR * 0.45, at.dy)
+        ..lineTo(at.dx - badgeR * 0.1, at.dy + badgeR * 0.4)
+        ..lineTo(at.dx + badgeR * 0.5, at.dy - badgeR * 0.4);
+      canvas.drawPath(
+        check,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = badgeR * 0.32
+          ..strokeCap = StrokeCap.round
+          ..strokeJoin = StrokeJoin.round
+          ..color = Colors.white,
+      );
+    }
   }
 
   void _orientationArrow(Canvas canvas, Seat seat, Rect rect, Color color) {
@@ -361,5 +420,6 @@ class FloorPlanPainter extends CustomPainter {
       oldDelegate.seatLabels != seatLabels ||
       oldDelegate.highlightedSeatId != highlightedSeatId ||
       oldDelegate.deskOpacity != deskOpacity ||
+      !setEquals(oldDelegate.onlineSeatIds, onlineSeatIds) ||
       oldDelegate.cellSize != cellSize;
 }
