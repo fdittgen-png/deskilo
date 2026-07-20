@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -80,22 +80,20 @@ class MembersScreen extends ConsumerWidget {
       ),
     );
     if (pct == null || pct == member.subscriptionPct) return;
+    if (!context.mounted) return;
 
-    try {
-      await ref
-          .read(workspaceRepositoryProvider)
-          .updateMemberSubscription(member.id, pct);
-    } catch (e, st) {
-      debugPrint('subscription update failed: $e\n$st');
-      TraceLogger.instance.error(
-          'workspace', 'member subscription update failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'member subscription update failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+          await ref
+              .read(workspaceRepositoryProvider)
+              .updateMemberSubscription(member.id, pct);
+      },
+    )) {
       return;
     }
     ref.invalidate(workspaceMembersProvider);
@@ -149,22 +147,20 @@ class MembersScreen extends ConsumerWidget {
       ),
     );
     if (chosen == null || chosen == member.overagePolicy) return;
+    if (!context.mounted) return;
 
-    try {
-      await ref
-          .read(workspaceRepositoryProvider)
-          .updateMemberOveragePolicy(member.id, chosen);
-    } catch (e, st) {
-      debugPrint('overage policy update failed: $e\n$st');
-      TraceLogger.instance.error(
-          'workspace', 'member overage policy update failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'member overage policy update failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+          await ref
+              .read(workspaceRepositoryProvider)
+              .updateMemberOveragePolicy(member.id, chosen);
+      },
+    )) {
       return;
     }
     ref.invalidate(workspaceMembersProvider);
@@ -182,23 +178,20 @@ class MembersScreen extends ConsumerWidget {
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     final makeAdmin = !member.isAdmin;
-    try {
-      await ref.read(workspaceRepositoryProvider).requestRoleChange(
-            workspace.id,
-            memberId: member.id,
-            makeAdmin: makeAdmin,
-          );
-    } catch (e, st) {
-      debugPrint('role change request failed: $e\n$st');
-      TraceLogger.instance.error(
-          'workspace', 'role change request failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'role change request failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+          await ref.read(workspaceRepositoryProvider).requestRoleChange(
+                workspace.id,
+                memberId: member.id,
+                makeAdmin: makeAdmin,
+              );
+      },
+    )) {
       return;
     }
     ref.invalidate(eventsProvider);

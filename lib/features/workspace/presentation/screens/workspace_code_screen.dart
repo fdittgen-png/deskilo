@@ -6,7 +6,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -65,22 +65,18 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
         ],
       ),
     );
-    if (code == null || code.isEmpty) return;
-    try {
-      await ref
+    if (code == null || code.isEmpty || !context.mounted) return;
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'set workspace code failed',
+      errorText: l10n?.workspaceCodeRejected ??
+          'That ID was rejected — it must be 4–20 letters or digits '
+              'and not already taken.',
+      action: () => ref
           .read(workspaceRepositoryProvider)
-          .setWorkspaceCode(workspace.id, code);
-    } catch (e, st) {
-      debugPrint('set workspace code failed: $e\n$st');
-      TraceLogger.instance.error('workspace', 'set workspace code failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceCodeRejected ??
-            'That ID was rejected — it must be 4–20 letters or digits '
-                'and not already taken.',
-      );
+          .setWorkspaceCode(workspace.id, code),
+    )) {
       return;
     }
     ref.invalidate(myWorkspacesProvider);
@@ -94,26 +90,25 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
     String payload,
   ) async {
     final l10n = AppLocalizations.of(context);
-    try {
-      final bytes = await buildQrPng(payload);
-      await SharePlus.instance.share(
-        ShareParams(
-          files: [
-            XFile.fromData(bytes, mimeType: 'image/png'),
-          ],
-          fileNameOverrides: ['deskilo-$code.png'],
-        ),
-      );
-    } catch (e, st) {
-      debugPrint('QR share failed: $e\n$st');
-      TraceLogger.instance.error('workspace', 'QR share failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'QR share failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+          final bytes = await buildQrPng(payload);
+          await SharePlus.instance.share(
+            ShareParams(
+              files: [
+                XFile.fromData(bytes, mimeType: 'image/png'),
+              ],
+              fileNameOverrides: ['deskilo-$code.png'],
+            ),
+          );
+      },
+    )) {
+      return;
     }
   }
 
