@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_radius.dart';
-import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
@@ -113,7 +113,7 @@ class BillView extends StatelessWidget {
 /// clipboard, the PayPal.me link opens externally, the reference hint is
 /// plain text. Purely informational — recording a payment stays the
 /// separate spec §8 confirmation flow.
-class _HowToPayCard extends StatelessWidget {
+class _HowToPayCard extends ConsumerWidget {
   const _HowToPayCard({required this.instructions, this.onPayOnline});
 
   final PaymentInstructions instructions;
@@ -122,9 +122,31 @@ class _HowToPayCard extends StatelessWidget {
   final VoidCallback? onPayOnline;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final paypalUri = instructions.paypalMeUri;
+    // (field, icon, brand label) of the #192 copy-to-clipboard methods —
+    // one data row per method instead of three pasted tiles.
+    final copyMethods = [
+      (
+        'Wero',
+        instructions.wero.trim(),
+        Icons.smartphone_outlined,
+        l10n?.paymentMethodWero ?? 'Wero',
+      ),
+      (
+        'Lydia',
+        instructions.lydia.trim(),
+        Icons.smartphone_outlined,
+        l10n?.paymentMethodLydia ?? 'Lydia',
+      ),
+      (
+        'Wise',
+        instructions.wise.trim(),
+        Icons.alternate_email,
+        l10n?.paymentMethodWise ?? 'Wise',
+      ),
+    ];
     return Card(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -166,50 +188,22 @@ class _HowToPayCard extends StatelessWidget {
                 // Brand name — reuses the #154 method label key.
                 title: Text(l10n?.paymentMethodPaypal ?? 'PayPal'),
                 subtitle: Text(paypalUri.toString()),
-                onTap: () async {
-                  try {
-                    await launchUrl(
-                      paypalUri,
-                      mode: LaunchMode.externalApplication,
-                    );
-                  } catch (e, st) {
-                    debugPrint('paypal launch failed: $e\n$st');
-                    TraceLogger.instance.error(
-                        'money', 'paypal launch failed',
-                        error: e, stackTrace: st);
-                  }
-                },
+                // Launch failures are traced inside the shared link seam.
+                onTap: () => ref.read(linkLauncherProvider)(paypalUri),
               ),
             // #192 — Wero / Lydia / Wise: phone number, phone/username,
             // Wisetag or link. All copy to the clipboard like the IBAN;
             // the titles reuse the #154 method labels (brand names).
-            if (instructions.wero.trim().isNotEmpty)
-              _CopyTile(
-                key: const Key('howToPayWero'),
-                icon: Icons.smartphone_outlined,
-                title: l10n?.paymentMethodWero ?? 'Wero',
-                value: instructions.wero.trim(),
-                copiedMessage: l10n?.paymentInstructionsValueCopied ??
-                    'Copied to clipboard.',
-              ),
-            if (instructions.lydia.trim().isNotEmpty)
-              _CopyTile(
-                key: const Key('howToPayLydia'),
-                icon: Icons.smartphone_outlined,
-                title: l10n?.paymentMethodLydia ?? 'Lydia',
-                value: instructions.lydia.trim(),
-                copiedMessage: l10n?.paymentInstructionsValueCopied ??
-                    'Copied to clipboard.',
-              ),
-            if (instructions.wise.trim().isNotEmpty)
-              _CopyTile(
-                key: const Key('howToPayWise'),
-                icon: Icons.alternate_email,
-                title: l10n?.paymentMethodWise ?? 'Wise',
-                value: instructions.wise.trim(),
-                copiedMessage: l10n?.paymentInstructionsValueCopied ??
-                    'Copied to clipboard.',
-              ),
+            for (final (keySuffix, value, icon, title) in copyMethods)
+              if (value.isNotEmpty)
+                _CopyTile(
+                  key: Key('howToPay$keySuffix'),
+                  icon: icon,
+                  title: title,
+                  value: value,
+                  copiedMessage: l10n?.paymentInstructionsValueCopied ??
+                      'Copied to clipboard.',
+                ),
             if (instructions.reference.trim().isNotEmpty)
               ListTile(
                 key: const Key('howToPayReference'),

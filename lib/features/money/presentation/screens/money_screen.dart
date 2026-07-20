@@ -4,11 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/files/file_saver.dart';
+import '../../../../core/format/cents.dart';
+import '../../../../core/links/link_launcher.dart';
+import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -111,52 +113,53 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       outstanding: l10n?.billOutstanding ?? 'Outstanding',
     );
 
-    try {
-      final sections = buildBillSections(
-        period: statement.period,
-        memberId: member.id,
-        ledger: ledger,
-        pendingEvents: pendingEvents,
-      );
-      // Embedded Roboto: base-14 PDF fonts cannot encode '€'/'−' (#133).
-      final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
-      final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
-      final bytes = await buildBillPdf(
-        statement: statement,
-        sections: sections,
-        currencyCode: workspace.currencyCode,
-        workspaceName: workspace.name,
-        memberName: memberName,
-        periodLabel: monthLabel,
-        strings: strings,
-        baseFont: pw.Font.ttf(regular),
-        boldFont: pw.Font.ttf(bold),
-        locale: locale,
-      );
-      final path = await save(
-        bytes: bytes,
-        fileName: 'deskilo-bill-${statement.period}.pdf',
-      );
-      if (!context.mounted) return;
-      if (path == null) {
-        AppSnack.error(context, l10n?.commonSaveFailed ?? 'Could not save.');
-      } else {
-        AppSnack.success(
-          context,
-          l10n?.commonSavedTo(path) ?? 'Saved to $path',
+    await runGuarded(
+      context,
+      domain: 'money',
+      message: 'bill PDF export failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        final sections = buildBillSections(
+          period: statement.period,
+          memberId: member.id,
+          ledger: ledger,
+          pendingEvents: pendingEvents,
         );
-      }
-    } catch (e, st) {
-      debugPrint('bill PDF export failed: $e\n$st');
-      TraceLogger.instance
-          .error('money', 'bill PDF export failed', error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
-    }
+        // Embedded Roboto: base-14 PDF fonts cannot encode '€'/'−' (#133).
+        final regular =
+            await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
+        final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
+        final bytes = await buildBillPdf(
+          statement: statement,
+          sections: sections,
+          currencyCode: workspace.currencyCode,
+          workspaceName: workspace.name,
+          memberName: memberName,
+          periodLabel: monthLabel,
+          strings: strings,
+          baseFont: pw.Font.ttf(regular),
+          boldFont: pw.Font.ttf(bold),
+          locale: locale,
+        );
+        final path = await save(
+          bytes: bytes,
+          fileName: 'deskilo-bill-${statement.period}.pdf',
+        );
+        if (!context.mounted) return;
+        if (path == null) {
+          AppSnack.error(
+            context,
+            l10n?.commonSaveFailed ?? 'Could not save.',
+          );
+        } else {
+          AppSnack.success(
+            context,
+            l10n?.commonSavedTo(path) ?? 'Saved to $path',
+          );
+        }
+      },
+    );
   }
 
   Future<void> _recordPaymentSheet(NumberFormat currency) async {
@@ -176,21 +179,9 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       context: context,
       isScrollControlled: true,
       builder: (context) => StatefulBuilder(
-        builder: (context, setSheetState) => Padding(
-          padding: EdgeInsets.only(
-            left: AppSpacing.xl,
-            right: AppSpacing.xl,
-            top: AppSpacing.xl,
-            bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                l10n?.moneyRecordPayment ?? 'Record a payment',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
+        builder: (context, setSheetState) => SheetShell(
+          title: l10n?.moneyRecordPayment ?? 'Record a payment',
+          children: [
               const SizedBox(height: 12),
               TextField(
                 controller: amount,
@@ -236,34 +227,28 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                   l10n?.moneySubmitPayment ?? 'Submit for confirmation',
                 ),
               ),
-            ],
-          ),
+          ],
         ),
       ),
     );
-    if (submitted != true) return;
+    if (submitted != true || !context.mounted) return;
 
-    final parsed =
-        double.tryParse(amount.text.trim().replaceAll(',', '.'));
-    if (parsed == null || parsed <= 0) return;
-    try {
-      await ref.read(moneyRepositoryProvider).recordPayment(
+    final cents = parseCentsInput(amount.text);
+    if (cents == null || cents <= 0) return;
+    if (!await runGuarded(
+      context,
+      domain: 'money',
+      message: 'record payment failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => ref.read(moneyRepositoryProvider).recordPayment(
             workspaceId: workspace.id,
             memberId: member.id,
-            amountCents: (parsed * 100).round(),
+            amountCents: cents,
             note: note.text.trim(),
             method: method,
-          );
-    } catch (e, st) {
-      debugPrint('record payment failed: $e\n$st');
-      TraceLogger.instance
-          .error('money', 'record payment failed', error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
+          ),
+    )) {
       return;
     }
     if (!context.mounted) return;
@@ -295,22 +280,10 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final submitted = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      builder: (context) => Padding(
-        padding: EdgeInsets.only(
-          left: AppSpacing.xl,
-          right: AppSpacing.xl,
-          top: AppSpacing.xl,
-          bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
-        ),
-        child: StatefulBuilder(
-          builder: (context, setSheetState) => Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                l10n?.moneySubmitExpense ?? 'Submit an expense',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
+      builder: (context) => StatefulBuilder(
+        builder: (context, setSheetState) => SheetShell(
+          title: l10n?.moneySubmitExpense ?? 'Submit an expense',
+          children: [
               const SizedBox(height: 12),
               TextField(
                 controller: amount,
@@ -352,33 +325,27 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                   l10n?.moneySubmitPayment ?? 'Submit for confirmation',
                 ),
               ),
-            ],
-          ),
+          ],
         ),
       ),
     );
-    if (submitted != true) return;
+    if (submitted != true || !context.mounted) return;
 
-    final parsed =
-        double.tryParse(amount.text.trim().replaceAll(',', '.'));
-    if (parsed == null || parsed <= 0) return;
-    try {
-      await ref.read(moneyRepositoryProvider).submitExpense(
+    final cents = parseCentsInput(amount.text);
+    if (cents == null || cents <= 0) return;
+    if (!await runGuarded(
+      context,
+      domain: 'money',
+      message: 'submit expense failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => ref.read(moneyRepositoryProvider).submitExpense(
             workspaceId: workspace.id,
-            amountCents: (parsed * 100).round(),
+            amountCents: cents,
             category: category,
             description: description.text.trim(),
-          );
-    } catch (e, st) {
-      debugPrint('submit expense failed: $e\n$st');
-      TraceLogger.instance
-          .error('money', 'submit expense failed', error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
+          ),
+    )) {
       return;
     }
     if (!context.mounted) return;
@@ -402,21 +369,9 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final submitted = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      builder: (context) => Padding(
-        padding: EdgeInsets.only(
-          left: AppSpacing.xl,
-          right: AppSpacing.xl,
-          top: AppSpacing.xl,
-          bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              l10n?.quotaRequestTitle ?? 'Request extra half-days',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+      builder: (context) => SheetShell(
+        title: l10n?.quotaRequestTitle ?? 'Request extra half-days',
+        children: [
             const SizedBox(height: 8),
             Text(
               l10n?.quotaRequestExplainer(period) ??
@@ -442,30 +397,25 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 l10n?.moneySubmitPayment ?? 'Submit for confirmation',
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
-    if (submitted != true) return;
+    if (submitted != true || !mounted) return;
 
     final halfDays = int.tryParse(count.text.trim());
     if (halfDays == null || halfDays < 1) return;
-    try {
-      await ref.read(eventRepositoryProvider).requestQuotaExtension(
+    if (!await runGuarded(
+      context,
+      domain: 'money',
+      message: 'quota request failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => ref.read(eventRepositoryProvider).requestQuotaExtension(
             workspace.id,
             period: period,
             halfDays: halfDays,
-          );
-    } catch (e, st) {
-      debugPrint('quota request failed: $e\n$st');
-      TraceLogger.instance
-          .error('money', 'quota request failed', error: e, stackTrace: st);
-      if (!mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
+          ),
+    )) {
       return;
     }
     if (!mounted) return;
@@ -494,16 +444,9 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final chosen = await showModalBottomSheet<Package>(
       context: context,
       isScrollControlled: true,
-      builder: (context) => Padding(
-        padding: const EdgeInsets.all(AppSpacing.xl),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              l10n?.buyPackageTitle ?? 'Buy a package',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+      builder: (context) => SheetShell(
+        title: l10n?.buyPackageTitle ?? 'Buy a package',
+        children: [
             const SizedBox(height: 8),
             for (final package in packages)
               Card(
@@ -517,26 +460,21 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                   onTap: () => Navigator.of(context).pop(package),
                 ),
               ),
-          ],
-        ),
+        ],
       ),
     );
     if (chosen == null || !mounted) return;
-    try {
-      await ref.read(moneyRepositoryProvider).buyPackage(
+    if (!await runGuarded(
+      context,
+      domain: 'money',
+      message: 'buy package failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => ref.read(moneyRepositoryProvider).buyPackage(
             workspace.id,
             chosen.id,
-          );
-    } catch (e, st) {
-      debugPrint('buy package failed: $e\n$st');
-      TraceLogger.instance
-          .error('money', 'buy package failed', error: e, stackTrace: st);
-      if (!mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
+          ),
+    )) {
       return;
     }
     if (!mounted) return;
@@ -561,28 +499,26 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final member = ref.read(myMemberProvider).value;
     if (workspace == null || member == null || amountCents <= 0) return;
     Uri? url;
-    try {
-      url = await ref.read(moneyRepositoryProvider).createPaymentOrder(
-            workspaceId: workspace.id,
-            memberId: member.id,
-            amountCents: amountCents,
-            period: _period,
-          );
-    } catch (e, st) {
-      debugPrint('create payment order failed: $e\n$st');
-      TraceLogger.instance.error(
-          'money', 'create payment order failed',
-          error: e, stackTrace: st);
-      if (!mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
+    if (!await runGuarded(
+      context,
+      domain: 'money',
+      message: 'create payment order failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        url = await ref.read(moneyRepositoryProvider).createPaymentOrder(
+              workspaceId: workspace.id,
+              memberId: member.id,
+              amountCents: amountCents,
+              period: _period,
+            );
+      },
+    )) {
       return;
     }
     if (!mounted) return;
-    if (url == null) {
+    final approveUrl = url;
+    if (approveUrl == null) {
       AppSnack.info(
         context,
         l10n?.payOnlineNotConfigured ??
@@ -590,14 +526,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       );
       return;
     }
-    try {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
-    } catch (e, st) {
-      debugPrint('payment url launch failed: $e\n$st');
-      TraceLogger.instance.error(
-          'money', 'payment url launch failed',
-          error: e, stackTrace: st);
-    }
+    // Launch failures are traced inside the shared link seam.
+    await ref.read(linkLauncherProvider)(approveUrl);
   }
 
   @override

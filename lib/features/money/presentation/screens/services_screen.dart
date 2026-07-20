@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../core/format/cents.dart';
+import '../../../../core/trace/guarded.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/trace_logger.dart';
-import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -32,34 +32,32 @@ class ServicesScreen extends ConsumerWidget {
       isScrollControlled: true,
       builder: (context) => _ServiceSheet(service: service),
     );
-    if (result == null) return;
+    if (result == null || !context.mounted) return;
 
-    try {
-      final repo = ref.read(moneyRepositoryProvider);
-      if (service == null) {
-        await repo.createService(
-          workspace.id,
-          name: result.name,
-          priceCents: result.priceCents,
-        );
-      } else {
-        await repo.updateService(
-          service.id,
-          name: result.name,
-          priceCents: result.priceCents,
-          active: result.active,
-        );
-      }
-    } catch (e, st) {
-      debugPrint('service save failed: $e\n$st');
-      TraceLogger.instance
-          .error('money', 'service save failed', error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
+    if (!await runGuarded(
+      context,
+      domain: 'money',
+      message: 'service save failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        final repo = ref.read(moneyRepositoryProvider);
+        if (service == null) {
+          await repo.createService(
+            workspace.id,
+            name: result.name,
+            priceCents: result.priceCents,
+          );
+        } else {
+          await repo.updateService(
+            service.id,
+            name: result.name,
+            priceCents: result.priceCents,
+            active: result.active,
+          );
+        }
+      },
+    )) {
       return;
     }
     ref
@@ -157,7 +155,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
     final service = widget.service;
     _name = TextEditingController(text: service?.name ?? '');
     _price = TextEditingController(
-      text: service == null ? '' : _money(service.priceCents),
+      text: service == null ? '' : centsToMajor(service.priceCents),
     );
     _active = service?.active ?? true;
   }
@@ -169,19 +167,9 @@ class _ServiceSheetState extends State<_ServiceSheet> {
     super.dispose();
   }
 
-  String _money(int cents) =>
-      cents % 100 == 0 ? '${cents ~/ 100}' : (cents / 100).toStringAsFixed(2);
-
-  int? _parseCents(String raw) {
-    if (raw.trim().isEmpty) return 0;
-    final value = double.tryParse(raw.trim().replaceAll(',', '.'));
-    if (value == null || value < 0) return null;
-    return (value * 100).round();
-  }
-
   void _submit() {
     final name = _name.text.trim();
-    final price = _parseCents(_price.text);
+    final price = parseCentsInput(_price.text);
     if (name.isEmpty || price == null) return;
     Navigator.of(context).pop(
       _ServiceDraft(
