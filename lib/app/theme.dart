@@ -68,6 +68,15 @@ ThemeData _finish(ThemeData base) {
       backgroundColor: scheme.surfaceContainerLow,
       selectedColor: scheme.secondaryContainer,
       labelStyle: base.textTheme.labelLarge,
+      // Denser chips app-wide (screenshot feedback 2026-07-20: the header
+      // chip rows ate too much space). Tighter label + shell padding
+      // narrows every chip — date pills, window/level chips, billing
+      // filter chips, member status chips — while the ambient padded tap
+      // target keeps them above the 44dp floor the touch-target guard
+      // enforces. (ChipThemeData has no visualDensity; a global one would
+      // shrink IconButtons below the 48dp guard, so we tighten padding.)
+      labelPadding: const EdgeInsets.symmetric(horizontal: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
     ),
     cardTheme: base.cardTheme.copyWith(
       elevation: 0,
