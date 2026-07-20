@@ -65,13 +65,19 @@ Future<void> seedOffice(
 }
 
 Offset cellCenter(WidgetTester tester, int x, int y) {
-  final canvas =
-      tester.getTopLeft(find.byKey(const ValueKey('level-canvas')));
-  return canvas +
+  // Transform-aware: the canvas auto-fits (zooms) to the plan on open, so a
+  // cell's on-screen position is the content origin plus its offset scaled
+  // by the actual rendered scale (top-right minus top-left over content px).
+  final finder = find.byKey(const ValueKey('level-canvas'));
+  final topLeft = tester.getTopLeft(finder);
+  final scale = (tester.getTopRight(finder).dx - topLeft.dx) /
+      (GridCanvas.widthCells * GridCanvas.cellSize);
+  return topLeft +
       Offset(
-        (x + 0.5) * GridCanvas.cellSize,
-        (y + 0.5) * GridCanvas.cellSize,
-      );
+            (x + 0.5) * GridCanvas.cellSize,
+            (y + 0.5) * GridCanvas.cellSize,
+          ) *
+          scale;
 }
 
 Future<void> dragCells(

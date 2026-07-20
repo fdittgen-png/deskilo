@@ -1182,6 +1182,11 @@ class _ReservePlanCanvasState extends State<_ReservePlanCanvas> {
             minScale: ReserveHubMetrics.canvasMinScale,
             maxScale: ReserveHubMetrics.canvasMaxScale,
             boundaryMargin: ReserveHubMetrics.canvasBoundaryMargin,
+            fitBounds: fitRectFromCells(
+              widget.plan.usedBounds,
+              ReserveHubMetrics.canvasCellSize,
+            ),
+            fitKey: widget.plan.levelId,
           ),
         ),
       ],
