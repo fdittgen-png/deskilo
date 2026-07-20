@@ -1640,6 +1640,37 @@ class AppLocalizationsDe extends AppLocalizations {
   String get workspaceConfigNone => 'Keine';
 
   @override
+  String get workspaceDangerZone => 'Gefahrenzone';
+
+  @override
+  String get workspaceResetTitle => 'Workspace zurücksetzen';
+
+  @override
+  String get workspaceResetSubtitle =>
+      'Löscht alle Buchungen, Finanzen und den Grundriss. Einstellungen und Mitglieder bleiben.';
+
+  @override
+  String get workspaceResetDialogTitle => 'Diesen Workspace zurücksetzen?';
+
+  @override
+  String get workspaceResetWarning =>
+      'Dies löscht dauerhaft alle Reservierungen, sämtliche Finanz- und Buchungsdaten, den Aktivitätsverlauf und den gesamten Grundriss — Etagen, Räume, Tische, Plätze und Bilder. Workspace-Einstellungen, Gebührenstufen, Verfügbarkeit, Funktionen, Kataloge und Mitglieder bleiben erhalten. Nicht rückgängig zu machen.';
+
+  @override
+  String get workspaceResetConfirmPhrase => 'Ich stimme zu';
+
+  @override
+  String workspaceResetConfirmLabel(String phrase) {
+    return 'Tippe „$phrase“ zum Bestätigen';
+  }
+
+  @override
+  String get workspaceResetConfirmButton => 'Workspace zurücksetzen';
+
+  @override
+  String get workspaceResetDone => 'Workspace zurückgesetzt.';
+
+  @override
   String get workspaceXmlExport => 'Workspace exportieren (XML)';
 
   @override

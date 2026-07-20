@@ -1640,6 +1640,37 @@ class AppLocalizationsIt extends AppLocalizations {
   String get workspaceConfigNone => 'Nessuno';
 
   @override
+  String get workspaceDangerZone => 'Zona pericolosa';
+
+  @override
+  String get workspaceResetTitle => 'Reimposta lo spazio';
+
+  @override
+  String get workspaceResetSubtitle =>
+      'Elimina tutte le prenotazioni, la contabilità e la pianta. Mantiene impostazioni e membri.';
+
+  @override
+  String get workspaceResetDialogTitle => 'Reimpostare questo spazio?';
+
+  @override
+  String get workspaceResetWarning =>
+      'Questo elimina definitivamente tutte le prenotazioni, tutti i dati contabili e di registro, il flusso attività e l\'intera pianta — piani, stanze, tavoli, posti e immagini. Le impostazioni dello spazio, le fasce tariffarie, la disponibilità, le funzioni, i cataloghi e i membri vengono mantenuti. Operazione irreversibile.';
+
+  @override
+  String get workspaceResetConfirmPhrase => 'Accetto';
+
+  @override
+  String workspaceResetConfirmLabel(String phrase) {
+    return 'Digita «$phrase» per confermare';
+  }
+
+  @override
+  String get workspaceResetConfirmButton => 'Reimposta lo spazio';
+
+  @override
+  String get workspaceResetDone => 'Spazio reimpostato.';
+
+  @override
   String get workspaceXmlExport => 'Esporta lo spazio (XML)';
 
   @override

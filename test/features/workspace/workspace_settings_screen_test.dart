@@ -247,4 +247,58 @@ void main() {
     final file = captured.single.files!.single;
     expect(file.mimeType, 'application/pdf');
   });
+
+  testWidgets(
+      'reset workspace is gated on typing the confirm phrase, then calls the '
+      'repository', (tester) async {
+    final workspace = await pumpWorkspaceSettings(tester);
+
+    // Open the destructive dialog from the Danger zone.
+    final resetTile = find.byKey(const Key('workspaceSettingsReset'));
+    await tester.ensureVisible(resetTile);
+    await tester.tap(resetTile);
+    await tester.pumpAndSettle();
+
+    // The confirm button is disabled until the exact phrase is typed.
+    FilledButton confirmButton() => tester.widget<FilledButton>(
+          find.byKey(const Key('workspaceResetConfirm')),
+        );
+    expect(confirmButton().onPressed, isNull);
+    expect(workspace.resetWorkspaceCalls, isEmpty);
+
+    // A wrong phrase keeps it disabled.
+    await tester.enterText(
+      find.byKey(const Key('workspaceResetConfirmField')),
+      'yes',
+    );
+    await tester.pump();
+    expect(confirmButton().onPressed, isNull);
+
+    // The exact phrase (case-insensitive) unlocks it.
+    await tester.enterText(
+      find.byKey(const Key('workspaceResetConfirmField')),
+      'I AGREE',
+    );
+    await tester.pump();
+    expect(confirmButton().onPressed, isNotNull);
+
+    await tester.tap(find.byKey(const Key('workspaceResetConfirm')));
+    await tester.pumpAndSettle();
+
+    expect(workspace.resetWorkspaceCalls, ['ws-1']);
+    expect(find.text('Workspace reset.'), findsOneWidget);
+  });
+
+  testWidgets('cancelling the reset dialog does nothing', (tester) async {
+    final workspace = await pumpWorkspaceSettings(tester);
+    final resetTile = find.byKey(const Key('workspaceSettingsReset'));
+    await tester.ensureVisible(resetTile);
+    await tester.tap(resetTile);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+
+    expect(workspace.resetWorkspaceCalls, isEmpty);
+  });
 }

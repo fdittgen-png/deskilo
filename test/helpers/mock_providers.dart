@@ -385,6 +385,14 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     closureDays.removeWhere((c) => c.id == closureDayId);
   }
 
+  /// Workspace ids passed to [resetWorkspace], for assertions.
+  final resetWorkspaceCalls = <String>[];
+
+  @override
+  Future<void> resetWorkspace(String workspaceId) async {
+    resetWorkspaceCalls.add(workspaceId);
+  }
+
   @override
   Future<void> updateMemberStatus(
     String memberId,

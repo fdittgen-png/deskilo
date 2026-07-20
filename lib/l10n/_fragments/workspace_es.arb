@@ -74,5 +74,14 @@
   "workspaceConfigBookableWhole": "reservable en su totalidad",
   "workspaceConfigSeats": "Plazas",
   "workspaceConfigEmptyLevel": "Sin salas",
-  "workspaceConfigNone": "Ninguno"
+  "workspaceConfigNone": "Ninguno",
+  "workspaceDangerZone": "Zona de peligro",
+  "workspaceResetTitle": "Restablecer el espacio",
+  "workspaceResetSubtitle": "Elimina todas las reservas, las finanzas y el plano. Conserva ajustes y miembros.",
+  "workspaceResetDialogTitle": "¿Restablecer este espacio?",
+  "workspaceResetWarning": "Esto elimina permanentemente todas las reservas, todos los datos financieros y del libro mayor, el registro de actividad y todo el plano — plantas, salas, mesas, plazas e imágenes. Se conservan los ajustes del espacio, los tramos de tarifa, la disponibilidad, las funciones, los catálogos y los miembros. No se puede deshacer.",
+  "workspaceResetConfirmPhrase": "Acepto",
+  "workspaceResetConfirmLabel": "Escribe «{phrase}» para confirmar",
+  "workspaceResetConfirmButton": "Restablecer el espacio",
+  "workspaceResetDone": "Espacio restablecido."
 }

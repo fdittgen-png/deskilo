@@ -1644,6 +1644,37 @@ class AppLocalizationsFr extends AppLocalizations {
   String get workspaceConfigNone => 'Aucun';
 
   @override
+  String get workspaceDangerZone => 'Zone de danger';
+
+  @override
+  String get workspaceResetTitle => 'Réinitialiser l\'espace';
+
+  @override
+  String get workspaceResetSubtitle =>
+      'Supprime toutes les réservations, la comptabilité et le plan. Conserve les réglages et les membres.';
+
+  @override
+  String get workspaceResetDialogTitle => 'Réinitialiser cet espace ?';
+
+  @override
+  String get workspaceResetWarning =>
+      'Cela supprime définitivement toutes les réservations, toute la comptabilité et le grand livre, le fil d\'activité, ainsi que l\'intégralité du plan — étages, salles, tables, places et images. Les réglages de l\'espace, les paliers tarifaires, les disponibilités, les fonctionnalités, les catalogues et les membres sont conservés. Action irréversible.';
+
+  @override
+  String get workspaceResetConfirmPhrase => 'J\'accepte';
+
+  @override
+  String workspaceResetConfirmLabel(String phrase) {
+    return 'Saisissez « $phrase » pour confirmer';
+  }
+
+  @override
+  String get workspaceResetConfirmButton => 'Réinitialiser l\'espace';
+
+  @override
+  String get workspaceResetDone => 'Espace réinitialisé.';
+
+  @override
   String get workspaceXmlExport => 'Exporter l\'espace (XML)';
 
   @override
