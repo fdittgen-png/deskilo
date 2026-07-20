@@ -120,4 +120,11 @@ abstract class WorkspaceRepository {
 
   /// Owner-only: remove a closure day.
   Future<void> removeClosureDay(String closureDayId);
+
+  /// Owner-only, irreversible (0039): wipe all transactions (reservations,
+  /// events, ledger, quota extensions) and the entire floor plan (levels,
+  /// offices, desks, seats, plan images) while keeping the workspace
+  /// configuration and its members. The client gates this behind a typed
+  /// confirmation.
+  Future<void> resetWorkspace(String workspaceId);
 }

@@ -312,6 +312,15 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
     await _client.from('closure_days').delete().eq('id', closureDayId);
   }
 
+  @override
+  Future<void> resetWorkspace(String workspaceId) async {
+    // SECURITY DEFINER RPC (0039); the owner check + all deletes are atomic
+    // server-side.
+    await _client.rpc<dynamic>('reset_workspace', params: {
+      'p_workspace_id': workspaceId,
+    });
+  }
+
   /// Postgres `date` wire format for [day]'s date part.
   String _isoDate(DateTime day) => '${day.year.toString().padLeft(4, '0')}-'
       '${day.month.toString().padLeft(2, '0')}-'

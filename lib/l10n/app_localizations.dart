@@ -3080,6 +3080,60 @@ abstract class AppLocalizations {
   /// **'None'**
   String get workspaceConfigNone;
 
+  /// Section header for irreversible owner-only actions in workspace settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Danger zone'**
+  String get workspaceDangerZone;
+
+  /// Owner settings entry: wipe all transactions and the floor plan, keeping settings and members (0039).
+  ///
+  /// In en, this message translates to:
+  /// **'Reset workspace'**
+  String get workspaceResetTitle;
+
+  /// Subtitle of the reset-workspace entry summarizing what is removed and kept.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all bookings, money and the floor plan. Keeps settings and members.'**
+  String get workspaceResetSubtitle;
+
+  /// Title of the destructive reset confirmation dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset this workspace?'**
+  String get workspaceResetDialogTitle;
+
+  /// Body of the reset confirmation dialog explaining exactly what is deleted vs kept, and that it is irreversible.
+  ///
+  /// In en, this message translates to:
+  /// **'This permanently deletes every reservation, all money and ledger entries, the activity feed, and the entire floor plan — floors, rooms, tables, seats and images. Workspace settings, fee bands, availability, features, catalogs and members are kept. This cannot be undone.'**
+  String get workspaceResetWarning;
+
+  /// The exact phrase the owner must type to unlock the reset button. Keep it short and hard to type by accident.
+  ///
+  /// In en, this message translates to:
+  /// **'I agree'**
+  String get workspaceResetConfirmPhrase;
+
+  /// Label of the confirmation text field, telling the owner which phrase to type.
+  ///
+  /// In en, this message translates to:
+  /// **'Type \"{phrase}\" to confirm'**
+  String workspaceResetConfirmLabel(String phrase);
+
+  /// Destructive confirm button in the reset dialog; enabled only once the phrase matches.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset workspace'**
+  String get workspaceResetConfirmButton;
+
+  /// Success snackbar after the workspace has been reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace reset.'**
+  String get workspaceResetDone;
+
   /// Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)
   ///
   /// In en, this message translates to:

@@ -74,5 +74,14 @@
   "workspaceConfigBookableWhole": "als Ganzes buchbar",
   "workspaceConfigSeats": "Plätze",
   "workspaceConfigEmptyLevel": "Keine Räume",
-  "workspaceConfigNone": "Keine"
+  "workspaceConfigNone": "Keine",
+  "workspaceDangerZone": "Gefahrenzone",
+  "workspaceResetTitle": "Workspace zurücksetzen",
+  "workspaceResetSubtitle": "Löscht alle Buchungen, Finanzen und den Grundriss. Einstellungen und Mitglieder bleiben.",
+  "workspaceResetDialogTitle": "Diesen Workspace zurücksetzen?",
+  "workspaceResetWarning": "Dies löscht dauerhaft alle Reservierungen, sämtliche Finanz- und Buchungsdaten, den Aktivitätsverlauf und den gesamten Grundriss — Etagen, Räume, Tische, Plätze und Bilder. Workspace-Einstellungen, Gebührenstufen, Verfügbarkeit, Funktionen, Kataloge und Mitglieder bleiben erhalten. Nicht rückgängig zu machen.",
+  "workspaceResetConfirmPhrase": "Ich stimme zu",
+  "workspaceResetConfirmLabel": "Tippe „{phrase}“ zum Bestätigen",
+  "workspaceResetConfirmButton": "Workspace zurücksetzen",
+  "workspaceResetDone": "Workspace zurückgesetzt."
 }

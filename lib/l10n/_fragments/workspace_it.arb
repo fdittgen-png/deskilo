@@ -74,5 +74,14 @@
   "workspaceConfigBookableWhole": "prenotabile per intero",
   "workspaceConfigSeats": "Posti",
   "workspaceConfigEmptyLevel": "Nessuna sala",
-  "workspaceConfigNone": "Nessuno"
+  "workspaceConfigNone": "Nessuno",
+  "workspaceDangerZone": "Zona pericolosa",
+  "workspaceResetTitle": "Reimposta lo spazio",
+  "workspaceResetSubtitle": "Elimina tutte le prenotazioni, la contabilità e la pianta. Mantiene impostazioni e membri.",
+  "workspaceResetDialogTitle": "Reimpostare questo spazio?",
+  "workspaceResetWarning": "Questo elimina definitivamente tutte le prenotazioni, tutti i dati contabili e di registro, il flusso attività e l'intera pianta — piani, stanze, tavoli, posti e immagini. Le impostazioni dello spazio, le fasce tariffarie, la disponibilità, le funzioni, i cataloghi e i membri vengono mantenuti. Operazione irreversibile.",
+  "workspaceResetConfirmPhrase": "Accetto",
+  "workspaceResetConfirmLabel": "Digita «{phrase}» per confermare",
+  "workspaceResetConfirmButton": "Reimposta lo spazio",
+  "workspaceResetDone": "Spazio reimpostato."
 }

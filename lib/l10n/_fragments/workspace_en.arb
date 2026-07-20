@@ -250,5 +250,46 @@
   "workspaceConfigNone": "None",
   "@workspaceConfigNone": {
     "description": "Configuration PDF: placeholder for an empty section (no members, no features, no closures)."
+  },
+  "workspaceDangerZone": "Danger zone",
+  "@workspaceDangerZone": {
+    "description": "Section header for irreversible owner-only actions in workspace settings."
+  },
+  "workspaceResetTitle": "Reset workspace",
+  "@workspaceResetTitle": {
+    "description": "Owner settings entry: wipe all transactions and the floor plan, keeping settings and members (0039)."
+  },
+  "workspaceResetSubtitle": "Delete all bookings, money and the floor plan. Keeps settings and members.",
+  "@workspaceResetSubtitle": {
+    "description": "Subtitle of the reset-workspace entry summarizing what is removed and kept."
+  },
+  "workspaceResetDialogTitle": "Reset this workspace?",
+  "@workspaceResetDialogTitle": {
+    "description": "Title of the destructive reset confirmation dialog."
+  },
+  "workspaceResetWarning": "This permanently deletes every reservation, all money and ledger entries, the activity feed, and the entire floor plan — floors, rooms, tables, seats and images. Workspace settings, fee bands, availability, features, catalogs and members are kept. This cannot be undone.",
+  "@workspaceResetWarning": {
+    "description": "Body of the reset confirmation dialog explaining exactly what is deleted vs kept, and that it is irreversible."
+  },
+  "workspaceResetConfirmPhrase": "I agree",
+  "@workspaceResetConfirmPhrase": {
+    "description": "The exact phrase the owner must type to unlock the reset button. Keep it short and hard to type by accident."
+  },
+  "workspaceResetConfirmLabel": "Type \"{phrase}\" to confirm",
+  "@workspaceResetConfirmLabel": {
+    "description": "Label of the confirmation text field, telling the owner which phrase to type.",
+    "placeholders": {
+      "phrase": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceResetConfirmButton": "Reset workspace",
+  "@workspaceResetConfirmButton": {
+    "description": "Destructive confirm button in the reset dialog; enabled only once the phrase matches."
+  },
+  "workspaceResetDone": "Workspace reset.",
+  "@workspaceResetDone": {
+    "description": "Success snackbar after the workspace has been reset."
   }
 }

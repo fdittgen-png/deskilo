@@ -1626,6 +1626,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workspaceConfigNone => 'None';
 
   @override
+  String get workspaceDangerZone => 'Danger zone';
+
+  @override
+  String get workspaceResetTitle => 'Reset workspace';
+
+  @override
+  String get workspaceResetSubtitle =>
+      'Delete all bookings, money and the floor plan. Keeps settings and members.';
+
+  @override
+  String get workspaceResetDialogTitle => 'Reset this workspace?';
+
+  @override
+  String get workspaceResetWarning =>
+      'This permanently deletes every reservation, all money and ledger entries, the activity feed, and the entire floor plan — floors, rooms, tables, seats and images. Workspace settings, fee bands, availability, features, catalogs and members are kept. This cannot be undone.';
+
+  @override
+  String get workspaceResetConfirmPhrase => 'I agree';
+
+  @override
+  String workspaceResetConfirmLabel(String phrase) {
+    return 'Type \"$phrase\" to confirm';
+  }
+
+  @override
+  String get workspaceResetConfirmButton => 'Reset workspace';
+
+  @override
+  String get workspaceResetDone => 'Workspace reset.';
+
+  @override
   String get workspaceXmlExport => 'Export workspace (XML)';
 
   @override
