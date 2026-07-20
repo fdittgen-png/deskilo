@@ -15,6 +15,7 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/motion.dart';
+import '../../../../core/ui/canvas_controls.dart';
 import '../../../../core/ui/view_toggle.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../calendar/presentation/widgets/day_timeline.dart';
@@ -1096,7 +1097,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
 /// [FloorPlanPainter] inside an InteractiveViewer with a tap handler
 /// resolving cell → seat via [FloorPlan.seatAtCell]. No jump highlight
 /// here — that affordance belongs to the Plan tab (#182).
-class _ReservePlanCanvas extends StatelessWidget {
+class _ReservePlanCanvas extends StatefulWidget {
   const _ReservePlanCanvas({
     required this.plan,
     required this.seatStates,
@@ -1114,40 +1115,67 @@ class _ReservePlanCanvas extends StatelessWidget {
   final Map<String, ui.Image> images;
 
   @override
+  State<_ReservePlanCanvas> createState() => _ReservePlanCanvasState();
+}
+
+class _ReservePlanCanvasState extends State<_ReservePlanCanvas> {
+  final _viewTransform = TransformationController();
+
+  @override
+  void dispose() {
+    _viewTransform.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     const size = Size(
       ReserveHubMetrics.canvasCells * ReserveHubMetrics.canvasCellSize,
       ReserveHubMetrics.canvasCells * ReserveHubMetrics.canvasCellSize,
     );
-    return InteractiveViewer(
-      constrained: false,
-      minScale: ReserveHubMetrics.canvasMinScale,
-      maxScale: ReserveHubMetrics.canvasMaxScale,
-      boundaryMargin:
-          const EdgeInsets.all(ReserveHubMetrics.canvasBoundaryMargin),
-      child: GestureDetector(
-        onTapUp: (details) {
-          const cell = ReserveHubMetrics.canvasCellSize;
-          final x = (details.localPosition.dx / cell).floor();
-          final y = (details.localPosition.dy / cell).floor();
-          final seat = plan.seatAtCell(x, y);
-          if (seat != null) onSeatTap(seat);
-        },
-        child: CustomPaint(
-          key: const ValueKey('reserve-plan-canvas'),
-          size: size,
-          painter: FloorPlanPainter(
-            plan: plan,
-            cellSize: ReserveHubMetrics.canvasCellSize,
-            colorScheme: Theme.of(context).colorScheme,
-            brightness: Theme.of(context).brightness,
-            background: background,
-            images: images,
-            seatStates: seatStates,
-            seatLabels: seatLabels,
+    return Stack(
+      children: [
+        InteractiveViewer(
+          transformationController: _viewTransform,
+          constrained: false,
+          minScale: ReserveHubMetrics.canvasMinScale,
+          maxScale: ReserveHubMetrics.canvasMaxScale,
+          boundaryMargin:
+              const EdgeInsets.all(ReserveHubMetrics.canvasBoundaryMargin),
+          child: GestureDetector(
+            onTapUp: (details) {
+              const cell = ReserveHubMetrics.canvasCellSize;
+              final x = (details.localPosition.dx / cell).floor();
+              final y = (details.localPosition.dy / cell).floor();
+              final seat = widget.plan.seatAtCell(x, y);
+              if (seat != null) widget.onSeatTap(seat);
+            },
+            child: CustomPaint(
+              key: const ValueKey('reserve-plan-canvas'),
+              size: size,
+              painter: FloorPlanPainter(
+                plan: widget.plan,
+                cellSize: ReserveHubMetrics.canvasCellSize,
+                colorScheme: Theme.of(context).colorScheme,
+                brightness: Theme.of(context).brightness,
+                background: widget.background,
+                images: widget.images,
+                seatStates: widget.seatStates,
+                seatLabels: widget.seatLabels,
+              ),
+            ),
           ),
         ),
-      ),
+        Positioned.fill(
+          child: CanvasControls(
+            controller: _viewTransform,
+            contentSize: size,
+            minScale: ReserveHubMetrics.canvasMinScale,
+            maxScale: ReserveHubMetrics.canvasMaxScale,
+            boundaryMargin: ReserveHubMetrics.canvasBoundaryMargin,
+          ),
+        ),
+      ],
     );
   }
 }

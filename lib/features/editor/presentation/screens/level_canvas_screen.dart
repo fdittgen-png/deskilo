@@ -9,6 +9,7 @@ import '../../../../core/files/file_picker.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/canvas_controls.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/accessory.dart';
@@ -975,7 +976,9 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     final selecting = _tool == EditorTool.select && _selectedId != null;
     final shownPlan = _draft ?? plan;
 
-    return InteractiveViewer(
+    return Stack(
+      children: [
+        InteractiveViewer(
       transformationController: _viewTransform,
       constrained: false,
       minScale: 0.4,
@@ -1047,6 +1050,18 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
           ),
         ),
       ),
+        ),
+        // Zoom buttons + draggable scrollbars share the viewer's controller.
+        Positioned.fill(
+          child: CanvasControls(
+            controller: _viewTransform,
+            contentSize: const Size(
+              GridCanvas.widthCells * GridCanvas.cellSize,
+              GridCanvas.heightCells * GridCanvas.cellSize,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
