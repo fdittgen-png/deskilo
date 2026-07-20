@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/trace/trace_logger.dart';
-import '../../../../core/ui/app_snack.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace.dart';
@@ -69,20 +68,18 @@ class FeaturesScreen extends ConsumerWidget {
       for (final f in featureManifest.keys)
         f.dbKey: f == feature ? value : enabled.contains(f),
     };
-    try {
-      await ref
-          .read(workspaceRepositoryProvider)
-          .setFeatureFlags(workspace.id, flags);
-    } catch (e, st) {
-      debugPrint('set feature flags failed: $e\n$st');
-      TraceLogger.instance.error('workspace', 'set feature flags failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'set feature flags failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+          await ref
+              .read(workspaceRepositoryProvider)
+              .setFeatureFlags(workspace.id, flags);
+      },
+    )) {
       return;
     }
     // The workspace chain re-derives enabledFeatures from the new row —

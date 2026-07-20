@@ -13,6 +13,7 @@ import '../../../../core/country/country_catalog.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -104,55 +105,54 @@ class _WorkspaceSettingsScreenState
     if (code == null) return;
     final l10n = AppLocalizations.of(context);
     setState(() => _busy = true);
-    try {
-      final repository = ref.read(workspaceRepositoryProvider);
-      await repository.updateWorkspaceLocale(
-        workspaceId,
-        countryCode: code,
-        currencyCode: _currency.text.trim().toUpperCase(),
-        timezone: _timezone.text.trim(),
-      );
-      // #155 — the how-to-pay blob rides the same Save.
-      await repository.setPaymentInstructions(
-        workspaceId,
-        PaymentInstructions(
-          iban: _iban.text,
-          paypalMe: _paypalMe.text,
-          reference: _reference.text,
-          wero: _wero.text,
-          lydia: _lydia.text,
-          wise: _wise.text,
-        ),
-      );
-      // #231 — the WhatsApp group link rides the same Save through its
-      // own setter (setPaymentInstructions shape); '' clears it.
-      await repository.setWhatsappGroup(
-        workspaceId,
-        _whatsappGroup.text.trim(),
-      );
-      // 0040 — desk transparency rides the same Save.
-      await repository.setDeskOpacity(workspaceId, _deskOpacity);
-      // Every money surface watches the workspace chain — invalidating it
-      // re-renders all amounts in the new currency immediately.
-      ref.invalidate(myWorkspacesProvider);
-      if (!mounted) return;
-      AppSnack.success(
-        context,
-        l10n?.workspaceSettingsSaved ?? 'Workspace saved.',
-      );
-    } catch (e, st) {
-      debugPrint('update workspace locale failed: $e\n$st');
-      TraceLogger.instance.error('workspace', 'update workspace locale failed',
-          error: e, stackTrace: st);
-      if (!mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
-    } finally {
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'update workspace locale failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+          final repository = ref.read(workspaceRepositoryProvider);
+          await repository.updateWorkspaceLocale(
+            workspaceId,
+            countryCode: code,
+            currencyCode: _currency.text.trim().toUpperCase(),
+            timezone: _timezone.text.trim(),
+          );
+          // #155 — the how-to-pay blob rides the same Save.
+          await repository.setPaymentInstructions(
+            workspaceId,
+            PaymentInstructions(
+              iban: _iban.text,
+              paypalMe: _paypalMe.text,
+              reference: _reference.text,
+              wero: _wero.text,
+              lydia: _lydia.text,
+              wise: _wise.text,
+            ),
+          );
+          // #231 — the WhatsApp group link rides the same Save through its
+          // own setter (setPaymentInstructions shape); '' clears it.
+          await repository.setWhatsappGroup(
+            workspaceId,
+            _whatsappGroup.text.trim(),
+          );
+          // 0040 — desk transparency rides the same Save.
+          await repository.setDeskOpacity(workspaceId, _deskOpacity);
+          // Every money surface watches the workspace chain — invalidating it
+          // re-renders all amounts in the new currency immediately.
+          ref.invalidate(myWorkspacesProvider);
+          if (!mounted) return;
+          AppSnack.success(
+            context,
+            l10n?.workspaceSettingsSaved ?? 'Workspace saved.',
+          );
+      },
+    )) {
       if (mounted) setState(() => _busy = false);
+      return;
     }
+    if (mounted) setState(() => _busy = false);
   }
 
   /// Serializes the workspace settings + every level's floor plan + the
@@ -162,44 +162,43 @@ class _WorkspaceSettingsScreenState
   Future<void> _exportXml(Workspace workspace) async {
     final l10n = AppLocalizations.of(context);
     setState(() => _busy = true);
-    try {
-      final levels = await ref.read(levelsProvider.future);
-      final plans = <({Level level, FloorPlan plan})>[];
-      for (final level in levels) {
-        plans.add((
-          level: level,
-          plan: await ref.read(floorPlanProvider(level.id).future),
-        ));
-      }
-      // Inactive entries included — a backup must be complete (#180).
-      final accessories =
-          await ref.read(accessoriesProvider(includeInactive: true).future);
-      final seatAccessories = await ref.read(seatAccessoriesProvider.future);
-      final xml = buildWorkspaceXml(
-        workspace: workspace,
-        levels: plans,
-        accessories: accessories,
-        seatAccessories: seatAccessories,
-      );
-      final path = await ref.read(fileSaverProvider)(
-        bytes: utf8.encode(xml),
-        fileName: workspaceXmlFileName(workspace.name),
-      );
-      if (!mounted) return;
-      _announceSaved(l10n, path);
-    } catch (e, st) {
-      debugPrint('workspace XML export failed: $e\n$st');
-      TraceLogger.instance.error('workspace', 'workspace XML export failed',
-          error: e, stackTrace: st);
-      if (!mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
-    } finally {
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'workspace XML export failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+          final levels = await ref.read(levelsProvider.future);
+          final plans = <({Level level, FloorPlan plan})>[];
+          for (final level in levels) {
+            plans.add((
+              level: level,
+              plan: await ref.read(floorPlanProvider(level.id).future),
+            ));
+          }
+          // Inactive entries included — a backup must be complete (#180).
+          final accessories =
+              await ref.read(accessoriesProvider(includeInactive: true).future);
+          final seatAccessories = await ref.read(seatAccessoriesProvider.future);
+          final xml = buildWorkspaceXml(
+            workspace: workspace,
+            levels: plans,
+            accessories: accessories,
+            seatAccessories: seatAccessories,
+          );
+          final path = await ref.read(fileSaverProvider)(
+            bytes: utf8.encode(xml),
+            fileName: workspaceXmlFileName(workspace.name),
+          );
+          if (!mounted) return;
+          _announceSaved(l10n, path);
+      },
+    )) {
       if (mounted) setState(() => _busy = false);
+      return;
     }
+    if (mounted) setState(() => _busy = false);
   }
 
   /// Confirms a local export saved (or reports failure) — never a share.
@@ -253,123 +252,121 @@ class _WorkspaceSettingsScreenState
     final l10n = AppLocalizations.of(context);
     final locale = Localizations.maybeLocaleOf(context)?.toString();
     setState(() => _busy = true);
-    try {
-      final levelsList = await ref.read(levelsProvider.future);
-      final plans = <ConfigPdfLevel>[];
-      for (final level in levelsList) {
-        plans.add((
-          level: level,
-          plan: await ref.read(floorPlanProvider(level.id).future),
-        ));
-      }
-      final members = await ref.read(workspaceMembersProvider.future);
-      final names = await ref.read(memberNamesProvider.future);
-      final granularity = await ref.read(bookingGranularityProvider.future);
-      final features = await ref.read(enabledFeaturesProvider.future);
-      final openWeekdays = await ref.read(openWeekdaysProvider.future);
-      final closures = await ref.read(closureDaysProvider.future);
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'workspace config PDF export failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+          final levelsList = await ref.read(levelsProvider.future);
+          final plans = <ConfigPdfLevel>[];
+          for (final level in levelsList) {
+            plans.add((
+              level: level,
+              plan: await ref.read(floorPlanProvider(level.id).future),
+            ));
+          }
+          final members = await ref.read(workspaceMembersProvider.future);
+          final names = await ref.read(memberNamesProvider.future);
+          final granularity = await ref.read(bookingGranularityProvider.future);
+          final features = await ref.read(enabledFeaturesProvider.future);
+          final openWeekdays = await ref.read(openWeekdaysProvider.future);
+          final closures = await ref.read(closureDaysProvider.future);
 
-      // ISO weekday (1=Mon..7=Sun) → localized name via a known Monday.
-      final weekdayFormat = DateFormat.EEEE(locale);
-      String weekdayName(int isoWeekday) =>
-          weekdayFormat.format(DateTime(2026, 6, 1 + (isoWeekday - 1)));
-      final openDaysLabel = (openWeekdays.toList()..sort())
-          .map(weekdayName)
-          .join(', ');
+          // ISO weekday (1=Mon..7=Sun) → localized name via a known Monday.
+          final weekdayFormat = DateFormat.EEEE(locale);
+          String weekdayName(int isoWeekday) =>
+              weekdayFormat.format(DateTime(2026, 6, 1 + (isoWeekday - 1)));
+          final openDaysLabel = (openWeekdays.toList()..sort())
+              .map(weekdayName)
+              .join(', ');
 
-      final dateFormat = DateFormat.yMMMd(locale);
-      final closureLabels = [
-        for (final closure in closures)
-          closure.reason.trim().isEmpty
-              ? dateFormat.format(closure.day.toLocal())
-              : '${dateFormat.format(closure.day.toLocal())} — '
-                  '${closure.reason}',
-      ];
+          final dateFormat = DateFormat.yMMMd(locale);
+          final closureLabels = [
+            for (final closure in closures)
+              closure.reason.trim().isEmpty
+                  ? dateFormat.format(closure.day.toLocal())
+                  : '${dateFormat.format(closure.day.toLocal())} — '
+                      '${closure.reason}',
+          ];
 
-      // Members sorted by name, like the directory.
-      final sortedMembers = [...members]..sort(
-          (a, b) => (names[a.id] ?? '')
-              .toLowerCase()
-              .compareTo((names[b.id] ?? '').toLowerCase()),
-        );
-      final configMembers = <ConfigPdfMember>[
-        for (final member in sortedMembers)
-          (
-            name: names[member.id] ?? '',
-            role: _roleLabel(l10n, member),
-            status: _statusLabel(l10n, member.status),
-          ),
-      ];
+          // Members sorted by name, like the directory.
+          final sortedMembers = [...members]..sort(
+              (a, b) => (names[a.id] ?? '')
+                  .toLowerCase()
+                  .compareTo((names[b.id] ?? '').toLowerCase()),
+            );
+          final configMembers = <ConfigPdfMember>[
+            for (final member in sortedMembers)
+              (
+                name: names[member.id] ?? '',
+                role: _roleLabel(l10n, member),
+                status: _statusLabel(l10n, member.status),
+              ),
+          ];
 
-      final strings = WorkspaceConfigPdfStrings(
-        title: l10n?.workspaceConfigPdfTitle ?? 'Workspace configuration',
-        overview: l10n?.workspaceConfigOverview ?? 'Overview',
-        country: l10n?.workspaceCountryLabel ?? 'Country',
-        currency: l10n?.workspaceCurrencyLabel ?? 'Currency',
-        timezone: l10n?.workspaceTimezoneLabel ?? 'Time zone',
-        granularity: l10n?.workspaceConfigGranularity ?? 'Booking granularity',
-        members: l10n?.workspaceConfigMembersSection ?? 'Members',
-        colName: l10n?.workspaceConfigColName ?? 'Name',
-        colRole: l10n?.workspaceConfigColRole ?? 'Role',
-        colStatus: l10n?.workspaceConfigColStatus ?? 'Status',
-        features: l10n?.workspaceConfigFeatures ?? 'Enabled features',
-        none: l10n?.workspaceConfigNone ?? 'None',
-        availability: l10n?.workspaceConfigAvailability ?? 'Availability',
-        openDays: l10n?.workspaceConfigOpenDays ?? 'Open days',
-        closures: l10n?.workspaceConfigClosures ?? 'Closures',
-        floorPlan: l10n?.workspaceConfigFloorPlan ?? 'Floor plan',
-        bookableWhole:
-            l10n?.workspaceConfigBookableWhole ?? 'bookable as a whole',
-        seatsLabel: l10n?.workspaceConfigSeats ?? 'Seats',
-        emptyLevel: l10n?.workspaceConfigEmptyLevel ?? 'No rooms',
-      );
+          final strings = WorkspaceConfigPdfStrings(
+            title: l10n?.workspaceConfigPdfTitle ?? 'Workspace configuration',
+            overview: l10n?.workspaceConfigOverview ?? 'Overview',
+            country: l10n?.workspaceCountryLabel ?? 'Country',
+            currency: l10n?.workspaceCurrencyLabel ?? 'Currency',
+            timezone: l10n?.workspaceTimezoneLabel ?? 'Time zone',
+            granularity: l10n?.workspaceConfigGranularity ?? 'Booking granularity',
+            members: l10n?.workspaceConfigMembersSection ?? 'Members',
+            colName: l10n?.workspaceConfigColName ?? 'Name',
+            colRole: l10n?.workspaceConfigColRole ?? 'Role',
+            colStatus: l10n?.workspaceConfigColStatus ?? 'Status',
+            features: l10n?.workspaceConfigFeatures ?? 'Enabled features',
+            none: l10n?.workspaceConfigNone ?? 'None',
+            availability: l10n?.workspaceConfigAvailability ?? 'Availability',
+            openDays: l10n?.workspaceConfigOpenDays ?? 'Open days',
+            closures: l10n?.workspaceConfigClosures ?? 'Closures',
+            floorPlan: l10n?.workspaceConfigFloorPlan ?? 'Floor plan',
+            bookableWhole:
+                l10n?.workspaceConfigBookableWhole ?? 'bookable as a whole',
+            seatsLabel: l10n?.workspaceConfigSeats ?? 'Seats',
+            emptyLevel: l10n?.workspaceConfigEmptyLevel ?? 'No rooms',
+          );
 
-      final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
-      final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
-      final bytes = await buildWorkspaceConfigPdf(
-        strings: strings,
-        workspaceName: workspace.name,
-        generatedOnLabel: l10n?.workspaceConfigPdfGeneratedOn(
-              dateFormat.format(DateTime.now()),
-            ) ??
-            'Generated on ${dateFormat.format(DateTime.now())}',
-        countryLabel: localizedCountryName(l10n, workspace.countryCode),
-        currencyCode: workspace.currencyCode,
-        timezone: workspace.timezone,
-        granularityLabel: _granularityLabel(l10n, granularity),
-        members: configMembers,
-        featureLabels: [
-          // Registry order for a stable list.
-          for (final feature in WorkspaceFeature.values)
-            if (features.contains(feature)) featureName(l10n, feature),
-        ],
-        openDaysLabel: openDaysLabel,
-        closureLabels: closureLabels,
-        levels: plans,
-        baseFont: pw.Font.ttf(regular),
-        boldFont: pw.Font.ttf(bold),
-      );
+          final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
+          final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
+          final bytes = await buildWorkspaceConfigPdf(
+            strings: strings,
+            workspaceName: workspace.name,
+            generatedOnLabel: l10n?.workspaceConfigPdfGeneratedOn(
+                  dateFormat.format(DateTime.now()),
+                ) ??
+                'Generated on ${dateFormat.format(DateTime.now())}',
+            countryLabel: localizedCountryName(l10n, workspace.countryCode),
+            currencyCode: workspace.currencyCode,
+            timezone: workspace.timezone,
+            granularityLabel: _granularityLabel(l10n, granularity),
+            members: configMembers,
+            featureLabels: [
+              // Registry order for a stable list.
+              for (final feature in WorkspaceFeature.values)
+                if (features.contains(feature)) featureName(l10n, feature),
+            ],
+            openDaysLabel: openDaysLabel,
+            closureLabels: closureLabels,
+            levels: plans,
+            baseFont: pw.Font.ttf(regular),
+            boldFont: pw.Font.ttf(bold),
+          );
 
-      final path = await ref.read(fileSaverProvider)(
-        bytes: bytes,
-        fileName: '${workspace.name}-configuration.pdf',
-      );
-      if (!mounted) return;
-      _announceSaved(l10n, path);
-    } catch (e, st) {
-      debugPrint('workspace config PDF export failed: $e\n$st');
-      TraceLogger.instance.error(
-          'workspace', 'workspace config PDF export failed',
-          error: e, stackTrace: st);
-      if (!mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
-    } finally {
+          final path = await ref.read(fileSaverProvider)(
+            bytes: bytes,
+            fileName: '${workspace.name}-configuration.pdf',
+          );
+          if (!mounted) return;
+          _announceSaved(l10n, path);
+      },
+    )) {
       if (mounted) setState(() => _busy = false);
+      return;
     }
+    if (mounted) setState(() => _busy = false);
   }
 
   /// Irreversible workspace reset (0039): a destructive dialog that unlocks
@@ -387,35 +384,34 @@ class _WorkspaceSettingsScreenState
     if (confirmed != true || !mounted) return;
 
     setState(() => _busy = true);
-    try {
-      await ref.read(workspaceRepositoryProvider).resetWorkspace(workspace.id);
-      // Refresh every surface that read the now-deleted data.
-      ref
-        ..invalidate(levelsProvider)
-        ..invalidate(floorPlanProvider)
-        ..invalidate(targetNamesProvider)
-        ..invalidate(accessoriesProvider)
-        ..invalidate(seatAccessoriesProvider)
-        ..invalidate(myWorkspacesProvider);
-      invalidateBookingData(ref);
-      if (!mounted) return;
-      AppSnack.success(
-        context,
-        l10n?.workspaceResetDone ?? 'Workspace reset.',
-      );
-    } catch (e, st) {
-      debugPrint('workspace reset failed: $e\n$st');
-      TraceLogger.instance
-          .error('workspace', 'workspace reset failed', error: e, stackTrace: st);
-      if (!mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
-    } finally {
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'workspace reset failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+          await ref.read(workspaceRepositoryProvider).resetWorkspace(workspace.id);
+          // Refresh every surface that read the now-deleted data.
+          ref
+            ..invalidate(levelsProvider)
+            ..invalidate(floorPlanProvider)
+            ..invalidate(targetNamesProvider)
+            ..invalidate(accessoriesProvider)
+            ..invalidate(seatAccessoriesProvider)
+            ..invalidate(myWorkspacesProvider);
+          invalidateBookingData(ref);
+          if (!mounted) return;
+          AppSnack.success(
+            context,
+            l10n?.workspaceResetDone ?? 'Workspace reset.',
+          );
+      },
+    )) {
       if (mounted) setState(() => _busy = false);
+      return;
     }
+    if (mounted) setState(() => _busy = false);
   }
 
   /// User-facing message for a typed parse failure (#164/#165). The

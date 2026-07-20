@@ -5,8 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/trace_logger.dart';
-import '../../../../core/ui/app_snack.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../providers/workspace_providers.dart';
@@ -44,25 +43,24 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Future<void> _run(Future<void> Function() action) async {
     setState(() => _busy = true);
     final l10n = AppLocalizations.of(context);
-    try {
-      await action();
-      ref.invalidate(myWorkspacesProvider);
-      // First-run visits are bounced to /plan by the router redirect; when
-      // opened from Profiles (#89) we pop back to the profile list instead.
-      if (mounted && context.canPop()) context.pop();
-    } catch (e, st) {
-      debugPrint('onboarding action failed: $e\n$st');
-      TraceLogger.instance.error('workspace', 'onboarding action failed',
-          error: e, stackTrace: st);
-      if (!mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
-    } finally {
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'onboarding action failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+          await action();
+          ref.invalidate(myWorkspacesProvider);
+          // First-run visits are bounced to /plan by the router redirect; when
+          // opened from Profiles (#89) we pop back to the profile list instead.
+          if (mounted && context.canPop()) context.pop();
+      },
+    )) {
       if (mounted) setState(() => _busy = false);
+      return;
     }
+    if (mounted) setState(() => _busy = false);
   }
 
   Future<void> _create() async {
