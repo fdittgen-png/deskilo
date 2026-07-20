@@ -114,5 +114,13 @@
   "billPackages": "Day packages",
   "@billPackages": {
     "description": "Bill section header for day packages bought this period (migration 0042); charge lines render trailing"
+  },
+  "payOnlineButton": "Pay online with PayPal",
+  "@payOnlineButton": {
+    "description": "Button on an outstanding bill that starts an online payment (0043)"
+  },
+  "payOnlineNotConfigured": "Online payments aren't set up yet. Ask the workspace owner.",
+  "@payOnlineNotConfigured": {
+    "description": "Shown when the member taps Pay online but the deployment has no payment provider configured"
   }
 }

@@ -15,7 +15,8 @@ enum WorkspaceFeature {
   bookForOthers,
   pushNotifications,
   adminSeatBlocking,
-  accessorySupplements;
+  accessorySupplements,
+  onlinePayments;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -65,6 +66,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // server only bills reservations starting after the activation.
   WorkspaceFeature.accessorySupplements: FeatureManifestEntry(
     feature: WorkspaceFeature.accessorySupplements,
+    defaultOn: false,
+  ),
+  // Online payments let members actually pay their bill through a payment
+  // provider (PayPal first) instead of only recording a manual transfer.
+  // Off until the owner enables it AND the deployment configures the PSP
+  // secrets server-side (see docs/design/payments-integration.md) — the button
+  // stays inert otherwise.
+  WorkspaceFeature.onlinePayments: FeatureManifestEntry(
+    feature: WorkspaceFeature.onlinePayments,
     defaultOn: false,
   ),
 };

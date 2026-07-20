@@ -20,5 +20,7 @@
   "featureAdminSeatBlocking": "Les admins peuvent bloquer des places",
   "featureAdminSeatBlockingDesc": "Les admins marquent des places comme non réservables pour maintenance. Le propriétaire le peut toujours.",
   "featureAccessorySupplements": "Suppléments d'accessoires",
-  "featureAccessorySupplementsDesc": "Facturer les accessoires de place tarifés par demi-journée réservée. S'applique aux réservations à partir de l'activation."
+  "featureAccessorySupplementsDesc": "Facturer les accessoires de place tarifés par demi-journée réservée. S'applique aux réservations à partir de l'activation.",
+  "featureOnlinePayments": "Paiements en ligne",
+  "featureOnlinePaymentsDesc": "Permettre aux membres de payer leur facture en ligne (PayPal). Nécessite la configuration du prestataire de paiement sur le serveur."
 }

@@ -18,5 +18,7 @@
   "entitlementBlockedFull": "Du hast diesen Monat alle Tage aufgebraucht. Bitte eine Administratorin um mehr oder beantrage unten zusätzliche Halbtage.",
   "entitlementPaygRate": "Tage über deinen Tarif hinaus kosten je {rate}.",
   "entitlementPackageFull": "Du hast diesen Monat alle Tage aufgebraucht. Kaufe ein Paket, um weiter zu buchen.",
-  "billPackages": "Tagespakete"
+  "billPackages": "Tagespakete",
+  "payOnlineButton": "Online mit PayPal bezahlen",
+  "payOnlineNotConfigured": "Online-Zahlungen sind noch nicht eingerichtet. Frag die Workspace-Inhaberin."
 }

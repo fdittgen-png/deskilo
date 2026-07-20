@@ -83,5 +83,13 @@
   "featureAccessorySupplementsDesc": "Bill priced seat accessories per booked half-day. Applies to bookings from activation on.",
   "@featureAccessorySupplementsDesc": {
     "description": "One-line description under the accessory-supplements switch (#170); no retroactive charging"
+  },
+  "featureOnlinePayments": "Online payments",
+  "@featureOnlinePayments": {
+    "description": "Feature switch: members pay their bill through a payment provider (0043)"
+  },
+  "featureOnlinePaymentsDesc": "Let members pay their bill online (PayPal). Needs the payment provider configured on the server.",
+  "@featureOnlinePaymentsDesc": {
+    "description": "One-line description under the online-payments switch (0043)"
   }
 }

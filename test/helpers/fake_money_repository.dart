@@ -357,4 +357,22 @@ class FakeMoneyRepository implements MoneyRepository {
     boughtPackages.add((workspaceId, packageId));
     return 'ext-${boughtPackages.length}';
   }
+
+  /// Amounts (cents) passed to createPaymentOrder.
+  final paymentOrders = <int>[];
+
+  /// Approval URL the fake returns; null models an unconfigured deployment
+  /// (the default), a Uri models a configured one.
+  Uri? paymentApprovalUrl;
+
+  @override
+  Future<Uri?> createPaymentOrder({
+    required String workspaceId,
+    required String memberId,
+    required int amountCents,
+    required String period,
+  }) async {
+    paymentOrders.add(amountCents);
+    return paymentApprovalUrl;
+  }
 }

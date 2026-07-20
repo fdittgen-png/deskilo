@@ -18,5 +18,7 @@
   "entitlementBlockedFull": "Has usado todos tus días este mes. Pide más a un administrador o solicita medias jornadas extra abajo.",
   "entitlementPaygRate": "Los días que superen tu plan se cobran a {rate} cada uno.",
   "entitlementPackageFull": "Has usado todos tus días este mes. Compra un paquete para seguir reservando.",
-  "billPackages": "Paquetes de días"
+  "billPackages": "Paquetes de días",
+  "payOnlineButton": "Pagar en línea con PayPal",
+  "payOnlineNotConfigured": "Los pagos en línea aún no están configurados. Pregunta al propietario del espacio."
 }

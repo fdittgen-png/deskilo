@@ -18,5 +18,7 @@
   "entitlementBlockedFull": "Hai usato tutti i tuoi giorni questo mese. Chiedine altri a un amministratore o richiedi mezze giornate extra qui sotto.",
   "entitlementPaygRate": "I giorni oltre il tuo piano costano {rate} ciascuno.",
   "entitlementPackageFull": "Hai usato tutti i tuoi giorni questo mese. Acquista un pacchetto per continuare a prenotare.",
-  "billPackages": "Pacchetti di giorni"
+  "billPackages": "Pacchetti di giorni",
+  "payOnlineButton": "Paga online con PayPal",
+  "payOnlineNotConfigured": "I pagamenti online non sono ancora configurati. Chiedi al proprietario dello spazio."
 }

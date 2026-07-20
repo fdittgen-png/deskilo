@@ -542,6 +542,18 @@ abstract class AppLocalizations {
   /// **'Day packages'**
   String get billPackages;
 
+  /// Button on an outstanding bill that starts an online payment (0043)
+  ///
+  /// In en, this message translates to:
+  /// **'Pay online with PayPal'**
+  String get payOnlineButton;
+
+  /// Shown when the member taps Pay online but the deployment has no payment provider configured
+  ///
+  /// In en, this message translates to:
+  /// **'Online payments aren\'t set up yet. Ask the workspace owner.'**
+  String get payOnlineNotConfigured;
+
   /// Document title on the exported bill PDF (#133)
   ///
   /// In en, this message translates to:
@@ -1645,6 +1657,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Bill priced seat accessories per booked half-day. Applies to bookings from activation on.'**
   String get featureAccessorySupplementsDesc;
+
+  /// Feature switch: members pay their bill through a payment provider (0043)
+  ///
+  /// In en, this message translates to:
+  /// **'Online payments'**
+  String get featureOnlinePayments;
+
+  /// One-line description under the online-payments switch (0043)
+  ///
+  /// In en, this message translates to:
+  /// **'Let members pay their bill online (PayPal). Needs the payment provider configured on the server.'**
+  String get featureOnlinePaymentsDesc;
 
   /// Settings entry and dialog title for the in-app language selection
   ///

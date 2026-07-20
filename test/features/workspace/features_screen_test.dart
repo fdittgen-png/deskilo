@@ -58,16 +58,17 @@ void main() {
       find.byType(SwitchListTile),
       findsNWidgets(featureManifest.length),
     );
-    // Everything defaults ON — except adminSeatBlocking (#161) and
-    // accessorySupplements (#170), which the owner must explicitly
-    // activate.
+    // Everything defaults ON — except adminSeatBlocking (#161),
+    // accessorySupplements (#170) and onlinePayments (0043), which the
+    // owner must explicitly activate.
     expect(switchTitled(tester, 'Admins can block seats').value, isFalse);
     expect(switchTitled(tester, 'Accessory supplements').value, isFalse);
+    expect(switchTitled(tester, 'Online payments').value, isFalse);
     final onCount = tester
         .widgetList<SwitchListTile>(find.byType(SwitchListTile))
         .where((t) => t.value)
         .length;
-    expect(onCount, featureManifest.length - 2);
+    expect(onCount, featureManifest.length - 3);
   });
 
   testWidgets('toggling a feature persists the full map and flips the switch',
@@ -86,7 +87,8 @@ void main() {
     expect(
       flags.entries.where((e) => e.value == false).map((e) => e.key),
       unorderedEquals(
-        ['moneyTab', 'adminSeatBlocking', 'accessorySupplements'],
+        ['moneyTab', 'adminSeatBlocking', 'accessorySupplements',
+          'onlinePayments'],
       ),
     );
     expect(switchTitled(tester, 'Money tab').value, isFalse);

@@ -251,6 +251,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get billPackages => 'Day packages';
 
   @override
+  String get payOnlineButton => 'Pay online with PayPal';
+
+  @override
+  String get payOnlineNotConfigured =>
+      'Online payments aren\'t set up yet. Ask the workspace owner.';
+
+  @override
   String get billPdfTitle => 'Monthly bill';
 
   @override
@@ -857,6 +864,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureAccessorySupplementsDesc =>
       'Bill priced seat accessories per booked half-day. Applies to bookings from activation on.';
+
+  @override
+  String get featureOnlinePayments => 'Online payments';
+
+  @override
+  String get featureOnlinePaymentsDesc =>
+      'Let members pay their bill online (PayPal). Needs the payment provider configured on the server.';
 
   @override
   String get languageTitle => 'Language';

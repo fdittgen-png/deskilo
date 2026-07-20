@@ -28,6 +28,8 @@ class BillView extends StatelessWidget {
     required this.currencyCode,
     required this.memberId,
     this.paymentInstructions = const PaymentInstructions(),
+    this.onlinePaymentsEnabled = false,
+    this.onPayOnline,
   });
 
   final Statement statement;
@@ -39,6 +41,16 @@ class BillView extends StatelessWidget {
   /// #155 — the workspace's how-to-pay details; rendered below the
   /// balance footer only while the statement is outstanding.
   final PaymentInstructions paymentInstructions;
+
+  /// Whether the workspace enabled online payments (0043 scaffolding). When
+  /// true and the statement is outstanding, the how-to-pay card shows a
+  /// "Pay online" button that calls [onPayOnline] with the owed amount.
+  final bool onlinePaymentsEnabled;
+
+  /// Called with the outstanding amount in cents when the member taps the
+  /// online-payment button. Owned by the Money screen (it has the ref to
+  /// start the provider order and open the approval URL).
+  final void Function(int amountCents)? onPayOnline;
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +91,18 @@ class BillView extends StatelessWidget {
         const SizedBox(height: 8),
         _BalanceFooter(statement: statement, money: money),
         // #155 — how to pay, only while something is owed (spec §7:
-        // "shown on unpaid statements") and only when the owner
-        // configured anything at all.
-        if (!statement.isSettled && !paymentInstructions.isEmpty) ...[
+        // "shown on unpaid statements") and only when the owner configured
+        // manual instructions or enabled online payments.
+        if (!statement.isSettled &&
+            (!paymentInstructions.isEmpty ||
+                (onlinePaymentsEnabled && onPayOnline != null))) ...[
           const SizedBox(height: 8),
-          _HowToPayCard(instructions: paymentInstructions),
+          _HowToPayCard(
+            instructions: paymentInstructions,
+            onPayOnline: onlinePaymentsEnabled && onPayOnline != null
+                ? () => onPayOnline!(-statement.balanceCents)
+                : null,
+          ),
         ],
       ],
     );
@@ -95,9 +114,12 @@ class BillView extends StatelessWidget {
 /// plain text. Purely informational — recording a payment stays the
 /// separate spec §8 confirmation flow.
 class _HowToPayCard extends StatelessWidget {
-  const _HowToPayCard({required this.instructions});
+  const _HowToPayCard({required this.instructions, this.onPayOnline});
 
   final PaymentInstructions instructions;
+
+  /// When non-null, a "Pay online" button heads the card (0043).
+  final VoidCallback? onPayOnline;
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +138,16 @@ class _HowToPayCard extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
+            if (onPayOnline != null)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: FilledButton.icon(
+                  key: const Key('pay-online-button'),
+                  onPressed: onPayOnline,
+                  icon: const Icon(Icons.account_balance_wallet_outlined),
+                  label: Text(l10n?.payOnlineButton ?? 'Pay online with PayPal'),
+                ),
+              ),
             if (instructions.iban.trim().isNotEmpty)
               _CopyTile(
                 key: const Key('howToPayIban'),
