@@ -881,10 +881,17 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     final level =
         levels.where((l) => l.id == _levelId).firstOrNull ?? levels.first;
     final planAsync = ref.watch(floorPlanProvider(level.id));
-    final reservations = ref
-            .watch(reservationsForDayProvider(dayKeyOf(window.start)))
-            .value ??
-        const <Reservation>[];
+    // The window may straddle TWO device-day keys (a workspace-clock full day
+    // starts before the device midnight west of the workspace); reading only
+    // dayKeyOf(start) misses those bookings — the reservation-shows-on-Plan-
+    // not-on-Reserve bug. Fetch every key the window touches and merge by id.
+    final reservations = <String, Reservation>{
+      for (final key in dayKeysForWindow(window.start, window.end))
+        for (final r
+            in ref.watch(reservationsForDayProvider(key)).value ??
+                const <Reservation>[])
+          r.id: r,
+    }.values.toList();
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     final names = ref.watch(memberNamesProvider).value ?? const {};
 

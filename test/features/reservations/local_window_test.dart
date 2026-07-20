@@ -77,4 +77,29 @@ void main() {
     expect(repo.from, DateTime(2026, 7, 9));
     expect(repo.to, DateTime(2026, 7, 10));
   });
+
+  group('dayKeysForWindow', () {
+    test('a window inside one local day touches a single key', () {
+      final start = DateTime(2026, 7, 20, 9);
+      final end = DateTime(2026, 7, 20, 13);
+      expect(dayKeysForWindow(start, end), ['2026-07-20']);
+    });
+
+    test('a full workspace-day window straddling the local midnight touches '
+        'BOTH keys (the Reserve-hub miss)', () {
+      // A full day stored as Jul 20 00:00 Europe/Paris = Jul 19 22:00Z →
+      // Jul 20 22:00Z. In a UTC test env dayKeyOf(start) is the 19th, so a
+      // single-key read (dayKeyOf(start)) would miss the 20th's bookings.
+      final start = DateTime.utc(2026, 7, 19, 22);
+      final end = DateTime.utc(2026, 7, 20, 22);
+      expect(dayKeysForWindow(start, end), ['2026-07-19', '2026-07-20']);
+    });
+
+    test('the end boundary is exclusive — a window ending at midnight does '
+        'not spill into the next day', () {
+      final start = DateTime(2026, 7, 20);
+      final end = DateTime(2026, 7, 21); // exactly next local midnight
+      expect(dayKeysForWindow(start, end), ['2026-07-20']);
+    });
+  });
 }
