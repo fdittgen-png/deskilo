@@ -20,5 +20,7 @@
   "featureAdminSeatBlocking": "Gli admin possono bloccare i posti",
   "featureAdminSeatBlockingDesc": "Gli admin contrassegnano i posti come non prenotabili per manutenzione. Il proprietario può sempre.",
   "featureAccessorySupplements": "Supplementi accessori",
-  "featureAccessorySupplementsDesc": "Fattura gli accessori del posto con prezzo per mezza giornata prenotata. Vale per le prenotazioni dall'attivazione in poi."
+  "featureAccessorySupplementsDesc": "Fattura gli accessori del posto con prezzo per mezza giornata prenotata. Vale per le prenotazioni dall'attivazione in poi.",
+  "featureOnlinePayments": "Pagamenti online",
+  "featureOnlinePaymentsDesc": "Consenti ai membri di pagare la fattura online (PayPal). Richiede la configurazione del fornitore di pagamento sul server."
 }

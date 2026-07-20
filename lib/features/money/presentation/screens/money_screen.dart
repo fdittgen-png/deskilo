@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -550,6 +551,55 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     invalidateBookingData(ref);
   }
 
+  /// Starts an online payment for [amountCents] (0043 scaffolding). Opens
+  /// the payment provider's approval URL when the deployment is configured;
+  /// otherwise tells the member online payments are not set up. Inert until
+  /// the server carries the PSP secrets (docs/design/payments-integration.md).
+  Future<void> _payOnline(int amountCents) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    final member = ref.read(myMemberProvider).value;
+    if (workspace == null || member == null || amountCents <= 0) return;
+    Uri? url;
+    try {
+      url = await ref.read(moneyRepositoryProvider).createPaymentOrder(
+            workspaceId: workspace.id,
+            memberId: member.id,
+            amountCents: amountCents,
+            period: _period,
+          );
+    } catch (e, st) {
+      debugPrint('create payment order failed: $e\n$st');
+      TraceLogger.instance.error(
+          'money', 'create payment order failed',
+          error: e, stackTrace: st);
+      if (!mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
+      return;
+    }
+    if (!mounted) return;
+    if (url == null) {
+      AppSnack.info(
+        context,
+        l10n?.payOnlineNotConfigured ??
+            "Online payments aren't set up yet. Ask the workspace owner.",
+      );
+      return;
+    }
+    try {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } catch (e, st) {
+      debugPrint('payment url launch failed: $e\n$st');
+      TraceLogger.instance.error(
+          'money', 'payment url launch failed',
+          error: e, stackTrace: st);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -610,6 +660,10 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 paymentInstructions: PaymentInstructions.fromDb(
                   workspace?.paymentInstructions ?? const {},
                 ),
+                // 0043 — online-payment button, gated by the feature flag.
+                onlinePaymentsEnabled:
+                    features.contains(WorkspaceFeature.onlinePayments),
+                onPayOnline: _payOnline,
               ),
             const SizedBox(height: 8),
             FilledButton.icon(

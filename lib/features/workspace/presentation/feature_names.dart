@@ -22,4 +22,6 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureAdminSeatBlocking ?? 'Admins can block seats',
       WorkspaceFeature.accessorySupplements =>
         l10n?.featureAccessorySupplements ?? 'Accessory supplements',
+      WorkspaceFeature.onlinePayments =>
+        l10n?.featureOnlinePayments ?? 'Online payments',
     };

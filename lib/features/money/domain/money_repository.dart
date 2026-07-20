@@ -120,4 +120,17 @@ abstract class MoneyRepository {
   /// member whose over-consumption policy is 'package' may buy. Returns the
   /// quota-extension id.
   Future<String> buyPackage(String workspaceId, String packageId);
+
+  /// Starts an online payment for [amountCents] of the member's bill via
+  /// the server-side payment function (`create-payment-order`, see
+  /// docs/design/payments-integration.md). Returns the payment provider's
+  /// approval URL to open, or null when online payments are not configured
+  /// on this deployment (the function replies `not_configured`). Throws on
+  /// transport/provider errors.
+  Future<Uri?> createPaymentOrder({
+    required String workspaceId,
+    required String memberId,
+    required int amountCents,
+    required String period,
+  });
 }

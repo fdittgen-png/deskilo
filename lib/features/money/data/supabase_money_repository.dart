@@ -288,4 +288,33 @@ class SupabaseMoneyRepository implements MoneyRepository {
     });
     return result as String;
   }
+
+  @override
+  Future<Uri?> createPaymentOrder({
+    required String workspaceId,
+    required String memberId,
+    required int amountCents,
+    required String period,
+  }) async {
+    // The Edge Function holds the PSP secrets and creates the provider
+    // order server-side (docs/design/payments-integration.md). Until a deployment
+    // configures those secrets it replies {status: 'not_configured'}.
+    final response = await _client.functions.invoke(
+      'create-payment-order',
+      body: {
+        'workspace_id': workspaceId,
+        'member_id': memberId,
+        'amount_cents': amountCents,
+        'period': period,
+      },
+    );
+    final data = response.data;
+    if (data is! Map) return null;
+    if (data['status'] == 'not_configured') return null;
+    final approveUrl = data['approve_url'];
+    if (approveUrl is String && approveUrl.isNotEmpty) {
+      return Uri.parse(approveUrl);
+    }
+    return null;
+  }
 }

@@ -186,6 +186,42 @@ void main() {
   });
 
   testWidgets(
+      'with online payments on, an outstanding bill offers Pay online and '
+      'starts the order for the owed amount (0043)', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+      featureFlags: const {'onlinePayments': true},
+    );
+    final money = FakeMoneyRepository(); // owes €16.00 (balance −1600)
+    await pumpMoney(tester, money: money, workspace: workspace);
+
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('pay-online-button')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.ensureVisible(find.byKey(const Key('pay-online-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('pay-online-button')));
+    await tester.pumpAndSettle();
+
+    // The order is started for the owed amount; the fake returns no URL
+    // (unconfigured deployment), so the member is told it isn't set up.
+    expect(money.paymentOrders, [1600]);
+    expect(find.textContaining("aren't set up yet"), findsOneWidget);
+  });
+
+  testWidgets('online payments off hides the Pay-online button (0043)',
+      (tester) async {
+    // Instructions present so the how-to-pay card renders, but the feature
+    // is off → no online button.
+    await pumpMoney(tester, workspace: workspaceWithInstructions());
+
+    expect(find.byKey(const Key('howToPayIban')), findsOneWidget);
+    expect(find.byKey(const Key('pay-online-button')), findsNothing);
+  });
+
+  testWidgets(
       'a non-zero accessory supplement (#170) renders its own bill line '
       'with the amount', (tester) async {
     final money = FakeMoneyRepository();

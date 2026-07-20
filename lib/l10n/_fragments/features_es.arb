@@ -20,5 +20,7 @@
   "featureAdminSeatBlocking": "Los administradores pueden bloquear sitios",
   "featureAdminSeatBlockingDesc": "Los administradores marcan sitios como no reservables por mantenimiento. El propietario siempre puede.",
   "featureAccessorySupplements": "Suplementos de accesorios",
-  "featureAccessorySupplementsDesc": "Facturar los accesorios de sitio con precio por media jornada reservada. Se aplica a las reservas desde la activación."
+  "featureAccessorySupplementsDesc": "Facturar los accesorios de sitio con precio por media jornada reservada. Se aplica a las reservas desde la activación.",
+  "featureOnlinePayments": "Pagos en línea",
+  "featureOnlinePaymentsDesc": "Permite a los miembros pagar su factura en línea (PayPal). Requiere configurar el proveedor de pago en el servidor."
 }

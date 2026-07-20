@@ -20,5 +20,7 @@
   "featureAdminSeatBlocking": "Admins können Plätze sperren",
   "featureAdminSeatBlockingDesc": "Admins markieren Plätze als nicht reservierbar für Wartung. Der Inhaber kann es immer.",
   "featureAccessorySupplements": "Zubehör-Aufpreise",
-  "featureAccessorySupplementsDesc": "Bepreistes Platz-Zubehör pro gebuchtem Halbtag berechnen. Gilt für Buchungen ab der Aktivierung."
+  "featureAccessorySupplementsDesc": "Bepreistes Platz-Zubehör pro gebuchtem Halbtag berechnen. Gilt für Buchungen ab der Aktivierung.",
+  "featureOnlinePayments": "Online-Zahlungen",
+  "featureOnlinePaymentsDesc": "Mitglieder zahlen ihre Rechnung online (PayPal). Erfordert die Einrichtung des Zahlungsanbieters auf dem Server."
 }

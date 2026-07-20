@@ -251,6 +251,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get billPackages => 'Paquetes de días';
 
   @override
+  String get payOnlineButton => 'Pagar en línea con PayPal';
+
+  @override
+  String get payOnlineNotConfigured =>
+      'Los pagos en línea aún no están configurados. Pregunta al propietario del espacio.';
+
+  @override
   String get billPdfTitle => 'Factura mensual';
 
   @override
@@ -862,6 +869,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureAccessorySupplementsDesc =>
       'Facturar los accesorios de sitio con precio por media jornada reservada. Se aplica a las reservas desde la activación.';
+
+  @override
+  String get featureOnlinePayments => 'Pagos en línea';
+
+  @override
+  String get featureOnlinePaymentsDesc =>
+      'Permite a los miembros pagar su factura en línea (PayPal). Requiere configurar el proveedor de pago en el servidor.';
 
   @override
   String get languageTitle => 'Idioma';

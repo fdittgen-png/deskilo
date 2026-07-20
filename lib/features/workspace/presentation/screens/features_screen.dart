@@ -48,6 +48,10 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureAccessorySupplementsDesc ??
               'Bill priced seat accessories per booked half-day. '
                   'Applies to bookings from activation on.',
+        WorkspaceFeature.onlinePayments =>
+          l10n?.featureOnlinePaymentsDesc ??
+              'Let members pay their bill online (PayPal). Needs the '
+                  'payment provider configured on the server.',
       };
 
   Future<void> _toggle(
