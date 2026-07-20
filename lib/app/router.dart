@@ -29,6 +29,7 @@ import '../features/workspace/presentation/screens/scan_join_screen.dart';
 import '../features/workspace/presentation/screens/workspace_code_screen.dart';
 import '../features/workspace/presentation/screens/workspace_settings_screen.dart';
 import '../features/workspace/providers/workspace_providers.dart';
+import '../features/kiosk/presentation/screens/kiosk_screen.dart';
 import 'shell/shell_screen.dart';
 
 part 'router.g.dart';
@@ -58,7 +59,10 @@ GoRouter router(Ref ref) {
     // Feature flags follow the ACTIVE workspace (#146): switching
     // profiles must re-evaluate the redirects even when the workspace
     // list itself did not change.
-    ..listen(enabledFeaturesProvider, (_, _) => refresh.value++);
+    ..listen(enabledFeaturesProvider, (_, _) => refresh.value++)
+    // Kiosk lock (0043): the active membership decides whether the app is
+    // a wall tablet — re-evaluate when it resolves or changes.
+    ..listen(myMemberProvider, (_, _) => refresh.value++);
 
   /// Whether [feature] is enabled for the active workspace (#146).
   /// Defaults (everything ON) while the workspace is still loading, so
@@ -91,12 +95,24 @@ GoRouter router(Ref ref) {
         if (list.isEmpty && !atOnboarding) return '/onboarding?first=1';
         if (list.isNotEmpty && atOnboarding && firstRun) return '/reserve';
       }
+
+      // Kiosk lock (0043): a kiosk account IS the wall tablet — every
+      // route collapses to the kiosk plan view, and a regular member can
+      // never land on it.
+      final me = ref.read(myMemberProvider).value;
+      final atKiosk = state.matchedLocation == '/kiosk';
+      if (me != null && me.isKiosk && !atKiosk) return '/kiosk';
+      if ((me == null || !me.isKiosk) && atKiosk) return '/reserve';
       return null;
     },
     routes: [
       GoRoute(
         path: '/auth',
         builder: (context, state) => const AuthScreen(),
+      ),
+      GoRoute(
+        path: '/kiosk',
+        builder: (context, state) => const KioskScreen(),
       ),
       GoRoute(
         path: '/onboarding',

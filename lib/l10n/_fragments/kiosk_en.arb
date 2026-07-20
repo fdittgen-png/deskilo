@@ -52,5 +52,45 @@
   "commonClose": "Close",
   "@commonClose": {
     "description": "Generic dialog close action"
+  },
+  "kioskCheckIn": "Check in",
+  "@kioskCheckIn": {
+    "description": "Kiosk seat action: walk-up check-in (or into an existing reservation)"
+  },
+  "kioskReserve": "Reserve",
+  "@kioskReserve": {
+    "description": "Kiosk seat action: reserve the seat for today's window"
+  },
+  "kioskCheckOut": "Check out",
+  "@kioskCheckOut": {
+    "description": "Kiosk seat action: complete the badge member's active check-in"
+  },
+  "kioskPresentBadge": "Present your badge",
+  "@kioskPresentBadge": {
+    "description": "Title of the kiosk badge prompt sheet"
+  },
+  "kioskBadgeHint": "Scan your badge QR, or type its code.",
+  "@kioskBadgeHint": {
+    "description": "Explainer in the badge prompt: wedge scanners type into the field"
+  },
+  "kioskBadgeFieldLabel": "Badge code",
+  "@kioskBadgeFieldLabel": {
+    "description": "Label of the badge-code input"
+  },
+  "kioskBadgeConfirm": "Confirm",
+  "@kioskBadgeConfirm": {
+    "description": "Submit button of the badge prompt"
+  },
+  "kioskBadgeRejected": "Badge not recognized.",
+  "@kioskBadgeRejected": {
+    "description": "Error when kiosk_act rejects the presented badge (unknown/revoked)"
+  },
+  "kioskDone": "Done — you're all set.",
+  "@kioskDone": {
+    "description": "Success snackbar after a kiosk operation; the member is signed out already"
+  },
+  "kioskTapHint": "Tap a seat to check in",
+  "@kioskTapHint": {
+    "description": "Header hint on the kiosk plan view"
   }
 }

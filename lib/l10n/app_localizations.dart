@@ -1742,6 +1742,66 @@ abstract class AppLocalizations {
   /// **'Close'**
   String get commonClose;
 
+  /// Kiosk seat action: walk-up check-in (or into an existing reservation)
+  ///
+  /// In en, this message translates to:
+  /// **'Check in'**
+  String get kioskCheckIn;
+
+  /// Kiosk seat action: reserve the seat for today's window
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve'**
+  String get kioskReserve;
+
+  /// Kiosk seat action: complete the badge member's active check-in
+  ///
+  /// In en, this message translates to:
+  /// **'Check out'**
+  String get kioskCheckOut;
+
+  /// Title of the kiosk badge prompt sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Present your badge'**
+  String get kioskPresentBadge;
+
+  /// Explainer in the badge prompt: wedge scanners type into the field
+  ///
+  /// In en, this message translates to:
+  /// **'Scan your badge QR, or type its code.'**
+  String get kioskBadgeHint;
+
+  /// Label of the badge-code input
+  ///
+  /// In en, this message translates to:
+  /// **'Badge code'**
+  String get kioskBadgeFieldLabel;
+
+  /// Submit button of the badge prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get kioskBadgeConfirm;
+
+  /// Error when kiosk_act rejects the presented badge (unknown/revoked)
+  ///
+  /// In en, this message translates to:
+  /// **'Badge not recognized.'**
+  String get kioskBadgeRejected;
+
+  /// Success snackbar after a kiosk operation; the member is signed out already
+  ///
+  /// In en, this message translates to:
+  /// **'Done — you\'re all set.'**
+  String get kioskDone;
+
+  /// Header hint on the kiosk plan view
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a seat to check in'**
+  String get kioskTapHint;
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:

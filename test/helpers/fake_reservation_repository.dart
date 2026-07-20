@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+import 'package:supabase_flutter/supabase_flutter.dart'
+    show PostgrestException;
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 
@@ -142,6 +144,11 @@ class FakeReservationRepository implements ReservationRepository {
     DateTime? startsAt,
     DateTime? endsAt,
   }) async {
+    // The sentinel token models an unknown/revoked badge (kiosk_act's
+    // pinned refusal, 0043).
+    if (badgeToken == 'bad-badge') {
+      throw const PostgrestException(message: 'badge not recognized');
+    }
     kioskActs.add((action: action, badgeToken: badgeToken, seatId: seatId));
     return 'res-kiosk-${kioskActs.length}';
   }

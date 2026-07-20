@@ -921,6 +921,37 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonClose => 'Fermer';
 
   @override
+  String get kioskCheckIn => 'Arrivée';
+
+  @override
+  String get kioskReserve => 'Réserver';
+
+  @override
+  String get kioskCheckOut => 'Départ';
+
+  @override
+  String get kioskPresentBadge => 'Présentez votre badge';
+
+  @override
+  String get kioskBadgeHint =>
+      'Scannez le QR de votre badge, ou saisissez son code.';
+
+  @override
+  String get kioskBadgeFieldLabel => 'Code du badge';
+
+  @override
+  String get kioskBadgeConfirm => 'Confirmer';
+
+  @override
+  String get kioskBadgeRejected => 'Badge non reconnu.';
+
+  @override
+  String get kioskDone => 'C\'est fait — tout est en ordre.';
+
+  @override
+  String get kioskTapHint => 'Touchez une place pour pointer';
+
+  @override
   String get languageTitle => 'Langue';
 
   @override
