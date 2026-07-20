@@ -86,3 +86,16 @@ String dayKeyOf(DateTime at) {
   final d = local.day.toString().padLeft(2, '0');
   return '${local.year}-$m-$d';
 }
+
+/// The [reservationsForDay] keys a half-open window `[start, end)` touches —
+/// one when it stays inside a device day, two when it straddles the local
+/// midnight. A workspace-clock day window (day-based granularity) starts on
+/// the previous device date when the device sits west of the workspace, so a
+/// full-day booking lands under the OTHER key; a surface that reads only
+/// `dayKeyOf(start)` misses it (the bug where a reservation showed on the
+/// Plan tab but not the Reserve hub). Fetch both and merge.
+List<String> dayKeysForWindow(DateTime start, DateTime end) {
+  final startKey = dayKeyOf(start);
+  final endKey = dayKeyOf(end.subtract(const Duration(microseconds: 1)));
+  return startKey == endKey ? [startKey] : [startKey, endKey];
+}
