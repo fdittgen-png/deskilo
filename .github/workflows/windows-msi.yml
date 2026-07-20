@@ -52,7 +52,10 @@ jobs:
           "msi=$msi" >> $env:GITHUB_OUTPUT
 
       - name: Install WiX toolset
-        run: dotnet tool install --global wix
+        # Pinned to v5: WiX v7+ requires accepting the Open Source
+        # Maintenance Fee EULA (WIX7015); v5 is free and uses the same
+        # v4/v5 authoring schema as deskilo.wxs.
+        run: dotnet tool install --global wix --version 5.0.2
 
       - name: Package MSI
         shell: pwsh
