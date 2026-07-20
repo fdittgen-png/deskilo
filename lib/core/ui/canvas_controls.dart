@@ -30,13 +30,20 @@ class CanvasControls extends StatefulWidget {
     super.key,
     required this.controller,
     required this.contentSize,
-    this.minScale = 0.4,
-    this.maxScale = 3,
-    this.boundaryMargin = 200,
+    this.minScale = defaultMinScale,
+    this.maxScale = defaultMaxScale,
+    this.boundaryMargin = defaultBoundaryMargin,
     this.zoomStep = 1.4,
     this.fitBounds,
     this.fitKey,
   });
+
+  /// Canonical zoom limits and pan margin of every plan canvas (live plan,
+  /// Reserve hub, editor). The paired [InteractiveViewer] must use the same
+  /// values — reference these instead of re-declaring the numbers.
+  static const double defaultMinScale = 0.4;
+  static const double defaultMaxScale = 3;
+  static const double defaultBoundaryMargin = 200;
 
   final TransformationController controller;
   final Size contentSize;

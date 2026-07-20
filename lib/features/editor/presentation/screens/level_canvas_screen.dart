@@ -24,14 +24,17 @@ import '../../../plan/providers/accessory_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../../plan/presentation/widgets/floor_plan_painter.dart';
+import '../../../plan/presentation/widgets/plan_canvas.dart';
 
 enum EditorTool { select, office, desk, seat, image, erase }
 
-/// Canvas dimensions in grid cells and the logical cell size at scale 1.
+/// Canvas dimensions in grid cells and the logical cell size at scale 1 —
+/// aliases of the shared [PlanCanvasMetrics] so the editor can never drift
+/// from the live plan / Reserve hub geometry.
 abstract final class GridCanvas {
-  static const int widthCells = 120;
-  static const int heightCells = 120;
-  static const double cellSize = 14;
+  static const int widthCells = PlanCanvasMetrics.cells;
+  static const int heightCells = PlanCanvasMetrics.cells;
+  static const double cellSize = PlanCanvasMetrics.cellSize;
 }
 
 /// Draw offices and desks on a level's grid (spec §10). Pan/zoom with the
@@ -981,11 +984,12 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
         InteractiveViewer(
       transformationController: _viewTransform,
       constrained: false,
-      minScale: 0.4,
-      maxScale: 3,
+      minScale: CanvasControls.defaultMinScale,
+      maxScale: CanvasControls.defaultMaxScale,
       panEnabled: !drawing && !selecting,
       scaleEnabled: !drawing && !selecting,
-      boundaryMargin: const EdgeInsets.all(200),
+      boundaryMargin:
+          const EdgeInsets.all(CanvasControls.defaultBoundaryMargin),
       child: GestureDetector(
         // `down` so onPanStart reports the touch-down cell, not the position
         // where the drag cleared the touch slop.
