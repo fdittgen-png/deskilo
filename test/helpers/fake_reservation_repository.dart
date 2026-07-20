@@ -130,6 +130,22 @@ class FakeReservationRepository implements ReservationRepository {
     );
   }
 
+  /// (action, badgeToken, seatId) of kiosk_act calls (0043).
+  final kioskActs = <({String action, String badgeToken, String? seatId})>[];
+
+  @override
+  Future<String> kioskAct({
+    required String workspaceId,
+    required String badgeToken,
+    required String action,
+    String? seatId,
+    DateTime? startsAt,
+    DateTime? endsAt,
+  }) async {
+    kioskActs.add((action: action, badgeToken: badgeToken, seatId: seatId));
+    return 'res-kiosk-${kioskActs.length}';
+  }
+
   @override
   Future<void> checkOut(String reservationId) async {
     final r = _byId(reservationId);

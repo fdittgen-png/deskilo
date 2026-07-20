@@ -1,0 +1,56 @@
+{
+  "@@locale": "en",
+  "memberKioskLabel": "Kiosk",
+  "@memberKioskLabel": {
+    "description": "Subtitle chip of a kiosk device account in the members list (0043)"
+  },
+  "memberMakeKiosk": "Make kiosk device",
+  "@memberMakeKiosk": {
+    "description": "Owner action flagging a member account as a wall-mounted kiosk"
+  },
+  "memberUnmakeKiosk": "Revert kiosk to member",
+  "@memberUnmakeKiosk": {
+    "description": "Owner action reverting a kiosk account to a regular member"
+  },
+  "memberBadgesTooltip": "Badges",
+  "@memberBadgesTooltip": {
+    "description": "Tooltip of the badge-manager button on a member row"
+  },
+  "memberBadgesTitle": "Badges — {name}",
+  "@memberBadgesTitle": {
+    "description": "Title of a member's badge-manager dialog",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeIssue": "New badge",
+  "@badgeIssue": {
+    "description": "Button minting a new kiosk badge for the member"
+  },
+  "badgeTokenOnce": "Save this QR now — it is shown only once.",
+  "@badgeTokenOnce": {
+    "description": "Warning under the freshly issued badge QR; the raw token is never recoverable later"
+  },
+  "badgeNone": "No badges yet.",
+  "@badgeNone": {
+    "description": "Empty state of the badge list"
+  },
+  "badgeDefaultLabel": "Badge",
+  "@badgeDefaultLabel": {
+    "description": "Fallback name of an unlabelled badge"
+  },
+  "badgeRevoke": "Revoke",
+  "@badgeRevoke": {
+    "description": "Button revoking a badge (kiosks reject it from then on)"
+  },
+  "badgeRevoked": "Revoked",
+  "@badgeRevoked": {
+    "description": "State line under a revoked badge"
+  },
+  "commonClose": "Close",
+  "@commonClose": {
+    "description": "Generic dialog close action"
+  }
+}

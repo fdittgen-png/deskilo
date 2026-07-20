@@ -2,6 +2,7 @@
 import 'booking_granularity.dart';
 import 'closure_day.dart';
 import 'member.dart';
+import 'member_badge.dart';
 import 'overage_policy.dart';
 import 'payment_instructions.dart';
 import 'workspace.dart';
@@ -77,6 +78,26 @@ abstract class WorkspaceRepository {
     String memberId,
     OveragePolicy policy,
   );
+
+  /// Owner-only (RPC `set_member_kiosk`, migration 0043): flag a member
+  /// account as a wall-mounted kiosk device (or back to a regular member).
+  Future<void> setMemberKiosk(String memberId, {required bool isKiosk});
+
+  /// Kiosk badges of the workspace (admin view; RLS also lets a member
+  /// read their own).
+  Future<List<MemberBadge>> fetchMemberBadges(String workspaceId);
+
+  /// Admin-only (RPC `issue_member_badge`): mints a badge for [memberId]
+  /// and returns the RAW token exactly once — render it as a QR and let
+  /// it go; the server keeps only the hash.
+  Future<IssuedBadge> issueMemberBadge(
+    String workspaceId,
+    String memberId, {
+    String label,
+  });
+
+  /// Admin-only: revokes a badge (kiosks reject it from now on).
+  Future<void> revokeMemberBadge(String badgeId);
 
   /// Owner-only: request a role change — promote a member to admin
   /// (make_admin true) or demote an admin to a regular member. Routed

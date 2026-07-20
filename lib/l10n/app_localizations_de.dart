@@ -879,6 +879,45 @@ class AppLocalizationsDe extends AppLocalizations {
       'Mitglieder zahlen ihre Rechnung online (PayPal). Erfordert die Einrichtung des Zahlungsanbieters auf dem Server.';
 
   @override
+  String get memberKioskLabel => 'Kiosk';
+
+  @override
+  String get memberMakeKiosk => 'Zum Kiosk-Gerät machen';
+
+  @override
+  String get memberUnmakeKiosk => 'Kiosk zu Mitglied zurücksetzen';
+
+  @override
+  String get memberBadgesTooltip => 'Badges';
+
+  @override
+  String memberBadgesTitle(String name) {
+    return 'Badges — $name';
+  }
+
+  @override
+  String get badgeIssue => 'Neuer Badge';
+
+  @override
+  String get badgeTokenOnce =>
+      'Speichere diesen QR jetzt — er wird nur einmal angezeigt.';
+
+  @override
+  String get badgeNone => 'Noch keine Badges.';
+
+  @override
+  String get badgeDefaultLabel => 'Badge';
+
+  @override
+  String get badgeRevoke => 'Widerrufen';
+
+  @override
+  String get badgeRevoked => 'Widerrufen';
+
+  @override
+  String get commonClose => 'Schließen';
+
+  @override
   String get languageTitle => 'Sprache';
 
   @override

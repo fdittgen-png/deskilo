@@ -271,11 +271,13 @@ final class SubscriptionLevelsProvider
 String _$subscriptionLevelsHash() =>
     r'ed43338c2ac179bb8e793c3a9b7f6cc1d3da0bf3';
 
+/// Current period key in workspace terms ('yyyy-MM').
 /// Active consumable services of the current workspace (#123).
 
 @ProviderFor(services)
 final servicesProvider = ServicesProvider._();
 
+/// Current period key in workspace terms ('yyyy-MM').
 /// Active consumable services of the current workspace (#123).
 
 final class ServicesProvider
@@ -288,6 +290,7 @@ final class ServicesProvider
     with
         $FutureModifier<List<ServiceItem>>,
         $FutureProvider<List<ServiceItem>> {
+  /// Current period key in workspace terms ('yyyy-MM').
   /// Active consumable services of the current workspace (#123).
   ServicesProvider._()
     : super(

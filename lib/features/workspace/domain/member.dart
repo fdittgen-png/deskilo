@@ -30,6 +30,10 @@ sealed class Member with _$Member {
     /// entitlement (migration 0041): blocked (default), pay-as-you-go, or
     /// buy-a-package.
     @Default(OveragePolicy.blocked) OveragePolicy overagePolicy,
+
+    /// Wall-mounted tablet account (migration 0043): the app locks to the
+    /// plan view; real members act through it by presenting a badge.
+    @Default(false) bool isKiosk,
   }) = _Member;
 
   /// Admin capability (owners inherit it, spec §2).
