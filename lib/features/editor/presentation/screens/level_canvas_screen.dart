@@ -58,6 +58,24 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   bool _draftValid = true;
   ResizeEdges? _dragEdges;
 
+  // Owned by the State so the pan/zoom survives every plan refetch. Each edit
+  // (delete/place/move) invalidates floorPlanProvider, which drops its value
+  // (AsyncLoading, hasValue=false) while it re-fetches; without a persistent
+  // controller the InteractiveViewer would remount with an identity transform
+  // and the view would jump back to the origin, so the next tap landed on the
+  // wrong cell (only the first delete appeared to work).
+  final TransformationController _viewTransform = TransformationController();
+
+  /// The last successfully fetched plan — rendered through a reload so the
+  /// canvas never tears down to a spinner mid-edit (see [_viewTransform]).
+  FloorPlan? _lastPlan;
+
+  @override
+  void dispose() {
+    _viewTransform.dispose();
+    super.dispose();
+  }
+
   GridRect? _selectionRect(FloorPlan plan) {
     final id = _selectedId;
     return switch (_selectedKind) {
@@ -821,6 +839,10 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final planAsync = ref.watch(floorPlanProvider(widget.levelId));
+    // Cache the freshest plan and render it through a reload — ref.invalidate
+    // drops the provider's value on every edit, so its own value is null then.
+    if (planAsync.value != null) _lastPlan = planAsync.value;
+    final shownPlan = planAsync.value ?? _lastPlan;
     final levelName = ref
             .watch(levelsProvider)
             .value
@@ -923,16 +945,22 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
           ),
         ),
       ),
-      body: switch (planAsync) {
-        AsyncData(value: final plan) => _buildCanvas(plan),
-        AsyncError() => Center(
-            child: Text(
-              l10n?.workspaceGenericError ??
-                  'Something went wrong. Please try again.',
-            ),
-          ),
-        _ => const LoadingView(),
-      },
+      // Keep the canvas mounted whenever we have ANY plan to show — the last
+      // fetched one during a reload. Matching only AsyncData here swapped in a
+      // spinner and tore down the InteractiveViewer on every delete, resetting
+      // its pan/zoom so the next tap missed. LoadingView shows only before the
+      // first plan; the error screen only when nothing else is available.
+      body: shownPlan != null
+          ? _buildCanvas(shownPlan)
+          : switch (planAsync) {
+              AsyncError() => Center(
+                  child: Text(
+                    l10n?.workspaceGenericError ??
+                        'Something went wrong. Please try again.',
+                  ),
+                ),
+              _ => const LoadingView(),
+            },
     );
   }
 
@@ -948,6 +976,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     final shownPlan = _draft ?? plan;
 
     return InteractiveViewer(
+      transformationController: _viewTransform,
       constrained: false,
       minScale: 0.4,
       maxScale: 3,
