@@ -176,6 +176,96 @@ void main() {
     expect(plans.desks, isEmpty);
   });
 
+  testWidgets('erase tool deletes MANY elements in a row (not just the first)',
+      (tester) async {
+    final plans = await pumpCanvas(
+      tester,
+      seed: (plans, levelId) async {
+        await seedOffice(plans, levelId);
+        final officeId = plans.offices.single.id;
+        for (var i = 0; i < 3; i++) {
+          await plans.createDesk(
+            workspaceId: 'ws-1',
+            officeId: officeId,
+            name: 'Desk $i',
+            rect: GridRect(x: 2 + i * 8, y: 4, w: 6, h: 4),
+          );
+        }
+      },
+    );
+
+    await tester.tap(find.text('Erase'));
+    await tester.pumpAndSettle();
+
+    // Delete all three desks one after another. Each tap → confirm → gone.
+    for (var i = 0; i < 3; i++) {
+      await tester.tapAt(cellCenter(tester, 4 + i * 8, 5));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
+      await tester.pumpAndSettle();
+      expect(plans.desks, hasLength(2 - i),
+          reason: 'desk ${i + 1} should be deleted too');
+    }
+
+    expect(plans.desks, isEmpty);
+  });
+
+  testWidgets(
+      "a delete keeps the canvas's pan/zoom (persistent transform, not reset)",
+      (tester) async {
+    // The regression: each edit invalidates floorPlanProvider, which drops
+    // its value (AsyncLoading, hasValue=false). If the body only rendered
+    // AsyncData it swapped in a spinner, tearing down the InteractiveViewer;
+    // on remount it built a FRESH internal transform, so pan/zoom jumped back
+    // to the origin and the next tap missed — only the first delete worked.
+    // The fix owns the TransformationController in the State and keeps the
+    // canvas mounted, so the SAME controller survives every delete.
+    final plans = await pumpCanvas(
+      tester,
+      seed: (plans, levelId) async {
+        await seedOffice(plans, levelId);
+        for (var i = 0; i < 2; i++) {
+          await plans.createDesk(
+            workspaceId: 'ws-1',
+            officeId: plans.offices.single.id,
+            name: 'Desk $i',
+            rect: GridRect(x: 4 + i * 8, y: 4, w: 6, h: 4),
+          );
+        }
+      },
+    );
+
+    final controller = tester
+        .widget<InteractiveViewer>(find.byType(InteractiveViewer))
+        .transformationController;
+    // The fix passes a State-owned controller (was null → internal before).
+    expect(controller, isNotNull);
+
+    await tester.tap(find.text('Erase'));
+    await tester.pumpAndSettle();
+    await tester.tapAt(cellCenter(tester, 6, 5));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
+    await tester.pumpAndSettle();
+
+    // After a full delete cycle the canvas is still the same InteractiveViewer
+    // instance with the same controller — the view never reset.
+    expect(plans.desks, hasLength(1));
+    expect(
+      tester
+          .widget<InteractiveViewer>(find.byType(InteractiveViewer))
+          .transformationController,
+      same(controller),
+    );
+
+    // And the second delete still works (it missed before the fix).
+    await tester.tapAt(cellCenter(tester, 14, 5));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
+    await tester.pumpAndSettle();
+    expect(plans.desks, isEmpty);
+  });
+
   testWidgets('select tool toggles bookable-as-whole on an office',
       (tester) async {
     final plans = await pumpCanvas(
