@@ -13,5 +13,12 @@
   "quotaRequestTitle": "Richiedi mezze giornate extra",
   "quotaRequestExplainer": "Le tue prenotazioni sono limitate dal tuo abbonamento. Le mezze giornate extra per {period} si applicano dopo la convalida.",
   "quotaRequestCountLabel": "Numero di mezze giornate",
-  "quotaRequestPending": "Richiesta inviata — in attesa di convalida."
+  "quotaRequestPending": "Richiesta inviata — in attesa di convalida.",
+  "memberReservationLimitTooltip": "Limite di prenotazioni",
+  "memberReservationLimitLabel": "Limite di prenotazioni",
+  "memberReservationLimitExplainer": "Quante prenotazioni aperte questo membro può avere contemporaneamente.",
+  "memberReservationLimitNone": "Nessun limite",
+  "memberReservationLimitCustom": "Personalizzato (1–100)",
+  "memberReservationLimitChip": "max {n}",
+  "reservationLimitError": "Limite di prenotazioni raggiunto — hai già il numero massimo di prenotazioni aperte."
 }

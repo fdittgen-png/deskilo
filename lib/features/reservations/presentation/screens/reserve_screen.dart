@@ -363,6 +363,12 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               'from the Money tab.';
     }
     if (error is PostgrestException &&
+        error.message.contains(ReservationLimitError.serverSubstring)) {
+      return l10n?.reservationLimitError ??
+          'Reservation limit reached — you already hold the maximum '
+              'number of open reservations.';
+    }
+    if (error is PostgrestException &&
         error.message.contains(BookingGranularityError.serverSubstring)) {
       return l10n?.planHalfDayError ?? 'Bookings here are per half day.';
     }

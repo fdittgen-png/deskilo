@@ -67,7 +67,9 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
-    expect(find.text('Members & plans'), findsNothing);
+    // 0044: admins reach member management too (reservation limits,
+    // badges); owner-only knobs gate inside the screen.
+    expect(find.text('Members & plans'), findsOneWidget);
   });
 
   testWidgets('worker boots into the shell with neither admin affordance',

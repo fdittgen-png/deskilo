@@ -1457,6 +1457,31 @@ class AppLocalizationsIt extends AppLocalizations {
       'Richiesta inviata — in attesa di convalida.';
 
   @override
+  String get memberReservationLimitTooltip => 'Limite di prenotazioni';
+
+  @override
+  String get memberReservationLimitLabel => 'Limite di prenotazioni';
+
+  @override
+  String get memberReservationLimitExplainer =>
+      'Quante prenotazioni aperte questo membro può avere contemporaneamente.';
+
+  @override
+  String get memberReservationLimitNone => 'Nessun limite';
+
+  @override
+  String get memberReservationLimitCustom => 'Personalizzato (1–100)';
+
+  @override
+  String memberReservationLimitChip(int n) {
+    return 'max $n';
+  }
+
+  @override
+  String get reservationLimitError =>
+      'Limite di prenotazioni raggiunto — hai già il numero massimo di prenotazioni aperte.';
+
+  @override
   String get reserveMonthView => 'Mese';
 
   @override

@@ -276,9 +276,12 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/members',
+        // Admins reach member management too (0044: they set reservation
+        // limits and issue badges); owner-only controls gate inside.
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
-          return isOwner ? null : '/plan';
+          final canAdminister =
+              ref.read(myMemberProvider).value?.canAdminister ?? false;
+          return canAdminister ? null : '/plan';
         },
         builder: (context, state) => const MembersScreen(),
       ),

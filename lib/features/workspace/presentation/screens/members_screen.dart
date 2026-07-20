@@ -170,6 +170,101 @@ class MembersScreen extends ConsumerWidget {
     ref.invalidate(workspaceMembersProvider);
   }
 
+  /// Caps [member]'s simultaneous open reservations (0044). Presets plus
+  /// a custom count and a no-limit reset; the server refuses self-setting
+  /// (the UI hides the button on the own row anyway).
+  Future<void> _pickReservationLimit(
+    BuildContext context,
+    WidgetRef ref,
+    Member member,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    const presets = [1, 2, 3, 5, 10];
+    const noLimitSentinel = -1;
+    final custom = TextEditingController();
+    final chosen = await showDialog<int>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          l10n?.memberReservationLimitLabel ?? 'Reservation limit',
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              l10n?.memberReservationLimitExplainer ??
+                  'How many open reservations this member may hold at '
+                      'the same time.',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              children: [
+                ChoiceChip(
+                  label: Text(
+                    l10n?.memberReservationLimitNone ?? 'No limit',
+                  ),
+                  selected: member.maxActiveReservations == null,
+                  onSelected: (_) =>
+                      Navigator.of(context).pop(noLimitSentinel),
+                ),
+                for (final preset in presets)
+                  ChoiceChip(
+                    label: Text(preset.toString()),
+                    selected: member.maxActiveReservations == preset,
+                    onSelected: (_) => Navigator.of(context).pop(preset),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: custom,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: l10n?.memberReservationLimitCustom ??
+                    'Custom (1\u2013100)',
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(l10n?.commonCancel ?? 'Cancel'),
+          ),
+          FilledButton(
+            onPressed: () {
+              final value = int.tryParse(custom.text.trim());
+              if (value == null || value < 1 || value > 100) return;
+              Navigator.of(context).pop(value);
+            },
+            child: Text(l10n?.commonSave ?? 'Save'),
+          ),
+        ],
+      ),
+    );
+    if (chosen == null || !context.mounted) return;
+    final limit = chosen == noLimitSentinel ? null : chosen;
+    if (limit == member.maxActiveReservations) return;
+
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'reservation limit update failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => ref
+          .read(workspaceRepositoryProvider)
+          .setMemberReservationLimit(member.id, limit),
+    )) {
+      return;
+    }
+    ref.invalidate(workspaceMembersProvider);
+  }
+
   /// Flags [member] as a wall-mounted kiosk device — or reverts it
   /// (0043, owner-only server-side). Kiosks lock to the plan view and act
   /// only through member badges.
@@ -258,6 +353,10 @@ class MembersScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final membersAsync = ref.watch(workspaceMembersProvider);
     final names = ref.watch(memberNamesProvider).value ?? const {};
+    // Admins reach this screen too (0044); owner-only controls gate on
+    // [isOwner], and the self row never offers the reservation limit.
+    final me = ref.watch(myMemberProvider).value;
+    final isOwner = me?.isOwner ?? false;
     // Consumption entry points follow the services feature (#146).
     final servicesOn = ref
         .watch(enabledFeaturesSyncProvider)
@@ -268,14 +367,15 @@ class MembersScreen extends ConsumerWidget {
         title: Text(l10n?.membersTitle ?? 'Members & plans'),
         actions: [
           // Invite entry point (#195): the members list is where owners
-          // notice someone is missing. Links to the workspace ID & QR
-          // surface; both routes share the same owner-only redirect, so no
-          // extra role check is needed here.
-          IconButton(
-            icon: const Icon(Icons.person_add_outlined),
-            tooltip: l10n?.membersInvite ?? 'Invite a member',
-            onPressed: () => context.push('/workspace-code'),
-          ),
+          // notice someone is missing. Links to the owner-only workspace
+          // ID & QR and billing surfaces — hidden from plain admins.
+          if (isOwner)
+            IconButton(
+              icon: const Icon(Icons.person_add_outlined),
+              tooltip: l10n?.membersInvite ?? 'Invite a member',
+              onPressed: () => context.push('/workspace-code'),
+            ),
+          if (isOwner)
           IconButton(
             icon: const Icon(Icons.tune),
             tooltip: l10n?.billingTitle ?? 'Billing',
@@ -310,6 +410,13 @@ class MembersScreen extends ConsumerWidget {
                         ),
                       if (member.isKiosk)
                         Text(l10n?.memberKioskLabel ?? 'Kiosk'),
+                      if (member.maxActiveReservations != null)
+                        Text(
+                          l10n?.memberReservationLimitChip(
+                                member.maxActiveReservations!,
+                              ) ??
+                              'max ${member.maxActiveReservations}',
+                        ),
                       if (member.isOwner)
                         Text(l10n?.memberRoleOwner ?? 'Owner'),
                       if (member.isAdmin && !member.isOwner)
@@ -344,7 +451,8 @@ class MembersScreen extends ConsumerWidget {
                       // Promote/demote through the validation quorum (0035):
                       // owners are excluded (they keep admin), exited
                       // members can't be re-roled.
-                      if (!member.isOwner &&
+                      if (isOwner &&
+                          !member.isOwner &&
                           !member.isKiosk &&
                           member.status == MemberStatus.active)
                         IconButton(
@@ -359,7 +467,7 @@ class MembersScreen extends ConsumerWidget {
                               : (l10n?.memberMakeAdmin ?? 'Make admin'),
                           onPressed: () => _changeRole(context, ref, member),
                         ),
-                      if (!member.isKiosk)
+                      if (isOwner && !member.isKiosk)
                         IconButton(
                           icon: const Icon(Icons.percent),
                           tooltip:
@@ -369,7 +477,8 @@ class MembersScreen extends ConsumerWidget {
                         ),
                       // Over-consumption policy (0041): block past the plan,
                       // or bill overage pay-as-you-go.
-                      if (!member.isKiosk &&
+                      if (isOwner &&
+                          !member.isKiosk &&
                           member.status == MemberStatus.active)
                         IconButton(
                           icon: Icon(
@@ -397,8 +506,26 @@ class MembersScreen extends ConsumerWidget {
                             names[member.id] ?? '',
                           ),
                         ),
+                      // Cap on simultaneous open reservations (0044):
+                      // admins and owners set it for OTHERS — the server
+                      // refuses self-setting, so the self row hides it.
+                      if (member.id != me?.id &&
+                          !member.isKiosk &&
+                          member.status == MemberStatus.active)
+                        IconButton(
+                          icon: Icon(
+                            member.maxActiveReservations == null
+                                ? Icons.stacked_bar_chart_outlined
+                                : Icons.stacked_bar_chart,
+                          ),
+                          tooltip: l10n?.memberReservationLimitTooltip ??
+                              'Reservation limit',
+                          onPressed: () =>
+                              _pickReservationLimit(context, ref, member),
+                        ),
                       // Kiosk device flag (0043, owner-only server-side).
-                      if (!member.isOwner &&
+                      if (isOwner &&
+                          !member.isOwner &&
                           member.status == MemberStatus.active)
                         IconButton(
                           icon: Icon(
@@ -416,7 +543,8 @@ class MembersScreen extends ConsumerWidget {
                         ),
                     ],
                   ),
-                  onLongPress: member.status == MemberStatus.exited
+                  onLongPress: !isOwner ||
+                          member.status == MemberStatus.exited
                       ? null
                       : () async {
                           final paused =

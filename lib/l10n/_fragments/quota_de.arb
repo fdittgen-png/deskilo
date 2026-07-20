@@ -13,5 +13,12 @@
   "quotaRequestTitle": "Zusätzliche halbe Tage beantragen",
   "quotaRequestExplainer": "Deine Reservierungen sind durch dein Abo begrenzt. Zusätzliche halbe Tage für {period} gelten nach der Freigabe.",
   "quotaRequestCountLabel": "Anzahl halber Tage",
-  "quotaRequestPending": "Antrag gesendet — wartet auf Freigabe."
+  "quotaRequestPending": "Antrag gesendet — wartet auf Freigabe.",
+  "memberReservationLimitTooltip": "Reservierungslimit",
+  "memberReservationLimitLabel": "Reservierungslimit",
+  "memberReservationLimitExplainer": "Wie viele offene Reservierungen dieses Mitglied gleichzeitig halten darf.",
+  "memberReservationLimitNone": "Kein Limit",
+  "memberReservationLimitCustom": "Individuell (1–100)",
+  "memberReservationLimitChip": "max. {n}",
+  "reservationLimitError": "Reservierungslimit erreicht — du hältst bereits die maximale Zahl offener Reservierungen."
 }

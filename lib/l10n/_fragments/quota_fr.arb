@@ -13,5 +13,12 @@
   "quotaRequestTitle": "Demander des demi-journées supplémentaires",
   "quotaRequestExplainer": "Vos réservations sont plafonnées par votre abonnement. Les demi-journées supplémentaires pour {period} s'appliquent une fois validées.",
   "quotaRequestCountLabel": "Nombre de demi-journées",
-  "quotaRequestPending": "Demande envoyée — en attente de validation."
+  "quotaRequestPending": "Demande envoyée — en attente de validation.",
+  "memberReservationLimitTooltip": "Limite de réservations",
+  "memberReservationLimitLabel": "Limite de réservations",
+  "memberReservationLimitExplainer": "Combien de réservations ouvertes ce membre peut détenir en même temps.",
+  "memberReservationLimitNone": "Sans limite",
+  "memberReservationLimitCustom": "Personnalisé (1–100)",
+  "memberReservationLimitChip": "max {n}",
+  "reservationLimitError": "Limite de réservations atteinte — vous détenez déjà le maximum de réservations ouvertes."
 }
