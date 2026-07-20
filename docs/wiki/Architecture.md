@@ -37,7 +37,8 @@ lib/
     calendar/     # month/week/day views of own reservations
     events/       # event feed + confirmation protocol, validation settings
     members/      # member directory (status, WhatsApp, reservation chips)
-    money/        # ledger, statements, billing, services, PDF export
+    money/        # ledger, statements, billing, packages, services, PDF export
+    kiosk/        # wall-tablet mode: locked plan view + badge-driven actions
     profile/      # settings, profiles (multi-workspace), developer screen
 ```
 
@@ -58,10 +59,12 @@ Each feature keeps the same internal shape: `domain/` (freezed models + a pure-D
 - `members` — a user's participation in a workspace: `is_admin`, `is_owner` booleans (roles are additive), `status` (`active`/`paused`/`exited`), subscription percentage.
 - `workspace_admin_invites` — one secret **admin invite code** per workspace (0030), readable by owners only.
 - Floor plan: `levels` → `offices` → `desks` → `seats` (0003), seat blocking (0021), accessories (0022/0023).
-- Booking: `reservations` + conflict-checked RPCs (0005), booking rules & series (0006), availability/open weekdays/closures (0013), granularity (0025), half-day walk-up (0026).
-- Money: plans/ledger/payments (0008), expenses (0009), service catalog & consumption (0014/0016), percentage subscriptions with fee bands (0015), payment method & instructions (0019/0020).
-- Events & confirmation protocol (0007), quorum validation (0017), solo-admin auto-respond (0011).
-- Push endpoints (0012), feature flags (0018), XML floor-plan import (0024/0027), profile presence & WhatsApp (0028/0029).
+- Booking: `reservations` + conflict-checked RPCs (0005), booking rules & series (0006), availability/open weekdays/closures (0013), granularity incl. minute slots (0025/0032), half-day walk-up (0026), reservation moves (0033), quota enforcement + extra-half-day requests (0031).
+- Money: ledger/payments (0008), expenses (0009), service catalog & consumption (0014/0016), percentage subscriptions with fee bands (0015), payment method & instructions (0019/0020), accessory supplements (0024), per-member over-consumption policy (0041), day packages + self-serve buy (0042). Online payments are Edge-Function scaffolding (`supabase/functions/`, see `docs/design/payments-integration.md`).
+- Events & confirmation protocol (0007), quorum validation (0017), solo-admin auto-respond (0011), validated role changes (0035).
+- Push endpoints (0012), feature flags (0018), XML floor-plan import/export (0027/0034), profile presence & WhatsApp (0028/0029/0033).
+- Plan visuals: level background photos (0036), resizable illustration images (0037), member avatars (0038), desk opacity (0040); owner-guarded workspace reset (0039).
+- Kiosk mode (0043): `members.is_kiosk`, hashed badge tokens (`member_badges`), and the stateless `kiosk_act` RPC that lets a wall tablet act *as* the badge's member without any session on the device.
 
 ### Security model
 
@@ -92,8 +95,12 @@ Invite QR codes encode `deskilo://join?role=<user|admin>&code=<CODE>` (`InviteUr
 Single codebase for all targets. Platform-specific behavior degrades gracefully:
 
 - **Push** (UnifiedPush) is Android-only — `PushConnector` returns `false` elsewhere and the app stays on local notifications.
-- **Desktop** (macOS/Windows) runs the full booking/ledger app; the macOS sandbox needs the network-client, camera, and user-selected-file entitlements (see the runner in `macos/`).
+- **Desktop** (macOS/Windows) runs the full booking/ledger app; the macOS sandbox needs the network-client, camera, and user-selected-file entitlements (see the runner in `macos/`). Windows ships as a WiX-built **MSI** (`windows/installer/deskilo.wxs`, built by the `windows-msi` workflow).
 - The F-Droid Android flavor is 100% Google-services-free, audited by script.
+
+## Shared building blocks
+
+Cross-surface concepts have exactly one implementation: `PlanCanvas` (+ `PlanCanvasMetrics`) is the floor-plan host for the Plan tab, the Reserve hub, and the kiosk; `seat_occupancy.dart` derives occupant labels, seat states, and presence dots; `LevelChipRow` is the level selector; `runGuarded` is the traced-failure wrapper every mutating call site uses; `linkLauncherProvider` is the one (test-capturable) external-link seam; `SheetShell` the modal-form scaffold; `centsToMajor`/`parseCentsInput` the money-input helpers.
 
 ## Design system
 
