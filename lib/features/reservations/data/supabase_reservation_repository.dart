@@ -72,6 +72,26 @@ class SupabaseReservationRepository implements ReservationRepository {
   }
 
   @override
+  Future<String> kioskAct({
+    required String workspaceId,
+    required String badgeToken,
+    required String action,
+    String? seatId,
+    DateTime? startsAt,
+    DateTime? endsAt,
+  }) async {
+    final result = await _client.rpc<dynamic>('kiosk_act', params: {
+      'p_workspace_id': workspaceId,
+      'p_badge_token': badgeToken,
+      'p_action': action,
+      'p_seat_id': ?seatId,
+      'p_starts_at': ?startsAt?.toUtc().toIso8601String(),
+      'p_ends_at': ?endsAt?.toUtc().toIso8601String(),
+    }) as Map<String, dynamic>;
+    return result['reservation_id'] as String;
+  }
+
+  @override
   Future<void> checkOut(String reservationId) async {
     await _client.rpc<dynamic>('check_out_reservation', params: {
       'p_reservation_id': reservationId,

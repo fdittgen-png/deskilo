@@ -10,21 +10,27 @@ part of 'link_launcher.dart';
 // ignore_for_file: type=lint, type=warning
 /// Injectable seam over `launchUrl` so widget tests can capture the exact
 /// external link the app would open (#224) — the deep-link twin of the
-/// share seam in core/share/share_launcher.dart.
+/// share seam. Launch failures are traced HERE, once, instead of every
+/// call site wrapping its own try/catch (formerly duplicated by the
+/// PayPal link and the online-payment approval launch).
 
 @ProviderFor(linkLauncher)
 final linkLauncherProvider = LinkLauncherProvider._();
 
 /// Injectable seam over `launchUrl` so widget tests can capture the exact
 /// external link the app would open (#224) — the deep-link twin of the
-/// share seam in core/share/share_launcher.dart.
+/// share seam. Launch failures are traced HERE, once, instead of every
+/// call site wrapping its own try/catch (formerly duplicated by the
+/// PayPal link and the online-payment approval launch).
 
 final class LinkLauncherProvider
     extends $FunctionalProvider<LinkLauncher, LinkLauncher, LinkLauncher>
     with $Provider<LinkLauncher> {
   /// Injectable seam over `launchUrl` so widget tests can capture the exact
   /// external link the app would open (#224) — the deep-link twin of the
-  /// share seam in core/share/share_launcher.dart.
+  /// share seam. Launch failures are traced HERE, once, instead of every
+  /// call site wrapping its own try/catch (formerly duplicated by the
+  /// PayPal link and the online-payment approval launch).
   LinkLauncherProvider._()
     : super(
         from: null,
@@ -58,4 +64,4 @@ final class LinkLauncherProvider
   }
 }
 
-String _$linkLauncherHash() => r'c56455dec6eb43b49dcf5411591d9c6f089d0269';
+String _$linkLauncherHash() => r'5735144e3069c4d50ebb4a0092ede3607c6f198a';

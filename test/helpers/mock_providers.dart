@@ -6,6 +6,7 @@ import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
@@ -305,6 +306,50 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     final i = otherMembers.indexWhere((m) => m.id == memberId);
     if (i >= 0) {
       otherMembers[i] = otherMembers[i].copyWith(overagePolicy: policy);
+    }
+  }
+
+  @override
+  Future<void> setMemberKiosk(String memberId, {required bool isKiosk}) async {
+    if (myMember.id == memberId) {
+      myMember = myMember.copyWith(isKiosk: isKiosk);
+      return;
+    }
+    final i = otherMembers.indexWhere((m) => m.id == memberId);
+    if (i >= 0) {
+      otherMembers[i] = otherMembers[i].copyWith(isKiosk: isKiosk);
+    }
+  }
+
+  /// Issued badges; tokens are deterministic 'badge-token-N'.
+  final badges = <MemberBadge>[];
+
+  @override
+  Future<List<MemberBadge>> fetchMemberBadges(String workspaceId) async =>
+      List.of(badges);
+
+  @override
+  Future<IssuedBadge> issueMemberBadge(
+    String workspaceId,
+    String memberId, {
+    String label = '',
+  }) async {
+    final n = badges.length + 1;
+    badges.add(MemberBadge(
+      id: 'badge-$n',
+      workspaceId: workspaceId,
+      memberId: memberId,
+      label: label,
+      createdAt: DateTime.now(),
+    ));
+    return (badgeId: 'badge-$n', token: 'badge-token-$n');
+  }
+
+  @override
+  Future<void> revokeMemberBadge(String badgeId) async {
+    final i = badges.indexWhere((b) => b.id == badgeId);
+    if (i >= 0) {
+      badges[i] = badges[i].copyWith(revokedAt: DateTime.now());
     }
   }
 

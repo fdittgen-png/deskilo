@@ -1670,6 +1670,78 @@ abstract class AppLocalizations {
   /// **'Let members pay their bill online (PayPal). Needs the payment provider configured on the server.'**
   String get featureOnlinePaymentsDesc;
 
+  /// Subtitle chip of a kiosk device account in the members list (0043)
+  ///
+  /// In en, this message translates to:
+  /// **'Kiosk'**
+  String get memberKioskLabel;
+
+  /// Owner action flagging a member account as a wall-mounted kiosk
+  ///
+  /// In en, this message translates to:
+  /// **'Make kiosk device'**
+  String get memberMakeKiosk;
+
+  /// Owner action reverting a kiosk account to a regular member
+  ///
+  /// In en, this message translates to:
+  /// **'Revert kiosk to member'**
+  String get memberUnmakeKiosk;
+
+  /// Tooltip of the badge-manager button on a member row
+  ///
+  /// In en, this message translates to:
+  /// **'Badges'**
+  String get memberBadgesTooltip;
+
+  /// Title of a member's badge-manager dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Badges — {name}'**
+  String memberBadgesTitle(String name);
+
+  /// Button minting a new kiosk badge for the member
+  ///
+  /// In en, this message translates to:
+  /// **'New badge'**
+  String get badgeIssue;
+
+  /// Warning under the freshly issued badge QR; the raw token is never recoverable later
+  ///
+  /// In en, this message translates to:
+  /// **'Save this QR now — it is shown only once.'**
+  String get badgeTokenOnce;
+
+  /// Empty state of the badge list
+  ///
+  /// In en, this message translates to:
+  /// **'No badges yet.'**
+  String get badgeNone;
+
+  /// Fallback name of an unlabelled badge
+  ///
+  /// In en, this message translates to:
+  /// **'Badge'**
+  String get badgeDefaultLabel;
+
+  /// Button revoking a badge (kiosks reject it from then on)
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke'**
+  String get badgeRevoke;
+
+  /// State line under a revoked badge
+  ///
+  /// In en, this message translates to:
+  /// **'Revoked'**
+  String get badgeRevoked;
+
+  /// Generic dialog close action
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get commonClose;
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:

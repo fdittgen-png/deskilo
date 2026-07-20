@@ -118,6 +118,55 @@ void main() {
     expect(workspace.otherMembers.single.overagePolicy, OveragePolicy.payg);
   });
 
+  testWidgets('the owner flags a member as a kiosk device (0043): row shows '
+      'Kiosk, billing controls disappear', (tester) async {
+    final workspace = await pumpMembers(tester);
+
+    // Ana's row: flag her account as the wall tablet.
+    await tester.tap(find.byTooltip('Make kiosk device').last);
+    await tester.pumpAndSettle();
+
+    expect(workspace.otherMembers.single.isKiosk, isTrue);
+    expect(find.text('Kiosk'), findsOneWidget);
+    // A kiosk is a device: no subscription, no over-consumption, no role
+    // toggle, no badges of its own — only the revert control remains.
+    expect(find.byIcon(Icons.percent), findsOneWidget); // owner's row only
+    expect(find.byTooltip('Revert kiosk to member'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Revert kiosk to member'));
+    await tester.pumpAndSettle();
+    expect(workspace.otherMembers.single.isKiosk, isFalse);
+  });
+
+  testWidgets('issuing a badge (0043) shows the one-time QR and lists it; '
+      'revoking marks it', (tester) async {
+    final workspace = await pumpMembers(tester);
+
+    await tester.tap(find.byTooltip('Badges').last);
+    await tester.pumpAndSettle();
+    expect(find.text('No badges yet.'), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('badge-issue-button')));
+    await tester.pumpAndSettle();
+
+    // The raw token renders exactly once as a QR.
+    expect(find.byKey(const ValueKey('badge-qr')), findsOneWidget);
+    expect(find.textContaining('shown only once'), findsOneWidget);
+    expect(workspace.badges.single.memberId, 'member-2');
+    expect(workspace.badges.single.isActive, isTrue);
+
+    // Reopen: the badge lists with a revoke action; revoking flags it.
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Badges').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Revoke'));
+    await tester.pumpAndSettle();
+
+    expect(workspace.badges.single.isActive, isFalse);
+    expect(find.text('Revoked'), findsOneWidget);
+  });
+
   testWidgets('long-press pauses an active membership', (tester) async {
     final workspace = await pumpMembers(tester);
 

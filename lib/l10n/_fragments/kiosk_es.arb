@@ -1,0 +1,15 @@
+{
+  "@@locale": "es",
+  "memberKioskLabel": "Quiosco",
+  "memberMakeKiosk": "Convertir en quiosco",
+  "memberUnmakeKiosk": "Revertir quiosco a miembro",
+  "memberBadgesTooltip": "Credenciales",
+  "memberBadgesTitle": "Credenciales — {name}",
+  "badgeIssue": "Nueva credencial",
+  "badgeTokenOnce": "Guarda este QR ahora — solo se muestra una vez.",
+  "badgeNone": "Aún no hay credenciales.",
+  "badgeDefaultLabel": "Credencial",
+  "badgeRevoke": "Revocar",
+  "badgeRevoked": "Revocada",
+  "commonClose": "Cerrar"
+}

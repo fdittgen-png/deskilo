@@ -56,6 +56,20 @@ abstract class ReservationRepository {
   Future<void> checkOut(String reservationId);
   Future<void> cancel(String reservationId);
 
+  /// Kiosk elevation (RPC `kiosk_act`, migration 0043): the signed-in
+  /// KIOSK account performs [action] AS the member the badge [badgeToken]
+  /// resolves to — 'reserve' | 'check_in' | 'check_out'. Stateless: the
+  /// member's "session" begins and ends inside the call, so nothing is
+  /// cached on the device. Returns the acted-on reservation id.
+  Future<String> kioskAct({
+    required String workspaceId,
+    required String badgeToken,
+    required String action,
+    String? seatId,
+    DateTime? startsAt,
+    DateTime? endsAt,
+  });
+
   /// Atomically moves MY still-'reserved' booking to a new window on the
   /// same seat (update_reservation, 0033) — rules, closures, seat blocks
   /// and quota re-checked server-side.

@@ -1,0 +1,15 @@
+{
+  "@@locale": "it",
+  "memberKioskLabel": "Chiosco",
+  "memberMakeKiosk": "Trasforma in chiosco",
+  "memberUnmakeKiosk": "Riporta il chiosco a membro",
+  "memberBadgesTooltip": "Badge",
+  "memberBadgesTitle": "Badge — {name}",
+  "badgeIssue": "Nuovo badge",
+  "badgeTokenOnce": "Salva questo QR adesso — viene mostrato una sola volta.",
+  "badgeNone": "Ancora nessun badge.",
+  "badgeDefaultLabel": "Badge",
+  "badgeRevoke": "Revoca",
+  "badgeRevoked": "Revocato",
+  "commonClose": "Chiudi"
+}

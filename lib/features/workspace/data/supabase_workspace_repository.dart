@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../domain/booking_granularity.dart';
 import '../domain/closure_day.dart';
 import '../domain/member.dart';
+import '../domain/member_badge.dart';
 import '../domain/overage_policy.dart';
 import '../domain/payment_instructions.dart';
 import '../domain/workspace.dart';
@@ -187,6 +188,48 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setMemberKiosk(String memberId, {required bool isKiosk}) async {
+    await _client.rpc<dynamic>('set_member_kiosk', params: {
+      'p_member_id': memberId,
+      'p_is_kiosk': isKiosk,
+    });
+  }
+
+  @override
+  Future<List<MemberBadge>> fetchMemberBadges(String workspaceId) async {
+    final rows = await _client
+        .from('member_badges')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('created_at', ascending: false);
+    return rows.map(MemberBadge.fromRow).toList();
+  }
+
+  @override
+  Future<IssuedBadge> issueMemberBadge(
+    String workspaceId,
+    String memberId, {
+    String label = '',
+  }) async {
+    final result = await _client.rpc<dynamic>('issue_member_badge', params: {
+      'p_workspace_id': workspaceId,
+      'p_member_id': memberId,
+      'p_label': label,
+    }) as Map<String, dynamic>;
+    return (
+      badgeId: result['badge_id'] as String,
+      token: result['token'] as String,
+    );
+  }
+
+  @override
+  Future<void> revokeMemberBadge(String badgeId) async {
+    await _client.rpc<dynamic>('revoke_member_badge', params: {
+      'p_badge_id': badgeId,
+    });
+  }
+
+  @override
   Future<void> updateMemberStatus(String memberId, MemberStatus status) async {
     await _client
         .from('members')
@@ -362,5 +405,6 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
         subscriptionPct: row['subscription_pct'] as int? ?? 100,
         overagePolicy:
             OveragePolicy.fromName(row['overage_policy'] as String?),
+        isKiosk: row['is_kiosk'] as bool? ?? false,
       );
 }

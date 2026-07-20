@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: MIT
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -10,6 +13,7 @@ import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/member.dart';
+import '../../domain/member_badge.dart';
 import '../../domain/overage_policy.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
@@ -166,6 +170,53 @@ class MembersScreen extends ConsumerWidget {
     ref.invalidate(workspaceMembersProvider);
   }
 
+  /// Flags [member] as a wall-mounted kiosk device — or reverts it
+  /// (0043, owner-only server-side). Kiosks lock to the plan view and act
+  /// only through member badges.
+  Future<void> _toggleKiosk(
+    BuildContext context,
+    WidgetRef ref,
+    Member member,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'kiosk toggle failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => ref
+          .read(workspaceRepositoryProvider)
+          .setMemberKiosk(member.id, isKiosk: !member.isKiosk),
+    )) {
+      return;
+    }
+    ref.invalidate(workspaceMembersProvider);
+  }
+
+  /// Badge manager of one member (0043): the active/revoked badge list
+  /// with revoke buttons, and "New badge" which mints one and swaps the
+  /// dialog to the ONE-TIME QR of the raw token.
+  Future<void> _badgesDialog(
+    BuildContext context,
+    WidgetRef ref,
+    Member member,
+    String name,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    await showDialog<void>(
+      context: context,
+      builder: (context) => _BadgesDialog(
+        workspaceId: workspace.id,
+        member: member,
+        name: name,
+        l10n: l10n,
+      ),
+    );
+  }
+
   /// Requests promoting/demotoggle the member's admin flag through the
   /// validation quorum (0035): the change is pending until the
   /// workspace's validators confirm it.
@@ -250,10 +301,15 @@ class MembersScreen extends ConsumerWidget {
                   subtitle: Wrap(
                     spacing: 6,
                     children: [
-                      Text(
-                        l10n?.percentValue(member.subscriptionPct) ??
-                            '${member.subscriptionPct}%',
-                      ),
+                      // A kiosk is a device, not a paying member — no
+                      // subscription line.
+                      if (!member.isKiosk)
+                        Text(
+                          l10n?.percentValue(member.subscriptionPct) ??
+                              '${member.subscriptionPct}%',
+                        ),
+                      if (member.isKiosk)
+                        Text(l10n?.memberKioskLabel ?? 'Kiosk'),
                       if (member.isOwner)
                         Text(l10n?.memberRoleOwner ?? 'Owner'),
                       if (member.isAdmin && !member.isOwner)
@@ -269,7 +325,9 @@ class MembersScreen extends ConsumerWidget {
                     children: [
                       // Consumed services land on the member's bill only
                       // after the member confirms (#129).
-                      if (servicesOn && member.status == MemberStatus.active)
+                      if (servicesOn &&
+                          !member.isKiosk &&
+                          member.status == MemberStatus.active)
                         IconButton(
                           icon: const Icon(Icons.room_service_outlined),
                           tooltip: l10n?.consumptionAddForMember(
@@ -287,6 +345,7 @@ class MembersScreen extends ConsumerWidget {
                       // owners are excluded (they keep admin), exited
                       // members can't be re-roled.
                       if (!member.isOwner &&
+                          !member.isKiosk &&
                           member.status == MemberStatus.active)
                         IconButton(
                           icon: Icon(
@@ -300,16 +359,18 @@ class MembersScreen extends ConsumerWidget {
                               : (l10n?.memberMakeAdmin ?? 'Make admin'),
                           onPressed: () => _changeRole(context, ref, member),
                         ),
-                      IconButton(
-                        icon: const Icon(Icons.percent),
-                        tooltip:
-                            l10n?.memberSubscriptionLabel ?? 'Subscription',
-                        onPressed: () =>
-                            _pickSubscription(context, ref, member),
-                      ),
+                      if (!member.isKiosk)
+                        IconButton(
+                          icon: const Icon(Icons.percent),
+                          tooltip:
+                              l10n?.memberSubscriptionLabel ?? 'Subscription',
+                          onPressed: () =>
+                              _pickSubscription(context, ref, member),
+                        ),
                       // Over-consumption policy (0041): block past the plan,
                       // or bill overage pay-as-you-go.
-                      if (member.status == MemberStatus.active)
+                      if (!member.isKiosk &&
+                          member.status == MemberStatus.active)
                         IconButton(
                           icon: Icon(
                             member.overagePolicy == OveragePolicy.blocked
@@ -320,6 +381,38 @@ class MembersScreen extends ConsumerWidget {
                               'Over-consumption',
                           onPressed: () =>
                               _pickOveragePolicy(context, ref, member),
+                        ),
+                      // Kiosk badges (0043): mint/revoke the QR badges the
+                      // member presents at a wall tablet.
+                      if (!member.isKiosk &&
+                          !member.isOwner &&
+                          member.status == MemberStatus.active)
+                        IconButton(
+                          icon: const Icon(Icons.qr_code_2_outlined),
+                          tooltip: l10n?.memberBadgesTooltip ?? 'Badges',
+                          onPressed: () => _badgesDialog(
+                            context,
+                            ref,
+                            member,
+                            names[member.id] ?? '',
+                          ),
+                        ),
+                      // Kiosk device flag (0043, owner-only server-side).
+                      if (!member.isOwner &&
+                          member.status == MemberStatus.active)
+                        IconButton(
+                          icon: Icon(
+                            member.isKiosk
+                                ? Icons.tablet_mac
+                                : Icons.tablet_mac_outlined,
+                          ),
+                          tooltip: member.isKiosk
+                              ? (l10n?.memberUnmakeKiosk ??
+                                  'Revert kiosk to member')
+                              : (l10n?.memberMakeKiosk ??
+                                  'Make kiosk device'),
+                          onPressed: () =>
+                              _toggleKiosk(context, ref, member),
                         ),
                     ],
                   ),
@@ -349,6 +442,196 @@ class MembersScreen extends ConsumerWidget {
           ),
         _ => const LoadingView(),
       },
+    );
+  }
+}
+
+/// Stateful badge manager (0043): shows the member's badges with revoke
+/// actions; issuing swaps the body to the raw token's QR — the only time
+/// it ever exists client-side.
+class _BadgesDialog extends ConsumerStatefulWidget {
+  const _BadgesDialog({
+    required this.workspaceId,
+    required this.member,
+    required this.name,
+    required this.l10n,
+  });
+
+  final String workspaceId;
+  final Member member;
+  final String name;
+  final AppLocalizations? l10n;
+
+  @override
+  ConsumerState<_BadgesDialog> createState() => _BadgesDialogState();
+}
+
+class _BadgesDialogState extends ConsumerState<_BadgesDialog> {
+  List<MemberBadge>? _badges;
+
+  /// Set right after issuing: the one-time raw token to render as a QR.
+  IssuedBadge? _issued;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final l10n = widget.l10n;
+    List<MemberBadge> all = const [];
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'badge list failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        all = await ref
+            .read(workspaceRepositoryProvider)
+            .fetchMemberBadges(widget.workspaceId);
+      },
+    )) {
+      return;
+    }
+    if (!mounted) return;
+    setState(() => _badges =
+        [for (final b in all) if (b.memberId == widget.member.id) b]);
+  }
+
+  Future<void> _issue() async {
+    final l10n = widget.l10n;
+    IssuedBadge? issued;
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'badge issue failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        issued = await ref
+            .read(workspaceRepositoryProvider)
+            .issueMemberBadge(widget.workspaceId, widget.member.id);
+      },
+    )) {
+      return;
+    }
+    if (!mounted) return;
+    setState(() => _issued = issued);
+    unawaited(_load());
+  }
+
+  Future<void> _revoke(MemberBadge badge) async {
+    final l10n = widget.l10n;
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'badge revoke failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () =>
+          ref.read(workspaceRepositoryProvider).revokeMemberBadge(badge.id),
+    )) {
+      return;
+    }
+    await _load();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = widget.l10n;
+    final issued = _issued;
+    final badges = _badges;
+    final badgeCountOf = badges?.length ?? 0;
+    return AlertDialog(
+      title: Text(
+        l10n?.memberBadgesTitle(widget.name) ?? 'Badges — ${widget.name}',
+      ),
+      content: SizedBox(
+        width: 320,
+        child: issued != null
+            ? Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // The raw token, once: print it or let the member scan
+                  // it into their badge wallet.
+                  Center(
+                    child: QrImageView(
+                      key: const ValueKey('badge-qr'),
+                      data: issued.token,
+                      size: 220,
+                      backgroundColor: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    l10n?.badgeTokenOnce ??
+                        'Save this QR now — it is shown only once.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              )
+            : badges == null
+                ? const Padding(
+                    padding: EdgeInsets.all(24),
+                    child: Center(child: CircularProgressIndicator()),
+                  )
+                : Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (badgeCountOf == 0)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            l10n?.badgeNone ?? 'No badges yet.',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ),
+                      for (final badge in badges)
+                        ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          leading: Icon(
+                            badge.isActive
+                                ? Icons.badge_outlined
+                                : Icons.block_outlined,
+                          ),
+                          title: Text(
+                            badge.label.isEmpty
+                                ? (l10n?.badgeDefaultLabel ?? 'Badge')
+                                : badge.label,
+                          ),
+                          subtitle: badge.isActive
+                              ? null
+                              : Text(l10n?.badgeRevoked ?? 'Revoked'),
+                          trailing: badge.isActive
+                              ? TextButton(
+                                  onPressed: () => _revoke(badge),
+                                  child: Text(
+                                    l10n?.badgeRevoke ?? 'Revoke',
+                                  ),
+                                )
+                              : null,
+                        ),
+                    ],
+                  ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n?.commonClose ?? 'Close'),
+        ),
+        if (issued == null)
+          FilledButton.icon(
+            key: const ValueKey('badge-issue-button'),
+            onPressed: _issue,
+            icon: const Icon(Icons.qr_code_2_outlined),
+            label: Text(l10n?.badgeIssue ?? 'New badge'),
+          ),
+      ],
     );
   }
 }

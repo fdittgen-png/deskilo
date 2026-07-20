@@ -1,0 +1,15 @@
+{
+  "@@locale": "de",
+  "memberKioskLabel": "Kiosk",
+  "memberMakeKiosk": "Zum Kiosk-Gerät machen",
+  "memberUnmakeKiosk": "Kiosk zu Mitglied zurücksetzen",
+  "memberBadgesTooltip": "Badges",
+  "memberBadgesTitle": "Badges — {name}",
+  "badgeIssue": "Neuer Badge",
+  "badgeTokenOnce": "Speichere diesen QR jetzt — er wird nur einmal angezeigt.",
+  "badgeNone": "Noch keine Badges.",
+  "badgeDefaultLabel": "Badge",
+  "badgeRevoke": "Widerrufen",
+  "badgeRevoked": "Widerrufen",
+  "commonClose": "Schließen"
+}
