@@ -158,7 +158,11 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         .toList()
       ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
 
-    return Column(
+    // In landscape the month + controls move to a side panel so the day's
+    // reservations fill the rest of the screen (and the month grid stops
+    // being clipped to a couple of weeks under the header).
+    final header = Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
           padding: AppSpacing.smH,
@@ -269,7 +273,9 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
           ),
         ),
         const SizedBox(height: AppSpacing.xs),
-        Expanded(
+      ],
+    );
+    final content = Expanded(
           child: RefreshIndicator(
             onRefresh: () async => invalidateBookingData(ref),
             // #209: cross-fade the list/timeline toggle. The two branches
@@ -329,8 +335,26 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                   ),
             ),
           ),
-        ),
-      ],
+        );
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth >= 840 &&
+            constraints.maxWidth > constraints.maxHeight) {
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                width: (constraints.maxWidth * 0.42).clamp(300.0, 520.0),
+                child: SingleChildScrollView(child: header),
+              ),
+              const VerticalDivider(width: 1),
+              content,
+            ],
+          );
+        }
+        return Column(children: [header, content]);
+      },
     );
   }
 }

@@ -102,4 +102,33 @@ void main() {
     expect(find.byType(ChoiceChip), findsNothing);
     expect(canvasLevelId(tester), 'level-1');
   });
+
+  testWidgets(
+      'landscape splits controls into a side panel so the level fills the '
+      'rest', (tester) async {
+    // A wide, landscape viewport (>= 840, W > H).
+    tester.view.physicalSize = const Size(1200, 700);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    await pumpTwoLevelPlan(tester);
+
+    // Split engaged: a vertical divider separates controls from the level,
+    // and the plan canvas still renders (and its controls are reachable).
+    expect(find.byType(VerticalDivider), findsOneWidget);
+    expect(find.byKey(const ValueKey('live-plan-canvas')), findsOneWidget);
+    expect(find.widgetWithText(ChoiceChip, 'Ground floor'), findsOneWidget);
+  });
+
+  testWidgets('portrait keeps the single-column layout (no split)',
+      (tester) async {
+    tester.view.physicalSize = const Size(700, 1400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    await pumpTwoLevelPlan(tester);
+
+    expect(find.byType(VerticalDivider), findsNothing);
+    expect(find.byKey(const ValueKey('live-plan-canvas')), findsOneWidget);
+  });
 }
