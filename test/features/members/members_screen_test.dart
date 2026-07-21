@@ -1,5 +1,12 @@
 // SPDX-License-Identifier: MIT
+//
+// Members & plans. Since the UX pass, every per-member action lives in
+// the row's MANAGEMENT SHEET (tap the row → labeled tiles) instead of a
+// pile of icon buttons — tests open the sheet first.
+import 'dart:typed_data';
+
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +20,7 @@ import '../../helpers/mock_providers.dart';
 Future<FakeWorkspaceRepository> pumpMembers(
   WidgetTester tester, {
   FakeMoneyRepository? money,
+  FileSaver? saver,
 }) async {
   final workspace = FakeWorkspaceRepository.withWorkspace()
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
@@ -28,7 +36,10 @@ Future<FakeWorkspaceRepository> pumpMembers(
     );
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(workspace: workspace, money: money),
+      overrides: [
+        ...standardTestOverrides(workspace: workspace, money: money),
+        if (saver != null) fileSaverProvider.overrideWithValue(saver),
+      ],
       child: const DeskiloApp(),
     ),
   );
@@ -38,6 +49,12 @@ Future<FakeWorkspaceRepository> pumpMembers(
   await tester.tap(find.text('Members & plans'));
   await tester.pumpAndSettle();
   return workspace;
+}
+
+/// Opens [name]'s management sheet (the row tap).
+Future<void> openSheet(WidgetTester tester, String name) async {
+  await tester.tap(find.text(name));
+  await tester.pumpAndSettle();
 }
 
 void main() {
@@ -56,8 +73,8 @@ void main() {
       (tester) async {
     final workspace = await pumpMembers(tester);
 
-    // Ana's row is the second one.
-    await tester.tap(find.byIcon(Icons.percent).last);
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Subscription'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('50%').last);
     await tester.pumpAndSettle();
@@ -70,7 +87,8 @@ void main() {
       (tester) async {
     final workspace = await pumpMembers(tester);
 
-    await tester.tap(find.byIcon(Icons.percent).last);
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Subscription'));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.widgetWithText(TextField, 'Custom (1–100)'),
@@ -87,11 +105,9 @@ void main() {
     final money = FakeMoneyRepository();
     await pumpMembers(tester, money: money);
 
-    // Ana's row is the second one.
-    await tester.tap(find.byIcon(Icons.room_service_outlined).last);
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Add service for Ana'));
     await tester.pumpAndSettle();
-
-    expect(find.text('Add service for Ana'), findsOneWidget);
     await tester.tap(find.text('Submit for confirmation'));
     await tester.pumpAndSettle();
 
@@ -106,11 +122,10 @@ void main() {
       (tester) async {
     final workspace = await pumpMembers(tester);
 
-    // Members default to the blocked policy.
     expect(workspace.otherMembers.single.overagePolicy, OveragePolicy.blocked);
 
-    // Ana's row is the second one.
-    await tester.tap(find.byTooltip('Over-consumption').last);
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('When days run out'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Charge overage (pay-as-you-go)'));
     await tester.pumpAndSettle();
@@ -119,21 +134,25 @@ void main() {
   });
 
   testWidgets('the owner flags a member as a kiosk device (0043): row shows '
-      'Kiosk, billing controls disappear', (tester) async {
+      'Kiosk, billing actions disappear from the sheet', (tester) async {
     final workspace = await pumpMembers(tester);
 
-    // Ana's row: flag her account as the wall tablet.
-    await tester.tap(find.byTooltip('Make kiosk device').last);
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Make kiosk device'));
     await tester.pumpAndSettle();
 
     expect(workspace.otherMembers.single.isKiosk, isTrue);
     expect(find.text('Kiosk'), findsOneWidget);
-    // A kiosk is a device: no subscription, no over-consumption, no role
-    // toggle, no badges of its own — only the revert control remains.
-    expect(find.byIcon(Icons.percent), findsOneWidget); // owner's row only
-    expect(find.byTooltip('Revert kiosk to member'), findsOneWidget);
 
-    await tester.tap(find.byTooltip('Revert kiosk to member'));
+    // A kiosk is a device: its sheet offers no billing/role knobs — only
+    // the revert (and pause) controls remain.
+    await openSheet(tester, 'Ana');
+    expect(find.text('Subscription'), findsNothing);
+    expect(find.text('When days run out'), findsNothing);
+    expect(find.text('Reservation limit'), findsNothing);
+    expect(find.text('Badges'), findsNothing);
+
+    await tester.tap(find.text('Revert kiosk to member'));
     await tester.pumpAndSettle();
     expect(workspace.otherMembers.single.isKiosk, isFalse);
   });
@@ -142,7 +161,8 @@ void main() {
       'revoking marks it', (tester) async {
     final workspace = await pumpMembers(tester);
 
-    await tester.tap(find.byTooltip('Badges').last);
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Badges'));
     await tester.pumpAndSettle();
     expect(find.text('No badges yet.'), findsOneWidget);
 
@@ -158,7 +178,8 @@ void main() {
     // Reopen: the badge lists with a revoke action; revoking flags it.
     await tester.tap(find.text('Close'));
     await tester.pumpAndSettle();
-    await tester.tap(find.byTooltip('Badges').last);
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Badges'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Revoke'));
     await tester.pumpAndSettle();
@@ -167,12 +188,39 @@ void main() {
     expect(find.text('Revoked'), findsOneWidget);
   });
 
+  testWidgets('the one-time badge QR downloads as a printable PDF card '
+      '(UX pass)', (tester) async {
+    final saved = <(String, Uint8List)>[];
+    await pumpMembers(
+      tester,
+      saver: ({required bytes, required fileName}) async {
+        saved.add((fileName, bytes));
+        return '/tmp/$fileName';
+      },
+    );
+
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Badges'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('badge-issue-button')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('badge-save-pdf')));
+    await tester.pumpAndSettle();
+
+    expect(saved, hasLength(1));
+    expect(saved.single.$1, 'deskilo-badge-ana.pdf');
+    // A real PDF, saved locally.
+    expect(String.fromCharCodes(saved.single.$2.sublist(0, 5)), '%PDF-');
+    expect(find.textContaining('Saved to'), findsOneWidget);
+  });
+
   testWidgets("the owner caps another member's simultaneous reservations "
-      '(0044): preset chip persists, chip shows on the row', (tester) async {
+      '(0044): preset persists, chip shows on the row', (tester) async {
     final workspace = await pumpMembers(tester);
 
-    // Ana's row (never the own row — the server refuses self-setting).
-    await tester.tap(find.byTooltip('Reservation limit').last);
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Reservation limit'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('3'));
     await tester.pumpAndSettle();
@@ -181,23 +229,26 @@ void main() {
     expect(find.text('max 3'), findsOneWidget);
 
     // "No limit" lifts the cap again.
-    await tester.tap(find.byTooltip('Reservation limit').last);
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Reservation limit'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('No limit'));
     await tester.pumpAndSettle();
     expect(workspace.otherMembers.single.maxActiveReservations, isNull);
   });
 
-  testWidgets('the reservation-limit button never shows on the own row '
+  testWidgets('the own sheet never offers the reservation limit '
       '(0044: not for themselves)', (tester) async {
     await pumpMembers(tester);
 
-    // Two active members on screen (me + Ana) — exactly ONE limit button.
-    expect(find.byTooltip('Reservation limit'), findsOneWidget);
+    await openSheet(tester, 'Flo');
+    expect(find.text('Reservation limit'), findsNothing);
+    // …while other self-service-safe actions are present.
+    expect(find.text('Subscription'), findsOneWidget);
   });
 
   testWidgets('an admin reaches Members & plans but sees no owner-only '
-      'controls (0044 widened access)', (tester) async {
+      'actions (0044 widened access)', (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace()
       ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
       ..myMember = const Member(
@@ -230,28 +281,36 @@ void main() {
     await tester.tap(find.text('Members & plans'));
     await tester.pumpAndSettle();
 
-    // Admin sees the limit control for the OTHER member…
-    expect(find.byTooltip('Reservation limit'), findsOneWidget);
-    // …but none of the owner-only knobs.
-    expect(find.byIcon(Icons.percent), findsNothing);
-    expect(find.byTooltip('Make kiosk device'), findsNothing);
-    expect(find.byTooltip('Make admin'), findsNothing);
-    expect(find.byTooltip('Over-consumption'), findsNothing);
+    // Ana's sheet for an ADMIN: limit + badges, none of the owner knobs.
+    await openSheet(tester, 'Ana');
+    expect(find.text('Reservation limit'), findsOneWidget);
+    expect(find.text('Badges'), findsOneWidget);
+    expect(find.text('Subscription'), findsNothing);
+    expect(find.text('Make admin'), findsNothing);
+    expect(find.text('Make kiosk device'), findsNothing);
+    expect(find.text('When days run out'), findsNothing);
+    expect(find.text('Pause membership'), findsNothing);
 
-    await tester.tap(find.byTooltip('Reservation limit'));
+    await tester.tap(find.text('Reservation limit'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('5'));
     await tester.pumpAndSettle();
     expect(workspace.otherMembers.single.maxActiveReservations, 5);
   });
 
-  testWidgets('long-press pauses an active membership', (tester) async {
+  testWidgets('pausing is a visible sheet action now (was a hidden '
+      'long-press)', (tester) async {
     final workspace = await pumpMembers(tester);
 
-    await tester.longPress(find.text('Ana'));
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Pause membership'));
     await tester.pumpAndSettle();
-
     expect(workspace.otherMembers.single.status, MemberStatus.paused);
+
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Reactivate membership'));
+    await tester.pumpAndSettle();
+    expect(workspace.otherMembers.single.status, MemberStatus.active);
   });
 
   testWidgets('invite button leads to the workspace ID & QR screen (#195)',
@@ -294,8 +353,8 @@ void main() {
       'validation, not applied immediately (0035)', (tester) async {
     final workspace = await pumpMembers(tester);
 
-    // Ana (member-2) is a regular member: her row offers "Make admin".
-    await tester.tap(find.byTooltip('Make admin'));
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Make admin'));
     await tester.pumpAndSettle();
 
     expect(workspace.lastRoleChange, ('ws-1', 'member-2', true));
@@ -305,7 +364,7 @@ void main() {
     );
   });
 
-  testWidgets('an admin can be demoted; the owner has no role toggle',
+  testWidgets('an admin can be demoted; the owner sheet has no role toggle',
       (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace()
       ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
@@ -331,13 +390,17 @@ void main() {
     await tester.tap(find.text('Members & plans'));
     await tester.pumpAndSettle();
 
-    // The admin offers demotion; the owner (Flo) offers no role toggle.
-    expect(find.byTooltip('Make regular member'), findsOneWidget);
-    expect(find.byTooltip('Make admin'), findsNothing);
+    // The owner's OWN sheet offers no role toggle…
+    await openSheet(tester, 'Flo');
+    expect(find.text('Make admin'), findsNothing);
+    expect(find.text('Make regular member'), findsNothing);
+    await tester.tapAt(const Offset(10, 10)); // dismiss
+    await tester.pumpAndSettle();
 
-    await tester.tap(find.byTooltip('Make regular member'));
+    // …the admin's sheet offers demotion.
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Make regular member'));
     await tester.pumpAndSettle();
     expect(workspace.lastRoleChange, ('ws-1', 'member-2', false));
   });
-
 }

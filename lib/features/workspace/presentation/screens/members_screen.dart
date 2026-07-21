@@ -4,8 +4,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:pdf/widgets.dart' as pw;
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -13,6 +16,8 @@ import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/member.dart';
+import '../../../../core/files/file_saver.dart';
+import '../../domain/badge_pdf.dart';
 import '../../domain/member_badge.dart';
 import '../../domain/overage_policy.dart';
 import '../../domain/workspace_feature.dart';
@@ -164,6 +169,156 @@ class MembersScreen extends ConsumerWidget {
               .read(workspaceRepositoryProvider)
               .updateMemberOveragePolicy(member.id, chosen);
       },
+    )) {
+      return;
+    }
+    ref.invalidate(workspaceMembersProvider);
+  }
+
+  /// The one management surface of a member (UX pass): every action as a
+  /// labeled tile, gated by the same rules the old icon buttons carried —
+  /// owner-only knobs, no self reservation-limit, no billing for kiosks.
+  Future<void> _memberSheet(
+    BuildContext context,
+    WidgetRef ref,
+    Member member,
+    String name, {
+    required bool isOwner,
+    required bool isSelf,
+    required bool servicesOn,
+  }) async {
+    final l10n = AppLocalizations.of(context);
+    final active = member.status == MemberStatus.active;
+    final actions = <Widget>[
+      if (servicesOn && !member.isKiosk && active)
+        _sheetAction(
+          context,
+          icon: Icons.room_service_outlined,
+          label: l10n?.consumptionAddForMember(name) ?? 'Add service for $name',
+          onTap: () => showConsumptionSheet(
+            context,
+            ref,
+            subjectMemberId: member.id,
+            subjectName: name,
+          ),
+        ),
+      if (isOwner && !member.isKiosk)
+        _sheetAction(
+          context,
+          icon: Icons.percent,
+          label: l10n?.memberSubscriptionLabel ?? 'Subscription',
+          onTap: () => _pickSubscription(context, ref, member),
+        ),
+      if (isOwner && !member.isKiosk && active)
+        _sheetAction(
+          context,
+          icon: member.overagePolicy == OveragePolicy.blocked
+              ? Icons.speed_outlined
+              : Icons.speed,
+          label: l10n?.memberOveragePolicyLabel ?? 'When days run out',
+          onTap: () => _pickOveragePolicy(context, ref, member),
+        ),
+      if (!isSelf && !member.isKiosk && active)
+        _sheetAction(
+          context,
+          icon: Icons.stacked_bar_chart_outlined,
+          label: l10n?.memberReservationLimitLabel ?? 'Reservation limit',
+          onTap: () => _pickReservationLimit(context, ref, member),
+        ),
+      if (!member.isKiosk && !member.isOwner && active)
+        _sheetAction(
+          context,
+          icon: Icons.qr_code_2_outlined,
+          label: l10n?.memberBadgesTooltip ?? 'Badges',
+          onTap: () => _badgesDialog(context, ref, member, name),
+        ),
+      if (isOwner && !member.isOwner && !member.isKiosk && active)
+        _sheetAction(
+          context,
+          icon: member.isAdmin
+              ? Icons.remove_moderator_outlined
+              : Icons.add_moderator_outlined,
+          label: member.isAdmin
+              ? (l10n?.memberMakeMember ?? 'Make regular member')
+              : (l10n?.memberMakeAdmin ?? 'Make admin'),
+          onTap: () => _changeRole(context, ref, member),
+        ),
+      if (isOwner && !member.isOwner && active)
+        _sheetAction(
+          context,
+          icon: member.isKiosk
+              ? Icons.tablet_mac
+              : Icons.tablet_mac_outlined,
+          label: member.isKiosk
+              ? (l10n?.memberUnmakeKiosk ?? 'Revert kiosk to member')
+              : (l10n?.memberMakeKiosk ?? 'Make kiosk device'),
+          onTap: () => _toggleKiosk(context, ref, member),
+        ),
+      // Pause/reactivate was a hidden long-press before — now a visible,
+      // named action.
+      if (isOwner && member.status != MemberStatus.exited)
+        _sheetAction(
+          context,
+          icon: member.status == MemberStatus.paused
+              ? Icons.play_circle_outline
+              : Icons.pause_circle_outline,
+          label: member.status == MemberStatus.paused
+              ? (l10n?.memberReactivate ?? 'Reactivate membership')
+              : (l10n?.memberPause ?? 'Pause membership'),
+          onTap: () => _togglePaused(context, ref, member),
+        ),
+    ];
+    if (actions.isEmpty) return;
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => SafeArea(
+        child: SingleChildScrollView(
+          child: SheetShell(title: name, children: actions),
+        ),
+      ),
+    );
+  }
+
+  /// One labeled sheet action: closes the sheet, then runs [onTap] with
+  /// the SCREEN's context (the sheet's dies with the pop).
+  Widget _sheetAction(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    // Builder: the tile's own context lives under the sheet route, so the
+    // pop closes the SHEET — the action then runs on the screen's context.
+    return Builder(
+      builder: (tileContext) => ListTile(
+        leading: Icon(icon),
+        title: Text(label),
+        onTap: () {
+          Navigator.of(tileContext).pop();
+          onTap();
+        },
+      ),
+    );
+  }
+
+  Future<void> _togglePaused(
+    BuildContext context,
+    WidgetRef ref,
+    Member member,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final paused = member.status == MemberStatus.paused;
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'member status update failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => ref.read(workspaceRepositoryProvider).updateMemberStatus(
+            member.id,
+            paused ? MemberStatus.active : MemberStatus.paused,
+          ),
     )) {
       return;
     }
@@ -427,138 +582,20 @@ class MembersScreen extends ConsumerWidget {
                         Text(l10n?.memberStatusExited ?? 'Exited'),
                     ],
                   ),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Consumed services land on the member's bill only
-                      // after the member confirms (#129).
-                      if (servicesOn &&
-                          !member.isKiosk &&
-                          member.status == MemberStatus.active)
-                        IconButton(
-                          icon: const Icon(Icons.room_service_outlined),
-                          tooltip: l10n?.consumptionAddForMember(
-                                names[member.id] ?? '',
-                              ) ??
-                              'Add service for ${names[member.id] ?? ''}',
-                          onPressed: () => showConsumptionSheet(
-                            context,
-                            ref,
-                            subjectMemberId: member.id,
-                            subjectName: names[member.id] ?? '',
-                          ),
-                        ),
-                      // Promote/demote through the validation quorum (0035):
-                      // owners are excluded (they keep admin), exited
-                      // members can't be re-roled.
-                      if (isOwner &&
-                          !member.isOwner &&
-                          !member.isKiosk &&
-                          member.status == MemberStatus.active)
-                        IconButton(
-                          icon: Icon(
-                            member.isAdmin
-                                ? Icons.remove_moderator_outlined
-                                : Icons.add_moderator_outlined,
-                          ),
-                          tooltip: member.isAdmin
-                              ? (l10n?.memberMakeMember ??
-                                  'Make regular member')
-                              : (l10n?.memberMakeAdmin ?? 'Make admin'),
-                          onPressed: () => _changeRole(context, ref, member),
-                        ),
-                      if (isOwner && !member.isKiosk)
-                        IconButton(
-                          icon: const Icon(Icons.percent),
-                          tooltip:
-                              l10n?.memberSubscriptionLabel ?? 'Subscription',
-                          onPressed: () =>
-                              _pickSubscription(context, ref, member),
-                        ),
-                      // Over-consumption policy (0041): block past the plan,
-                      // or bill overage pay-as-you-go.
-                      if (isOwner &&
-                          !member.isKiosk &&
-                          member.status == MemberStatus.active)
-                        IconButton(
-                          icon: Icon(
-                            member.overagePolicy == OveragePolicy.blocked
-                                ? Icons.speed_outlined
-                                : Icons.speed,
-                          ),
-                          tooltip: l10n?.memberOveragePolicyTooltip ??
-                              'Over-consumption',
-                          onPressed: () =>
-                              _pickOveragePolicy(context, ref, member),
-                        ),
-                      // Kiosk badges (0043): mint/revoke the QR badges the
-                      // member presents at a wall tablet.
-                      if (!member.isKiosk &&
-                          !member.isOwner &&
-                          member.status == MemberStatus.active)
-                        IconButton(
-                          icon: const Icon(Icons.qr_code_2_outlined),
-                          tooltip: l10n?.memberBadgesTooltip ?? 'Badges',
-                          onPressed: () => _badgesDialog(
-                            context,
-                            ref,
-                            member,
-                            names[member.id] ?? '',
-                          ),
-                        ),
-                      // Cap on simultaneous open reservations (0044):
-                      // admins and owners set it for OTHERS — the server
-                      // refuses self-setting, so the self row hides it.
-                      if (member.id != me?.id &&
-                          !member.isKiosk &&
-                          member.status == MemberStatus.active)
-                        IconButton(
-                          icon: Icon(
-                            member.maxActiveReservations == null
-                                ? Icons.stacked_bar_chart_outlined
-                                : Icons.stacked_bar_chart,
-                          ),
-                          tooltip: l10n?.memberReservationLimitTooltip ??
-                              'Reservation limit',
-                          onPressed: () =>
-                              _pickReservationLimit(context, ref, member),
-                        ),
-                      // Kiosk device flag (0043, owner-only server-side).
-                      if (isOwner &&
-                          !member.isOwner &&
-                          member.status == MemberStatus.active)
-                        IconButton(
-                          icon: Icon(
-                            member.isKiosk
-                                ? Icons.tablet_mac
-                                : Icons.tablet_mac_outlined,
-                          ),
-                          tooltip: member.isKiosk
-                              ? (l10n?.memberUnmakeKiosk ??
-                                  'Revert kiosk to member')
-                              : (l10n?.memberMakeKiosk ??
-                                  'Make kiosk device'),
-                          onPressed: () =>
-                              _toggleKiosk(context, ref, member),
-                        ),
-                    ],
+                  // One labeled management surface per member (UX pass):
+                  // the row opens a sheet of named actions instead of a
+                  // pile of cryptic icon buttons (which overflowed on
+                  // phones) and a hidden long-press.
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => _memberSheet(
+                    context,
+                    ref,
+                    member,
+                    names[member.id] ?? '',
+                    isOwner: isOwner,
+                    isSelf: member.id == me?.id,
+                    servicesOn: servicesOn,
                   ),
-                  onLongPress: !isOwner ||
-                          member.status == MemberStatus.exited
-                      ? null
-                      : () async {
-                          final paused =
-                              member.status == MemberStatus.paused;
-                          await ref
-                              .read(workspaceRepositoryProvider)
-                              .updateMemberStatus(
-                                member.id,
-                                paused
-                                    ? MemberStatus.active
-                                    : MemberStatus.paused,
-                              );
-                          ref.invalidate(workspaceMembersProvider);
-                        },
                 ),
             ],
           ),
@@ -648,6 +685,56 @@ class _BadgesDialogState extends ConsumerState<_BadgesDialog> {
     if (!mounted) return;
     setState(() => _issued = issued);
     unawaited(_load());
+  }
+
+  /// Downloads the freshly issued badge as a printable PDF card (the QR
+  /// exists only in this dialog — this is the moment to keep it).
+  Future<void> _savePdf(IssuedBadge issued) async {
+    final l10n = widget.l10n;
+    final workspaceName =
+        ref.read(currentWorkspaceProvider).value?.name ?? '';
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'badge PDF export failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        // Embedded Roboto like the bill PDF: accented names must encode.
+        final regular =
+            await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
+        final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
+        final bytes = await buildBadgePdf(
+          workspaceName: workspaceName,
+          memberName: widget.name,
+          token: issued.token,
+          hint: l10n?.kioskPresentBadge ?? 'Present your badge',
+          baseFont: pw.Font.ttf(regular),
+          boldFont: pw.Font.ttf(bold),
+        );
+        final safeName = widget.name
+            .toLowerCase()
+            .replaceAll(RegExp(r'[^a-z0-9]+'), '-');
+        final path = await ref.read(fileSaverProvider)(
+          bytes: bytes,
+          fileName: 'deskilo-badge-$safeName.pdf',
+        );
+        if (!mounted) return;
+        if (path == null) {
+          AppSnack.error(
+            context,
+            l10n?.commonSaveFailed ?? 'Could not save.',
+          );
+        } else {
+          AppSnack.success(
+            context,
+            l10n?.commonSavedTo(path) ?? 'Saved to $path',
+          );
+        }
+      },
+    )) {
+      return;
+    }
   }
 
   Future<void> _revoke(MemberBadge badge) async {
@@ -752,6 +839,14 @@ class _BadgesDialogState extends ConsumerState<_BadgesDialog> {
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonClose ?? 'Close'),
         ),
+        // Download & print the one-time QR as a badge card (UX pass).
+        if (issued != null)
+          FilledButton.icon(
+            key: const ValueKey('badge-save-pdf'),
+            onPressed: () => _savePdf(issued),
+            icon: const Icon(Icons.picture_as_pdf_outlined),
+            label: Text(l10n?.badgeSavePdf ?? 'Save as PDF'),
+          ),
         if (issued == null)
           FilledButton.icon(
             key: const ValueKey('badge-issue-button'),

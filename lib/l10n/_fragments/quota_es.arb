@@ -20,5 +20,7 @@
   "memberReservationLimitNone": "Sin límite",
   "memberReservationLimitCustom": "Personalizado (1–100)",
   "memberReservationLimitChip": "máx. {n}",
-  "reservationLimitError": "Límite de reservas alcanzado — ya tienes el máximo de reservas abiertas."
+  "reservationLimitError": "Límite de reservas alcanzado — ya tienes el máximo de reservas abiertas.",
+  "memberPause": "Pausar la membresía",
+  "memberReactivate": "Reactivar la membresía"
 }

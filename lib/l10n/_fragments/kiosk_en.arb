@@ -92,5 +92,9 @@
   "kioskTapHint": "Tap a seat to check in",
   "@kioskTapHint": {
     "description": "Header hint on the kiosk plan view"
+  },
+  "badgeSavePdf": "Save as PDF",
+  "@badgeSavePdf": {
+    "description": "Badge dialog action: download the one-time QR as a printable badge card PDF"
   }
 }

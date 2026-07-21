@@ -21,5 +21,6 @@
   "kioskBadgeConfirm": "Confirmer",
   "kioskBadgeRejected": "Badge non reconnu.",
   "kioskDone": "C'est fait — tout est en ordre.",
-  "kioskTapHint": "Touchez une place pour pointer"
+  "kioskTapHint": "Touchez une place pour pointer",
+  "badgeSavePdf": "Enregistrer en PDF"
 }

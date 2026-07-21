@@ -21,5 +21,6 @@
   "kioskBadgeConfirm": "Bestätigen",
   "kioskBadgeRejected": "Badge nicht erkannt.",
   "kioskDone": "Fertig — alles erledigt.",
-  "kioskTapHint": "Tippe einen Platz zum Einchecken"
+  "kioskTapHint": "Tippe einen Platz zum Einchecken",
+  "badgeSavePdf": "Als PDF speichern"
 }

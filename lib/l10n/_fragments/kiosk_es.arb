@@ -21,5 +21,6 @@
   "kioskBadgeConfirm": "Confirmar",
   "kioskBadgeRejected": "Credencial no reconocida.",
   "kioskDone": "Listo — todo en orden.",
-  "kioskTapHint": "Toca un asiento para registrarte"
+  "kioskTapHint": "Toca un asiento para registrarte",
+  "badgeSavePdf": "Guardar como PDF"
 }

@@ -179,7 +179,11 @@ void main() {
 
     final created = repo.reservations.single;
     expect(created.status, ReservationStatus.reserved);
-    final expected = HalfDayWindows.morning(DateTime.now());
+    // Workspace-anchored day, NOT device-local: west of the workspace the
+    // wall clock crosses midnight hours earlier — the plan books the
+    // workspace's today (day-boundary flake fix).
+    final expected =
+        HalfDayWindows.morning(WorkspaceTime.dateOf(DateTime.now()));
     expect(created.startsAt.toUtc(), expected.start.toUtc());
     expect(created.endsAt.toUtc(), expected.end.toUtc());
   });
