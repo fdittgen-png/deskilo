@@ -32,6 +32,10 @@ sealed class Statement with _$Statement {
     /// omit the field entirely, so it defaults.
     @Default(0) int accessorySupplementCents,
 
+    /// Sum of the reserved levels' half-day prices (0050); 0 unless the
+    /// member holds whole-level reservations this period.
+    @Default(0) int levelSupplementCents,
+
     /// What happens once the entitlement is used up (migration 0041).
     @Default(OveragePolicy.blocked) OveragePolicy overagePolicy,
 
@@ -64,6 +68,8 @@ sealed class Statement with _$Statement {
         balanceCents: json['balance_cents'] as int,
         accessorySupplementCents:
             (json['accessory_supplement_cents'] as num?)?.toInt() ?? 0,
+        levelSupplementCents:
+            (json['level_supplement_cents'] as num?)?.toInt() ?? 0,
         overagePolicy:
             OveragePolicy.fromName(json['overage_policy'] as String?),
         overageRateCents: (json['overage_rate_cents'] as num?)?.toInt() ?? 0,

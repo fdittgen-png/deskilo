@@ -16,6 +16,14 @@ abstract class FloorPlanRepository {
   Future<List<Level>> fetchLevels(String workspaceId);
   Future<Level> createLevel(String workspaceId, String name, int sortOrder);
   Future<void> renameLevel(String levelId, String name);
+
+  /// Owner-only (0050): mark a level bookable as a whole and price it per
+  /// half-day (cents, >= 0).
+  Future<void> setLevelBooking(
+    String levelId, {
+    required bool bookableAsWhole,
+    required int priceCents,
+  });
   Future<void> deleteLevel(String levelId);
 
   /// Persists a new level order; index in [orderedLevelIds] becomes sort_order.

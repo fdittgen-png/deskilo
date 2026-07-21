@@ -52,6 +52,19 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   }
 
   @override
+  Future<void> setLevelBooking(
+    String levelId, {
+    required bool bookableAsWhole,
+    required int priceCents,
+  }) async {
+    // Owner-only levels RLS (0003); the 0050 check keeps the price >= 0.
+    await _client.from('levels').update({
+      'bookable_as_whole': bookableAsWhole,
+      'price_cents': priceCents,
+    }).eq('id', levelId);
+  }
+
+  @override
   Future<void> deleteLevel(String levelId) async {
     await _client.from('levels').delete().eq('id', levelId);
   }
@@ -441,6 +454,8 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         name: row['name'] as String,
         sortOrder: row['sort_order'] as int,
         backgroundPath: row['background_path'] as String?,
+        bookableAsWhole: row['bookable_as_whole'] as bool? ?? false,
+        priceCents: (row['price_cents'] as num?)?.toInt() ?? 0,
       );
 
   GridRect _rectFromRow(Map<String, dynamic> row) => GridRect(

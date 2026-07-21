@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
 
+import '../../../../core/format/cents.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
@@ -14,6 +15,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/motion.dart';
 import '../../../../core/ui/view_toggle.dart';
@@ -1067,9 +1069,136 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                     ),
                   ),
           ),
+        // Whole-level booking (0050): its own full-width row — the
+        // header rows are too tight for another button on phones.
+        if (_levelReserveVisible(level))
+          Align(
+            alignment: Alignment.centerLeft,
+            child: OutlinedButton.icon(
+              key: const ValueKey('plan-reserve-level'),
+              onPressed: () => _reserveLevel(level),
+              icon: const Icon(Icons.layers_outlined),
+              label: Text(l10n?.levelReserveButton ?? 'Reserve level'),
+            ),
+          ),
         ],
       ),
     );
+  }
+
+  /// Whether the reserve-level affordance shows for [level] (0050):
+  /// feature on + level bookable + the member may book one themselves OR
+  /// may assign one (owner always, admin with adminLevelAssign).
+  bool _levelReserveVisible(Level level) {
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    if (!features.contains(WorkspaceFeature.levelBooking)) return false;
+    if (!level.bookableAsWhole) return false;
+    final me = ref.watch(myMemberProvider).value;
+    if (me == null || me.status != MemberStatus.active) return false;
+    return me.canReserveLevel || _canAssignLevel(me, features);
+  }
+
+  bool _canAssignLevel(Member me, Set<WorkspaceFeature> features) =>
+      me.isOwner ||
+      (me.canAdminister &&
+          features.contains(WorkspaceFeature.adminLevelAssign));
+
+  /// Books [level] as ONE reservation for the chosen window — for myself
+  /// (needs the personal grant) or, for owners/delegated admins, assigned
+  /// to another member (their confirmation flow applies, #106).
+  Future<void> _reserveLevel(Level level) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    final me = ref.read(myMemberProvider).value;
+    if (workspace == null || me == null) return;
+    final features = ref.read(enabledFeaturesSyncProvider);
+    final names = await ref.read(memberNamesProvider.future);
+    // Await the roster (unlike the seat sheet, this can be the first
+    // reader) so the assignment dropdown never renders half-loaded.
+    final candidates = _canAssignLevel(me, features)
+        ? [
+            for (final m in (await ref.read(workspaceMembersProvider.future))
+                .where((m) =>
+                    m.status == MemberStatus.active && !m.isKiosk))
+              (id: m.id, name: names[m.id] ?? ''),
+          ]
+        : const <({String id, String name})>[];
+    if (!mounted) return;
+
+    final start = _browse ?? DateTime.now();
+    final granularity = _granularity;
+    final end = _browseEnd ??
+        (granularity == BookingGranularity.halfDay
+            ? HalfDayWindows.windowForNow(start).end
+            : granularity == BookingGranularity.fullDay
+                ? HalfDayWindows.fullDay(start).end
+                : start.add(_kDefaultStay));
+
+    final subjectId = await showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      builder: (sheetContext) => _LevelReserveSheet(
+        level: level,
+        start: start,
+        end: end,
+        currencyCode: workspace.currencyCode,
+        myMemberId: me.id,
+        canBookSelf: me.canReserveLevel,
+        members: candidates,
+      ),
+    );
+    if (subjectId == null || !mounted) return;
+
+    try {
+      if (subjectId == me.id) {
+        await ref.read(reservationRepositoryProvider).create(
+              workspaceId: workspace.id,
+              levelId: level.id,
+              startsAt: start,
+              endsAt: end,
+            );
+      } else {
+        await ref.read(reservationRepositoryProvider).createFor(
+              workspaceId: workspace.id,
+              subjectMemberId: subjectId,
+              levelId: level.id,
+              startsAt: start,
+              endsAt: end,
+            );
+        final who = names[subjectId] ?? '';
+        if (!mounted) return;
+        AppSnack.success(
+          context,
+          l10n?.planBookedForPending(who) ??
+              'Sent to $who for confirmation.',
+          replace: true,
+        );
+      }
+    } catch (e, st) {
+      debugPrint('level booking failed: $e\n$st');
+      TraceLogger.instance.error('plan', 'level booking failed',
+          error: e, stackTrace: st);
+      if (!mounted) return;
+      final message = switch (e) {
+        PostgrestException(:final message)
+            when message.contains('not allowed to reserve a level') =>
+          l10n?.levelNotAllowed ??
+              'You are not allowed to reserve a whole level.',
+        PostgrestException(:final message)
+            when message.contains('reservations in that period') =>
+          l10n?.levelConflict ??
+              'The level has reservations in that period.',
+        _ => _bookingErrorText(
+            l10n,
+            e,
+            l10n?.workspaceGenericError ??
+                'Something went wrong. Please try again.',
+          ),
+      };
+      AppSnack.error(context, message, replace: true);
+      return;
+    }
+    invalidateBookingData(ref);
   }
 
   /// Compact level picker: a chip-styled button showing the current level;
@@ -1425,3 +1554,106 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
 
 }
 
+
+
+/// Confirm sheet for a whole-level booking (0050): window summary, the
+/// half-day price, and — for owners/delegated admins — the member the
+/// reservation is assigned to (defaults to myself when allowed).
+class _LevelReserveSheet extends StatefulWidget {
+  const _LevelReserveSheet({
+    required this.level,
+    required this.start,
+    required this.end,
+    required this.currencyCode,
+    required this.myMemberId,
+    required this.canBookSelf,
+    required this.members,
+  });
+
+  final Level level;
+  final DateTime start;
+  final DateTime end;
+  final String currencyCode;
+  final String myMemberId;
+  final bool canBookSelf;
+  final List<({String id, String name})> members;
+
+  @override
+  State<_LevelReserveSheet> createState() => _LevelReserveSheetState();
+}
+
+class _LevelReserveSheetState extends State<_LevelReserveSheet> {
+  /// Subjects the dropdown offers: myself only with the personal grant
+  /// (the server would refuse otherwise), then every other member.
+  late final List<({String id, String name})> _options = [
+    if (widget.canBookSelf) (id: widget.myMemberId, name: ''),
+    for (final m in widget.members)
+      if (m.id != widget.myMemberId) m,
+  ];
+  late String _subjectId = _options.first.id;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final timeFormat = DateFormat.MMMEd().add_Hm();
+    return SafeArea(
+      child: SheetShell(
+        title: l10n?.levelReserveTitle ?? 'Reserve the whole level',
+        children: [
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            widget.level.name,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            '${timeFormat.format(widget.start.toLocal())} → '
+            '${timeFormat.format(widget.end.toLocal())}',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          if (widget.level.priceCents > 0) ...[
+            const SizedBox(height: AppSpacing.xs),
+            Text(
+              '${centsToMajor(widget.level.priceCents)} '
+              '${widget.currencyCode} / '
+              '${l10n?.levelPriceLabel ?? 'Price per half-day'}',
+              key: const ValueKey('level-price-line'),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ],
+          // Shown whenever there is a real choice OR the subject is not
+          // me — the actor must always SEE who the booking lands on.
+          if (_options.length > 1 ||
+              _options.first.id != widget.myMemberId) ...[
+            const SizedBox(height: AppSpacing.md),
+            DropdownButtonFormField<String>(
+              key: const ValueKey('level-subject-dropdown'),
+              initialValue: _subjectId,
+              decoration: InputDecoration(
+                labelText: l10n?.levelAssignMember ?? 'For member',
+              ),
+              items: [
+                for (final o in _options)
+                  DropdownMenuItem(
+                    value: o.id,
+                    child: Text(o.id == widget.myMemberId
+                        ? (l10n?.levelAssignMyself ?? 'Myself')
+                        : o.name),
+                  ),
+              ],
+              onChanged: (v) =>
+                  setState(() => _subjectId = v ?? _options.first.id),
+            ),
+          ],
+          const SizedBox(height: AppSpacing.md),
+          FilledButton.icon(
+            key: const ValueKey('level-reserve-confirm'),
+            onPressed: () => Navigator.of(context).pop(_subjectId),
+            icon: const Icon(Icons.layers_outlined),
+            label: Text(l10n?.levelReserveButton ?? 'Reserve level'),
+          ),
+        ],
+      ),
+    );
+  }
+}

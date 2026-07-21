@@ -1,0 +1,17 @@
+{
+  "levelReserveButton": "Réserver le niveau",
+  "levelReserveTitle": "Réserver le niveau entier",
+  "levelPermissionTile": "Réservations de niveau",
+  "levelPermissionAllowed": "Peut réserver un niveau entier",
+  "levelPermissionDenied": "Ne peut pas réserver un niveau entier",
+  "levelBookableToggle": "Réservable en entier",
+  "levelBookableDesc": "L'étage entier peut être réservé en une seule réservation.",
+  "levelPriceLabel": "Prix par demi-journée",
+  "levelAssignMember": "Pour le membre",
+  "levelAssignMyself": "Moi-même",
+  "levelSupplementLabel": "Réservations de niveau",
+  "levelNotAllowed": "Vous n'êtes pas autorisé à réserver un niveau entier.",
+  "levelConflict": "Le niveau a des réservations sur cette période.",
+  "levelDetail": "Niveau entier",
+  "kioskLevelButton": "Ce niveau"
+}

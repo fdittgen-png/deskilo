@@ -30,6 +30,7 @@ class SupabaseReservationRepository implements ReservationRepository {
     required String workspaceId,
     String? seatId,
     String? officeId,
+    String? levelId,
     required DateTime startsAt,
     required DateTime endsAt,
     bool checkIn = false,
@@ -38,6 +39,7 @@ class SupabaseReservationRepository implements ReservationRepository {
       'p_workspace_id': workspaceId,
       'p_seat_id': seatId,
       'p_office_id': officeId,
+      'p_level_id': levelId,
       'p_starts_at': startsAt.toUtc().toIso8601String(),
       'p_ends_at': endsAt.toUtc().toIso8601String(),
       'p_check_in': checkIn,
@@ -49,7 +51,8 @@ class SupabaseReservationRepository implements ReservationRepository {
   Future<String> createFor({
     required String workspaceId,
     required String subjectMemberId,
-    required String seatId,
+    String? seatId,
+    String? levelId,
     required DateTime startsAt,
     required DateTime endsAt,
   }) async {
@@ -58,6 +61,7 @@ class SupabaseReservationRepository implements ReservationRepository {
       'p_workspace_id': workspaceId,
       'p_subject_member_id': subjectMemberId,
       'p_seat_id': seatId,
+      'p_level_id': levelId,
       'p_starts_at': startsAt.toUtc().toIso8601String(),
       'p_ends_at': endsAt.toUtc().toIso8601String(),
     });
@@ -77,6 +81,7 @@ class SupabaseReservationRepository implements ReservationRepository {
     required String badgeToken,
     required String action,
     String? seatId,
+    String? levelId,
     DateTime? startsAt,
     DateTime? endsAt,
   }) async {
@@ -85,6 +90,7 @@ class SupabaseReservationRepository implements ReservationRepository {
       'p_badge_token': badgeToken,
       'p_action': action,
       'p_seat_id': ?seatId,
+      'p_level_id': ?levelId,
       'p_starts_at': ?startsAt?.toUtc().toIso8601String(),
       'p_ends_at': ?endsAt?.toUtc().toIso8601String(),
     }) as Map<String, dynamic>;
@@ -159,6 +165,7 @@ class SupabaseReservationRepository implements ReservationRepository {
         workspaceId: row['workspace_id'] as String,
         seatId: row['seat_id'] as String?,
         officeId: row['office_id'] as String?,
+        levelId: row['level_id'] as String?,
         memberId: row['member_id'] as String,
         startsAt: DateTime.parse(row['starts_at'] as String),
         endsAt: DateTime.parse(row['ends_at'] as String),

@@ -24,5 +24,9 @@
   "featureOnlinePayments": "Paiements en ligne",
   "featureOnlinePaymentsDesc": "Permettre aux membres de payer leur facture en ligne (PayPal). Nécessite la configuration du prestataire de paiement sur le serveur.",
   "featureNfcBadges": "Badges RFID / NFC",
-  "featureNfcBadgesDesc": "Les membres pointent à une borne en approchant une carte RFID/NFC. Nécessite un appareil Android avec NFC."
+  "featureNfcBadgesDesc": "Les membres pointent à une borne en approchant une carte RFID/NFC. Nécessite un appareil Android avec NFC.",
+  "featureLevelBooking": "Réservation de niveau",
+  "featureLevelBookingDesc": "Réserver un étage entier en une seule réservation, tarifée par demi-journée. Le droit s'accorde membre par membre.",
+  "featureAdminLevelAssign": "Les admins peuvent attribuer des niveaux",
+  "featureAdminLevelAssignDesc": "Les admins attribuent des réservations de niveau aux membres. Le propriétaire le peut toujours."
 }

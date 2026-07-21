@@ -26,4 +26,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureOnlinePayments ?? 'Online payments',
       WorkspaceFeature.nfcBadges =>
         l10n?.featureNfcBadges ?? 'RFID / NFC badges',
+      WorkspaceFeature.levelBooking =>
+        l10n?.featureLevelBooking ?? 'Level reservations',
+      WorkspaceFeature.adminLevelAssign =>
+        l10n?.featureAdminLevelAssign ?? 'Admins can assign levels',
     };

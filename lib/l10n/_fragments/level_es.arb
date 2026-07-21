@@ -1,0 +1,17 @@
+{
+  "levelReserveButton": "Reservar la planta",
+  "levelReserveTitle": "Reservar la planta entera",
+  "levelPermissionTile": "Reservas de planta",
+  "levelPermissionAllowed": "Puede reservar una planta entera",
+  "levelPermissionDenied": "No puede reservar una planta entera",
+  "levelBookableToggle": "Reservable en su totalidad",
+  "levelBookableDesc": "La planta entera puede reservarse como una sola reserva.",
+  "levelPriceLabel": "Precio por media jornada",
+  "levelAssignMember": "Para el miembro",
+  "levelAssignMyself": "Yo mismo",
+  "levelSupplementLabel": "Reservas de planta",
+  "levelNotAllowed": "No tienes permiso para reservar una planta entera.",
+  "levelConflict": "La planta tiene reservas en ese periodo.",
+  "levelDetail": "Planta entera",
+  "kioskLevelButton": "Esta planta"
+}

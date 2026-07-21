@@ -24,5 +24,9 @@
   "featureOnlinePayments": "Online-Zahlungen",
   "featureOnlinePaymentsDesc": "Mitglieder zahlen ihre Rechnung online (PayPal). Erfordert die Einrichtung des Zahlungsanbieters auf dem Server.",
   "featureNfcBadges": "RFID-/NFC-Badges",
-  "featureNfcBadgesDesc": "Mitglieder checken an einem Kiosk per RFID/NFC-Karte ein. Erfordert ein Android-Gerät mit NFC."
+  "featureNfcBadgesDesc": "Mitglieder checken an einem Kiosk per RFID/NFC-Karte ein. Erfordert ein Android-Gerät mit NFC.",
+  "featureLevelBooking": "Etagen-Reservierung",
+  "featureLevelBookingDesc": "Eine ganze Etage als eine Buchung reservieren, bepreist je Halbtag. Das Recht wird pro Mitglied vergeben.",
+  "featureAdminLevelAssign": "Admins können Etagen zuweisen",
+  "featureAdminLevelAssignDesc": "Admins weisen Mitgliedern Etagen-Reservierungen zu. Die Inhaberin kann es immer."
 }

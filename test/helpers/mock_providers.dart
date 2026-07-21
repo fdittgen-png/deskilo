@@ -324,6 +324,21 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     }
   }
 
+  /// (0050) member id → last level-permission written, for assertions.
+  final levelPermissions = <String, bool>{};
+
+  @override
+  Future<void> setMemberLevelPermission(
+    String memberId, {
+    required bool allowed,
+  }) async {
+    levelPermissions[memberId] = allowed;
+    final i = otherMembers.indexWhere((m) => m.id == memberId);
+    if (i != -1) {
+      otherMembers[i] = otherMembers[i].copyWith(canReserveLevel: allowed);
+    }
+  }
+
   @override
   Future<void> setMemberKiosk(String memberId, {required bool isKiosk}) async {
     if (myMember.id == memberId) {

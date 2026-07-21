@@ -119,4 +119,31 @@ void main() {
     expect(plans.levels, isEmpty);
     expect(find.text('Doomed floor'), findsNothing);
   });
+
+  testWidgets(
+      'owner marks a level bookable as a whole with a half-day price '
+      '(0050)', (tester) async {
+    final seeded = FakeFloorPlanRepository();
+    await seeded.createLevel('ws-1', 'Ground floor', 0);
+    final plans = await pumpAsOwner(tester, plans: seeded);
+    await tester.tap(find.byIcon(Icons.design_services_outlined));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Bookable as a whole'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('level-bookable-switch')));
+    await tester.pump();
+    await tester.enterText(
+      find.byKey(const ValueKey('level-price-field')),
+      '25',
+    );
+    await tester.tap(find.byKey(const ValueKey('level-booking-save')));
+    await tester.pumpAndSettle();
+
+    expect(plans.levels.single.bookableAsWhole, isTrue);
+    expect(plans.levels.single.priceCents, 2500);
+  });
 }

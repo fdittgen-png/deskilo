@@ -956,6 +956,20 @@ class AppLocalizationsEs extends AppLocalizations {
       'Los miembros se registran en un quiosco acercando una tarjeta RFID/NFC. Requiere un dispositivo Android con NFC.';
 
   @override
+  String get featureLevelBooking => 'Reserva de planta';
+
+  @override
+  String get featureLevelBookingDesc =>
+      'Reservar una planta entera como una sola reserva, con precio por media jornada. El permiso se concede miembro a miembro.';
+
+  @override
+  String get featureAdminLevelAssign => 'Los admins pueden asignar plantas';
+
+  @override
+  String get featureAdminLevelAssignDesc =>
+      'Los admins asignan reservas de planta a los miembros. El propietario siempre puede.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override
@@ -1086,6 +1100,53 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get languageSystemDefault => 'Predeterminado del sistema';
+
+  @override
+  String get levelReserveButton => 'Reservar la planta';
+
+  @override
+  String get levelReserveTitle => 'Reservar la planta entera';
+
+  @override
+  String get levelPermissionTile => 'Reservas de planta';
+
+  @override
+  String get levelPermissionAllowed => 'Puede reservar una planta entera';
+
+  @override
+  String get levelPermissionDenied => 'No puede reservar una planta entera';
+
+  @override
+  String get levelBookableToggle => 'Reservable en su totalidad';
+
+  @override
+  String get levelBookableDesc =>
+      'La planta entera puede reservarse como una sola reserva.';
+
+  @override
+  String get levelPriceLabel => 'Precio por media jornada';
+
+  @override
+  String get levelAssignMember => 'Para el miembro';
+
+  @override
+  String get levelAssignMyself => 'Yo mismo';
+
+  @override
+  String get levelSupplementLabel => 'Reservas de planta';
+
+  @override
+  String get levelNotAllowed =>
+      'No tienes permiso para reservar una planta entera.';
+
+  @override
+  String get levelConflict => 'La planta tiene reservas en ese periodo.';
+
+  @override
+  String get levelDetail => 'Planta entera';
+
+  @override
+  String get kioskLevelButton => 'Esta planta';
 
   @override
   String get membersTitle => 'Miembros y planes';

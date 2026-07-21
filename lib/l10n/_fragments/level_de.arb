@@ -1,0 +1,17 @@
+{
+  "levelReserveButton": "Etage reservieren",
+  "levelReserveTitle": "Die ganze Etage reservieren",
+  "levelPermissionTile": "Etagen-Reservierungen",
+  "levelPermissionAllowed": "Darf eine ganze Etage reservieren",
+  "levelPermissionDenied": "Darf keine ganze Etage reservieren",
+  "levelBookableToggle": "Als Ganzes reservierbar",
+  "levelBookableDesc": "Die ganze Etage kann als eine Buchung reserviert werden.",
+  "levelPriceLabel": "Preis je Halbtag",
+  "levelAssignMember": "Für Mitglied",
+  "levelAssignMyself": "Mich selbst",
+  "levelSupplementLabel": "Etagen-Reservierungen",
+  "levelNotAllowed": "Du darfst keine ganze Etage reservieren.",
+  "levelConflict": "Die Etage hat Reservierungen in diesem Zeitraum.",
+  "levelDetail": "Ganze Etage",
+  "kioskLevelButton": "Diese Etage"
+}

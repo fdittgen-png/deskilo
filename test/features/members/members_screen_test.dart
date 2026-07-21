@@ -23,8 +23,10 @@ Future<FakeWorkspaceRepository> pumpMembers(
   FakeMoneyRepository? money,
   FileSaver? saver,
   FakeNfcUidReader? nfc,
+  Map<String, dynamic> featureFlags = const {},
 }) async {
-  final workspace = FakeWorkspaceRepository.withWorkspace()
+  final workspace =
+      FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags)
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
     ..otherMembers.add(
       const Member(
@@ -477,5 +479,44 @@ void main() {
     await tester.tap(find.text('Make regular member'));
     await tester.pumpAndSettle();
     expect(workspace.lastRoleChange, ('ws-1', 'member-2', false));
+  });
+
+  testWidgets(
+      "the owner grants and revokes another member's whole-level right "
+      '(0050): tile flips through the RPC, gated on the feature',
+      (tester) async {
+    final workspace =
+        await pumpMembers(tester, featureFlags: const {'levelBooking': true});
+
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('May not reserve a whole level'));
+    await tester.pumpAndSettle();
+    expect(workspace.levelPermissions['member-2'], isTrue);
+    expect(workspace.otherMembers.single.canReserveLevel, isTrue);
+
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('May reserve a whole level'));
+    await tester.pumpAndSettle();
+    expect(workspace.levelPermissions['member-2'], isFalse);
+  });
+
+  testWidgets(
+      'no level-permission tile for oneself, nor when the feature is off '
+      '(0050)', (tester) async {
+    await pumpMembers(tester, featureFlags: const {'levelBooking': true});
+    await openSheet(tester, 'Flo');
+    expect(find.textContaining('whole level'), findsNothing);
+    await tester.tapAt(const Offset(10, 10)); // close the sheet
+    await tester.pumpAndSettle();
+
+    await openSheet(tester, 'Ana');
+    // Feature ON + other member → the tile exists…
+    expect(find.text('May not reserve a whole level'), findsOneWidget);
+  });
+
+  testWidgets('feature off (default): no level tile at all', (tester) async {
+    await pumpMembers(tester);
+    await openSheet(tester, 'Ana');
+    expect(find.textContaining('whole level'), findsNothing);
   });
 }

@@ -22,10 +22,17 @@ const _canvasKey = ValueKey('kiosk-plan-canvas');
 Future<FakeReservationRepository> pumpKiosk(
   WidgetTester tester, {
   FakeNfcUidReader? nfc,
+  Map<String, dynamic> featureFlags = const {},
+  bool bookableLevel = false,
 }) async {
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
+  if (bookableLevel) {
+    plans.levels[0] = plans.levels[0]
+        .copyWith(bookableAsWhole: true, priceCents: 1000);
+  }
   final reservations = FakeReservationRepository();
-  final workspace = FakeWorkspaceRepository.withWorkspace();
+  final workspace =
+      FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags);
   workspace.myMember = workspace.myMember.copyWith(
     isAdmin: false,
     isOwner: false,
@@ -151,5 +158,40 @@ void main() {
 
     expect(reservations.kioskActs, isEmpty);
     expect(find.text('Badge not recognized.'), findsOneWidget);
+  });
+
+  testWidgets(
+      'whole-level flow (0050): the level button offers the actions, the '
+      'badge authenticates, kiosk_act carries the level', (tester) async {
+    final reservations = await pumpKiosk(
+      tester,
+      bookableLevel: true,
+      featureFlags: const {'levelBooking': true},
+    );
+
+    await tester.tap(find.byKey(const ValueKey('kiosk-level-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(
+      find.byKey(const ValueKey('kiosk-badge-field')),
+      'badge-token-9',
+    );
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle();
+
+    final act = reservations.kioskActs.single;
+    expect(act.action, 'check_in');
+    expect(act.levelId, isNotNull);
+    expect(act.seatId, isNull);
+  });
+
+  testWidgets(
+      'no level button while the levelBooking feature is off (default) or '
+      'the level is not bookable', (tester) async {
+    await pumpKiosk(tester, bookableLevel: true);
+
+    expect(find.byKey(const ValueKey('kiosk-level-button')), findsNothing);
   });
 }

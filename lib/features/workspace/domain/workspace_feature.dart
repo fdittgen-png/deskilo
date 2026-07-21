@@ -17,7 +17,9 @@ enum WorkspaceFeature {
   adminSeatBlocking,
   accessorySupplements,
   onlinePayments,
-  nfcBadges;
+  nfcBadges,
+  levelBooking,
+  adminLevelAssign;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -82,6 +84,18 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // exists; the owner can disable the tap path per workspace.
   WorkspaceFeature.nfcBadges:
       FeatureManifestEntry(feature: WorkspaceFeature.nfcBadges),
+  // Whole-level reservations (0050) change money and space allocation —
+  // an explicit owner decision, like accessorySupplements.
+  WorkspaceFeature.levelBooking: FeatureManifestEntry(
+    feature: WorkspaceFeature.levelBooking,
+    defaultOn: false,
+  ),
+  // Admins assigning level reservations to members is an owner
+  // delegation (0050) — the adminSeatBlocking idiom.
+  WorkspaceFeature.adminLevelAssign: FeatureManifestEntry(
+    feature: WorkspaceFeature.adminLevelAssign,
+    defaultOn: false,
+  ),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start

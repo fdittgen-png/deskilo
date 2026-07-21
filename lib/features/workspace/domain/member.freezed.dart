@@ -25,7 +25,9 @@ mixin _$Member {
 /// this many bookings with status reserved/checked-in that have not
 /// ended yet. Null = unlimited. Set by owner/admins for OTHERS only —
 /// never self-service.
- int? get maxActiveReservations;
+ int? get maxActiveReservations;/// Whether this member may reserve/check into a WHOLE level (0050);
+/// granted by the owner or an admin, never self-set.
+ bool get canReserveLevel;
 /// Create a copy of Member
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -36,16 +38,16 @@ $MemberCopyWith<Member> get copyWith => _$MemberCopyWithImpl<Member>(this as Mem
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Member&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner)&&(identical(other.status, status) || other.status == status)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct)&&(identical(other.overagePolicy, overagePolicy) || other.overagePolicy == overagePolicy)&&(identical(other.isKiosk, isKiosk) || other.isKiosk == isKiosk)&&(identical(other.maxActiveReservations, maxActiveReservations) || other.maxActiveReservations == maxActiveReservations));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Member&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner)&&(identical(other.status, status) || other.status == status)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct)&&(identical(other.overagePolicy, overagePolicy) || other.overagePolicy == overagePolicy)&&(identical(other.isKiosk, isKiosk) || other.isKiosk == isKiosk)&&(identical(other.maxActiveReservations, maxActiveReservations) || other.maxActiveReservations == maxActiveReservations)&&(identical(other.canReserveLevel, canReserveLevel) || other.canReserveLevel == canReserveLevel));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,userId,isAdmin,isOwner,status,subscriptionPct,overagePolicy,isKiosk,maxActiveReservations);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,userId,isAdmin,isOwner,status,subscriptionPct,overagePolicy,isKiosk,maxActiveReservations,canReserveLevel);
 
 @override
 String toString() {
-  return 'Member(id: $id, workspaceId: $workspaceId, userId: $userId, isAdmin: $isAdmin, isOwner: $isOwner, status: $status, subscriptionPct: $subscriptionPct, overagePolicy: $overagePolicy, isKiosk: $isKiosk, maxActiveReservations: $maxActiveReservations)';
+  return 'Member(id: $id, workspaceId: $workspaceId, userId: $userId, isAdmin: $isAdmin, isOwner: $isOwner, status: $status, subscriptionPct: $subscriptionPct, overagePolicy: $overagePolicy, isKiosk: $isKiosk, maxActiveReservations: $maxActiveReservations, canReserveLevel: $canReserveLevel)';
 }
 
 
@@ -56,7 +58,7 @@ abstract mixin class $MemberCopyWith<$Res>  {
   factory $MemberCopyWith(Member value, $Res Function(Member) _then) = _$MemberCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, String userId, bool isAdmin, bool isOwner, MemberStatus status, int subscriptionPct, OveragePolicy overagePolicy, bool isKiosk, int? maxActiveReservations
+ String id, String workspaceId, String userId, bool isAdmin, bool isOwner, MemberStatus status, int subscriptionPct, OveragePolicy overagePolicy, bool isKiosk, int? maxActiveReservations, bool canReserveLevel
 });
 
 
@@ -73,7 +75,7 @@ class _$MemberCopyWithImpl<$Res>
 
 /// Create a copy of Member
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? userId = null,Object? isAdmin = null,Object? isOwner = null,Object? status = null,Object? subscriptionPct = null,Object? overagePolicy = null,Object? isKiosk = null,Object? maxActiveReservations = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? userId = null,Object? isAdmin = null,Object? isOwner = null,Object? status = null,Object? subscriptionPct = null,Object? overagePolicy = null,Object? isKiosk = null,Object? maxActiveReservations = freezed,Object? canReserveLevel = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -85,7 +87,8 @@ as MemberStatus,subscriptionPct: null == subscriptionPct ? _self.subscriptionPct
 as int,overagePolicy: null == overagePolicy ? _self.overagePolicy : overagePolicy // ignore: cast_nullable_to_non_nullable
 as OveragePolicy,isKiosk: null == isKiosk ? _self.isKiosk : isKiosk // ignore: cast_nullable_to_non_nullable
 as bool,maxActiveReservations: freezed == maxActiveReservations ? _self.maxActiveReservations : maxActiveReservations // ignore: cast_nullable_to_non_nullable
-as int?,
+as int?,canReserveLevel: null == canReserveLevel ? _self.canReserveLevel : canReserveLevel // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -167,10 +170,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  int subscriptionPct,  OveragePolicy overagePolicy,  bool isKiosk,  int? maxActiveReservations)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  int subscriptionPct,  OveragePolicy overagePolicy,  bool isKiosk,  int? maxActiveReservations,  bool canReserveLevel)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Member() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.subscriptionPct,_that.overagePolicy,_that.isKiosk,_that.maxActiveReservations);case _:
+return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.subscriptionPct,_that.overagePolicy,_that.isKiosk,_that.maxActiveReservations,_that.canReserveLevel);case _:
   return orElse();
 
 }
@@ -188,10 +191,10 @@ return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOw
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  int subscriptionPct,  OveragePolicy overagePolicy,  bool isKiosk,  int? maxActiveReservations)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  int subscriptionPct,  OveragePolicy overagePolicy,  bool isKiosk,  int? maxActiveReservations,  bool canReserveLevel)  $default,) {final _that = this;
 switch (_that) {
 case _Member():
-return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.subscriptionPct,_that.overagePolicy,_that.isKiosk,_that.maxActiveReservations);}
+return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.subscriptionPct,_that.overagePolicy,_that.isKiosk,_that.maxActiveReservations,_that.canReserveLevel);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -205,10 +208,10 @@ return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOw
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  int subscriptionPct,  OveragePolicy overagePolicy,  bool isKiosk,  int? maxActiveReservations)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String userId,  bool isAdmin,  bool isOwner,  MemberStatus status,  int subscriptionPct,  OveragePolicy overagePolicy,  bool isKiosk,  int? maxActiveReservations,  bool canReserveLevel)?  $default,) {final _that = this;
 switch (_that) {
 case _Member() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.subscriptionPct,_that.overagePolicy,_that.isKiosk,_that.maxActiveReservations);case _:
+return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOwner,_that.status,_that.subscriptionPct,_that.overagePolicy,_that.isKiosk,_that.maxActiveReservations,_that.canReserveLevel);case _:
   return null;
 
 }
@@ -220,7 +223,7 @@ return $default(_that.id,_that.workspaceId,_that.userId,_that.isAdmin,_that.isOw
 
 
 class _Member extends Member {
-  const _Member({required this.id, required this.workspaceId, required this.userId, required this.isAdmin, required this.isOwner, required this.status, this.subscriptionPct = 100, this.overagePolicy = OveragePolicy.blocked, this.isKiosk = false, this.maxActiveReservations}): super._();
+  const _Member({required this.id, required this.workspaceId, required this.userId, required this.isAdmin, required this.isOwner, required this.status, this.subscriptionPct = 100, this.overagePolicy = OveragePolicy.blocked, this.isKiosk = false, this.maxActiveReservations, this.canReserveLevel = false}): super._();
   
 
 @override final  String id;
@@ -244,6 +247,9 @@ class _Member extends Member {
 /// ended yet. Null = unlimited. Set by owner/admins for OTHERS only —
 /// never self-service.
 @override final  int? maxActiveReservations;
+/// Whether this member may reserve/check into a WHOLE level (0050);
+/// granted by the owner or an admin, never self-set.
+@override@JsonKey() final  bool canReserveLevel;
 
 /// Create a copy of Member
 /// with the given fields replaced by the non-null parameter values.
@@ -255,16 +261,16 @@ _$MemberCopyWith<_Member> get copyWith => __$MemberCopyWithImpl<_Member>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Member&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner)&&(identical(other.status, status) || other.status == status)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct)&&(identical(other.overagePolicy, overagePolicy) || other.overagePolicy == overagePolicy)&&(identical(other.isKiosk, isKiosk) || other.isKiosk == isKiosk)&&(identical(other.maxActiveReservations, maxActiveReservations) || other.maxActiveReservations == maxActiveReservations));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Member&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin)&&(identical(other.isOwner, isOwner) || other.isOwner == isOwner)&&(identical(other.status, status) || other.status == status)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct)&&(identical(other.overagePolicy, overagePolicy) || other.overagePolicy == overagePolicy)&&(identical(other.isKiosk, isKiosk) || other.isKiosk == isKiosk)&&(identical(other.maxActiveReservations, maxActiveReservations) || other.maxActiveReservations == maxActiveReservations)&&(identical(other.canReserveLevel, canReserveLevel) || other.canReserveLevel == canReserveLevel));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,userId,isAdmin,isOwner,status,subscriptionPct,overagePolicy,isKiosk,maxActiveReservations);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,userId,isAdmin,isOwner,status,subscriptionPct,overagePolicy,isKiosk,maxActiveReservations,canReserveLevel);
 
 @override
 String toString() {
-  return 'Member(id: $id, workspaceId: $workspaceId, userId: $userId, isAdmin: $isAdmin, isOwner: $isOwner, status: $status, subscriptionPct: $subscriptionPct, overagePolicy: $overagePolicy, isKiosk: $isKiosk, maxActiveReservations: $maxActiveReservations)';
+  return 'Member(id: $id, workspaceId: $workspaceId, userId: $userId, isAdmin: $isAdmin, isOwner: $isOwner, status: $status, subscriptionPct: $subscriptionPct, overagePolicy: $overagePolicy, isKiosk: $isKiosk, maxActiveReservations: $maxActiveReservations, canReserveLevel: $canReserveLevel)';
 }
 
 
@@ -275,7 +281,7 @@ abstract mixin class _$MemberCopyWith<$Res> implements $MemberCopyWith<$Res> {
   factory _$MemberCopyWith(_Member value, $Res Function(_Member) _then) = __$MemberCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, String userId, bool isAdmin, bool isOwner, MemberStatus status, int subscriptionPct, OveragePolicy overagePolicy, bool isKiosk, int? maxActiveReservations
+ String id, String workspaceId, String userId, bool isAdmin, bool isOwner, MemberStatus status, int subscriptionPct, OveragePolicy overagePolicy, bool isKiosk, int? maxActiveReservations, bool canReserveLevel
 });
 
 
@@ -292,7 +298,7 @@ class __$MemberCopyWithImpl<$Res>
 
 /// Create a copy of Member
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? userId = null,Object? isAdmin = null,Object? isOwner = null,Object? status = null,Object? subscriptionPct = null,Object? overagePolicy = null,Object? isKiosk = null,Object? maxActiveReservations = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? userId = null,Object? isAdmin = null,Object? isOwner = null,Object? status = null,Object? subscriptionPct = null,Object? overagePolicy = null,Object? isKiosk = null,Object? maxActiveReservations = freezed,Object? canReserveLevel = null,}) {
   return _then(_Member(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -304,7 +310,8 @@ as MemberStatus,subscriptionPct: null == subscriptionPct ? _self.subscriptionPct
 as int,overagePolicy: null == overagePolicy ? _self.overagePolicy : overagePolicy // ignore: cast_nullable_to_non_nullable
 as OveragePolicy,isKiosk: null == isKiosk ? _self.isKiosk : isKiosk // ignore: cast_nullable_to_non_nullable
 as bool,maxActiveReservations: freezed == maxActiveReservations ? _self.maxActiveReservations : maxActiveReservations // ignore: cast_nullable_to_non_nullable
-as int?,
+as int?,canReserveLevel: null == canReserveLevel ? _self.canReserveLevel : canReserveLevel // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
