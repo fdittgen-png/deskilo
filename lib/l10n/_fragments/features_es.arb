@@ -22,5 +22,7 @@
   "featureAccessorySupplements": "Suplementos de accesorios",
   "featureAccessorySupplementsDesc": "Facturar los accesorios de sitio con precio por media jornada reservada. Se aplica a las reservas desde la activación.",
   "featureOnlinePayments": "Pagos en línea",
-  "featureOnlinePaymentsDesc": "Permite a los miembros pagar su factura en línea (PayPal). Requiere configurar el proveedor de pago en el servidor."
+  "featureOnlinePaymentsDesc": "Permite a los miembros pagar su factura en línea (PayPal). Requiere configurar el proveedor de pago en el servidor.",
+  "featureNfcBadges": "Credenciales RFID / NFC",
+  "featureNfcBadgesDesc": "Los miembros se registran en un quiosco acercando una tarjeta RFID/NFC. Requiere un dispositivo Android con NFC."
 }

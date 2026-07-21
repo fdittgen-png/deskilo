@@ -28,5 +28,13 @@
   "badgeTapCardHint": "Acerca la tarjeta RFID/NFC a la parte trasera del dispositivo.",
   "badgeCardRegistered": "Tarjeta registrada.",
   "badgeCardAlreadyRegistered": "Esa tarjeta ya está registrada.",
-  "kioskBadgeHintNfc": "Acerca tu tarjeta, escanea tu QR o escribe el código."
+  "kioskBadgeHintNfc": "Acerca tu tarjeta, escanea tu QR o escribe el código.",
+  "nfcConfigTitle": "Credenciales RFID / NFC",
+  "nfcConfigIntro": "Los miembros se registran en un quiosco de pared acercando una tarjeta RFID/NFC. Registra la tarjeta de cada miembro en Miembros y planes; en el quiosco la acercan para reservar o registrarse.",
+  "nfcConfigEnable": "Activar registro por credencial NFC",
+  "nfcConfigEnableDesc": "Muestra la opción de acercar la tarjeta en los quioscos y en el gestor de credenciales.",
+  "nfcConfigDeviceStatus": "Este dispositivo",
+  "nfcConfigChecking": "Comprobando…",
+  "nfcConfigDeviceReady": "NFC disponible y activado",
+  "nfcConfigDeviceUnavailable": "Sin NFC aquí — se necesita un dispositivo Android con NFC activado (los iPad no tienen NFC). Las credenciales QR siguen funcionando."
 }

@@ -949,6 +949,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Permite a los miembros pagar su factura en línea (PayPal). Requiere configurar el proveedor de pago en el servidor.';
 
   @override
+  String get featureNfcBadges => 'Credenciales RFID / NFC';
+
+  @override
+  String get featureNfcBadgesDesc =>
+      'Los miembros se registran en un quiosco acercando una tarjeta RFID/NFC. Requiere un dispositivo Android con NFC.';
+
+  @override
   String get memberKioskLabel => 'Quiosco';
 
   @override
@@ -1040,6 +1047,33 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get kioskBadgeHintNfc =>
       'Acerca tu tarjeta, escanea tu QR o escribe el código.';
+
+  @override
+  String get nfcConfigTitle => 'Credenciales RFID / NFC';
+
+  @override
+  String get nfcConfigIntro =>
+      'Los miembros se registran en un quiosco de pared acercando una tarjeta RFID/NFC. Registra la tarjeta de cada miembro en Miembros y planes; en el quiosco la acercan para reservar o registrarse.';
+
+  @override
+  String get nfcConfigEnable => 'Activar registro por credencial NFC';
+
+  @override
+  String get nfcConfigEnableDesc =>
+      'Muestra la opción de acercar la tarjeta en los quioscos y en el gestor de credenciales.';
+
+  @override
+  String get nfcConfigDeviceStatus => 'Este dispositivo';
+
+  @override
+  String get nfcConfigChecking => 'Comprobando…';
+
+  @override
+  String get nfcConfigDeviceReady => 'NFC disponible y activado';
+
+  @override
+  String get nfcConfigDeviceUnavailable =>
+      'Sin NFC aquí — se necesita un dispositivo Android con NFC activado (los iPad no tienen NFC). Las credenciales QR siguen funcionando.';
 
   @override
   String get languageTitle => 'Idioma';

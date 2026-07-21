@@ -651,7 +651,12 @@ class _BadgesDialogState extends ConsumerState<_BadgesDialog> {
   }
 
   Future<void> _checkNfc() async {
-    final available = await ref.read(nfcUidReaderProvider).isAvailable();
+    // Both the workspace toggle AND this device's hardware must allow it.
+    final enabled = ref
+        .read(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.nfcBadges);
+    final available =
+        enabled && await ref.read(nfcUidReaderProvider).isAvailable();
     if (mounted) setState(() => _nfcAvailable = available);
   }
 

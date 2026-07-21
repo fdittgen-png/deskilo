@@ -22,5 +22,7 @@
   "featureAccessorySupplements": "Suppléments d'accessoires",
   "featureAccessorySupplementsDesc": "Facturer les accessoires de place tarifés par demi-journée réservée. S'applique aux réservations à partir de l'activation.",
   "featureOnlinePayments": "Paiements en ligne",
-  "featureOnlinePaymentsDesc": "Permettre aux membres de payer leur facture en ligne (PayPal). Nécessite la configuration du prestataire de paiement sur le serveur."
+  "featureOnlinePaymentsDesc": "Permettre aux membres de payer leur facture en ligne (PayPal). Nécessite la configuration du prestataire de paiement sur le serveur.",
+  "featureNfcBadges": "Badges RFID / NFC",
+  "featureNfcBadgesDesc": "Les membres pointent à une borne en approchant une carte RFID/NFC. Nécessite un appareil Android avec NFC."
 }

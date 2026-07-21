@@ -25,6 +25,7 @@ import '../../../plan/presentation/widgets/plan_canvas.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/booking_granularity.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 
 /// Server error substring when a presented badge is unknown/revoked
@@ -141,6 +142,9 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       isScrollControlled: true,
       builder: (context) => _KioskBadgePrompt(
         reader: ref.read(nfcUidReaderProvider),
+        nfcEnabled: ref
+            .read(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.nfcBadges),
         l10n: l10n,
       ),
     );
@@ -316,9 +320,14 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
 /// which kiosk_act resolves by hash exactly like a scanned code. The code
 /// never leaves this sheet.
 class _KioskBadgePrompt extends StatefulWidget {
-  const _KioskBadgePrompt({required this.reader, required this.l10n});
+  const _KioskBadgePrompt({
+    required this.reader,
+    required this.nfcEnabled,
+    required this.l10n,
+  });
 
   final NfcUidReader reader;
+  final bool nfcEnabled;
   final AppLocalizations? l10n;
 
   @override
@@ -337,7 +346,7 @@ class _KioskBadgePromptState extends State<_KioskBadgePrompt> {
   }
 
   Future<void> _startNfc() async {
-    if (!await widget.reader.isAvailable()) return;
+    if (!widget.nfcEnabled || !await widget.reader.isAvailable()) return;
     if (!mounted) return;
     setState(() => _nfcAvailable = true);
     await widget.reader.startRead(onUid: (uid) => _submit(uid));

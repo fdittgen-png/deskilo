@@ -950,6 +950,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Mitglieder zahlen ihre Rechnung online (PayPal). Erfordert die Einrichtung des Zahlungsanbieters auf dem Server.';
 
   @override
+  String get featureNfcBadges => 'RFID-/NFC-Badges';
+
+  @override
+  String get featureNfcBadgesDesc =>
+      'Mitglieder checken an einem Kiosk per RFID/NFC-Karte ein. Erfordert ein Android-Gerät mit NFC.';
+
+  @override
   String get memberKioskLabel => 'Kiosk';
 
   @override
@@ -1042,6 +1049,33 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get kioskBadgeHintNfc =>
       'Karte auflegen, QR scannen oder Code eintippen.';
+
+  @override
+  String get nfcConfigTitle => 'RFID-/NFC-Badges';
+
+  @override
+  String get nfcConfigIntro =>
+      'Mitglieder checken an einem Wandtablet per RFID/NFC-Karte ein. Registriere die Karte jedes Mitglieds unter Mitglieder & Tarife; am Kiosk halten sie die Karte an, um zu reservieren oder einzuchecken.';
+
+  @override
+  String get nfcConfigEnable => 'NFC-Badge-Check-in aktivieren';
+
+  @override
+  String get nfcConfigEnableDesc =>
+      'Zeigt die Karten-Antipp-Option an Kiosken und im Badge-Manager.';
+
+  @override
+  String get nfcConfigDeviceStatus => 'Dieses Gerät';
+
+  @override
+  String get nfcConfigChecking => 'Prüfe…';
+
+  @override
+  String get nfcConfigDeviceReady => 'NFC verfügbar und aktiviert';
+
+  @override
+  String get nfcConfigDeviceUnavailable =>
+      'Hier kein NFC — ein Android-Gerät mit aktiviertem NFC ist nötig (iPads haben kein NFC). QR-Badges funktionieren weiter.';
 
   @override
   String get languageTitle => 'Sprache';

@@ -51,6 +51,10 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureOnlinePaymentsDesc ??
               'Let members pay their bill online (PayPal). Needs the '
                   'payment provider configured on the server.',
+        WorkspaceFeature.nfcBadges =>
+          l10n?.featureNfcBadgesDesc ??
+              'Members check in at a kiosk by tapping an RFID/NFC card. '
+                  'Needs an Android device with NFC.',
       };
 
   Future<void> _toggle(

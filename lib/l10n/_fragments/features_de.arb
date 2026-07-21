@@ -22,5 +22,7 @@
   "featureAccessorySupplements": "Zubehör-Aufpreise",
   "featureAccessorySupplementsDesc": "Bepreistes Platz-Zubehör pro gebuchtem Halbtag berechnen. Gilt für Buchungen ab der Aktivierung.",
   "featureOnlinePayments": "Online-Zahlungen",
-  "featureOnlinePaymentsDesc": "Mitglieder zahlen ihre Rechnung online (PayPal). Erfordert die Einrichtung des Zahlungsanbieters auf dem Server."
+  "featureOnlinePaymentsDesc": "Mitglieder zahlen ihre Rechnung online (PayPal). Erfordert die Einrichtung des Zahlungsanbieters auf dem Server.",
+  "featureNfcBadges": "RFID-/NFC-Badges",
+  "featureNfcBadgesDesc": "Mitglieder checken an einem Kiosk per RFID/NFC-Karte ein. Erfordert ein Android-Gerät mit NFC."
 }

@@ -24,4 +24,6 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureAccessorySupplements ?? 'Accessory supplements',
       WorkspaceFeature.onlinePayments =>
         l10n?.featureOnlinePayments ?? 'Online payments',
+      WorkspaceFeature.nfcBadges =>
+        l10n?.featureNfcBadges ?? 'RFID / NFC badges',
     };
