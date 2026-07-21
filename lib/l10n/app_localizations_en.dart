@@ -944,6 +944,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Let members pay their bill online (PayPal). Needs the payment provider configured on the server.';
 
   @override
+  String get featureNfcBadges => 'RFID / NFC badges';
+
+  @override
+  String get featureNfcBadgesDesc =>
+      'Members check in at a kiosk by tapping an RFID/NFC card. Needs an Android device with NFC.';
+
+  @override
   String get memberKioskLabel => 'Kiosk';
 
   @override
@@ -1033,6 +1040,33 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get kioskBadgeHintNfc =>
       'Tap your card, scan your QR, or type its code.';
+
+  @override
+  String get nfcConfigTitle => 'RFID / NFC badges';
+
+  @override
+  String get nfcConfigIntro =>
+      'Members check in at a wall-mounted kiosk by tapping an RFID/NFC card. Register each member\'s card in Members & plans; at the kiosk they tap to reserve or check in.';
+
+  @override
+  String get nfcConfigEnable => 'Enable NFC badge check-in';
+
+  @override
+  String get nfcConfigEnableDesc =>
+      'Show the card-tap option on kiosks and in the badge manager.';
+
+  @override
+  String get nfcConfigDeviceStatus => 'This device';
+
+  @override
+  String get nfcConfigChecking => 'Checking…';
+
+  @override
+  String get nfcConfigDeviceReady => 'NFC available and enabled';
+
+  @override
+  String get nfcConfigDeviceUnavailable =>
+      'No NFC here — Android with NFC on is needed (iPads have no NFC). QR badges still work.';
 
   @override
   String get languageTitle => 'Language';

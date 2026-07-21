@@ -1808,6 +1808,18 @@ abstract class AppLocalizations {
   /// **'Let members pay their bill online (PayPal). Needs the payment provider configured on the server.'**
   String get featureOnlinePaymentsDesc;
 
+  /// Feature switch: RFID/NFC card check-in at a kiosk (0046)
+  ///
+  /// In en, this message translates to:
+  /// **'RFID / NFC badges'**
+  String get featureNfcBadges;
+
+  /// One-line description under the NFC-badges switch
+  ///
+  /// In en, this message translates to:
+  /// **'Members check in at a kiosk by tapping an RFID/NFC card. Needs an Android device with NFC.'**
+  String get featureNfcBadgesDesc;
+
   /// Subtitle chip of a kiosk device account in the members list (0043)
   ///
   /// In en, this message translates to:
@@ -1981,6 +1993,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap your card, scan your QR, or type its code.'**
   String get kioskBadgeHintNfc;
+
+  /// Owner NFC configuration screen title (0046)
+  ///
+  /// In en, this message translates to:
+  /// **'RFID / NFC badges'**
+  String get nfcConfigTitle;
+
+  /// Intro on the NFC config screen
+  ///
+  /// In en, this message translates to:
+  /// **'Members check in at a wall-mounted kiosk by tapping an RFID/NFC card. Register each member\'s card in Members & plans; at the kiosk they tap to reserve or check in.'**
+  String get nfcConfigIntro;
+
+  /// Workspace toggle for NFC badges
+  ///
+  /// In en, this message translates to:
+  /// **'Enable NFC badge check-in'**
+  String get nfcConfigEnable;
+
+  /// Subtitle of the NFC enable toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Show the card-tap option on kiosks and in the badge manager.'**
+  String get nfcConfigEnableDesc;
+
+  /// Title of the device NFC status card
+  ///
+  /// In en, this message translates to:
+  /// **'This device'**
+  String get nfcConfigDeviceStatus;
+
+  /// While the device NFC status is being read
+  ///
+  /// In en, this message translates to:
+  /// **'Checking…'**
+  String get nfcConfigChecking;
+
+  /// Device NFC status: usable
+  ///
+  /// In en, this message translates to:
+  /// **'NFC available and enabled'**
+  String get nfcConfigDeviceReady;
+
+  /// Device NFC status: not usable
+  ///
+  /// In en, this message translates to:
+  /// **'No NFC here — Android with NFC on is needed (iPads have no NFC). QR badges still work.'**
+  String get nfcConfigDeviceUnavailable;
 
   /// Settings entry and dialog title for the in-app language selection
   ///

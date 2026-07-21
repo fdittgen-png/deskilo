@@ -952,6 +952,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Consenti ai membri di pagare la fattura online (PayPal). Richiede la configurazione del fornitore di pagamento sul server.';
 
   @override
+  String get featureNfcBadges => 'Badge RFID / NFC';
+
+  @override
+  String get featureNfcBadgesDesc =>
+      'I membri fanno check-in a un chiosco avvicinando una tessera RFID/NFC. Richiede un dispositivo Android con NFC.';
+
+  @override
   String get memberKioskLabel => 'Chiosco';
 
   @override
@@ -1043,6 +1050,33 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get kioskBadgeHintNfc =>
       'Avvicina la tessera, scansiona il QR o digita il codice.';
+
+  @override
+  String get nfcConfigTitle => 'Badge RFID / NFC';
+
+  @override
+  String get nfcConfigIntro =>
+      'I membri fanno check-in a un chiosco a parete avvicinando una tessera RFID/NFC. Registra la tessera di ogni membro in Membri e piani; al chiosco la avvicinano per prenotare o fare check-in.';
+
+  @override
+  String get nfcConfigEnable => 'Abilita il check-in con badge NFC';
+
+  @override
+  String get nfcConfigEnableDesc =>
+      'Mostra l\'opzione di avvicinare la tessera su chioschi e nel gestore badge.';
+
+  @override
+  String get nfcConfigDeviceStatus => 'Questo dispositivo';
+
+  @override
+  String get nfcConfigChecking => 'Verifica…';
+
+  @override
+  String get nfcConfigDeviceReady => 'NFC disponibile e attivo';
+
+  @override
+  String get nfcConfigDeviceUnavailable =>
+      'Nessun NFC qui — serve un dispositivo Android con NFC attivo (gli iPad non hanno NFC). I badge QR funzionano comunque.';
 
   @override
   String get languageTitle => 'Lingua';

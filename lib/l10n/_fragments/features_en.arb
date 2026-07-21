@@ -91,5 +91,13 @@
   "featureOnlinePaymentsDesc": "Let members pay their bill online (PayPal). Needs the payment provider configured on the server.",
   "@featureOnlinePaymentsDesc": {
     "description": "One-line description under the online-payments switch (0043)"
+  },
+  "featureNfcBadges": "RFID / NFC badges",
+  "@featureNfcBadges": {
+    "description": "Feature switch: RFID/NFC card check-in at a kiosk (0046)"
+  },
+  "featureNfcBadgesDesc": "Members check in at a kiosk by tapping an RFID/NFC card. Needs an Android device with NFC.",
+  "@featureNfcBadgesDesc": {
+    "description": "One-line description under the NFC-badges switch"
   }
 }

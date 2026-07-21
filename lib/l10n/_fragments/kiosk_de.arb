@@ -28,5 +28,13 @@
   "badgeTapCardHint": "Halte die RFID/NFC-Karte an die Rückseite des Geräts.",
   "badgeCardRegistered": "Karte registriert.",
   "badgeCardAlreadyRegistered": "Diese Karte ist bereits registriert.",
-  "kioskBadgeHintNfc": "Karte auflegen, QR scannen oder Code eintippen."
+  "kioskBadgeHintNfc": "Karte auflegen, QR scannen oder Code eintippen.",
+  "nfcConfigTitle": "RFID-/NFC-Badges",
+  "nfcConfigIntro": "Mitglieder checken an einem Wandtablet per RFID/NFC-Karte ein. Registriere die Karte jedes Mitglieds unter Mitglieder & Tarife; am Kiosk halten sie die Karte an, um zu reservieren oder einzuchecken.",
+  "nfcConfigEnable": "NFC-Badge-Check-in aktivieren",
+  "nfcConfigEnableDesc": "Zeigt die Karten-Antipp-Option an Kiosken und im Badge-Manager.",
+  "nfcConfigDeviceStatus": "Dieses Gerät",
+  "nfcConfigChecking": "Prüfe…",
+  "nfcConfigDeviceReady": "NFC verfügbar und aktiviert",
+  "nfcConfigDeviceUnavailable": "Hier kein NFC — ein Android-Gerät mit aktiviertem NFC ist nötig (iPads haben kein NFC). QR-Badges funktionieren weiter."
 }

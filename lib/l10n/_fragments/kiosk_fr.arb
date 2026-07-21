@@ -28,5 +28,13 @@
   "badgeTapCardHint": "Approchez la carte RFID/NFC de l'arrière de l'appareil.",
   "badgeCardRegistered": "Carte enregistrée.",
   "badgeCardAlreadyRegistered": "Cette carte est déjà enregistrée.",
-  "kioskBadgeHintNfc": "Approchez votre carte, scannez votre QR, ou saisissez le code."
+  "kioskBadgeHintNfc": "Approchez votre carte, scannez votre QR, ou saisissez le code.",
+  "nfcConfigTitle": "Badges RFID / NFC",
+  "nfcConfigIntro": "Les membres pointent à une borne murale en approchant une carte RFID/NFC. Enregistrez la carte de chaque membre dans Membres & forfaits ; à la borne, ils approchent la carte pour réserver ou pointer.",
+  "nfcConfigEnable": "Activer le pointage par badge NFC",
+  "nfcConfigEnableDesc": "Afficher l'option « approcher la carte » sur les bornes et dans le gestionnaire de badges.",
+  "nfcConfigDeviceStatus": "Cet appareil",
+  "nfcConfigChecking": "Vérification…",
+  "nfcConfigDeviceReady": "NFC disponible et activé",
+  "nfcConfigDeviceUnavailable": "Pas de NFC ici — un appareil Android avec NFC activé est nécessaire (les iPad n'ont pas de NFC). Les badges QR fonctionnent toujours."
 }

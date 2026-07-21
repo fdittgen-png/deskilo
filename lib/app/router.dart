@@ -31,6 +31,7 @@ import '../features/workspace/presentation/screens/workspace_settings_screen.dar
 import '../features/workspace/providers/workspace_providers.dart';
 import '../features/kiosk/presentation/screens/kiosk_screen.dart';
 import '../features/money/presentation/screens/payment_config_screen.dart';
+import '../features/workspace/presentation/screens/nfc_config_screen.dart';
 import 'shell/shell_screen.dart';
 
 part 'router.g.dart';
@@ -213,6 +214,14 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/scan-join',
         builder: (context, state) => const ScanJoinScreen(),
+      ),
+      GoRoute(
+        path: '/nfc-config',
+        redirect: (context, state) {
+          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          return isOwner ? null : '/plan';
+        },
+        builder: (context, state) => const NfcConfigScreen(),
       ),
       GoRoute(
         path: '/payment-config',

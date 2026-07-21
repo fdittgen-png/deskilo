@@ -120,5 +120,37 @@
   "kioskBadgeHintNfc": "Tap your card, scan your QR, or type its code.",
   "@kioskBadgeHintNfc": {
     "description": "Kiosk badge prompt hint when NFC is available (RFID tap path)"
+  },
+  "nfcConfigTitle": "RFID / NFC badges",
+  "@nfcConfigTitle": {
+    "description": "Owner NFC configuration screen title (0046)"
+  },
+  "nfcConfigIntro": "Members check in at a wall-mounted kiosk by tapping an RFID/NFC card. Register each member's card in Members & plans; at the kiosk they tap to reserve or check in.",
+  "@nfcConfigIntro": {
+    "description": "Intro on the NFC config screen"
+  },
+  "nfcConfigEnable": "Enable NFC badge check-in",
+  "@nfcConfigEnable": {
+    "description": "Workspace toggle for NFC badges"
+  },
+  "nfcConfigEnableDesc": "Show the card-tap option on kiosks and in the badge manager.",
+  "@nfcConfigEnableDesc": {
+    "description": "Subtitle of the NFC enable toggle"
+  },
+  "nfcConfigDeviceStatus": "This device",
+  "@nfcConfigDeviceStatus": {
+    "description": "Title of the device NFC status card"
+  },
+  "nfcConfigChecking": "Checking…",
+  "@nfcConfigChecking": {
+    "description": "While the device NFC status is being read"
+  },
+  "nfcConfigDeviceReady": "NFC available and enabled",
+  "@nfcConfigDeviceReady": {
+    "description": "Device NFC status: usable"
+  },
+  "nfcConfigDeviceUnavailable": "No NFC here — Android with NFC on is needed (iPads have no NFC). QR badges still work.",
+  "@nfcConfigDeviceUnavailable": {
+    "description": "Device NFC status: not usable"
   }
 }

@@ -258,6 +258,12 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l10n?.payConfigTitle ?? 'Online payments'),
               onTap: () => context.push('/payment-config'),
             ),
+          if (isOwner)
+            ListTile(
+              leading: const Icon(Icons.contactless_outlined),
+              title: Text(l10n?.nfcConfigTitle ?? 'RFID / NFC badges'),
+              onTap: () => context.push('/nfc-config'),
+            ),
           if (isOwner && features.contains(WorkspaceFeature.services))
             ListTile(
               leading: const Icon(Icons.local_cafe_outlined),

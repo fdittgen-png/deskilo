@@ -16,7 +16,8 @@ enum WorkspaceFeature {
   pushNotifications,
   adminSeatBlocking,
   accessorySupplements,
-  onlinePayments;
+  onlinePayments,
+  nfcBadges;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -77,6 +78,10 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.onlinePayments,
     defaultOn: false,
   ),
+  // RFID/NFC badge check-in (0046). On by default where the hardware
+  // exists; the owner can disable the tap path per workspace.
+  WorkspaceFeature.nfcBadges:
+      FeatureManifestEntry(feature: WorkspaceFeature.nfcBadges),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start
