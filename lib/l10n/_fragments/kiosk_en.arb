@@ -96,5 +96,29 @@
   "badgeSavePdf": "Save as PDF",
   "@badgeSavePdf": {
     "description": "Badge dialog action: download the one-time QR as a printable badge card PDF"
+  },
+  "badgeRegisterCard": "Register card",
+  "@badgeRegisterCard": {
+    "description": "Badge dialog action: register a physical RFID/NFC card as the member's badge (Android + NFC)"
+  },
+  "badgeTapCardTitle": "Register a card",
+  "@badgeTapCardTitle": {
+    "description": "Title of the tap-the-card prompt"
+  },
+  "badgeTapCardHint": "Hold the RFID/NFC card to the back of the device.",
+  "@badgeTapCardHint": {
+    "description": "Instruction in the tap-the-card prompt"
+  },
+  "badgeCardRegistered": "Card registered.",
+  "@badgeCardRegistered": {
+    "description": "Snackbar after an RFID/NFC card was registered as a badge"
+  },
+  "badgeCardAlreadyRegistered": "That card is already registered.",
+  "@badgeCardAlreadyRegistered": {
+    "description": "Error when the tapped card's UID is already a badge in the workspace"
+  },
+  "kioskBadgeHintNfc": "Tap your card, scan your QR, or type its code.",
+  "@kioskBadgeHintNfc": {
+    "description": "Kiosk badge prompt hint when NFC is available (RFID tap path)"
   }
 }

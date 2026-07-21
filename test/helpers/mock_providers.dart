@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT
 import 'dart:async';
+import 'package:flutter/foundation.dart' show ValueChanged;
 
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
+import 'package:deskilo/core/nfc/nfc_uid_reader.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
@@ -29,7 +31,8 @@ import 'package:deskilo/features/reservations/domain/reservation_repository.dart
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/misc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
+import 'package:supabase_flutter/supabase_flutter.dart'
+    show AuthException, PostgrestException;
 
 import 'fake_accessory_repository.dart';
 import 'fake_event_repository.dart';
@@ -358,6 +361,28 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> registerNfcBadge(
+    String workspaceId,
+    String memberId, {
+    required String uid,
+    String label = '',
+  }) async {
+    // Duplicate-tag path (register_nfc_badge's pinned refusal, 0046).
+    if (badges.any((b) => b.label == 'uid:$uid' && b.isActive)) {
+      throw const PostgrestException(message: 'tag already registered');
+    }
+    badges.add(MemberBadge(
+      id: 'badge-${badges.length + 1}',
+      workspaceId: workspaceId,
+      memberId: memberId,
+      // The fake records the uid in the label so tests can assert it.
+      label: label.isEmpty ? 'uid:$uid' : label,
+      createdAt: DateTime.now(),
+      kind: BadgeKind.nfc,
+    ));
+  }
+
+  @override
   Future<void> revokeMemberBadge(String badgeId) async {
     final i = badges.indexWhere((b) => b.id == badgeId);
     if (i >= 0) {
@@ -505,6 +530,7 @@ List<Override> standardTestOverrides({
   ActiveWorkspaceStore? activeWorkspace,
   DefaultLevelStore? defaultLevel,
   ProfileRepository? profile,
+  NfcUidReader? nfc,
 }) {
   return [
     authRepositoryProvider
@@ -530,6 +556,7 @@ List<Override> standardTestOverrides({
         .overrideWithValue(defaultLevel ?? InMemoryDefaultLevelStore()),
     profileRepositoryProvider
         .overrideWithValue(profile ?? FakeProfileRepository()),
+    nfcUidReaderProvider.overrideWithValue(nfc ?? FakeNfcUidReader()),
   ];
 }
 
@@ -543,4 +570,27 @@ class InMemoryActiveWorkspaceStore implements ActiveWorkspaceStore {
 
   @override
   Future<void> write(String? workspaceId) async => value = workspaceId;
+}
+
+/// Fake RFID/NFC reader: [available] toggles the tap path; [tap] drives a
+/// card presentation without hardware.
+class FakeNfcUidReader extends NfcUidReader {
+  FakeNfcUidReader({this.available = false});
+
+  final bool available;
+  ValueChanged<String>? _onUid;
+
+  @override
+  Future<bool> isAvailable() async => available;
+
+  @override
+  Future<void> startRead({required ValueChanged<String> onUid}) async {
+    _onUid = onUid;
+  }
+
+  @override
+  Future<void> stop() async => _onUid = null;
+
+  /// Simulates a physical card tap with UID [uid] (already normalized).
+  void tap(String uid) => _onUid?.call(uid);
 }

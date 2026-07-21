@@ -231,6 +231,21 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> registerNfcBadge(
+    String workspaceId,
+    String memberId, {
+    required String uid,
+    String label = '',
+  }) async {
+    await _client.rpc<dynamic>('register_nfc_badge', params: {
+      'p_workspace_id': workspaceId,
+      'p_member_id': memberId,
+      'p_uid': uid,
+      'p_label': label,
+    });
+  }
+
+  @override
   Future<void> revokeMemberBadge(String badgeId) async {
     await _client.rpc<dynamic>('revoke_member_badge', params: {
       'p_badge_id': badgeId,

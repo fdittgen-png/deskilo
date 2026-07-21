@@ -19,7 +19,10 @@ import '../../helpers/mock_providers.dart';
 const _canvasKey = ValueKey('kiosk-plan-canvas');
 
 /// Pumps the app signed in as the wall tablet's KIOSK account.
-Future<FakeReservationRepository> pumpKiosk(WidgetTester tester) async {
+Future<FakeReservationRepository> pumpKiosk(
+  WidgetTester tester, {
+  FakeNfcUidReader? nfc,
+}) async {
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   final reservations = FakeReservationRepository();
   final workspace = FakeWorkspaceRepository.withWorkspace();
@@ -34,6 +37,7 @@ Future<FakeReservationRepository> pumpKiosk(WidgetTester tester) async {
         floorPlan: plans,
         reservations: reservations,
         workspace: workspace,
+        nfc: nfc,
       ),
       child: const DeskiloApp(),
     ),
@@ -105,6 +109,28 @@ void main() {
     expect(act.action, 'check_in');
     expect(act.badgeToken, 'badge-token-1');
     expect(act.seatId, isNotNull);
+    expect(find.textContaining("all set"), findsOneWidget);
+  });
+
+  testWidgets('a kiosk RFID tap sends the card UID straight to kiosk_act '
+      '(0046)', (tester) async {
+    final nfc = FakeNfcUidReader(available: true);
+    final reservations = await pumpKiosk(tester, nfc: nfc);
+
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
+    await tester.pumpAndSettle();
+
+    // NFC available → the prompt shows the tap hint; a card tap acts as
+    // the credential without any typing.
+    expect(find.textContaining('Tap your card'), findsOneWidget);
+    nfc.tap('04a2b3c4d5');
+    await tester.pumpAndSettle();
+
+    final act = reservations.kioskActs.single;
+    expect(act.action, 'check_in');
+    expect(act.badgeToken, '04a2b3c4d5');
     expect(find.textContaining("all set"), findsOneWidget);
   });
 

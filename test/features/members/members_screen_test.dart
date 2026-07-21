@@ -9,6 +9,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
+import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,6 +22,7 @@ Future<FakeWorkspaceRepository> pumpMembers(
   WidgetTester tester, {
   FakeMoneyRepository? money,
   FileSaver? saver,
+  FakeNfcUidReader? nfc,
 }) async {
   final workspace = FakeWorkspaceRepository.withWorkspace()
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
@@ -37,7 +39,11 @@ Future<FakeWorkspaceRepository> pumpMembers(
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
-        ...standardTestOverrides(workspace: workspace, money: money),
+        ...standardTestOverrides(
+          workspace: workspace,
+          money: money,
+          nfc: nfc,
+        ),
         if (saver != null) fileSaverProvider.overrideWithValue(saver),
       ],
       child: const DeskiloApp(),
@@ -213,6 +219,75 @@ void main() {
     // A real PDF, saved locally.
     expect(String.fromCharCodes(saved.single.$2.sublist(0, 5)), '%PDF-');
     expect(find.textContaining('Saved to'), findsOneWidget);
+  });
+
+  testWidgets('registering an RFID/NFC card (0046): the tap prompt reads a '
+      'UID and the badge lists as an NFC credential', (tester) async {
+    final nfc = FakeNfcUidReader(available: true);
+    final workspace = await pumpMembers(tester, nfc: nfc);
+
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Badges'));
+    await tester.pumpAndSettle();
+
+    // NFC available → the register-card action shows next to New badge.
+    await tester.tap(find.byKey(const ValueKey('badge-register-nfc-button')));
+    await tester.pumpAndSettle();
+    expect(find.text('Register a card'), findsOneWidget);
+
+    // A physical tap delivers the tag UID (already normalized).
+    nfc.tap('04a2b3c4d5');
+    await tester.pumpAndSettle();
+
+    expect(find.text('Card registered.'), findsOneWidget);
+    final badge = workspace.badges.single;
+    expect(badge.memberId, 'member-2');
+    expect(badge.kind, BadgeKind.nfc);
+    expect(badge.label, 'uid:04a2b3c4d5');
+  });
+
+  testWidgets('a second tap of the same card is refused (0046 dup guard)',
+      (tester) async {
+    final nfc = FakeNfcUidReader(available: true);
+    final workspace = await pumpMembers(tester, nfc: nfc);
+    workspace.badges.add(
+      MemberBadge(
+        id: 'badge-existing',
+        workspaceId: 'ws-1',
+        memberId: 'member-2',
+        label: 'uid:04a2b3c4d5',
+        createdAt: DateTime.now(),
+        kind: BadgeKind.nfc,
+      ),
+    );
+
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Badges'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('badge-register-nfc-button')));
+    await tester.pumpAndSettle();
+    nfc.tap('04a2b3c4d5');
+    await tester.pumpAndSettle();
+
+    expect(find.text('That card is already registered.'), findsOneWidget);
+    expect(workspace.badges.where((b) => b.isActive), hasLength(1));
+  });
+
+  testWidgets('no NFC hardware hides the register-card action (0046)',
+      (tester) async {
+    // Default fake reader reports NFC unavailable.
+    await pumpMembers(tester);
+
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Badges'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const ValueKey('badge-register-nfc-button')),
+      findsNothing,
+    );
+    // The QR path stays available everywhere.
+    expect(find.byKey(const ValueKey('badge-issue-button')), findsOneWidget);
   });
 
   testWidgets("the owner caps another member's simultaneous reservations "

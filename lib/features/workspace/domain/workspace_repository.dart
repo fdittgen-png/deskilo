@@ -104,6 +104,18 @@ abstract class WorkspaceRepository {
   /// Admin-only: revokes a badge (kiosks reject it from now on).
   Future<void> revokeMemberBadge(String badgeId);
 
+  /// Admin-only (RPC `register_nfc_badge`, migration 0046): registers a
+  /// physical RFID/NFC tag as [memberId]'s badge. [uid] is the tag UID as
+  /// lowercase hex (the reader normalizes it); the server keeps only the
+  /// hash. A UID registers at most once per workspace — re-registration
+  /// raises with the pinned substring 'tag already registered'.
+  Future<void> registerNfcBadge(
+    String workspaceId,
+    String memberId, {
+    required String uid,
+    String label,
+  });
+
   /// Owner-only: request a role change — promote a member to admin
   /// (make_admin true) or demote an admin to a regular member. Routed
   /// through the validation quorum (0035): returns the pending event id;

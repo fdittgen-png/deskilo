@@ -4,6 +4,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart'
+    show PostgrestException;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:pdf/widgets.dart' as pw;
 import 'package:qr_flutter/qr_flutter.dart';
@@ -17,6 +19,7 @@ import '../../../money/providers/money_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/member.dart';
 import '../../../../core/files/file_saver.dart';
+import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../domain/badge_pdf.dart';
 import '../../domain/member_badge.dart';
 import '../../domain/overage_policy.dart';
@@ -637,10 +640,19 @@ class _BadgesDialogState extends ConsumerState<_BadgesDialog> {
   /// Set right after issuing: the one-time raw token to render as a QR.
   IssuedBadge? _issued;
 
+  /// Whether this device can read an RFID/NFC tap (Android + NFC on).
+  bool _nfcAvailable = false;
+
   @override
   void initState() {
     super.initState();
     _load();
+    _checkNfc();
+  }
+
+  Future<void> _checkNfc() async {
+    final available = await ref.read(nfcUidReaderProvider).isAvailable();
+    if (mounted) setState(() => _nfcAvailable = available);
   }
 
   Future<void> _load() async {
@@ -737,6 +749,62 @@ class _BadgesDialogState extends ConsumerState<_BadgesDialog> {
     }
   }
 
+  /// Registers a physical RFID/NFC card as this member's badge (0046):
+  /// prompt "tap the card", read its UID, hand it to the server. The
+  /// reader session is always stopped, and a re-registered tag maps to
+  /// its own message.
+  Future<void> _registerNfc() async {
+    final l10n = widget.l10n;
+    final reader = ref.read(nfcUidReaderProvider);
+    final uid = await showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => _NfcTapDialog(reader: reader, l10n: l10n),
+    );
+    if (uid == null || uid.isEmpty || !mounted) return;
+
+    var duplicate = false;
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'nfc badge registration failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        try {
+          await ref.read(workspaceRepositoryProvider).registerNfcBadge(
+                widget.workspaceId,
+                widget.member.id,
+                uid: uid,
+              );
+        } on PostgrestException catch (e, st) {
+          if (e.message.contains('tag already registered')) {
+            duplicate = true;
+            return; // handled below, not a generic failure
+          }
+          // trace-exempt: rethrown to runGuarded, which logs it.
+          Error.throwWithStackTrace(e, st);
+        }
+      },
+    )) {
+      return;
+    }
+    if (!mounted) return;
+    if (duplicate) {
+      AppSnack.error(
+        context,
+        l10n?.badgeCardAlreadyRegistered ??
+            'That card is already registered.',
+      );
+      return;
+    }
+    AppSnack.success(
+      context,
+      l10n?.badgeCardRegistered ?? 'Card registered.',
+    );
+    unawaited(_load());
+  }
+
   Future<void> _revoke(MemberBadge badge) async {
     final l10n = widget.l10n;
     if (!await runGuarded(
@@ -810,9 +878,11 @@ class _BadgesDialogState extends ConsumerState<_BadgesDialog> {
                         ListTile(
                           contentPadding: EdgeInsets.zero,
                           leading: Icon(
-                            badge.isActive
-                                ? Icons.badge_outlined
-                                : Icons.block_outlined,
+                            !badge.isActive
+                                ? Icons.block_outlined
+                                : badge.kind == BadgeKind.nfc
+                                    ? Icons.contactless_outlined
+                                    : Icons.qr_code_2_outlined,
                           ),
                           title: Text(
                             badge.label.isEmpty
@@ -847,6 +917,13 @@ class _BadgesDialogState extends ConsumerState<_BadgesDialog> {
             icon: const Icon(Icons.picture_as_pdf_outlined),
             label: Text(l10n?.badgeSavePdf ?? 'Save as PDF'),
           ),
+        if (issued == null && _nfcAvailable)
+          OutlinedButton.icon(
+            key: const ValueKey('badge-register-nfc-button'),
+            onPressed: _registerNfc,
+            icon: const Icon(Icons.contactless_outlined),
+            label: Text(l10n?.badgeRegisterCard ?? 'Register card'),
+          ),
         if (issued == null)
           FilledButton.icon(
             key: const ValueKey('badge-issue-button'),
@@ -854,6 +931,73 @@ class _BadgesDialogState extends ConsumerState<_BadgesDialog> {
             icon: const Icon(Icons.qr_code_2_outlined),
             label: Text(l10n?.badgeIssue ?? 'New badge'),
           ),
+      ],
+    );
+  }
+}
+
+/// "Tap the card" prompt (0046): starts an NFC read session and pops with
+/// the first tag's normalized UID. Owns the session lifecycle so it is
+/// always stopped, whether the user taps a card or cancels.
+class _NfcTapDialog extends StatefulWidget {
+  const _NfcTapDialog({required this.reader, required this.l10n});
+
+  final NfcUidReader reader;
+  final AppLocalizations? l10n;
+
+  @override
+  State<_NfcTapDialog> createState() => _NfcTapDialogState();
+}
+
+class _NfcTapDialogState extends State<_NfcTapDialog> {
+  bool _done = false;
+
+  @override
+  void initState() {
+    super.initState();
+    unawaited(
+      widget.reader.startRead(
+        onUid: (uid) {
+          if (_done || !mounted) return;
+          _done = true;
+          Navigator.of(context).pop(uid);
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    unawaited(widget.reader.stop());
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = widget.l10n;
+    return AlertDialog(
+      title: Text(l10n?.badgeTapCardTitle ?? 'Register a card'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12),
+            child: Icon(Icons.contactless_outlined, size: 56),
+          ),
+          Text(
+            l10n?.badgeTapCardHint ??
+                'Hold the RFID/NFC card to the back of the device.',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          key: const ValueKey('nfc-tap-cancel'),
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n?.commonCancel ?? 'Cancel'),
+        ),
       ],
     );
   }

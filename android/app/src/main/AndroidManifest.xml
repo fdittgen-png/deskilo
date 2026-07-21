@@ -1,6 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Kiosk RFID badges (0046): read NFC tag UIDs. Optional hardware —
+         phones without NFC still install; the kiosk hides the tap path. -->
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-feature android:name="android.hardware.nfc" android:required="false" />
     <application
         android:label="DesKilo"
         android:name="${applicationName}"
