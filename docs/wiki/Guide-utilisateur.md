@@ -2,6 +2,10 @@
 
 Tout ce qu'un membre, un admin ou un propriétaire doit savoir pour utiliser DesKilo. *Autres langues : [English](User-Guide) · [Deutsch](Benutzerhandbuch) · [Español](Guia-de-usuario) · [Italiano](Guida-utente).*
 
+> Les captures d'écran de ce guide montrent l'application en français — chaque écran existe à l'identique dans les cinq langues (English, Français, Deutsch, Español, Italiano) ; changez dans **Réglages → Langue**.
+>
+> <img src="images/settings-language.jpg" width="200">
+
 ## 1. Premiers pas
 
 ### Créer un compte
@@ -88,14 +92,40 @@ Le fil d'événements est la piste d'audit de votre espace : réservations cré�
 
 **Quorum de validation :** pour les questions d'argent et les changements de rôle, le propriétaire définit *qui* doit approuver et *combien* d'approbations il faut. Les demandes sans réponse expirent après 7 jours — rien de coûteux n'est jamais accordé en silence.
 
+Le propriétaire règle cela par **domaine** dans **Réglages → Règles de validation** : paiements, dépenses, services, demi-journées supplémentaires, changements de rôle, réservations et ajustements ont chacun leur règle (ou héritent de la règle par défaut). Une règle fixe le nombre de validations requises, *quels* admins peuvent valider (tous, ou nommés), et si le propriétaire doit toujours signer.
+
+<p><img src="images/validation-rules.jpg" width="240"> <img src="images/validation-rule-edit.jpg" width="240"></p>
+
+*À gauche : une règle par domaine, héritant de la règle par défaut. À droite : édition d'une règle — validations requises, validateurs autorisés, signature du propriétaire.*
+
 ## 7. Pour les propriétaires : éditeur et réglages
 
+Toute l'administration vit sous **Réglages → Administration**. Une règle à connaître : **l'entrée de réglages d'une fonctionnalité n'apparaît que tant que la fonctionnalité est activée** — désactivez *Paiements en ligne* dans **Fonctionnalités** et son écran de configuration disparaît avec elle (il revient quand vous la réactivez). L'entrée **Fonctionnalités** elle-même est toujours là, pour pouvoir toujours réactiver un module.
+
+<p><img src="images/settings-administration.jpg" width="240"></p>
+
 - **Éditeur** (barre d'app) : dessinez votre espace sur une grille — niveaux, bureaux, tables, places (avec orientation, type de chaise et équipements), blocage de places pour maintenance. Ajoutez une **photo d'arrière-plan** par niveau et des **images d'illustration** déplaçables et redimensionnables. Supprimer un élément portant des réservations futures oblige à les résoudre d'abord.
-- **Identifiant & QR** : vos invitations liées aux rôles (§2). Vous pouvez remplacer l'identifiant généré par un identifiant mémorable (4–20 lettres/chiffres).
-- **Disponibilité** : jours d'ouverture, jours de fermeture, et granularité — demi-journées, journées entières, ou grille de minutes (15/30/60).
-- **Fonctionnalités** : activez ou désactivez des modules entiers par espace — calendrier, événements, argent, services, export PDF, séries, réserver pour autrui, notifications push, blocage de places par les admins, suppléments d'accessoires, **paiements en ligne**.
-- **Membres & forfaits** : pourcentages d'abonnement, **politique de dépassement** de chaque membre (§8), pause/sortie, promotions/rétrogradations d'admin, marquage des **bornes**, émission des **badges** (§9).
-- **Facturation** : tranches tarifaires des abonnements en pourcentage, tarifs de dépassement, niveaux d'abonnement proposés — et **forfaits de jours** (un nombre de jours pour un prix) pour les membres en politique « forfait ».
+- **Identifiant & QR** : vos invitations liées aux rôles (§2). Vous pouvez remplacer l'identifiant généré par un identifiant mémorable (4–20 lettres/chiffres), le copier, ou partager le QR en PNG.
+- **Disponibilité** : jours d'ouverture, jours de fermeture, et granularité — plage horaire libre, grille de minutes (5/15/30/60), demi-journées, ou journées entières uniquement.
+- **Fonctionnalités** : activez ou désactivez des modules entiers par espace — calendrier, événements, argent, services, export PDF, séries, réserver pour autrui, notifications push, blocage de places par les admins, suppléments d'accessoires, **paiements en ligne**, **badges RFID/NFC**. Désactiver un module retire *tous* ses écrans et boutons pour tous les membres.
+
+<p><img src="images/workspace-id-qr.jpg" width="220"> <img src="images/availability-granularity.jpg" width="220"> <img src="images/features-toggles-1.jpg" width="220"> <img src="images/features-toggles-2.jpg" width="220"></p>
+
+- **Membres & forfaits** : touchez un membre pour ouvrir sa **feuille de gestion** — lui ajouter un service, régler son pourcentage d'abonnement, choisir sa **politique de dépassement** (§8), plafonner ses **réservations simultanées**, émettre ses **badges** (§9), le promouvoir/rétrograder admin, transformer le compte en **borne**, ou mettre l'adhésion en pause.
+
+<p><img src="images/member-management-sheet.jpg" width="220"> <img src="images/member-subscription.jpg" width="220"> <img src="images/member-reservation-limit.jpg" width="220"></p>
+
+*La feuille de gestion, le dialogue de pourcentage d'abonnement, et la limite de réservations par membre.*
+
+- **Facturation** : tranches tarifaires des abonnements en pourcentage, tarifs de dépassement, niveaux d'abonnement proposés (avec valeur libre négociée en option) — et **forfaits de jours** (un nombre de jours pour un prix) pour les membres en politique « forfait ».
+- **Services** et **Accessoires** : les catalogues derrière le §8 — extras définis par le propriétaire (casiers, impression…) et équipements de place avec supplément par demi-journée en option. Deux listes simples avec un bouton **+**.
+
+<p><img src="images/billing-bands-levels-packages.jpg" width="220"> <img src="images/services-catalog.jpg" width="220"> <img src="images/services-new-service.jpg" width="220"> <img src="images/accessories-catalog.jpg" width="220"></p>
+
+*Facturation (tranches, niveaux, forfaits de jours) · le catalogue Services et son formulaire de création · le catalogue Accessoires. Un admin ajoute une consommation de service pour un membre depuis sa feuille de gestion :*
+
+<p><img src="images/member-add-service.jpg" width="220"></p>
+
 - **Réglages de l'espace** : nom, pays/devise, fuseau, instructions de paiement (IBAN, PayPal.me, Wero, Lydia, Wise), lien du groupe WhatsApp, **transparence des tables**, exports — et la **zone dangereuse** : **réinitialisation complète** (supprime réservations, argent et plan ; conserve configuration et membres), protégée par la saisie de « I agree ».
 - **Import/export** : toute la configuration voyage en **fichier XML** — sauvegarde, modèle, ou migration d'une instance auto-hébergée. Un **PDF de configuration** (membres, plan, prix, fonctionnalités) peut aussi être généré. Les fichiers sont enregistrés **localement sur votre appareil**.
 
@@ -109,9 +139,15 @@ Chaque communauté encaisse sur son **propre** compte prestataire ; l'applicatio
    - **Carte bancaire (Stripe)** — Clé secrète, Secret de signature du webhook, URL de retour (Stripe → clés API / Webhooks).
    - **Mollie** — Clé API, URL de retour (propose iDEAL, Bancontact, cartes…).
    - **Wero (via Mollie)** — la même clé API Mollie, avec Wero activé dans votre compte Mollie.
-3. **Enregistrez** — une pastille verte *Configuré* apparaît. Activez la fonctionnalité **Paiements en ligne** (Réglages → Fonctionnalités) et les membres voient **Payer en ligne** sur une facture impayée.
+3. **Enregistrez** — une pastille verte *Configuré* apparaît. Activez la fonctionnalité **Paiements en ligne** (Réglages → Fonctionnalités) et les membres voient **Payer en ligne** sur une facture impayée. (L'entrée de réglages *Paiements en ligne* elle-même n'apparaît que quand la fonctionnalité est activée.)
+
+<p><img src="images/payment-config-paypal-stripe.jpg" width="240"> <img src="images/payment-config-mollie-wero.jpg" width="240"></p>
 
 Une clé secrète enregistrée n'est plus jamais affichée — laissez le champ vide pour la conserver, saisissez pour la remplacer, **Supprimer** pour retirer le prestataire. Les frais sont ceux du prestataire (typiquement ~1,5–3 % par paiement, sans abonnement mensuel) ; DesKilo n'ajoute rien, et le virement/IBAN manuel reste gratuit.
+
+Si un paiement ne démarre pas, activez **Réglages → Avancé → Mode développeur** et ouvrez l'écran **Développeur** : la trace *payments* montre exactement quels prestataires sont configurés et quels champs manquent encore.
+
+<p><img src="images/developer-payment-traces.jpg" width="240"></p>
 
 ### Configurer les badges RFID / NFC (propriétaires)
 
@@ -120,6 +156,10 @@ Les cartes physiques permettent de pointer d'un simple contact — sans téléph
 1. Ouvrez **Réglages → Badges RFID / NFC** (propriétaire uniquement). Activez **Activer le pointage par badge NFC**, et lisez la ligne d'**état de l'appareil** — il faut un appareil **Android** avec NFC activé (les iPad n'ont pas de NFC).
 2. Donnez une carte à chaque membre : **Membres & forfaits → le membre → Badges → Enregistrer une carte**, puis approchez sa carte de l'appareil. Toute carte à puce lisible convient (MIFARE, NTAG…).
 3. Utilisez-les à une **borne** (§9) : le membre approche sa carte pour réserver ou pointer. Révoquez une carte perdue depuis la même fenêtre Badges.
+
+<p><img src="images/nfc-config.jpg" width="240"> <img src="images/member-badges-dialog.jpg" width="240"></p>
+
+*L'écran de configuration NFC (interrupteur de l'espace + état NFC de cet appareil) et la fenêtre Badges d'un membre : révoquer, enregistrer une carte, ou émettre un nouveau badge QR.*
 
 ## 8. Argent (onglet Argent)
 

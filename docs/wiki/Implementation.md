@@ -19,8 +19,9 @@ docs/
 fastlane/ metadata/       # store metadata per locale
 lib/                      # the app (see Architecture page)
 supabase/
-  migrations/             # 0001..0043 — schema, RLS, RPCs (numbered, immutable)
-  functions/              # Edge Function scaffolding (online payments)
+  migrations/             # 0001..0048 — schema, RLS, RPCs (numbered, immutable)
+  functions/              # deployed Edge Functions: create-payment-order,
+                          # paypal-webhook, stripe-webhook, mollie-webhook
 test/                     # unit + widget tests, fakes in test/helpers/
 integration_test/         # end-to-end flows
 tool/ tools/ scripts/     # repo tooling
@@ -60,12 +61,23 @@ The macOS runner is sandboxed; entitlements already include the network client (
 - Migrations are numbered SQL files in `supabase/migrations/`, applied in order to the hosted reference project (and by self-hosters). They are **immutable once applied** — fixes are new migrations.
 - Local development is possible with the Supabase CLI (`supabase start`), but the reference deployment is hosted Supabase (decided 2026-07-07).
 - Pattern to follow when adding tables: enable RLS immediately, add select policies with the role-helper functions, keep writes behind `SECURITY DEFINER` RPCs, and `revoke execute … from public, anon` on every new function (see migration 0004).
+- **Secrets tables get zero policies.** `payment_credentials` (0047) enables RLS and adds *no* policies at all — only service-role Edge Functions and owner RPCs reach it, and the status RPC returns key names, never values. Follow this shape for anything secret.
+- Edge Functions are deployed to the hosted project (webhooks run with `verify_jwt` off and authenticate via the payment provider's signature instead). Provider credentials resolve **table-first, env-fallback**, so a single-workspace self-host can configure everything with function env vars alone.
+
+## Feature flags — the gating checklist
+
+When a screen or surface belongs to a `WorkspaceFeature`, gate it at **both** layers (the *enable a feature → get all of it; disable → get none* rule):
+
+1. Hide the entry point: `if (… && features.contains(WorkspaceFeature.x))` in the settings list / tab bar.
+2. Guard the route: `featureEnabled(WorkspaceFeature.x)` in its `redirect` in `app/router.dart`.
+
+`/services`, `/payment-config`, `/nfc-config`, and `/accessories` are the reference implementations; the **Features** screen itself must stay ungated. Add a widget test for both the hidden entry and the bounced deep link (see `test/features/profile/settings_sections_test.dart`).
 
 ## Testing
 
 ```bash
 flutter analyze          # zero tolerance
-flutter test             # full suite (700+ tests)
+flutter test             # full suite (740+ tests)
 flutter test test/features/<feature>/   # one feature
 ```
 

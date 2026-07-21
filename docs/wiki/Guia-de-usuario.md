@@ -2,6 +2,10 @@
 
 Todo lo que un miembro, admin o propietario necesita para usar DesKilo. *Otros idiomas: [English](User-Guide) · [Français](Guide-utilisateur) · [Deutsch](Benutzerhandbuch) · [Italiano](Guida-utente).*
 
+> Las capturas de pantalla de esta guía muestran la app en francés — cada pantalla existe idéntica en los cinco idiomas (English, Français, Deutsch, Español, Italiano); cambia el idioma en **Ajustes → Idioma**.
+>
+> <img src="images/settings-language.jpg" width="200">
+
 ## 1. Primeros pasos
 
 ### Crear una cuenta
@@ -88,14 +92,40 @@ El hilo de eventos es la pista de auditoría del espacio: reservas creadas/cambi
 
 **Quórum de validación:** para asuntos de dinero y cambios de rol, el propietario define *quién* debe aprobar y *cuántas* aprobaciones hacen falta. Las solicitudes sin respuesta caducan a los 7 días — nada costoso se concede jamás en silencio.
 
+El propietario afina esto por **dominio** en **Ajustes → Reglas de validación**: pagos, gastos, servicios, medias jornadas extra, cambios de rol, reservas y ajustes tienen cada uno su propia regla (o heredan la regla por defecto). Una regla define el número de validaciones requeridas, *qué* admins pueden validar (todos, o algunos concretos) y si el propietario debe firmar siempre.
+
+<p><img src="images/validation-rules.jpg" width="240"> <img src="images/validation-rule-edit.jpg" width="240"></p>
+
+*Izquierda: una regla por dominio, heredando de la regla por defecto. Derecha: edición de una regla — validaciones requeridas, validadores autorizados, firma del propietario.*
+
 ## 7. Para propietarios: editor y ajustes
 
+Toda la administración vive en **Ajustes → Administración**. Una regla que conviene conocer: **la entrada de ajustes de una función solo aparece mientras esa función está activada** — desactiva *Pagos en línea* en **Funciones** y su pantalla de configuración desaparece con ella (y vuelve al reactivarla). La entrada **Funciones** siempre está presente, así que siempre puedes volver a activar un módulo.
+
+<p><img src="images/settings-administration.jpg" width="240"></p>
+
 - **Editor** (barra de la app): dibuja tu espacio en una cuadrícula — plantas, oficinas, mesas, asientos (con orientación, tipo de silla y equipamiento), bloqueo de asientos por mantenimiento. Añade una **foto de fondo** por planta e **imágenes de ilustración** que puedes mover y redimensionar. Borrar algo con reservas futuras obliga a resolverlas antes.
-- **ID del espacio & QR**: tus invitaciones ligadas a rol (§2). Puedes sustituir el ID generado por uno memorable (4–20 letras/dígitos).
-- **Disponibilidad**: días de apertura, días de cierre y la granularidad — medias jornadas, días completos o rejilla de minutos (15/30/60).
-- **Funciones**: activa o desactiva módulos enteros por espacio — calendario, eventos, dinero, servicios, exportación PDF, series, reservar por otros, push, bloqueo de asientos por admins, suplementos de accesorios, **pagos en línea**.
-- **Miembros y planes**: porcentajes de suscripción, **política de exceso** de cada miembro (§8), pausar/salir, promociones/degradaciones de admin, marcar **quioscos** y emitir **credenciales** (§9).
-- **Facturación**: bandas de tarifas de las suscripciones porcentuales, tarifas de exceso, niveles de suscripción ofrecidos — y **paquetes de días** (un número de días por un precio) para miembros con política de paquete.
+- **ID del espacio & QR**: tus invitaciones ligadas a rol (§2). Puedes sustituir el ID generado por uno memorable (4–20 letras/dígitos), copiarlo o compartir el QR como PNG.
+- **Disponibilidad**: días de apertura, días de cierre y la granularidad — horas de inicio y fin libres, una rejilla de minutos (5/15/30/60), medias jornadas o solo días completos.
+- **Funciones**: activa o desactiva módulos enteros por espacio — calendario, eventos, dinero, servicios, exportación PDF, series, reservar por otros, push, bloqueo de asientos por admins, suplementos de accesorios, **pagos en línea**, **credenciales RFID/NFC**. Desactivar un módulo elimina *todas* sus pantallas y botones para todos los miembros.
+
+<p><img src="images/workspace-id-qr.jpg" width="220"> <img src="images/availability-granularity.jpg" width="220"> <img src="images/features-toggles-1.jpg" width="220"> <img src="images/features-toggles-2.jpg" width="220"></p>
+
+- **Miembros y planes**: toca un miembro para abrir su **ficha de gestión** — añadirle un servicio, fijar su porcentaje de suscripción, elegir su **política de exceso** (§8), limitar sus **reservas simultáneas**, emitir **credenciales** (§9), promover/degradar admin, convertir la cuenta en **quiosco**, o pausar la membresía.
+
+<p><img src="images/member-management-sheet.jpg" width="220"> <img src="images/member-subscription.jpg" width="220"> <img src="images/member-reservation-limit.jpg" width="220"></p>
+
+*La ficha de gestión, el diálogo de porcentaje de suscripción y el tope de reservas por miembro.*
+
+- **Facturación**: bandas de tarifas de las suscripciones porcentuales, tarifas de exceso, niveles de suscripción ofrecidos (con un valor libre negociado opcional) — y **paquetes de días** (un número de días por un precio) para miembros con política de paquete.
+- **Servicios** y **Accesorios**: los catálogos detrás del §8 — extras definidos por el propietario (taquillas, impresión…) y equipamiento por asiento con suplementos opcionales por media jornada. Ambos son listas simples con un botón **+**.
+
+<p><img src="images/billing-bands-levels-packages.jpg" width="220"> <img src="images/services-catalog.jpg" width="220"> <img src="images/services-new-service.jpg" width="220"> <img src="images/accessories-catalog.jpg" width="220"></p>
+
+*Facturación (bandas, niveles, paquetes de días) · el catálogo de Servicios y su formulario de creación · el catálogo de Accesorios. Un admin añade un consumo de servicio para un miembro desde la ficha de gestión del miembro:*
+
+<p><img src="images/member-add-service.jpg" width="220"></p>
+
 - **Ajustes del espacio**: nombre, país/moneda, zona horaria, instrucciones de pago (IBAN, PayPal.me, Wero, Lydia, Wise), enlace del grupo de WhatsApp, **transparencia de mesas**, exportaciones — y la **zona de peligro**: un **reinicio total del espacio** (borra reservas, dinero y plano; conserva configuración y miembros), protegido escribiendo «I agree».
 - **Importar/exportar**: toda la configuración viaja como **archivo XML** — cópiala, úsala de plantilla o migra una instancia autoalojada. También puede generarse un **PDF de configuración** (miembros, plano, precios, funciones). Los archivos se guardan **localmente en tu dispositivo**.
 
@@ -109,9 +139,15 @@ Cada comunidad cobra en su **propia** cuenta de proveedor; la app nunca guarda l
    - **Tarjeta (Stripe)** — Clave secreta, Secreto de firma del webhook, URL de retorno (Stripe → claves API / Webhooks).
    - **Mollie** — Clave API, URL de retorno (ofrece iDEAL, Bancontact, tarjetas…).
    - **Wero (con Mollie)** — la misma clave API de Mollie, con Wero activado en tu cuenta Mollie.
-3. **Guarda** — aparece un chip verde *Configurado*. Activa la función **Pagos en línea** (Ajustes → Funciones) y los miembros verán **Pagar en línea** en una factura pendiente.
+3. **Guarda** — aparece un chip verde *Configurado*. Activa la función **Pagos en línea** (Ajustes → Funciones) y los miembros verán **Pagar en línea** en una factura pendiente. (La propia entrada de ajustes *Pagos en línea* solo se muestra mientras la función está activada.)
+
+<p><img src="images/payment-config-paypal-stripe.jpg" width="240"> <img src="images/payment-config-mollie-wero.jpg" width="240"></p>
 
 Un secreto guardado no se vuelve a mostrar — deja el campo en blanco para conservarlo, escribe para reemplazarlo, **Eliminar** para quitar el proveedor. Las comisiones son del proveedor (típicamente ~1,5–3 % por pago, sin cuota mensual); DesKilo no añade nada, y la transferencia/IBAN manual sigue siendo gratis.
+
+Si un pago no arranca, activa **Ajustes → Avanzado → Modo desarrollador** y abre la pantalla **Desarrollador**: la traza de *pagos* muestra exactamente qué proveedores están configurados y qué campos faltan todavía.
+
+<p><img src="images/developer-payment-traces.jpg" width="240"></p>
 
 ### Configurar las credenciales RFID / NFC (propietarios)
 
@@ -120,6 +156,10 @@ Las tarjetas físicas permiten registrarse con un toque — sin teléfono.
 1. Abre **Ajustes → Credenciales RFID / NFC** (solo propietario). Activa **Activar registro por credencial NFC** y lee la línea de **estado del dispositivo** — hace falta un dispositivo **Android** con NFC activado (los iPad no tienen NFC).
 2. Da una tarjeta a cada miembro: **Miembros y planes → el miembro → Credenciales → Registrar tarjeta**, y acerca su tarjeta al dispositivo. Vale cualquier tarjeta con chip legible (MIFARE, NTAG…).
 3. Úsalas en un **quiosco** (§9): el miembro acerca la tarjeta para reservar o registrarse. Revoca una tarjeta perdida desde la misma ventana de Credenciales.
+
+<p><img src="images/nfc-config.jpg" width="240"> <img src="images/member-badges-dialog.jpg" width="240"></p>
+
+*La pantalla de configuración NFC (interruptor del espacio + estado NFC de este dispositivo) y la ventana de Credenciales de un miembro: revocar, registrar una tarjeta o emitir una nueva credencial QR.*
 
 ## 8. Dinero (pestaña Dinero)
 
