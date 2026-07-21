@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Edit & cancel own reservations from the shared detail sheet (0033):
 // the sheet serves the hub's plan, Day, Week and the calendar timeline,

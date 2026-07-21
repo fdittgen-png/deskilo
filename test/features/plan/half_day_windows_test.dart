@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // #201: the canonical half-day windows the plan header offers under
 // half-day granularity. The 13:00 pivot is a cross-system contract —

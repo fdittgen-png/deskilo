@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/plan/presentation/widgets/seat_accessory_row.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';

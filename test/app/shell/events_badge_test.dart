@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // The app-bar events bell (#230): the events feed left the bottom bar, so
 // the pending-confirmation badge now decorates the bell beside the

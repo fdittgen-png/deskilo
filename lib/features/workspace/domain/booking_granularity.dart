@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 /// Workspace booking-granularity rule (#200) — stored inside the
 /// `booking_rules` jsonb under [BookingRulesKeys.granularity] and

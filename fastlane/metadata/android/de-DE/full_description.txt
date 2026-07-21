@@ -8,4 +8,4 @@ DesKilo ist eine freie, datenschutzfreundliche App für kleine selbstorganisiert
 • Gemeinschaftsausgaben: Kaffee für den Space kaufen, Gutschrift auf der nächsten Abrechnung
 • Alles, was ein Admin für dich tut, braucht deine Bestätigung
 
-Keine Google-Dienste, kein Tracking, keine Werbung. Selbst hostbares Backend. MIT-lizenziert.
+Keine Google-Dienste, kein Tracking, keine Werbung. Selbst hostbares Backend. 0BSD-lizenziert (permissiv).

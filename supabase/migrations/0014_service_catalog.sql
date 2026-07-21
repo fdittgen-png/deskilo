@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo consumable-service catalog (epic #121 task 3, issue #123,
 -- ADR 0008). Owner-priced services (coffee, printing, meeting room, ...)
 -- that members/admins add to the monthly bill (task 5 wires consumption).

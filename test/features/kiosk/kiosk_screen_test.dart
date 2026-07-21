@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Kiosk mode (0043, K2): the router locks a kiosk account to the kiosk
 // plan view; seat taps offer check-in / reserve / check-out, each

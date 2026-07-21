@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // #210: shared inline banner — the #186 closed-day banner generalized.
 // Structure: full width, AppRadius.mdAll container, severity-driven

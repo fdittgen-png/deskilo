@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:flutter/widgets.dart';
 
 /// Canonical corner-radius tokens (spec §14, identical to Sparkilo).

@@ -8,4 +8,4 @@ DesKilo è un'app libera e rispettosa della privacy per piccole community di cow
 • Spese comuni: compra il caffè per lo spazio, accreditato sul prossimo estratto conto
 • Tutto ciò che un admin fa per te richiede la tua conferma
 
-Nessun servizio Google, nessun tracciamento, nessuna pubblicità. Backend self-hostable. Licenza MIT.
+Nessun servizio Google, nessun tracciamento, nessuna pubblicità. Backend self-hostable. Licenza 0BSD (permissiva).

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // #186: on days the workspace is closed (weekday not open / closure day)
 // the plan must say so — banner, muted seats, gated taps — and booking

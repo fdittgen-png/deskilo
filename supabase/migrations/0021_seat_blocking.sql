@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo seat blocking from the Plan screen (issue #161). NOT YET applied
 -- to the hosted reference project.
 --

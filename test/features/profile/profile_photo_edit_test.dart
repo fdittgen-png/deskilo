@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // The profile-photo editor on the settings surface (0038): choosing an
 // image uploads it through the repository and marks the profile; removing

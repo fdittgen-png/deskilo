@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 /// Online-payment providers the create-payment-order Edge Function can
 /// charge with (docs/design/payments-integration.md). Wire names match

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // #210: spacing tokens pinned like AppRadius — the token VALUES are part
 // of the visual contract, not free-floating magic numbers.

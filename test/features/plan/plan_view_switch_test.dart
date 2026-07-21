@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // #209: the plan's list/canvas toggle cross-fades via AnimatedSwitcher —
 // mid-transition both branch subtrees are in the tree; after settling

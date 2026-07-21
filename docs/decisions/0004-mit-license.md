@@ -1,6 +1,6 @@
 # ADR 0004 — MIT license
 
-**Status:** accepted · **Date:** 2026-07-07
+**Status:** superseded by [ADR 0009](0009-relicense-0bsd.md) · **Date:** 2026-07-07
 
 ## Context
 

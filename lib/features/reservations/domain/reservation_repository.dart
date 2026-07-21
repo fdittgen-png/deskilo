@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'reservation.dart';
 
 /// Recurrence patterns supported by the backend (spec §5.2 subset).

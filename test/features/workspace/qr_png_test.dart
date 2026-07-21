@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'dart:ui' as ui;
 
 import 'package:deskilo/features/workspace/domain/qr_png.dart';

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'dart:convert';
 
 import 'package:deskilo/app/app.dart';

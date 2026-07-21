@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:deskilo/features/reservations/domain/check_in_reminders.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:flutter_test/flutter_test.dart';

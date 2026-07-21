@@ -1,7 +1,7 @@
 # DesKilo — Coworking Community App — Product Specification
 
 **Status:** v1.1 — validated by owner (2026-07-07) · **Author:** Florian DITTGEN
-**Repo:** `github.com/fdittgen-png/deskilo` · **License:** MIT
+**Repo:** `github.com/fdittgen-png/deskilo` · **License:** 0BSD
 **Product name:** **DesKilo** (sibling of *Sparkilo*, the tankstellen fuel-price app)
 
 This specification is deliberately free of implementation detail. The framework, visual identity, and working methodology are inherited from the **tankstellen/Sparkilo** project (see §12–§15).
@@ -240,8 +240,8 @@ A dedicated editor space for drawing the physical workspace on a **grid of small
 - **iOS** — App Store via TestFlight; same codebase.
 - **Windows** — Flutter Windows desktop; same codebase, distributed as an installer/MSIX (store or direct download to be decided).
 - **macOS** — Flutter macOS desktop (iMac/MacBook); same codebase, distribution channel (Mac App Store or notarized direct download) to be decided.
-- **License**: MIT, SPDX headers in every file.
-- **No** Google Play Services, **no** Firebase, **no** third-party tracking, **no** GPL dependencies (MIT-compatibility rule).
+- **License**: 0BSD (BSD Zero Clause), SPDX headers in every file.
+- **No** Google Play Services, **no** Firebase, **no** third-party tracking, **no** GPL dependencies (permissive-compatibility rule).
 
 ## 13. Technical framework (level of principle only — inherited from tankstellen)
 

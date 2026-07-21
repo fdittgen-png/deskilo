@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- Per-workspace online-payment provider credentials, configurable from the
 -- owner UI (previously only Edge-Function env secrets). NOT YET applied to
 -- the hosted reference project — the orchestrator applies it after review.

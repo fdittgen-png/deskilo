@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo half-day walk-up exemption (epic #199, issue #201). NOT YET
 -- applied to the hosted reference project — the orchestrator applies it
 -- after review.

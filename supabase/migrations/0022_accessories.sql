@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo accessory catalog + seat assignment (epic #163, issue #166).
 -- NOT YET applied to the hosted reference project — the orchestrator
 -- applies it after review.

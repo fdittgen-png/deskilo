@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // #211 (epic #205): touch-target guard for the compact header controls.
 // Each audited surface (Plan tab, Calendar tab incl. the day timeline,

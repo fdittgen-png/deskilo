@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo workspace XML import (epic #162, issue #165). NOT YET applied
 -- to the hosted reference project — the orchestrator applies it after
 -- review.

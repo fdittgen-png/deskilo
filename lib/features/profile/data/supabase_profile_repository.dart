@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';

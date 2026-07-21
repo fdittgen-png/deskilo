@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 /// A scheduled local reminder (spec §4.3 check-in reminder).
 class ReminderRequest {

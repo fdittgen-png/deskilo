@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import '../../../core/time/workspace_time.dart';
 
 /// A half-open booking window `[start, end)`.

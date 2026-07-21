@@ -29,4 +29,4 @@ Every feature serves at least one of three goals (the *feature filter*):
 
 ## License
 
-MIT © 2026 Florian DITTGEN. Sibling project of [Sparkilo / tankstellen](https://github.com/fdittgen-png/tankstellen).
+0BSD (BSD Zero Clause) © 2026 Florian DITTGEN. Sibling project of [Sparkilo / tankstellen](https://github.com/fdittgen-png/tankstellen).

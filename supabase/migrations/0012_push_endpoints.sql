@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- UnifiedPush endpoints + pending-event push fan-out (issue #72, v1.1).
 -- Applied to the hosted reference project on 2026-07-08.
 --

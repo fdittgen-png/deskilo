@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // #209: shared empty-state block — muted icon over a titleMedium title
 // and an optional bodySmall subtitle, centered with the pinned metrics.

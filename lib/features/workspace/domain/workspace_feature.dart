@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 /// Per-workspace toggleable features (#146). The owner switches them
 /// on/off for the whole workspace; every member's client applies the

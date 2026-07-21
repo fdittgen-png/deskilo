@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Resizable illustration images on the plan (0037): the owner drops a
 // photo of the real space (plant, couch, whiteboard) onto the grid, then

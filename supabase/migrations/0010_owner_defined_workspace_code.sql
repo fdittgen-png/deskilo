@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo owner-defined workspace ID (#88). Applied 2026-07-08. The
 -- invite_code doubles as the human-readable workspace ID shown in the QR;
 -- owners may replace the generated one with a memorable alphanumeric ID.

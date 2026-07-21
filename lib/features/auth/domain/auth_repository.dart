@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 /// Pure-Dart auth boundary (spec §2). Implemented by Supabase in data/,
 /// faked in tests — presentation never sees supabase_flutter types.

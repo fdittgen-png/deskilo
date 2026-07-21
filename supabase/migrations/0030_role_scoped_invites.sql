@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- Applied to the hosted reference project on 2026-07-18.
 -- Role-scoped invites: every join carries an explicit role, derived from
 -- WHICH secret code was used — never from a client-supplied parameter.

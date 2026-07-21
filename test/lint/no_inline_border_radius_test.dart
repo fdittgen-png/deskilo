@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Design-token lint: inline `BorderRadius.circular(n)` is banned in feature
 // code — use the AppRadius tokens (spec §14, DESIGN_SYSTEM.md).

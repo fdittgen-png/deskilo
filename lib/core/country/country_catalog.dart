@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 /// A country selectable at workspace creation. The country drives the
 /// default currency and time zone (spec §3, decided 2026-07-07); both stay

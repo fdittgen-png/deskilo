@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // #208 (epic #204): the Reserve hub behind the bottom bar's raised centre
 // button — date-pill strip (+ calendar icon), granularity-aware window

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- Per-member cap on SIMULTANEOUS open reservations. NOT YET applied to
 -- the hosted reference project — the orchestrator applies it after review.
 --

@@ -30,4 +30,4 @@ Feature-first: `lib/features/<name>/{data,domain,presentation,providers}` with a
 
 ## License
 
-By contributing you agree your contributions are licensed under the [MIT License](LICENSE). Add the SPDX header `// SPDX-License-Identifier: MIT` to new source files.
+By contributing you agree your contributions are licensed under the [0BSD License](LICENSE). Add the SPDX header `// SPDX-License-Identifier: 0BSD` to new source files.

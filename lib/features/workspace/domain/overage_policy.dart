@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 /// How a member is treated once they have used their whole monthly
 /// half-day entitlement (migration 0041). Persisted by name — never

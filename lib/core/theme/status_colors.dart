@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 
 /// Semantic outcome colors (#196) — the theme-adjacent token for

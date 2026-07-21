@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo billing v2 core: percentage subscriptions + fee bands
 -- (epic #121 task 4, issue #128, ADR 0008). Fee bands REPLACE the plan
 -- model: a member's subscription is an integer percentage 1-100; the

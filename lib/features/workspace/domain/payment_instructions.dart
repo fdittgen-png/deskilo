@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 /// Per-workspace payment instructions (spec §7, #155): how members are
 /// asked to settle an unpaid statement. Purely informational — the app

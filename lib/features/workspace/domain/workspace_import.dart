@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import '../../plan/domain/desk.dart';
 import '../../plan/domain/floor_plan_rules.dart';
 import '../../plan/domain/office.dart';

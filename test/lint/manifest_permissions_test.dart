@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Pinning test for #99: Flutter injects INTERNET only into the debug/profile
 // manifest overlays — a release build without it in the MAIN manifest cannot

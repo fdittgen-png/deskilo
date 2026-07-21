@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Content pins for migration 0029 (#231): the status_text column with
 // the SAME 40-char cap the client enforces (StatusTextRules cross-pin),

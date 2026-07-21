@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // mollie-webhook — verify_jwt OFF; authenticity from FETCHING the payment
 // back from Mollie with the workspace's API key (the body is untrusted).

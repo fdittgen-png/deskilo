@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // The member directory (#224, epic #222): every member reaches it from
 // settings; each ACTIVE member renders up to TWO chips side by side

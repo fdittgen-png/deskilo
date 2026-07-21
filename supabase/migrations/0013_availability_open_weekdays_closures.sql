@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo availability: owner-configurable open weekdays + closure days
 -- (epic #121 task 2, issue #127, ADR 0008). Closed days are rejected for
 -- reservation AND check-in; series expansion skips them; they drop out of

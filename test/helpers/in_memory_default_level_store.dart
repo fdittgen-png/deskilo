@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:deskilo/features/plan/providers/default_level_controller.dart';
 
 /// In-memory [DefaultLevelStore] so tests never touch SharedPreferences

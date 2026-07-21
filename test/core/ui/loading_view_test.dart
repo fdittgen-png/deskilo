@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // #209: LoadingView masks quick loads — the spinner renders at opacity 0
 // on the first frame and fades in over AppMotion.loadingFadeIn, so a load

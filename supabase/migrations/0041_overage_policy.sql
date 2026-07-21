@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- Per-member over-consumption policy (epic: subscription over-consumption).
 -- NOT YET applied to the hosted reference project — the orchestrator
 -- applies it after review.

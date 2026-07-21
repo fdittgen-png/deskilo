@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace_feature.dart';
 

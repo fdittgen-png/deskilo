@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/plan/presentation/screens/accessories_screen.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';

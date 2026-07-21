@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Seat avatars show whether the occupant is checked in (a check badge) and
 // online (a green presence dot) — a glance answers "who's actually here".

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Configurable desk transparency (0040): a lower deskOpacity fades the desk
 // fill so a background photo shows through, and repaints when it changes.

@@ -8,4 +8,4 @@ DesKilo est une application libre et respectueuse de la vie privée pour les pet
 • Dépenses communes : achetez du café pour l'espace, crédité sur votre prochaine facture
 • Tout ce qu'un admin fait pour vous demande votre confirmation
 
-Pas de services Google, pas de pistage, pas de pub. Backend auto-hébergeable. Licence MIT.
+Pas de services Google, pas de pistage, pas de pub. Backend auto-hébergeable. Licence 0BSD (permissive).

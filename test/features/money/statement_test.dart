@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:flutter_test/flutter_test.dart';

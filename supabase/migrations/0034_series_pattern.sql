@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- Persist the repetition modality. Applied to the hosted reference
 -- project on 2026-07-19.
 --

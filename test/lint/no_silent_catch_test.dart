@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Error-handling lints (from Sparkilo's CI, extended for #145):
 //  - no empty `catch (_) {}` — errors must never be swallowed silently.

@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo reservations (Epic #4, issue #41). Applied to the hosted reference
 -- project on 2026-07-07 as "reservations_schema_and_rpcs".
 -- The exclusion constraint is the hard guarantee against double-booking

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:flutter/widgets.dart';
 
 /// Canonical motion durations of the feedback & motion pass (#209).

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Structural test for the sectioned settings list (#188): Profiles on top,
 // then the Administration / Preferences / Advanced sections in that order,

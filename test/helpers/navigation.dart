@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:flutter_test/flutter_test.dart';
 

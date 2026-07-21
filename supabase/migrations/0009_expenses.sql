@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo community expenses (Epic #8, issue #66, spec §9). Applied to the
 -- hosted reference project on 2026-07-07.
 

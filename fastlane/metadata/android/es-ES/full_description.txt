@@ -8,4 +8,4 @@ DesKilo es una aplicación libre y respetuosa con la privacidad para pequeñas c
 • Gastos comunes: compra café para el espacio y recibe el crédito en tu próxima factura
 • Todo lo que un admin hace por ti requiere tu confirmación
 
-Sin servicios de Google, sin rastreo, sin publicidad. Backend autoalojable. Licencia MIT.
+Sin servicios de Google, sin rastreo, sin publicidad. Backend autoalojable. Licencia 0BSD (permisiva).

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // HARD RULE #4: every locale must carry every key that exists in the
 // canonical English ARB. Fails CI when a locale is missing keys (or carries

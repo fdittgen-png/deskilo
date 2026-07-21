@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 /// Server-side error text raised by `assert_member_quota` (migration
 /// 0031) when a booking would exceed the member's monthly half-day

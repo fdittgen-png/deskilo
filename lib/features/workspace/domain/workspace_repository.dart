@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'booking_granularity.dart';
 import 'closure_day.dart';
 import 'member.dart';

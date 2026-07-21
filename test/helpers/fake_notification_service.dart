@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:deskilo/core/notifications/notification_service.dart';
 
 /// Captures reminder scheduling for assertions.
