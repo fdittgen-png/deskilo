@@ -959,6 +959,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'I membri fanno check-in a un chiosco avvicinando una tessera RFID/NFC. Richiede un dispositivo Android con NFC.';
 
   @override
+  String get featureLevelBooking => 'Prenotazione del piano';
+
+  @override
+  String get featureLevelBookingDesc =>
+      'Prenotare un intero piano come un\'unica prenotazione, con prezzo per mezza giornata. Il permesso si concede membro per membro.';
+
+  @override
+  String get featureAdminLevelAssign => 'Gli admin possono assegnare piani';
+
+  @override
+  String get featureAdminLevelAssignDesc =>
+      'Gli admin assegnano prenotazioni di piano ai membri. Il proprietario può sempre.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override
@@ -1089,6 +1103,53 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get languageSystemDefault => 'Predefinita di sistema';
+
+  @override
+  String get levelReserveButton => 'Prenota il piano';
+
+  @override
+  String get levelReserveTitle => 'Prenotare l\'intero piano';
+
+  @override
+  String get levelPermissionTile => 'Prenotazioni del piano';
+
+  @override
+  String get levelPermissionAllowed => 'Può prenotare un intero piano';
+
+  @override
+  String get levelPermissionDenied => 'Non può prenotare un intero piano';
+
+  @override
+  String get levelBookableToggle => 'Prenotabile per intero';
+
+  @override
+  String get levelBookableDesc =>
+      'L\'intero piano può essere prenotato come un\'unica prenotazione.';
+
+  @override
+  String get levelPriceLabel => 'Prezzo per mezza giornata';
+
+  @override
+  String get levelAssignMember => 'Per il membro';
+
+  @override
+  String get levelAssignMyself => 'Io stesso';
+
+  @override
+  String get levelSupplementLabel => 'Prenotazioni del piano';
+
+  @override
+  String get levelNotAllowed =>
+      'Non sei autorizzato a prenotare un intero piano.';
+
+  @override
+  String get levelConflict => 'Il piano ha prenotazioni in quel periodo.';
+
+  @override
+  String get levelDetail => 'Intero piano';
+
+  @override
+  String get kioskLevelButton => 'Questo piano';
 
   @override
   String get membersTitle => 'Membri e piani';

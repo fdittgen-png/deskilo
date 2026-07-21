@@ -99,5 +99,9 @@
   "featureNfcBadgesDesc": "Members check in at a kiosk by tapping an RFID/NFC card. Needs an Android device with NFC.",
   "@featureNfcBadgesDesc": {
     "description": "One-line description under the NFC-badges switch"
-  }
+  },
+  "featureLevelBooking": "Level reservations",
+  "featureLevelBookingDesc": "Reserve a whole floor as one booking, priced per half-day. Grant members the right per member.",
+  "featureAdminLevelAssign": "Admins can assign levels",
+  "featureAdminLevelAssignDesc": "Admins assign level reservations to members. The owner always can."
 }

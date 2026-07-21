@@ -36,6 +36,7 @@ abstract class ReservationRepository {
     required String workspaceId,
     String? seatId,
     String? officeId,
+    String? levelId,
     required DateTime startsAt,
     required DateTime endsAt,
     bool checkIn = false,
@@ -47,7 +48,8 @@ abstract class ReservationRepository {
   Future<String> createFor({
     required String workspaceId,
     required String subjectMemberId,
-    required String seatId,
+    String? seatId,
+    String? levelId,
     required DateTime startsAt,
     required DateTime endsAt,
   });
@@ -66,6 +68,7 @@ abstract class ReservationRepository {
     required String badgeToken,
     required String action,
     String? seatId,
+    String? levelId,
     DateTime? startsAt,
     DateTime? endsAt,
   });

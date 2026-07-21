@@ -55,6 +55,14 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureNfcBadgesDesc ??
               'Members check in at a kiosk by tapping an RFID/NFC card. '
                   'Needs an Android device with NFC.',
+        WorkspaceFeature.levelBooking =>
+          l10n?.featureLevelBookingDesc ??
+              'Reserve a whole floor as one booking, priced per '
+                  'half-day. Grant members the right per member.',
+        WorkspaceFeature.adminLevelAssign =>
+          l10n?.featureAdminLevelAssignDesc ??
+              'Admins assign level reservations to members. '
+                  'The owner always can.',
       };
 
   Future<void> _toggle(

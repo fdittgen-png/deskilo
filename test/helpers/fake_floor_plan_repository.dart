@@ -85,6 +85,22 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
   }
 
   @override
+  @override
+  Future<void> setLevelBooking(
+    String levelId, {
+    required bool bookableAsWhole,
+    required int priceCents,
+  }) async {
+    final i = levels.indexWhere((l) => l.id == levelId);
+    if (i != -1) {
+      levels[i] = levels[i].copyWith(
+        bookableAsWhole: bookableAsWhole,
+        priceCents: priceCents,
+      );
+    }
+  }
+
+  @override
   Future<void> renameLevel(String levelId, String name) async {
     final i = levels.indexWhere((l) => l.id == levelId);
     if (i >= 0) levels[i] = levels[i].copyWith(name: name);

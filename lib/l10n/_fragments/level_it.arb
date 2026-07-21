@@ -1,0 +1,17 @@
+{
+  "levelReserveButton": "Prenota il piano",
+  "levelReserveTitle": "Prenotare l'intero piano",
+  "levelPermissionTile": "Prenotazioni del piano",
+  "levelPermissionAllowed": "Può prenotare un intero piano",
+  "levelPermissionDenied": "Non può prenotare un intero piano",
+  "levelBookableToggle": "Prenotabile per intero",
+  "levelBookableDesc": "L'intero piano può essere prenotato come un'unica prenotazione.",
+  "levelPriceLabel": "Prezzo per mezza giornata",
+  "levelAssignMember": "Per il membro",
+  "levelAssignMyself": "Io stesso",
+  "levelSupplementLabel": "Prenotazioni del piano",
+  "levelNotAllowed": "Non sei autorizzato a prenotare un intero piano.",
+  "levelConflict": "Il piano ha prenotazioni in quel periodo.",
+  "levelDetail": "Intero piano",
+  "kioskLevelButton": "Questo piano"
+}

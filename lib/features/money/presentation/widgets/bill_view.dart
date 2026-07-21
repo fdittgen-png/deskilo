@@ -414,6 +414,12 @@ class _SubscriptionCard extends StatelessWidget {
                     'Accessory supplements',
                 value: '−${money(statement.accessorySupplementCents)}',
               ),
+            // 0050 — whole-level reservations priced per half-day.
+            if (statement.levelSupplementCents > 0)
+              _BillLine(
+                label: l10n?.levelSupplementLabel ?? 'Level reservations',
+                value: '−${money(statement.levelSupplementCents)}',
+              ),
           ],
         ),
       ),

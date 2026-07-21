@@ -24,7 +24,8 @@ String reservationStatusToDb(ReservationStatus status) => switch (status) {
       ReservationStatus.released => 'released',
     };
 
-/// A booking of one seat — or one whole office (spec §3).
+/// A booking of one seat — or one whole office, or one whole level
+/// (spec §3, 0050).
 @freezed
 sealed class Reservation with _$Reservation {
   const Reservation._();
@@ -34,6 +35,10 @@ sealed class Reservation with _$Reservation {
     required String workspaceId,
     String? seatId,
     String? officeId,
+
+    /// Set when the booking covers a WHOLE level (0050); exactly one of
+    /// seat/office/level is non-null.
+    String? levelId,
     required String memberId,
     required DateTime startsAt,
     required DateTime endsAt,

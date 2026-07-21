@@ -40,6 +40,10 @@ sealed class Member with _$Member {
     /// ended yet. Null = unlimited. Set by owner/admins for OTHERS only —
     /// never self-service.
     int? maxActiveReservations,
+
+    /// Whether this member may reserve/check into a WHOLE level (0050);
+    /// granted by the owner or an admin, never self-set.
+    @Default(false) bool canReserveLevel,
   }) = _Member;
 
   /// Admin capability (owners inherit it, spec §2).

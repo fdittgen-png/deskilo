@@ -50,12 +50,19 @@ class FakeReservationRepository implements ReservationRepository {
     required String workspaceId,
     String? seatId,
     String? officeId,
+    String? levelId,
     required DateTime startsAt,
     required DateTime endsAt,
     bool checkIn = false,
   }) async {
-    if ((seatId == null) == (officeId == null)) {
-      throw StateError('exactly one of seat or office required');
+    final targets = [seatId, officeId, levelId].whereType<String>().length;
+    if (targets != 1) {
+      throw StateError('exactly one of seat, office or level required');
+    }
+    if (levelId != null &&
+        reservations.any((r) =>
+            r.levelId == levelId && r.coversRange(startsAt, endsAt))) {
+      throw StateError('the level has reservations in that period');
     }
     if (_overlapsActive(seatId, officeId, startsAt, endsAt)) {
       throw StateError('conflict');
@@ -65,6 +72,7 @@ class FakeReservationRepository implements ReservationRepository {
       workspaceId: workspaceId,
       seatId: seatId,
       officeId: officeId,
+      levelId: levelId,
       memberId: myMemberId,
       startsAt: startsAt,
       endsAt: endsAt,
@@ -87,16 +95,21 @@ class FakeReservationRepository implements ReservationRepository {
   }
 
   final bookedForOthers =
-      <({String subjectMemberId, String seatId, DateTime startsAt})>[];
+      <({String subjectMemberId, String? seatId, String? levelId,
+        DateTime startsAt})>[];
 
   @override
   Future<String> createFor({
     required String workspaceId,
     required String subjectMemberId,
-    required String seatId,
+    String? seatId,
+    String? levelId,
     required DateTime startsAt,
     required DateTime endsAt,
   }) async {
+    if ((seatId == null) == (levelId == null)) {
+      throw StateError('exactly one of seat or level required');
+    }
     if (_overlapsActive(seatId, null, startsAt, endsAt)) {
       throw StateError('conflict');
     }
@@ -104,6 +117,7 @@ class FakeReservationRepository implements ReservationRepository {
       (
         subjectMemberId: subjectMemberId,
         seatId: seatId,
+        levelId: levelId,
         startsAt: startsAt,
       ),
     );
@@ -112,6 +126,7 @@ class FakeReservationRepository implements ReservationRepository {
         id: 'res-${_nextId++}',
         workspaceId: workspaceId,
         seatId: seatId,
+        levelId: levelId,
         memberId: subjectMemberId,
         startsAt: startsAt,
         endsAt: endsAt,
@@ -132,8 +147,9 @@ class FakeReservationRepository implements ReservationRepository {
     );
   }
 
-  /// (action, badgeToken, seatId) of kiosk_act calls (0043).
-  final kioskActs = <({String action, String badgeToken, String? seatId})>[];
+  /// (action, badgeToken, seatId, levelId) of kiosk_act calls (0043/0050).
+  final kioskActs =
+      <({String action, String badgeToken, String? seatId, String? levelId})>[];
 
   @override
   Future<String> kioskAct({
@@ -141,6 +157,7 @@ class FakeReservationRepository implements ReservationRepository {
     required String badgeToken,
     required String action,
     String? seatId,
+    String? levelId,
     DateTime? startsAt,
     DateTime? endsAt,
   }) async {
@@ -149,7 +166,12 @@ class FakeReservationRepository implements ReservationRepository {
     if (badgeToken == 'bad-badge') {
       throw const PostgrestException(message: 'badge not recognized');
     }
-    kioskActs.add((action: action, badgeToken: badgeToken, seatId: seatId));
+    kioskActs.add((
+      action: action,
+      badgeToken: badgeToken,
+      seatId: seatId,
+      levelId: levelId,
+    ));
     return 'res-kiosk-${kioskActs.length}';
   }
 

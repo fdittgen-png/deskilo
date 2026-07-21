@@ -960,6 +960,21 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les membres pointent à une borne en approchant une carte RFID/NFC. Nécessite un appareil Android avec NFC.';
 
   @override
+  String get featureLevelBooking => 'Réservation de niveau';
+
+  @override
+  String get featureLevelBookingDesc =>
+      'Réserver un étage entier en une seule réservation, tarifée par demi-journée. Le droit s\'accorde membre par membre.';
+
+  @override
+  String get featureAdminLevelAssign =>
+      'Les admins peuvent attribuer des niveaux';
+
+  @override
+  String get featureAdminLevelAssignDesc =>
+      'Les admins attribuent des réservations de niveau aux membres. Le propriétaire le peut toujours.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override
@@ -1090,6 +1105,53 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get languageSystemDefault => 'Par défaut du système';
+
+  @override
+  String get levelReserveButton => 'Réserver le niveau';
+
+  @override
+  String get levelReserveTitle => 'Réserver le niveau entier';
+
+  @override
+  String get levelPermissionTile => 'Réservations de niveau';
+
+  @override
+  String get levelPermissionAllowed => 'Peut réserver un niveau entier';
+
+  @override
+  String get levelPermissionDenied => 'Ne peut pas réserver un niveau entier';
+
+  @override
+  String get levelBookableToggle => 'Réservable en entier';
+
+  @override
+  String get levelBookableDesc =>
+      'L\'étage entier peut être réservé en une seule réservation.';
+
+  @override
+  String get levelPriceLabel => 'Prix par demi-journée';
+
+  @override
+  String get levelAssignMember => 'Pour le membre';
+
+  @override
+  String get levelAssignMyself => 'Moi-même';
+
+  @override
+  String get levelSupplementLabel => 'Réservations de niveau';
+
+  @override
+  String get levelNotAllowed =>
+      'Vous n\'êtes pas autorisé à réserver un niveau entier.';
+
+  @override
+  String get levelConflict => 'Le niveau a des réservations sur cette période.';
+
+  @override
+  String get levelDetail => 'Niveau entier';
+
+  @override
+  String get kioskLevelButton => 'Ce niveau';
 
   @override
   String get membersTitle => 'Membres et forfaits';

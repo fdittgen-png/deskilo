@@ -84,6 +84,14 @@ abstract class WorkspaceRepository {
   /// cap. The server refuses self-setting.
   Future<void> setMemberReservationLimit(String memberId, int? limit);
 
+  /// Admin/owner (RPC `set_member_level_permission`, migration 0050):
+  /// grant or revoke another member's right to reserve a whole level.
+  /// The server refuses self-setting.
+  Future<void> setMemberLevelPermission(
+    String memberId, {
+    required bool allowed,
+  });
+
   /// Owner-only (RPC `set_member_kiosk`, migration 0043): flag a member
   /// account as a wall-mounted kiosk device (or back to a regular member).
   Future<void> setMemberKiosk(String memberId, {required bool isKiosk});

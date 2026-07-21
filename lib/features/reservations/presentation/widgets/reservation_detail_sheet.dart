@@ -9,6 +9,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
+import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/seat_context.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
@@ -89,12 +90,30 @@ class ReservationDetailSheet extends ConsumerWidget {
                 '${DateFormat.MMMEd().format(WorkspaceTime.display(r.startsAt))}'
                 ' · ${bookingRangeText(l10n, r.startsAt, r.endsAt)}',
               ),
-              subtitle: target == null && r.seriesId == null
-                  ? null
+              subtitle:
+                  target == null && r.seriesId == null && r.levelId == null
+                      ? null
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (target != null) Text(target.locationLine),
+                        // Whole-level booking (0050): name the floor.
+                        if (r.levelId != null)
+                          Consumer(
+                            builder: (context, ref, _) {
+                              final name = ref
+                                  .watch(levelsProvider)
+                                  .value
+                                  ?.where((l) => l.id == r.levelId)
+                                  .firstOrNull
+                                  ?.name;
+                              return Text(
+                                '${l10n?.levelDetail ?? 'Whole level'}'
+                                '${name == null ? '' : ' — $name'}',
+                                key: const ValueKey('reservation-level'),
+                              );
+                            },
+                          ),
                         // The repetition modality (field report: it was
                         // invisible everywhere).
                         if (r.seriesId != null)

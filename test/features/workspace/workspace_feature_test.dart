@@ -3,11 +3,14 @@ import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// The features the owner must explicitly activate: adminSeatBlocking
-/// (#161), accessorySupplements (#170) and onlinePayments (0043).
+/// (#161), accessorySupplements (#170), onlinePayments (0043), and the
+/// level-booking pair (0050).
 const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.adminSeatBlocking,
   WorkspaceFeature.accessorySupplements,
   WorkspaceFeature.onlinePayments,
+  WorkspaceFeature.levelBooking,
+  WorkspaceFeature.adminLevelAssign,
 };
 
 /// Every other feature ships ON.
@@ -17,7 +20,8 @@ final Set<WorkspaceFeature> registryDefaults =
 void main() {
   test(
       'manifest covers every feature; only adminSeatBlocking, '
-      'accessorySupplements and onlinePayments default OFF', () {
+      'accessorySupplements, onlinePayments, levelBooking and '
+      'adminLevelAssign default OFF', () {
     expect(featureManifest.keys, containsAll(WorkspaceFeature.values));
     for (final entry in featureManifest.values) {
       expect(
@@ -43,16 +47,20 @@ void main() {
   });
 
   test('a stored true override enables the default-OFF features '
-      '(#161, #170, 0043)', () {
+      '(#161, #170, 0043, 0050)', () {
     final enabled = resolveEnabledFeatures(const {
       'adminSeatBlocking': true,
       'accessorySupplements': true,
       'onlinePayments': true,
+      'levelBooking': true,
+      'adminLevelAssign': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);
     expect(enabled.contains(WorkspaceFeature.accessorySupplements), isTrue);
     expect(enabled.contains(WorkspaceFeature.onlinePayments), isTrue);
+    expect(enabled.contains(WorkspaceFeature.levelBooking), isTrue);
+    expect(enabled.contains(WorkspaceFeature.adminLevelAssign), isTrue);
     expect(enabled, WorkspaceFeature.values.toSet());
   });
 

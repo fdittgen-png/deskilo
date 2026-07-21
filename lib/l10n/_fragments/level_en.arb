@@ -1,0 +1,17 @@
+{
+  "levelReserveButton": "Reserve level",
+  "levelReserveTitle": "Reserve the whole level",
+  "levelPermissionTile": "Level reservations",
+  "levelPermissionAllowed": "May reserve a whole level",
+  "levelPermissionDenied": "May not reserve a whole level",
+  "levelBookableToggle": "Bookable as a whole",
+  "levelBookableDesc": "The whole floor can be reserved as one booking.",
+  "levelPriceLabel": "Price per half-day",
+  "levelAssignMember": "For member",
+  "levelAssignMyself": "Myself",
+  "levelSupplementLabel": "Level reservations",
+  "levelNotAllowed": "You are not allowed to reserve a whole level.",
+  "levelConflict": "The level has reservations in that period.",
+  "levelDetail": "Whole level",
+  "kioskLevelButton": "This level"
+}

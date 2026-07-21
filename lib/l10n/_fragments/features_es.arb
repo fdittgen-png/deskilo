@@ -24,5 +24,9 @@
   "featureOnlinePayments": "Pagos en línea",
   "featureOnlinePaymentsDesc": "Permite a los miembros pagar su factura en línea (PayPal). Requiere configurar el proveedor de pago en el servidor.",
   "featureNfcBadges": "Credenciales RFID / NFC",
-  "featureNfcBadgesDesc": "Los miembros se registran en un quiosco acercando una tarjeta RFID/NFC. Requiere un dispositivo Android con NFC."
+  "featureNfcBadgesDesc": "Los miembros se registran en un quiosco acercando una tarjeta RFID/NFC. Requiere un dispositivo Android con NFC.",
+  "featureLevelBooking": "Reserva de planta",
+  "featureLevelBookingDesc": "Reservar una planta entera como una sola reserva, con precio por media jornada. El permiso se concede miembro a miembro.",
+  "featureAdminLevelAssign": "Los admins pueden asignar plantas",
+  "featureAdminLevelAssignDesc": "Los admins asignan reservas de planta a los miembros. El propietario siempre puede."
 }

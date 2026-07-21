@@ -276,6 +276,20 @@ void main() {
     expect(find.text('−€9.00'), findsOneWidget);
   });
 
+  testWidgets(
+      'a non-zero level supplement (0050) renders its own bill line with '
+      'the amount', (tester) async {
+    final money = FakeMoneyRepository();
+    money.statement = money.statement.copyWith(
+      levelSupplementCents: 5000,
+      balanceCents: -6600,
+    );
+    await pumpMoney(tester, money: money);
+
+    expect(find.text('Level reservations'), findsOneWidget);
+    expect(find.text('−€50.00'), findsOneWidget);
+  });
+
   testWidgets('a settled statement shows the settled state', (tester) async {
     final money = FakeMoneyRepository();
     money.statement = money.statement.copyWith(

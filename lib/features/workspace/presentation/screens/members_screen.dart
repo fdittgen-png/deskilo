@@ -189,6 +189,7 @@ class MembersScreen extends ConsumerWidget {
     required bool isOwner,
     required bool isSelf,
     required bool servicesOn,
+    required bool levelBookingOn,
   }) async {
     final l10n = AppLocalizations.of(context);
     final active = member.status == MemberStatus.active;
@@ -227,6 +228,21 @@ class MembersScreen extends ConsumerWidget {
           icon: Icons.stacked_bar_chart_outlined,
           label: l10n?.memberReservationLimitLabel ?? 'Reservation limit',
           onTap: () => _pickReservationLimit(context, ref, member),
+        ),
+      // Whole-level reservations (0050): grant/revoke — owner or admin,
+      // never self (the reservation-limit rule), feature-gated.
+      if (levelBookingOn && !isSelf && !member.isKiosk && active)
+        _sheetAction(
+          context,
+          icon: member.canReserveLevel
+              ? Icons.layers
+              : Icons.layers_outlined,
+          label: member.canReserveLevel
+              ? (l10n?.levelPermissionAllowed ??
+                  'May reserve a whole level')
+              : (l10n?.levelPermissionDenied ??
+                  'May not reserve a whole level'),
+          onTap: () => _toggleLevelPermission(context, ref, member),
         ),
       if (!member.isKiosk && !member.isOwner && active)
         _sheetAction(
@@ -447,6 +463,32 @@ class MembersScreen extends ConsumerWidget {
     ref.invalidate(workspaceMembersProvider);
   }
 
+  /// Whole-level grant (0050): flips can_reserve_level through the
+  /// admin/owner RPC (server refuses self-setting).
+  Future<void> _toggleLevelPermission(
+    BuildContext context,
+    WidgetRef ref,
+    Member member,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'level permission toggle failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => ref
+          .read(workspaceRepositoryProvider)
+          .setMemberLevelPermission(
+            member.id,
+            allowed: !member.canReserveLevel,
+          ),
+    )) {
+      return;
+    }
+    ref.invalidate(workspaceMembersProvider);
+  }
+
   /// Badge manager of one member (0043): the active/revoked badge list
   /// with revoke buttons, and "New badge" which mints one and swaps the
   /// dialog to the ONE-TIME QR of the raw token.
@@ -516,9 +558,10 @@ class MembersScreen extends ConsumerWidget {
     final me = ref.watch(myMemberProvider).value;
     final isOwner = me?.isOwner ?? false;
     // Consumption entry points follow the services feature (#146).
-    final servicesOn = ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.services);
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    final servicesOn = features.contains(WorkspaceFeature.services);
+    final levelBookingOn =
+        features.contains(WorkspaceFeature.levelBooking);
 
     return Scaffold(
       appBar: AppBar(
@@ -598,6 +641,7 @@ class MembersScreen extends ConsumerWidget {
                     isOwner: isOwner,
                     isSelf: member.id == me?.id,
                     servicesOn: servicesOn,
+                    levelBookingOn: levelBookingOn,
                   ),
                 ),
             ],

@@ -87,6 +87,7 @@ class ThrowingReservationRepository extends FakeReservationRepository {
     required String workspaceId,
     String? seatId,
     String? officeId,
+    String? levelId,
     required DateTime startsAt,
     required DateTime endsAt,
     bool checkIn = false,

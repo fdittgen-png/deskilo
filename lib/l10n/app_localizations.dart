@@ -1820,6 +1820,30 @@ abstract class AppLocalizations {
   /// **'Members check in at a kiosk by tapping an RFID/NFC card. Needs an Android device with NFC.'**
   String get featureNfcBadgesDesc;
 
+  /// No description provided for @featureLevelBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Level reservations'**
+  String get featureLevelBooking;
+
+  /// No description provided for @featureLevelBookingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve a whole floor as one booking, priced per half-day. Grant members the right per member.'**
+  String get featureLevelBookingDesc;
+
+  /// No description provided for @featureAdminLevelAssign.
+  ///
+  /// In en, this message translates to:
+  /// **'Admins can assign levels'**
+  String get featureAdminLevelAssign;
+
+  /// No description provided for @featureAdminLevelAssignDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Admins assign level reservations to members. The owner always can.'**
+  String get featureAdminLevelAssignDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -2065,6 +2089,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'System default'**
   String get languageSystemDefault;
+
+  /// No description provided for @levelReserveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve level'**
+  String get levelReserveButton;
+
+  /// No description provided for @levelReserveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve the whole level'**
+  String get levelReserveTitle;
+
+  /// No description provided for @levelPermissionTile.
+  ///
+  /// In en, this message translates to:
+  /// **'Level reservations'**
+  String get levelPermissionTile;
+
+  /// No description provided for @levelPermissionAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'May reserve a whole level'**
+  String get levelPermissionAllowed;
+
+  /// No description provided for @levelPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'May not reserve a whole level'**
+  String get levelPermissionDenied;
+
+  /// No description provided for @levelBookableToggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookable as a whole'**
+  String get levelBookableToggle;
+
+  /// No description provided for @levelBookableDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The whole floor can be reserved as one booking.'**
+  String get levelBookableDesc;
+
+  /// No description provided for @levelPriceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Price per half-day'**
+  String get levelPriceLabel;
+
+  /// No description provided for @levelAssignMember.
+  ///
+  /// In en, this message translates to:
+  /// **'For member'**
+  String get levelAssignMember;
+
+  /// No description provided for @levelAssignMyself.
+  ///
+  /// In en, this message translates to:
+  /// **'Myself'**
+  String get levelAssignMyself;
+
+  /// No description provided for @levelSupplementLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Level reservations'**
+  String get levelSupplementLabel;
+
+  /// No description provided for @levelNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'You are not allowed to reserve a whole level.'**
+  String get levelNotAllowed;
+
+  /// No description provided for @levelConflict.
+  ///
+  /// In en, this message translates to:
+  /// **'The level has reservations in that period.'**
+  String get levelConflict;
+
+  /// No description provided for @levelDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Whole level'**
+  String get levelDetail;
+
+  /// No description provided for @kioskLevelButton.
+  ///
+  /// In en, this message translates to:
+  /// **'This level'**
+  String get kioskLevelButton;
 
   /// Title of the owner-only member management screen + its settings entry
   ///

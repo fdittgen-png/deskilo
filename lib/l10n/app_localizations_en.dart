@@ -951,6 +951,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Members check in at a kiosk by tapping an RFID/NFC card. Needs an Android device with NFC.';
 
   @override
+  String get featureLevelBooking => 'Level reservations';
+
+  @override
+  String get featureLevelBookingDesc =>
+      'Reserve a whole floor as one booking, priced per half-day. Grant members the right per member.';
+
+  @override
+  String get featureAdminLevelAssign => 'Admins can assign levels';
+
+  @override
+  String get featureAdminLevelAssignDesc =>
+      'Admins assign level reservations to members. The owner always can.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
@@ -1079,6 +1093,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get languageSystemDefault => 'System default';
+
+  @override
+  String get levelReserveButton => 'Reserve level';
+
+  @override
+  String get levelReserveTitle => 'Reserve the whole level';
+
+  @override
+  String get levelPermissionTile => 'Level reservations';
+
+  @override
+  String get levelPermissionAllowed => 'May reserve a whole level';
+
+  @override
+  String get levelPermissionDenied => 'May not reserve a whole level';
+
+  @override
+  String get levelBookableToggle => 'Bookable as a whole';
+
+  @override
+  String get levelBookableDesc =>
+      'The whole floor can be reserved as one booking.';
+
+  @override
+  String get levelPriceLabel => 'Price per half-day';
+
+  @override
+  String get levelAssignMember => 'For member';
+
+  @override
+  String get levelAssignMyself => 'Myself';
+
+  @override
+  String get levelSupplementLabel => 'Level reservations';
+
+  @override
+  String get levelNotAllowed => 'You are not allowed to reserve a whole level.';
+
+  @override
+  String get levelConflict => 'The level has reservations in that period.';
+
+  @override
+  String get levelDetail => 'Whole level';
+
+  @override
+  String get kioskLevelButton => 'This level';
 
   @override
   String get membersTitle => 'Members & plans';

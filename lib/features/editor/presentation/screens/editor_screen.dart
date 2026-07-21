@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/format/cents.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/level.dart';
@@ -150,6 +152,17 @@ class _LevelList extends ConsumerWidget {
                 },
                 child: Text(l10n?.editorRenameLevel ?? 'Rename'),
               ),
+              // Whole-level booking (0050): bookable toggle + half-day
+              // price, per level.
+              MenuItemButton(
+                onPressed: () => showDialog<void>(
+                  context: context,
+                  builder: (_) => _LevelBookingDialog(level: level),
+                ),
+                child: Text(
+                  l10n?.levelBookableToggle ?? 'Bookable as a whole',
+                ),
+              ),
               MenuItemButton(
                 onPressed: () async {
                   final confirmed = await showDialog<bool>(
@@ -185,6 +198,102 @@ class _LevelList extends ConsumerWidget {
           ),
         );
       },
+    );
+  }
+}
+
+
+/// Owner dialog (0050): mark [level] bookable as one whole booking and
+/// price it per half-day. Saves through setLevelBooking.
+class _LevelBookingDialog extends ConsumerStatefulWidget {
+  const _LevelBookingDialog({required this.level});
+
+  final Level level;
+
+  @override
+  ConsumerState<_LevelBookingDialog> createState() =>
+      _LevelBookingDialogState();
+}
+
+class _LevelBookingDialogState extends ConsumerState<_LevelBookingDialog> {
+  late bool _bookable = widget.level.bookableAsWhole;
+  late final TextEditingController _price = TextEditingController(
+    text: widget.level.priceCents == 0
+        ? ''
+        : centsToMajor(widget.level.priceCents),
+  );
+
+  @override
+  void dispose() {
+    _price.dispose();
+    super.dispose();
+  }
+
+  Future<void> _save() async {
+    final l10n = AppLocalizations.of(context);
+    final cents = parseCentsInput(_price.text) ?? 0;
+    if (!await runGuarded(
+      context,
+      domain: 'editor',
+      message: 'level booking save failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => ref.read(floorPlanRepositoryProvider).setLevelBooking(
+            widget.level.id,
+            bookableAsWhole: _bookable,
+            priceCents: cents,
+          ),
+    )) {
+      return;
+    }
+    ref.invalidate(levelsProvider);
+    if (mounted) Navigator.of(context).pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return AlertDialog(
+      title: Text(widget.level.name),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SwitchListTile(
+            key: const ValueKey('level-bookable-switch'),
+            contentPadding: EdgeInsets.zero,
+            title: Text(
+              l10n?.levelBookableToggle ?? 'Bookable as a whole',
+            ),
+            subtitle: Text(
+              l10n?.levelBookableDesc ??
+                  'The whole floor can be reserved as one booking.',
+            ),
+            value: _bookable,
+            onChanged: (v) => setState(() => _bookable = v),
+          ),
+          TextField(
+            key: const ValueKey('level-price-field'),
+            controller: _price,
+            enabled: _bookable,
+            keyboardType:
+                const TextInputType.numberWithOptions(decimal: true),
+            decoration: InputDecoration(
+              labelText: l10n?.levelPriceLabel ?? 'Price per half-day',
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n?.commonCancel ?? 'Cancel'),
+        ),
+        FilledButton(
+          key: const ValueKey('level-booking-save'),
+          onPressed: _save,
+          child: Text(l10n?.commonSave ?? 'Save'),
+        ),
+      ],
     );
   }
 }

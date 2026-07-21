@@ -17,6 +17,7 @@ import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../money/domain/quota_rules.dart';
+import '../../../plan/domain/level.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/presentation/seat_occupancy.dart';
@@ -95,12 +96,26 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     return (start: now, end: end);
   }
 
-  Future<void> _onSeatTap(Seat seat) async {
+  Future<void> _onSeatTap(Seat seat) =>
+      _actionThenBadge(title: seat.name, seatId: seat.id);
+
+  /// Whole-level path (0050): the same action → authenticate flow, with
+  /// the level as the booking target.
+  Future<void> _onLevelTap(Level level) => _actionThenBadge(
+        title: level.name,
+        levelId: level.id,
+      );
+
+  Future<void> _actionThenBadge({
+    required String title,
+    String? seatId,
+    String? levelId,
+  }) async {
     final l10n = AppLocalizations.of(context);
     final action = await showModalBottomSheet<KioskAction>(
       context: context,
       builder: (context) => SheetShell(
-        title: seat.name,
+        title: title,
         children: [
           const SizedBox(height: 12),
           FilledButton.icon(
@@ -127,13 +142,17 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       ),
     );
     if (action == null || !mounted) return;
-    await _badgeSheet(seat, action);
+    await _badgeSheet(action, seatId: seatId, levelId: levelId);
   }
 
   /// The badge prompt: an autofocused field a wedge scanner (or a human)
   /// types the badge code into. Submitting calls the stateless kiosk_act
   /// RPC — the code lives only in this sheet's controller and dies with it.
-  Future<void> _badgeSheet(Seat seat, KioskAction action) async {
+  Future<void> _badgeSheet(
+    KioskAction action, {
+    String? seatId,
+    String? levelId,
+  }) async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
@@ -156,7 +175,8 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
             workspaceId: workspace.id,
             badgeToken: token,
             action: action.wireName,
-            seatId: seat.id,
+            seatId: seatId,
+            levelId: levelId,
             startsAt:
                 action == KioskAction.checkOut ? null : window.start,
             endsAt: action == KioskAction.checkOut ? null : window.end,
@@ -254,6 +274,30 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
               selectedLevelId: level.id,
               onSelected: (id) => setState(() => _levelId = id),
             ),
+            // Whole-level booking at the wall (0050): tap → pick the
+            // action → authenticate with the RFID/NFC card, a scanned
+            // badge, or the typed code — exactly like a seat.
+            if (level.bookableAsWhole &&
+                ref
+                    .watch(enabledFeaturesSyncProvider)
+                    .contains(WorkspaceFeature.levelBooking))
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.lg,
+                  vertical: AppSpacing.xs,
+                ),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: OutlinedButton.icon(
+                    key: const ValueKey('kiosk-level-button'),
+                    onPressed: () => _onLevelTap(level),
+                    icon: const Icon(Icons.layers_outlined),
+                    label: Text(
+                      l10n?.kioskLevelButton ?? 'This level',
+                    ),
+                  ),
+                ),
+              ),
             Expanded(
               child: switch (planAsync) {
                 AsyncData(value: final plan) => PlanCanvas(

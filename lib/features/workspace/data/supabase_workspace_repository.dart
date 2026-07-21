@@ -196,6 +196,17 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setMemberLevelPermission(
+    String memberId, {
+    required bool allowed,
+  }) async {
+    await _client.rpc<dynamic>('set_member_level_permission', params: {
+      'p_member_id': memberId,
+      'p_allowed': allowed,
+    });
+  }
+
+  @override
   Future<void> setMemberKiosk(String memberId, {required bool isKiosk}) async {
     await _client.rpc<dynamic>('set_member_kiosk', params: {
       'p_member_id': memberId,
@@ -430,5 +441,6 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
             OveragePolicy.fromName(row['overage_policy'] as String?),
         isKiosk: row['is_kiosk'] as bool? ?? false,
         maxActiveReservations: row['max_active_reservations'] as int?,
+        canReserveLevel: row['can_reserve_level'] as bool? ?? false,
       );
 }

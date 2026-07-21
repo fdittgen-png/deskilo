@@ -24,5 +24,9 @@
   "featureOnlinePayments": "Pagamenti online",
   "featureOnlinePaymentsDesc": "Consenti ai membri di pagare la fattura online (PayPal). Richiede la configurazione del fornitore di pagamento sul server.",
   "featureNfcBadges": "Badge RFID / NFC",
-  "featureNfcBadgesDesc": "I membri fanno check-in a un chiosco avvicinando una tessera RFID/NFC. Richiede un dispositivo Android con NFC."
+  "featureNfcBadgesDesc": "I membri fanno check-in a un chiosco avvicinando una tessera RFID/NFC. Richiede un dispositivo Android con NFC.",
+  "featureLevelBooking": "Prenotazione del piano",
+  "featureLevelBookingDesc": "Prenotare un intero piano come un'unica prenotazione, con prezzo per mezza giornata. Il permesso si concede membro per membro.",
+  "featureAdminLevelAssign": "Gli admin possono assegnare piani",
+  "featureAdminLevelAssignDesc": "Gli admin assegnano prenotazioni di piano ai membri. Il proprietario può sempre."
 }
