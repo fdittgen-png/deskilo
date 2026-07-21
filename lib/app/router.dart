@@ -219,7 +219,9 @@ GoRouter router(Ref ref) {
         path: '/nfc-config',
         redirect: (context, state) {
           final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
-          return isOwner ? null : '/plan';
+          return isOwner && featureEnabled(WorkspaceFeature.nfcBadges)
+              ? null
+              : '/plan';
         },
         builder: (context, state) => const NfcConfigScreen(),
       ),
@@ -227,7 +229,9 @@ GoRouter router(Ref ref) {
         path: '/payment-config',
         redirect: (context, state) {
           final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
-          return isOwner ? null : '/plan';
+          return isOwner && featureEnabled(WorkspaceFeature.onlinePayments)
+              ? null
+              : '/plan';
         },
         builder: (context, state) => const PaymentConfigScreen(),
       ),
@@ -256,7 +260,10 @@ GoRouter router(Ref ref) {
         redirect: (context, state) {
           final canAdminister =
               ref.read(myMemberProvider).value?.canAdminister ?? false;
-          return canAdminister ? null : '/plan';
+          return canAdminister &&
+                  featureEnabled(WorkspaceFeature.accessorySupplements)
+              ? null
+              : '/plan';
         },
         builder: (context, state) => const AccessoriesScreen(),
       ),

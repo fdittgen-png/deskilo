@@ -252,13 +252,18 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l10n?.availabilityTitle ?? 'Availability'),
               onTap: () => context.push('/availability'),
             ),
-          if (isOwner)
+          // Feature-gated admin surfaces (#146 rule): the config screen for a
+          // feature appears only while that feature is on — enable it in
+          // Features to reveal its settings, disable it and the entry (and its
+          // route) go with it. The master Features toggle below is always
+          // reachable so a disabled feature can be switched back on.
+          if (isOwner && features.contains(WorkspaceFeature.onlinePayments))
             ListTile(
               leading: const Icon(Icons.credit_card_outlined),
               title: Text(l10n?.payConfigTitle ?? 'Online payments'),
               onTap: () => context.push('/payment-config'),
             ),
-          if (isOwner)
+          if (isOwner && features.contains(WorkspaceFeature.nfcBadges))
             ListTile(
               leading: const Icon(Icons.contactless_outlined),
               title: Text(l10n?.nfcConfigTitle ?? 'RFID / NFC badges'),
@@ -271,8 +276,11 @@ class SettingsScreen extends ConsumerWidget {
               onTap: () => context.push('/services'),
             ),
           // Accessory catalog (#167): owner AND admins, per the epic #163
-          // decision — deliberately canAdminister, not owner-only.
-          if (canAdminister)
+          // decision — deliberately canAdminister, not owner-only. Gated on the
+          // accessorySupplements feature (#170): the catalog only bites when
+          // supplements bill, so no feature → no catalog surface.
+          if (canAdminister &&
+              features.contains(WorkspaceFeature.accessorySupplements))
             ListTile(
               leading: const Icon(Icons.devices_other_outlined),
               title: Text(l10n?.accessoriesTitle ?? 'Accessories'),

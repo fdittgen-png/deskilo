@@ -26,7 +26,14 @@ Future<FakeAccessoryRepository> pumpAccessories(
   accessories ??= FakeAccessoryRepository()..seedSmallCatalog();
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(accessories: accessories),
+      overrides: standardTestOverrides(
+        // /accessories is gated on the accessorySupplements feature (#170,
+        // default-off) since the admin-menu feature-gating refactor.
+        workspace: FakeWorkspaceRepository.withWorkspace(
+          featureFlags: const {'accessorySupplements': true},
+        ),
+        accessories: accessories,
+      ),
       child: const DeskiloApp(),
     ),
   );
@@ -43,7 +50,12 @@ Future<void> pumpSettingsAs(
   FakeAccessoryRepository? accessories,
 }) async {
   useTallViewport(tester);
-  final workspace = FakeWorkspaceRepository.withWorkspace()..myMember = member;
+  // The Accessories entry is gated on accessorySupplements (#170, default-off)
+  // since the admin-menu feature-gating refactor — seed it on so the entry
+  // (or its correct absence for a plain member) is what's under test.
+  final workspace = FakeWorkspaceRepository.withWorkspace(
+    featureFlags: const {'accessorySupplements': true},
+  )..myMember = member;
   await tester.pumpWidget(
     ProviderScope(
       overrides: standardTestOverrides(
