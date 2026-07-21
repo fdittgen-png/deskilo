@@ -99,6 +99,28 @@ El hilo de eventos es la pista de auditoría del espacio: reservas creadas/cambi
 - **Ajustes del espacio**: nombre, país/moneda, zona horaria, instrucciones de pago (IBAN, PayPal.me, Wero, Lydia, Wise), enlace del grupo de WhatsApp, **transparencia de mesas**, exportaciones — y la **zona de peligro**: un **reinicio total del espacio** (borra reservas, dinero y plano; conserva configuración y miembros), protegido escribiendo «I agree».
 - **Importar/exportar**: toda la configuración viaja como **archivo XML** — cópiala, úsala de plantilla o migra una instancia autoalojada. También puede generarse un **PDF de configuración** (miembros, plano, precios, funciones). Los archivos se guardan **localmente en tu dispositivo**.
 
+### Configurar los pagos en línea (propietarios)
+
+Cada comunidad cobra en su **propia** cuenta de proveedor; la app nunca guarda las claves secretas en ningún dispositivo — están en el servidor.
+
+1. Abre **Ajustes → Pagos en línea** (solo propietario).
+2. Elige un proveedor y pega sus claves desde su panel:
+   - **PayPal** — Client ID, Secreto, Entorno (empieza por *sandbox*), ID de webhook, URL de retorno (PayPal Developer → tu app REST).
+   - **Tarjeta (Stripe)** — Clave secreta, Secreto de firma del webhook, URL de retorno (Stripe → claves API / Webhooks).
+   - **Mollie** — Clave API, URL de retorno (ofrece iDEAL, Bancontact, tarjetas…).
+   - **Wero (con Mollie)** — la misma clave API de Mollie, con Wero activado en tu cuenta Mollie.
+3. **Guarda** — aparece un chip verde *Configurado*. Activa la función **Pagos en línea** (Ajustes → Funciones) y los miembros verán **Pagar en línea** en una factura pendiente.
+
+Un secreto guardado no se vuelve a mostrar — deja el campo en blanco para conservarlo, escribe para reemplazarlo, **Eliminar** para quitar el proveedor. Las comisiones son del proveedor (típicamente ~1,5–3 % por pago, sin cuota mensual); DesKilo no añade nada, y la transferencia/IBAN manual sigue siendo gratis.
+
+### Configurar las credenciales RFID / NFC (propietarios)
+
+Las tarjetas físicas permiten registrarse con un toque — sin teléfono.
+
+1. Abre **Ajustes → Credenciales RFID / NFC** (solo propietario). Activa **Activar registro por credencial NFC** y lee la línea de **estado del dispositivo** — hace falta un dispositivo **Android** con NFC activado (los iPad no tienen NFC).
+2. Da una tarjeta a cada miembro: **Miembros y planes → el miembro → Credenciales → Registrar tarjeta**, y acerca su tarjeta al dispositivo. Vale cualquier tarjeta con chip legible (MIFARE, NTAG…).
+3. Úsalas en un **quiosco** (§9): el miembro acerca la tarjeta para reservar o registrarse. Revoca una tarjeta perdida desde la misma ventana de Credenciales.
+
 ## 8. Dinero (pestaña Dinero)
 
 Tu cuenta responde *qué debo, qué me deben* — y *cuánto puedo reservar aún*:
@@ -111,7 +133,7 @@ Tu cuenta responde *qué debo, qué me deben* — y *cuánto puedo reservar aún
 - **Cargos**: suscripción mensual (plan porcentual), exceso, consumo de servicios, suplementos de accesorios, paquetes de días.
 - **Abonos**: gastos aprobados, pagos registrados, ajustes.
 - **Extractos**: mensuales, con estado **saldado / pendiente**, exportables como **factura PDF** guardada localmente.
-- **Pagar**: DesKilo registra los pagos; una factura pendiente muestra las **instrucciones de pago** del espacio (el IBAN se copia con un toque, PayPal.me se abre directamente). Registra un pago («he pagado») con su método — la otra parte confirma. Si el espacio activó los **pagos en línea** y su servidor está configurado, el botón **Pagar en línea con PayPal** inicia un pago PayPal real por el importe adeudado.
+- **Pagar**: DesKilo registra los pagos; una factura pendiente muestra las **instrucciones de pago** del espacio (el IBAN se copia con un toque, PayPal.me se abre directamente). Registra un pago («he pagado») con su método — la otra parte confirma. Si el espacio activó los **pagos en línea** y su servidor está configurado, el botón **Pagar en línea** permite abonar el importe adeudado al instante — con **PayPal, tarjeta (Stripe), Mollie o Wero**, según lo que el espacio haya activado (si hay varios, se muestra un selector).
 - **Gastos**: ¿compraste café para el espacio? Presenta el gasto — otro admin lo aprueba (sin autoaprobación) y el importe se abona en tu próximo extracto.
 - **Servicios**: extras definidos por el propietario (taquillas, impresión…) cuyo consumo llega a tu extracto tras tu confirmación.
 
@@ -120,10 +142,13 @@ Tu cuenta responde *qué debo, qué me deben* — y *cuánto puedo reservar aún
 Monta una tableta Android o un iPad junto a la puerta y deja que la gente se registre al entrar:
 
 1. El propietario crea una cuenta normal para el dispositivo, la une al espacio y la marca como **quiosco** en *Miembros y planes*. Desde entonces esa cuenta queda bloqueada en el plano a pantalla completa — sin otras pantallas, sin nada más que tocar.
-2. El propietario (o un admin) emite a cada miembro una **credencial**: un código QR mostrado **una sola vez** — imprímelo como tarjeta o guárdalo en el móvil. Las credenciales se revocan en cualquier momento.
-3. En el quiosco: toca un asiento → **Registrarse**, **Reservar** o **Salir** → presenta tu credencial. Un lector de códigos USB/Bluetooth la lee al instante (teclea el código), o introduce el código a mano.
+2. El propietario (o un admin) da una **credencial** a cada miembro, en *Miembros y planes → un miembro → Credenciales*. Dos tipos:
+   - **Código QR** — mostrado **una sola vez**; toca **Guardar como PDF** para imprimir una tarjeta, o guarda el QR en el móvil del miembro.
+   - **Tarjeta RFID/NFC** — toca **Registrar tarjeta** y acerca la tarjeta física del miembro (Android con NFC). Configúralo en *Ajustes → Credenciales RFID / NFC* (§7).
+   Cualquier credencial es revocable en cualquier momento.
+3. En el quiosco: toca un asiento → **Registrarse**, **Reservar** o **Salir** → presenta la credencial: **acerca la tarjeta RFID/NFC**, escanea el QR con un lector de códigos USB/Bluetooth, o escribe el código.
 
-Tu identidad solo existe durante la operación: el código viaja una vez al servidor, la reserva se hace **a tu nombre**, y nada se guarda en la tableta — quedas «desconectado» en cuanto termina. El escaneo con cámara, las credenciales NFC (Android — los iPad no tienen hardware NFC) y el acceso puntual con Google/Facebook están en la hoja de ruta.
+Tu identidad solo existe durante la operación: la credencial viaja una vez al servidor, la reserva se hace **a tu nombre**, y nada se guarda en la tableta — quedas «desconectado» en cuanto termina. (El escaneo de QR con cámara y el acceso puntual con Google/Facebook siguen en la hoja de ruta; **los iPad no tienen NFC**, así que allí el QR es la vía.)
 
 ## 10. Notificaciones
 

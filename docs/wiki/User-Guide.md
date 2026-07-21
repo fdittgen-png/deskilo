@@ -99,6 +99,28 @@ The events feed is the audit trail of your workspace: reservations created/chang
 - **Workspace settings**: name, country/currency, time zone, payment instructions (IBAN, PayPal.me, Wero, Lydia, Wise), the WhatsApp group link, **desk transparency**, exports — and the **danger zone**: a full **workspace reset** (deletes bookings, money, and the floor plan; keeps configuration and members) guarded by a typed *"I agree"*.
 - **Import/export**: the whole configuration travels as an **XML file** — back it up, template it, or migrate a self-hosted instance. A **configuration PDF** (members, plan, prices, features) can be generated too. Files are saved **locally on your device**.
 
+### Setting up online payments (owners)
+
+Each community collects to its **own** provider account; the app never keeps the secret keys on any device — they live on the server.
+
+1. Open **Settings → Online payments** (owner only).
+2. Pick a provider and paste its keys from that provider's dashboard:
+   - **PayPal** — Client ID, Secret, Environment (start with *sandbox*), Webhook ID, Return URL (PayPal Developer → your REST app).
+   - **Credit card (Stripe)** — Secret key, Webhook signing secret, Return URL (Stripe → API keys / Webhooks).
+   - **Mollie** — API key, Return URL (offers iDEAL, Bancontact, cards…).
+   - **Wero (via Mollie)** — the same Mollie API key, with Wero enabled in your Mollie account.
+3. **Save** — a green *Configured* chip appears. Turn on the **Online payments** feature (Settings → Features), and members see **Pay online** on an outstanding bill.
+
+A saved secret is never shown again — leave its field blank to keep it, type to replace it, **Remove** to clear the provider. Fees are the provider's (typically ~1.5–3% per payment, no monthly fee); DesKilo adds nothing, and the manual bank-transfer/IBAN route stays free.
+
+### Setting up RFID / NFC badges (owners)
+
+Physical cards let people check in with a tap — no phone needed.
+
+1. Open **Settings → RFID / NFC badges** (owner only). Switch **Enable NFC badge check-in** on, and read the **device status** line — you need an **Android** device with NFC on (iPads have no NFC).
+2. Give each member a card: **Members & plans → the member → Badges → Register card**, then hold their card to the device. Any card with a readable chip works (MIFARE, NTAG…).
+3. Use them at a **kiosk** (§9): the member taps the card to reserve or check in. Revoke a lost card from the same Badges dialog.
+
 ## 8. Money (Money tab)
 
 Your ledger answers *what do I owe, what am I owed* — and *how much can I still book*:
@@ -111,7 +133,7 @@ Your ledger answers *what do I owe, what am I owed* — and *how much can I stil
 - **Charges**: monthly subscription (a percentage plan), overage, service consumption, accessory supplements, day packages.
 - **Credits**: approved expenses, recorded payments, adjustments.
 - **Statements**: monthly, with **settled / outstanding** status, exportable as a **PDF bill** saved locally.
-- **Paying**: DesKilo tracks payments; outstanding bills show the workspace's **payment instructions** (IBAN copies with one tap, PayPal.me opens directly). Record a payment ("I paid") with its method — the other side confirms. If the workspace enabled **online payments** and its server is configured for it, a **Pay online with PayPal** button starts a real PayPal payment for the amount owed.
+- **Paying**: DesKilo tracks payments; outstanding bills show the workspace's **payment instructions** (IBAN copies with one tap, PayPal.me opens directly). Record a payment ("I paid") with its method — the other side confirms. If the workspace enabled **online payments** and its server is configured for it, a **Pay online** button lets the member pay the amount owed straight away — with **PayPal, a credit card (Stripe), Mollie, or Wero**, whichever the workspace enabled (several show a chooser).
 - **Expenses**: bought coffee for the space? Submit the expense — another admin approves it (no self-approval) and it credits your next statement.
 - **Services**: owner-defined extras (lockers, printing…) whose consumption lands on your statement after you confirm it.
 
@@ -120,10 +142,13 @@ Your ledger answers *what do I owe, what am I owed* — and *how much can I stil
 Mount an Android tablet or iPad by the door and let people check in as they walk in:
 
 1. The owner creates a normal account for the device, joins it to the workspace, and flags it as a **kiosk** in *Members & plans*. From then on that account is locked to a full-screen live floor plan — no other screens, nothing else to touch.
-2. The owner (or an admin) issues each member a **badge**: a QR code shown **exactly once** — print it as a card or save it on your phone. Badges can be revoked at any time.
-3. At the kiosk, tap a seat → **Check in**, **Reserve**, or **Check out** → present your badge. A USB/Bluetooth barcode scanner reads it instantly (it types the code), or enter the code manually.
+2. The owner (or an admin) gives each member a **badge**, in *Members & plans → a member → Badges*. Two kinds:
+   - **QR code** — shown **exactly once**; tap **Save as PDF** to print a badge card, or save the QR on the member's phone.
+   - **RFID/NFC card** — tap **Register card** and hold the member's physical card to the device (Android with NFC). Set it up in *Settings → RFID / NFC badges* (§7).
+   Either badge is revocable at any time.
+3. At the kiosk, tap a seat → **Check in**, **Reserve**, or **Check out** → present the badge: **tap the RFID/NFC card**, scan the QR with a USB/Bluetooth barcode scanner, or type the code.
 
-Your identity exists only for the moment of the operation: the badge code is sent once to the server, the booking is made **in your name**, and nothing is stored on the tablet — you are "signed out" the instant it completes. Camera scanning, NFC badge taps (Android — iPads have no NFC hardware), and per-operation Google/Facebook sign-in are on the roadmap.
+Your identity exists only for the moment of the operation: the credential is sent once to the server, the booking is made **in your name**, and nothing is stored on the tablet — you are "signed out" the instant it completes. (Camera QR scanning and per-operation Google/Facebook sign-in are still on the roadmap; **iPads have no NFC**, so there the QR path is the way.)
 
 ## 10. Notifications
 

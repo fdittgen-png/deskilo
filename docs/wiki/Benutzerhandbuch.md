@@ -99,6 +99,28 @@ Der Ereignis-Feed ist die Prüfspur deines Workspace: Reservierungen erstellt/ge
 - **Workspace-Einstellungen**: Name, Land/Währung, Zeitzone, Zahlungshinweise (IBAN, PayPal.me, Wero, Lydia, Wise), WhatsApp-Gruppenlink, **Tisch-Transparenz**, Exporte — und die **Gefahrenzone**: ein kompletter **Workspace-Reset** (löscht Buchungen, Geld und Grundriss; behält Konfiguration und Mitglieder), abgesichert durch das getippte „I agree".
 - **Import/Export**: Die gesamte Konfiguration reist als **XML-Datei** — Backup, Vorlage oder Migration einer selbst gehosteten Instanz. Auch ein **Konfigurations-PDF** (Mitglieder, Plan, Preise, Funktionen) lässt sich erzeugen. Dateien werden **lokal auf deinem Gerät** gespeichert.
 
+### Online-Zahlungen einrichten (Inhaberinnen)
+
+Jede Community kassiert auf ihr **eigenes** Anbieterkonto; die App speichert die geheimen Schlüssel nie auf einem Gerät — sie liegen auf dem Server.
+
+1. Öffne **Einstellungen → Online-Zahlungen** (nur Inhaberin).
+2. Wähle einen Anbieter und füge seine Schlüssel aus dessen Dashboard ein:
+   - **PayPal** — Client-ID, Secret, Umgebung (beginne mit *sandbox*), Webhook-ID, Rückkehr-URL (PayPal Developer → deine REST-App).
+   - **Kreditkarte (Stripe)** — Secret Key, Webhook-Signaturgeheimnis, Rückkehr-URL (Stripe → API-Keys / Webhooks).
+   - **Mollie** — API-Schlüssel, Rückkehr-URL (bietet iDEAL, Bancontact, Karten…).
+   - **Wero (über Mollie)** — derselbe Mollie-API-Schlüssel, mit Wero im Mollie-Konto aktiviert.
+3. **Speichern** — ein grünes *Eingerichtet* erscheint. Aktiviere die Funktion **Online-Zahlungen** (Einstellungen → Funktionen), dann sehen Mitglieder **Online bezahlen** auf einer offenen Rechnung.
+
+Ein gespeichertes Geheimnis wird nie wieder gezeigt — Feld leer lassen zum Behalten, tippen zum Ersetzen, **Entfernen** löscht den Anbieter. Die Gebühren sind die des Anbieters (typisch ~1,5–3 % pro Zahlung, keine Monatsgebühr); DesKilo kommt nichts hinzu, und der manuelle Überweisungs-/IBAN-Weg bleibt kostenlos.
+
+### RFID-/NFC-Badges einrichten (Inhaberinnen)
+
+Physische Karten ermöglichen Check-in per Antippen — ohne Handy.
+
+1. Öffne **Einstellungen → RFID-/NFC-Badges** (nur Inhaberin). Schalte **NFC-Badge-Check-in aktivieren** ein und lies die **Gerätestatus**-Zeile — nötig ist ein **Android**-Gerät mit aktiviertem NFC (iPads haben kein NFC).
+2. Gib jedem Mitglied eine Karte: **Mitglieder & Tarife → das Mitglied → Badges → Karte registrieren**, dann die Karte ans Gerät halten. Jede Karte mit lesbarem Chip passt (MIFARE, NTAG…).
+3. Nutze sie an einem **Kiosk** (§9): das Mitglied tippt die Karte an, um zu reservieren oder einzuchecken. Eine verlorene Karte im selben Badges-Dialog widerrufen.
+
 ## 8. Geld (Tab Geld)
 
 Dein Konto beantwortet *was schulde ich, was schuldet man mir* — und *wie viel kann ich noch buchen*:
@@ -111,7 +133,7 @@ Dein Konto beantwortet *was schulde ich, was schuldet man mir* — und *wie viel
 - **Belastungen**: Monatsabo (Prozent-Tarif), Mehrverbrauch, Service-Konsum, Zubehör-Aufpreise, Tagespakete.
 - **Gutschriften**: genehmigte Ausgaben, erfasste Zahlungen, Anpassungen.
 - **Abrechnungen**: monatlich, mit Status **beglichen / offen**, exportierbar als **PDF-Rechnung**, lokal gespeichert.
-- **Zahlen**: DesKilo erfasst Zahlungen; offene Rechnungen zeigen die **Zahlungshinweise** des Workspace (IBAN mit einem Tipp kopiert, PayPal.me öffnet direkt). Erfasse eine Zahlung („ich habe gezahlt") mit Methode — die Gegenseite bestätigt. Hat der Workspace **Online-Zahlungen** aktiviert und ist sein Server dafür eingerichtet, startet **Online mit PayPal bezahlen** eine echte PayPal-Zahlung über den offenen Betrag.
+- **Zahlen**: DesKilo erfasst Zahlungen; offene Rechnungen zeigen die **Zahlungshinweise** des Workspace (IBAN mit einem Tipp kopiert, PayPal.me öffnet direkt). Erfasse eine Zahlung („ich habe gezahlt") mit Methode — die Gegenseite bestätigt. Hat der Workspace **Online-Zahlungen** aktiviert und ist sein Server dafür eingerichtet, lässt **Online bezahlen** den offenen Betrag sofort begleichen — per **PayPal, Kreditkarte (Stripe), Mollie oder Wero**, je nachdem was der Workspace aktiviert hat (mehrere zeigen eine Auswahl).
 - **Ausgaben**: Kaffee für den Raum gekauft? Reiche die Ausgabe ein — ein anderer Admin genehmigt (keine Selbstgenehmigung) und der Betrag wird deiner nächsten Abrechnung gutgeschrieben.
 - **Services**: von der Inhaberin definierte Extras (Schließfächer, Druck…), deren Konsum nach deiner Bestätigung auf der Abrechnung landet.
 
@@ -120,10 +142,13 @@ Dein Konto beantwortet *was schulde ich, was schuldet man mir* — und *wie viel
 Häng ein Android-Tablet oder iPad neben die Tür und lass alle beim Reinkommen einchecken:
 
 1. Die Inhaberin legt ein normales Konto für das Gerät an, lässt es dem Workspace beitreten und markiert es unter *Mitglieder & Tarife* als **Kiosk**. Ab dann ist dieses Konto auf den Vollbild-Grundriss festgenagelt — keine anderen Bildschirme, nichts sonst zu bedienen.
-2. Die Inhaberin (oder ein Admin) stellt jedem Mitglied einen **Badge** aus: einen QR-Code, der **genau einmal** angezeigt wird — als Karte drucken oder aufs Handy nehmen. Badges lassen sich jederzeit widerrufen.
-3. Am Kiosk: Platz antippen → **Einchecken**, **Reservieren** oder **Auschecken** → Badge vorzeigen. Ein USB/Bluetooth-Barcode-Scanner liest ihn sofort (er tippt den Code), oder gib den Code manuell ein.
+2. Die Inhaberin (oder ein Admin) gibt jedem Mitglied einen **Badge**, unter *Mitglieder & Tarife → ein Mitglied → Badges*. Zwei Arten:
+   - **QR-Code** — **genau einmal** angezeigt; tippe **Als PDF speichern** für eine gedruckte Badge-Karte, oder speichere den QR auf dem Handy des Mitglieds.
+   - **RFID/NFC-Karte** — tippe **Karte registrieren** und halte die physische Karte ans Gerät (Android mit NFC). Einrichtung unter *Einstellungen → RFID-/NFC-Badges* (§7).
+   Jeder Badge ist jederzeit widerrufbar.
+3. Am Kiosk: Platz antippen → **Einchecken**, **Reservieren** oder **Auschecken** → Badge vorzeigen: **RFID/NFC-Karte antippen**, QR mit einem USB/Bluetooth-Barcode-Scanner scannen oder Code eintippen.
 
-Deine Identität existiert nur für den Moment der Operation: Der Badge-Code geht einmal zum Server, die Buchung läuft **auf deinen Namen**, und auf dem Tablet wird nichts gespeichert — du bist „abgemeldet", sobald es fertig ist. Kamera-Scan, NFC-Badges (Android — iPads haben keine NFC-Hardware) und die Anmeldung pro Vorgang mit Google/Facebook stehen auf der Roadmap.
+Deine Identität existiert nur für den Moment der Operation: die Berechtigung geht einmal zum Server, die Buchung läuft **auf deinen Namen**, und auf dem Tablet wird nichts gespeichert — du bist „abgemeldet", sobald es fertig ist. (Kamera-QR-Scan und Anmeldung pro Vorgang mit Google/Facebook stehen noch auf der Roadmap; **iPads haben kein NFC**, dort ist der QR-Weg der richtige.)
 
 ## 10. Benachrichtigungen
 

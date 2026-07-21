@@ -99,6 +99,28 @@ Il flusso eventi è la traccia di controllo dello spazio: prenotazioni create/mo
 - **Impostazioni dello spazio**: nome, paese/valuta, fuso, istruzioni di pagamento (IBAN, PayPal.me, Wero, Lydia, Wise), link del gruppo WhatsApp, **trasparenza dei tavoli**, esportazioni — e la **zona pericolosa**: un **reset completo dello spazio** (elimina prenotazioni, denaro e planimetria; conserva configurazione e membri), protetto digitando «I agree».
 - **Import/export**: l'intera configurazione viaggia come **file XML** — backup, modello o migrazione di un'istanza self-hosted. Si può generare anche un **PDF di configurazione** (membri, planimetria, prezzi, funzionalità). I file vengono salvati **localmente sul tuo dispositivo**.
 
+### Configurare i pagamenti online (proprietari)
+
+Ogni comunità incassa sul **proprio** account del fornitore; l'app non conserva mai le chiavi segrete su alcun dispositivo — restano sul server.
+
+1. Apri **Impostazioni → Pagamenti online** (solo proprietario).
+2. Scegli un fornitore e incolla le sue chiavi dal suo pannello:
+   - **PayPal** — Client ID, Secret, Ambiente (inizia con *sandbox*), ID webhook, URL di ritorno (PayPal Developer → la tua app REST).
+   - **Carta (Stripe)** — Chiave segreta, Segreto di firma webhook, URL di ritorno (Stripe → chiavi API / Webhook).
+   - **Mollie** — Chiave API, URL di ritorno (offre iDEAL, Bancontact, carte…).
+   - **Wero (tramite Mollie)** — la stessa chiave API Mollie, con Wero abilitato nel tuo account Mollie.
+3. **Salva** — appare un chip verde *Configurato*. Attiva la funzione **Pagamenti online** (Impostazioni → Funzionalità) e i membri vedranno **Paga online** su una fattura da saldare.
+
+Un segreto salvato non viene più mostrato — lascia il campo vuoto per mantenerlo, digita per sostituirlo, **Rimuovi** per togliere il fornitore. Le commissioni sono del fornitore (tipicamente ~1,5–3 % per pagamento, senza canone mensile); DesKilo non aggiunge nulla, e il bonifico/IBAN manuale resta gratuito.
+
+### Configurare i badge RFID / NFC (proprietari)
+
+Le tessere fisiche permettono il check-in con un tocco — senza telefono.
+
+1. Apri **Impostazioni → Badge RFID / NFC** (solo proprietario). Attiva **Abilita il check-in con badge NFC** e leggi la riga di **stato del dispositivo** — serve un dispositivo **Android** con NFC attivo (gli iPad non hanno NFC).
+2. Dai una tessera a ogni membro: **Membri e piani → il membro → Badge → Registra tessera**, poi avvicina la sua tessera al dispositivo. Va bene qualsiasi tessera con chip leggibile (MIFARE, NTAG…).
+3. Usale a un **chiosco** (§9): il membro avvicina la tessera per prenotare o fare check-in. Revoca una tessera persa dalla stessa finestra Badge.
+
 ## 8. Denaro (scheda Denaro)
 
 Il tuo conto risponde a *quanto devo, quanto mi devono* — e *quanto posso ancora prenotare*:
@@ -111,7 +133,7 @@ Il tuo conto risponde a *quanto devo, quanto mi devono* — e *quanto posso anco
 - **Addebiti**: abbonamento mensile (piano percentuale), extra, consumo di servizi, supplementi accessori, pacchetti di giorni.
 - **Accrediti**: spese approvate, pagamenti registrati, rettifiche.
 - **Estratti**: mensili, con stato **saldato / da saldare**, esportabili come **fattura PDF** salvata localmente.
-- **Pagare**: DesKilo tiene traccia dei pagamenti; una fattura da saldare mostra le **istruzioni di pagamento** dello spazio (l'IBAN si copia con un tocco, PayPal.me si apre direttamente). Registra un pagamento («ho pagato») con il metodo — l'altra parte conferma. Se lo spazio ha attivato i **pagamenti online** e il suo server è configurato, il pulsante **Paga online con PayPal** avvia un vero pagamento PayPal dell'importo dovuto.
+- **Pagare**: DesKilo tiene traccia dei pagamenti; una fattura da saldare mostra le **istruzioni di pagamento** dello spazio (l'IBAN si copia con un tocco, PayPal.me si apre direttamente). Registra un pagamento («ho pagato») con il metodo — l'altra parte conferma. Se lo spazio ha attivato i **pagamenti online** e il suo server è configurato, il pulsante **Paga online** consente di saldare subito l'importo dovuto — con **PayPal, carta (Stripe), Mollie o Wero**, secondo ciò che lo spazio ha attivato (se più di uno, appare un selettore).
 - **Spese**: hai comprato il caffè per lo spazio? Presenta la spesa — un altro admin la approva (niente auto-approvazione) e l'importo viene accreditato sul prossimo estratto.
 - **Servizi**: extra definiti dal proprietario (armadietti, stampe…) il cui consumo arriva sul tuo estratto dopo la tua conferma.
 
@@ -120,10 +142,13 @@ Il tuo conto risponde a *quanto devo, quanto mi devono* — e *quanto posso anco
 Monta un tablet Android o un iPad vicino alla porta e lascia che le persone facciano check-in entrando:
 
 1. Il proprietario crea un account normale per il dispositivo, lo unisce allo spazio e lo marca come **chiosco** in *Membri e piani*. Da quel momento l'account è bloccato sulla planimetria a schermo intero — nessun'altra schermata, nient'altro da toccare.
-2. Il proprietario (o un admin) emette per ogni membro un **badge**: un codice QR mostrato **una sola volta** — stampalo come tessera o tienilo sul telefono. I badge si revocano in qualsiasi momento.
-3. Al chiosco: tocca un posto → **Check-in**, **Prenota** o **Check-out** → presenta il badge. Un lettore di codici USB/Bluetooth lo legge all'istante (digita il codice), oppure inserisci il codice a mano.
+2. Il proprietario (o un admin) dà un **badge** a ogni membro, in *Membri e piani → un membro → Badge*. Due tipi:
+   - **Codice QR** — mostrato **una sola volta**; tocca **Salva come PDF** per stampare una tessera, o salva il QR sul telefono del membro.
+   - **Tessera RFID/NFC** — tocca **Registra tessera** e avvicina la tessera fisica del membro (Android con NFC). Configuralo in *Impostazioni → Badge RFID / NFC* (§7).
+   Ogni badge è revocabile in qualsiasi momento.
+3. Al chiosco: tocca un posto → **Check-in**, **Prenota** o **Check-out** → presenta il badge: **avvicina la tessera RFID/NFC**, scansiona il QR con un lettore di codici USB/Bluetooth, o digita il codice.
 
-La tua identità esiste solo per il tempo dell'operazione: il codice del badge va una volta al server, la prenotazione è fatta **a tuo nome**, e nulla resta sul tablet — sei «disconnesso» nell'istante in cui finisce. Scansione con fotocamera, badge NFC (Android — gli iPad non hanno hardware NFC) e accesso puntuale con Google/Facebook sono nella roadmap.
+La tua identità esiste solo per il tempo dell'operazione: la credenziale va una volta al server, la prenotazione è fatta **a tuo nome**, e nulla resta sul tablet — sei «disconnesso» appena finisce. (La scansione QR con fotocamera e l'accesso per singola operazione con Google/Facebook sono ancora nella roadmap; **gli iPad non hanno NFC**, quindi lì il QR è la via.)
 
 ## 10. Notifiche
 
