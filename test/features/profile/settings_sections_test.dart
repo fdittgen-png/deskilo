@@ -28,14 +28,16 @@ Future<void> pumpSettingsAs(
   WidgetTester tester, {
   required bool isAdmin,
   required bool isOwner,
+  Map<String, dynamic> featureFlags = const {},
 }) async {
   // The sectioned list no longer fits the default 800×600 lazy-list
   // viewport; a taller view keeps every tile and header built.
   tester.view.physicalSize = const Size(800, 1600);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
-  final workspace = FakeWorkspaceRepository.withWorkspace()
-    ..myMember = Member(
+  final workspace = FakeWorkspaceRepository.withWorkspace(
+    featureFlags: featureFlags,
+  )..myMember = Member(
       id: 'member-1',
       workspaceId: 'ws-1',
       userId: 'user-1',
@@ -113,5 +115,60 @@ void main() {
     expect(find.text('Preferences'), findsOneWidget);
     expect(find.text('Advanced'), findsOneWidget);
     expect(find.text('Sign out'), findsOneWidget);
+  });
+
+  // Feature-gating of the admin entries (#146 rule): a feature's config entry
+  // appears only while the feature is on. onlinePayments and
+  // accessorySupplements are default-off; nfcBadges is default-on.
+  testWidgets(
+      'an owner with the features OFF sees no payments, NFC or accessories '
+      'entry', (tester) async {
+    await pumpSettingsAs(
+      tester,
+      isAdmin: true,
+      isOwner: true,
+      featureFlags: const {
+        'onlinePayments': false,
+        'nfcBadges': false,
+        'accessorySupplements': false,
+        'services': false,
+      },
+    );
+
+    for (final entry in [
+      'Online payments',
+      'RFID / NFC badges',
+      'Accessories',
+      'Services',
+    ]) {
+      expect(find.text(entry), findsNothing, reason: '"$entry" leaked when off');
+    }
+    // The master Features toggle is always reachable to switch them back on.
+    expect(find.text('Features'), findsOneWidget);
+  });
+
+  testWidgets(
+      'an owner with the features ON sees payments, NFC, accessories and '
+      'services entries', (tester) async {
+    await pumpSettingsAs(
+      tester,
+      isAdmin: true,
+      isOwner: true,
+      featureFlags: const {
+        'onlinePayments': true,
+        'nfcBadges': true,
+        'accessorySupplements': true,
+        'services': true,
+      },
+    );
+
+    for (final entry in [
+      'Online payments',
+      'RFID / NFC badges',
+      'Accessories',
+      'Services',
+    ]) {
+      expect(find.text(entry), findsOneWidget, reason: '"$entry" missing when on');
+    }
   });
 }

@@ -22,7 +22,14 @@ Future<FakeMoneyRepository> pumpConfig(
   addTearDown(() => tester.binding.setSurfaceSize(null));
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(money: money),
+      overrides: standardTestOverrides(
+        // /payment-config is gated on the onlinePayments feature (default-off)
+        // since the admin-menu feature-gating refactor.
+        workspace: FakeWorkspaceRepository.withWorkspace(
+          featureFlags: const {'onlinePayments': true},
+        ),
+        money: money,
+      ),
       child: const DeskiloApp(),
     ),
   );
@@ -34,6 +41,34 @@ Future<FakeMoneyRepository> pumpConfig(
 }
 
 void main() {
+  testWidgets(
+      'with onlinePayments OFF the /payment-config deep link bounces to /plan',
+      (tester) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1600));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      ProviderScope(
+        // Owner, but the feature is off → the route guard must redirect even
+        // though the menu tile is already hidden (dual-layer gating).
+        overrides: standardTestOverrides(
+          workspace: FakeWorkspaceRepository.withWorkspace(
+            featureFlags: const {'onlinePayments': false},
+          ),
+          money: FakeMoneyRepository(),
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final context = tester.element(find.byType(Scaffold).first);
+    GoRouter.of(context).push('/payment-config');
+    await tester.pumpAndSettle();
+
+    // Bounced away — the config screen never mounts.
+    expect(find.text('Online payments'), findsNothing);
+    expect(find.byKey(const ValueKey('pay-config-paypal')), findsNothing);
+  });
+
   testWidgets('the three providers render, each with a not-configured chip',
       (tester) async {
     await pumpConfig(tester);
