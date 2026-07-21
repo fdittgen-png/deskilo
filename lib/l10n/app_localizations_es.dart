@@ -964,6 +964,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get kioskTapHint => 'Toca un asiento para registrarte';
 
   @override
+  String get badgeSavePdf => 'Guardar como PDF';
+
+  @override
   String get languageTitle => 'Idioma';
 
   @override
@@ -1491,6 +1494,12 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get reservationLimitError =>
       'Límite de reservas alcanzado — ya tienes el máximo de reservas abiertas.';
+
+  @override
+  String get memberPause => 'Pausar la membresía';
+
+  @override
+  String get memberReactivate => 'Reactivar la membresía';
 
   @override
   String get reserveMonthView => 'Mes';

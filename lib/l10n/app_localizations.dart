@@ -1832,6 +1832,12 @@ abstract class AppLocalizations {
   /// **'Tap a seat to check in'**
   String get kioskTapHint;
 
+  /// Badge dialog action: download the one-time QR as a printable badge card PDF
+  ///
+  /// In en, this message translates to:
+  /// **'Save as PDF'**
+  String get badgeSavePdf;
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:
@@ -2785,6 +2791,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reservation limit reached — you already hold the maximum number of open reservations.'**
   String get reservationLimitError;
+
+  /// Member sheet action: pause an active membership (formerly a hidden long-press)
+  ///
+  /// In en, this message translates to:
+  /// **'Pause membership'**
+  String get memberPause;
+
+  /// Member sheet action: reactivate a paused membership
+  ///
+  /// In en, this message translates to:
+  /// **'Reactivate membership'**
+  String get memberReactivate;
 
   /// Reserve hub view segment: month availability calendar (#7)
   ///

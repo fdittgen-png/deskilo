@@ -21,5 +21,6 @@
   "kioskBadgeConfirm": "Conferma",
   "kioskBadgeRejected": "Badge non riconosciuto.",
   "kioskDone": "Fatto — è tutto a posto.",
-  "kioskTapHint": "Tocca un posto per fare check-in"
+  "kioskTapHint": "Tocca un posto per fare check-in",
+  "badgeSavePdf": "Salva come PDF"
 }

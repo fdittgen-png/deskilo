@@ -745,54 +745,84 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 onPayOnline: _payOnline,
               ),
             const SizedBox(height: 8),
+            // Primary action stays full-width; the secondary ones share a
+            // two-column grid (UX pass — the old five-deep button stack
+            // pushed the bill off screen).
             FilledButton.icon(
               onPressed: () => _recordPaymentSheet(currency),
               icon: const Icon(Icons.payments_outlined),
               label: Text(l10n?.moneyRecordPayment ?? 'Record a payment'),
             ),
             const SizedBox(height: 8),
-            OutlinedButton.icon(
-              onPressed: () => _submitExpenseSheet(currency),
-              icon: const Icon(Icons.receipt_long_outlined),
-              label: Text(l10n?.moneySubmitExpense ?? 'Submit an expense'),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final buttonWidth =
+                    (constraints.maxWidth - AppSpacing.sm) / 2;
+                Widget cell(Widget child) =>
+                    SizedBox(width: buttonWidth, child: child);
+                return Wrap(
+                  spacing: AppSpacing.sm,
+                  runSpacing: AppSpacing.sm,
+                  children: [
+                    cell(OutlinedButton.icon(
+                      onPressed: () => _submitExpenseSheet(currency),
+                      icon: const Icon(Icons.receipt_long_outlined),
+                      label: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          l10n?.moneySubmitExpense ?? 'Submit an expense',
+                        ),
+                      ),
+                    )),
+                    cell(OutlinedButton.icon(
+                      key: const ValueKey('quota-request-button'),
+                      onPressed: _requestQuotaSheet,
+                      icon: const Icon(Icons.hourglass_top_outlined),
+                      label: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          l10n?.quotaRequestButton ?? 'Request extra half-days',
+                        ),
+                      ),
+                    )),
+                    // Buy-a-package entry point (0042): only for members
+                    // the owner put on the package plan.
+                    if (member?.overagePolicy == OveragePolicy.package)
+                      cell(FilledButton.tonalIcon(
+                        key: const ValueKey('buy-package-button'),
+                        onPressed: () => _buyPackageSheet(currency),
+                        icon: const Icon(Icons.shopping_bag_outlined),
+                        label: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            l10n?.buyPackageButton ?? 'Buy a package',
+                          ),
+                        ),
+                      )),
+                    // Consumption follows the services feature (#146).
+                    if (features.contains(WorkspaceFeature.services))
+                      cell(OutlinedButton.icon(
+                        onPressed: () {
+                          final me = ref.read(myMemberProvider).value;
+                          if (me == null) return;
+                          showConsumptionSheet(
+                            context,
+                            ref,
+                            subjectMemberId: me.id,
+                          );
+                        },
+                        icon: const Icon(Icons.room_service_outlined),
+                        label: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            l10n?.consumptionAdd ?? 'Add consumption',
+                          ),
+                        ),
+                      )),
+                  ],
+                );
+              },
             ),
-            const SizedBox(height: 8),
-            OutlinedButton.icon(
-              key: const ValueKey('quota-request-button'),
-              onPressed: _requestQuotaSheet,
-              icon: const Icon(Icons.hourglass_top_outlined),
-              label: Text(
-                l10n?.quotaRequestButton ?? 'Request extra half-days',
-              ),
-            ),
-            // Buy-a-package entry point (0042): only for members the owner
-            // put on the package plan.
-            if (member?.overagePolicy == OveragePolicy.package) ...[
-              const SizedBox(height: 8),
-              FilledButton.tonalIcon(
-                key: const ValueKey('buy-package-button'),
-                onPressed: () => _buyPackageSheet(currency),
-                icon: const Icon(Icons.shopping_bag_outlined),
-                label: Text(l10n?.buyPackageButton ?? 'Buy a package'),
-              ),
-            ],
-            // Consumption entry points follow the services feature (#146).
-            if (features.contains(WorkspaceFeature.services)) ...[
-              const SizedBox(height: 8),
-              OutlinedButton.icon(
-                onPressed: () {
-                  final me = ref.read(myMemberProvider).value;
-                  if (me == null) return;
-                  showConsumptionSheet(
-                    context,
-                    ref,
-                    subjectMemberId: me.id,
-                  );
-                },
-                icon: const Icon(Icons.room_service_outlined),
-                label: Text(l10n?.consumptionAdd ?? 'Add consumption'),
-              ),
-            ],
           ],
         ),
       AsyncError() => Center(
