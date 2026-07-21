@@ -16,6 +16,7 @@ import '../features/money/presentation/screens/money_screen.dart';
 import '../features/money/presentation/screens/services_screen.dart';
 import '../features/plan/presentation/screens/accessories_screen.dart';
 import '../features/plan/presentation/screens/plan_screen.dart';
+import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
@@ -193,6 +194,12 @@ GoRouter router(Ref ref) {
         // available to every member.
         path: '/developer',
         builder: (context, state) => const DeveloperScreen(),
+      ),
+      GoRoute(
+        // In-app help: the bundled wiki user guide — every member,
+        // fully offline, no guard.
+        path: '/help',
+        builder: (context, state) => const HelpScreen(),
       ),
       GoRoute(
         // Events feed (#230): moved off the bottom bar — the app-bar bell

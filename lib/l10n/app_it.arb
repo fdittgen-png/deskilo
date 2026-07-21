@@ -286,6 +286,8 @@
   "featureOnlinePaymentsDesc": "Consenti ai membri di pagare la fattura online (PayPal). Richiede la configurazione del fornitore di pagamento sul server.",
   "featureNfcBadges": "Badge RFID / NFC",
   "featureNfcBadgesDesc": "I membri fanno check-in a un chiosco avvicinando una tessera RFID/NFC. Richiede un dispositivo Android con NFC.",
+  "helpTitle": "Aiuto",
+  "helpContents": "Indice",
   "memberKioskLabel": "Chiosco",
   "memberMakeKiosk": "Trasforma in chiosco",
   "memberUnmakeKiosk": "Riporta il chiosco a membro",

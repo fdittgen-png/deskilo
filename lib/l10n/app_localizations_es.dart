@@ -956,6 +956,12 @@ class AppLocalizationsEs extends AppLocalizations {
       'Los miembros se registran en un quiosco acercando una tarjeta RFID/NFC. Requiere un dispositivo Android con NFC.';
 
   @override
+  String get helpTitle => 'Ayuda';
+
+  @override
+  String get helpContents => 'Índice';
+
+  @override
   String get memberKioskLabel => 'Quiosco';
 
   @override

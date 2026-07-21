@@ -951,6 +951,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'Members check in at a kiosk by tapping an RFID/NFC card. Needs an Android device with NFC.';
 
   @override
+  String get helpTitle => 'Help';
+
+  @override
+  String get helpContents => 'Contents';
+
+  @override
   String get memberKioskLabel => 'Kiosk';
 
   @override

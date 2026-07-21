@@ -959,6 +959,12 @@ class AppLocalizationsIt extends AppLocalizations {
       'I membri fanno check-in a un chiosco avvicinando una tessera RFID/NFC. Richiede un dispositivo Android con NFC.';
 
   @override
+  String get helpTitle => 'Aiuto';
+
+  @override
+  String get helpContents => 'Indice';
+
+  @override
   String get memberKioskLabel => 'Chiosco';
 
   @override

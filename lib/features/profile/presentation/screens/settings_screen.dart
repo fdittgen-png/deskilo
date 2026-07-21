@@ -228,6 +228,14 @@ class SettingsScreen extends ConsumerWidget {
               builder: (_) => const _StatusDialog(),
             ),
           ),
+          // In-app help: the wiki user guide bundled as an offline asset,
+          // in the app's language. Available to every member.
+          ListTile(
+            key: const ValueKey('settings-help'),
+            leading: const Icon(Icons.help_outline),
+            title: Text(l10n?.helpTitle ?? 'Help'),
+            onTap: () => context.push('/help'),
+          ),
           if (showAdminSection) ...[
             const Divider(),
             _SectionHeader(

@@ -286,6 +286,8 @@
   "featureOnlinePaymentsDesc": "Permettre aux membres de payer leur facture en ligne (PayPal). Nécessite la configuration du prestataire de paiement sur le serveur.",
   "featureNfcBadges": "Badges RFID / NFC",
   "featureNfcBadgesDesc": "Les membres pointent à une borne en approchant une carte RFID/NFC. Nécessite un appareil Android avec NFC.",
+  "helpTitle": "Aide",
+  "helpContents": "Sommaire",
   "memberKioskLabel": "Borne",
   "memberMakeKiosk": "Transformer en borne",
   "memberUnmakeKiosk": "Rétablir comme membre",

@@ -1820,6 +1820,18 @@ abstract class AppLocalizations {
   /// **'Members check in at a kiosk by tapping an RFID/NFC card. Needs an Android device with NFC.'**
   String get featureNfcBadgesDesc;
 
+  /// No description provided for @helpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get helpTitle;
+
+  /// No description provided for @helpContents.
+  ///
+  /// In en, this message translates to:
+  /// **'Contents'**
+  String get helpContents;
+
   /// Subtitle chip of a kiosk device account in the members list (0043)
   ///
   /// In en, this message translates to:
