@@ -9,7 +9,8 @@ DesKilo is a Flutter app backed by Supabase. The client is feature-first and ful
 | UI framework | Flutter (pinned stable), Material 3 via `flex_color_scheme` | One codebase for Android, iOS, macOS, Windows (ADR 0001) |
 | State | Riverpod 3 **with codegen** (`@riverpod` / `@Riverpod(keepAlive: true)`) | Compile-safe providers, no manual provider wiring (ADR 0001) |
 | Models | `freezed` immutable data classes | Value semantics, exhaustive `sealed` matching |
-| Routing | `go_router` with a `StatefulShellRoute` bottom-nav shell | Declarative redirects encode role/feature gating |
+| Routing | `go_router` with a `StatefulShellRoute` bottom-nav shell | Declarative redirects encode role/feature gating (see *Feature flags*) |
+| NFC | `nfc_manager` behind an injectable `NfcUidReader` seam | Card-UID reads for badges; Android-only, degrades gracefully |
 | Backend | **Supabase** — Auth, RLS Postgres, RPCs | Multi-user source of truth, self-hostable to keep the libre promise (ADR 0002) |
 | Local storage | Hive (encrypted) + `shared_preferences` | Offline read cache, active-workspace choice |
 | Networking | `supabase_flutter` (PostgREST + GoTrue); `dio` where raw HTTP is needed | |
@@ -60,11 +61,22 @@ Each feature keeps the same internal shape: `domain/` (freezed models + a pure-D
 - `workspace_admin_invites` — one secret **admin invite code** per workspace (0030), readable by owners only.
 - Floor plan: `levels` → `offices` → `desks` → `seats` (0003), seat blocking (0021), accessories (0022/0023).
 - Booking: `reservations` + conflict-checked RPCs (0005), booking rules & series (0006), availability/open weekdays/closures (0013), granularity incl. minute slots (0025/0032), half-day walk-up (0026), reservation moves (0033), quota enforcement + extra-half-day requests (0031).
-- Money: ledger/payments (0008), expenses (0009), service catalog & consumption (0014/0016), percentage subscriptions with fee bands (0015), payment method & instructions (0019/0020), accessory supplements (0024), per-member over-consumption policy (0041), day packages + self-serve buy (0042). Online payments are Edge-Function scaffolding (`supabase/functions/`, see `docs/design/payments-integration.md`).
+- Money: ledger/payments (0008), expenses (0009), service catalog & consumption (0014/0016), percentage subscriptions with fee bands (0015), payment method & instructions (0019/0020), accessory supplements (0024), per-member over-consumption policy (0041), day packages + self-serve buy (0042).
+- **Online payments — live** (0044/0045/0047/0048): `payment_intents` tracks each provider order; `payment_credentials` holds the per-workspace provider secrets in a **deny-all table** (RLS enabled, deliberately *zero* policies — only service-role Edge Functions and owner `SECURITY DEFINER` RPCs touch it, and secret *values* are never returned to any client, only key names via `payment_credentials_status`). Settlement goes through the idempotent `settle_online_payment` RPC keyed on `(provider, order_id)`. See *Online payments* below.
 - Events & confirmation protocol (0007), quorum validation (0017), solo-admin auto-respond (0011), validated role changes (0035).
 - Push endpoints (0012), feature flags (0018), XML floor-plan import/export (0027/0034), profile presence & WhatsApp (0028/0029/0033).
 - Plan visuals: level background photos (0036), resizable illustration images (0037), member avatars (0038), desk opacity (0040); owner-guarded workspace reset (0039).
 - Kiosk mode (0043): `members.is_kiosk`, hashed badge tokens (`member_badges`), and the stateless `kiosk_act` RPC that lets a wall tablet act *as* the badge's member without any session on the device.
+- RFID/NFC badges (0046): `member_badges.kind` (`qr` | `nfc`), `register_nfc_badge` stores the card UID as a SHA-256 hash; the kiosk feeds a tapped card's UID into the same `kiosk_act` path as a scanned QR.
+- Per-member reservation cap (0044): owners/admins set how many simultaneous open reservations a member may hold (never their own row), enforced server-side.
+
+### Online payments
+
+Four providers — **PayPal** (Orders v2), **Stripe** (Checkout), **Mollie** (Payments API), and **Wero** (offered *through* Mollie with `method=wero`) — behind one architecture:
+
+- `supabase/functions/create-payment-order` starts an order: it reads the workspace's `payment_credentials` row first and falls back to function env vars, records a `payment_intents` row, and returns the provider's approval URL. A `{action:'config'}` probe reports which providers are ready and which fields are missing (surfaced on the in-app developer screen).
+- One webhook function per provider family (`paypal-webhook`, `stripe-webhook`, `mollie-webhook`) runs with `verify_jwt` off — authenticity comes from **the provider's own signature verification** (PayPal verify-webhook-signature, Stripe signing secret, Mollie re-fetch). Each resolves the workspace from the intent, verifies, then settles via `settle_online_payment` (idempotent, so replays are harmless). The Mollie webhook matches intents of provider `mollie` *or* `wero`.
+- The client never sees a secret: the owner writes credentials through `set_payment_credentials` (blank field = keep existing), reads back only key *names* + non-secret fields (`return_url`, `env`), and can `clear_payment_provider`.
 
 ### Security model
 
@@ -79,6 +91,17 @@ Role-scoped invites (0030) follow the same philosophy: the role granted on join 
 ### Concurrency
 
 Walk-up check-in and reservation creation are **atomic RPCs** with conflict checks at confirmation time — availability is never decided against a possibly-stale client view (the #1 failure mode of booking systems).
+
+## Feature flags (per-workspace modules)
+
+`WorkspaceFeature` + `featureManifest` (`features/workspace/domain/workspace_feature.dart`) form a declarative registry: every feature has a `defaultOn` and its enum name is the jsonb key in `workspaces.feature_flags`. `resolveEnabledFeatures` starts from the defaults and applies boolean overrides, ignoring unknown keys so old and new clients coexist. Most features default **on**; `adminSeatBlocking`, `accessorySupplements`, and `onlinePayments` default **off** because they change money or permissions.
+
+**The gating rule: enable a feature and *all* of its surfaces appear; disable it and *none* remain.** Every feature-linked surface is gated at **two layers** with the same providers:
+
+1. the entry point (settings tile, tab, button) checks `enabledFeaturesSync.contains(feature)`, and
+2. the route guards with a `featureEnabled(...)` redirect in the router — so deep links and bookmarks bounce too.
+
+The router's `refreshListenable` watches `enabledFeaturesProvider`, so toggling a feature (or switching workspaces) re-evaluates every redirect immediately. The master **Features** screen is deliberately *not* feature-gated — it must always be reachable to switch a module back on.
 
 ## Invites & deep links
 

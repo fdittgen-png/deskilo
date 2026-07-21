@@ -2,6 +2,10 @@
 
 Everything a member, admin, or owner needs to use DesKilo. *Autres langues : [Français](Guide-utilisateur) · [Deutsch](Benutzerhandbuch) · [Español](Guia-de-usuario) · [Italiano](Guida-utente).*
 
+> The screenshots in this guide show the app in French — every screen exists identically in all five languages (English, Français, Deutsch, Español, Italiano); switch in **Settings → Language**.
+>
+> <img src="images/settings-language.jpg" width="200">
+
 ## 1. Getting started
 
 ### Create an account
@@ -88,14 +92,40 @@ The events feed is the audit trail of your workspace: reservations created/chang
 
 **Validation quorum:** for money matters and role changes the owner defines *who* must approve and *how many* approvals are needed. Unanswered requests expire after 7 days — nothing costly is ever granted silently.
 
+The owner tunes this per **domain** in **Settings → Validation rules**: payments, expenses, services, extra half-days, role changes, reservations, and adjustments each have their own rule (or inherit the default). A rule sets the number of required validations, *which* admins may validate (all, or named ones), and whether the owner must always sign off.
+
+<p><img src="images/validation-rules.jpg" width="240"> <img src="images/validation-rule-edit.jpg" width="240"></p>
+
+*Left: one rule per domain, inheriting from the default. Right: editing a rule — required validations, allowed validators, owner sign-off.*
+
 ## 7. For owners: the editor & settings
 
+All administration lives under **Settings → Administration**. One rule to know: **a feature's settings entry only appears while that feature is enabled** — switch *Online payments* off in **Features** and its configuration screen disappears with it (and comes back when you re-enable it). The **Features** entry itself is always there, so you can always switch a module back on.
+
+<p><img src="images/settings-administration.jpg" width="240"></p>
+
 - **Editor** (app bar): draw your space on a grid — add levels, outline offices, place desks, stamp seats (with orientation, chair type, and amenities), block seats for maintenance. Add a **background photo** per level and **illustration images** you can move and resize. Deleting anything with future reservations makes you resolve them first.
-- **Workspace ID & QR**: your role-bound invites (§2). You can replace the generated workspace ID with a memorable one (4–20 letters/digits).
-- **Availability**: open weekdays, closure days, and the booking granularity — half-days, full days, or a minute grid (15/30/60).
-- **Features**: switch whole modules on or off per workspace — calendar, events, money, services, PDF export, series booking, booking for others, push, seat blocking by admins, accessory supplements, **online payments**.
-- **Members & plans**: assign subscription percentages, set each member's **over-consumption policy** (§8), pause/exit members, request admin promotions/demotions, flag **kiosk devices**, and issue **badges** (§9).
-- **Billing**: fee bands pricing the percentage subscriptions, overage rates, the subscription levels members may pick — and **day packages** (a number of days for a price) for members on the package policy.
+- **Workspace ID & QR**: your role-bound invites (§2). You can replace the generated workspace ID with a memorable one (4–20 letters/digits), copy it, or share the QR as a PNG.
+- **Availability**: open weekdays, closure days, and the booking granularity — free start/end times, a minute grid (5/15/30/60), half-days, or full days only.
+- **Features**: switch whole modules on or off per workspace — calendar, events, money, services, PDF export, series booking, booking for others, push, seat blocking by admins, accessory supplements, **online payments**, **RFID/NFC badges**. Switching a module off removes *all* of its screens and buttons for every member.
+
+<p><img src="images/workspace-id-qr.jpg" width="220"> <img src="images/availability-granularity.jpg" width="220"> <img src="images/features-toggles-1.jpg" width="220"> <img src="images/features-toggles-2.jpg" width="220"></p>
+
+- **Members & plans**: tap a member to open their **management sheet** — add a service for them, set their subscription percentage, choose their **over-consumption policy** (§8), cap their **simultaneous reservations**, issue **badges** (§9), promote/demote admin, turn the account into a **kiosk device**, or pause the membership.
+
+<p><img src="images/member-management-sheet.jpg" width="220"> <img src="images/member-subscription.jpg" width="220"> <img src="images/member-reservation-limit.jpg" width="220"></p>
+
+*The management sheet, the subscription-percentage dialog, and the per-member reservation cap.*
+
+- **Billing**: fee bands pricing the percentage subscriptions, overage rates, the subscription levels members may pick (with an optional free negotiated value) — and **day packages** (a number of days for a price) for members on the package policy.
+- **Services** and **Accessories**: the catalogs behind §8 — owner-defined extras (lockers, printing…) and per-seat equipment with optional per-half-day supplements. Both are plain lists with a **+** button.
+
+<p><img src="images/billing-bands-levels-packages.jpg" width="220"> <img src="images/services-catalog.jpg" width="220"> <img src="images/services-new-service.jpg" width="220"> <img src="images/accessories-catalog.jpg" width="220"></p>
+
+*Billing (bands, levels, day packages) · the Services catalog and its create form · the Accessories catalog. An admin adds a service consumption for a member from the member's management sheet:*
+
+<p><img src="images/member-add-service.jpg" width="220"></p>
+
 - **Workspace settings**: name, country/currency, time zone, payment instructions (IBAN, PayPal.me, Wero, Lydia, Wise), the WhatsApp group link, **desk transparency**, exports — and the **danger zone**: a full **workspace reset** (deletes bookings, money, and the floor plan; keeps configuration and members) guarded by a typed *"I agree"*.
 - **Import/export**: the whole configuration travels as an **XML file** — back it up, template it, or migrate a self-hosted instance. A **configuration PDF** (members, plan, prices, features) can be generated too. Files are saved **locally on your device**.
 
@@ -109,9 +139,15 @@ Each community collects to its **own** provider account; the app never keeps the
    - **Credit card (Stripe)** — Secret key, Webhook signing secret, Return URL (Stripe → API keys / Webhooks).
    - **Mollie** — API key, Return URL (offers iDEAL, Bancontact, cards…).
    - **Wero (via Mollie)** — the same Mollie API key, with Wero enabled in your Mollie account.
-3. **Save** — a green *Configured* chip appears. Turn on the **Online payments** feature (Settings → Features), and members see **Pay online** on an outstanding bill.
+3. **Save** — a green *Configured* chip appears. Turn on the **Online payments** feature (Settings → Features), and members see **Pay online** on an outstanding bill. (The *Online payments* settings entry itself only shows while the feature is on.)
+
+<p><img src="images/payment-config-paypal-stripe.jpg" width="240"> <img src="images/payment-config-mollie-wero.jpg" width="240"></p>
 
 A saved secret is never shown again — leave its field blank to keep it, type to replace it, **Remove** to clear the provider. Fees are the provider's (typically ~1.5–3% per payment, no monthly fee); DesKilo adds nothing, and the manual bank-transfer/IBAN route stays free.
+
+If a payment doesn't start, turn on **Settings → Advanced → Developer mode** and open the **Developer** screen: the *payments* trace shows exactly which providers are configured and which fields are still missing.
+
+<p><img src="images/developer-payment-traces.jpg" width="240"></p>
 
 ### Setting up RFID / NFC badges (owners)
 
@@ -120,6 +156,10 @@ Physical cards let people check in with a tap — no phone needed.
 1. Open **Settings → RFID / NFC badges** (owner only). Switch **Enable NFC badge check-in** on, and read the **device status** line — you need an **Android** device with NFC on (iPads have no NFC).
 2. Give each member a card: **Members & plans → the member → Badges → Register card**, then hold their card to the device. Any card with a readable chip works (MIFARE, NTAG…).
 3. Use them at a **kiosk** (§9): the member taps the card to reserve or check in. Revoke a lost card from the same Badges dialog.
+
+<p><img src="images/nfc-config.jpg" width="240"> <img src="images/member-badges-dialog.jpg" width="240"></p>
+
+*The NFC configuration screen (workspace toggle + this device's NFC status) and a member's Badges dialog: revoke, register a card, or issue a new QR badge.*
 
 ## 8. Money (Money tab)
 

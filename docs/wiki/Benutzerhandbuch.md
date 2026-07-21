@@ -2,6 +2,10 @@
 
 Alles, was Mitglieder, Admins und Inhaberinnen brauchen, um DesKilo zu nutzen. *Andere Sprachen: [English](User-Guide) · [Français](Guide-utilisateur) · [Español](Guia-de-usuario) · [Italiano](Guida-utente).*
 
+> Die Screenshots in diesem Handbuch zeigen die App auf Französisch — jeder Bildschirm existiert identisch in allen fünf Sprachen (English, Français, Deutsch, Español, Italiano); umschalten unter **Einstellungen → Sprache**.
+>
+> <img src="images/settings-language.jpg" width="200">
+
 ## 1. Erste Schritte
 
 ### Konto anlegen
@@ -88,14 +92,40 @@ Der Ereignis-Feed ist die Prüfspur deines Workspace: Reservierungen erstellt/ge
 
 **Validierungsquorum:** Für Geldfragen und Rollenwechsel legt die Inhaberin fest, *wer* zustimmen muss und *wie viele* Zustimmungen nötig sind. Unbeantwortete Anfragen verfallen nach 7 Tagen — nichts Kostspieliges wird je stillschweigend gewährt.
 
+Die Inhaberin stellt das pro **Bereich** ein, unter **Einstellungen → Validierungsregeln**: Zahlungen, Ausgaben, Services, zusätzliche Halbtage, Rollenwechsel, Reservierungen und Anpassungen haben je eine eigene Regel (oder erben die Standardregel). Eine Regel legt die Zahl der nötigen Bestätigungen fest, *welche* Admins bestätigen dürfen (alle oder namentlich benannte) und ob die Inhaberin immer mitzeichnen muss.
+
+<p><img src="images/validation-rules.jpg" width="240"> <img src="images/validation-rule-edit.jpg" width="240"></p>
+
+*Links: eine Regel pro Bereich, mit Vererbung von der Standardregel. Rechts: Bearbeiten einer Regel — nötige Bestätigungen, zugelassene Validierende, Mitzeichnung der Inhaberin.*
+
 ## 7. Für Inhaberinnen: Editor & Einstellungen
 
+Die gesamte Administration liegt unter **Einstellungen → Administration**. Eine Regel muss man kennen: **Der Einstellungs-Eintrag einer Funktion erscheint nur, solange die Funktion aktiviert ist** — schalte *Online-Zahlungen* unter **Funktionen** aus und ihr Konfigurationsbildschirm verschwindet mit (und kommt beim Wiedereinschalten zurück). Der Eintrag **Funktionen** selbst ist immer da, sodass sich ein Modul jederzeit wieder einschalten lässt.
+
+<p><img src="images/settings-administration.jpg" width="240"></p>
+
 - **Editor** (App-Leiste): Zeichne deinen Raum auf einem Raster — Etagen, Büros, Tische, Plätze (mit Ausrichtung, Stuhltyp und Ausstattung), Platzsperren für Wartung. Füge pro Etage ein **Hintergrundfoto** und verschieb- und skalierbare **Illustrationsbilder** hinzu. Löschen mit künftigen Reservierungen erzwingt erst deren Auflösung.
-- **Workspace-ID & QR**: deine rollengebundenen Einladungen (§2). Die generierte ID lässt sich durch eine merkbare ersetzen (4–20 Buchstaben/Ziffern).
-- **Verfügbarkeit**: Öffnungstage, Schließtage und die Granularität — Halbtage, ganze Tage oder Minutenraster (15/30/60).
-- **Funktionen**: Ganze Module pro Workspace ein-/ausschalten — Kalender, Ereignisse, Geld, Services, PDF-Export, Serienbuchung, Buchen für andere, Push, Platzsperren durch Admins, Zubehör-Aufpreise, **Online-Zahlungen**.
-- **Mitglieder & Tarife**: Abo-Prozente zuweisen, je Mitglied die **Mehrverbrauchs-Politik** (§8) setzen, pausieren/austragen, Admin-Beförderungen anstoßen, **Kiosk-Geräte** markieren und **Badges** ausstellen (§9).
-- **Abrechnung**: Gebührenbänder für die Prozent-Abos, Mehrverbrauchssätze, wählbare Abo-Stufen — und **Tagespakete** (Tage zum Festpreis) für Mitglieder mit Paket-Politik.
+- **Workspace-ID & QR**: deine rollengebundenen Einladungen (§2). Die generierte ID lässt sich durch eine merkbare ersetzen (4–20 Buchstaben/Ziffern), kopieren, und der QR als PNG teilen.
+- **Verfügbarkeit**: Öffnungstage, Schließtage und die Granularität — freie Start-/Endzeiten, ein Minutenraster (5/15/30/60), Halbtage oder nur ganze Tage.
+- **Funktionen**: Ganze Module pro Workspace ein-/ausschalten — Kalender, Ereignisse, Geld, Services, PDF-Export, Serienbuchung, Buchen für andere, Push, Platzsperren durch Admins, Zubehör-Aufpreise, **Online-Zahlungen**, **RFID-/NFC-Badges**. Ein ausgeschaltetes Modul entfernt *alle* seine Bildschirme und Buttons für jedes Mitglied.
+
+<p><img src="images/workspace-id-qr.jpg" width="220"> <img src="images/availability-granularity.jpg" width="220"> <img src="images/features-toggles-1.jpg" width="220"> <img src="images/features-toggles-2.jpg" width="220"></p>
+
+- **Mitglieder & Tarife**: Tippe ein Mitglied an, um sein **Verwaltungsblatt** zu öffnen — einen Service für es hinzufügen, den Abo-Prozentsatz setzen, die **Mehrverbrauchs-Politik** (§8) wählen, die **gleichzeitigen Reservierungen** deckeln, **Badges** ausstellen (§9), zum Admin befördern/degradieren, das Konto zum **Kiosk-Gerät** machen oder die Mitgliedschaft pausieren.
+
+<p><img src="images/member-management-sheet.jpg" width="220"> <img src="images/member-subscription.jpg" width="220"> <img src="images/member-reservation-limit.jpg" width="220"></p>
+
+*Das Verwaltungsblatt, der Dialog für den Abo-Prozentsatz und die Reservierungsobergrenze pro Mitglied.*
+
+- **Abrechnung**: Gebührenbänder für die Prozent-Abos, Mehrverbrauchssätze, wählbare Abo-Stufen (mit optionalem frei verhandeltem Wert) — und **Tagespakete** (Tage zum Festpreis) für Mitglieder mit Paket-Politik.
+- **Services** und **Zubehör**: die Kataloge hinter §8 — von der Inhaberin definierte Extras (Schließfächer, Druck…) und Platz-Ausstattung mit optionalem Aufpreis je Halbtag. Beides sind schlichte Listen mit einem **+**-Button.
+
+<p><img src="images/billing-bands-levels-packages.jpg" width="220"> <img src="images/services-catalog.jpg" width="220"> <img src="images/services-new-service.jpg" width="220"> <img src="images/accessories-catalog.jpg" width="220"></p>
+
+*Abrechnung (Bänder, Stufen, Tagespakete) · der Services-Katalog und sein Anlegeformular · der Zubehör-Katalog. Ein Admin erfasst einen Service-Konsum für ein Mitglied über dessen Verwaltungsblatt:*
+
+<p><img src="images/member-add-service.jpg" width="220"></p>
+
 - **Workspace-Einstellungen**: Name, Land/Währung, Zeitzone, Zahlungshinweise (IBAN, PayPal.me, Wero, Lydia, Wise), WhatsApp-Gruppenlink, **Tisch-Transparenz**, Exporte — und die **Gefahrenzone**: ein kompletter **Workspace-Reset** (löscht Buchungen, Geld und Grundriss; behält Konfiguration und Mitglieder), abgesichert durch das getippte „I agree".
 - **Import/Export**: Die gesamte Konfiguration reist als **XML-Datei** — Backup, Vorlage oder Migration einer selbst gehosteten Instanz. Auch ein **Konfigurations-PDF** (Mitglieder, Plan, Preise, Funktionen) lässt sich erzeugen. Dateien werden **lokal auf deinem Gerät** gespeichert.
 
@@ -109,9 +139,15 @@ Jede Community kassiert auf ihr **eigenes** Anbieterkonto; die App speichert die
    - **Kreditkarte (Stripe)** — Secret Key, Webhook-Signaturgeheimnis, Rückkehr-URL (Stripe → API-Keys / Webhooks).
    - **Mollie** — API-Schlüssel, Rückkehr-URL (bietet iDEAL, Bancontact, Karten…).
    - **Wero (über Mollie)** — derselbe Mollie-API-Schlüssel, mit Wero im Mollie-Konto aktiviert.
-3. **Speichern** — ein grünes *Eingerichtet* erscheint. Aktiviere die Funktion **Online-Zahlungen** (Einstellungen → Funktionen), dann sehen Mitglieder **Online bezahlen** auf einer offenen Rechnung.
+3. **Speichern** — ein grünes *Eingerichtet* erscheint. Aktiviere die Funktion **Online-Zahlungen** (Einstellungen → Funktionen), dann sehen Mitglieder **Online bezahlen** auf einer offenen Rechnung. (Der Einstellungs-Eintrag *Online-Zahlungen* selbst erscheint nur, solange die Funktion eingeschaltet ist.)
+
+<p><img src="images/payment-config-paypal-stripe.jpg" width="240"> <img src="images/payment-config-mollie-wero.jpg" width="240"></p>
 
 Ein gespeichertes Geheimnis wird nie wieder gezeigt — Feld leer lassen zum Behalten, tippen zum Ersetzen, **Entfernen** löscht den Anbieter. Die Gebühren sind die des Anbieters (typisch ~1,5–3 % pro Zahlung, keine Monatsgebühr); DesKilo kommt nichts hinzu, und der manuelle Überweisungs-/IBAN-Weg bleibt kostenlos.
+
+Startet eine Zahlung nicht, aktiviere **Einstellungen → Erweitert → Entwicklermodus** und öffne den **Entwickler**-Bildschirm: die *payments*-Spur zeigt genau, welche Anbieter eingerichtet sind und welche Felder noch fehlen.
+
+<p><img src="images/developer-payment-traces.jpg" width="240"></p>
 
 ### RFID-/NFC-Badges einrichten (Inhaberinnen)
 
@@ -120,6 +156,10 @@ Physische Karten ermöglichen Check-in per Antippen — ohne Handy.
 1. Öffne **Einstellungen → RFID-/NFC-Badges** (nur Inhaberin). Schalte **NFC-Badge-Check-in aktivieren** ein und lies die **Gerätestatus**-Zeile — nötig ist ein **Android**-Gerät mit aktiviertem NFC (iPads haben kein NFC).
 2. Gib jedem Mitglied eine Karte: **Mitglieder & Tarife → das Mitglied → Badges → Karte registrieren**, dann die Karte ans Gerät halten. Jede Karte mit lesbarem Chip passt (MIFARE, NTAG…).
 3. Nutze sie an einem **Kiosk** (§9): das Mitglied tippt die Karte an, um zu reservieren oder einzuchecken. Eine verlorene Karte im selben Badges-Dialog widerrufen.
+
+<p><img src="images/nfc-config.jpg" width="240"> <img src="images/member-badges-dialog.jpg" width="240"></p>
+
+*Der NFC-Konfigurationsbildschirm (Workspace-Schalter + NFC-Status dieses Geräts) und der Badges-Dialog eines Mitglieds: widerrufen, Karte registrieren oder einen neuen QR-Badge ausstellen.*
 
 ## 8. Geld (Tab Geld)
 
