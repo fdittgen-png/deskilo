@@ -12,7 +12,7 @@
 
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 
-type Provider = "paypal" | "stripe" | "mollie";
+type Provider = "paypal" | "stripe" | "mollie" | "wero";
 
 /** Config field → env-var fallback, per provider. */
 const FIELD_ENV: Record<Provider, Record<string, string>> = {
@@ -32,6 +32,11 @@ const FIELD_ENV: Record<Provider, Record<string, string>> = {
     api_key: "MOLLIE_API_KEY",
     return_url: "PAYMENT_RETURN_URL",
   },
+  // Wero rides Mollie (same API key), a distinct provider for the chooser.
+  wero: {
+    api_key: "MOLLIE_API_KEY",
+    return_url: "PAYMENT_RETURN_URL",
+  },
 };
 
 /** Fields a provider must have before it can be offered. */
@@ -39,6 +44,7 @@ const REQUIRED: Record<Provider, string[]> = {
   paypal: ["client_id", "secret", "return_url"],
   stripe: ["secret_key", "return_url"],
   mollie: ["api_key", "return_url"],
+  wero: ["api_key", "return_url"],
 };
 
 const json = (body: unknown, status = 200) =>
@@ -166,6 +172,7 @@ async function createMolliePayment(
   amountCents: number,
   currency: string,
   reference: string,
+  method?: string,
 ): Promise<{ orderId: string; approveUrl: string }> {
   const res = await fetch("https://api.mollie.com/v2/payments", {
     method: "POST",
@@ -178,6 +185,7 @@ async function createMolliePayment(
       description: `DesKilo ${reference}`,
       redirectUrl: cfg.return_url,
       metadata: { reference },
+      ...(method ? { method } : {}),
     }),
   });
   if (!res.ok) {
@@ -267,6 +275,8 @@ Deno.serve(async (req: Request): Promise<Response> => {
       ? await createPaypalOrder(cfg, amountCents, currency, reference)
       : provider === "stripe"
       ? await createStripeSession(cfg, amountCents, currency, reference)
+      : provider === "wero"
+      ? await createMolliePayment(cfg, amountCents, currency, reference, "wero")
       : await createMolliePayment(cfg, amountCents, currency, reference);
 
     const { error: insertError } = await admin.from("payment_intents").insert({

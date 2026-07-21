@@ -452,6 +452,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get payFieldApiKey => 'Chiave API';
 
   @override
+  String get paymentProviderWero => 'Wero (tramite Mollie)';
+
+  @override
   String get calendarMineTab => 'Le mie';
 
   @override

@@ -51,5 +51,6 @@
   "payFieldReturnUrl": "URL de retour",
   "payFieldSecretKey": "Clé secrète",
   "payFieldWebhookSecret": "Secret de signature du webhook",
-  "payFieldApiKey": "Clé API"
+  "payFieldApiKey": "Clé API",
+  "paymentProviderWero": "Wero (via Mollie)"
 }

@@ -134,6 +134,7 @@
   "payFieldSecretKey": "Clave secreta",
   "payFieldWebhookSecret": "Secreto de firma del webhook",
   "payFieldApiKey": "Clave API",
+  "paymentProviderWero": "Wero (con Mollie)",
   "calendarMineTab": "Mías",
   "calendarEveryoneTab": "Todos",
   "calendarNoReservations": "No hay reservas ese día.",

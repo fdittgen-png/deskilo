@@ -6,7 +6,8 @@
 enum PaymentProvider {
   paypal('paypal'),
   stripe('stripe'),
-  mollie('mollie');
+  mollie('mollie'),
+  wero('wero');
 
   const PaymentProvider(this.wireName);
 
@@ -112,6 +113,12 @@ const Map<PaymentProvider, List<PaymentField>> paymentProviderFields = {
     PaymentField(key: 'return_url', secret: false),
   ],
   PaymentProvider.mollie: [
+    PaymentField(key: 'api_key', secret: true),
+    PaymentField(key: 'return_url', secret: false),
+  ],
+  // Wero rides Mollie: same credentials (a Mollie API key with Wero
+  // enabled) + return URL.
+  PaymentProvider.wero: [
     PaymentField(key: 'api_key', secret: true),
     PaymentField(key: 'return_url', secret: false),
   ],

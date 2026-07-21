@@ -504,6 +504,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           l10n?.paymentProviderStripe ?? 'Credit card (Stripe)',
         PaymentProvider.mollie =>
           l10n?.paymentProviderMollie ?? 'Mollie — iDEAL, Bancontact…',
+        PaymentProvider.wero =>
+          l10n?.paymentProviderWero ?? 'Wero (via Mollie)',
       };
 
   /// Owner/admin diagnostics when online payments cannot run: names the
