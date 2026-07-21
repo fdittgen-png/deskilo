@@ -2365,6 +2365,21 @@
   "@servicesActive": {
     "description": "Label of the activate/deactivate switch in the edit sheet"
   },
+  "authContinueWith": "or continue with",
+  "authSocialUnavailable": "{provider} sign-in is not available yet — the server has not enabled it.",
+  "@authSocialUnavailable": {
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "linkedAccountsTitle": "Linked accounts",
+  "linkedAccountsIntro": "Sign into this account with any of these. Add Google, Microsoft, Apple, or Facebook to sign in without a password.",
+  "linkedAccountsLink": "Link",
+  "linkedAccountsUnlink": "Unlink",
+  "linkedAccountsLinked": "Linked",
+  "linkedAccountsLinkStarted": "Continue in the browser to finish linking.",
   "themeTitle": "Theme",
   "@themeTitle": {
     "description": "Settings entry and dialog title for the in-app theme selection"

@@ -3332,6 +3332,54 @@ abstract class AppLocalizations {
   /// **'Active'**
   String get servicesActive;
 
+  /// No description provided for @authContinueWith.
+  ///
+  /// In en, this message translates to:
+  /// **'or continue with'**
+  String get authContinueWith;
+
+  /// No description provided for @authSocialUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} sign-in is not available yet — the server has not enabled it.'**
+  String authSocialUnavailable(String provider);
+
+  /// No description provided for @linkedAccountsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked accounts'**
+  String get linkedAccountsTitle;
+
+  /// No description provided for @linkedAccountsIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign into this account with any of these. Add Google, Microsoft, Apple, or Facebook to sign in without a password.'**
+  String get linkedAccountsIntro;
+
+  /// No description provided for @linkedAccountsLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Link'**
+  String get linkedAccountsLink;
+
+  /// No description provided for @linkedAccountsUnlink.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlink'**
+  String get linkedAccountsUnlink;
+
+  /// No description provided for @linkedAccountsLinked.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked'**
+  String get linkedAccountsLinked;
+
+  /// No description provided for @linkedAccountsLinkStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue in the browser to finish linking.'**
+  String get linkedAccountsLinkStarted;
+
   /// Settings entry and dialog title for the in-app theme selection
   ///
   /// In en, this message translates to:

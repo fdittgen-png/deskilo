@@ -25,6 +25,11 @@ Future<FakeWorkspaceRepository> pumpMembers(
   FakeNfcUidReader? nfc,
   Map<String, dynamic> featureFlags = const {},
 }) async {
+  // The settings list grew (Help + Linked accounts, 0051): keep the
+  // Members & plans entry on-stage in the lazy list.
+  tester.view.physicalSize = const Size(800, 2200);
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
   final workspace =
       FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags)
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
@@ -346,6 +351,9 @@ void main() {
           status: MemberStatus.active,
         ),
       );
+    tester.view.physicalSize = const Size(800, 2200);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
     await tester.pumpWidget(
       ProviderScope(
         overrides: standardTestOverrides(workspace: workspace),
@@ -455,6 +463,9 @@ void main() {
           status: MemberStatus.active,
         ),
       );
+    tester.view.physicalSize = const Size(800, 2200);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
     await tester.pumpWidget(
       ProviderScope(
         overrides: standardTestOverrides(workspace: workspace),

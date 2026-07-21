@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:io' show Platform;
+
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/auth_repository.dart';
+import '../domain/social_provider.dart';
 
 class SupabaseAuthRepository implements AuthRepository {
   SupabaseAuthRepository(this._client);
@@ -60,5 +64,57 @@ class SupabaseAuthRepository implements AuthRepository {
       token: code.trim(),
     );
     await _client.auth.updateUser(UserAttributes(password: newPassword));
+  }
+
+  /// Brand → Supabase provider; Microsoft is 'azure' on the server side.
+  static OAuthProvider _oauth(SocialProvider provider) => switch (provider) {
+        SocialProvider.google => OAuthProvider.google,
+        SocialProvider.microsoft => OAuthProvider.azure,
+        SocialProvider.apple => OAuthProvider.apple,
+        SocialProvider.facebook => OAuthProvider.facebook,
+      };
+
+  /// Mobile returns into the app over the deskilo:// scheme (registered
+  /// in both native manifests); elsewhere Supabase falls back to the
+  /// project's Site URL.
+  static String? get _redirect => !kIsWeb && (Platform.isAndroid || Platform.isIOS)
+      ? 'deskilo://auth-callback'
+      : null;
+
+  @override
+  Future<void> signInWithSocial(SocialProvider provider) async {
+    await _client.auth.signInWithOAuth(
+      _oauth(provider),
+      redirectTo: _redirect,
+      authScreenLaunchMode: LaunchMode.externalApplication,
+    );
+  }
+
+  @override
+  Future<List<LinkedIdentity>> linkedIdentities() async {
+    final identities = await _client.auth.getUserIdentities();
+    return [
+      for (final i in identities)
+        (id: i.identityId, provider: i.provider),
+    ];
+  }
+
+  @override
+  Future<void> linkSocial(SocialProvider provider) async {
+    await _client.auth.linkIdentity(
+      _oauth(provider),
+      redirectTo: _redirect,
+      authScreenLaunchMode: LaunchMode.externalApplication,
+    );
+  }
+
+  @override
+  Future<void> unlinkIdentity(LinkedIdentity identity) async {
+    final identities = await _client.auth.getUserIdentities();
+    final match = identities
+        .where((i) => i.identityId == identity.id)
+        .firstOrNull;
+    if (match == null) return;
+    await _client.auth.unlinkIdentity(match);
   }
 }

@@ -1793,6 +1793,34 @@ class AppLocalizationsIt extends AppLocalizations {
   String get servicesActive => 'Attivo';
 
   @override
+  String get authContinueWith => 'oppure continua con';
+
+  @override
+  String authSocialUnavailable(String provider) {
+    return 'L\'accesso con $provider non è ancora disponibile — il server non lo ha abilitato.';
+  }
+
+  @override
+  String get linkedAccountsTitle => 'Account collegati';
+
+  @override
+  String get linkedAccountsIntro =>
+      'Accedi a questo account con uno qualsiasi di essi. Aggiungi Google, Microsoft, Apple o Facebook per accedere senza password.';
+
+  @override
+  String get linkedAccountsLink => 'Collega';
+
+  @override
+  String get linkedAccountsUnlink => 'Scollega';
+
+  @override
+  String get linkedAccountsLinked => 'Collegato';
+
+  @override
+  String get linkedAccountsLinkStarted =>
+      'Continua nel browser per completare il collegamento.';
+
+  @override
   String get themeTitle => 'Tema';
 
   @override

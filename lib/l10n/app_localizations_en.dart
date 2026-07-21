@@ -1777,6 +1777,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get servicesActive => 'Active';
 
   @override
+  String get authContinueWith => 'or continue with';
+
+  @override
+  String authSocialUnavailable(String provider) {
+    return '$provider sign-in is not available yet — the server has not enabled it.';
+  }
+
+  @override
+  String get linkedAccountsTitle => 'Linked accounts';
+
+  @override
+  String get linkedAccountsIntro =>
+      'Sign into this account with any of these. Add Google, Microsoft, Apple, or Facebook to sign in without a password.';
+
+  @override
+  String get linkedAccountsLink => 'Link';
+
+  @override
+  String get linkedAccountsUnlink => 'Unlink';
+
+  @override
+  String get linkedAccountsLinked => 'Linked';
+
+  @override
+  String get linkedAccountsLinkStarted =>
+      'Continue in the browser to finish linking.';
+
+  @override
   String get themeTitle => 'Theme';
 
   @override
