@@ -49,6 +49,11 @@ sealed class Workspace with _$Workspace {
     /// makes desks translucent so a level's background photo shows through.
     /// Clamped 20..100 by the column check.
     @Default(100) int deskOpacity,
+
+    /// Owner-configured invitation message template (0049) with {tag}
+    /// placeholders (see [InvitationTags]); '' = use the app's localized
+    /// default message. Max length enforced by the column check.
+    @Default('') String invitationTemplate,
   }) = _Workspace;
 
   /// Desk fill opacity as a 0..1 fraction for the painter.

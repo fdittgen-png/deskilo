@@ -1328,6 +1328,45 @@
   "featureAdminLevelAssignDesc": "Admins assign level reservations to members. The owner always can.",
   "helpTitle": "Help",
   "helpContents": "Contents",
+  "inviteSectionTitle": "Invite someone",
+  "inviteViaWhatsapp": "WhatsApp",
+  "inviteViaSms": "SMS",
+  "inviteViaShare": "Share…",
+  "inviteFirstNameLabel": "First name (optional)",
+  "inviteLastNameLabel": "Last name (optional)",
+  "invitePhoneLabel": "Phone (optional, with country code)",
+  "inviteLanguageLabel": "Message language",
+  "inviteSendFailed": "Could not open the app for sending. The message was copied instead.",
+  "invitationDefaultTemplate": "Hi{firstName}! You're invited to join our coworking space \"{workspaceName}\" on DesKilo.\n\n1. Download the app:\n{downloadUrl}\n\n2. Open it, create your account (e-mail + password) and sign in.\n\n3. Choose \"Join a workspace\" and enter the workspace ID: {workspaceId}\n(or scan the invite QR on site — {inviteLink})\n\nSee you soon at {workspaceName}!",
+  "@invitationDefaultTemplate": {
+    "description": "Default invitation message; firstName is '' or ' Name'",
+    "placeholders": {
+      "firstName": {
+        "type": "String"
+      },
+      "workspaceName": {
+        "type": "String"
+      },
+      "workspaceId": {
+        "type": "String"
+      },
+      "downloadUrl": {
+        "type": "String"
+      },
+      "inviteLink": {
+        "type": "String"
+      }
+    }
+  },
+  "invitationTemplateTitle": "Invitation message",
+  "invitationTemplateHelp": "Sent when you invite someone via WhatsApp, SMS, or share. Leave empty to use the built-in message in the chosen language. Available tags:",
+  "@invitationTemplateHelp": {
+    "description": "Help above the tag list"
+  },
+  "invitationTemplateHint": "Custom invitation message using the tags above…",
+  "@invitationTemplateHint": {
+    "description": "Hint in the template editor"
+  },
   "memberKioskLabel": "Kiosk",
   "@memberKioskLabel": {
     "description": "Subtitle chip of a kiosk device account in the members list (0043)"

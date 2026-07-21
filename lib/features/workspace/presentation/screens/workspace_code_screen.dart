@@ -13,6 +13,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/invite_uri.dart';
 import '../../domain/qr_png.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/invite_sheet.dart';
 
 /// Owner surface (#88): role-scoped invites. Every invite is bound to a
 /// role — the member QR carries the workspace ID, the admin QR its own
@@ -244,6 +245,22 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                 label: Text(
                   l10n?.workspaceCodeSharePng ?? 'Share as PNG',
                 ),
+              ),
+              const SizedBox(height: 12),
+              // Personal invitation (0049): a ready-made explanation of
+              // download → account → join, over WhatsApp, SMS, or any
+              // share target, in the invitee's language.
+              FilledButton.tonalIcon(
+                key: const ValueKey('invite-someone'),
+                onPressed: () => showInviteSheet(
+                  context,
+                  workspace: workspace,
+                  code: code,
+                  role:
+                      isAdminInvite ? InviteRole.admin : InviteRole.user,
+                ),
+                icon: const Icon(Icons.person_add_alt),
+                label: Text(l10n?.inviteSectionTitle ?? 'Invite someone'),
               ),
               const SizedBox(height: 16),
               Text(

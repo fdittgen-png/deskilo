@@ -1856,6 +1856,90 @@ abstract class AppLocalizations {
   /// **'Contents'**
   String get helpContents;
 
+  /// No description provided for @inviteSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite someone'**
+  String get inviteSectionTitle;
+
+  /// No description provided for @inviteViaWhatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get inviteViaWhatsapp;
+
+  /// No description provided for @inviteViaSms.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS'**
+  String get inviteViaSms;
+
+  /// No description provided for @inviteViaShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share…'**
+  String get inviteViaShare;
+
+  /// No description provided for @inviteFirstNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'First name (optional)'**
+  String get inviteFirstNameLabel;
+
+  /// No description provided for @inviteLastNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Last name (optional)'**
+  String get inviteLastNameLabel;
+
+  /// No description provided for @invitePhoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone (optional, with country code)'**
+  String get invitePhoneLabel;
+
+  /// No description provided for @inviteLanguageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Message language'**
+  String get inviteLanguageLabel;
+
+  /// No description provided for @inviteSendFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the app for sending. The message was copied instead.'**
+  String get inviteSendFailed;
+
+  /// Default invitation message; firstName is '' or ' Name'
+  ///
+  /// In en, this message translates to:
+  /// **'Hi{firstName}! You\'re invited to join our coworking space \"{workspaceName}\" on DesKilo.\n\n1. Download the app:\n{downloadUrl}\n\n2. Open it, create your account (e-mail + password) and sign in.\n\n3. Choose \"Join a workspace\" and enter the workspace ID: {workspaceId}\n(or scan the invite QR on site — {inviteLink})\n\nSee you soon at {workspaceName}!'**
+  String invitationDefaultTemplate(
+    String firstName,
+    String workspaceName,
+    String workspaceId,
+    String downloadUrl,
+    String inviteLink,
+  );
+
+  /// No description provided for @invitationTemplateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation message'**
+  String get invitationTemplateTitle;
+
+  /// Help above the tag list
+  ///
+  /// In en, this message translates to:
+  /// **'Sent when you invite someone via WhatsApp, SMS, or share. Leave empty to use the built-in message in the chosen language. Available tags:'**
+  String get invitationTemplateHelp;
+
+  /// Hint in the template editor
+  ///
+  /// In en, this message translates to:
+  /// **'Custom invitation message using the tags above…'**
+  String get invitationTemplateHint;
+
   /// Subtitle chip of a kiosk device account in the members list (0043)
   ///
   /// In en, this message translates to:

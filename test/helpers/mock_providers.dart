@@ -255,6 +255,18 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     }
   }
 
+  /// (0049) The last saved invitation template, for assertions.
+  String? lastInvitationTemplate;
+
+  @override
+  Future<void> setInvitationTemplate(String workspaceId, String template) async {
+    lastInvitationTemplate = template;
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i != -1) {
+      workspaces[i] = workspaces[i].copyWith(invitationTemplate: template);
+    }
+  }
+
   @override
   Future<Member?> fetchMyMember(String workspaceId) async =>
       [myMember, ...extraMyMemberships]

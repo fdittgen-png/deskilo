@@ -54,6 +54,11 @@ abstract class WorkspaceRepository {
   /// the chat.whatsapp.com prefix server-side.
   Future<void> setWhatsappGroup(String workspaceId, String link);
 
+  /// Owner-only (workspaces_update RLS): set the invitation message
+  /// template (0049) — trimmed, '' means "use the localized default".
+  /// Length capped at [invitationTemplateMaxLength] by the column check.
+  Future<void> setInvitationTemplate(String workspaceId, String template);
+
   /// The signed-in user's membership in [workspaceId], or null.
   Future<Member?> fetchMyMember(String workspaceId);
 

@@ -17,7 +17,8 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   // three more payment fields in #192, the WhatsApp-group section in
   // #231); a taller view keeps every field + Save built without
   // scrolling.
-  tester.view.physicalSize = const Size(800, 3600);
+  // 0049 added the invitation-template section — grow again.
+  tester.view.physicalSize = const Size(800, 4600);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
@@ -63,6 +64,30 @@ void main() {
     expect(workspace.lastLocaleUpdate,
         ['ws-1', 'CH', 'CHF', 'Europe/Zurich']);
     expect(find.text('Workspace saved.'), findsOneWidget);
+  });
+
+  testWidgets(
+      'the invitation template rides the same Save and a tag chip inserts '
+      'its tag (0049)', (tester) async {
+    final workspace = await pumpWorkspaceSettings(tester);
+    await tester.enterText(
+      find.byKey(const Key('workspaceSettingsInvitationTemplate')),
+      'Join {workspaceName}: ',
+    );
+    // The {workspaceId} chip appends at the cursor.
+    await tester.tap(find.byKey(const ValueKey('invitation-tag-{workspaceId}')));
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+    await tester.pumpAndSettle();
+
+    expect(
+      workspace.lastInvitationTemplate,
+      'Join {workspaceName}: {workspaceId}',
+    );
+    expect(
+      workspace.workspaces[0].invitationTemplate,
+      'Join {workspaceName}: {workspaceId}',
+    );
   });
 
   testWidgets(
