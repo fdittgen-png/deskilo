@@ -94,6 +94,14 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setInvitationTemplate(String workspaceId, String template) async {
+    // Same shape as setWhatsappGroup — owner-only RLS, 0049 length check.
+    await _client
+        .from('workspaces')
+        .update({'invitation_template': template.trim()}).eq('id', workspaceId);
+  }
+
+  @override
   Future<Member?> fetchMyMember(String workspaceId) async {
     final userId = _client.auth.currentUser?.id;
     if (userId == null) return null;
@@ -145,6 +153,7 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
             row['payment_instructions'] as Map<String, dynamic>? ?? const {},
         whatsappGroup: row['whatsapp_group'] as String? ?? '',
         deskOpacity: (row['desk_opacity'] as num?)?.toInt() ?? 100,
+        invitationTemplate: row['invitation_template'] as String? ?? '',
       );
 
   @override

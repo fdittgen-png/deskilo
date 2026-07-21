@@ -977,6 +977,56 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpContents => 'Inhalt';
 
   @override
+  String get inviteSectionTitle => 'Jemanden einladen';
+
+  @override
+  String get inviteViaWhatsapp => 'WhatsApp';
+
+  @override
+  String get inviteViaSms => 'SMS';
+
+  @override
+  String get inviteViaShare => 'Teilen…';
+
+  @override
+  String get inviteFirstNameLabel => 'Vorname (optional)';
+
+  @override
+  String get inviteLastNameLabel => 'Nachname (optional)';
+
+  @override
+  String get invitePhoneLabel => 'Telefon (optional, mit Ländervorwahl)';
+
+  @override
+  String get inviteLanguageLabel => 'Sprache der Nachricht';
+
+  @override
+  String get inviteSendFailed =>
+      'Die Sende-App ließ sich nicht öffnen. Die Nachricht wurde stattdessen kopiert.';
+
+  @override
+  String invitationDefaultTemplate(
+    String firstName,
+    String workspaceName,
+    String workspaceId,
+    String downloadUrl,
+    String inviteLink,
+  ) {
+    return 'Hallo$firstName! Du bist eingeladen, unserem Coworking-Space „$workspaceName“ auf DesKilo beizutreten.\n\n1. Lade die App herunter:\n$downloadUrl\n\n2. Öffne sie, lege dein Konto an (E-Mail + Passwort) und melde dich an.\n\n3. Wähle „Workspace beitreten“ und gib die Workspace-ID ein: $workspaceId\n(oder scanne vor Ort den Einladungs-QR — $inviteLink)\n\nBis bald bei $workspaceName!';
+  }
+
+  @override
+  String get invitationTemplateTitle => 'Einladungsnachricht';
+
+  @override
+  String get invitationTemplateHelp =>
+      'Wird gesendet, wenn du jemanden per WhatsApp, SMS oder Teilen einlädst. Leer lassen für die eingebaute Nachricht in der gewählten Sprache. Verfügbare Tags:';
+
+  @override
+  String get invitationTemplateHint =>
+      'Eigene Einladungsnachricht mit den Tags oben…';
+
+  @override
   String get memberKioskLabel => 'Kiosk';
 
   @override

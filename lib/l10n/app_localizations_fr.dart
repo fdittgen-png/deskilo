@@ -981,6 +981,56 @@ class AppLocalizationsFr extends AppLocalizations {
   String get helpContents => 'Sommaire';
 
   @override
+  String get inviteSectionTitle => 'Inviter quelqu\'un';
+
+  @override
+  String get inviteViaWhatsapp => 'WhatsApp';
+
+  @override
+  String get inviteViaSms => 'SMS';
+
+  @override
+  String get inviteViaShare => 'Partager…';
+
+  @override
+  String get inviteFirstNameLabel => 'Prénom (facultatif)';
+
+  @override
+  String get inviteLastNameLabel => 'Nom (facultatif)';
+
+  @override
+  String get invitePhoneLabel => 'Téléphone (facultatif, avec indicatif)';
+
+  @override
+  String get inviteLanguageLabel => 'Langue du message';
+
+  @override
+  String get inviteSendFailed =>
+      'Impossible d\'ouvrir l\'application d\'envoi. Le message a été copié à la place.';
+
+  @override
+  String invitationDefaultTemplate(
+    String firstName,
+    String workspaceName,
+    String workspaceId,
+    String downloadUrl,
+    String inviteLink,
+  ) {
+    return 'Bonjour$firstName ! Vous êtes invité·e à rejoindre notre espace de coworking « $workspaceName » sur DesKilo.\n\n1. Téléchargez l\'application :\n$downloadUrl\n\n2. Ouvrez-la, créez votre compte (e-mail + mot de passe) et connectez-vous.\n\n3. Choisissez « Rejoindre un espace » et saisissez l\'identifiant : $workspaceId\n(ou scannez le QR d\'invitation sur place — $inviteLink)\n\nÀ bientôt chez $workspaceName !';
+  }
+
+  @override
+  String get invitationTemplateTitle => 'Message d\'invitation';
+
+  @override
+  String get invitationTemplateHelp =>
+      'Envoyé quand vous invitez quelqu\'un par WhatsApp, SMS ou partage. Laissez vide pour utiliser le message intégré dans la langue choisie. Balises disponibles :';
+
+  @override
+  String get invitationTemplateHint =>
+      'Message d\'invitation personnalisé utilisant les balises ci-dessus…';
+
+  @override
   String get memberKioskLabel => 'Borne';
 
   @override

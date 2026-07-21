@@ -27,6 +27,7 @@ import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/booking_granularity.dart';
 import '../../domain/member.dart';
 import '../../domain/payment_instructions.dart';
+import '../../domain/invitation_message.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_config_pdf.dart';
 import '../../domain/workspace_feature.dart';
@@ -64,6 +65,7 @@ class _WorkspaceSettingsScreenState
   final _wise = TextEditingController();
   // #231 — the community's WhatsApp group invite link (directory, #232).
   final _whatsappGroup = TextEditingController();
+  final _invitationTemplate = TextEditingController();
   // 0040 — desk fill opacity percentage (20..100); rides the Save button.
   int _deskOpacity = 100;
   String? _countryCode;
@@ -84,6 +86,7 @@ class _WorkspaceSettingsScreenState
     _lydia.dispose();
     _wise.dispose();
     _whatsappGroup.dispose();
+    _invitationTemplate.dispose();
     super.dispose();
   }
 
@@ -136,6 +139,12 @@ class _WorkspaceSettingsScreenState
           await repository.setWhatsappGroup(
             workspaceId,
             _whatsappGroup.text.trim(),
+          );
+          // 0049 — the invitation message template rides the same Save;
+          // '' falls back to the localized built-in message.
+          await repository.setInvitationTemplate(
+            workspaceId,
+            _invitationTemplate.text.trim(),
           );
           // 0040 — desk transparency rides the same Save.
           await repository.setDeskOpacity(workspaceId, _deskOpacity);
@@ -633,6 +642,7 @@ class _WorkspaceSettingsScreenState
       _lydia.text = instructions.lydia;
       _wise.text = instructions.wise;
       _whatsappGroup.text = workspace.whatsappGroup;
+      _invitationTemplate.text = workspace.invitationTemplate;
       _deskOpacity = workspace.deskOpacity;
     }
     return Scaffold(
@@ -815,6 +825,64 @@ class _WorkspaceSettingsScreenState
                             ? null
                             : (l10n?.workspaceWhatsappGroupInvalid ??
                                 'Must be a chat.whatsapp.com invite link'),
+                  ),
+                  const SizedBox(height: 24),
+                  // 0049 — the invitation message template. Tags are
+                  // listed as selectable chips; empty uses the localized
+                  // built-in message (invite sheet on the ID & QR screen).
+                  Text(
+                    l10n?.invitationTemplateTitle ?? 'Invitation message',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    l10n?.invitationTemplateHelp ??
+                        'Sent when you invite someone via WhatsApp, SMS, '
+                            'or share. Leave empty to use the built-in '
+                            'message in the chosen language. '
+                            'Available tags:',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 6,
+                    runSpacing: 6,
+                    children: [
+                      for (final tag in InvitationTags.all)
+                        ActionChip(
+                          key: ValueKey('invitation-tag-$tag'),
+                          label: Text(tag),
+                          onPressed: _busy
+                              ? null
+                              : () {
+                                  final t = _invitationTemplate;
+                                  final sel = t.selection.isValid
+                                      ? t.selection.start
+                                      : t.text.length;
+                                  t.text = t.text.substring(0, sel) +
+                                      tag +
+                                      t.text.substring(sel);
+                                  t.selection = TextSelection.collapsed(
+                                    offset: sel + tag.length,
+                                  );
+                                },
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    key: const Key('workspaceSettingsInvitationTemplate'),
+                    controller: _invitationTemplate,
+                    enabled: !_busy,
+                    minLines: 3,
+                    maxLines: 8,
+                    maxLength: invitationTemplateMaxLength,
+                    decoration: InputDecoration(
+                      labelText: l10n?.invitationTemplateTitle ??
+                          'Invitation message',
+                      hintText: l10n?.invitationTemplateHint ??
+                          'Custom invitation message using the tags above…',
+                    ),
                   ),
                   const SizedBox(height: 24),
                   // 0040 — desk transparency. Rides the same Save button.
