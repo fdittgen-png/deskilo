@@ -149,6 +149,42 @@ Si un paiement ne démarre pas, activez **Réglages → Avancé → Mode dévelo
 
 <p><img src="images/developer-payment-traces.jpg" width="240"></p>
 
+#### Les tableaux de bord des prestataires, pas à pas
+
+Séparez **strictement les environnements de test et de production** : chaque prestataire a des clés distinctes par mode, et toutes les clés collées dans DesKilo doivent appartenir au même mode. Dans les URL ci-dessous, `<project-ref>` est la référence de votre projet Supabase (les auto-hébergeurs utilisent l'URL de leur instance).
+
+**PayPal**
+
+1. Connectez-vous sur [developer.paypal.com](https://developer.paypal.com) et ouvrez **Apps & Credentials**.
+2. Basculez l'interrupteur **Sandbox / Live** — commencez en *sandbox* ; passez en *live* seulement pour la production. Le champ *Environnement* de DesKilo doit correspondre aux clés.
+3. **Créez une app REST-API** — cela génère le **Client ID** et le **Secret**.
+4. Dans l'app, ajoutez un **webhook** : URL `https://<project-ref>.supabase.co/functions/v1/paypal-webhook`, abonné au minimum à *Payment capture completed* (plus *denied* / *order voided*). Copiez l'**ID du webhook**. Dans DesKilo, le webhook n'est pas optionnel — c'est lui qui règle le paiement sur la facture.
+5. Collez Client ID, Secret, Environnement, ID du webhook et votre URL de retour dans **Réglages → Paiements en ligne → PayPal**. Rien n'est stocké dans l'application ni sur un appareil — tout part sur le serveur.
+
+**Stripe (cartes bancaires & Cartes Bancaires)**
+
+1. Connectez-vous sur [dashboard.stripe.com](https://dashboard.stripe.com) et ouvrez **Developers**.
+2. L'interrupteur **Mode test / Mode live** décide des clés affichées. DesKilo n'a besoin que de la **clé secrète** — le paiement est créé côté serveur, la clé *publishable* n'est pas utilisée.
+3. Sous **Settings → Payment methods**, activez les réseaux souhaités. **Vous visez la France ? Activez explicitement Cartes Bancaires** — les membres français préfèrent souvent le réseau CB au routage international Visa/Mastercard.
+4. Sous **Developers → Webhooks**, ajoutez le point de terminaison `https://<project-ref>.supabase.co/functions/v1/stripe-webhook` avec l'événement `checkout.session.completed`, et copiez le **secret de signature du webhook**.
+5. Collez la clé secrète, le secret de signature et votre URL de retour dans **Réglages → Paiements en ligne → Carte bancaire (Stripe)**.
+
+**Mollie (iDEAL, Bancontact, Wero…)**
+
+1. Connectez-vous sur [my.mollie.com](https://my.mollie.com) → **Developers → API keys** et copiez la **clé API Test** ou **Live** (le mode est encodé dans la clé elle-même).
+2. Sous **Settings → Payment methods**, activez ce que vos membres doivent voir : **iDEAL** (Pays-Bas), **Bancontact** (Belgique), cartes — et **Wero**, le portefeuille de l'European Payments Initiative pour les paiements instantanés de compte à compte en Allemagne, France et Belgique (le successeur de Paylib et giropay).
+3. Dans DesKilo, **Mollie** et **Wero** sont deux cartes prestataire partageant la même clé API — un paiement Wero est créé comme un paiement Mollie avec la méthode Wero. Configurez ce que vos membres doivent voir.
+4. Les URL de redirection et de webhook sont définies **automatiquement par DesKilo** à chaque paiement (redirection = votre URL de retour, webhook = la fonction `mollie-webhook`) — rien à configurer dans le tableau de bord Mollie.
+
+#### D'autres méthodes de paiement (perspectives)
+
+| Prestataire / méthode | Cible | Comment cela s'intègre à DesKilo |
+|---|---|---|
+| **Apple Pay / Google Pay** | Portefeuilles mobiles, paiement en un geste | Activez-les dans votre tableau de bord Stripe (ou Mollie) — ils apparaissent automatiquement sur la page de paiement hébergée, sans changement dans DesKilo ni frais de base supplémentaires. |
+| **Klarna** | Paiement différé (BNPL) | Pareil : activez-le dans Stripe/Mollie et il apparaît au paiement — pertinent pour les montants élevés. |
+| **Adyen** | Entreprise & omnicanal, une API pour presque toutes les méthodes | Non intégré — ce serait un nouveau prestataire dans DesKilo (contributions bienvenues). |
+| **Braintree** | Drop-in mobile & web (propriété de PayPal) | Non intégré — l'intégration PayPal directe de DesKilo couvre déjà ce terrain. |
+
 ### Configurer les badges RFID / NFC (propriétaires)
 
 Les cartes physiques permettent de pointer d'un simple contact — sans téléphone.

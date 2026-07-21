@@ -77,6 +77,7 @@ Four providers — **PayPal** (Orders v2), **Stripe** (Checkout), **Mollie** (Pa
 - `supabase/functions/create-payment-order` starts an order: it reads the workspace's `payment_credentials` row first and falls back to function env vars, records a `payment_intents` row, and returns the provider's approval URL. A `{action:'config'}` probe reports which providers are ready and which fields are missing (surfaced on the in-app developer screen).
 - One webhook function per provider family (`paypal-webhook`, `stripe-webhook`, `mollie-webhook`) runs with `verify_jwt` off — authenticity comes from **the provider's own signature verification** (PayPal verify-webhook-signature, Stripe signing secret, Mollie re-fetch). Each resolves the workspace from the intent, verifies, then settles via `settle_online_payment` (idempotent, so replays are harmless). The Mollie webhook matches intents of provider `mollie` *or* `wero`.
 - The client never sees a secret: the owner writes credentials through `set_payment_credentials` (blank field = keep existing), reads back only key *names* + non-secret fields (`return_url`, `env`), and can `clear_payment_provider`.
+- Webhook endpoints to register in the provider dashboards (PayPal and Stripe only — Mollie's is passed per payment): `https://<project-ref>.supabase.co/functions/v1/paypal-webhook` and `…/stripe-webhook`. The step-by-step dashboard walkthrough lives in the [User Guide](User-Guide).
 
 ### Security model
 
