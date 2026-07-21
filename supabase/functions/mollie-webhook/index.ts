@@ -35,16 +35,19 @@ Deno.serve(async (req: Request): Promise<Response> => {
     Deno.env.get("SUPABASE_URL")!,
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
   );
+  // Mollie's webhook covers all its payments, including Wero (offered
+  // through Mollie). Match either provider and settle with the actual one.
   const { data: intent } = await admin
     .from("payment_intents")
-    .select("workspace_id")
-    .eq("provider", "mollie")
+    .select("workspace_id, provider")
+    .in("provider", ["mollie", "wero"])
     .eq("order_id", paymentId)
     .maybeSingle();
   if (!intent) {
     console.log("mollie webhook: unknown payment, ignoring", paymentId);
     return new Response("ok", { status: 200 });
   }
+  const settleProvider = intent.provider as string;
   const key = await apiKey(admin, intent.workspace_id);
   if (!key) {
     console.log("mollie webhook not configured for workspace", intent.workspace_id);
@@ -66,7 +69,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
       ? Math.round(parseFloat(payment.amount.value) * 100)
       : null;
     const { error } = await admin.rpc("settle_online_payment", {
-      p_provider: "mollie",
+      p_provider: settleProvider,
       p_order_id: paymentId,
       p_capture_id: paymentId,
       p_amount_cents: cents,
@@ -80,7 +83,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
     ["failed", "canceled", "expired"].includes(payment.status as string)
   ) {
     await admin.rpc("mark_payment_failed", {
-      p_provider: "mollie",
+      p_provider: settleProvider,
       p_order_id: paymentId,
     });
     console.log("mollie payment marked failed", { paymentId, status: payment.status });

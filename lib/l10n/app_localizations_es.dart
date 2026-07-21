@@ -449,6 +449,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get payFieldApiKey => 'Clave API';
 
   @override
+  String get paymentProviderWero => 'Wero (con Mollie)';
+
+  @override
   String get calendarMineTab => 'Mías';
 
   @override

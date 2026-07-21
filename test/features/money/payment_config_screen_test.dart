@@ -42,7 +42,10 @@ void main() {
     expect(find.byKey(const ValueKey('pay-config-paypal')), findsOneWidget);
     expect(find.byKey(const ValueKey('pay-config-stripe')), findsOneWidget);
     expect(find.byKey(const ValueKey('pay-config-mollie')), findsOneWidget);
-    expect(find.text('Not configured'), findsNWidgets(3));
+    // Wero (offered through Mollie) is its own provider card (0048).
+    expect(find.byKey(const ValueKey('pay-config-wero')), findsOneWidget);
+    expect(find.text('Wero (via Mollie)'), findsOneWidget);
+    expect(find.text('Not configured'), findsNWidgets(4));
   });
 
   testWidgets('entering PayPal credentials saves the config (secrets go to '

@@ -159,6 +159,8 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
           l10n?.paymentProviderStripe ?? 'Credit card (Stripe)',
         PaymentProvider.mollie =>
           l10n?.paymentProviderMollie ?? 'Mollie — iDEAL, Bancontact…',
+        PaymentProvider.wero =>
+          l10n?.paymentProviderWero ?? 'Wero (via Mollie)',
       };
 
   Future<void> _save() async {

@@ -908,6 +908,12 @@ abstract class AppLocalizations {
   /// **'API key'**
   String get payFieldApiKey;
 
+  /// Provider button/label: Wero paid through Mollie's checkout (0048)
+  ///
+  /// In en, this message translates to:
+  /// **'Wero (via Mollie)'**
+  String get paymentProviderWero;
+
   /// Calendar filter showing only the user's reservations
   ///
   /// In en, this message translates to:

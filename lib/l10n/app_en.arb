@@ -613,6 +613,10 @@
   "@payFieldApiKey": {
     "description": "Mollie API key field"
   },
+  "paymentProviderWero": "Wero (via Mollie)",
+  "@paymentProviderWero": {
+    "description": "Provider button/label: Wero paid through Mollie's checkout (0048)"
+  },
   "calendarMineTab": "Mine",
   "@calendarMineTab": {
     "description": "Calendar filter showing only the user's reservations"
