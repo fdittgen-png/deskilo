@@ -372,11 +372,40 @@ class FakeMoneyRepository implements MoneyRepository {
   Uri? paymentApprovalUrl;
 
   @override
-  Future<PaymentGatewayConfig> fetchPaymentConfig() async =>
+  Future<PaymentGatewayConfig> fetchPaymentConfig(String workspaceId) async =>
       PaymentGatewayConfig(
         providers: List.of(paymentProviders),
         missing: paymentMissing,
       );
+
+  /// Per-provider server config the owner UI reads back.
+  final Map<PaymentProvider, PaymentProviderStatus> paymentStatus = {};
+
+  /// (provider, config) of setPaymentCredentials calls.
+  final savedPaymentConfigs = <(PaymentProvider, Map<String, String>)>[];
+  final clearedProviders = <PaymentProvider>[];
+
+  @override
+  Future<Map<PaymentProvider, PaymentProviderStatus>>
+      fetchPaymentGatewayStatus(String workspaceId) async =>
+          Map.of(paymentStatus);
+
+  @override
+  Future<void> setPaymentCredentials(
+    String workspaceId,
+    PaymentProvider provider,
+    Map<String, String> config,
+  ) async {
+    savedPaymentConfigs.add((provider, config));
+  }
+
+  @override
+  Future<void> clearPaymentProvider(
+    String workspaceId,
+    PaymentProvider provider,
+  ) async {
+    clearedProviders.add(provider);
+  }
 
   @override
   Future<PaymentOrderStart> createPaymentOrder({

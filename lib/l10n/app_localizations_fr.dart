@@ -399,6 +399,58 @@ class AppLocalizationsFr extends AppLocalizations {
   String get buyPackageDone => 'Jours ajoutés — profitez-en.';
 
   @override
+  String get payConfigTitle => 'Paiements en ligne';
+
+  @override
+  String get payConfigOpen => 'Configurer';
+
+  @override
+  String get payConfigIntro =>
+      'Saisissez chaque prestataire de paiement à proposer. Les clés sont stockées en sécurité sur le serveur et ne sont plus affichées. Voir docs/design/payments-integration.md.';
+
+  @override
+  String get payConfigConfigured => 'Configuré';
+
+  @override
+  String get payConfigNotConfigured => 'Non configuré';
+
+  @override
+  String get payConfigSecretSet => 'Défini — laisser vide pour conserver';
+
+  @override
+  String get payConfigSaved => 'Enregistré.';
+
+  @override
+  String get payConfigRemove => 'Supprimer';
+
+  @override
+  String get payConfigRemoved => 'Supprimé.';
+
+  @override
+  String get payFieldClientId => 'Client ID';
+
+  @override
+  String get payFieldSecret => 'Secret';
+
+  @override
+  String get payFieldEnv => 'Environnement';
+
+  @override
+  String get payFieldWebhookId => 'ID du webhook';
+
+  @override
+  String get payFieldReturnUrl => 'URL de retour';
+
+  @override
+  String get payFieldSecretKey => 'Clé secrète';
+
+  @override
+  String get payFieldWebhookSecret => 'Secret de signature du webhook';
+
+  @override
+  String get payFieldApiKey => 'Clé API';
+
+  @override
   String get calendarMineTab => 'Les miennes';
 
   @override

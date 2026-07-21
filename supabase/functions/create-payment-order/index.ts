@@ -1,47 +1,45 @@
 // SPDX-License-Identifier: MIT
 //
 // create-payment-order — starts a REAL online payment for a member's bill
-// (docs/design/payments-integration.md). Three providers:
+// (docs/design/payments-integration.md). Providers: PayPal (Orders v2),
+// Stripe (Checkout), Mollie (Payments).
 //
-//   paypal  — Orders v2 (PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_ENV)
-//   stripe  — Checkout Session, cards/SEPA/… (STRIPE_SECRET_KEY)
-//   mollie  — Payments API, iDEAL/Bancontact/cards/… (MOLLIE_API_KEY)
-//
-// All providers also need PAYMENT_RETURN_URL (where the payer lands after
-// approving). A provider whose secrets are absent is simply NOT offered:
-// {action:'config'} lists the configured ones, and starting an order on an
-// unconfigured provider answers {status:'not_configured', missing:[…]} so
-// the app can say exactly what the deployment lacks.
-//
-// Capture confirmation is asynchronous via the per-provider webhook
-// functions, which settle through the service-role settle_online_payment
-// RPC — this function only creates the order and the payment_intents row.
-//
-// Deploy: verify_jwt ON (members call it with their session token).
-// Secrets: supabase secrets set PAYPAL_CLIENT_ID=… PAYPAL_SECRET=… \
-//   PAYPAL_ENV=sandbox STRIPE_SECRET_KEY=… MOLLIE_API_KEY=… \
-//   PAYMENT_RETURN_URL=https://…
+// Credentials are PER WORKSPACE, configured from the owner UI and stored in
+// the deny-all `payment_credentials` table (read here via the service role);
+// deployment-wide env vars are the fallback. A provider whose required
+// config is absent is not offered: {action:'config', workspace_id} lists the
+// configured providers and, per provider, the missing config fields.
 
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 
 type Provider = "paypal" | "stripe" | "mollie";
 
-const RETURN_URL = Deno.env.get("PAYMENT_RETURN_URL") ?? "";
-
-/** Env keys each provider needs before it is offered at all. */
-const REQUIRED: Record<Provider, string[]> = {
-  paypal: ["PAYPAL_CLIENT_ID", "PAYPAL_SECRET", "PAYMENT_RETURN_URL"],
-  stripe: ["STRIPE_SECRET_KEY", "PAYMENT_RETURN_URL"],
-  mollie: ["MOLLIE_API_KEY", "PAYMENT_RETURN_URL"],
+/** Config field → env-var fallback, per provider. */
+const FIELD_ENV: Record<Provider, Record<string, string>> = {
+  paypal: {
+    client_id: "PAYPAL_CLIENT_ID",
+    secret: "PAYPAL_SECRET",
+    env: "PAYPAL_ENV",
+    webhook_id: "PAYPAL_WEBHOOK_ID",
+    return_url: "PAYMENT_RETURN_URL",
+  },
+  stripe: {
+    secret_key: "STRIPE_SECRET_KEY",
+    webhook_secret: "STRIPE_WEBHOOK_SECRET",
+    return_url: "PAYMENT_RETURN_URL",
+  },
+  mollie: {
+    api_key: "MOLLIE_API_KEY",
+    return_url: "PAYMENT_RETURN_URL",
+  },
 };
 
-const missingFor = (provider: Provider): string[] =>
-  REQUIRED[provider].filter((key) => !Deno.env.get(key));
-
-const configuredProviders = (): Provider[] =>
-  (Object.keys(REQUIRED) as Provider[]).filter(
-    (p) => missingFor(p).length === 0,
-  );
+/** Fields a provider must have before it can be offered. */
+const REQUIRED: Record<Provider, string[]> = {
+  paypal: ["client_id", "secret", "return_url"],
+  stripe: ["secret_key", "return_url"],
+  mollie: ["api_key", "return_url"],
+};
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -49,25 +47,48 @@ const json = (body: unknown, status = 200) =>
     headers: { "Content-Type": "application/json" },
   });
 
-const paypalApi = () =>
-  Deno.env.get("PAYPAL_ENV") === "live"
+const major = (cents: number) => (cents / 100).toFixed(2);
+
+/** The effective config of a provider for a workspace: table row (owner UI)
+ * overlaid on env-var fallbacks, per field. */
+async function effectiveConfig(
+  admin: SupabaseClient,
+  workspaceId: string,
+  provider: Provider,
+): Promise<Record<string, string>> {
+  const { data } = await admin
+    .from("payment_credentials")
+    .select("config")
+    .eq("workspace_id", workspaceId)
+    .eq("provider", provider)
+    .maybeSingle();
+  const stored = (data?.config ?? {}) as Record<string, string>;
+  const out: Record<string, string> = {};
+  for (const [field, envVar] of Object.entries(FIELD_ENV[provider])) {
+    const value = stored[field] ?? Deno.env.get(envVar) ?? "";
+    if (value) out[field] = value;
+  }
+  return out;
+}
+
+const missingFields = (config: Record<string, string>, provider: Provider) =>
+  REQUIRED[provider].filter((f) => !config[f]);
+
+const paypalApi = (env?: string) =>
+  env === "live"
     ? "https://api-m.paypal.com"
     : "https://api-m.sandbox.paypal.com";
-
-/** Cents → major-unit string with two decimals ('12.34'). */
-const major = (cents: number) => (cents / 100).toFixed(2);
 
 // ── providers ─────────────────────────────────────────────────────────
 
 async function createPaypalOrder(
+  cfg: Record<string, string>,
   amountCents: number,
   currency: string,
   reference: string,
 ): Promise<{ orderId: string; approveUrl: string }> {
-  const auth = btoa(
-    `${Deno.env.get("PAYPAL_CLIENT_ID")}:${Deno.env.get("PAYPAL_SECRET")}`,
-  );
-  const tokenRes = await fetch(`${paypalApi()}/v1/oauth2/token`, {
+  const auth = btoa(`${cfg.client_id}:${cfg.secret}`);
+  const tokenRes = await fetch(`${paypalApi(cfg.env)}/v1/oauth2/token`, {
     method: "POST",
     headers: {
       Authorization: `Basic ${auth}`,
@@ -79,8 +100,7 @@ async function createPaypalOrder(
     throw new Error(`paypal oauth ${tokenRes.status}: ${await tokenRes.text()}`);
   }
   const { access_token } = await tokenRes.json();
-
-  const orderRes = await fetch(`${paypalApi()}/v2/checkout/orders`, {
+  const orderRes = await fetch(`${paypalApi(cfg.env)}/v2/checkout/orders`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${access_token}`,
@@ -93,8 +113,8 @@ async function createPaypalOrder(
         custom_id: reference,
       }],
       application_context: {
-        return_url: RETURN_URL,
-        cancel_url: RETURN_URL,
+        return_url: cfg.return_url,
+        cancel_url: cfg.return_url,
         user_action: "PAY_NOW",
       },
     }),
@@ -111,14 +131,15 @@ async function createPaypalOrder(
 }
 
 async function createStripeSession(
+  cfg: Record<string, string>,
   amountCents: number,
   currency: string,
   reference: string,
 ): Promise<{ orderId: string; approveUrl: string }> {
   const params = new URLSearchParams({
     mode: "payment",
-    success_url: RETURN_URL,
-    cancel_url: RETURN_URL,
+    success_url: cfg.return_url,
+    cancel_url: cfg.return_url,
     client_reference_id: reference,
     "line_items[0][quantity]": "1",
     "line_items[0][price_data][currency]": currency.toLowerCase(),
@@ -128,7 +149,7 @@ async function createStripeSession(
   const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${Deno.env.get("STRIPE_SECRET_KEY")}`,
+      Authorization: `Bearer ${cfg.secret_key}`,
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: params,
@@ -141,6 +162,7 @@ async function createStripeSession(
 }
 
 async function createMolliePayment(
+  cfg: Record<string, string>,
   amountCents: number,
   currency: string,
   reference: string,
@@ -148,13 +170,13 @@ async function createMolliePayment(
   const res = await fetch("https://api.mollie.com/v2/payments", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${Deno.env.get("MOLLIE_API_KEY")}`,
+      Authorization: `Bearer ${cfg.api_key}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
       amount: { currency, value: major(amountCents) },
       description: `DesKilo ${reference}`,
-      redirectUrl: RETURN_URL,
+      redirectUrl: cfg.return_url,
       metadata: { reference },
     }),
   });
@@ -169,7 +191,6 @@ async function createMolliePayment(
 
 Deno.serve(async (req: Request): Promise<Response> => {
   if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
-
   let body: Record<string, unknown>;
   try {
     body = await req.json();
@@ -177,40 +198,47 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return json({ error: "invalid_json" }, 400);
   }
 
-  // Config probe: which providers can this deployment actually charge with?
+  const admin = createClient(
+    Deno.env.get("SUPABASE_URL")!,
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+  );
+  const workspaceId = body.workspace_id as string;
+  if (!workspaceId) return json({ error: "invalid_request" }, 400);
+
+  // Config probe: which providers can THIS workspace charge with?
   if (body.action === "config") {
-    const providers = configuredProviders();
-    const missing = Object.fromEntries(
-      (Object.keys(REQUIRED) as Provider[]).map((p) => [p, missingFor(p)]),
-    );
-    console.log("payment config probe", { providers, missing });
+    const providers: Provider[] = [];
+    const missing: Record<string, string[]> = {};
+    for (const provider of Object.keys(REQUIRED) as Provider[]) {
+      const cfg = await effectiveConfig(admin, workspaceId, provider);
+      const gap = missingFields(cfg, provider);
+      missing[provider] = gap;
+      if (gap.length === 0) providers.push(provider);
+    }
+    console.log("payment config probe", { workspaceId, providers, missing });
     return json({ providers, missing });
   }
 
   const provider = body.provider as Provider;
-  const workspaceId = body.workspace_id as string;
   const memberId = body.member_id as string;
   const amountCents = body.amount_cents as number;
   const currency = ((body.currency as string) ?? "EUR").toUpperCase();
   const period = body.period as string;
   if (
-    !provider || !(provider in REQUIRED) || !workspaceId || !memberId ||
+    !provider || !(provider in REQUIRED) || !memberId ||
     typeof amountCents !== "number" || amountCents <= 0 || !period
   ) {
     return json({ error: "invalid_request" }, 400);
   }
 
-  const missing = missingFor(provider);
-  if (missing.length > 0) {
-    console.log("payment provider not configured", { provider, missing });
-    return json({ status: "not_configured", provider, missing });
+  const cfg = await effectiveConfig(admin, workspaceId, provider);
+  const gap = missingFields(cfg, provider);
+  if (gap.length > 0) {
+    console.log("payment provider not configured", { provider, gap });
+    return json({ status: "not_configured", provider, missing: gap });
   }
 
   // AuthZ: the JWT's user must BE the member they pay for.
-  const admin = createClient(
-    Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-  );
   const token = (req.headers.get("Authorization") ?? "").replace(
     "Bearer ",
     "",
@@ -236,10 +264,10 @@ Deno.serve(async (req: Request): Promise<Response> => {
   const reference = `${workspaceId}:${memberId}:${period}`;
   try {
     const order = provider === "paypal"
-      ? await createPaypalOrder(amountCents, currency, reference)
+      ? await createPaypalOrder(cfg, amountCents, currency, reference)
       : provider === "stripe"
-      ? await createStripeSession(amountCents, currency, reference)
-      : await createMolliePayment(amountCents, currency, reference);
+      ? await createStripeSession(cfg, amountCents, currency, reference)
+      : await createMolliePayment(cfg, amountCents, currency, reference);
 
     const { error: insertError } = await admin.from("payment_intents").insert({
       workspace_id: workspaceId,
@@ -254,7 +282,6 @@ Deno.serve(async (req: Request): Promise<Response> => {
       console.error("payment intent insert failed", insertError.message);
       return json({ error: "intent_insert_failed" }, 500);
     }
-
     console.log("payment order created", {
       provider,
       orderId: order.orderId,
@@ -269,7 +296,6 @@ Deno.serve(async (req: Request): Promise<Response> => {
       approve_url: order.approveUrl,
     });
   } catch (e) {
-    // Full detail into the function logs AND back to the app's trace.
     const detail = e instanceof Error ? e.message : String(e);
     console.error("payment order failed", { provider, detail });
     return json({ error: "provider_error", provider, detail }, 502);

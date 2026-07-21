@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../../../core/files/file_saver.dart';
@@ -563,6 +564,14 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             onPressed: () => Navigator.of(context).pop(),
             child: Text(l10n?.commonClose ?? 'Close'),
           ),
+          FilledButton(
+            key: const ValueKey('pay-config-open'),
+            onPressed: () {
+              Navigator.of(context).pop();
+              context.push('/payment-config');
+            },
+            child: Text(l10n?.payConfigOpen ?? 'Configure'),
+          ),
         ],
       ),
     );
@@ -584,7 +593,9 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
       action: () async {
-        config = await ref.read(moneyRepositoryProvider).fetchPaymentConfig();
+        config = await ref
+            .read(moneyRepositoryProvider)
+            .fetchPaymentConfig(workspace.id);
       },
     )) {
       return;

@@ -252,6 +252,12 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l10n?.availabilityTitle ?? 'Availability'),
               onTap: () => context.push('/availability'),
             ),
+          if (isOwner)
+            ListTile(
+              leading: const Icon(Icons.credit_card_outlined),
+              title: Text(l10n?.payConfigTitle ?? 'Online payments'),
+              onTap: () => context.push('/payment-config'),
+            ),
           if (isOwner && features.contains(WorkspaceFeature.services))
             ListTile(
               leading: const Icon(Icons.local_cafe_outlined),

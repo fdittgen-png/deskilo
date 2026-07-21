@@ -34,5 +34,22 @@
   "buyPackageTitle": "Acheter un forfait",
   "buyPackageDays": "{days} jours",
   "buyPackageNone": "Aucun forfait disponible pour l'instant.",
-  "buyPackageDone": "Jours ajoutés — profitez-en."
+  "buyPackageDone": "Jours ajoutés — profitez-en.",
+  "payConfigTitle": "Paiements en ligne",
+  "payConfigOpen": "Configurer",
+  "payConfigIntro": "Saisissez chaque prestataire de paiement à proposer. Les clés sont stockées en sécurité sur le serveur et ne sont plus affichées. Voir docs/design/payments-integration.md.",
+  "payConfigConfigured": "Configuré",
+  "payConfigNotConfigured": "Non configuré",
+  "payConfigSecretSet": "Défini — laisser vide pour conserver",
+  "payConfigSaved": "Enregistré.",
+  "payConfigRemove": "Supprimer",
+  "payConfigRemoved": "Supprimé.",
+  "payFieldClientId": "Client ID",
+  "payFieldSecret": "Secret",
+  "payFieldEnv": "Environnement",
+  "payFieldWebhookId": "ID du webhook",
+  "payFieldReturnUrl": "URL de retour",
+  "payFieldSecretKey": "Clé secrète",
+  "payFieldWebhookSecret": "Secret de signature du webhook",
+  "payFieldApiKey": "Clé API"
 }
