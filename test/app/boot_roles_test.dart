@@ -29,6 +29,11 @@ Future<void> bootAs(
 }) async {
   final workspace = FakeWorkspaceRepository.withWorkspace()
     ..myMember = member(isAdmin: isAdmin, isOwner: isOwner);
+  // The settings list grew (Help + Linked accounts, 0051): a taller view
+  // keeps the admin entries built in the lazy list.
+  tester.view.physicalSize = const Size(800, 2000);
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
   await tester.pumpWidget(
     ProviderScope(
       overrides: standardTestOverrides(workspace: workspace),

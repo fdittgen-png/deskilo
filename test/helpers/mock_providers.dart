@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart' show ValueChanged;
 
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
+import 'package:deskilo/features/auth/domain/social_provider.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
@@ -51,6 +52,45 @@ class FakeAuthRepository implements AuthRepository {
 
   String? _userId;
   final _controller = StreamController<String?>.broadcast();
+
+  /// Social sign-in/link calls, for assertions (0051).
+  final socialSignIns = <SocialProvider>[];
+  final socialLinks = <SocialProvider>[];
+  final unlinked = <LinkedIdentity>[];
+
+  /// Identities the fake reports; seeded by tests.
+  List<LinkedIdentity> identities = [
+    (id: 'ident-email', provider: 'email'),
+  ];
+
+  /// When set, social calls throw (models a provider not enabled).
+  Object? socialError;
+
+  @override
+  Future<void> signInWithSocial(SocialProvider provider) async {
+    if (socialError != null) throw socialError!;
+    socialSignIns.add(provider);
+  }
+
+  @override
+  Future<List<LinkedIdentity>> linkedIdentities() async => identities;
+
+  @override
+  Future<void> linkSocial(SocialProvider provider) async {
+    if (socialError != null) throw socialError!;
+    socialLinks.add(provider);
+    identities = [
+      ...identities,
+      (id: 'ident-${provider.wireName}', provider: provider.wireName),
+    ];
+  }
+
+  @override
+  Future<void> unlinkIdentity(LinkedIdentity identity) async {
+    unlinked.add(identity);
+    identities =
+        identities.where((i) => i.id != identity.id).toList();
+  }
 
   /// Emails for which [signInWithPassword]/[signUp] should throw.
   final Set<String> failingEmails = {};

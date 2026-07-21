@@ -1796,6 +1796,34 @@ class AppLocalizationsFr extends AppLocalizations {
   String get servicesActive => 'Actif';
 
   @override
+  String get authContinueWith => 'ou continuer avec';
+
+  @override
+  String authSocialUnavailable(String provider) {
+    return 'La connexion $provider n\'est pas encore disponible — le serveur ne l\'a pas activée.';
+  }
+
+  @override
+  String get linkedAccountsTitle => 'Comptes liés';
+
+  @override
+  String get linkedAccountsIntro =>
+      'Connectez-vous à ce compte avec n\'importe lequel d\'entre eux. Ajoutez Google, Microsoft, Apple ou Facebook pour vous connecter sans mot de passe.';
+
+  @override
+  String get linkedAccountsLink => 'Lier';
+
+  @override
+  String get linkedAccountsUnlink => 'Délier';
+
+  @override
+  String get linkedAccountsLinked => 'Lié';
+
+  @override
+  String get linkedAccountsLinkStarted =>
+      'Continuez dans le navigateur pour terminer la liaison.';
+
+  @override
   String get themeTitle => 'Thème';
 
   @override

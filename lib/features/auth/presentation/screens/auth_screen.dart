@@ -7,6 +7,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/social_provider.dart';
 import '../../providers/auth_providers.dart';
 
 /// Email + password sign-in / sign-up. Navigation after success is handled
@@ -236,6 +237,34 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     }
   }
 
+  /// Browser OAuth (0051): the flow finishes out-of-app; the router
+  /// reacts to the auth-state change when the callback returns.
+  Future<void> _social(SocialProvider provider) async {
+    final l10n = AppLocalizations.of(context);
+    try {
+      await ref.read(authRepositoryProvider).signInWithSocial(provider);
+    } on AuthException catch (e, st) {
+      TraceLogger.instance
+          .error('auth', 'social sign-in failed', error: e, stackTrace: st);
+      if (!mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.authSocialUnavailable(provider.label) ??
+            '${provider.label} sign-in is not available yet — the server '
+                'has not enabled it.',
+      );
+    } catch (e, st) {
+      TraceLogger.instance
+          .error('auth', 'social sign-in failed', error: e, stackTrace: st);
+      if (!mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.authNetworkError ??
+            'Could not reach the server. Check your connection.',
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -342,6 +371,38 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                                 ? (l10n?.authSignUpButton ?? 'Create account')
                                 : (l10n?.authSignInButton ?? 'Sign in'),
                           ),
+                  ),
+                  const SizedBox(height: 12),
+                  // Social sign-in (0051): browser-based Supabase OAuth —
+                  // no vendor SDKs, F-Droid-clean. The session lands via
+                  // the deskilo:// callback; errors (provider not enabled
+                  // on the server) surface as a snack.
+                  Row(children: [
+                    const Expanded(child: Divider()),
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text(
+                        l10n?.authContinueWith ?? 'or continue with',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                    const Expanded(child: Divider()),
+                  ]),
+                  const SizedBox(height: 12),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    alignment: WrapAlignment.center,
+                    children: [
+                      for (final provider in SocialProvider.values)
+                        OutlinedButton(
+                          key: ValueKey('auth-social-${provider.name}'),
+                          onPressed:
+                              _busy ? null : () => _social(provider),
+                          child: Text(provider.label),
+                        ),
+                    ],
                   ),
                   const SizedBox(height: 12),
                   TextButton(

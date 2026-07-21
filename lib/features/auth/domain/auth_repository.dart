@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'social_provider.dart';
 
 /// Pure-Dart auth boundary (spec §2). Implemented by Supabase in data/,
 /// faked in tests — presentation never sees supabase_flutter types.
@@ -35,4 +36,20 @@ abstract class AuthRepository {
     required String code,
     required String newPassword,
   });
+
+  /// Starts the browser-based OAuth sign-in (or sign-up) with [provider].
+  /// The result arrives asynchronously through [authStateChanges] once the
+  /// deskilo:// callback returns to the app. Throws when the provider is
+  /// not enabled on the server.
+  Future<void> signInWithSocial(SocialProvider provider);
+
+  /// The identities attached to the signed-in account (email + socials).
+  Future<List<LinkedIdentity>> linkedIdentities();
+
+  /// Attaches [provider] to the SIGNED-IN account through the same
+  /// browser flow — afterwards either credential signs into this account.
+  Future<void> linkSocial(SocialProvider provider);
+
+  /// Detaches an identity. The server refuses removing the last one.
+  Future<void> unlinkIdentity(LinkedIdentity identity);
 }

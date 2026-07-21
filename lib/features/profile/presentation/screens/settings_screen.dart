@@ -236,6 +236,14 @@ class SettingsScreen extends ConsumerWidget {
             title: Text(l10n?.helpTitle ?? 'Help'),
             onTap: () => context.push('/help'),
           ),
+          // Linked accounts (0051): attach Google/Microsoft/Apple/
+          // Facebook to this account for password-less sign-in.
+          ListTile(
+            key: const ValueKey('settings-linked-accounts'),
+            leading: const Icon(Icons.link),
+            title: Text(l10n?.linkedAccountsTitle ?? 'Linked accounts'),
+            onTap: () => context.push('/linked-accounts'),
+          ),
           if (showAdminSection) ...[
             const Divider(),
             _SectionHeader(
