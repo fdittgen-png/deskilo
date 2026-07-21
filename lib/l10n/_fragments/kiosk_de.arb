@@ -22,5 +22,11 @@
   "kioskBadgeRejected": "Badge nicht erkannt.",
   "kioskDone": "Fertig — alles erledigt.",
   "kioskTapHint": "Tippe einen Platz zum Einchecken",
-  "badgeSavePdf": "Als PDF speichern"
+  "badgeSavePdf": "Als PDF speichern",
+  "badgeRegisterCard": "Karte registrieren",
+  "badgeTapCardTitle": "Karte registrieren",
+  "badgeTapCardHint": "Halte die RFID/NFC-Karte an die Rückseite des Geräts.",
+  "badgeCardRegistered": "Karte registriert.",
+  "badgeCardAlreadyRegistered": "Diese Karte ist bereits registriert.",
+  "kioskBadgeHintNfc": "Karte auflegen, QR scannen oder Code eintippen."
 }

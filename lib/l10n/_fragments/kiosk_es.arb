@@ -22,5 +22,11 @@
   "kioskBadgeRejected": "Credencial no reconocida.",
   "kioskDone": "Listo — todo en orden.",
   "kioskTapHint": "Toca un asiento para registrarte",
-  "badgeSavePdf": "Guardar como PDF"
+  "badgeSavePdf": "Guardar como PDF",
+  "badgeRegisterCard": "Registrar tarjeta",
+  "badgeTapCardTitle": "Registrar una tarjeta",
+  "badgeTapCardHint": "Acerca la tarjeta RFID/NFC a la parte trasera del dispositivo.",
+  "badgeCardRegistered": "Tarjeta registrada.",
+  "badgeCardAlreadyRegistered": "Esa tarjeta ya está registrada.",
+  "kioskBadgeHintNfc": "Acerca tu tarjeta, escanea tu QR o escribe el código."
 }

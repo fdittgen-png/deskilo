@@ -1838,6 +1838,42 @@ abstract class AppLocalizations {
   /// **'Save as PDF'**
   String get badgeSavePdf;
 
+  /// Badge dialog action: register a physical RFID/NFC card as the member's badge (Android + NFC)
+  ///
+  /// In en, this message translates to:
+  /// **'Register card'**
+  String get badgeRegisterCard;
+
+  /// Title of the tap-the-card prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Register a card'**
+  String get badgeTapCardTitle;
+
+  /// Instruction in the tap-the-card prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Hold the RFID/NFC card to the back of the device.'**
+  String get badgeTapCardHint;
+
+  /// Snackbar after an RFID/NFC card was registered as a badge
+  ///
+  /// In en, this message translates to:
+  /// **'Card registered.'**
+  String get badgeCardRegistered;
+
+  /// Error when the tapped card's UID is already a badge in the workspace
+  ///
+  /// In en, this message translates to:
+  /// **'That card is already registered.'**
+  String get badgeCardAlreadyRegistered;
+
+  /// Kiosk badge prompt hint when NFC is available (RFID tap path)
+  ///
+  /// In en, this message translates to:
+  /// **'Tap your card, scan your QR, or type its code.'**
+  String get kioskBadgeHintNfc;
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:

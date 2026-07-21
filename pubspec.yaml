@@ -59,6 +59,7 @@ dependencies:
   # XML import file picking (#165) — Flutter-official, BSD-3; the Android
   # implementation rides the Storage Access Framework, no GMS.
   file_selector: ^1.1.0
+  nfc_manager: ^4.2.1
 
 dev_dependencies:
   flutter_test:

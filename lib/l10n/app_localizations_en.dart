@@ -960,6 +960,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get badgeSavePdf => 'Save as PDF';
 
   @override
+  String get badgeRegisterCard => 'Register card';
+
+  @override
+  String get badgeTapCardTitle => 'Register a card';
+
+  @override
+  String get badgeTapCardHint =>
+      'Hold the RFID/NFC card to the back of the device.';
+
+  @override
+  String get badgeCardRegistered => 'Card registered.';
+
+  @override
+  String get badgeCardAlreadyRegistered => 'That card is already registered.';
+
+  @override
+  String get kioskBadgeHintNfc =>
+      'Tap your card, scan your QR, or type its code.';
+
+  @override
   String get languageTitle => 'Language';
 
   @override

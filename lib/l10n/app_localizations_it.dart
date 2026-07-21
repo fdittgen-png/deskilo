@@ -970,6 +970,26 @@ class AppLocalizationsIt extends AppLocalizations {
   String get badgeSavePdf => 'Salva come PDF';
 
   @override
+  String get badgeRegisterCard => 'Registra tessera';
+
+  @override
+  String get badgeTapCardTitle => 'Registra una tessera';
+
+  @override
+  String get badgeTapCardHint =>
+      'Avvicina la tessera RFID/NFC al retro del dispositivo.';
+
+  @override
+  String get badgeCardRegistered => 'Tessera registrata.';
+
+  @override
+  String get badgeCardAlreadyRegistered => 'Questa tessera è già registrata.';
+
+  @override
+  String get kioskBadgeHintNfc =>
+      'Avvicina la tessera, scansiona il QR o digita il codice.';
+
+  @override
   String get languageTitle => 'Lingua';
 
   @override

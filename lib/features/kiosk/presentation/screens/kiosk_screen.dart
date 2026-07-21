@@ -13,6 +13,7 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../money/domain/quota_rules.dart';
@@ -138,40 +139,10 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     final token = await showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
-      builder: (context) {
-        final controller = TextEditingController();
-        return SheetShell(
-          title: l10n?.kioskPresentBadge ?? 'Present your badge',
-          children: [
-            const SizedBox(height: 8),
-            Text(
-              l10n?.kioskBadgeHint ??
-                  'Scan your badge QR, or type its code.',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              key: const ValueKey('kiosk-badge-field'),
-              controller: controller,
-              autofocus: true,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: l10n?.kioskBadgeFieldLabel ?? 'Badge code',
-              ),
-              // Wedge scanners terminate with Enter — submit directly.
-              onSubmitted: (value) =>
-                  Navigator.of(context).pop(value.trim()),
-            ),
-            const SizedBox(height: 16),
-            FilledButton(
-              key: const ValueKey('kiosk-badge-submit'),
-              onPressed: () =>
-                  Navigator.of(context).pop(controller.text.trim()),
-              child: Text(l10n?.kioskBadgeConfirm ?? 'Confirm'),
-            ),
-          ],
-        );
-      },
+      builder: (context) => _KioskBadgePrompt(
+        reader: ref.read(nfcUidReaderProvider),
+        l10n: l10n,
+      ),
     );
     if (token == null || token.isEmpty || !mounted) return;
 
@@ -335,6 +306,98 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// The badge prompt (0043 + 0046): type/scan the QR code, OR tap an
+/// RFID/NFC card. When NFC is available a read session runs while the
+/// sheet is open; the first tap pops with the tag's normalized UID —
+/// which kiosk_act resolves by hash exactly like a scanned code. The code
+/// never leaves this sheet.
+class _KioskBadgePrompt extends StatefulWidget {
+  const _KioskBadgePrompt({required this.reader, required this.l10n});
+
+  final NfcUidReader reader;
+  final AppLocalizations? l10n;
+
+  @override
+  State<_KioskBadgePrompt> createState() => _KioskBadgePromptState();
+}
+
+class _KioskBadgePromptState extends State<_KioskBadgePrompt> {
+  final _controller = TextEditingController();
+  bool _nfcAvailable = false;
+  bool _done = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _startNfc();
+  }
+
+  Future<void> _startNfc() async {
+    if (!await widget.reader.isAvailable()) return;
+    if (!mounted) return;
+    setState(() => _nfcAvailable = true);
+    await widget.reader.startRead(onUid: (uid) => _submit(uid));
+  }
+
+  void _submit(String value) {
+    final code = value.trim();
+    if (_done || !mounted || code.isEmpty) return;
+    _done = true;
+    Navigator.of(context).pop(code);
+  }
+
+  @override
+  void dispose() {
+    unawaited(widget.reader.stop());
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = widget.l10n;
+    return SheetShell(
+      title: l10n?.kioskPresentBadge ?? 'Present your badge',
+      children: [
+        const SizedBox(height: 8),
+        Text(
+          _nfcAvailable
+              ? (l10n?.kioskBadgeHintNfc ??
+                  'Tap your card, scan your QR, or type its code.')
+              : (l10n?.kioskBadgeHint ??
+                  'Scan your badge QR, or type its code.'),
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+        if (_nfcAvailable)
+          const Padding(
+            padding: EdgeInsets.only(top: 12),
+            child: Center(
+              child: Icon(Icons.contactless_outlined, size: 44),
+            ),
+          ),
+        const SizedBox(height: 12),
+        TextField(
+          key: const ValueKey('kiosk-badge-field'),
+          controller: _controller,
+          autofocus: true,
+          obscureText: true,
+          decoration: InputDecoration(
+            labelText: l10n?.kioskBadgeFieldLabel ?? 'Badge code',
+          ),
+          // Wedge scanners terminate with Enter — submit directly.
+          onSubmitted: _submit,
+        ),
+        const SizedBox(height: 16),
+        FilledButton(
+          key: const ValueKey('kiosk-badge-submit'),
+          onPressed: () => _submit(_controller.text),
+          child: Text(l10n?.kioskBadgeConfirm ?? 'Confirm'),
+        ),
+      ],
     );
   }
 }

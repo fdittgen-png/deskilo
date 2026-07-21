@@ -17,6 +17,7 @@ void main() {
     for (final permission in [
       'android.permission.INTERNET', // Supabase — everything is remote (#99)
       'android.permission.CAMERA', // QR scan-to-join (#88)
+      'android.permission.NFC', // kiosk RFID badge taps (0046)
     ]) {
       expect(
         manifest,
