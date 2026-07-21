@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:xml/xml.dart';
 
 import '../../plan/domain/accessory.dart';

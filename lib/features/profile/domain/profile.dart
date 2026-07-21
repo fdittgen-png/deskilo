@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 /// Rules for the self-set status line (#231). The cap is enforced three
 /// times with this single constant: the editor's `maxLength`, the

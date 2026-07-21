@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'plan_focus_controller.g.dart';

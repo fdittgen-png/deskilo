@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/plan/providers/default_level_controller.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';

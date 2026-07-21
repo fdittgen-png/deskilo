@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Pure closed-day derivation (#186) — the client-side twin of the
 // `assert_workspace_open` guard (migration 0013): a day is open when its

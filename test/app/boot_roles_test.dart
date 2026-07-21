@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // App-start validation per role (#87): the app must reach the shell for
 // every role defined on the workspace membership (owner / admin / worker),

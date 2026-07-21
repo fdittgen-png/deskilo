@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Owner online-payments configuration (0047): enter provider credentials
 // from the app; secrets go to the deny-all table via an owner RPC and are

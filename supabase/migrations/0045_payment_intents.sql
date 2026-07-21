@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- Online-payment intents + settlement (docs/design/payments-integration.md
 -- §6, now live). NOT YET applied to the hosted reference project — the
 -- orchestrator applies it after review.

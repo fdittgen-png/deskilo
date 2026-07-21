@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo hardening (issue #31, driven by Supabase security advisors).
 -- Applied to the hosted reference project on 2026-07-07.
 --

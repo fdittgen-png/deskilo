@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Booking windows must anchor to the WORKSPACE timezone, not the
 // device's — found the hard way: a US/Pacific laptop booking a

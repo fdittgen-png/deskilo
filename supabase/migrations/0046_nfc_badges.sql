@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- RFID/NFC badge credentials (kiosk slice 3). NOT YET applied to the
 -- hosted reference project — the orchestrator applies it after review.
 --

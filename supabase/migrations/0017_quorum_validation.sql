@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo quorum validation with per-validator audit trail (epic #121
 -- task 6, issue #130, ADR 0008). The single-confirmer protocol of
 -- 0007/0011/0016 generalizes to an owner-configurable quorum:

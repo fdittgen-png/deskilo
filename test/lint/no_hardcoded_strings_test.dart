@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // HARD RULE #1: no hard-coded user-facing strings. Every Text() must go
 // through AppLocalizations; a string literal is allowed only as the

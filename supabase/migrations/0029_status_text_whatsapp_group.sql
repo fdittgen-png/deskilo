@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo member-directory upgrade (epic #229, issue #231). NOT YET
 -- applied to the hosted reference project — the orchestrator applies it
 -- after review.

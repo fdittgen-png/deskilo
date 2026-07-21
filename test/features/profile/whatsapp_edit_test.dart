@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // The WhatsApp editor on the settings surface (#223): entering a number
 // pins the normalization rule (+ + digits) on the exact repository call

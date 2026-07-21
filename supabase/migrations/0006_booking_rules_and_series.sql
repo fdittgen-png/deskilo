@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo booking rules + recurring series (Epic #5, issue #50). Applied to
 -- the hosted reference project on 2026-07-07 as "booking_rules_and_series".
 

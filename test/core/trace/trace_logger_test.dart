@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'dart:io';
 
 import 'package:deskilo/core/trace/trace_logger.dart';

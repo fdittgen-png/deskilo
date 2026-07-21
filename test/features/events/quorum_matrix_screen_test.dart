@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Screen-level quorum matrix (#134, epic #121): the #130 policy rules are
 // unit-tested in event_decider_test; these pin the events SCREEN wiring —

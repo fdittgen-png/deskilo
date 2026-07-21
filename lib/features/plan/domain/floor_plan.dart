@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'desk.dart';

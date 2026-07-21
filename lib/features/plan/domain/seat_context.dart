@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 /// Where a reservation target lives on the floor plan (#182): the level,
 /// office, desk and seat display names of one seat — or level + office only

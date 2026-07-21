@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Start/pause/resume semantics of the foreground last-seen heartbeat
 // (#223), driven through an injected timer factory — no real clock.

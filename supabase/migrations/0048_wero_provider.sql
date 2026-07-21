@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- Wero as an online-payment provider. NOT YET applied to the hosted
 -- reference project — the orchestrator applies it after review.
 --

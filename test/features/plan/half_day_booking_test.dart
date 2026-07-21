@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // #201 (epic #199): under half-day booking granularity the plan header
 // swaps the from→to time chips for Morning / Afternoon / Day choice

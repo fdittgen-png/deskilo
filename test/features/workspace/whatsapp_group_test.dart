@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // The workspace side of #231: the whatsappGroup field and its #232
 // contract (whatsappGroupUri null when no group is configured), the

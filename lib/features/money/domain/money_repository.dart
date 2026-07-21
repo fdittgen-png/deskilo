@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'fee_band.dart';
 import 'ledger_entry.dart';
 import 'package.dart';

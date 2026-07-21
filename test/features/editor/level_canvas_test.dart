@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/editor/presentation/screens/level_canvas_screen.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';

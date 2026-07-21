@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // The status editor on the settings surface (#231): saving pins the
 // trim + hard-cap normalization on the exact repository call the UI

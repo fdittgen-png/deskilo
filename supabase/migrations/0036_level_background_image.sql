@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- A background image per level — a photo or blueprint of the real
 -- working space, rendered behind the seat/desk graphics so the plan
 -- reads against the actual room. Applied to the hosted reference

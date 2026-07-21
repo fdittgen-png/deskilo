@@ -44,4 +44,4 @@ Issue-first, PR < 400 lines, conventional commits, TDD. See [`CONTRIBUTING.md`](
 
 ## License
 
-[MIT](LICENSE) © 2026 Florian DITTGEN
+[0BSD](LICENSE) © 2026 Florian DITTGEN

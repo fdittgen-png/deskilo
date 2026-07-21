@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 /// Presence tuning (#223), pinned by test (no magic numbers rule).
 ///

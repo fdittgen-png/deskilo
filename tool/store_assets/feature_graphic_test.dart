@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Florian DITTGEN
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 // One-off generator for the Play Store feature graphic (1024x500). Lives
 // under tool/ (not test/) so `flutter test` in CI never runs it; regenerate

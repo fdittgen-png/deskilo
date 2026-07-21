@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Forgot-password flow: a one-time code is emailed (Supabase recovery
 // OTP — no links, so no Site-URL/deep-link dependency); entering the

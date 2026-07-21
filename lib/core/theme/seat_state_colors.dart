@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 
 /// The five floor-plan seat states (spec §4.1).

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Pure reminder derivation (spec §4.3): my reserved (not yet checked-in)
 // bookings starting within the lookahead get a reminder [before] their start.

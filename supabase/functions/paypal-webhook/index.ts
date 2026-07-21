@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // paypal-webhook — verify_jwt OFF; authenticity from PayPal's own
 // webhook-signature verification. Credentials are PER WORKSPACE: the

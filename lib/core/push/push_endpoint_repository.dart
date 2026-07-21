@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Server-side registry of this device's push endpoint, one row per

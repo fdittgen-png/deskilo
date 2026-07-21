@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- Resizable illustration images placed on a level's plan — photos of
 -- the real space (a plant, a couch, a whiteboard) positioned and sized
 -- over the grid, distinct from the whole-level background (0036).

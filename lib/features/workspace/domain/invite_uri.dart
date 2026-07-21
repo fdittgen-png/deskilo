@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 /// Role an invite grants on join. There is deliberately no `owner` value:
 /// ownership is never invitable — only an owner can grant it, by editing

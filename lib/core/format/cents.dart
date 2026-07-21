@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 // Cent-amount helpers — formerly three identical private `_money` clones
 // (billing, services, accessories editors) and two inline amount parsers.

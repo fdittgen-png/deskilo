@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Profile model round-trip (#223, status_text since #231) plus the
 // normalization rules: WhatsApp (keep digits, fold a leading 00 into +,

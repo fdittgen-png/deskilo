@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Booking ranges as humans read them (field report: a full-day booking
 // showed as '00:00 – 00:00') and the repetition modality (0034).

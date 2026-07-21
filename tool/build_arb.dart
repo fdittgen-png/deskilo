@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Merges the per-feature ARB fragments in lib/l10n/_fragments/ into the
 // aggregated lib/l10n/app_<locale>.arb files that flutter gen-l10n consumes.

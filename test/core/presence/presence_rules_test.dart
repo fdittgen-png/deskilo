@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Pins the presence constants (#223, no-magic-numbers rule) and the pure
 // online/offline resolver the member directory (#224) consumes.

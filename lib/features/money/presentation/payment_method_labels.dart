@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import '../../../l10n/app_localizations.dart';
 import '../domain/payment_method.dart';
 

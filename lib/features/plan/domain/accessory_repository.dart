@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'accessory.dart';
 
 /// Pure-Dart accessory-catalog boundary (#166, epic #163). Writes are

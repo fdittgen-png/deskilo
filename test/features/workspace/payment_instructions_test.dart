@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
 import 'package:flutter_test/flutter_test.dart';
 

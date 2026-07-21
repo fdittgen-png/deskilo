@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/calendar/presentation/widgets/day_timeline.dart';
 import 'package:deskilo/features/plan/domain/desk.dart';

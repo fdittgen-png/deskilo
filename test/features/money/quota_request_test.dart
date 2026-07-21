@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Quota enforcement + extension requests (migration 0031): reservations
 // are capped by the subscription entitlement; a member who needs more

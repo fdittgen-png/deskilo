@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo RLS (Epic #2, issue #24). Applied to the hosted reference project
 -- on 2026-07-07 as migration "rls_core_tables".
 --

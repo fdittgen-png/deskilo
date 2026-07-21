@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
 import 'package:deskilo/core/theme/theme_controller.dart';

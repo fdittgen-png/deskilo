@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

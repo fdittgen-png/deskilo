@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:flutter/widgets.dart';
 
 /// Canonical spacing tokens (#210) — the padding/gap analog of [AppRadius].

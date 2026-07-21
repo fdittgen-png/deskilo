@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import '../../plan/domain/half_day_windows.dart';
 
 import '../../../core/time/workspace_time.dart';

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Owner RFID/NFC configuration (0046): the workspace toggle + this
 // device's NFC status. Registration itself is per member (see the members

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Pure move/resize transformations for the editor (#101). All functions
 // return a NEW plan; the canvas keeps a draft during the drag and either

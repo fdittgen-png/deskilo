@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Sparkilo-style notched bottom bar with the docked Reserve button (#207):
 // the tabs split around the centre gap by index halving, the raised button

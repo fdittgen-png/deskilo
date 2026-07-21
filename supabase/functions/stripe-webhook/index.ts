@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // stripe-webhook — verify_jwt OFF; authenticity from the Stripe-Signature
 // header (HMAC-SHA256). Credentials are PER WORKSPACE: the session id

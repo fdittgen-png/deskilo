@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_accessory_repository.dart';

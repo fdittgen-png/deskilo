@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:deskilo/app/theme.dart';
 import 'package:deskilo/core/theme/app_radius.dart';
 import 'package:deskilo/core/theme/seat_state_colors.dart';

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:deskilo/core/theme/seat_state_colors.dart';
 import 'package:deskilo/features/plan/presentation/widgets/floor_plan_painter.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';

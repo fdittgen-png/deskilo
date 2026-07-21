@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Cold-boot smoke test on a real device/emulator (#86/#87): runs the REAL
 // main() — Supabase init, timezone data, notification plugin — and asserts

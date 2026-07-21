@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'dart:ui';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';

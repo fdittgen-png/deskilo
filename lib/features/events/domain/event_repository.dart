@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'event_decision.dart';
 import 'validation_policy.dart';
 import 'workspace_event.dart';

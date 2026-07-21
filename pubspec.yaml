@@ -52,7 +52,7 @@ dependencies:
   pdf: ^3.12.0
   path_provider: ^2.1.6
 
-  # Workspace configuration export/import (#164) — pure Dart, MIT,
+  # Workspace configuration export/import (#164) — pure Dart, permissive,
   # F-Droid clean. Already in the tree as a transitive dependency.
   xml: ^6.6.1
 

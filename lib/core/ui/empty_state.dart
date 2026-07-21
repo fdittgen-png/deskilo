@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 
 /// Layout constants of [EmptyState] — pinned by test, not free-floating

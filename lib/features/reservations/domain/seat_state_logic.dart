@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Pure seat-state computation (spec §4.1) — drives the live floor plan AND
 // the time scroller: pass any instant, get the plan at that moment.

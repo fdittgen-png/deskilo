@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 import 'package:intl/intl.dart';
 
 import '../../../../core/time/workspace_time.dart';

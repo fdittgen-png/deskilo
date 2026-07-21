@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // Shared seat-occupancy derivations of the read-only plan canvases: which
 // reservation holds a seat over the browsed window, the occupant's label,

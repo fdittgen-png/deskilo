@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- Member profile photos (avatars): each user may set one photo, shown on
 -- their directory row and detail sheet, on calendar/timeline blocks and
 -- everywhere the initial avatar renders today. Applied to the hosted

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 
 /// How a recorded payment was made (spec §7, #154). Recording only — the
 /// app never processes payments (no PSP; F-Droid-clean). The wire name is

@@ -1,11 +1,11 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: 0BSD
 # fdroiddata recipe DRAFT for the official F-Droid submission (Epic #10).
 # Submit as a merge request to https://gitlab.com/fdroid/fdroiddata once the
 # first tagged release exists. Mirrors the Sparkilo recipe pattern.
 Categories:
   - Time
   - Money
-License: MIT
+License: 0BSD
 AuthorName: Florian DITTGEN
 AuthorEmail: fdittgen@gmail.com
 SourceCode: https://github.com/fdittgen-png/deskilo

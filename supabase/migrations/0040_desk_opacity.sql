@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- Configurable desk transparency: the owner can make desk fills
 -- translucent so a level's background photo shows through the drawn
 -- tables. Applied to the hosted reference project on 2026-07-20.

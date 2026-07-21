@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: MIT
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo service consumption on the monthly bill (epic #121 task 5,
 -- issue #129, ADR 0008). Members self-report consumed services; admins/
 -- owner add for any member. A pending 'service_charge' event carries a

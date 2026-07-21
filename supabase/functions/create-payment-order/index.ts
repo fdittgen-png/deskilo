@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: 0BSD
 //
 // create-payment-order — starts a REAL online payment for a member's bill
 // (docs/design/payments-integration.md). Providers: PayPal (Orders v2),
