@@ -960,6 +960,12 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les membres pointent à une borne en approchant une carte RFID/NFC. Nécessite un appareil Android avec NFC.';
 
   @override
+  String get helpTitle => 'Aide';
+
+  @override
+  String get helpContents => 'Sommaire';
+
+  @override
   String get memberKioskLabel => 'Borne';
 
   @override

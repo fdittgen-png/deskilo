@@ -60,6 +60,7 @@ dependencies:
   # implementation rides the Storage Access Framework, no GMS.
   file_selector: ^1.1.0
   nfc_manager: ^4.2.1
+  markdown_widget: ^2.3.2+8
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   flutter_launcher_icons: ^0.14.4
+  visibility_detector: ^0.4.0+2
 
 flutter:
   uses-material-design: true
@@ -82,3 +84,7 @@ flutter:
     # Roboto (Apache-2.0, copied from the Flutter SDK) embedded into the
     # bill PDF: base-14 PDF fonts cannot encode '€'/'−' (#133).
     - assets/fonts/
+    # In-app help, compiled from the wiki user guides by
+    # `dart run tool/build_help.dart` — offline on every platform.
+    - assets/help/
+    - assets/help/images/

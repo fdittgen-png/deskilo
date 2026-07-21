@@ -957,6 +957,12 @@ class AppLocalizationsDe extends AppLocalizations {
       'Mitglieder checken an einem Kiosk per RFID/NFC-Karte ein. Erfordert ein Android-Gerät mit NFC.';
 
   @override
+  String get helpTitle => 'Hilfe';
+
+  @override
+  String get helpContents => 'Inhalt';
+
+  @override
   String get memberKioskLabel => 'Kiosk';
 
   @override

@@ -1322,6 +1322,8 @@
   "@featureNfcBadgesDesc": {
     "description": "One-line description under the NFC-badges switch"
   },
+  "helpTitle": "Help",
+  "helpContents": "Contents",
   "memberKioskLabel": "Kiosk",
   "@memberKioskLabel": {
     "description": "Subtitle chip of a kiosk device account in the members list (0043)"
