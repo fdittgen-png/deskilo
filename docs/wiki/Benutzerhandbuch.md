@@ -149,6 +149,42 @@ Startet eine Zahlung nicht, aktiviere **Einstellungen → Erweitert → Entwickl
 
 <p><img src="images/developer-payment-traces.jpg" width="240"></p>
 
+#### Die Anbieter-Dashboards, Schritt für Schritt
+
+Trenne **Test- und Live-Umgebung strikt**: jeder Anbieter hat je Modus eigene Schlüssel, und alle in DesKilo eingetragenen Schlüssel müssen zum selben Modus gehören. In den URLs unten ist `<project-ref>` die Referenz deines Supabase-Projekts (Selbst-Hoster verwenden die URL ihrer Instanz).
+
+**PayPal**
+
+1. Melde dich auf [developer.paypal.com](https://developer.paypal.com) an und öffne **Apps & Credentials**.
+2. Schalte den **Sandbox/Live**-Schalter um — beginne in der *Sandbox*; wechsle erst für die Produktion auf *Live*. Das Feld *Umgebung* in DesKilo muss zu den Schlüsseln passen.
+3. **Erstelle eine REST-API-App** — dadurch generiert das System **Client ID** und **Secret**.
+4. Richte in der App einen **Webhook** ein: URL `https://<project-ref>.supabase.co/functions/v1/paypal-webhook`, abonniert mindestens auf *Payment capture completed* (plus *denied* / *order voided*). Kopiere die **Webhook-ID**. In DesKilo ist der Webhook nicht optional — er verbucht die Zahlung auf der Rechnung.
+5. Trage Client ID, Secret, Umgebung, Webhook-ID und deine Rückkehr-URL unter **Einstellungen → Online-Zahlungen → PayPal** ein. Nichts davon landet in der App oder auf einem Gerät — alles wird serverseitig gespeichert.
+
+**Stripe (Kreditkarten & Cartes Bancaires)**
+
+1. Melde dich auf [dashboard.stripe.com](https://dashboard.stripe.com) an und öffne **Developers**.
+2. Der Schalter **Testmodus / Livemodus** bestimmt, welche Schlüssel du siehst. DesKilo braucht nur den **Secret Key** — der Checkout wird serverseitig erstellt, der *Publishable Key* wird nicht verwendet.
+3. Aktiviere unter **Settings → Payment methods** die gewünschten Kartennetze. **Zielt dein Space auf Frankreich? Aktiviere explizit Cartes Bancaires** — französische Mitglieder bevorzugen das CB-Netz häufig gegenüber dem internationalen Visa-/Mastercard-Routing.
+4. Lege unter **Developers → Webhooks** den Endpunkt `https://<project-ref>.supabase.co/functions/v1/stripe-webhook` mit dem Ereignis `checkout.session.completed` an und kopiere das **Webhook-Signing-Secret**.
+5. Trage Secret Key, Signing-Secret und deine Rückkehr-URL unter **Einstellungen → Online-Zahlungen → Kreditkarte (Stripe)** ein.
+
+**Mollie (iDEAL, Bancontact, Wero…)**
+
+1. Melde dich auf [my.mollie.com](https://my.mollie.com) an → **Developers → API keys** und kopiere den **Test-** oder **Live-API-Key** (der Modus steckt im Schlüssel selbst).
+2. Aktiviere unter **Settings → Payment methods**, was deine Mitglieder sehen sollen: **iDEAL** (Niederlande), **Bancontact** (Belgien), Karten — und **Wero**, das Wallet der European Payments Initiative für Instant-Account-to-Account-Zahlungen in Deutschland, Frankreich und Belgien (der Nachfolger von Paylib und giropay).
+3. In DesKilo sind **Mollie** und **Wero** zwei Anbieter-Karten mit demselben API-Key — eine Wero-Zahlung wird als Mollie-Zahlung mit der Wero-Methode erstellt. Konfiguriere, was deine Mitglieder sehen sollen.
+4. Redirect- und Webhook-URLs setzt **DesKilo bei jeder Zahlung automatisch** (Redirect = deine Rückkehr-URL, Webhook = die Funktion `mollie-webhook`) — im Mollie-Dashboard ist nichts zu konfigurieren.
+
+#### Weitere Zahlungsmethoden (Ausblick)
+
+| Anbieter / Methode | Fokus | So passt es zu DesKilo |
+|---|---|---|
+| **Apple Pay / Google Pay** | Mobile Wallets, One-Tap-Checkout | Im Stripe- (oder Mollie-)Dashboard aktivieren — sie erscheinen automatisch auf der gehosteten Zahlungsseite, ohne Änderung in DesKilo und ohne zusätzliche Grundgebühr. |
+| **Klarna** | Buy Now, Pay Later (BNPL) | Genauso: in Stripe/Mollie zuschalten und es erscheint beim Bezahlen — relevant bei höheren Beträgen. |
+| **Adyen** | Enterprise & Omnichannel, eine API für fast alle Methoden | Nicht integriert — wäre ein neuer Anbieter in DesKilo (Beiträge willkommen). |
+| **Braintree** | Mobile & Web Drop-in-UI (gehört zu PayPal) | Nicht integriert — DesKilos direkte PayPal-Integration deckt das Terrain bereits ab. |
+
 ### RFID-/NFC-Badges einrichten (Inhaberinnen)
 
 Physische Karten ermöglichen Check-in per Antippen — ohne Handy.

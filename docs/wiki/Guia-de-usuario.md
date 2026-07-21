@@ -149,6 +149,42 @@ Si un pago no arranca, activa **Ajustes → Avanzado → Modo desarrollador** y 
 
 <p><img src="images/developer-payment-traces.jpg" width="240"></p>
 
+#### Los paneles de los proveedores, paso a paso
+
+Mantén **los entornos de prueba y de producción estrictamente separados**: cada proveedor tiene claves distintas por modo, y todas las claves que pegues en DesKilo deben pertenecer al mismo modo. En las URL de abajo, `<project-ref>` es la referencia de tu proyecto de Supabase (las instancias autoalojadas usan su propia URL).
+
+**PayPal**
+
+1. Inicia sesión en [developer.paypal.com](https://developer.paypal.com) y abre **Apps & Credentials**.
+2. Cambia el conmutador **Sandbox / Live** — empieza en *sandbox*; pasa a *live* solo para producción. El campo *Entorno* de DesKilo debe coincidir con las claves.
+3. **Crea una app REST-API** — esto genera el **Client ID** y el **Secret**.
+4. En la app, añade un **webhook**: URL `https://<project-ref>.supabase.co/functions/v1/paypal-webhook`, suscrito como mínimo a *Payment capture completed* (más *denied* / *order voided*). Copia el **Webhook ID**. En DesKilo el webhook no es opcional — es la vía por la que un pago queda liquidado en la factura.
+5. Pega el Client ID, el Secret, el Entorno, el Webhook ID y tu URL de retorno en **Ajustes → Pagos en línea → PayPal**. Nada se guarda en la app ni en ningún dispositivo — todo va al servidor.
+
+**Stripe (tarjetas y Cartes Bancaires)**
+
+1. Inicia sesión en [dashboard.stripe.com](https://dashboard.stripe.com) y abre **Developers**.
+2. El conmutador **Test mode / Live mode** decide qué claves ves. DesKilo solo necesita la **Secret key** — el checkout se crea en el servidor, así que la clave *publishable* no se usa.
+3. En **Settings → Payment methods**, activa las redes de tarjetas que quieras. **¿Tu público está en Francia? Activa explícitamente Cartes Bancaires** — los miembros franceses suelen preferir CB al enrutado internacional de Visa/Mastercard.
+4. En **Developers → Webhooks**, añade el endpoint `https://<project-ref>.supabase.co/functions/v1/stripe-webhook` con el evento `checkout.session.completed`, y copia el **Webhook signing secret**.
+5. Pega la Secret key, el secreto de firma y tu URL de retorno en **Ajustes → Pagos en línea → Tarjeta (Stripe)**.
+
+**Mollie (iDEAL, Bancontact, Wero…)**
+
+1. Inicia sesión en [my.mollie.com](https://my.mollie.com) → **Developers → API keys** y copia la **API key** de **Test** o **Live** (el modo va codificado en la propia clave).
+2. En **Settings → Payment methods**, activa lo que deban ver tus miembros: **iDEAL** (Países Bajos), **Bancontact** (Bélgica), tarjetas — y **Wero**, el monedero de la European Payments Initiative para pagos instantáneos de cuenta a cuenta en Alemania, Francia y Bélgica (el sucesor de Paylib y giropay).
+3. En DesKilo, **Mollie** y **Wero** son dos tarjetas de proveedor que comparten la misma API key — un pago Wero se crea como un pago Mollie con el método Wero. Configura las que quieras que vean los miembros.
+4. Las URL de redirección y de webhook las establece **DesKilo automáticamente** en cada pago (redirección = tu URL de retorno, webhook = la función `mollie-webhook`) — no hay nada que configurar en el panel de Mollie.
+
+#### Más métodos de pago (perspectiva)
+
+| Proveedor / método | Enfoque | Cómo encaja en DesKilo |
+|---|---|---|
+| **Apple Pay / Google Pay** | Monederos móviles, pago con un toque | Actívalos en tu panel de Stripe (o Mollie) — aparecen automáticamente en la página de pago alojada, sin cambios en DesKilo y sin comisión base extra. |
+| **Klarna** | Compra ahora, paga después | Igual: actívalo en Stripe/Mollie y aparece en el checkout — relevante para importes grandes. |
+| **Adyen** | Empresas y omnicanal, una API para casi cualquier método | No integrado — sería un nuevo proveedor en DesKilo (las contribuciones son bienvenidas). |
+| **Braintree** | UI drop-in para móvil y web (propiedad de PayPal) | No integrado — la integración directa de DesKilo con PayPal ya cubre ese terreno. |
+
 ### Configurar las credenciales RFID / NFC (propietarios)
 
 Las tarjetas físicas permiten registrarse con un toque — sin teléfono.
