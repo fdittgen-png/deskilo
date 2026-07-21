@@ -34,5 +34,22 @@
   "buyPackageTitle": "Comprar un paquete",
   "buyPackageDays": "{days} días",
   "buyPackageNone": "Aún no hay paquetes disponibles.",
-  "buyPackageDone": "Días añadidos — disfruta del tiempo extra."
+  "buyPackageDone": "Días añadidos — disfruta del tiempo extra.",
+  "payConfigTitle": "Pagos en línea",
+  "payConfigOpen": "Configurar",
+  "payConfigIntro": "Introduce cada proveedor de pago que quieras ofrecer. Las claves se guardan de forma segura en el servidor y no se vuelven a mostrar. Consulta docs/design/payments-integration.md.",
+  "payConfigConfigured": "Configurado",
+  "payConfigNotConfigured": "Sin configurar",
+  "payConfigSecretSet": "Definido — deja en blanco para conservar",
+  "payConfigSaved": "Guardado.",
+  "payConfigRemove": "Eliminar",
+  "payConfigRemoved": "Eliminado.",
+  "payFieldClientId": "Client ID",
+  "payFieldSecret": "Secreto",
+  "payFieldEnv": "Entorno",
+  "payFieldWebhookId": "ID de webhook",
+  "payFieldReturnUrl": "URL de retorno",
+  "payFieldSecretKey": "Clave secreta",
+  "payFieldWebhookSecret": "Secreto de firma del webhook",
+  "payFieldApiKey": "Clave API"
 }

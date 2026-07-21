@@ -1,23 +1,40 @@
 // SPDX-License-Identifier: MIT
 //
-// paypal-webhook — PayPal calls this on capture events. Deployed with
-// verify_jwt OFF (PayPal holds no Supabase JWT); authenticity comes from
-// PayPal's own webhook-signature verification against PAYPAL_WEBHOOK_ID.
-// On PAYMENT.CAPTURE.COMPLETED the capture settles through the
-// service-role settle_online_payment RPC (idempotent per order).
+// paypal-webhook — verify_jwt OFF; authenticity from PayPal's own
+// webhook-signature verification. Credentials are PER WORKSPACE: the
+// event's order id resolves the payment_intents row → workspace →
+// that workspace's PayPal config (table first, env fallback). Settlement
+// goes through the service-role settle_online_payment RPC (idempotent).
 
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 
-const paypalApi = () =>
-  Deno.env.get("PAYPAL_ENV") === "live"
+async function paypalConfig(
+  admin: SupabaseClient,
+  workspaceId: string,
+): Promise<Record<string, string>> {
+  const { data } = await admin
+    .from("payment_credentials")
+    .select("config")
+    .eq("workspace_id", workspaceId)
+    .eq("provider", "paypal")
+    .maybeSingle();
+  const stored = (data?.config ?? {}) as Record<string, string>;
+  return {
+    client_id: stored.client_id ?? Deno.env.get("PAYPAL_CLIENT_ID") ?? "",
+    secret: stored.secret ?? Deno.env.get("PAYPAL_SECRET") ?? "",
+    env: stored.env ?? Deno.env.get("PAYPAL_ENV") ?? "sandbox",
+    webhook_id: stored.webhook_id ?? Deno.env.get("PAYPAL_WEBHOOK_ID") ?? "",
+  };
+}
+
+const paypalApi = (env: string) =>
+  env === "live"
     ? "https://api-m.paypal.com"
     : "https://api-m.sandbox.paypal.com";
 
-async function accessToken(): Promise<string> {
-  const auth = btoa(
-    `${Deno.env.get("PAYPAL_CLIENT_ID")}:${Deno.env.get("PAYPAL_SECRET")}`,
-  );
-  const res = await fetch(`${paypalApi()}/v1/oauth2/token`, {
+async function accessToken(cfg: Record<string, string>): Promise<string> {
+  const auth = btoa(`${cfg.client_id}:${cfg.secret}`);
+  const res = await fetch(`${paypalApi(cfg.env)}/v1/oauth2/token`, {
     method: "POST",
     headers: {
       Authorization: `Basic ${auth}`,
@@ -32,26 +49,46 @@ async function accessToken(): Promise<string> {
 Deno.serve(async (req: Request): Promise<Response> => {
   if (req.method !== "POST") return new Response("method_not_allowed", { status: 405 });
 
-  const webhookId = Deno.env.get("PAYPAL_WEBHOOK_ID");
-  if (!webhookId || !Deno.env.get("PAYPAL_CLIENT_ID")) {
-    // Not configured: acknowledge so PayPal stops retrying, act on nothing.
-    console.log("paypal webhook not configured — ignoring event");
-    return new Response("not_configured", { status: 200 });
-  }
-
-  const rawBody = await req.text();
   let event: Record<string, unknown>;
   try {
-    event = JSON.parse(rawBody);
+    event = JSON.parse(await req.text());
   } catch {
     return new Response("invalid_json", { status: 400 });
   }
 
-  // 1. Verify the transmission against PayPal before trusting anything.
+  const admin = createClient(
+    Deno.env.get("SUPABASE_URL")!,
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+  );
+  const resource = (event.resource ?? {}) as Record<string, unknown>;
+  const orderId = String(
+    ((resource.supplementary_data as Record<string, unknown> | undefined)
+      ?.related_ids as Record<string, unknown> | undefined)?.order_id ??
+      resource.id ?? "",
+  );
+
+  // Resolve the workspace from the intent, then load ITS PayPal config.
+  const { data: intent } = await admin
+    .from("payment_intents")
+    .select("workspace_id")
+    .eq("provider", "paypal")
+    .eq("order_id", orderId)
+    .maybeSingle();
+  if (!intent) {
+    console.log("paypal webhook: unknown order, ignoring", orderId);
+    return new Response("ok", { status: 200 });
+  }
+  const cfg = await paypalConfig(admin, intent.workspace_id);
+  if (!cfg.webhook_id || !cfg.client_id) {
+    console.log("paypal webhook not configured for workspace", intent.workspace_id);
+    return new Response("not_configured", { status: 200 });
+  }
+
+  // Verify the transmission against PayPal before trusting anything.
   try {
-    const token = await accessToken();
+    const token = await accessToken(cfg);
     const verifyRes = await fetch(
-      `${paypalApi()}/v1/notifications/verify-webhook-signature`,
+      `${paypalApi(cfg.env)}/v1/notifications/verify-webhook-signature`,
       {
         method: "POST",
         headers: {
@@ -64,7 +101,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
           cert_url: req.headers.get("paypal-cert-url"),
           auth_algo: req.headers.get("paypal-auth-algo"),
           transmission_sig: req.headers.get("paypal-transmission-sig"),
-          webhook_id: webhookId,
+          webhook_id: cfg.webhook_id,
           webhook_event: event,
         }),
       },
@@ -79,18 +116,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return new Response("verification_error", { status: 500 });
   }
 
-  // 2. Settle completed captures; mark denials failed.
   const type = event.event_type as string;
-  const resource = (event.resource ?? {}) as Record<string, unknown>;
-  const admin = createClient(
-    Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-  );
-  const orderId =
-    ((resource.supplementary_data as Record<string, unknown> | undefined)
-      ?.related_ids as Record<string, unknown> | undefined)?.order_id ??
-      resource.id;
-
   if (type === "PAYMENT.CAPTURE.COMPLETED") {
     const amount = resource.amount as { value?: string } | undefined;
     const cents = amount?.value
@@ -98,7 +124,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
       : null;
     const { error } = await admin.rpc("settle_online_payment", {
       p_provider: "paypal",
-      p_order_id: String(orderId),
+      p_order_id: orderId,
       p_capture_id: String(resource.id),
       p_amount_cents: cents,
     });
@@ -112,7 +138,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
   ) {
     await admin.rpc("mark_payment_failed", {
       p_provider: "paypal",
-      p_order_id: String(orderId),
+      p_order_id: orderId,
     });
     console.log("paypal payment marked failed", { orderId, type });
   } else {

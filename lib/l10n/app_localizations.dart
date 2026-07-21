@@ -806,6 +806,108 @@ abstract class AppLocalizations {
   /// **'Days added — enjoy the extra time.'**
   String get buyPackageDone;
 
+  /// Owner screen to configure online-payment providers (0047)
+  ///
+  /// In en, this message translates to:
+  /// **'Online payments'**
+  String get payConfigTitle;
+
+  /// Diagnostics dialog action opening the online-payments config screen
+  ///
+  /// In en, this message translates to:
+  /// **'Configure'**
+  String get payConfigOpen;
+
+  /// Intro on the online-payments config screen
+  ///
+  /// In en, this message translates to:
+  /// **'Enter each payment provider you want to offer. Keys are stored securely on the server and never shown again. See docs/design/payments-integration.md.'**
+  String get payConfigIntro;
+
+  /// Chip: provider is configured
+  ///
+  /// In en, this message translates to:
+  /// **'Configured'**
+  String get payConfigConfigured;
+
+  /// Chip: provider is not configured
+  ///
+  /// In en, this message translates to:
+  /// **'Not configured'**
+  String get payConfigNotConfigured;
+
+  /// Helper under a secret field that already holds a value
+  ///
+  /// In en, this message translates to:
+  /// **'Set — leave blank to keep'**
+  String get payConfigSecretSet;
+
+  /// Snackbar after saving a provider's config
+  ///
+  /// In en, this message translates to:
+  /// **'Saved.'**
+  String get payConfigSaved;
+
+  /// Button removing a provider's config
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get payConfigRemove;
+
+  /// Snackbar after removing a provider's config
+  ///
+  /// In en, this message translates to:
+  /// **'Removed.'**
+  String get payConfigRemoved;
+
+  /// PayPal client ID field
+  ///
+  /// In en, this message translates to:
+  /// **'Client ID'**
+  String get payFieldClientId;
+
+  /// PayPal secret field
+  ///
+  /// In en, this message translates to:
+  /// **'Secret'**
+  String get payFieldSecret;
+
+  /// PayPal environment (sandbox/live) field
+  ///
+  /// In en, this message translates to:
+  /// **'Environment'**
+  String get payFieldEnv;
+
+  /// PayPal webhook id field
+  ///
+  /// In en, this message translates to:
+  /// **'Webhook ID'**
+  String get payFieldWebhookId;
+
+  /// Return URL the payer lands on after paying
+  ///
+  /// In en, this message translates to:
+  /// **'Return URL'**
+  String get payFieldReturnUrl;
+
+  /// Stripe secret key field
+  ///
+  /// In en, this message translates to:
+  /// **'Secret key'**
+  String get payFieldSecretKey;
+
+  /// Stripe webhook signing secret field
+  ///
+  /// In en, this message translates to:
+  /// **'Webhook signing secret'**
+  String get payFieldWebhookSecret;
+
+  /// Mollie API key field
+  ///
+  /// In en, this message translates to:
+  /// **'API key'**
+  String get payFieldApiKey;
+
   /// Calendar filter showing only the user's reservations
   ///
   /// In en, this message translates to:

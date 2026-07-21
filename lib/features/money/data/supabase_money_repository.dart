@@ -317,8 +317,11 @@ class SupabaseMoneyRepository implements MoneyRepository {
   }
 
   @override
-  Future<PaymentGatewayConfig> fetchPaymentConfig() async {
-    final data = await _invokePayments({'action': 'config'});
+  Future<PaymentGatewayConfig> fetchPaymentConfig(String workspaceId) async {
+    final data = await _invokePayments({
+      'action': 'config',
+      'workspace_id': workspaceId,
+    });
     if (data == null) return PaymentGatewayConfig.notDeployed;
     final providers = [
       for (final name in (data['providers'] as List? ?? const []))
@@ -371,5 +374,55 @@ class SupabaseMoneyRepository implements MoneyRepository {
       approveUrl: Uri.parse(approveUrl),
       orderId: data['order_id'] as String?,
     );
+  }
+
+  @override
+  Future<Map<PaymentProvider, PaymentProviderStatus>>
+      fetchPaymentGatewayStatus(String workspaceId) async {
+    final result = await _client.rpc<dynamic>(
+      'payment_credentials_status',
+      params: {'p_workspace_id': workspaceId},
+    ) as Map<String, dynamic>;
+    final out = <PaymentProvider, PaymentProviderStatus>{};
+    for (final entry in result.entries) {
+      final provider = PaymentProvider.fromWire(entry.key);
+      if (provider == null) continue;
+      final v = entry.value as Map<String, dynamic>;
+      out[provider] = PaymentProviderStatus(
+        configured: v['configured'] as bool? ?? false,
+        publicFields: {
+          for (final e in (v['public'] as Map? ?? const {}).entries)
+            e.key as String: e.value as String,
+        },
+        secretKeysSet: {
+          for (final k in (v['secret_keys'] as List? ?? const [])) k as String,
+        },
+      );
+    }
+    return out;
+  }
+
+  @override
+  Future<void> setPaymentCredentials(
+    String workspaceId,
+    PaymentProvider provider,
+    Map<String, String> config,
+  ) async {
+    await _client.rpc<dynamic>('set_payment_credentials', params: {
+      'p_workspace_id': workspaceId,
+      'p_provider': provider.wireName,
+      'p_config': config,
+    });
+  }
+
+  @override
+  Future<void> clearPaymentProvider(
+    String workspaceId,
+    PaymentProvider provider,
+  ) async {
+    await _client.rpc<dynamic>('clear_payment_provider', params: {
+      'p_workspace_id': workspaceId,
+      'p_provider': provider.wireName,
+    });
   }
 }

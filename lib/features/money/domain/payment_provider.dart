@@ -75,3 +75,62 @@ class PaymentGatewayException implements Exception {
   @override
   String toString() => 'PaymentGatewayException($status): $detail';
 }
+
+/// One editable field of a provider's server config (owner UI).
+class PaymentField {
+  const PaymentField({
+    required this.key,
+    required this.secret,
+    this.options,
+  });
+
+  /// The config key sent to `set_payment_credentials` (matches the Edge
+  /// Function's field names).
+  final String key;
+
+  /// Secret fields render obscured and are never read back — the status
+  /// only reports whether they are set.
+  final bool secret;
+
+  /// When non-null, the field is a choice (e.g. PayPal sandbox/live).
+  final List<String>? options;
+}
+
+/// The config fields each provider needs, in display order. Labels are
+/// resolved in the UI from the [PaymentField.key].
+const Map<PaymentProvider, List<PaymentField>> paymentProviderFields = {
+  PaymentProvider.paypal: [
+    PaymentField(key: 'client_id', secret: true),
+    PaymentField(key: 'secret', secret: true),
+    PaymentField(key: 'env', secret: false, options: ['sandbox', 'live']),
+    PaymentField(key: 'webhook_id', secret: true),
+    PaymentField(key: 'return_url', secret: false),
+  ],
+  PaymentProvider.stripe: [
+    PaymentField(key: 'secret_key', secret: true),
+    PaymentField(key: 'webhook_secret', secret: true),
+    PaymentField(key: 'return_url', secret: false),
+  ],
+  PaymentProvider.mollie: [
+    PaymentField(key: 'api_key', secret: true),
+    PaymentField(key: 'return_url', secret: false),
+  ],
+};
+
+/// Owner read-back of one provider's server config (never the secret
+/// values — only whether they are set, plus the non-secret fields).
+class PaymentProviderStatus {
+  const PaymentProviderStatus({
+    this.configured = false,
+    this.publicFields = const {},
+    this.secretKeysSet = const {},
+  });
+
+  final bool configured;
+
+  /// Non-secret fields (return_url, env), echoed back for editing.
+  final Map<String, String> publicFields;
+
+  /// Names of the secret fields that currently hold a value.
+  final Set<String> secretKeysSet;
+}

@@ -545,6 +545,74 @@
   "@buyPackageDone": {
     "description": "Snackbar after a member bought a package"
   },
+  "payConfigTitle": "Online payments",
+  "@payConfigTitle": {
+    "description": "Owner screen to configure online-payment providers (0047)"
+  },
+  "payConfigOpen": "Configure",
+  "@payConfigOpen": {
+    "description": "Diagnostics dialog action opening the online-payments config screen"
+  },
+  "payConfigIntro": "Enter each payment provider you want to offer. Keys are stored securely on the server and never shown again. See docs/design/payments-integration.md.",
+  "@payConfigIntro": {
+    "description": "Intro on the online-payments config screen"
+  },
+  "payConfigConfigured": "Configured",
+  "@payConfigConfigured": {
+    "description": "Chip: provider is configured"
+  },
+  "payConfigNotConfigured": "Not configured",
+  "@payConfigNotConfigured": {
+    "description": "Chip: provider is not configured"
+  },
+  "payConfigSecretSet": "Set — leave blank to keep",
+  "@payConfigSecretSet": {
+    "description": "Helper under a secret field that already holds a value"
+  },
+  "payConfigSaved": "Saved.",
+  "@payConfigSaved": {
+    "description": "Snackbar after saving a provider's config"
+  },
+  "payConfigRemove": "Remove",
+  "@payConfigRemove": {
+    "description": "Button removing a provider's config"
+  },
+  "payConfigRemoved": "Removed.",
+  "@payConfigRemoved": {
+    "description": "Snackbar after removing a provider's config"
+  },
+  "payFieldClientId": "Client ID",
+  "@payFieldClientId": {
+    "description": "PayPal client ID field"
+  },
+  "payFieldSecret": "Secret",
+  "@payFieldSecret": {
+    "description": "PayPal secret field"
+  },
+  "payFieldEnv": "Environment",
+  "@payFieldEnv": {
+    "description": "PayPal environment (sandbox/live) field"
+  },
+  "payFieldWebhookId": "Webhook ID",
+  "@payFieldWebhookId": {
+    "description": "PayPal webhook id field"
+  },
+  "payFieldReturnUrl": "Return URL",
+  "@payFieldReturnUrl": {
+    "description": "Return URL the payer lands on after paying"
+  },
+  "payFieldSecretKey": "Secret key",
+  "@payFieldSecretKey": {
+    "description": "Stripe secret key field"
+  },
+  "payFieldWebhookSecret": "Webhook signing secret",
+  "@payFieldWebhookSecret": {
+    "description": "Stripe webhook signing secret field"
+  },
+  "payFieldApiKey": "API key",
+  "@payFieldApiKey": {
+    "description": "Mollie API key field"
+  },
   "calendarMineTab": "Mine",
   "@calendarMineTab": {
     "description": "Calendar filter showing only the user's reservations"

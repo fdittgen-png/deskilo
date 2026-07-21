@@ -122,11 +122,29 @@ abstract class MoneyRepository {
   /// quota-extension id.
   Future<String> buyPackage(String workspaceId, String packageId);
 
-  /// Which online-payment providers this deployment can charge with
+  /// Which online-payment providers this WORKSPACE can charge with
   /// (create-payment-order's config probe) — plus per-provider missing
-  /// server config for the owner diagnostics. An undeployed function maps
+  /// config fields for the owner diagnostics. An undeployed function maps
   /// to [PaymentGatewayConfig.notDeployed], never a throw.
-  Future<PaymentGatewayConfig> fetchPaymentConfig();
+  Future<PaymentGatewayConfig> fetchPaymentConfig(String workspaceId);
+
+  /// Owner-only: the per-provider server-config status (configured flag,
+  /// non-secret fields, which secret fields are set — never their values).
+  Future<Map<PaymentProvider, PaymentProviderStatus>> fetchPaymentGatewayStatus(
+    String workspaceId,
+  );
+
+  /// Owner-only: merge [config] into a provider's server credentials
+  /// (blank fields keep existing values). Secrets go to the deny-all
+  /// payment_credentials table via an owner-gated RPC.
+  Future<void> setPaymentCredentials(
+    String workspaceId,
+    PaymentProvider provider,
+    Map<String, String> config,
+  );
+
+  /// Owner-only: remove a provider's server credentials entirely.
+  Future<void> clearPaymentProvider(String workspaceId, PaymentProvider provider);
 
   /// Starts an online payment with [provider] for [amountCents] of the
   /// member's bill (docs/design/payments-integration.md). Returns the
