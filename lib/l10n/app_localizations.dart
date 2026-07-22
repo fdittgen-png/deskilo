@@ -1913,7 +1913,7 @@ abstract class AppLocalizations {
   /// Default invitation message; firstName is '' or ' Name'
   ///
   /// In en, this message translates to:
-  /// **'Hi{firstName}! You\'re invited to join our coworking space \"{workspaceName}\" on DesKilo.\n\n1. Download the app:\n{downloadUrl}\n\n2. Open it, create your account (e-mail + password) and sign in.\n\n3. Choose \"Join a workspace\" and enter the workspace ID: {workspaceId}\n(or scan the invite QR on site — {inviteLink})\n\nSee you soon at {workspaceName}!'**
+  /// **'Hi{firstName}! You\'re invited to join our coworking space \"{workspaceName}\" on DesKilo.\n\n1. Download the app:\n{downloadUrl}\n\n2. Open it, create your account (e-mail + password) and sign in.\n\n3. Choose \"Join a workspace\" and enter the workspace ID:\n{workspaceId}\n(or scan the invite QR on site — {inviteLink})\n\nSee you soon at {workspaceName}!'**
   String invitationDefaultTemplate(
     String firstName,
     String workspaceName,
@@ -1939,6 +1939,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Custom invitation message using the tags above…'**
   String get invitationTemplateHint;
+
+  /// No description provided for @workspaceInvitePasteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste the whole invitation message — the ID is found automatically.'**
+  String get workspaceInvitePasteHint;
+
+  /// No description provided for @workspaceInviteCodeInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'No workspace ID found — paste the invitation or type the ID.'**
+  String get workspaceInviteCodeInvalid;
 
   /// Subtitle chip of a kiosk device account in the members list (0043)
   ///

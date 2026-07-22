@@ -8,7 +8,7 @@
   "invitePhoneLabel": "Phone (optional, with country code)",
   "inviteLanguageLabel": "Message language",
   "inviteSendFailed": "Could not open the app for sending. The message was copied instead.",
-  "invitationDefaultTemplate": "Hi{firstName}! You're invited to join our coworking space \"{workspaceName}\" on DesKilo.\n\n1. Download the app:\n{downloadUrl}\n\n2. Open it, create your account (e-mail + password) and sign in.\n\n3. Choose \"Join a workspace\" and enter the workspace ID: {workspaceId}\n(or scan the invite QR on site — {inviteLink})\n\nSee you soon at {workspaceName}!",
+  "invitationDefaultTemplate": "Hi{firstName}! You're invited to join our coworking space \"{workspaceName}\" on DesKilo.\n\n1. Download the app:\n{downloadUrl}\n\n2. Open it, create your account (e-mail + password) and sign in.\n\n3. Choose \"Join a workspace\" and enter the workspace ID:\n{workspaceId}\n(or scan the invite QR on site — {inviteLink})\n\nSee you soon at {workspaceName}!",
   "@invitationDefaultTemplate": {
     "description": "Default invitation message; firstName is '' or ' Name'",
     "placeholders": {
@@ -37,5 +37,7 @@
   "invitationTemplateHint": "Custom invitation message using the tags above…",
   "@invitationTemplateHint": {
     "description": "Hint in the template editor"
-  }
+  },
+  "workspaceInvitePasteHint": "Paste the whole invitation message — the ID is found automatically.",
+  "workspaceInviteCodeInvalid": "No workspace ID found — paste the invitation or type the ID."
 }

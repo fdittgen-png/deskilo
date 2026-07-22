@@ -1011,7 +1011,7 @@ class AppLocalizationsEs extends AppLocalizations {
     String downloadUrl,
     String inviteLink,
   ) {
-    return '¡Hola$firstName! Te invitamos a unirte a nuestro espacio de coworking «$workspaceName» en DesKilo.\n\n1. Descarga la aplicación:\n$downloadUrl\n\n2. Ábrela, crea tu cuenta (correo + contraseña) e inicia sesión.\n\n3. Elige «Unirse a un espacio» e introduce el ID: $workspaceId\n(o escanea el QR de invitación in situ — $inviteLink)\n\n¡Hasta pronto en $workspaceName!';
+    return '¡Hola$firstName! Te invitamos a unirte a nuestro espacio de coworking «$workspaceName» en DesKilo.\n\n1. Descarga la aplicación:\n$downloadUrl\n\n2. Ábrela, crea tu cuenta (correo + contraseña) e inicia sesión.\n\n3. Elige «Unirse a un espacio» e introduce el ID:\n$workspaceId\n(o escanea el QR de invitación in situ — $inviteLink)\n\n¡Hasta pronto en $workspaceName!';
   }
 
   @override
@@ -1024,6 +1024,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get invitationTemplateHint =>
       'Mensaje de invitación personalizado usando las etiquetas de arriba…';
+
+  @override
+  String get workspaceInvitePasteHint =>
+      'Pega el mensaje de invitación completo — el ID se detecta automáticamente.';
+
+  @override
+  String get workspaceInviteCodeInvalid =>
+      'No se encontró ningún ID — pega la invitación o escribe el ID.';
 
   @override
   String get memberKioskLabel => 'Quiosco';

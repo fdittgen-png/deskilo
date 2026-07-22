@@ -30,4 +30,40 @@ abstract final class InviteUriCodec {
     }
     return payload.trim().toUpperCase();
   }
+
+  /// A deskilo://join URL anywhere in free text. WhatsApp copies the
+  /// WHOLE invitation message, and line-wrapping may inject whitespace
+  /// into the URL — the text is compacted before matching.
+  static final _joinUrl = RegExp('$_scheme://[^)\\]>\u00ab\u00bb"\']+');
+
+  /// The invite code found in [text], which may be a bare code, an
+  /// invite URL, or an ENTIRE pasted invitation message (0049 — the
+  /// join field accepts a wholesale WhatsApp/SMS paste). '' when
+  /// nothing code-like is found.
+  static String extractCode(String text) {
+    final trimmed = text.trim();
+    if (trimmed.isEmpty) return '';
+    // A single token (no whitespace) is a bare code or a lone URL —
+    // the historical decode path.
+    if (!trimmed.contains(RegExp(r'\s'))) return decodeCode(trimmed);
+    // Free text: find the join URL (tolerating wrap breaks inside it),
+    // and read its code parameter.
+    final compact = trimmed.replaceAll(RegExp(r'\s+'), '');
+    final match = _joinUrl.firstMatch(compact);
+    if (match != null) {
+      final code = decodeCode(match.group(0)!);
+      if (code.isNotEmpty) return code;
+    }
+    // No URL: accept a line holding exactly one code-shaped token (the
+    // invitation template puts the ID alone on its line). Digits are
+    // required so prose words never masquerade as codes.
+    for (final line in trimmed.split('\n')) {
+      final token = line.trim();
+      if (RegExp(r'^[A-Za-z0-9]{4,20}$').hasMatch(token) &&
+          RegExp(r'[0-9]').hasMatch(token)) {
+        return token.toUpperCase();
+      }
+    }
+    return '';
+  }
 }

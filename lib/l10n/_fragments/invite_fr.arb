@@ -8,8 +8,10 @@
   "invitePhoneLabel": "Téléphone (facultatif, avec indicatif)",
   "inviteLanguageLabel": "Langue du message",
   "inviteSendFailed": "Impossible d'ouvrir l'application d'envoi. Le message a été copié à la place.",
-  "invitationDefaultTemplate": "Bonjour{firstName} ! Vous êtes invité·e à rejoindre notre espace de coworking « {workspaceName} » sur DesKilo.\n\n1. Téléchargez l'application :\n{downloadUrl}\n\n2. Ouvrez-la, créez votre compte (e-mail + mot de passe) et connectez-vous.\n\n3. Choisissez « Rejoindre un espace » et saisissez l'identifiant : {workspaceId}\n(ou scannez le QR d'invitation sur place — {inviteLink})\n\nÀ bientôt chez {workspaceName} !",
+  "invitationDefaultTemplate": "Bonjour{firstName} ! Vous êtes invité·e à rejoindre notre espace de coworking « {workspaceName} » sur DesKilo.\n\n1. Téléchargez l'application :\n{downloadUrl}\n\n2. Ouvrez-la, créez votre compte (e-mail + mot de passe) et connectez-vous.\n\n3. Choisissez « Rejoindre un espace » et saisissez l'identifiant :\n{workspaceId}\n(ou scannez le QR d'invitation sur place — {inviteLink})\n\nÀ bientôt chez {workspaceName} !",
   "invitationTemplateTitle": "Message d'invitation",
   "invitationTemplateHelp": "Envoyé quand vous invitez quelqu'un par WhatsApp, SMS ou partage. Laissez vide pour utiliser le message intégré dans la langue choisie. Balises disponibles :",
-  "invitationTemplateHint": "Message d'invitation personnalisé utilisant les balises ci-dessus…"
+  "invitationTemplateHint": "Message d'invitation personnalisé utilisant les balises ci-dessus…",
+  "workspaceInvitePasteHint": "Collez le message d'invitation entier — l'identifiant est trouvé automatiquement.",
+  "workspaceInviteCodeInvalid": "Aucun identifiant trouvé — collez l'invitation ou saisissez l'identifiant."
 }
