@@ -1004,6 +1004,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo abrir la aplicación de envío. El mensaje se copió en su lugar.';
 
   @override
+  String get inviteCreateFailed =>
+      'No se pudo crear la invitación. Comprueba tu conexión e inténtalo de nuevo.';
+
+  @override
   String invitationDefaultTemplate(
     String firstName,
     String workspaceName,
@@ -1011,7 +1015,7 @@ class AppLocalizationsEs extends AppLocalizations {
     String downloadUrl,
     String inviteLink,
   ) {
-    return '¡Hola$firstName! Te invitamos a unirte a nuestro espacio de coworking «$workspaceName» en DesKilo.\n\n1. Descarga la aplicación:\n$downloadUrl\n\n2. Ábrela, crea tu cuenta (correo + contraseña) e inicia sesión.\n\n3. Elige «Unirse a un espacio» e introduce el ID:\n$workspaceId\n(o escanea el QR de invitación in situ — $inviteLink)\n\n¡Hasta pronto en $workspaceName!';
+    return '¡Hola$firstName! Te invitamos a unirte a nuestro espacio de coworking «$workspaceName» en DesKilo.\n\n1. Descarga la aplicación:\n$downloadUrl\n\n2. Ábrela, crea tu cuenta (correo + contraseña) e inicia sesión.\n\n3. Elige «Unirse a un espacio» e introduce tu código de invitación personal:\n$workspaceId\n(enlace de invitación: $inviteLink)\n\nConsejo: simplemente copia este mensaje completo y pégalo en la aplicación — el código se detecta automáticamente. Tu código es personal, de un solo uso y válido durante 14 días.\n\n¡Hasta pronto en $workspaceName!';
   }
 
   @override
@@ -1992,7 +1996,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get inviteAdminExplainer =>
-      'Quien escanee este código QR — o escriba este código — se unirá como admin. Compártelo solo con personas que deban gestionar este espacio.';
+      'Este código es de un solo uso: admite a UNA persona como admin y luego caduca. Entrégalo solo a la persona a la que está destinado.';
+
+  @override
+  String get inviteAdminNewCode => 'Nuevo código de admin';
 
   @override
   String get inviteOwnerNote =>

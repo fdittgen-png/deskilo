@@ -1910,10 +1910,16 @@ abstract class AppLocalizations {
   /// **'Could not open the app for sending. The message was copied instead.'**
   String get inviteSendFailed;
 
+  /// No description provided for @inviteCreateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not create the invitation. Check your connection and try again.'**
+  String get inviteCreateFailed;
+
   /// Default invitation message; firstName is '' or ' Name'
   ///
   /// In en, this message translates to:
-  /// **'Hi{firstName}! You\'re invited to join our coworking space \"{workspaceName}\" on DesKilo.\n\n1. Download the app:\n{downloadUrl}\n\n2. Open it, create your account (e-mail + password) and sign in.\n\n3. Choose \"Join a workspace\" and enter the workspace ID:\n{workspaceId}\n(or scan the invite QR on site — {inviteLink})\n\nSee you soon at {workspaceName}!'**
+  /// **'Hi{firstName}! You\'re invited to join our coworking space \"{workspaceName}\" on DesKilo.\n\n1. Download the app:\n{downloadUrl}\n\n2. Open it, create your account (e-mail + password) and sign in.\n\n3. Choose \"Join a workspace\" and enter your personal invitation code:\n{workspaceId}\n(invitation link: {inviteLink})\n\nTip: simply copy this whole message and paste it into the app — the code is found automatically. Your code is personal, single-use and valid for 14 days.\n\nSee you soon at {workspaceName}!'**
   String invitationDefaultTemplate(
     String firstName,
     String workspaceName,
@@ -3713,8 +3719,14 @@ abstract class AppLocalizations {
   /// Explainer under the admin invite QR
   ///
   /// In en, this message translates to:
-  /// **'Whoever scans this QR code — or types this code — joins as an admin. Share it only with people who should manage this workspace.'**
+  /// **'This code is single-use: it admits ONE person as an admin, then expires. Give it only to the person it is meant for.'**
   String get inviteAdminExplainer;
+
+  /// No description provided for @inviteAdminNewCode.
+  ///
+  /// In en, this message translates to:
+  /// **'New admin code'**
+  String get inviteAdminNewCode;
 
   /// Footnote on the invite screen: owner role is never invitable
   ///
