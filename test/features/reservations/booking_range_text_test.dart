@@ -75,7 +75,7 @@ void main() {
       ),
     ]);
 
-    await tester.tap(find.text('Day'));
+    await tester.tap(find.byTooltip('Day'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('timeline-block-res-own')));
     await tester.pumpAndSettle();

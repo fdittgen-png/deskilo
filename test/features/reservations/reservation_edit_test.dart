@@ -39,7 +39,7 @@ DateTime get _today {
 
 /// Opens my booking's detail sheet through the hub's Day view block.
 Future<void> openDetail(WidgetTester tester) async {
-  await tester.tap(find.text('Day'));
+  await tester.tap(find.byTooltip('Day'));
   await tester.pumpAndSettle();
   await tester.tap(find.byKey(const ValueKey('timeline-block-res-own')));
   await tester.pumpAndSettle();
