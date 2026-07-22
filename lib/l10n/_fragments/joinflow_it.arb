@@ -1,0 +1,13 @@
+{
+  "eventTypeMemberJoin": "Nuovo membro",
+  "memberStatusPending": "In attesa",
+  "pendingApprovalTitle": "In attesa di approvazione",
+  "pendingApprovalBody": "Ti sei unito a {workspace}. Un amministratore deve approvare la tua adesione prima che tu possa usare lo spazio — avrai accesso appena confermata.",
+  "pendingApprovalRefresh": "Controlla di nuovo",
+  "memberApprove": "Approva l'adesione",
+  "memberRejectJoin": "Rifiuta l'adesione",
+  "workspaceConfigInvitations": "Inviti",
+  "workspaceConfigInvitationCustom": "Messaggio d'invito personalizzato configurato",
+  "workspaceConfigInvitationDefault": "Messaggio d'invito integrato (tutte le lingue)",
+  "workspaceConfigInvitationSingleUse": "I codici d'invito personali sono monouso e scadono dopo 14 giorni; i nuovi membri richiedono l'approvazione di un admin"
+}

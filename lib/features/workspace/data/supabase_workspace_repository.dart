@@ -107,6 +107,17 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> decideMemberJoin(
+    String memberId, {
+    required bool approve,
+  }) async {
+    await _client.rpc<dynamic>('decide_member_join', params: {
+      'p_member_id': memberId,
+      'p_approve': approve,
+    });
+  }
+
+  @override
   Future<Member?> fetchMyMember(String workspaceId) async {
     final userId = _client.auth.currentUser?.id;
     if (userId == null) return null;

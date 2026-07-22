@@ -22,7 +22,11 @@ enum EventType {
 
   /// An owner-initiated admin promotion/demotion (migration 0035),
   /// confirmed through the validation quorum before it applies.
-  roleChange('role_change');
+  roleChange('role_change'),
+
+  /// A new member's join awaiting the workspace's welcome (0051):
+  /// confirmed → active membership, rejected → exited.
+  memberJoin('member_join');
 
   const EventType([String? dbName]) : _dbName = dbName;
 
@@ -71,6 +75,7 @@ sealed class WorkspaceEvent with _$WorkspaceEvent {
       type == EventType.expense ||
       type == EventType.quota ||
       type == EventType.roleChange ||
+      type == EventType.memberJoin ||
       ((type == EventType.payment || type == EventType.serviceCharge) &&
           actorIsSubject);
 

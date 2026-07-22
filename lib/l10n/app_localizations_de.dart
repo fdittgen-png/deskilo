@@ -1039,6 +1039,44 @@ class AppLocalizationsDe extends AppLocalizations {
       'Keine Workspace-ID gefunden — Einladung einfügen oder ID eintippen.';
 
   @override
+  String get eventTypeMemberJoin => 'Neues Mitglied';
+
+  @override
+  String get memberStatusPending => 'Ausstehend';
+
+  @override
+  String get pendingApprovalTitle => 'Warten auf Freigabe';
+
+  @override
+  String pendingApprovalBody(String workspace) {
+    return 'Du bist $workspace beigetreten. Ein Admin muss deine Mitgliedschaft bestätigen, bevor du den Workspace nutzen kannst — du erhältst Zugriff, sobald sie bestätigt ist.';
+  }
+
+  @override
+  String get pendingApprovalRefresh => 'Erneut prüfen';
+
+  @override
+  String get memberApprove => 'Mitgliedschaft bestätigen';
+
+  @override
+  String get memberRejectJoin => 'Mitgliedschaft ablehnen';
+
+  @override
+  String get workspaceConfigInvitations => 'Einladungen';
+
+  @override
+  String get workspaceConfigInvitationCustom =>
+      'Eigene Einladungsnachricht konfiguriert';
+
+  @override
+  String get workspaceConfigInvitationDefault =>
+      'Eingebaute Einladungsnachricht (alle Sprachen)';
+
+  @override
+  String get workspaceConfigInvitationSingleUse =>
+      'Persönliche Einladungscodes sind einmalig nutzbar und verfallen nach 14 Tagen; neue Mitglieder brauchen die Freigabe eines Admins';
+
+  @override
   String get memberKioskLabel => 'Kiosk';
 
   @override

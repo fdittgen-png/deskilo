@@ -1033,6 +1033,44 @@ class AppLocalizationsEn extends AppLocalizations {
       'No workspace ID found — paste the invitation or type the ID.';
 
   @override
+  String get eventTypeMemberJoin => 'New member';
+
+  @override
+  String get memberStatusPending => 'Pending';
+
+  @override
+  String get pendingApprovalTitle => 'Awaiting approval';
+
+  @override
+  String pendingApprovalBody(String workspace) {
+    return 'You have joined $workspace. An administrator must approve your membership before you can use the workspace — you will get access as soon as they confirm.';
+  }
+
+  @override
+  String get pendingApprovalRefresh => 'Check again';
+
+  @override
+  String get memberApprove => 'Approve membership';
+
+  @override
+  String get memberRejectJoin => 'Reject membership';
+
+  @override
+  String get workspaceConfigInvitations => 'Invitations';
+
+  @override
+  String get workspaceConfigInvitationCustom =>
+      'Custom invitation message configured';
+
+  @override
+  String get workspaceConfigInvitationDefault =>
+      'Built-in invitation message (all languages)';
+
+  @override
+  String get workspaceConfigInvitationSingleUse =>
+      'Personal invitation codes are single-use and expire after 14 days; new members need admin approval';
+
+  @override
   String get memberKioskLabel => 'Kiosk';
 
   @override

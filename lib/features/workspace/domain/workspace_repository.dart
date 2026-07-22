@@ -37,6 +37,12 @@ abstract class WorkspaceRepository {
     String lastName = '',
   });
 
+  /// Admin/owner (RPC `decide_member_join`, migration 0052): approves
+  /// (active) or rejects (exited) a PENDING membership and settles its
+  /// member_join validation event. The quorum path through
+  /// respond_to_event stays available on the events feed.
+  Future<void> decideMemberJoin(String memberId, {required bool approve});
+
   /// Owner-only (workspaces_update RLS): change the workspace locale —
   /// country, currency and time zone (#153). Currency defaults from the
   /// country in the UI but any ISO 4217 override is persisted verbatim.

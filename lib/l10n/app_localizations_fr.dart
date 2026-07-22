@@ -1043,6 +1043,44 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucun identifiant trouvé — collez l\'invitation ou saisissez l\'identifiant.';
 
   @override
+  String get eventTypeMemberJoin => 'Nouveau membre';
+
+  @override
+  String get memberStatusPending => 'En attente';
+
+  @override
+  String get pendingApprovalTitle => 'En attente d\'approbation';
+
+  @override
+  String pendingApprovalBody(String workspace) {
+    return 'Vous avez rejoint $workspace. Un administrateur doit approuver votre adhésion avant que vous puissiez utiliser l\'espace — vous aurez accès dès sa confirmation.';
+  }
+
+  @override
+  String get pendingApprovalRefresh => 'Vérifier à nouveau';
+
+  @override
+  String get memberApprove => 'Approuver l\'adhésion';
+
+  @override
+  String get memberRejectJoin => 'Refuser l\'adhésion';
+
+  @override
+  String get workspaceConfigInvitations => 'Invitations';
+
+  @override
+  String get workspaceConfigInvitationCustom =>
+      'Message d\'invitation personnalisé configuré';
+
+  @override
+  String get workspaceConfigInvitationDefault =>
+      'Message d\'invitation intégré (toutes les langues)';
+
+  @override
+  String get workspaceConfigInvitationSingleUse =>
+      'Les codes d\'invitation personnels sont à usage unique et expirent après 14 jours ; les nouveaux membres doivent être approuvés par un admin';
+
+  @override
   String get memberKioskLabel => 'Borne';
 
   @override

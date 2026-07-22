@@ -12,7 +12,7 @@ import 'package:deskilo/features/workspace/domain/workspace_config_pdf.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-const _strings = WorkspaceConfigPdfStrings(
+final _strings = WorkspaceConfigPdfStrings(
   title: 'Workspace configuration',
   overview: 'Overview',
   country: 'Country',
@@ -32,6 +32,12 @@ const _strings = WorkspaceConfigPdfStrings(
   bookableWhole: 'bookable as a whole',
   seatsLabel: 'Seats',
   emptyLevel: 'No rooms',
+  levelBookable: (price) =>
+      price.isEmpty ? 'Bookable as a whole' : 'Bookable — $price',
+  invitations: 'Invitations',
+  invitationCustomTemplate: 'Custom invitation message configured',
+  invitationDefault: 'Built-in invitation message',
+  invitationSingleUse: 'Single-use codes; approval required',
 );
 
 pw.Font _ttf(String path) => pw.Font.ttf(
@@ -76,8 +82,8 @@ FloorPlan _plan() {
 
 Future<Uint8List> _build({
   List<ConfigPdfMember> members = const [
-    (name: 'Anna', role: 'Owner', status: 'Active'),
-    (name: 'Ben', role: 'Member', status: 'Active'),
+    (name: 'Anna', role: 'Owner', status: 'Active', details: ''),
+    (name: 'Ben', role: 'Member', status: 'Active', details: ''),
   ],
   List<String> featureLabels = const ['Calendar tab', 'Money tab'],
   List<String> closureLabels = const ['Jul 14, 2026 — Bastille Day'],
@@ -105,7 +111,9 @@ Future<Uint8List> _build({
           plan: _plan(),
         ),
       ],
-      baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+      levelPrices: const {},
+    hasCustomInvitationTemplate: false,
+    baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
       boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
     );
 
@@ -118,12 +126,12 @@ void main() {
 
   test('more members grow the document', () async {
     final few = await _build(
-      members: const [(name: 'Anna', role: 'Owner', status: 'Active')],
+      members: const [(name: 'Anna', role: 'Owner', status: 'Active', details: '')],
     );
     final many = await _build(
       members: [
         for (var i = 0; i < 20; i++)
-          (name: 'Member $i', role: 'Member', status: 'Active'),
+          (name: 'Member $i', role: 'Member', status: 'Active', details: ''),
       ],
     );
     expect(many.length, greaterThan(few.length));

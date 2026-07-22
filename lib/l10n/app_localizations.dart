@@ -1958,6 +1958,72 @@ abstract class AppLocalizations {
   /// **'No workspace ID found — paste the invitation or type the ID.'**
   String get workspaceInviteCodeInvalid;
 
+  /// No description provided for @eventTypeMemberJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'New member'**
+  String get eventTypeMemberJoin;
+
+  /// No description provided for @memberStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get memberStatusPending;
+
+  /// No description provided for @pendingApprovalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting approval'**
+  String get pendingApprovalTitle;
+
+  /// No description provided for @pendingApprovalBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You have joined {workspace}. An administrator must approve your membership before you can use the workspace — you will get access as soon as they confirm.'**
+  String pendingApprovalBody(String workspace);
+
+  /// No description provided for @pendingApprovalRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Check again'**
+  String get pendingApprovalRefresh;
+
+  /// No description provided for @memberApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve membership'**
+  String get memberApprove;
+
+  /// No description provided for @memberRejectJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject membership'**
+  String get memberRejectJoin;
+
+  /// No description provided for @workspaceConfigInvitations.
+  ///
+  /// In en, this message translates to:
+  /// **'Invitations'**
+  String get workspaceConfigInvitations;
+
+  /// No description provided for @workspaceConfigInvitationCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom invitation message configured'**
+  String get workspaceConfigInvitationCustom;
+
+  /// No description provided for @workspaceConfigInvitationDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Built-in invitation message (all languages)'**
+  String get workspaceConfigInvitationDefault;
+
+  /// No description provided for @workspaceConfigInvitationSingleUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal invitation codes are single-use and expire after 14 days; new members need admin approval'**
+  String get workspaceConfigInvitationSingleUse;
+
   /// Subtitle chip of a kiosk device account in the members list (0043)
   ///
   /// In en, this message translates to:

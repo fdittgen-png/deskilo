@@ -1038,6 +1038,44 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se encontró ningún ID — pega la invitación o escribe el ID.';
 
   @override
+  String get eventTypeMemberJoin => 'Nuevo miembro';
+
+  @override
+  String get memberStatusPending => 'Pendiente';
+
+  @override
+  String get pendingApprovalTitle => 'Esperando aprobación';
+
+  @override
+  String pendingApprovalBody(String workspace) {
+    return 'Te has unido a $workspace. Un administrador debe aprobar tu membresía antes de que puedas usar el espacio — tendrás acceso en cuanto confirme.';
+  }
+
+  @override
+  String get pendingApprovalRefresh => 'Comprobar de nuevo';
+
+  @override
+  String get memberApprove => 'Aprobar membresía';
+
+  @override
+  String get memberRejectJoin => 'Rechazar membresía';
+
+  @override
+  String get workspaceConfigInvitations => 'Invitaciones';
+
+  @override
+  String get workspaceConfigInvitationCustom =>
+      'Mensaje de invitación personalizado configurado';
+
+  @override
+  String get workspaceConfigInvitationDefault =>
+      'Mensaje de invitación integrado (todos los idiomas)';
+
+  @override
+  String get workspaceConfigInvitationSingleUse =>
+      'Los códigos de invitación personales son de un solo uso y caducan a los 14 días; los nuevos miembros necesitan la aprobación de un admin';
+
+  @override
   String get memberKioskLabel => 'Quiosco';
 
   @override

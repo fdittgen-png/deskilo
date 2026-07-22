@@ -7,7 +7,15 @@ part 'member.freezed.dart';
 
 /// Membership status (spec §7.2). Enum values are persisted by name —
 /// never rename.
-enum MemberStatus { active, paused, exited }
+enum MemberStatus {
+  active,
+  paused,
+
+  /// Joined but not yet validated by the workspace (0051): the member
+  /// waits on the approval screen until owner/admins confirm.
+  pending,
+  exited,
+}
 
 /// A user's participation in one workspace. Roles are additive flags
 /// (spec §2): every member is a worker; admin/owner add capabilities.

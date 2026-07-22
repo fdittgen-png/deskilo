@@ -1,0 +1,20 @@
+{
+  "eventTypeMemberJoin": "New member",
+  "memberStatusPending": "Pending",
+  "pendingApprovalTitle": "Awaiting approval",
+  "pendingApprovalBody": "You have joined {workspace}. An administrator must approve your membership before you can use the workspace — you will get access as soon as they confirm.",
+  "@pendingApprovalBody": {
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      }
+    }
+  },
+  "pendingApprovalRefresh": "Check again",
+  "memberApprove": "Approve membership",
+  "memberRejectJoin": "Reject membership",
+  "workspaceConfigInvitations": "Invitations",
+  "workspaceConfigInvitationCustom": "Custom invitation message configured",
+  "workspaceConfigInvitationDefault": "Built-in invitation message (all languages)",
+  "workspaceConfigInvitationSingleUse": "Personal invitation codes are single-use and expire after 14 days; new members need admin approval"
+}
