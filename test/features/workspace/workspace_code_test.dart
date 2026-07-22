@@ -50,17 +50,40 @@ void main() {
     expect(qr.semanticsLabel, 'deskilo://join?role=user&code=GOODCODE22');
   });
 
-  testWidgets('owner switches to the admin invite — its own code, role in '
-      'the QR URL, no ID editing', (tester) async {
-    await pumpWorkspaceCode(tester);
+  testWidgets('owner switches to the admin invite — a PERSONAL single-use '
+      'code is minted (#319), role in the QR URL, no ID editing',
+      (tester) async {
+    final workspace = await pumpWorkspaceCode(tester);
 
     await tester.tap(find.text('Admin invite'));
     await tester.pumpAndSettle();
 
+    final minted = workspace.mintedInvitations.single;
+    expect(minted.isAdmin, isTrue);
     final qr = tester.widget<QrImageView>(find.byType(QrImageView));
-    expect(qr.semanticsLabel, 'deskilo://join?role=admin&code=ADMINCODE33');
-    expect(find.text('ADMINCODE33'), findsOneWidget);
+    expect(
+      qr.semanticsLabel,
+      'deskilo://join?role=admin&code=${minted.code}',
+    );
+    expect(find.text(minted.code), findsOneWidget);
     expect(find.text('Change workspace ID'), findsNothing);
+  });
+
+  testWidgets('each "New admin code" tap mints another single-use '
+      'invitation', (tester) async {
+    final workspace = await pumpWorkspaceCode(tester);
+
+    await tester.tap(find.text('Admin invite'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('admin-invite-new')));
+    await tester.tap(find.byKey(const ValueKey('admin-invite-new')));
+    await tester.pumpAndSettle();
+
+    expect(workspace.mintedInvitations, hasLength(2));
+    expect(
+      find.text(workspace.mintedInvitations.last.code),
+      findsOneWidget,
+    );
   });
 
   testWidgets('no owner invite exists — only member and admin segments',

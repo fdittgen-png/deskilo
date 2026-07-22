@@ -196,13 +196,37 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     status: MemberStatus.active,
   );
 
-  /// Admin invite code (0030); like the owner-only RLS, [adminInviteCode]
-  /// only hands it out when [myMember] is an owner.
-  String adminCode = 'ADMINCODE33';
+  /// Personal invitations minted through [createInvitation] (0051), in
+  /// mint order — tests read the codes and roles back from here.
+  final List<({String code, bool isAdmin, String firstName, String lastName})>
+      mintedInvitations = [];
 
+  var _nextInviteCode = 1;
+
+  /// Mirrors the server rules (0051): admins mint member invites, only
+  /// owners mint admin invites.
   @override
-  Future<String?> adminInviteCode(String workspaceId) async =>
-      myMember.isOwner ? adminCode : null;
+  Future<String> createInvitation(
+    String workspaceId, {
+    required bool isAdmin,
+    String firstName = '',
+    String lastName = '',
+  }) async {
+    if (isAdmin && !myMember.isOwner) {
+      throw Exception('only owners may invite admins');
+    }
+    if (!isAdmin && !myMember.isAdmin) {
+      throw Exception('only admins may invite members');
+    }
+    final code = 'INVITE${_nextInviteCode++}Z';
+    mintedInvitations.add((
+      code: code,
+      isAdmin: isAdmin,
+      firstName: firstName,
+      lastName: lastName,
+    ));
+    return code;
+  }
 
   var _nextId = 1;
 

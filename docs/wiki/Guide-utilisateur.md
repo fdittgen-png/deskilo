@@ -35,11 +35,13 @@ DesKilo a trois rôles cumulatifs, plus un compte « appareil » :
 **Chaque invitation est liée à un rôle.** Sur l'écran *Identifiant & QR* du propriétaire, il existe deux invitations, chacune avec son propre QR code et son propre code :
 
 - **Invitation membre** — l'identifiant de l'espace lui-même. Imprimez-le, affichez-le au mur, partagez-le librement : quiconque le scanne ou le saisit rejoint comme simple membre.
-- **Invitation admin** — un code secret distinct, visible des propriétaires uniquement. Ne le partagez qu'avec les personnes qui doivent gérer l'espace : quiconque l'utilise rejoint comme admin.
+- **Invitation admin** — un **code personnel à usage unique**, émis par un propriétaire pour une personne précise. Il admet cette seule personne comme admin, puis expire (un code inutilisé périme après 14 jours). Émettez-en un nouveau par admin avec *Nouveau code admin*.
 
 **Il n'existe pas d'invitation propriétaire — c'est voulu.** La propriété ne peut être accordée que par un propriétaire existant, dans *Membres & forfaits*. Un espace garde toujours au moins un propriétaire : l'application refuse de rétrograder ou de retirer le dernier. Promouvoir ou rétrograder un **admin** passe par le flux de validation (§6) — le changement s'applique une fois confirmé par les validateurs de l'espace.
 
-Le QR encode un lien qui nomme le rôle accordé (`deskilo://join?role=…`). Falsifier le lien ne change rien — le serveur déduit le rôle du code secret lui-même.
+Le QR encode un lien qui nomme le rôle accordé (`deskilo://join?role=…`). Falsifier le lien ne change rien — le serveur déduit le rôle du code lui-même : l'identifiant d'espace fait toujours rejoindre comme membre, et une invitation personnelle fait rejoindre exactement dans le rôle pour lequel elle a été émise, une seule fois. Un code admin transféré déjà utilisé — ou expiré — n'admet personne.
+
+**Inviter par message** (*Inviter quelqu'un*) : chaque envoi WhatsApp/SMS/partage émet son propre code personnel à usage unique et compose un message prêt à l'emploi dans la langue de l'invité·e. Le destinataire peut simplement copier le message entier et le coller dans le champ de connexion de l'application — le code est détecté automatiquement.
 
 ## 3. Le plan (onglet Plan)
 

@@ -6,11 +6,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/share/text_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invitation_message.dart';
 import '../../domain/invite_uri.dart';
 import '../../domain/workspace.dart';
+import '../../providers/workspace_providers.dart';
 
 /// The five help/app languages, by endonym — the invitee reads the
 /// message, so the sender picks THEIR language, defaulting to the app's.
@@ -25,6 +27,11 @@ const _inviteLanguages = <String, String>{
 /// Builds the invitation text for [languageCode] (0049): the workspace's
 /// custom template when set — its {tag}s filled — otherwise the localized
 /// built-in message explaining download → account → join.
+///
+/// [monospaceCode] wraps the code in WhatsApp's ```…``` monospace markers
+/// (#318) so it renders as a visually distinct code; [InviteUriCodec.
+/// extractCode] strips the markers back out when the whole message is
+/// pasted into the join field.
 String buildInvitationMessage({
   required Workspace workspace,
   required String code,
@@ -33,14 +40,16 @@ String buildInvitationMessage({
   String firstName = '',
   String lastName = '',
   String phone = '',
+  bool monospaceCode = false,
 }) {
   final link = InviteUriCodec.encode(code: code, role: role);
+  final shownCode = monospaceCode ? '```$code```' : code;
   final l10n = lookupAppLocalizations(Locale(languageCode));
   if (workspace.invitationTemplate.trim().isEmpty) {
     return l10n.invitationDefaultTemplate(
       firstName.isEmpty ? '' : ' $firstName',
       workspace.name,
-      code,
+      shownCode,
       StoreLinks.downloadLine,
       link,
     );
@@ -50,7 +59,7 @@ String buildInvitationMessage({
     'lastName': lastName,
     'phone': phone,
     'workspaceName': workspace.name,
-    'workspaceId': code,
+    'workspaceId': shownCode,
     'inviteLink': link,
     'downloadUrl': StoreLinks.downloadLine,
     'role': role == InviteRole.admin
@@ -60,28 +69,26 @@ String buildInvitationMessage({
 }
 
 /// Opens the invite sheet for the current invite tab (member or admin).
+/// Every send mints its own personal, single-use invitation code (#319)
+/// — the workspace ID is never what an invitation carries.
 Future<void> showInviteSheet(
   BuildContext context, {
   required Workspace workspace,
-  required String code,
   required InviteRole role,
 }) =>
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (_) =>
-          _InviteSheet(workspace: workspace, code: code, role: role),
+      builder: (_) => _InviteSheet(workspace: workspace, role: role),
     );
 
 class _InviteSheet extends ConsumerStatefulWidget {
   const _InviteSheet({
     required this.workspace,
-    required this.code,
     required this.role,
   });
 
   final Workspace workspace;
-  final String code;
   final InviteRole role;
 
   @override
@@ -102,26 +109,58 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
     super.dispose();
   }
 
-  String get _message => buildInvitationMessage(
-        workspace: widget.workspace,
-        code: widget.code,
-        role: widget.role,
-        languageCode:
-            _language ?? Localizations.localeOf(context).languageCode,
-        firstName: _firstName.text.trim(),
-        lastName: _lastName.text.trim(),
-        phone: _phone.text.trim(),
-      );
+  /// Mints a fresh personal, single-use invitation (#319) and composes
+  /// the message around its code. Every send button mints its own code —
+  /// a code is one person's, for one join, in the role of this sheet.
+  /// Null when minting failed (already traced + snackbarred).
+  Future<String?> _composeWithFreshCode({required bool monospace}) async {
+    final l10n = AppLocalizations.of(context);
+    String? code;
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'create invitation failed',
+      errorText: l10n?.inviteCreateFailed ??
+          'Could not create the invitation. '
+              'Check your connection and try again.',
+      action: () async {
+        code = await ref.read(workspaceRepositoryProvider).createInvitation(
+              widget.workspace.id,
+              isAdmin: widget.role == InviteRole.admin,
+              firstName: _firstName.text.trim(),
+              lastName: _lastName.text.trim(),
+            );
+      },
+    )) {
+      return null;
+    }
+    if (!mounted) return null;
+    return buildInvitationMessage(
+      workspace: widget.workspace,
+      code: code!,
+      role: widget.role,
+      languageCode:
+          _language ?? Localizations.localeOf(context).languageCode,
+      firstName: _firstName.text.trim(),
+      lastName: _lastName.text.trim(),
+      phone: _phone.text.trim(),
+      monospaceCode: monospace,
+    );
+  }
 
   /// The phone as wa.me digits ('' when none given).
   String get _phoneDigits =>
       _phone.text.replaceAll(RegExp(r'[^0-9]'), '');
 
-  Future<void> _send(Uri uri) async {
+  Future<void> _send(
+    Uri Function(String message) uriOf, {
+    required bool monospace,
+  }) async {
     final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
-    final message = _message;
-    final opened = await ref.read(linkLauncherProvider)(uri);
+    final message = await _composeWithFreshCode(monospace: monospace);
+    if (message == null || !mounted) return;
+    final opened = await ref.read(linkLauncherProvider)(uriOf(message));
     if (!mounted) return;
     if (!opened) {
       // No handler (e.g. WhatsApp not installed) — the message is not
@@ -137,23 +176,28 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
   }
 
   Future<void> _whatsapp() => _send(
-        Uri.https(
+        // WhatsApp renders ```…``` as monospace, so the personal code
+        // reads as a code (#318).
+        (message) => Uri.https(
           'wa.me',
           '/${_phoneDigits.isEmpty ? '' : _phoneDigits}',
-          {'text': _message},
+          {'text': message},
         ),
+        monospace: true,
       );
 
   Future<void> _sms() => _send(
-        Uri(
+        (message) => Uri(
           scheme: 'sms',
           path: _phoneDigits.isEmpty ? '' : '+$_phoneDigits',
-          queryParameters: {'body': _message},
+          queryParameters: {'body': message},
         ),
+        monospace: false,
       );
 
   Future<void> _share() async {
-    final message = _message;
+    final message = await _composeWithFreshCode(monospace: false);
+    if (message == null || !mounted) return;
     await ref.read(textSharerProvider)(message);
     if (mounted) Navigator.of(context).pop();
   }

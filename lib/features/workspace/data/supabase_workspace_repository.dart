@@ -46,14 +46,19 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
-  Future<String?> adminInviteCode(String workspaceId) async {
-    // Owner-only RLS (0030): non-owners simply get no row back.
-    final row = await _client
-        .from('workspace_admin_invites')
-        .select('code')
-        .eq('workspace_id', workspaceId)
-        .maybeSingle();
-    return row?['code'] as String?;
+  Future<String> createInvitation(
+    String workspaceId, {
+    required bool isAdmin,
+    String firstName = '',
+    String lastName = '',
+  }) async {
+    final result = await _client.rpc<dynamic>('create_invitation', params: {
+      'p_workspace_id': workspaceId,
+      'p_is_admin': isAdmin,
+      'p_first_name': firstName,
+      'p_last_name': lastName,
+    });
+    return result as String;
   }
 
   @override

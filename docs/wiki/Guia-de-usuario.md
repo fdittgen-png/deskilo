@@ -35,11 +35,13 @@ DesKilo tiene tres roles acumulativos, más una cuenta de dispositivo:
 **Cada invitación está ligada a un rol.** En la pantalla *ID del espacio & QR* del propietario hay dos invitaciones, cada una con su propio QR y su propio código:
 
 - **Invitación de miembro** — el propio ID del espacio. Imprímelo, cuélgalo en la pared, compártelo libremente: quien lo escanee o escriba se une como miembro normal.
-- **Invitación de admin** — un código secreto aparte, visible solo para propietarios. Compártelo solo con quien deba gestionar el espacio: quien lo use se une como admin.
+- **Invitación de admin** — un **código personal de un solo uso**, emitido por un propietario para una persona concreta. Admite solo a esa persona como admin y luego caduca (un código sin usar expira a los 14 días). Emite uno nuevo por admin con *Nuevo código de admin*.
 
 **No existe invitación de propietario — a propósito.** La propiedad solo puede otorgarla un propietario existente, en *Miembros y planes*. Un espacio conserva siempre al menos un propietario: la app se niega a degradar o eliminar al último. Promover o degradar un **admin** pasa por el flujo de validación (§6) — se aplica cuando los validadores del espacio confirman.
 
-El QR codifica un enlace que nombra el rol otorgado (`deskilo://join?role=…`). Manipular el enlace no cambia nada — el servidor deriva el rol del propio código secreto.
+El QR codifica un enlace que nombra el rol otorgado (`deskilo://join?role=…`). Manipular el enlace no cambia nada — el servidor deriva el rol del propio código: el ID del espacio siempre une como miembro, y una invitación personal une exactamente en el rol con el que se emitió, una sola vez. Un código de admin reenviado ya usado — o caducado — no admite a nadie.
+
+**Invitar por mensaje** (*Invitar a alguien*): cada envío por WhatsApp/SMS/compartir emite su propio código personal de un solo uso y compone un mensaje listo en el idioma del invitado. El destinatario puede simplemente copiar el mensaje completo y pegarlo en el campo de unión de la app — el código se detecta automáticamente.
 
 ## 3. El plano (pestaña Plano)
 
