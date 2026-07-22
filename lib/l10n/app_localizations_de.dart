@@ -1012,7 +1012,7 @@ class AppLocalizationsDe extends AppLocalizations {
     String downloadUrl,
     String inviteLink,
   ) {
-    return 'Hallo$firstName! Du bist eingeladen, unserem Coworking-Space „$workspaceName“ auf DesKilo beizutreten.\n\n1. Lade die App herunter:\n$downloadUrl\n\n2. Öffne sie, lege dein Konto an (E-Mail + Passwort) und melde dich an.\n\n3. Wähle „Workspace beitreten“ und gib die Workspace-ID ein: $workspaceId\n(oder scanne vor Ort den Einladungs-QR — $inviteLink)\n\nBis bald bei $workspaceName!';
+    return 'Hallo$firstName! Du bist eingeladen, unserem Coworking-Space „$workspaceName“ auf DesKilo beizutreten.\n\n1. Lade die App herunter:\n$downloadUrl\n\n2. Öffne sie, lege dein Konto an (E-Mail + Passwort) und melde dich an.\n\n3. Wähle „Workspace beitreten“ und gib die Workspace-ID ein:\n$workspaceId\n(oder scanne vor Ort den Einladungs-QR — $inviteLink)\n\nBis bald bei $workspaceName!';
   }
 
   @override
@@ -1025,6 +1025,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get invitationTemplateHint =>
       'Eigene Einladungsnachricht mit den Tags oben…';
+
+  @override
+  String get workspaceInvitePasteHint =>
+      'Füge die ganze Einladungsnachricht ein — die ID wird automatisch erkannt.';
+
+  @override
+  String get workspaceInviteCodeInvalid =>
+      'Keine Workspace-ID gefunden — Einladung einfügen oder ID eintippen.';
 
   @override
   String get memberKioskLabel => 'Kiosk';

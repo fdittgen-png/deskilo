@@ -188,8 +188,11 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              Text(
+              // Selectable so the owner can copy the ID with a long
+              // press too, not only via the Copy button.
+              SelectableText(
                 code,
+                textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall

@@ -8,6 +8,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
+import '../../domain/invite_uri.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
 
@@ -77,10 +78,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   Future<void> _join() async {
     if (!(_joinFormKey.currentState?.validate() ?? false)) return;
+    // Smart paste (0049): the field accepts a bare code, an invite URL,
+    // or a WHOLE pasted invitation message — WhatsApp only copies the
+    // full message, so the app digs the code out itself.
+    final code = InviteUriCodec.extractCode(_inviteCode.text);
+    if (code.isEmpty) return;
     await _run(
-      () => ref
-          .read(workspaceRepositoryProvider)
-          .joinWorkspace(_inviteCode.text.trim().toUpperCase()),
+      () => ref.read(workspaceRepositoryProvider).joinWorkspace(code),
     );
   }
 
@@ -214,10 +218,18 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           decoration: InputDecoration(
                             labelText:
                                 l10n?.workspaceInviteCodeLabel ?? 'Invite code',
+                            helperText: l10n?.workspaceInvitePasteHint ??
+                                'Paste the whole invitation message — '
+                                    'the ID is found automatically.',
+                            helperMaxLines: 2,
                           ),
+                          maxLines: null,
                           textCapitalization: TextCapitalization.characters,
-                          validator: (v) => (v == null || v.trim().isEmpty)
-                              ? (l10n?.authFieldRequired ?? 'Required')
+                          validator: (v) => InviteUriCodec.extractCode(v ?? '')
+                                  .isEmpty
+                              ? (l10n?.workspaceInviteCodeInvalid ??
+                                  'No workspace ID found — paste the '
+                                      'invitation or type the ID.')
                               : null,
                         ),
                         const SizedBox(height: 24),

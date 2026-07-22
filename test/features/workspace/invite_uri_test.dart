@@ -41,4 +41,46 @@ void main() {
       expect(InviteUriCodec.decodeCode('https://example.com/x'), '');
     });
   });
+
+  group('extractCode (0049 smart paste)', () {
+    test('bare code and lone URL behave like decodeCode', () {
+      expect(InviteUriCodec.extractCode('mma3eracep'), 'MMA3ERACEP');
+      expect(
+        InviteUriCodec.extractCode(
+          'deskilo://join?role=user&code=MMA3ERACEP',
+        ),
+        'MMA3ERACEP',
+      );
+    });
+
+    test('a whole WhatsApp invitation message yields the code — even '
+        'with the URL wrapped across lines', () {
+      const message = 'Bonjour F ! Vous êtes invité·e à rejoindre notre '
+          'espace « test Google » sur DesKilo.\n\n'
+          "3. Choisissez « Rejoindre un espace » et saisissez l'identifiant :\n"
+          'MMA3ERACEP\n'
+          "(ou scannez le QR d'invitation sur place — "
+          'deskilo://join?role=user&code=\nMMA3ERACEP)\n\n'
+          'À bientôt chez test Google !';
+      expect(InviteUriCodec.extractCode(message), 'MMA3ERACEP');
+    });
+
+    test('a message without the URL still finds the standalone-ID line',
+        () {
+      expect(
+        InviteUriCodec.extractCode(
+          'Join us! The workspace ID:\nGOODCODE22\nsee you soon',
+        ),
+        'GOODCODE22',
+      );
+    });
+
+    test('prose without a code, and foreign URLs, yield nothing', () {
+      expect(InviteUriCodec.extractCode('just some words here'), '');
+      expect(
+        InviteUriCodec.extractCode('visit https://example.com/?code=EVIL1 now'),
+        '',
+      );
+    });
+  });
 }

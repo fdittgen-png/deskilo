@@ -60,13 +60,32 @@ void main() {
     expect(find.byType(ShellBottomBar), findsOneWidget);
   });
 
+  testWidgets(
+      'pasting the WHOLE invitation message joins too — the ID is '
+      'extracted automatically (0049 smart paste)', (tester) async {
+    await pumpWithoutWorkspace(tester);
+
+    await tester.tap(find.text('Join a workspace'));
+    await tester.pumpAndSettle();
+    const message = 'Hi! You are invited to join "Pezenas" on DesKilo.\n'
+        '3. Choose "Join a workspace" and enter the workspace ID:\n'
+        'GOODCODE22\n'
+        '(or scan the invite QR — deskilo://join?role=user&code=GOODCODE22)\n'
+        'See you soon!';
+    await tester.enterText(find.byType(TextFormField).first, message);
+    await tester.tap(find.text('Join'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ShellBottomBar), findsOneWidget);
+  });
+
   testWidgets('joining with an invalid code shows the error and stays',
       (tester) async {
     await pumpWithoutWorkspace(tester);
 
     await tester.tap(find.text('Join a workspace'));
     await tester.pumpAndSettle();
-    await tester.enterText(find.byType(TextFormField).first, 'BADCODE');
+    await tester.enterText(find.byType(TextFormField).first, 'BADCODE99');
     await tester.tap(find.text('Join'));
     await tester.pumpAndSettle();
 
