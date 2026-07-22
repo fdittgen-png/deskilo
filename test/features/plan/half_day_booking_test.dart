@@ -97,7 +97,7 @@ void main() {
     expect(find.byKey(_dayChip), findsOneWidget);
     expect(find.text('Morning'), findsOneWidget);
     expect(find.text('Afternoon'), findsOneWidget);
-    expect(find.text('Day'), findsOneWidget);
+    expect(find.text('Full day'), findsOneWidget);
     expect(find.byKey(_fromChip), findsNothing);
     expect(find.byKey(_toChip), findsNothing);
     // Live mode: no window selected yet.
