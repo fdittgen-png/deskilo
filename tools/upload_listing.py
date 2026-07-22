@@ -105,6 +105,22 @@ def main() -> int:
         lambda: edits.insert(packageName=args.package, body={}),
         label="edits.insert")["id"]
 
+    # App details (the API-settable slice of the Console's "category &
+    # contact details" task): contact e-mail/website + default language.
+    # The category itself and the policy declarations have NO API — they
+    # are owner-only Console forms.
+    print("Updating app details (contact e-mail, website)")
+    _execute_with_retry(
+        lambda: edits.details().update(
+            packageName=args.package, editId=edit_id,
+            body={
+                "contactEmail": "fdittgen@gmail.com",
+                "contactWebsite": "https://github.com/fdittgen-png/deskilo",
+                "defaultLanguage": "en-US",
+            },
+        ),
+        label="details.update")
+
     for locale in locales:
         loc_dir = metadata / locale
         print(f"[{locale}] listing texts")
