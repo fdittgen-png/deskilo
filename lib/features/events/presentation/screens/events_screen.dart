@@ -103,6 +103,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         l10n?.eventTypeServiceCharge ?? 'Service',
       EventType.quota => l10n?.eventTypeQuota ?? 'Extra half-days',
       EventType.roleChange => l10n?.eventTypeRoleChange ?? 'Role change',
+      EventType.memberJoin => l10n?.eventTypeMemberJoin ?? 'New member',
     };
   }
 
@@ -116,6 +117,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.adjustment => Icons.tune,
       EventType.serviceCharge => Icons.room_service_outlined,
       EventType.quota => Icons.hourglass_top_outlined,
+      EventType.memberJoin => Icons.person_add_alt,
       EventType.roleChange => Icons.admin_panel_settings_outlined,
     };
   }

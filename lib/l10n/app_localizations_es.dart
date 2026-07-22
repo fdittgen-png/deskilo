@@ -1004,6 +1004,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo abrir la aplicación de envío. El mensaje se copió en su lugar.';
 
   @override
+  String get inviteCreateFailed =>
+      'No se pudo crear la invitación. Comprueba tu conexión e inténtalo de nuevo.';
+
+  @override
   String invitationDefaultTemplate(
     String firstName,
     String workspaceName,
@@ -1011,7 +1015,7 @@ class AppLocalizationsEs extends AppLocalizations {
     String downloadUrl,
     String inviteLink,
   ) {
-    return '¡Hola$firstName! Te invitamos a unirte a nuestro espacio de coworking «$workspaceName» en DesKilo.\n\n1. Descarga la aplicación:\n$downloadUrl\n\n2. Ábrela, crea tu cuenta (correo + contraseña) e inicia sesión.\n\n3. Elige «Unirse a un espacio» e introduce el ID:\n$workspaceId\n(o escanea el QR de invitación in situ — $inviteLink)\n\n¡Hasta pronto en $workspaceName!';
+    return '¡Hola$firstName! Te invitamos a unirte a nuestro espacio de coworking «$workspaceName» en DesKilo.\n\n1. Descarga la aplicación:\n$downloadUrl\n\n2. Ábrela, crea tu cuenta (correo + contraseña) e inicia sesión.\n\n3. Elige «Unirse a un espacio» e introduce tu código de invitación personal:\n$workspaceId\n(enlace de invitación: $inviteLink)\n\nConsejo: simplemente copia este mensaje completo y pégalo en la aplicación — el código se detecta automáticamente. Tu código es personal, de un solo uso y válido durante 14 días.\n\n¡Hasta pronto en $workspaceName!';
   }
 
   @override
@@ -1032,6 +1036,44 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get workspaceInviteCodeInvalid =>
       'No se encontró ningún ID — pega la invitación o escribe el ID.';
+
+  @override
+  String get eventTypeMemberJoin => 'Nuevo miembro';
+
+  @override
+  String get memberStatusPending => 'Pendiente';
+
+  @override
+  String get pendingApprovalTitle => 'Esperando aprobación';
+
+  @override
+  String pendingApprovalBody(String workspace) {
+    return 'Te has unido a $workspace. Un administrador debe aprobar tu membresía antes de que puedas usar el espacio — tendrás acceso en cuanto confirme.';
+  }
+
+  @override
+  String get pendingApprovalRefresh => 'Comprobar de nuevo';
+
+  @override
+  String get memberApprove => 'Aprobar membresía';
+
+  @override
+  String get memberRejectJoin => 'Rechazar membresía';
+
+  @override
+  String get workspaceConfigInvitations => 'Invitaciones';
+
+  @override
+  String get workspaceConfigInvitationCustom =>
+      'Mensaje de invitación personalizado configurado';
+
+  @override
+  String get workspaceConfigInvitationDefault =>
+      'Mensaje de invitación integrado (todos los idiomas)';
+
+  @override
+  String get workspaceConfigInvitationSingleUse =>
+      'Los códigos de invitación personales son de un solo uso y caducan a los 14 días; los nuevos miembros necesitan la aprobación de un admin';
 
   @override
   String get memberKioskLabel => 'Quiosco';
@@ -1992,7 +2034,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get inviteAdminExplainer =>
-      'Quien escanee este código QR — o escriba este código — se unirá como admin. Compártelo solo con personas que deban gestionar este espacio.';
+      'Este código es de un solo uso: admite a UNA persona como admin y luego caduca. Entrégalo solo a la persona a la que está destinado.';
+
+  @override
+  String get inviteAdminNewCode => 'Nuevo código de admin';
 
   @override
   String get inviteOwnerNote =>

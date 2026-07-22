@@ -22,13 +22,26 @@ abstract class WorkspaceRepository {
 
   /// Joins via invite code. Returns the workspace id. The granted role is
   /// derived server-side from which code matched: the workspace ID joins
-  /// as a plain user, the admin invite code as an admin (0030) — a join
+  /// as a plain user; any other code must be an unredeemed, unexpired
+  /// personal invitation, whose row fixes the role (0051) — a join
   /// therefore always carries a role, and never `owner`.
   Future<String> joinWorkspace(String inviteCode);
 
-  /// The workspace's admin invite code, or null when the caller is not
-  /// its owner (owner-only RLS on workspace_admin_invites, 0030).
-  Future<String?> adminInviteCode(String workspaceId);
+  /// Mints a personal, single-use invitation (0051) and returns its code.
+  /// Admins may mint member invites; only owners may mint admin invites —
+  /// the server enforces both, this just surfaces the exception.
+  Future<String> createInvitation(
+    String workspaceId, {
+    required bool isAdmin,
+    String firstName = '',
+    String lastName = '',
+  });
+
+  /// Admin/owner (RPC `decide_member_join`, migration 0052): approves
+  /// (active) or rejects (exited) a PENDING membership and settles its
+  /// member_join validation event. The quorum path through
+  /// respond_to_event stays available on the events feed.
+  Future<void> decideMemberJoin(String memberId, {required bool approve});
 
   /// Owner-only (workspaces_update RLS): change the workspace locale —
   /// country, currency and time zone (#153). Currency defaults from the

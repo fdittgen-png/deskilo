@@ -80,7 +80,20 @@ void main() {
         languageCode: 'de',
       );
       expect(de, contains('Hallo!'));
-      expect(de, contains('Workspace-ID'));
+      expect(de, contains('Einladungscode'));
+    });
+
+    test('monospaceCode wraps the code in WhatsApp markers (#318)', () {
+      final wa = buildInvitationMessage(
+        workspace: _workspace,
+        code: 'GOODCODE22',
+        role: InviteRole.user,
+        languageCode: 'en',
+        monospaceCode: true,
+      );
+      expect(wa, contains('```GOODCODE22```'));
+      // The deep link must stay unformatted — only the shown code wraps.
+      expect(wa, contains('deskilo://join?role=user&code=GOODCODE22'));
     });
 
     test('custom template wins and its tags fill', () {
@@ -101,7 +114,7 @@ void main() {
   });
 
   group('invite sheet', () {
-    Future<(List<Uri>, List<String>)> pumpSheet(
+    Future<(List<Uri>, List<String>, FakeWorkspaceRepository)> pumpSheet(
       WidgetTester tester, {
       Workspace? workspace,
     }) async {
@@ -130,16 +143,15 @@ void main() {
       unawaited(showInviteSheet(
         context,
         workspace: workspace ?? repo.workspaces.first,
-        code: 'GOODCODE22',
         role: InviteRole.user,
       ));
       await tester.pumpAndSettle();
-      return (launched, shared);
+      return (launched, shared, repo);
     }
 
-    testWidgets('WhatsApp without a phone opens wa.me with the message',
-        (tester) async {
-      final (launched, _) = await pumpSheet(tester);
+    testWidgets('WhatsApp mints a personal code (#319) and formats it '
+        'monospace (#318) — never the workspace ID', (tester) async {
+      final (launched, _, repo) = await pumpSheet(tester);
 
       await tester.tap(find.byKey(const ValueKey('invite-whatsapp')));
       await tester.pumpAndSettle();
@@ -147,13 +159,17 @@ void main() {
       expect(launched, hasLength(1));
       final uri = launched.single;
       expect(uri.host, 'wa.me');
-      expect(uri.queryParameters['text'], contains('GOODCODE22'));
-      expect(uri.queryParameters['text'], contains(StoreLinks.play));
+      final minted = repo.mintedInvitations.single;
+      expect(minted.isAdmin, isFalse);
+      final text = uri.queryParameters['text']!;
+      expect(text, contains('```${minted.code}```'));
+      expect(text, isNot(contains('GOODCODE22')));
+      expect(text, contains(StoreLinks.play));
     });
 
     testWidgets('a typed phone routes WhatsApp and SMS to that number',
         (tester) async {
-      final (launched, _) = await pumpSheet(tester);
+      final (launched, _, _) = await pumpSheet(tester);
 
       await tester.enterText(
         find.byKey(const ValueKey('invite-phone')),
@@ -165,31 +181,69 @@ void main() {
       expect(launched.single.path, '/33612345678');
     });
 
-    testWidgets('SMS carries the message in the body', (tester) async {
-      final (launched, _) = await pumpSheet(tester);
+    testWidgets('SMS carries the minted code UNformatted in the body',
+        (tester) async {
+      final (launched, _, repo) = await pumpSheet(tester);
 
       await tester.tap(find.byKey(const ValueKey('invite-sms')));
       await tester.pumpAndSettle();
 
       final uri = launched.single;
       expect(uri.scheme, 'sms');
-      expect(uri.queryParameters['body'], contains('GOODCODE22'));
+      final minted = repo.mintedInvitations.single;
+      expect(uri.queryParameters['body'], contains(minted.code));
+      expect(uri.queryParameters['body'], isNot(contains('```')));
     });
 
     testWidgets('share hands the full text to the share seam',
         (tester) async {
-      final (_, shared) = await pumpSheet(tester);
+      final (_, shared, repo) = await pumpSheet(tester);
 
       await tester.tap(find.byKey(const ValueKey('invite-share')));
       await tester.pumpAndSettle();
 
-      expect(shared.single, contains('GOODCODE22'));
+      expect(shared.single, contains(repo.mintedInvitations.single.code));
       expect(shared.single, contains(StoreLinks.fdroid));
+    });
+
+    testWidgets('a WhatsApp message pasted wholesale back into extractCode '
+        'yields the minted code — the copy-tip round-trip (#318)',
+        (tester) async {
+      final (launched, _, repo) = await pumpSheet(tester);
+
+      await tester.tap(find.byKey(const ValueKey('invite-whatsapp')));
+      await tester.pumpAndSettle();
+
+      final text = launched.single.queryParameters['text']!;
+      expect(
+        InviteUriCodec.extractCode(text),
+        repo.mintedInvitations.single.code,
+      );
+    });
+
+    testWidgets('the typed names travel into the minted invitation (#319)',
+        (tester) async {
+      final (_, _, repo) = await pumpSheet(tester);
+
+      await tester.enterText(
+        find.byKey(const ValueKey('invite-first-name')),
+        'Alice',
+      );
+      await tester.enterText(
+        find.byKey(const ValueKey('invite-last-name')),
+        'Martin',
+      );
+      await tester.tap(find.byKey(const ValueKey('invite-share')));
+      await tester.pumpAndSettle();
+
+      final minted = repo.mintedInvitations.single;
+      expect(minted.firstName, 'Alice');
+      expect(minted.lastName, 'Martin');
     });
 
     testWidgets('the language chips switch the message language',
         (tester) async {
-      final (launched, _) = await pumpSheet(tester);
+      final (launched, _, _) = await pumpSheet(tester);
 
       await tester.tap(find.byKey(const ValueKey('invite-lang-fr')));
       await tester.pumpAndSettle();
@@ -200,7 +254,7 @@ void main() {
     });
 
     testWidgets('a first name lands in the greeting', (tester) async {
-      final (launched, _) = await pumpSheet(tester);
+      final (launched, _, _) = await pumpSheet(tester);
 
       await tester.enterText(
         find.byKey(const ValueKey('invite-first-name')),

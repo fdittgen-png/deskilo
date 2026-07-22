@@ -35,11 +35,13 @@ DesKilo has three additive roles, plus a device account:
 **Every invitation is bound to a role.** On the owner's *Workspace ID & QR* screen there are two invites, each with its own QR code and code:
 
 - **Member invite** — the workspace ID itself. Print it, pin it to the wall, share it freely: whoever scans or types it joins as a plain member.
-- **Admin invite** — a separate secret code, visible to owners only. Share it only with people who should manage the workspace: whoever uses it joins as an admin.
+- **Admin invite** — a **personal, single-use code**, minted by an owner for one specific person. It admits that one person as an admin, then expires (unused codes lapse after 14 days). Mint a new one per admin with *New admin code*.
 
 **There is no owner invite — by design.** Ownership can only be granted by an existing owner, in *Members & plans*. A workspace always keeps at least one owner: the app refuses to demote or remove the last one. Promoting or demoting an **admin** goes through the validation flow (§6) — it applies once the workspace's validators confirm.
 
-The QR encodes a link that names the role it grants (`deskilo://join?role=…`). Tampering with the link changes nothing — the server derives the role from the secret code itself.
+The QR encodes a link that names the role it grants (`deskilo://join?role=…`). Tampering with the link changes nothing — the server derives the role from the code itself: the workspace ID always joins as a member, and a personal invitation joins in exactly the role it was minted with, once. A forwarded admin code that was already used — or expired — admits nobody.
+
+**Inviting someone by message** (*Invite someone*): each WhatsApp/SMS/share send mints its own personal single-use code and builds a ready-made message in the invitee's language. The recipient can simply copy the whole message and paste it into the app's join field — the code is detected automatically.
 
 ## 3. The floor plan (Plan tab)
 

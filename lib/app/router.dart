@@ -26,7 +26,9 @@ import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/presentation/screens/availability_screen.dart';
 import '../features/workspace/presentation/screens/features_screen.dart';
 import '../features/workspace/presentation/screens/members_screen.dart';
+import '../features/workspace/domain/member.dart';
 import '../features/workspace/presentation/screens/onboarding_screen.dart';
+import '../features/workspace/presentation/screens/pending_approval_screen.dart';
 import '../features/workspace/presentation/screens/scan_join_screen.dart';
 import '../features/workspace/presentation/screens/workspace_code_screen.dart';
 import '../features/workspace/presentation/screens/workspace_settings_screen.dart';
@@ -107,6 +109,21 @@ GoRouter router(Ref ref) {
       final atKiosk = state.matchedLocation == '/kiosk';
       if (me != null && me.isKiosk && !atKiosk) return '/kiosk';
       if ((me == null || !me.isKiosk) && atKiosk) return '/reserve';
+
+      // Pending membership (0052): the waiting room until the validators
+      // approve. Profiles stays reachable — the user may be active in
+      // another workspace and switch to it.
+      final atPending = state.matchedLocation == '/pending';
+      final pendingSafe =
+          atPending || state.matchedLocation == '/profiles';
+      if (me != null &&
+          me.status == MemberStatus.pending &&
+          !pendingSafe) {
+        return '/pending';
+      }
+      if ((me == null || me.status != MemberStatus.pending) && atPending) {
+        return '/reserve';
+      }
       return null;
     },
     routes: [
@@ -117,6 +134,10 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/kiosk',
         builder: (context, state) => const KioskScreen(),
+      ),
+      GoRoute(
+        path: '/pending',
+        builder: (context, state) => const PendingApprovalScreen(),
       ),
       GoRoute(
         path: '/onboarding',

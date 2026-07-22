@@ -196,13 +196,37 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     status: MemberStatus.active,
   );
 
-  /// Admin invite code (0030); like the owner-only RLS, [adminInviteCode]
-  /// only hands it out when [myMember] is an owner.
-  String adminCode = 'ADMINCODE33';
+  /// Personal invitations minted through [createInvitation] (0051), in
+  /// mint order — tests read the codes and roles back from here.
+  final List<({String code, bool isAdmin, String firstName, String lastName})>
+      mintedInvitations = [];
 
+  var _nextInviteCode = 1;
+
+  /// Mirrors the server rules (0051): admins mint member invites, only
+  /// owners mint admin invites.
   @override
-  Future<String?> adminInviteCode(String workspaceId) async =>
-      myMember.isOwner ? adminCode : null;
+  Future<String> createInvitation(
+    String workspaceId, {
+    required bool isAdmin,
+    String firstName = '',
+    String lastName = '',
+  }) async {
+    if (isAdmin && !myMember.isOwner) {
+      throw Exception('only owners may invite admins');
+    }
+    if (!isAdmin && !myMember.isAdmin) {
+      throw Exception('only admins may invite members');
+    }
+    final code = 'INVITE${_nextInviteCode++}Z';
+    mintedInvitations.add((
+      code: code,
+      isAdmin: isAdmin,
+      firstName: firstName,
+      lastName: lastName,
+    ));
+    return code;
+  }
 
   var _nextId = 1;
 
@@ -228,9 +252,48 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     return workspace.id;
   }
 
+  /// (0052) member id → last join decision, for assertions.
+  final joinDecisions = <String, bool>{};
+
+  @override
+  Future<void> decideMemberJoin(
+    String memberId, {
+    required bool approve,
+  }) async {
+    joinDecisions[memberId] = approve;
+    final i = otherMembers.indexWhere((m) => m.id == memberId);
+    if (i != -1) {
+      otherMembers[i] = otherMembers[i].copyWith(
+        status: approve ? MemberStatus.active : MemberStatus.exited,
+      );
+    }
+    if (myMember.id == memberId) {
+      myMember = myMember.copyWith(
+        status: approve ? MemberStatus.active : MemberStatus.exited,
+      );
+    }
+  }
+
+  /// (0052) Whether the fake's joins land pending (the server default).
+  /// Tests that predate the validation flow keep instant-active joins.
+  bool joinsArePending = false;
+
+  /// (0051) codes already redeemed — a second use is refused like the
+  /// server's atomic latch.
+  final redeemedInvitations = <String>{};
+
   @override
   Future<String> joinWorkspace(String inviteCode) async {
-    if (inviteCode != 'GOODCODE22') {
+    final invitation = mintedInvitations
+        .where((i) => i.code == inviteCode)
+        .firstOrNull;
+    var joinAsAdmin = false;
+    if (invitation != null) {
+      if (!redeemedInvitations.add(inviteCode)) {
+        throw StateError('invalid invite code');
+      }
+      joinAsAdmin = invitation.isAdmin;
+    } else if (inviteCode != 'GOODCODE22') {
       throw StateError('invalid invite code');
     }
     final workspace = Workspace(
@@ -242,6 +305,15 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       inviteCode: inviteCode,
     );
     workspaces.add(workspace);
+    if (joinsArePending) {
+      // Server truth since 0052: the joined membership awaits validation.
+      myMember = myMember.copyWith(
+        workspaceId: workspace.id,
+        status: MemberStatus.pending,
+        isAdmin: joinAsAdmin,
+        isOwner: false,
+      );
+    }
     return workspace.id;
   }
 

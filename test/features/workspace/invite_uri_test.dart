@@ -43,6 +43,18 @@ void main() {
   });
 
   group('extractCode (0049 smart paste)', () {
+    test('WhatsApp monospace markers around the code line are stripped '
+        '(#318)', () {
+      expect(
+        InviteUriCodec.extractCode(
+          'Choose "Join a workspace" and enter your code:\n'
+          '```MMA3ERACEP```\n'
+          'See you soon!',
+        ),
+        'MMA3ERACEP',
+      );
+    });
+
     test('bare code and lone URL behave like decodeCode', () {
       expect(InviteUriCodec.extractCode('mma3eracep'), 'MMA3ERACEP');
       expect(

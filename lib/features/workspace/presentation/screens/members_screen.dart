@@ -193,7 +193,25 @@ class MembersScreen extends ConsumerWidget {
   }) async {
     final l10n = AppLocalizations.of(context);
     final active = member.status == MemberStatus.active;
+    final pending = member.status == MemberStatus.pending;
     final actions = <Widget>[
+      // New-member validation (0052): a pending membership offers the
+      // decision first — approve activates, reject exits. The quorum
+      // path on the events feed stays available in parallel.
+      if (pending && !isSelf)
+        _sheetAction(
+          context,
+          icon: Icons.how_to_reg_outlined,
+          label: l10n?.memberApprove ?? 'Approve membership',
+          onTap: () => _decideJoin(context, ref, member, approve: true),
+        ),
+      if (pending && !isSelf)
+        _sheetAction(
+          context,
+          icon: Icons.person_off_outlined,
+          label: l10n?.memberRejectJoin ?? 'Reject membership',
+          onTap: () => _decideJoin(context, ref, member, approve: false),
+        ),
       if (servicesOn && !member.isKiosk && active)
         _sheetAction(
           context,
@@ -489,6 +507,30 @@ class MembersScreen extends ConsumerWidget {
     ref.invalidate(workspaceMembersProvider);
   }
 
+  /// New-member decision (0052): activates or exits a pending
+  /// membership through the admin/owner RPC.
+  Future<void> _decideJoin(
+    BuildContext context,
+    WidgetRef ref,
+    Member member, {
+    required bool approve,
+  }) async {
+    final l10n = AppLocalizations.of(context);
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'member join decision failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => ref
+          .read(workspaceRepositoryProvider)
+          .decideMemberJoin(member.id, approve: approve),
+    )) {
+      return;
+    }
+    ref.invalidate(workspaceMembersProvider);
+  }
+
   /// Badge manager of one member (0043): the active/revoked badge list
   /// with revoke buttons, and "New badge" which mints one and swaps the
   /// dialog to the ONE-TIME QR of the raw token.
@@ -622,6 +664,14 @@ class MembersScreen extends ConsumerWidget {
                         Text(l10n?.memberRoleOwner ?? 'Owner'),
                       if (member.isAdmin && !member.isOwner)
                         Text(l10n?.memberRoleAdmin ?? 'Admin'),
+                      if (member.status == MemberStatus.pending)
+                        Text(
+                          l10n?.memberStatusPending ?? 'Pending',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.error,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       if (member.status == MemberStatus.paused)
                         Text(l10n?.memberStatusPaused ?? 'Paused'),
                       if (member.status == MemberStatus.exited)

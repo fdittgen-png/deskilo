@@ -10,6 +10,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../../core/country/country_catalog.dart';
+import '../../../../core/format/cents.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -26,6 +27,7 @@ import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/booking_granularity.dart';
 import '../../domain/member.dart';
+import '../../domain/overage_policy.dart';
 import '../../domain/payment_instructions.dart';
 import '../../domain/invitation_message.dart';
 import '../../domain/workspace.dart';
@@ -230,6 +232,7 @@ class _WorkspaceSettingsScreenState
       switch (status) {
         MemberStatus.active => l10n?.memberStatusActive ?? 'Active',
         MemberStatus.paused => l10n?.memberStatusPaused ?? 'Paused',
+        MemberStatus.pending => l10n?.memberStatusPending ?? 'Pending',
         MemberStatus.exited => l10n?.memberStatusExited ?? 'Exited',
       };
 
@@ -306,12 +309,32 @@ class _WorkspaceSettingsScreenState
                   .toLowerCase()
                   .compareTo((names[b.id] ?? '').toLowerCase()),
             );
+          String memberDetails(Member member) {
+            final parts = <String>[
+              switch (member.overagePolicy) {
+                OveragePolicy.blocked =>
+                  l10n?.overagePolicyBlocked ?? 'Blocked at quota',
+                OveragePolicy.payg =>
+                  l10n?.overagePolicyPayg ?? 'Pay as you go',
+                OveragePolicy.package =>
+                  l10n?.overagePolicyPackage ?? 'Day packages',
+              },
+              if (member.maxActiveReservations != null)
+                'max ${member.maxActiveReservations}',
+              if (member.canReserveLevel)
+                l10n?.levelPermissionAllowed ??
+                    'May reserve a whole level',
+            ];
+            return parts.join(' · ');
+          }
+
           final configMembers = <ConfigPdfMember>[
             for (final member in sortedMembers)
               (
                 name: names[member.id] ?? '',
                 role: _roleLabel(l10n, member),
                 status: _statusLabel(l10n, member.status),
+                details: memberDetails(member),
               ),
           ];
 
@@ -336,6 +359,23 @@ class _WorkspaceSettingsScreenState
                 l10n?.workspaceConfigBookableWhole ?? 'bookable as a whole',
             seatsLabel: l10n?.workspaceConfigSeats ?? 'Seats',
             emptyLevel: l10n?.workspaceConfigEmptyLevel ?? 'No rooms',
+            levelBookable: (price) => price.isEmpty
+                ? (l10n?.levelBookableToggle ?? 'Bookable as a whole')
+                : '${l10n?.levelBookableToggle ?? 'Bookable as a whole'}'
+                    ' — $price / '
+                    '${l10n?.levelPriceLabel ?? 'Price per half-day'}',
+            invitations:
+                l10n?.workspaceConfigInvitations ?? 'Invitations',
+            invitationCustomTemplate:
+                l10n?.workspaceConfigInvitationCustom ??
+                    'Custom invitation message configured',
+            invitationDefault: l10n?.workspaceConfigInvitationDefault ??
+                'Built-in invitation message (all languages)',
+            invitationSingleUse:
+                l10n?.workspaceConfigInvitationSingleUse ??
+                    'Personal invitation codes are single-use and '
+                        'expire after 14 days; new members need '
+                        'admin approval',
           );
 
           final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
@@ -360,6 +400,16 @@ class _WorkspaceSettingsScreenState
             openDaysLabel: openDaysLabel,
             closureLabels: closureLabels,
             levels: plans,
+            levelPrices: {
+              for (final entry in plans)
+                if (entry.level.bookableAsWhole)
+                  entry.level.id: entry.level.priceCents == 0
+                      ? ''
+                      : '${centsToMajor(entry.level.priceCents)} '
+                          '${workspace.currencyCode}',
+            },
+            hasCustomInvitationTemplate:
+                workspace.invitationTemplate.trim().isNotEmpty,
             baseFont: pw.Font.ttf(regular),
             boldFont: pw.Font.ttf(bold),
           );

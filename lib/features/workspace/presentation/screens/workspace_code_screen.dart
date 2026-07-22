@@ -30,6 +30,38 @@ class WorkspaceCodeScreen extends ConsumerStatefulWidget {
 class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
   InviteRole _role = InviteRole.user;
 
+  /// The personal admin invitation minted for THIS screen visit (#319).
+  /// Single-use on the server, so the segment mints one on first entry
+  /// and the owner mints another per additional admin.
+  String? _adminCode;
+  bool _minting = false;
+
+  Future<void> _mintAdminCode() async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null || _minting) return;
+    setState(() => _minting = true);
+    String? code;
+    final ok = await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'create admin invitation failed',
+      errorText: l10n?.inviteCreateFailed ??
+          'Could not create the invitation. '
+              'Check your connection and try again.',
+      action: () async {
+        code = await ref
+            .read(workspaceRepositoryProvider)
+            .createInvitation(workspace.id, isAdmin: true);
+      },
+    );
+    if (!mounted) return;
+    setState(() {
+      _minting = false;
+      if (ok) _adminCode = code;
+    });
+  }
+
   Future<void> _editCode(BuildContext context) async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
@@ -117,7 +149,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final adminCode = ref.watch(adminInviteCodeProvider).value;
+    final isOwner = ref.watch(myMemberProvider).value?.isOwner ?? false;
 
     if (workspace == null) {
       return Scaffold(
@@ -128,12 +160,14 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
       );
     }
 
-    final isAdminInvite = _role == InviteRole.admin && adminCode != null;
-    final code = isAdminInvite ? adminCode : workspace.inviteCode;
-    final payload = InviteUriCodec.encode(
-      code: code,
-      role: isAdminInvite ? InviteRole.admin : InviteRole.user,
-    );
+    final isAdminInvite = _role == InviteRole.admin && isOwner;
+    final code = isAdminInvite ? _adminCode : workspace.inviteCode;
+    final payload = code == null
+        ? null
+        : InviteUriCodec.encode(
+            code: code,
+            role: isAdminInvite ? InviteRole.admin : InviteRole.user,
+          );
 
     return Scaffold(
       appBar: AppBar(
@@ -151,7 +185,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
               ),
               // The invite is always role-bound; there is no role-less QR
               // and no owner segment by design.
-              if (adminCode != null) ...[
+              if (isOwner) ...[
                 const SizedBox(height: 16),
                 SegmentedButton<InviteRole>(
                   segments: [
@@ -171,11 +205,34 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                     ),
                   ],
                   selected: {_role},
-                  onSelectionChanged: (selection) =>
-                      setState(() => _role = selection.first),
+                  onSelectionChanged: (selection) {
+                    setState(() => _role = selection.first);
+                    if (selection.first == InviteRole.admin &&
+                        _adminCode == null) {
+                      _mintAdminCode();
+                    }
+                  },
                 ),
               ],
               const SizedBox(height: 24),
+              if (code == null || payload == null) ...[
+                // Admin segment while the personal code is minted (or
+                // after a failed mint — the retry button re-mints).
+                SizedBox(
+                  height: 240,
+                  child: Center(
+                    child: _minting
+                        ? const CircularProgressIndicator()
+                        : OutlinedButton.icon(
+                            key: const ValueKey('admin-invite-retry'),
+                            onPressed: _mintAdminCode,
+                            icon: const Icon(Icons.refresh),
+                            label: Text(l10n?.inviteAdminNewCode ??
+                                'New admin code'),
+                          ),
+                  ),
+                ),
+              ] else ...[
               Container(
                 color: Colors.white,
                 padding: AppSpacing.lgAll,
@@ -202,9 +259,9 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
               Text(
                 isAdminInvite
                     ? (l10n?.inviteAdminExplainer ??
-                        'Whoever scans this QR code — or types this code — '
-                            'joins as an admin. Share it only with people '
-                            'who should manage this workspace.')
+                        'This code is single-use: it admits ONE person as '
+                            'an admin, then expires. Give it only to the '
+                            'person it is meant for.')
                     : (l10n?.workspaceCodeExplainer ??
                         'Coworkers scan this QR code — or type the ID — '
                             'to join this workspace.'),
@@ -249,6 +306,18 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                   l10n?.workspaceCodeSharePng ?? 'Share as PNG',
                 ),
               ),
+              if (isAdminInvite) ...[
+                const SizedBox(height: 12),
+                // Each admin invitation is single-use — mint the next
+                // one right here for the next person.
+                OutlinedButton.icon(
+                  key: const ValueKey('admin-invite-new'),
+                  onPressed: _minting ? null : _mintAdminCode,
+                  icon: const Icon(Icons.refresh),
+                  label: Text(l10n?.inviteAdminNewCode ?? 'New admin code'),
+                ),
+              ],
+              ],
               const SizedBox(height: 12),
               // Personal invitation (0049): a ready-made explanation of
               // download → account → join, over WhatsApp, SMS, or any
@@ -258,7 +327,6 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                 onPressed: () => showInviteSheet(
                   context,
                   workspace: workspace,
-                  code: code,
                   role:
                       isAdminInvite ? InviteRole.admin : InviteRole.user,
                 ),

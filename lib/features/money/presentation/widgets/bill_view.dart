@@ -521,6 +521,7 @@ class _OpenPositionsCard extends StatelessWidget {
       case EventType.quota:
         return l10n?.eventTypeQuota ?? 'Extra half-days';
       case EventType.roleChange:
+      case EventType.memberJoin:
       case EventType.reservation:
       case EventType.adjustment:
         return l10n?.eventTypeAdjustment ?? 'Adjustment';

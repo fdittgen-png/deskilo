@@ -1337,7 +1337,8 @@
   "invitePhoneLabel": "Phone (optional, with country code)",
   "inviteLanguageLabel": "Message language",
   "inviteSendFailed": "Could not open the app for sending. The message was copied instead.",
-  "invitationDefaultTemplate": "Hi{firstName}! You're invited to join our coworking space \"{workspaceName}\" on DesKilo.\n\n1. Download the app:\n{downloadUrl}\n\n2. Open it, create your account (e-mail + password) and sign in.\n\n3. Choose \"Join a workspace\" and enter the workspace ID:\n{workspaceId}\n(or scan the invite QR on site — {inviteLink})\n\nSee you soon at {workspaceName}!",
+  "inviteCreateFailed": "Could not create the invitation. Check your connection and try again.",
+  "invitationDefaultTemplate": "Hi{firstName}! You're invited to join our coworking space \"{workspaceName}\" on DesKilo.\n\n1. Download the app:\n{downloadUrl}\n\n2. Open it, create your account (e-mail + password) and sign in.\n\n3. Choose \"Join a workspace\" and enter your personal invitation code:\n{workspaceId}\n(invitation link: {inviteLink})\n\nTip: simply copy this whole message and paste it into the app — the code is found automatically. Your code is personal, single-use and valid for 14 days.\n\nSee you soon at {workspaceName}!",
   "@invitationDefaultTemplate": {
     "description": "Default invitation message; firstName is '' or ' Name'",
     "placeholders": {
@@ -1369,6 +1370,24 @@
   },
   "workspaceInvitePasteHint": "Paste the whole invitation message — the ID is found automatically.",
   "workspaceInviteCodeInvalid": "No workspace ID found — paste the invitation or type the ID.",
+  "eventTypeMemberJoin": "New member",
+  "memberStatusPending": "Pending",
+  "pendingApprovalTitle": "Awaiting approval",
+  "pendingApprovalBody": "You have joined {workspace}. An administrator must approve your membership before you can use the workspace — you will get access as soon as they confirm.",
+  "@pendingApprovalBody": {
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      }
+    }
+  },
+  "pendingApprovalRefresh": "Check again",
+  "memberApprove": "Approve membership",
+  "memberRejectJoin": "Reject membership",
+  "workspaceConfigInvitations": "Invitations",
+  "workspaceConfigInvitationCustom": "Custom invitation message configured",
+  "workspaceConfigInvitationDefault": "Built-in invitation message (all languages)",
+  "workspaceConfigInvitationSingleUse": "Personal invitation codes are single-use and expire after 14 days; new members need admin approval",
   "memberKioskLabel": "Kiosk",
   "@memberKioskLabel": {
     "description": "Subtitle chip of a kiosk device account in the members list (0043)"
@@ -2555,7 +2574,8 @@
   "workspaceCodeCopied": "Copied",
   "inviteRoleMember": "Member invite",
   "inviteRoleAdmin": "Admin invite",
-  "inviteAdminExplainer": "Whoever scans this QR code — or types this code — joins as an admin. Share it only with people who should manage this workspace.",
+  "inviteAdminExplainer": "This code is single-use: it admits ONE person as an admin, then expires. Give it only to the person it is meant for.",
+  "inviteAdminNewCode": "New admin code",
   "inviteOwnerNote": "There is no owner invite — only an owner can grant ownership, in Members & plans.",
   "scanJoinTitle": "Scan workspace QR",
   "onboardingScanButton": "Scan QR code",

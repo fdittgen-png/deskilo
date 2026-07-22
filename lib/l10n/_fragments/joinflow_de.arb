@@ -1,0 +1,13 @@
+{
+  "eventTypeMemberJoin": "Neues Mitglied",
+  "memberStatusPending": "Ausstehend",
+  "pendingApprovalTitle": "Warten auf Freigabe",
+  "pendingApprovalBody": "Du bist {workspace} beigetreten. Ein Admin muss deine Mitgliedschaft bestätigen, bevor du den Workspace nutzen kannst — du erhältst Zugriff, sobald sie bestätigt ist.",
+  "pendingApprovalRefresh": "Erneut prüfen",
+  "memberApprove": "Mitgliedschaft bestätigen",
+  "memberRejectJoin": "Mitgliedschaft ablehnen",
+  "workspaceConfigInvitations": "Einladungen",
+  "workspaceConfigInvitationCustom": "Eigene Einladungsnachricht konfiguriert",
+  "workspaceConfigInvitationDefault": "Eingebaute Einladungsnachricht (alle Sprachen)",
+  "workspaceConfigInvitationSingleUse": "Persönliche Einladungscodes sind einmalig nutzbar und verfallen nach 14 Tagen; neue Mitglieder brauchen die Freigabe eines Admins"
+}

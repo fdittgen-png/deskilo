@@ -97,17 +97,6 @@ Future<List<ClosureDay>> closureDays(Ref ref) async {
       .fetchClosureDays(workspace.id);
 }
 
-/// The active workspace's admin invite code — null for non-owners
-/// (owner-only RLS on workspace_admin_invites, 0030).
-@riverpod
-Future<String?> adminInviteCode(Ref ref) async {
-  final workspace = await ref.watch(currentWorkspaceProvider.future);
-  if (workspace == null) return null;
-  return ref
-      .watch(workspaceRepositoryProvider)
-      .adminInviteCode(workspace.id);
-}
-
 /// Features enabled for the active workspace (#146). Deriving from
 /// [currentWorkspace] is what makes flags "apply on connect": switching
 /// profiles (#89) or refetching workspaces recomputes the set with the

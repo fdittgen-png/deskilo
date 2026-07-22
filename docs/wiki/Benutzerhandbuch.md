@@ -35,11 +35,13 @@ DesKilo hat drei additive Rollen plus ein Gerätekonto:
 **Jede Einladung ist an eine Rolle gebunden.** Auf dem Bildschirm *Workspace-ID & QR* gibt es zwei Einladungen, jede mit eigenem QR-Code und Code:
 
 - **Mitglieder-Einladung** — die Workspace-ID selbst. Drucken, an die Wand hängen, frei teilen: Wer sie scannt oder eintippt, tritt als einfaches Mitglied bei.
-- **Admin-Einladung** — ein separater Geheimcode, nur für Inhaberinnen sichtbar. Nur an Personen geben, die den Workspace verwalten sollen: Wer ihn nutzt, tritt als Admin bei.
+- **Admin-Einladung** — ein **persönlicher, einmalig nutzbarer Code**, von einer Inhaberin für genau eine Person ausgestellt. Er lässt nur diese eine Person als Admin beitreten und verfällt dann (ungenutzte Codes verfallen nach 14 Tagen). Für jeden weiteren Admin mit *Neuer Admin-Code* einen neuen ausstellen.
 
 **Eine Inhaber-Einladung gibt es absichtlich nicht.** Inhaberschaft kann nur eine bestehende Inhaberin vergeben, unter *Mitglieder & Tarife*. Ein Workspace behält immer mindestens eine Inhaberin: Die App weigert sich, die letzte zu degradieren oder zu entfernen. **Admin**-Beförderungen und -Degradierungen laufen über den Validierungsfluss (§6) — sie greifen erst nach Bestätigung durch die Validierenden.
 
-Der QR kodiert einen Link, der die vergebene Rolle nennt (`deskilo://join?role=…`). Manipulation am Link ändert nichts — der Server leitet die Rolle aus dem Geheimcode selbst ab.
+Der QR kodiert einen Link, der die vergebene Rolle nennt (`deskilo://join?role=…`). Manipulation am Link ändert nichts — der Server leitet die Rolle aus dem Code selbst ab: Die Workspace-ID lässt immer als Mitglied beitreten, eine persönliche Einladung genau in der Rolle, für die sie ausgestellt wurde — ein einziges Mal. Ein weitergeleiteter, bereits genutzter — oder abgelaufener — Admin-Code lässt niemanden mehr beitreten.
+
+**Per Nachricht einladen** (*Jemanden einladen*): Jeder WhatsApp-/SMS-/Teilen-Versand stellt seinen eigenen persönlichen Einmal-Code aus und baut eine fertige Nachricht in der Sprache der eingeladenen Person. Die Empfängerin kann einfach die ganze Nachricht kopieren und in das Beitrittsfeld der App einfügen — der Code wird automatisch erkannt.
 
 ## 3. Der Grundriss (Tab Plan)
 

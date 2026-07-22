@@ -1009,6 +1009,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible d\'ouvrir l\'application d\'envoi. Le message a été copié à la place.';
 
   @override
+  String get inviteCreateFailed =>
+      'Impossible de créer l\'invitation. Vérifiez votre connexion et réessayez.';
+
+  @override
   String invitationDefaultTemplate(
     String firstName,
     String workspaceName,
@@ -1016,7 +1020,7 @@ class AppLocalizationsFr extends AppLocalizations {
     String downloadUrl,
     String inviteLink,
   ) {
-    return 'Bonjour$firstName ! Vous êtes invité·e à rejoindre notre espace de coworking « $workspaceName » sur DesKilo.\n\n1. Téléchargez l\'application :\n$downloadUrl\n\n2. Ouvrez-la, créez votre compte (e-mail + mot de passe) et connectez-vous.\n\n3. Choisissez « Rejoindre un espace » et saisissez l\'identifiant :\n$workspaceId\n(ou scannez le QR d\'invitation sur place — $inviteLink)\n\nÀ bientôt chez $workspaceName !';
+    return 'Bonjour$firstName ! Vous êtes invité·e à rejoindre notre espace de coworking « $workspaceName » sur DesKilo.\n\n1. Téléchargez l\'application :\n$downloadUrl\n\n2. Ouvrez-la, créez votre compte (e-mail + mot de passe) et connectez-vous.\n\n3. Choisissez « Rejoindre un espace » et saisissez votre code d\'invitation personnel :\n$workspaceId\n(lien d\'invitation : $inviteLink)\n\nAstuce : copiez simplement ce message entier et collez-le dans l\'application — le code est détecté automatiquement. Votre code est personnel, à usage unique et valable 14 jours.\n\nÀ bientôt chez $workspaceName !';
   }
 
   @override
@@ -1037,6 +1041,44 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get workspaceInviteCodeInvalid =>
       'Aucun identifiant trouvé — collez l\'invitation ou saisissez l\'identifiant.';
+
+  @override
+  String get eventTypeMemberJoin => 'Nouveau membre';
+
+  @override
+  String get memberStatusPending => 'En attente';
+
+  @override
+  String get pendingApprovalTitle => 'En attente d\'approbation';
+
+  @override
+  String pendingApprovalBody(String workspace) {
+    return 'Vous avez rejoint $workspace. Un administrateur doit approuver votre adhésion avant que vous puissiez utiliser l\'espace — vous aurez accès dès sa confirmation.';
+  }
+
+  @override
+  String get pendingApprovalRefresh => 'Vérifier à nouveau';
+
+  @override
+  String get memberApprove => 'Approuver l\'adhésion';
+
+  @override
+  String get memberRejectJoin => 'Refuser l\'adhésion';
+
+  @override
+  String get workspaceConfigInvitations => 'Invitations';
+
+  @override
+  String get workspaceConfigInvitationCustom =>
+      'Message d\'invitation personnalisé configuré';
+
+  @override
+  String get workspaceConfigInvitationDefault =>
+      'Message d\'invitation intégré (toutes les langues)';
+
+  @override
+  String get workspaceConfigInvitationSingleUse =>
+      'Les codes d\'invitation personnels sont à usage unique et expirent après 14 jours ; les nouveaux membres doivent être approuvés par un admin';
 
   @override
   String get memberKioskLabel => 'Borne';
@@ -2001,7 +2043,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get inviteAdminExplainer =>
-      'Quiconque scanne ce QR code — ou saisit ce code — rejoint en tant qu\'admin. Ne le partagez qu\'avec des personnes de confiance pour gérer cet espace.';
+      'Ce code est à usage unique : il admet UNE personne comme admin, puis expire. Ne le remettez qu\'à la personne à qui il est destiné.';
+
+  @override
+  String get inviteAdminNewCode => 'Nouveau code admin';
 
   @override
   String get inviteOwnerNote =>

@@ -9,7 +9,15 @@ import '../../plan/domain/level.dart';
 
 /// One member row in the configuration PDF — every string pre-resolved at
 /// the call site (the domain layer stays l10n-free, ADR 0007).
-typedef ConfigPdfMember = ({String name, String role, String status});
+typedef ConfigPdfMember = ({
+  String name,
+  String role,
+  String status,
+
+  /// Pre-resolved extras line ('' when none): over-consumption policy,
+  /// reservation cap, whole-level right (0041/0044/0050).
+  String details,
+});
 
 /// One level's plan, paired with its [Level] for the section header.
 typedef ConfigPdfLevel = ({Level level, FloorPlan plan});
@@ -40,6 +48,11 @@ class WorkspaceConfigPdfStrings {
     required this.bookableWhole,
     required this.seatsLabel,
     required this.emptyLevel,
+    required this.levelBookable,
+    required this.invitations,
+    required this.invitationCustomTemplate,
+    required this.invitationDefault,
+    required this.invitationSingleUse,
   });
 
   final String title;
@@ -67,6 +80,16 @@ class WorkspaceConfigPdfStrings {
 
   /// Placeholder for a level with no rooms yet.
   final String emptyLevel;
+
+  /// Level bookable-as-a-whole line, price pre-formatted by the caller
+  /// ('' when free), e.g. 'Bookable as a whole — €25.00 / half-day'.
+  final String Function(String price) levelBookable;
+
+  /// Invitations section title + its three states (0049/0051).
+  final String invitations;
+  final String invitationCustomTemplate;
+  final String invitationDefault;
+  final String invitationSingleUse;
 }
 
 /// Renders the complete workspace configuration as an A4 PDF: an overview,
@@ -89,6 +112,13 @@ Future<Uint8List> buildWorkspaceConfigPdf({
   required String openDaysLabel,
   required List<String> closureLabels,
   required List<ConfigPdfLevel> levels,
+
+  /// Pre-formatted price per bookable level id ('' = bookable, free).
+  /// Absent id = level not bookable as a whole (0050).
+  required Map<String, String> levelPrices,
+
+  /// Whether the owner replaced the built-in invitation message (0049).
+  required bool hasCustomInvitationTemplate,
   required pw.Font baseFont,
   required pw.Font boldFont,
 }) async {
@@ -123,8 +153,20 @@ Future<Uint8List> buildWorkspaceConfigPdf({
           if (members.isEmpty)
             _line(strings.none, '')
           else
-            for (final member in members)
+            for (final member in members) ...[
               _memberRow(member.name, member.role, member.status),
+              if (member.details.isNotEmpty)
+                pw.Padding(
+                  padding: const pw.EdgeInsets.only(left: 10, bottom: 2),
+                  child: pw.Text(
+                    member.details,
+                    style: const pw.TextStyle(
+                      fontSize: 8,
+                      color: PdfColors.grey700,
+                    ),
+                  ),
+                ),
+            ],
         ]),
         _section(strings.features, [
           if (featureLabels.isEmpty)
@@ -140,8 +182,17 @@ Future<Uint8List> buildWorkspaceConfigPdf({
           ),
           for (final closure in closureLabels) _bullet(closure),
         ]),
+        _section(strings.invitations, [
+          _bullet(strings.invitationSingleUse),
+          _bullet(
+            hasCustomInvitationTemplate
+                ? strings.invitationCustomTemplate
+                : strings.invitationDefault,
+          ),
+        ]),
         _section(strings.floorPlan, [
-          for (final entry in levels) ..._levelBlock(entry, strings),
+          for (final entry in levels)
+            ..._levelBlock(entry, strings, levelPrices[entry.level.id]),
         ]),
       ],
     ),
@@ -153,6 +204,7 @@ Future<Uint8List> buildWorkspaceConfigPdf({
 List<pw.Widget> _levelBlock(
   ConfigPdfLevel entry,
   WorkspaceConfigPdfStrings strings,
+  String? bookablePrice,
 ) {
   final plan = entry.plan;
   return [
@@ -163,6 +215,15 @@ List<pw.Widget> _levelBlock(
         style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 11),
       ),
     ),
+    // Whole-level booking (0050): bookable + its half-day price.
+    if (bookablePrice != null)
+      pw.Padding(
+        padding: const pw.EdgeInsets.only(left: 10, bottom: 1),
+        child: pw.Text(
+          strings.levelBookable(bookablePrice),
+          style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey800),
+        ),
+      ),
     if (plan.offices.isEmpty)
       _line(strings.emptyLevel, '')
     else

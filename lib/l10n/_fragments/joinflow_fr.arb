@@ -1,0 +1,13 @@
+{
+  "eventTypeMemberJoin": "Nouveau membre",
+  "memberStatusPending": "En attente",
+  "pendingApprovalTitle": "En attente d'approbation",
+  "pendingApprovalBody": "Vous avez rejoint {workspace}. Un administrateur doit approuver votre adhésion avant que vous puissiez utiliser l'espace — vous aurez accès dès sa confirmation.",
+  "pendingApprovalRefresh": "Vérifier à nouveau",
+  "memberApprove": "Approuver l'adhésion",
+  "memberRejectJoin": "Refuser l'adhésion",
+  "workspaceConfigInvitations": "Invitations",
+  "workspaceConfigInvitationCustom": "Message d'invitation personnalisé configuré",
+  "workspaceConfigInvitationDefault": "Message d'invitation intégré (toutes les langues)",
+  "workspaceConfigInvitationSingleUse": "Les codes d'invitation personnels sont à usage unique et expirent après 14 jours ; les nouveaux membres doivent être approuvés par un admin"
+}

@@ -67,9 +67,9 @@ void main() {
     // No stored rows: every card shows the built-in defaults and inherits.
     expect(
       find.text('Required validations: 1 · All admins'),
-      findsNWidgets(8),
+      findsNWidgets(9),
     );
-    expect(find.text('Inherits default'), findsNWidgets(8));
+    expect(find.text('Inherits default'), findsNWidgets(9));
     expect(find.text('Customized'), findsNothing);
   });
 
@@ -178,7 +178,7 @@ void main() {
     );
 
     expect(find.text('Customized'), findsOneWidget);
-    expect(find.text('Inherits default'), findsNWidgets(7));
+    expect(find.text('Inherits default'), findsNWidgets(8));
     expect(
       find.text(
         'Required validations: 2 · All admins · Owner must always validate',

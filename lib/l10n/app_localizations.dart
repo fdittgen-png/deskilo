@@ -1910,10 +1910,16 @@ abstract class AppLocalizations {
   /// **'Could not open the app for sending. The message was copied instead.'**
   String get inviteSendFailed;
 
+  /// No description provided for @inviteCreateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not create the invitation. Check your connection and try again.'**
+  String get inviteCreateFailed;
+
   /// Default invitation message; firstName is '' or ' Name'
   ///
   /// In en, this message translates to:
-  /// **'Hi{firstName}! You\'re invited to join our coworking space \"{workspaceName}\" on DesKilo.\n\n1. Download the app:\n{downloadUrl}\n\n2. Open it, create your account (e-mail + password) and sign in.\n\n3. Choose \"Join a workspace\" and enter the workspace ID:\n{workspaceId}\n(or scan the invite QR on site — {inviteLink})\n\nSee you soon at {workspaceName}!'**
+  /// **'Hi{firstName}! You\'re invited to join our coworking space \"{workspaceName}\" on DesKilo.\n\n1. Download the app:\n{downloadUrl}\n\n2. Open it, create your account (e-mail + password) and sign in.\n\n3. Choose \"Join a workspace\" and enter your personal invitation code:\n{workspaceId}\n(invitation link: {inviteLink})\n\nTip: simply copy this whole message and paste it into the app — the code is found automatically. Your code is personal, single-use and valid for 14 days.\n\nSee you soon at {workspaceName}!'**
   String invitationDefaultTemplate(
     String firstName,
     String workspaceName,
@@ -1951,6 +1957,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No workspace ID found — paste the invitation or type the ID.'**
   String get workspaceInviteCodeInvalid;
+
+  /// No description provided for @eventTypeMemberJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'New member'**
+  String get eventTypeMemberJoin;
+
+  /// No description provided for @memberStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get memberStatusPending;
+
+  /// No description provided for @pendingApprovalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting approval'**
+  String get pendingApprovalTitle;
+
+  /// No description provided for @pendingApprovalBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You have joined {workspace}. An administrator must approve your membership before you can use the workspace — you will get access as soon as they confirm.'**
+  String pendingApprovalBody(String workspace);
+
+  /// No description provided for @pendingApprovalRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Check again'**
+  String get pendingApprovalRefresh;
+
+  /// No description provided for @memberApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve membership'**
+  String get memberApprove;
+
+  /// No description provided for @memberRejectJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject membership'**
+  String get memberRejectJoin;
+
+  /// No description provided for @workspaceConfigInvitations.
+  ///
+  /// In en, this message translates to:
+  /// **'Invitations'**
+  String get workspaceConfigInvitations;
+
+  /// No description provided for @workspaceConfigInvitationCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom invitation message configured'**
+  String get workspaceConfigInvitationCustom;
+
+  /// No description provided for @workspaceConfigInvitationDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Built-in invitation message (all languages)'**
+  String get workspaceConfigInvitationDefault;
+
+  /// No description provided for @workspaceConfigInvitationSingleUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal invitation codes are single-use and expire after 14 days; new members need admin approval'**
+  String get workspaceConfigInvitationSingleUse;
 
   /// Subtitle chip of a kiosk device account in the members list (0043)
   ///
@@ -3713,8 +3785,14 @@ abstract class AppLocalizations {
   /// Explainer under the admin invite QR
   ///
   /// In en, this message translates to:
-  /// **'Whoever scans this QR code — or types this code — joins as an admin. Share it only with people who should manage this workspace.'**
+  /// **'This code is single-use: it admits ONE person as an admin, then expires. Give it only to the person it is meant for.'**
   String get inviteAdminExplainer;
+
+  /// No description provided for @inviteAdminNewCode.
+  ///
+  /// In en, this message translates to:
+  /// **'New admin code'**
+  String get inviteAdminNewCode;
 
   /// Footnote on the invite screen: owner role is never invitable
   ///

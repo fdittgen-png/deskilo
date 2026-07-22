@@ -56,9 +56,11 @@ abstract final class InviteUriCodec {
     }
     // No URL: accept a line holding exactly one code-shaped token (the
     // invitation template puts the ID alone on its line). Digits are
-    // required so prose words never masquerade as codes.
+    // required so prose words never masquerade as codes. WhatsApp's
+    // monospace markers (```CODE```, #318) survive a copy as literal
+    // backticks — strip them before matching.
     for (final line in trimmed.split('\n')) {
-      final token = line.trim();
+      final token = line.trim().replaceAll(RegExp(r'^`+|`+$'), '').trim();
       if (RegExp(r'^[A-Za-z0-9]{4,20}$').hasMatch(token) &&
           RegExp(r'[0-9]').hasMatch(token)) {
         return token.toUpperCase();
