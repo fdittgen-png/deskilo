@@ -311,6 +311,56 @@ def main() -> int:
             label="edits.commit",
         )
     except (HttpError, httplib2.HttpLib2Error, TimeoutError) as e:
+        # A DRAFT APP (store listing never reviewed/published) only accepts
+        # DRAFT releases outside the internal track. Fall back: redo the
+        # whole edit with status 'draft' so the build still lands on the
+        # track — the maintainer publishes it in the Console once the app
+        # leaves draft state.
+        if isinstance(e, HttpError) and "draft app" in str(e):
+            print("Draft app: retrying the release with status 'draft' "
+                  "(publish it in the Console after app review)")
+            try:
+                edit_id = _execute_with_retry(
+                    lambda: edits.insert(packageName=args.package),
+                    label="edits.insert (draft retry)",
+                )["id"]
+                _execute_with_retry(
+                    lambda: edits.bundles().upload(
+                        packageName=args.package, editId=edit_id,
+                        media_body=MediaFileUpload(
+                            str(aab), mimetype=(
+                                "application/octet-stream"), resumable=True),
+                    ),
+                    label="bundles.upload (draft retry)",
+                )
+                _execute_with_retry(
+                    lambda: edits.tracks().update(
+                        packageName=args.package, editId=edit_id,
+                        track=args.track,
+                        body={
+                            "track": args.track,
+                            "releases": [{
+                                "name": f"{version_code}",
+                                "versionCodes": [str(version_code)],
+                                "status": "draft",
+                                "releaseNotes": release_notes,
+                            }],
+                        },
+                    ),
+                    label="tracks.update (draft retry)",
+                )
+                _execute_with_retry(
+                    lambda: edits.commit(
+                        packageName=args.package, editId=edit_id,
+                    ),
+                    label="edits.commit (draft retry)",
+                )
+                print(f"\nSUCCESS: versionCode {version_code} uploaded to "
+                      f"track '{args.track}' as a DRAFT release")
+                return 0
+            except (HttpError, httplib2.HttpLib2Error, TimeoutError) as e2:
+                print(f"ERROR: draft retry failed: {e2}", file=sys.stderr)
+                return 7
         print(f"ERROR: edits.commit failed: {e}", file=sys.stderr)
         return 7
 
