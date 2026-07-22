@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,10 +48,16 @@ Future<
 }
 
 Offset seatCenter(WidgetTester tester) {
-  final canvas =
-      tester.getTopLeft(find.byKey(const ValueKey('live-plan-canvas')));
+  // Transform-aware (#278 idiom): the canvas auto-fits to the plan, and
+  // the fit scale follows the viewport height (the compact header grew
+  // the canvas). Content position = origin + content offset × rendered
+  // scale (top-right minus top-left over the content width in px).
+  final finder = find.byKey(const ValueKey('live-plan-canvas'));
+  final topLeft = tester.getTopLeft(finder);
+  final scale = (tester.getTopRight(finder).dx - topLeft.dx) /
+      (PlanCanvasMetrics.cells * PlanCanvasMetrics.cellSize);
   // Seat footprint (2,2)..(8,6) → center cell ~(5,4).
-  return canvas + const Offset(5 * _cellSize, 4 * _cellSize);
+  return topLeft + const Offset(5 * _cellSize, 4 * _cellSize) * scale;
 }
 
 Reservation foreignReservation({

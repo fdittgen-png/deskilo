@@ -86,13 +86,18 @@ Future<FakeReservationRepository> pumpHub(
 }
 
 /// Centre of seat 'A1' on the hub's canvas (footprint (2,2)..(8,6)).
+/// Transform-aware (#278 idiom): the fit scale follows the viewport.
 Offset seatCenter(WidgetTester tester) {
-  final canvas = tester.getTopLeft(find.byKey(_canvasKey));
-  return canvas +
+  final topLeft = tester.getTopLeft(find.byKey(_canvasKey));
+  final scale = (tester.getTopRight(find.byKey(_canvasKey)).dx -
+          topLeft.dx) /
+      (PlanCanvasMetrics.cells * PlanCanvasMetrics.cellSize);
+  return topLeft +
       const Offset(
-        5 * PlanCanvasMetrics.cellSize,
-        4 * PlanCanvasMetrics.cellSize,
-      );
+            5 * PlanCanvasMetrics.cellSize,
+            4 * PlanCanvasMetrics.cellSize,
+          ) *
+          scale;
 }
 
 /// The painter of the hub's plan canvas.

@@ -8,7 +8,6 @@ import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
 
 import '../../../../core/format/cents.dart';
-import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -25,6 +24,7 @@ import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/domain/reservation_repository.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../reservations/domain/seat_state_logic.dart';
+import '../../../reservations/presentation/widgets/booking_controls.dart';
 import '../../../reservations/presentation/widgets/booking_sheet.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../../core/time/workspace_time.dart';
@@ -783,10 +783,13 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     // The level chips share the scroller's top row (#159). In landscape the
     // header moves into a side panel so the level fills the rest — the plan
     // gets nearly the whole screen instead of a thin strip under the chips.
-    final header = Column(
+    // wrap=true in the landscape sidebar: vertical space is plentiful
+    // there, so the controls flow onto lines instead of hiding behind
+    // the portrait row's horizontal scroll.
+    Widget header({required bool wrap}) => Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _scrollerRow(at, granularity, levels, level),
+        _scrollerRow(at, granularity, levels, level, wrap: wrap),
         if (!dayOpen) _closedDayBanner(l10n),
       ],
     );
@@ -879,14 +882,14 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             children: [
               SizedBox(
                 width: (constraints.maxWidth * 0.4).clamp(280.0, 460.0),
-                child: SingleChildScrollView(child: header),
+                child: SingleChildScrollView(child: header(wrap: true)),
               ),
               const VerticalDivider(width: 1),
               content,
             ],
           );
         }
-        return Column(children: [header, content]);
+        return Column(children: [header(wrap: false), content]);
       },
     );
   }
@@ -899,8 +902,9 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     DateTime at,
     BookingGranularity granularity,
     List<Level> levels,
-    Level level,
-  ) {
+    Level level, {
+    required bool wrap,
+  }) {
     final l10n = AppLocalizations.of(context);
     final dayBased = granularity.isDayBased;
     // Day-based chips describe a WORKSPACE-local day: deriving it via
@@ -909,21 +913,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final local = dayBased ? WorkspaceTime.dateOf(at) : at.toLocal();
     final live = _browse == null;
     final endLocal = (_browseEnd ?? _defaultEndFor(local)).toLocal();
-    final timeFormat = DateFormat.Hm();
-    // Live mode de-emphasizes the chips: they only preview the window a
-    // tap would browse.
-    final chipStyle = live
-        ? TextButton.styleFrom(
-            foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
-          )
-        : null;
-    return Padding(
-      padding: AppSpacing.smH,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
+    // ONE compact header row (space refactor): toggle · date · window ·
+    // level · now — horizontally scrollable so every control keeps its
+    // 48dp target on narrow phones (#284 idiom) while the plan canvas
+    // gets the reclaimed rows. In the landscape sidebar ([wrap]) the
+    // same controls flow onto lines instead — nothing hides there.
+    final controls = <Widget>[
           // #211: the shared canvas/list toggle idiom (icon segments with
           // tooltips) instead of a lone flipping IconButton.
           ViewToggle<bool>(
@@ -994,22 +989,41 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             },
             child: Text(DateFormat.MMMd().format(local)),
           ),
-          // Quick level picker (#159 chips were unusable squeezed into the
-          // top row): a compact dropdown showing the current level; the menu
-          // opens the full list with one tap, scales to any level count.
-          // Expanded so it absorbs slack (and ellipsizes on a narrow panel).
+          // The shared window controls, inline (space refactor): the
+          // former full-width chips row is gone.
+          WindowControls(
+            keyPrefix: 'plan',
+            granularity: granularity,
+            day: local,
+            isSelected: (w) =>
+                _browse == w.start && _browseEnd == w.end,
+            onPickWindow: (w) => setState(() {
+              // Window change drops the #182 jump highlight like every
+              // other time-scroller interaction.
+              _highlightedSeatId = null;
+              _browse = w.start;
+              _browseEnd = w.end;
+            }),
+            from: local,
+            to: endLocal,
+            onPickFrom: _pickFrom,
+            onPickTo: _pickTo,
+            muted: live,
+          ),
+          // Shared compact level picker (#283, now booking_controls).
           if (levels.length > 1)
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: AppSpacing.xs),
-                  child: _levelMenu(levels, level),
-                ),
+            Padding(
+              padding: const EdgeInsets.only(left: AppSpacing.xs),
+              child: LevelMenuButton(
+                key: const ValueKey('plan-level-menu'),
+                levels: levels,
+                current: level,
+                onSelected: (id) {
+                  setState(() => _highlightedSeatId = null);
+                  ref.read(selectedLevelIdProvider.notifier).select(id);
+                },
               ),
-            )
-          else
-            const Spacer(),
+            ),
           // 'Now' is a symbol to save space: return to the live instant.
           // Disabled (muted) while already live.
           IconButton(
@@ -1024,65 +1038,32 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                       _browseEnd = null;
                     }),
           ),
-        ],
-      ),
-      // The window chips get their own full-width row (needs analysis:
-      // squeezed to unreadable on phones inside the leftover header
-      // space). Same builders, honest tap targets.
-      SizedBox(
-        width: double.infinity,
-        child: dayBased
-                ? _halfDayChips(l10n, local, granularity)
-                : SizedBox(
-                    height: kMinInteractiveDimension,
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Tooltip(
-                            message: l10n?.planFromLabel ?? 'From',
-                            child: TextButton(
-                              key: const ValueKey('plan-from-chip'),
-                              style: chipStyle,
-                              onPressed: _pickFrom,
-                              child: Text(timeFormat.format(local)),
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_right_alt,
-                            size: 16,
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant,
-                          ),
-                          Tooltip(
-                            message: l10n?.planToLabel ?? 'To',
-                            child: TextButton(
-                              key: const ValueKey('plan-to-chip'),
-                              style: chipStyle,
-                              onPressed: _pickTo,
-                              child: Text(timeFormat.format(endLocal)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-          ),
-        // Whole-level booking (0050): its own full-width row — the
-        // header rows are too tight for another button on phones.
-        if (_levelReserveVisible(level))
-          Align(
-            alignment: Alignment.centerLeft,
-            child: OutlinedButton.icon(
+          // Whole-level booking (0050): inline icon — the dedicated row
+          // is gone with the compact header.
+          if (_levelReserveVisible(level))
+            IconButton(
               key: const ValueKey('plan-reserve-level'),
-              onPressed: () => _reserveLevel(level),
+              tooltip: l10n?.levelReserveButton ?? 'Reserve level',
               icon: const Icon(Icons.layers_outlined),
-              label: Text(l10n?.levelReserveButton ?? 'Reserve level'),
+              onPressed: () => _reserveLevel(level),
             ),
-          ),
-        ],
-      ),
+    ];
+    return Padding(
+      padding: AppSpacing.smH,
+      child: wrap
+          ? Wrap(
+              spacing: AppSpacing.xs,
+              runSpacing: AppSpacing.xs,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: controls,
+            )
+          : SizedBox(
+              height: kMinInteractiveDimension + 4,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(children: controls),
+              ),
+            ),
     );
   }
 
@@ -1201,62 +1182,6 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     invalidateBookingData(ref);
   }
 
-  /// Compact level picker: a chip-styled button showing the current level;
-  /// tapping opens a menu of all levels. Replaces the squeezed inline chips
-  /// so a member can switch floor with one tap regardless of level count.
-  Widget _levelMenu(List<Level> levels, Level current) {
-    final l10n = AppLocalizations.of(context);
-    final scheme = Theme.of(context).colorScheme;
-    return PopupMenuButton<String>(
-      key: const ValueKey('plan-level-menu'),
-      tooltip: l10n?.planLevelTooltip ?? 'Level',
-      onSelected: (id) {
-        setState(() => _highlightedSeatId = null);
-        ref.read(selectedLevelIdProvider.notifier).select(id);
-      },
-      itemBuilder: (context) => [
-        for (final Level l in levels)
-          PopupMenuItem(
-            value: l.id,
-            child: Row(
-              children: [
-                Icon(
-                  l.id == current.id ? Icons.check : null,
-                  size: 18,
-                  color: scheme.primary,
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                Text(l.name),
-              ],
-            ),
-          ),
-      ],
-      child: Container(
-        constraints: const BoxConstraints(minHeight: kMinInteractiveDimension),
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-        decoration: BoxDecoration(
-          color: scheme.secondaryContainer,
-          borderRadius: AppRadius.xlAll,
-          border: Border.all(color: scheme.outlineVariant),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Flexible(
-              child: Text(
-                current.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-            ),
-            Icon(Icons.arrow_drop_down, size: 20, color: scheme.onSurfaceVariant),
-          ],
-        ),
-      ),
-    );
-  }
 
   /// The canonical builder whose window on [day] the current browse
   /// window matches — null when live or browsing a non-canonical window
@@ -1282,69 +1207,6 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   /// from→to time chips — a tap enters (or moves) browse mode with the
   /// canonical window on the browsed day (today when live). Live mode
   /// shows no selection; "Now" resets to live as usual.
-  Widget _halfDayChips(
-    AppLocalizations? l10n,
-    DateTime local,
-    BookingGranularity granularity,
-  ) {
-    Widget chip(
-      String key,
-      String label,
-      HalfDayWindow Function(DateTime day) windowOf,
-    ) {
-      final window = windowOf(local);
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 2),
-        child: ChoiceChip(
-          key: ValueKey(key),
-          label: Text(label),
-          selected: _browse == window.start && _browseEnd == window.end,
-          materialTapTargetSize: MaterialTapTargetSize.padded,
-          onSelected: (_) => setState(() {
-            // Window change: drop the #182 jump highlight like every
-            // other time-scroller interaction.
-            _highlightedSeatId = null;
-            _browse = window.start;
-            _browseEnd = window.end;
-          }),
-        ),
-      );
-    }
-
-    // scaleDown keeps the three chips on one row on narrow screens
-    // without letting the header scroll horizontally. The 48dp-tall box
-    // centers the chips and preserves their padded tap targets (#211).
-    return SizedBox(
-      height: kMinInteractiveDimension,
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Full-day granularity (0032) books whole days only — the
-            // half chips exist under half-day granularity alone.
-            if (granularity == BookingGranularity.halfDay) ...[
-              chip(
-                'plan-am-chip',
-                l10n?.planMorningChip ?? 'Morning',
-                HalfDayWindows.morning,
-              ),
-              chip(
-                'plan-pm-chip',
-                l10n?.planAfternoonChip ?? 'Afternoon',
-                HalfDayWindows.afternoon,
-              ),
-            ],
-            chip(
-              'plan-day-chip',
-              l10n?.planFullDayChip ?? 'Day',
-              HalfDayWindows.fullDay,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   /// Closed-day banner under the header row (#186): the workspace is not
   /// open on the browsed/live day (weekday not open or closure day), so

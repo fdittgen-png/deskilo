@@ -24,7 +24,7 @@ import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/domain/seat_context.dart';
 import '../../../plan/presentation/seat_occupancy.dart';
-import '../../../plan/presentation/widgets/level_chip_row.dart';
+import '../../../plan/domain/level.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/providers/plan_focus_controller.dart';
@@ -36,6 +36,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
 import '../../domain/seat_state_logic.dart';
 import '../../providers/reservation_providers.dart';
+import '../widgets/booking_controls.dart';
 import '../widgets/booking_sheet.dart';
 import '../widgets/series_result_dialog.dart';
 import '../widgets/reservation_detail_sheet.dart';
@@ -610,31 +611,21 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     // visible); the shell's app bar carries the 'Reserve' title.
     // In landscape the controls move to a side panel so the view (level,
     // week grid, month) fills the rest of the screen.
-    final header = Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-          _dateStrip(l10n),
-          // Honest controls: the window chips act on Plan (state filter +
-          // booking window) and Day (the window a free-row tap books).
-          // Week books per tapped half, Month is an overview — no chips.
-          if (_view == _ReserveView.plan || _view == _ReserveView.day)
-            _windowChips(l10n, granularity, window),
-          if (!dayOpen) _closedDayBanner(l10n),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: AppSpacing.lg,
-              right: AppSpacing.lg,
-              bottom: AppSpacing.xs,
-            ),
-            // #211: the shared toggle idiom — same key, same labels and
-            // behaviour as the original SegmentedButton, plus the shared
-            // icon set (map/timeline/week). Horizontally scrollable so the
-            // four labelled segments keep their 48dp height (never shrunk
-            // below the tap-target floor) and never overflow the narrow
-            // landscape side panel.
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: ViewToggle<_ReserveView>(
+    // Space refactor: ONE control row under the date strip — view
+    // toggle, window controls and level picker share it (all shared
+    // widgets, booking_controls.dart), horizontally scrollable so every
+    // segment keeps its 48dp target (#284 idiom). Two header rows total
+    // instead of four; the view below gets the difference.
+    final levels = ref.watch(levelsProvider).value ?? const <Level>[];
+    final hubLevel = _view == _ReserveView.plan && levels.length > 1
+        ? (levels.where((l) => l.id == _levelId).firstOrNull ??
+            levels.first)
+        : null;
+    // wrap=true in the landscape sidebar (#284): controls flow onto
+    // lines there instead of hiding behind the portrait row's scroll.
+    Widget header({required bool wrap}) {
+      final controls = <Widget>[
+              ViewToggle<_ReserveView>(
               key: const ValueKey('reserve-view-switch'),
               options: [
                 ViewToggleOption(
@@ -663,10 +654,71 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               // derives its week from the selected day on every build.
               onChanged: (view) => setState(() => _view = view),
             ),
+            // Honest controls: the window chips act on Plan (state
+            // filter + booking window) and Day (the window a free-row
+            // tap books). Week books per tapped half, Month is an
+            // overview — no chips.
+            if (_view == _ReserveView.plan || _view == _ReserveView.day)
+              Padding(
+                padding: const EdgeInsets.only(left: AppSpacing.xs),
+                child: WindowControls(
+                  keyPrefix: 'reserve',
+                  granularity: granularity,
+                  day: _selectedDay,
+                  isSelected: (w) =>
+                      window.start == w.start && window.end == w.end,
+                  onPickWindow: (w) => setState(() {
+                    _windowStart = w.start;
+                    _windowEnd = w.end;
+                  }),
+                  from: window.start,
+                  to: window.end,
+                  onPickFrom: _pickFrom,
+                  onPickTo: _pickTo,
+                ),
+              ),
+            // Hub-local level pick (#187) — shares the Plan tab's
+            // compact menu instead of a whole chip row.
+            if (hubLevel != null)
+              Padding(
+                padding: const EdgeInsets.only(left: AppSpacing.xs),
+                child: LevelMenuButton(
+                  key: const ValueKey('reserve-level-menu'),
+                  levels: levels,
+                  current: hubLevel,
+                  onSelected: (id) => setState(() => _levelId = id),
+                ),
+              ),
+      ];
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _dateStrip(l10n),
+          if (!dayOpen) _closedDayBanner(l10n),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: AppSpacing.lg,
+              right: AppSpacing.lg,
+              bottom: AppSpacing.xs,
             ),
+            child: wrap
+                ? Wrap(
+                    spacing: AppSpacing.xs,
+                    runSpacing: AppSpacing.xs,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: controls,
+                  )
+                : SizedBox(
+                    height: kMinInteractiveDimension + 4,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(children: controls),
+                    ),
+                  ),
           ),
-      ],
-    );
+        ],
+      );
+    }
     final content = Expanded(
             // #209: cross-fade the Plan/Day/Week toggle. Distinct subtree
             // keys make the switcher animate the swap; the fade stays
@@ -703,14 +755,14 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               children: [
                 SizedBox(
                   width: (constraints.maxWidth * 0.4).clamp(280.0, 460.0),
-                  child: SingleChildScrollView(child: header),
+                  child: SingleChildScrollView(child: header(wrap: true)),
                 ),
                 const VerticalDivider(width: 1),
                 content,
               ],
             );
           }
-          return Column(children: [header, content]);
+          return Column(children: [header(wrap: false), content]);
         },
       ),
     );
@@ -770,100 +822,6 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     );
   }
 
-  /// Granularity-aware window chips: Morning/Afternoon/Full day under
-  /// half-day granularity (#201 pattern), from→to clock chips otherwise
-  /// (#184/#185 pattern).
-  Widget _windowChips(
-    AppLocalizations? l10n,
-    BookingGranularity granularity,
-    HalfDayWindow window,
-  ) {
-    if (granularity.isDayBased) {
-      final selectedBuilder = _matchingHalfDayBuilder(_selectedDay, window);
-      Widget chip(
-        String key,
-        String label,
-        HalfDayWindow Function(DateTime day) windowOf,
-      ) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2),
-          child: ChoiceChip(
-            key: ValueKey(key),
-            label: Text(label),
-            selected: selectedBuilder == windowOf,
-            materialTapTargetSize: MaterialTapTargetSize.padded,
-            onSelected: (_) => setState(() {
-              final chosen = windowOf(_selectedDay);
-              _windowStart = chosen.start;
-              _windowEnd = chosen.end;
-            }),
-          ),
-        );
-      }
-
-      // scaleDown keeps the three chips on one row on narrow screens. The
-      // 48dp-tall box centers the chips and preserves their padded tap
-      // targets (#211).
-      return SizedBox(
-        height: kMinInteractiveDimension,
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Full-day granularity (0032) books whole days only — the
-              // half chips exist under half-day granularity alone.
-              if (granularity == BookingGranularity.halfDay) ...[
-                chip(
-                  'reserve-am-chip',
-                  l10n?.planMorningChip ?? 'Morning',
-                  HalfDayWindows.morning,
-                ),
-                chip(
-                  'reserve-pm-chip',
-                  l10n?.planAfternoonChip ?? 'Afternoon',
-                  HalfDayWindows.afternoon,
-                ),
-              ],
-              chip(
-                'reserve-day-chip',
-                l10n?.reserveFullDayChip ?? 'Full day',
-                HalfDayWindows.fullDay,
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    final timeFormat = DateFormat.Hm();
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Tooltip(
-          message: l10n?.planFromLabel ?? 'From',
-          child: TextButton(
-            key: const ValueKey('reserve-from-chip'),
-            onPressed: _pickFrom,
-            child: Text(timeFormat.format(window.start)),
-          ),
-        ),
-        Icon(
-          Icons.arrow_right_alt,
-          size: 16,
-          color: Theme.of(context).colorScheme.onSurfaceVariant,
-        ),
-        Tooltip(
-          message: l10n?.planToLabel ?? 'To',
-          child: TextButton(
-            key: const ValueKey('reserve-to-chip'),
-            onPressed: _pickTo,
-            child: Text(timeFormat.format(window.end)),
-          ),
-        ),
-      ],
-    );
-  }
 
   /// Closed-day banner (#186 style): the workspace is not open on the
   /// selected day, so nothing below is bookable. Shared [InlineBanner]
@@ -910,15 +868,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     final names = ref.watch(memberNamesProvider).value ?? const {};
 
+    // Level switching lives in the header's LevelMenuButton now — the
+    // canvas takes the full remaining height.
     return Column(
       children: [
-        // One tap per level — hub-local browsing state like the day
-        // timeline (#187), never the plan tab's persisted default (#159).
-        LevelChipRow(
-          levels: levels,
-          selectedLevelId: level.id,
-          onSelected: (id) => setState(() => _levelId = id),
-        ),
         Expanded(
           child: switch (planAsync) {
             AsyncData(value: final plan) => PlanCanvas(
