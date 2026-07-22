@@ -83,11 +83,12 @@ void main() {
     await pumpApp(tester);
     await switchToPlanTab(tester);
 
-    // The half-day window chips are ChoiceChips; the level picker is now a
-    // compact dropdown (was inline chips) — both must be reachable.
+    // The half-day window chips are icon ChoiceChips; the level picker
+    // floats over the canvas (indoor-maps idiom) — both must be
+    // reachable and honestly sized.
     expect(find.byType(ChoiceChip), findsAtLeastNWidgets(3));
     expect(find.byKey(const ValueKey('plan-view-switch')), findsOneWidget);
-    expect(find.byKey(const ValueKey('plan-level-menu')), findsOneWidget);
+    expect(find.byKey(const ValueKey('plan-level-level-1')), findsOneWidget);
 
     expectTouchTargets(tester, surface: 'plan');
   });
@@ -122,8 +123,13 @@ void main() {
     await tester.tap(find.byTooltip('Reserve'));
     await tester.pumpAndSettle();
 
-    // Date pills + Morning/Afternoon/Full day + two level chips.
-    expect(find.byType(ChoiceChip), findsAtLeastNWidgets(5));
+    // Morning/Afternoon/Full-day icon chips + the floating level
+    // buttons (the date pills are gone — one calendar chip now).
+    expect(find.byType(ChoiceChip), findsAtLeastNWidgets(3));
+    expect(
+      find.byKey(const ValueKey('reserve-level-level-1')),
+      findsOneWidget,
+    );
     expect(find.byKey(const ValueKey('reserve-view-switch')), findsOneWidget);
 
     expectTouchTargets(tester, surface: 'reserve hub');

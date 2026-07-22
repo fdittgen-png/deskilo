@@ -150,9 +150,7 @@ void main() {
     await tester.tap(find.text('Show on plan'));
     await tester.pumpAndSettle();
 
-    // Plan tab, switched to the seat's level (not the stored default) — the
-    // level picker shows Ground floor …
-    expect(find.text('Ground floor'), findsOneWidget);
+    // Plan tab, switched to the seat's level (not the stored default).
     expect(planPainter(tester).plan.levelId, 'level-1');
     // … with the reserved seat ringed on the canvas …
     expect(planPainter(tester).highlightedSeatId, 'seat-4');

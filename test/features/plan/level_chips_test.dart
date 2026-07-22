@@ -55,17 +55,15 @@ void main() {
       (tester) async {
     final env = await pumpTwoLevelPlan(tester);
 
-    // The picker shows the current level; the first is selected by default.
-    expect(find.text('Ground floor'), findsOneWidget);
+    // The floor switcher floats on the canvas (indoor-maps idiom): one
+    // short button per level, full name in the tooltip.
+    expect(find.byKey(const ValueKey('plan-level-level-1')), findsOneWidget);
     expect(canvasLevelId(tester), 'level-1');
 
-    // Open the menu and pick the other floor.
-    await tester.tap(find.byKey(const ValueKey('plan-level-menu')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('First floor').last);
+    // Tap the other floor's button.
+    await tester.tap(find.byKey(const ValueKey('plan-level-level-upper')));
     await tester.pumpAndSettle();
 
-    expect(find.text('First floor'), findsOneWidget);
     expect(canvasLevelId(tester), 'level-upper');
     expect(env.store.values['ws-1'], 'level-upper');
   });
@@ -74,7 +72,6 @@ void main() {
       (tester) async {
     await pumpTwoLevelPlan(tester, storedLevelId: 'level-upper');
 
-    expect(find.text('First floor'), findsOneWidget);
     expect(canvasLevelId(tester), 'level-upper');
   });
 
@@ -82,7 +79,6 @@ void main() {
       (tester) async {
     await pumpTwoLevelPlan(tester, storedLevelId: 'level-gone');
 
-    expect(find.text('Ground floor'), findsOneWidget);
     expect(canvasLevelId(tester), 'level-1');
   });
 
@@ -97,7 +93,7 @@ void main() {
     await tester.pumpAndSettle();
     await switchToPlanTab(tester);
 
-    expect(find.byKey(const ValueKey('plan-level-menu')), findsNothing);
+    expect(find.byKey(const ValueKey('plan-level-level-1')), findsNothing);
     expect(canvasLevelId(tester), 'level-1');
   });
 
@@ -116,7 +112,8 @@ void main() {
     // and the plan canvas still renders (and its controls are reachable).
     expect(find.byType(VerticalDivider), findsOneWidget);
     expect(find.byKey(const ValueKey('live-plan-canvas')), findsOneWidget);
-    expect(find.byKey(const ValueKey('plan-level-menu')), findsOneWidget);
+    // The floor switcher rides the canvas, not the side panel.
+    expect(find.byKey(const ValueKey('plan-level-level-1')), findsOneWidget);
   });
 
   testWidgets('portrait keeps the single-column layout (no split)',

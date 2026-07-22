@@ -95,9 +95,11 @@ void main() {
     expect(find.byKey(_amChip), findsOneWidget);
     expect(find.byKey(_pmChip), findsOneWidget);
     expect(find.byKey(_dayChip), findsOneWidget);
-    expect(find.text('Morning'), findsOneWidget);
-    expect(find.text('Afternoon'), findsOneWidget);
-    expect(find.text('Full day'), findsOneWidget);
+    // Icon chips (UX pass): the localized names live in tooltips.
+    expect(find.byKey(const ValueKey('plan-am-chip')), findsOneWidget);
+    expect(find.byKey(const ValueKey('plan-pm-chip')), findsOneWidget);
+    expect(find.byKey(const ValueKey('plan-day-chip')), findsOneWidget);
+    expect(find.byTooltip('Morning'), findsOneWidget);
     expect(find.byKey(_fromChip), findsNothing);
     expect(find.byKey(_toChip), findsNothing);
     // Live mode: no window selected yet.

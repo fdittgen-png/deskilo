@@ -57,20 +57,27 @@ class WindowControls extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     if (granularity.isDayBased) {
+      // Icons, not words (UX pass): sunrise = morning, sunset =
+      // afternoon, calendar-day = full day; the localized name lives in
+      // the tooltip (and the semantics label for assistive tech).
       Widget chip(
         String keySuffix,
-        String label,
+        IconData icon,
+        String name,
         HalfDayWindow Function(DateTime day) windowOf,
       ) {
         final window = windowOf(day);
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2),
-          child: ChoiceChip(
-            key: ValueKey('$keyPrefix-$keySuffix'),
-            label: Text(label),
-            selected: isSelected(window),
-            materialTapTargetSize: MaterialTapTargetSize.padded,
-            onSelected: (_) => onPickWindow(window),
+          child: Tooltip(
+            message: name,
+            child: ChoiceChip(
+              key: ValueKey('$keyPrefix-$keySuffix'),
+              label: Icon(icon, size: 18, semanticLabel: name),
+              selected: isSelected(window),
+              materialTapTargetSize: MaterialTapTargetSize.padded,
+              onSelected: (_) => onPickWindow(window),
+            ),
           ),
         );
       }
@@ -86,17 +93,20 @@ class WindowControls extends StatelessWidget {
           if (granularity == BookingGranularity.halfDay) ...[
             chip(
               'am-chip',
+              Icons.wb_sunny_outlined,
               l10n?.planMorningChip ?? 'Morning',
               HalfDayWindows.morning,
             ),
             chip(
               'pm-chip',
+              Icons.wb_twilight,
               l10n?.planAfternoonChip ?? 'Afternoon',
               HalfDayWindows.afternoon,
             ),
           ],
           chip(
             'day-chip',
+            Icons.today_outlined,
             l10n?.reserveFullDayChip ?? 'Full day',
             HalfDayWindows.fullDay,
           ),
@@ -141,69 +151,108 @@ class WindowControls extends StatelessWidget {
   }
 }
 
-/// Compact level picker (#283): a chip-styled button naming the current
-/// level; the menu lists all levels. One tap to switch regardless of
-/// level count — replaces whole rows of level chips in headers.
-class LevelMenuButton extends StatelessWidget {
-  const LevelMenuButton({
+/// Floor switcher ON the plan (UX pass): a small vertical stack of
+/// buttons floating over the canvas — where floors intuitively live
+/// (the indoor-maps idiom) — instead of eating header space. One short
+/// button per level (full name in the tooltip); beyond five levels it
+/// collapses into a single menu button. [trailing] hosts contextual
+/// per-level actions (the reserve-level icon).
+class LevelSelector extends StatelessWidget {
+  const LevelSelector({
     super.key,
+    required this.keyPrefix,
     required this.levels,
     required this.current,
     required this.onSelected,
+    this.trailing,
   });
 
+  final String keyPrefix;
   final List<Level> levels;
   final Level current;
   final ValueChanged<String> onSelected;
+  final Widget? trailing;
+
+  /// A level's on-button short form: leading digits when the name has
+  /// them ('2eme' → '2'), else its first two characters.
+  static String shortLabel(String name) {
+    final digits = RegExp(r'^\d+').firstMatch(name.trim())?.group(0);
+    if (digits != null) return digits;
+    final t = name.trim();
+    return t.length <= 2 ? t : t.substring(0, 2);
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
-    return PopupMenuButton<String>(
-      tooltip: l10n?.planLevelTooltip ?? 'Level',
-      onSelected: onSelected,
-      itemBuilder: (context) => [
-        for (final Level l in levels)
-          PopupMenuItem(
-            value: l.id,
-            child: Row(
-              children: [
-                Icon(
-                  l.id == current.id ? Icons.check : null,
-                  size: 18,
-                  color: scheme.primary,
-                ),
-                const SizedBox(width: 8),
-                Text(l.name),
-              ],
-            ),
-          ),
-      ],
-      child: Container(
-        constraints: BoxConstraints(
-          minHeight: kMinInteractiveDimension,
-          maxWidth: MediaQuery.sizeOf(context).width * 0.4,
-        ),
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        decoration: BoxDecoration(
-          color: scheme.secondaryContainer,
-          borderRadius: AppRadius.xlAll,
-          border: Border.all(color: scheme.outlineVariant),
-        ),
-        child: Row(
+    return Card(
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(2),
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Flexible(
-              child: Text(
-                current.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.labelLarge,
+            if (levels.length <= 5)
+              for (final level in levels)
+                Tooltip(
+                  message: level.name,
+                  child: InkWell(
+                    key: ValueKey('$keyPrefix-level-${level.id}'),
+                    borderRadius: AppRadius.smAll,
+                    onTap: () => onSelected(level.id),
+                    child: Container(
+                      width: kMinInteractiveDimension,
+                      height: kMinInteractiveDimension,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: level.id == current.id
+                            ? scheme.secondaryContainer
+                            : null,
+                        borderRadius: AppRadius.smAll,
+                      ),
+                      child: Text(
+                        shortLabel(level.name),
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge
+                            ?.copyWith(
+                              fontWeight: level.id == current.id
+                                  ? FontWeight.w700
+                                  : null,
+                            ),
+                      ),
+                    ),
+                  ),
+                )
+            else
+              PopupMenuButton<String>(
+                key: ValueKey('$keyPrefix-level-menu'),
+                tooltip: l10n?.planLevelTooltip ?? 'Level',
+                onSelected: onSelected,
+                icon: const Icon(Icons.layers_outlined),
+                itemBuilder: (context) => [
+                  for (final Level l in levels)
+                    PopupMenuItem(
+                      value: l.id,
+                      child: Row(
+                        children: [
+                          Icon(
+                            l.id == current.id ? Icons.check : null,
+                            size: 18,
+                            color: scheme.primary,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(l.name),
+                        ],
+                      ),
+                    ),
+                ],
               ),
-            ),
-            const Icon(Icons.arrow_drop_down),
+            if (trailing != null) ...[
+              const Divider(height: 1),
+              trailing!,
+            ],
           ],
         ),
       ),

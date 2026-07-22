@@ -786,13 +786,40 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     // wrap=true in the landscape sidebar: vertical space is plentiful
     // there, so the controls flow onto lines instead of hiding behind
     // the portrait row's horizontal scroll.
-    Widget header({required bool wrap}) => Column(
+    final header = Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _scrollerRow(at, granularity, levels, level, wrap: wrap),
+        _scrollerRow(at, granularity, levels, level),
         if (!dayOpen) _closedDayBanner(l10n),
       ],
     );
+    // Floor switcher floats over the view (indoor-maps idiom, UX pass):
+    // levels belong to the map, not the header. Hosts the reserve-level
+    // action beneath the floors.
+    final levelOverlay = (levels.length > 1 || _levelReserveVisible(level))
+        ? Positioned(
+            top: AppSpacing.sm,
+            right: AppSpacing.sm,
+            child: LevelSelector(
+              keyPrefix: 'plan',
+              levels: levels.length > 1 ? levels : const <Level>[],
+              current: level,
+              onSelected: (id) {
+                setState(() => _highlightedSeatId = null);
+                ref.read(selectedLevelIdProvider.notifier).select(id);
+              },
+              trailing: _levelReserveVisible(level)
+                  ? IconButton(
+                      key: const ValueKey('plan-reserve-level'),
+                      tooltip:
+                          l10n?.levelReserveButton ?? 'Reserve level',
+                      icon: const Icon(Icons.layers_outlined),
+                      onPressed: () => _reserveLevel(level),
+                    )
+                  : null,
+            ),
+          )
+        : null;
     final content = Expanded(
           // #209: cross-fade the list/canvas toggle (and the transitions
           // out of loading/error). Distinct subtree keys make the switcher
@@ -871,6 +898,17 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             },
           ),
         );
+    final overlaidContent = levelOverlay == null
+        ? content
+        : Expanded(
+            child: Stack(children: [
+              // The switcher child fills; the floor buttons float above.
+              Positioned.fill(
+                child: Column(children: [content]),
+              ),
+              levelOverlay,
+            ]),
+          );
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -882,14 +920,14 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             children: [
               SizedBox(
                 width: (constraints.maxWidth * 0.4).clamp(280.0, 460.0),
-                child: SingleChildScrollView(child: header(wrap: true)),
+                child: SingleChildScrollView(child: header),
               ),
               const VerticalDivider(width: 1),
-              content,
+              overlaidContent,
             ],
           );
         }
-        return Column(children: [header(wrap: false), content]);
+        return Column(children: [header, overlaidContent]);
       },
     );
   }
@@ -902,9 +940,8 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     DateTime at,
     BookingGranularity granularity,
     List<Level> levels,
-    Level level, {
-    required bool wrap,
-  }) {
+    Level level,
+  ) {
     final l10n = AppLocalizations.of(context);
     final dayBased = granularity.isDayBased;
     // Day-based chips describe a WORKSPACE-local day: deriving it via
@@ -987,7 +1024,11 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                 _browseEnd = end;
               });
             },
-            child: Text(DateFormat.MMMd().format(local)),
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              const Icon(Icons.calendar_month_outlined, size: 18),
+              const SizedBox(width: 4),
+              Text(DateFormat.MMMd().format(local)),
+            ]),
           ),
           // The shared window controls, inline (space refactor): the
           // former full-width chips row is gone.
@@ -1010,60 +1051,32 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             onPickTo: _pickTo,
             muted: live,
           ),
-          // Shared compact level picker (#283, now booking_controls).
-          if (levels.length > 1)
-            Padding(
-              padding: const EdgeInsets.only(left: AppSpacing.xs),
-              child: LevelMenuButton(
-                key: const ValueKey('plan-level-menu'),
-                levels: levels,
-                current: level,
-                onSelected: (id) {
-                  setState(() => _highlightedSeatId = null);
-                  ref.read(selectedLevelIdProvider.notifier).select(id);
-                },
-              ),
-            ),
-          // 'Now' is a symbol to save space: return to the live instant.
-          // Disabled (muted) while already live.
-          IconButton(
-            key: const ValueKey('plan-now-button'),
-            tooltip: l10n?.planNowButton ?? 'Now',
-            icon: const Icon(Icons.schedule_outlined),
-            onPressed: live
-                ? null
-                : () => setState(() {
-                      _highlightedSeatId = null;
-                      _browse = null;
-                      _browseEnd = null;
-                    }),
-          ),
-          // Whole-level booking (0050): inline icon — the dedicated row
-          // is gone with the compact header.
-          if (_levelReserveVisible(level))
+          // 'Now' returns to the live instant — shown only while
+          // browsing (contextual; an always-visible disabled button was
+          // header noise).
+          if (!live)
             IconButton(
-              key: const ValueKey('plan-reserve-level'),
-              tooltip: l10n?.levelReserveButton ?? 'Reserve level',
-              icon: const Icon(Icons.layers_outlined),
-              onPressed: () => _reserveLevel(level),
+              key: const ValueKey('plan-now-button'),
+              tooltip: l10n?.planNowButton ?? 'Now',
+              icon: const Icon(Icons.schedule_outlined),
+              onPressed: () => setState(() {
+                _highlightedSeatId = null;
+                _browse = null;
+                _browseEnd = null;
+              }),
             ),
     ];
+    // A Wrap, never a scroll: every control stays visible at any width
+    // (the scroll-row hid half the header on phones — field report).
+    // Normally one line; narrow widths flow onto a second.
     return Padding(
       padding: AppSpacing.smH,
-      child: wrap
-          ? Wrap(
-              spacing: AppSpacing.xs,
-              runSpacing: AppSpacing.xs,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: controls,
-            )
-          : SizedBox(
-              height: kMinInteractiveDimension + 4,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(children: controls),
-              ),
-            ),
+      child: Wrap(
+        spacing: AppSpacing.xs,
+        runSpacing: AppSpacing.xs,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: controls,
+      ),
     );
   }
 

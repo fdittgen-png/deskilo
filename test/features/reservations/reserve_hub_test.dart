@@ -110,6 +110,23 @@ FloorPlanPainter hubPainter(WidgetTester tester) {
 bool chipSelected(WidgetTester tester, Key key) =>
     tester.widget<ChoiceChip>(find.byKey(key)).selected;
 
+/// Selects [day] through the hub's date chip + calendar dialog (the
+/// 7-day pill strip is gone — UX pass). Handles a month rollover with
+/// the picker's next-month chevron.
+Future<void> pickHubDate(WidgetTester tester, DateTime day) async {
+  await tester.tap(find.byKey(const ValueKey('reserve-date-button')));
+  await tester.pumpAndSettle();
+  final now = DateTime.now();
+  if (day.month != now.month || day.year != now.year) {
+    await tester.tap(find.byTooltip('Next month'));
+    await tester.pumpAndSettle();
+  }
+  await tester.tap(find.text('${day.day}').last);
+  await tester.pumpAndSettle();
+  await tester.tap(find.text('OK'));
+  await tester.pumpAndSettle();
+}
+
 DateTime get _today {
   final now = DateTime.now();
   return DateTime(now.year, now.month, now.day);
@@ -241,10 +258,8 @@ void main() {
     );
     expect(appBarTitle, findsOneWidget);
 
-    // Date strip: today's pill exists and is selected.
-    final todayPill = find.byKey(ReserveScreen.dayPillKey(_today));
-    expect(todayPill, findsOneWidget);
-    expect(chipSelected(tester, ReserveScreen.dayPillKey(_today)), isTrue);
+    // One date affordance (UX pass): the chip names today and opens
+    // the calendar picker; the pill strip is gone.
     expect(find.byKey(const ValueKey('reserve-date-button')), findsOneWidget);
 
     // Flexible granularity: from→to clock chips, no half-day chips.
@@ -404,7 +419,7 @@ void main() {
       ],
     );
 
-    await tester.tap(find.text('Day'));
+    await tester.tap(find.byTooltip('Day'));
     await tester.pumpAndSettle();
 
     // Everyone mode: the foreign block is visible and labelled.
@@ -427,7 +442,7 @@ void main() {
       'the seat row, and no pager', (tester) async {
     await pumpHub(tester);
 
-    await tester.tap(find.text('Week'));
+    await tester.tap(find.byTooltip('Week'));
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('reserve-week-grid')), findsOneWidget);
@@ -475,7 +490,7 @@ void main() {
       ],
     );
 
-    await tester.tap(find.text('Week'));
+    await tester.tap(find.byTooltip('Week'));
     await tester.pumpAndSettle();
 
     final brightness = _gridBrightness(tester);
@@ -524,7 +539,7 @@ void main() {
       ],
     );
 
-    await tester.tap(find.text('Week'));
+    await tester.tap(find.byTooltip('Week'));
     await tester.pumpAndSettle();
 
     final brightness = _gridBrightness(tester);
@@ -556,7 +571,7 @@ void main() {
       'Day view', (tester) async {
     await pumpHub(tester);
 
-    await tester.tap(find.text('Week'));
+    await tester.tap(find.byTooltip('Week'));
     await tester.pumpAndSettle();
 
     // A neighbouring day inside the same ISO week (Sundays step back).
@@ -571,11 +586,7 @@ void main() {
     expect(find.byKey(const ValueKey('reserve-week-grid')), findsNothing);
     final timeline = tester.widget<DayTimeline>(find.byType(DayTimeline));
     expect(DateUtils.isSameDay(timeline.day, target), isTrue);
-    // The strip follows too (only future days have a pill — the strip
-    // starts today).
-    if (!target.isBefore(today)) {
-      expect(chipSelected(tester, ReserveScreen.dayPillKey(target)), isTrue);
-    }
+
   });
 
   testWidgets(
@@ -611,7 +622,7 @@ void main() {
       ],
     );
 
-    await tester.tap(find.text('Week'));
+    await tester.tap(find.byTooltip('Week'));
     await tester.pumpAndSettle();
     await tester
         .tap(find.byKey(WeekGrid.cellKey('seat-4', today, morning: true)));
@@ -637,7 +648,7 @@ void main() {
       'level headers (#221 semantics)', (tester) async {
     await pumpHub(tester, twoLevels: true);
 
-    await tester.tap(find.text('Week'));
+    await tester.tap(find.byTooltip('Week'));
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(ChoiceChip, 'All levels').first);
     await tester.pumpAndSettle();
@@ -710,7 +721,7 @@ void main() {
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Week'));
+    await tester.tap(find.byTooltip('Week'));
     await tester.pumpAndSettle();
 
     // Both months around the boundary were fetched (month providers).
@@ -763,7 +774,7 @@ void main() {
 
     // Observable regardless of whether the day still has a strip pill:
     // the Day view timeline is on the picked day.
-    await tester.tap(find.text('Day'));
+    await tester.tap(find.byTooltip('Day'));
     await tester.pumpAndSettle();
     final timeline = tester.widget<DayTimeline>(find.byType(DayTimeline));
     expect(DateUtils.isSameDay(timeline.day, target), isTrue);
@@ -780,8 +791,7 @@ void main() {
       saturday =
           DateTime(saturday.year, saturday.month, saturday.day + 1);
     }
-    await tester.tap(find.byKey(ReserveScreen.dayPillKey(saturday)));
-    await tester.pumpAndSettle();
+    await pickHubDate(tester, saturday);
 
     expect(
       find.byKey(const ValueKey('reserve-closed-banner')),
@@ -826,7 +836,7 @@ void main() {
       ],
     );
 
-    await tester.tap(find.text('Month'));
+    await tester.tap(find.byTooltip('Month'));
     await tester.pumpAndSettle();
 
     expect(find.byType(MonthGrid), findsOneWidget);
@@ -858,7 +868,7 @@ void main() {
         : DateTime(today.year, today.month, 1);
     await pumpHub(tester);
 
-    await tester.tap(find.text('Month'));
+    await tester.tap(find.byTooltip('Month'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(MonthGrid.cellKey(other)));
     await tester.pumpAndSettle();
@@ -879,7 +889,7 @@ void main() {
       granularity: BookingGranularity.halfDay,
     );
 
-    await tester.tap(find.text('Week'));
+    await tester.tap(find.byTooltip('Week'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(ValueKey(
       'week-free-seat-4-${WeekGrid.dayStampOf(today)}-am',
@@ -916,7 +926,7 @@ void main() {
       ],
     );
 
-    await tester.tap(find.text('Week'));
+    await tester.tap(find.byTooltip('Week'));
     await tester.pumpAndSettle();
 
     expect(
@@ -937,7 +947,7 @@ void main() {
       granularity: BookingGranularity.halfDay,
     );
 
-    await tester.tap(find.text('Day'));
+    await tester.tap(find.byTooltip('Day'));
     await tester.pumpAndSettle();
 
     // No reservations — but the seat row is there, not an empty hint.
@@ -967,15 +977,15 @@ void main() {
 
     expect(find.byKey(_amChip), findsOneWidget); // Plan view
 
-    await tester.tap(find.text('Day'));
+    await tester.tap(find.byTooltip('Day'));
     await tester.pumpAndSettle();
     expect(find.byKey(_amChip), findsOneWidget);
 
-    await tester.tap(find.text('Week'));
+    await tester.tap(find.byTooltip('Week'));
     await tester.pumpAndSettle();
     expect(find.byKey(_amChip), findsNothing);
 
-    await tester.tap(find.text('Month'));
+    await tester.tap(find.byTooltip('Month'));
     await tester.pumpAndSettle();
     expect(find.byKey(_amChip), findsNothing);
   });

@@ -24,7 +24,6 @@ import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/domain/seat_context.dart';
 import '../../../plan/presentation/seat_occupancy.dart';
-import '../../../plan/domain/level.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/providers/plan_focus_controller.dart';
@@ -89,9 +88,6 @@ enum _ReserveView { plan, day, week, month }
 class ReserveScreen extends ConsumerStatefulWidget {
   const ReserveScreen({super.key});
 
-  /// Key of one date-strip pill (tests): the pill of [day]'s local date.
-  static Key dayPillKey(DateTime day) =>
-      ValueKey('reserve-day-pill-${dayKeyOf(day)}');
 
   @override
   ConsumerState<ReserveScreen> createState() => _ReserveScreenState();
@@ -209,8 +205,6 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
 
   // ── day selection (strip · calendar icon · week-grid headers) ──
 
-  DateTime _stripDay(int index) =>
-      DateTime(_today.year, _today.month, _today.day + index);
 
   /// Central day switch: re-maps the window onto the new day (canonical
   /// half re-derived under half-day granularity, times of day kept under
@@ -616,14 +610,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     // widgets, booking_controls.dart), horizontally scrollable so every
     // segment keeps its 48dp target (#284 idiom). Two header rows total
     // instead of four; the view below gets the difference.
-    final levels = ref.watch(levelsProvider).value ?? const <Level>[];
-    final hubLevel = _view == _ReserveView.plan && levels.length > 1
-        ? (levels.where((l) => l.id == _levelId).firstOrNull ??
-            levels.first)
-        : null;
-    // wrap=true in the landscape sidebar (#284): controls flow onto
-    // lines there instead of hiding behind the portrait row's scroll.
-    Widget header({required bool wrap}) {
+    Widget header() {
       final controls = <Widget>[
               ViewToggle<_ReserveView>(
               key: const ValueKey('reserve-view-switch'),
@@ -631,28 +618,43 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                 ViewToggleOption(
                   value: _ReserveView.plan,
                   icon: Icons.map_outlined,
-                  label: l10n?.tabPlan ?? 'Plan',
+                  tooltip: l10n?.tabPlan ?? 'Plan',
                 ),
                 ViewToggleOption(
                   value: _ReserveView.day,
                   icon: Icons.view_timeline_outlined,
-                  label: l10n?.reserveDayView ?? 'Day',
+                  tooltip: l10n?.reserveDayView ?? 'Day',
                 ),
                 ViewToggleOption(
                   value: _ReserveView.week,
                   icon: Icons.view_week_outlined,
-                  label: l10n?.reserveWeekView ?? 'Week',
+                  tooltip: l10n?.reserveWeekView ?? 'Week',
                 ),
                 ViewToggleOption(
                   value: _ReserveView.month,
                   icon: Icons.calendar_month_outlined,
-                  label: l10n?.reserveMonthView ?? 'Month',
+                  tooltip: l10n?.reserveMonthView ?? 'Month',
                 ),
               ],
               selected: _view,
               // No re-entry syncing needed since #236: the week grid
               // derives its week from the selected day on every build.
               onChanged: (view) => setState(() => _view = view),
+            ),
+            // One date affordance (UX pass): the 7-day pill strip was
+            // redundant with the calendar picker — a chip naming the
+            // selected day opens it.
+            Padding(
+              padding: const EdgeInsets.only(left: AppSpacing.xs),
+              child: TextButton(
+                key: const ValueKey('reserve-date-button'),
+                onPressed: _pickDate,
+                child: Row(mainAxisSize: MainAxisSize.min, children: [
+                  const Icon(Icons.calendar_month_outlined, size: 18),
+                  const SizedBox(width: 4),
+                  Text(DateFormat.MMMd().format(_selectedDay)),
+                ]),
+              ),
             ),
             // Honest controls: the window chips act on Plan (state
             // filter + booking window) and Day (the window a free-row
@@ -677,23 +679,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                   onPickTo: _pickTo,
                 ),
               ),
-            // Hub-local level pick (#187) — shares the Plan tab's
-            // compact menu instead of a whole chip row.
-            if (hubLevel != null)
-              Padding(
-                padding: const EdgeInsets.only(left: AppSpacing.xs),
-                child: LevelMenuButton(
-                  key: const ValueKey('reserve-level-menu'),
-                  levels: levels,
-                  current: hubLevel,
-                  onSelected: (id) => setState(() => _levelId = id),
-                ),
-              ),
       ];
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _dateStrip(l10n),
           if (!dayOpen) _closedDayBanner(l10n),
           Padding(
             padding: const EdgeInsets.only(
@@ -701,20 +690,14 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               right: AppSpacing.lg,
               bottom: AppSpacing.xs,
             ),
-            child: wrap
-                ? Wrap(
-                    spacing: AppSpacing.xs,
-                    runSpacing: AppSpacing.xs,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: controls,
-                  )
-                : SizedBox(
-                    height: kMinInteractiveDimension + 4,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(children: controls),
-                    ),
-                  ),
+            // A Wrap, never a scroll: every control stays visible at
+            // any width; narrow phones flow onto a second line.
+            child: Wrap(
+              spacing: AppSpacing.xs,
+              runSpacing: AppSpacing.xs,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: controls,
+            ),
           ),
         ],
       );
@@ -755,72 +738,19 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               children: [
                 SizedBox(
                   width: (constraints.maxWidth * 0.4).clamp(280.0, 460.0),
-                  child: SingleChildScrollView(child: header(wrap: true)),
+                  child: SingleChildScrollView(child: header()),
                 ),
                 const VerticalDivider(width: 1),
                 content,
               ],
             );
           }
-          return Column(children: [header(wrap: false), content]);
+          return Column(children: [header(), content]);
         },
       ),
     );
   }
 
-  /// Horizontal date-pill strip: [ReserveHubMetrics.stripDayCount] days
-  /// from today, plus a calendar icon for anything further out.
-  Widget _dateStrip(AppLocalizations? l10n) {
-    final weekdayFormat = DateFormat.E();
-    final dayFormat = DateFormat.d();
-    return SizedBox(
-      height: ReserveHubMetrics.stripHeight,
-      child: Row(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: AppSpacing.smH,
-              itemCount: ReserveHubMetrics.stripDayCount,
-              itemBuilder: (context, index) {
-                final day = _stripDay(index);
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 2,
-                    vertical: 4,
-                  ),
-                  child: ChoiceChip(
-                    key: ReserveScreen.dayPillKey(day),
-                    label: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          weekdayFormat.format(day),
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        Text(dayFormat.format(day)),
-                      ],
-                    ),
-                    selected: DateUtils.isSameDay(day, _selectedDay),
-                    // 48dp Material tap minimum (#211): the padded target
-                    // keeps the pill's hit area honest inside the strip.
-                    materialTapTargetSize: MaterialTapTargetSize.padded,
-                    onSelected: (_) => _selectDay(day),
-                  ),
-                );
-              },
-            ),
-          ),
-          IconButton(
-            key: const ValueKey('reserve-date-button'),
-            icon: const Icon(Icons.calendar_month_outlined),
-            tooltip: l10n?.reservePickDateTooltip ?? 'Choose a date',
-            onPressed: _pickDate,
-          ),
-        ],
-      ),
-    );
-  }
 
 
   /// Closed-day banner (#186 style): the workspace is not open on the
@@ -868,9 +798,12 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     final names = ref.watch(memberNamesProvider).value ?? const {};
 
-    // Level switching lives in the header's LevelMenuButton now — the
-    // canvas takes the full remaining height.
-    return Column(
+    // Floor switcher floats over the canvas (indoor-maps idiom, UX
+    // pass) — hub-local browsing state (#187), never the plan tab's
+    // persisted default (#159).
+    return Stack(
+      children: [
+        Positioned.fill(child: Column(
       children: [
         Expanded(
           child: switch (planAsync) {
@@ -933,6 +866,19 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
             _ => const LoadingView(),
           },
         ),
+      ],
+    )),
+        if (levels.length > 1)
+          Positioned(
+            top: AppSpacing.sm,
+            right: AppSpacing.sm,
+            child: LevelSelector(
+              keyPrefix: 'reserve',
+              levels: levels,
+              current: level,
+              onSelected: (id) => setState(() => _levelId = id),
+            ),
+          ),
       ],
     );
   }
