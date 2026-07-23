@@ -2,8 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'dart:async';
+
 import 'app/app.dart';
 import 'app/app_initializer.dart';
+import 'core/files/file_saver.dart';
 import 'core/notifications/local_notification_service.dart';
 import 'core/notifications/notification_providers.dart';
 import 'core/notifications/notification_service.dart';
@@ -30,6 +33,16 @@ Future<void> main() async {
     trace.error('boot', 'Supabase initialization failed',
         error: e, stackTrace: st);
   }
+
+  // One-time repair (Downloads pass): exports saved by older builds sit
+  // in the hidden app dir — move them into the visible Downloads. Fire
+  // and forget; failures land in the trace, never block boot.
+  unawaited(migrateLegacyExports().then((moved) {
+    if (moved > 0) trace.warn('files', 'migrated $moved legacy exports');
+  }).catchError((Object e, StackTrace st) {
+    trace.error('files', 'legacy export migration failed',
+        error: e, stackTrace: st);
+  }));
 
   NotificationService notifications = const NoopNotificationService();
   try {
