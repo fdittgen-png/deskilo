@@ -1228,6 +1228,22 @@ class AppLocalizationsIt extends AppLocalizations {
       'I badge vengono letti con la fotocamera lato schermo — disattiva per usare la fotocamera posteriore.';
 
   @override
+  String get kioskNfcOff =>
+      'L\'NFC è disattivato nelle impostazioni Android di questo tablet — attivalo per leggere le carte RFID.';
+
+  @override
+  String get kioskNfcUnsupported =>
+      'Questo tablet non ha un lettore NFC — scansiona il badge QR.';
+
+  @override
+  String get kioskNfcFailed =>
+      'Il lettore RFID non si è avviato — riavvia l\'app e riprova.';
+
+  @override
+  String get nfcConfigDeviceOff =>
+      'L\'NFC è disattivato nelle impostazioni Android di questo dispositivo — attivalo per leggere le carte RFID.';
+
+  @override
   String get languageTitle => 'Lingua';
 
   @override

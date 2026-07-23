@@ -1230,6 +1230,22 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les badges sont lus avec la caméra côté écran — désactivez pour utiliser la caméra arrière.';
 
   @override
+  String get kioskNfcOff =>
+      'Le NFC est désactivé dans les paramètres Android de cette tablette — activez-le pour lire les cartes RFID.';
+
+  @override
+  String get kioskNfcUnsupported =>
+      'Cette tablette n\'a pas de lecteur NFC — scannez le badge QR à la place.';
+
+  @override
+  String get kioskNfcFailed =>
+      'Le lecteur RFID n\'a pas démarré — redémarrez l\'application et réessayez.';
+
+  @override
+  String get nfcConfigDeviceOff =>
+      'Le NFC est désactivé dans les paramètres Android de cet appareil — activez-le pour lire les cartes RFID.';
+
+  @override
   String get languageTitle => 'Langue';
 
   @override

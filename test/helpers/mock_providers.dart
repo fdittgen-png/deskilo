@@ -757,20 +757,31 @@ class InMemoryActiveWorkspaceStore implements ActiveWorkspaceStore {
   Future<void> write(String? workspaceId) async => value = workspaceId;
 }
 
-/// Fake RFID/NFC reader: [available] toggles the tap path; [tap] drives a
-/// card presentation without hardware.
+/// Fake RFID/NFC reader: [available] toggles the tap path ([deviceStatus]
+/// pins a precise state instead); [startFails] simulates a session that
+/// will not start; [tap] drives a card presentation without hardware.
 class FakeNfcUidReader extends NfcUidReader {
-  FakeNfcUidReader({this.available = false});
+  FakeNfcUidReader({
+    this.available = false,
+    this.deviceStatus,
+    this.startFails = false,
+  });
 
   final bool available;
+  final NfcStatus? deviceStatus;
+  final bool startFails;
   ValueChanged<String>? _onUid;
 
   @override
-  Future<bool> isAvailable() async => available;
+  Future<NfcStatus> status() async =>
+      deviceStatus ??
+      (available ? NfcStatus.ready : NfcStatus.unsupported);
 
   @override
-  Future<void> startRead({required ValueChanged<String> onUid}) async {
+  Future<bool> startRead({required ValueChanged<String> onUid}) async {
+    if (startFails) return false;
     _onUid = onUid;
+    return true;
   }
 
   @override

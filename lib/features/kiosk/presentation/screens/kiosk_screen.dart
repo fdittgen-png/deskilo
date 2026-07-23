@@ -487,9 +487,14 @@ class _KioskBadgePrompt extends StatefulWidget {
   State<_KioskBadgePrompt> createState() => _KioskBadgePromptState();
 }
 
+/// What the RFID path is doing, shown IN the sheet (field report: "the
+/// RFID was not read" was undiagnosable at the wall — no NFC hardware,
+/// NFC off in Android settings and a dead session all looked identical).
+enum _NfcUiState { checking, reading, off, unsupported, failed, featureOff }
+
 class _KioskBadgePromptState extends State<_KioskBadgePrompt> {
   final _controller = TextEditingController();
-  bool _nfcAvailable = false;
+  _NfcUiState _nfc = _NfcUiState.checking;
   bool _cameraReady = false;
   bool _done = false;
 
@@ -509,10 +514,25 @@ class _KioskBadgePromptState extends State<_KioskBadgePrompt> {
   }
 
   Future<void> _startNfc() async {
-    if (!widget.nfcEnabled || !await widget.reader.isAvailable()) return;
+    if (!widget.nfcEnabled) {
+      if (mounted) setState(() => _nfc = _NfcUiState.featureOff);
+      return;
+    }
+    final status = await widget.reader.status();
     if (!mounted) return;
-    setState(() => _nfcAvailable = true);
-    await widget.reader.startRead(onUid: (uid) => _submit(uid));
+    if (status != NfcStatus.ready) {
+      TraceLogger.instance.warn('kiosk', 'nfc not ready: ${status.name}');
+      setState(() => _nfc = status == NfcStatus.off
+          ? _NfcUiState.off
+          : _NfcUiState.unsupported);
+      return;
+    }
+    setState(() => _nfc = _NfcUiState.reading);
+    final started =
+        await widget.reader.startRead(onUid: (uid) => _submit(uid));
+    if (!mounted || started) return;
+    // startRead already traced the failure — surface it at the wall.
+    setState(() => _nfc = _NfcUiState.failed);
   }
 
   void _submit(String value) {
@@ -532,23 +552,59 @@ class _KioskBadgePromptState extends State<_KioskBadgePrompt> {
   @override
   Widget build(BuildContext context) {
     final l10n = widget.l10n;
+    // Precomputed (lint: no literals inside Text with interpolation).
+    final nfcProblem = switch (_nfc) {
+      _NfcUiState.off => l10n?.kioskNfcOff ??
+          "NFC is turned off in this tablet's Android settings — turn it "
+              'on to read RFID cards.',
+      _NfcUiState.unsupported => l10n?.kioskNfcUnsupported ??
+          'This tablet has no NFC reader — scan the QR badge instead.',
+      _NfcUiState.failed => l10n?.kioskNfcFailed ??
+          'The RFID reader did not start — restart the app and try again.',
+      _ => null,
+    };
     return SheetShell(
       title: l10n?.kioskPresentBadge ?? 'Present your badge',
       children: [
         const SizedBox(height: 8),
         Text(
-          _nfcAvailable
+          _nfc == _NfcUiState.reading
               ? (l10n?.kioskBadgeHintNfc ??
                   'Tap your card, scan your QR, or type its code.')
               : (l10n?.kioskBadgeHint ??
                   'Scan your badge QR, or type its code.'),
           style: Theme.of(context).textTheme.bodySmall,
         ),
-        if (_nfcAvailable)
+        if (_nfc == _NfcUiState.reading)
           const Padding(
             padding: EdgeInsets.only(top: 12),
             child: Center(
               child: Icon(Icons.contactless_outlined, size: 44),
+            ),
+          ),
+        // The RFID path explains itself when it cannot read — the
+        // difference between "no hardware", "NFC off in settings" and
+        // "session failed" is exactly what a wall diagnosis needs.
+        if (nfcProblem != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: Row(
+              key: const ValueKey('kiosk-nfc-status'),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.mobile_off_outlined,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.error,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    nfcProblem,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
+              ],
             ),
           ),
         // The camera reads the printed badge QR right in the sheet —

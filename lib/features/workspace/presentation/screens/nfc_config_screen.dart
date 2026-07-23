@@ -22,7 +22,7 @@ class NfcConfigScreen extends ConsumerStatefulWidget {
 
 class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
   /// null = still checking this device's NFC.
-  bool? _deviceAvailable;
+  NfcStatus? _deviceStatus;
 
   @override
   void initState() {
@@ -31,8 +31,8 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
   }
 
   Future<void> _checkDevice() async {
-    final available = await ref.read(nfcUidReaderProvider).isAvailable();
-    if (mounted) setState(() => _deviceAvailable = available);
+    final status = await ref.read(nfcUidReaderProvider).status();
+    if (mounted) setState(() => _deviceStatus = status);
   }
 
   Future<void> _toggle(Workspace workspace, bool value) async {
@@ -68,7 +68,19 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
     final enabled = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.nfcBadges);
-    final device = _deviceAvailable;
+    final device = _deviceStatus;
+    // Precomputed (lint: no literals inside Text with interpolation).
+    final deviceLine = switch (device) {
+      null => l10n?.nfcConfigChecking ?? 'Checking…',
+      NfcStatus.ready =>
+        l10n?.nfcConfigDeviceReady ?? 'NFC available and enabled',
+      NfcStatus.off => l10n?.nfcConfigDeviceOff ??
+          "NFC is turned off in this device's Android settings — turn it "
+              'on to read RFID cards.',
+      NfcStatus.unsupported => l10n?.nfcConfigDeviceUnavailable ??
+          'No NFC here — Android with NFC on is needed (iPads have no '
+              'NFC). QR badges still work.',
+    };
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.nfcConfigTitle ?? 'RFID / NFC badges'),
@@ -105,24 +117,15 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
           Card(
             child: ListTile(
               leading: Icon(
-                device == true
+                device == NfcStatus.ready
                     ? Icons.contactless_outlined
                     : Icons.mobile_off_outlined,
-                color: device == true
+                color: device == NfcStatus.ready
                     ? Theme.of(context).colorScheme.primary
                     : Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               title: Text(l10n?.nfcConfigDeviceStatus ?? 'This device'),
-              subtitle: Text(
-                device == null
-                    ? (l10n?.nfcConfigChecking ?? 'Checking…')
-                    : device
-                        ? (l10n?.nfcConfigDeviceReady ??
-                            'NFC available and enabled')
-                        : (l10n?.nfcConfigDeviceUnavailable ??
-                            'No NFC here — Android with NFC on is needed '
-                                '(iPads have no NFC). QR badges still work.'),
-              ),
+              subtitle: Text(deviceLine),
             ),
           ),
         ],

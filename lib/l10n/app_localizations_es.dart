@@ -1225,6 +1225,22 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las tarjetas se leen con la cámara del lado de la pantalla — desactívalo para usar la cámara trasera.';
 
   @override
+  String get kioskNfcOff =>
+      'El NFC está desactivado en los ajustes de Android de esta tableta — actívalo para leer tarjetas RFID.';
+
+  @override
+  String get kioskNfcUnsupported =>
+      'Esta tableta no tiene lector NFC — escanea la tarjeta QR en su lugar.';
+
+  @override
+  String get kioskNfcFailed =>
+      'El lector RFID no se inició — reinicia la aplicación e inténtalo de nuevo.';
+
+  @override
+  String get nfcConfigDeviceOff =>
+      'El NFC está desactivado en los ajustes de Android de este dispositivo — actívalo para leer tarjetas RFID.';
+
+  @override
   String get languageTitle => 'Idioma';
 
   @override
