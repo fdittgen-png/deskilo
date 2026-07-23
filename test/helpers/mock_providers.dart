@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:async';
 import 'package:flutter/foundation.dart' show ValueChanged;
+import 'package:flutter/widgets.dart' show Widget, ColoredBox, Color, Center, Text;
 
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/domain/social_provider.dart';
@@ -16,6 +17,7 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
 import 'package:deskilo/core/notifications/notification_providers.dart';
 import 'package:deskilo/core/notifications/notification_service.dart';
+import 'package:deskilo/core/scan/qr_scan_widget.dart';
 import 'package:deskilo/core/storage/active_workspace_store.dart';
 import 'package:deskilo/features/events/domain/event_repository.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
@@ -687,6 +689,7 @@ List<Override> standardTestOverrides({
   MoneyRepository? money,
   NotificationService? notifications,
   ActiveWorkspaceStore? activeWorkspace,
+  FakeQrScanner? qrScan,
   DefaultWorkspaceStore? defaultWorkspace,
   DefaultLevelStore? defaultLevel,
   ProfileRepository? profile,
@@ -712,6 +715,10 @@ List<Override> standardTestOverrides({
         .overrideWithValue(notifications ?? FakeNotificationService()),
     activeWorkspaceStoreProvider
         .overrideWithValue(activeWorkspace ?? InMemoryActiveWorkspaceStore()),
+    // Camera scanner seam (K3): widget tests can't run a camera — the
+    // fake renders a placeholder and lets tests emit codes on demand.
+    qrScanWidgetBuilderProvider
+        .overrideWithValue((qrScan ?? FakeQrScanner()).build),
     defaultWorkspaceStoreProvider
         .overrideWithValue(defaultWorkspace ?? InMemoryDefaultWorkspaceStore()),
     defaultLevelStoreProvider
@@ -767,4 +774,21 @@ class InMemoryDefaultWorkspaceStore implements DefaultWorkspaceStore {
 
   @override
   Future<void> write(String? workspaceId) async => value = workspaceId;
+}
+
+/// Fake camera QR scanner (K3): [build] renders a keyed placeholder and
+/// captures the sheet's onCode callback; [emit] simulates a decoded QR.
+class FakeQrScanner {
+  ValueChanged<String>? _onCode;
+
+  Widget build({required ValueChanged<String> onCode}) {
+    _onCode = onCode;
+    return const ColoredBox(
+      color: Color(0xFF222222),
+      child: Center(child: Text('camera')),
+    );
+  }
+
+  /// Simulates the camera decoding [code].
+  void emit(String code) => _onCode?.call(code);
 }

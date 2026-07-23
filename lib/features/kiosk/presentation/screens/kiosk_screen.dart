@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
 
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -14,6 +15,7 @@ import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
+import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../money/domain/quota_rules.dart';
@@ -164,6 +166,11 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
         nfcEnabled: ref
             .read(enabledFeaturesSyncProvider)
             .contains(WorkspaceFeature.nfcBadges),
+        // Camera QR scanning (K3): the wall tablet reads the printed
+        // badge with its camera — the injectable zxing seam keeps
+        // tests camera-free.
+        scanBuilder:
+            qrScanSupported ? ref.read(qrScanWidgetBuilderProvider) : null,
         l10n: l10n,
       ),
     );
@@ -367,11 +374,15 @@ class _KioskBadgePrompt extends StatefulWidget {
   const _KioskBadgePrompt({
     required this.reader,
     required this.nfcEnabled,
+    required this.scanBuilder,
     required this.l10n,
   });
 
   final NfcUidReader reader;
   final bool nfcEnabled;
+
+  /// Camera scanner embed, or null off-mobile (wedge scanners remain).
+  final QrScanWidgetBuilder? scanBuilder;
   final AppLocalizations? l10n;
 
   @override
@@ -432,11 +443,27 @@ class _KioskBadgePromptState extends State<_KioskBadgePrompt> {
               child: Icon(Icons.contactless_outlined, size: 44),
             ),
           ),
+        // The camera reads the printed badge QR right in the sheet —
+        // no external scanner needed on the wall tablet (K3).
+        if (widget.scanBuilder != null) ...[
+          const SizedBox(height: 12),
+          ClipRRect(
+            borderRadius: AppRadius.mdAll,
+            child: SizedBox(
+              key: const ValueKey('kiosk-badge-camera'),
+              height: 220,
+              child: widget.scanBuilder!(onCode: _submit),
+            ),
+          ),
+        ],
         const SizedBox(height: 12),
         TextField(
           key: const ValueKey('kiosk-badge-field'),
           controller: _controller,
-          autofocus: true,
+          // The camera embed owns the screen when present; the field
+          // stays for wedge scanners and manual entry without popping
+          // the soft keyboard over the preview.
+          autofocus: widget.scanBuilder == null,
           obscureText: true,
           decoration: InputDecoration(
             labelText: l10n?.kioskBadgeFieldLabel ?? 'Badge code',
