@@ -37,8 +37,26 @@ DateTime get _today {
   return DateTime(now.year, now.month, now.day);
 }
 
+/// Seed day for the bookings under test: TOMORROW — never running now.
+DateTime get _seedDay =>
+    DateTime(_today.year, _today.month, _today.day + 1);
+
 /// Opens my booking's detail sheet through the hub's Day view block.
+/// Navigates to [_seedDay] first: seeds live on TOMORROW so a booking is
+/// never mid-window at test time — a running reserved booking renders a
+/// different sheet, which made these tests fail only on CI runs landing
+/// inside the seeded window (2026-07-23).
 Future<void> openDetail(WidgetTester tester) async {
+  await tester.tap(find.byKey(const ValueKey('reserve-date-button')));
+  await tester.pumpAndSettle();
+  final now = DateTime.now();
+  if (_seedDay.month != now.month || _seedDay.year != now.year) {
+    await tester.tap(find.byTooltip('Next month'));
+    await tester.pumpAndSettle();
+  }
+  await tester.tap(find.text('${_seedDay.day}').last);
+  await tester.tap(find.text('OK'));
+  await tester.pumpAndSettle();
   await tester.tap(find.byTooltip('Day'));
   await tester.pumpAndSettle();
   await tester.tap(find.byKey(const ValueKey('timeline-block-res-own')));
@@ -51,7 +69,7 @@ void main() {
   testWidgets('my upcoming booking offers Edit and Cancel in the sheet; '
       'cancelling removes it', (tester) async {
     WorkspaceTime.install('Europe/Berlin');
-    final repo = await pumpHub(tester, seed: [_mine(_today)]);
+    final repo = await pumpHub(tester, seed: [_mine(_seedDay)]);
 
     await openDetail(tester);
     expect(find.byKey(const ValueKey('reservation-edit')), findsOneWidget);
@@ -75,11 +93,11 @@ void main() {
   testWidgets('a series booking offers occurrence AND following; '
       'following cancels from this start', (tester) async {
     WorkspaceTime.install('Europe/Berlin');
-    final tomorrow =
-        DateTime(_today.year, _today.month, _today.day + 1);
+    final followUp =
+        DateTime(_seedDay.year, _seedDay.month, _seedDay.day + 1);
     final repo = await pumpHub(tester, seed: [
-      _mine(_today, seriesId: 'series-1'),
-      _mine(tomorrow, id: 'res-next', seriesId: 'series-1'),
+      _mine(_seedDay, seriesId: 'series-1'),
+      _mine(followUp, id: 'res-next', seriesId: 'series-1'),
     ]);
 
     await openDetail(tester);
@@ -110,8 +128,8 @@ void main() {
           workspaceId: 'ws-1',
           seatId: 'seat-4',
           memberId: 'member-1',
-          startsAt: HalfDayWindows.morning(_today).start,
-          endsAt: HalfDayWindows.morning(_today).end,
+          startsAt: HalfDayWindows.morning(_seedDay).start,
+          endsAt: HalfDayWindows.morning(_seedDay).end,
           status: ReservationStatus.reserved,
         ),
       ],
@@ -127,7 +145,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final updated = repo.reservations.single;
-    final expected = HalfDayWindows.afternoon(_today);
+    final expected = HalfDayWindows.afternoon(_seedDay);
     expect(updated.startsAt.toUtc(), expected.start.toUtc());
     expect(updated.endsAt.toUtc(), expected.end.toUtc());
     expect(find.text('Reservation updated.'), findsOneWidget);
@@ -146,8 +164,8 @@ void main() {
           workspaceId: 'ws-1',
           seatId: 'seat-4',
           memberId: 'member-1',
-          startsAt: HalfDayWindows.morning(_today).start,
-          endsAt: HalfDayWindows.morning(_today).end,
+          startsAt: HalfDayWindows.morning(_seedDay).start,
+          endsAt: HalfDayWindows.morning(_seedDay).end,
           status: ReservationStatus.reserved,
         ),
       ],
@@ -178,7 +196,7 @@ void main() {
     WorkspaceTime.install('Europe/Berlin');
     await pumpHub(
       tester,
-      seed: [_mine(_today, status: ReservationStatus.checkedIn)],
+      seed: [_mine(_seedDay, status: ReservationStatus.checkedIn)],
     );
 
     await openDetail(tester);
