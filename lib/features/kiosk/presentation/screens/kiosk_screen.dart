@@ -496,6 +496,15 @@ class _KioskBadgePromptState extends State<_KioskBadgePrompt> {
   final _controller = TextEditingController();
   _NfcUiState _nfc = _NfcUiState.checking;
   bool _cameraReady = false;
+
+  /// Whether the camera scanner is mounted. Field-proven root cause: on
+  /// the wall tablet the RFID tap reads fine in the registration dialog
+  /// (NFC armed, NO camera) but never in this sheet with the camera
+  /// streaming next to it — Samsung camera/NFC coexistence. So when NFC
+  /// is ready the sheet opens in CARD mode (no camera — the exact
+  /// environment registration proved working) and the QR camera is one
+  /// tap away; without NFC the camera mounts directly as before.
+  bool _cameraMode = true;
   bool _done = false;
 
   @override
@@ -527,12 +536,20 @@ class _KioskBadgePromptState extends State<_KioskBadgePrompt> {
           : _NfcUiState.unsupported);
       return;
     }
-    setState(() => _nfc = _NfcUiState.reading);
+    // Card mode: the tap path owns the sheet, the camera stays down.
+    setState(() {
+      _nfc = _NfcUiState.reading;
+      _cameraMode = false;
+    });
     final started =
         await widget.reader.startRead(onUid: (uid) => _submit(uid));
     if (!mounted || started) return;
-    // startRead already traced the failure — surface it at the wall.
-    setState(() => _nfc = _NfcUiState.failed);
+    // startRead already traced the failure — surface it at the wall and
+    // fall back to the camera.
+    setState(() {
+      _nfc = _NfcUiState.failed;
+      _cameraMode = true;
+    });
   }
 
   void _submit(String value) {
@@ -607,10 +624,24 @@ class _KioskBadgePromptState extends State<_KioskBadgePrompt> {
               ],
             ),
           ),
+        // With NFC reading, the camera stays DOWN (see _cameraMode) —
+        // one tap brings it up for QR badges.
+        if (widget.scanBuilder != null && _cameraReady && !_cameraMode)
+          Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: OutlinedButton.icon(
+              key: const ValueKey('kiosk-scan-qr-button'),
+              onPressed: () => setState(() => _cameraMode = true),
+              icon: const Icon(Icons.qr_code_scanner_outlined),
+              label: Text(
+                l10n?.kioskScanQr ?? 'Scan the QR badge',
+              ),
+            ),
+          ),
         // The camera reads the printed badge QR right in the sheet —
         // no external scanner needed on the wall tablet (K3). It mounts
         // only after the NFC session is up (see _startReaders).
-        if (widget.scanBuilder != null && _cameraReady) ...[
+        if (widget.scanBuilder != null && _cameraReady && _cameraMode) ...[
           const SizedBox(height: 12),
           ClipRRect(
             borderRadius: AppRadius.mdAll,

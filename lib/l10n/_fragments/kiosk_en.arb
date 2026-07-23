@@ -194,5 +194,9 @@
   "nfcConfigDeviceOff": "NFC is turned off in this device's Android settings — turn it on to read RFID cards.",
   "@nfcConfigDeviceOff": {
     "description": "Owner NFC config device status: adapter present but disabled in Android settings"
+  },
+  "kioskScanQr": "Scan the QR badge",
+  "@kioskScanQr": {
+    "description": "Kiosk badge sheet button mounting the camera for QR scanning while NFC card mode is active"
   }
 }

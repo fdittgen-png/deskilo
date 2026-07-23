@@ -1246,6 +1246,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le NFC est désactivé dans les paramètres Android de cet appareil — activez-le pour lire les cartes RFID.';
 
   @override
+  String get kioskScanQr => 'Scanner le badge QR';
+
+  @override
   String get languageTitle => 'Langue';
 
   @override

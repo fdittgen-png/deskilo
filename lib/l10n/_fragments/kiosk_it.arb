@@ -48,5 +48,6 @@
   "kioskNfcOff": "L'NFC è disattivato nelle impostazioni Android di questo tablet — attivalo per leggere le carte RFID.",
   "kioskNfcUnsupported": "Questo tablet non ha un lettore NFC — scansiona il badge QR.",
   "kioskNfcFailed": "Il lettore RFID non si è avviato — riavvia l'app e riprova.",
-  "nfcConfigDeviceOff": "L'NFC è disattivato nelle impostazioni Android di questo dispositivo — attivalo per leggere le carte RFID."
+  "nfcConfigDeviceOff": "L'NFC è disattivato nelle impostazioni Android di questo dispositivo — attivalo per leggere le carte RFID.",
+  "kioskScanQr": "Scansiona il badge QR"
 }
