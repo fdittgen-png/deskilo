@@ -335,6 +335,51 @@ void main() {
   });
 
   testWidgets(
+      'CARD MODE (field-proven fix): with NFC ready the camera stays '
+      'DOWN — the exact environment card registration proved working — '
+      'and one tap mounts it for QR badges', (tester) async {
+    final nfc = FakeNfcUidReader(available: true);
+    final qrScan = FakeQrScanner();
+    final reservations =
+        await pumpKiosk(tester, nfc: nfc, qrScan: qrScan);
+    await openBadgeSheet(tester);
+
+    // No camera streaming next to the armed NFC session.
+    expect(find.byKey(const ValueKey('kiosk-badge-camera')), findsNothing);
+    final scanButton = find.byKey(const ValueKey('kiosk-scan-qr-button'));
+    expect(scanButton, findsOneWidget);
+
+    // The QR path is one tap away and still completes the flow.
+    await tester.tap(scanButton);
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('kiosk-badge-camera')),
+      findsOneWidget,
+    );
+    qrScan.emit('badge-token-cam');
+    await tester.pumpAndSettle();
+    await confirmSummary(tester);
+    expect(reservations.kioskActs.single.badgeToken, 'badge-token-cam');
+  });
+
+  testWidgets(
+      'without NFC the camera mounts directly — no extra tap for '
+      'QR-only tablets', (tester) async {
+    final qrScan = FakeQrScanner();
+    await pumpKiosk(tester, qrScan: qrScan);
+    await openBadgeSheet(tester);
+
+    expect(
+      find.byKey(const ValueKey('kiosk-badge-camera')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('kiosk-scan-qr-button')),
+      findsNothing,
+    );
+  });
+
+  testWidgets(
       'the summary names the identified member and the target; Reject '
       'discards — nothing runs and the readers stay off', (tester) async {
     final reservations = await pumpKiosk(tester);

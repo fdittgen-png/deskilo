@@ -1243,6 +1243,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'NFC ist in den Android-Einstellungen dieses Geräts ausgeschaltet — zum Lesen von RFID-Karten einschalten.';
 
   @override
+  String get kioskScanQr => 'QR-Badge scannen';
+
+  @override
   String get languageTitle => 'Sprache';
 
   @override

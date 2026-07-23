@@ -2324,6 +2324,12 @@ abstract class AppLocalizations {
   /// **'NFC is turned off in this device\'s Android settings — turn it on to read RFID cards.'**
   String get nfcConfigDeviceOff;
 
+  /// Kiosk badge sheet button mounting the camera for QR scanning while NFC card mode is active
+  ///
+  /// In en, this message translates to:
+  /// **'Scan the QR badge'**
+  String get kioskScanQr;
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:

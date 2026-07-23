@@ -1584,6 +1584,10 @@
   "@nfcConfigDeviceOff": {
     "description": "Owner NFC config device status: adapter present but disabled in Android settings"
   },
+  "kioskScanQr": "Scan the QR badge",
+  "@kioskScanQr": {
+    "description": "Kiosk badge sheet button mounting the camera for QR scanning while NFC card mode is active"
+  },
   "languageTitle": "Language",
   "@languageTitle": {
     "description": "Settings entry and dialog title for the in-app language selection"

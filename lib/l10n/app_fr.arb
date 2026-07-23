@@ -369,6 +369,7 @@
   "kioskNfcUnsupported": "Cette tablette n'a pas de lecteur NFC — scannez le badge QR à la place.",
   "kioskNfcFailed": "Le lecteur RFID n'a pas démarré — redémarrez l'application et réessayez.",
   "nfcConfigDeviceOff": "Le NFC est désactivé dans les paramètres Android de cet appareil — activez-le pour lire les cartes RFID.",
+  "kioskScanQr": "Scanner le badge QR",
   "languageTitle": "Langue",
   "languageSystemDefault": "Par défaut du système",
   "levelReserveButton": "Réserver le niveau",
