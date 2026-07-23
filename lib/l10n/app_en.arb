@@ -2179,6 +2179,8 @@
   "@profilePhotoFileType": {
     "description": "File-picker type label when choosing a profile photo; the word is identical across locales but the key exists for parity."
   },
+  "profilesDefault": "Default at startup",
+  "profilesMakeDefault": "Use as default at startup",
   "eventTypeRoleChange": "Role change",
   "@eventTypeRoleChange": {
     "description": "Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card"

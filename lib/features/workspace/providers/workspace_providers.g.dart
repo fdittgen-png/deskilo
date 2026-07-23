@@ -96,18 +96,24 @@ final class MyWorkspacesProvider
 
 String _$myWorkspacesHash() => r'198c8d5a8c8478df79f3177df2af39d009d2c760';
 
-/// The persisted active-profile choice (#89). Falls back to the first
-/// workspace when nothing was chosen yet or the choice no longer exists.
+/// The persisted active-profile choice (#89). At START-UP the user's
+/// DEFAULT profile wins when one is checked (#322); in-session switches
+/// still take effect immediately and last until the next start. Falls
+/// back to the first workspace when nothing matches.
 
 @ProviderFor(ActiveWorkspaceId)
 final activeWorkspaceIdProvider = ActiveWorkspaceIdProvider._();
 
-/// The persisted active-profile choice (#89). Falls back to the first
-/// workspace when nothing was chosen yet or the choice no longer exists.
+/// The persisted active-profile choice (#89). At START-UP the user's
+/// DEFAULT profile wins when one is checked (#322); in-session switches
+/// still take effect immediately and last until the next start. Falls
+/// back to the first workspace when nothing matches.
 final class ActiveWorkspaceIdProvider
     extends $AsyncNotifierProvider<ActiveWorkspaceId, String?> {
-  /// The persisted active-profile choice (#89). Falls back to the first
-  /// workspace when nothing was chosen yet or the choice no longer exists.
+  /// The persisted active-profile choice (#89). At START-UP the user's
+  /// DEFAULT profile wins when one is checked (#322); in-session switches
+  /// still take effect immediately and last until the next start. Falls
+  /// back to the first workspace when nothing matches.
   ActiveWorkspaceIdProvider._()
     : super(
         from: null,
@@ -127,12 +133,73 @@ final class ActiveWorkspaceIdProvider
   ActiveWorkspaceId create() => ActiveWorkspaceId();
 }
 
-String _$activeWorkspaceIdHash() => r'e8db64d6d579326d7abb53e0c19a98cb679ebc4f';
+String _$activeWorkspaceIdHash() => r'56952bcd9ab8f195349204c7f243eaf2b5036f35';
 
-/// The persisted active-profile choice (#89). Falls back to the first
-/// workspace when nothing was chosen yet or the choice no longer exists.
+/// The persisted active-profile choice (#89). At START-UP the user's
+/// DEFAULT profile wins when one is checked (#322); in-session switches
+/// still take effect immediately and last until the next start. Falls
+/// back to the first workspace when nothing matches.
 
 abstract class _$ActiveWorkspaceId extends $AsyncNotifier<String?> {
+  FutureOr<String?> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<String?>, String?>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<String?>, String?>,
+              AsyncValue<String?>,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}
+
+/// The user-checked default profile (#322); null = none. Radio
+/// semantics: checking one replaces the previous; re-checking the
+/// current default clears it.
+
+@ProviderFor(DefaultWorkspaceId)
+final defaultWorkspaceIdProvider = DefaultWorkspaceIdProvider._();
+
+/// The user-checked default profile (#322); null = none. Radio
+/// semantics: checking one replaces the previous; re-checking the
+/// current default clears it.
+final class DefaultWorkspaceIdProvider
+    extends $AsyncNotifierProvider<DefaultWorkspaceId, String?> {
+  /// The user-checked default profile (#322); null = none. Radio
+  /// semantics: checking one replaces the previous; re-checking the
+  /// current default clears it.
+  DefaultWorkspaceIdProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'defaultWorkspaceIdProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$defaultWorkspaceIdHash();
+
+  @$internal
+  @override
+  DefaultWorkspaceId create() => DefaultWorkspaceId();
+}
+
+String _$defaultWorkspaceIdHash() =>
+    r'69d9dda45e30ec3756d2d8c4af60f301efd19571';
+
+/// The user-checked default profile (#322); null = none. Radio
+/// semantics: checking one replaces the previous; re-checking the
+/// current default clears it.
+
+abstract class _$DefaultWorkspaceId extends $AsyncNotifier<String?> {
   FutureOr<String?> build();
   @$mustCallSuper
   @override

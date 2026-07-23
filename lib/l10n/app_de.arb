@@ -509,6 +509,8 @@
   "profilePhotoRemoved": "Foto entfernt",
   "profilePhotoSaveFailed": "Foto konnte nicht aktualisiert werden",
   "profilePhotoFileType": "Bild",
+  "profilesDefault": "Standard beim Start",
+  "profilesMakeDefault": "Beim Start als Standard verwenden",
   "eventTypeRoleChange": "Rollenwechsel",
   "eventRolePromote": "{actor} befördert ein Mitglied zum Admin",
   "eventRoleDemote": "{actor} stuft einen Admin zum Mitglied zurück",

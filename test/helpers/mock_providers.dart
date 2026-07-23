@@ -667,6 +667,7 @@ List<Override> standardTestOverrides({
   MoneyRepository? money,
   NotificationService? notifications,
   ActiveWorkspaceStore? activeWorkspace,
+  DefaultWorkspaceStore? defaultWorkspace,
   DefaultLevelStore? defaultLevel,
   ProfileRepository? profile,
   NfcUidReader? nfc,
@@ -691,6 +692,8 @@ List<Override> standardTestOverrides({
         .overrideWithValue(notifications ?? FakeNotificationService()),
     activeWorkspaceStoreProvider
         .overrideWithValue(activeWorkspace ?? InMemoryActiveWorkspaceStore()),
+    defaultWorkspaceStoreProvider
+        .overrideWithValue(defaultWorkspace ?? InMemoryDefaultWorkspaceStore()),
     defaultLevelStoreProvider
         .overrideWithValue(defaultLevel ?? InMemoryDefaultLevelStore()),
     profileRepositoryProvider
@@ -732,4 +735,16 @@ class FakeNfcUidReader extends NfcUidReader {
 
   /// Simulates a physical card tap with UID [uid] (already normalized).
   void tap(String uid) => _onUid?.call(uid);
+}
+
+/// In-memory [DefaultWorkspaceStore] (#322) so widget tests never touch
+/// SharedPreferences.
+class InMemoryDefaultWorkspaceStore implements DefaultWorkspaceStore {
+  String? value;
+
+  @override
+  Future<String?> read() async => value;
+
+  @override
+  Future<void> write(String? workspaceId) async => value = workspaceId;
 }
