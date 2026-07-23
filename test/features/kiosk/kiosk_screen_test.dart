@@ -18,13 +18,16 @@ import '../../helpers/mock_providers.dart';
 
 const _canvasKey = ValueKey('kiosk-plan-canvas');
 
-/// Pumps the app signed in as the wall tablet's KIOSK account.
+/// Pumps the app signed in as the wall tablet's KIOSK account. Kiosk
+/// mode never auto-loads (field request): the gate asks first — by
+/// default this helper confirms it; [startKiosk] false stops at the gate.
 Future<FakeReservationRepository> pumpKiosk(
   WidgetTester tester, {
   FakeNfcUidReader? nfc,
   FakeQrScanner? qrScan,
   Map<String, dynamic> featureFlags = const {},
   bool bookableLevel = false,
+  bool startKiosk = true,
 }) async {
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   if (bookableLevel) {
@@ -52,6 +55,10 @@ Future<FakeReservationRepository> pumpKiosk(
     ),
   );
   await tester.pumpAndSettle();
+  if (startKiosk) {
+    await tester.tap(find.byKey(const ValueKey('kiosk-gate-start')));
+    await tester.pumpAndSettle();
+  }
   return reservations;
 }
 
@@ -78,14 +85,43 @@ Future<void> confirmSummary(WidgetTester tester) async {
 
 void main() {
   testWidgets(
-      'a kiosk account is locked to the kiosk view: no shell, no bottom '
-      'bar — just the plan', (tester) async {
-    await pumpKiosk(tester);
+      'the gate asks before kiosk mode loads; confirming locks the pad '
+      'to the kiosk view: no shell, no bottom bar, back disabled',
+      (tester) async {
+    await pumpKiosk(tester, startKiosk: false);
+
+    // Kiosk mode never auto-loads — the gate asks first.
+    expect(find.byKey(const ValueKey('kiosk-gate-title')), findsOneWidget);
+    expect(find.byType(KioskScreen), findsNothing);
+
+    await tester.tap(find.byKey(const ValueKey('kiosk-gate-start')));
+    await tester.pumpAndSettle();
 
     expect(find.byType(KioskScreen), findsOneWidget);
     expect(find.byKey(const ValueKey('kiosk-title')), findsOneWidget);
     expect(find.byKey(_canvasKey), findsOneWidget);
     expect(find.byType(ShellBottomBar), findsNothing);
+    // Locked: the back button/gesture cannot leave kiosk mode.
+    final scope = tester.widget<PopScope>(
+      find.descendant(
+        of: find.byType(KioskScreen),
+        matching: find.bySubtype<PopScope>(),
+      ),
+    );
+    expect(scope.canPop, isFalse);
+  });
+
+  testWidgets(
+      'rejecting the gate lets the app start normally — shell and bottom '
+      'bar, no kiosk view until the next app start', (tester) async {
+    await pumpKiosk(tester, startKiosk: false);
+
+    await tester.tap(find.byKey(const ValueKey('kiosk-gate-reject')));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(KioskScreen), findsNothing);
+    expect(find.byKey(const ValueKey('kiosk-gate-title')), findsNothing);
+    expect(find.byType(ShellBottomBar), findsOneWidget);
   });
 
   testWidgets('a regular member can never land on /kiosk', (tester) async {

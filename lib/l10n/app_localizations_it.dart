@@ -1208,6 +1208,26 @@ class AppLocalizationsIt extends AppLocalizations {
   String get kioskRejectAction => 'Rifiuta';
 
   @override
+  String get kioskGateTitle => 'Avviare la modalità chiosco?';
+
+  @override
+  String get kioskGateBody =>
+      'Questo account è configurato come chiosco dello spazio. In modalità chiosco il tablet mostra solo la piantina per il check-in con badge — non si può aprire altro. Per uscire dalla modalità chiosco, riavvia il tablet.';
+
+  @override
+  String get kioskGateStart => 'Avvia la modalità chiosco';
+
+  @override
+  String get kioskGateReject => 'Non ora — apri l\'app normalmente';
+
+  @override
+  String get settingsFrontCamera => 'Scansiona con la fotocamera frontale';
+
+  @override
+  String get settingsFrontCameraDesc =>
+      'I badge vengono letti con la fotocamera lato schermo — disattiva per usare la fotocamera posteriore.';
+
+  @override
   String get languageTitle => 'Lingua';
 
   @override

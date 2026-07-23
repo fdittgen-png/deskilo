@@ -38,5 +38,11 @@
   "nfcConfigDeviceReady": "NFC disponible y activado",
   "nfcConfigDeviceUnavailable": "Sin NFC aquí — se necesita un dispositivo Android con NFC activado (los iPad no tienen NFC). Las credenciales QR siguen funcionando.",
   "kioskConfirmAction": "Confirmar",
-  "kioskRejectAction": "Rechazar"
+  "kioskRejectAction": "Rechazar",
+  "kioskGateTitle": "¿Iniciar el modo quiosco?",
+  "kioskGateBody": "Esta cuenta está configurada como quiosco del espacio. En modo quiosco la tableta solo muestra el plano para fichar con la tarjeta — no se puede abrir nada más. Para salir del modo quiosco, reinicia la tableta.",
+  "kioskGateStart": "Iniciar el modo quiosco",
+  "kioskGateReject": "Ahora no — abrir la app normalmente",
+  "settingsFrontCamera": "Escanear con la cámara frontal",
+  "settingsFrontCameraDesc": "Las tarjetas se leen con la cámara del lado de la pantalla — desactívalo para usar la cámara trasera."
 }

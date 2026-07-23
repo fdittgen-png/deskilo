@@ -55,4 +55,4 @@ final class QrScanWidgetBuilderProvider
 }
 
 String _$qrScanWidgetBuilderHash() =>
-    r'31d3b1aaea7f693c70debc037df9e917a7564059';
+    r'295132976ac27b171026105f274300fcefc39476';

@@ -1544,6 +1544,30 @@
   },
   "kioskConfirmAction": "Confirm",
   "kioskRejectAction": "Reject",
+  "kioskGateTitle": "Start kiosk mode?",
+  "@kioskGateTitle": {
+    "description": "Title of the kiosk gate a kiosk account sees on every app start"
+  },
+  "kioskGateBody": "This account is set up as the workspace kiosk. In kiosk mode the tablet only shows the floor plan for badge check-in — nothing else can be opened. To leave kiosk mode, restart the tablet.",
+  "@kioskGateBody": {
+    "description": "Explainer on the kiosk gate: confirmed kiosk mode locks the pad until restart"
+  },
+  "kioskGateStart": "Start kiosk mode",
+  "@kioskGateStart": {
+    "description": "Gate button confirming and locking kiosk mode"
+  },
+  "kioskGateReject": "Not now — open the app normally",
+  "@kioskGateReject": {
+    "description": "Gate button rejecting kiosk mode for this run of the app"
+  },
+  "settingsFrontCamera": "Scan with the front camera",
+  "@settingsFrontCamera": {
+    "description": "Settings switch: badge QR scanning uses the screen-side camera (default on)"
+  },
+  "settingsFrontCameraDesc": "Badges are read with the screen-side camera — turn off to use the back camera.",
+  "@settingsFrontCameraDesc": {
+    "description": "Subtitle of the front-camera switch"
+  },
   "languageTitle": "Language",
   "@languageTitle": {
     "description": "Settings entry and dialog title for the in-app language selection"

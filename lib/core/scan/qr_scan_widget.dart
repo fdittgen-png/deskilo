@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_zxing/flutter_zxing.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'front_camera.dart';
+
 part 'qr_scan_widget.g.dart';
 
 /// Builds an embedded camera QR scanner delivering decoded payloads to
@@ -24,13 +26,21 @@ bool get qrScanSupported =>
         defaultTargetPlatform == TargetPlatform.iOS);
 
 @Riverpod(keepAlive: true)
-QrScanWidgetBuilder qrScanWidgetBuilder(Ref ref) => ({required onCode}) =>
-    ReaderWidget(
-      showFlashlight: false,
-      showGallery: false,
-      showToggleCamera: false,
-      onScan: (result) {
-        final text = result.text ?? '';
-        if (text.isNotEmpty) onCode(text);
-      },
-    );
+QrScanWidgetBuilder qrScanWidgetBuilder(Ref ref) {
+  // Front camera by default: a wall tablet's back lens faces the wall,
+  // so badges are presented to the screen side. Device preference in
+  // Settings flips to the back camera for handheld use.
+  final front = ref.watch(frontCameraScanProvider).value ?? true;
+  return ({required onCode}) => ReaderWidget(
+        showFlashlight: false,
+        showGallery: false,
+        showToggleCamera: false,
+        lensDirection: front
+            ? CameraLensDirection.front
+            : CameraLensDirection.back,
+        onScan: (result) {
+          final text = result.text ?? '';
+          if (text.isNotEmpty) onCode(text);
+        },
+      );
+}

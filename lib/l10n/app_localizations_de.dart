@@ -1207,6 +1207,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get kioskRejectAction => 'Ablehnen';
 
   @override
+  String get kioskGateTitle => 'Kiosk-Modus starten?';
+
+  @override
+  String get kioskGateBody =>
+      'Dieses Konto ist als Kiosk des Workspace eingerichtet. Im Kiosk-Modus zeigt das Tablet nur den Raumplan für das Einchecken per Badge — sonst lässt sich nichts öffnen. Zum Verlassen des Kiosk-Modus das Tablet neu starten.';
+
+  @override
+  String get kioskGateStart => 'Kiosk-Modus starten';
+
+  @override
+  String get kioskGateReject => 'Jetzt nicht — App normal öffnen';
+
+  @override
+  String get settingsFrontCamera => 'Mit der Frontkamera scannen';
+
+  @override
+  String get settingsFrontCameraDesc =>
+      'Badges werden mit der Kamera auf der Bildschirmseite gelesen — ausschalten für die Rückkamera.';
+
+  @override
   String get languageTitle => 'Sprache';
 
   @override

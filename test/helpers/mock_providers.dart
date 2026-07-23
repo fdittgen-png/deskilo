@@ -17,6 +17,7 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
 import 'package:deskilo/core/notifications/notification_providers.dart';
 import 'package:deskilo/core/notifications/notification_service.dart';
+import 'package:deskilo/core/scan/front_camera.dart';
 import 'package:deskilo/core/scan/qr_scan_widget.dart';
 import 'package:deskilo/core/storage/active_workspace_store.dart';
 import 'package:deskilo/features/events/domain/event_repository.dart';
@@ -694,6 +695,7 @@ List<Override> standardTestOverrides({
   DefaultLevelStore? defaultLevel,
   ProfileRepository? profile,
   NfcUidReader? nfc,
+  FrontCameraStore? frontCamera,
 }) {
   return [
     authRepositoryProvider
@@ -726,7 +728,21 @@ List<Override> standardTestOverrides({
     profileRepositoryProvider
         .overrideWithValue(profile ?? FakeProfileRepository()),
     nfcUidReaderProvider.overrideWithValue(nfc ?? FakeNfcUidReader()),
+    frontCameraStoreProvider
+        .overrideWithValue(frontCamera ?? InMemoryFrontCameraStore()),
   ];
+}
+
+/// In-memory [FrontCameraStore] so widget tests never touch
+/// SharedPreferences; front camera by default, like production.
+class InMemoryFrontCameraStore implements FrontCameraStore {
+  bool value = true;
+
+  @override
+  Future<bool> read() async => value;
+
+  @override
+  Future<void> write(bool enabled) async => value = enabled;
 }
 
 /// In-memory [ActiveWorkspaceStore] so widget tests never touch

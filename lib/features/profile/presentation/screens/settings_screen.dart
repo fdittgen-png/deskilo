@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/locale/locale_controller.dart';
+import '../../../../core/scan/front_camera.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/theme_controller.dart';
 import '../../../../core/trace/dev_mode.dart';
@@ -391,6 +392,24 @@ class SettingsScreen extends ConsumerWidget {
               context: context,
               builder: (_) => const _ThemeDialog(),
             ),
+          ),
+          // Which camera reads badge QR codes: front by default (a
+          // wall-mounted kiosk's back lens faces the wall). Device-local
+          // preference, like language and theme.
+          SwitchListTile(
+            key: const ValueKey('settings-front-camera'),
+            secondary: const Icon(Icons.camera_front_outlined),
+            title: Text(
+              l10n?.settingsFrontCamera ?? 'Scan with the front camera',
+            ),
+            subtitle: Text(
+              l10n?.settingsFrontCameraDesc ??
+                  'Badges are read with the screen-side camera — turn '
+                      'off to use the back camera.',
+            ),
+            value: ref.watch(frontCameraScanProvider).value ?? true,
+            onChanged: (v) =>
+                ref.read(frontCameraScanProvider.notifier).setEnabled(v),
           ),
           // The dev-mode switch below is visible to everyone, so this
           // section header is never empty and needs no gating.
