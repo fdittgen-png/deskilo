@@ -3164,6 +3164,18 @@ abstract class AppLocalizations {
   /// **'Image'**
   String get profilePhotoFileType;
 
+  /// No description provided for @profilesDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Default at startup'**
+  String get profilesDefault;
+
+  /// No description provided for @profilesMakeDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Use as default at startup'**
+  String get profilesMakeDefault;
+
   /// Event-type label for owner-initiated admin promotions/demotions (0035): feed + validation card
   ///
   /// In en, this message translates to:

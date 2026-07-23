@@ -1699,6 +1699,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get profilePhotoFileType => 'Bild';
 
   @override
+  String get profilesDefault => 'Standard beim Start';
+
+  @override
+  String get profilesMakeDefault => 'Beim Start als Standard verwenden';
+
+  @override
   String get eventTypeRoleChange => 'Rollenwechsel';
 
   @override

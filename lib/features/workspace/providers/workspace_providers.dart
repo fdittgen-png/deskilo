@@ -25,17 +25,38 @@ Future<List<Workspace>> myWorkspaces(Ref ref) async {
   return ref.watch(workspaceRepositoryProvider).fetchMyWorkspaces();
 }
 
-/// The persisted active-profile choice (#89). Falls back to the first
-/// workspace when nothing was chosen yet or the choice no longer exists.
+/// The persisted active-profile choice (#89). At START-UP the user's
+/// DEFAULT profile wins when one is checked (#322); in-session switches
+/// still take effect immediately and last until the next start. Falls
+/// back to the first workspace when nothing matches.
 @Riverpod(keepAlive: true)
 class ActiveWorkspaceId extends _$ActiveWorkspaceId {
   @override
-  Future<String?> build() =>
-      ref.watch(activeWorkspaceStoreProvider).read();
+  Future<String?> build() async {
+    final defaultId = await ref.watch(defaultWorkspaceStoreProvider).read();
+    if (defaultId != null) return defaultId;
+    return ref.watch(activeWorkspaceStoreProvider).read();
+  }
 
   Future<void> select(String workspaceId) async {
     await ref.read(activeWorkspaceStoreProvider).write(workspaceId);
     state = AsyncData(workspaceId);
+  }
+}
+
+/// The user-checked default profile (#322); null = none. Radio
+/// semantics: checking one replaces the previous; re-checking the
+/// current default clears it.
+@Riverpod(keepAlive: true)
+class DefaultWorkspaceId extends _$DefaultWorkspaceId {
+  @override
+  Future<String?> build() =>
+      ref.watch(defaultWorkspaceStoreProvider).read();
+
+  Future<void> toggle(String workspaceId) async {
+    final next = state.value == workspaceId ? null : workspaceId;
+    await ref.read(defaultWorkspaceStoreProvider).write(next);
+    state = AsyncData(next);
   }
 }
 

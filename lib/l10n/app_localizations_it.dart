@@ -1699,6 +1699,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get profilePhotoFileType => 'Immagine';
 
   @override
+  String get profilesDefault => 'Predefinito all\'avvio';
+
+  @override
+  String get profilesMakeDefault => 'Usa come predefinito all\'avvio';
+
+  @override
   String get eventTypeRoleChange => 'Cambio di ruolo';
 
   @override

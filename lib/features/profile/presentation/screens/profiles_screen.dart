@@ -26,6 +26,7 @@ class ProfilesScreen extends ConsumerWidget {
     final workspaces = ref.watch(myWorkspacesProvider).value ?? const [];
     final memberships = ref.watch(myMembershipsProvider).value ?? const [];
     final active = ref.watch(currentWorkspaceProvider).value;
+    final defaultId = ref.watch(defaultWorkspaceIdProvider).value;
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.profilesTitle ?? 'Profiles')),
@@ -70,14 +71,41 @@ class ProfilesScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    trailing: isActive
-                        ? Icon(
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Default-at-startup star (#322): radio
+                        // semantics — checking one replaces the
+                        // previous; tapping the checked star clears it
+                        // (last-active behavior returns).
+                        IconButton(
+                          key: ValueKey('profile-default-${workspace.id}'),
+                          tooltip: workspace.id == defaultId
+                              ? (l10n?.profilesDefault ??
+                                  'Default at startup')
+                              : (l10n?.profilesMakeDefault ??
+                                  'Use as default at startup'),
+                          icon: Icon(
+                            workspace.id == defaultId
+                                ? Icons.star
+                                : Icons.star_border,
+                            color: workspace.id == defaultId
+                                ? Theme.of(context).colorScheme.primary
+                                : null,
+                          ),
+                          onPressed: () => ref
+                              .read(defaultWorkspaceIdProvider.notifier)
+                              .toggle(workspace.id),
+                        ),
+                        if (isActive)
+                          Icon(
                             Icons.check_circle,
                             color: Theme.of(context).colorScheme.primary,
                             semanticLabel:
                                 l10n?.profilesActive ?? 'Active profile',
-                          )
-                        : null,
+                          ),
+                      ],
+                    ),
                     onTap: isActive
                         ? null
                         : () async {

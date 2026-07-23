@@ -1694,6 +1694,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get profilePhotoFileType => 'Imagen';
 
   @override
+  String get profilesDefault => 'Predeterminado al iniciar';
+
+  @override
+  String get profilesMakeDefault => 'Usar como predeterminado al iniciar';
+
+  @override
   String get eventTypeRoleChange => 'Cambio de rol';
 
   @override
