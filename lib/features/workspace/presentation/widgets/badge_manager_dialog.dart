@@ -34,6 +34,7 @@ class BadgeManagerDialog extends ConsumerStatefulWidget {
     required this.issue,
     required this.registerNfc,
     required this.revoke,
+    required this.delete,
   });
 
   final String workspaceId;
@@ -49,6 +50,10 @@ class BadgeManagerDialog extends ConsumerStatefulWidget {
 
   /// Revokes one of the subject's badges.
   final Future<void> Function(String badgeId) revoke;
+
+  /// Deletes a REVOKED badge for good (0055) — the swipe-right cleanup
+  /// of the pile a badge history leaves behind.
+  final Future<void> Function(String badgeId) delete;
 
   @override
   ConsumerState<BadgeManagerDialog> createState() =>
@@ -241,6 +246,75 @@ class _BadgeManagerDialogState
     await _load();
   }
 
+  /// Deletes a revoked badge; returns whether the swipe may complete —
+  /// a failed delete snaps the row back instead of lying about it.
+  Future<bool> _delete(MemberBadge badge) async {
+    final l10n = widget.l10n;
+    return runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'badge delete failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => widget.delete(badge.id),
+    );
+  }
+
+  /// One badge row: live badges keep the Revoke button; revoked ones
+  /// are swiped RIGHT to delete for good (field request — a badge
+  /// history piles up otherwise).
+  Widget _badgeRow(BuildContext context, MemberBadge badge) {
+    final l10n = widget.l10n;
+    final colorScheme = Theme.of(context).colorScheme;
+    final row = ListTile(
+      contentPadding: EdgeInsets.zero,
+      leading: Icon(
+        !badge.isActive
+            ? Icons.block_outlined
+            : badge.kind == BadgeKind.nfc
+                ? Icons.contactless_outlined
+                : Icons.qr_code_2_outlined,
+      ),
+      title: Text(
+        badge.label.isEmpty
+            ? (l10n?.badgeDefaultLabel ?? 'Badge')
+            : badge.label,
+      ),
+      subtitle: badge.isActive
+          ? null
+          : Text(l10n?.badgeRevoked ?? 'Revoked'),
+      trailing: badge.isActive
+          ? TextButton(
+              onPressed: () => _revoke(badge),
+              child: Text(l10n?.badgeRevoke ?? 'Revoke'),
+            )
+          : null,
+    );
+    if (badge.isActive) return row;
+    return Dismissible(
+      key: ValueKey('badge-dismiss-${badge.id}'),
+      direction: DismissDirection.startToEnd,
+      background: ColoredBox(
+        color: colorScheme.errorContainer,
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Icon(
+              Icons.delete_outline,
+              color: colorScheme.onErrorContainer,
+            ),
+          ),
+        ),
+      ),
+      confirmDismiss: (_) => _delete(badge),
+      onDismissed: (_) => setState(
+        () => _badges?.removeWhere((b) => b.id == badge.id),
+      ),
+      child: row,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = widget.l10n;
@@ -295,32 +369,7 @@ class _BadgeManagerDialogState
                           ),
                         ),
                       for (final badge in badges)
-                        ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          leading: Icon(
-                            !badge.isActive
-                                ? Icons.block_outlined
-                                : badge.kind == BadgeKind.nfc
-                                    ? Icons.contactless_outlined
-                                    : Icons.qr_code_2_outlined,
-                          ),
-                          title: Text(
-                            badge.label.isEmpty
-                                ? (l10n?.badgeDefaultLabel ?? 'Badge')
-                                : badge.label,
-                          ),
-                          subtitle: badge.isActive
-                              ? null
-                              : Text(l10n?.badgeRevoked ?? 'Revoked'),
-                          trailing: badge.isActive
-                              ? TextButton(
-                                  onPressed: () => _revoke(badge),
-                                  child: Text(
-                                    l10n?.badgeRevoke ?? 'Revoke',
-                                  ),
-                                )
-                              : null,
-                        ),
+                        _badgeRow(context, badge),
                     ],
                   ),
       ),

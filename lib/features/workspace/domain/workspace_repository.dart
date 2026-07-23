@@ -148,6 +148,11 @@ abstract class WorkspaceRepository {
   /// badges.
   Future<void> revokeMyBadge(String badgeId);
 
+  /// Deletes a REVOKED badge for good (RPC `delete_revoked_badge`,
+  /// migration 0055) — allowed to the badge's own member or a workspace
+  /// admin; live badges must be revoked first.
+  Future<void> deleteRevokedBadge(String badgeId);
+
   /// Admin-only (RPC `register_nfc_badge`, migration 0046): registers a
   /// physical RFID/NFC tag as [memberId]'s badge. [uid] is the tag UID as
   /// lowercase hex (the reader normalizes it); the server keeps only the

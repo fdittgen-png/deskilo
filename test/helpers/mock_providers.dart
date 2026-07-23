@@ -552,6 +552,16 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   @override
   Future<void> revokeMyBadge(String badgeId) => revokeMemberBadge(badgeId);
 
+  @override
+  Future<void> deleteRevokedBadge(String badgeId) async {
+    final before = badges.length;
+    badges.removeWhere((b) => b.id == badgeId && !b.isActive);
+    // Server contract (0055): live or unknown badges refuse.
+    if (badges.length == before) {
+      throw const PostgrestException(message: 'unknown badge');
+    }
+  }
+
   /// (workspaceId, memberId, makeAdmin) of the last role-change request.
   (String, String, bool)? lastRoleChange;
 

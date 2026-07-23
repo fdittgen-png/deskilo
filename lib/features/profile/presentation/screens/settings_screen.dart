@@ -268,6 +268,11 @@ class SettingsScreen extends ConsumerWidget {
                     revoke: (badgeId) => ref
                         .read(workspaceRepositoryProvider)
                         .revokeMyBadge(badgeId),
+                    // Deletion is one shared RPC: the server allows the
+                    // badge's own member or an admin (0055).
+                    delete: (badgeId) => ref
+                        .read(workspaceRepositoryProvider)
+                        .deleteRevokedBadge(badgeId),
                   ),
                 );
               },

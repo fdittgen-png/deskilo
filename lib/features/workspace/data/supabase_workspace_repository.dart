@@ -302,6 +302,13 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> deleteRevokedBadge(String badgeId) async {
+    await _client.rpc<dynamic>('delete_revoked_badge', params: {
+      'p_badge_id': badgeId,
+    });
+  }
+
+  @override
   Future<void> registerNfcBadge(
     String workspaceId,
     String memberId, {
