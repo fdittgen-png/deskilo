@@ -178,5 +178,21 @@
   "settingsFrontCameraDesc": "Badges are read with the screen-side camera — turn off to use the back camera.",
   "@settingsFrontCameraDesc": {
     "description": "Subtitle of the front-camera switch"
+  },
+  "kioskNfcOff": "NFC is turned off in this tablet's Android settings — turn it on to read RFID cards.",
+  "@kioskNfcOff": {
+    "description": "Kiosk badge sheet RFID status: adapter present but disabled in Android settings"
+  },
+  "kioskNfcUnsupported": "This tablet has no NFC reader — scan the QR badge instead.",
+  "@kioskNfcUnsupported": {
+    "description": "Kiosk badge sheet RFID status: no NFC hardware on this device"
+  },
+  "kioskNfcFailed": "The RFID reader did not start — restart the app and try again.",
+  "@kioskNfcFailed": {
+    "description": "Kiosk badge sheet RFID status: the read session failed to start (details in the trace)"
+  },
+  "nfcConfigDeviceOff": "NFC is turned off in this device's Android settings — turn it on to read RFID cards.",
+  "@nfcConfigDeviceOff": {
+    "description": "Owner NFC config device status: adapter present but disabled in Android settings"
   }
 }

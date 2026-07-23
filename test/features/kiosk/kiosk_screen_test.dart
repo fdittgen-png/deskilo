@@ -6,6 +6,7 @@
 // stateless kiosk_act RPC — nothing is retained on the device.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
+import 'package:deskilo/core/nfc/nfc_uid_reader.dart';
 import 'package:deskilo/features/kiosk/presentation/screens/kiosk_screen.dart';
 import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
 import 'package:flutter/material.dart';
@@ -272,6 +273,65 @@ void main() {
     final act = reservations.kioskActs.single;
     expect(act.action, 'check_in');
     expect(act.badgeToken, 'badge-token-cam');
+  });
+
+  /// Opens the badge sheet (seat tap → Check in) for the status tests.
+  Future<void> openBadgeSheet(WidgetTester tester) async {
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
+    await tester.pumpAndSettle();
+  }
+
+  const nfcStatusKey = ValueKey('kiosk-nfc-status');
+
+  testWidgets(
+      'the badge sheet says the RFID reader is OFF in Android settings — '
+      'the wall diagnosis for a present-but-disabled adapter',
+      (tester) async {
+    await pumpKiosk(
+      tester,
+      nfc: FakeNfcUidReader(deviceStatus: NfcStatus.off),
+    );
+    await openBadgeSheet(tester);
+
+    expect(find.byKey(nfcStatusKey), findsOneWidget);
+    expect(find.textContaining('Android settings'), findsOneWidget);
+  });
+
+  testWidgets(
+      'the badge sheet says the tablet has NO NFC reader when the '
+      'hardware is absent (the default fake)', (tester) async {
+    await pumpKiosk(tester);
+    await openBadgeSheet(tester);
+
+    expect(find.byKey(nfcStatusKey), findsOneWidget);
+    expect(find.textContaining('no NFC reader'), findsOneWidget);
+  });
+
+  testWidgets(
+      'a session that will not start is surfaced instead of silently '
+      'showing the tap icon over a dead reader', (tester) async {
+    await pumpKiosk(
+      tester,
+      nfc: FakeNfcUidReader(available: true, startFails: true),
+    );
+    await openBadgeSheet(tester);
+
+    expect(find.byKey(nfcStatusKey), findsOneWidget);
+    expect(find.textContaining('did not start'), findsOneWidget);
+    // No tap icon pretending the reader works.
+    expect(find.byIcon(Icons.contactless_outlined), findsNothing);
+  });
+
+  testWidgets(
+      'a working RFID reader shows the tap path and NO problem row',
+      (tester) async {
+    await pumpKiosk(tester, nfc: FakeNfcUidReader(available: true));
+    await openBadgeSheet(tester);
+
+    expect(find.byKey(nfcStatusKey), findsNothing);
+    expect(find.byIcon(Icons.contactless_outlined), findsOneWidget);
   });
 
   testWidgets(

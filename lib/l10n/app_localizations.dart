@@ -2300,6 +2300,30 @@ abstract class AppLocalizations {
   /// **'Badges are read with the screen-side camera — turn off to use the back camera.'**
   String get settingsFrontCameraDesc;
 
+  /// Kiosk badge sheet RFID status: adapter present but disabled in Android settings
+  ///
+  /// In en, this message translates to:
+  /// **'NFC is turned off in this tablet\'s Android settings — turn it on to read RFID cards.'**
+  String get kioskNfcOff;
+
+  /// Kiosk badge sheet RFID status: no NFC hardware on this device
+  ///
+  /// In en, this message translates to:
+  /// **'This tablet has no NFC reader — scan the QR badge instead.'**
+  String get kioskNfcUnsupported;
+
+  /// Kiosk badge sheet RFID status: the read session failed to start (details in the trace)
+  ///
+  /// In en, this message translates to:
+  /// **'The RFID reader did not start — restart the app and try again.'**
+  String get kioskNfcFailed;
+
+  /// Owner NFC config device status: adapter present but disabled in Android settings
+  ///
+  /// In en, this message translates to:
+  /// **'NFC is turned off in this device\'s Android settings — turn it on to read RFID cards.'**
+  String get nfcConfigDeviceOff;
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:
