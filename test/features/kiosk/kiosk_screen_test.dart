@@ -22,6 +22,7 @@ const _canvasKey = ValueKey('kiosk-plan-canvas');
 Future<FakeReservationRepository> pumpKiosk(
   WidgetTester tester, {
   FakeNfcUidReader? nfc,
+  FakeQrScanner? qrScan,
   Map<String, dynamic> featureFlags = const {},
   bool bookableLevel = false,
 }) async {
@@ -45,6 +46,7 @@ Future<FakeReservationRepository> pumpKiosk(
         reservations: reservations,
         workspace: workspace,
         nfc: nfc,
+        qrScan: qrScan,
       ),
       child: const DeskiloApp(),
     ),
@@ -193,5 +195,31 @@ void main() {
     await pumpKiosk(tester, bookableLevel: true);
 
     expect(find.byKey(const ValueKey('kiosk-level-button')), findsNothing);
+  });
+
+  testWidgets(
+      'the camera reads the printed badge QR in the sheet (K3): the '
+      'embedded scanner decodes and kiosk_act runs with the code',
+      (tester) async {
+    final qrScan = FakeQrScanner();
+    final reservations = await pumpKiosk(tester, qrScan: qrScan);
+
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
+    await tester.pumpAndSettle();
+
+    // The camera area is embedded in the badge sheet.
+    expect(
+      find.byKey(const ValueKey('kiosk-badge-camera')),
+      findsOneWidget,
+    );
+
+    qrScan.emit('badge-token-cam');
+    await tester.pumpAndSettle();
+
+    final act = reservations.kioskActs.single;
+    expect(act.action, 'check_in');
+    expect(act.badgeToken, 'badge-token-cam');
   });
 }
