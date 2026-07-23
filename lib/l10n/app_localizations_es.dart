@@ -1199,6 +1199,12 @@ class AppLocalizationsEs extends AppLocalizations {
       'Sin NFC aquí — se necesita un dispositivo Android con NFC activado (los iPad no tienen NFC). Las credenciales QR siguen funcionando.';
 
   @override
+  String get kioskConfirmAction => 'Confirmar';
+
+  @override
+  String get kioskRejectAction => 'Rechazar';
+
+  @override
   String get languageTitle => 'Idioma';
 
   @override

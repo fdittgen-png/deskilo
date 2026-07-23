@@ -76,6 +76,18 @@ class SupabaseReservationRepository implements ReservationRepository {
   }
 
   @override
+  Future<String> kioskIdentify({
+    required String workspaceId,
+    required String badgeToken,
+  }) async {
+    final result = await _client.rpc<dynamic>('kiosk_identify', params: {
+      'p_workspace_id': workspaceId,
+      'p_badge_token': badgeToken,
+    }) as Map<String, dynamic>;
+    return result['display_name'] as String;
+  }
+
+  @override
   Future<String> kioskAct({
     required String workspaceId,
     required String badgeToken,

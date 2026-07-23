@@ -2252,6 +2252,18 @@ abstract class AppLocalizations {
   /// **'No NFC here — Android with NFC on is needed (iPads have no NFC). QR badges still work.'**
   String get nfcConfigDeviceUnavailable;
 
+  /// No description provided for @kioskConfirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get kioskConfirmAction;
+
+  /// No description provided for @kioskRejectAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get kioskRejectAction;
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:

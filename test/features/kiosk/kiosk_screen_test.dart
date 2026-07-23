@@ -65,6 +65,17 @@ Offset seatCenter(WidgetTester tester) {
       );
 }
 
+/// Confirms the summary dialog (identify → résumé → Confirm) the
+/// confirm-step flow inserts between the badge read and kiosk_act.
+Future<void> confirmSummary(WidgetTester tester) async {
+  expect(
+    find.byKey(const ValueKey('kiosk-summary-name')),
+    findsOneWidget,
+  );
+  await tester.tap(find.byKey(const ValueKey('kiosk-summary-confirm')));
+  await tester.pumpAndSettle();
+}
+
 void main() {
   testWidgets(
       'a kiosk account is locked to the kiosk view: no shell, no bottom '
@@ -113,6 +124,7 @@ void main() {
     );
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pumpAndSettle();
+    await confirmSummary(tester);
 
     final act = reservations.kioskActs.single;
     expect(act.action, 'check_in');
@@ -136,6 +148,7 @@ void main() {
     expect(find.textContaining('Tap your card'), findsOneWidget);
     nfc.tap('04a2b3c4d5');
     await tester.pumpAndSettle();
+    await confirmSummary(tester);
 
     final act = reservations.kioskActs.single;
     expect(act.action, 'check_in');
@@ -182,6 +195,7 @@ void main() {
     );
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pumpAndSettle();
+    await confirmSummary(tester);
 
     final act = reservations.kioskActs.single;
     expect(act.action, 'check_in');
@@ -217,9 +231,37 @@ void main() {
 
     qrScan.emit('badge-token-cam');
     await tester.pumpAndSettle();
+    await confirmSummary(tester);
 
     final act = reservations.kioskActs.single;
     expect(act.action, 'check_in');
     expect(act.badgeToken, 'badge-token-cam');
+  });
+
+  testWidgets(
+      'the summary names the identified member and the target; Reject '
+      'discards — nothing runs and the readers stay off', (tester) async {
+    final reservations = await pumpKiosk(tester);
+
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('kiosk-badge-field')),
+      'badge-token-1',
+    );
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle();
+
+    // The résumé: who (identified from the badge) and where.
+    expect(find.text('Flo'), findsOneWidget);
+    expect(find.text('A1'), findsWidgets);
+
+    await tester.tap(find.byKey(const ValueKey('kiosk-summary-reject')));
+    await tester.pumpAndSettle();
+
+    expect(reservations.kioskActs, isEmpty);
+    expect(find.byKey(const ValueKey('kiosk-summary-name')), findsNothing);
   });
 }

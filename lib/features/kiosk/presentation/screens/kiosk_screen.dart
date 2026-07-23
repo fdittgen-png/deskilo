@@ -21,6 +21,7 @@ import '../../../members/providers/directory_providers.dart';
 import '../../../money/domain/quota_rules.dart';
 import '../../../plan/domain/level.dart';
 import '../../../plan/domain/half_day_windows.dart';
+import '../../../reservations/presentation/widgets/booking_range_text.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/presentation/seat_occupancy.dart';
 import '../../../plan/presentation/widgets/level_chip_row.dart';
@@ -144,7 +145,12 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       ),
     );
     if (action == null || !mounted) return;
-    await _badgeSheet(action, seatId: seatId, levelId: levelId);
+    await _badgeSheet(
+      action,
+      targetName: title,
+      seatId: seatId,
+      levelId: levelId,
+    );
   }
 
   /// The badge prompt: an autofocused field a wedge scanner (or a human)
@@ -152,6 +158,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
   /// RPC — the code lives only in this sheet's controller and dies with it.
   Future<void> _badgeSheet(
     KioskAction action, {
+    required String targetName,
     String? seatId,
     String? levelId,
   }) async {
@@ -175,8 +182,86 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       ),
     );
     if (token == null || token.isEmpty || !mounted) return;
+    // The sheet's dispose stopped BOTH readers (NFC session + camera) —
+    // the confirm step below runs with everything off (field request).
 
     final window = _actionWindow();
+
+    // Identify first: resolve the badge to its member so the summary
+    // names WHO is about to act — the wrong-badge guard on a shared
+    // wall tablet.
+    final String memberName;
+    try {
+      memberName =
+          await ref.read(reservationRepositoryProvider).kioskIdentify(
+                workspaceId: workspace.id,
+                badgeToken: token,
+              );
+    } catch (e, st) {
+      debugPrint('kiosk identify failed: $e\n$st');
+      TraceLogger.instance
+          .error('kiosk', 'kiosk identify failed', error: e, stackTrace: st);
+      if (!mounted) return;
+      AppSnack.error(
+        context,
+        e is PostgrestException &&
+                e.message.contains(KioskBadgeError.serverSubstring)
+            ? (l10n?.kioskBadgeRejected ?? 'Badge not recognized.')
+            : (l10n?.workspaceGenericError ??
+                'Something went wrong. Please try again.'),
+        replace: true,
+      );
+      return;
+    }
+    if (!mounted) return;
+
+    // The résumé: who, what, where, when — Confirm executes, Reject
+    // discards. Nothing has happened yet.
+    final actionLabel = switch (action) {
+      KioskAction.checkIn => l10n?.kioskCheckIn ?? 'Check in',
+      KioskAction.reserve => l10n?.kioskReserve ?? 'Reserve',
+      KioskAction.checkOut => l10n?.kioskCheckOut ?? 'Check out',
+    };
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(actionLabel),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              memberName,
+              key: const ValueKey('kiosk-summary-name'),
+              style: Theme.of(dialogContext).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 4),
+            Text(targetName),
+            if (action != KioskAction.checkOut) ...[
+              const SizedBox(height: 4),
+              Text(
+                bookingRangeText(l10n, window.start, window.end),
+                style: Theme.of(dialogContext).textTheme.bodySmall,
+              ),
+            ],
+          ],
+        ),
+        actions: [
+          TextButton(
+            key: const ValueKey('kiosk-summary-reject'),
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(l10n?.kioskRejectAction ?? 'Reject'),
+          ),
+          FilledButton(
+            key: const ValueKey('kiosk-summary-confirm'),
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(l10n?.kioskConfirmAction ?? 'Confirm'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+
     try {
       await ref.read(reservationRepositoryProvider).kioskAct(
             workspaceId: workspace.id,

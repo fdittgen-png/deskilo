@@ -152,6 +152,17 @@ class FakeReservationRepository implements ReservationRepository {
       <({String action, String badgeToken, String? seatId, String? levelId})>[];
 
   @override
+  Future<String> kioskIdentify({
+    required String workspaceId,
+    required String badgeToken,
+  }) async {
+    if (badgeToken == 'bad-badge') {
+      throw const PostgrestException(message: 'badge not recognized');
+    }
+    return 'Flo';
+  }
+
+  @override
   Future<String> kioskAct({
     required String workspaceId,
     required String badgeToken,
