@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
@@ -31,6 +32,7 @@ import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../device_pin.dart';
 
 /// Server error substring when a presented badge is unknown/revoked
 /// (kiosk_act, migration 0043) — pinned by test like the other guards.
@@ -74,11 +76,18 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     // Wall displays live forever — keep seat states following the clock.
     _minuteTick =
         Timer.periodic(const Duration(minutes: 1), (_) => setState(() {}));
+    // Lockdown (field request): confirmed kiosk mode owns the pad —
+    // hide the system bars and pin the app so nothing else can be
+    // opened. Leaving kiosk mode = restarting the pad.
+    unawaited(SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky));
+    unawaited(KioskDevicePin.pin());
   }
 
   @override
   void dispose() {
     _minuteTick?.cancel();
+    unawaited(SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge));
+    unawaited(KioskDevicePin.unpin());
     super.dispose();
   }
 
@@ -333,9 +342,12 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
             const [];
     final names = ref.watch(memberNamesProvider).value ?? const {};
 
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
+    // canPop:false — the back button/gesture never leaves kiosk mode.
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
           children: [
             Padding(
               padding: AppSpacing.lgAll,
@@ -443,7 +455,8 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                 _ => const LoadingView(),
               },
             ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -477,12 +490,22 @@ class _KioskBadgePrompt extends StatefulWidget {
 class _KioskBadgePromptState extends State<_KioskBadgePrompt> {
   final _controller = TextEditingController();
   bool _nfcAvailable = false;
+  bool _cameraReady = false;
   bool _done = false;
 
   @override
   void initState() {
     super.initState();
-    _startNfc();
+    _startReaders();
+  }
+
+  /// NFC first, camera second: the RFID reader-mode session must be
+  /// registered before the camera pipeline spins up — starting both at
+  /// once left the tap path dead on the wall tablet while the barcode
+  /// still scanned (field report).
+  Future<void> _startReaders() async {
+    await _startNfc();
+    if (mounted) setState(() => _cameraReady = true);
   }
 
   Future<void> _startNfc() async {
@@ -529,8 +552,9 @@ class _KioskBadgePromptState extends State<_KioskBadgePrompt> {
             ),
           ),
         // The camera reads the printed badge QR right in the sheet —
-        // no external scanner needed on the wall tablet (K3).
-        if (widget.scanBuilder != null) ...[
+        // no external scanner needed on the wall tablet (K3). It mounts
+        // only after the NFC session is up (see _startReaders).
+        if (widget.scanBuilder != null && _cameraReady) ...[
           const SizedBox(height: 12),
           ClipRRect(
             borderRadius: AppRadius.mdAll,

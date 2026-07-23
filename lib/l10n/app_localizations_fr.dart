@@ -1210,6 +1210,26 @@ class AppLocalizationsFr extends AppLocalizations {
   String get kioskRejectAction => 'Rejeter';
 
   @override
+  String get kioskGateTitle => 'Démarrer le mode borne ?';
+
+  @override
+  String get kioskGateBody =>
+      'Ce compte est configuré comme borne de l\'espace. En mode borne, la tablette n\'affiche que le plan pour le pointage par badge — rien d\'autre ne peut être ouvert. Pour quitter le mode borne, redémarrez la tablette.';
+
+  @override
+  String get kioskGateStart => 'Démarrer le mode borne';
+
+  @override
+  String get kioskGateReject => 'Pas maintenant — ouvrir l\'appli normalement';
+
+  @override
+  String get settingsFrontCamera => 'Scanner avec la caméra avant';
+
+  @override
+  String get settingsFrontCameraDesc =>
+      'Les badges sont lus avec la caméra côté écran — désactivez pour utiliser la caméra arrière.';
+
+  @override
   String get languageTitle => 'Langue';
 
   @override

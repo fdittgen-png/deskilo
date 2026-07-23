@@ -33,7 +33,9 @@ import '../features/workspace/presentation/screens/scan_join_screen.dart';
 import '../features/workspace/presentation/screens/workspace_code_screen.dart';
 import '../features/workspace/presentation/screens/workspace_settings_screen.dart';
 import '../features/workspace/providers/workspace_providers.dart';
+import '../features/kiosk/presentation/screens/kiosk_gate_screen.dart';
 import '../features/kiosk/presentation/screens/kiosk_screen.dart';
+import '../features/kiosk/providers/kiosk_mode.dart';
 import '../features/money/presentation/screens/payment_config_screen.dart';
 import '../features/workspace/presentation/screens/nfc_config_screen.dart';
 import 'shell/shell_screen.dart';
@@ -68,7 +70,10 @@ GoRouter router(Ref ref) {
     ..listen(enabledFeaturesProvider, (_, _) => refresh.value++)
     // Kiosk lock (0043): the active membership decides whether the app is
     // a wall tablet — re-evaluate when it resolves or changes.
-    ..listen(myMemberProvider, (_, _) => refresh.value++);
+    ..listen(myMemberProvider, (_, _) => refresh.value++)
+    // Kiosk gate: the accept/reject decision moves the pad between the
+    // gate, the locked kiosk view, and the normal app.
+    ..listen(kioskModeProvider, (_, _) => refresh.value++);
 
   /// Whether [feature] is enabled for the active workspace (#146).
   /// Defaults (everything ON) while the workspace is still loading, so
@@ -102,13 +107,26 @@ GoRouter router(Ref ref) {
         if (list.isNotEmpty && atOnboarding && firstRun) return '/reserve';
       }
 
-      // Kiosk lock (0043): a kiosk account IS the wall tablet — every
-      // route collapses to the kiosk plan view, and a regular member can
-      // never land on it.
+      // Kiosk lock (0043) behind the kiosk gate (field request): kiosk
+      // mode never auto-loads. A kiosk account first CONFIRMS it on the
+      // gate — accepted collapses every route to the kiosk plan view
+      // until the pad restarts; rejected lets this run of the app behave
+      // normally. Regular members can never land on either screen.
       final me = ref.read(myMemberProvider).value;
       final atKiosk = state.matchedLocation == '/kiosk';
-      if (me != null && me.isKiosk && !atKiosk) return '/kiosk';
-      if ((me == null || !me.isKiosk) && atKiosk) return '/reserve';
+      final atGate = state.matchedLocation == '/kiosk-gate';
+      if (me != null && me.isKiosk) {
+        switch (ref.read(kioskModeProvider)) {
+          case KioskModeDecision.pending:
+            if (!atGate) return '/kiosk-gate';
+          case KioskModeDecision.accepted:
+            if (!atKiosk) return '/kiosk';
+          case KioskModeDecision.rejected:
+            if (atKiosk || atGate) return '/reserve';
+        }
+      } else if (atKiosk || atGate) {
+        return '/reserve';
+      }
 
       // Pending membership (0052): the waiting room until the validators
       // approve. Profiles stays reachable — the user may be active in
@@ -130,6 +148,10 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/auth',
         builder: (context, state) => const AuthScreen(),
+      ),
+      GoRoute(
+        path: '/kiosk-gate',
+        builder: (context, state) => const KioskGateScreen(),
       ),
       GoRoute(
         path: '/kiosk',

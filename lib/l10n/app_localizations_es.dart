@@ -1205,6 +1205,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String get kioskRejectAction => 'Rechazar';
 
   @override
+  String get kioskGateTitle => '¿Iniciar el modo quiosco?';
+
+  @override
+  String get kioskGateBody =>
+      'Esta cuenta está configurada como quiosco del espacio. En modo quiosco la tableta solo muestra el plano para fichar con la tarjeta — no se puede abrir nada más. Para salir del modo quiosco, reinicia la tableta.';
+
+  @override
+  String get kioskGateStart => 'Iniciar el modo quiosco';
+
+  @override
+  String get kioskGateReject => 'Ahora no — abrir la app normalmente';
+
+  @override
+  String get settingsFrontCamera => 'Escanear con la cámara frontal';
+
+  @override
+  String get settingsFrontCameraDesc =>
+      'Las tarjetas se leen con la cámara del lado de la pantalla — desactívalo para usar la cámara trasera.';
+
+  @override
   String get languageTitle => 'Idioma';
 
   @override

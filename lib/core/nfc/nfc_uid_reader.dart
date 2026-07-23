@@ -35,19 +35,43 @@ class NfcUidReader {
   /// Starts a read session; [onUid] fires with the normalized UID of the
   /// first tag presented. The caller stops the session (or it dies with
   /// the next [startRead]).
+  ///
+  /// Kiosk hardening: the badge sheet opens repeatedly on a long-lived
+  /// wall tablet, so a previous sheet's unawaited [stop] may still be in
+  /// flight — stop first ourselves, and never let a failed startSession
+  /// die silently (it used to leave the sheet showing the tap icon with
+  /// a dead reader): trace it and retry once.
   Future<void> startRead({required ValueChanged<String> onUid}) async {
-    await NfcManager.instance.startSession(
-      pollingOptions: const {
-        NfcPollingOption.iso14443,
-        NfcPollingOption.iso15693,
-      },
-      onDiscovered: (tag) {
-        final id = NfcTagAndroid.from(tag)?.id;
-        if (id == null || id.isEmpty) return;
-        onUid(normalizeUid(id));
-      },
-    );
+    await stop();
+    try {
+      await _startSession(onUid);
+    } catch (e, st) {
+      debugPrint('nfc start failed, retrying: $e\n$st');
+      TraceLogger.instance
+          .error('nfc', 'start failed, retrying', error: e, stackTrace: st);
+      await Future<void>.delayed(const Duration(milliseconds: 400));
+      try {
+        await _startSession(onUid);
+      } catch (e, st) {
+        debugPrint('nfc start retry failed: $e\n$st');
+        TraceLogger.instance
+            .error('nfc', 'start retry failed', error: e, stackTrace: st);
+      }
+    }
   }
+
+  Future<void> _startSession(ValueChanged<String> onUid) =>
+      NfcManager.instance.startSession(
+        pollingOptions: const {
+          NfcPollingOption.iso14443,
+          NfcPollingOption.iso15693,
+        },
+        onDiscovered: (tag) {
+          final id = NfcTagAndroid.from(tag)?.id;
+          if (id == null || id.isEmpty) return;
+          onUid(normalizeUid(id));
+        },
+      );
 
   Future<void> stop() async {
     try {

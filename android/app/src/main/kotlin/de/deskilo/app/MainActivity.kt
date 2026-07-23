@@ -12,6 +12,25 @@ import java.io.File
 class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        // Kiosk pinning: while kiosk mode is confirmed the app pins
+        // itself (screen pinning / lock task) so the pad cannot leave
+        // it — home, recents and notifications are blocked by the
+        // system. Best-effort: without device-owner provisioning Android
+        // shows its one-time pinning confirmation.
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            "deskilo/kiosk",
+        ).setMethodCallHandler { call, result ->
+            when (call.method) {
+                "lock" -> result.success(
+                    runCatching { startLockTask() }.isSuccess,
+                )
+                "unlock" -> result.success(
+                    runCatching { stopLockTask() }.isSuccess,
+                )
+                else -> result.notImplemented()
+            }
+        }
         // Local-save channel: exports (bill/badge/config PDFs, XML) land
         // in the USER-VISIBLE Downloads collection via MediaStore — no
         // runtime permission needed on API 29+. Pre-29 falls back to the

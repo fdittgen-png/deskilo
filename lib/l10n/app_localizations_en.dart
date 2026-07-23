@@ -1198,6 +1198,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kioskRejectAction => 'Reject';
 
   @override
+  String get kioskGateTitle => 'Start kiosk mode?';
+
+  @override
+  String get kioskGateBody =>
+      'This account is set up as the workspace kiosk. In kiosk mode the tablet only shows the floor plan for badge check-in — nothing else can be opened. To leave kiosk mode, restart the tablet.';
+
+  @override
+  String get kioskGateStart => 'Start kiosk mode';
+
+  @override
+  String get kioskGateReject => 'Not now — open the app normally';
+
+  @override
+  String get settingsFrontCamera => 'Scan with the front camera';
+
+  @override
+  String get settingsFrontCameraDesc =>
+      'Badges are read with the screen-side camera — turn off to use the back camera.';
+
+  @override
   String get languageTitle => 'Language';
 
   @override

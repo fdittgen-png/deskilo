@@ -2264,6 +2264,42 @@ abstract class AppLocalizations {
   /// **'Reject'**
   String get kioskRejectAction;
 
+  /// Title of the kiosk gate a kiosk account sees on every app start
+  ///
+  /// In en, this message translates to:
+  /// **'Start kiosk mode?'**
+  String get kioskGateTitle;
+
+  /// Explainer on the kiosk gate: confirmed kiosk mode locks the pad until restart
+  ///
+  /// In en, this message translates to:
+  /// **'This account is set up as the workspace kiosk. In kiosk mode the tablet only shows the floor plan for badge check-in — nothing else can be opened. To leave kiosk mode, restart the tablet.'**
+  String get kioskGateBody;
+
+  /// Gate button confirming and locking kiosk mode
+  ///
+  /// In en, this message translates to:
+  /// **'Start kiosk mode'**
+  String get kioskGateStart;
+
+  /// Gate button rejecting kiosk mode for this run of the app
+  ///
+  /// In en, this message translates to:
+  /// **'Not now — open the app normally'**
+  String get kioskGateReject;
+
+  /// Settings switch: badge QR scanning uses the screen-side camera (default on)
+  ///
+  /// In en, this message translates to:
+  /// **'Scan with the front camera'**
+  String get settingsFrontCamera;
+
+  /// Subtitle of the front-camera switch
+  ///
+  /// In en, this message translates to:
+  /// **'Badges are read with the screen-side camera — turn off to use the back camera.'**
+  String get settingsFrontCameraDesc;
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:
