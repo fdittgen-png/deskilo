@@ -36,5 +36,7 @@
   "nfcConfigDeviceStatus": "Cet appareil",
   "nfcConfigChecking": "Vérification…",
   "nfcConfigDeviceReady": "NFC disponible et activé",
-  "nfcConfigDeviceUnavailable": "Pas de NFC ici — un appareil Android avec NFC activé est nécessaire (les iPad n'ont pas de NFC). Les badges QR fonctionnent toujours."
+  "nfcConfigDeviceUnavailable": "Pas de NFC ici — un appareil Android avec NFC activé est nécessaire (les iPad n'ont pas de NFC). Les badges QR fonctionnent toujours.",
+  "kioskConfirmAction": "Confirmer",
+  "kioskRejectAction": "Rejeter"
 }

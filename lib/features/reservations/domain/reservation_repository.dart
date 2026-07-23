@@ -63,6 +63,16 @@ abstract class ReservationRepository {
   /// resolves to — 'reserve' | 'check_in' | 'check_out'. Stateless: the
   /// member's "session" begins and ends inside the call, so nothing is
   /// cached on the device. Returns the acted-on reservation id.
+  /// Kiosk identification (RPC `kiosk_identify`, migration 0054): who
+  /// does [badgeToken] belong to? Resolves the badge to the member's
+  /// display name WITHOUT acting — the confirm step between reading the
+  /// badge and running [kioskAct]. Pinned refusal: 'badge not
+  /// recognized'.
+  Future<String> kioskIdentify({
+    required String workspaceId,
+    required String badgeToken,
+  });
+
   Future<String> kioskAct({
     required String workspaceId,
     required String badgeToken,

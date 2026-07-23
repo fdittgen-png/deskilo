@@ -1542,6 +1542,8 @@
   "@nfcConfigDeviceUnavailable": {
     "description": "Device NFC status: not usable"
   },
+  "kioskConfirmAction": "Confirm",
+  "kioskRejectAction": "Reject",
   "languageTitle": "Language",
   "@languageTitle": {
     "description": "Settings entry and dialog title for the in-app language selection"

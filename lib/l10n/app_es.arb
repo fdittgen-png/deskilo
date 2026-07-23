@@ -357,6 +357,8 @@
   "nfcConfigChecking": "Comprobando…",
   "nfcConfigDeviceReady": "NFC disponible y activado",
   "nfcConfigDeviceUnavailable": "Sin NFC aquí — se necesita un dispositivo Android con NFC activado (los iPad no tienen NFC). Las credenciales QR siguen funcionando.",
+  "kioskConfirmAction": "Confirmar",
+  "kioskRejectAction": "Rechazar",
   "languageTitle": "Idioma",
   "languageSystemDefault": "Predeterminado del sistema",
   "levelReserveButton": "Reservar la planta",

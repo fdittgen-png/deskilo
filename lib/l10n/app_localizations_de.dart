@@ -1201,6 +1201,12 @@ class AppLocalizationsDe extends AppLocalizations {
       'Hier kein NFC — ein Android-Gerät mit aktiviertem NFC ist nötig (iPads haben kein NFC). QR-Badges funktionieren weiter.';
 
   @override
+  String get kioskConfirmAction => 'Bestätigen';
+
+  @override
+  String get kioskRejectAction => 'Ablehnen';
+
+  @override
   String get languageTitle => 'Sprache';
 
   @override

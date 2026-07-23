@@ -152,5 +152,7 @@
   "nfcConfigDeviceUnavailable": "No NFC here — Android with NFC on is needed (iPads have no NFC). QR badges still work.",
   "@nfcConfigDeviceUnavailable": {
     "description": "Device NFC status: not usable"
-  }
+  },
+  "kioskConfirmAction": "Confirm",
+  "kioskRejectAction": "Reject"
 }
