@@ -529,6 +529,26 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     }
   }
 
+  /// (0053) Self-service paths — the fake reuses the admin bodies with
+  /// the caller's own member id.
+  @override
+  Future<IssuedBadge> issueMyBadge(
+    String workspaceId, {
+    String label = '',
+  }) =>
+      issueMemberBadge(workspaceId, myMember.id, label: label);
+
+  @override
+  Future<void> registerMyNfcBadge(
+    String workspaceId, {
+    required String uid,
+    String label = '',
+  }) =>
+      registerNfcBadge(workspaceId, myMember.id, uid: uid, label: label);
+
+  @override
+  Future<void> revokeMyBadge(String badgeId) => revokeMemberBadge(badgeId);
+
   /// (workspaceId, memberId, makeAdmin) of the last role-change request.
   (String, String, bool)? lastRoleChange;
 

@@ -226,6 +226,7 @@
   "@planFullDayError": {
     "description": "Booking error when the server rejects a non-full-day window under full-day granularity (0032)"
   },
+  "myBadgeTitle": "My badge",
   "billSubscription": "Subscription {pct}%",
   "@billSubscription": {
     "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount",

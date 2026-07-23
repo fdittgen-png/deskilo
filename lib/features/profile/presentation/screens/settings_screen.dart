@@ -15,6 +15,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/domain/member.dart';
+import '../../../workspace/presentation/widgets/badge_manager_dialog.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/profile.dart';
 import '../../providers/profile_providers.dart';
@@ -236,6 +238,39 @@ class SettingsScreen extends ConsumerWidget {
             title: Text(l10n?.helpTitle ?? 'Help'),
             onTap: () => context.push('/help'),
           ),
+          // My badge (0053): the member's own kiosk credentials — mint
+          // the printable QR, register their RFID/NFC card, revoke.
+          // Same manager the admins use, with the self-service RPCs.
+          if (ref.watch(myMemberProvider).value case final me?
+              when me.status == MemberStatus.active && !me.isKiosk)
+            ListTile(
+              key: const ValueKey('settings-my-badge'),
+              leading: const Icon(Icons.badge_outlined),
+              title: Text(l10n?.myBadgeTitle ?? 'My badge'),
+              onTap: () {
+                final workspace =
+                    ref.read(currentWorkspaceProvider).value;
+                if (workspace == null) return;
+                showDialog<void>(
+                  context: context,
+                  builder: (_) => BadgeManagerDialog(
+                    workspaceId: workspace.id,
+                    memberId: me.id,
+                    name: myProfile?.displayName ?? '',
+                    l10n: l10n,
+                    issue: () => ref
+                        .read(workspaceRepositoryProvider)
+                        .issueMyBadge(workspace.id),
+                    registerNfc: (uid) => ref
+                        .read(workspaceRepositoryProvider)
+                        .registerMyNfcBadge(workspace.id, uid: uid),
+                    revoke: (badgeId) => ref
+                        .read(workspaceRepositoryProvider)
+                        .revokeMyBadge(badgeId),
+                  ),
+                );
+              },
+            ),
           // Linked accounts (0051): attach Google/Microsoft/Apple/
           // Facebook to this account for password-less sign-in.
           ListTile(

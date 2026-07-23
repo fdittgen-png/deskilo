@@ -130,6 +130,24 @@ abstract class WorkspaceRepository {
   /// Admin-only: revokes a badge (kiosks reject it from now on).
   Future<void> revokeMemberBadge(String badgeId);
 
+  /// Self-service (RPC `issue_my_badge`, migration 0053): mints MY badge
+  /// and returns the raw token exactly once — same one-time contract as
+  /// the admin path.
+  Future<IssuedBadge> issueMyBadge(String workspaceId, {String label});
+
+  /// Self-service (RPC `register_my_nfc_badge`, 0053): registers a
+  /// physical RFID/NFC tag as MY badge. Pinned duplicate substring:
+  /// 'tag already registered'.
+  Future<void> registerMyNfcBadge(
+    String workspaceId, {
+    required String uid,
+    String label,
+  });
+
+  /// Self-service (RPC `revoke_my_badge`, 0053): revokes one of MY
+  /// badges.
+  Future<void> revokeMyBadge(String badgeId);
+
   /// Admin-only (RPC `register_nfc_badge`, migration 0046): registers a
   /// physical RFID/NFC tag as [memberId]'s badge. [uid] is the tag UID as
   /// lowercase hex (the reader normalizes it); the server keeps only the

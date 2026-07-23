@@ -54,6 +54,7 @@
   "availabilityGranularityFullDay": "Nur ganze Tage",
   "planSlotError": "Buchungen müssen im {minutes}-Minuten-Raster beginnen und enden.",
   "planFullDayError": "Buchungen umfassen hier den ganzen Tag.",
+  "myBadgeTitle": "Mein Badge",
   "billSubscription": "Abo {pct} %",
   "billEntitlement": "{used} von {included} halben Tagen genutzt ({openDays} Öffnungstage)",
   "billOverage": "{extra} zusätzliche halbe Tage",

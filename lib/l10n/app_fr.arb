@@ -54,6 +54,7 @@
   "availabilityGranularityFullDay": "Journées entières uniquement",
   "planSlotError": "Les réservations doivent commencer et finir sur la grille de {minutes} minutes.",
   "planFullDayError": "Ici, les réservations couvrent la journée entière.",
+  "myBadgeTitle": "Mon badge",
   "billSubscription": "Abonnement {pct} %",
   "billEntitlement": "{used} demi-journées utilisées sur {included} ({openDays} jours d'ouverture)",
   "billOverage": "{extra} demi-journées supplémentaires",
