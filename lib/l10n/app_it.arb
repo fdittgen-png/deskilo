@@ -54,6 +54,7 @@
   "availabilityGranularityFullDay": "Solo giornate intere",
   "planSlotError": "Le prenotazioni devono iniziare e finire sulla griglia di {minutes} minuti.",
   "planFullDayError": "Qui le prenotazioni coprono l'intera giornata.",
+  "myBadgeTitle": "Il mio badge",
   "billSubscription": "Abbonamento {pct} %",
   "billEntitlement": "{used} mezze giornate usate su {included} ({openDays} giorni di apertura)",
   "billOverage": "{extra} mezze giornate extra",

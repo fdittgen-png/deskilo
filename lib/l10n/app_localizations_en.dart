@@ -180,6 +180,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get planFullDayError => 'Bookings here cover the full day.';
 
   @override
+  String get myBadgeTitle => 'My badge';
+
+  @override
   String billSubscription(int pct) {
     return 'Subscription $pct%';
   }

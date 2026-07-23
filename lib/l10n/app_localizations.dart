@@ -428,6 +428,12 @@ abstract class AppLocalizations {
   /// **'Bookings here cover the full day.'**
   String get planFullDayError;
 
+  /// No description provided for @myBadgeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My badge'**
+  String get myBadgeTitle;
+
   /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount
   ///
   /// In en, this message translates to:

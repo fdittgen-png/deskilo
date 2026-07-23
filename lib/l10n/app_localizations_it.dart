@@ -182,6 +182,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Qui le prenotazioni coprono l\'intera giornata.';
 
   @override
+  String get myBadgeTitle => 'Il mio badge';
+
+  @override
   String billSubscription(int pct) {
     return 'Abbonamento $pct %';
   }

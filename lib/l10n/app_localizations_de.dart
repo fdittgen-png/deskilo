@@ -182,6 +182,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get planFullDayError => 'Buchungen umfassen hier den ganzen Tag.';
 
   @override
+  String get myBadgeTitle => 'Mein Badge';
+
+  @override
   String billSubscription(int pct) {
     return 'Abo $pct %';
   }

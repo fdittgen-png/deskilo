@@ -180,6 +180,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get planFullDayError => 'Aquí las reservas cubren el día completo.';
 
   @override
+  String get myBadgeTitle => 'Mi credencial';
+
+  @override
   String billSubscription(int pct) {
     return 'Suscripción $pct %';
   }
