@@ -1244,6 +1244,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get kioskScanQr => 'Escanear la tarjeta QR';
 
   @override
+  String get kioskRevertTitle => 'Dispositivo quiosco';
+
+  @override
+  String get kioskRevertDesc =>
+      'Este perfil está configurado como quiosco del espacio. Reviértelo a miembro normal para que la pregunta de quiosco no aparezca al iniciar.';
+
+  @override
+  String get kioskRevertDone => 'Este perfil vuelve a ser un miembro normal.';
+
+  @override
   String get languageTitle => 'Idioma';
 
   @override

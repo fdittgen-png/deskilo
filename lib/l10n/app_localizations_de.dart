@@ -1246,6 +1246,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get kioskScanQr => 'QR-Badge scannen';
 
   @override
+  String get kioskRevertTitle => 'Kiosk-Gerät';
+
+  @override
+  String get kioskRevertDesc =>
+      'Dieses Profil ist als Kiosk des Workspace eingerichtet. Als reguläres Mitglied zurücksetzen, damit die Kiosk-Frage beim Start nicht mehr erscheint.';
+
+  @override
+  String get kioskRevertDone =>
+      'Dieses Profil ist wieder ein reguläres Mitglied.';
+
+  @override
   String get languageTitle => 'Sprache';
 
   @override

@@ -113,6 +113,46 @@ void main() {
   });
 
   testWidgets(
+      'a kiosk profile reverts ITSELF from Settings (0056): reject the '
+      'gate, Settings → Kiosk device → confirm — the membership flips '
+      'and the tile disappears', (tester) async {
+    tester.view.physicalSize = const Size(800, 2400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.myMember = workspace.myMember.copyWith(
+      isAdmin: false,
+      isOwner: false,
+      isKiosk: true,
+    );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
+          workspace: workspace,
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-gate-reject')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('settings-kiosk-revert')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-revert-confirm')));
+    await tester.pumpAndSettle();
+
+    expect(workspace.myMember.isKiosk, isFalse);
+    expect(
+      find.byKey(const ValueKey('settings-kiosk-revert')),
+      findsNothing,
+    );
+  });
+
+  testWidgets(
       'rejecting the gate lets the app start normally — shell and bottom '
       'bar, no kiosk view until the next app start', (tester) async {
     await pumpKiosk(tester, startKiosk: false);

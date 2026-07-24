@@ -55,6 +55,17 @@ void main() {
   });
 
   testWidgets(
+      'the badge manager names its WORKSPACE — badges are per workspace '
+      '(0056), so the wrong active profile is visible before registering',
+      (tester) async {
+    await openMyBadge(tester);
+
+    final line = find.byKey(const ValueKey('badge-workspace-name'));
+    expect(line, findsOneWidget);
+    expect(tester.widget<Text>(line).data, 'Test Space');
+  });
+
+  testWidgets(
       'with NFC available, "Register card" reads my tap and registers '
       'the card on my membership', (tester) async {
     final nfc = FakeNfcUidReader(available: true);

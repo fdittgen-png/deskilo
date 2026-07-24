@@ -562,6 +562,17 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     }
   }
 
+  @override
+  Future<void> unsetMyKiosk(String workspaceId) async {
+    // Server contract (0056): only an actual kiosk membership reverts.
+    if (!myMember.isKiosk || myMember.workspaceId != workspaceId) {
+      throw const PostgrestException(
+        message: 'not a kiosk of this workspace',
+      );
+    }
+    myMember = myMember.copyWith(isKiosk: false);
+  }
+
   /// (workspaceId, memberId, makeAdmin) of the last role-change request.
   (String, String, bool)? lastRoleChange;
 

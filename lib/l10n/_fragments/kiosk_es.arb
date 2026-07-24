@@ -49,5 +49,8 @@
   "kioskNfcUnsupported": "Esta tableta no tiene lector NFC — escanea la tarjeta QR en su lugar.",
   "kioskNfcFailed": "El lector RFID no se inició — reinicia la aplicación e inténtalo de nuevo.",
   "nfcConfigDeviceOff": "El NFC está desactivado en los ajustes de Android de este dispositivo — actívalo para leer tarjetas RFID.",
-  "kioskScanQr": "Escanear la tarjeta QR"
+  "kioskScanQr": "Escanear la tarjeta QR",
+  "kioskRevertTitle": "Dispositivo quiosco",
+  "kioskRevertDesc": "Este perfil está configurado como quiosco del espacio. Reviértelo a miembro normal para que la pregunta de quiosco no aparezca al iniciar.",
+  "kioskRevertDone": "Este perfil vuelve a ser un miembro normal."
 }

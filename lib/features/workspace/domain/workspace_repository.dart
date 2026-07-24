@@ -153,6 +153,11 @@ abstract class WorkspaceRepository {
   /// admin; live badges must be revoked first.
   Future<void> deleteRevokedBadge(String badgeId);
 
+  /// Self-service escape hatch (RPC `unset_my_kiosk`, migration 0056):
+  /// the signed-in kiosk account reverts ITSELF to a regular member.
+  /// Flagging a member as kiosk stays owner-only.
+  Future<void> unsetMyKiosk(String workspaceId);
+
   /// Admin-only (RPC `register_nfc_badge`, migration 0046): registers a
   /// physical RFID/NFC tag as [memberId]'s badge. [uid] is the tag UID as
   /// lowercase hex (the reader normalizes it); the server keeps only the

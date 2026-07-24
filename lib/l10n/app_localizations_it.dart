@@ -1247,6 +1247,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get kioskScanQr => 'Scansiona il badge QR';
 
   @override
+  String get kioskRevertTitle => 'Dispositivo chiosco';
+
+  @override
+  String get kioskRevertDesc =>
+      'Questo profilo è configurato come chiosco dello spazio. Ripristinalo come membro normale per non vedere più la domanda chiosco all\'avvio.';
+
+  @override
+  String get kioskRevertDone => 'Questo profilo è di nuovo un membro normale.';
+
+  @override
   String get languageTitle => 'Lingua';
 
   @override

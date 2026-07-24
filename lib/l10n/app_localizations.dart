@@ -2330,6 +2330,24 @@ abstract class AppLocalizations {
   /// **'Scan the QR badge'**
   String get kioskScanQr;
 
+  /// Settings tile on a kiosk profile: revert this profile to a regular member (0056)
+  ///
+  /// In en, this message translates to:
+  /// **'Kiosk device'**
+  String get kioskRevertTitle;
+
+  /// Subtitle of the kiosk revert tile and body of its confirm dialog
+  ///
+  /// In en, this message translates to:
+  /// **'This profile is set up as the workspace kiosk. Revert it to a regular member to stop the kiosk question at start.'**
+  String get kioskRevertDesc;
+
+  /// Snackbar after the kiosk profile reverted itself
+  ///
+  /// In en, this message translates to:
+  /// **'This profile is a regular member again.'**
+  String get kioskRevertDone;
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:
