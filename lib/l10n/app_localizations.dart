@@ -2348,6 +2348,12 @@ abstract class AppLocalizations {
   /// **'This profile is a regular member again.'**
   String get kioskRevertDone;
 
+  /// Empty member-sheet explainer when the viewer has no actions for this row (e.g. an admin viewing a kiosk)
+  ///
+  /// In en, this message translates to:
+  /// **'Only the workspace owner can change this member.'**
+  String get memberNoActions;
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:

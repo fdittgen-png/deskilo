@@ -70,7 +70,85 @@ Future<void> openSheet(WidgetTester tester, String name) async {
   await tester.pumpAndSettle();
 }
 
+/// Pumps Members & plans with a CUSTOM viewer/roster (the field cases
+/// around kiosk rows need non-owner viewers and kiosk members).
+Future<void> pumpMembersWith(
+  WidgetTester tester,
+  FakeWorkspaceRepository workspace, {
+  bool throughKioskGate = false,
+}) async {
+  tester.view.physicalSize = const Size(800, 2200);
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: standardTestOverrides(workspace: workspace),
+      child: const DeskiloApp(),
+    ),
+  );
+  await tester.pumpAndSettle();
+  if (throughKioskGate) {
+    await tester.tap(find.byKey(const ValueKey('kiosk-gate-reject')));
+    await tester.pumpAndSettle();
+  }
+  await tester.tap(find.byIcon(Icons.settings_outlined));
+  await tester.pumpAndSettle();
+  await tester.tap(find.text('Members & plans'));
+  await tester.pumpAndSettle();
+}
+
 void main() {
+  testWidgets(
+      'an ADMIN tapping a kiosk row gets an explaining sheet — never a '
+      'silent nothing (field report: "sur Flo s\'affiche rien")',
+      (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
+      ..otherMembers.add(
+        const Member(
+          id: 'member-2',
+          workspaceId: 'ws-1',
+          userId: 'user-2',
+          isAdmin: false,
+          isOwner: false,
+          isKiosk: true,
+          status: MemberStatus.active,
+        ),
+      );
+    // The viewer is an admin, NOT the owner: every kiosk-row action is
+    // owner-gated, which used to collapse into showing nothing at all.
+    workspace.myMember = workspace.myMember.copyWith(isOwner: false);
+    await pumpMembersWith(tester, workspace);
+
+    await openSheet(tester, 'Ana');
+
+    expect(
+      find.text('Only the workspace owner can change this member.'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets(
+      'a kiosk account reverts ITSELF from its own member row (0056) — '
+      'the admin kiosk at the pad has a way back', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..memberNames = {'member-1': 'Flo'};
+    // The real field shape: the kiosk account is also an admin, so
+    // Members & plans is reachable after rejecting the gate.
+    workspace.myMember = workspace.myMember.copyWith(
+      isOwner: false,
+      isAdmin: true,
+      isKiosk: true,
+    );
+    await pumpMembersWith(tester, workspace, throughKioskGate: true);
+
+    await openSheet(tester, 'Flo');
+    await tester.tap(find.text('Revert kiosk to member'));
+    await tester.pumpAndSettle();
+
+    expect(workspace.myMember.isKiosk, isFalse);
+  });
+
   testWidgets('owner reaches the members screen and sees roles + levels',
       (tester) async {
     await pumpMembers(tester);

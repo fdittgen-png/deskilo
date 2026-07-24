@@ -1257,6 +1257,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieses Profil ist wieder ein reguläres Mitglied.';
 
   @override
+  String get memberNoActions =>
+      'Nur der Inhaber des Workspace kann dieses Mitglied ändern.';
+
+  @override
   String get languageTitle => 'Sprache';
 
   @override

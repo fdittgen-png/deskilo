@@ -1247,6 +1247,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kioskRevertDone => 'This profile is a regular member again.';
 
   @override
+  String get memberNoActions =>
+      'Only the workspace owner can change this member.';
+
+  @override
   String get languageTitle => 'Language';
 
   @override

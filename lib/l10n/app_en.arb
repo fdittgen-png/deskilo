@@ -1600,6 +1600,10 @@
   "@kioskRevertDone": {
     "description": "Snackbar after the kiosk profile reverted itself"
   },
+  "memberNoActions": "Only the workspace owner can change this member.",
+  "@memberNoActions": {
+    "description": "Empty member-sheet explainer when the viewer has no actions for this row (e.g. an admin viewing a kiosk)"
+  },
   "languageTitle": "Language",
   "@languageTitle": {
     "description": "Settings entry and dialog title for the in-app language selection"

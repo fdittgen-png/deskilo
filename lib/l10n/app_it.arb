@@ -373,6 +373,7 @@
   "kioskRevertTitle": "Dispositivo chiosco",
   "kioskRevertDesc": "Questo profilo è configurato come chiosco dello spazio. Ripristinalo come membro normale per non vedere più la domanda chiosco all'avvio.",
   "kioskRevertDone": "Questo profilo è di nuovo un membro normale.",
+  "memberNoActions": "Solo il proprietario dello spazio può modificare questo membro.",
   "languageTitle": "Lingua",
   "languageSystemDefault": "Predefinita di sistema",
   "levelReserveButton": "Prenota il piano",

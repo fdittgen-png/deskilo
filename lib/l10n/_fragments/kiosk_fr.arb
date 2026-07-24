@@ -52,5 +52,6 @@
   "kioskScanQr": "Scanner le badge QR",
   "kioskRevertTitle": "Appareil borne",
   "kioskRevertDesc": "Ce profil est configuré comme borne de l'espace. Rétablissez-le comme membre pour que la question borne ne s'affiche plus au démarrage.",
-  "kioskRevertDone": "Ce profil est de nouveau un membre normal."
+  "kioskRevertDone": "Ce profil est de nouveau un membre normal.",
+  "memberNoActions": "Seul le propriétaire de l'espace peut modifier ce membre."
 }

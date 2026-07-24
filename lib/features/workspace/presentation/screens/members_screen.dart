@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -283,6 +284,16 @@ class MembersScreen extends ConsumerWidget {
               : (l10n?.memberMakeKiosk ?? 'Make kiosk device'),
           onTap: () => _toggleKiosk(context, ref, member),
         ),
+      // Kiosk self-revert (0056): the kiosk account manages its OWN row
+      // here too, not only in Settings — without this, an admin kiosk
+      // viewing itself had zero actions (field report: "nothing opens").
+      if (isSelf && member.isKiosk)
+        _sheetAction(
+          context,
+          icon: Icons.tablet_mac,
+          label: l10n?.memberUnmakeKiosk ?? 'Revert kiosk to member',
+          onTap: () => _revertMyKiosk(context, ref, member),
+        ),
       // Pause/reactivate was a hidden long-press before — now a visible,
       // named action.
       if (isOwner && member.status != MemberStatus.exited)
@@ -297,7 +308,20 @@ class MembersScreen extends ConsumerWidget {
           onTap: () => _togglePaused(context, ref, member),
         ),
     ];
-    if (actions.isEmpty) return;
+    // NEVER a silent no-op (field report: tapping the kiosk row as a
+    // non-owner showed nothing at all) — an empty sheet explains itself.
+    if (actions.isEmpty) {
+      actions.add(
+        Padding(
+          padding: AppSpacing.lgAll,
+          child: Text(
+            l10n?.memberNoActions ??
+                'Only the workspace owner can change this member.',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ),
+      );
+    }
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -307,6 +331,31 @@ class MembersScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  /// The kiosk account reverting ITSELF (0056) from its own member row —
+  /// the same self RPC the Settings tile uses.
+  Future<void> _revertMyKiosk(
+    BuildContext context,
+    WidgetRef ref,
+    Member member,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'kiosk self-revert failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => ref
+          .read(workspaceRepositoryProvider)
+          .unsetMyKiosk(member.workspaceId),
+    )) {
+      return;
+    }
+    ref
+      ..invalidate(workspaceMembersProvider)
+      ..invalidate(myMemberProvider);
   }
 
   /// One labeled sheet action: closes the sheet, then runs [onTap] with

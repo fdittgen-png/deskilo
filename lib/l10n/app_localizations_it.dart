@@ -1257,6 +1257,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get kioskRevertDone => 'Questo profilo è di nuovo un membro normale.';
 
   @override
+  String get memberNoActions =>
+      'Solo il proprietario dello spazio può modificare questo membro.';
+
+  @override
   String get languageTitle => 'Lingua';
 
   @override
