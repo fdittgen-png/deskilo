@@ -145,6 +145,66 @@ class SettingsScreen extends ConsumerWidget {
       ..invalidate(memberAvatarProvider(userId));
   }
 
+  /// Reverts THIS kiosk profile to a regular member (0056): confirm,
+  /// call the self RPC, refresh the membership so the router's kiosk
+  /// gate never comes back.
+  Future<void> _revertKiosk(
+    BuildContext context,
+    WidgetRef ref,
+    String workspaceId,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n?.kioskRevertTitle ?? 'Kiosk device'),
+        content: Text(
+          l10n?.kioskRevertDesc ??
+              'This profile is set up as the workspace kiosk. Revert it '
+                  'to a regular member to stop the kiosk question at '
+                  'start.',
+        ),
+        actions: [
+          TextButton(
+            key: const ValueKey('kiosk-revert-cancel'),
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(l10n?.commonCancel ?? 'Cancel'),
+          ),
+          FilledButton(
+            key: const ValueKey('kiosk-revert-confirm'),
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(
+              l10n?.memberUnmakeKiosk ?? 'Revert kiosk to member',
+            ),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !context.mounted) return;
+    try {
+      await ref.read(workspaceRepositoryProvider).unsetMyKiosk(workspaceId);
+    } catch (e, st) {
+      debugPrint('kiosk revert failed: $e\n$st');
+      TraceLogger.instance
+          .error('workspace', 'kiosk revert failed', error: e, stackTrace: st);
+      if (!context.mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
+      return;
+    }
+    ref
+      ..invalidate(myMemberProvider)
+      ..invalidate(workspaceMembersProvider);
+    if (!context.mounted) return;
+    AppSnack.success(
+      context,
+      l10n?.kioskRevertDone ?? 'This profile is a regular member again.',
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -239,6 +299,23 @@ class SettingsScreen extends ConsumerWidget {
             title: Text(l10n?.helpTitle ?? 'Help'),
             onTap: () => context.push('/help'),
           ),
+          // Kiosk escape hatch (0056, field report: "cannot be undone"):
+          // a profile flagged as kiosk reverts ITSELF to a regular
+          // member right here — the kiosk gate stops appearing on start.
+          if (ref.watch(myMemberProvider).value case final me?
+              when me.isKiosk)
+            ListTile(
+              key: const ValueKey('settings-kiosk-revert'),
+              leading: const Icon(Icons.tablet_mac_outlined),
+              title: Text(l10n?.kioskRevertTitle ?? 'Kiosk device'),
+              subtitle: Text(
+                l10n?.kioskRevertDesc ??
+                    'This profile is set up as the workspace kiosk. '
+                        'Revert it to a regular member to stop the kiosk '
+                        'question at start.',
+              ),
+              onTap: () => _revertKiosk(context, ref, me.workspaceId),
+            ),
           // My badge (0053): the member's own kiosk credentials — mint
           // the printable QR, register their RFID/NFC card, revoke.
           // Same manager the admins use, with the self-service RPCs.

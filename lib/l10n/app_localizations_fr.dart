@@ -1249,6 +1249,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get kioskScanQr => 'Scanner le badge QR';
 
   @override
+  String get kioskRevertTitle => 'Appareil borne';
+
+  @override
+  String get kioskRevertDesc =>
+      'Ce profil est configuré comme borne de l\'espace. Rétablissez-le comme membre pour que la question borne ne s\'affiche plus au démarrage.';
+
+  @override
+  String get kioskRevertDone => 'Ce profil est de nouveau un membre normal.';
+
+  @override
   String get languageTitle => 'Langue';
 
   @override

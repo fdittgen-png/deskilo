@@ -309,6 +309,13 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> unsetMyKiosk(String workspaceId) async {
+    await _client.rpc<dynamic>('unset_my_kiosk', params: {
+      'p_workspace_id': workspaceId,
+    });
+  }
+
+  @override
   Future<void> registerNfcBadge(
     String workspaceId,
     String memberId, {

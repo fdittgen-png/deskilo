@@ -315,20 +315,16 @@ class _BadgeManagerDialogState
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  /// The dialog body below the workspace line: the one-time QR, the
+  /// loading spinner, or the badge list.
+  Widget _content(
+    BuildContext context,
+    IssuedBadge? issued,
+    List<MemberBadge>? badges,
+  ) {
     final l10n = widget.l10n;
-    final issued = _issued;
-    final badges = _badges;
-    final badgeCountOf = badges?.length ?? 0;
-    return AlertDialog(
-      title: Text(
-        l10n?.memberBadgesTitle(widget.name) ?? 'Badges — ${widget.name}',
-      ),
-      content: SizedBox(
-        width: 320,
-        child: issued != null
-            ? Column(
+    return issued != null
+        ? Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -360,7 +356,7 @@ class _BadgeManagerDialogState
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      if (badgeCountOf == 0)
+                      if (badges.isEmpty)
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
@@ -371,7 +367,39 @@ class _BadgeManagerDialogState
                       for (final badge in badges)
                         _badgeRow(context, badge),
                     ],
+                  );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = widget.l10n;
+    final issued = _issued;
+    final badges = _badges;
+    return AlertDialog(
+      title: Text(
+        l10n?.memberBadgesTitle(widget.name) ?? 'Badges — ${widget.name}',
+      ),
+      content: SizedBox(
+        width: 320,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Badges are PER WORKSPACE (0056) — say which one this
+            // manager registers into, so a card is never silently
+            // attached to the wrong profile's workspace (field trap:
+            // read at the kiosk, "not recognized").
+            Text(
+              ref.watch(currentWorkspaceProvider).value?.name ?? '',
+              key: const ValueKey('badge-workspace-name'),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
                   ),
+            ),
+            const SizedBox(height: 8),
+            _content(context, issued, badges),
+          ],
+        ),
       ),
       actions: [
         TextButton(

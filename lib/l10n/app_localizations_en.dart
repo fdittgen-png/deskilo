@@ -1237,6 +1237,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kioskScanQr => 'Scan the QR badge';
 
   @override
+  String get kioskRevertTitle => 'Kiosk device';
+
+  @override
+  String get kioskRevertDesc =>
+      'This profile is set up as the workspace kiosk. Revert it to a regular member to stop the kiosk question at start.';
+
+  @override
+  String get kioskRevertDone => 'This profile is a regular member again.';
+
+  @override
   String get languageTitle => 'Language';
 
   @override

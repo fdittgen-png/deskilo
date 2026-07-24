@@ -198,5 +198,17 @@
   "kioskScanQr": "Scan the QR badge",
   "@kioskScanQr": {
     "description": "Kiosk badge sheet button mounting the camera for QR scanning while NFC card mode is active"
+  },
+  "kioskRevertTitle": "Kiosk device",
+  "@kioskRevertTitle": {
+    "description": "Settings tile on a kiosk profile: revert this profile to a regular member (0056)"
+  },
+  "kioskRevertDesc": "This profile is set up as the workspace kiosk. Revert it to a regular member to stop the kiosk question at start.",
+  "@kioskRevertDesc": {
+    "description": "Subtitle of the kiosk revert tile and body of its confirm dialog"
+  },
+  "kioskRevertDone": "This profile is a regular member again.",
+  "@kioskRevertDone": {
+    "description": "Snackbar after the kiosk profile reverted itself"
   }
 }

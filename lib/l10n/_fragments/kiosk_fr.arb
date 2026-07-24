@@ -49,5 +49,8 @@
   "kioskNfcUnsupported": "Cette tablette n'a pas de lecteur NFC — scannez le badge QR à la place.",
   "kioskNfcFailed": "Le lecteur RFID n'a pas démarré — redémarrez l'application et réessayez.",
   "nfcConfigDeviceOff": "Le NFC est désactivé dans les paramètres Android de cet appareil — activez-le pour lire les cartes RFID.",
-  "kioskScanQr": "Scanner le badge QR"
+  "kioskScanQr": "Scanner le badge QR",
+  "kioskRevertTitle": "Appareil borne",
+  "kioskRevertDesc": "Ce profil est configuré comme borne de l'espace. Rétablissez-le comme membre pour que la question borne ne s'affiche plus au démarrage.",
+  "kioskRevertDone": "Ce profil est de nouveau un membre normal."
 }
