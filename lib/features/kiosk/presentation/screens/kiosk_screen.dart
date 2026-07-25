@@ -21,7 +21,7 @@ import '../../../events/providers/event_providers.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../money/domain/quota_rules.dart';
 import '../../../plan/domain/level.dart';
-import '../../../plan/domain/half_day_windows.dart';
+import '../../../reservations/domain/walk_up_window.dart';
 import '../../../reservations/presentation/widgets/booking_range_text.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/presentation/seat_occupancy.dart';
@@ -91,22 +91,13 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     super.dispose();
   }
 
-  /// The window an action books: the canonical full day under day-based
-  /// granularity, else now → default stay (capped at the day's last slot).
-  ({DateTime start, DateTime end}) _actionWindow() {
-    final granularity = ref.read(bookingGranularityProvider).value ??
-        BookingGranularity.flexible;
-    final now = DateTime.now();
-    if (granularity.isDayBased) {
-      final window = HalfDayWindows.fullDay(now);
-      return (start: window.start, end: window.end);
-    }
-    var end = now.add(const Duration(hours: 4));
-    final last = DateTime(now.year, now.month, now.day, 23, 45);
-    if (end.isAfter(last)) end = last;
-    if (!end.isAfter(now)) end = now.add(const Duration(minutes: 15));
-    return (start: now, end: end);
-  }
+  /// The window an action books — the shared walk-up window (also the
+  /// space-QR scan flow's).
+  ({DateTime start, DateTime end}) _actionWindow() => walkUpWindow(
+        ref.read(bookingGranularityProvider).value ??
+            BookingGranularity.flexible,
+        DateTime.now(),
+      );
 
   Future<void> _onSeatTap(Seat seat) =>
       _actionThenBadge(title: seat.name, seatId: seat.id);

@@ -1,0 +1,15 @@
+{
+  "@@locale": "it",
+  "spaceScanTitle": "Scansiona un codice spazio",
+  "spaceScanHint": "Inquadra la scheda di un tavolo, ufficio o piano — oppure digita il codice.",
+  "spaceScanField": "Codice",
+  "spaceScanInvalid": "Non è un codice spazio di questo workspace.",
+  "spaceScanUnknown": "Questo codice non corrisponde più a nessuno spazio qui.",
+  "spaceSeatTaken": "Occupato",
+  "spaceNotBookable": "Questo spazio non è configurato per le prenotazioni intere.",
+  "spaceCodesTitle": "Codici QR degli spazi (PDF)",
+  "spaceCodesDesc": "Una scheda QR stampabile per tavolo, ufficio e piano — i membri la scansionano per prenotare o fare check-in.",
+  "spaceKindDesk": "Tavolo",
+  "spaceKindOffice": "Ufficio",
+  "spaceKindLevel": "Piano"
+}

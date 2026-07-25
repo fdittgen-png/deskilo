@@ -1944,6 +1944,46 @@ class AppLocalizationsIt extends AppLocalizations {
       'Continua nel browser per completare il collegamento.';
 
   @override
+  String get spaceScanTitle => 'Scansiona un codice spazio';
+
+  @override
+  String get spaceScanHint =>
+      'Inquadra la scheda di un tavolo, ufficio o piano — oppure digita il codice.';
+
+  @override
+  String get spaceScanField => 'Codice';
+
+  @override
+  String get spaceScanInvalid => 'Non è un codice spazio di questo workspace.';
+
+  @override
+  String get spaceScanUnknown =>
+      'Questo codice non corrisponde più a nessuno spazio qui.';
+
+  @override
+  String get spaceSeatTaken => 'Occupato';
+
+  @override
+  String get spaceNotBookable =>
+      'Questo spazio non è configurato per le prenotazioni intere.';
+
+  @override
+  String get spaceCodesTitle => 'Codici QR degli spazi (PDF)';
+
+  @override
+  String get spaceCodesDesc =>
+      'Una scheda QR stampabile per tavolo, ufficio e piano — i membri la scansionano per prenotare o fare check-in.';
+
+  @override
+  String get spaceKindDesk => 'Tavolo';
+
+  @override
+  String get spaceKindOffice => 'Ufficio';
+
+  @override
+  String get spaceKindLevel => 'Piano';
+
+  @override
   String get themeTitle => 'Tema';
 
   @override

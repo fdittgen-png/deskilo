@@ -38,6 +38,7 @@ import '../../providers/reservation_providers.dart';
 import '../widgets/booking_controls.dart';
 import '../widgets/booking_sheet.dart';
 import '../widgets/series_result_dialog.dart';
+import '../widgets/space_scan.dart';
 import '../widgets/reservation_detail_sheet.dart';
 import '../widgets/month_grid.dart';
 import '../widgets/week_grid.dart';
@@ -655,6 +656,14 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                   Text(DateFormat.MMMd().format(_selectedDay)),
                 ]),
               ),
+            ),
+            // Space QR scan (field request): a desk/office/level card
+            // opens that space's permitted actions.
+            IconButton(
+              key: const ValueKey('reserve-scan-button'),
+              tooltip: l10n?.spaceScanTitle ?? 'Scan a space code',
+              icon: const Icon(Icons.qr_code_scanner_outlined),
+              onPressed: () => scanSpace(context, ref),
             ),
             // Honest controls: the window chips act on Plan (state
             // filter + booking window) and Day (the window a free-row

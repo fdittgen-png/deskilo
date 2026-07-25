@@ -3590,6 +3590,78 @@ abstract class AppLocalizations {
   /// **'Continue in the browser to finish linking.'**
   String get linkedAccountsLinkStarted;
 
+  /// Title of the space-QR scanner sheet and tooltip of the hub scan button
+  ///
+  /// In en, this message translates to:
+  /// **'Scan a space code'**
+  String get spaceScanTitle;
+
+  /// Explainer in the space scanner sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Point the camera at a desk, office or level card — or type its code.'**
+  String get spaceScanHint;
+
+  /// Label of the typed space-code input
+  ///
+  /// In en, this message translates to:
+  /// **'Code'**
+  String get spaceScanField;
+
+  /// Inline error when the scanned/typed payload is foreign or belongs to another workspace
+  ///
+  /// In en, this message translates to:
+  /// **'Not a space code of this workspace.'**
+  String get spaceScanInvalid;
+
+  /// Error when a stale card references a deleted desk/office/level
+  ///
+  /// In en, this message translates to:
+  /// **'This code does not match any space here anymore.'**
+  String get spaceScanUnknown;
+
+  /// Subtitle of an occupied seat row in the space sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Taken'**
+  String get spaceSeatTaken;
+
+  /// Space sheet explainer when the office/level is not bookable or the feature is off
+  ///
+  /// In en, this message translates to:
+  /// **'This space is not set up for whole-space reservations.'**
+  String get spaceNotBookable;
+
+  /// Workspace-settings tile printing the per-space QR sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Space QR codes (PDF)'**
+  String get spaceCodesTitle;
+
+  /// Subtitle of the space-QR-codes tile
+  ///
+  /// In en, this message translates to:
+  /// **'One printable QR card per desk, office and level — members scan to reserve or check in.'**
+  String get spaceCodesDesc;
+
+  /// Kind label on a desk's printed QR card
+  ///
+  /// In en, this message translates to:
+  /// **'Desk'**
+  String get spaceKindDesk;
+
+  /// Kind label on an office's printed QR card
+  ///
+  /// In en, this message translates to:
+  /// **'Office'**
+  String get spaceKindOffice;
+
+  /// Kind label on a level's printed QR card
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get spaceKindLevel;
+
   /// Settings entry and dialog title for the in-app theme selection
   ///
   /// In en, this message translates to:
