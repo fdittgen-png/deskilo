@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: 0BSD
 
-/// The printable space QR codes (field request): every desk, office and
-/// level carries a QR; scanning it in the app opens that space's
-/// permitted actions (reserve / check in). The payload is a
-/// self-describing deskilo:// URI — decoded offline, no server lookup:
+/// The printable space QR codes (field request): every seat
+/// (workstation), desk, office and level carries a QR; scanning it in
+/// the app opens that space's permitted actions (reserve / check in).
+/// The payload is a self-describing deskilo:// URI — decoded offline,
+/// no server lookup:
 ///
-///     deskilo://space?ws=WORKSPACE&kind=desk|office|level&id=UUID
-enum SpaceKind { desk, office, level }
+///     deskilo://space?ws=WORKSPACE&kind=seat|desk|office|level&id=UUID
+enum SpaceKind { seat, desk, office, level }
 
 /// A decoded space QR payload.
 typedef SpaceCode = ({String workspaceId, SpaceKind kind, String id});

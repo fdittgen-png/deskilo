@@ -1,15 +1,16 @@
 {
   "@@locale": "es",
   "spaceScanTitle": "Escanear un código de espacio",
-  "spaceScanHint": "Apunta la cámara a la tarjeta de una mesa, oficina o planta — o escribe su código.",
+  "spaceScanHint": "Apunta la cámara a la tarjeta de un puesto, mesa, oficina o planta — o escribe su código.",
   "spaceScanField": "Código",
   "spaceScanInvalid": "No es un código de espacio de este espacio de trabajo.",
   "spaceScanUnknown": "Este código ya no corresponde a ningún espacio aquí.",
   "spaceSeatTaken": "Ocupado",
   "spaceNotBookable": "Este espacio no está configurado para reservas completas.",
   "spaceCodesTitle": "Códigos QR de espacios (PDF)",
-  "spaceCodesDesc": "Una tarjeta QR imprimible por mesa, oficina y planta — los miembros la escanean para reservar o fichar.",
+  "spaceCodesDesc": "Una tarjeta QR imprimible por puesto, mesa, oficina y planta — los miembros la escanean para reservar o fichar.",
   "spaceKindDesk": "Mesa",
   "spaceKindOffice": "Oficina",
-  "spaceKindLevel": "Planta"
+  "spaceKindLevel": "Planta",
+  "spaceKindSeat": "Puesto"
 }

@@ -109,6 +109,33 @@ void main() {
       );
 
   testWidgets(
+      'WORKSTATION card: scanning a seat QR goes straight to that seat — '
+      'named with its desk — and checks in on the spot', (tester) async {
+    final env = await pumpAndScan(
+      tester,
+      (plans) => SpaceCodeCodec.encode(
+        workspaceId: 'ws-1',
+        kind: SpaceKind.seat,
+        id: plans.seats.single.id,
+      ),
+    );
+
+    // Seat and desk on the title — tables share seat letters.
+    expect(find.text('A1 · Window desk'), findsOneWidget);
+    await tester.tap(
+      find.byKey(ValueKey('space-seat-${env.plans.seats.single.id}')),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('space-act-checkin')));
+    await tester.pumpAndSettle();
+
+    expect(
+      env.reservations.reservations.single.seatId,
+      env.plans.seats.single.id,
+    );
+  });
+
+  testWidgets(
       'desk card: the sheet lists the desk seats; a free seat checks in '
       'on the spot', (tester) async {
     final env = await pumpAndScan(tester, deskPayload);

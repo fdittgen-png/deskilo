@@ -1951,7 +1951,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get spaceScanHint =>
-      'Visez la carte d\'une table, d\'un bureau ou d\'un niveau — ou saisissez son code.';
+      'Visez la carte d\'un poste, d\'une table, d\'un bureau ou d\'un niveau — ou saisissez son code.';
 
   @override
   String get spaceScanField => 'Code';
@@ -1976,7 +1976,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get spaceCodesDesc =>
-      'Une carte QR imprimable par table, bureau et niveau — les membres la scannent pour réserver ou pointer.';
+      'Une carte QR imprimable par poste, table, bureau et niveau — les membres la scannent pour réserver ou pointer.';
 
   @override
   String get spaceKindDesk => 'Table';
@@ -1986,6 +1986,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get spaceKindLevel => 'Niveau';
+
+  @override
+  String get spaceKindSeat => 'Poste';
 
   @override
   String get themeTitle => 'Thème';

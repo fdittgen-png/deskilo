@@ -4,7 +4,7 @@
   "@spaceScanTitle": {
     "description": "Title of the space-QR scanner sheet and tooltip of the hub scan button"
   },
-  "spaceScanHint": "Point the camera at a desk, office or level card — or type its code.",
+  "spaceScanHint": "Point the camera at the card of a seat, desk, office or level — or type its code.",
   "@spaceScanHint": {
     "description": "Explainer in the space scanner sheet"
   },
@@ -32,7 +32,7 @@
   "@spaceCodesTitle": {
     "description": "Workspace-settings tile printing the per-space QR sheet"
   },
-  "spaceCodesDesc": "One printable QR card per desk, office and level — members scan to reserve or check in.",
+  "spaceCodesDesc": "One printable QR card per seat, desk, office and level — members scan to reserve or check in.",
   "@spaceCodesDesc": {
     "description": "Subtitle of the space-QR-codes tile"
   },
@@ -47,5 +47,9 @@
   "spaceKindLevel": "Level",
   "@spaceKindLevel": {
     "description": "Kind label on a level's printed QR card"
+  },
+  "spaceKindSeat": "Seat",
+  "@spaceKindSeat": {
+    "description": "Kind label on a workstation's printed QR card"
   }
 }

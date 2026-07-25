@@ -3599,7 +3599,7 @@ abstract class AppLocalizations {
   /// Explainer in the space scanner sheet
   ///
   /// In en, this message translates to:
-  /// **'Point the camera at a desk, office or level card — or type its code.'**
+  /// **'Point the camera at the card of a seat, desk, office or level — or type its code.'**
   String get spaceScanHint;
 
   /// Label of the typed space-code input
@@ -3641,7 +3641,7 @@ abstract class AppLocalizations {
   /// Subtitle of the space-QR-codes tile
   ///
   /// In en, this message translates to:
-  /// **'One printable QR card per desk, office and level — members scan to reserve or check in.'**
+  /// **'One printable QR card per seat, desk, office and level — members scan to reserve or check in.'**
   String get spaceCodesDesc;
 
   /// Kind label on a desk's printed QR card
@@ -3661,6 +3661,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Level'**
   String get spaceKindLevel;
+
+  /// Kind label on a workstation's printed QR card
+  ///
+  /// In en, this message translates to:
+  /// **'Seat'**
+  String get spaceKindSeat;
 
   /// Settings entry and dialog title for the in-app theme selection
   ///

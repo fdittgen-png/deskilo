@@ -1948,7 +1948,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get spaceScanHint =>
-      'Inquadra la scheda di un tavolo, ufficio o piano — oppure digita il codice.';
+      'Inquadra la scheda di una postazione, tavolo, ufficio o piano — oppure digita il codice.';
 
   @override
   String get spaceScanField => 'Codice';
@@ -1972,7 +1972,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get spaceCodesDesc =>
-      'Una scheda QR stampabile per tavolo, ufficio e piano — i membri la scansionano per prenotare o fare check-in.';
+      'Una scheda QR stampabile per postazione, tavolo, ufficio e piano — i membri la scansionano per prenotare o fare check-in.';
 
   @override
   String get spaceKindDesk => 'Tavolo';
@@ -1982,6 +1982,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get spaceKindLevel => 'Piano';
+
+  @override
+  String get spaceKindSeat => 'Postazione';
 
   @override
   String get themeTitle => 'Tema';
