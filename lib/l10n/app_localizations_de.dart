@@ -1949,7 +1949,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get spaceScanHint =>
-      'Kamera auf die Karte eines Tischs, Büros oder einer Etage richten — oder den Code eintippen.';
+      'Kamera auf die Karte eines Platzes, Tischs, Büros oder einer Etage richten — oder den Code eintippen.';
 
   @override
   String get spaceScanField => 'Code';
@@ -1972,7 +1972,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get spaceCodesDesc =>
-      'Eine druckbare QR-Karte je Tisch, Büro und Etage — Mitglieder scannen sie zum Reservieren oder Einchecken.';
+      'Eine druckbare QR-Karte je Platz, Tisch, Büro und Etage — Mitglieder scannen sie zum Reservieren oder Einchecken.';
 
   @override
   String get spaceKindDesk => 'Tisch';
@@ -1982,6 +1982,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get spaceKindLevel => 'Etage';
+
+  @override
+  String get spaceKindSeat => 'Platz';
 
   @override
   String get themeTitle => 'Design';

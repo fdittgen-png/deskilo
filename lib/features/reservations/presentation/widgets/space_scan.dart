@@ -57,34 +57,43 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
   Level? level;
   Office? office;
   Desk? desk;
+  Seat? seat;
   FloorPlan? plan;
   if (code.kind == SpaceKind.level) {
     level = levels.where((l) => l.id == code.id).firstOrNull;
   } else {
     for (final candidate in levels) {
       final p = await ref.read(floorPlanProvider(candidate.id).future);
-      if (code.kind == SpaceKind.office) {
-        office = p.offices.where((o) => o.id == code.id).firstOrNull;
-        if (office != null) {
-          level = candidate;
-          plan = p;
+      switch (code.kind) {
+        case SpaceKind.office:
+          office = p.offices.where((o) => o.id == code.id).firstOrNull;
+        case SpaceKind.desk:
+          desk = p.desks.where((d) => d.id == code.id).firstOrNull;
+        case SpaceKind.seat:
+          seat = p.seats.where((s) => s.id == code.id).firstOrNull;
+          desk = seat == null
+              ? null
+              : p.desks.where((d) => d.id == seat!.deskId).firstOrNull;
+        case SpaceKind.level:
           break;
-        }
-      } else {
-        desk = p.desks.where((d) => d.id == code.id).firstOrNull;
-        if (desk != null) {
-          level = candidate;
-          plan = p;
-          office = p.offices.where((o) => o.id == desk!.officeId).firstOrNull;
-          break;
-        }
+      }
+      if (office != null || desk != null || seat != null) {
+        level = candidate;
+        plan = p;
+        office ??=
+            p.offices.where((o) => o.id == desk?.officeId).firstOrNull;
+        break;
       }
     }
   }
   if (!context.mounted) return;
-  if ((code.kind == SpaceKind.level && level == null) ||
-      (code.kind == SpaceKind.office && office == null) ||
-      (code.kind == SpaceKind.desk && desk == null)) {
+  final resolved = switch (code.kind) {
+    SpaceKind.level => level != null,
+    SpaceKind.office => office != null,
+    SpaceKind.desk => desk != null,
+    SpaceKind.seat => seat != null,
+  };
+  if (!resolved) {
     AppSnack.error(
       context,
       l10n?.spaceScanUnknown ??
@@ -101,6 +110,7 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
       level: level,
       office: office,
       desk: desk,
+      seat: seat,
       plan: plan,
     ),
   );
@@ -206,6 +216,7 @@ class SpaceSheet extends ConsumerStatefulWidget {
     this.level,
     this.office,
     this.desk,
+    this.seat,
     this.plan,
   });
 
@@ -213,6 +224,7 @@ class SpaceSheet extends ConsumerStatefulWidget {
   final Level? level;
   final Office? office;
   final Desk? desk;
+  final Seat? seat;
   final FloorPlan? plan;
 
   @override
@@ -344,16 +356,24 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
     final level = widget.level;
     final office = widget.office;
     final desk = widget.desk;
+    final scannedSeat = widget.seat;
     final plan = widget.plan;
 
     final title = switch (widget.kind) {
       SpaceKind.level => level?.name ?? '',
       SpaceKind.office => office?.name ?? '',
       SpaceKind.desk => desk?.name ?? '',
+      // The workstation card names seat AND desk — several tables can
+      // share seat letters.
+      SpaceKind.seat => desk == null
+          ? (scannedSeat?.name ?? '')
+          : '${scannedSeat?.name ?? ''} · ${desk.name}',
     };
 
-    // Seats shown: the desk's own, or every seat of the office's desks.
+    // Seats shown: the scanned workstation itself, the desk's own, or
+    // every seat of the office's desks.
     final seats = switch (widget.kind) {
+      SpaceKind.seat => [?scannedSeat],
       SpaceKind.desk => (plan?.seats ?? const <Seat>[])
           .where((s) => s.deskId == desk?.id)
           .toList(),
@@ -382,7 +402,7 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
           bookable: level?.bookableAsWhole ?? false,
           priceCents: level?.priceCents ?? 0,
         ),
-      SpaceKind.desk => null,
+      SpaceKind.desk || SpaceKind.seat => null,
     };
     final granted = me?.canReserveLevel ?? false;
     final wholeAllowed =

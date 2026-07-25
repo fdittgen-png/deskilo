@@ -1931,7 +1931,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get spaceScanHint =>
-      'Point the camera at a desk, office or level card — or type its code.';
+      'Point the camera at the card of a seat, desk, office or level — or type its code.';
 
   @override
   String get spaceScanField => 'Code';
@@ -1955,7 +1955,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get spaceCodesDesc =>
-      'One printable QR card per desk, office and level — members scan to reserve or check in.';
+      'One printable QR card per seat, desk, office and level — members scan to reserve or check in.';
 
   @override
   String get spaceKindDesk => 'Desk';
@@ -1965,6 +1965,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get spaceKindLevel => 'Level';
+
+  @override
+  String get spaceKindSeat => 'Seat';
 
   @override
   String get themeTitle => 'Theme';

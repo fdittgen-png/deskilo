@@ -469,6 +469,16 @@ class _WorkspaceSettingsScreenState
               kindLabel: l10n?.spaceKindDesk ?? 'Desk',
               payload: payload(SpaceKind.desk, desk.id),
             ));
+            // One card per WORKSTATION too (field request): the card
+            // names seat and desk — tables share seat letters.
+            for (final seat
+                in plan.seats.where((s) => s.deskId == desk.id)) {
+              entries.add((
+                name: '${seat.name} · ${desk.name}',
+                kindLabel: l10n?.spaceKindSeat ?? 'Seat',
+                payload: payload(SpaceKind.seat, seat.id),
+              ));
+            }
           }
         }
         if (entries.isEmpty) {
