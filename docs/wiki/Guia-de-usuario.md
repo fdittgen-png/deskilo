@@ -19,7 +19,7 @@ Tras iniciar sesión, la pantalla de bienvenida ofrece dos caminos:
 - **Crear un espacio de trabajo** — te conviertes en su **propietario**. Elige nombre, país (determina la moneda por defecto) y zona horaria. Después dibujarás tu plano en el editor (§7).
 - **Unirse a un espacio** — escribe el **ID del espacio** que te compartieron, o toca **Escanear código QR** y apunta la cámara al QR de invitación colgado en la pared. Te unes con el rol que lleva la invitación (§2).
 
-Una cuenta puede pertenecer a varios espacios; cambia entre ellos en **Ajustes → Perfiles**. Todo en la app se refiere al espacio activo.
+Una cuenta puede pertenecer a varios espacios; cambia entre ellos en **Ajustes → Perfiles** y **marca uno con la estrella como predeterminado** — es el perfil con el que se abre la app. Todo en la app se refiere al espacio activo.
 
 ## 2. Roles e invitaciones
 
@@ -77,6 +77,16 @@ Las reservas siguen la **regla de granularidad** del espacio — medias jornadas
 
 La pestaña **Calendario** muestra tus reservas por mes — tus días en **rojo**, los de otros en **azul**, hoy rodeado — con cronología por día. En horizontal, calendario y cronología usan el diseño dividido.
 
+### Escanear un código de espacio
+
+Cada puesto, mesa, oficina y planta puede llevar una **tarjeta QR** impresa (§7). Toca el **botón de escaneo** en el hub Reservar, apunta la cámara a la tarjeta — o escribe su código — y la app identifica el espacio y muestra exactamente lo que *tú* puedes hacer allí:
+
+- **Tarjeta de puesto** — reserva o regístrate en ese puesto concreto, al momento (la ventana de hoy: mañana / tarde / día completo donde el espacio usa medias jornadas; si no, desde ahora para las próximas horas).
+- **Tarjeta de mesa** — los puestos de la mesa con su estado en vivo; elige uno libre.
+- **Tarjeta de oficina o planta** — si el propietario la hizo reservable, la función *Reservas de oficina y planta* está activada **y** tienes el derecho personal (§7), puedes reservar o registrarte en la **oficina o planta entera**; se muestra su precio por media jornada y entra en tu factura. Si no, la hoja te dice por qué, y una oficina recae en sus puestos.
+
+**Los conflictos protegen en ambos sentidos:** una oficina o planta no puede reservarse mientras algún puesto de su interior ya esté reservado en esa ventana — y ningún puesto puede reservarse mientras su oficina o planta esté reservada entera.
+
 ## 5. Directorio de miembros (pestaña Miembros)
 
 Mira quién forma tu comunidad:
@@ -109,7 +119,7 @@ Toda la administración vive en **Ajustes → Administración**. Una regla que c
 - **Editor** (barra de la app): dibuja tu espacio en una cuadrícula — plantas, oficinas, mesas, asientos (con orientación, tipo de silla y equipamiento), bloqueo de asientos por mantenimiento. Añade una **foto de fondo** por planta e **imágenes de ilustración** que puedes mover y redimensionar. Borrar algo con reservas futuras obliga a resolverlas antes.
 - **ID del espacio & QR**: tus invitaciones ligadas a rol (§2). Puedes sustituir el ID generado por uno memorable (4–20 letras/dígitos), copiarlo o compartir el QR como PNG.
 - **Disponibilidad**: días de apertura, días de cierre y la granularidad — horas de inicio y fin libres, una rejilla de minutos (5/15/30/60), medias jornadas o solo días completos.
-- **Funciones**: activa o desactiva módulos enteros por espacio — calendario, eventos, dinero, servicios, exportación PDF, series, reservar por otros, push, bloqueo de asientos por admins, suplementos de accesorios, **pagos en línea**, **credenciales RFID/NFC**. Desactivar un módulo elimina *todas* sus pantallas y botones para todos los miembros.
+- **Funciones**: activa o desactiva módulos enteros por espacio — calendario, eventos, dinero, servicios, exportación PDF, series, reservar por otros, push, bloqueo de asientos por admins, suplementos de accesorios, **pagos en línea**, **credenciales RFID/NFC**, **reservas de oficina y planta**. Desactivar un módulo elimina *todas* sus pantallas y botones para todos los miembros.
 
 <p><img src="images/workspace-id-qr.jpg" width="220"> <img src="images/availability-granularity.jpg" width="220"> <img src="images/features-toggles-1.jpg" width="220"> <img src="images/features-toggles-2.jpg" width="220"></p>
 
@@ -129,7 +139,18 @@ Toda la administración vive en **Ajustes → Administración**. Una regla que c
 <p><img src="images/member-add-service.jpg" width="220"></p>
 
 - **Ajustes del espacio**: nombre, país/moneda, zona horaria, instrucciones de pago (IBAN, PayPal.me, Wero, Lydia, Wise), enlace del grupo de WhatsApp, **transparencia de mesas**, exportaciones — y la **zona de peligro**: un **reinicio total del espacio** (borra reservas, dinero y plano; conserva configuración y miembros), protegido escribiendo «I agree».
-- **Importar/exportar**: toda la configuración viaja como **archivo XML** — cópiala, úsala de plantilla o migra una instancia autoalojada. También puede generarse un **PDF de configuración** (miembros, plano, precios, funciones). Los archivos se guardan **localmente en tu dispositivo**.
+- **Importar/exportar**: toda la configuración viaja como **archivo XML** — cópiala, úsala de plantilla o migra una instancia autoalojada. También puede generarse un **PDF de configuración** (miembros, plano, precios, funciones). Cada exportación se guarda en la carpeta de **Descargas** de tu dispositivo.
+
+### Códigos QR de espacios y reservas de espacios enteros (propietarios)
+
+Cuatro pasos convierten «escanear el código de la mesa» en el flujo de reserva diario (§4):
+
+1. En el **editor**, marca una oficina o una planta como **Reservable en su totalidad** y dale un **precio por media jornada** (la ficha de propiedades de la oficina / el menú de la planta).
+2. Activa **Reservas de oficina y planta** en **Funciones** (desactivada por defecto).
+3. Concede a cada miembro autorizado **«Puede reservar una oficina o planta entera»** — propietarios y admins lo fijan en la ficha de gestión del miembro, nunca para sí mismos.
+4. Imprime las tarjetas: **Ajustes del espacio → Códigos QR de espacios (PDF)** — un QR tamaño tarjeta de crédito por **puesto, mesa, oficina y planta**, diez por página A4, guardado en Descargas. Recórtalas y pega cada tarjeta en su espacio.
+
+Una reserva de oficina cubre **todas las mesas de su interior**; una reserva de planta cubre la planta entera. Ambas solo son posibles mientras nada de su interior esté reservado — y aparecen como líneas propias en la factura del miembro.
 
 ### Configurar los pagos en línea (propietarios)
 
@@ -191,9 +212,11 @@ Mantén **los entornos de prueba y de producción estrictamente separados**: cad
 
 Las tarjetas físicas permiten registrarse con un toque — sin teléfono.
 
-1. Abre **Ajustes → Credenciales RFID / NFC** (solo propietario). Activa **Activar registro por credencial NFC** y lee la línea de **estado del dispositivo** — hace falta un dispositivo **Android** con NFC activado (los iPad no tienen NFC).
-2. Da una tarjeta a cada miembro: **Miembros y planes → el miembro → Credenciales → Registrar tarjeta**, y acerca su tarjeta al dispositivo. Vale cualquier tarjeta con chip legible (MIFARE, NTAG…).
-3. Úsalas en un **quiosco** (§9): el miembro acerca la tarjeta para reservar o registrarse. Revoca una tarjeta perdida desde la misma ventana de Credenciales.
+1. Abre **Ajustes → Credenciales RFID / NFC** (solo propietario). Activa **Activar registro por credencial NFC** y lee la línea de **estado del dispositivo** — distingue entre *listo*, *NFC desactivado en los ajustes de Android* y *sin hardware NFC* (los iPad no tienen).
+2. Da una tarjeta a cada miembro: **Miembros y planes → el miembro → Credenciales → Registrar tarjeta**, y acerca su tarjeta al dispositivo. Vale cualquier tarjeta con chip legible (MIFARE, NTAG…). Los miembros también pueden hacerlo **ellos mismos**: **Ajustes → Mi credencial** emite su credencial QR imprimible y registra su propia tarjeta — sin necesidad de admin.
+3. Úsalas en un **quiosco** (§9): el miembro acerca la tarjeta para reservar o registrarse. Revoca una tarjeta perdida desde la misma ventana de Credenciales; **desliza una credencial revocada hacia la derecha para eliminarla** definitivamente.
+
+Las credenciales pertenecen a **un solo espacio** — la ventana indica en cuál estás registrando, así que registra la tarjeta en el espacio cuyo quiosco la leerá. La misma tarjeta física puede servirte en varios espacios. Una credencial QR guardada **como PDF** imprime diez copias tamaño tarjeta de crédito en una página A4 — con repuestos incluidos.
 
 <p><img src="images/nfc-config.jpg" width="240"> <img src="images/member-badges-dialog.jpg" width="240"></p>
 
@@ -219,14 +242,15 @@ Tu cuenta responde *qué debo, qué me deben* — y *cuánto puedo reservar aún
 
 Monta una tableta Android o un iPad junto a la puerta y deja que la gente se registre al entrar:
 
-1. El propietario crea una cuenta normal para el dispositivo, la une al espacio y la marca como **quiosco** en *Miembros y planes*. Desde entonces esa cuenta queda bloqueada en el plano a pantalla completa — sin otras pantallas, sin nada más que tocar.
-2. El propietario (o un admin) da una **credencial** a cada miembro, en *Miembros y planes → un miembro → Credenciales*. Dos tipos:
-   - **Código QR** — mostrado **una sola vez**; toca **Guardar como PDF** para imprimir una tarjeta, o guarda el QR en el móvil del miembro.
-   - **Tarjeta RFID/NFC** — toca **Registrar tarjeta** y acerca la tarjeta física del miembro (Android con NFC). Configúralo en *Ajustes → Credenciales RFID / NFC* (§7).
-   Cualquier credencial es revocable en cualquier momento.
-3. En el quiosco: toca un asiento → **Registrarse**, **Reservar** o **Salir** → presenta la credencial: **acerca la tarjeta RFID/NFC**, escanea el QR con un lector de códigos USB/Bluetooth, o escribe el código.
+1. El propietario crea una cuenta normal para el dispositivo, la une al espacio y la marca como **quiosco** en *Miembros y planes*.
+2. **El modo quiosco nunca arranca solo.** En cada inicio de la app la tableta pregunta *¿Iniciar el modo quiosco?* — confirma y la tableta se bloquea: solo el plano a pantalla completa, botón de atrás desactivado, la app se ancla para que no pueda abrirse nada más; salir del modo quiosco implica reiniciar la tableta. Elige *Ahora no* y la app se abre normalmente — útil para la configuración. La propia designación de quiosco puede revertirse en cualquier momento: en el dispositivo, en **Ajustes → Dispositivo quiosco**, o por el propietario en *Miembros y planes*.
+3. Cada miembro lleva una **credencial** — emitida por un admin (*Miembros y planes → Credenciales*) o por el propio miembro (**Ajustes → Mi credencial**, §7): una **credencial QR** imprimible y/o su **tarjeta RFID/NFC**.
+4. En el quiosco, toca un asiento (o **Esta planta**) → **Registrarse**, **Reservar** o **Salir** → presenta la credencial:
+   - **Acerca la tarjeta RFID/NFC.** Mientras el lector de tarjetas está armado, la cámara permanece apagada; si el NFC está desactivado o no existe, la hoja lo dice explícitamente.
+   - O toca **Escanear la tarjeta QR** — la tableta lee la credencial impresa **con su propia cámara** (la frontal por defecto, ya que la lente trasera de una tableta de pared mira a la pared; cámbialo en *Ajustes → Escanear con la cámara frontal*). Un lector USB/Bluetooth o escribir el código también funcionan.
+5. **Nada ocurre sin tu visto bueno:** el quiosco identifica la credencial, cierra los lectores y muestra un resumen — *a quién* reconoció, *qué* va a pasar, *dónde* y *cuándo*. Solo **Confirmar** ejecuta y actualiza el plano; **Rechazar** descarta.
 
-Tu identidad solo existe durante la operación: la credencial viaja una vez al servidor, la reserva se hace **a tu nombre**, y nada se guarda en la tableta — quedas «desconectado» en cuanto termina. (El escaneo de QR con cámara y el acceso puntual con Google/Facebook siguen en la hoja de ruta; **los iPad no tienen NFC**, así que allí el QR es la vía.)
+Tu identidad solo existe durante la operación: la credencial viaja una vez al servidor, la reserva se hace **a tu nombre**, y nada se guarda en la tableta — quedas «desconectado» en cuanto termina. (El acceso puntual con Google/Facebook sigue en la hoja de ruta; **los iPad no tienen NFC**, así que allí la vía es el QR con la cámara.)
 
 ## 10. Notificaciones
 

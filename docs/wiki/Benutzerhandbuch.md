@@ -19,7 +19,7 @@ Nach der Anmeldung bietet der Startbildschirm zwei Wege:
 - **Workspace anlegen** — du wirst **Inhaberin**. Wähle Name, Land (bestimmt die Standardwährung) und Zeitzone. Danach zeichnest du deinen Grundriss im Editor (§7).
 - **Workspace beitreten** — tippe die **Workspace-ID** ein, die man dir gegeben hat, oder wähle **QR-Code scannen** und richte die Kamera auf den Einladungs-QR an der Wand. Du trittst mit der Rolle bei, die die Einladung trägt (§2).
 
-Ein Konto kann mehreren Workspaces angehören; wechsle unter **Einstellungen → Profile**. Alles in der App bezieht sich auf den aktiven Workspace.
+Ein Konto kann mehreren Workspaces angehören; wechsle unter **Einstellungen → Profile** und **markiere eines mit dem Stern als Standard** — mit diesem Profil öffnet sich die App. Alles in der App bezieht sich auf den aktiven Workspace.
 
 ## 2. Rollen & Einladungen
 
@@ -77,6 +77,16 @@ Reservierungen folgen der **Granularitätsregel** des Workspace — Halbtage, ga
 
 Der Tab **Kalender** zeigt deine Buchungen pro Monat — deine Tage **rot**, die der anderen **blau**, heute umkreist — mit Tages-Zeitstrahl. Im Querformat nutzen Kalender und Zeitstrahl das geteilte Layout.
 
+### Raumcode scannen
+
+Jeder Platz, Tisch, jedes Büro und jede Etage kann eine gedruckte **QR-Karte** tragen (§7). Tippe den **Scan-Button** im Reservieren-Hub, richte die Kamera auf die Karte — oder tippe ihren Code ein — und die App erkennt den Raum und zeigt genau, was *du* dort tun darfst:
+
+- **Platz-Karte** — reserviere oder checke direkt auf genau diesem Platz ein (heutiges Fenster: Vormittag / Nachmittag / Ganzer Tag, wo der Workspace Halbtage nutzt, sonst ab jetzt für die nächsten Stunden).
+- **Tisch-Karte** — die Plätze des Tischs mit ihrem Live-Status; wähle einen freien.
+- **Büro- oder Etagen-Karte** — hat die Inhaberin sie reservierbar gemacht, ist die Funktion *Büro- & Etagen-Reservierungen* eingeschaltet **und** hast du das persönliche Recht (§7), kannst du das **ganze Büro oder die ganze Etage** reservieren oder dort einchecken; der Preis je Halbtag wird angezeigt und landet auf deiner Rechnung. Andernfalls sagt dir das Formular, warum nicht — und ein Büro fällt auf seine Plätze zurück.
+
+**Konflikte schützen in beide Richtungen:** Ein Büro oder eine Etage kann nicht reserviert werden, solange irgendein Platz darin in diesem Fenster schon gebucht ist — und kein Platz kann gebucht werden, solange sein Büro oder seine Etage als Ganzes reserviert ist.
+
 ## 5. Mitgliederverzeichnis (Tab Mitglieder)
 
 Sieh, wer zu deiner Community gehört:
@@ -109,7 +119,7 @@ Die gesamte Administration liegt unter **Einstellungen → Administration**. Ein
 - **Editor** (App-Leiste): Zeichne deinen Raum auf einem Raster — Etagen, Büros, Tische, Plätze (mit Ausrichtung, Stuhltyp und Ausstattung), Platzsperren für Wartung. Füge pro Etage ein **Hintergrundfoto** und verschieb- und skalierbare **Illustrationsbilder** hinzu. Löschen mit künftigen Reservierungen erzwingt erst deren Auflösung.
 - **Workspace-ID & QR**: deine rollengebundenen Einladungen (§2). Die generierte ID lässt sich durch eine merkbare ersetzen (4–20 Buchstaben/Ziffern), kopieren, und der QR als PNG teilen.
 - **Verfügbarkeit**: Öffnungstage, Schließtage und die Granularität — freie Start-/Endzeiten, ein Minutenraster (5/15/30/60), Halbtage oder nur ganze Tage.
-- **Funktionen**: Ganze Module pro Workspace ein-/ausschalten — Kalender, Ereignisse, Geld, Services, PDF-Export, Serienbuchung, Buchen für andere, Push, Platzsperren durch Admins, Zubehör-Aufpreise, **Online-Zahlungen**, **RFID-/NFC-Badges**. Ein ausgeschaltetes Modul entfernt *alle* seine Bildschirme und Buttons für jedes Mitglied.
+- **Funktionen**: Ganze Module pro Workspace ein-/ausschalten — Kalender, Ereignisse, Geld, Services, PDF-Export, Serienbuchung, Buchen für andere, Push, Platzsperren durch Admins, Zubehör-Aufpreise, **Online-Zahlungen**, **RFID-/NFC-Badges**, **Büro- & Etagen-Reservierungen**. Ein ausgeschaltetes Modul entfernt *alle* seine Bildschirme und Buttons für jedes Mitglied.
 
 <p><img src="images/workspace-id-qr.jpg" width="220"> <img src="images/availability-granularity.jpg" width="220"> <img src="images/features-toggles-1.jpg" width="220"> <img src="images/features-toggles-2.jpg" width="220"></p>
 
@@ -129,7 +139,18 @@ Die gesamte Administration liegt unter **Einstellungen → Administration**. Ein
 <p><img src="images/member-add-service.jpg" width="220"></p>
 
 - **Workspace-Einstellungen**: Name, Land/Währung, Zeitzone, Zahlungshinweise (IBAN, PayPal.me, Wero, Lydia, Wise), WhatsApp-Gruppenlink, **Tisch-Transparenz**, Exporte — und die **Gefahrenzone**: ein kompletter **Workspace-Reset** (löscht Buchungen, Geld und Grundriss; behält Konfiguration und Mitglieder), abgesichert durch das getippte „I agree".
-- **Import/Export**: Die gesamte Konfiguration reist als **XML-Datei** — Backup, Vorlage oder Migration einer selbst gehosteten Instanz. Auch ein **Konfigurations-PDF** (Mitglieder, Plan, Preise, Funktionen) lässt sich erzeugen. Dateien werden **lokal auf deinem Gerät** gespeichert.
+- **Import/Export**: Die gesamte Konfiguration reist als **XML-Datei** — Backup, Vorlage oder Migration einer selbst gehosteten Instanz. Auch ein **Konfigurations-PDF** (Mitglieder, Plan, Preise, Funktionen) lässt sich erzeugen. Jeder Export landet im **Downloads**-Ordner deines Geräts.
+
+### Raum-QR-Codes & Ganzraum-Reservierungen (Inhaberinnen)
+
+Vier Schritte machen aus „scanne den Code auf dem Tisch" den täglichen Buchungsablauf (§4):
+
+1. Markiere im **Editor** ein Büro oder eine Etage als **Als Ganzes reservierbar** und gib einen **Preis je Halbtag** an (das Eigenschaftsblatt des Büros / das Etagen-Menü).
+2. Aktiviere **Büro- & Etagen-Reservierungen** unter **Funktionen** (standardmäßig aus).
+3. Gib jedem berechtigten Mitglied **„Darf ein ganzes Büro oder eine Etage reservieren"** — Inhaberinnen und Admins setzen es im Verwaltungsblatt des Mitglieds, nie für sich selbst.
+4. Drucke die Karten: **Workspace-Einstellungen → Raum-QR-Codes (PDF)** — ein QR im Kreditkartenformat je **Platz, Tisch, Büro und Etage**, zehn pro A4-Seite, gespeichert in Downloads. Ausschneiden und jede Karte auf ihren Raum kleben.
+
+Eine Büro-Reservierung umfasst **alle Tische darin**; eine Etagen-Reservierung die ganze Etage. Beide sind nur möglich, solange nichts darin gebucht ist — und sie erscheinen als eigene Zeilen auf der Rechnung des Mitglieds.
 
 ### Online-Zahlungen einrichten (Inhaberinnen)
 
@@ -191,9 +212,11 @@ Trenne **Test- und Live-Umgebung strikt**: jeder Anbieter hat je Modus eigene Sc
 
 Physische Karten ermöglichen Check-in per Antippen — ohne Handy.
 
-1. Öffne **Einstellungen → RFID-/NFC-Badges** (nur Inhaberin). Schalte **NFC-Badge-Check-in aktivieren** ein und lies die **Gerätestatus**-Zeile — nötig ist ein **Android**-Gerät mit aktiviertem NFC (iPads haben kein NFC).
-2. Gib jedem Mitglied eine Karte: **Mitglieder & Tarife → das Mitglied → Badges → Karte registrieren**, dann die Karte ans Gerät halten. Jede Karte mit lesbarem Chip passt (MIFARE, NTAG…).
-3. Nutze sie an einem **Kiosk** (§9): das Mitglied tippt die Karte an, um zu reservieren oder einzuchecken. Eine verlorene Karte im selben Badges-Dialog widerrufen.
+1. Öffne **Einstellungen → RFID-/NFC-Badges** (nur Inhaberin). Schalte **NFC-Badge-Check-in aktivieren** ein und lies die **Gerätestatus**-Zeile — sie unterscheidet *bereit*, *NFC in den Android-Einstellungen ausgeschaltet* und *keine NFC-Hardware* (iPads haben keine).
+2. Gib jedem Mitglied eine Karte: **Mitglieder & Tarife → das Mitglied → Badges → Karte registrieren**, dann die Karte ans Gerät halten. Jede Karte mit lesbarem Chip passt (MIFARE, NTAG…). Mitglieder können es auch **selbst** erledigen: **Einstellungen → Mein Badge** stellt ihren druckbaren QR-Badge aus und registriert ihre eigene Karte — ganz ohne Admin.
+3. Nutze sie an einem **Kiosk** (§9): das Mitglied tippt die Karte an, um zu reservieren oder einzuchecken. Eine verlorene Karte im selben Badges-Dialog widerrufen; **wische einen widerrufenen Badge nach rechts, um ihn endgültig zu löschen**.
+
+Badges gehören zu **einem Workspace** — der Dialog nennt, in welchem du registrierst; registriere die Karte also in dem Workspace, dessen Kiosk sie lesen soll. Dieselbe physische Karte kann dich in mehreren Workspaces bedienen. Ein **als PDF** gespeicherter QR-Badge druckt zehn Kopien im Kreditkartenformat auf eine A4-Seite — Ersatz inklusive.
 
 <p><img src="images/nfc-config.jpg" width="240"> <img src="images/member-badges-dialog.jpg" width="240"></p>
 
@@ -219,14 +242,15 @@ Dein Konto beantwortet *was schulde ich, was schuldet man mir* — und *wie viel
 
 Häng ein Android-Tablet oder iPad neben die Tür und lass alle beim Reinkommen einchecken:
 
-1. Die Inhaberin legt ein normales Konto für das Gerät an, lässt es dem Workspace beitreten und markiert es unter *Mitglieder & Tarife* als **Kiosk**. Ab dann ist dieses Konto auf den Vollbild-Grundriss festgenagelt — keine anderen Bildschirme, nichts sonst zu bedienen.
-2. Die Inhaberin (oder ein Admin) gibt jedem Mitglied einen **Badge**, unter *Mitglieder & Tarife → ein Mitglied → Badges*. Zwei Arten:
-   - **QR-Code** — **genau einmal** angezeigt; tippe **Als PDF speichern** für eine gedruckte Badge-Karte, oder speichere den QR auf dem Handy des Mitglieds.
-   - **RFID/NFC-Karte** — tippe **Karte registrieren** und halte die physische Karte ans Gerät (Android mit NFC). Einrichtung unter *Einstellungen → RFID-/NFC-Badges* (§7).
-   Jeder Badge ist jederzeit widerrufbar.
-3. Am Kiosk: Platz antippen → **Einchecken**, **Reservieren** oder **Auschecken** → Badge vorzeigen: **RFID/NFC-Karte antippen**, QR mit einem USB/Bluetooth-Barcode-Scanner scannen oder Code eintippen.
+1. Die Inhaberin legt ein normales Konto für das Gerät an, lässt es dem Workspace beitreten und markiert es unter *Mitglieder & Tarife* als **Kiosk**.
+2. **Der Kiosk-Modus startet nie von selbst.** Bei jedem App-Start fragt das Tablet *Kiosk-Modus starten?* — bestätige, und das Gerät riegelt sich ab: nur noch der Vollbild-Grundriss, Zurück-Button deaktiviert, die App pinnt sich fest, sodass sich nichts anderes öffnen lässt; den Kiosk-Modus verlässt man nur durch Neustart des Tablets. Wähle stattdessen *Jetzt nicht* und die App öffnet normal — praktisch für die Einrichtung. Die Kiosk-Zuweisung selbst lässt sich jederzeit zurücknehmen: am Gerät unter **Einstellungen → Kiosk-Gerät** oder durch die Inhaberin unter *Mitglieder & Tarife*.
+3. Jedes Mitglied trägt einen **Badge** — ausgestellt von einem Admin (*Mitglieder & Tarife → Badges*) oder vom Mitglied selbst (**Einstellungen → Mein Badge**, §7): ein druckbarer **QR-Badge** und/oder seine **RFID/NFC-Karte**.
+4. Am Kiosk: Platz antippen (oder **Diese Etage**) → **Einchecken**, **Reservieren** oder **Auschecken** → Badge vorzeigen:
+   - **RFID/NFC-Karte antippen.** Solange der Kartenleser scharf ist, bleibt die Kamera aus; ist NFC ausgeschaltet oder nicht vorhanden, sagt es das Formular ausdrücklich.
+   - Oder tippe **QR-Badge scannen** — das Tablet liest den gedruckten Badge **mit seiner eigenen Kamera** (standardmäßig die Frontkamera, denn die Rücklinse eines Wandtablets zeigt zur Wand; umschalten unter *Einstellungen → Mit der Frontkamera scannen*). Ein USB/Bluetooth-Scanner oder das Eintippen des Codes funktioniert ebenfalls.
+5. **Nichts passiert ohne dein Zutun:** Der Kiosk identifiziert den Badge, schließt die Leser und zeigt eine Zusammenfassung — *wen* er erkannt hat, *was* passieren wird, *wo* und *wann*. Erst **Bestätigen** führt aus und aktualisiert den Plan; **Ablehnen** verwirft.
 
-Deine Identität existiert nur für den Moment der Operation: die Berechtigung geht einmal zum Server, die Buchung läuft **auf deinen Namen**, und auf dem Tablet wird nichts gespeichert — du bist „abgemeldet", sobald es fertig ist. (Kamera-QR-Scan und Anmeldung pro Vorgang mit Google/Facebook stehen noch auf der Roadmap; **iPads haben kein NFC**, dort ist der QR-Weg der richtige.)
+Deine Identität existiert nur für den Moment der Operation: die Berechtigung geht einmal zum Server, die Buchung läuft **auf deinen Namen**, und auf dem Tablet wird nichts gespeichert — du bist „abgemeldet", sobald es fertig ist. (Anmeldung pro Vorgang mit Google/Facebook steht noch auf der Roadmap; **iPads haben kein NFC**, dort ist der Kamera-QR-Weg der richtige.)
 
 ## 10. Benachrichtigungen
 

@@ -19,7 +19,7 @@ Après connexion, l'écran d'accueil propose deux chemins :
 - **Créer un espace de travail** — vous en devenez le **propriétaire**. Choisissez un nom, un pays (qui détermine la devise par défaut) et un fuseau horaire. Vous dessinerez ensuite votre plan dans l'éditeur (§7).
 - **Rejoindre un espace** — saisissez l'**identifiant de l'espace** qu'on vous a communiqué, ou touchez **Scanner le QR code** et visez le QR d'invitation affiché au mur. Vous rejoignez avec le rôle que porte l'invitation (§2).
 
-Un compte peut appartenir à plusieurs espaces ; changez d'espace dans **Réglages → Profils**. Tout dans l'application est limité à l'espace actif.
+Un compte peut appartenir à plusieurs espaces ; changez d'espace dans **Réglages → Profils**, et **marquez-en un d'une étoile comme profil par défaut** — c'est le profil avec lequel l'application s'ouvre. Tout dans l'application est limité à l'espace actif.
 
 ## 2. Rôles et invitations
 
@@ -77,6 +77,16 @@ Les réservations suivent la **règle de granularité** de l'espace — demi-jou
 
 L'onglet **Calendrier** montre vos réservations par mois — vos jours en **rouge**, ceux des autres en **bleu**, aujourd'hui entouré — avec une chronologie par jour. En paysage, calendrier et chronologie utilisent la disposition en deux panneaux.
 
+### Scanner un code d'espace
+
+Chaque poste, table, bureau et niveau peut porter une **carte QR** imprimée (§7). Touchez le **bouton de scan** dans le hub Réserver, visez la carte avec la caméra — ou saisissez son code — et l'application identifie l'espace et montre exactement ce que *vous* pouvez y faire :
+
+- **Carte de poste** — réservez ou pointez sur ce poste précis, sur-le-champ (fenêtre du jour : matin / après-midi / journée entière quand l'espace utilise les demi-journées, sinon à partir de maintenant pour les prochaines heures).
+- **Carte de table** — les postes de la table avec leur état en direct ; choisissez-en un libre.
+- **Carte de bureau ou de niveau** — si le propriétaire l'a rendu réservable, que la fonctionnalité *Réservations de bureau et de niveau* est activée **et** que vous détenez le droit personnel (§7), vous pouvez réserver ou pointer sur le **bureau ou l'étage entier** ; son prix par demi-journée est affiché et arrive sur votre facture. Sinon, la feuille vous explique pourquoi, et un bureau se rabat sur ses postes.
+
+**Les conflits protègent dans les deux sens :** un bureau ou un niveau ne peut pas être réservé tant qu'un poste à l'intérieur est déjà réservé sur cette fenêtre — et aucun poste ne peut être réservé tant que son bureau ou son niveau est réservé en entier.
+
 ## 5. Annuaire des membres (onglet Membres)
 
 Voyez qui fait partie de votre communauté :
@@ -109,7 +119,7 @@ Toute l'administration vit sous **Réglages → Administration**. Une règle à 
 - **Éditeur** (barre d'app) : dessinez votre espace sur une grille — niveaux, bureaux, tables, places (avec orientation, type de chaise et équipements), blocage de places pour maintenance. Ajoutez une **photo d'arrière-plan** par niveau et des **images d'illustration** déplaçables et redimensionnables. Supprimer un élément portant des réservations futures oblige à les résoudre d'abord.
 - **Identifiant & QR** : vos invitations liées aux rôles (§2). Vous pouvez remplacer l'identifiant généré par un identifiant mémorable (4–20 lettres/chiffres), le copier, ou partager le QR en PNG.
 - **Disponibilité** : jours d'ouverture, jours de fermeture, et granularité — plage horaire libre, grille de minutes (5/15/30/60), demi-journées, ou journées entières uniquement.
-- **Fonctionnalités** : activez ou désactivez des modules entiers par espace — calendrier, événements, argent, services, export PDF, séries, réserver pour autrui, notifications push, blocage de places par les admins, suppléments d'accessoires, **paiements en ligne**, **badges RFID/NFC**. Désactiver un module retire *tous* ses écrans et boutons pour tous les membres.
+- **Fonctionnalités** : activez ou désactivez des modules entiers par espace — calendrier, événements, argent, services, export PDF, séries, réserver pour autrui, notifications push, blocage de places par les admins, suppléments d'accessoires, **paiements en ligne**, **badges RFID/NFC**, **réservations de bureau et de niveau**. Désactiver un module retire *tous* ses écrans et boutons pour tous les membres.
 
 <p><img src="images/workspace-id-qr.jpg" width="220"> <img src="images/availability-granularity.jpg" width="220"> <img src="images/features-toggles-1.jpg" width="220"> <img src="images/features-toggles-2.jpg" width="220"></p>
 
@@ -129,7 +139,18 @@ Toute l'administration vit sous **Réglages → Administration**. Une règle à 
 <p><img src="images/member-add-service.jpg" width="220"></p>
 
 - **Réglages de l'espace** : nom, pays/devise, fuseau, instructions de paiement (IBAN, PayPal.me, Wero, Lydia, Wise), lien du groupe WhatsApp, **transparence des tables**, exports — et la **zone dangereuse** : **réinitialisation complète** (supprime réservations, argent et plan ; conserve configuration et membres), protégée par la saisie de « I agree ».
-- **Import/export** : toute la configuration voyage en **fichier XML** — sauvegarde, modèle, ou migration d'une instance auto-hébergée. Un **PDF de configuration** (membres, plan, prix, fonctionnalités) peut aussi être généré. Les fichiers sont enregistrés **localement sur votre appareil**.
+- **Import/export** : toute la configuration voyage en **fichier XML** — sauvegarde, modèle, ou migration d'une instance auto-hébergée. Un **PDF de configuration** (membres, plan, prix, fonctionnalités) peut aussi être généré. Chaque export arrive dans le dossier **Téléchargements** de votre appareil.
+
+### Codes QR des espaces et réservations d'espaces entiers (propriétaires)
+
+Quatre étapes font de « scanner le code sur la table » le geste de réservation quotidien (§4) :
+
+1. Dans l'**éditeur**, marquez un bureau ou un niveau **Réservable en entier** et donnez-lui un **prix par demi-journée** (la feuille de propriétés du bureau / le menu du niveau).
+2. Activez **Réservations de bureau et de niveau** dans **Fonctionnalités** (désactivé par défaut).
+3. Accordez à chaque membre concerné le droit **« Peut réserver un bureau ou un niveau entier »** — propriétaires et admins le règlent dans la feuille de gestion du membre, jamais pour eux-mêmes.
+4. Imprimez les cartes : **Réglages de l'espace → Codes QR des espaces (PDF)** — un QR au format carte de crédit par **poste, table, bureau et niveau**, dix par page A4, enregistré dans Téléchargements. Découpez-les et collez chaque carte sur son espace.
+
+Une réservation de bureau couvre **toutes les tables qu'il contient** ; une réservation de niveau couvre l'étage entier. Les deux ne sont possibles que tant que rien n'est réservé à l'intérieur — et elles apparaissent comme des lignes à part entière sur la facture du membre.
 
 ### Configurer les paiements en ligne (propriétaires)
 
@@ -191,9 +212,11 @@ Séparez **strictement les environnements de test et de production** : chaque pr
 
 Les cartes physiques permettent de pointer d'un simple contact — sans téléphone.
 
-1. Ouvrez **Réglages → Badges RFID / NFC** (propriétaire uniquement). Activez **Activer le pointage par badge NFC**, et lisez la ligne d'**état de l'appareil** — il faut un appareil **Android** avec NFC activé (les iPad n'ont pas de NFC).
-2. Donnez une carte à chaque membre : **Membres & forfaits → le membre → Badges → Enregistrer une carte**, puis approchez sa carte de l'appareil. Toute carte à puce lisible convient (MIFARE, NTAG…).
-3. Utilisez-les à une **borne** (§9) : le membre approche sa carte pour réserver ou pointer. Révoquez une carte perdue depuis la même fenêtre Badges.
+1. Ouvrez **Réglages → Badges RFID / NFC** (propriétaire uniquement). Activez **Activer le pointage par badge NFC**, et lisez la ligne d'**état de l'appareil** — elle distingue *prêt*, *NFC désactivé dans les paramètres Android* et *pas de matériel NFC* (les iPad n'en ont pas).
+2. Donnez une carte à chaque membre : **Membres & forfaits → le membre → Badges → Enregistrer une carte**, puis approchez sa carte de l'appareil. Toute carte à puce lisible convient (MIFARE, NTAG…). Les membres peuvent aussi le faire **eux-mêmes** : **Réglages → Mon badge** émet leur badge QR imprimable et enregistre leur propre carte — sans admin.
+3. Utilisez-les à une **borne** (§9) : le membre approche sa carte pour réserver ou pointer. Révoquez une carte perdue depuis la même fenêtre Badges ; **balayez un badge révoqué vers la droite pour le supprimer** définitivement.
+
+Les badges appartiennent à **un seul espace de travail** — la fenêtre nomme celui dans lequel vous enregistrez : enregistrez donc la carte dans l'espace dont la borne la lira. La même carte physique peut vous servir dans plusieurs espaces. Un badge QR enregistré **en PDF** imprime dix exemplaires au format carte de crédit sur une page A4 — de quoi avoir des exemplaires de rechange.
 
 <p><img src="images/nfc-config.jpg" width="240"> <img src="images/member-badges-dialog.jpg" width="240"></p>
 
@@ -219,14 +242,15 @@ Votre compte répond à *combien je dois, combien on me doit* — et *combien pu
 
 Fixez une tablette Android ou un iPad près de la porte et laissez chacun pointer en entrant :
 
-1. Le propriétaire crée un compte normal pour l'appareil, le fait rejoindre l'espace, et le marque comme **borne** dans *Membres & forfaits*. Dès lors ce compte est verrouillé sur le plan en plein écran — aucun autre écran, rien d'autre à toucher.
-2. Le propriétaire (ou un admin) donne un **badge** à chaque membre, dans *Membres & forfaits → un membre → Badges*. Deux types :
-   - **QR code** — affiché **une seule fois** ; touchez **Enregistrer en PDF** pour imprimer une carte de badge, ou gardez le QR sur le téléphone du membre.
-   - **Carte RFID/NFC** — touchez **Enregistrer une carte** et approchez la carte physique du membre (Android avec NFC). Configurez-le dans *Réglages → Badges RFID / NFC* (§7).
-   Chaque badge est révocable à tout moment.
-3. À la borne : touchez une place → **Arrivée**, **Réserver** ou **Départ** → présentez le badge : **approchez la carte RFID/NFC**, scannez le QR avec un lecteur de codes-barres USB/Bluetooth, ou saisissez le code.
+1. Le propriétaire crée un compte normal pour l'appareil, le fait rejoindre l'espace, et le marque comme **borne** dans *Membres & forfaits*.
+2. **Le mode borne ne démarre jamais tout seul.** À chaque démarrage de l'application, la tablette demande *Démarrer le mode borne ?* — confirmez et la tablette se verrouille : plan en plein écran uniquement, bouton retour désactivé, l'application s'épingle pour que rien d'autre ne puisse être ouvert ; quitter le mode borne passe par un redémarrage de la tablette. Choisissez plutôt *Pas maintenant* et l'application s'ouvre normalement — utile pour la configuration. La désignation borne elle-même est réversible à tout moment : sur l'appareil sous **Réglages → Appareil borne**, ou par le propriétaire dans *Membres & forfaits*.
+3. Chaque membre porte un **badge** — émis par un admin (*Membres & forfaits → Badges*) ou par le membre lui-même (**Réglages → Mon badge**, §7) : un **badge QR** imprimable et/ou sa **carte RFID/NFC**.
+4. À la borne, touchez une place (ou **Ce niveau**) → **Arrivée**, **Réserver** ou **Départ** → présentez le badge :
+   - **Approchez la carte RFID/NFC.** Tant que le lecteur de carte est armé, la caméra reste éteinte ; si le NFC est désactivé ou absent, la feuille le dit explicitement.
+   - Ou touchez **Scanner le badge QR** — la tablette lit le badge imprimé **avec sa propre caméra** (caméra avant par défaut, puisque l'objectif arrière d'une tablette murale fait face au mur ; changez dans *Réglages → Scanner avec la caméra avant*). Un lecteur de codes-barres USB/Bluetooth ou la saisie du code fonctionnent aussi.
+5. **Rien ne se passe sans votre accord :** la borne identifie le badge, ferme les lecteurs et affiche un récapitulatif — *qui* elle a reconnu, *ce qui* va se passer, *où* et *quand*. Seul **Confirmer** exécute et rafraîchit le plan ; **Rejeter** abandonne.
 
-Votre identité n'existe que le temps de l'opération : l'identifiant est envoyé une fois au serveur, la réservation est faite **à votre nom**, et rien n'est stocké sur la tablette — vous êtes « déconnecté » dès que c'est terminé. (Le scan QR par caméra et la connexion ponctuelle Google/Facebook restent sur la feuille de route ; **les iPad n'ont pas de NFC**, le QR y est donc la voie à suivre.)
+Votre identité n'existe que le temps de l'opération : l'identifiant est envoyé une fois au serveur, la réservation est faite **à votre nom**, et rien n'est stocké sur la tablette — vous êtes « déconnecté » dès que c'est terminé. (La connexion ponctuelle Google/Facebook reste sur la feuille de route ; **les iPad n'ont pas de NFC**, le QR par caméra y est donc la voie à suivre.)
 
 ## 10. Notifications
 

@@ -19,7 +19,7 @@ After signing in you land on the welcome screen with two paths:
 - **Create a workspace** — you become its **owner**. Pick a name, country (drives the default currency), and time zone. You'll then draw your floor plan in the editor (§7).
 - **Join a workspace** — type the **workspace ID** someone shared with you, or tap **Scan QR code** and point the camera at the invite QR pinned to your space's wall. You join with the role the invite carries (§2).
 
-One account can belong to several workspaces; switch between them in **Settings → Profiles**. Everything in the app is scoped to the active workspace.
+One account can belong to several workspaces; switch between them in **Settings → Profiles**, and **star one as your default** — that's the profile the app opens with. Everything in the app is scoped to the active workspace.
 
 ## 2. Roles & invitations
 
@@ -35,11 +35,13 @@ DesKilo has three additive roles, plus a device account:
 **Every invitation is bound to a role.** On the owner's *Workspace ID & QR* screen there are two invites, each with its own QR code and code:
 
 - **Member invite** — the workspace ID itself. Print it, pin it to the wall, share it freely: whoever scans or types it joins as a plain member.
-- **Admin invite** — a separate secret code, visible to owners only. Share it only with people who should manage the workspace: whoever uses it joins as an admin.
+- **Admin invite** — a **personal, single-use code**, minted by an owner for one specific person. It admits that one person as an admin, then expires (unused codes lapse after 14 days). Mint a new one per admin with *New admin code*.
 
 **There is no owner invite — by design.** Ownership can only be granted by an existing owner, in *Members & plans*. A workspace always keeps at least one owner: the app refuses to demote or remove the last one. Promoting or demoting an **admin** goes through the validation flow (§6) — it applies once the workspace's validators confirm.
 
-The QR encodes a link that names the role it grants (`deskilo://join?role=…`). Tampering with the link changes nothing — the server derives the role from the secret code itself.
+The QR encodes a link that names the role it grants (`deskilo://join?role=…`). Tampering with the link changes nothing — the server derives the role from the code itself: the workspace ID always joins as a member, and a personal invitation joins in exactly the role it was minted with, once. A forwarded admin code that was already used — or expired — admits nobody.
+
+**Inviting someone by message** (*Invite someone*): each WhatsApp/SMS/share send mints its own personal single-use code and builds a ready-made message in the invitee's language. The recipient can simply copy the whole message and paste it into the app's join field — the code is detected automatically.
 
 ## 3. The floor plan (Plan tab)
 
@@ -74,6 +76,16 @@ Open the **Reserve** hub (center button). A date strip picks the day; the window
 Reservations follow the workspace **granularity rule** — half-days, full days, or free start/end times on the owner's slot grid. They respect the **open weekdays** and **closure days**, and the booking rules (advance horizon, max duration, cancellation deadline). Repeating needs? Book a **series** (daily, weekdays, weekly) — closed days and conflicts are skipped and reported.
 
 The **Calendar** tab shows your own bookings by month — your days are marked **red**, other members' **blue**, today is ringed — with a timeline view per day. In landscape both the calendar and the timeline use the split layout.
+
+### Scan a space code
+
+Every seat, desk, office and level can carry a printed **QR card** (§7). Tap the **scan button** in the Reserve hub, point the camera at the card — or type its code — and the app identifies the space and shows exactly what *you* may do there:
+
+- **Seat card** — reserve or check in on that exact seat, on the spot (today's window: morning / afternoon / full day where the workspace uses half-days, otherwise from now for the next hours).
+- **Desk card** — the desk's seats with their live state; pick a free one.
+- **Office or level card** — if the owner made it reservable, the *Office & level reservations* feature is on **and** you hold the personal right (§7), you can reserve or check into the **whole office or floor**; its price per half-day is shown and lands on your bill. Otherwise the sheet tells you why, and an office falls back to its seats.
+
+**Conflicts protect both directions:** an office or level cannot be reserved while any seat inside is already booked in that window — and no seat can be booked while its office or level is reserved as a whole.
 
 ## 5. Members directory (Members tab)
 
@@ -111,7 +123,7 @@ All administration lives under **Settings → Administration**. One rule to know
 - **Editor** (app bar): draw your space on a grid — add levels, outline offices, place desks, stamp seats (with orientation, chair type, and amenities), block seats for maintenance. Add a **background photo** per level and **illustration images** you can move and resize. Deleting anything with future reservations makes you resolve them first.
 - **Workspace ID & QR**: your role-bound invites (§2). You can replace the generated workspace ID with a memorable one (4–20 letters/digits), copy it, or share the QR as a PNG.
 - **Availability**: open weekdays, closure days, and the booking granularity — free start/end times, a minute grid (5/15/30/60), half-days, or full days only.
-- **Features**: switch whole modules on or off per workspace — calendar, events, money, services, PDF export, series booking, booking for others, push, seat blocking by admins, accessory supplements, **online payments**, **RFID/NFC badges**. Switching a module off removes *all* of its screens and buttons for every member.
+- **Features**: switch whole modules on or off per workspace — calendar, events, money, services, PDF export, series booking, booking for others, push, seat blocking by admins, accessory supplements, **online payments**, **RFID/NFC badges**, **office & level reservations**. Switching a module off removes *all* of its screens and buttons for every member.
 
 ![](assets/help/images/workspace-id-qr.jpg)
 
@@ -163,7 +175,18 @@ All administration lives under **Settings → Administration**. One rule to know
 ![](assets/help/images/member-add-service.jpg)
 
 - **Workspace settings**: name, country/currency, time zone, payment instructions (IBAN, PayPal.me, Wero, Lydia, Wise), the WhatsApp group link, **desk transparency**, exports — and the **danger zone**: a full **workspace reset** (deletes bookings, money, and the floor plan; keeps configuration and members) guarded by a typed *"I agree"*.
-- **Import/export**: the whole configuration travels as an **XML file** — back it up, template it, or migrate a self-hosted instance. A **configuration PDF** (members, plan, prices, features) can be generated too. Files are saved **locally on your device**.
+- **Import/export**: the whole configuration travels as an **XML file** — back it up, template it, or migrate a self-hosted instance. A **configuration PDF** (members, plan, prices, features) can be generated too. Every export lands in your device's **Downloads** folder.
+
+### Space QR codes & whole-space reservations (owners)
+
+Four steps turn "scan the code on the desk" into the daily booking flow (§4):
+
+1. In the **editor**, mark an office or a level **Bookable as a whole** and give it a **price per half-day** (the office property sheet / the level menu).
+2. Enable **Office & level reservations** in **Features** (off by default).
+3. Grant each entitled member **"May reserve a whole office or level"** — owners and admins set it in the member's management sheet, never for themselves.
+4. Print the cards: **Workspace settings → Space QR codes (PDF)** — one credit-card QR per **seat, desk, office and level**, ten per A4 page, saved to Downloads. Cut them out and stick each card on its space.
+
+An office reservation covers **all the desks inside it**; a level reservation covers the whole floor. Both are only possible while nothing inside is booked — and they show up as their own lines on the member's bill.
 
 ### Setting up online payments (owners)
 
@@ -229,9 +252,11 @@ Keep **test and live environments strictly apart**: every provider has separate 
 
 Physical cards let people check in with a tap — no phone needed.
 
-1. Open **Settings → RFID / NFC badges** (owner only). Switch **Enable NFC badge check-in** on, and read the **device status** line — you need an **Android** device with NFC on (iPads have no NFC).
-2. Give each member a card: **Members & plans → the member → Badges → Register card**, then hold their card to the device. Any card with a readable chip works (MIFARE, NTAG…).
-3. Use them at a **kiosk** (§9): the member taps the card to reserve or check in. Revoke a lost card from the same Badges dialog.
+1. Open **Settings → RFID / NFC badges** (owner only). Switch **Enable NFC badge check-in** on, and read the **device status** line — it distinguishes *ready*, *NFC turned off in Android settings*, and *no NFC hardware* (iPads have none).
+2. Give each member a card: **Members & plans → the member → Badges → Register card**, then hold their card to the device. Any card with a readable chip works (MIFARE, NTAG…). Members can also do it **themselves**: **Settings → My badge** mints their printable QR badge and registers their own card — no admin needed.
+3. Use them at a **kiosk** (§9): the member taps the card to reserve or check in. Revoke a lost card from the same Badges dialog; **swipe a revoked badge to the right to delete it** for good.
+
+Badges belong to **one workspace** — the dialog names which one you're registering into, so register the card under the workspace whose kiosk will read it. The same physical card can serve you in several workspaces. A badge QR saved **as PDF** prints ten credit-card copies on one A4 page — spares included.
 
 ![](assets/help/images/nfc-config.jpg)
 
@@ -261,14 +286,15 @@ Your ledger answers *what do I owe, what am I owed* — and *how much can I stil
 
 Mount an Android tablet or iPad by the door and let people check in as they walk in:
 
-1. The owner creates a normal account for the device, joins it to the workspace, and flags it as a **kiosk** in *Members & plans*. From then on that account is locked to a full-screen live floor plan — no other screens, nothing else to touch.
-2. The owner (or an admin) gives each member a **badge**, in *Members & plans → a member → Badges*. Two kinds:
-   - **QR code** — shown **exactly once**; tap **Save as PDF** to print a badge card, or save the QR on the member's phone.
-   - **RFID/NFC card** — tap **Register card** and hold the member's physical card to the device (Android with NFC). Set it up in *Settings → RFID / NFC badges* (§7).
-   Either badge is revocable at any time.
-3. At the kiosk, tap a seat → **Check in**, **Reserve**, or **Check out** → present the badge: **tap the RFID/NFC card**, scan the QR with a USB/Bluetooth barcode scanner, or type the code.
+1. The owner creates a normal account for the device, joins it to the workspace, and flags it as a **kiosk** in *Members & plans*.
+2. **Kiosk mode never starts by itself.** On every app start the tablet asks *Start kiosk mode?* — confirm and the pad locks down: full-screen floor plan only, back button disabled, the app pins itself so nothing else can be opened; leaving kiosk mode means restarting the tablet. Choose *Not now* instead and the app opens normally — useful for setup. The kiosk designation itself can be reverted at any time: on the device under **Settings → Kiosk device**, or by the owner in *Members & plans*.
+3. Each member carries a **badge** — minted by an admin (*Members & plans → Badges*) or by the member themselves (**Settings → My badge**, §7): a printable **QR badge** and/or their **RFID/NFC card**.
+4. At the kiosk, tap a seat (or **This level**) → **Check in**, **Reserve**, or **Check out** → present the badge:
+   - **Tap the RFID/NFC card.** While the card reader is armed the camera stays down; if NFC is off or absent, the sheet says so explicitly.
+   - Or tap **Scan the QR badge** — the tablet reads the printed badge **with its own camera** (front camera by default, since a wall tablet's back lens faces the wall; switch in *Settings → Scan with the front camera*). A USB/Bluetooth wedge scanner or typing the code works too.
+5. **Nothing happens without your say-so:** the kiosk identifies the badge, closes the readers, and shows a summary — *who* it recognized, *what* will happen, *where* and *when*. Only **Confirm** executes and refreshes the plan; **Reject** discards.
 
-Your identity exists only for the moment of the operation: the credential is sent once to the server, the booking is made **in your name**, and nothing is stored on the tablet — you are "signed out" the instant it completes. (Camera QR scanning and per-operation Google/Facebook sign-in are still on the roadmap; **iPads have no NFC**, so there the QR path is the way.)
+Your identity exists only for the moment of the operation: the credential is sent once to the server, the booking is made **in your name**, and nothing is stored on the tablet — you are "signed out" the instant it completes. (Per-operation Google/Facebook sign-in is still on the roadmap; **iPads have no NFC**, so there the camera QR path is the way.)
 
 ## 10. Notifications
 
