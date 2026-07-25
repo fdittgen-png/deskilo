@@ -1945,6 +1945,45 @@ class AppLocalizationsDe extends AppLocalizations {
       'Fahre im Browser fort, um die Verknüpfung abzuschließen.';
 
   @override
+  String get spaceScanTitle => 'Raumcode scannen';
+
+  @override
+  String get spaceScanHint =>
+      'Kamera auf die Karte eines Tischs, Büros oder einer Etage richten — oder den Code eintippen.';
+
+  @override
+  String get spaceScanField => 'Code';
+
+  @override
+  String get spaceScanInvalid => 'Kein Raumcode dieses Workspace.';
+
+  @override
+  String get spaceScanUnknown => 'Dieser Code passt zu keinem Raum mehr.';
+
+  @override
+  String get spaceSeatTaken => 'Belegt';
+
+  @override
+  String get spaceNotBookable =>
+      'Dieser Raum ist nicht für Ganzraum-Reservierungen eingerichtet.';
+
+  @override
+  String get spaceCodesTitle => 'Raum-QR-Codes (PDF)';
+
+  @override
+  String get spaceCodesDesc =>
+      'Eine druckbare QR-Karte je Tisch, Büro und Etage — Mitglieder scannen sie zum Reservieren oder Einchecken.';
+
+  @override
+  String get spaceKindDesk => 'Tisch';
+
+  @override
+  String get spaceKindOffice => 'Büro';
+
+  @override
+  String get spaceKindLevel => 'Etage';
+
+  @override
   String get themeTitle => 'Design';
 
   @override

@@ -1,0 +1,51 @@
+{
+  "@@locale": "en",
+  "spaceScanTitle": "Scan a space code",
+  "@spaceScanTitle": {
+    "description": "Title of the space-QR scanner sheet and tooltip of the hub scan button"
+  },
+  "spaceScanHint": "Point the camera at a desk, office or level card — or type its code.",
+  "@spaceScanHint": {
+    "description": "Explainer in the space scanner sheet"
+  },
+  "spaceScanField": "Code",
+  "@spaceScanField": {
+    "description": "Label of the typed space-code input"
+  },
+  "spaceScanInvalid": "Not a space code of this workspace.",
+  "@spaceScanInvalid": {
+    "description": "Inline error when the scanned/typed payload is foreign or belongs to another workspace"
+  },
+  "spaceScanUnknown": "This code does not match any space here anymore.",
+  "@spaceScanUnknown": {
+    "description": "Error when a stale card references a deleted desk/office/level"
+  },
+  "spaceSeatTaken": "Taken",
+  "@spaceSeatTaken": {
+    "description": "Subtitle of an occupied seat row in the space sheet"
+  },
+  "spaceNotBookable": "This space is not set up for whole-space reservations.",
+  "@spaceNotBookable": {
+    "description": "Space sheet explainer when the office/level is not bookable or the feature is off"
+  },
+  "spaceCodesTitle": "Space QR codes (PDF)",
+  "@spaceCodesTitle": {
+    "description": "Workspace-settings tile printing the per-space QR sheet"
+  },
+  "spaceCodesDesc": "One printable QR card per desk, office and level — members scan to reserve or check in.",
+  "@spaceCodesDesc": {
+    "description": "Subtitle of the space-QR-codes tile"
+  },
+  "spaceKindDesk": "Desk",
+  "@spaceKindDesk": {
+    "description": "Kind label on a desk's printed QR card"
+  },
+  "spaceKindOffice": "Office",
+  "@spaceKindOffice": {
+    "description": "Kind label on an office's printed QR card"
+  },
+  "spaceKindLevel": "Level",
+  "@spaceKindLevel": {
+    "description": "Kind label on a level's printed QR card"
+  }
+}

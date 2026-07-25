@@ -1927,6 +1927,46 @@ class AppLocalizationsEn extends AppLocalizations {
       'Continue in the browser to finish linking.';
 
   @override
+  String get spaceScanTitle => 'Scan a space code';
+
+  @override
+  String get spaceScanHint =>
+      'Point the camera at a desk, office or level card — or type its code.';
+
+  @override
+  String get spaceScanField => 'Code';
+
+  @override
+  String get spaceScanInvalid => 'Not a space code of this workspace.';
+
+  @override
+  String get spaceScanUnknown =>
+      'This code does not match any space here anymore.';
+
+  @override
+  String get spaceSeatTaken => 'Taken';
+
+  @override
+  String get spaceNotBookable =>
+      'This space is not set up for whole-space reservations.';
+
+  @override
+  String get spaceCodesTitle => 'Space QR codes (PDF)';
+
+  @override
+  String get spaceCodesDesc =>
+      'One printable QR card per desk, office and level — members scan to reserve or check in.';
+
+  @override
+  String get spaceKindDesk => 'Desk';
+
+  @override
+  String get spaceKindOffice => 'Office';
+
+  @override
+  String get spaceKindLevel => 'Level';
+
+  @override
   String get themeTitle => 'Theme';
 
   @override

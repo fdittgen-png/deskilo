@@ -21,6 +21,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
+import '../../../reservations/domain/space_code.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../plan/providers/accessory_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
@@ -30,6 +31,7 @@ import '../../domain/member.dart';
 import '../../domain/overage_policy.dart';
 import '../../domain/payment_instructions.dart';
 import '../../domain/invitation_message.dart';
+import '../../domain/space_codes_pdf.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_config_pdf.dart';
 import '../../domain/workspace_feature.dart';
@@ -420,6 +422,80 @@ class _WorkspaceSettingsScreenState
           );
           if (!mounted) return;
           _announceSaved(l10n, path);
+      },
+    )) {
+      if (mounted) setState(() => _busy = false);
+      return;
+    }
+    if (mounted) setState(() => _busy = false);
+  }
+
+  /// Prints the space QR sheet (field request): one card per desk,
+  /// office and level, in the badge-sheet A4 grid — saved to Downloads.
+  Future<void> _exportSpaceCodes(Workspace workspace) async {
+    final l10n = AppLocalizations.of(context);
+    setState(() => _busy = true);
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'space codes export failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        final levels = await ref.read(levelsProvider.future);
+        final entries = <SpaceCodeEntry>[];
+        String payload(SpaceKind kind, String id) => SpaceCodeCodec.encode(
+              workspaceId: workspace.id,
+              kind: kind,
+              id: id,
+            );
+        for (final level in levels) {
+          final plan = await ref.read(floorPlanProvider(level.id).future);
+          entries.add((
+            name: level.name,
+            kindLabel: l10n?.spaceKindLevel ?? 'Level',
+            payload: payload(SpaceKind.level, level.id),
+          ));
+          for (final office in plan.offices) {
+            entries.add((
+              name: office.name,
+              kindLabel: l10n?.spaceKindOffice ?? 'Office',
+              payload: payload(SpaceKind.office, office.id),
+            ));
+          }
+          for (final desk in plan.desks) {
+            entries.add((
+              name: desk.name,
+              kindLabel: l10n?.spaceKindDesk ?? 'Desk',
+              payload: payload(SpaceKind.desk, desk.id),
+            ));
+          }
+        }
+        if (entries.isEmpty) {
+          if (!mounted) return;
+          AppSnack.info(
+            context,
+            l10n?.planNoLevels ?? 'The workspace has no floor plan yet.',
+          );
+          return;
+        }
+        final regular =
+            await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
+        final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
+        final bytes = await buildSpaceCodesPdf(
+          workspaceName: workspace.name,
+          entries: entries,
+          baseFont: pw.Font.ttf(regular),
+          boldFont: pw.Font.ttf(bold),
+        );
+        final path = await ref.read(fileSaverProvider)(
+          bytes: bytes,
+          fileName:
+              '${workspace.name.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '-')}'
+              '-space-codes.pdf',
+        );
+        if (!mounted) return;
+        _announceSaved(l10n, path);
       },
     )) {
       if (mounted) setState(() => _busy = false);
@@ -1006,6 +1082,25 @@ class _WorkspaceSettingsScreenState
                     ),
                     enabled: !_busy,
                     onTap: () => _exportConfigPdf(workspace),
+                  ),
+                  // Space QR codes (field request): one printable card
+                  // per desk, office and level — members scan them to
+                  // reserve or check in on the spot.
+                  ListTile(
+                    key: const Key('workspaceSettingsSpaceCodes'),
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.qr_code_2_outlined),
+                    title: Text(
+                      l10n?.spaceCodesTitle ?? 'Space QR codes (PDF)',
+                    ),
+                    subtitle: Text(
+                      l10n?.spaceCodesDesc ??
+                          'One printable QR card per desk, office and '
+                              'level — members scan to reserve or check '
+                              'in.',
+                    ),
+                    enabled: !_busy,
+                    onTap: () => _exportSpaceCodes(workspace),
                   ),
                   // #165 — restore from an exported file. Replaces the
                   // floor plan (guarded by preview + destructive confirm);
