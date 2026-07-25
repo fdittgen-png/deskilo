@@ -290,9 +290,15 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byType(Switch));
     await tester.pumpAndSettle();
+    // Whole-office price per half-day (0057) — the level dialog shape.
+    await tester.enterText(
+      find.byKey(const ValueKey('office-price-field')),
+      '25',
+    );
     await tester.tap(find.widgetWithText(FilledButton, 'Save'));
     await tester.pumpAndSettle();
 
     expect(plans.offices.single.bookableAsWhole, isTrue);
+    expect(plans.offices.single.priceCents, 2500);
   });
 }

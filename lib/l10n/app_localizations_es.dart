@@ -959,11 +959,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Los miembros se registran en un quiosco acercando una tarjeta RFID/NFC. Requiere un dispositivo Android con NFC.';
 
   @override
-  String get featureLevelBooking => 'Reserva de planta';
+  String get featureLevelBooking => 'Reservas de oficina y planta';
 
   @override
   String get featureLevelBookingDesc =>
-      'Reservar una planta entera como una sola reserva, con precio por media jornada. El permiso se concede miembro a miembro.';
+      'Reservar una oficina o planta entera como una sola reserva, con precio por media jornada. Concede el derecho por miembro.';
 
   @override
   String get featureAdminLevelAssign => 'Los admins pueden asignar plantas';
@@ -1273,10 +1273,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get levelPermissionTile => 'Reservas de planta';
 
   @override
-  String get levelPermissionAllowed => 'Puede reservar una planta entera';
+  String get levelPermissionAllowed =>
+      'Puede reservar una oficina o planta entera';
 
   @override
-  String get levelPermissionDenied => 'No puede reservar una planta entera';
+  String get levelPermissionDenied =>
+      'No puede reservar una oficina o planta entera';
 
   @override
   String get levelBookableToggle => 'Reservable en su totalidad';
@@ -1299,7 +1301,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get levelNotAllowed =>
-      'No tienes permiso para reservar una planta entera.';
+      'No tienes permiso para reservar una oficina o planta entera.';
 
   @override
   String get levelConflict => 'La planta tiene reservas en ese periodo.';
@@ -1309,6 +1311,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get kioskLevelButton => 'Esta planta';
+
+  @override
+  String get officeSupplementLabel => 'Reservas de oficina';
 
   @override
   String get membersTitle => 'Miembros y planes';

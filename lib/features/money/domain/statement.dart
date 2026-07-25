@@ -36,6 +36,10 @@ sealed class Statement with _$Statement {
     /// member holds whole-level reservations this period.
     @Default(0) int levelSupplementCents,
 
+    /// Sum of the reserved offices' half-day prices (0057) — the level
+    /// shape over whole-office reservations.
+    @Default(0) int officeSupplementCents,
+
     /// What happens once the entitlement is used up (migration 0041).
     @Default(OveragePolicy.blocked) OveragePolicy overagePolicy,
 
@@ -70,6 +74,8 @@ sealed class Statement with _$Statement {
             (json['accessory_supplement_cents'] as num?)?.toInt() ?? 0,
         levelSupplementCents:
             (json['level_supplement_cents'] as num?)?.toInt() ?? 0,
+        officeSupplementCents:
+            (json['office_supplement_cents'] as num?)?.toInt() ?? 0,
         overagePolicy:
             OveragePolicy.fromName(json['overage_policy'] as String?),
         overageRateCents: (json['overage_rate_cents'] as num?)?.toInt() ?? 0,

@@ -341,6 +341,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       'name': office.name,
       'color': office.color,
       'bookable_as_whole': office.bookableAsWhole,
+      'price_cents': office.priceCents,
       'x': office.rect.x,
       'y': office.rect.y,
       'w': office.rect.w,
@@ -472,6 +473,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         name: row['name'] as String,
         color: row['color'] as int,
         bookableAsWhole: row['bookable_as_whole'] as bool,
+        priceCents: (row['price_cents'] as num?)?.toInt() ?? 0,
         rect: _rectFromRow(row),
       );
 

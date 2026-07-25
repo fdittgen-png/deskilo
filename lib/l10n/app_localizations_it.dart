@@ -962,11 +962,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'I membri fanno check-in a un chiosco avvicinando una tessera RFID/NFC. Richiede un dispositivo Android con NFC.';
 
   @override
-  String get featureLevelBooking => 'Prenotazione del piano';
+  String get featureLevelBooking => 'Prenotazioni di ufficio e piano';
 
   @override
   String get featureLevelBookingDesc =>
-      'Prenotare un intero piano come un\'unica prenotazione, con prezzo per mezza giornata. Il permesso si concede membro per membro.';
+      'Prenota un intero ufficio o piano come un\'unica prenotazione, con prezzo per mezza giornata. Concedi il diritto per membro.';
 
   @override
   String get featureAdminLevelAssign => 'Gli admin possono assegnare piani';
@@ -1276,10 +1276,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get levelPermissionTile => 'Prenotazioni del piano';
 
   @override
-  String get levelPermissionAllowed => 'Può prenotare un intero piano';
+  String get levelPermissionAllowed =>
+      'Può prenotare un ufficio o un piano intero';
 
   @override
-  String get levelPermissionDenied => 'Non può prenotare un intero piano';
+  String get levelPermissionDenied =>
+      'Non può prenotare un ufficio o un piano intero';
 
   @override
   String get levelBookableToggle => 'Prenotabile per intero';
@@ -1302,7 +1304,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get levelNotAllowed =>
-      'Non sei autorizzato a prenotare un intero piano.';
+      'Non sei autorizzato a prenotare un ufficio o un piano intero.';
 
   @override
   String get levelConflict => 'Il piano ha prenotazioni in quel periodo.';
@@ -1312,6 +1314,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get kioskLevelButton => 'Questo piano';
+
+  @override
+  String get officeSupplementLabel => 'Prenotazioni di ufficio';
 
   @override
   String get membersTitle => 'Membri e piani';

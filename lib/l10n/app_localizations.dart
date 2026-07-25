@@ -1829,13 +1829,13 @@ abstract class AppLocalizations {
   /// No description provided for @featureLevelBooking.
   ///
   /// In en, this message translates to:
-  /// **'Level reservations'**
+  /// **'Office & level reservations'**
   String get featureLevelBooking;
 
   /// No description provided for @featureLevelBookingDesc.
   ///
   /// In en, this message translates to:
-  /// **'Reserve a whole floor as one booking, priced per half-day. Grant members the right per member.'**
+  /// **'Reserve a whole office or floor as one booking, priced per half-day. Grant the right per member.'**
   String get featureLevelBookingDesc;
 
   /// No description provided for @featureAdminLevelAssign.
@@ -2387,13 +2387,13 @@ abstract class AppLocalizations {
   /// No description provided for @levelPermissionAllowed.
   ///
   /// In en, this message translates to:
-  /// **'May reserve a whole level'**
+  /// **'May reserve a whole office or level'**
   String get levelPermissionAllowed;
 
   /// No description provided for @levelPermissionDenied.
   ///
   /// In en, this message translates to:
-  /// **'May not reserve a whole level'**
+  /// **'May not reserve a whole office or level'**
   String get levelPermissionDenied;
 
   /// No description provided for @levelBookableToggle.
@@ -2435,7 +2435,7 @@ abstract class AppLocalizations {
   /// No description provided for @levelNotAllowed.
   ///
   /// In en, this message translates to:
-  /// **'You are not allowed to reserve a whole level.'**
+  /// **'You are not allowed to reserve a whole office or level.'**
   String get levelNotAllowed;
 
   /// No description provided for @levelConflict.
@@ -2455,6 +2455,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This level'**
   String get kioskLevelButton;
+
+  /// Bill line: sum of whole-office reservation prices this period (0057)
+  ///
+  /// In en, this message translates to:
+  /// **'Office reservations'**
+  String get officeSupplementLabel;
 
   /// Title of the owner-only member management screen + its settings entry
   ///

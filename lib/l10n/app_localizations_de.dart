@@ -960,11 +960,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Mitglieder checken an einem Kiosk per RFID/NFC-Karte ein. Erfordert ein Android-Gerät mit NFC.';
 
   @override
-  String get featureLevelBooking => 'Etagen-Reservierung';
+  String get featureLevelBooking => 'Büro- & Etagen-Reservierungen';
 
   @override
   String get featureLevelBookingDesc =>
-      'Eine ganze Etage als eine Buchung reservieren, bepreist je Halbtag. Das Recht wird pro Mitglied vergeben.';
+      'Ein ganzes Büro oder eine Etage als eine Buchung reservieren, je Halbtag bepreist. Das Recht wird pro Mitglied vergeben.';
 
   @override
   String get featureAdminLevelAssign => 'Admins können Etagen zuweisen';
@@ -1276,10 +1276,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get levelPermissionTile => 'Etagen-Reservierungen';
 
   @override
-  String get levelPermissionAllowed => 'Darf eine ganze Etage reservieren';
+  String get levelPermissionAllowed =>
+      'Darf ein ganzes Büro oder eine Etage reservieren';
 
   @override
-  String get levelPermissionDenied => 'Darf keine ganze Etage reservieren';
+  String get levelPermissionDenied =>
+      'Darf kein ganzes Büro und keine Etage reservieren';
 
   @override
   String get levelBookableToggle => 'Als Ganzes reservierbar';
@@ -1301,7 +1303,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get levelSupplementLabel => 'Etagen-Reservierungen';
 
   @override
-  String get levelNotAllowed => 'Du darfst keine ganze Etage reservieren.';
+  String get levelNotAllowed =>
+      'Sie dürfen kein ganzes Büro und keine ganze Etage reservieren.';
 
   @override
   String get levelConflict =>
@@ -1312,6 +1315,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get kioskLevelButton => 'Diese Etage';
+
+  @override
+  String get officeSupplementLabel => 'Büro-Reservierungen';
 
   @override
   String get membersTitle => 'Mitglieder & Tarife';

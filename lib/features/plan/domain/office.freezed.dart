@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Office {
 
- String get id; String get workspaceId; String get levelId; String get name; int get color; bool get bookableAsWhole; GridRect get rect;
+ String get id; String get workspaceId; String get levelId; String get name; int get color; bool get bookableAsWhole; int get priceCents; GridRect get rect;
 /// Create a copy of Office
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $OfficeCopyWith<Office> get copyWith => _$OfficeCopyWithImpl<Office>(this as Off
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Office&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.name, name) || other.name == name)&&(identical(other.color, color) || other.color == color)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.rect, rect) || other.rect == rect));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Office&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.name, name) || other.name == name)&&(identical(other.color, color) || other.color == color)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.rect, rect) || other.rect == rect));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,levelId,name,color,bookableAsWhole,rect);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,levelId,name,color,bookableAsWhole,priceCents,rect);
 
 @override
 String toString() {
-  return 'Office(id: $id, workspaceId: $workspaceId, levelId: $levelId, name: $name, color: $color, bookableAsWhole: $bookableAsWhole, rect: $rect)';
+  return 'Office(id: $id, workspaceId: $workspaceId, levelId: $levelId, name: $name, color: $color, bookableAsWhole: $bookableAsWhole, priceCents: $priceCents, rect: $rect)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $OfficeCopyWith<$Res>  {
   factory $OfficeCopyWith(Office value, $Res Function(Office) _then) = _$OfficeCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, String levelId, String name, int color, bool bookableAsWhole, GridRect rect
+ String id, String workspaceId, String levelId, String name, int color, bool bookableAsWhole, int priceCents, GridRect rect
 });
 
 
@@ -62,7 +62,7 @@ class _$OfficeCopyWithImpl<$Res>
 
 /// Create a copy of Office
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? levelId = null,Object? name = null,Object? color = null,Object? bookableAsWhole = null,Object? rect = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? levelId = null,Object? name = null,Object? color = null,Object? bookableAsWhole = null,Object? priceCents = null,Object? rect = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -70,7 +70,8 @@ as String,levelId: null == levelId ? _self.levelId : levelId // ignore: cast_nul
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
 as int,bookableAsWhole: null == bookableAsWhole ? _self.bookableAsWhole : bookableAsWhole // ignore: cast_nullable_to_non_nullable
-as bool,rect: null == rect ? _self.rect : rect // ignore: cast_nullable_to_non_nullable
+as bool,priceCents: null == priceCents ? _self.priceCents : priceCents // ignore: cast_nullable_to_non_nullable
+as int,rect: null == rect ? _self.rect : rect // ignore: cast_nullable_to_non_nullable
 as GridRect,
   ));
 }
@@ -162,10 +163,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String levelId,  String name,  int color,  bool bookableAsWhole,  GridRect rect)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String levelId,  String name,  int color,  bool bookableAsWhole,  int priceCents,  GridRect rect)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Office() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,_that.bookableAsWhole,_that.rect);case _:
+return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,_that.bookableAsWhole,_that.priceCents,_that.rect);case _:
   return orElse();
 
 }
@@ -183,10 +184,10 @@ return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String levelId,  String name,  int color,  bool bookableAsWhole,  GridRect rect)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String levelId,  String name,  int color,  bool bookableAsWhole,  int priceCents,  GridRect rect)  $default,) {final _that = this;
 switch (_that) {
 case _Office():
-return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,_that.bookableAsWhole,_that.rect);}
+return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,_that.bookableAsWhole,_that.priceCents,_that.rect);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -200,10 +201,10 @@ return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String levelId,  String name,  int color,  bool bookableAsWhole,  GridRect rect)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String levelId,  String name,  int color,  bool bookableAsWhole,  int priceCents,  GridRect rect)?  $default,) {final _that = this;
 switch (_that) {
 case _Office() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,_that.bookableAsWhole,_that.rect);case _:
+return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,_that.bookableAsWhole,_that.priceCents,_that.rect);case _:
   return null;
 
 }
@@ -215,7 +216,7 @@ return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,
 
 
 class _Office implements Office {
-  const _Office({required this.id, required this.workspaceId, required this.levelId, required this.name, required this.color, required this.bookableAsWhole, required this.rect});
+  const _Office({required this.id, required this.workspaceId, required this.levelId, required this.name, required this.color, required this.bookableAsWhole, this.priceCents = 0, required this.rect});
   
 
 @override final  String id;
@@ -224,6 +225,7 @@ class _Office implements Office {
 @override final  String name;
 @override final  int color;
 @override final  bool bookableAsWhole;
+@override@JsonKey() final  int priceCents;
 @override final  GridRect rect;
 
 /// Create a copy of Office
@@ -236,16 +238,16 @@ _$OfficeCopyWith<_Office> get copyWith => __$OfficeCopyWithImpl<_Office>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Office&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.name, name) || other.name == name)&&(identical(other.color, color) || other.color == color)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.rect, rect) || other.rect == rect));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Office&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.name, name) || other.name == name)&&(identical(other.color, color) || other.color == color)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.rect, rect) || other.rect == rect));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,levelId,name,color,bookableAsWhole,rect);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,levelId,name,color,bookableAsWhole,priceCents,rect);
 
 @override
 String toString() {
-  return 'Office(id: $id, workspaceId: $workspaceId, levelId: $levelId, name: $name, color: $color, bookableAsWhole: $bookableAsWhole, rect: $rect)';
+  return 'Office(id: $id, workspaceId: $workspaceId, levelId: $levelId, name: $name, color: $color, bookableAsWhole: $bookableAsWhole, priceCents: $priceCents, rect: $rect)';
 }
 
 
@@ -256,7 +258,7 @@ abstract mixin class _$OfficeCopyWith<$Res> implements $OfficeCopyWith<$Res> {
   factory _$OfficeCopyWith(_Office value, $Res Function(_Office) _then) = __$OfficeCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, String levelId, String name, int color, bool bookableAsWhole, GridRect rect
+ String id, String workspaceId, String levelId, String name, int color, bool bookableAsWhole, int priceCents, GridRect rect
 });
 
 
@@ -273,7 +275,7 @@ class __$OfficeCopyWithImpl<$Res>
 
 /// Create a copy of Office
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? levelId = null,Object? name = null,Object? color = null,Object? bookableAsWhole = null,Object? rect = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? levelId = null,Object? name = null,Object? color = null,Object? bookableAsWhole = null,Object? priceCents = null,Object? rect = null,}) {
   return _then(_Office(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -281,7 +283,8 @@ as String,levelId: null == levelId ? _self.levelId : levelId // ignore: cast_nul
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
 as int,bookableAsWhole: null == bookableAsWhole ? _self.bookableAsWhole : bookableAsWhole // ignore: cast_nullable_to_non_nullable
-as bool,rect: null == rect ? _self.rect : rect // ignore: cast_nullable_to_non_nullable
+as bool,priceCents: null == priceCents ? _self.priceCents : priceCents // ignore: cast_nullable_to_non_nullable
+as int,rect: null == rect ? _self.rect : rect // ignore: cast_nullable_to_non_nullable
 as GridRect,
   ));
 }
