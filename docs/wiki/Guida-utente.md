@@ -19,7 +19,7 @@ Dopo l'accesso, la schermata di benvenuto offre due strade:
 - **Crea uno spazio di lavoro** — ne diventi il **proprietario**. Scegli nome, paese (determina la valuta predefinita) e fuso orario. Poi disegnerai la planimetria nell'editor (§7).
 - **Unisciti a uno spazio** — digita l'**ID dello spazio** che ti hanno condiviso, oppure tocca **Scansiona codice QR** e inquadra il QR d'invito appeso alla parete. Ti unisci con il ruolo che l'invito porta con sé (§2).
 
-Un account può appartenere a più spazi; passa dall'uno all'altro in **Impostazioni → Profili**. Tutto nell'app è riferito allo spazio attivo.
+Un account può appartenere a più spazi; passa dall'uno all'altro in **Impostazioni → Profili**, e **contrassegna con la stella quello predefinito** — è il profilo con cui l'app si apre. Tutto nell'app è riferito allo spazio attivo.
 
 ## 2. Ruoli e inviti
 
@@ -77,6 +77,16 @@ Le prenotazioni seguono la **regola di granularità** dello spazio — mezze gio
 
 La scheda **Calendario** mostra le tue prenotazioni per mese — i tuoi giorni in **rosso**, quelli degli altri in **blu**, oggi cerchiato — con una timeline per giorno. In orizzontale, calendario e timeline usano il layout diviso.
 
+### Scansionare un codice spazio
+
+Ogni postazione, tavolo, ufficio e piano può avere una **scheda QR** stampata (§7). Tocca il **pulsante di scansione** nell'hub Prenota, inquadra la scheda — o digita il suo codice — e l'app identifica lo spazio e mostra esattamente ciò che *tu* puoi farci:
+
+- **Scheda postazione** — prenota o fai check-in su quella precisa postazione, al momento (finestra di oggi: mattina / pomeriggio / giornata intera dove lo spazio usa le mezze giornate, altrimenti da adesso per le prossime ore).
+- **Scheda tavolo** — le postazioni del tavolo con il loro stato in tempo reale; scegline una libera.
+- **Scheda ufficio o piano** — se il proprietario lo ha reso prenotabile, la funzionalità *Prenotazioni di ufficio e piano* è attiva **e** possiedi il diritto personale (§7), puoi prenotare o fare check-in sull'**intero ufficio o piano**; il suo prezzo per mezza giornata viene mostrato e finisce sulla tua fattura. Altrimenti la scheda ti spiega perché, e un ufficio ripiega sulle sue postazioni.
+
+**I conflitti proteggono in entrambe le direzioni:** un ufficio o un piano non può essere prenotato mentre una postazione al suo interno è già prenotata in quella finestra — e nessuna postazione può essere prenotata mentre il suo ufficio o piano è prenotato per intero.
+
 ## 5. Elenco dei membri (scheda Membri)
 
 Guarda chi fa parte della tua comunità:
@@ -109,7 +119,7 @@ Tutta l'amministrazione vive in **Impostazioni → Amministrazione**. Una sola r
 - **Editor** (barra dell'app): disegna il tuo spazio su una griglia — livelli, uffici, tavoli, posti (con orientamento, tipo di sedia e dotazioni), blocco posti per manutenzione. Aggiungi una **foto di sfondo** per livello e **immagini illustrative** spostabili e ridimensionabili. Eliminare qualcosa con prenotazioni future obbliga prima a risolverle.
 - **ID spazio & QR**: i tuoi inviti legati ai ruoli (§2). Puoi sostituire l'ID generato con uno memorizzabile (4–20 lettere/cifre), copiarlo, o condividere il QR come PNG.
 - **Disponibilità**: giorni di apertura, giorni di chiusura e granularità — orari liberi di inizio/fine, una griglia di minuti (5/15/30/60), mezze giornate o solo giornate intere.
-- **Funzionalità**: attiva o disattiva interi moduli per spazio — calendario, eventi, denaro, servizi, esportazione PDF, serie, prenotare per altri, push, blocco posti da parte degli admin, supplementi accessori, **pagamenti online**, **badge RFID/NFC**. Disattivare un modulo rimuove *tutte* le sue schermate e i suoi pulsanti per ogni membro.
+- **Funzionalità**: attiva o disattiva interi moduli per spazio — calendario, eventi, denaro, servizi, esportazione PDF, serie, prenotare per altri, push, blocco posti da parte degli admin, supplementi accessori, **pagamenti online**, **badge RFID/NFC**, **prenotazioni di ufficio e piano**. Disattivare un modulo rimuove *tutte* le sue schermate e i suoi pulsanti per ogni membro.
 
 <p><img src="images/workspace-id-qr.jpg" width="220"> <img src="images/availability-granularity.jpg" width="220"> <img src="images/features-toggles-1.jpg" width="220"> <img src="images/features-toggles-2.jpg" width="220"></p>
 
@@ -129,7 +139,18 @@ Tutta l'amministrazione vive in **Impostazioni → Amministrazione**. Una sola r
 <p><img src="images/member-add-service.jpg" width="220"></p>
 
 - **Impostazioni dello spazio**: nome, paese/valuta, fuso, istruzioni di pagamento (IBAN, PayPal.me, Wero, Lydia, Wise), link del gruppo WhatsApp, **trasparenza dei tavoli**, esportazioni — e la **zona pericolosa**: un **reset completo dello spazio** (elimina prenotazioni, denaro e planimetria; conserva configurazione e membri), protetto digitando «I agree».
-- **Import/export**: l'intera configurazione viaggia come **file XML** — backup, modello o migrazione di un'istanza self-hosted. Si può generare anche un **PDF di configurazione** (membri, planimetria, prezzi, funzionalità). I file vengono salvati **localmente sul tuo dispositivo**.
+- **Import/export**: l'intera configurazione viaggia come **file XML** — backup, modello o migrazione di un'istanza self-hosted. Si può generare anche un **PDF di configurazione** (membri, planimetria, prezzi, funzionalità). Ogni esportazione finisce nella cartella **Download** del tuo dispositivo.
+
+### Codici QR degli spazi e prenotazioni di spazi interi (proprietari)
+
+Quattro passi trasformano «scansiona il codice sul tavolo» nel flusso di prenotazione quotidiano (§4):
+
+1. Nell'**editor**, marca un ufficio o un piano come **Prenotabile per intero** e assegnagli un **prezzo per mezza giornata** (la scheda proprietà dell'ufficio / il menu del livello).
+2. Attiva **Prenotazioni di ufficio e piano** in **Funzionalità** (disattivata per impostazione predefinita).
+3. Concedi a ogni membro autorizzato **«Può prenotare un ufficio o un piano intero»** — proprietari e admin lo impostano nella scheda di gestione del membro, mai per se stessi.
+4. Stampa le schede: **Impostazioni dello spazio → Codici QR degli spazi (PDF)** — un QR formato carta di credito per **postazione, tavolo, ufficio e piano**, dieci per pagina A4, salvato in Download. Ritagliale e attacca ogni scheda sul suo spazio.
+
+Una prenotazione di ufficio copre **tutti i tavoli al suo interno**; una prenotazione di piano copre l'intero piano. Entrambe sono possibili solo finché nulla all'interno è prenotato — e compaiono come righe a sé sulla fattura del membro.
 
 ### Configurare i pagamenti online (proprietari)
 
@@ -191,9 +212,11 @@ Tieni **ambienti di test e di produzione rigorosamente separati**: ogni fornitor
 
 Le tessere fisiche permettono il check-in con un tocco — senza telefono.
 
-1. Apri **Impostazioni → Badge RFID / NFC** (solo proprietario). Attiva **Abilita il check-in con badge NFC** e leggi la riga di **stato del dispositivo** — serve un dispositivo **Android** con NFC attivo (gli iPad non hanno NFC).
-2. Dai una tessera a ogni membro: **Membri e piani → il membro → Badge → Registra tessera**, poi avvicina la sua tessera al dispositivo. Va bene qualsiasi tessera con chip leggibile (MIFARE, NTAG…).
-3. Usale a un **chiosco** (§9): il membro avvicina la tessera per prenotare o fare check-in. Revoca una tessera persa dalla stessa finestra Badge.
+1. Apri **Impostazioni → Badge RFID / NFC** (solo proprietario). Attiva **Abilita il check-in con badge NFC** e leggi la riga di **stato del dispositivo** — distingue *pronto*, *NFC disattivato nelle impostazioni Android* e *nessun hardware NFC* (gli iPad non ne hanno).
+2. Dai una tessera a ogni membro: **Membri e piani → il membro → Badge → Registra tessera**, poi avvicina la sua tessera al dispositivo. Va bene qualsiasi tessera con chip leggibile (MIFARE, NTAG…). I membri possono farlo anche **da soli**: **Impostazioni → Il mio badge** emette il loro badge QR stampabile e registra la loro tessera — senza bisogno di un admin.
+3. Usale a un **chiosco** (§9): il membro avvicina la tessera per prenotare o fare check-in. Revoca una tessera persa dalla stessa finestra Badge; **scorri un badge revocato verso destra per eliminarlo** definitivamente.
+
+I badge appartengono a **un solo spazio** — la finestra indica in quale stai registrando, quindi registra la tessera nello spazio il cui chiosco la leggerà. La stessa tessera fisica può servirti in più spazi. Un badge QR salvato **come PDF** stampa dieci copie formato carta di credito su una pagina A4 — scorte incluse.
 
 <p><img src="images/nfc-config.jpg" width="240"> <img src="images/member-badges-dialog.jpg" width="240"></p>
 
@@ -219,14 +242,15 @@ Il tuo conto risponde a *quanto devo, quanto mi devono* — e *quanto posso anco
 
 Monta un tablet Android o un iPad vicino alla porta e lascia che le persone facciano check-in entrando:
 
-1. Il proprietario crea un account normale per il dispositivo, lo unisce allo spazio e lo marca come **chiosco** in *Membri e piani*. Da quel momento l'account è bloccato sulla planimetria a schermo intero — nessun'altra schermata, nient'altro da toccare.
-2. Il proprietario (o un admin) dà un **badge** a ogni membro, in *Membri e piani → un membro → Badge*. Due tipi:
-   - **Codice QR** — mostrato **una sola volta**; tocca **Salva come PDF** per stampare una tessera, o salva il QR sul telefono del membro.
-   - **Tessera RFID/NFC** — tocca **Registra tessera** e avvicina la tessera fisica del membro (Android con NFC). Configuralo in *Impostazioni → Badge RFID / NFC* (§7).
-   Ogni badge è revocabile in qualsiasi momento.
-3. Al chiosco: tocca un posto → **Check-in**, **Prenota** o **Check-out** → presenta il badge: **avvicina la tessera RFID/NFC**, scansiona il QR con un lettore di codici USB/Bluetooth, o digita il codice.
+1. Il proprietario crea un account normale per il dispositivo, lo unisce allo spazio e lo marca come **chiosco** in *Membri e piani*.
+2. **La modalità chiosco non parte mai da sola.** A ogni avvio dell'app il tablet chiede *Avviare la modalità chiosco?* — conferma e il tablet si blocca: solo la planimetria a schermo intero, pulsante indietro disabilitato, l'app si fissa in primo piano così non si può aprire altro; per uscire dalla modalità chiosco bisogna riavviare il tablet. Scegli invece *Non ora* e l'app si apre normalmente — utile per la configurazione. La designazione a chiosco si può revocare in qualsiasi momento: sul dispositivo in **Impostazioni → Dispositivo chiosco**, o dal proprietario in *Membri e piani*.
+3. Ogni membro porta con sé un **badge** — emesso da un admin (*Membri e piani → Badge*) o dal membro stesso (**Impostazioni → Il mio badge**, §7): un **badge QR** stampabile e/o la sua **tessera RFID/NFC**.
+4. Al chiosco, tocca un posto (o **Questo piano**) → **Check-in**, **Prenota** o **Check-out** → presenta il badge:
+   - **Avvicina la tessera RFID/NFC.** Finché il lettore di tessere è armato la fotocamera resta spenta; se l'NFC è disattivato o assente, la scheda lo dice esplicitamente.
+   - Oppure tocca **Scansiona il badge QR** — il tablet legge il badge stampato **con la propria fotocamera** (frontale per impostazione predefinita, perché l'obiettivo posteriore di un tablet a parete guarda il muro; cambia in *Impostazioni → Scansiona con la fotocamera frontale*). Funzionano anche un lettore di codici USB/Bluetooth o la digitazione del codice.
+5. **Nulla accade senza il tuo consenso:** il chiosco identifica il badge, chiude i lettori e mostra un riepilogo — *chi* ha riconosciuto, *cosa* accadrà, *dove* e *quando*. Solo **Conferma** esegue e aggiorna la planimetria; **Rifiuta** annulla.
 
-La tua identità esiste solo per il tempo dell'operazione: la credenziale va una volta al server, la prenotazione è fatta **a tuo nome**, e nulla resta sul tablet — sei «disconnesso» appena finisce. (La scansione QR con fotocamera e l'accesso per singola operazione con Google/Facebook sono ancora nella roadmap; **gli iPad non hanno NFC**, quindi lì il QR è la via.)
+La tua identità esiste solo per il tempo dell'operazione: la credenziale va una volta al server, la prenotazione è fatta **a tuo nome**, e nulla resta sul tablet — sei «disconnesso» appena finisce. (L'accesso per singola operazione con Google/Facebook è ancora nella roadmap; **gli iPad non hanno NFC**, quindi lì la via è il QR con fotocamera.)
 
 ## 10. Notifiche
 

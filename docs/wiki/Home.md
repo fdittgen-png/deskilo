@@ -14,7 +14,7 @@ Every feature serves at least one of three goals (the *feature filter*):
 |---|---|---|
 | [Architecture](Architecture) | Developers | Stack, feature-first layout, state management, the Supabase data model, security (RLS + RPCs), feature flags, online payments, i18n, platforms |
 | [Implementation](Implementation) | Developers / contributors | Repo layout, conventions, codegen, migrations, testing, CI, feature-gating checklist, how to build and run on every platform |
-| [User Guide](User-Guide) | Members, admins, owners | Complete illustrated walkthrough in English: onboarding, booking, roles & invites, money, online payments & NFC configuration, kiosk mode, settings |
+| [User Guide](User-Guide) | Members, admins, owners | Complete illustrated walkthrough in English: onboarding, booking, roles & invites, money, online payments & NFC configuration, space QR codes, kiosk mode, settings |
 | [Guide utilisateur](Guide-utilisateur) | Membres, admins, propriétaires | Le guide complet en français |
 | [Benutzerhandbuch](Benutzerhandbuch) | Mitglieder, Admins, Inhaberinnen | Das vollständige Handbuch auf Deutsch |
 | [Guía de usuario](Guia-de-usuario) | Miembros, admins, propietarios | La guía completa en español |
