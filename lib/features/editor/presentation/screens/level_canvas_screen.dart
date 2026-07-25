@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/files/file_picker.dart';
+import '../../../../core/format/cents.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -656,6 +657,10 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     final l10n = AppLocalizations.of(context);
     var bookable = office.bookableAsWhole;
     final name = TextEditingController(text: office.name);
+    // Whole-office price per half-day (0057) — the 0050 level shape.
+    final price = TextEditingController(
+      text: office.priceCents == 0 ? '' : centsToMajor(office.priceCents),
+    );
     final saved = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
@@ -690,6 +695,16 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                 value: bookable,
                 onChanged: (v) => setSheetState(() => bookable = v),
               ),
+              TextField(
+                key: const ValueKey('office-price-field'),
+                controller: price,
+                enabled: bookable,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                decoration: InputDecoration(
+                  labelText: l10n?.levelPriceLabel ?? 'Price per half-day',
+                ),
+              ),
               const SizedBox(height: 12),
               FilledButton(
                 onPressed: () => Navigator.of(context).pop(true),
@@ -705,6 +720,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
           office.copyWith(
             name: name.text.trim().isEmpty ? office.name : name.text.trim(),
             bookableAsWhole: bookable,
+            priceCents: parseCentsInput(price.text) ?? 0,
           ),
         );
     ref.invalidate(floorPlanProvider(widget.levelId));

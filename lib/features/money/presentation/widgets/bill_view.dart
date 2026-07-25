@@ -420,6 +420,12 @@ class _SubscriptionCard extends StatelessWidget {
                 label: l10n?.levelSupplementLabel ?? 'Level reservations',
                 value: '−${money(statement.levelSupplementCents)}',
               ),
+            // 0057 — whole-office reservations priced per half-day.
+            if (statement.officeSupplementCents > 0)
+              _BillLine(
+                label: l10n?.officeSupplementLabel ?? 'Office reservations',
+                value: '−${money(statement.officeSupplementCents)}',
+              ),
           ],
         ),
       ),

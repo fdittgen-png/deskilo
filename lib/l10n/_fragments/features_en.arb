@@ -100,8 +100,8 @@
   "@featureNfcBadgesDesc": {
     "description": "One-line description under the NFC-badges switch"
   },
-  "featureLevelBooking": "Level reservations",
-  "featureLevelBookingDesc": "Reserve a whole floor as one booking, priced per half-day. Grant members the right per member.",
+  "featureLevelBooking": "Office & level reservations",
+  "featureLevelBookingDesc": "Reserve a whole office or floor as one booking, priced per half-day. Grant the right per member.",
   "featureAdminLevelAssign": "Admins can assign levels",
   "featureAdminLevelAssignDesc": "Admins assign level reservations to members. The owner always can."
 }

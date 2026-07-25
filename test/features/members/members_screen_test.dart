@@ -578,13 +578,13 @@ void main() {
         await pumpMembers(tester, featureFlags: const {'levelBooking': true});
 
     await openSheet(tester, 'Ana');
-    await tester.tap(find.text('May not reserve a whole level'));
+    await tester.tap(find.text('May not reserve a whole office or level'));
     await tester.pumpAndSettle();
     expect(workspace.levelPermissions['member-2'], isTrue);
     expect(workspace.otherMembers.single.canReserveLevel, isTrue);
 
     await openSheet(tester, 'Ana');
-    await tester.tap(find.text('May reserve a whole level'));
+    await tester.tap(find.text('May reserve a whole office or level'));
     await tester.pumpAndSettle();
     expect(workspace.levelPermissions['member-2'], isFalse);
   });
@@ -600,7 +600,7 @@ void main() {
 
     await openSheet(tester, 'Ana');
     // Feature ON + other member → the tile exists…
-    expect(find.text('May not reserve a whole level'), findsOneWidget);
+    expect(find.text('May not reserve a whole office or level'), findsOneWidget);
   });
 
   testWidgets('feature off (default): no level tile at all', (tester) async {
