@@ -16,22 +16,6 @@
   "@invoiceMemberLabel": {
     "description": "Member dropdown label on the invoice form"
   },
-  "invoiceTitleLabel": "Title",
-  "@invoiceTitleLabel": {
-    "description": "Title field on the invoice form"
-  },
-  "invoiceLineLabel": "Item",
-  "@invoiceLineLabel": {
-    "description": "Line label field on the invoice form"
-  },
-  "invoiceLineAmount": "Amount",
-  "@invoiceLineAmount": {
-    "description": "Line amount field on the invoice form (major units)"
-  },
-  "invoiceAddLine": "Add line",
-  "@invoiceAddLine": {
-    "description": "Adds another line row to the invoice form"
-  },
   "invoiceIssue": "Issue invoice",
   "@invoiceIssue": {
     "description": "Submit button of the invoice form — issuing is final (immutable)"
@@ -39,14 +23,6 @@
   "invoiceIssued": "Invoice issued.",
   "@invoiceIssued": {
     "description": "Snackbar after an invoice was issued"
-  },
-  "invoiceLineInvalid": "Every line needs a label and amount.",
-  "@invoiceLineInvalid": {
-    "description": "Validation error for a half-filled invoice line"
-  },
-  "invoiceFormIncomplete": "Pick a member, a title and at least one line.",
-  "@invoiceFormIncomplete": {
-    "description": "Validation error for an incomplete invoice form"
   },
   "invoiceDownload": "Download PDF",
   "@invoiceDownload": {
@@ -144,5 +120,13 @@
   "invoicePdfReplaces": "Replaces",
   "@invoicePdfReplaces": {
     "description": "Label before the replaced invoice's number (row, sheet banner, PDF)"
+  },
+  "invoiceNothingToInvoice": "Nothing tracked for this month — nothing to invoice.",
+  "@invoiceNothingToInvoice": {
+    "description": "Issue form: the picked month has no tracked positions (0062)"
+  },
+  "invoiceLineAdjustment": "Adjustment",
+  "@invoiceLineAdjustment": {
+    "description": "Fallback label of an adjustment position without a description"
   }
 }

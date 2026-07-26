@@ -9,6 +9,7 @@ import 'dart:typed_data';
 
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
+import 'package:deskilo/features/money/presentation/invoice_line_text.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -35,10 +36,11 @@ void main() {
       memberId: 'member-1',
       number: 'INV-2026-0001',
       issuedAt: DateTime(2026, 7, 13),
-      title: 'July membership',
+      title: '2026-07',
       lines: const [
-        InvoiceLine(label: 'Subscription 50%', amountCents: 15000),
-        InvoiceLine(label: 'Coffee', amountCents: 450),
+        InvoiceLine(
+            kind: 'subscription', label: '50', amountCents: 15000),
+        InvoiceLine(kind: 'service', label: 'Coffee ×3', amountCents: 450),
       ],
       totalCents: 15450,
       currency: 'EUR',
@@ -54,6 +56,7 @@ void main() {
       invoice: invoice,
       strings: _strings,
       money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
+      lineText: (line) => invoiceLineText(null, line),
       dateLabel: 'Jul 13, 2026',
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
       boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
@@ -74,9 +77,10 @@ void main() {
       memberId: 'member-1',
       number: 'INV-2026-0002',
       issuedAt: DateTime(2026, 7, 14),
-      title: 'July membership (corrected)',
+      title: '2026-07',
       lines: const [
-        InvoiceLine(label: 'Subscription 50%', amountCents: 15000),
+        InvoiceLine(
+            kind: 'subscription', label: '50', amountCents: 15000),
       ],
       totalCents: 15000,
       currency: 'EUR',
@@ -96,6 +100,7 @@ void main() {
       invoice: invoice,
       strings: _strings,
       money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
+      lineText: (line) => invoiceLineText(null, line),
       dateLabel: 'Jul 14, 2026',
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
       boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),

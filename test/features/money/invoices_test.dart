@@ -1,15 +1,16 @@
 // SPDX-License-Identifier: 0BSD
 //
-// Invoices (0060): an IMMUTABLE archive — the member sees their own,
-// admins the workspace's; the owner (or a delegated admin) issues; each
-// row downloads or shares the signed PDF. Snapshots + the SHA-256
-// fingerprint come from the server; the trigger refuses any mutation.
+// Invoices (0060/0061/0062): an IMMUTABLE archive whose positions are
+// DERIVED — the issue form is member + month + a read-only preview of
+// what that month already tracked (subscription, overage, supplements,
+// services, packages). Nothing is typed at issue time; an empty month
+// cannot be invoiced. Correction stays: void + referencing replacement.
 import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,13 +18,14 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 
-FakeMoneyRepository seededMoney() {
+/// A fake archive seeded with one derived invoice for the current month
+/// (the default fake statement: 150.00 subscription + 16.00 overage).
+Future<FakeMoneyRepository> seededMoney() async {
   final money = FakeMoneyRepository();
-  money.createInvoice(
+  await money.createInvoice(
     workspaceId: 'ws-1',
     memberId: 'member-1',
-    title: 'July membership',
-    lines: const [InvoiceLine(label: 'Subscription', amountCents: 25000)],
+    period: '2026-07',
   );
   return money;
 }
@@ -63,9 +65,23 @@ Future<FakeMoneyRepository> pumpInvoices(
 
 void main() {
   testWidgets(
-      'the OWNER issues an invoice: member + title + lines → the archive '
-      'lists it with number and total', (tester) async {
-    final money = await pumpInvoices(tester);
+      'the OWNER issues an invoice: member + month → the DERIVED preview '
+      'shows the tracked positions and the issued invoice carries exactly '
+      'those', (tester) async {
+    final money = FakeMoneyRepository();
+    // A consumed service booked to the current month joins the
+    // statement's subscription + overage on the preview.
+    money.ledger.add(LedgerEntry(
+      id: 'ledger-1',
+      memberId: 'member-1',
+      kind: LedgerKind.charge,
+      category: LedgerCategory.service,
+      amountCents: 450,
+      description: 'Coffee ×3',
+      period: currentTestPeriod(),
+      createdAt: DateTime.now(),
+    ));
+    await pumpInvoices(tester, money: money);
     expect(find.text('No invoices yet.'), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('invoice-create-button')));
@@ -74,49 +90,98 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Flo').last);
     await tester.pumpAndSettle();
-    await tester.enterText(
-      find.byKey(const ValueKey('invoice-title-field')),
-      'July membership',
+
+    // The read-only preview: subscription 50% (150.00), overage ×2
+    // (16.00), the service line — and their total. No text fields.
+    expect(find.text('Subscription 50%'), findsOneWidget);
+    expect(find.textContaining('extra half-day'), findsOneWidget);
+    expect(find.text('Coffee ×3'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('invoice-preview-total')),
+      findsOneWidget,
     );
-    await tester.enterText(
-      find.byKey(const ValueKey('invoice-line-label-0')),
-      'Subscription 100%',
-    );
-    await tester.enterText(
-      find.byKey(const ValueKey('invoice-line-amount-0')),
-      '250',
-    );
+    expect(find.byType(TextField), findsNothing,
+        reason: 'positions are derived — nothing is typed at issue time');
+
     await tester.tap(find.byKey(const ValueKey('invoice-submit')));
     await tester.pumpAndSettle();
 
     final invoice = money.invoices.single;
-    expect(invoice.title, 'July membership');
-    expect(invoice.totalCents, 25000);
-    expect(invoice.memberId, 'member-1');
+    expect(invoice.period, currentTestPeriod());
+    expect(invoice.totalCents, 15000 + 1600 + 450);
+    expect(invoice.lines.map((l) => l.kind),
+        ['subscription', 'overage', 'service']);
     expect(invoice.number, startsWith('INV-'));
-    expect(find.textContaining(invoice.number), findsOneWidget);
     expect(find.text('Invoice issued.'), findsOneWidget);
   });
 
   testWidgets(
-      'a half-filled line refuses with the pinned validation message '
-      '(nothing issued)', (tester) async {
-    final money = await pumpInvoices(tester);
+      'an EMPTY month cannot be invoiced: the preview says so and Issue '
+      'stays disabled', (tester) async {
+    final money = FakeMoneyRepository();
+    money.statement = money.statement.copyWith(
+      feeCents: 0,
+      overageCents: 0,
+      extraHalfDays: 0,
+    );
+    await pumpInvoices(tester, money: money);
 
     await tester.tap(find.byKey(const ValueKey('invoice-create-button')));
     await tester.pumpAndSettle();
-    await tester.enterText(
-      find.byKey(const ValueKey('invoice-line-label-0')),
-      'Subscription',
-    );
-    await tester.tap(find.byKey(const ValueKey('invoice-submit')));
+    await tester.tap(find.byKey(const ValueKey('invoice-member-dropdown')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Flo').last);
     await tester.pumpAndSettle();
 
     expect(
-      find.text('Every line needs a label and amount.'),
+      find.byKey(const ValueKey('invoice-preview-empty')),
       findsOneWidget,
     );
+    final submit = tester.widget<FilledButton>(
+        find.byKey(const ValueKey('invoice-submit')));
+    expect(submit.onPressed, isNull,
+        reason: 'nothing tracked = nothing to invoice');
     expect(money.invoices, isEmpty);
+  });
+
+  testWidgets(
+      'the month chevron re-derives the preview for the picked period',
+      (tester) async {
+    final money = FakeMoneyRepository();
+    // Last month tracked nothing.
+    final now = DateTime.now();
+    final prev = DateTime(now.year, now.month - 1);
+    final prevPeriod =
+        '${prev.year}-${prev.month.toString().padLeft(2, '0')}';
+    money.statements[prevPeriod] = money.statement.copyWith(
+      period: prevPeriod,
+      feeCents: 0,
+      overageCents: 0,
+      extraHalfDays: 0,
+    );
+    await pumpInvoices(tester, money: money);
+
+    await tester.tap(find.byKey(const ValueKey('invoice-create-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-member-dropdown')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Flo').last);
+    await tester.pumpAndSettle();
+    expect(find.text('Subscription 50%'), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('invoice-period-prev')));
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('invoice-preview-empty')),
+      findsOneWidget,
+      reason: 'the preview follows the picked month',
+    );
+    // The current month cannot be exceeded.
+    await tester.tap(find.byKey(const ValueKey('invoice-period-next')));
+    await tester.pumpAndSettle();
+    final next = tester.widget<IconButton>(
+        find.byKey(const ValueKey('invoice-period-next')));
+    expect(next.onPressed, isNull);
   });
 
   testWidgets(
@@ -125,7 +190,7 @@ void main() {
     final saved = <({String name, Uint8List bytes})>[];
     final money = await pumpInvoices(
       tester,
-      money: seededMoney(),
+      money: await seededMoney(),
       saver: ({required bytes, required fileName}) async {
         saved.add((name: fileName, bytes: bytes));
         return 'Download/$fileName';
@@ -151,7 +216,7 @@ void main() {
     final shared = <({String name, String mime, Uint8List bytes})>[];
     final money = await pumpInvoices(
       tester,
-      money: seededMoney(),
+      money: await seededMoney(),
       sharer: ({required bytes, required fileName, required mimeType}) async {
         shared.add((name: fileName, mime: mimeType, bytes: bytes));
       },
@@ -170,35 +235,16 @@ void main() {
   });
 
   testWidgets(
-      'a PLAIN member sees the archive (their own invoices) but no issue '
-      'button', (tester) async {
-    final workspace = FakeWorkspaceRepository.withWorkspace();
-    workspace.myMember =
-        workspace.myMember.copyWith(isOwner: false, isAdmin: false);
-    final money = await pumpInvoices(
-      tester,
-      money: seededMoney(),
-      workspace: workspace,
-    );
-    expect(
-      find.byKey(ValueKey('invoice-${money.invoices.single.id}')),
-      findsOneWidget,
-    );
-    expect(find.byKey(const ValueKey('invoice-create-button')), findsNothing);
-  });
-
-  testWidgets(
       'the owner tags an invoice ERRONEOUS (0061): confirm → voided, '
       'struck through with the chip — the row stays in the archive',
       (tester) async {
-    final money = await pumpInvoices(tester, money: seededMoney());
+    final money = await pumpInvoices(tester, money: await seededMoney());
     final invoice = money.invoices.single;
 
     await tester.tap(find.byKey(ValueKey('invoice-menu-${invoice.id}')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('invoice-void-action')));
     await tester.pumpAndSettle();
-    // Nothing voided until the explicit confirm.
     expect(money.invoices.single.isVoided, isFalse);
     await tester.tap(find.byKey(const ValueKey('invoice-void-confirm')));
     await tester.pumpAndSettle();
@@ -206,81 +252,81 @@ void main() {
     expect(money.invoices.single.isVoided, isTrue);
     expect(find.text('Invoice marked as erroneous.'), findsOneWidget);
     expect(find.text('Erroneous'), findsOneWidget);
-    expect(
-      find.byKey(ValueKey('invoice-${invoice.id}')),
-      findsOneWidget,
-    );
+    expect(find.byKey(ValueKey('invoice-${invoice.id}')), findsOneWidget);
   });
 
   testWidgets(
-      'REPLACE (0061): the prefilled form issues a new invoice that '
-      'references the erroneous one; the old is voided; the row shows '
-      'the reference', (tester) async {
-    final money = await pumpInvoices(tester, money: seededMoney());
+      'REPLACE (0061/0062): the replacement RE-DERIVES the same month '
+      'from the corrected data and references the erroneous invoice',
+      (tester) async {
+    final money = await seededMoney();
     final wrong = money.invoices.single;
+    // The underlying data was corrected since the wrong invoice: the
+    // member's subscription fee changed.
+    money.statement = money.statement.copyWith(feeCents: 20000);
+    await pumpInvoices(tester, money: money);
 
     await tester.tap(find.byKey(ValueKey('invoice-menu-${wrong.id}')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('invoice-replace-action')));
     await tester.pumpAndSettle();
 
-    // Prefilled from the erroneous invoice, banner names its number.
+    // Prefilled member + month; banner names the replaced number; the
+    // preview shows the RE-DERIVED positions.
     expect(
       find.byKey(const ValueKey('invoice-replaces-banner')),
       findsOneWidget,
     );
-    expect(
-      tester
-          .widget<TextField>(
-              find.byKey(const ValueKey('invoice-title-field')))
-          .controller
-          ?.text,
-      'July membership',
-    );
-    // Correct the amount and issue.
-    await tester.enterText(
-      find.byKey(const ValueKey('invoice-line-amount-0')),
-      '150',
-    );
+    expect(find.text('Subscription 50%'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('invoice-submit')));
     await tester.pumpAndSettle();
 
     expect(money.invoices, hasLength(2));
     final replacement =
         money.invoices.singleWhere((i) => i.id != wrong.id);
-    final voided =
-        money.invoices.singleWhere((i) => i.id == wrong.id);
-    // The technical reference: replacement → replaced invoice.
+    final voided = money.invoices.singleWhere((i) => i.id == wrong.id);
     expect(replacement.replacesInvoiceId, wrong.id);
     expect(replacement.replacesNumber, wrong.number);
-    expect(replacement.totalCents, 15000);
-    expect(replacement.isVoided, isFalse);
+    expect(replacement.totalCents, 20000 + 1600,
+        reason: 'the replacement carries the corrected derivation');
+    expect(replacement.period, wrong.period);
     expect(voided.isVoided, isTrue);
-    // The archive shows both the chip and the reference line.
     expect(find.text('Erroneous'), findsOneWidget);
-    expect(
-      find.textContaining('Replaces ${wrong.number}'),
-      findsOneWidget,
-    );
+    expect(find.textContaining('Replaces ${wrong.number}'), findsOneWidget);
   });
 
   testWidgets(
       'a replaced invoice offers no second replacement; a voided-and-'
       'replaced one has no menu at all', (tester) async {
-    final money = seededMoney();
+    final money = await seededMoney();
     await money.createInvoice(
       workspaceId: 'ws-1',
       memberId: 'member-1',
-      title: 'July membership (corrected)',
-      lines: const [InvoiceLine(label: 'Subscription', amountCents: 15000)],
+      period: '2026-07',
       replacesId: 'inv-1',
     );
     await pumpInvoices(tester, money: money);
 
-    // inv-1 is voided AND replaced → no menu; the replacement keeps its
-    // menu with both actions.
     expect(find.byKey(const ValueKey('invoice-menu-inv-1')), findsNothing);
     expect(find.byKey(const ValueKey('invoice-menu-inv-2')), findsOneWidget);
+  });
+
+  testWidgets(
+      'a PLAIN member sees the archive (their own invoices) but no issue '
+      'button', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.myMember =
+        workspace.myMember.copyWith(isOwner: false, isAdmin: false);
+    final money = await pumpInvoices(
+      tester,
+      money: await seededMoney(),
+      workspace: workspace,
+    );
+    expect(
+      find.byKey(ValueKey('invoice-${money.invoices.single.id}')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('invoice-create-button')), findsNothing);
   });
 
   testWidgets('an admin WITHOUT the adminInvoicing delegation cannot issue',
@@ -305,4 +351,11 @@ void main() {
       findsOneWidget,
     );
   });
+}
+
+/// The period the fake books to when tests issue "now" — mirrors
+/// currentPeriod() without importing intl here.
+String currentTestPeriod() {
+  final now = DateTime.now();
+  return '${now.year}-${now.month.toString().padLeft(2, '0')}';
 }

@@ -3,11 +3,19 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'invoice.freezed.dart';
 
-/// One line of an invoice (0060).
+/// One position of an invoice. Since 0062 positions are DERIVED from
+/// the month's tracked data — [kind] names the source (subscription |
+/// overage | accessories | level | office | desk | service | package |
+/// adjustment), [label] carries its data (the pct, the catalog
+/// description), and the client renders localized wording per kind.
+/// Legacy 0060 free-form lines have an empty [kind] and render their
+/// [label] verbatim.
 @freezed
 sealed class InvoiceLine with _$InvoiceLine {
   const factory InvoiceLine({
+    @Default('') String kind,
     required String label,
+    @Default(1) int quantity,
     required int amountCents,
   }) = _InvoiceLine;
 }
@@ -62,7 +70,9 @@ sealed class Invoice with _$Invoice {
         lines: [
           for (final line in (row['lines'] as List? ?? const []))
             InvoiceLine(
-              label: (line as Map)['label'] as String,
+              kind: (line as Map)['kind'] as String? ?? '',
+              label: line['label'] as String? ?? '',
+              quantity: (line['quantity'] as num?)?.toInt() ?? 1,
               amountCents: (line['amount_cents'] as num).toInt(),
             ),
         ],

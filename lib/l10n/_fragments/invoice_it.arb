@@ -4,14 +4,8 @@
   "invoicesEmpty": "Ancora nessuna fattura.",
   "invoiceCreate": "Nuova fattura",
   "invoiceMemberLabel": "Membro",
-  "invoiceTitleLabel": "Titolo",
-  "invoiceLineLabel": "Voce",
-  "invoiceLineAmount": "Importo",
-  "invoiceAddLine": "Aggiungi riga",
   "invoiceIssue": "Emetti fattura",
   "invoiceIssued": "Fattura emessa.",
-  "invoiceLineInvalid": "Ogni riga richiede descrizione e importo.",
-  "invoiceFormIncomplete": "Scegli un membro, un titolo e almeno una riga.",
   "invoiceDownload": "Scarica PDF",
   "invoiceShare": "Condividi PDF",
   "invoicePdfTitle": "Fattura",
@@ -41,5 +35,7 @@
   "invoiceVoided": "Fattura contrassegnata come errata.",
   "invoiceReplaceAction": "Emetti sostitutiva",
   "invoicePdfVoided": "ERRATA — annullata il",
-  "invoicePdfReplaces": "Sostituisce"
+  "invoicePdfReplaces": "Sostituisce",
+  "invoiceNothingToInvoice": "Nessun dato registrato per questo mese — niente da fatturare.",
+  "invoiceLineAdjustment": "Rettifica"
 }

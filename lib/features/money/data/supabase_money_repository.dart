@@ -27,23 +27,41 @@ class SupabaseMoneyRepository implements MoneyRepository {
   Future<String> createInvoice({
     required String workspaceId,
     required String memberId,
-    required String title,
-    required List<InvoiceLine> lines,
-    String? period,
+    required String period,
     String? replacesId,
   }) async {
     final id = await _client.rpc<dynamic>('create_invoice', params: {
       'p_workspace_id': workspaceId,
       'p_member_id': memberId,
-      'p_title': title,
-      'p_lines': [
-        for (final line in lines)
-          {'label': line.label, 'amount_cents': line.amountCents},
-      ],
       'p_period': period,
       'p_replaces': replacesId,
     });
     return id as String;
+  }
+
+  @override
+  Future<({List<InvoiceLine> lines, int totalCents})> previewInvoice({
+    required String workspaceId,
+    required String memberId,
+    required String period,
+  }) async {
+    final raw = await _client.rpc<dynamic>('preview_invoice', params: {
+      'p_workspace_id': workspaceId,
+      'p_member_id': memberId,
+      'p_period': period,
+    }) as Map<String, dynamic>;
+    return (
+      lines: [
+        for (final line in (raw['lines'] as List? ?? const []))
+          InvoiceLine(
+            kind: (line as Map)['kind'] as String? ?? '',
+            label: line['label'] as String? ?? '',
+            quantity: (line['quantity'] as num?)?.toInt() ?? 1,
+            amountCents: (line['amount_cents'] as num).toInt(),
+          ),
+      ],
+      totalCents: (raw['total_cents'] as num?)?.toInt() ?? 0,
+    );
   }
 
   @override

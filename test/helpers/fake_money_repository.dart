@@ -25,15 +25,73 @@ class FakeMoneyRepository implements MoneyRepository {
   Future<List<Invoice>> fetchInvoices(String workspaceId) async =>
       List.unmodifiable(invoices);
 
+  /// Mirrors invoice_lines_for (0062): positions derive EXCLUSIVELY
+  /// from the period's statement + confirmed ledger charges — nothing
+  /// is accepted from the caller.
+  List<InvoiceLine> derivedLines(String memberId, String period) {
+    final s = statements[period] ?? statement.copyWith(period: period);
+    return [
+      if (s.feeCents > 0)
+        InvoiceLine(
+            kind: 'subscription',
+            label: '${s.subscriptionPct}',
+            amountCents: s.feeCents),
+      if (s.overageCents > 0)
+        InvoiceLine(
+            kind: 'overage',
+            label: '',
+            quantity: s.extraHalfDays,
+            amountCents: s.overageCents),
+      if (s.accessorySupplementCents > 0)
+        InvoiceLine(
+            kind: 'accessories',
+            label: '',
+            amountCents: s.accessorySupplementCents),
+      if (s.levelSupplementCents > 0)
+        InvoiceLine(
+            kind: 'level', label: '', amountCents: s.levelSupplementCents),
+      if (s.officeSupplementCents > 0)
+        InvoiceLine(
+            kind: 'office', label: '', amountCents: s.officeSupplementCents),
+      if (s.deskSupplementCents > 0)
+        InvoiceLine(
+            kind: 'desk', label: '', amountCents: s.deskSupplementCents),
+      for (final entry in ledger)
+        if (entry.memberId == memberId &&
+            entry.period == period &&
+            entry.kind == LedgerKind.charge &&
+            (entry.category == LedgerCategory.service ||
+                entry.category == LedgerCategory.package ||
+                entry.category == LedgerCategory.adjustment))
+          InvoiceLine(
+              kind: entry.category.name,
+              label: entry.description,
+              amountCents: entry.amountCents),
+    ];
+  }
+
+  @override
+  Future<({List<InvoiceLine> lines, int totalCents})> previewInvoice({
+    required String workspaceId,
+    required String memberId,
+    required String period,
+  }) async {
+    final lines = derivedLines(memberId, period);
+    return (
+      lines: lines,
+      totalCents: lines.fold(0, (sum, l) => sum + l.amountCents),
+    );
+  }
+
   @override
   Future<String> createInvoice({
     required String workspaceId,
     required String memberId,
-    required String title,
-    required List<InvoiceLine> lines,
-    String? period,
+    required String period,
     String? replacesId,
   }) async {
+    final lines = derivedLines(memberId, period);
+    if (lines.isEmpty) throw StateError('nothing to invoice for this period');
     var replacesNumber = '';
     if (replacesId != null) {
       // Server contract (0061): the reference must resolve, one direct
@@ -57,7 +115,7 @@ class FakeMoneyRepository implements MoneyRepository {
       number: 'INV-2026-${_nextInvoice.toString().padLeft(4, '0')}',
       issuedAt: DateTime.now(),
       period: period,
-      title: title,
+      title: period,
       lines: lines,
       totalCents: lines.fold(0, (sum, l) => sum + l.amountCents),
       currency: 'EUR',
