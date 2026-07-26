@@ -616,7 +616,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               ),
             ),
             // Space QR scan (field request): a desk/office/level card
-            // opens that space's permitted actions.
+            // opens that space's permitted actions. Feature-gated since
+            // the hierarchy pass.
+            if (ref
+                .watch(enabledFeaturesSyncProvider)
+                .contains(WorkspaceFeature.spaceQrCodes))
             IconButton(
               key: const ValueKey('reserve-scan-button'),
               tooltip: l10n?.spaceScanTitle ?? 'Scan a space code',

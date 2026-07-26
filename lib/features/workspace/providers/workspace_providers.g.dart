@@ -541,7 +541,7 @@ final class EnabledFeaturesProvider
   }
 }
 
-String _$enabledFeaturesHash() => r'e00f205c90b700b3e55fd58ecb417ad0ed1b03fb';
+String _$enabledFeaturesHash() => r'838e424e27423aebcbb620c0d2d369b6347f995c';
 
 /// Sync convenience over [enabledFeatures] for build methods and router
 /// redirects. While the workspace is still loading it falls back to ALL
@@ -603,7 +603,7 @@ final class EnabledFeaturesSyncProvider
 }
 
 String _$enabledFeaturesSyncHash() =>
-    r'e00a472e646ad2f10612458cdd9653fa46b4e429';
+    r'c52b3f67c83044e46408ec70a8fcdfda35485b80';
 
 /// The signed-in user's membership (roles!) in the active workspace.
 

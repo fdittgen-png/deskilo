@@ -115,7 +115,11 @@ GoRouter router(Ref ref) {
       final me = ref.read(myMemberProvider).value;
       final atKiosk = state.matchedLocation == '/kiosk';
       final atGate = state.matchedLocation == '/kiosk-gate';
-      if (me != null && me.isKiosk) {
+      // The kioskMode feature (hierarchy pass) turns the whole module
+      // off: flagged accounts just behave as regular members.
+      if (me != null &&
+          me.isKiosk &&
+          featureEnabled(WorkspaceFeature.kioskMode)) {
         switch (ref.read(kioskModeProvider)) {
           case KioskModeDecision.pending:
             if (!atGate) return '/kiosk-gate';
@@ -192,10 +196,13 @@ GoRouter router(Ref ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                // Member directory (#224, tab since #230): open to EVERY
-                // member and deliberately ungated (core, like Plan) —
-                // unlike /members (owner management).
+                // Member directory (#224, tab since #230) — gated by the
+                // membersDirectory feature since the hierarchy pass.
                 path: '/directory',
+                redirect: (context, state) =>
+                    featureEnabled(WorkspaceFeature.membersDirectory)
+                        ? null
+                        : '/plan',
                 builder: (context, state) => const DirectoryScreen(),
               ),
             ],
@@ -262,7 +269,7 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/workspace-code',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner ? null : '/plan';
         },
         builder: (context, state) => const WorkspaceCodeScreen(),
@@ -274,7 +281,7 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/nfc-config',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner && featureEnabled(WorkspaceFeature.nfcBadges)
               ? null
               : '/plan';
@@ -284,7 +291,7 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/payment-config',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner && featureEnabled(WorkspaceFeature.onlinePayments)
               ? null
               : '/plan';
@@ -294,7 +301,7 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/billing',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner ? null : '/plan';
         },
         builder: (context, state) => const BillingScreen(),
@@ -302,7 +309,7 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/services',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner && featureEnabled(WorkspaceFeature.services)
               ? null
               : '/plan';
@@ -326,7 +333,7 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/features',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner ? null : '/plan';
         },
         builder: (context, state) => const FeaturesScreen(),
@@ -334,7 +341,7 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/workspace-settings',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner ? null : '/plan';
         },
         builder: (context, state) => const WorkspaceSettingsScreen(),
@@ -342,7 +349,7 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/validation',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner ? null : '/plan';
         },
         builder: (context, state) => const ValidationSettingsScreen(),
@@ -350,7 +357,7 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/availability',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner ? null : '/plan';
         },
         builder: (context, state) => const AvailabilityScreen(),
@@ -369,7 +376,7 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/editor',
         redirect: (context, state) {
-          final isOwner = ref.read(myMemberProvider).value?.isOwner ?? false;
+          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner ? null : '/plan';
         },
         builder: (context, state) => const EditorScreen(),

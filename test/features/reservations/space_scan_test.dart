@@ -312,4 +312,25 @@ void main() {
     final r = reservations.reservations.single;
     expect(r.levelId, plans.levels.single.id);
   });
+
+  testWidgets(
+      'spaceQrCodes OFF (hierarchy pass): the hub shows no scan button',
+      (tester) async {
+    tester.view.physicalSize = const Size(800, 1400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
+          workspace: FakeWorkspaceRepository.withWorkspace(
+            featureFlags: const {'spaceQrCodes': false},
+          ),
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('reserve-scan-button')), findsNothing);
+  });
 }

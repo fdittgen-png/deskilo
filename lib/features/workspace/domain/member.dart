@@ -17,6 +17,19 @@ enum MemberStatus {
   exited,
 }
 
+/// Co-ownership flavor (migration 0058). Wire values by name.
+enum CoOwnerStatus {
+  none,
+  /// Owner permissions NOW + automatic succession.
+  active,
+  /// Successor-in-waiting: becomes owner when activated by the owner or
+  /// when the last owner leaves.
+  passive;
+
+  static CoOwnerStatus fromWire(String? raw) =>
+      CoOwnerStatus.values.asNameMap()[raw] ?? CoOwnerStatus.none;
+}
+
 /// A user's participation in one workspace. Roles are additive flags
 /// (spec §2): every member is a worker; admin/owner add capabilities.
 @freezed
@@ -52,8 +65,19 @@ sealed class Member with _$Member {
     /// Whether this member may reserve/check into a WHOLE level (0050);
     /// granted by the owner or an admin, never self-set.
     @Default(false) bool canReserveLevel,
+
+    /// Co-ownership (0058): active = owner permissions now + automatic
+    /// succession; passive = successor-in-waiting.
+    @Default(CoOwnerStatus.none) CoOwnerStatus coOwner,
   }) = _Member;
 
   /// Admin capability (owners inherit it, spec §2).
   bool get canAdminister => (isAdmin || isOwner) && status == MemberStatus.active;
+
+  /// Owner-level PERMISSION (0058): literal owners and ACTIVE co-owners.
+  /// Use this for permission gates; use [isOwner] only where literal
+  /// ownership matters (role chips, last-owner semantics).
+  bool get actsAsOwner =>
+      (isOwner || coOwner == CoOwnerStatus.active) &&
+      status == MemberStatus.active;
 }

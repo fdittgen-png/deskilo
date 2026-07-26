@@ -28,5 +28,16 @@
   "featureLevelBooking": "Büro- & Etagen-Reservierungen",
   "featureLevelBookingDesc": "Ein ganzes Büro oder eine Etage als eine Buchung reservieren, je Halbtag bepreist. Das Recht wird pro Mitglied vergeben.",
   "featureAdminLevelAssign": "Admins können Etagen zuweisen",
-  "featureAdminLevelAssignDesc": "Admins weisen Mitgliedern Etagen-Reservierungen zu. Die Inhaberin kann es immer."
+  "featureAdminLevelAssignDesc": "Admins weisen Mitgliedern Etagen-Reservierungen zu. Die Inhaberin kann es immer.",
+  "featureKioskMode": "Kiosk-Modus",
+  "featureKioskModeDesc": "Wandtablet-Konten, verriegelt auf den Live-Plan; Mitglieder handeln per Badge.",
+  "featureMembersDirectory": "Mitgliederverzeichnis",
+  "featureMembersDirectoryDesc": "Der Community-Tab: wer da ist, Status, Präsenz.",
+  "featureWhatsappIntegration": "WhatsApp-Integration",
+  "featureWhatsappIntegrationDesc": "Mitglieder per WhatsApp anschreiben und die Community-Gruppe verlinken.",
+  "featureSpaceQrCodes": "Raum-QR-Codes",
+  "featureSpaceQrCodesDesc": "Druckbare QR-Karten je Platz, Tisch, Büro und Etage — scannen zum Reservieren oder Einchecken.",
+  "featureRequires": "Benötigt {feature}",
+  "featureCoOwner": "Mit-Inhaberinnen",
+  "featureCoOwnerDesc": "Mit-Inhaber ernennen: Inhaber-Rechte sofort (aktiv) oder wartende Nachfolge (passiv)."
 }

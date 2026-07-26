@@ -585,6 +585,29 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get coOwnerAction => 'Comproprietà';
+
+  @override
+  String get coOwnerNone => 'Nessun ruolo di comproprietario';
+
+  @override
+  String get coOwnerActive =>
+      'Comproprietario attivo — permessi da proprietario subito, successione automatica';
+
+  @override
+  String get coOwnerPassive =>
+      'Comproprietario passivo — diventa proprietario all\'attivazione o quando il proprietario se ne va';
+
+  @override
+  String get coOwnerActivate => 'Promuovi a proprietario ora';
+
+  @override
+  String get memberCoOwnerChip => 'Comproprietario';
+
+  @override
+  String get memberCoOwnerPassiveChip => 'Comproprietario (passivo)';
+
+  @override
   String get developerMode => 'Modalità sviluppatore';
 
   @override
@@ -974,6 +997,46 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featureAdminLevelAssignDesc =>
       'Gli admin assegnano prenotazioni di piano ai membri. Il proprietario può sempre.';
+
+  @override
+  String get featureKioskMode => 'Modalità chiosco';
+
+  @override
+  String get featureKioskModeDesc =>
+      'Account tablet a parete bloccati sulla piantina live; i membri agiscono col badge.';
+
+  @override
+  String get featureMembersDirectory => 'Elenco dei membri';
+
+  @override
+  String get featureMembersDirectoryDesc =>
+      'La scheda comunità: chi c\'è, stati, presenza.';
+
+  @override
+  String get featureWhatsappIntegration => 'Integrazione WhatsApp';
+
+  @override
+  String get featureWhatsappIntegrationDesc =>
+      'Scrivere ai membri su WhatsApp e collegare il gruppo della comunità.';
+
+  @override
+  String get featureSpaceQrCodes => 'Codici QR degli spazi';
+
+  @override
+  String get featureSpaceQrCodesDesc =>
+      'Schede QR stampabili per postazione, tavolo, ufficio e piano — scansiona per prenotare o fare check-in.';
+
+  @override
+  String featureRequires(String feature) {
+    return 'Richiede $feature';
+  }
+
+  @override
+  String get featureCoOwner => 'Comproprietari';
+
+  @override
+  String get featureCoOwnerDesc =>
+      'Nominare comproprietari: permessi da proprietario subito (attivo) o successione in attesa (passivo).';
 
   @override
   String get helpTitle => 'Aiuto';

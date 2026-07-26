@@ -584,6 +584,29 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get coOwnerAction => 'Mit-Inhaberschaft';
+
+  @override
+  String get coOwnerNone => 'Keine Mit-Inhaber-Rolle';
+
+  @override
+  String get coOwnerActive =>
+      'Aktive Mit-Inhaberin — Inhaber-Rechte sofort, automatische Nachfolge';
+
+  @override
+  String get coOwnerPassive =>
+      'Passive Mit-Inhaberin — wird Inhaberin bei Aktivierung oder wenn der Inhaber geht';
+
+  @override
+  String get coOwnerActivate => 'Jetzt zur Inhaberin machen';
+
+  @override
+  String get memberCoOwnerChip => 'Mit-Inhaberin';
+
+  @override
+  String get memberCoOwnerPassiveChip => 'Mit-Inhaberin (passiv)';
+
+  @override
   String get developerMode => 'Entwicklermodus';
 
   @override
@@ -972,6 +995,46 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureAdminLevelAssignDesc =>
       'Admins weisen Mitgliedern Etagen-Reservierungen zu. Die Inhaberin kann es immer.';
+
+  @override
+  String get featureKioskMode => 'Kiosk-Modus';
+
+  @override
+  String get featureKioskModeDesc =>
+      'Wandtablet-Konten, verriegelt auf den Live-Plan; Mitglieder handeln per Badge.';
+
+  @override
+  String get featureMembersDirectory => 'Mitgliederverzeichnis';
+
+  @override
+  String get featureMembersDirectoryDesc =>
+      'Der Community-Tab: wer da ist, Status, Präsenz.';
+
+  @override
+  String get featureWhatsappIntegration => 'WhatsApp-Integration';
+
+  @override
+  String get featureWhatsappIntegrationDesc =>
+      'Mitglieder per WhatsApp anschreiben und die Community-Gruppe verlinken.';
+
+  @override
+  String get featureSpaceQrCodes => 'Raum-QR-Codes';
+
+  @override
+  String get featureSpaceQrCodesDesc =>
+      'Druckbare QR-Karten je Platz, Tisch, Büro und Etage — scannen zum Reservieren oder Einchecken.';
+
+  @override
+  String featureRequires(String feature) {
+    return 'Benötigt $feature';
+  }
+
+  @override
+  String get featureCoOwner => 'Mit-Inhaberinnen';
+
+  @override
+  String get featureCoOwnerDesc =>
+      'Mit-Inhaber ernennen: Inhaber-Rechte sofort (aktiv) oder wartende Nachfolge (passiv).';
 
   @override
   String get helpTitle => 'Hilfe';

@@ -1098,6 +1098,9 @@ class _WorkspaceSettingsScreenState
                   // Space QR codes (field request): one printable card
                   // per desk, office and level — members scan them to
                   // reserve or check in on the spot.
+                  if (ref
+                      .watch(enabledFeaturesSyncProvider)
+                      .contains(WorkspaceFeature.spaceQrCodes))
                   ListTile(
                     key: const Key('workspaceSettingsSpaceCodes'),
                     contentPadding: EdgeInsets.zero,

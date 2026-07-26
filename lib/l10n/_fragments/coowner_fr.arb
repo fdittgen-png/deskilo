@@ -1,0 +1,10 @@
+{
+  "@@locale": "fr",
+  "coOwnerAction": "Copropriété",
+  "coOwnerNone": "Aucun rôle de copropriétaire",
+  "coOwnerActive": "Copropriétaire actif — permissions de propriétaire immédiates, succession automatique",
+  "coOwnerPassive": "Copropriétaire passif — devient propriétaire à l'activation ou au départ du propriétaire",
+  "coOwnerActivate": "Promouvoir propriétaire maintenant",
+  "memberCoOwnerChip": "Copropriétaire",
+  "memberCoOwnerPassiveChip": "Copropriétaire (passif)"
+}

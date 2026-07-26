@@ -564,6 +564,32 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setCoOwner(String memberId, CoOwnerStatus status) async {
+    // Server contract (0058): active co-owners also become admins.
+    Member patch(Member m) => m.copyWith(
+        coOwner: status,
+        isAdmin: status == CoOwnerStatus.active ? true : m.isAdmin);
+    if (myMember.id == memberId) {
+      myMember = patch(myMember);
+      return;
+    }
+    final i = otherMembers.indexWhere((m) => m.id == memberId);
+    if (i >= 0) otherMembers[i] = patch(otherMembers[i]);
+  }
+
+  @override
+  Future<void> activateCoOwner(String memberId) async {
+    Member promote(Member m) =>
+        m.copyWith(isOwner: true, isAdmin: true, coOwner: CoOwnerStatus.none);
+    if (myMember.id == memberId) {
+      myMember = promote(myMember);
+      return;
+    }
+    final i = otherMembers.indexWhere((m) => m.id == memberId);
+    if (i >= 0) otherMembers[i] = promote(otherMembers[i]);
+  }
+
+  @override
   Future<void> unsetMyKiosk(String workspaceId) async {
     // Server contract (0056): only an actual kiosk membership reverts.
     if (!myMember.isKiosk || myMember.workspaceId != workspaceId) {

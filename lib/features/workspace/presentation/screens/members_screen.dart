@@ -183,6 +183,8 @@ class MembersScreen extends ConsumerWidget {
     required bool isSelf,
     required bool servicesOn,
     required bool levelBookingOn,
+    required bool kioskOn,
+    required bool coOwnerOn,
   }) async {
     final l10n = AppLocalizations.of(context);
     final active = member.status == MemberStatus.active;
@@ -273,7 +275,39 @@ class MembersScreen extends ConsumerWidget {
               : (l10n?.memberMakeAdmin ?? 'Make admin'),
           onTap: () => _changeRole(context, ref, member),
         ),
-      if (isOwner && !member.isOwner && active)
+      // Co-ownership (0058): owner-level callers appoint active/passive
+      // co-owners; a co-owner can be promoted to FULL owner on the
+      // spot. The server-side succession runs regardless of the flag.
+      if (isOwner &&
+          coOwnerOn &&
+          !member.isOwner &&
+          !member.isKiosk &&
+          !isSelf &&
+          active)
+        _sheetAction(
+          context,
+          icon: switch (member.coOwner) {
+            CoOwnerStatus.active => Icons.workspace_premium,
+            CoOwnerStatus.passive => Icons.workspace_premium_outlined,
+            CoOwnerStatus.none => Icons.badge_outlined,
+          },
+          label: l10n?.coOwnerAction ?? 'Co-ownership',
+          onTap: () => _pickCoOwner(context, ref, member),
+        ),
+      if (isOwner &&
+          coOwnerOn &&
+          member.coOwner != CoOwnerStatus.none &&
+          active)
+        _sheetAction(
+          context,
+          icon: Icons.military_tech_outlined,
+          label: l10n?.coOwnerActivate ?? 'Promote to owner now',
+          onTap: () => _activateCoOwner(context, ref, member),
+        ),
+      if (isOwner &&
+          !member.isOwner &&
+          active &&
+          (member.isKiosk || kioskOn))
         _sheetAction(
           context,
           icon: member.isKiosk
@@ -378,6 +412,93 @@ class MembersScreen extends ConsumerWidget {
         },
       ),
     );
+  }
+
+  /// Picks the member's co-ownership flavor (0058).
+  Future<void> _pickCoOwner(
+    BuildContext context,
+    WidgetRef ref,
+    Member member,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final options = <(CoOwnerStatus, String)>[
+      (CoOwnerStatus.none, l10n?.coOwnerNone ?? 'No co-owner role'),
+      (
+        CoOwnerStatus.active,
+        l10n?.coOwnerActive ??
+            'Active co-owner — owner permissions now, automatic succession'
+      ),
+      (
+        CoOwnerStatus.passive,
+        l10n?.coOwnerPassive ??
+            'Passive co-owner — becomes owner when activated or when the '
+                'owner leaves'
+      ),
+    ];
+    final chosen = await showDialog<CoOwnerStatus>(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: Text(l10n?.coOwnerAction ?? 'Co-ownership'),
+        children: [
+          for (final (status, label) in options)
+            SimpleDialogOption(
+              key: ValueKey('co-owner-${status.name}'),
+              onPressed: () => Navigator.of(context).pop(status),
+              child: Row(
+                children: [
+                  Icon(
+                    member.coOwner == status
+                        ? Icons.radio_button_checked
+                        : Icons.radio_button_unchecked,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(child: Text(label)),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+    if (chosen == null || chosen == member.coOwner) return;
+    if (!context.mounted) return;
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'co-owner update failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () =>
+          ref.read(workspaceRepositoryProvider).setCoOwner(member.id, chosen),
+    )) {
+      return;
+    }
+    ref
+      ..invalidate(workspaceMembersProvider)
+      ..invalidate(myMemberProvider);
+  }
+
+  /// Promotes a co-owner to FULL owner right now (0058).
+  Future<void> _activateCoOwner(
+    BuildContext context,
+    WidgetRef ref,
+    Member member,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'co-owner activation failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () =>
+          ref.read(workspaceRepositoryProvider).activateCoOwner(member.id),
+    )) {
+      return;
+    }
+    ref
+      ..invalidate(workspaceMembersProvider)
+      ..invalidate(myMemberProvider);
   }
 
   Future<void> _togglePaused(
@@ -655,10 +776,14 @@ class MembersScreen extends ConsumerWidget {
     // Admins reach this screen too (0044); owner-only controls gate on
     // [isOwner], and the self row never offers the reservation limit.
     final me = ref.watch(myMemberProvider).value;
-    final isOwner = me?.isOwner ?? false;
+    // Permission, not literal ownership: active co-owners (0058) get
+    // the full owner surface.
+    final isOwner = me?.actsAsOwner ?? false;
     // Consumption entry points follow the services feature (#146).
     final features = ref.watch(enabledFeaturesSyncProvider);
     final servicesOn = features.contains(WorkspaceFeature.services);
+    final kioskOn = features.contains(WorkspaceFeature.kioskMode);
+    final coOwnerOn = features.contains(WorkspaceFeature.coOwner);
     final levelBookingOn =
         features.contains(WorkspaceFeature.levelBooking);
 
@@ -719,6 +844,11 @@ class MembersScreen extends ConsumerWidget {
                         ),
                       if (member.isOwner)
                         Text(l10n?.memberRoleOwner ?? 'Owner'),
+                      if (member.coOwner == CoOwnerStatus.active)
+                        Text(l10n?.memberCoOwnerChip ?? 'Co-owner'),
+                      if (member.coOwner == CoOwnerStatus.passive)
+                        Text(l10n?.memberCoOwnerPassiveChip ??
+                            'Co-owner (passive)'),
                       if (member.isAdmin && !member.isOwner)
                         Text(l10n?.memberRoleAdmin ?? 'Admin'),
                       if (member.status == MemberStatus.pending)
@@ -749,6 +879,8 @@ class MembersScreen extends ConsumerWidget {
                     isSelf: member.id == me?.id,
                     servicesOn: servicesOn,
                     levelBookingOn: levelBookingOn,
+                    kioskOn: kioskOn,
+                    coOwnerOn: coOwnerOn,
                   ),
                 ),
             ],

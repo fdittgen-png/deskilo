@@ -445,4 +445,32 @@ void main() {
     expect(reservations.kioskActs, isEmpty);
     expect(find.byKey(const ValueKey('kiosk-summary-name')), findsNothing);
   });
+
+  testWidgets(
+      'kioskMode OFF (hierarchy pass): a kiosk-flagged account behaves '
+      'as a regular member — no gate, normal shell', (tester) async {
+    final plans = FakeFloorPlanRepository()..seedSmallPlan();
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+      featureFlags: const {'kioskMode': false},
+    );
+    workspace.myMember = workspace.myMember.copyWith(
+      isAdmin: false,
+      isOwner: false,
+      isKiosk: true,
+    );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          floorPlan: plans,
+          workspace: workspace,
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('kiosk-gate-title')), findsNothing);
+    expect(find.byType(KioskScreen), findsNothing);
+    expect(find.byType(ShellBottomBar), findsOneWidget);
+  });
 }
