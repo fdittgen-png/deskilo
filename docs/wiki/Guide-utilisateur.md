@@ -30,6 +30,7 @@ DesKilo a trois rôles cumulatifs, plus un compte « appareil » :
 | **Membre** | Pointer à l'arrivée/au départ, réserver, soumettre des dépenses, voir et gérer ses propres événements et son propre compte |
 | **Admin** | Tout ce qu'un membre peut faire, plus : agir *pour n'importe qui* (réservations, paiements, dépenses — soumis à confirmation, §6), approuver les dépenses, émettre des badges de borne |
 | **Propriétaire** | Tout ce qu'un admin peut faire, plus : modifier l'espace physique, définir les forfaits et les prix, gérer les rôles, les bornes et les réglages de l'espace |
+| **Copropriétaire** | *Actif* : les permissions du propriétaire immédiatement, plus la succession automatique. *Passif* : un successeur en attente, sans permissions supplémentaires aujourd'hui |
 | **Borne** | Un compte de tablette murale (§9) — n'affiche que le plan ; les membres agissent à travers elle avec un badge |
 
 **Chaque invitation est liée à un rôle.** Sur l'écran *Identifiant & QR* du propriétaire, il existe deux invitations, chacune avec son propre QR code et son propre code :
@@ -37,7 +38,9 @@ DesKilo a trois rôles cumulatifs, plus un compte « appareil » :
 - **Invitation membre** — l'identifiant de l'espace lui-même. Imprimez-le, affichez-le au mur, partagez-le librement : quiconque le scanne ou le saisit rejoint comme simple membre.
 - **Invitation admin** — un **code personnel à usage unique**, émis par un propriétaire pour une personne précise. Il admet cette seule personne comme admin, puis expire (un code inutilisé périme après 14 jours). Émettez-en un nouveau par admin avec *Nouveau code admin*.
 
-**Il n'existe pas d'invitation propriétaire — c'est voulu.** La propriété ne peut être accordée que par un propriétaire existant, dans *Membres & forfaits*. Un espace garde toujours au moins un propriétaire : l'application refuse de rétrograder ou de retirer le dernier. Promouvoir ou rétrograder un **admin** passe par le flux de validation (§6) — le changement s'applique une fois confirmé par les validateurs de l'espace.
+**Il n'existe pas d'invitation propriétaire — c'est voulu.** La propriété ne peut être accordée que par un propriétaire existant, dans *Membres & forfaits*. Un espace garde toujours au moins un propriétaire. Promouvoir ou rétrograder un **admin** passe par le flux de validation (§6) — le changement s'applique une fois confirmé par les validateurs de l'espace.
+
+**Les copropriétaires gardent l'espace en vie.** Le propriétaire nomme n'importe quel membre ou admin copropriétaire (*Membres & forfaits → le membre → Copropriété*), en deux variantes : un copropriétaire **actif** travaille immédiatement avec les permissions du propriétaire ; un copropriétaire **passif** n'a aucune permission supplémentaire jusqu'au jour où l'on a besoin de lui. Dans les deux cas, la succession est automatique : si le dernier propriétaire s'en va — quitte l'espace, est retiré, ou son compte disparaît — le meilleur copropriétaire (actif avant passif) **devient propriétaire instantanément**, côté serveur, sans aucune action requise. Le propriétaire peut aussi passer la main délibérément, à tout moment, avec *Promouvoir propriétaire maintenant*. Une nuance : les règles de validation qui exigent la signature du *propriétaire* (§6) désignent toujours un propriétaire au sens strict, jamais un copropriétaire actif.
 
 Le QR encode un lien qui nomme le rôle accordé (`deskilo://join?role=…`). Falsifier le lien ne change rien — le serveur déduit le rôle du code lui-même : l'identifiant d'espace fait toujours rejoindre comme membre, et une invitation personnelle fait rejoindre exactement dans le rôle pour lequel elle a été émise, une seule fois. Un code admin transféré déjà utilisé — ou expiré — n'admet personne.
 
@@ -45,7 +48,7 @@ Le QR encode un lien qui nomme le rôle accordé (`deskilo://join?role=…`). Fa
 
 ## 3. Le plan (onglet Plan)
 
-Le plan montre le niveau actif de votre espace : bureaux, tables et places, avec un code couleur — **libre**, **réservée**, **occupée**, **la mienne**, **bloquée**. Les places occupées affichent le prénom de l'occupant, un **badge de pointage** quand il est arrivé, et un **point vert** quand il est en ligne dans l'application.
+Le plan montre le niveau actif de votre espace : bureaux, tables et places, avec un code couleur — **libre**, **réservée**, **occupée**, **la mienne**, **bloquée**. Il s'ouvre **instantanément à partir des dernières données connues** et se rafraîchit en arrière-plan — sur un Wi-Fi capricieux, vous voyez toujours l'état le plus récent au lieu d'un écran vide. Les places occupées affichent le prénom de l'occupant, un **badge de pointage** quand il est arrivé, et un **point vert** quand il est en ligne dans l'application.
 
 Le plan peut ressembler à votre espace réel : le propriétaire peut mettre une **photo de la pièce en arrière-plan du niveau** et placer des **images d'illustration redimensionnables** (plantes, canapés…) sur la grille. Un curseur de **transparence des tables** dans les réglages laisse la photo transparaître sous les tables dessinées.
 
@@ -119,7 +122,9 @@ Toute l'administration vit sous **Réglages → Administration**. Une règle à 
 - **Éditeur** (barre d'app) : dessinez votre espace sur une grille — niveaux, bureaux, tables, places (avec orientation, type de chaise et équipements), blocage de places pour maintenance. Ajoutez une **photo d'arrière-plan** par niveau et des **images d'illustration** déplaçables et redimensionnables. Supprimer un élément portant des réservations futures oblige à les résoudre d'abord.
 - **Identifiant & QR** : vos invitations liées aux rôles (§2). Vous pouvez remplacer l'identifiant généré par un identifiant mémorable (4–20 lettres/chiffres), le copier, ou partager le QR en PNG.
 - **Disponibilité** : jours d'ouverture, jours de fermeture, et granularité — plage horaire libre, grille de minutes (5/15/30/60), demi-journées, ou journées entières uniquement.
-- **Fonctionnalités** : activez ou désactivez des modules entiers par espace — calendrier, événements, argent, services, export PDF, séries, réserver pour autrui, notifications push, blocage de places par les admins, suppléments d'accessoires, **paiements en ligne**, **badges RFID/NFC**, **réservations de bureau et de niveau**. Désactiver un module retire *tous* ses écrans et boutons pour tous les membres.
+- **Fonctionnalités** : activez ou désactivez des modules entiers par espace — calendrier, événements, argent, services, export PDF, séries, réserver pour autrui, notifications push, blocage de places par les admins, suppléments d'accessoires, **paiements en ligne**, **réservations de bureau et de niveau**, **mode borne**, **badges RFID/NFC**, **annuaire des membres**, **intégration WhatsApp**, **codes QR des espaces**, **copropriétaires**. Désactiver un module retire *tous* ses écrans et boutons pour tous les membres.
+
+  La liste est **hiérarchique** : une fonctionnalité qui en nécessite une autre apparaît en retrait sous elle avec une note *Nécessite…*, et est grisée tant que son parent est désactivé — *Argent* porte les services, les suppléments d'accessoires et les paiements en ligne ; *Réservations de bureau et de niveau* porte le droit d'attribution par les admins ; *Mode borne* porte les badges RFID/NFC ; *Annuaire des membres* porte l'intégration WhatsApp. Désactiver un parent retire tout son sous-arbre de l'application ; le choix enregistré de l'enfant revient intact quand le parent est réactivé.
 
 <p><img src="images/workspace-id-qr.jpg" width="220"> <img src="images/availability-granularity.jpg" width="220"> <img src="images/features-toggles-1.jpg" width="220"> <img src="images/features-toggles-2.jpg" width="220"></p>
 
@@ -151,6 +156,14 @@ Quatre étapes font de « scanner le code sur la table » le geste de réservati
 4. Imprimez les cartes : **Réglages de l'espace → Codes QR des espaces (PDF)** — un QR au format carte de crédit par **poste, table, bureau et niveau**, dix par page A4, enregistré dans Téléchargements. Découpez-les et collez chaque carte sur son espace.
 
 Une réservation de bureau couvre **toutes les tables qu'il contient** ; une réservation de niveau couvre l'étage entier. Les deux ne sont possibles que tant que rien n'est réservé à l'intérieur — et elles apparaissent comme des lignes à part entière sur la facture du membre.
+
+### Copropriétaires (propriétaires)
+
+Faites en sorte que la communauté ne dépende jamais d'un seul compte :
+
+1. Ouvrez *Membres & forfaits → le membre → **Copropriété*** et choisissez **actif** (permissions de propriétaire dès maintenant) ou **passif** (successeur en attente).
+2. Passez la main à tout moment avec ***Promouvoir propriétaire maintenant*** — le copropriétaire devient propriétaire à part entière à vos côtés.
+3. Si le dernier propriétaire quitte un jour l'espace, le meilleur copropriétaire est **promu automatiquement** sur le serveur — actif avant passif. Ce filet de sécurité fonctionne même quand l'interrupteur de la fonctionnalité *Copropriétaires* est désactivé (il ne masque que les boutons de nomination).
 
 ### Configurer les paiements en ligne (propriétaires)
 

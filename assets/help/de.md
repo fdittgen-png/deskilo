@@ -30,6 +30,7 @@ DesKilo hat drei additive Rollen plus ein Gerätekonto:
 | **Mitglied** | Ein-/auschecken, reservieren, Ausgaben einreichen, eigene Ereignisse und das eigene Konto sehen und verwalten |
 | **Admin** | Alles, was ein Mitglied kann, plus: *für andere* handeln (Reservierungen, Zahlungen, Ausgaben — bestätigungspflichtig, §6), Ausgaben freigeben, Kiosk-Badges ausstellen |
 | **Inhaberin** | Alles, was ein Admin kann, plus: den physischen Workspace bearbeiten, Tarife und Preise festlegen, Rollen, Kiosk-Geräte und Einstellungen verwalten |
+| **Mit-Inhaberin** | *Aktiv*: sofort die Rechte der Inhaberin plus automatische Nachfolge. *Passiv*: Nachfolge in Wartestellung, heute ohne zusätzliche Rechte |
 | **Kiosk** | Ein Wandtablet-Konto (§9) — zeigt nur den Plan; echte Mitglieder handeln darüber mit einem Badge |
 
 **Jede Einladung ist an eine Rolle gebunden.** Auf dem Bildschirm *Workspace-ID & QR* gibt es zwei Einladungen, jede mit eigenem QR-Code und Code:
@@ -37,7 +38,9 @@ DesKilo hat drei additive Rollen plus ein Gerätekonto:
 - **Mitglieder-Einladung** — die Workspace-ID selbst. Drucken, an die Wand hängen, frei teilen: Wer sie scannt oder eintippt, tritt als einfaches Mitglied bei.
 - **Admin-Einladung** — ein **persönlicher, einmalig nutzbarer Code**, von einer Inhaberin für genau eine Person ausgestellt. Er lässt nur diese eine Person als Admin beitreten und verfällt dann (ungenutzte Codes verfallen nach 14 Tagen). Für jeden weiteren Admin mit *Neuer Admin-Code* einen neuen ausstellen.
 
-**Eine Inhaber-Einladung gibt es absichtlich nicht.** Inhaberschaft kann nur eine bestehende Inhaberin vergeben, unter *Mitglieder & Tarife*. Ein Workspace behält immer mindestens eine Inhaberin: Die App weigert sich, die letzte zu degradieren oder zu entfernen. **Admin**-Beförderungen und -Degradierungen laufen über den Validierungsfluss (§6) — sie greifen erst nach Bestätigung durch die Validierenden.
+**Eine Inhaber-Einladung gibt es absichtlich nicht.** Inhaberschaft kann nur eine bestehende Inhaberin vergeben, unter *Mitglieder & Tarife*. Ein Workspace behält immer mindestens eine Inhaberin. **Admin**-Beförderungen und -Degradierungen laufen über den Validierungsfluss (§6) — sie greifen erst nach Bestätigung durch die Validierenden.
+
+**Mit-Inhaberinnen halten den Workspace am Leben.** Die Inhaberin ernennt ein beliebiges Mitglied oder einen Admin zur Mit-Inhaberin (*Mitglieder & Tarife → das Mitglied → Mit-Inhaberschaft*), in einer von zwei Spielarten: Eine **aktive** Mit-Inhaberin arbeitet sofort mit den Rechten der Inhaberin; eine **passive** hat heute keine zusätzlichen Rechte — bis zu dem Tag, an dem sie gebraucht werden. In beiden Fällen ist die Nachfolge automatisch: Geht die letzte Inhaberin — sie tritt aus, wird entfernt oder ihr Konto verschwindet — wird die beste Mit-Inhaberin (aktiv vor passiv) **sofort zur Inhaberin**, auf dem Server, ohne dass jemand etwas tun muss. Die Inhaberin kann auch jederzeit bewusst übergeben, mit *Jetzt zur Inhaberin machen*. Eine Feinheit: Validierungsregeln, die die Mitzeichnung der *Inhaberin* verlangen (§6), meinen immer eine echte Inhaberin, nicht eine aktive Mit-Inhaberin.
 
 Der QR kodiert einen Link, der die vergebene Rolle nennt (`deskilo://join?role=…`). Manipulation am Link ändert nichts — der Server leitet die Rolle aus dem Code selbst ab: Die Workspace-ID lässt immer als Mitglied beitreten, eine persönliche Einladung genau in der Rolle, für die sie ausgestellt wurde — ein einziges Mal. Ein weitergeleiteter, bereits genutzter — oder abgelaufener — Admin-Code lässt niemanden mehr beitreten.
 
@@ -45,7 +48,7 @@ Der QR kodiert einen Link, der die vergebene Rolle nennt (`deskilo://join?role=�
 
 ## 3. Der Grundriss (Tab Plan)
 
-Der Plan zeigt die aktive Etage: Büros, Tische und Plätze, farbcodiert — **frei**, **reserviert**, **besetzt**, **meiner**, **gesperrt**. Besetzte Plätze zeigen den Vornamen, ein **Check-Abzeichen**, wenn die Person eingecheckt ist, und einen **grünen Punkt**, wenn sie gerade in der App online ist.
+Der Plan zeigt die aktive Etage: Büros, Tische und Plätze, farbcodiert — **frei**, **reserviert**, **besetzt**, **meiner**, **gesperrt**. Er öffnet sich **sofort aus den letzten bekannten Daten** und aktualisiert sich im Hintergrund — bei wackeligem WLAN siehst du den letzten Stand statt eines leeren Bildschirms. Besetzte Plätze zeigen den Vornamen, ein **Check-Abzeichen**, wenn die Person eingecheckt ist, und einen **grünen Punkt**, wenn sie gerade in der App online ist.
 
 Der Plan kann wie dein echter Raum aussehen: Die Inhaberin kann ein **Foto des Raums als Etagen-Hintergrund** hinterlegen und frei **skalierbare Illustrationsbilder** (Pflanzen, Sofas…) auf dem Raster platzieren. Ein Regler für die **Tisch-Transparenz** in den Einstellungen lässt das Foto durch die gezeichneten Tische durchscheinen.
 
@@ -123,7 +126,9 @@ Die gesamte Administration liegt unter **Einstellungen → Administration**. Ein
 - **Editor** (App-Leiste): Zeichne deinen Raum auf einem Raster — Etagen, Büros, Tische, Plätze (mit Ausrichtung, Stuhltyp und Ausstattung), Platzsperren für Wartung. Füge pro Etage ein **Hintergrundfoto** und verschieb- und skalierbare **Illustrationsbilder** hinzu. Löschen mit künftigen Reservierungen erzwingt erst deren Auflösung.
 - **Workspace-ID & QR**: deine rollengebundenen Einladungen (§2). Die generierte ID lässt sich durch eine merkbare ersetzen (4–20 Buchstaben/Ziffern), kopieren, und der QR als PNG teilen.
 - **Verfügbarkeit**: Öffnungstage, Schließtage und die Granularität — freie Start-/Endzeiten, ein Minutenraster (5/15/30/60), Halbtage oder nur ganze Tage.
-- **Funktionen**: Ganze Module pro Workspace ein-/ausschalten — Kalender, Ereignisse, Geld, Services, PDF-Export, Serienbuchung, Buchen für andere, Push, Platzsperren durch Admins, Zubehör-Aufpreise, **Online-Zahlungen**, **RFID-/NFC-Badges**, **Büro- & Etagen-Reservierungen**. Ein ausgeschaltetes Modul entfernt *alle* seine Bildschirme und Buttons für jedes Mitglied.
+- **Funktionen**: Ganze Module pro Workspace ein-/ausschalten — Kalender, Ereignisse, Geld, Services, PDF-Export, Serienbuchung, Buchen für andere, Push, Platzsperren durch Admins, Zubehör-Aufpreise, **Online-Zahlungen**, **Büro- & Etagen-Reservierungen**, **Kiosk-Modus**, **RFID-/NFC-Badges**, **Mitgliederverzeichnis**, **WhatsApp-Integration**, **Raum-QR-Codes**, **Mit-Inhaberinnen**. Ein ausgeschaltetes Modul entfernt *alle* seine Bildschirme und Buttons für jedes Mitglied.
+
+  Die Liste ist **hierarchisch**: Eine Funktion, die eine andere benötigt, steht eingerückt darunter mit dem Hinweis *Benötigt…* und ist ausgegraut, solange ihr Elternteil aus ist — *Geld* trägt Services, Zubehör-Aufpreise und Online-Zahlungen; *Büro- & Etagen-Reservierungen* tragen das Zuweisungsrecht der Admins; *Kiosk-Modus* trägt die RFID-/NFC-Badges; *Mitgliederverzeichnis* trägt die WhatsApp-Integration. Ein ausgeschaltetes Elternteil nimmt seinen ganzen Teilbaum aus der App; die gespeicherte Wahl des Kindes kommt unangetastet zurück, sobald das Elternteil wiederkehrt.
 
 ![](assets/help/images/workspace-id-qr.jpg)
 
@@ -187,6 +192,14 @@ Vier Schritte machen aus „scanne den Code auf dem Tisch" den täglichen Buchun
 4. Drucke die Karten: **Workspace-Einstellungen → Raum-QR-Codes (PDF)** — ein QR im Kreditkartenformat je **Platz, Tisch, Büro und Etage**, zehn pro A4-Seite, gespeichert in Downloads. Ausschneiden und jede Karte auf ihren Raum kleben.
 
 Eine Büro-Reservierung umfasst **alle Tische darin**; eine Etagen-Reservierung die ganze Etage. Beide sind nur möglich, solange nichts darin gebucht ist — und sie erscheinen als eigene Zeilen auf der Rechnung des Mitglieds.
+
+### Mit-Inhaberinnen (Inhaberinnen)
+
+Sorge dafür, dass die Community nie von einem einzigen Konto abhängt:
+
+1. Öffne *Mitglieder & Tarife → das Mitglied → **Mit-Inhaberschaft*** und wähle **aktiv** (Inhaber-Rechte sofort) oder **passiv** (Nachfolge in Wartestellung).
+2. Übergib jederzeit mit ***Jetzt zur Inhaberin machen*** — die Mit-Inhaberin wird volle Inhaberin neben dir.
+3. Verlässt die letzte Inhaberin je den Workspace, wird die beste Mit-Inhaberin **automatisch auf dem Server befördert** — aktiv vor passiv. Dieses Sicherheitsnetz greift selbst dann, wenn der Funktions-Schalter *Mit-Inhaberinnen* aus ist (der Schalter blendet nur die Ernennungs-Buttons aus).
 
 ### Online-Zahlungen einrichten (Inhaberinnen)
 

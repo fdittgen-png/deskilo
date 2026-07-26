@@ -30,6 +30,7 @@ DesKilo has three additive roles, plus a device account:
 | **Member** | Check in/out, reserve, submit expenses, see and manage their own events and ledger |
 | **Admin** | Everything a member can, plus: act *for anybody* (reservations, payments, expenses — subject to confirmation, §6), approve expenses, issue kiosk badges |
 | **Owner** | Everything an admin can, plus: edit the physical workspace, define plans and prices, manage roles, kiosk devices, and workspace settings |
+| **Co-owner** | *Active*: the owner's permissions right now, plus automatic succession. *Passive*: a successor-in-waiting with no extra permissions today |
 | **Kiosk** | A wall-mounted tablet account (§9) — shows the plan only; real members act through it with a badge |
 
 **Every invitation is bound to a role.** On the owner's *Workspace ID & QR* screen there are two invites, each with its own QR code and code:
@@ -37,7 +38,9 @@ DesKilo has three additive roles, plus a device account:
 - **Member invite** — the workspace ID itself. Print it, pin it to the wall, share it freely: whoever scans or types it joins as a plain member.
 - **Admin invite** — a **personal, single-use code**, minted by an owner for one specific person. It admits that one person as an admin, then expires (unused codes lapse after 14 days). Mint a new one per admin with *New admin code*.
 
-**There is no owner invite — by design.** Ownership can only be granted by an existing owner, in *Members & plans*. A workspace always keeps at least one owner: the app refuses to demote or remove the last one. Promoting or demoting an **admin** goes through the validation flow (§6) — it applies once the workspace's validators confirm.
+**There is no owner invite — by design.** Ownership can only be granted by an existing owner, in *Members & plans*. A workspace always keeps at least one owner. Promoting or demoting an **admin** goes through the validation flow (§6) — it applies once the workspace's validators confirm.
+
+**Co-owners keep the workspace alive.** The owner appoints any member or admin as a co-owner (*Members & plans → the member → Co-ownership*), in one of two flavors: an **active** co-owner works with the owner's permissions immediately; a **passive** co-owner has no extra permissions until the day they are needed. Either way, succession is automatic: if the last owner leaves — exits, is removed, or their account disappears — the best co-owner (active before passive) **becomes owner instantly**, on the server, with no action required. The owner can also hand over deliberately at any time with *Promote to owner now*. One nuance: validation rules that demand the *owner's* sign-off (§6) always mean a literal owner, not an active co-owner.
 
 The QR encodes a link that names the role it grants (`deskilo://join?role=…`). Tampering with the link changes nothing — the server derives the role from the code itself: the workspace ID always joins as a member, and a personal invitation joins in exactly the role it was minted with, once. A forwarded admin code that was already used — or expired — admits nobody.
 
@@ -45,7 +48,7 @@ The QR encodes a link that names the role it grants (`deskilo://join?role=…`).
 
 ## 3. The floor plan (Plan tab)
 
-The plan shows the active level of your space: offices, desks, and seats, color-coded — **free**, **reserved**, **occupied**, **mine**, **blocked**. Occupied seats show who's there by first name, a **check badge** when they are checked in, and a **green dot** when they are online in the app right now.
+The plan shows the active level of your space: offices, desks, and seats, color-coded — **free**, **reserved**, **occupied**, **mine**, **blocked**. It opens **instantly from the last known data** and refreshes in the background — on flaky Wi-Fi you still see the most recent state instead of a blank screen. Occupied seats show who's there by first name, a **check badge** when they are checked in, and a **green dot** when they are online in the app right now.
 
 The plan can look like your real space: the owner can put a **photo of the room as the level background** and place freely **resizable illustration images** (plants, sofas…) on the grid. A **desk transparency** slider in the workspace settings lets the photo show through the drawn desks.
 
@@ -123,7 +126,9 @@ All administration lives under **Settings → Administration**. One rule to know
 - **Editor** (app bar): draw your space on a grid — add levels, outline offices, place desks, stamp seats (with orientation, chair type, and amenities), block seats for maintenance. Add a **background photo** per level and **illustration images** you can move and resize. Deleting anything with future reservations makes you resolve them first.
 - **Workspace ID & QR**: your role-bound invites (§2). You can replace the generated workspace ID with a memorable one (4–20 letters/digits), copy it, or share the QR as a PNG.
 - **Availability**: open weekdays, closure days, and the booking granularity — free start/end times, a minute grid (5/15/30/60), half-days, or full days only.
-- **Features**: switch whole modules on or off per workspace — calendar, events, money, services, PDF export, series booking, booking for others, push, seat blocking by admins, accessory supplements, **online payments**, **RFID/NFC badges**, **office & level reservations**. Switching a module off removes *all* of its screens and buttons for every member.
+- **Features**: switch whole modules on or off per workspace — calendar, events, money, services, PDF export, series booking, booking for others, push, seat blocking by admins, accessory supplements, **online payments**, **office & level reservations**, **kiosk mode**, **RFID/NFC badges**, **members directory**, **WhatsApp integration**, **space QR codes**, **co-owners**. Switching a module off removes *all* of its screens and buttons for every member.
+
+  The list is **hierarchical**: a feature that needs another sits indented under it with a *Requires…* note, and is greyed out while its parent is off — *Money* carries services, accessory supplements and online payments; *Office & level reservations* carries the admin assignment right; *Kiosk mode* carries RFID/NFC badges; *Members directory* carries the WhatsApp integration. Switching a parent off takes its whole subtree out of the app; the child's stored choice comes back untouched when the parent returns.
 
 ![](assets/help/images/workspace-id-qr.jpg)
 
@@ -187,6 +192,14 @@ Four steps turn "scan the code on the desk" into the daily booking flow (§4):
 4. Print the cards: **Workspace settings → Space QR codes (PDF)** — one credit-card QR per **seat, desk, office and level**, ten per A4 page, saved to Downloads. Cut them out and stick each card on its space.
 
 An office reservation covers **all the desks inside it**; a level reservation covers the whole floor. Both are only possible while nothing inside is booked — and they show up as their own lines on the member's bill.
+
+### Co-owners (owners)
+
+Make sure the community never depends on one account:
+
+1. Open *Members & plans → the member → **Co-ownership*** and pick **active** (owner permissions now) or **passive** (successor-in-waiting).
+2. Hand over at any time with ***Promote to owner now*** — the co-owner becomes a full owner alongside you.
+3. If the last owner ever leaves the workspace, the best co-owner is **promoted automatically** on the server — active before passive. This safety net works even while the *Co-owners* feature toggle is off (the toggle only hides the appointment buttons).
 
 ### Setting up online payments (owners)
 
