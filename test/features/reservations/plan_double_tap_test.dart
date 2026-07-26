@@ -10,7 +10,10 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
 import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -28,6 +31,7 @@ Future<
   WidgetTester tester, {
   Map<String, dynamic> featureFlags = const {'levelBooking': true},
   bool granted = true,
+  BookingGranularity? granularity,
   void Function(FakeFloorPlanRepository plans)? tunePlan,
   void Function(FakeReservationRepository reservations)? seedReservations,
 }) async {
@@ -54,6 +58,9 @@ Future<
   final workspace =
       FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags)
         ..openWeekdays['ws-1'] = [1, 2, 3, 4, 5, 6, 7];
+  if (granularity != null) {
+    workspace.bookingGranularities['ws-1'] = granularity;
+  }
   if (granted) {
     workspace.myMember = workspace.myMember.copyWith(canReserveLevel: true);
   }
@@ -107,7 +114,11 @@ void main() {
     await doubleTapCell(tester, 12.5, 4.5);
 
     expect(find.text('Window desk'), findsWidgets);
+    // 0065 — Reserve opens the seat sheet's period/repeat picker for
+    // the whole space; confirming books the shown window.
     await tester.tap(find.byKey(const ValueKey('space-reserve')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
     await tester.pumpAndSettle();
 
     final created = env.reservations.reservations.single;
@@ -194,5 +205,88 @@ void main() {
     expect(find.byKey(const ValueKey('space-reserve')), findsNothing);
     expect(find.byKey(const ValueKey('space-checkin')), findsNothing);
     expect(find.text('Window desk'), findsNothing);
+  });
+
+  testWidgets(
+      'RESERVE offers the CONFIGURED period picker (0065): half-day '
+      'chips edit the whole-desk window like a seat booking',
+      (tester) async {
+    WorkspaceTime.install('Europe/Berlin');
+    addTearDown(WorkspaceTime.reset);
+    final env = await pumpHubPlan(
+      tester,
+      granularity: BookingGranularity.halfDay,
+    );
+
+    await doubleTapCell(tester, 12.5, 4.5);
+    await tester.tap(find.byKey(const ValueKey('space-reserve')));
+    await tester.pumpAndSettle();
+
+    // The seat sheet's own picker, for the whole table.
+    expect(find.byKey(const ValueKey('booking-am')), findsOneWidget);
+    expect(find.byKey(const ValueKey('booking-pm')), findsOneWidget);
+    expect(find.byKey(const ValueKey('booking-day')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('booking-am')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
+    await tester.pumpAndSettle();
+
+    final created = env.reservations.reservations.single;
+    expect(created.deskId, env.plans.desks.single.id);
+    final now = DateTime.now();
+    final expected =
+        HalfDayWindows.morning(DateTime(now.year, now.month, now.day));
+    expect(created.startsAt.toUtc(), expected.start.toUtc());
+    expect(created.endsAt.toUtc(), expected.end.toUtc());
+  });
+
+  testWidgets(
+      'under FLEXIBLE granularity the whole-space picker shows '
+      'From/Until tiles — the picker follows the configuration',
+      (tester) async {
+    await pumpHubPlan(tester);
+
+    await doubleTapCell(tester, 12.5, 4.5);
+    await tester.tap(find.byKey(const ValueKey('space-reserve')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('booking-from-tile')), findsOneWidget);
+    expect(find.byKey(const ValueKey('booking-until-tile')), findsOneWidget);
+    expect(find.byKey(const ValueKey('booking-am')), findsNothing);
+  });
+
+  testWidgets(
+      'REPETITION (0065): a weekly repeat on a ROOM creates a series of '
+      'whole-office reservations with the skipped report',
+      (tester) async {
+    WorkspaceTime.install('Europe/Berlin');
+    addTearDown(WorkspaceTime.reset);
+    final env = await pumpHubPlan(
+      tester,
+      granularity: BookingGranularity.halfDay,
+    );
+
+    await doubleTapCell(tester, 17.5, 15.5); // office, outside the desk
+    await tester.tap(find.byKey(const ValueKey('space-reserve')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('booking-day')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('booking-repeat')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Weekly').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
+    await tester.pumpAndSettle();
+
+    // 28-day default horizon, weekly → 5 occurrences, all office-whole.
+    final series = env.reservations.reservations
+        .where((r) => r.officeId == env.plans.offices.first.id)
+        .toList();
+    expect(series, hasLength(5));
+    expect(series.map((r) => r.seriesId).toSet(), hasLength(1));
+    expect(series.every((r) => r.seatId == null), isTrue);
+    // The series result dialog reports the booked occurrences.
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
   });
 }

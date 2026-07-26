@@ -20,7 +20,10 @@ import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
+import '../../domain/reservation_repository.dart';
 import '../../domain/booking_error_text.dart';
+import 'booking_sheet.dart';
+import 'series_result_dialog.dart';
 import '../../domain/space_code.dart';
 import '../../domain/walk_up_window.dart';
 import '../../providers/reservation_providers.dart';
@@ -137,6 +140,7 @@ Future<void> showSpaceSheet(
   Desk? desk,
   Seat? seat,
   FloorPlan? plan,
+  ({DateTime start, DateTime end})? initialWindow,
 }) =>
     showModalBottomSheet<void>(
       context: context,
@@ -148,6 +152,7 @@ Future<void> showSpaceSheet(
         desk: desk,
         seat: seat,
         plan: plan,
+        initialWindow: initialWindow,
       ),
     );
 
@@ -250,6 +255,7 @@ class SpaceSheet extends ConsumerStatefulWidget {
     this.desk,
     this.seat,
     this.plan,
+    this.initialWindow,
   });
 
   final SpaceKind kind;
@@ -258,6 +264,11 @@ class SpaceSheet extends ConsumerStatefulWidget {
   final Desk? desk;
   final Seat? seat;
   final FloorPlan? plan;
+
+  /// The window the opener was browsing (hub date strip / plan
+  /// scrubber): seeds the reserve picker so "reserve for the day I am
+  /// looking at" works — a scan defaults to today's walk-up window.
+  final ({DateTime start, DateTime end})? initialWindow;
 
   @override
   ConsumerState<SpaceSheet> createState() => _SpaceSheetState();
@@ -281,6 +292,8 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
     String? officeId,
     String? levelId,
     required bool checkIn,
+    DateTime? startsAt,
+    DateTime? endsAt,
   }) async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
@@ -294,8 +307,8 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
             deskId: deskId,
             officeId: officeId,
             levelId: levelId,
-            startsAt: window.start,
-            endsAt: window.end,
+            startsAt: startsAt ?? window.start,
+            endsAt: endsAt ?? window.end,
             checkIn: checkIn,
           );
     } catch (e, st) {
@@ -366,6 +379,95 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
       replace: true,
     );
     invalidateBookingData(ref);
+  }
+
+  /// Whole-space RESERVE (0065, field request): the same
+  /// granularity-aware period picker and repetition the seat sheet
+  /// offers — the configuration decides which picker shows. The
+  /// server re-checks conflicts for whatever window is chosen.
+  Future<void> _reserveSpace({
+    String? deskId,
+    String? officeId,
+    String? levelId,
+    required String name,
+  }) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null || _busy) return;
+    final granularity =
+        ref.read(bookingGranularityProvider).value ??
+            BookingGranularity.flexible;
+    final me = ref.read(myMemberProvider).value;
+    final allowSeries = ref
+        .read(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.seriesBooking);
+    final initial = widget.initialWindow ?? _window;
+
+    final choice = await showModalBottomSheet<BookingChoice>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => BookingSheet(
+        seatName: name,
+        start: initial.start,
+        initialEnd: initial.end,
+        cap: null,
+        capped: false,
+        granularity: granularity,
+        walkUp: false,
+        fixedEnd: granularity.isDayBased,
+        members: const [],
+        myMemberId: me?.id,
+        allowSeries: allowSeries,
+        allowBlocking: false,
+      ),
+    );
+    if (choice == null || !mounted) return;
+
+    if (choice.pattern == null) {
+      await _create(
+        deskId: deskId,
+        officeId: officeId,
+        levelId: levelId,
+        checkIn: false,
+        startsAt: choice.start,
+        endsAt: choice.end,
+      );
+      return;
+    }
+    setState(() => _busy = true);
+    final SeriesResult result;
+    try {
+      result = await ref.read(reservationRepositoryProvider).createSeries(
+            workspaceId: workspace.id,
+            deskId: deskId,
+            officeId: officeId,
+            levelId: levelId,
+            firstStart: choice.start,
+            firstEnd: choice.end,
+            pattern: choice.pattern!,
+            until: choice.until!,
+          );
+    } catch (e, st) {
+      TraceLogger.instance.error('reservations', 'space series failed',
+          error: e, stackTrace: st);
+      if (!mounted) return;
+      setState(() => _busy = false);
+      AppSnack.error(
+        context,
+        bookingErrorText(
+          l10n,
+          e,
+          l10n?.workspaceGenericError ??
+              'Something went wrong. Please try again.',
+        ),
+        replace: true,
+      );
+      return;
+    }
+    if (!mounted) return;
+    Navigator.of(context).pop();
+    invalidateBookingData(ref);
+    await showSeriesResultDialog(context, result);
   }
 
   /// Reserve-or-check-in picker for one free seat (the kiosk action
@@ -559,16 +661,19 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
             const SizedBox(height: 8),
             OutlinedButton.icon(
               key: const ValueKey('space-reserve'),
-              onPressed: _busy || wholeConflict
+              // A visible conflict only blocks the NOW-based check-in:
+              // the reserve picker can target any other day/period —
+              // the server re-checks whatever is chosen (0065).
+              onPressed: _busy
                   ? null
-                  : () => _create(
+                  : () => _reserveSpace(
                         deskId:
                             widget.kind == SpaceKind.desk ? desk?.id : null,
                         officeId:
                             widget.kind == SpaceKind.office ? office?.id : null,
                         levelId:
                             widget.kind == SpaceKind.level ? level?.id : null,
-                        checkIn: false,
+                        name: title,
                       ),
               icon: const Icon(Icons.event_available_outlined),
               label: Text(l10n?.kioskReserve ?? 'Reserve'),

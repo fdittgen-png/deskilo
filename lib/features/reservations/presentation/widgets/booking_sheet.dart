@@ -47,7 +47,7 @@ class BookingChoice {
 class BookingSheet extends StatefulWidget {
   const BookingSheet({
     super.key,
-    required this.seatId,
+    this.seatId,
     required this.seatName,
     required this.start,
     required this.initialEnd,
@@ -62,7 +62,9 @@ class BookingSheet extends StatefulWidget {
     this.allowBlocking = false,
   });
 
-  final String seatId;
+  /// Null for a WHOLE-SPACE booking (0065): the sheet then shows no
+  /// accessory row; [seatName] carries the space's name either way.
+  final String? seatId;
   final String seatName;
   final DateTime start;
   final DateTime initialEnd;
@@ -166,7 +168,8 @@ class _BookingSheetState extends State<BookingSheet> {
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
             ),
-            SeatAccessoryRow(seatId: widget.seatId),
+            if (widget.seatId != null)
+              SeatAccessoryRow(seatId: widget.seatId!),
 
             // ── period (fits the workspace granularity) ──
             if (showHalfDayPicker) ...[

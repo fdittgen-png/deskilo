@@ -805,6 +805,11 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                                       .firstOrNull,
                               desk: desk,
                               plan: plan,
+                              // Seed the reserve picker with the frame
+                              // being browsed (0065).
+                              initialWindow: windowEnd == null
+                                  ? null
+                                  : (start: at, end: windowEnd),
                             )
                         : null,
                     seatStates: seatStatesFor(

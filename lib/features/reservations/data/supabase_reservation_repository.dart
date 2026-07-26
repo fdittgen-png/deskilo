@@ -169,7 +169,10 @@ class SupabaseReservationRepository implements ReservationRepository {
   @override
   Future<SeriesResult> createSeries({
     required String workspaceId,
-    required String seatId,
+    String? seatId,
+    String? deskId,
+    String? officeId,
+    String? levelId,
     required DateTime firstStart,
     required DateTime firstEnd,
     required SeriesPattern pattern,
@@ -178,6 +181,9 @@ class SupabaseReservationRepository implements ReservationRepository {
     final result = await _client.rpc<dynamic>('create_series', params: {
       'p_workspace_id': workspaceId,
       'p_seat_id': seatId,
+      'p_desk_id': deskId,
+      'p_office_id': officeId,
+      'p_level_id': levelId,
       'p_first_start': firstStart.toUtc().toIso8601String(),
       'p_first_end': firstEnd.toUtc().toIso8601String(),
       'p_pattern': pattern.name,
