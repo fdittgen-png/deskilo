@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
-import '../../../../core/theme/app_radius.dart';
+import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
@@ -184,13 +184,10 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
         ),
         if (widget.scanBuilder != null) ...[
           const SizedBox(height: 12),
-          ClipRRect(
-            borderRadius: AppRadius.mdAll,
-            child: SizedBox(
-              key: const ValueKey('space-scan-camera'),
-              height: 220,
-              child: widget.scanBuilder!(onCode: _submit),
-            ),
+          // Shared camera box with the lens FLIP button (field request).
+          ScanCameraBox(
+            cameraKey: const ValueKey('space-scan-camera'),
+            onCode: _submit,
           ),
         ],
         const SizedBox(height: 12),
