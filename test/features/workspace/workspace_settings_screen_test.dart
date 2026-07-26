@@ -335,6 +335,24 @@ void main() {
     expect(workspace.lastDeskOpacity, greaterThanOrEqualTo(20));
   });
 
+  testWidgets(
+      'the workspace address rides the same Save through the repository '
+      '(0060 — printed on invoice letterheads)', (tester) async {
+    final workspace = await pumpWorkspaceSettings(tester);
+    final field = find.byKey(const Key('workspaceSettingsAddress'));
+    await tester.ensureVisible(field);
+    await tester.enterText(field, '  2 Place du Marché\n34120 Pézenas  ');
+    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+    await tester.pumpAndSettle();
+
+    // The fake trims like the server and writes it back onto the
+    // workspace — the saved address re-seeds the field on reload.
+    expect(
+      workspace.workspaces[0].address,
+      '2 Place du Marché\n34120 Pézenas',
+    );
+  });
+
   testWidgets('cancelling the reset dialog does nothing', (tester) async {
     final workspace = await pumpWorkspaceSettings(tester);
     final resetTile = find.byKey(const Key('workspaceSettingsReset'));

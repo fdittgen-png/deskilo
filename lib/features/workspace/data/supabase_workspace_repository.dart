@@ -89,7 +89,16 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
-  Future<void> setWhatsappGroup(String workspaceId, String link) async {
+  Future<void> setWorkspaceAddress(String workspaceId, String address) async {
+    // Owner-only via workspaces_update RLS; 0060 caps at 400 chars.
+    await _client
+        .from('workspaces')
+        .update({'address': address.trim()}).eq('id', workspaceId);
+  }
+
+  @override
+Future<void> setWhatsappGroup(String workspaceId, String link) async {
+
     // Direct row update like setPaymentInstructions — workspaces_update
     // RLS restricts it to owners, and the 0029 column check re-validates
     // the chat.whatsapp.com prefix.
@@ -168,6 +177,7 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
         paymentInstructions:
             row['payment_instructions'] as Map<String, dynamic>? ?? const {},
         whatsappGroup: row['whatsapp_group'] as String? ?? '',
+        address: row['address'] as String? ?? '',
         deskOpacity: (row['desk_opacity'] as num?)?.toInt() ?? 100,
         invitationTemplate: row['invitation_template'] as String? ?? '',
       );

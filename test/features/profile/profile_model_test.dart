@@ -15,6 +15,7 @@ void main() {
         'display_name': 'Ada',
         'whatsapp': '+33612345678',
         'status_text': 'In a call · back at 14:00',
+        'address': '12 Rue des Halles, 34120 Pézenas',
         'last_seen_at': '2026-07-11T09:30:00.000Z',
         'avatar_path': 'user-1/avatar',
       };
@@ -25,6 +26,7 @@ void main() {
       expect(profile.whatsapp, '+33612345678');
       expect(profile.statusText, 'In a call · back at 14:00');
       expect(profile.hasStatus, isTrue);
+      expect(profile.address, '12 Rue des Halles, 34120 Pézenas');
       expect(profile.lastSeenAt, DateTime.utc(2026, 7, 11, 9, 30));
       expect(profile.hasAvatar, isTrue);
       expect(profile.avatarPath, 'user-1/avatar');

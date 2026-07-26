@@ -24,7 +24,9 @@ enum WorkspaceFeature {
   membersDirectory,
   whatsappIntegration,
   spaceQrCodes,
-  coOwner;
+  coOwner,
+  invoicing,
+  adminInvoicing;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -80,6 +82,18 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.onlinePayments,
     defaultOn: false,
     requires: WorkspaceFeature.moneyTab,
+  ),
+  // Invoices (0060): the immutable archive + issuing UI.
+  WorkspaceFeature.invoicing: FeatureManifestEntry(
+    feature: WorkspaceFeature.invoicing,
+    requires: WorkspaceFeature.moneyTab,
+  ),
+  // Admins issuing invoices is an OWNER delegation (the adminSeatBlocking
+  // idiom) — the server re-checks the flag.
+  WorkspaceFeature.adminInvoicing: FeatureManifestEntry(
+    feature: WorkspaceFeature.adminInvoicing,
+    defaultOn: false,
+    requires: WorkspaceFeature.invoicing,
   ),
   WorkspaceFeature.pdfExport:
       FeatureManifestEntry(feature: WorkspaceFeature.pdfExport),

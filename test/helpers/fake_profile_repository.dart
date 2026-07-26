@@ -6,6 +6,13 @@ import 'package:deskilo/features/profile/domain/profile_repository.dart';
 
 /// In-memory [ProfileRepository] for widget/unit tests (#223).
 class FakeProfileRepository implements ProfileRepository {
+  @override
+  Future<void> updateAddress(String address) async {
+    if (failing) throw StateError('address write failed');
+    final mine = _mine;
+    if (mine != null) _replaceMine(mine.copyWith(address: address.trim()));
+  }
+
   FakeProfileRepository({List<Profile>? profiles, this.myUserId = 'user-1'})
       : profiles = profiles ??
             [const Profile(id: 'user-1', displayName: 'Test User')];

@@ -768,6 +768,15 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               label: Text(l10n?.moneyRecordPayment ?? 'Record a payment'),
             ),
             const SizedBox(height: 8),
+            // The invoice archive (0060) — every member has one.
+            if (features.contains(WorkspaceFeature.invoicing))
+              OutlinedButton.icon(
+                key: const ValueKey('invoices-button'),
+                onPressed: () => context.push('/invoices'),
+                icon: const Icon(Icons.receipt_long_outlined),
+                label: Text(l10n?.invoicesTitle ?? 'Invoices'),
+              ),
+            const SizedBox(height: 8),
             LayoutBuilder(
               builder: (context, constraints) {
                 final buttonWidth =

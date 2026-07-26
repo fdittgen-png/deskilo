@@ -38,6 +38,10 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureSpaceQrCodes ?? 'Space QR codes',
       WorkspaceFeature.coOwner =>
         l10n?.featureCoOwner ?? 'Co-owners',
+      WorkspaceFeature.invoicing =>
+        l10n?.featureInvoicing ?? 'Invoices',
+      WorkspaceFeature.adminInvoicing =>
+        l10n?.featureAdminInvoicing ?? 'Admins issue invoices',
       WorkspaceFeature.adminLevelAssign =>
         l10n?.featureAdminLevelAssign ?? 'Admins can assign levels',
     };

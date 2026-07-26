@@ -77,6 +77,13 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureCoOwnerDesc ??
               'Appoint co-owners: owner permissions now (active) or '
                   'succession-in-waiting (passive).',
+        WorkspaceFeature.invoicing =>
+          l10n?.featureInvoicingDesc ??
+              'Immutable, signed invoices in an archive — download or '
+                  'share as PDF.',
+        WorkspaceFeature.adminInvoicing =>
+          l10n?.featureAdminInvoicingDesc ??
+              'Admins issue invoices too. The owner always can.',
         WorkspaceFeature.adminLevelAssign =>
           l10n?.featureAdminLevelAssignDesc ??
               'Admins assign level reservations to members. '

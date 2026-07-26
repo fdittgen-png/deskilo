@@ -2072,6 +2072,174 @@ abstract class AppLocalizations {
   /// **'No workspace ID found — paste the invitation or type the ID.'**
   String get workspaceInviteCodeInvalid;
 
+  /// The invoice archive screen title and its Money entry button (0060)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get invoicesTitle;
+
+  /// Empty state of the invoice archive
+  ///
+  /// In en, this message translates to:
+  /// **'No invoices yet.'**
+  String get invoicesEmpty;
+
+  /// FAB + sheet title issuing an invoice
+  ///
+  /// In en, this message translates to:
+  /// **'New invoice'**
+  String get invoiceCreate;
+
+  /// Member dropdown label on the invoice form
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get invoiceMemberLabel;
+
+  /// Title field on the invoice form
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get invoiceTitleLabel;
+
+  /// Line label field on the invoice form
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get invoiceLineLabel;
+
+  /// Line amount field on the invoice form (major units)
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get invoiceLineAmount;
+
+  /// Adds another line row to the invoice form
+  ///
+  /// In en, this message translates to:
+  /// **'Add line'**
+  String get invoiceAddLine;
+
+  /// Submit button of the invoice form — issuing is final (immutable)
+  ///
+  /// In en, this message translates to:
+  /// **'Issue invoice'**
+  String get invoiceIssue;
+
+  /// Snackbar after an invoice was issued
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice issued.'**
+  String get invoiceIssued;
+
+  /// Validation error for a half-filled invoice line
+  ///
+  /// In en, this message translates to:
+  /// **'Every line needs a label and amount.'**
+  String get invoiceLineInvalid;
+
+  /// Validation error for an incomplete invoice form
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a member, a title and at least one line.'**
+  String get invoiceFormIncomplete;
+
+  /// Tooltip: save the invoice PDF to Downloads
+  ///
+  /// In en, this message translates to:
+  /// **'Download PDF'**
+  String get invoiceDownload;
+
+  /// Tooltip: share the invoice PDF via an app (mail, WhatsApp…)
+  ///
+  /// In en, this message translates to:
+  /// **'Share PDF'**
+  String get invoiceShare;
+
+  /// PDF: the word before the invoice number
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice'**
+  String get invoicePdfTitle;
+
+  /// PDF: label before the issue date
+  ///
+  /// In en, this message translates to:
+  /// **'Issued on'**
+  String get invoicePdfIssuedOn;
+
+  /// PDF: label before the issuer name
+  ///
+  /// In en, this message translates to:
+  /// **'Issued by'**
+  String get invoicePdfIssuedBy;
+
+  /// PDF: label above the member block
+  ///
+  /// In en, this message translates to:
+  /// **'Billed to'**
+  String get invoicePdfBilledTo;
+
+  /// PDF: the total row
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get invoicePdfTotal;
+
+  /// PDF: caption above the integrity fingerprint
+  ///
+  /// In en, this message translates to:
+  /// **'Digital signature (SHA-256)'**
+  String get invoicePdfSignature;
+
+  /// Settings tile: the member's postal address (printed on invoices)
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get addressTitle;
+
+  /// Subtitle while no address is stored
+  ///
+  /// In en, this message translates to:
+  /// **'No address'**
+  String get addressNone;
+
+  /// Snackbar after saving the address
+  ///
+  /// In en, this message translates to:
+  /// **'Address saved'**
+  String get addressSaved;
+
+  /// Workspace-settings field: postal address printed on invoices
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace address'**
+  String get workspaceAddressLabel;
+
+  /// Feature toggle: the invoice archive (0060)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get featureInvoicing;
+
+  /// Subtitle of the invoicing toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Immutable, signed invoices in an archive — download or share as PDF.'**
+  String get featureInvoicingDesc;
+
+  /// Delegation toggle: admins may issue invoices
+  ///
+  /// In en, this message translates to:
+  /// **'Admins issue invoices'**
+  String get featureAdminInvoicing;
+
+  /// Subtitle of the delegation toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Admins issue invoices too. The owner always can.'**
+  String get featureAdminInvoicingDesc;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

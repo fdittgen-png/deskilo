@@ -71,6 +71,7 @@ class _WorkspaceSettingsScreenState
   final _wise = TextEditingController();
   // #231 — the community's WhatsApp group invite link (directory, #232).
   final _whatsappGroup = TextEditingController();
+  final _workspaceAddress = TextEditingController();
   final _invitationTemplate = TextEditingController();
   // 0040 — desk fill opacity percentage (20..100); rides the Save button.
   int _deskOpacity = 100;
@@ -92,6 +93,7 @@ class _WorkspaceSettingsScreenState
     _lydia.dispose();
     _wise.dispose();
     _whatsappGroup.dispose();
+    _workspaceAddress.dispose();
     _invitationTemplate.dispose();
     super.dispose();
   }
@@ -145,6 +147,11 @@ class _WorkspaceSettingsScreenState
           await repository.setWhatsappGroup(
             workspaceId,
             _whatsappGroup.text.trim(),
+          );
+          // 0060 — the invoice-letterhead address rides the same Save.
+          await repository.setWorkspaceAddress(
+            workspaceId,
+            _workspaceAddress.text.trim(),
           );
           // 0049 — the invitation message template rides the same Save;
           // '' falls back to the localized built-in message.
@@ -780,6 +787,7 @@ class _WorkspaceSettingsScreenState
       _lydia.text = instructions.lydia;
       _wise.text = instructions.wise;
       _whatsappGroup.text = workspace.whatsappGroup;
+      _workspaceAddress.text = workspace.address;
       _invitationTemplate.text = workspace.invitationTemplate;
       _deskOpacity = workspace.deskOpacity;
     }
@@ -944,6 +952,19 @@ class _WorkspaceSettingsScreenState
                             '(https://chat.whatsapp.com/…). Leave empty '
                             'to show nothing.',
                     style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 12),
+                  // 0060 — the postal address printed as the invoice
+                  // letterhead.
+                  TextFormField(
+                    key: const Key('workspaceSettingsAddress'),
+                    controller: _workspaceAddress,
+                    enabled: !_busy,
+                    maxLines: 2,
+                    decoration: InputDecoration(
+                      labelText: l10n?.workspaceAddressLabel ??
+                          'Workspace address',
+                    ),
                   ),
                   const SizedBox(height: 12),
                   TextFormField(

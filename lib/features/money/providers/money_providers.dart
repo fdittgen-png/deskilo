@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../domain/invoice.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../workspace/providers/workspace_providers.dart';
@@ -91,4 +93,13 @@ Future<List<Package>> allPackages(Ref ref) async {
   return ref
       .watch(moneyRepositoryProvider)
       .fetchPackages(workspace.id, includeInactive: true);
+}
+
+/// The invoice archive (0060): RLS scopes rows — members their own,
+/// admins the whole workspace.
+@Riverpod(keepAlive: true)
+Future<List<Invoice>> invoices(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return ref.watch(moneyRepositoryProvider).fetchInvoices(workspace.id);
 }
