@@ -1109,6 +1109,94 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucun identifiant trouvé — collez l\'invitation ou saisissez l\'identifiant.';
 
   @override
+  String get invoicesTitle => 'Factures';
+
+  @override
+  String get invoicesEmpty => 'Aucune facture pour l\'instant.';
+
+  @override
+  String get invoiceCreate => 'Nouvelle facture';
+
+  @override
+  String get invoiceMemberLabel => 'Membre';
+
+  @override
+  String get invoiceTitleLabel => 'Titre';
+
+  @override
+  String get invoiceLineLabel => 'Article';
+
+  @override
+  String get invoiceLineAmount => 'Montant';
+
+  @override
+  String get invoiceAddLine => 'Ajouter une ligne';
+
+  @override
+  String get invoiceIssue => 'Émettre la facture';
+
+  @override
+  String get invoiceIssued => 'Facture émise.';
+
+  @override
+  String get invoiceLineInvalid =>
+      'Chaque ligne nécessite un libellé et un montant.';
+
+  @override
+  String get invoiceFormIncomplete =>
+      'Choisissez un membre, un titre et au moins une ligne.';
+
+  @override
+  String get invoiceDownload => 'Télécharger le PDF';
+
+  @override
+  String get invoiceShare => 'Partager le PDF';
+
+  @override
+  String get invoicePdfTitle => 'Facture';
+
+  @override
+  String get invoicePdfIssuedOn => 'Émise le';
+
+  @override
+  String get invoicePdfIssuedBy => 'Émise par';
+
+  @override
+  String get invoicePdfBilledTo => 'Facturé à';
+
+  @override
+  String get invoicePdfTotal => 'Total';
+
+  @override
+  String get invoicePdfSignature => 'Signature numérique (SHA-256)';
+
+  @override
+  String get addressTitle => 'Adresse';
+
+  @override
+  String get addressNone => 'Aucune adresse';
+
+  @override
+  String get addressSaved => 'Adresse enregistrée';
+
+  @override
+  String get workspaceAddressLabel => 'Adresse de l\'espace';
+
+  @override
+  String get featureInvoicing => 'Factures';
+
+  @override
+  String get featureInvoicingDesc =>
+      'Factures immuables et signées dans une archive — à télécharger ou partager en PDF.';
+
+  @override
+  String get featureAdminInvoicing => 'Les admins émettent des factures';
+
+  @override
+  String get featureAdminInvoicingDesc =>
+      'Les admins émettent aussi des factures. Le propriétaire le peut toujours.';
+
+  @override
   String get eventTypeMemberJoin => 'Nouveau membre';
 
   @override

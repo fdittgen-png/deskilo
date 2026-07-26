@@ -18,6 +18,7 @@ class Profile {
     this.displayName = '',
     this.whatsapp = '',
     this.statusText = '',
+    this.address = '',
     this.lastSeenAt,
     this.avatarPath,
   });
@@ -35,6 +36,9 @@ class Profile {
   /// e.g. "In a call · back at 14:00"; '' = no status. At most
   /// [StatusTextRules.maxLength] characters (0029 column check).
   final String statusText;
+
+  /// Postal address (0060): printed on invoices; self-edited.
+  final String address;
 
   /// Last foreground heartbeat (UTC); null until the first beat.
   final DateTime? lastSeenAt;
@@ -60,6 +64,7 @@ class Profile {
         displayName: db['display_name'] as String? ?? '',
         whatsapp: db['whatsapp'] as String? ?? '',
         statusText: db['status_text'] as String? ?? '',
+        address: db['address'] as String? ?? '',
         lastSeenAt: db['last_seen_at'] == null
             ? null
             : DateTime.parse(db['last_seen_at'] as String).toUtc(),
@@ -71,6 +76,7 @@ class Profile {
         'display_name': displayName,
         'whatsapp': whatsapp,
         'status_text': statusText,
+        'address': address,
         'last_seen_at': lastSeenAt?.toUtc().toIso8601String(),
         'avatar_path': avatarPath,
       };
@@ -79,6 +85,7 @@ class Profile {
     String? displayName,
     String? whatsapp,
     String? statusText,
+    String? address,
     DateTime? lastSeenAt,
     String? avatarPath,
   }) =>
@@ -87,6 +94,7 @@ class Profile {
         displayName: displayName ?? this.displayName,
         whatsapp: whatsapp ?? this.whatsapp,
         statusText: statusText ?? this.statusText,
+        address: address ?? this.address,
         lastSeenAt: lastSeenAt ?? this.lastSeenAt,
         avatarPath: avatarPath ?? this.avatarPath,
       );

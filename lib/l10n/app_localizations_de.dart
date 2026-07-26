@@ -1105,6 +1105,93 @@ class AppLocalizationsDe extends AppLocalizations {
       'Keine Workspace-ID gefunden — Einladung einfügen oder ID eintippen.';
 
   @override
+  String get invoicesTitle => 'Rechnungen';
+
+  @override
+  String get invoicesEmpty => 'Noch keine Rechnungen.';
+
+  @override
+  String get invoiceCreate => 'Neue Rechnung';
+
+  @override
+  String get invoiceMemberLabel => 'Mitglied';
+
+  @override
+  String get invoiceTitleLabel => 'Titel';
+
+  @override
+  String get invoiceLineLabel => 'Posten';
+
+  @override
+  String get invoiceLineAmount => 'Betrag';
+
+  @override
+  String get invoiceAddLine => 'Zeile hinzufügen';
+
+  @override
+  String get invoiceIssue => 'Rechnung ausstellen';
+
+  @override
+  String get invoiceIssued => 'Rechnung ausgestellt.';
+
+  @override
+  String get invoiceLineInvalid => 'Jede Zeile braucht Bezeichnung und Betrag.';
+
+  @override
+  String get invoiceFormIncomplete =>
+      'Mitglied, Titel und mindestens eine Zeile wählen.';
+
+  @override
+  String get invoiceDownload => 'PDF herunterladen';
+
+  @override
+  String get invoiceShare => 'PDF teilen';
+
+  @override
+  String get invoicePdfTitle => 'Rechnung';
+
+  @override
+  String get invoicePdfIssuedOn => 'Ausgestellt am';
+
+  @override
+  String get invoicePdfIssuedBy => 'Ausgestellt von';
+
+  @override
+  String get invoicePdfBilledTo => 'Rechnung an';
+
+  @override
+  String get invoicePdfTotal => 'Gesamt';
+
+  @override
+  String get invoicePdfSignature => 'Digitale Signatur (SHA-256)';
+
+  @override
+  String get addressTitle => 'Adresse';
+
+  @override
+  String get addressNone => 'Keine Adresse';
+
+  @override
+  String get addressSaved => 'Adresse gespeichert';
+
+  @override
+  String get workspaceAddressLabel => 'Adresse des Workspace';
+
+  @override
+  String get featureInvoicing => 'Rechnungen';
+
+  @override
+  String get featureInvoicingDesc =>
+      'Unveränderliche, signierte Rechnungen im Archiv — als PDF herunterladen oder teilen.';
+
+  @override
+  String get featureAdminInvoicing => 'Admins stellen Rechnungen aus';
+
+  @override
+  String get featureAdminInvoicingDesc =>
+      'Auch Admins stellen Rechnungen aus. Die Inhaberin kann es immer.';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

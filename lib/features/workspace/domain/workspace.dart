@@ -45,6 +45,9 @@ sealed class Workspace with _$Workspace {
     /// against [WhatsappGroupRules.linkPrefix] (0029 column check).
     @Default('') String whatsappGroup,
 
+    /// Postal address (0060): printed on invoices; owner-edited.
+    @Default('') String address,
+
     /// Desk fill opacity percentage (0040): 100 = solid (default), lower
     /// makes desks translucent so a level's background photo shows through.
     /// Clamped 20..100 by the column check.

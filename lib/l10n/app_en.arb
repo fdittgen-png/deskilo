@@ -1448,6 +1448,118 @@
   },
   "workspaceInvitePasteHint": "Paste the whole invitation message — the ID is found automatically.",
   "workspaceInviteCodeInvalid": "No workspace ID found — paste the invitation or type the ID.",
+  "invoicesTitle": "Invoices",
+  "@invoicesTitle": {
+    "description": "The invoice archive screen title and its Money entry button (0060)"
+  },
+  "invoicesEmpty": "No invoices yet.",
+  "@invoicesEmpty": {
+    "description": "Empty state of the invoice archive"
+  },
+  "invoiceCreate": "New invoice",
+  "@invoiceCreate": {
+    "description": "FAB + sheet title issuing an invoice"
+  },
+  "invoiceMemberLabel": "Member",
+  "@invoiceMemberLabel": {
+    "description": "Member dropdown label on the invoice form"
+  },
+  "invoiceTitleLabel": "Title",
+  "@invoiceTitleLabel": {
+    "description": "Title field on the invoice form"
+  },
+  "invoiceLineLabel": "Item",
+  "@invoiceLineLabel": {
+    "description": "Line label field on the invoice form"
+  },
+  "invoiceLineAmount": "Amount",
+  "@invoiceLineAmount": {
+    "description": "Line amount field on the invoice form (major units)"
+  },
+  "invoiceAddLine": "Add line",
+  "@invoiceAddLine": {
+    "description": "Adds another line row to the invoice form"
+  },
+  "invoiceIssue": "Issue invoice",
+  "@invoiceIssue": {
+    "description": "Submit button of the invoice form — issuing is final (immutable)"
+  },
+  "invoiceIssued": "Invoice issued.",
+  "@invoiceIssued": {
+    "description": "Snackbar after an invoice was issued"
+  },
+  "invoiceLineInvalid": "Every line needs a label and amount.",
+  "@invoiceLineInvalid": {
+    "description": "Validation error for a half-filled invoice line"
+  },
+  "invoiceFormIncomplete": "Pick a member, a title and at least one line.",
+  "@invoiceFormIncomplete": {
+    "description": "Validation error for an incomplete invoice form"
+  },
+  "invoiceDownload": "Download PDF",
+  "@invoiceDownload": {
+    "description": "Tooltip: save the invoice PDF to Downloads"
+  },
+  "invoiceShare": "Share PDF",
+  "@invoiceShare": {
+    "description": "Tooltip: share the invoice PDF via an app (mail, WhatsApp…)"
+  },
+  "invoicePdfTitle": "Invoice",
+  "@invoicePdfTitle": {
+    "description": "PDF: the word before the invoice number"
+  },
+  "invoicePdfIssuedOn": "Issued on",
+  "@invoicePdfIssuedOn": {
+    "description": "PDF: label before the issue date"
+  },
+  "invoicePdfIssuedBy": "Issued by",
+  "@invoicePdfIssuedBy": {
+    "description": "PDF: label before the issuer name"
+  },
+  "invoicePdfBilledTo": "Billed to",
+  "@invoicePdfBilledTo": {
+    "description": "PDF: label above the member block"
+  },
+  "invoicePdfTotal": "Total",
+  "@invoicePdfTotal": {
+    "description": "PDF: the total row"
+  },
+  "invoicePdfSignature": "Digital signature (SHA-256)",
+  "@invoicePdfSignature": {
+    "description": "PDF: caption above the integrity fingerprint"
+  },
+  "addressTitle": "Address",
+  "@addressTitle": {
+    "description": "Settings tile: the member's postal address (printed on invoices)"
+  },
+  "addressNone": "No address",
+  "@addressNone": {
+    "description": "Subtitle while no address is stored"
+  },
+  "addressSaved": "Address saved",
+  "@addressSaved": {
+    "description": "Snackbar after saving the address"
+  },
+  "workspaceAddressLabel": "Workspace address",
+  "@workspaceAddressLabel": {
+    "description": "Workspace-settings field: postal address printed on invoices"
+  },
+  "featureInvoicing": "Invoices",
+  "@featureInvoicing": {
+    "description": "Feature toggle: the invoice archive (0060)"
+  },
+  "featureInvoicingDesc": "Immutable, signed invoices in an archive — download or share as PDF.",
+  "@featureInvoicingDesc": {
+    "description": "Subtitle of the invoicing toggle"
+  },
+  "featureAdminInvoicing": "Admins issue invoices",
+  "@featureAdminInvoicing": {
+    "description": "Delegation toggle: admins may issue invoices"
+  },
+  "featureAdminInvoicingDesc": "Admins issue invoices too. The owner always can.",
+  "@featureAdminInvoicingDesc": {
+    "description": "Subtitle of the delegation toggle"
+  },
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
   "pendingApprovalTitle": "Awaiting approval",

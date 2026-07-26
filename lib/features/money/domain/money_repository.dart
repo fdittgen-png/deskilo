@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'fee_band.dart';
-import 'ledger_entry.dart';
+
+import 'invoice.dart';import 'ledger_entry.dart';
 import 'package.dart';
 import 'payment_method.dart';
 import 'payment_provider.dart';
@@ -12,6 +13,20 @@ import 'subscription_levels.dart';
 /// event created by [recordPayment] must be confirmed by the other side
 /// before a ledger credit exists.
 abstract class MoneyRepository {
+  /// The invoice archive (0060): the member's own invoices — admins see
+  /// everyone's (RLS decides).
+  Future<List<Invoice>> fetchInvoices(String workspaceId);
+
+  /// Issues an IMMUTABLE invoice (RPC `create_invoice`, 0060) — owner
+  /// always, admins per the adminInvoicing delegation. Returns its id.
+  Future<String> createInvoice({
+    required String workspaceId,
+    required String memberId,
+    required String title,
+    required List<InvoiceLine> lines,
+    String? period,
+  });
+
   Future<Statement> fetchStatement(String memberId, String period);
 
   Future<List<LedgerEntry>> fetchLedger(String memberId);

@@ -10,6 +10,7 @@ import '../../../../core/scan/front_camera.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/theme_controller.dart';
 import '../../../../core/trace/dev_mode.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -291,6 +292,23 @@ class SettingsScreen extends ConsumerWidget {
             onTap: () => showDialog<void>(
               context: context,
               builder: (_) => const _StatusDialog(),
+            ),
+          ),
+          // Postal address (0060): printed on the member's invoices.
+          ListTile(
+            key: const ValueKey('settings-address'),
+            leading: const Icon(Icons.home_outlined),
+            title: Text(l10n?.addressTitle ?? 'Address'),
+            subtitle: Text(
+              (myProfile?.address.isNotEmpty ?? false)
+                  ? myProfile!.address
+                  : (l10n?.addressNone ?? 'No address'),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            onTap: () => showDialog<void>(
+              context: context,
+              builder: (_) => const _AddressDialog(),
             ),
           ),
           // In-app help: the wiki user guide bundled as an offline asset,
@@ -703,6 +721,83 @@ class _WhatsappDialogState extends ConsumerState<_WhatsappDialog> {
 /// field's maxLength already blocks typing past the cap); an emptied
 /// field clears the status. Follows the settings dialog pattern
 /// (_WhatsappDialog) with an explicit Save.
+/// Edits the member's postal address (0060) — printed on invoices;
+/// blank clears it.
+class _AddressDialog extends ConsumerStatefulWidget {
+  const _AddressDialog();
+
+  @override
+  ConsumerState<_AddressDialog> createState() => _AddressDialogState();
+}
+
+class _AddressDialogState extends ConsumerState<_AddressDialog> {
+  late final TextEditingController _controller;
+  bool _saving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: ref.read(myProfileProvider).value?.address ?? '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _save() async {
+    final l10n = AppLocalizations.of(context);
+    setState(() => _saving = true);
+    if (!await runGuarded(
+      context,
+      domain: 'profile',
+      message: 'address update failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () =>
+          ref.read(profileRepositoryProvider).updateAddress(_controller.text),
+    )) {
+      if (mounted) setState(() => _saving = false);
+      return;
+    }
+    ref.invalidate(myProfileProvider);
+    if (!mounted) return;
+    Navigator.of(context).pop();
+    AppSnack.success(context, l10n?.addressSaved ?? 'Address saved');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return AlertDialog(
+      title: Text(l10n?.addressTitle ?? 'Address'),
+      content: TextField(
+        key: const ValueKey('address-field'),
+        controller: _controller,
+        maxLines: 3,
+        maxLength: 400,
+        decoration: InputDecoration(
+          labelText: l10n?.addressTitle ?? 'Address',
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n?.commonCancel ?? 'Cancel'),
+        ),
+        FilledButton(
+          key: const ValueKey('address-save'),
+          onPressed: _saving ? null : _save,
+          child: Text(l10n?.commonSave ?? 'Save'),
+        ),
+      ],
+    );
+  }
+}
+
 class _StatusDialog extends ConsumerStatefulWidget {
   const _StatusDialog();
 

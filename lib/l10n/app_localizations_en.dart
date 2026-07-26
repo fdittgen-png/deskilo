@@ -1099,6 +1099,93 @@ class AppLocalizationsEn extends AppLocalizations {
       'No workspace ID found — paste the invitation or type the ID.';
 
   @override
+  String get invoicesTitle => 'Invoices';
+
+  @override
+  String get invoicesEmpty => 'No invoices yet.';
+
+  @override
+  String get invoiceCreate => 'New invoice';
+
+  @override
+  String get invoiceMemberLabel => 'Member';
+
+  @override
+  String get invoiceTitleLabel => 'Title';
+
+  @override
+  String get invoiceLineLabel => 'Item';
+
+  @override
+  String get invoiceLineAmount => 'Amount';
+
+  @override
+  String get invoiceAddLine => 'Add line';
+
+  @override
+  String get invoiceIssue => 'Issue invoice';
+
+  @override
+  String get invoiceIssued => 'Invoice issued.';
+
+  @override
+  String get invoiceLineInvalid => 'Every line needs a label and amount.';
+
+  @override
+  String get invoiceFormIncomplete =>
+      'Pick a member, a title and at least one line.';
+
+  @override
+  String get invoiceDownload => 'Download PDF';
+
+  @override
+  String get invoiceShare => 'Share PDF';
+
+  @override
+  String get invoicePdfTitle => 'Invoice';
+
+  @override
+  String get invoicePdfIssuedOn => 'Issued on';
+
+  @override
+  String get invoicePdfIssuedBy => 'Issued by';
+
+  @override
+  String get invoicePdfBilledTo => 'Billed to';
+
+  @override
+  String get invoicePdfTotal => 'Total';
+
+  @override
+  String get invoicePdfSignature => 'Digital signature (SHA-256)';
+
+  @override
+  String get addressTitle => 'Address';
+
+  @override
+  String get addressNone => 'No address';
+
+  @override
+  String get addressSaved => 'Address saved';
+
+  @override
+  String get workspaceAddressLabel => 'Workspace address';
+
+  @override
+  String get featureInvoicing => 'Invoices';
+
+  @override
+  String get featureInvoicingDesc =>
+      'Immutable, signed invoices in an archive — download or share as PDF.';
+
+  @override
+  String get featureAdminInvoicing => 'Admins issue invoices';
+
+  @override
+  String get featureAdminInvoicingDesc =>
+      'Admins issue invoices too. The owner always can.';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

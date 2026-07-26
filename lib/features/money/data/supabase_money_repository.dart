@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../domain/invoice.dart';
 import '../domain/fee_band.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
@@ -12,6 +13,37 @@ import '../domain/statement.dart';
 import '../domain/subscription_levels.dart';
 
 class SupabaseMoneyRepository implements MoneyRepository {
+  @override
+  Future<List<Invoice>> fetchInvoices(String workspaceId) async {
+    final rows = await _client
+        .from('invoices')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('issued_at', ascending: false);
+    return rows.map(Invoice.fromRow).toList();
+  }
+
+  @override
+  Future<String> createInvoice({
+    required String workspaceId,
+    required String memberId,
+    required String title,
+    required List<InvoiceLine> lines,
+    String? period,
+  }) async {
+    final id = await _client.rpc<dynamic>('create_invoice', params: {
+      'p_workspace_id': workspaceId,
+      'p_member_id': memberId,
+      'p_title': title,
+      'p_lines': [
+        for (final line in lines)
+          {'label': line.label, 'amount_cents': line.amountCents},
+      ],
+      'p_period': period,
+    });
+    return id as String;
+  }
+
   SupabaseMoneyRepository(this._client);
 
   final SupabaseClient _client;

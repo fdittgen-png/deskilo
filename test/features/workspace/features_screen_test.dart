@@ -59,9 +59,9 @@ void main() {
       findsNWidgets(featureManifest.length),
     );
     // Everything defaults ON — except adminSeatBlocking (#161),
-    // accessorySupplements (#170), onlinePayments (0043) and the
-    // level-booking pair (0050), which the owner must explicitly
-    // activate.
+    // accessorySupplements (#170), onlinePayments (0043), the
+    // level-booking pair (0050) and the invoice delegation (0060),
+    // which the owner must explicitly activate.
     expect(switchTitled(tester, 'Admins can block seats').value, isFalse);
     expect(switchTitled(tester, 'Accessory supplements').value, isFalse);
     expect(switchTitled(tester, 'Online payments').value, isFalse);
@@ -70,11 +70,12 @@ void main() {
       switchTitled(tester, 'Admins can assign levels').value,
       isFalse,
     );
+    expect(switchTitled(tester, 'Admins issue invoices').value, isFalse);
     final onCount = tester
         .widgetList<SwitchListTile>(find.byType(SwitchListTile))
         .where((t) => t.value)
         .length;
-    expect(onCount, featureManifest.length - 5);
+    expect(onCount, featureManifest.length - 6);
   });
 
   testWidgets('toggling a feature persists the full map and flips the switch',
@@ -94,7 +95,8 @@ void main() {
       flags.entries.where((e) => e.value == false).map((e) => e.key),
       unorderedEquals(
         ['moneyTab', 'adminSeatBlocking', 'accessorySupplements',
-          'onlinePayments', 'levelBooking', 'adminLevelAssign'],
+          'onlinePayments', 'levelBooking', 'adminLevelAssign',
+          'adminInvoicing'],
       ),
     );
     expect(switchTitled(tester, 'Money tab').value, isFalse);

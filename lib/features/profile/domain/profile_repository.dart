@@ -22,6 +22,9 @@ abstract class ProfileRepository {
   /// out.
   Future<void> updateStatusText(String statusText);
 
+  /// Postal address (0060), printed on invoices; '' clears it.
+  Future<void> updateAddress(String address);
+
   /// Foreground heartbeat: stamps my `last_seen_at` via the self-scoped
   /// `touch_last_seen` RPC (0028).
   Future<void> touchLastSeen();

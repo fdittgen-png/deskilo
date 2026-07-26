@@ -456,3 +456,50 @@ final class AllPackagesProvider
 }
 
 String _$allPackagesHash() => r'9d0f934aac44c544d100dcca18203008e973c47e';
+
+/// The invoice archive (0060): RLS scopes rows — members their own,
+/// admins the whole workspace.
+
+@ProviderFor(invoices)
+final invoicesProvider = InvoicesProvider._();
+
+/// The invoice archive (0060): RLS scopes rows — members their own,
+/// admins the whole workspace.
+
+final class InvoicesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Invoice>>,
+          List<Invoice>,
+          FutureOr<List<Invoice>>
+        >
+    with $FutureModifier<List<Invoice>>, $FutureProvider<List<Invoice>> {
+  /// The invoice archive (0060): RLS scopes rows — members their own,
+  /// admins the whole workspace.
+  InvoicesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'invoicesProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$invoicesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Invoice>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Invoice>> create(Ref ref) {
+    return invoices(ref);
+  }
+}
+
+String _$invoicesHash() => r'1750a78bf092e310a8b152b40bc7f4facd84c06d';

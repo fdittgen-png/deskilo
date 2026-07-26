@@ -65,6 +65,18 @@ class SupabaseProfileRepository implements ProfileRepository {
   }
 
   @override
+  Future<void> updateAddress(String address) async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) {
+      throw StateError('cannot update the profile while signed out');
+    }
+    // Self-only via profiles_update RLS (0002); 0060 caps at 400 chars.
+    await _client
+        .from('profiles')
+        .update({'address': address.trim()}).eq('id', userId);
+  }
+
+  @override
   Future<void> touchLastSeen() async {
     await _client.rpc<dynamic>('touch_last_seen');
   }

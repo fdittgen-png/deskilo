@@ -67,6 +67,9 @@ abstract class WorkspaceRepository {
   /// the chat.whatsapp.com prefix server-side.
   Future<void> setWhatsappGroup(String workspaceId, String link);
 
+  /// The workspace's postal address (0060), printed on invoices.
+  Future<void> setWorkspaceAddress(String workspaceId, String address);
+
   /// Owner-only (workspaces_update RLS): set the invitation message
   /// template (0049) — trimmed, '' means "use the localized default".
   /// Length capped at [invitationTemplateMaxLength] by the column check.

@@ -19,6 +19,7 @@ import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
 import 'package:deskilo/core/notifications/notification_providers.dart';
 import 'package:deskilo/core/notifications/notification_service.dart';
 import 'package:deskilo/core/scan/front_camera.dart';
+import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/core/scan/qr_scan_widget.dart';
 import 'package:deskilo/core/storage/active_workspace_store.dart';
 import 'package:deskilo/features/events/domain/event_repository.dart';
@@ -564,6 +565,12 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setWorkspaceAddress(String workspaceId, String address) async {
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i >= 0) workspaces[i] = workspaces[i].copyWith(address: address.trim());
+  }
+
+  @override
   Future<void> setCoOwner(String memberId, CoOwnerStatus status) async {
     // Server contract (0058): active co-owners also become admins.
     Member patch(Member m) => m.copyWith(
@@ -744,6 +751,7 @@ List<Override> standardTestOverrides({
   ProfileRepository? profile,
   NfcUidReader? nfc,
   FrontCameraStore? frontCamera,
+  FileSharer? fileSharer,
 }) {
   return [
     authRepositoryProvider
@@ -781,6 +789,11 @@ List<Override> standardTestOverrides({
     // File cache would touch path_provider channels in tests — and boot
     // eviction runs on every app pump.
     cacheStoreProvider.overrideWithValue(InMemoryCacheStore()),
+    // Share seam (0060): the real one opens a system share sheet.
+    fileSharerProvider.overrideWithValue(
+      fileSharer ??
+          ({required bytes, required fileName, required mimeType}) async {},
+    ),
   ];
 }
 

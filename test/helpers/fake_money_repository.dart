@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:deskilo/features/events/domain/workspace_event.dart';
+import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
@@ -15,6 +16,46 @@ import 'fake_event_repository.dart';
 /// In-memory [MoneyRepository]; recorded payments are captured for
 /// assertions (they only become ledger credits after confirmation).
 class FakeMoneyRepository implements MoneyRepository {
+  /// The immutable archive (0060); [createInvoice] mirrors the server's
+  /// numbering + fingerprint contract.
+  final invoices = <Invoice>[];
+  var _nextInvoice = 1;
+
+  @override
+  Future<List<Invoice>> fetchInvoices(String workspaceId) async =>
+      List.unmodifiable(invoices);
+
+  @override
+  Future<String> createInvoice({
+    required String workspaceId,
+    required String memberId,
+    required String title,
+    required List<InvoiceLine> lines,
+    String? period,
+  }) async {
+    final invoice = Invoice(
+      id: 'inv-$_nextInvoice',
+      workspaceId: workspaceId,
+      memberId: memberId,
+      number: 'INV-2026-${_nextInvoice.toString().padLeft(4, '0')}',
+      issuedAt: DateTime.now(),
+      period: period,
+      title: title,
+      lines: lines,
+      totalCents: lines.fold(0, (sum, l) => sum + l.amountCents),
+      currency: 'EUR',
+      memberName: 'Ana',
+      memberAddress: '1 Rue Test, 34120 Pézenas',
+      workspaceName: 'Test Space',
+      workspaceAddress: '2 Place du Marché, 34120 Pézenas',
+      issuerName: 'Flo',
+      signature: 'f' * 64,
+    );
+    _nextInvoice++;
+    invoices.insert(0, invoice);
+    return invoice.id;
+  }
+
   FakeMoneyRepository({FakeEventRepository? events}) : _events = events;
 
   /// When wired, [recordServiceCharge] also files the pending

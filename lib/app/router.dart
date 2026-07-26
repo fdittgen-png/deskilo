@@ -13,6 +13,7 @@ import '../features/events/presentation/screens/events_screen.dart';
 import '../features/events/presentation/screens/validation_settings_screen.dart';
 import '../features/money/presentation/screens/billing_screen.dart';
 import '../features/money/presentation/screens/money_screen.dart';
+import '../features/money/presentation/screens/invoices_screen.dart';
 import '../features/money/presentation/screens/services_screen.dart';
 import '../features/plan/presentation/screens/accessories_screen.dart';
 import '../features/plan/presentation/screens/plan_screen.dart';
@@ -305,6 +306,12 @@ GoRouter router(Ref ref) {
           return isOwner ? null : '/plan';
         },
         builder: (context, state) => const BillingScreen(),
+      ),
+      GoRoute(
+        path: '/invoices',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.invoicing) ? null : '/money',
+        builder: (context, state) => const InvoicesScreen(),
       ),
       GoRoute(
         path: '/services',
