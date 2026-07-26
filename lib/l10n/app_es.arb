@@ -355,6 +355,20 @@
   "featureInvoicingDesc": "Facturas inmutables y firmadas en un archivo — descarga o comparte en PDF.",
   "featureAdminInvoicing": "Los admins emiten facturas",
   "featureAdminInvoicingDesc": "Los admins también emiten facturas. El propietario siempre puede.",
+  "invoiceVoidedChip": "Errónea",
+  "invoiceVoidAction": "Marcar como errónea",
+  "invoiceVoidConfirm": "¿Marcar la factura {number} como errónea? Esta acción no se puede deshacer.",
+  "@invoiceVoidConfirm": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceVoided": "Factura marcada como errónea.",
+  "invoiceReplaceAction": "Emitir reemplazo",
+  "invoicePdfVoided": "ERRÓNEA — anulada el",
+  "invoicePdfReplaces": "Reemplaza a",
   "eventTypeMemberJoin": "Nuevo miembro",
   "memberStatusPending": "Pendiente",
   "pendingApprovalTitle": "Esperando aprobación",

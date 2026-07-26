@@ -23,6 +23,8 @@ const _strings = InvoicePdfStrings(
   billedTo: 'Billed to',
   total: 'Total',
   signature: 'Digital signature (SHA-256)',
+  voided: 'ERRONEOUS — voided on Jul 20, 2026',
+  replaces: 'Replaces',
 );
 
 void main() {
@@ -59,6 +61,47 @@ void main() {
 
     expect(String.fromCharCodes(bytes.take(5)), '%PDF-');
     // Exactly one A4 page (595.28 × 841.89 pt MediaBox).
+    final raw = String.fromCharCodes(bytes);
+    expect(RegExp(r'/MediaBox[^\]]*595').allMatches(raw).length, 1);
+  });
+
+  test(
+      'a VOIDED replacement renders the erroneous banner and the '
+      'replaced number on one A4 page (0061)', () async {
+    final invoice = Invoice(
+      id: 'inv-2',
+      workspaceId: 'ws-1',
+      memberId: 'member-1',
+      number: 'INV-2026-0002',
+      issuedAt: DateTime(2026, 7, 14),
+      title: 'July membership (corrected)',
+      lines: const [
+        InvoiceLine(label: 'Subscription 50%', amountCents: 15000),
+      ],
+      totalCents: 15000,
+      currency: 'EUR',
+      memberName: 'Ana Martin',
+      memberAddress: '1 Rue Test, 34120 Pezenas',
+      workspaceName: 'Test Space',
+      workspaceAddress: '2 Place du Marche, 34120 Pezenas',
+      issuerName: 'Flo',
+      signature: 'e' * 64,
+      voidedAt: DateTime(2026, 7, 20),
+      voidedByName: 'Flo',
+      replacesInvoiceId: 'inv-1',
+      replacesNumber: 'INV-2026-0001',
+    );
+
+    final bytes = await buildInvoicePdf(
+      invoice: invoice,
+      strings: _strings,
+      money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
+      dateLabel: 'Jul 14, 2026',
+      baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+    );
+
+    expect(String.fromCharCodes(bytes.take(5)), '%PDF-');
     final raw = String.fromCharCodes(bytes);
     expect(RegExp(r'/MediaBox[^\]]*595').allMatches(raw).length, 1);
   });

@@ -111,5 +111,38 @@
   "featureAdminInvoicingDesc": "Admins issue invoices too. The owner always can.",
   "@featureAdminInvoicingDesc": {
     "description": "Subtitle of the delegation toggle"
+  },
+  "invoiceVoidedChip": "Erroneous",
+  "@invoiceVoidedChip": {
+    "description": "Chip on an archive row of an invoice tagged erroneous (0061)"
+  },
+  "invoiceVoidAction": "Mark erroneous",
+  "@invoiceVoidAction": {
+    "description": "Menu action + confirm button tagging an invoice erroneous"
+  },
+  "invoiceVoidConfirm": "Mark invoice {number} as erroneous? This cannot be undone.",
+  "@invoiceVoidConfirm": {
+    "description": "Confirm dialog body before tagging an invoice erroneous",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceVoided": "Invoice marked as erroneous.",
+  "@invoiceVoided": {
+    "description": "Snackbar after an invoice was tagged erroneous"
+  },
+  "invoiceReplaceAction": "Issue replacement",
+  "@invoiceReplaceAction": {
+    "description": "Menu action opening the prefilled replacement form"
+  },
+  "invoicePdfVoided": "ERRONEOUS — voided on",
+  "@invoicePdfVoided": {
+    "description": "PDF banner + row label prefix before the void date"
+  },
+  "invoicePdfReplaces": "Replaces",
+  "@invoicePdfReplaces": {
+    "description": "Label before the replaced invoice's number (row, sheet banner, PDF)"
   }
 }

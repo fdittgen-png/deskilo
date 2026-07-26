@@ -1194,6 +1194,29 @@ class AppLocalizationsIt extends AppLocalizations {
       'Anche gli admin emettono fatture. Il proprietario può sempre.';
 
   @override
+  String get invoiceVoidedChip => 'Errata';
+
+  @override
+  String get invoiceVoidAction => 'Segna come errata';
+
+  @override
+  String invoiceVoidConfirm(String number) {
+    return 'Segnare la fattura $number come errata? L\'operazione è irreversibile.';
+  }
+
+  @override
+  String get invoiceVoided => 'Fattura contrassegnata come errata.';
+
+  @override
+  String get invoiceReplaceAction => 'Emetti sostitutiva';
+
+  @override
+  String get invoicePdfVoided => 'ERRATA — annullata il';
+
+  @override
+  String get invoicePdfReplaces => 'Sostituisce';
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override

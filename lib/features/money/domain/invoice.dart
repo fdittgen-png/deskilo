@@ -17,6 +17,11 @@ sealed class InvoiceLine with _$InvoiceLine {
 /// can change later without ever rewriting an issued document. The
 /// [signature] is the server's SHA-256 fingerprint over the canonical
 /// content, printed on the PDF as the digital signature.
+///
+/// Correction (0061): a wrong invoice is tagged erroneous ([voidedAt],
+/// the sole one-way change the server permits) and re-issued as a
+/// replacement carrying [replacesInvoiceId] (technical reference) and
+/// [replacesNumber] (snapshot for display and the PDF).
 @freezed
 sealed class Invoice with _$Invoice {
   const Invoice._();
@@ -38,7 +43,13 @@ sealed class Invoice with _$Invoice {
     required String workspaceAddress,
     required String issuerName,
     required String signature,
+    DateTime? voidedAt,
+    @Default('') String voidedByName,
+    String? replacesInvoiceId,
+    @Default('') String replacesNumber,
   }) = _Invoice;
+
+  bool get isVoided => voidedAt != null;
 
   factory Invoice.fromRow(Map<String, dynamic> row) => Invoice(
         id: row['id'] as String,
@@ -63,5 +74,11 @@ sealed class Invoice with _$Invoice {
         workspaceAddress: row['workspace_address'] as String? ?? '',
         issuerName: row['issuer_name'] as String? ?? '',
         signature: row['signature'] as String,
+        voidedAt: row['voided_at'] == null
+            ? null
+            : DateTime.parse(row['voided_at'] as String).toLocal(),
+        voidedByName: row['voided_by_name'] as String? ?? '',
+        replacesInvoiceId: row['replaces_invoice_id'] as String?,
+        replacesNumber: row['replaces_number'] as String? ?? '',
       );
 }

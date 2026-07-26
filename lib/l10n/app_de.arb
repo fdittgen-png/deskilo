@@ -355,6 +355,20 @@
   "featureInvoicingDesc": "Unveränderliche, signierte Rechnungen im Archiv — als PDF herunterladen oder teilen.",
   "featureAdminInvoicing": "Admins stellen Rechnungen aus",
   "featureAdminInvoicingDesc": "Auch Admins stellen Rechnungen aus. Die Inhaberin kann es immer.",
+  "invoiceVoidedChip": "Fehlerhaft",
+  "invoiceVoidAction": "Als fehlerhaft markieren",
+  "invoiceVoidConfirm": "Rechnung {number} als fehlerhaft markieren? Das kann nicht rückgängig gemacht werden.",
+  "@invoiceVoidConfirm": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceVoided": "Rechnung als fehlerhaft markiert.",
+  "invoiceReplaceAction": "Ersatzrechnung ausstellen",
+  "invoicePdfVoided": "FEHLERHAFT — storniert am",
+  "invoicePdfReplaces": "Ersetzt",
   "eventTypeMemberJoin": "Neues Mitglied",
   "memberStatusPending": "Ausstehend",
   "pendingApprovalTitle": "Warten auf Freigabe",

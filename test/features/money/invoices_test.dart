@@ -187,6 +187,102 @@ void main() {
     expect(find.byKey(const ValueKey('invoice-create-button')), findsNothing);
   });
 
+  testWidgets(
+      'the owner tags an invoice ERRONEOUS (0061): confirm → voided, '
+      'struck through with the chip — the row stays in the archive',
+      (tester) async {
+    final money = await pumpInvoices(tester, money: seededMoney());
+    final invoice = money.invoices.single;
+
+    await tester.tap(find.byKey(ValueKey('invoice-menu-${invoice.id}')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-void-action')));
+    await tester.pumpAndSettle();
+    // Nothing voided until the explicit confirm.
+    expect(money.invoices.single.isVoided, isFalse);
+    await tester.tap(find.byKey(const ValueKey('invoice-void-confirm')));
+    await tester.pumpAndSettle();
+
+    expect(money.invoices.single.isVoided, isTrue);
+    expect(find.text('Invoice marked as erroneous.'), findsOneWidget);
+    expect(find.text('Erroneous'), findsOneWidget);
+    expect(
+      find.byKey(ValueKey('invoice-${invoice.id}')),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets(
+      'REPLACE (0061): the prefilled form issues a new invoice that '
+      'references the erroneous one; the old is voided; the row shows '
+      'the reference', (tester) async {
+    final money = await pumpInvoices(tester, money: seededMoney());
+    final wrong = money.invoices.single;
+
+    await tester.tap(find.byKey(ValueKey('invoice-menu-${wrong.id}')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-replace-action')));
+    await tester.pumpAndSettle();
+
+    // Prefilled from the erroneous invoice, banner names its number.
+    expect(
+      find.byKey(const ValueKey('invoice-replaces-banner')),
+      findsOneWidget,
+    );
+    expect(
+      tester
+          .widget<TextField>(
+              find.byKey(const ValueKey('invoice-title-field')))
+          .controller
+          ?.text,
+      'July membership',
+    );
+    // Correct the amount and issue.
+    await tester.enterText(
+      find.byKey(const ValueKey('invoice-line-amount-0')),
+      '150',
+    );
+    await tester.tap(find.byKey(const ValueKey('invoice-submit')));
+    await tester.pumpAndSettle();
+
+    expect(money.invoices, hasLength(2));
+    final replacement =
+        money.invoices.singleWhere((i) => i.id != wrong.id);
+    final voided =
+        money.invoices.singleWhere((i) => i.id == wrong.id);
+    // The technical reference: replacement → replaced invoice.
+    expect(replacement.replacesInvoiceId, wrong.id);
+    expect(replacement.replacesNumber, wrong.number);
+    expect(replacement.totalCents, 15000);
+    expect(replacement.isVoided, isFalse);
+    expect(voided.isVoided, isTrue);
+    // The archive shows both the chip and the reference line.
+    expect(find.text('Erroneous'), findsOneWidget);
+    expect(
+      find.textContaining('Replaces ${wrong.number}'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets(
+      'a replaced invoice offers no second replacement; a voided-and-'
+      'replaced one has no menu at all', (tester) async {
+    final money = seededMoney();
+    await money.createInvoice(
+      workspaceId: 'ws-1',
+      memberId: 'member-1',
+      title: 'July membership (corrected)',
+      lines: const [InvoiceLine(label: 'Subscription', amountCents: 15000)],
+      replacesId: 'inv-1',
+    );
+    await pumpInvoices(tester, money: money);
+
+    // inv-1 is voided AND replaced → no menu; the replacement keeps its
+    // menu with both actions.
+    expect(find.byKey(const ValueKey('invoice-menu-inv-1')), findsNothing);
+    expect(find.byKey(const ValueKey('invoice-menu-inv-2')), findsOneWidget);
+  });
+
   testWidgets('an admin WITHOUT the adminInvoicing delegation cannot issue',
       (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace();

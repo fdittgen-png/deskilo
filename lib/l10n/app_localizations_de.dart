@@ -1192,6 +1192,29 @@ class AppLocalizationsDe extends AppLocalizations {
       'Auch Admins stellen Rechnungen aus. Die Inhaberin kann es immer.';
 
   @override
+  String get invoiceVoidedChip => 'Fehlerhaft';
+
+  @override
+  String get invoiceVoidAction => 'Als fehlerhaft markieren';
+
+  @override
+  String invoiceVoidConfirm(String number) {
+    return 'Rechnung $number als fehlerhaft markieren? Das kann nicht rückgängig gemacht werden.';
+  }
+
+  @override
+  String get invoiceVoided => 'Rechnung als fehlerhaft markiert.';
+
+  @override
+  String get invoiceReplaceAction => 'Ersatzrechnung ausstellen';
+
+  @override
+  String get invoicePdfVoided => 'FEHLERHAFT — storniert am';
+
+  @override
+  String get invoicePdfReplaces => 'Ersetzt';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

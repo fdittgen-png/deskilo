@@ -355,6 +355,20 @@
   "featureInvoicingDesc": "Fatture immutabili e firmate in un archivio — scarica o condividi in PDF.",
   "featureAdminInvoicing": "Gli admin emettono fatture",
   "featureAdminInvoicingDesc": "Anche gli admin emettono fatture. Il proprietario può sempre.",
+  "invoiceVoidedChip": "Errata",
+  "invoiceVoidAction": "Segna come errata",
+  "invoiceVoidConfirm": "Segnare la fattura {number} come errata? L'operazione è irreversibile.",
+  "@invoiceVoidConfirm": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceVoided": "Fattura contrassegnata come errata.",
+  "invoiceReplaceAction": "Emetti sostitutiva",
+  "invoicePdfVoided": "ERRATA — annullata il",
+  "invoicePdfReplaces": "Sostituisce",
   "eventTypeMemberJoin": "Nuovo membro",
   "memberStatusPending": "In attesa",
   "pendingApprovalTitle": "In attesa di approvazione",

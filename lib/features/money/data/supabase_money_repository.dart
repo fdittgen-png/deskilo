@@ -30,6 +30,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     required String title,
     required List<InvoiceLine> lines,
     String? period,
+    String? replacesId,
   }) async {
     final id = await _client.rpc<dynamic>('create_invoice', params: {
       'p_workspace_id': workspaceId,
@@ -40,8 +41,15 @@ class SupabaseMoneyRepository implements MoneyRepository {
           {'label': line.label, 'amount_cents': line.amountCents},
       ],
       'p_period': period,
+      'p_replaces': replacesId,
     });
     return id as String;
+  }
+
+  @override
+  Future<void> voidInvoice(String invoiceId) async {
+    await _client
+        .rpc<void>('void_invoice', params: {'p_invoice_id': invoiceId});
   }
 
   SupabaseMoneyRepository(this._client);

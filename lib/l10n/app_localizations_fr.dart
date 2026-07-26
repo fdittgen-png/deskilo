@@ -1197,6 +1197,29 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les admins émettent aussi des factures. Le propriétaire le peut toujours.';
 
   @override
+  String get invoiceVoidedChip => 'Erronée';
+
+  @override
+  String get invoiceVoidAction => 'Marquer comme erronée';
+
+  @override
+  String invoiceVoidConfirm(String number) {
+    return 'Marquer la facture $number comme erronée ? Cette action est irréversible.';
+  }
+
+  @override
+  String get invoiceVoided => 'Facture marquée comme erronée.';
+
+  @override
+  String get invoiceReplaceAction => 'Émettre un remplacement';
+
+  @override
+  String get invoicePdfVoided => 'ERRONÉE — annulée le';
+
+  @override
+  String get invoicePdfReplaces => 'Remplace';
+
+  @override
   String get eventTypeMemberJoin => 'Nouveau membre';
 
   @override
