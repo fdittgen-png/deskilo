@@ -114,19 +114,42 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
     return;
   }
 
-  await showModalBottomSheet<void>(
-    context: context,
-    isScrollControlled: true,
-    builder: (context) => SpaceSheet(
-      kind: code.kind,
-      level: level,
-      office: office,
-      desk: desk,
-      seat: seat,
-      plan: plan,
-    ),
+  await showSpaceSheet(
+    context,
+    kind: code.kind,
+    level: level,
+    office: office,
+    desk: desk,
+    seat: seat,
+    plan: plan,
   );
 }
+
+/// Opens the whole-space sheet for an ALREADY-RESOLVED target — the
+/// scan flow above, and the plan canvases' double-tap (field request:
+/// double-tapping a table or a room/level on the plan reserves it, or
+/// checks in when it is already reserved).
+Future<void> showSpaceSheet(
+  BuildContext context, {
+  required SpaceKind kind,
+  Level? level,
+  Office? office,
+  Desk? desk,
+  Seat? seat,
+  FloorPlan? plan,
+}) =>
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => SpaceSheet(
+        kind: kind,
+        level: level,
+        office: office,
+        desk: desk,
+        seat: seat,
+        plan: plan,
+      ),
+    );
 
 /// The scanner: camera (injectable seam) plus a typed field — wedge
 /// scanners and tests type the payload. Foreign QR contents show an
@@ -306,6 +329,45 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
     invalidateBookingData(ref);
   }
 
+  /// Checks in to MY existing reservation of this space (field
+  /// request: an already-reserved table/room must check in, not sit
+  /// behind a disabled "conflict" button — my own reservation IS the
+  /// conflict).
+  Future<void> _checkInExisting(Reservation reservation) async {
+    final l10n = AppLocalizations.of(context);
+    if (_busy) return;
+    setState(() => _busy = true);
+    try {
+      await ref
+          .read(reservationRepositoryProvider)
+          .checkIn(reservation.id);
+    } catch (e, st) {
+      TraceLogger.instance.error('reservations', 'space check-in failed',
+          error: e, stackTrace: st);
+      if (!mounted) return;
+      setState(() => _busy = false);
+      AppSnack.error(
+        context,
+        bookingErrorText(
+          l10n,
+          e,
+          l10n?.workspaceGenericError ??
+              'Something went wrong. Please try again.',
+        ),
+        replace: true,
+      );
+      return;
+    }
+    if (!mounted) return;
+    Navigator.of(context).pop();
+    AppSnack.success(
+      context,
+      l10n?.kioskDone ?? "Done — you're all set.",
+      replace: true,
+    );
+    invalidateBookingData(ref);
+  }
+
   /// Reserve-or-check-in picker for one free seat (the kiosk action
   /// idiom, without the badge — the member is signed in).
   Future<void> _seatActions(Seat seat) async {
@@ -425,6 +487,23 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
               r.coversRange(window.start, window.end)),
     };
 
+    // My own live reservation of exactly this space in the window: the
+    // sheet then offers CHECK IN to it instead of a disabled conflict.
+    final myWholeReservation = me == null
+        ? null
+        : reservations
+            .where((r) =>
+                r.memberId == me.id &&
+                r.status == ReservationStatus.reserved &&
+                r.coversRange(window.start, window.end) &&
+                switch (widget.kind) {
+                  SpaceKind.desk => r.deskId == desk?.id,
+                  SpaceKind.office => r.officeId == office?.id,
+                  SpaceKind.level => r.levelId == level?.id,
+                  SpaceKind.seat => false,
+                })
+            .firstOrNull;
+
     final priceLine = wholeTarget != null && wholeTarget.priceCents > 0
         ? '${centsToMajor(wholeTarget.priceCents)} '
             '${workspace?.currencyCode ?? ''} / '
@@ -445,7 +524,22 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
         ],
         if (wholeTarget != null) ...[
           const SizedBox(height: 12),
-          if (wholeAllowed) ...[
+          if (myWholeReservation != null) ...[
+            Text(
+              l10n?.spaceYoursNow ?? 'Reserved by you for this slot.',
+              key: const ValueKey('space-yours'),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 8),
+            FilledButton.icon(
+              key: const ValueKey('space-checkin-mine'),
+              onPressed: _busy
+                  ? null
+                  : () => _checkInExisting(myWholeReservation),
+              icon: const Icon(Icons.login_outlined),
+              label: Text(l10n?.kioskCheckIn ?? 'Check in'),
+            ),
+          ] else if (wholeAllowed) ...[
             FilledButton.icon(
               key: const ValueKey('space-checkin'),
               onPressed: _busy || wholeConflict

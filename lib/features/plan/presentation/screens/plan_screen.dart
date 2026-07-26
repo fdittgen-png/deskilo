@@ -22,7 +22,9 @@ import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/domain/reservation_repository.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../reservations/domain/seat_state_logic.dart';
+import '../../../reservations/domain/space_code.dart';
 import '../../../reservations/presentation/widgets/booking_controls.dart';
+import '../../../reservations/presentation/widgets/space_scan.dart';
 import '../../../reservations/presentation/widgets/booking_sheet.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../../core/time/workspace_time.dart';
@@ -782,6 +784,29 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                     key: const ValueKey('plan-canvas-view'),
                     paintKey: const ValueKey('live-plan-canvas'),
                     plan: plan,
+                    // Double tap = whole-space reserve / check-in
+                    // (field request); only registered while the
+                    // feature is on so single taps stay instant
+                    // otherwise.
+                    onSpaceDoubleTap: ref
+                            .watch(enabledFeaturesSyncProvider)
+                            .contains(WorkspaceFeature.levelBooking)
+                        ? (desk, office) => showSpaceSheet(
+                              context,
+                              kind: desk != null
+                                  ? SpaceKind.desk
+                                  : office != null
+                                      ? SpaceKind.office
+                                      : SpaceKind.level,
+                              level: level,
+                              office: office ??
+                                  plan.offices
+                                      .where((o) => o.id == desk?.officeId)
+                                      .firstOrNull,
+                              desk: desk,
+                              plan: plan,
+                            )
+                        : null,
                     seatStates: seatStatesFor(
                       plan: plan,
                       reservations: reservations,

@@ -2153,6 +2153,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get spaceKindSeat => 'Puesto';
 
   @override
+  String get spaceYoursNow => 'Reservado por ti para esta franja.';
+
+  @override
   String get themeTitle => 'Tema';
 
   @override

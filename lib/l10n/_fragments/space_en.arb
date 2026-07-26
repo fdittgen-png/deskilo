@@ -51,5 +51,9 @@
   "spaceKindSeat": "Seat",
   "@spaceKindSeat": {
     "description": "Kind label on a workstation's printed QR card"
+  },
+  "spaceYoursNow": "Reserved by you for this slot.",
+  "@spaceYoursNow": {
+    "description": "Space sheet: the viewer already holds the reservation — the button below checks in"
   }
 }

@@ -12,5 +12,6 @@
   "spaceKindDesk": "Mesa",
   "spaceKindOffice": "Oficina",
   "spaceKindLevel": "Planta",
-  "spaceKindSeat": "Puesto"
+  "spaceKindSeat": "Puesto",
+  "spaceYoursNow": "Reservado por ti para esta franja."
 }

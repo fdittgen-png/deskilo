@@ -33,6 +33,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
 import '../../domain/seat_state_logic.dart';
 import '../../providers/reservation_providers.dart';
+import '../../domain/space_code.dart';
 import '../widgets/booking_controls.dart';
 import '../widgets/booking_sheet.dart';
 import '../widgets/series_result_dialog.dart';
@@ -776,6 +777,27 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
             AsyncData(value: final plan) => PlanCanvas(
                 paintKey: const ValueKey('reserve-plan-canvas'),
                 plan: plan,
+                // Double tap = whole-space reserve / check-in (field
+                // request); only registered while the feature is on.
+                onSpaceDoubleTap: ref
+                        .watch(enabledFeaturesSyncProvider)
+                        .contains(WorkspaceFeature.levelBooking)
+                    ? (desk, office) => showSpaceSheet(
+                          context,
+                          kind: desk != null
+                              ? SpaceKind.desk
+                              : office != null
+                                  ? SpaceKind.office
+                                  : SpaceKind.level,
+                          level: level,
+                          office: office ??
+                              plan.offices
+                                  .where((o) => o.id == desk?.officeId)
+                                  .firstOrNull,
+                          desk: desk,
+                          plan: plan,
+                        )
+                    : null,
                 // Presence dots: same rule as the directory and Plan tab.
                 onlineSeatIds: onlineSeatIdsFor(
                   plan: plan,
