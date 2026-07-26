@@ -8,6 +8,7 @@ import 'package:deskilo/features/auth/domain/social_provider.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
+import 'package:deskilo/core/cache/cache_store.dart';
 import 'package:deskilo/core/nfc/nfc_uid_reader.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
@@ -751,7 +752,37 @@ List<Override> standardTestOverrides({
     nfcUidReaderProvider.overrideWithValue(nfc ?? FakeNfcUidReader()),
     frontCameraStoreProvider
         .overrideWithValue(frontCamera ?? InMemoryFrontCameraStore()),
+    // File cache would touch path_provider channels in tests — and boot
+    // eviction runs on every app pump.
+    cacheStoreProvider.overrideWithValue(InMemoryCacheStore()),
   ];
+}
+
+/// In-memory [CacheStore] so widget tests never touch the filesystem.
+class InMemoryCacheStore implements CacheStore {
+  final Map<String, CacheEntry> entries = {};
+
+  @override
+  Future<CacheEntry?> get(String key) async => entries[key];
+
+  @override
+  Future<void> put(String key, Object? payload,
+      {required Duration ttl}) async {
+    entries[key] =
+        CacheEntry(payload: payload, storedAt: DateTime.now(), ttl: ttl);
+  }
+
+  @override
+  Future<void> invalidatePrefix(String prefix) async {
+    entries.removeWhere((key, _) => key.startsWith(prefix));
+  }
+
+  @override
+  Future<int> evictExpired() async {
+    final before = entries.length;
+    entries.removeWhere((_, e) => e.age > e.ttl * 3);
+    return before - entries.length;
+  }
 }
 
 /// In-memory [FrontCameraStore] so widget tests never touch

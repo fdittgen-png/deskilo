@@ -1,29 +1,50 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/cache/cache_store.dart';
+import '../../../core/cache/cached_fetch.dart';
+
 import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
 
 class SupabaseReservationRepository implements ReservationRepository {
-  SupabaseReservationRepository(this._client);
+  SupabaseReservationRepository(this._client, this._cache);
 
   final SupabaseClient _client;
+
+  /// Reservations are LIVE data: the network stays primary and the
+  /// cache only answers when it fails (the tankstellen offline
+  /// backbone) — a stale answer online would mislead a booking.
+  final CacheStore _cache;
+
+  /// Every mutation drops the cached windows: an offline fallback must
+  /// never resurrect a pre-mutation view.
+  Future<void> _bust() => _cache.invalidatePrefix('resv:');
 
   @override
   Future<List<Reservation>> fetchWindow(
     String workspaceId, {
     required DateTime from,
     required DateTime to,
-  }) async {
-    final rows = await _client
-        .from('reservations')
-        .select()
-        .eq('workspace_id', workspaceId)
-        .lt('starts_at', to.toUtc().toIso8601String())
-        .gt('ends_at', from.toUtc().toIso8601String())
-        .order('starts_at', ascending: true);
-    return rows.map(_fromRow).toList();
-  }
+  }) =>
+      cachedFetch<List<Reservation>>(
+        cache: _cache,
+        key: 'resv:$workspaceId:${from.toUtc().toIso8601String()}'
+            ':${to.toUtc().toIso8601String()}',
+        ttl: const Duration(minutes: 15),
+        mode: CacheReadMode.networkFirst,
+        fetchRaw: () => _client
+            .from('reservations')
+            .select()
+            .eq('workspace_id', workspaceId)
+            .lt('starts_at', to.toUtc().toIso8601String())
+            .gt('ends_at', from.toUtc().toIso8601String())
+            .order('starts_at', ascending: true),
+        parse: (payload) => [
+          for (final row in payload as List)
+            _fromRow(Map<String, dynamic>.from(row as Map)),
+        ],
+      );
 
   @override
   Future<String> create({
@@ -44,6 +65,7 @@ class SupabaseReservationRepository implements ReservationRepository {
       'p_ends_at': endsAt.toUtc().toIso8601String(),
       'p_check_in': checkIn,
     });
+    await _bust();
     return result as String;
   }
 
@@ -65,6 +87,7 @@ class SupabaseReservationRepository implements ReservationRepository {
       'p_starts_at': startsAt.toUtc().toIso8601String(),
       'p_ends_at': endsAt.toUtc().toIso8601String(),
     });
+    await _bust();
     return result as String;
   }
 
@@ -73,6 +96,7 @@ class SupabaseReservationRepository implements ReservationRepository {
     await _client.rpc<dynamic>('check_in_reservation', params: {
       'p_reservation_id': reservationId,
     });
+    await _bust();
   }
 
   @override
@@ -106,6 +130,7 @@ class SupabaseReservationRepository implements ReservationRepository {
       'p_starts_at': ?startsAt?.toUtc().toIso8601String(),
       'p_ends_at': ?endsAt?.toUtc().toIso8601String(),
     }) as Map<String, dynamic>;
+    await _bust();
     return result['reservation_id'] as String;
   }
 
@@ -114,6 +139,7 @@ class SupabaseReservationRepository implements ReservationRepository {
     await _client.rpc<dynamic>('check_out_reservation', params: {
       'p_reservation_id': reservationId,
     });
+    await _bust();
   }
 
   @override
@@ -121,6 +147,7 @@ class SupabaseReservationRepository implements ReservationRepository {
     await _client.rpc<dynamic>('cancel_reservation', params: {
       'p_reservation_id': reservationId,
     });
+    await _bust();
   }
 
   @override
@@ -134,6 +161,7 @@ class SupabaseReservationRepository implements ReservationRepository {
       'p_starts_at': startsAt.toUtc().toIso8601String(),
       'p_ends_at': endsAt.toUtc().toIso8601String(),
     });
+    await _bust();
   }
 
   @override
@@ -156,6 +184,7 @@ class SupabaseReservationRepository implements ReservationRepository {
     List<DateTime> dates(String key) => (result[key] as List<dynamic>)
         .map((v) => DateTime.parse(v as String))
         .toList();
+    await _bust();
     return SeriesResult(
       seriesId: result['series_id'] as String,
       booked: dates('booked'),
@@ -169,6 +198,7 @@ class SupabaseReservationRepository implements ReservationRepository {
       'p_series_id': seriesId,
       'p_from': from?.toUtc().toIso8601String(),
     });
+    await _bust();
     return result as int;
   }
 

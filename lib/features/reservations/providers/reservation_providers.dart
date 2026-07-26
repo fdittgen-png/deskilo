@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart' show WidgetRef;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/cache/cache_store.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_reservation_repository.dart';
 import '../domain/reservation.dart';
@@ -12,7 +13,10 @@ part 'reservation_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 ReservationRepository reservationRepository(Ref ref) =>
-    SupabaseReservationRepository(Supabase.instance.client);
+    SupabaseReservationRepository(
+      Supabase.instance.client,
+      ref.watch(cacheStoreProvider),
+    );
 
 /// Reservations of the active workspace intersecting the given LOCAL day
 /// (keyed 'yyyy-MM-dd'). Local, not UTC: the user thinks in wall-clock

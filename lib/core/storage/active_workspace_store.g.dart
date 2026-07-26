@@ -55,7 +55,7 @@ final class ActiveWorkspaceStoreProvider
 }
 
 String _$activeWorkspaceStoreHash() =>
-    r'890709c93eab5c64532497c3421fc944045333cd';
+    r'f1659ccba620ddb42b49a4a7b000a2d8adf80061';
 
 @ProviderFor(defaultWorkspaceStore)
 final defaultWorkspaceStoreProvider = DefaultWorkspaceStoreProvider._();
@@ -103,4 +103,4 @@ final class DefaultWorkspaceStoreProvider
 }
 
 String _$defaultWorkspaceStoreHash() =>
-    r'eede3cb778891b197ac026fd6604e3d76c93b371';
+    r'15bd537127160bd12e1e2f440dc88d973b31a7d2';
