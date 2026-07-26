@@ -22,5 +22,14 @@ String invoiceLineText(AppLocalizations? l10n, InvoiceLine line) =>
       'adjustment' => line.label.isNotEmpty
           ? line.label
           : l10n?.invoiceLineAdjustment ?? 'Adjustment',
+      // 0063 — credits: payments and expense reimbursements carry
+      // their ledger note behind the category label.
+      'payment' => line.label.isEmpty
+          ? (l10n?.ledgerCategoryPayment ?? 'Payment')
+          : '${l10n?.ledgerCategoryPayment ?? 'Payment'} · ${line.label}',
+      'expense' => line.label.isEmpty
+          ? (l10n?.ledgerCategoryExpense ?? 'Expense reimbursement')
+          : '${l10n?.ledgerCategoryExpense ?? 'Expense reimbursement'}'
+              ' · ${line.label}',
       _ => line.label,
     };

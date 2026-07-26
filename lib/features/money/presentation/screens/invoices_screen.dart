@@ -78,7 +78,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
         issuedOn: l10n?.invoicePdfIssuedOn ?? 'Issued on',
         issuedBy: l10n?.invoicePdfIssuedBy ?? 'Issued by',
         billedTo: l10n?.invoicePdfBilledTo ?? 'Billed to',
-        total: l10n?.invoicePdfTotal ?? 'Total',
+        total: l10n?.invoiceBalance ?? 'Balance due',
         signature:
             l10n?.invoicePdfSignature ?? 'Digital signature (SHA-256)',
         voided: voidedLabel,
@@ -777,7 +777,9 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             children: [
               Expanded(
                 child: Text(
-                  l10n?.invoicePdfTotal ?? 'Total',
+                  // 0063 — the invoice nets consumptions against
+                  // payments: the total IS the balance due (solde).
+                  l10n?.invoiceBalance ?? 'Balance due',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),

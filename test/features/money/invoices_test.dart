@@ -69,8 +69,9 @@ void main() {
       'shows the tracked positions and the issued invoice carries exactly '
       'those', (tester) async {
     final money = FakeMoneyRepository();
-    // A consumed service booked to the current month joins the
-    // statement's subscription + overage on the preview.
+    // A consumed service AND a confirmed payment booked to the current
+    // month join the statement's subscription + overage — the invoice
+    // nets them into the solde (0063).
     money.ledger.add(LedgerEntry(
       id: 'ledger-1',
       memberId: 'member-1',
@@ -78,6 +79,16 @@ void main() {
       category: LedgerCategory.service,
       amountCents: 450,
       description: 'Coffee ×3',
+      period: currentTestPeriod(),
+      createdAt: DateTime.now(),
+    ));
+    money.ledger.add(LedgerEntry(
+      id: 'ledger-2',
+      memberId: 'member-1',
+      kind: LedgerKind.credit,
+      category: LedgerCategory.payment,
+      amountCents: 10000,
+      description: 'PayPal',
       period: currentTestPeriod(),
       createdAt: DateTime.now(),
     ));
@@ -96,6 +107,10 @@ void main() {
     expect(find.text('Subscription 50%'), findsOneWidget);
     expect(find.textContaining('extra half-day'), findsOneWidget);
     expect(find.text('Coffee ×3'), findsOneWidget);
+    expect(find.textContaining('Payment'), findsOneWidget,
+        reason: 'the confirmed payment is a NEGATIVE position');
+    expect(find.text('Balance due'), findsOneWidget,
+        reason: 'the bottom line is the solde, not a charges total');
     expect(
       find.byKey(const ValueKey('invoice-preview-total')),
       findsOneWidget,
@@ -108,9 +123,12 @@ void main() {
 
     final invoice = money.invoices.single;
     expect(invoice.period, currentTestPeriod());
-    expect(invoice.totalCents, 15000 + 1600 + 450);
+    expect(invoice.totalCents, 15000 + 1600 + 450 - 10000,
+        reason: 'the invoice total IS the solde: consumptions minus '
+            'payments');
     expect(invoice.lines.map((l) => l.kind),
-        ['subscription', 'overage', 'service']);
+        ['subscription', 'overage', 'service', 'payment']);
+    expect(invoice.lines.last.amountCents, -10000);
     expect(invoice.number, startsWith('INV-'));
     expect(find.text('Invoice issued.'), findsOneWidget);
   });

@@ -48,10 +48,6 @@
   "@invoicePdfBilledTo": {
     "description": "PDF: label above the member block"
   },
-  "invoicePdfTotal": "Total",
-  "@invoicePdfTotal": {
-    "description": "PDF: the total row"
-  },
   "invoicePdfSignature": "Digital signature (SHA-256)",
   "@invoicePdfSignature": {
     "description": "PDF: caption above the integrity fingerprint"
@@ -156,5 +152,9 @@
   "invoiceSortByMonth": "By month",
   "@invoiceSortByMonth": {
     "description": "Sort: newest invoiced month first"
+  },
+  "invoiceBalance": "Balance due",
+  "@invoiceBalance": {
+    "description": "Invoice bottom line (0063): consumptions minus payments — the solde"
   }
 }
