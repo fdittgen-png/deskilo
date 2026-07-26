@@ -1203,6 +1203,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceLineAdjustment => 'Anpassung';
 
   @override
+  String get invoiceFilterAllMembers => 'Alle Mitglieder';
+
+  @override
+  String get invoiceFilterAllMonths => 'Alle Monate';
+
+  @override
+  String get invoiceFilterMonthLabel => 'Monat';
+
+  @override
+  String get invoiceSortTooltip => 'Sortieren';
+
+  @override
+  String get invoiceSortNewest => 'Neueste zuerst';
+
+  @override
+  String get invoiceSortByMember => 'Nach Mitglied';
+
+  @override
+  String get invoiceSortByMonth => 'Nach Monat';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

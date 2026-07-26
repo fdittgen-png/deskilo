@@ -1207,6 +1207,27 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceLineAdjustment => 'Ajustement';
 
   @override
+  String get invoiceFilterAllMembers => 'Tous les membres';
+
+  @override
+  String get invoiceFilterAllMonths => 'Tous les mois';
+
+  @override
+  String get invoiceFilterMonthLabel => 'Mois';
+
+  @override
+  String get invoiceSortTooltip => 'Trier';
+
+  @override
+  String get invoiceSortNewest => 'Plus récentes d\'abord';
+
+  @override
+  String get invoiceSortByMember => 'Par membre';
+
+  @override
+  String get invoiceSortByMonth => 'Par mois';
+
+  @override
   String get eventTypeMemberJoin => 'Nouveau membre';
 
   @override

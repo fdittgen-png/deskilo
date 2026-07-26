@@ -351,6 +351,76 @@ void main() {
       findsOneWidget,
     );
   });
+  testWidgets(
+      'ARCHIVE FILTERS: member and month narrow the list; sort by month '
+      'reorders it', (tester) async {
+    final money = FakeMoneyRepository();
+    // Flo: June + May; Ana (member-2): July.
+    await money.createInvoice(
+        workspaceId: 'ws-1', memberId: 'member-1', period: '2026-05');
+    await money.createInvoice(
+        workspaceId: 'ws-1', memberId: 'member-1', period: '2026-06');
+    await money.createInvoice(
+        workspaceId: 'ws-1', memberId: 'member-2', period: '2026-07');
+    await pumpInvoices(tester, money: money);
+
+    expect(find.byType(ListTile), findsNWidgets(3));
+
+    // Member filter → only Ana's invoice.
+    await tester.tap(find.byKey(const ValueKey('invoice-filter-member')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Ana').last);
+    await tester.pumpAndSettle();
+    expect(find.byType(ListTile), findsNWidgets(1));
+    expect(find.textContaining('2026-07'), findsOneWidget);
+
+    // Back to all members, then filter by June.
+    await tester.tap(find.byKey(const ValueKey('invoice-filter-member')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('All members').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-filter-period')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('June 2026').last);
+    await tester.pumpAndSettle();
+    expect(find.byType(ListTile), findsNWidgets(1));
+    expect(find.textContaining('2026-06'), findsOneWidget);
+
+    // Clear the month filter; sort by month: newest invoiced month
+    // first (July, June, May) regardless of issue order.
+    await tester.tap(find.byKey(const ValueKey('invoice-filter-period')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('All months').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-sort')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-sort-period')));
+    await tester.pumpAndSettle();
+    double rowY(String id) =>
+        tester.getTopLeft(find.byKey(ValueKey('invoice-$id'))).dy;
+    expect(rowY('inv-3'), lessThan(rowY('inv-2')),
+        reason: 'July (inv-3) sorts above June (inv-2)');
+    expect(rowY('inv-2'), lessThan(rowY('inv-1')),
+        reason: 'June above May');
+  });
+
+  testWidgets(
+      'a PLAIN member gets the month filter but no member filter (their '
+      'archive is theirs alone)', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.myMember =
+        workspace.myMember.copyWith(isOwner: false, isAdmin: false);
+    await pumpInvoices(
+      tester,
+      money: await seededMoney(),
+      workspace: workspace,
+    );
+    expect(
+        find.byKey(const ValueKey('invoice-filter-member')), findsNothing);
+    expect(
+        find.byKey(const ValueKey('invoice-filter-period')), findsOneWidget);
+    expect(find.byKey(const ValueKey('invoice-sort')), findsOneWidget);
+  });
 }
 
 /// The period the fake books to when tests issue "now" — mirrors

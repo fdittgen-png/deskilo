@@ -37,5 +37,12 @@
   "invoicePdfVoided": "ERRATA — annullata il",
   "invoicePdfReplaces": "Sostituisce",
   "invoiceNothingToInvoice": "Nessun dato registrato per questo mese — niente da fatturare.",
-  "invoiceLineAdjustment": "Rettifica"
+  "invoiceLineAdjustment": "Rettifica",
+  "invoiceFilterAllMembers": "Tutti i membri",
+  "invoiceFilterAllMonths": "Tutti i mesi",
+  "invoiceFilterMonthLabel": "Mese",
+  "invoiceSortTooltip": "Ordina",
+  "invoiceSortNewest": "Più recenti prima",
+  "invoiceSortByMember": "Per membro",
+  "invoiceSortByMonth": "Per mese"
 }

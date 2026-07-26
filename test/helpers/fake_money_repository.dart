@@ -119,7 +119,8 @@ class FakeMoneyRepository implements MoneyRepository {
       lines: lines,
       totalCents: lines.fold(0, (sum, l) => sum + l.amountCents),
       currency: 'EUR',
-      memberName: 'Ana',
+      // Distinguishable snapshots for the archive filters.
+      memberName: memberId == 'member-1' ? 'Flo' : 'Ana',
       memberAddress: '1 Rue Test, 34120 Pézenas',
       workspaceName: 'Test Space',
       workspaceAddress: '2 Place du Marché, 34120 Pézenas',

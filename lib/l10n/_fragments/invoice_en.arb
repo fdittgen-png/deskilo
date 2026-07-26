@@ -128,5 +128,33 @@
   "invoiceLineAdjustment": "Adjustment",
   "@invoiceLineAdjustment": {
     "description": "Fallback label of an adjustment position without a description"
+  },
+  "invoiceFilterAllMembers": "All members",
+  "@invoiceFilterAllMembers": {
+    "description": "Archive member filter: no filter"
+  },
+  "invoiceFilterAllMonths": "All months",
+  "@invoiceFilterAllMonths": {
+    "description": "Archive month filter: no filter"
+  },
+  "invoiceFilterMonthLabel": "Month",
+  "@invoiceFilterMonthLabel": {
+    "description": "Archive month filter label"
+  },
+  "invoiceSortTooltip": "Sort",
+  "@invoiceSortTooltip": {
+    "description": "Archive sort menu tooltip"
+  },
+  "invoiceSortNewest": "Newest first",
+  "@invoiceSortNewest": {
+    "description": "Sort: newest issued first (default)"
+  },
+  "invoiceSortByMember": "By member",
+  "@invoiceSortByMember": {
+    "description": "Sort: grouped by member name"
+  },
+  "invoiceSortByMonth": "By month",
+  "@invoiceSortByMonth": {
+    "description": "Sort: newest invoiced month first"
   }
 }
