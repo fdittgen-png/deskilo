@@ -306,7 +306,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Ground floor'), findsOneWidget);
+    // 0065 — Reserve opens the period/repeat picker; confirming books.
     await tester.tap(find.byKey(const ValueKey('space-reserve')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
     await tester.pumpAndSettle();
 
     final r = reservations.reservations.single;

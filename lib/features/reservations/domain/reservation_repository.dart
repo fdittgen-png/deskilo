@@ -95,9 +95,14 @@ abstract class ReservationRepository {
 
   /// Books a recurring series; the backend expands instances and reports
   /// conflicts as skipped.
+  /// Exactly one of [seatId], [deskId], [officeId], [levelId] (0065):
+  /// whole-space series carry the same repetition as seats.
   Future<SeriesResult> createSeries({
     required String workspaceId,
-    required String seatId,
+    String? seatId,
+    String? deskId,
+    String? officeId,
+    String? levelId,
     required DateTime firstStart,
     required DateTime firstEnd,
     required SeriesPattern pattern,

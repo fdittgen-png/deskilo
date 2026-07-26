@@ -796,6 +796,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                                   .firstOrNull,
                           desk: desk,
                           plan: plan,
+                          // Seed the reserve picker with the hub's
+                          // selected day + period (0065).
+                          initialWindow:
+                              (start: window.start, end: window.end),
                         )
                     : null,
                 // Presence dots: same rule as the directory and Plan tab.

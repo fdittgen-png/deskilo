@@ -234,7 +234,10 @@ class FakeReservationRepository implements ReservationRepository {
   @override
   Future<SeriesResult> createSeries({
     required String workspaceId,
-    required String seatId,
+    String? seatId,
+    String? deskId,
+    String? officeId,
+    String? levelId,
     required DateTime firstStart,
     required DateTime firstEnd,
     required SeriesPattern pattern,
@@ -251,7 +254,9 @@ class FakeReservationRepository implements ReservationRepository {
     while (!start.isAfter(until)) {
       final isWeekday = start.weekday <= DateTime.friday;
       if (pattern != SeriesPattern.weekdays || isWeekday) {
-        if (_overlapsActive(seatId, null, start, end)) {
+        // Seat overlap check for seat series; whole-space fakes lean on
+        // the widget-level conflict displays (the server re-checks).
+        if (seatId != null && _overlapsActive(seatId, null, start, end)) {
           skipped.add(start);
         } else {
           reservations.add(
@@ -259,6 +264,9 @@ class FakeReservationRepository implements ReservationRepository {
               id: 'res-${_nextId++}',
               workspaceId: workspaceId,
               seatId: seatId,
+              deskId: deskId,
+              officeId: officeId,
+              levelId: levelId,
               memberId: myMemberId,
               startsAt: start,
               endsAt: end,
