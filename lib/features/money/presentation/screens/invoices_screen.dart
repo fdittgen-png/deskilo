@@ -10,11 +10,14 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../../../../core/files/file_names.dart';
 import '../../../../core/files/file_saver.dart';
+import '../../../../core/format/cents.dart';
 import '../../../../core/share/file_sharer.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -44,9 +47,15 @@ class InvoicesScreen extends ConsumerWidget {
     // Everything context-derived is captured BEFORE the awaits.
     final l10n = AppLocalizations.of(context);
     final currency = NumberFormat.simpleCurrency(name: invoice.currency);
-    final dateLabel = DateFormat.yMMMd(
+    final dateFormat = DateFormat.yMMMd(
       Localizations.maybeLocaleOf(context)?.toString(),
-    ).format(invoice.issuedAt);
+    );
+    final dateLabel = dateFormat.format(invoice.issuedAt);
+    final voidedAt = invoice.voidedAt;
+    final voidedLabel = voidedAt == null
+        ? ''
+        : '${l10n?.invoicePdfVoided ?? 'ERRONEOUS — voided on'} '
+            '${dateFormat.format(voidedAt)}';
     final bytes = await buildInvoicePdf(
       invoice: invoice,
       strings: InvoicePdfStrings(
@@ -57,6 +66,8 @@ class InvoicesScreen extends ConsumerWidget {
         total: l10n?.invoicePdfTotal ?? 'Total',
         signature:
             l10n?.invoicePdfSignature ?? 'Digital signature (SHA-256)',
+        voided: voidedLabel,
+        replaces: l10n?.invoicePdfReplaces ?? 'Replaces',
       ),
       money: (cents) => currency.format(cents / 100),
       dateLabel: dateLabel,
@@ -97,6 +108,56 @@ class InvoicesScreen extends ConsumerWidget {
           );
         }
       },
+    );
+  }
+
+  /// Tags [invoice] erroneous (0061) after an explicit confirm — the
+  /// stamp is one-way, so the dialog says so.
+  Future<void> _void(
+    BuildContext context,
+    WidgetRef ref,
+    Invoice invoice,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n?.invoiceVoidAction ?? 'Mark erroneous'),
+        content: Text(
+          l10n?.invoiceVoidConfirm(invoice.number) ??
+              'Mark invoice ${invoice.number} as erroneous? '
+                  'This cannot be undone.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(l10n?.commonCancel ?? 'Cancel'),
+          ),
+          FilledButton(
+            key: const ValueKey('invoice-void-confirm'),
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(l10n?.invoiceVoidAction ?? 'Mark erroneous'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !context.mounted) return;
+    if (!await runGuarded(
+      context,
+      domain: 'money',
+      message: 'invoice void failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () =>
+          ref.read(moneyRepositoryProvider).voidInvoice(invoice.id),
+    )) {
+      return;
+    }
+    ref.invalidate(invoicesProvider);
+    if (!context.mounted) return;
+    AppSnack.success(
+      context,
+      l10n?.invoiceVoided ?? 'Invoice marked as erroneous.',
     );
   }
 
@@ -156,45 +217,123 @@ class InvoicesScreen extends ConsumerWidget {
                 icon: Icons.receipt_long_outlined,
                 title: l10n?.invoicesEmpty ?? 'No invoices yet.',
               )
-            : ListView.builder(
-                padding: AppSpacing.mdAll,
-                itemCount: invoices.length,
-                itemBuilder: (context, index) {
-                  final invoice = invoices[index];
-                  final currency =
-                      NumberFormat.simpleCurrency(name: invoice.currency);
-                  final rowTitle = '${invoice.number} · ${invoice.title}';
-                  return Card(
-                    child: ListTile(
-                      key: ValueKey('invoice-${invoice.id}'),
-                      title: Text(rowTitle),
-                      subtitle: Text([
-                        dateFormat.format(invoice.issuedAt),
-                        if (showMemberNames) invoice.memberName,
-                        currency.format(invoice.totalCents / 100),
-                      ].join(' · ')),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            key: ValueKey('invoice-download-${invoice.id}'),
-                            tooltip: l10n?.invoiceDownload ?? 'Download PDF',
-                            icon: const Icon(Icons.download_outlined),
-                            onPressed: () =>
-                                _download(context, ref, invoice),
+            : Builder(builder: (context) {
+                // An invoice already replaced cannot be replaced again —
+                // corrections form a chain, never a fork (0061).
+                final replacedIds = {
+                  for (final invoice in invoices)
+                    if (invoice.replacesInvoiceId != null)
+                      invoice.replacesInvoiceId!,
+                };
+                return ListView.builder(
+                  padding: AppSpacing.mdAll,
+                  itemCount: invoices.length,
+                  itemBuilder: (context, index) {
+                    final invoice = invoices[index];
+                    final currency =
+                        NumberFormat.simpleCurrency(name: invoice.currency);
+                    final rowTitle =
+                        '${invoice.number} · ${invoice.title}';
+                    final colors = Theme.of(context).colorScheme;
+                    return Card(
+                      child: ListTile(
+                        key: ValueKey('invoice-${invoice.id}'),
+                        title: Row(children: [
+                          Flexible(
+                            child: Text(
+                              rowTitle,
+                              overflow: TextOverflow.ellipsis,
+                              style: invoice.isVoided
+                                  ? const TextStyle(
+                                      decoration:
+                                          TextDecoration.lineThrough)
+                                  : null,
+                            ),
                           ),
-                          IconButton(
-                            key: ValueKey('invoice-share-${invoice.id}'),
-                            tooltip: l10n?.invoiceShare ?? 'Share PDF',
-                            icon: const Icon(Icons.share_outlined),
-                            onPressed: () => _share(context, ref, invoice),
-                          ),
-                        ],
+                          if (invoice.isVoided) ...[
+                            const SizedBox(width: 8),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: colors.errorContainer,
+                                borderRadius: AppRadius.smAll,
+                              ),
+                              child: Text(
+                                l10n?.invoiceVoidedChip ?? 'Erroneous',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall
+                                    ?.copyWith(
+                                        color: colors.onErrorContainer),
+                              ),
+                            ),
+                          ],
+                        ]),
+                        subtitle: Text([
+                          dateFormat.format(invoice.issuedAt),
+                          if (showMemberNames) invoice.memberName,
+                          currency.format(invoice.totalCents / 100),
+                          if (invoice.replacesNumber.isNotEmpty)
+                            '${l10n?.invoicePdfReplaces ?? 'Replaces'} '
+                                '${invoice.replacesNumber}',
+                        ].join(' · ')),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              key: ValueKey(
+                                  'invoice-download-${invoice.id}'),
+                              tooltip:
+                                  l10n?.invoiceDownload ?? 'Download PDF',
+                              icon: const Icon(Icons.download_outlined),
+                              onPressed: () =>
+                                  _download(context, ref, invoice),
+                            ),
+                            IconButton(
+                              key: ValueKey('invoice-share-${invoice.id}'),
+                              tooltip: l10n?.invoiceShare ?? 'Share PDF',
+                              icon: const Icon(Icons.share_outlined),
+                              onPressed: () =>
+                                  _share(context, ref, invoice),
+                            ),
+                            if (canIssue &&
+                                (!invoice.isVoided ||
+                                    !replacedIds.contains(invoice.id)))
+                              PopupMenuButton<String>(
+                                key: ValueKey('invoice-menu-${invoice.id}'),
+                                onSelected: (action) => switch (action) {
+                                  'void' => _void(context, ref, invoice),
+                                  _ => _createSheet(context, ref,
+                                      replaces: invoice),
+                                },
+                                itemBuilder: (context) => [
+                                  if (!invoice.isVoided)
+                                    PopupMenuItem(
+                                      key: const ValueKey(
+                                          'invoice-void-action'),
+                                      value: 'void',
+                                      child: Text(l10n?.invoiceVoidAction ??
+                                          'Mark erroneous'),
+                                    ),
+                                  if (!replacedIds.contains(invoice.id))
+                                    PopupMenuItem(
+                                      key: const ValueKey(
+                                          'invoice-replace-action'),
+                                      value: 'replace',
+                                      child: Text(
+                                          l10n?.invoiceReplaceAction ??
+                                              'Issue replacement'),
+                                    ),
+                                ],
+                              ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
+                    );
+                  },
+                );
+              }),
         AsyncError() => Center(
             child: Text(
               l10n?.workspaceGenericError ??
@@ -206,7 +345,14 @@ class InvoicesScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _createSheet(BuildContext context, WidgetRef ref) async {
+  /// Issue sheet — plain from the FAB, or a REPLACEMENT (0061) prefilled
+  /// from [replaces]: the erroneous invoice is voided by the server in
+  /// the same transaction and the new one references it.
+  Future<void> _createSheet(
+    BuildContext context,
+    WidgetRef ref, {
+    Invoice? replaces,
+  }) async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
@@ -226,6 +372,14 @@ class InvoicesScreen extends ConsumerWidget {
           for (final member in members)
             (id: member.id, name: names[member.id] ?? ''),
         ],
+        // Only preselect a member the dropdown actually offers — the
+        // wrong invoice may target a member who has left since.
+        initialMemberId: members.any((m) => m.id == replaces?.memberId)
+            ? replaces?.memberId
+            : null,
+        initialTitle: replaces?.title,
+        initialLines: replaces?.lines,
+        replacesNumber: replaces?.number,
       ),
     );
     if (result == null || !context.mounted) return;
@@ -241,6 +395,7 @@ class InvoicesScreen extends ConsumerWidget {
             memberId: result.memberId,
             title: result.title,
             lines: result.lines,
+            replacesId: replaces?.id,
           ),
     )) {
       return;
@@ -252,22 +407,42 @@ class InvoicesScreen extends ConsumerWidget {
 }
 
 /// The issue form: member, title, dynamic label+amount lines. Amounts
-/// parse as major units ("12.50" → 1250 cents).
+/// parse as major units ("12.50" → 1250 cents). A replacement (0061)
+/// arrives prefilled from the erroneous invoice, with a banner naming
+/// the number it replaces.
 class _InvoiceForm extends StatefulWidget {
-  const _InvoiceForm({required this.l10n, required this.members});
+  const _InvoiceForm({
+    required this.l10n,
+    required this.members,
+    this.initialMemberId,
+    this.initialTitle,
+    this.initialLines,
+    this.replacesNumber,
+  });
 
   final AppLocalizations? l10n;
   final List<({String id, String name})> members;
+  final String? initialMemberId;
+  final String? initialTitle;
+  final List<InvoiceLine>? initialLines;
+  final String? replacesNumber;
 
   @override
   State<_InvoiceForm> createState() => _InvoiceFormState();
 }
 
 class _InvoiceFormState extends State<_InvoiceForm> {
-  String? _memberId;
-  final _title = TextEditingController();
-  final _lines = <({TextEditingController label, TextEditingController amount})>[
-    (label: TextEditingController(), amount: TextEditingController()),
+  late String? _memberId = widget.initialMemberId;
+  late final _title = TextEditingController(text: widget.initialTitle ?? '');
+  late final _lines =
+      <({TextEditingController label, TextEditingController amount})>[
+    for (final line in widget.initialLines ?? const <InvoiceLine>[])
+      (
+        label: TextEditingController(text: line.label),
+        amount: TextEditingController(text: centsToMajor(line.amountCents)),
+      ),
+    if (widget.initialLines == null || widget.initialLines!.isEmpty)
+      (label: TextEditingController(), amount: TextEditingController()),
   ];
 
   @override
@@ -320,9 +495,22 @@ class _InvoiceFormState extends State<_InvoiceForm> {
   @override
   Widget build(BuildContext context) {
     final l10n = widget.l10n;
+    final replacesNumber = widget.replacesNumber;
+    final replacesBanner = replacesNumber == null
+        ? null
+        : '${l10n?.invoicePdfReplaces ?? 'Replaces'} $replacesNumber';
     return SheetShell(
       title: l10n?.invoiceCreate ?? 'New invoice',
       children: [
+        if (replacesBanner != null) ...[
+          const SizedBox(height: 8),
+          InlineBanner(
+            key: const ValueKey('invoice-replaces-banner'),
+            icon: Icons.published_with_changes_outlined,
+            text: replacesBanner,
+            severity: InlineBannerSeverity.info,
+          ),
+        ],
         const SizedBox(height: 8),
         DropdownButtonFormField<String>(
           key: const ValueKey('invoice-member-dropdown'),

@@ -1186,6 +1186,29 @@ class AppLocalizationsEn extends AppLocalizations {
       'Admins issue invoices too. The owner always can.';
 
   @override
+  String get invoiceVoidedChip => 'Erroneous';
+
+  @override
+  String get invoiceVoidAction => 'Mark erroneous';
+
+  @override
+  String invoiceVoidConfirm(String number) {
+    return 'Mark invoice $number as erroneous? This cannot be undone.';
+  }
+
+  @override
+  String get invoiceVoided => 'Invoice marked as erroneous.';
+
+  @override
+  String get invoiceReplaceAction => 'Issue replacement';
+
+  @override
+  String get invoicePdfVoided => 'ERRONEOUS — voided on';
+
+  @override
+  String get invoicePdfReplaces => 'Replaces';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

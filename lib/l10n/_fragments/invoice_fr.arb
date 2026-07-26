@@ -27,5 +27,19 @@
   "featureInvoicing": "Factures",
   "featureInvoicingDesc": "Factures immuables et signées dans une archive — à télécharger ou partager en PDF.",
   "featureAdminInvoicing": "Les admins émettent des factures",
-  "featureAdminInvoicingDesc": "Les admins émettent aussi des factures. Le propriétaire le peut toujours."
+  "featureAdminInvoicingDesc": "Les admins émettent aussi des factures. Le propriétaire le peut toujours.",
+  "invoiceVoidedChip": "Erronée",
+  "invoiceVoidAction": "Marquer comme erronée",
+  "invoiceVoidConfirm": "Marquer la facture {number} comme erronée ? Cette action est irréversible.",
+  "@invoiceVoidConfirm": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceVoided": "Facture marquée comme erronée.",
+  "invoiceReplaceAction": "Émettre un remplacement",
+  "invoicePdfVoided": "ERRONÉE — annulée le",
+  "invoicePdfReplaces": "Remplace"
 }

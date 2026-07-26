@@ -32,7 +32,24 @@ class FakeMoneyRepository implements MoneyRepository {
     required String title,
     required List<InvoiceLine> lines,
     String? period,
+    String? replacesId,
   }) async {
+    var replacesNumber = '';
+    if (replacesId != null) {
+      // Server contract (0061): the reference must resolve, one direct
+      // replacement per invoice, and the replaced one ends up voided in
+      // the same transaction.
+      final i = invoices.indexWhere((inv) => inv.id == replacesId);
+      if (i < 0) throw StateError('unknown invoice');
+      if (invoices.any((inv) => inv.replacesInvoiceId == replacesId)) {
+        throw StateError('invoice already replaced');
+      }
+      if (!invoices[i].isVoided) {
+        invoices[i] = invoices[i]
+            .copyWith(voidedAt: DateTime.now(), voidedByName: 'Flo');
+      }
+      replacesNumber = invoices[i].number;
+    }
     final invoice = Invoice(
       id: 'inv-$_nextInvoice',
       workspaceId: workspaceId,
@@ -50,10 +67,21 @@ class FakeMoneyRepository implements MoneyRepository {
       workspaceAddress: '2 Place du Marché, 34120 Pézenas',
       issuerName: 'Flo',
       signature: 'f' * 64,
+      replacesInvoiceId: replacesId,
+      replacesNumber: replacesNumber,
     );
     _nextInvoice++;
     invoices.insert(0, invoice);
     return invoice.id;
+  }
+
+  @override
+  Future<void> voidInvoice(String invoiceId) async {
+    final i = invoices.indexWhere((inv) => inv.id == invoiceId);
+    if (i < 0) throw StateError('unknown invoice');
+    if (invoices[i].isVoided) throw StateError('invoice already voided');
+    invoices[i] = invoices[i]
+        .copyWith(voidedAt: DateTime.now(), voidedByName: 'Flo');
   }
 
   FakeMoneyRepository({FakeEventRepository? events}) : _events = events;

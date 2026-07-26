@@ -2240,6 +2240,48 @@ abstract class AppLocalizations {
   /// **'Admins issue invoices too. The owner always can.'**
   String get featureAdminInvoicingDesc;
 
+  /// Chip on an archive row of an invoice tagged erroneous (0061)
+  ///
+  /// In en, this message translates to:
+  /// **'Erroneous'**
+  String get invoiceVoidedChip;
+
+  /// Menu action + confirm button tagging an invoice erroneous
+  ///
+  /// In en, this message translates to:
+  /// **'Mark erroneous'**
+  String get invoiceVoidAction;
+
+  /// Confirm dialog body before tagging an invoice erroneous
+  ///
+  /// In en, this message translates to:
+  /// **'Mark invoice {number} as erroneous? This cannot be undone.'**
+  String invoiceVoidConfirm(String number);
+
+  /// Snackbar after an invoice was tagged erroneous
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice marked as erroneous.'**
+  String get invoiceVoided;
+
+  /// Menu action opening the prefilled replacement form
+  ///
+  /// In en, this message translates to:
+  /// **'Issue replacement'**
+  String get invoiceReplaceAction;
+
+  /// PDF banner + row label prefix before the void date
+  ///
+  /// In en, this message translates to:
+  /// **'ERRONEOUS — voided on'**
+  String get invoicePdfVoided;
+
+  /// Label before the replaced invoice's number (row, sheet banner, PDF)
+  ///
+  /// In en, this message translates to:
+  /// **'Replaces'**
+  String get invoicePdfReplaces;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

@@ -19,13 +19,20 @@ abstract class MoneyRepository {
 
   /// Issues an IMMUTABLE invoice (RPC `create_invoice`, 0060) — owner
   /// always, admins per the adminInvoicing delegation. Returns its id.
+  /// With [replacesId] (0061) the new invoice references the erroneous
+  /// one it replaces; the server voids that one in the same transaction.
   Future<String> createInvoice({
     required String workspaceId,
     required String memberId,
     required String title,
     required List<InvoiceLine> lines,
     String? period,
+    String? replacesId,
   });
+
+  /// Tags an invoice erroneous (RPC `void_invoice`, 0061) — the sole
+  /// one-way change the server permits on an issued invoice.
+  Future<void> voidInvoice(String invoiceId);
 
   Future<Statement> fetchStatement(String memberId, String period);
 

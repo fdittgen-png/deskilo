@@ -15,6 +15,8 @@ class InvoicePdfStrings {
     required this.billedTo,
     required this.total,
     required this.signature,
+    required this.voided,
+    required this.replaces,
   });
 
   final String invoiceTitle;
@@ -23,6 +25,12 @@ class InvoicePdfStrings {
   final String billedTo;
   final String total;
   final String signature;
+
+  /// Banner on an invoice tagged erroneous (0061).
+  final String voided;
+
+  /// Label before the replaced invoice's number on a replacement (0061).
+  final String replaces;
 }
 
 /// The archive PDF of one invoice (0060): workspace letterhead with its
@@ -44,6 +52,7 @@ Future<Uint8List> buildInvoicePdf({
   final numberLine = '${strings.invoiceTitle} ${invoice.number}';
   final issuedOnLine = '${strings.issuedOn} $dateLabel';
   final issuedByLine = '${strings.issuedBy} ${invoice.issuerName}';
+  final replacesLine = '${strings.replaces} ${invoice.replacesNumber}';
   doc.addPage(
     pw.Page(
       pageFormat: PdfPageFormat.a4,
@@ -58,6 +67,21 @@ Future<Uint8List> buildInvoicePdf({
           if (invoice.workspaceAddress.isNotEmpty)
             pw.Text(invoice.workspaceAddress,
                 style: const pw.TextStyle(fontSize: 10)),
+          // An erroneous invoice keeps its content but is unmistakably
+          // marked — the archive never hides a voided document (0061).
+          if (invoice.isVoided) ...[
+            pw.SizedBox(height: 10),
+            pw.Container(
+              padding: const pw.EdgeInsets.symmetric(
+                  horizontal: 8, vertical: 4),
+              decoration: pw.BoxDecoration(
+                border: pw.Border.all(color: PdfColors.red, width: 1),
+              ),
+              child: pw.Text(strings.voided,
+                  style: const pw.TextStyle(
+                      fontSize: 11, color: PdfColors.red)),
+            ),
+          ],
           pw.SizedBox(height: 18),
           pw.Row(
             mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
@@ -86,6 +110,9 @@ Future<Uint8List> buildInvoicePdf({
                       style: const pw.TextStyle(fontSize: 10)),
                   pw.Text(issuedByLine,
                       style: const pw.TextStyle(fontSize: 10)),
+                  if (invoice.replacesNumber.isNotEmpty)
+                    pw.Text(replacesLine,
+                        style: const pw.TextStyle(fontSize: 10)),
                 ],
               ),
             ],
