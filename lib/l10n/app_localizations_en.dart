@@ -1111,29 +1111,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceMemberLabel => 'Member';
 
   @override
-  String get invoiceTitleLabel => 'Title';
-
-  @override
-  String get invoiceLineLabel => 'Item';
-
-  @override
-  String get invoiceLineAmount => 'Amount';
-
-  @override
-  String get invoiceAddLine => 'Add line';
-
-  @override
   String get invoiceIssue => 'Issue invoice';
 
   @override
   String get invoiceIssued => 'Invoice issued.';
-
-  @override
-  String get invoiceLineInvalid => 'Every line needs a label and amount.';
-
-  @override
-  String get invoiceFormIncomplete =>
-      'Pick a member, a title and at least one line.';
 
   @override
   String get invoiceDownload => 'Download PDF';
@@ -1207,6 +1188,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoicePdfReplaces => 'Replaces';
+
+  @override
+  String get invoiceNothingToInvoice =>
+      'Nothing tracked for this month — nothing to invoice.';
+
+  @override
+  String get invoiceLineAdjustment => 'Adjustment';
 
   @override
   String get eventTypeMemberJoin => 'New member';

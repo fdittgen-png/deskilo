@@ -2096,30 +2096,6 @@ abstract class AppLocalizations {
   /// **'Member'**
   String get invoiceMemberLabel;
 
-  /// Title field on the invoice form
-  ///
-  /// In en, this message translates to:
-  /// **'Title'**
-  String get invoiceTitleLabel;
-
-  /// Line label field on the invoice form
-  ///
-  /// In en, this message translates to:
-  /// **'Item'**
-  String get invoiceLineLabel;
-
-  /// Line amount field on the invoice form (major units)
-  ///
-  /// In en, this message translates to:
-  /// **'Amount'**
-  String get invoiceLineAmount;
-
-  /// Adds another line row to the invoice form
-  ///
-  /// In en, this message translates to:
-  /// **'Add line'**
-  String get invoiceAddLine;
-
   /// Submit button of the invoice form — issuing is final (immutable)
   ///
   /// In en, this message translates to:
@@ -2131,18 +2107,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invoice issued.'**
   String get invoiceIssued;
-
-  /// Validation error for a half-filled invoice line
-  ///
-  /// In en, this message translates to:
-  /// **'Every line needs a label and amount.'**
-  String get invoiceLineInvalid;
-
-  /// Validation error for an incomplete invoice form
-  ///
-  /// In en, this message translates to:
-  /// **'Pick a member, a title and at least one line.'**
-  String get invoiceFormIncomplete;
 
   /// Tooltip: save the invoice PDF to Downloads
   ///
@@ -2281,6 +2245,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Replaces'**
   String get invoicePdfReplaces;
+
+  /// Issue form: the picked month has no tracked positions (0062)
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing tracked for this month — nothing to invoice.'**
+  String get invoiceNothingToInvoice;
+
+  /// Fallback label of an adjustment position without a description
+  ///
+  /// In en, this message translates to:
+  /// **'Adjustment'**
+  String get invoiceLineAdjustment;
 
   /// No description provided for @eventTypeMemberJoin.
   ///

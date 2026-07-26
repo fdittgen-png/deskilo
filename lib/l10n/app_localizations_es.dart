@@ -1116,29 +1116,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceMemberLabel => 'Miembro';
 
   @override
-  String get invoiceTitleLabel => 'Título';
-
-  @override
-  String get invoiceLineLabel => 'Concepto';
-
-  @override
-  String get invoiceLineAmount => 'Importe';
-
-  @override
-  String get invoiceAddLine => 'Añadir línea';
-
-  @override
   String get invoiceIssue => 'Emitir factura';
 
   @override
   String get invoiceIssued => 'Factura emitida.';
-
-  @override
-  String get invoiceLineInvalid => 'Cada línea necesita concepto e importe.';
-
-  @override
-  String get invoiceFormIncomplete =>
-      'Elige un miembro, un título y al menos una línea.';
 
   @override
   String get invoiceDownload => 'Descargar PDF';
@@ -1212,6 +1193,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoicePdfReplaces => 'Reemplaza a';
+
+  @override
+  String get invoiceNothingToInvoice =>
+      'Nada registrado este mes — nada que facturar.';
+
+  @override
+  String get invoiceLineAdjustment => 'Ajuste';
 
   @override
   String get eventTypeMemberJoin => 'Nuevo miembro';

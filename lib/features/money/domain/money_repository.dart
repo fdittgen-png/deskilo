@@ -17,17 +17,25 @@ abstract class MoneyRepository {
   /// everyone's (RLS decides).
   Future<List<Invoice>> fetchInvoices(String workspaceId);
 
-  /// Issues an IMMUTABLE invoice (RPC `create_invoice`, 0060) — owner
-  /// always, admins per the adminInvoicing delegation. Returns its id.
-  /// With [replacesId] (0061) the new invoice references the erroneous
-  /// one it replaces; the server voids that one in the same transaction.
+  /// Issues an IMMUTABLE invoice (RPC `create_invoice`) — owner always,
+  /// admins per the adminInvoicing delegation. Returns its id. Since
+  /// 0062 the positions are DERIVED server-side from [period]'s tracked
+  /// data — nothing is entered at issue time. With [replacesId] (0061)
+  /// the new invoice references the erroneous one it replaces; the
+  /// server voids that one in the same transaction.
   Future<String> createInvoice({
     required String workspaceId,
     required String memberId,
-    required String title,
-    required List<InvoiceLine> lines,
-    String? period,
+    required String period,
     String? replacesId,
+  });
+
+  /// What [createInvoice] would issue for [period], without issuing
+  /// (RPC `preview_invoice`, 0062).
+  Future<({List<InvoiceLine> lines, int totalCents})> previewInvoice({
+    required String workspaceId,
+    required String memberId,
+    required String period,
   });
 
   /// Tags an invoice erroneous (RPC `void_invoice`, 0061) — the sole

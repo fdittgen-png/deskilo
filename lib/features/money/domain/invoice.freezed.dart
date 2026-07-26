@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$InvoiceLine {
 
- String get label; int get amountCents;
+ String get kind; String get label; int get quantity; int get amountCents;
 /// Create a copy of InvoiceLine
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $InvoiceLineCopyWith<InvoiceLine> get copyWith => _$InvoiceLineCopyWithImpl<Invo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InvoiceLine&&(identical(other.label, label) || other.label == label)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InvoiceLine&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.label, label) || other.label == label)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,label,amountCents);
+int get hashCode => Object.hash(runtimeType,kind,label,quantity,amountCents);
 
 @override
 String toString() {
-  return 'InvoiceLine(label: $label, amountCents: $amountCents)';
+  return 'InvoiceLine(kind: $kind, label: $label, quantity: $quantity, amountCents: $amountCents)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $InvoiceLineCopyWith<$Res>  {
   factory $InvoiceLineCopyWith(InvoiceLine value, $Res Function(InvoiceLine) _then) = _$InvoiceLineCopyWithImpl;
 @useResult
 $Res call({
- String label, int amountCents
+ String kind, String label, int quantity, int amountCents
 });
 
 
@@ -62,10 +62,12 @@ class _$InvoiceLineCopyWithImpl<$Res>
 
 /// Create a copy of InvoiceLine
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? label = null,Object? amountCents = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? kind = null,Object? label = null,Object? quantity = null,Object? amountCents = null,}) {
   return _then(_self.copyWith(
-label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
-as String,amountCents: null == amountCents ? _self.amountCents : amountCents // ignore: cast_nullable_to_non_nullable
+kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
+as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
+as String,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
+as int,amountCents: null == amountCents ? _self.amountCents : amountCents // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -148,10 +150,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String label,  int amountCents)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String kind,  String label,  int quantity,  int amountCents)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _InvoiceLine() when $default != null:
-return $default(_that.label,_that.amountCents);case _:
+return $default(_that.kind,_that.label,_that.quantity,_that.amountCents);case _:
   return orElse();
 
 }
@@ -169,10 +171,10 @@ return $default(_that.label,_that.amountCents);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String label,  int amountCents)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String kind,  String label,  int quantity,  int amountCents)  $default,) {final _that = this;
 switch (_that) {
 case _InvoiceLine():
-return $default(_that.label,_that.amountCents);}
+return $default(_that.kind,_that.label,_that.quantity,_that.amountCents);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -186,10 +188,10 @@ return $default(_that.label,_that.amountCents);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String label,  int amountCents)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String kind,  String label,  int quantity,  int amountCents)?  $default,) {final _that = this;
 switch (_that) {
 case _InvoiceLine() when $default != null:
-return $default(_that.label,_that.amountCents);case _:
+return $default(_that.kind,_that.label,_that.quantity,_that.amountCents);case _:
   return null;
 
 }
@@ -201,10 +203,12 @@ return $default(_that.label,_that.amountCents);case _:
 
 
 class _InvoiceLine implements InvoiceLine {
-  const _InvoiceLine({required this.label, required this.amountCents});
+  const _InvoiceLine({this.kind = '', required this.label, this.quantity = 1, required this.amountCents});
   
 
+@override@JsonKey() final  String kind;
 @override final  String label;
+@override@JsonKey() final  int quantity;
 @override final  int amountCents;
 
 /// Create a copy of InvoiceLine
@@ -217,16 +221,16 @@ _$InvoiceLineCopyWith<_InvoiceLine> get copyWith => __$InvoiceLineCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InvoiceLine&&(identical(other.label, label) || other.label == label)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InvoiceLine&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.label, label) || other.label == label)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,label,amountCents);
+int get hashCode => Object.hash(runtimeType,kind,label,quantity,amountCents);
 
 @override
 String toString() {
-  return 'InvoiceLine(label: $label, amountCents: $amountCents)';
+  return 'InvoiceLine(kind: $kind, label: $label, quantity: $quantity, amountCents: $amountCents)';
 }
 
 
@@ -237,7 +241,7 @@ abstract mixin class _$InvoiceLineCopyWith<$Res> implements $InvoiceLineCopyWith
   factory _$InvoiceLineCopyWith(_InvoiceLine value, $Res Function(_InvoiceLine) _then) = __$InvoiceLineCopyWithImpl;
 @override @useResult
 $Res call({
- String label, int amountCents
+ String kind, String label, int quantity, int amountCents
 });
 
 
@@ -254,10 +258,12 @@ class __$InvoiceLineCopyWithImpl<$Res>
 
 /// Create a copy of InvoiceLine
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? label = null,Object? amountCents = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? kind = null,Object? label = null,Object? quantity = null,Object? amountCents = null,}) {
   return _then(_InvoiceLine(
-label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
-as String,amountCents: null == amountCents ? _self.amountCents : amountCents // ignore: cast_nullable_to_non_nullable
+kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
+as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
+as String,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
+as int,amountCents: null == amountCents ? _self.amountCents : amountCents // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }

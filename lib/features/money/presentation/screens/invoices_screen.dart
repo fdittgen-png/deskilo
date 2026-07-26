@@ -10,11 +10,11 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../../../../core/files/file_names.dart';
 import '../../../../core/files/file_saver.dart';
-import '../../../../core/format/cents.dart';
 import '../../../../core/share/file_sharer.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -28,6 +28,7 @@ import '../../domain/invoice.dart';
 import '../../domain/invoice_pdf.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../providers/money_providers.dart';
+import '../invoice_line_text.dart';
 
 /// The invoice ARCHIVE (0060): every member sees their own invoices,
 /// admins see the workspace's. Each row downloads or shares the signed
@@ -58,6 +59,7 @@ class InvoicesScreen extends ConsumerWidget {
             '${dateFormat.format(voidedAt)}';
     final bytes = await buildInvoicePdf(
       invoice: invoice,
+      lineText: (line) => invoiceLineText(l10n, line),
       strings: InvoicePdfStrings(
         invoiceTitle: l10n?.invoicePdfTitle ?? 'Invoice',
         issuedOn: l10n?.invoicePdfIssuedOn ?? 'Issued on',
@@ -345,9 +347,12 @@ class InvoicesScreen extends ConsumerWidget {
     );
   }
 
-  /// Issue sheet — plain from the FAB, or a REPLACEMENT (0061) prefilled
-  /// from [replaces]: the erroneous invoice is voided by the server in
-  /// the same transaction and the new one references it.
+  /// Issue sheet — plain from the FAB, or a REPLACEMENT (0061)
+  /// prefilled from [replaces]. Since 0062 nothing is typed here: the
+  /// admin picks the member and the MONTH, the sheet previews the
+  /// positions the server derives from that month's tracked data
+  /// (subscription, overage, supplements, services, packages), and
+  /// issuing snapshots exactly those — no new positions are created.
   Future<void> _createSheet(
     BuildContext context,
     WidgetRef ref, {
@@ -362,8 +367,9 @@ class InvoicesScreen extends ConsumerWidget {
     final names = await ref.read(memberNamesProvider.future);
     if (!context.mounted) return;
 
+    final repo = ref.read(moneyRepositoryProvider);
     final result = await showModalBottomSheet<
-        ({String memberId, String title, List<InvoiceLine> lines})>(
+        ({String memberId, String period})>(
       context: context,
       isScrollControlled: true,
       builder: (context) => _InvoiceForm(
@@ -372,13 +378,19 @@ class InvoicesScreen extends ConsumerWidget {
           for (final member in members)
             (id: member.id, name: names[member.id] ?? ''),
         ],
+        currency:
+            NumberFormat.simpleCurrency(name: workspace.currencyCode),
+        preview: (memberId, period) => repo.previewInvoice(
+          workspaceId: workspace.id,
+          memberId: memberId,
+          period: period,
+        ),
         // Only preselect a member the dropdown actually offers — the
         // wrong invoice may target a member who has left since.
         initialMemberId: members.any((m) => m.id == replaces?.memberId)
             ? replaces?.memberId
             : null,
-        initialTitle: replaces?.title,
-        initialLines: replaces?.lines,
+        initialPeriod: replaces?.period,
         replacesNumber: replaces?.number,
       ),
     );
@@ -393,8 +405,7 @@ class InvoicesScreen extends ConsumerWidget {
       action: () => ref.read(moneyRepositoryProvider).createInvoice(
             workspaceId: workspace.id,
             memberId: result.memberId,
-            title: result.title,
-            lines: result.lines,
+            period: result.period,
             replacesId: replaces?.id,
           ),
     )) {
@@ -406,25 +417,27 @@ class InvoicesScreen extends ConsumerWidget {
   }
 }
 
-/// The issue form: member, title, dynamic label+amount lines. Amounts
-/// parse as major units ("12.50" → 1250 cents). A replacement (0061)
-/// arrives prefilled from the erroneous invoice, with a banner naming
-/// the number it replaces.
+/// The issue form (0062): member + month, and a read-only PREVIEW of
+/// the positions the server derives from that month's tracked data.
+/// There is no way to type a position — that is the point.
 class _InvoiceForm extends StatefulWidget {
   const _InvoiceForm({
     required this.l10n,
     required this.members,
+    required this.currency,
+    required this.preview,
     this.initialMemberId,
-    this.initialTitle,
-    this.initialLines,
+    this.initialPeriod,
     this.replacesNumber,
   });
 
   final AppLocalizations? l10n;
   final List<({String id, String name})> members;
+  final NumberFormat currency;
+  final Future<({List<InvoiceLine> lines, int totalCents})> Function(
+      String memberId, String period) preview;
   final String? initialMemberId;
-  final String? initialTitle;
-  final List<InvoiceLine>? initialLines;
+  final String? initialPeriod;
   final String? replacesNumber;
 
   @override
@@ -433,63 +446,59 @@ class _InvoiceForm extends StatefulWidget {
 
 class _InvoiceFormState extends State<_InvoiceForm> {
   late String? _memberId = widget.initialMemberId;
-  late final _title = TextEditingController(text: widget.initialTitle ?? '');
-  late final _lines =
-      <({TextEditingController label, TextEditingController amount})>[
-    for (final line in widget.initialLines ?? const <InvoiceLine>[])
-      (
-        label: TextEditingController(text: line.label),
-        amount: TextEditingController(text: centsToMajor(line.amountCents)),
-      ),
-    if (widget.initialLines == null || widget.initialLines!.isEmpty)
-      (label: TextEditingController(), amount: TextEditingController()),
-  ];
+  late String _period = widget.initialPeriod ?? currentPeriod();
+  ({List<InvoiceLine> lines, int totalCents})? _preview;
+  bool _loading = false;
 
   @override
-  void dispose() {
-    _title.dispose();
-    for (final line in _lines) {
-      line.label.dispose();
-      line.amount.dispose();
-    }
-    super.dispose();
+  void initState() {
+    super.initState();
+    _load();
   }
 
-  int? _parseCents(String raw) {
-    final normalized = raw.trim().replaceAll(',', '.');
-    final value = double.tryParse(normalized);
-    if (value == null || value < 0) return null;
-    return (value * 100).round();
+  DateTime get _month {
+    final parts = _period.split('-');
+    return DateTime(int.parse(parts[0]), int.parse(parts[1]));
   }
 
-  void _submit() {
-    final l10n = widget.l10n;
+  Future<void> _load() async {
     final memberId = _memberId;
-    final title = _title.text.trim();
-    final lines = <InvoiceLine>[];
-    for (final line in _lines) {
-      final label = line.label.text.trim();
-      final cents = _parseCents(line.amount.text);
-      if (label.isEmpty && line.amount.text.trim().isEmpty) continue;
-      if (label.isEmpty || cents == null) {
-        AppSnack.error(
-          context,
-          l10n?.invoiceLineInvalid ?? 'Every line needs a label and amount.',
-        );
-        return;
-      }
-      lines.add(InvoiceLine(label: label, amountCents: cents));
+    if (memberId == null) return;
+    final period = _period;
+    setState(() => _loading = true);
+    try {
+      final result = await widget.preview(memberId, period);
+      if (!mounted || _memberId != memberId || _period != period) return;
+      setState(() {
+        _preview = result;
+        _loading = false;
+      });
+    } catch (e, st) {
+      // The preview is advisory (issuing re-derives server-side), but a
+      // failing fetch still leaves a breadcrumb.
+      TraceLogger.instance
+          .error('money', 'invoice preview failed', error: e, stackTrace: st);
+      if (!mounted) return;
+      setState(() {
+        _preview = (lines: const <InvoiceLine>[], totalCents: 0);
+        _loading = false;
+      });
     }
-    if (memberId == null || title.isEmpty || lines.isEmpty) {
-      AppSnack.error(
-        context,
-        l10n?.invoiceFormIncomplete ??
-            'Pick a member, a title and at least one line.',
-      );
+  }
+
+  void _shiftMonth(int delta) {
+    final next = DateTime(_month.year, _month.month + delta);
+    final now = DateTime.now();
+    if (next.year > now.year ||
+        (next.year == now.year && next.month > now.month)) {
       return;
     }
-    Navigator.of(context)
-        .pop((memberId: memberId, title: title, lines: lines));
+    setState(() {
+      _period =
+          '${next.year}-${next.month.toString().padLeft(2, '0')}';
+      _preview = null;
+    });
+    _load();
   }
 
   @override
@@ -499,6 +508,15 @@ class _InvoiceFormState extends State<_InvoiceForm> {
     final replacesBanner = replacesNumber == null
         ? null
         : '${l10n?.invoicePdfReplaces ?? 'Replaces'} $replacesNumber';
+    final monthLabel = DateFormat.yMMMM(
+      Localizations.maybeLocaleOf(context)?.toString(),
+    ).format(_month);
+    final now = DateTime.now();
+    final atCurrent =
+        _month.year == now.year && _month.month == now.month;
+    final preview = _preview;
+    final lines = preview?.lines ?? const <InvoiceLine>[];
+
     return SheetShell(
       title: l10n?.invoiceCreate ?? 'New invoice',
       children: [
@@ -522,63 +540,101 @@ class _InvoiceFormState extends State<_InvoiceForm> {
                 child: Text(member.name),
               ),
           ],
-          onChanged: (value) => setState(() => _memberId = value),
+          onChanged: (value) {
+            setState(() {
+              _memberId = value;
+              _preview = null;
+            });
+            _load();
+          },
           decoration: InputDecoration(
             labelText: l10n?.invoiceMemberLabel ?? 'Member',
           ),
         ),
         const SizedBox(height: 8),
-        TextField(
-          key: const ValueKey('invoice-title-field'),
-          controller: _title,
-          decoration: InputDecoration(
-            labelText: l10n?.invoiceTitleLabel ?? 'Title',
+        Row(children: [
+          IconButton(
+            key: const ValueKey('invoice-period-prev'),
+            icon: const Icon(Icons.chevron_left),
+            onPressed: () => _shiftMonth(-1),
           ),
-        ),
-        const SizedBox(height: 8),
-        for (var i = 0; i < _lines.length; i++)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: TextField(
-                    key: ValueKey('invoice-line-label-$i'),
-                    controller: _lines[i].label,
-                    decoration: InputDecoration(
-                      labelText: l10n?.invoiceLineLabel ?? 'Item',
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextField(
-                    key: ValueKey('invoice-line-amount-$i'),
-                    controller: _lines[i].amount,
-                    keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true),
-                    decoration: InputDecoration(
-                      labelText: l10n?.invoiceLineAmount ?? 'Amount',
-                    ),
-                  ),
-                ),
-              ],
+          Expanded(
+            child: Text(
+              monthLabel,
+              key: const ValueKey('invoice-period-label'),
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
-        TextButton.icon(
-          key: const ValueKey('invoice-add-line'),
-          onPressed: () => setState(() => _lines.add((
-                label: TextEditingController(),
-                amount: TextEditingController(),
-              ))),
-          icon: const Icon(Icons.add),
-          label: Text(l10n?.invoiceAddLine ?? 'Add line'),
-        ),
+          IconButton(
+            key: const ValueKey('invoice-period-next'),
+            icon: const Icon(Icons.chevron_right),
+            onPressed: atCurrent ? null : () => _shiftMonth(1),
+          ),
+        ]),
+        const SizedBox(height: 8),
+        // The derived positions — read-only by design (0062).
+        if (_memberId == null)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Text(
+              l10n?.invoiceMemberLabel ?? 'Member',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          )
+        else if (_loading || preview == null)
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: Center(child: CircularProgressIndicator()),
+          )
+        else if (lines.isEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Text(
+              l10n?.invoiceNothingToInvoice ??
+                  'Nothing tracked for this month — nothing to invoice.',
+              key: const ValueKey('invoice-preview-empty'),
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          )
+        else ...[
+          for (final (i, line) in lines.indexed)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 2),
+              child: Row(
+                key: ValueKey('invoice-preview-line-$i'),
+                children: [
+                  Expanded(child: Text(invoiceLineText(l10n, line))),
+                  Text(widget.currency.format(line.amountCents / 100)),
+                ],
+              ),
+            ),
+          const Divider(),
+          Row(
+            key: const ValueKey('invoice-preview-total'),
+            children: [
+              Expanded(
+                child: Text(
+                  l10n?.invoicePdfTotal ?? 'Total',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Text(
+                widget.currency.format(preview.totalCents / 100),
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ],
         const SizedBox(height: 12),
         FilledButton(
           key: const ValueKey('invoice-submit'),
-          onPressed: _submit,
+          onPressed: _memberId == null || lines.isEmpty
+              ? null
+              : () => Navigator.of(context)
+                  .pop((memberId: _memberId!, period: _period)),
           child: Text(l10n?.invoiceIssue ?? 'Issue invoice'),
         ),
       ],

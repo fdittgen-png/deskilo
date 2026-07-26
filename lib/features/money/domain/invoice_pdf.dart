@@ -41,6 +41,9 @@ Future<Uint8List> buildInvoicePdf({
   required Invoice invoice,
   required InvoicePdfStrings strings,
   required String Function(int cents) money,
+  // 0062 — positions are structured (kind + data); the caller renders
+  // the localized wording so this builder stays l10n-free.
+  required String Function(InvoiceLine line) lineText,
   required String dateLabel,
   required pw.Font baseFont,
   required pw.Font boldFont,
@@ -136,7 +139,7 @@ Future<Uint8List> buildInvoicePdf({
                 pw.TableRow(children: [
                   pw.Padding(
                     padding: const pw.EdgeInsets.symmetric(vertical: 4),
-                    child: pw.Text(line.label,
+                    child: pw.Text(lineText(line),
                         style: const pw.TextStyle(fontSize: 10)),
                   ),
                   pw.Padding(
