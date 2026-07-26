@@ -12,5 +12,6 @@
   "spaceKindDesk": "Table",
   "spaceKindOffice": "Bureau",
   "spaceKindLevel": "Niveau",
-  "spaceKindSeat": "Poste"
+  "spaceKindSeat": "Poste",
+  "spaceYoursNow": "Réservé par vous pour ce créneau."
 }

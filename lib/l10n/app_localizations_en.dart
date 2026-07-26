@@ -2142,6 +2142,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get spaceKindSeat => 'Seat';
 
   @override
+  String get spaceYoursNow => 'Reserved by you for this slot.';
+
+  @override
   String get themeTitle => 'Theme';
 
   @override

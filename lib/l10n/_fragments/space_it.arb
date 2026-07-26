@@ -12,5 +12,6 @@
   "spaceKindDesk": "Tavolo",
   "spaceKindOffice": "Ufficio",
   "spaceKindLevel": "Piano",
-  "spaceKindSeat": "Postazione"
+  "spaceKindSeat": "Postazione",
+  "spaceYoursNow": "Riservato da te per questa fascia."
 }

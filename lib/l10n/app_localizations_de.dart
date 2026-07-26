@@ -2157,6 +2157,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get spaceKindSeat => 'Platz';
 
   @override
+  String get spaceYoursNow => 'Von dir für dieses Zeitfenster reserviert.';
+
+  @override
   String get themeTitle => 'Design';
 
   @override

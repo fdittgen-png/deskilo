@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/canvas_controls.dart';
+import '../../domain/desk.dart';
 import '../../domain/floor_plan.dart';
+import '../../domain/office.dart';
 import '../../domain/seat.dart';
 import 'floor_plan_painter.dart';
 
@@ -41,6 +43,7 @@ class PlanCanvas extends StatefulWidget {
     required this.seatStates,
     required this.seatLabels,
     required this.onSeatTap,
+    this.onSpaceDoubleTap,
     this.highlightedSeatId,
     this.onlineSeatIds = const {},
     this.deskOpacity = 1,
@@ -56,6 +59,13 @@ class PlanCanvas extends StatefulWidget {
   final Map<String, SeatState> seatStates;
   final Map<String, String> seatLabels;
   final ValueChanged<Seat> onSeatTap;
+
+  /// Double tap = whole-space intent (field request): the resolved desk
+  /// and office under the tapped cell — both null means the open floor
+  /// (the level). Null disables the double-tap recognizer entirely, so
+  /// surfaces without whole-space booking keep instant single taps
+  /// (a registered double-tap recognizer delays them by design).
+  final void Function(Desk? desk, Office? office)? onSpaceDoubleTap;
 
   /// Seat ringed by the painter after a calendar jump (#182).
   final String? highlightedSeatId;
@@ -104,6 +114,20 @@ class _PlanCanvasState extends State<PlanCanvas> {
               final seat = widget.plan.seatAtCell(x, y);
               if (seat != null) widget.onSeatTap(seat);
             },
+            onDoubleTapDown: widget.onSpaceDoubleTap == null
+                ? null
+                : (details) {
+                    const cell = PlanCanvasMetrics.cellSize;
+                    final x = (details.localPosition.dx / cell).floor();
+                    final y = (details.localPosition.dy / cell).floor();
+                    widget.onSpaceDoubleTap!(
+                      widget.plan.deskAtCell(x, y),
+                      widget.plan.officeAtCell(x, y),
+                    );
+                  },
+            // The down handler carries the position; this registers the
+            // recognizer.
+            onDoubleTap: widget.onSpaceDoubleTap == null ? null : () {},
             child: CustomPaint(
               key: widget.paintKey,
               size: PlanCanvasMetrics.size,

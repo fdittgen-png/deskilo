@@ -3980,6 +3980,12 @@ abstract class AppLocalizations {
   /// **'Seat'**
   String get spaceKindSeat;
 
+  /// Space sheet: the viewer already holds the reservation — the button below checks in
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved by you for this slot.'**
+  String get spaceYoursNow;
+
   /// Settings entry and dialog title for the in-app theme selection
   ///
   /// In en, this message translates to:

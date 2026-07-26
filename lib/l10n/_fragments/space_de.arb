@@ -12,5 +12,6 @@
   "spaceKindDesk": "Tisch",
   "spaceKindOffice": "Büro",
   "spaceKindLevel": "Etage",
-  "spaceKindSeat": "Platz"
+  "spaceKindSeat": "Platz",
+  "spaceYoursNow": "Von dir für dieses Zeitfenster reserviert."
 }

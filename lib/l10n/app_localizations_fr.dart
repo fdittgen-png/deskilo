@@ -2161,6 +2161,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get spaceKindSeat => 'Poste';
 
   @override
+  String get spaceYoursNow => 'Réservé par vous pour ce créneau.';
+
+  @override
   String get themeTitle => 'Thème';
 
   @override
