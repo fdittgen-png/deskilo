@@ -1223,6 +1223,34 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceBalance => 'Saldo';
 
   @override
+  String get invoiceDetailedToggle =>
+      'Incluir el anexo detallado (asistencias, servicios, pagos)';
+
+  @override
+  String get invoicePdfDescription => 'Descripción';
+
+  @override
+  String get invoicePdfCharges => 'Cargos';
+
+  @override
+  String get invoicePdfPayments => 'Pagos';
+
+  @override
+  String get invoicePdfAnnex => 'Anexo — detalles';
+
+  @override
+  String get invoicePdfAttendance => 'Asistencias';
+
+  @override
+  String get invoicePdfActivity => 'Movimientos y pagos';
+
+  @override
+  String get invoicePdfReserved => 'reservado';
+
+  @override
+  String get invoicePdfPage => 'Página';
+
+  @override
   String get eventTypeMemberJoin => 'Nuevo miembro';
 
   @override

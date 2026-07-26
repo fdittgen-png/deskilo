@@ -1224,6 +1224,34 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceBalance => 'Saldo';
 
   @override
+  String get invoiceDetailedToggle =>
+      'Detaillierten Anhang aufnehmen (Check-ins, Services, Zahlungen)';
+
+  @override
+  String get invoicePdfDescription => 'Beschreibung';
+
+  @override
+  String get invoicePdfCharges => 'Posten';
+
+  @override
+  String get invoicePdfPayments => 'Zahlungen';
+
+  @override
+  String get invoicePdfAnnex => 'Anhang — Details';
+
+  @override
+  String get invoicePdfAttendance => 'Check-ins';
+
+  @override
+  String get invoicePdfActivity => 'Buchungen & Zahlungen';
+
+  @override
+  String get invoicePdfReserved => 'reserviert';
+
+  @override
+  String get invoicePdfPage => 'Seite';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

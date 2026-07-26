@@ -2300,6 +2300,60 @@ abstract class AppLocalizations {
   /// **'Balance due'**
   String get invoiceBalance;
 
+  /// Issue form switch (0064): snapshot the annex into the invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Include the detailed annex (check-ins, services, payments)'**
+  String get invoiceDetailedToggle;
+
+  /// PDF positions table column header
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get invoicePdfDescription;
+
+  /// PDF subtotal caption: sum of positive positions
+  ///
+  /// In en, this message translates to:
+  /// **'Charges'**
+  String get invoicePdfCharges;
+
+  /// PDF subtotal caption: sum of credits
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get invoicePdfPayments;
+
+  /// PDF annex section title
+  ///
+  /// In en, this message translates to:
+  /// **'Annex — details'**
+  String get invoicePdfAnnex;
+
+  /// PDF annex: check-ins table title
+  ///
+  /// In en, this message translates to:
+  /// **'Check-ins'**
+  String get invoicePdfAttendance;
+
+  /// PDF annex: ledger movements table title
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings & payments'**
+  String get invoicePdfActivity;
+
+  /// PDF annex suffix on a booked-but-not-attended row
+  ///
+  /// In en, this message translates to:
+  /// **'reserved'**
+  String get invoicePdfReserved;
+
+  /// PDF footer page label
+  ///
+  /// In en, this message translates to:
+  /// **'Page'**
+  String get invoicePdfPage;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

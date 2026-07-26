@@ -1218,6 +1218,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceBalance => 'Balance due';
 
   @override
+  String get invoiceDetailedToggle =>
+      'Include the detailed annex (check-ins, services, payments)';
+
+  @override
+  String get invoicePdfDescription => 'Description';
+
+  @override
+  String get invoicePdfCharges => 'Charges';
+
+  @override
+  String get invoicePdfPayments => 'Payments';
+
+  @override
+  String get invoicePdfAnnex => 'Annex — details';
+
+  @override
+  String get invoicePdfAttendance => 'Check-ins';
+
+  @override
+  String get invoicePdfActivity => 'Bookings & payments';
+
+  @override
+  String get invoicePdfReserved => 'reserved';
+
+  @override
+  String get invoicePdfPage => 'Page';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

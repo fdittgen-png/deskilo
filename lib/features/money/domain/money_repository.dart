@@ -23,11 +23,14 @@ abstract class MoneyRepository {
   /// data — nothing is entered at issue time. With [replacesId] (0061)
   /// the new invoice references the erroneous one it replaces; the
   /// server voids that one in the same transaction.
+  /// [detailed] (0064) snapshots the annex — the period's full ledger
+  /// and attendance — into the immutable document.
   Future<String> createInvoice({
     required String workspaceId,
     required String memberId,
     required String period,
     String? replacesId,
+    bool detailed = false,
   });
 
   /// What [createInvoice] would issue for [period], without issuing

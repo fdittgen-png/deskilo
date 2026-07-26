@@ -33,3 +33,19 @@ String invoiceLineText(AppLocalizations? l10n, InvoiceLine line) =>
               ' · ${line.label}',
       _ => line.label,
     };
+
+/// Localized wording for one annex activity row (0064): the ledger
+/// category label, with the entry's own note behind it.
+String annexEntryText(AppLocalizations? l10n, InvoiceDetailEntry entry) {
+  final category = switch (entry.category) {
+    'subscription' =>
+      l10n?.ledgerCategorySubscription ?? 'Subscription',
+    'overage' => l10n?.ledgerCategoryOverage ?? 'Overage',
+    'expense' => l10n?.ledgerCategoryExpense ?? 'Expense reimbursement',
+    'payment' => l10n?.ledgerCategoryPayment ?? 'Payment',
+    'adjustment' => l10n?.ledgerCategoryAdjustment ?? 'Adjustment',
+    'service' => l10n?.ledgerCategoryService ?? 'Service',
+    _ => entry.category,
+  };
+  return entry.label.isEmpty ? category : '$category · ${entry.label}';
+}

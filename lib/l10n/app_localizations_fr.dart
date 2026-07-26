@@ -1228,6 +1228,34 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceBalance => 'Solde';
 
   @override
+  String get invoiceDetailedToggle =>
+      'Inclure l\'annexe détaillée (présences, services, paiements)';
+
+  @override
+  String get invoicePdfDescription => 'Description';
+
+  @override
+  String get invoicePdfCharges => 'Charges';
+
+  @override
+  String get invoicePdfPayments => 'Paiements';
+
+  @override
+  String get invoicePdfAnnex => 'Annexe — détails';
+
+  @override
+  String get invoicePdfAttendance => 'Présences';
+
+  @override
+  String get invoicePdfActivity => 'Mouvements & paiements';
+
+  @override
+  String get invoicePdfReserved => 'réservé';
+
+  @override
+  String get invoicePdfPage => 'Page';
+
+  @override
   String get eventTypeMemberJoin => 'Nouveau membre';
 
   @override
