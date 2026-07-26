@@ -7,7 +7,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
 
-import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -17,6 +16,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
+import '../../../../core/scan/scan_camera_box.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../money/domain/quota_rules.dart';
@@ -633,13 +633,10 @@ class _KioskBadgePromptState extends State<_KioskBadgePrompt> {
         // only after the NFC session is up (see _startReaders).
         if (widget.scanBuilder != null && _cameraReady && _cameraMode) ...[
           const SizedBox(height: 12),
-          ClipRRect(
-            borderRadius: AppRadius.mdAll,
-            child: SizedBox(
-              key: const ValueKey('kiosk-badge-camera'),
-              height: 220,
-              child: widget.scanBuilder!(onCode: _submit),
-            ),
+          // Shared camera box with the lens FLIP button (field request).
+          ScanCameraBox(
+            cameraKey: const ValueKey('kiosk-badge-camera'),
+            onCode: _submit,
           ),
         ],
         const SizedBox(height: 12),

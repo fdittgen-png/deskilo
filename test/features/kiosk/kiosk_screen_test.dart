@@ -473,4 +473,40 @@ void main() {
     expect(find.byType(KioskScreen), findsNothing);
     expect(find.byType(ShellBottomBar), findsOneWidget);
   });
+
+  testWidgets(
+      'the camera box carries a FLIP button that switches the lens '
+      'preference on the spot (field request)', (tester) async {
+    final frontCamera = InMemoryFrontCameraStore();
+    final plans = FakeFloorPlanRepository()..seedSmallPlan();
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.myMember = workspace.myMember.copyWith(
+      isAdmin: false,
+      isOwner: false,
+      isKiosk: true,
+    );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          floorPlan: plans,
+          workspace: workspace,
+          qrScan: FakeQrScanner(),
+          frontCamera: frontCamera,
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-gate-start')));
+    await tester.pumpAndSettle();
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
+    await tester.pumpAndSettle();
+
+    expect(frontCamera.value, isTrue); // front by default
+    await tester.tap(find.byKey(const ValueKey('scan-flip-camera')));
+    await tester.pumpAndSettle();
+    expect(frontCamera.value, isFalse);
+  });
 }
