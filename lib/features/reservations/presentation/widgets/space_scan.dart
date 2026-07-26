@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
@@ -12,7 +10,6 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
-import '../../../money/domain/quota_rules.dart';
 import '../../../plan/domain/desk.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
@@ -23,6 +20,7 @@ import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
+import '../../domain/booking_error_text.dart';
 import '../../domain/space_code.dart';
 import '../../domain/walk_up_window.dart';
 import '../../providers/reservation_providers.dart';
@@ -62,8 +60,22 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
   if (code.kind == SpaceKind.level) {
     level = levels.where((l) => l.id == code.id).firstOrNull;
   } else {
-    for (final candidate in levels) {
-      final p = await ref.read(floorPlanProvider(candidate.id).future);
+    // All plans in parallel (perf audit: the sequential per-level await
+    // made multi-floor scans wait one round-trip per floor). A level
+    // whose plan fails to load is skipped — the code then reports as
+    // unknown rather than crashing the scanner.
+    final plans = await Future.wait([
+      for (final candidate in levels)
+        ref
+            .read(floorPlanProvider(candidate.id).future)
+            .then<({Level level, FloorPlan plan})?>(
+              (p) => (level: candidate, plan: p),
+              onError: (_, _) => null,
+            ),
+    ]);
+    for (final entry in plans.whereType<({Level level, FloorPlan plan})>()) {
+      final candidate = entry.level;
+      final p = entry.plan;
       switch (code.kind) {
         case SpaceKind.office:
           office = p.offices.where((o) => o.id == code.id).firstOrNull;
@@ -240,15 +252,8 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
         DateTime.now(),
       );
 
-  List<Reservation> _reservations(({DateTime start, DateTime end}) window) {
-    final merged = <Reservation>[];
-    for (final key in dayKeysForWindow(window.start, window.end)) {
-      merged.addAll(
-        ref.watch(reservationsForDayProvider(key)).value ?? const [],
-      );
-    }
-    return merged;
-  }
+  List<Reservation> _reservations(({DateTime start, DateTime end}) window) =>
+      reservationsAcrossWindow(ref, window.start, window.end);
 
   Future<void> _create({
     String? seatId,
@@ -278,31 +283,18 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
               error: e, stackTrace: st);
       if (!mounted) return;
       setState(() => _busy = false);
-      final message = switch (e) {
-        PostgrestException(:final message)
-            when message.contains('not allowed to reserve a level') =>
-          l10n?.levelNotAllowed ??
-              'You are not allowed to reserve a whole office or level.',
-        PostgrestException(:final message)
-            when message.contains('reservations in that period') ||
-                message.contains('already reserved') ||
-                message.contains('reserved as a whole') =>
-          l10n?.levelConflict ??
-              'The level has reservations in that period.',
-        PostgrestException(:final message)
-            when message.contains(QuotaExceededError.serverSubstring) =>
-          l10n?.quotaExceededError ??
-              'Monthly half-day quota reached — request extra half-days '
-                  'from the Money tab.',
-        PostgrestException(:final message)
-            when message.contains(ReservationLimitError.serverSubstring) =>
-          l10n?.reservationLimitError ??
-              'Reservation limit reached — you already hold the maximum '
-                  'number of open reservations.',
-        _ => l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      };
-      AppSnack.error(context, message, replace: true);
+      // Shared mapper (maintainability audit): one switch for every
+      // booking surface instead of a drifting paste per screen.
+      AppSnack.error(
+        context,
+        bookingErrorText(
+          l10n,
+          e,
+          l10n?.workspaceGenericError ??
+              'Something went wrong. Please try again.',
+        ),
+        replace: true,
+      );
       return;
     }
     if (!mounted) return;

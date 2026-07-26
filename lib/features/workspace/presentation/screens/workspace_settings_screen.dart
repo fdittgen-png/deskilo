@@ -21,6 +21,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
+import '../../../../core/files/file_names.dart';
 import '../../../reservations/domain/space_code.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../plan/providers/accessory_providers.dart';
@@ -42,11 +43,12 @@ import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
 import '../feature_names.dart';
 
-/// Owner-only workspace settings (#153): country, currency and time zone
-/// become editable after creation. Picking a country re-defaults the
-/// currency and time zone from [CountryCatalog] — exactly the onboarding
-/// behaviour — but a manual currency override typed AFTER the country
-/// pick is persisted verbatim (spec §3: owner-overridable).
+/// Owner-only workspace settings: identity (country/currency/time zone,
+/// #153 — a country pick re-defaults both from [CountryCatalog], a
+/// manual currency typed afterwards wins), payment instructions, the
+/// WhatsApp group link, desk transparency, invitation template, the
+/// backup tools (XML export/import, configuration PDF, space-QR PDF)
+/// and the guarded workspace reset (0039).
 class WorkspaceSettingsScreen extends ConsumerStatefulWidget {
   const WorkspaceSettingsScreen({super.key});
 
@@ -418,7 +420,9 @@ class _WorkspaceSettingsScreenState
 
           final path = await ref.read(fileSaverProvider)(
             bytes: bytes,
-            fileName: '${workspace.name}-configuration.pdf',
+            // Slugged (security audit): a raw name may carry path
+            // separators — the one export site that skipped the slug.
+            fileName: '${safeFileSlug(workspace.name)}-configuration.pdf',
           );
           if (!mounted) return;
           _announceSaved(l10n, path);
@@ -500,9 +504,7 @@ class _WorkspaceSettingsScreenState
         );
         final path = await ref.read(fileSaverProvider)(
           bytes: bytes,
-          fileName:
-              '${workspace.name.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '-')}'
-              '-space-codes.pdf',
+          fileName: '${safeFileSlug(workspace.name)}-space-codes.pdf',
         );
         if (!mounted) return;
         _announceSaved(l10n, path);

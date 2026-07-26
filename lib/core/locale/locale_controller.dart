@@ -2,7 +2,7 @@
 import 'dart:ui';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../storage/prefs_stores.dart';
 
 part 'locale_controller.g.dart';
 
@@ -16,26 +16,12 @@ abstract class LocaleStore {
   Future<void> write(String? languageCode);
 }
 
-class PrefsLocaleStore implements LocaleStore {
-  static const _key = 'locale_override';
-
-  @override
-  Future<String?> read() async =>
-      (await SharedPreferences.getInstance()).getString(_key);
-
-  @override
-  Future<void> write(String? languageCode) async {
-    final prefs = await SharedPreferences.getInstance();
-    if (languageCode == null) {
-      await prefs.remove(_key);
-    } else {
-      await prefs.setString(_key, languageCode);
-    }
-  }
+class PrefsLocaleStore extends PrefsStringStore implements LocaleStore {
+  const PrefsLocaleStore() : super('locale_override');
 }
 
 @Riverpod(keepAlive: true)
-LocaleStore localeStore(Ref ref) => PrefsLocaleStore();
+LocaleStore localeStore(Ref ref) => const PrefsLocaleStore();
 
 /// The user's language override; null means "follow the system locale".
 /// Feeding this into `MaterialApp.locale` applies a change instantly,

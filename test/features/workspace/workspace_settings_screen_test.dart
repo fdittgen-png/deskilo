@@ -268,9 +268,9 @@ void main() {
     await tester.pumpAndSettle();
 
     // Saved to a local path and confirmed — no share sheet.
-    expect(saved, ['Test Space-configuration.pdf']);
+    expect(saved, ['test-space-configuration.pdf']);
     expect(
-      find.textContaining('/local/Test Space-configuration.pdf'),
+      find.textContaining('/local/test-space-configuration.pdf'),
       findsOneWidget,
     );
   });

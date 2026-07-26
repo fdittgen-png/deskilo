@@ -102,7 +102,7 @@ void main() {
     test('writes, reads and removes under the theme_mode_override key',
         () async {
       SharedPreferences.setMockInitialValues({});
-      final store = PrefsThemeStore();
+      const store = PrefsThemeStore();
 
       expect(await store.read(), isNull);
 

@@ -48,7 +48,15 @@ async function validSignature(
   const expected = [...new Uint8Array(mac)]
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
-  return expected === signature;
+  // Constant-time compare (security audit): `===` short-circuits on the
+  // first mismatched byte, leaking a timing side-channel on the one
+  // auth-critical comparison in this function.
+  if (expected.length !== signature.length) return false;
+  let diff = 0;
+  for (let i = 0; i < expected.length; i++) {
+    diff |= expected.charCodeAt(i) ^ signature.charCodeAt(i);
+  }
+  return diff === 0;
 }
 
 Deno.serve(async (req: Request): Promise<Response> => {

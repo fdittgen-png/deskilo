@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../storage/prefs_stores.dart';
 
 part 'dev_mode.g.dart';
 
@@ -11,20 +11,12 @@ abstract class DevModeStore {
   Future<void> write(bool enabled);
 }
 
-class PrefsDevModeStore implements DevModeStore {
-  static const _key = 'developer_mode';
-
-  @override
-  Future<bool> read() async =>
-      (await SharedPreferences.getInstance()).getBool(_key) ?? false;
-
-  @override
-  Future<void> write(bool enabled) async =>
-      (await SharedPreferences.getInstance()).setBool(_key, enabled);
+class PrefsDevModeStore extends PrefsBoolStore implements DevModeStore {
+  const PrefsDevModeStore() : super('developer_mode');
 }
 
 @Riverpod(keepAlive: true)
-DevModeStore devModeStore(Ref ref) => PrefsDevModeStore();
+DevModeStore devModeStore(Ref ref) => const PrefsDevModeStore();
 
 /// Whether developer mode is on. Local diagnostics only — visible to every
 /// user, default off, never synced to the backend.

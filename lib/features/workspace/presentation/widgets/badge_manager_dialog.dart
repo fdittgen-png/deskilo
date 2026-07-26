@@ -8,6 +8,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import '../../../../core/files/file_names.dart';
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/trace/guarded.dart';
@@ -154,9 +155,7 @@ class _BadgeManagerDialogState
           baseFont: pw.Font.ttf(regular),
           boldFont: pw.Font.ttf(bold),
         );
-        final safeName = widget.name
-            .toLowerCase()
-            .replaceAll(RegExp(r'[^a-z0-9]+'), '-');
+        final safeName = safeFileSlug(widget.name);
         final path = await ref.read(fileSaverProvider)(
           bytes: bytes,
           fileName: 'deskilo-badge-$safeName.pdf',

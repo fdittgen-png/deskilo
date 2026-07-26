@@ -4,8 +4,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -28,9 +26,9 @@ import '../../../reservations/presentation/widgets/booking_controls.dart';
 import '../../../reservations/presentation/widgets/booking_sheet.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../../core/time/workspace_time.dart';
-import '../../../money/domain/quota_rules.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/member.dart';
+import '../../../reservations/domain/booking_error_text.dart';
 import '../../../workspace/domain/workspace_availability.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -235,55 +233,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     return isWorkspaceOpenOn(at.toLocal(), openWeekdays, closures);
   }
 
-  /// Booking failure snackbar text (#186): the server's closed-day
-  /// refusal (`assert_workspace_open`, migration 0013) gets its own
-  /// explanation instead of [fallback]'s misleading generic one. Same for
-  /// the half-day granularity refusal (`enforce_booking_rules`, migration
-  /// 0025, #201) — defensive: the half-day UI only produces the canonical
-  /// windows, but a stale rule or legacy client path can still trip it.
-  String _bookingErrorText(
-    AppLocalizations? l10n,
-    Object error,
-    String fallback,
-  ) {
-    if (error is PostgrestException &&
-        error.message.contains(WorkspaceClosedError.serverSubstring)) {
-      return l10n?.planClosedDayError ??
-          'The workspace is closed on that day.';
-    }
-    // Quota before granularity: 'half-day quota' also contains the
-    // granularity substring 'half-day'.
-    if (error is PostgrestException &&
-        error.message.contains(QuotaExceededError.serverSubstring)) {
-      return l10n?.quotaExceededError ??
-          'Monthly half-day quota reached — request extra half-days '
-              'from the Money tab.';
-    }
-    if (error is PostgrestException &&
-        error.message.contains(ReservationLimitError.serverSubstring)) {
-      return l10n?.reservationLimitError ??
-          'Reservation limit reached — you already hold the maximum '
-              'number of open reservations.';
-    }
-    if (error is PostgrestException &&
-        error.message.contains(BookingGranularityError.serverSubstring)) {
-      return l10n?.planHalfDayError ?? 'Bookings here are per half day.';
-    }
-    if (error is PostgrestException &&
-        error.message
-            .contains(BookingGranularityError.fullDayServerSubstring)) {
-      return l10n?.planFullDayError ??
-          'Bookings here cover the full day.';
-    }
-    if (error is PostgrestException &&
-        error.message
-            .contains(BookingGranularityError.slotServerSubstring)) {
-      final step = _granularity.stepMinutes ?? 15;
-      return l10n?.planSlotError(step) ??
-          'Bookings must start and end on the $step-minute grid.';
-    }
-    return fallback;
-  }
+  /// Forward to the shared mapper with this screen's slot size
+  /// (maintainability audit: the 42-line switch was pasted per screen).
+  String _errorText(AppLocalizations? l10n, Object error, String fallback) =>
+      bookingErrorText(l10n, error, fallback,
+          stepMinutes: _granularity.stepMinutes);
+
 
   Future<void> _onSeatTap(
     FloorPlan plan,
@@ -581,7 +536,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       // other) shares this catch, so all four get the mapping.
       AppSnack.error(
         context,
-        _bookingErrorText(
+        _errorText(
           l10n,
           e,
           l10n?.planCheckInFailed ??
@@ -691,7 +646,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       // (migration 0013) — map its refusal like the booking paths.
       AppSnack.error(
         context,
-        _bookingErrorText(
+        _errorText(
           l10n,
           e,
           l10n?.workspaceGenericError ??
@@ -744,23 +699,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     // windows (day-based granularities) start on the previous device
     // date when the device sits west of the workspace. Fetch both ends
     // and merge, hub cross-month style.
-    final startKey = dayKeyOf(at);
-    final endKey = dayKeyOf(
-      (windowEnd ?? at).subtract(const Duration(microseconds: 1)),
+    final reservations = reservationsAcrossWindow(
+      ref,
+      at,
+      // Live mode has no end — the instant's own day key suffices.
+      windowEnd ?? at.add(const Duration(microseconds: 1)),
     );
-    final startDayReservations =
-        ref.watch(reservationsForDayProvider(startKey)).value ??
-            const <Reservation>[];
-    final reservations = startKey == endKey
-        ? startDayReservations
-        : {
-            for (final r in [
-              ...startDayReservations,
-              ...ref.watch(reservationsForDayProvider(endKey)).value ??
-                  const <Reservation>[],
-            ])
-              r.id: r,
-          }.values.toList();
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     final names = ref.watch(memberNamesProvider).value ?? const {};
 
@@ -879,11 +823,10 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                     background:
                         ref.watch(levelBackgroundProvider(level.id)).value,
                     images: {
+                      // Single watch per image (perf audit): the double
+                      // watch subscribed twice per image on every rebuild.
                       for (final image in plan.images)
-                        if (ref.watch(planImageProvider(image.id)).value
-                            != null)
-                          image.id:
-                              ref.watch(planImageProvider(image.id)).value!,
+                        image.id: ?ref.watch(planImageProvider(image.id)).value,
                     },
                     onSeatTap: (seat) =>
                         _onSeatTap(plan, seat, reservations, at),
@@ -1173,22 +1116,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       TraceLogger.instance.error('plan', 'level booking failed',
           error: e, stackTrace: st);
       if (!mounted) return;
-      final message = switch (e) {
-        PostgrestException(:final message)
-            when message.contains('not allowed to reserve a level') =>
-          l10n?.levelNotAllowed ??
-              'You are not allowed to reserve a whole level.',
-        PostgrestException(:final message)
-            when message.contains('reservations in that period') =>
-          l10n?.levelConflict ??
-              'The level has reservations in that period.',
-        _ => _bookingErrorText(
-            l10n,
-            e,
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
-          ),
-      };
+      final message = _errorText(
+        l10n,
+        e,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
       AppSnack.error(context, message, replace: true);
       return;
     }

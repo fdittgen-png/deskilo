@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'package:flutter_riverpod/flutter_riverpod.dart' show WidgetRef;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -98,4 +99,24 @@ List<String> dayKeysForWindow(DateTime start, DateTime end) {
   final startKey = dayKeyOf(start);
   final endKey = dayKeyOf(end.subtract(const Duration(microseconds: 1)));
   return startKey == endKey ? [startKey] : [startKey, endKey];
+}
+
+/// Reservations overlapping the (possibly day-straddling) window,
+/// fetched per day key and MERGED BY ID (maintainability audit: three
+/// surfaces open-coded this merge and one skipped the dedup, double-
+/// counting a booking that surfaces under both keys). Watches the day
+/// providers, so callers rebuild when a day refreshes.
+List<Reservation> reservationsAcrossWindow(
+  WidgetRef ref,
+  DateTime start,
+  DateTime end,
+) {
+  final byId = <String, Reservation>{};
+  for (final key in dayKeysForWindow(start, end)) {
+    for (final r in ref.watch(reservationsForDayProvider(key)).value ??
+        const <Reservation>[]) {
+      byId[r.id] = r;
+    }
+  }
+  return byId.values.toList();
 }
