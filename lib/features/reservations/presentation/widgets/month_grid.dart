@@ -87,6 +87,11 @@ class MonthGrid extends ConsumerWidget {
 
     final today = DateTime.now();
     final weekdayFormat = DateFormat.E();
+    // One occupancy fold for the whole grid instead of one reservation
+    // scan per cell (perf audit).
+    final occupied = plansReady
+        ? _occupiedByDay(cells)
+        : const <DateTime, Set<String>>{};
 
     return Column(
       children: [
@@ -121,7 +126,7 @@ class MonthGrid extends ConsumerWidget {
               final day = cells[index];
               final inMonth = day.month == selectedDay.month;
               final free = plansReady
-                  ? totalSeats - _occupiedSeatsOn(day)
+                  ? totalSeats - (occupied[day]?.length ?? 0)
                   : null;
               return _DayCell(
                 day: day,
@@ -143,16 +148,34 @@ class MonthGrid extends ConsumerWidget {
     );
   }
 
-  /// Distinct seats with an active reservation overlapping [day]'s full
-  /// workspace-local window — the day's occupancy across all floors.
-  int _occupiedSeatsOn(DateTime day) {
-    final window = HalfDayWindows.fullDay(day);
-    final seatIds = <String>{};
+  /// Occupied seats per visible day, folded in ONE pass over the
+  /// reservations (perf audit: the previous per-cell scan was
+  /// O(42 × month's reservations) and re-ran on every rebuild). Each
+  /// reservation only walks the few grid days it can actually touch;
+  /// the exact overlap check stays [Reservation.coversRange] against the
+  /// day's workspace-local full window.
+  Map<DateTime, Set<String>> _occupiedByDay(List<DateTime> cells) {
+    if (cells.isEmpty) return const {};
+    final first = cells.first;
+    final last = cells.last;
+    final byDay = <DateTime, Set<String>>{};
     for (final r in reservations) {
-      if (r.seatId == null) continue;
-      if (r.coversRange(window.start, window.end)) seatIds.add(r.seatId!);
+      final seatId = r.seatId;
+      if (seatId == null || !r.isActive) continue;
+      var day = DateTime(r.startsAt.year, r.startsAt.month, r.startsAt.day);
+      if (day.isBefore(first)) day = first;
+      // The +1 day slack keeps the loop bound conservative across time
+      // zones; coversRange below is the exact test.
+      while (!day.isAfter(last) &&
+          day.isBefore(r.endsAt.add(const Duration(days: 1)))) {
+        final window = HalfDayWindows.fullDay(day);
+        if (r.coversRange(window.start, window.end)) {
+          (byDay[day] ??= <String>{}).add(seatId);
+        }
+        day = DateTime(day.year, day.month, day.day + 1);
+      }
     }
-    return seatIds.length;
+    return byDay;
   }
 }
 

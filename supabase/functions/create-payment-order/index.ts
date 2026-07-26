@@ -213,8 +213,29 @@ Deno.serve(async (req: Request): Promise<Response> => {
   const workspaceId = body.workspace_id as string;
   if (!workspaceId) return json({ error: "invalid_request" }, 400);
 
+  // AuthN for EVERY action (security audit): the config probe used to
+  // answer unauthenticated callers, disclosing which payment providers
+  // a workspace has configured. Membership is checked per action below.
+  const token = (req.headers.get("Authorization") ?? "").replace(
+    "Bearer ",
+    "",
+  );
+  const { data: userData, error: userError } = await admin.auth.getUser(token);
+  if (userError || !userData?.user) {
+    console.error("payment auth failed", userError?.message);
+    return json({ error: "unauthorized" }, 401);
+  }
+
   // Config probe: which providers can THIS workspace charge with?
   if (body.action === "config") {
+    const { data: caller } = await admin
+      .from("members")
+      .select("id")
+      .eq("workspace_id", workspaceId)
+      .eq("user_id", userData.user.id)
+      .eq("status", "active")
+      .maybeSingle();
+    if (!caller) return json({ error: "unauthorized" }, 403);
     const providers: Provider[] = [];
     const missing: Record<string, string[]> = {};
     for (const provider of Object.keys(REQUIRED) as Provider[]) {
@@ -246,16 +267,8 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return json({ status: "not_configured", provider, missing: gap });
   }
 
-  // AuthZ: the JWT's user must BE the member they pay for.
-  const token = (req.headers.get("Authorization") ?? "").replace(
-    "Bearer ",
-    "",
-  );
-  const { data: userData, error: userError } = await admin.auth.getUser(token);
-  if (userError || !userData?.user) {
-    console.error("payment auth failed", userError?.message);
-    return json({ error: "unauthorized" }, 401);
-  }
+  // AuthZ: the JWT's user (verified above) must BE the member they pay
+  // for.
   const { data: member } = await admin
     .from("members")
     .select("id, user_id, workspace_id, status")

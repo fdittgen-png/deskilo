@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:ui' as ui;
 
-import 'package:flutter/foundation.dart' show setEquals;
+import 'package:flutter/foundation.dart' show mapEquals, setEquals;
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/office_colors.dart';
@@ -410,14 +410,18 @@ class FloorPlanPainter extends CustomPainter {
   bool shouldRepaint(FloorPlanPainter oldDelegate) =>
       oldDelegate.plan != plan ||
       oldDelegate.background != background ||
-      oldDelegate.images != images ||
+      // Deep compares on the maps (perf audit): callers rebuild these
+      // maps every frame/minute-tick, so identity `!=` was ALWAYS true
+      // and every rebuild forced a full canvas repaint — including a
+      // TextPainter.layout per seat label — even when nothing changed.
+      !mapEquals(oldDelegate.images, images) ||
       oldDelegate.marquee != marquee ||
       oldDelegate.marqueeValid != marqueeValid ||
       oldDelegate.selection != selection ||
       oldDelegate.selectionResizable != selectionResizable ||
       oldDelegate.selectionValid != selectionValid ||
-      oldDelegate.seatStates != seatStates ||
-      oldDelegate.seatLabels != seatLabels ||
+      !mapEquals(oldDelegate.seatStates, seatStates) ||
+      !mapEquals(oldDelegate.seatLabels, seatLabels) ||
       oldDelegate.highlightedSeatId != highlightedSeatId ||
       oldDelegate.deskOpacity != deskOpacity ||
       !setEquals(oldDelegate.onlineSeatIds, onlineSeatIds) ||

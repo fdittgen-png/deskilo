@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart' show ThemeMode;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../storage/prefs_stores.dart';
 
 part 'theme_controller.g.dart';
 
@@ -15,26 +15,12 @@ abstract class ThemeStore {
   Future<void> write(String? mode);
 }
 
-class PrefsThemeStore implements ThemeStore {
-  static const _key = 'theme_mode_override';
-
-  @override
-  Future<String?> read() async =>
-      (await SharedPreferences.getInstance()).getString(_key);
-
-  @override
-  Future<void> write(String? mode) async {
-    final prefs = await SharedPreferences.getInstance();
-    if (mode == null) {
-      await prefs.remove(_key);
-    } else {
-      await prefs.setString(_key, mode);
-    }
-  }
+class PrefsThemeStore extends PrefsStringStore implements ThemeStore {
+  const PrefsThemeStore() : super('theme_mode_override');
 }
 
 @Riverpod(keepAlive: true)
-ThemeStore themeStore(Ref ref) => PrefsThemeStore();
+ThemeStore themeStore(Ref ref) => const PrefsThemeStore();
 
 /// The user's theme override; null means "follow the system brightness".
 /// Feeding this into `MaterialApp.themeMode` applies a change instantly,

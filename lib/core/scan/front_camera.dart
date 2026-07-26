@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../storage/prefs_stores.dart';
 
 part 'front_camera.g.dart';
 
@@ -11,20 +11,12 @@ abstract class FrontCameraStore {
   Future<void> write(bool enabled);
 }
 
-class PrefsFrontCameraStore implements FrontCameraStore {
-  static const _key = 'scan_front_camera';
-
-  @override
-  Future<bool> read() async =>
-      (await SharedPreferences.getInstance()).getBool(_key) ?? true;
-
-  @override
-  Future<void> write(bool enabled) async =>
-      (await SharedPreferences.getInstance()).setBool(_key, enabled);
+class PrefsFrontCameraStore extends PrefsBoolStore implements FrontCameraStore {
+  const PrefsFrontCameraStore() : super('scan_front_camera', fallback: true);
 }
 
 @Riverpod(keepAlive: true)
-FrontCameraStore frontCameraStore(Ref ref) => PrefsFrontCameraStore();
+FrontCameraStore frontCameraStore(Ref ref) => const PrefsFrontCameraStore();
 
 /// Whether badge scanning uses the FRONT (screen-side) camera — the
 /// default: a wall-mounted kiosk tablet has its back camera against the

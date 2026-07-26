@@ -88,3 +88,5 @@ flutter:
     # `dart run tool/build_help.dart` — offline on every platform.
     - assets/help/
     - assets/help/images/
+    # Brand icon on the boot splash — same artwork as the launcher icon.
+    - assets/icon/icon_full.png

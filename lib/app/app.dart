@@ -7,6 +7,7 @@ import '../core/locale/locale_controller.dart';
 import '../core/presence/presence_providers.dart';
 import '../core/theme/theme_controller.dart';
 import '../l10n/app_localizations.dart';
+import 'boot_splash.dart';
 import 'router.dart';
 import 'theme.dart';
 
@@ -37,6 +38,9 @@ class DeskiloApp extends ConsumerWidget {
       // null follows the system brightness (#160).
       themeMode:
           ref.watch(themeControllerProvider).value ?? ThemeMode.system,
+      // Boot splash (field request): covers every route until the data
+      // warm-up finishes — the user never watches the form assemble.
+      builder: (context, child) => BootSplash(child: child),
       routerConfig: router,
     );
   }

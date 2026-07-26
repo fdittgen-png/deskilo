@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -27,8 +25,8 @@ import '../../../plan/presentation/seat_occupancy.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/providers/plan_focus_controller.dart';
-import '../../../money/domain/quota_rules.dart';
 import '../../../workspace/domain/booking_granularity.dart';
+import '../../domain/booking_error_text.dart';
 import '../../../workspace/domain/workspace_availability.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -337,52 +335,12 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     return isWorkspaceOpenOn(at.toLocal(), openWeekdays, closures);
   }
 
-  /// Booking failure snackbar text: closed-day (#186) and half-day (#201)
-  /// server refusals get their dedicated explanations instead of the
-  /// misleading generic [fallback] — same mapping as the plan screen.
-  String _bookingErrorText(
-    AppLocalizations? l10n,
-    Object error,
-    String fallback,
-  ) {
-    if (error is PostgrestException &&
-        error.message.contains(WorkspaceClosedError.serverSubstring)) {
-      return l10n?.planClosedDayError ??
-          'The workspace is closed on that day.';
-    }
-    // Quota before granularity: 'half-day quota' also contains the
-    // granularity substring 'half-day'.
-    if (error is PostgrestException &&
-        error.message.contains(QuotaExceededError.serverSubstring)) {
-      return l10n?.quotaExceededError ??
-          'Monthly half-day quota reached — request extra half-days '
-              'from the Money tab.';
-    }
-    if (error is PostgrestException &&
-        error.message.contains(ReservationLimitError.serverSubstring)) {
-      return l10n?.reservationLimitError ??
-          'Reservation limit reached — you already hold the maximum '
-              'number of open reservations.';
-    }
-    if (error is PostgrestException &&
-        error.message.contains(BookingGranularityError.serverSubstring)) {
-      return l10n?.planHalfDayError ?? 'Bookings here are per half day.';
-    }
-    if (error is PostgrestException &&
-        error.message
-            .contains(BookingGranularityError.fullDayServerSubstring)) {
-      return l10n?.planFullDayError ??
-          'Bookings here cover the full day.';
-    }
-    if (error is PostgrestException &&
-        error.message
-            .contains(BookingGranularityError.slotServerSubstring)) {
-      final step = _granularity.stepMinutes ?? 15;
-      return l10n?.planSlotError(step) ??
-          'Bookings must start and end on the $step-minute grid.';
-    }
-    return fallback;
-  }
+  /// Forward to the shared mapper with this screen's slot size
+  /// (maintainability audit: the 42-line switch was pasted per screen).
+  String _errorText(AppLocalizations? l10n, Object error, String fallback) =>
+      bookingErrorText(l10n, error, fallback,
+          stepMinutes: _granularity.stepMinutes);
+
 
   // ── Plan view: seat tap → shared booking sheet (#206) ──
 
@@ -549,7 +507,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
       if (!mounted) return;
       AppSnack.error(
         context,
-        _bookingErrorText(
+        _errorText(
           l10n,
           e,
           l10n?.reserveBookingFailed ??
@@ -797,13 +755,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     // starts before the device midnight west of the workspace); reading only
     // dayKeyOf(start) misses those bookings — the reservation-shows-on-Plan-
     // not-on-Reserve bug. Fetch every key the window touches and merge by id.
-    final reservations = <String, Reservation>{
-      for (final key in dayKeysForWindow(window.start, window.end))
-        for (final r
-            in ref.watch(reservationsForDayProvider(key)).value ??
-                const <Reservation>[])
-          r.id: r,
-    }.values.toList();
+    final reservations =
+        reservationsAcrossWindow(ref, window.start, window.end);
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     final names = ref.watch(memberNamesProvider).value ?? const {};
 
@@ -840,9 +793,9 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                     ref.watch(levelBackgroundProvider(level.id)).value,
                 images: {
                   for (final image in plan.images)
-                    if (ref.watch(planImageProvider(image.id)).value != null)
-                      image.id:
-                          ref.watch(planImageProvider(image.id)).value!,
+                    // Single watch per image (perf audit): the double watch
+                        // subscribed twice per image on every rebuild.
+                        image.id: ?ref.watch(planImageProvider(image.id)).value,
                 },
                 seatStates: seatStatesFor(
                   plan: plan,

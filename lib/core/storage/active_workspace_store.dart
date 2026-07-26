@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'prefs_stores.dart';
+
 
 part 'active_workspace_store.g.dart';
 
@@ -10,27 +11,13 @@ abstract class ActiveWorkspaceStore {
   Future<void> write(String? workspaceId);
 }
 
-class PrefsActiveWorkspaceStore implements ActiveWorkspaceStore {
-  static const _key = 'active_workspace_id';
-
-  @override
-  Future<String?> read() async =>
-      (await SharedPreferences.getInstance()).getString(_key);
-
-  @override
-  Future<void> write(String? workspaceId) async {
-    final prefs = await SharedPreferences.getInstance();
-    if (workspaceId == null) {
-      await prefs.remove(_key);
-    } else {
-      await prefs.setString(_key, workspaceId);
-    }
-  }
+class PrefsActiveWorkspaceStore extends PrefsStringStore implements ActiveWorkspaceStore {
+  const PrefsActiveWorkspaceStore() : super('active_workspace_id');
 }
 
 @Riverpod(keepAlive: true)
 ActiveWorkspaceStore activeWorkspaceStore(Ref ref) =>
-    PrefsActiveWorkspaceStore();
+    const PrefsActiveWorkspaceStore();
 
 /// Persists the user-chosen DEFAULT profile (#322): the workspace the
 /// app opens on at every start, regardless of what was active last.
@@ -40,24 +27,10 @@ abstract class DefaultWorkspaceStore {
   Future<void> write(String? workspaceId);
 }
 
-class PrefsDefaultWorkspaceStore implements DefaultWorkspaceStore {
-  static const _key = 'default_workspace_id';
-
-  @override
-  Future<String?> read() async =>
-      (await SharedPreferences.getInstance()).getString(_key);
-
-  @override
-  Future<void> write(String? workspaceId) async {
-    final prefs = await SharedPreferences.getInstance();
-    if (workspaceId == null) {
-      await prefs.remove(_key);
-    } else {
-      await prefs.setString(_key, workspaceId);
-    }
-  }
+class PrefsDefaultWorkspaceStore extends PrefsStringStore implements DefaultWorkspaceStore {
+  const PrefsDefaultWorkspaceStore() : super('default_workspace_id');
 }
 
 @Riverpod(keepAlive: true)
 DefaultWorkspaceStore defaultWorkspaceStore(Ref ref) =>
-    PrefsDefaultWorkspaceStore();
+    const PrefsDefaultWorkspaceStore();
