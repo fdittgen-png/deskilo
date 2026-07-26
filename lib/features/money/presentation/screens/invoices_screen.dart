@@ -73,6 +73,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     final bytes = await buildInvoicePdf(
       invoice: invoice,
       lineText: (line) => invoiceLineText(l10n, line),
+      activityText: (entry) => annexEntryText(l10n, entry),
       strings: InvoicePdfStrings(
         invoiceTitle: l10n?.invoicePdfTitle ?? 'Invoice',
         issuedOn: l10n?.invoicePdfIssuedOn ?? 'Issued on',
@@ -83,6 +84,14 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
             l10n?.invoicePdfSignature ?? 'Digital signature (SHA-256)',
         voided: voidedLabel,
         replaces: l10n?.invoicePdfReplaces ?? 'Replaces',
+        description: l10n?.invoicePdfDescription ?? 'Description',
+        charges: l10n?.invoicePdfCharges ?? 'Charges',
+        payments: l10n?.invoicePdfPayments ?? 'Payments',
+        annex: l10n?.invoicePdfAnnex ?? 'Annex — details',
+        attendance: l10n?.invoicePdfAttendance ?? 'Check-ins',
+        activity: l10n?.invoicePdfActivity ?? 'Bookings & payments',
+        reserved: l10n?.invoicePdfReserved ?? 'reserved',
+        page: l10n?.invoicePdfPage ?? 'Page',
       ),
       money: (cents) => currency.format(cents / 100),
       dateLabel: dateLabel,
@@ -529,7 +538,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
 
     final repo = ref.read(moneyRepositoryProvider);
     final result = await showModalBottomSheet<
-        ({String memberId, String period})>(
+        ({String memberId, String period, bool detailed})>(
       context: context,
       isScrollControlled: true,
       builder: (context) => _InvoiceForm(
@@ -551,6 +560,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
             ? replaces?.memberId
             : null,
         initialPeriod: replaces?.period,
+        initialDetailed: replaces?.detailed ?? false,
         replacesNumber: replaces?.number,
       ),
     );
@@ -567,6 +577,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
             memberId: result.memberId,
             period: result.period,
             replacesId: replaces?.id,
+            detailed: result.detailed,
           ),
     )) {
       return;
@@ -588,6 +599,7 @@ class _InvoiceForm extends StatefulWidget {
     required this.preview,
     this.initialMemberId,
     this.initialPeriod,
+    this.initialDetailed = false,
     this.replacesNumber,
   });
 
@@ -598,6 +610,7 @@ class _InvoiceForm extends StatefulWidget {
       String memberId, String period) preview;
   final String? initialMemberId;
   final String? initialPeriod;
+  final bool initialDetailed;
   final String? replacesNumber;
 
   @override
@@ -607,6 +620,7 @@ class _InvoiceForm extends StatefulWidget {
 class _InvoiceFormState extends State<_InvoiceForm> {
   late String? _memberId = widget.initialMemberId;
   late String _period = widget.initialPeriod ?? currentPeriod();
+  late bool _detailed = widget.initialDetailed;
   ({List<InvoiceLine> lines, int totalCents})? _preview;
   bool _loading = false;
 
@@ -790,13 +804,31 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             ],
           ),
         ],
-        const SizedBox(height: 12),
+        const SizedBox(height: 4),
+        // 0064 — snapshot the annex (check-ins, bookings, payments)
+        // into the immutable document.
+        SwitchListTile(
+          key: const ValueKey('invoice-detailed-switch'),
+          contentPadding: EdgeInsets.zero,
+          value: _detailed,
+          onChanged: (value) => setState(() => _detailed = value),
+          title: Text(
+            l10n?.invoiceDetailedToggle ??
+                'Include the detailed annex (check-ins, services, '
+                    'payments)',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+        const SizedBox(height: 4),
         FilledButton(
           key: const ValueKey('invoice-submit'),
           onPressed: _memberId == null || lines.isEmpty
               ? null
-              : () => Navigator.of(context)
-                  .pop((memberId: _memberId!, period: _period)),
+              : () => Navigator.of(context).pop((
+                    memberId: _memberId!,
+                    period: _period,
+                    detailed: _detailed,
+                  )),
           child: Text(l10n?.invoiceIssue ?? 'Issue invoice'),
         ),
       ],

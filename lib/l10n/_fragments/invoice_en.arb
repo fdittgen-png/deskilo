@@ -156,5 +156,41 @@
   "invoiceBalance": "Balance due",
   "@invoiceBalance": {
     "description": "Invoice bottom line (0063): consumptions minus payments — the solde"
+  },
+  "invoiceDetailedToggle": "Include the detailed annex (check-ins, services, payments)",
+  "@invoiceDetailedToggle": {
+    "description": "Issue form switch (0064): snapshot the annex into the invoice"
+  },
+  "invoicePdfDescription": "Description",
+  "@invoicePdfDescription": {
+    "description": "PDF positions table column header"
+  },
+  "invoicePdfCharges": "Charges",
+  "@invoicePdfCharges": {
+    "description": "PDF subtotal caption: sum of positive positions"
+  },
+  "invoicePdfPayments": "Payments",
+  "@invoicePdfPayments": {
+    "description": "PDF subtotal caption: sum of credits"
+  },
+  "invoicePdfAnnex": "Annex — details",
+  "@invoicePdfAnnex": {
+    "description": "PDF annex section title"
+  },
+  "invoicePdfAttendance": "Check-ins",
+  "@invoicePdfAttendance": {
+    "description": "PDF annex: check-ins table title"
+  },
+  "invoicePdfActivity": "Bookings & payments",
+  "@invoicePdfActivity": {
+    "description": "PDF annex: ledger movements table title"
+  },
+  "invoicePdfReserved": "reserved",
+  "@invoicePdfReserved": {
+    "description": "PDF annex suffix on a booked-but-not-attended row"
+  },
+  "invoicePdfPage": "Page",
+  "@invoicePdfPage": {
+    "description": "PDF footer page label"
   }
 }

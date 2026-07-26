@@ -91,12 +91,17 @@ class FakeMoneyRepository implements MoneyRepository {
     );
   }
 
+  /// Annex attendance rows the fake snapshots on detailed invoices —
+  /// tests seed these (the money fake has no reservations access).
+  List<InvoiceAttendance> attendanceSeed = [];
+
   @override
   Future<String> createInvoice({
     required String workspaceId,
     required String memberId,
     required String period,
     String? replacesId,
+    bool detailed = false,
   }) async {
     final lines = derivedLines(memberId, period);
     if (lines.isEmpty) throw StateError('nothing to invoice for this period');
@@ -136,6 +141,22 @@ class FakeMoneyRepository implements MoneyRepository {
       signature: 'f' * 64,
       replacesInvoiceId: replacesId,
       replacesNumber: replacesNumber,
+      detailed: detailed,
+      detailLedger: detailed
+          ? [
+              for (final entry in ledger)
+                if (entry.memberId == memberId && entry.period == period)
+                  InvoiceDetailEntry(
+                    on: entry.createdAt.toIso8601String().split('T').first,
+                    category: entry.category.name,
+                    label: entry.description,
+                    amountCents: entry.kind == LedgerKind.credit
+                        ? -entry.amountCents
+                        : entry.amountCents,
+                  ),
+            ]
+          : const [],
+      attendance: detailed ? List.of(attendanceSeed) : const [],
     );
     _nextInvoice++;
     invoices.insert(0, invoice);

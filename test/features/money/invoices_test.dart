@@ -10,6 +10,7 @@ import 'dart:typed_data';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
+import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -438,6 +439,48 @@ void main() {
     expect(
         find.byKey(const ValueKey('invoice-filter-period')), findsOneWidget);
     expect(find.byKey(const ValueKey('invoice-sort')), findsOneWidget);
+  });
+  testWidgets(
+      'the DETAILED toggle (0064) snapshots the annex into the issued '
+      'invoice', (tester) async {
+    final money = FakeMoneyRepository();
+    money.ledger.add(LedgerEntry(
+      id: 'ledger-1',
+      memberId: 'member-1',
+      kind: LedgerKind.credit,
+      category: LedgerCategory.payment,
+      amountCents: 5000,
+      description: 'PayPal',
+      period: currentTestPeriod(),
+      createdAt: DateTime.now(),
+    ));
+    money.attendanceSeed = const [
+      InvoiceAttendance(
+        startsAt: '2026-07-12T09:00',
+        endsAt: '2026-07-12T13:00',
+        space: 'A1 · Window desk',
+        status: 'checked_in',
+      ),
+    ];
+    await pumpInvoices(tester, money: money);
+
+    await tester.tap(find.byKey(const ValueKey('invoice-create-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-member-dropdown')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Flo').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-detailed-switch')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-submit')));
+    await tester.pumpAndSettle();
+
+    final invoice = money.invoices.single;
+    expect(invoice.detailed, isTrue);
+    expect(invoice.detailLedger.single.label, 'PayPal');
+    expect(invoice.detailLedger.single.amountCents, -5000,
+        reason: 'annex credits are signed like the positions');
+    expect(invoice.attendance.single.space, 'A1 · Window desk');
   });
 }
 

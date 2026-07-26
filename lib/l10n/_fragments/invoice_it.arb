@@ -44,5 +44,14 @@
   "invoiceSortNewest": "Più recenti prima",
   "invoiceSortByMember": "Per membro",
   "invoiceSortByMonth": "Per mese",
-  "invoiceBalance": "Saldo"
+  "invoiceBalance": "Saldo",
+  "invoiceDetailedToggle": "Includi l'allegato dettagliato (presenze, servizi, pagamenti)",
+  "invoicePdfDescription": "Descrizione",
+  "invoicePdfCharges": "Addebiti",
+  "invoicePdfPayments": "Pagamenti",
+  "invoicePdfAnnex": "Allegato — dettagli",
+  "invoicePdfAttendance": "Presenze",
+  "invoicePdfActivity": "Movimenti e pagamenti",
+  "invoicePdfReserved": "riservato",
+  "invoicePdfPage": "Pagina"
 }

@@ -29,12 +29,14 @@ class SupabaseMoneyRepository implements MoneyRepository {
     required String memberId,
     required String period,
     String? replacesId,
+    bool detailed = false,
   }) async {
     final id = await _client.rpc<dynamic>('create_invoice', params: {
       'p_workspace_id': workspaceId,
       'p_member_id': memberId,
       'p_period': period,
       'p_replaces': replacesId,
+      'p_detailed': detailed,
     });
     return id as String;
   }

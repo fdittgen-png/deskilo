@@ -20,6 +20,32 @@ sealed class InvoiceLine with _$InvoiceLine {
   }) = _InvoiceLine;
 }
 
+/// One annex activity row (0064): a confirmed ledger movement of the
+/// invoiced month, with its booking date. Credits carry negative
+/// amounts.
+@freezed
+sealed class InvoiceDetailEntry with _$InvoiceDetailEntry {
+  const factory InvoiceDetailEntry({
+    required String on,
+    required String category,
+    @Default('') String label,
+    required int amountCents,
+  }) = _InvoiceDetailEntry;
+}
+
+/// One annex attendance row (0064): a reservation of the invoiced
+/// month. Timestamps are the workspace's local wall clock, snapshotted
+/// as 'yyyy-MM-ddTHH:mm'.
+@freezed
+sealed class InvoiceAttendance with _$InvoiceAttendance {
+  const factory InvoiceAttendance({
+    required String startsAt,
+    required String endsAt,
+    @Default('') String space,
+    @Default('') String status,
+  }) = _InvoiceAttendance;
+}
+
 /// An IMMUTABLE invoice from the archive (0060): every displayed detail
 /// is a SNAPSHOT taken at issue time — names, addresses and the issuer
 /// can change later without ever rewriting an issued document. The
@@ -55,6 +81,11 @@ sealed class Invoice with _$Invoice {
     @Default('') String voidedByName,
     String? replacesInvoiceId,
     @Default('') String replacesNumber,
+    // 0064 — the optional SNAPSHOTTED annex; compact invoices carry
+    // neither.
+    @Default(false) bool detailed,
+    @Default([]) List<InvoiceDetailEntry> detailLedger,
+    @Default([]) List<InvoiceAttendance> attendance,
   }) = _Invoice;
 
   bool get isVoided => voidedAt != null;
@@ -90,5 +121,27 @@ sealed class Invoice with _$Invoice {
         voidedByName: row['voided_by_name'] as String? ?? '',
         replacesInvoiceId: row['replaces_invoice_id'] as String?,
         replacesNumber: row['replaces_number'] as String? ?? '',
+        detailed: row['details'] != null,
+        detailLedger: [
+          for (final entry
+              in ((row['details'] as Map?)?['ledger'] as List? ?? const []))
+            InvoiceDetailEntry(
+              on: (entry as Map)['on'] as String? ?? '',
+              category: entry['category'] as String? ?? '',
+              label: entry['description'] as String? ?? '',
+              amountCents: (entry['amount_cents'] as num?)?.toInt() ?? 0,
+            ),
+        ],
+        attendance: [
+          for (final entry in ((row['details'] as Map?)?['attendance']
+                  as List? ??
+              const []))
+            InvoiceAttendance(
+              startsAt: (entry as Map)['starts_at'] as String? ?? '',
+              endsAt: entry['ends_at'] as String? ?? '',
+              space: entry['space'] as String? ?? '',
+              status: entry['status'] as String? ?? '',
+            ),
+        ],
       );
 }

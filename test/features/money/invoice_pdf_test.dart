@@ -22,10 +22,18 @@ const _strings = InvoicePdfStrings(
   issuedOn: 'Issued on',
   issuedBy: 'Issued by',
   billedTo: 'Billed to',
-  total: 'Total',
+  total: 'Balance due',
   signature: 'Digital signature (SHA-256)',
   voided: 'ERRONEOUS — voided on Jul 20, 2026',
   replaces: 'Replaces',
+  description: 'Description',
+  charges: 'Charges',
+  payments: 'Payments',
+  annex: 'Annex — details',
+  attendance: 'Check-ins',
+  activity: 'Bookings & payments',
+  reserved: 'reserved',
+  page: 'Page',
 );
 
 void main() {
@@ -57,15 +65,79 @@ void main() {
       strings: _strings,
       money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
       lineText: (line) => invoiceLineText(null, line),
+      activityText: (entry) => annexEntryText(null, entry),
       dateLabel: 'Jul 13, 2026',
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
       boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
     );
 
     expect(String.fromCharCodes(bytes.take(5)), '%PDF-');
-    // Exactly one A4 page (595.28 × 841.89 pt MediaBox).
+    // A4 pages (595.28 × 841.89 pt MediaBox); the compact invoice fits
+    // one.
     final raw = String.fromCharCodes(bytes);
     expect(RegExp(r'/MediaBox[^\]]*595').allMatches(raw).length, 1);
+  });
+
+  test(
+      'a DETAILED invoice (0064) renders the annex — long months '
+      'paginate', () async {
+    final invoice = Invoice(
+      id: 'inv-9',
+      workspaceId: 'ws-1',
+      memberId: 'member-1',
+      number: 'INV-2026-0009',
+      issuedAt: DateTime(2026, 7, 31),
+      title: '2026-07',
+      lines: const [
+        InvoiceLine(kind: 'subscription', label: '50', amountCents: 15000),
+        InvoiceLine(kind: 'payment', label: 'PayPal', amountCents: -5000),
+      ],
+      totalCents: 10000,
+      currency: 'EUR',
+      memberName: 'Ana Martin',
+      memberAddress: '1 Rue Test, 34120 Pezenas',
+      workspaceName: 'Test Space',
+      workspaceAddress: '2 Place du Marche, 34120 Pezenas',
+      issuerName: 'Flo',
+      signature: 'd' * 64,
+      detailed: true,
+      detailLedger: [
+        for (var i = 1; i <= 30; i++)
+          InvoiceDetailEntry(
+            on: '2026-07-${i.toString().padLeft(2, '0')}',
+            category: i.isEven ? 'service' : 'payment',
+            label: 'Entry $i',
+            amountCents: i.isEven ? 150 : -150,
+          ),
+      ],
+      attendance: [
+        for (var i = 1; i <= 26; i++)
+          InvoiceAttendance(
+            startsAt: '2026-07-${i.toString().padLeft(2, '0')}T09:00',
+            endsAt: '2026-07-${i.toString().padLeft(2, '0')}T13:00',
+            space: 'A1 · Window desk',
+            status: i.isEven ? 'checked_in' : 'reserved',
+          ),
+      ],
+    );
+
+    final bytes = await buildInvoicePdf(
+      invoice: invoice,
+      strings: _strings,
+      money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
+      lineText: (line) => invoiceLineText(null, line),
+      activityText: (entry) => annexEntryText(null, entry),
+      dateLabel: 'Jul 31, 2026',
+      baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+    );
+
+    expect(String.fromCharCodes(bytes.take(5)), '%PDF-');
+    final raw = String.fromCharCodes(bytes);
+    expect(RegExp(r'/MediaBox[^\]]*595').allMatches(raw).length,
+        greaterThanOrEqualTo(2),
+        reason: '56 annex rows cannot fit one A4 page — MultiPage must '
+            'paginate');
   });
 
   test(
@@ -101,6 +173,7 @@ void main() {
       strings: _strings,
       money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
       lineText: (line) => invoiceLineText(null, line),
+      activityText: (entry) => annexEntryText(null, entry),
       dateLabel: 'Jul 14, 2026',
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
       boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
