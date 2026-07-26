@@ -3,6 +3,8 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/cache/cache_store.dart';
+import '../../../core/cache/cached_fetch.dart';
 import '../domain/desk.dart';
 import '../domain/floor_plan.dart';
 import '../domain/floor_plan_repository.dart';
@@ -14,19 +16,43 @@ import '../domain/seat.dart';
 import '../domain/seat_context.dart';
 
 class SupabaseFloorPlanRepository implements FloorPlanRepository {
-  SupabaseFloorPlanRepository(this._client);
+  SupabaseFloorPlanRepository(this._client, this._cache);
 
   final SupabaseClient _client;
 
-  @override
-  Future<List<Level>> fetchLevels(String workspaceId) async {
-    final rows = await _client
-        .from('levels')
-        .select()
-        .eq('workspace_id', workspaceId)
-        .order('sort_order', ascending: true);
-    return rows.map(_levelFromRow).toList();
+  /// Tankstellen-style cache: fresh entries answer reads instantly,
+  /// stale ones back the offline fallback, and every mutation in this
+  /// repo busts the plan/levels prefixes so a fresh read is
+  /// network-true.
+  final CacheStore _cache;
+
+  static const Duration _ttl = Duration(minutes: 10);
+
+  /// Bust every cached read this repo serves. Prefix-coarse on purpose:
+  /// delete-by-id mutations don't know their level, and correctness
+  /// beats keeping a sibling floor's 10-minute entry warm.
+  Future<void> _bust() async {
+    await _cache.invalidatePrefix('levels:');
+    await _cache.invalidatePrefix('plan:');
   }
+
+  @override
+  Future<List<Level>> fetchLevels(String workspaceId) =>
+      cachedFetch<List<Level>>(
+        cache: _cache,
+        key: 'levels:$workspaceId',
+        ttl: _ttl,
+        mode: CacheReadMode.cacheFirst,
+        fetchRaw: () => _client
+            .from('levels')
+            .select()
+            .eq('workspace_id', workspaceId)
+            .order('sort_order', ascending: true),
+        parse: (payload) => [
+          for (final row in payload as List)
+            _levelFromRow(Map<String, dynamic>.from(row as Map)),
+        ],
+      );
 
   @override
   Future<Level> createLevel(
@@ -43,12 +69,14 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         })
         .select()
         .single();
+    await _bust();
     return _levelFromRow(row);
   }
 
   @override
   Future<void> renameLevel(String levelId, String name) async {
     await _client.from('levels').update({'name': name}).eq('id', levelId);
+    await _bust();
   }
 
   @override
@@ -62,11 +90,13 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       'bookable_as_whole': bookableAsWhole,
       'price_cents': priceCents,
     }).eq('id', levelId);
+    await _bust();
   }
 
   @override
   Future<void> deleteLevel(String levelId) async {
     await _client.from('levels').delete().eq('id', levelId);
+    await _bust();
   }
 
   @override
@@ -76,6 +106,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
           .from('levels')
           .update({'sort_order': i}).eq('id', orderedLevelIds[i]);
     }
+    await _bust();
   }
 
   static String _bgPath(String workspaceId, String levelId) =>
@@ -97,6 +128,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     await _client
         .from('levels')
         .update({'background_path': path}).eq('id', levelId);
+    await _bust();
   }
 
   @override
@@ -110,6 +142,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     await _client
         .from('levels')
         .update({'background_path': null}).eq('id', levelId);
+    await _bust();
   }
 
   @override
@@ -195,36 +228,61 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   }
 
   @override
-  Future<FloorPlan> fetchPlan(String levelId) async {
+  Future<FloorPlan> fetchPlan(String levelId) =>
+      cachedFetch<FloorPlan>(
+        cache: _cache,
+        key: 'plan:$levelId',
+        ttl: _ttl,
+        mode: CacheReadMode.cacheFirst,
+        // The raw four-table bundle is what gets cached; parsing always
+        // runs with current code.
+        fetchRaw: () => _fetchPlanRows(levelId),
+        parse: (payload) => _planFromRows(
+          levelId,
+          Map<String, dynamic>.from(payload as Map),
+        ),
+      );
+
+  Future<Map<String, dynamic>> _fetchPlanRows(String levelId) async {
     final officeRows =
         await _client.from('offices').select().eq('level_id', levelId);
-    final offices = officeRows.map(_officeFromRow).toList();
-    final officeIds = offices.map((o) => o.id).toList();
+    final officeIds =
+        officeRows.map((row) => row['id'] as String).toList();
 
-    var desks = <Desk>[];
-    var seats = <Seat>[];
+    var deskRows = const <Map<String, dynamic>>[];
+    var seatRows = const <Map<String, dynamic>>[];
     if (officeIds.isNotEmpty) {
-      final deskRows = await _client
+      deskRows = await _client
           .from('desks')
           .select()
           .inFilter('office_id', officeIds);
-      desks = deskRows.map(_deskFromRow).toList();
-      final deskIds = desks.map((d) => d.id).toList();
+      final deskIds = deskRows.map((row) => row['id'] as String).toList();
       if (deskIds.isNotEmpty) {
-        final seatRows =
+        seatRows =
             await _client.from('seats').select().inFilter('desk_id', deskIds);
-        seats = seatRows.map(_seatFromRow).toList();
       }
     }
     final imageRows =
         await _client.from('plan_images').select().eq('level_id', levelId);
-    final images = imageRows.map(_planImageFromRow).toList();
+    return {
+      'offices': officeRows,
+      'desks': deskRows,
+      'seats': seatRows,
+      'images': imageRows,
+    };
+  }
+
+  FloorPlan _planFromRows(String levelId, Map<String, dynamic> rows) {
+    List<Map<String, dynamic>> section(String name) => [
+          for (final row in (rows[name] as List? ?? const []))
+            Map<String, dynamic>.from(row as Map),
+        ];
     return FloorPlan(
       levelId: levelId,
-      offices: offices,
-      desks: desks,
-      seats: seats,
-      images: images,
+      offices: section('offices').map(_officeFromRow).toList(),
+      desks: section('desks').map(_deskFromRow).toList(),
+      seats: section('seats').map(_seatFromRow).toList(),
+      images: section('images').map(_planImageFromRow).toList(),
     );
   }
 
@@ -262,6 +320,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     await _client
         .from('plan_images')
         .update({'storage_path': path}).eq('id', id);
+    await _bust();
     return _planImageFromRow({...row, 'storage_path': path});
   }
 
@@ -273,6 +332,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       'w': rect.w,
       'h': rect.h,
     }).eq('id', imageId);
+    await _bust();
   }
 
   @override
@@ -287,6 +347,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       await _client.storage.from('floor-plans').remove([path]);
     }
     await _client.from('plan_images').delete().eq('id', imageId);
+    await _bust();
   }
 
   @override
@@ -332,6 +393,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         })
         .select()
         .single();
+    await _bust();
     return _officeFromRow(row);
   }
 
@@ -347,11 +409,13 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       'w': office.rect.w,
       'h': office.rect.h,
     }).eq('id', office.id);
+    await _bust();
   }
 
   @override
   Future<void> deleteOffice(String officeId) async {
     await _client.from('offices').delete().eq('id', officeId);
+    await _bust();
   }
 
   @override
@@ -374,6 +438,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         })
         .select()
         .single();
+    await _bust();
     return _deskFromRow(row);
   }
 
@@ -386,11 +451,13 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       'w': desk.rect.w,
       'h': desk.rect.h,
     }).eq('id', desk.id);
+    await _bust();
   }
 
   @override
   Future<void> deleteDesk(String deskId) async {
     await _client.from('desks').delete().eq('id', deskId);
+    await _bust();
   }
 
   @override
@@ -414,6 +481,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         })
         .select()
         .single();
+    await _bust();
     return _seatFromRow(row);
   }
 
@@ -429,11 +497,13 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       'blocked_from': seat.blockedFrom?.toUtc().toIso8601String(),
       'blocked_to': seat.blockedTo?.toUtc().toIso8601String(),
     }).eq('id', seat.id);
+    await _bust();
   }
 
   @override
   Future<void> deleteSeat(String seatId) async {
     await _client.from('seats').delete().eq('id', seatId);
+    await _bust();
   }
 
   @override
@@ -447,6 +517,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       'p_blocked_from': from?.toUtc().toIso8601String(),
       'p_blocked_to': to?.toUtc().toIso8601String(),
     });
+    await _bust();
   }
 
   Level _levelFromRow(Map<String, dynamic> row) => Level(

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:typed_data';
+
+import '../../../core/cache/cache_store.dart';
 import 'dart:ui' as ui;
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -15,7 +17,10 @@ part 'floor_plan_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 FloorPlanRepository floorPlanRepository(Ref ref) =>
-    SupabaseFloorPlanRepository(Supabase.instance.client);
+    SupabaseFloorPlanRepository(
+      Supabase.instance.client,
+      ref.watch(cacheStoreProvider),
+    );
 
 /// Levels of the active workspace, sorted by sort_order.
 @Riverpod(keepAlive: true)

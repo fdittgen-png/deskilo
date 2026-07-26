@@ -48,7 +48,7 @@ final class DevModeStoreProvider
   }
 }
 
-String _$devModeStoreHash() => r'deb207acde934b94c24b1d436d293f4d7a552cbf';
+String _$devModeStoreHash() => r'31e47a980d2682fde4d19688b059ca5069b0cacf';
 
 /// Whether developer mode is on. Local diagnostics only — visible to every
 /// user, default off, never synced to the backend.

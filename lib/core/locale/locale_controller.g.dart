@@ -48,7 +48,7 @@ final class LocaleStoreProvider
   }
 }
 
-String _$localeStoreHash() => r'448b8cd7a461a799a01f45d22c045ec4f4251f78';
+String _$localeStoreHash() => r'67739ff0dc40234afc4b12e9ccf2789bed012dca';
 
 /// The user's language override; null means "follow the system locale".
 /// Feeding this into `MaterialApp.locale` applies a change instantly,

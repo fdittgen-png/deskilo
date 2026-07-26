@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:async';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../core/cache/cache_store.dart';
 import '../core/trace/trace_logger.dart';
 import '../features/auth/providers/auth_providers.dart';
 import '../features/plan/domain/level.dart';
@@ -34,6 +37,19 @@ Future<void> bootReady(Ref ref) async {
     TraceLevel.info,
     'boot',
     'warm-up finished in ${DateTime.now().difference(started).inMilliseconds} ms',
+  );
+  // Bounded cache eviction after boot (the tankstellen 3×TTL rule) —
+  // never on the critical path, failures only trace.
+  unawaited(
+    ref.read(cacheStoreProvider).evictExpired().then((evicted) {
+      if (evicted > 0) {
+        TraceLogger.instance
+            .log(TraceLevel.info, 'cache', 'evicted $evicted stale entries');
+      }
+    }).catchError((Object e, StackTrace st) {
+      TraceLogger.instance
+          .warn('cache', 'eviction failed', error: e, stackTrace: st);
+    }),
   );
 }
 

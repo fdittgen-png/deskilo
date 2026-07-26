@@ -48,7 +48,7 @@ final class ThemeStoreProvider
   }
 }
 
-String _$themeStoreHash() => r'ba3c9f825a7fdddf111964e4a622fc015aac3058';
+String _$themeStoreHash() => r'd40ed089c944ca55d6d1222a76205080c68395c8';
 
 /// The user's theme override; null means "follow the system brightness".
 /// Feeding this into `MaterialApp.themeMode` applies a change instantly,

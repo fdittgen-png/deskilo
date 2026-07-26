@@ -55,7 +55,7 @@ final class FloorPlanRepositoryProvider
 }
 
 String _$floorPlanRepositoryHash() =>
-    r'a434ef037e2ecf90963189df3532ff953f06a4eb';
+    r'197beafbe39361e5548525326577ed6af8e3909d';
 
 /// Levels of the active workspace, sorted by sort_order.
 
