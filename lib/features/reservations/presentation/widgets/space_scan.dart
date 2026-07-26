@@ -254,6 +254,7 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
 
   Future<void> _create({
     String? seatId,
+    String? deskId,
     String? officeId,
     String? levelId,
     required bool checkIn,
@@ -267,6 +268,7 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
       await ref.read(reservationRepositoryProvider).create(
             workspaceId: workspace.id,
             seatId: seatId,
+            deskId: deskId,
             officeId: officeId,
             levelId: levelId,
             startsAt: window.start,
@@ -381,8 +383,13 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
         .any((r) => r.seatId == seat.id &&
             r.coversRange(window.start, window.end));
 
-    // Whole-space bookability of the scanned office/level.
+    // Whole-space bookability of the scanned desk/office/level (0059
+    // added the desk scale).
     final wholeTarget = switch (widget.kind) {
+      SpaceKind.desk => (
+          bookable: desk?.bookableAsWhole ?? false,
+          priceCents: desk?.priceCents ?? 0,
+        ),
       SpaceKind.office => (
           bookable: office?.bookableAsWhole ?? false,
           priceCents: office?.priceCents ?? 0,
@@ -391,21 +398,32 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
           bookable: level?.bookableAsWhole ?? false,
           priceCents: level?.priceCents ?? 0,
         ),
-      SpaceKind.desk || SpaceKind.seat => null,
+      SpaceKind.seat => null,
     };
     final granted = me?.canReserveLevel ?? false;
     final wholeAllowed =
         wholeTarget != null && featureOn && wholeTarget.bookable && granted;
     // Visible conflicts disable the whole-space buttons up front; the
     // server re-checks (offices/levels elsewhere, series, races).
-    final wholeConflict = widget.kind == SpaceKind.office
-        ? seats.any(seatTaken) ||
-            reservations.any((r) =>
-                (r.officeId == office?.id || r.levelId == office?.levelId) &&
-                r.coversRange(window.start, window.end))
-        : reservations.any((r) =>
-            r.levelId == level?.id &&
-                r.coversRange(window.start, window.end));
+    final wholeConflict = switch (widget.kind) {
+      SpaceKind.desk => seats.any(seatTaken) ||
+          reservations.any((r) =>
+              (r.deskId == desk?.id ||
+                  r.officeId == desk?.officeId ||
+                  r.levelId == office?.levelId) &&
+              r.coversRange(window.start, window.end)),
+      SpaceKind.office => seats.any(seatTaken) ||
+          reservations.any((r) =>
+              (r.officeId == office?.id ||
+                  r.levelId == office?.levelId ||
+                  (r.deskId != null &&
+                      (plan?.desks ?? const <Desk>[])
+                          .any((d) => d.id == r.deskId))) &&
+              r.coversRange(window.start, window.end)),
+      _ => reservations.any((r) =>
+          r.levelId == level?.id &&
+              r.coversRange(window.start, window.end)),
+    };
 
     final priceLine = wholeTarget != null && wholeTarget.priceCents > 0
         ? '${centsToMajor(wholeTarget.priceCents)} '
@@ -433,6 +451,8 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
               onPressed: _busy || wholeConflict
                   ? null
                   : () => _create(
+                        deskId:
+                            widget.kind == SpaceKind.desk ? desk?.id : null,
                         officeId:
                             widget.kind == SpaceKind.office ? office?.id : null,
                         levelId:
@@ -448,6 +468,8 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
               onPressed: _busy || wholeConflict
                   ? null
                   : () => _create(
+                        deskId:
+                            widget.kind == SpaceKind.desk ? desk?.id : null,
                         officeId:
                             widget.kind == SpaceKind.office ? office?.id : null,
                         levelId:

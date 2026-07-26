@@ -1871,13 +1871,13 @@ abstract class AppLocalizations {
   /// No description provided for @featureLevelBooking.
   ///
   /// In en, this message translates to:
-  /// **'Office & level reservations'**
+  /// **'Desk, office & level reservations'**
   String get featureLevelBooking;
 
   /// No description provided for @featureLevelBookingDesc.
   ///
   /// In en, this message translates to:
-  /// **'Reserve a whole office or floor as one booking, priced per half-day. Grant the right per member.'**
+  /// **'Reserve a whole desk, office or floor as one booking, priced per half-day. Grant the right per member.'**
   String get featureLevelBookingDesc;
 
   /// No description provided for @featureAdminLevelAssign.
@@ -2495,13 +2495,13 @@ abstract class AppLocalizations {
   /// No description provided for @levelPermissionAllowed.
   ///
   /// In en, this message translates to:
-  /// **'May reserve a whole office or level'**
+  /// **'May reserve a whole desk, office or level'**
   String get levelPermissionAllowed;
 
   /// No description provided for @levelPermissionDenied.
   ///
   /// In en, this message translates to:
-  /// **'May not reserve a whole office or level'**
+  /// **'May not reserve a whole desk, office or level'**
   String get levelPermissionDenied;
 
   /// No description provided for @levelBookableToggle.
@@ -2543,7 +2543,7 @@ abstract class AppLocalizations {
   /// No description provided for @levelNotAllowed.
   ///
   /// In en, this message translates to:
-  /// **'You are not allowed to reserve a whole office or level.'**
+  /// **'You are not allowed to reserve a whole desk, office or level.'**
   String get levelNotAllowed;
 
   /// No description provided for @levelConflict.
@@ -2569,6 +2569,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Office reservations'**
   String get officeSupplementLabel;
+
+  /// Event/validation domain: whole desk/office/level reservations (0059)
+  ///
+  /// In en, this message translates to:
+  /// **'Whole-space reservations'**
+  String get eventTypeSpaceReservation;
+
+  /// Detail-sheet line naming a whole-desk reservation
+  ///
+  /// In en, this message translates to:
+  /// **'Whole desk'**
+  String get deskDetail;
+
+  /// Bill line: sum of whole-desk reservation prices this period (0059)
+  ///
+  /// In en, this message translates to:
+  /// **'Desk reservations'**
+  String get deskSupplementLabel;
 
   /// Title of the owner-only member management screen + its settings entry
   ///

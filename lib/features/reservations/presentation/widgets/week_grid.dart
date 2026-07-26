@@ -316,6 +316,11 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
             for (final desk in plan.desksOf(office.id)) {
               final seats = plan.seatsOf(desk.id);
               if (seats.isEmpty) continue;
+              // Whole-desk reservations (0059) occupy every seat row of
+              // the desk, like whole-office ones.
+              final deskReservations = widget.reservations
+                  .where((r) => r.deskId == desk.id)
+                  .toList();
               leadingCells.add(
                 _groupHeaderCell(context, '${office.name} · ${desk.name}'),
               );
@@ -325,6 +330,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
               for (final Seat seat in seats) {
                 final rowReservations = <Reservation>[
                   ...officeReservations,
+                  ...deskReservations,
                   ...widget.reservations.where((r) => r.seatId == seat.id),
                 ];
                 leadingCells.add(_seatCell(

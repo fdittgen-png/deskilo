@@ -22,7 +22,8 @@ mixin _$Statement {
 /// member holds whole-level reservations this period.
  int get levelSupplementCents;/// Sum of the reserved offices' half-day prices (0057) — the level
 /// shape over whole-office reservations.
- int get officeSupplementCents;/// What happens once the entitlement is used up (migration 0041).
+ int get officeSupplementCents;/// Sum of the reserved desks' half-day prices (0059).
+ int get deskSupplementCents;/// What happens once the entitlement is used up (migration 0041).
  OveragePolicy get overagePolicy;/// The fee band's per-extra-half-day overage rate — what a
 /// pay-as-you-go half-day beyond the entitlement costs.
  int get overageRateCents;/// Confirmed extra half-days this period (quota extensions / packages),
@@ -40,16 +41,16 @@ $StatementCopyWith<Statement> get copyWith => _$StatementCopyWithImpl<Statement>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Statement&&(identical(other.period, period) || other.period == period)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct)&&(identical(other.feeCents, feeCents) || other.feeCents == feeCents)&&(identical(other.includedHalfDays, includedHalfDays) || other.includedHalfDays == includedHalfDays)&&(identical(other.openDays, openDays) || other.openDays == openDays)&&(identical(other.usedHalfDays, usedHalfDays) || other.usedHalfDays == usedHalfDays)&&(identical(other.extraHalfDays, extraHalfDays) || other.extraHalfDays == extraHalfDays)&&(identical(other.overageCents, overageCents) || other.overageCents == overageCents)&&(identical(other.creditsCents, creditsCents) || other.creditsCents == creditsCents)&&(identical(other.balanceCents, balanceCents) || other.balanceCents == balanceCents)&&(identical(other.accessorySupplementCents, accessorySupplementCents) || other.accessorySupplementCents == accessorySupplementCents)&&(identical(other.levelSupplementCents, levelSupplementCents) || other.levelSupplementCents == levelSupplementCents)&&(identical(other.officeSupplementCents, officeSupplementCents) || other.officeSupplementCents == officeSupplementCents)&&(identical(other.overagePolicy, overagePolicy) || other.overagePolicy == overagePolicy)&&(identical(other.overageRateCents, overageRateCents) || other.overageRateCents == overageRateCents)&&(identical(other.grantedHalfDays, grantedHalfDays) || other.grantedHalfDays == grantedHalfDays)&&(identical(other.remainingHalfDays, remainingHalfDays) || other.remainingHalfDays == remainingHalfDays));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Statement&&(identical(other.period, period) || other.period == period)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct)&&(identical(other.feeCents, feeCents) || other.feeCents == feeCents)&&(identical(other.includedHalfDays, includedHalfDays) || other.includedHalfDays == includedHalfDays)&&(identical(other.openDays, openDays) || other.openDays == openDays)&&(identical(other.usedHalfDays, usedHalfDays) || other.usedHalfDays == usedHalfDays)&&(identical(other.extraHalfDays, extraHalfDays) || other.extraHalfDays == extraHalfDays)&&(identical(other.overageCents, overageCents) || other.overageCents == overageCents)&&(identical(other.creditsCents, creditsCents) || other.creditsCents == creditsCents)&&(identical(other.balanceCents, balanceCents) || other.balanceCents == balanceCents)&&(identical(other.accessorySupplementCents, accessorySupplementCents) || other.accessorySupplementCents == accessorySupplementCents)&&(identical(other.levelSupplementCents, levelSupplementCents) || other.levelSupplementCents == levelSupplementCents)&&(identical(other.officeSupplementCents, officeSupplementCents) || other.officeSupplementCents == officeSupplementCents)&&(identical(other.deskSupplementCents, deskSupplementCents) || other.deskSupplementCents == deskSupplementCents)&&(identical(other.overagePolicy, overagePolicy) || other.overagePolicy == overagePolicy)&&(identical(other.overageRateCents, overageRateCents) || other.overageRateCents == overageRateCents)&&(identical(other.grantedHalfDays, grantedHalfDays) || other.grantedHalfDays == grantedHalfDays)&&(identical(other.remainingHalfDays, remainingHalfDays) || other.remainingHalfDays == remainingHalfDays));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,period,subscriptionPct,feeCents,includedHalfDays,openDays,usedHalfDays,extraHalfDays,overageCents,creditsCents,balanceCents,accessorySupplementCents,levelSupplementCents,officeSupplementCents,overagePolicy,overageRateCents,grantedHalfDays,remainingHalfDays);
+int get hashCode => Object.hash(runtimeType,period,subscriptionPct,feeCents,includedHalfDays,openDays,usedHalfDays,extraHalfDays,overageCents,creditsCents,balanceCents,accessorySupplementCents,levelSupplementCents,officeSupplementCents,deskSupplementCents,overagePolicy,overageRateCents,grantedHalfDays,remainingHalfDays);
 
 @override
 String toString() {
-  return 'Statement(period: $period, subscriptionPct: $subscriptionPct, feeCents: $feeCents, includedHalfDays: $includedHalfDays, openDays: $openDays, usedHalfDays: $usedHalfDays, extraHalfDays: $extraHalfDays, overageCents: $overageCents, creditsCents: $creditsCents, balanceCents: $balanceCents, accessorySupplementCents: $accessorySupplementCents, levelSupplementCents: $levelSupplementCents, officeSupplementCents: $officeSupplementCents, overagePolicy: $overagePolicy, overageRateCents: $overageRateCents, grantedHalfDays: $grantedHalfDays, remainingHalfDays: $remainingHalfDays)';
+  return 'Statement(period: $period, subscriptionPct: $subscriptionPct, feeCents: $feeCents, includedHalfDays: $includedHalfDays, openDays: $openDays, usedHalfDays: $usedHalfDays, extraHalfDays: $extraHalfDays, overageCents: $overageCents, creditsCents: $creditsCents, balanceCents: $balanceCents, accessorySupplementCents: $accessorySupplementCents, levelSupplementCents: $levelSupplementCents, officeSupplementCents: $officeSupplementCents, deskSupplementCents: $deskSupplementCents, overagePolicy: $overagePolicy, overageRateCents: $overageRateCents, grantedHalfDays: $grantedHalfDays, remainingHalfDays: $remainingHalfDays)';
 }
 
 
@@ -60,7 +61,7 @@ abstract mixin class $StatementCopyWith<$Res>  {
   factory $StatementCopyWith(Statement value, $Res Function(Statement) _then) = _$StatementCopyWithImpl;
 @useResult
 $Res call({
- String period, int subscriptionPct, int feeCents, int includedHalfDays, int openDays, int usedHalfDays, int extraHalfDays, int overageCents, int creditsCents, int balanceCents, int accessorySupplementCents, int levelSupplementCents, int officeSupplementCents, OveragePolicy overagePolicy, int overageRateCents, int grantedHalfDays, int remainingHalfDays
+ String period, int subscriptionPct, int feeCents, int includedHalfDays, int openDays, int usedHalfDays, int extraHalfDays, int overageCents, int creditsCents, int balanceCents, int accessorySupplementCents, int levelSupplementCents, int officeSupplementCents, int deskSupplementCents, OveragePolicy overagePolicy, int overageRateCents, int grantedHalfDays, int remainingHalfDays
 });
 
 
@@ -77,7 +78,7 @@ class _$StatementCopyWithImpl<$Res>
 
 /// Create a copy of Statement
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? period = null,Object? subscriptionPct = null,Object? feeCents = null,Object? includedHalfDays = null,Object? openDays = null,Object? usedHalfDays = null,Object? extraHalfDays = null,Object? overageCents = null,Object? creditsCents = null,Object? balanceCents = null,Object? accessorySupplementCents = null,Object? levelSupplementCents = null,Object? officeSupplementCents = null,Object? overagePolicy = null,Object? overageRateCents = null,Object? grantedHalfDays = null,Object? remainingHalfDays = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? period = null,Object? subscriptionPct = null,Object? feeCents = null,Object? includedHalfDays = null,Object? openDays = null,Object? usedHalfDays = null,Object? extraHalfDays = null,Object? overageCents = null,Object? creditsCents = null,Object? balanceCents = null,Object? accessorySupplementCents = null,Object? levelSupplementCents = null,Object? officeSupplementCents = null,Object? deskSupplementCents = null,Object? overagePolicy = null,Object? overageRateCents = null,Object? grantedHalfDays = null,Object? remainingHalfDays = null,}) {
   return _then(_self.copyWith(
 period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
 as String,subscriptionPct: null == subscriptionPct ? _self.subscriptionPct : subscriptionPct // ignore: cast_nullable_to_non_nullable
@@ -92,6 +93,7 @@ as int,balanceCents: null == balanceCents ? _self.balanceCents : balanceCents //
 as int,accessorySupplementCents: null == accessorySupplementCents ? _self.accessorySupplementCents : accessorySupplementCents // ignore: cast_nullable_to_non_nullable
 as int,levelSupplementCents: null == levelSupplementCents ? _self.levelSupplementCents : levelSupplementCents // ignore: cast_nullable_to_non_nullable
 as int,officeSupplementCents: null == officeSupplementCents ? _self.officeSupplementCents : officeSupplementCents // ignore: cast_nullable_to_non_nullable
+as int,deskSupplementCents: null == deskSupplementCents ? _self.deskSupplementCents : deskSupplementCents // ignore: cast_nullable_to_non_nullable
 as int,overagePolicy: null == overagePolicy ? _self.overagePolicy : overagePolicy // ignore: cast_nullable_to_non_nullable
 as OveragePolicy,overageRateCents: null == overageRateCents ? _self.overageRateCents : overageRateCents // ignore: cast_nullable_to_non_nullable
 as int,grantedHalfDays: null == grantedHalfDays ? _self.grantedHalfDays : grantedHalfDays // ignore: cast_nullable_to_non_nullable
@@ -178,10 +180,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String period,  int subscriptionPct,  int feeCents,  int includedHalfDays,  int openDays,  int usedHalfDays,  int extraHalfDays,  int overageCents,  int creditsCents,  int balanceCents,  int accessorySupplementCents,  int levelSupplementCents,  int officeSupplementCents,  OveragePolicy overagePolicy,  int overageRateCents,  int grantedHalfDays,  int remainingHalfDays)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String period,  int subscriptionPct,  int feeCents,  int includedHalfDays,  int openDays,  int usedHalfDays,  int extraHalfDays,  int overageCents,  int creditsCents,  int balanceCents,  int accessorySupplementCents,  int levelSupplementCents,  int officeSupplementCents,  int deskSupplementCents,  OveragePolicy overagePolicy,  int overageRateCents,  int grantedHalfDays,  int remainingHalfDays)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Statement() when $default != null:
-return $default(_that.period,_that.subscriptionPct,_that.feeCents,_that.includedHalfDays,_that.openDays,_that.usedHalfDays,_that.extraHalfDays,_that.overageCents,_that.creditsCents,_that.balanceCents,_that.accessorySupplementCents,_that.levelSupplementCents,_that.officeSupplementCents,_that.overagePolicy,_that.overageRateCents,_that.grantedHalfDays,_that.remainingHalfDays);case _:
+return $default(_that.period,_that.subscriptionPct,_that.feeCents,_that.includedHalfDays,_that.openDays,_that.usedHalfDays,_that.extraHalfDays,_that.overageCents,_that.creditsCents,_that.balanceCents,_that.accessorySupplementCents,_that.levelSupplementCents,_that.officeSupplementCents,_that.deskSupplementCents,_that.overagePolicy,_that.overageRateCents,_that.grantedHalfDays,_that.remainingHalfDays);case _:
   return orElse();
 
 }
@@ -199,10 +201,10 @@ return $default(_that.period,_that.subscriptionPct,_that.feeCents,_that.included
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String period,  int subscriptionPct,  int feeCents,  int includedHalfDays,  int openDays,  int usedHalfDays,  int extraHalfDays,  int overageCents,  int creditsCents,  int balanceCents,  int accessorySupplementCents,  int levelSupplementCents,  int officeSupplementCents,  OveragePolicy overagePolicy,  int overageRateCents,  int grantedHalfDays,  int remainingHalfDays)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String period,  int subscriptionPct,  int feeCents,  int includedHalfDays,  int openDays,  int usedHalfDays,  int extraHalfDays,  int overageCents,  int creditsCents,  int balanceCents,  int accessorySupplementCents,  int levelSupplementCents,  int officeSupplementCents,  int deskSupplementCents,  OveragePolicy overagePolicy,  int overageRateCents,  int grantedHalfDays,  int remainingHalfDays)  $default,) {final _that = this;
 switch (_that) {
 case _Statement():
-return $default(_that.period,_that.subscriptionPct,_that.feeCents,_that.includedHalfDays,_that.openDays,_that.usedHalfDays,_that.extraHalfDays,_that.overageCents,_that.creditsCents,_that.balanceCents,_that.accessorySupplementCents,_that.levelSupplementCents,_that.officeSupplementCents,_that.overagePolicy,_that.overageRateCents,_that.grantedHalfDays,_that.remainingHalfDays);}
+return $default(_that.period,_that.subscriptionPct,_that.feeCents,_that.includedHalfDays,_that.openDays,_that.usedHalfDays,_that.extraHalfDays,_that.overageCents,_that.creditsCents,_that.balanceCents,_that.accessorySupplementCents,_that.levelSupplementCents,_that.officeSupplementCents,_that.deskSupplementCents,_that.overagePolicy,_that.overageRateCents,_that.grantedHalfDays,_that.remainingHalfDays);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -216,10 +218,10 @@ return $default(_that.period,_that.subscriptionPct,_that.feeCents,_that.included
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String period,  int subscriptionPct,  int feeCents,  int includedHalfDays,  int openDays,  int usedHalfDays,  int extraHalfDays,  int overageCents,  int creditsCents,  int balanceCents,  int accessorySupplementCents,  int levelSupplementCents,  int officeSupplementCents,  OveragePolicy overagePolicy,  int overageRateCents,  int grantedHalfDays,  int remainingHalfDays)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String period,  int subscriptionPct,  int feeCents,  int includedHalfDays,  int openDays,  int usedHalfDays,  int extraHalfDays,  int overageCents,  int creditsCents,  int balanceCents,  int accessorySupplementCents,  int levelSupplementCents,  int officeSupplementCents,  int deskSupplementCents,  OveragePolicy overagePolicy,  int overageRateCents,  int grantedHalfDays,  int remainingHalfDays)?  $default,) {final _that = this;
 switch (_that) {
 case _Statement() when $default != null:
-return $default(_that.period,_that.subscriptionPct,_that.feeCents,_that.includedHalfDays,_that.openDays,_that.usedHalfDays,_that.extraHalfDays,_that.overageCents,_that.creditsCents,_that.balanceCents,_that.accessorySupplementCents,_that.levelSupplementCents,_that.officeSupplementCents,_that.overagePolicy,_that.overageRateCents,_that.grantedHalfDays,_that.remainingHalfDays);case _:
+return $default(_that.period,_that.subscriptionPct,_that.feeCents,_that.includedHalfDays,_that.openDays,_that.usedHalfDays,_that.extraHalfDays,_that.overageCents,_that.creditsCents,_that.balanceCents,_that.accessorySupplementCents,_that.levelSupplementCents,_that.officeSupplementCents,_that.deskSupplementCents,_that.overagePolicy,_that.overageRateCents,_that.grantedHalfDays,_that.remainingHalfDays);case _:
   return null;
 
 }
@@ -231,7 +233,7 @@ return $default(_that.period,_that.subscriptionPct,_that.feeCents,_that.included
 
 
 class _Statement extends Statement {
-  const _Statement({required this.period, required this.subscriptionPct, required this.feeCents, required this.includedHalfDays, required this.openDays, required this.usedHalfDays, required this.extraHalfDays, required this.overageCents, required this.creditsCents, required this.balanceCents, this.accessorySupplementCents = 0, this.levelSupplementCents = 0, this.officeSupplementCents = 0, this.overagePolicy = OveragePolicy.blocked, this.overageRateCents = 0, this.grantedHalfDays = 0, this.remainingHalfDays = 0}): super._();
+  const _Statement({required this.period, required this.subscriptionPct, required this.feeCents, required this.includedHalfDays, required this.openDays, required this.usedHalfDays, required this.extraHalfDays, required this.overageCents, required this.creditsCents, required this.balanceCents, this.accessorySupplementCents = 0, this.levelSupplementCents = 0, this.officeSupplementCents = 0, this.deskSupplementCents = 0, this.overagePolicy = OveragePolicy.blocked, this.overageRateCents = 0, this.grantedHalfDays = 0, this.remainingHalfDays = 0}): super._();
   
 
 @override final  String period;
@@ -255,6 +257,8 @@ class _Statement extends Statement {
 /// Sum of the reserved offices' half-day prices (0057) — the level
 /// shape over whole-office reservations.
 @override@JsonKey() final  int officeSupplementCents;
+/// Sum of the reserved desks' half-day prices (0059).
+@override@JsonKey() final  int deskSupplementCents;
 /// What happens once the entitlement is used up (migration 0041).
 @override@JsonKey() final  OveragePolicy overagePolicy;
 /// The fee band's per-extra-half-day overage rate — what a
@@ -277,16 +281,16 @@ _$StatementCopyWith<_Statement> get copyWith => __$StatementCopyWithImpl<_Statem
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Statement&&(identical(other.period, period) || other.period == period)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct)&&(identical(other.feeCents, feeCents) || other.feeCents == feeCents)&&(identical(other.includedHalfDays, includedHalfDays) || other.includedHalfDays == includedHalfDays)&&(identical(other.openDays, openDays) || other.openDays == openDays)&&(identical(other.usedHalfDays, usedHalfDays) || other.usedHalfDays == usedHalfDays)&&(identical(other.extraHalfDays, extraHalfDays) || other.extraHalfDays == extraHalfDays)&&(identical(other.overageCents, overageCents) || other.overageCents == overageCents)&&(identical(other.creditsCents, creditsCents) || other.creditsCents == creditsCents)&&(identical(other.balanceCents, balanceCents) || other.balanceCents == balanceCents)&&(identical(other.accessorySupplementCents, accessorySupplementCents) || other.accessorySupplementCents == accessorySupplementCents)&&(identical(other.levelSupplementCents, levelSupplementCents) || other.levelSupplementCents == levelSupplementCents)&&(identical(other.officeSupplementCents, officeSupplementCents) || other.officeSupplementCents == officeSupplementCents)&&(identical(other.overagePolicy, overagePolicy) || other.overagePolicy == overagePolicy)&&(identical(other.overageRateCents, overageRateCents) || other.overageRateCents == overageRateCents)&&(identical(other.grantedHalfDays, grantedHalfDays) || other.grantedHalfDays == grantedHalfDays)&&(identical(other.remainingHalfDays, remainingHalfDays) || other.remainingHalfDays == remainingHalfDays));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Statement&&(identical(other.period, period) || other.period == period)&&(identical(other.subscriptionPct, subscriptionPct) || other.subscriptionPct == subscriptionPct)&&(identical(other.feeCents, feeCents) || other.feeCents == feeCents)&&(identical(other.includedHalfDays, includedHalfDays) || other.includedHalfDays == includedHalfDays)&&(identical(other.openDays, openDays) || other.openDays == openDays)&&(identical(other.usedHalfDays, usedHalfDays) || other.usedHalfDays == usedHalfDays)&&(identical(other.extraHalfDays, extraHalfDays) || other.extraHalfDays == extraHalfDays)&&(identical(other.overageCents, overageCents) || other.overageCents == overageCents)&&(identical(other.creditsCents, creditsCents) || other.creditsCents == creditsCents)&&(identical(other.balanceCents, balanceCents) || other.balanceCents == balanceCents)&&(identical(other.accessorySupplementCents, accessorySupplementCents) || other.accessorySupplementCents == accessorySupplementCents)&&(identical(other.levelSupplementCents, levelSupplementCents) || other.levelSupplementCents == levelSupplementCents)&&(identical(other.officeSupplementCents, officeSupplementCents) || other.officeSupplementCents == officeSupplementCents)&&(identical(other.deskSupplementCents, deskSupplementCents) || other.deskSupplementCents == deskSupplementCents)&&(identical(other.overagePolicy, overagePolicy) || other.overagePolicy == overagePolicy)&&(identical(other.overageRateCents, overageRateCents) || other.overageRateCents == overageRateCents)&&(identical(other.grantedHalfDays, grantedHalfDays) || other.grantedHalfDays == grantedHalfDays)&&(identical(other.remainingHalfDays, remainingHalfDays) || other.remainingHalfDays == remainingHalfDays));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,period,subscriptionPct,feeCents,includedHalfDays,openDays,usedHalfDays,extraHalfDays,overageCents,creditsCents,balanceCents,accessorySupplementCents,levelSupplementCents,officeSupplementCents,overagePolicy,overageRateCents,grantedHalfDays,remainingHalfDays);
+int get hashCode => Object.hash(runtimeType,period,subscriptionPct,feeCents,includedHalfDays,openDays,usedHalfDays,extraHalfDays,overageCents,creditsCents,balanceCents,accessorySupplementCents,levelSupplementCents,officeSupplementCents,deskSupplementCents,overagePolicy,overageRateCents,grantedHalfDays,remainingHalfDays);
 
 @override
 String toString() {
-  return 'Statement(period: $period, subscriptionPct: $subscriptionPct, feeCents: $feeCents, includedHalfDays: $includedHalfDays, openDays: $openDays, usedHalfDays: $usedHalfDays, extraHalfDays: $extraHalfDays, overageCents: $overageCents, creditsCents: $creditsCents, balanceCents: $balanceCents, accessorySupplementCents: $accessorySupplementCents, levelSupplementCents: $levelSupplementCents, officeSupplementCents: $officeSupplementCents, overagePolicy: $overagePolicy, overageRateCents: $overageRateCents, grantedHalfDays: $grantedHalfDays, remainingHalfDays: $remainingHalfDays)';
+  return 'Statement(period: $period, subscriptionPct: $subscriptionPct, feeCents: $feeCents, includedHalfDays: $includedHalfDays, openDays: $openDays, usedHalfDays: $usedHalfDays, extraHalfDays: $extraHalfDays, overageCents: $overageCents, creditsCents: $creditsCents, balanceCents: $balanceCents, accessorySupplementCents: $accessorySupplementCents, levelSupplementCents: $levelSupplementCents, officeSupplementCents: $officeSupplementCents, deskSupplementCents: $deskSupplementCents, overagePolicy: $overagePolicy, overageRateCents: $overageRateCents, grantedHalfDays: $grantedHalfDays, remainingHalfDays: $remainingHalfDays)';
 }
 
 
@@ -297,7 +301,7 @@ abstract mixin class _$StatementCopyWith<$Res> implements $StatementCopyWith<$Re
   factory _$StatementCopyWith(_Statement value, $Res Function(_Statement) _then) = __$StatementCopyWithImpl;
 @override @useResult
 $Res call({
- String period, int subscriptionPct, int feeCents, int includedHalfDays, int openDays, int usedHalfDays, int extraHalfDays, int overageCents, int creditsCents, int balanceCents, int accessorySupplementCents, int levelSupplementCents, int officeSupplementCents, OveragePolicy overagePolicy, int overageRateCents, int grantedHalfDays, int remainingHalfDays
+ String period, int subscriptionPct, int feeCents, int includedHalfDays, int openDays, int usedHalfDays, int extraHalfDays, int overageCents, int creditsCents, int balanceCents, int accessorySupplementCents, int levelSupplementCents, int officeSupplementCents, int deskSupplementCents, OveragePolicy overagePolicy, int overageRateCents, int grantedHalfDays, int remainingHalfDays
 });
 
 
@@ -314,7 +318,7 @@ class __$StatementCopyWithImpl<$Res>
 
 /// Create a copy of Statement
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? period = null,Object? subscriptionPct = null,Object? feeCents = null,Object? includedHalfDays = null,Object? openDays = null,Object? usedHalfDays = null,Object? extraHalfDays = null,Object? overageCents = null,Object? creditsCents = null,Object? balanceCents = null,Object? accessorySupplementCents = null,Object? levelSupplementCents = null,Object? officeSupplementCents = null,Object? overagePolicy = null,Object? overageRateCents = null,Object? grantedHalfDays = null,Object? remainingHalfDays = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? period = null,Object? subscriptionPct = null,Object? feeCents = null,Object? includedHalfDays = null,Object? openDays = null,Object? usedHalfDays = null,Object? extraHalfDays = null,Object? overageCents = null,Object? creditsCents = null,Object? balanceCents = null,Object? accessorySupplementCents = null,Object? levelSupplementCents = null,Object? officeSupplementCents = null,Object? deskSupplementCents = null,Object? overagePolicy = null,Object? overageRateCents = null,Object? grantedHalfDays = null,Object? remainingHalfDays = null,}) {
   return _then(_Statement(
 period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
 as String,subscriptionPct: null == subscriptionPct ? _self.subscriptionPct : subscriptionPct // ignore: cast_nullable_to_non_nullable
@@ -329,6 +333,7 @@ as int,balanceCents: null == balanceCents ? _self.balanceCents : balanceCents //
 as int,accessorySupplementCents: null == accessorySupplementCents ? _self.accessorySupplementCents : accessorySupplementCents // ignore: cast_nullable_to_non_nullable
 as int,levelSupplementCents: null == levelSupplementCents ? _self.levelSupplementCents : levelSupplementCents // ignore: cast_nullable_to_non_nullable
 as int,officeSupplementCents: null == officeSupplementCents ? _self.officeSupplementCents : officeSupplementCents // ignore: cast_nullable_to_non_nullable
+as int,deskSupplementCents: null == deskSupplementCents ? _self.deskSupplementCents : deskSupplementCents // ignore: cast_nullable_to_non_nullable
 as int,overagePolicy: null == overagePolicy ? _self.overagePolicy : overagePolicy // ignore: cast_nullable_to_non_nullable
 as OveragePolicy,overageRateCents: null == overageRateCents ? _self.overageRateCents : overageRateCents // ignore: cast_nullable_to_non_nullable
 as int,grantedHalfDays: null == grantedHalfDays ? _self.grantedHalfDays : grantedHalfDays // ignore: cast_nullable_to_non_nullable

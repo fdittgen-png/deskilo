@@ -426,6 +426,12 @@ class _SubscriptionCard extends StatelessWidget {
                 label: l10n?.officeSupplementLabel ?? 'Office reservations',
                 value: '−${money(statement.officeSupplementCents)}',
               ),
+            // 0059 — whole-desk reservations priced per half-day.
+            if (statement.deskSupplementCents > 0)
+              _BillLine(
+                label: l10n?.deskSupplementLabel ?? 'Desk reservations',
+                value: '−${money(statement.deskSupplementCents)}',
+              ),
           ],
         ),
       ),
@@ -529,6 +535,7 @@ class _OpenPositionsCard extends StatelessWidget {
       case EventType.roleChange:
       case EventType.memberJoin:
       case EventType.reservation:
+      case EventType.spaceReservation:
       case EventType.adjustment:
         return l10n?.eventTypeAdjustment ?? 'Adjustment';
     }

@@ -26,7 +26,12 @@ enum EventType {
 
   /// A new member's join awaiting the workspace's welcome (0051):
   /// confirmed → active membership, rejected → exited.
-  memberJoin('member_join');
+  memberJoin('member_join'),
+
+  /// A whole-SPACE reservation (desk/office/level, 0059) awaiting the
+  /// validation quorum: the booking blocks the space immediately, a
+  /// reject cancels it.
+  spaceReservation('space_reservation');
 
   const EventType([String? dbName]) : _dbName = dbName;
 

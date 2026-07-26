@@ -982,11 +982,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Los miembros se registran en un quiosco acercando una tarjeta RFID/NFC. Requiere un dispositivo Android con NFC.';
 
   @override
-  String get featureLevelBooking => 'Reservas de oficina y planta';
+  String get featureLevelBooking => 'Reservas de mesa, oficina y planta';
 
   @override
   String get featureLevelBookingDesc =>
-      'Reservar una oficina o planta entera como una sola reserva, con precio por media jornada. Concede el derecho por miembro.';
+      'Reservar una mesa, oficina o planta entera como una sola reserva, con precio por media jornada. Concede el derecho por miembro.';
 
   @override
   String get featureAdminLevelAssign => 'Los admins pueden asignar plantas';
@@ -1337,11 +1337,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get levelPermissionAllowed =>
-      'Puede reservar una oficina o planta entera';
+      'Puede reservar una mesa, oficina o planta entera';
 
   @override
   String get levelPermissionDenied =>
-      'No puede reservar una oficina o planta entera';
+      'No puede reservar una mesa, oficina o planta entera';
 
   @override
   String get levelBookableToggle => 'Reservable en su totalidad';
@@ -1364,7 +1364,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get levelNotAllowed =>
-      'No tienes permiso para reservar una oficina o planta entera.';
+      'No tienes permiso para reservar una mesa, oficina o planta entera.';
 
   @override
   String get levelConflict => 'La planta tiene reservas en ese periodo.';
@@ -1377,6 +1377,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get officeSupplementLabel => 'Reservas de oficina';
+
+  @override
+  String get eventTypeSpaceReservation => 'Reservas de espacios enteros';
+
+  @override
+  String get deskDetail => 'Mesa entera';
+
+  @override
+  String get deskSupplementLabel => 'Reservas de mesa';
 
   @override
   String get membersTitle => 'Miembros y planes';

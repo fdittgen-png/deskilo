@@ -65,7 +65,7 @@ void main() {
     expect(switchTitled(tester, 'Admins can block seats').value, isFalse);
     expect(switchTitled(tester, 'Accessory supplements').value, isFalse);
     expect(switchTitled(tester, 'Online payments').value, isFalse);
-    expect(switchTitled(tester, 'Office & level reservations').value, isFalse);
+    expect(switchTitled(tester, 'Desk, office & level reservations').value, isFalse);
     expect(
       switchTitled(tester, 'Admins can assign levels').value,
       isFalse,

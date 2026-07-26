@@ -736,14 +736,13 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       ],
     );
 
-    return switch (statementAsync) {
-      AsyncData(value: final statement) => ListView(
-          padding: AppSpacing.mdAll,
-          children: [
-            periodHeader,
-            if (statement != null)
+    // Landscape split (#282 idiom, field request): the period header and
+    // the money actions move into a side panel so the bill fills the
+    // rest of the screen — same layout family as Plan/Reserve/Calendar.
+    final billChildren = <Widget>[
+            if (visibleStatement != null)
               BillView(
-                statement: statement,
+                statement: visibleStatement,
                 ledger: ledger,
                 pendingMoneyEvents: pendingEvents,
                 currencyCode: currencyCode,
@@ -757,6 +756,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                     features.contains(WorkspaceFeature.onlinePayments),
                 onPayOnline: _payOnline,
               ),
+    ];
+    final actionChildren = <Widget>[
             const SizedBox(height: 8),
             // Primary action stays full-width; the secondary ones share a
             // two-column grid (UX pass — the old five-deep button stack
@@ -836,7 +837,47 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 );
               },
             ),
-          ],
+    ];
+
+    return switch (statementAsync) {
+      AsyncData() => LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth > constraints.maxHeight) {
+              return Row(
+                children: [
+                  SizedBox(
+                    width: constraints.maxWidth * 0.4,
+                    child: SingleChildScrollView(
+                      padding: AppSpacing.mdAll,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          periodHeader,
+                          const SizedBox(height: 8),
+                          ...actionChildren,
+                        ],
+                      ),
+                    ),
+                  ),
+                  const VerticalDivider(width: 1),
+                  Expanded(
+                    child: ListView(
+                      padding: AppSpacing.mdAll,
+                      children: billChildren,
+                    ),
+                  ),
+                ],
+              );
+            }
+            return ListView(
+              padding: AppSpacing.mdAll,
+              children: [
+                periodHeader,
+                ...billChildren,
+                ...actionChildren,
+              ],
+            );
+          },
         ),
       AsyncError() => Center(
           child: Text(

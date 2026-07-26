@@ -983,11 +983,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Mitglieder checken an einem Kiosk per RFID/NFC-Karte ein. Erfordert ein Android-Gerät mit NFC.';
 
   @override
-  String get featureLevelBooking => 'Büro- & Etagen-Reservierungen';
+  String get featureLevelBooking => 'Tisch-, Büro- & Etagen-Reservierungen';
 
   @override
   String get featureLevelBookingDesc =>
-      'Ein ganzes Büro oder eine Etage als eine Buchung reservieren, je Halbtag bepreist. Das Recht wird pro Mitglied vergeben.';
+      'Einen ganzen Tisch, ein Büro oder eine Etage als eine Buchung reservieren, je Halbtag bepreist. Das Recht wird pro Mitglied vergeben.';
 
   @override
   String get featureAdminLevelAssign => 'Admins können Etagen zuweisen';
@@ -1340,11 +1340,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get levelPermissionAllowed =>
-      'Darf ein ganzes Büro oder eine Etage reservieren';
+      'Darf einen ganzen Tisch, ein Büro oder eine Etage reservieren';
 
   @override
   String get levelPermissionDenied =>
-      'Darf kein ganzes Büro und keine Etage reservieren';
+      'Darf keinen ganzen Tisch, kein Büro und keine Etage reservieren';
 
   @override
   String get levelBookableToggle => 'Als Ganzes reservierbar';
@@ -1367,7 +1367,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get levelNotAllowed =>
-      'Sie dürfen kein ganzes Büro und keine ganze Etage reservieren.';
+      'Sie dürfen keinen ganzen Tisch, kein Büro und keine ganze Etage reservieren.';
 
   @override
   String get levelConflict =>
@@ -1381,6 +1381,15 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get officeSupplementLabel => 'Büro-Reservierungen';
+
+  @override
+  String get eventTypeSpaceReservation => 'Ganzraum-Reservierungen';
+
+  @override
+  String get deskDetail => 'Ganzer Tisch';
+
+  @override
+  String get deskSupplementLabel => 'Tisch-Reservierungen';
 
   @override
   String get membersTitle => 'Mitglieder & Tarife';

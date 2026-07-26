@@ -985,11 +985,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'I membri fanno check-in a un chiosco avvicinando una tessera RFID/NFC. Richiede un dispositivo Android con NFC.';
 
   @override
-  String get featureLevelBooking => 'Prenotazioni di ufficio e piano';
+  String get featureLevelBooking => 'Prenotazioni di tavolo, ufficio e piano';
 
   @override
   String get featureLevelBookingDesc =>
-      'Prenota un intero ufficio o piano come un\'unica prenotazione, con prezzo per mezza giornata. Concedi il diritto per membro.';
+      'Prenota un intero tavolo, ufficio o piano come un\'unica prenotazione, con prezzo per mezza giornata. Concedi il diritto per membro.';
 
   @override
   String get featureAdminLevelAssign => 'Gli admin possono assegnare piani';
@@ -1340,11 +1340,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get levelPermissionAllowed =>
-      'Può prenotare un ufficio o un piano intero';
+      'Può prenotare un tavolo, ufficio o piano intero';
 
   @override
   String get levelPermissionDenied =>
-      'Non può prenotare un ufficio o un piano intero';
+      'Non può prenotare un tavolo, ufficio o piano intero';
 
   @override
   String get levelBookableToggle => 'Prenotabile per intero';
@@ -1367,7 +1367,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get levelNotAllowed =>
-      'Non sei autorizzato a prenotare un ufficio o un piano intero.';
+      'Non sei autorizzato a prenotare un tavolo, ufficio o piano intero.';
 
   @override
   String get levelConflict => 'Il piano ha prenotazioni in quel periodo.';
@@ -1380,6 +1380,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get officeSupplementLabel => 'Prenotazioni di ufficio';
+
+  @override
+  String get eventTypeSpaceReservation => 'Prenotazioni di spazi interi';
+
+  @override
+  String get deskDetail => 'Tavolo intero';
+
+  @override
+  String get deskSupplementLabel => 'Prenotazioni di tavolo';
 
   @override
   String get membersTitle => 'Membri e piani';

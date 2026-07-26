@@ -333,4 +333,51 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('reserve-scan-button')), findsNothing);
   });
+
+  testWidgets(
+      'DESK card with feature + bookable + grant: whole-desk check-in '
+      'creates the desk reservation (0059)', (tester) async {
+    tester.view.physicalSize = const Size(800, 1400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    final plans = FakeFloorPlanRepository()..seedSmallPlan();
+    plans.desks[0] =
+        plans.desks[0].copyWith(bookableAsWhole: true, priceCents: 1500);
+    final reservations = FakeReservationRepository();
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+      featureFlags: const {'levelBooking': true},
+    )..openWeekdays['ws-1'] = [1, 2, 3, 4, 5, 6, 7];
+    workspace.myMember =
+        workspace.myMember.copyWith(canReserveLevel: true);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          floorPlan: plans,
+          reservations: reservations,
+          workspace: workspace,
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('reserve-scan-button')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('space-scan-field')),
+      SpaceCodeCodec.encode(
+        workspaceId: 'ws-1',
+        kind: SpaceKind.desk,
+        id: plans.desks.single.id,
+      ),
+    );
+    await tester.tap(find.byKey(const ValueKey('space-scan-submit')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('space-checkin')));
+    await tester.pumpAndSettle();
+
+    final r = reservations.reservations.single;
+    expect(r.deskId, plans.desks.single.id);
+    expect(r.seatId, isNull);
+  });
 }

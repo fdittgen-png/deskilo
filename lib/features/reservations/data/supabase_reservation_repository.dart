@@ -50,6 +50,7 @@ class SupabaseReservationRepository implements ReservationRepository {
   Future<String> create({
     required String workspaceId,
     String? seatId,
+    String? deskId,
     String? officeId,
     String? levelId,
     required DateTime startsAt,
@@ -59,6 +60,7 @@ class SupabaseReservationRepository implements ReservationRepository {
     final result = await _client.rpc<dynamic>('create_reservation', params: {
       'p_workspace_id': workspaceId,
       'p_seat_id': seatId,
+      'p_desk_id': deskId,
       'p_office_id': officeId,
       'p_level_id': levelId,
       'p_starts_at': startsAt.toUtc().toIso8601String(),
@@ -206,6 +208,7 @@ class SupabaseReservationRepository implements ReservationRepository {
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
         seatId: row['seat_id'] as String?,
+        deskId: row['desk_id'] as String?,
         officeId: row['office_id'] as String?,
         levelId: row['level_id'] as String?,
         memberId: row['member_id'] as String,
