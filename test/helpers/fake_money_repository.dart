@@ -59,14 +59,22 @@ class FakeMoneyRepository implements MoneyRepository {
       for (final entry in ledger)
         if (entry.memberId == memberId &&
             entry.period == period &&
-            entry.kind == LedgerKind.charge &&
-            (entry.category == LedgerCategory.service ||
-                entry.category == LedgerCategory.package ||
-                entry.category == LedgerCategory.adjustment))
+            ((entry.kind == LedgerKind.charge &&
+                    (entry.category == LedgerCategory.service ||
+                        entry.category == LedgerCategory.package ||
+                        entry.category == LedgerCategory.adjustment)) ||
+                (entry.kind == LedgerKind.credit &&
+                    (entry.category == LedgerCategory.payment ||
+                        entry.category == LedgerCategory.expense ||
+                        entry.category == LedgerCategory.adjustment))))
           InvoiceLine(
               kind: entry.category.name,
               label: entry.description,
-              amountCents: entry.amountCents),
+              // 0063 — credits net against the charges: the total IS
+              // the solde.
+              amountCents: entry.kind == LedgerKind.credit
+                  ? -entry.amountCents
+                  : entry.amountCents),
     ];
   }
 

@@ -12,7 +12,6 @@
   "invoicePdfIssuedOn": "Emessa il",
   "invoicePdfIssuedBy": "Emessa da",
   "invoicePdfBilledTo": "Intestata a",
-  "invoicePdfTotal": "Totale",
   "invoicePdfSignature": "Firma digitale (SHA-256)",
   "addressTitle": "Indirizzo",
   "addressNone": "Nessun indirizzo",
@@ -44,5 +43,6 @@
   "invoiceSortTooltip": "Ordina",
   "invoiceSortNewest": "Più recenti prima",
   "invoiceSortByMember": "Per membro",
-  "invoiceSortByMonth": "Per mese"
+  "invoiceSortByMonth": "Per mese",
+  "invoiceBalance": "Saldo"
 }

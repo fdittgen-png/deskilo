@@ -2144,12 +2144,6 @@ abstract class AppLocalizations {
   /// **'Billed to'**
   String get invoicePdfBilledTo;
 
-  /// PDF: the total row
-  ///
-  /// In en, this message translates to:
-  /// **'Total'**
-  String get invoicePdfTotal;
-
   /// PDF: caption above the integrity fingerprint
   ///
   /// In en, this message translates to:
@@ -2299,6 +2293,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'By month'**
   String get invoiceSortByMonth;
+
+  /// Invoice bottom line (0063): consumptions minus payments — the solde
+  ///
+  /// In en, this message translates to:
+  /// **'Balance due'**
+  String get invoiceBalance;
 
   /// No description provided for @eventTypeMemberJoin.
   ///

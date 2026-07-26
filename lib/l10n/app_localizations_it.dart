@@ -1143,9 +1143,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoicePdfBilledTo => 'Intestata a';
 
   @override
-  String get invoicePdfTotal => 'Totale';
-
-  @override
   String get invoicePdfSignature => 'Firma digitale (SHA-256)';
 
   @override
@@ -1224,6 +1221,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceSortByMonth => 'Per mese';
+
+  @override
+  String get invoiceBalance => 'Saldo';
 
   @override
   String get eventTypeMemberJoin => 'Nuovo membro';
