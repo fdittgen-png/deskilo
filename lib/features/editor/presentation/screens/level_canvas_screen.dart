@@ -728,15 +728,75 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
 
   Future<void> _showDeskSheet(Desk desk) async {
     final l10n = AppLocalizations.of(context);
-    final name = await _promptText(
-      title: l10n?.editorDeskProperties ?? 'Desk',
-      label: l10n?.editorDeskNameLabel ?? 'Desk name',
-      initial: desk.name,
+    var bookable = desk.bookableAsWhole;
+    final name = TextEditingController(text: desk.name);
+    // Whole-desk price per half-day (0059) — the office-sheet shape.
+    final price = TextEditingController(
+      text: desk.priceCents == 0 ? '' : centsToMajor(desk.priceCents),
     );
-    if (name == null || name.isEmpty) return;
-    await ref
-        .read(floorPlanRepositoryProvider)
-        .updateDesk(desk.copyWith(name: name));
+    final saved = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          left: AppSpacing.xl,
+          right: AppSpacing.xl,
+          top: AppSpacing.xl,
+          bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
+        ),
+        child: StatefulBuilder(
+          builder: (context, setSheetState) => Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                l10n?.editorDeskProperties ?? 'Desk',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: name,
+                decoration: InputDecoration(
+                  labelText: l10n?.editorDeskNameLabel ?? 'Desk name',
+                ),
+              ),
+              SwitchListTile(
+                key: const ValueKey('desk-bookable-switch'),
+                contentPadding: EdgeInsets.zero,
+                title: Text(
+                  l10n?.editorBookableAsWhole ?? 'Bookable as a whole',
+                ),
+                value: bookable,
+                onChanged: (v) => setSheetState(() => bookable = v),
+              ),
+              TextField(
+                key: const ValueKey('desk-price-field'),
+                controller: price,
+                enabled: bookable,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                decoration: InputDecoration(
+                  labelText: l10n?.levelPriceLabel ?? 'Price per half-day',
+                ),
+              ),
+              const SizedBox(height: 12),
+              FilledButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text(l10n?.commonSave ?? 'Save'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (saved != true) return;
+    await ref.read(floorPlanRepositoryProvider).updateDesk(
+          desk.copyWith(
+            name: name.text.trim().isEmpty ? desk.name : name.text.trim(),
+            bookableAsWhole: bookable,
+            priceCents: parseCentsInput(price.text) ?? 0,
+          ),
+        );
     ref.invalidate(floorPlanProvider(widget.levelId));
   }
 

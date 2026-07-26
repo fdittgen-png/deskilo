@@ -24,6 +24,7 @@ const _cardTypes = [
   EventType.roleChange,
   EventType.memberJoin,
   EventType.reservation,
+  EventType.spaceReservation,
   EventType.adjustment,
 ];
 
@@ -49,6 +50,8 @@ class ValidationSettingsScreen extends ConsumerWidget {
       EventType.quota => l10n?.eventTypeQuota ?? 'Extra half-days',
       EventType.roleChange => l10n?.eventTypeRoleChange ?? 'Role change',
       EventType.memberJoin => l10n?.eventTypeMemberJoin ?? 'New member',
+      EventType.spaceReservation =>
+        l10n?.eventTypeSpaceReservation ?? 'Whole-space reservations',
     };
   }
 

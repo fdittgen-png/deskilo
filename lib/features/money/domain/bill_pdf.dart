@@ -275,6 +275,7 @@ String _openPositionLabel(BillPdfStrings strings, WorkspaceEvent event) {
     case EventType.roleChange:
     case EventType.memberJoin:
     case EventType.reservation:
+    case EventType.spaceReservation:
     case EventType.adjustment:
       return strings.eventAdjustment;
   }

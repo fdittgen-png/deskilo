@@ -986,11 +986,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les membres pointent à une borne en approchant une carte RFID/NFC. Nécessite un appareil Android avec NFC.';
 
   @override
-  String get featureLevelBooking => 'Réservations de bureau et de niveau';
+  String get featureLevelBooking => 'Réservations de table, bureau et niveau';
 
   @override
   String get featureLevelBookingDesc =>
-      'Réserver un bureau ou un étage entier en une seule réservation, tarifé par demi-journée. Accordez le droit par membre.';
+      'Réserver une table, un bureau ou un étage entier en une seule réservation, tarifé par demi-journée. Accordez le droit par membre.';
 
   @override
   String get featureAdminLevelAssign =>
@@ -1342,11 +1342,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get levelPermissionAllowed =>
-      'Peut réserver un bureau ou un niveau entier';
+      'Peut réserver une table, un bureau ou un niveau entier';
 
   @override
   String get levelPermissionDenied =>
-      'Ne peut pas réserver un bureau ou un niveau entier';
+      'Ne peut pas réserver une table, un bureau ou un niveau entier';
 
   @override
   String get levelBookableToggle => 'Réservable en entier';
@@ -1369,7 +1369,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get levelNotAllowed =>
-      'Vous n\'êtes pas autorisé à réserver un bureau ou un niveau entier.';
+      'Vous n\'êtes pas autorisé à réserver une table, un bureau ou un niveau entier.';
 
   @override
   String get levelConflict => 'Le niveau a des réservations sur cette période.';
@@ -1382,6 +1382,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get officeSupplementLabel => 'Réservations de bureau';
+
+  @override
+  String get eventTypeSpaceReservation => 'Réservations d\'espaces entiers';
+
+  @override
+  String get deskDetail => 'Table entière';
+
+  @override
+  String get deskSupplementLabel => 'Réservations de table';
 
   @override
   String get membersTitle => 'Membres et forfaits';

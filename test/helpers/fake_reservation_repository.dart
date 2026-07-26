@@ -49,20 +49,27 @@ class FakeReservationRepository implements ReservationRepository {
   Future<String> create({
     required String workspaceId,
     String? seatId,
+    String? deskId,
     String? officeId,
     String? levelId,
     required DateTime startsAt,
     required DateTime endsAt,
     bool checkIn = false,
   }) async {
-    final targets = [seatId, officeId, levelId].whereType<String>().length;
+    final targets =
+        [seatId, deskId, officeId, levelId].whereType<String>().length;
     if (targets != 1) {
-      throw StateError('exactly one of seat, office or level required');
+      throw StateError('exactly one of seat, desk, office or level required');
     }
     if (levelId != null &&
         reservations.any((r) =>
             r.levelId == levelId && r.coversRange(startsAt, endsAt))) {
       throw StateError('the level has reservations in that period');
+    }
+    if (deskId != null &&
+        reservations.any((r) =>
+            r.deskId == deskId && r.coversRange(startsAt, endsAt))) {
+      throw StateError('conflict');
     }
     if (_overlapsActive(seatId, officeId, startsAt, endsAt)) {
       throw StateError('conflict');
@@ -71,6 +78,7 @@ class FakeReservationRepository implements ReservationRepository {
       id: 'res-${_nextId++}',
       workspaceId: workspaceId,
       seatId: seatId,
+      deskId: deskId,
       officeId: officeId,
       levelId: levelId,
       memberId: myMemberId,

@@ -27,7 +27,9 @@ SeatState seatStateAt({
   Reservation? covering;
   for (final r in reservations) {
     if (!r.coversInstant(at)) continue;
-    if (r.seatId == seat.id || (r.officeId != null && r.officeId == officeId)) {
+    if (r.seatId == seat.id ||
+        (r.deskId != null && r.deskId == seat.deskId) ||
+        (r.officeId != null && r.officeId == officeId)) {
       covering = r;
       break;
     }
@@ -50,7 +52,9 @@ Reservation? reservationOnSeatAt({
       plan.desks.where((d) => d.id == seat.deskId).firstOrNull?.officeId;
   for (final r in reservations) {
     if (!r.coversInstant(at)) continue;
-    if (r.seatId == seat.id || (r.officeId != null && r.officeId == officeId)) {
+    if (r.seatId == seat.id ||
+        (r.deskId != null && r.deskId == seat.deskId) ||
+        (r.officeId != null && r.officeId == officeId)) {
       return r;
     }
   }
@@ -98,7 +102,9 @@ Reservation? reservationOnSeatInRange({
       plan.desks.where((d) => d.id == seat.deskId).firstOrNull?.officeId;
   for (final r in reservations) {
     if (!r.coversRange(from, to)) continue;
-    if (r.seatId == seat.id || (r.officeId != null && r.officeId == officeId)) {
+    if (r.seatId == seat.id ||
+        (r.deskId != null && r.deskId == seat.deskId) ||
+        (r.officeId != null && r.officeId == officeId)) {
       return r;
     }
   }

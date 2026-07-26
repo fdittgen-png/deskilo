@@ -170,8 +170,13 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         .from('offices')
         .select('id, name')
         .eq('workspace_id', workspaceId);
+    // Desks joined (0059): whole-desk reservations name their table.
+    final deskRows = await _client
+        .from('desks')
+        .select('id, name')
+        .eq('workspace_id', workspaceId);
     return {
-      for (final r in [...seatRows, ...officeRows])
+      for (final r in [...seatRows, ...deskRows, ...officeRows])
         r['id'] as String: r['name'] as String,
     };
   }
@@ -446,6 +451,8 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   Future<void> updateDesk(Desk desk) async {
     await _client.from('desks').update({
       'name': desk.name,
+      'bookable_as_whole': desk.bookableAsWhole,
+      'price_cents': desk.priceCents,
       'x': desk.rect.x,
       'y': desk.rect.y,
       'w': desk.rect.w,
@@ -553,6 +560,8 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         workspaceId: row['workspace_id'] as String,
         officeId: row['office_id'] as String,
         name: row['name'] as String,
+        bookableAsWhole: row['bookable_as_whole'] as bool? ?? false,
+        priceCents: (row['price_cents'] as num?)?.toInt() ?? 0,
         rect: _rectFromRow(row),
       );
 

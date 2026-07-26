@@ -1351,8 +1351,8 @@
   "@featureNfcBadgesDesc": {
     "description": "One-line description under the NFC-badges switch"
   },
-  "featureLevelBooking": "Office & level reservations",
-  "featureLevelBookingDesc": "Reserve a whole office or floor as one booking, priced per half-day. Grant the right per member.",
+  "featureLevelBooking": "Desk, office & level reservations",
+  "featureLevelBookingDesc": "Reserve a whole desk, office or floor as one booking, priced per half-day. Grant the right per member.",
   "featureAdminLevelAssign": "Admins can assign levels",
   "featureAdminLevelAssignDesc": "Admins assign level reservations to members. The owner always can.",
   "featureKioskMode": "Kiosk mode",
@@ -1692,21 +1692,33 @@
   "levelReserveButton": "Reserve level",
   "levelReserveTitle": "Reserve the whole level",
   "levelPermissionTile": "Level reservations",
-  "levelPermissionAllowed": "May reserve a whole office or level",
-  "levelPermissionDenied": "May not reserve a whole office or level",
+  "levelPermissionAllowed": "May reserve a whole desk, office or level",
+  "levelPermissionDenied": "May not reserve a whole desk, office or level",
   "levelBookableToggle": "Bookable as a whole",
   "levelBookableDesc": "The whole floor can be reserved as one booking.",
   "levelPriceLabel": "Price per half-day",
   "levelAssignMember": "For member",
   "levelAssignMyself": "Myself",
   "levelSupplementLabel": "Level reservations",
-  "levelNotAllowed": "You are not allowed to reserve a whole office or level.",
+  "levelNotAllowed": "You are not allowed to reserve a whole desk, office or level.",
   "levelConflict": "The level has reservations in that period.",
   "levelDetail": "Whole level",
   "kioskLevelButton": "This level",
   "officeSupplementLabel": "Office reservations",
   "@officeSupplementLabel": {
     "description": "Bill line: sum of whole-office reservation prices this period (0057)"
+  },
+  "eventTypeSpaceReservation": "Whole-space reservations",
+  "@eventTypeSpaceReservation": {
+    "description": "Event/validation domain: whole desk/office/level reservations (0059)"
+  },
+  "deskDetail": "Whole desk",
+  "@deskDetail": {
+    "description": "Detail-sheet line naming a whole-desk reservation"
+  },
+  "deskSupplementLabel": "Desk reservations",
+  "@deskSupplementLabel": {
+    "description": "Bill line: sum of whole-desk reservation prices this period (0059)"
   },
   "membersTitle": "Members & plans",
   "@membersTitle": {

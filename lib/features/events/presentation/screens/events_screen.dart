@@ -104,6 +104,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.quota => l10n?.eventTypeQuota ?? 'Extra half-days',
       EventType.roleChange => l10n?.eventTypeRoleChange ?? 'Role change',
       EventType.memberJoin => l10n?.eventTypeMemberJoin ?? 'New member',
+      EventType.spaceReservation =>
+        l10n?.eventTypeSpaceReservation ?? 'Whole-space reservations',
     };
   }
 
@@ -118,6 +120,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.serviceCharge => Icons.room_service_outlined,
       EventType.quota => Icons.hourglass_top_outlined,
       EventType.memberJoin => Icons.person_add_alt,
+      EventType.spaceReservation => Icons.meeting_room_outlined,
       EventType.roleChange => Icons.admin_panel_settings_outlined,
     };
   }

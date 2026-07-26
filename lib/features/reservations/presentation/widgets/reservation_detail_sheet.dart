@@ -90,13 +90,29 @@ class ReservationDetailSheet extends ConsumerWidget {
                 '${DateFormat.MMMEd().format(WorkspaceTime.display(r.startsAt))}'
                 ' · ${bookingRangeText(l10n, r.startsAt, r.endsAt)}',
               ),
-              subtitle:
-                  target == null && r.seriesId == null && r.levelId == null
-                      ? null
+              subtitle: target == null &&
+                      r.seriesId == null &&
+                      r.levelId == null &&
+                      r.deskId == null
+                  ? null
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (target != null) Text(target.locationLine),
+                        // Whole-desk booking (0059): name the table.
+                        if (r.deskId != null)
+                          Consumer(
+                            builder: (context, ref, _) {
+                              final name = ref
+                                  .watch(targetNamesProvider)
+                                  .value?[r.deskId];
+                              return Text(
+                                '${l10n?.deskDetail ?? 'Whole desk'}'
+                                '${name == null ? '' : ' — $name'}',
+                                key: const ValueKey('reservation-desk'),
+                              );
+                            },
+                          ),
                         // Whole-level booking (0050): name the floor.
                         if (r.levelId != null)
                           Consumer(

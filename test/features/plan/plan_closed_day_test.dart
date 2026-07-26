@@ -86,6 +86,7 @@ class ThrowingReservationRepository extends FakeReservationRepository {
   Future<String> create({
     required String workspaceId,
     String? seatId,
+    String? deskId,
     String? officeId,
     String? levelId,
     required DateTime startsAt,

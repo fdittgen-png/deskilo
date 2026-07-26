@@ -34,6 +34,7 @@ sealed class Reservation with _$Reservation {
     required String id,
     required String workspaceId,
     String? seatId,
+    String? deskId,
     String? officeId,
 
     /// Set when the booking covers a WHOLE level (0050); exactly one of

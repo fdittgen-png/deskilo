@@ -22,6 +22,11 @@ Future<FakeMoneyRepository> pumpMoney(
   FakeEventRepository? events,
   FakeWorkspaceRepository? workspace,
 }) async {
+  // Portrait viewport (#284 idiom): the 800×600 default is LANDSCAPE and
+  // would engage the money split; feature tests exercise the column.
+  tester.view.physicalSize = const Size(800, 1400);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.reset);
   money ??= FakeMoneyRepository();
   await tester.pumpWidget(
     ProviderScope(
@@ -749,5 +754,25 @@ void main() {
       'service-printing',
     );
     expect(money.recordedServiceCharges.single.quantity, 1);
+  });
+
+  testWidgets(
+      'landscape: the money screen splits — actions in the side panel, '
+      'the bill fills the rest (#282 idiom)', (tester) async {
+    tester.view.physicalSize = const Size(760, 360);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(money: FakeMoneyRepository()),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.account_balance_wallet_outlined));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(VerticalDivider), findsWidgets);
+    expect(tester.takeException(), isNull);
   });
 }
