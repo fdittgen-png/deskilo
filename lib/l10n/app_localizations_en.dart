@@ -581,6 +581,29 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get coOwnerAction => 'Co-ownership';
+
+  @override
+  String get coOwnerNone => 'No co-owner role';
+
+  @override
+  String get coOwnerActive =>
+      'Active co-owner — owner permissions now, automatic succession';
+
+  @override
+  String get coOwnerPassive =>
+      'Passive co-owner — becomes owner when activated or when the owner leaves';
+
+  @override
+  String get coOwnerActivate => 'Promote to owner now';
+
+  @override
+  String get memberCoOwnerChip => 'Co-owner';
+
+  @override
+  String get memberCoOwnerPassiveChip => 'Co-owner (passive)';
+
+  @override
   String get developerMode => 'Developer mode';
 
   @override
@@ -966,6 +989,46 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureAdminLevelAssignDesc =>
       'Admins assign level reservations to members. The owner always can.';
+
+  @override
+  String get featureKioskMode => 'Kiosk mode';
+
+  @override
+  String get featureKioskModeDesc =>
+      'Wall-tablet accounts locked to the live plan; members act through badges.';
+
+  @override
+  String get featureMembersDirectory => 'Members directory';
+
+  @override
+  String get featureMembersDirectoryDesc =>
+      'The community tab: who is here, statuses, presence.';
+
+  @override
+  String get featureWhatsappIntegration => 'WhatsApp integration';
+
+  @override
+  String get featureWhatsappIntegrationDesc =>
+      'Message members on WhatsApp and link the community group.';
+
+  @override
+  String get featureSpaceQrCodes => 'Space QR codes';
+
+  @override
+  String get featureSpaceQrCodesDesc =>
+      'Printable QR cards per seat, desk, office and level — scan to reserve or check in.';
+
+  @override
+  String featureRequires(String feature) {
+    return 'Requires $feature';
+  }
+
+  @override
+  String get featureCoOwner => 'Co-owners';
+
+  @override
+  String get featureCoOwnerDesc =>
+      'Appoint co-owners: owner permissions now (active) or succession-in-waiting (passive).';
 
   @override
   String get helpTitle => 'Help';

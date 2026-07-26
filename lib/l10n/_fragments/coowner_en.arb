@@ -1,0 +1,31 @@
+{
+  "@@locale": "en",
+  "coOwnerAction": "Co-ownership",
+  "@coOwnerAction": {
+    "description": "Member-sheet action opening the co-owner dialog (0058)"
+  },
+  "coOwnerNone": "No co-owner role",
+  "@coOwnerNone": {
+    "description": "Co-owner dialog option: clear the role"
+  },
+  "coOwnerActive": "Active co-owner — owner permissions now, automatic succession",
+  "@coOwnerActive": {
+    "description": "Co-owner dialog option: the active flavor"
+  },
+  "coOwnerPassive": "Passive co-owner — becomes owner when activated or when the owner leaves",
+  "@coOwnerPassive": {
+    "description": "Co-owner dialog option: the passive flavor"
+  },
+  "coOwnerActivate": "Promote to owner now",
+  "@coOwnerActivate": {
+    "description": "Member-sheet action promoting a co-owner to full owner"
+  },
+  "memberCoOwnerChip": "Co-owner",
+  "@memberCoOwnerChip": {
+    "description": "Members-list chip for an active co-owner"
+  },
+  "memberCoOwnerPassiveChip": "Co-owner (passive)",
+  "@memberCoOwnerPassiveChip": {
+    "description": "Members-list chip for a passive co-owner"
+  }
+}

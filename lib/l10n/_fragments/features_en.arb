@@ -103,5 +103,54 @@
   "featureLevelBooking": "Office & level reservations",
   "featureLevelBookingDesc": "Reserve a whole office or floor as one booking, priced per half-day. Grant the right per member.",
   "featureAdminLevelAssign": "Admins can assign levels",
-  "featureAdminLevelAssignDesc": "Admins assign level reservations to members. The owner always can."
+  "featureAdminLevelAssignDesc": "Admins assign level reservations to members. The owner always can.",
+  "featureKioskMode": "Kiosk mode",
+  "@featureKioskMode": {
+    "description": "Feature toggle: the wall-tablet module (0043)"
+  },
+  "featureKioskModeDesc": "Wall-tablet accounts locked to the live plan; members act through badges.",
+  "@featureKioskModeDesc": {
+    "description": "Subtitle of the kiosk-mode feature toggle"
+  },
+  "featureMembersDirectory": "Members directory",
+  "@featureMembersDirectory": {
+    "description": "Feature toggle: the community tab (#224)"
+  },
+  "featureMembersDirectoryDesc": "The community tab: who is here, statuses, presence.",
+  "@featureMembersDirectoryDesc": {
+    "description": "Subtitle of the directory feature toggle"
+  },
+  "featureWhatsappIntegration": "WhatsApp integration",
+  "@featureWhatsappIntegration": {
+    "description": "Feature toggle: WhatsApp affordances riding the directory"
+  },
+  "featureWhatsappIntegrationDesc": "Message members on WhatsApp and link the community group.",
+  "@featureWhatsappIntegrationDesc": {
+    "description": "Subtitle of the WhatsApp feature toggle"
+  },
+  "featureSpaceQrCodes": "Space QR codes",
+  "@featureSpaceQrCodes": {
+    "description": "Feature toggle: printable per-space QR + scan-to-book (#335)"
+  },
+  "featureSpaceQrCodesDesc": "Printable QR cards per seat, desk, office and level — scan to reserve or check in.",
+  "@featureSpaceQrCodesDesc": {
+    "description": "Subtitle of the space-QR feature toggle"
+  },
+  "featureRequires": "Requires {feature}",
+  "@featureRequires": {
+    "description": "Hierarchy note under a child feature's switch",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "featureCoOwner": "Co-owners",
+  "@featureCoOwner": {
+    "description": "Feature toggle: co-ownership (0058)"
+  },
+  "featureCoOwnerDesc": "Appoint co-owners: owner permissions now (active) or succession-in-waiting (passive).",
+  "@featureCoOwnerDesc": {
+    "description": "Subtitle of the co-owner feature toggle"
+  }
 }

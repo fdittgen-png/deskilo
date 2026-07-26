@@ -1148,6 +1148,48 @@ abstract class AppLocalizations {
   /// **'{name} ×{quantity} — {amount}'**
   String eventServiceChargeTitle(String name, int quantity, String amount);
 
+  /// Member-sheet action opening the co-owner dialog (0058)
+  ///
+  /// In en, this message translates to:
+  /// **'Co-ownership'**
+  String get coOwnerAction;
+
+  /// Co-owner dialog option: clear the role
+  ///
+  /// In en, this message translates to:
+  /// **'No co-owner role'**
+  String get coOwnerNone;
+
+  /// Co-owner dialog option: the active flavor
+  ///
+  /// In en, this message translates to:
+  /// **'Active co-owner — owner permissions now, automatic succession'**
+  String get coOwnerActive;
+
+  /// Co-owner dialog option: the passive flavor
+  ///
+  /// In en, this message translates to:
+  /// **'Passive co-owner — becomes owner when activated or when the owner leaves'**
+  String get coOwnerPassive;
+
+  /// Member-sheet action promoting a co-owner to full owner
+  ///
+  /// In en, this message translates to:
+  /// **'Promote to owner now'**
+  String get coOwnerActivate;
+
+  /// Members-list chip for an active co-owner
+  ///
+  /// In en, this message translates to:
+  /// **'Co-owner'**
+  String get memberCoOwnerChip;
+
+  /// Members-list chip for a passive co-owner
+  ///
+  /// In en, this message translates to:
+  /// **'Co-owner (passive)'**
+  String get memberCoOwnerPassiveChip;
+
   /// Settings toggle enabling the local diagnostics screen
   ///
   /// In en, this message translates to:
@@ -1849,6 +1891,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Admins assign level reservations to members. The owner always can.'**
   String get featureAdminLevelAssignDesc;
+
+  /// Feature toggle: the wall-tablet module (0043)
+  ///
+  /// In en, this message translates to:
+  /// **'Kiosk mode'**
+  String get featureKioskMode;
+
+  /// Subtitle of the kiosk-mode feature toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Wall-tablet accounts locked to the live plan; members act through badges.'**
+  String get featureKioskModeDesc;
+
+  /// Feature toggle: the community tab (#224)
+  ///
+  /// In en, this message translates to:
+  /// **'Members directory'**
+  String get featureMembersDirectory;
+
+  /// Subtitle of the directory feature toggle
+  ///
+  /// In en, this message translates to:
+  /// **'The community tab: who is here, statuses, presence.'**
+  String get featureMembersDirectoryDesc;
+
+  /// Feature toggle: WhatsApp affordances riding the directory
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp integration'**
+  String get featureWhatsappIntegration;
+
+  /// Subtitle of the WhatsApp feature toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Message members on WhatsApp and link the community group.'**
+  String get featureWhatsappIntegrationDesc;
+
+  /// Feature toggle: printable per-space QR + scan-to-book (#335)
+  ///
+  /// In en, this message translates to:
+  /// **'Space QR codes'**
+  String get featureSpaceQrCodes;
+
+  /// Subtitle of the space-QR feature toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Printable QR cards per seat, desk, office and level — scan to reserve or check in.'**
+  String get featureSpaceQrCodesDesc;
+
+  /// Hierarchy note under a child feature's switch
+  ///
+  /// In en, this message translates to:
+  /// **'Requires {feature}'**
+  String featureRequires(String feature);
+
+  /// Feature toggle: co-ownership (0058)
+  ///
+  /// In en, this message translates to:
+  /// **'Co-owners'**
+  String get featureCoOwner;
+
+  /// Subtitle of the co-owner feature toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Appoint co-owners: owner permissions now (active) or succession-in-waiting (passive).'**
+  String get featureCoOwnerDesc;
 
   /// No description provided for @helpTitle.
   ///

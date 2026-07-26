@@ -55,7 +55,7 @@ final class ReservationRepositoryProvider
 }
 
 String _$reservationRepositoryHash() =>
-    r'3e7e1c9b286d791bf252ab662e2454c870f11c65';
+    r'55f521658d95cec06053ca711f6d9e0e5a1c8712';
 
 /// Reservations of the active workspace intersecting the given LOCAL day
 /// (keyed 'yyyy-MM-dd'). Local, not UTC: the user thinks in wall-clock

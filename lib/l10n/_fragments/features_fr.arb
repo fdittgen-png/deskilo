@@ -28,5 +28,16 @@
   "featureLevelBooking": "Réservations de bureau et de niveau",
   "featureLevelBookingDesc": "Réserver un bureau ou un étage entier en une seule réservation, tarifé par demi-journée. Accordez le droit par membre.",
   "featureAdminLevelAssign": "Les admins peuvent attribuer des niveaux",
-  "featureAdminLevelAssignDesc": "Les admins attribuent des réservations de niveau aux membres. Le propriétaire le peut toujours."
+  "featureAdminLevelAssignDesc": "Les admins attribuent des réservations de niveau aux membres. Le propriétaire le peut toujours.",
+  "featureKioskMode": "Mode borne",
+  "featureKioskModeDesc": "Comptes tablette murale verrouillés sur le plan en direct ; les membres agissent par badge.",
+  "featureMembersDirectory": "Annuaire des membres",
+  "featureMembersDirectoryDesc": "L'onglet communauté : qui est là, statuts, présence.",
+  "featureWhatsappIntegration": "Intégration WhatsApp",
+  "featureWhatsappIntegrationDesc": "Écrire aux membres sur WhatsApp et lier le groupe de la communauté.",
+  "featureSpaceQrCodes": "Codes QR des espaces",
+  "featureSpaceQrCodesDesc": "Cartes QR imprimables par poste, table, bureau et niveau — scanner pour réserver ou pointer.",
+  "featureRequires": "Nécessite {feature}",
+  "featureCoOwner": "Copropriétaires",
+  "featureCoOwnerDesc": "Nommer des copropriétaires : permissions de propriétaire immédiates (actif) ou succession en attente (passif)."
 }

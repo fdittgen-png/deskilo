@@ -11,7 +11,7 @@ bool canManageSeatBlocks({
   required Set<WorkspaceFeature> features,
 }) {
   if (member == null) return false;
-  if (member.isOwner && member.status == MemberStatus.active) return true;
+  if (member.actsAsOwner) return true;
   return member.canAdminister &&
       features.contains(WorkspaceFeature.adminSeatBlocking);
 }

@@ -51,6 +51,10 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureOnlinePaymentsDesc ??
               'Let members pay their bill online (PayPal). Needs the '
                   'payment provider configured on the server.',
+        WorkspaceFeature.kioskMode =>
+          l10n?.featureKioskModeDesc ??
+              'Wall-tablet accounts locked to the live plan; members act '
+                  'through badges.',
         WorkspaceFeature.nfcBadges =>
           l10n?.featureNfcBadgesDesc ??
               'Members check in at a kiosk by tapping an RFID/NFC card. '
@@ -59,6 +63,20 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureLevelBookingDesc ??
               'Reserve a whole floor as one booking, priced per '
                   'half-day. Grant members the right per member.',
+        WorkspaceFeature.membersDirectory =>
+          l10n?.featureMembersDirectoryDesc ??
+              'The community tab: who is here, statuses, presence.',
+        WorkspaceFeature.whatsappIntegration =>
+          l10n?.featureWhatsappIntegrationDesc ??
+              'Message members on WhatsApp and link the community group.',
+        WorkspaceFeature.spaceQrCodes =>
+          l10n?.featureSpaceQrCodesDesc ??
+              'Printable QR cards per seat, desk, office and level — '
+                  'scan to reserve or check in.',
+        WorkspaceFeature.coOwner =>
+          l10n?.featureCoOwnerDesc ??
+              'Appoint co-owners: owner permissions now (active) or '
+                  'succession-in-waiting (passive).',
         WorkspaceFeature.adminLevelAssign =>
           l10n?.featureAdminLevelAssignDesc ??
               'Admins assign level reservations to members. '
@@ -103,7 +121,12 @@ class FeaturesScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final enabled = ref.watch(enabledFeaturesSyncProvider);
+    // The RAW stored set, not the effective one: a child's saved choice
+    // must survive its parent being switched off (and its switch must
+    // show that saved choice, greyed out).
+    final raw = workspace == null
+        ? const <WorkspaceFeature>{}
+        : resolveEnabledFeatures(workspace.featureFlags);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.featuresTitle ?? 'Features')),
@@ -112,21 +135,72 @@ class FeaturesScreen extends ConsumerWidget {
           : ListView(
               children: [
                 for (final entry in featureManifest.values)
-                  SwitchListTile(
-                    title: Text(_name(l10n, entry.feature)),
-                    subtitle: Text(_description(l10n, entry.feature)),
-                    value: enabled.contains(entry.feature),
+                  _FeatureTile(
+                    entry: entry,
+                    name: _name(l10n, entry.feature),
+                    description: _description(l10n, entry.feature),
+                    requiresLabel: entry.requires == null
+                        ? null
+                        : (l10n?.featureRequires(
+                                featureName(l10n, entry.requires!)) ??
+                            'Requires ${featureName(l10n, entry.requires!)}'),
+                    value: raw.contains(entry.feature),
+                    // A child is only editable while its parent chain is
+                    // ON — the hierarchy made visible.
+                    parentOn: entry.requires == null ||
+                        effectiveFeatures(raw).contains(entry.requires),
                     onChanged: (value) => _toggle(
                       context,
                       ref,
                       workspace,
-                      enabled,
+                      raw,
                       entry.feature,
                       value,
                     ),
                   ),
               ],
             ),
+    );
+  }
+}
+
+/// One feature row: children indent under their parent, carry the
+/// "Requires X" note, and grey out while the parent (chain) is off.
+class _FeatureTile extends StatelessWidget {
+  const _FeatureTile({
+    required this.entry,
+    required this.name,
+    required this.description,
+    required this.requiresLabel,
+    required this.value,
+    required this.parentOn,
+    required this.onChanged,
+  });
+
+  final FeatureManifestEntry entry;
+  final String name;
+  final String description;
+  final String? requiresLabel;
+  final bool value;
+  final bool parentOn;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final child = entry.requires != null;
+    return Padding(
+      padding: EdgeInsets.only(left: child ? 24 : 0),
+      child: SwitchListTile(
+        key: ValueKey('feature-${entry.feature.name}'),
+        title: Text(name),
+        subtitle: Text(
+          requiresLabel == null
+              ? description
+              : '$description\n$requiresLabel',
+        ),
+        value: value,
+        onChanged: parentOn ? onChanged : null,
+      ),
     );
   }
 }

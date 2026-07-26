@@ -28,5 +28,16 @@
   "featureLevelBooking": "Prenotazioni di ufficio e piano",
   "featureLevelBookingDesc": "Prenota un intero ufficio o piano come un'unica prenotazione, con prezzo per mezza giornata. Concedi il diritto per membro.",
   "featureAdminLevelAssign": "Gli admin possono assegnare piani",
-  "featureAdminLevelAssignDesc": "Gli admin assegnano prenotazioni di piano ai membri. Il proprietario può sempre."
+  "featureAdminLevelAssignDesc": "Gli admin assegnano prenotazioni di piano ai membri. Il proprietario può sempre.",
+  "featureKioskMode": "Modalità chiosco",
+  "featureKioskModeDesc": "Account tablet a parete bloccati sulla piantina live; i membri agiscono col badge.",
+  "featureMembersDirectory": "Elenco dei membri",
+  "featureMembersDirectoryDesc": "La scheda comunità: chi c'è, stati, presenza.",
+  "featureWhatsappIntegration": "Integrazione WhatsApp",
+  "featureWhatsappIntegrationDesc": "Scrivere ai membri su WhatsApp e collegare il gruppo della comunità.",
+  "featureSpaceQrCodes": "Codici QR degli spazi",
+  "featureSpaceQrCodesDesc": "Schede QR stampabili per postazione, tavolo, ufficio e piano — scansiona per prenotare o fare check-in.",
+  "featureRequires": "Richiede {feature}",
+  "featureCoOwner": "Comproprietari",
+  "featureCoOwnerDesc": "Nominare comproprietari: permessi da proprietario subito (attivo) o successione in attesa (passivo)."
 }

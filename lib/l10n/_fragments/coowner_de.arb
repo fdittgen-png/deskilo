@@ -1,0 +1,10 @@
+{
+  "@@locale": "de",
+  "coOwnerAction": "Mit-Inhaberschaft",
+  "coOwnerNone": "Keine Mit-Inhaber-Rolle",
+  "coOwnerActive": "Aktive Mit-Inhaberin — Inhaber-Rechte sofort, automatische Nachfolge",
+  "coOwnerPassive": "Passive Mit-Inhaberin — wird Inhaberin bei Aktivierung oder wenn der Inhaber geht",
+  "coOwnerActivate": "Jetzt zur Inhaberin machen",
+  "memberCoOwnerChip": "Mit-Inhaberin",
+  "memberCoOwnerPassiveChip": "Mit-Inhaberin (passiv)"
+}

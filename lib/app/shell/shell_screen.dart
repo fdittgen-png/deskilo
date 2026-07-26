@@ -45,7 +45,7 @@ class ShellScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final isOwner = ref.watch(myMemberProvider).value?.isOwner ?? false;
+    final isOwner = ref.watch(myMemberProvider).value?.actsAsOwner ?? false;
 
     // Fire-and-forget UnifiedPush start (#72); no-op without distributor.
     ref.watch(pushBootstrapProvider);
@@ -103,9 +103,11 @@ class ShellScreen extends ConsumerWidget {
       ShellBranch.plan,
       if (features.contains(WorkspaceFeature.calendarTab))
         ShellBranch.calendar,
-      // The member directory (#230) is core like Plan — never gated. The
-      // eventsTab feature now gates the app-bar bell instead.
-      ShellBranch.directory,
+      // The member directory tab is feature-gated since the hierarchy
+      // pass (membersDirectory, default ON); the eventsTab feature gates
+      // the app-bar bell.
+      if (features.contains(WorkspaceFeature.membersDirectory))
+        ShellBranch.directory,
       if (features.contains(WorkspaceFeature.moneyTab)) ShellBranch.money,
     ];
     final selectedPosition =

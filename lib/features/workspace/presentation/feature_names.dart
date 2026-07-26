@@ -24,10 +24,20 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureAccessorySupplements ?? 'Accessory supplements',
       WorkspaceFeature.onlinePayments =>
         l10n?.featureOnlinePayments ?? 'Online payments',
+      WorkspaceFeature.kioskMode =>
+        l10n?.featureKioskMode ?? 'Kiosk mode',
       WorkspaceFeature.nfcBadges =>
         l10n?.featureNfcBadges ?? 'RFID / NFC badges',
       WorkspaceFeature.levelBooking =>
         l10n?.featureLevelBooking ?? 'Level reservations',
+      WorkspaceFeature.membersDirectory =>
+        l10n?.featureMembersDirectory ?? 'Members directory',
+      WorkspaceFeature.whatsappIntegration =>
+        l10n?.featureWhatsappIntegration ?? 'WhatsApp integration',
+      WorkspaceFeature.spaceQrCodes =>
+        l10n?.featureSpaceQrCodes ?? 'Space QR codes',
+      WorkspaceFeature.coOwner =>
+        l10n?.featureCoOwner ?? 'Co-owners',
       WorkspaceFeature.adminLevelAssign =>
         l10n?.featureAdminLevelAssign ?? 'Admins can assign levels',
     };

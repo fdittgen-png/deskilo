@@ -1036,7 +1036,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   }
 
   bool _canAssignLevel(Member me, Set<WorkspaceFeature> features) =>
-      me.isOwner ||
+      me.actsAsOwner ||
       (me.canAdminister &&
           features.contains(WorkspaceFeature.adminLevelAssign));
 

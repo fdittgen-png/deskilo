@@ -209,7 +209,7 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final myProfile = ref.watch(myProfileProvider).value;
-    final isOwner = ref.watch(myMemberProvider).value?.isOwner ?? false;
+    final isOwner = ref.watch(myMemberProvider).value?.actsAsOwner ?? false;
     final canAdminister =
         ref.watch(myMemberProvider).value?.canAdminister ?? false;
     final devMode = ref.watch(devModeProvider).value ?? false;
@@ -253,7 +253,8 @@ class SettingsScreen extends ConsumerWidget {
           // the ungrouped personal section, not under Administration. Kept
           // for discovery even though the directory is a bottom tab since
           // #230: go() switches to the Members branch (closing settings)
-          // instead of pushing a second copy.
+          // instead of pushing a second copy. Gated with the tab.
+          if (features.contains(WorkspaceFeature.membersDirectory))
           ListTile(
             leading: const Icon(Icons.people_outline),
             title: Text(l10n?.directoryTitle ?? 'Members'),
@@ -261,7 +262,8 @@ class SettingsScreen extends ConsumerWidget {
           ),
           // Opt-in WhatsApp number on my profile (#223): shared with
           // members of my workspaces, consumed by the directory (#224).
-          // Sits with Profiles in the ungrouped personal area on top.
+          // Rides the whatsappIntegration feature (hierarchy pass).
+          if (features.contains(WorkspaceFeature.whatsappIntegration))
           ListTile(
             leading: const Icon(Icons.chat_outlined),
             title: Text(l10n?.whatsappTitle ?? 'WhatsApp'),

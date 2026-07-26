@@ -153,6 +153,14 @@ abstract class WorkspaceRepository {
   /// admin; live badges must be revoked first.
   Future<void> deleteRevokedBadge(String badgeId);
 
+  /// Appoints/changes/clears a co-owner (RPC `set_co_owner`, 0058) —
+  /// owner-gated server-side; active co-owners may manage co-owners too.
+  Future<void> setCoOwner(String memberId, CoOwnerStatus status);
+
+  /// Promotes a co-owner to FULL owner right now (RPC
+  /// `activate_co_owner`, 0058).
+  Future<void> activateCoOwner(String memberId);
+
   /// Self-service escape hatch (RPC `unset_my_kiosk`, migration 0056):
   /// the signed-in kiosk account reverts ITSELF to a regular member.
   /// Flagging a member as kiosk stays owner-only.

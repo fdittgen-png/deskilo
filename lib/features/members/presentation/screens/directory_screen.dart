@@ -20,6 +20,7 @@ import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/directory_status.dart';
 import '../../providers/directory_providers.dart';
@@ -96,16 +97,30 @@ class DirectoryScreen extends ConsumerWidget {
     final now = DateTime.now();
     final membersAsync = ref.watch(workspaceMembersProvider);
     final names = ref.watch(memberNamesProvider).value ?? const {};
-    final profiles = ref.watch(memberProfilesProvider).value ?? const {};
+    final rawProfiles =
+        ref.watch(memberProfilesProvider).value ?? const {};
     final reservations =
         ref.watch(directoryReservationsProvider).value ?? const <Reservation>[];
     final targets = ref.watch(targetNamesProvider).value ?? const {};
     final myMemberId = ref.watch(myMemberProvider).value?.id;
+    // WhatsApp affordances (swipe, chat buttons, group tile) ride the
+    // whatsappIntegration feature (hierarchy pass): off = every
+    // affordance disappears at this single point.
+    final whatsappOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.whatsappIntegration);
     // The owner-set group link (#231) shows the tile for ALL members.
-    final groupUri = ref
-        .watch(currentWorkspaceProvider)
-        .value
-        ?.whatsappGroupUri;
+    final groupUri = whatsappOn
+        ? ref.watch(currentWorkspaceProvider).value?.whatsappGroupUri
+        : null;
+    // Feature off → strip the numbers, so every whatsappUri-derived
+    // affordance (row swipe, chat buttons, sheet) vanishes together.
+    final profiles = whatsappOn
+        ? rawProfiles
+        : {
+            for (final entry in rawProfiles.entries)
+              entry.key: entry.value.copyWith(whatsapp: ''),
+          };
 
     // No own Scaffold since #230: the directory is a shell branch — the
     // shell's app bar already shows the localized Members title.

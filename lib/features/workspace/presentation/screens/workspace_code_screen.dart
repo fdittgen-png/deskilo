@@ -149,7 +149,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final isOwner = ref.watch(myMemberProvider).value?.isOwner ?? false;
+    final isOwner = ref.watch(myMemberProvider).value?.actsAsOwner ?? false;
 
     if (workspace == null) {
       return Scaffold(

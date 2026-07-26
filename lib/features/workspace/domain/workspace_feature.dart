@@ -10,38 +10,54 @@ enum WorkspaceFeature {
   eventsTab,
   moneyTab,
   services,
+  accessorySupplements,
+  onlinePayments,
   pdfExport,
   seriesBooking,
   bookForOthers,
   pushNotifications,
   adminSeatBlocking,
-  accessorySupplements,
-  onlinePayments,
-  nfcBadges,
   levelBooking,
-  adminLevelAssign;
+  adminLevelAssign,
+  kioskMode,
+  nfcBadges,
+  membersDirectory,
+  whatsappIntegration,
+  spaceQrCodes,
+  coOwner;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
 }
 
-/// Registry entry of one toggleable feature. Extension point (mirrors
-/// tankstellen's manifest): a `List<WorkspaceFeature> requires` field can
-/// be added here to express prerequisite features as a DAG — resolve
-/// would then drop features whose prerequisites are off.
+/// Registry entry of one toggleable feature (mirrors tankstellen's
+/// manifest). [requires] expresses the feature HIERARCHY: a feature is
+/// only EFFECTIVE while its whole prerequisite chain is enabled — the
+/// Features screen renders children indented under their parent and
+/// [effectiveFeatures] drops orphans, so switching a parent off takes
+/// its whole subtree out of the app without erasing the owner's stored
+/// child choices.
 class FeatureManifestEntry {
-  const FeatureManifestEntry({required this.feature, this.defaultOn = true});
+  const FeatureManifestEntry({
+    required this.feature,
+    this.defaultOn = true,
+    this.requires,
+  });
 
   final WorkspaceFeature feature;
 
   /// Whether the feature is enabled when the workspace row carries no
   /// override for it.
   final bool defaultOn;
+
+  /// The parent feature this one needs, or null for a root feature.
+  final WorkspaceFeature? requires;
 }
 
-/// The declarative feature registry: every feature ships enabled, except
-/// adminSeatBlocking (#161) and accessorySupplements (#170) which the
-/// owner must explicitly activate.
+/// The declarative feature registry, in DISPLAY order: children follow
+/// their parent. Everything ships enabled except the explicit owner
+/// decisions (seat-blocking delegation #161, accessory billing #170,
+/// online payments, whole-space booking 0050 and its admin delegation).
 const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.calendarTab:
       FeatureManifestEntry(feature: WorkspaceFeature.calendarTab),
@@ -49,8 +65,22 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
       FeatureManifestEntry(feature: WorkspaceFeature.eventsTab),
   WorkspaceFeature.moneyTab:
       FeatureManifestEntry(feature: WorkspaceFeature.moneyTab),
-  WorkspaceFeature.services:
-      FeatureManifestEntry(feature: WorkspaceFeature.services),
+  // Money children: they all land charges on the statement, so without
+  // the money module they have no surface to land on.
+  WorkspaceFeature.services: FeatureManifestEntry(
+    feature: WorkspaceFeature.services,
+    requires: WorkspaceFeature.moneyTab,
+  ),
+  WorkspaceFeature.accessorySupplements: FeatureManifestEntry(
+    feature: WorkspaceFeature.accessorySupplements,
+    defaultOn: false,
+    requires: WorkspaceFeature.moneyTab,
+  ),
+  WorkspaceFeature.onlinePayments: FeatureManifestEntry(
+    feature: WorkspaceFeature.onlinePayments,
+    defaultOn: false,
+    requires: WorkspaceFeature.moneyTab,
+  ),
   WorkspaceFeature.pdfExport:
       FeatureManifestEntry(feature: WorkspaceFeature.pdfExport),
   WorkspaceFeature.seriesBooking:
@@ -59,43 +89,45 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
       FeatureManifestEntry(feature: WorkspaceFeature.bookForOthers),
   WorkspaceFeature.pushNotifications:
       FeatureManifestEntry(feature: WorkspaceFeature.pushNotifications),
-  // Seat blocking is owner-only until the owner delegates it (#161).
   WorkspaceFeature.adminSeatBlocking: FeatureManifestEntry(
     feature: WorkspaceFeature.adminSeatBlocking,
     defaultOn: false,
   ),
-  // Accessory supplements bill seat accessories per half-day (#170);
-  // charging members money must be an explicit owner decision, and the
-  // server only bills reservations starting after the activation.
-  WorkspaceFeature.accessorySupplements: FeatureManifestEntry(
-    feature: WorkspaceFeature.accessorySupplements,
-    defaultOn: false,
-  ),
-  // Online payments let members actually pay their bill through a payment
-  // provider (PayPal first) instead of only recording a manual transfer.
-  // Off until the owner enables it AND the deployment configures the PSP
-  // secrets server-side (see docs/design/payments-integration.md) — the button
-  // stays inert otherwise.
-  WorkspaceFeature.onlinePayments: FeatureManifestEntry(
-    feature: WorkspaceFeature.onlinePayments,
-    defaultOn: false,
-  ),
-  // RFID/NFC badge check-in (0046). On by default where the hardware
-  // exists; the owner can disable the tap path per workspace.
-  WorkspaceFeature.nfcBadges:
-      FeatureManifestEntry(feature: WorkspaceFeature.nfcBadges),
-  // Whole-level reservations (0050) change money and space allocation —
-  // an explicit owner decision, like accessorySupplements.
   WorkspaceFeature.levelBooking: FeatureManifestEntry(
     feature: WorkspaceFeature.levelBooking,
     defaultOn: false,
   ),
-  // Admins assigning level reservations to members is an owner
-  // delegation (0050) — the adminSeatBlocking idiom.
+  // Admin level assignment is a DELEGATION of level booking.
   WorkspaceFeature.adminLevelAssign: FeatureManifestEntry(
     feature: WorkspaceFeature.adminLevelAssign,
     defaultOn: false,
+    requires: WorkspaceFeature.levelBooking,
   ),
+  // The wall tablet module (0043): kiosk accounts, badge check-in.
+  WorkspaceFeature.kioskMode:
+      FeatureManifestEntry(feature: WorkspaceFeature.kioskMode),
+  // RFID/NFC badges are kiosk credentials — no kiosk, no tap path.
+  WorkspaceFeature.nfcBadges: FeatureManifestEntry(
+    feature: WorkspaceFeature.nfcBadges,
+    requires: WorkspaceFeature.kioskMode,
+  ),
+  // The community directory tab (#224).
+  WorkspaceFeature.membersDirectory:
+      FeatureManifestEntry(feature: WorkspaceFeature.membersDirectory),
+  // WhatsApp affordances (swipe-to-message, group tile, number
+  // editing) ride the directory.
+  WorkspaceFeature.whatsappIntegration: FeatureManifestEntry(
+    feature: WorkspaceFeature.whatsappIntegration,
+    requires: WorkspaceFeature.membersDirectory,
+  ),
+  // Printable per-space QR cards + the scan-to-book flow (#335).
+  WorkspaceFeature.spaceQrCodes:
+      FeatureManifestEntry(feature: WorkspaceFeature.spaceQrCodes),
+  // Co-ownership (0058): appoint active/passive co-owners with owner
+  // permissions and automatic succession. The SERVER-side succession
+  // safety net stays on regardless — this gates the appointment UI.
+  WorkspaceFeature.coOwner:
+      FeatureManifestEntry(feature: WorkspaceFeature.coOwner),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start
@@ -116,4 +148,24 @@ Set<WorkspaceFeature> resolveEnabledFeatures(
     value ? enabled.add(feature) : enabled.remove(feature);
   }
   return enabled;
+}
+
+/// Applies the hierarchy to a RAW resolved set: a feature stays only
+/// while its whole `requires` chain is present. The stored child flag
+/// survives a parent toggle — switch the parent back on and the child
+/// returns exactly as configured.
+Set<WorkspaceFeature> effectiveFeatures(Set<WorkspaceFeature> raw) {
+  bool chainOn(WorkspaceFeature feature) {
+    var current = featureManifest[feature]?.requires;
+    while (current != null) {
+      if (!raw.contains(current)) return false;
+      current = featureManifest[current]?.requires;
+    }
+    return true;
+  }
+
+  return {
+    for (final feature in raw)
+      if (chainOn(feature)) feature,
+  };
 }

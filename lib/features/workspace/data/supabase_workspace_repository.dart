@@ -309,6 +309,21 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setCoOwner(String memberId, CoOwnerStatus status) async {
+    await _client.rpc<dynamic>('set_co_owner', params: {
+      'p_member_id': memberId,
+      'p_status': status.name,
+    });
+  }
+
+  @override
+  Future<void> activateCoOwner(String memberId) async {
+    await _client.rpc<dynamic>('activate_co_owner', params: {
+      'p_member_id': memberId,
+    });
+  }
+
+  @override
   Future<void> unsetMyKiosk(String workspaceId) async {
     await _client.rpc<dynamic>('unset_my_kiosk', params: {
       'p_workspace_id': workspaceId,
@@ -509,6 +524,7 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
         userId: row['user_id'] as String,
         isAdmin: row['is_admin'] as bool,
         isOwner: row['is_owner'] as bool,
+        coOwner: CoOwnerStatus.fromWire(row['co_owner'] as String?),
         status: MemberStatus.values.byName(row['status'] as String),
         subscriptionPct: row['subscription_pct'] as int? ?? 100,
         overagePolicy:

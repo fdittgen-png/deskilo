@@ -125,7 +125,11 @@ Future<List<ClosureDay>> closureDays(Ref ref) async {
 @Riverpod(keepAlive: true)
 Future<Set<WorkspaceFeature>> enabledFeatures(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
-  return resolveEnabledFeatures(workspace?.featureFlags ?? const {});
+  // Hierarchy applied here: gates all over the app see the EFFECTIVE
+  // set, so switching a parent off takes its whole subtree with it.
+  return effectiveFeatures(
+    resolveEnabledFeatures(workspace?.featureFlags ?? const {}),
+  );
 }
 
 /// Sync convenience over [enabledFeatures] for build methods and router
@@ -135,7 +139,7 @@ Future<Set<WorkspaceFeature>> enabledFeatures(Ref ref) async {
 @Riverpod(keepAlive: true)
 Set<WorkspaceFeature> enabledFeaturesSync(Ref ref) =>
     ref.watch(enabledFeaturesProvider).value ??
-    resolveEnabledFeatures(const {});
+    effectiveFeatures(resolveEnabledFeatures(const {}));
 
 /// The signed-in user's membership (roles!) in the active workspace.
 @Riverpod(keepAlive: true)

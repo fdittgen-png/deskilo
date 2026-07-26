@@ -31,7 +31,7 @@ Future<FakeWorkspaceRepository> pumpFeatures(
 }) async {
   // Ten manifest features no longer fit the default 800×600 surface and
   // the lazy list drops off-screen tiles; keep every switch mounted.
-  tester.view.physicalSize = const Size(800, 3400);
+  tester.view.physicalSize = const Size(800, 4200);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final workspace =
@@ -138,7 +138,7 @@ void main() {
       (tester) async {
     // The personal tiles above the admin section keep growing (#223/#231
     // WhatsApp + Status) — keep every asserted tile mounted.
-    tester.view.physicalSize = const Size(800, 3400);
+    tester.view.physicalSize = const Size(800, 4200);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     await pumpSettings(tester, featureFlags: const {'services': false});
@@ -153,11 +153,28 @@ void main() {
       (tester) async {
     // The personal tiles above the admin section keep growing (#223/#231
     // WhatsApp + Status, 0038 Photo) — a taller view keeps Services mounted.
-    tester.view.physicalSize = const Size(800, 3400);
+    tester.view.physicalSize = const Size(800, 4200);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     await pumpSettings(tester);
 
     expect(find.text('Services'), findsOneWidget);
+  });
+
+  testWidgets(
+      'HIERARCHY: a child switch is greyed out while its parent is off '
+      'and carries the Requires note', (tester) async {
+    await pumpFeatures(tester, featureFlags: const {'kioskMode': false});
+
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('feature-nfcBadges')),
+      80,
+      scrollable: find.byType(Scrollable).first,
+    );
+    final child = tester.widget<SwitchListTile>(
+      find.byKey(const ValueKey('feature-nfcBadges')),
+    );
+    expect(child.onChanged, isNull);
+    expect(find.textContaining('Requires'), findsWidgets);
   });
 }
