@@ -437,6 +437,19 @@ void main() {
   });
 
   testWidgets(
+      'the now line never steals taps from blocks: it ignores pointers '
+      '(master flake, CI #416 — the line crossed a block centre at tap '
+      'time and swallowed the tap)', (tester) async {
+    await pumpHub(tester);
+    await tester.tap(find.byTooltip('Day'));
+    await tester.pumpAndSettle();
+
+    final line =
+        tester.widget<Positioned>(find.byKey(DayTimeline.nowLineKey));
+    expect(line.child, isA<IgnorePointer>());
+  });
+
+  testWidgets(
       'Week view is the seat × day grid (#236): seven tappable day headers '
       "Mon–Sun of the selected day's ISO week, a half-slot pair per day on "
       'the seat row, and no pager', (tester) async {

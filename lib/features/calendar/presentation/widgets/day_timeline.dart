@@ -458,7 +458,14 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
                         top: 0,
                         bottom: 0,
                         width: TimelineAxis.nowLineWidth,
-                        child: ColoredBox(color: scheme.error),
+                        // IgnorePointer: ColoredBox is hit-test OPAQUE, so
+                        // without it the line steals the tap from any block
+                        // whose centre the wall clock is currently crossing
+                        // (a running booking became untappable for a few
+                        // minutes — caught as CI run #416's master flake).
+                        child: IgnorePointer(
+                          child: ColoredBox(color: scheme.error),
+                        ),
                       ),
                   ],
                 ),
