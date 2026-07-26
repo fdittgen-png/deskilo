@@ -30,6 +30,7 @@ DesKilo tiene tres roles acumulativos, más una cuenta de dispositivo:
 | **Miembro** | Registrar entrada/salida, reservar, presentar gastos, ver y gestionar sus propios eventos y su propia cuenta |
 | **Admin** | Todo lo de un miembro, más: actuar *por cualquiera* (reservas, pagos, gastos — sujeto a confirmación, §6), aprobar gastos, emitir credenciales de quiosco |
 | **Propietario** | Todo lo de un admin, más: editar el espacio físico, definir planes y precios, gestionar roles, quioscos y ajustes del espacio |
+| **Copropietario** | *Activo*: los permisos del propietario de inmediato, más la sucesión automática. *Pasivo*: un sucesor en espera, sin permisos adicionales hoy |
 | **Quiosco** | Una cuenta de tableta de pared (§9) — solo muestra el plano; los miembros actúan a través de ella con una credencial |
 
 **Cada invitación está ligada a un rol.** En la pantalla *ID del espacio & QR* del propietario hay dos invitaciones, cada una con su propio QR y su propio código:
@@ -37,7 +38,9 @@ DesKilo tiene tres roles acumulativos, más una cuenta de dispositivo:
 - **Invitación de miembro** — el propio ID del espacio. Imprímelo, cuélgalo en la pared, compártelo libremente: quien lo escanee o escriba se une como miembro normal.
 - **Invitación de admin** — un **código personal de un solo uso**, emitido por un propietario para una persona concreta. Admite solo a esa persona como admin y luego caduca (un código sin usar expira a los 14 días). Emite uno nuevo por admin con *Nuevo código de admin*.
 
-**No existe invitación de propietario — a propósito.** La propiedad solo puede otorgarla un propietario existente, en *Miembros y planes*. Un espacio conserva siempre al menos un propietario: la app se niega a degradar o eliminar al último. Promover o degradar un **admin** pasa por el flujo de validación (§6) — se aplica cuando los validadores del espacio confirman.
+**No existe invitación de propietario — a propósito.** La propiedad solo puede otorgarla un propietario existente, en *Miembros y planes*. Un espacio conserva siempre al menos un propietario. Promover o degradar un **admin** pasa por el flujo de validación (§6) — se aplica cuando los validadores del espacio confirman.
+
+**Los copropietarios mantienen vivo el espacio.** El propietario nombra copropietario a cualquier miembro o admin (*Miembros y planes → el miembro → Copropiedad*), en una de dos variantes: un copropietario **activo** trabaja con los permisos del propietario de inmediato; un copropietario **pasivo** no tiene permisos adicionales hasta el día en que hagan falta. En ambos casos, la sucesión es automática: si el último propietario se va — sale, es eliminado o su cuenta desaparece — el mejor copropietario (activo antes que pasivo) **se convierte en propietario al instante**, en el servidor, sin que haga falta ninguna acción. El propietario también puede ceder el mando deliberadamente en cualquier momento con *Promover a propietario ahora*. Un matiz: las reglas de validación que exigen la firma del *propietario* (§6) se refieren siempre a un propietario literal, no a un copropietario activo.
 
 El QR codifica un enlace que nombra el rol otorgado (`deskilo://join?role=…`). Manipular el enlace no cambia nada — el servidor deriva el rol del propio código: el ID del espacio siempre une como miembro, y una invitación personal une exactamente en el rol con el que se emitió, una sola vez. Un código de admin reenviado ya usado — o caducado — no admite a nadie.
 
@@ -45,7 +48,7 @@ El QR codifica un enlace que nombra el rol otorgado (`deskilo://join?role=…`).
 
 ## 3. El plano (pestaña Plano)
 
-El plano muestra la planta activa de tu espacio: oficinas, mesas y asientos, con código de colores — **libre**, **reservado**, **ocupado**, **mío**, **bloqueado**. Los asientos ocupados muestran el nombre de pila de quien está, una **insignia de registro** cuando ha hecho check-in, y un **punto verde** cuando está en línea en la app.
+El plano muestra la planta activa de tu espacio: oficinas, mesas y asientos, con código de colores — **libre**, **reservado**, **ocupado**, **mío**, **bloqueado**. Se abre **al instante con los últimos datos conocidos** y se actualiza en segundo plano — con un Wi-Fi inestable sigues viendo el estado más reciente en lugar de una pantalla vacía. Los asientos ocupados muestran el nombre de pila de quien está, una **insignia de registro** cuando ha hecho check-in, y un **punto verde** cuando está en línea en la app.
 
 El plano puede parecerse a tu espacio real: el propietario puede poner una **foto de la sala como fondo de la planta** y colocar **imágenes de ilustración redimensionables** (plantas, sofás…) sobre la cuadrícula. Un control de **transparencia de mesas** en los ajustes deja ver la foto a través de las mesas dibujadas.
 
@@ -119,7 +122,9 @@ Toda la administración vive en **Ajustes → Administración**. Una regla que c
 - **Editor** (barra de la app): dibuja tu espacio en una cuadrícula — plantas, oficinas, mesas, asientos (con orientación, tipo de silla y equipamiento), bloqueo de asientos por mantenimiento. Añade una **foto de fondo** por planta e **imágenes de ilustración** que puedes mover y redimensionar. Borrar algo con reservas futuras obliga a resolverlas antes.
 - **ID del espacio & QR**: tus invitaciones ligadas a rol (§2). Puedes sustituir el ID generado por uno memorable (4–20 letras/dígitos), copiarlo o compartir el QR como PNG.
 - **Disponibilidad**: días de apertura, días de cierre y la granularidad — horas de inicio y fin libres, una rejilla de minutos (5/15/30/60), medias jornadas o solo días completos.
-- **Funciones**: activa o desactiva módulos enteros por espacio — calendario, eventos, dinero, servicios, exportación PDF, series, reservar por otros, push, bloqueo de asientos por admins, suplementos de accesorios, **pagos en línea**, **credenciales RFID/NFC**, **reservas de oficina y planta**. Desactivar un módulo elimina *todas* sus pantallas y botones para todos los miembros.
+- **Funciones**: activa o desactiva módulos enteros por espacio — calendario, eventos, dinero, servicios, exportación PDF, series, reservar por otros, push, bloqueo de asientos por admins, suplementos de accesorios, **pagos en línea**, **reservas de oficina y planta**, **modo quiosco**, **credenciales RFID/NFC**, **directorio de miembros**, **integración con WhatsApp**, **códigos QR de espacios**, **copropietarios**. Desactivar un módulo elimina *todas* sus pantallas y botones para todos los miembros.
+
+  La lista es **jerárquica**: una función que necesita otra aparece indentada bajo ella con una nota *Requiere…*, y queda atenuada mientras su padre está desactivado — *Dinero* lleva los servicios, los suplementos de accesorios y los pagos en línea; *Reservas de oficina y planta* lleva el derecho de asignación por admins; *Modo quiosco* lleva las credenciales RFID/NFC; *Directorio de miembros* lleva la integración con WhatsApp. Desactivar un padre saca todo su subárbol de la app; la elección guardada del hijo vuelve intacta cuando el padre regresa.
 
 <p><img src="images/workspace-id-qr.jpg" width="220"> <img src="images/availability-granularity.jpg" width="220"> <img src="images/features-toggles-1.jpg" width="220"> <img src="images/features-toggles-2.jpg" width="220"></p>
 
@@ -151,6 +156,14 @@ Cuatro pasos convierten «escanear el código de la mesa» en el flujo de reserv
 4. Imprime las tarjetas: **Ajustes del espacio → Códigos QR de espacios (PDF)** — un QR tamaño tarjeta de crédito por **puesto, mesa, oficina y planta**, diez por página A4, guardado en Descargas. Recórtalas y pega cada tarjeta en su espacio.
 
 Una reserva de oficina cubre **todas las mesas de su interior**; una reserva de planta cubre la planta entera. Ambas solo son posibles mientras nada de su interior esté reservado — y aparecen como líneas propias en la factura del miembro.
+
+### Copropietarios (propietarios)
+
+Asegúrate de que la comunidad nunca dependa de una sola cuenta:
+
+1. Abre *Miembros y planes → el miembro → **Copropiedad*** y elige **activo** (permisos de propietario ya) o **pasivo** (sucesor en espera).
+2. Cede el mando en cualquier momento con ***Promover a propietario ahora*** — el copropietario se convierte en propietario de pleno derecho junto a ti.
+3. Si el último propietario abandona alguna vez el espacio, el mejor copropietario es **promovido automáticamente** en el servidor — activo antes que pasivo. Esta red de seguridad funciona incluso con el interruptor de la función *Copropietarios* desactivado (el interruptor solo oculta los botones de nombramiento).
 
 ### Configurar los pagos en línea (propietarios)
 
