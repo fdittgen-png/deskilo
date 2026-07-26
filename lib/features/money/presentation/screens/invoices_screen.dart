@@ -35,8 +35,21 @@ import '../invoice_line_text.dart';
 /// PDF; issuing is owner-only (admins via the adminInvoicing
 /// delegation). Invoices are immutable — there is no edit or delete
 /// anywhere, by design.
-class InvoicesScreen extends ConsumerWidget {
+class InvoicesScreen extends ConsumerStatefulWidget {
   const InvoicesScreen({super.key});
+
+  @override
+  ConsumerState<InvoicesScreen> createState() => _InvoicesScreenState();
+}
+
+/// Archive sort orders (field request: sort and filter by member and
+/// period).
+enum _InvoiceSort { newest, member, period }
+
+class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
+  String? _filterMemberId;
+  String? _filterPeriod;
+  _InvoiceSort _sort = _InvoiceSort.newest;
 
   Future<pw.Font> _font(String asset) async =>
       pw.Font.ttf(await rootBundle.load(asset));
@@ -187,7 +200,7 @@ class InvoicesScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final invoicesAsync = ref.watch(invoicesProvider);
     final me = ref.watch(myMemberProvider).value;
@@ -227,11 +240,147 @@ class InvoicesScreen extends ConsumerWidget {
                     if (invoice.replacesInvoiceId != null)
                       invoice.replacesInvoiceId!,
                 };
-                return ListView.builder(
+                // Filter options come from the ARCHIVE itself: member
+                // names are the invoices' snapshots (departed members
+                // keep working), periods the distinct issued months.
+                final memberOptions = <String, String>{};
+                for (final invoice in invoices) {
+                  memberOptions.putIfAbsent(
+                      invoice.memberId, () => invoice.memberName);
+                }
+                final periodOptions = {
+                  for (final invoice in invoices) ?invoice.period,
+                }.toList()
+                  ..sort((a, b) => b.compareTo(a));
+                final visible = [
+                  for (final invoice in invoices)
+                    if ((_filterMemberId == null ||
+                            invoice.memberId == _filterMemberId) &&
+                        (_filterPeriod == null ||
+                            invoice.period == _filterPeriod))
+                      invoice,
+                ]..sort((a, b) => switch (_sort) {
+                    _InvoiceSort.newest =>
+                      b.issuedAt.compareTo(a.issuedAt),
+                    _InvoiceSort.member => a.memberName
+                                .toLowerCase()
+                                .compareTo(b.memberName.toLowerCase()) !=
+                            0
+                        ? a.memberName
+                            .toLowerCase()
+                            .compareTo(b.memberName.toLowerCase())
+                        : b.issuedAt.compareTo(a.issuedAt),
+                    _InvoiceSort.period => (b.period ?? '')
+                                .compareTo(a.period ?? '') !=
+                            0
+                        ? (b.period ?? '').compareTo(a.period ?? '')
+                        : b.issuedAt.compareTo(a.issuedAt),
+                  });
+                final filterBar = Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 8, 0),
+                  child: Row(children: [
+                    if (showMemberNames) ...[
+                      Expanded(
+                        child: DropdownButtonFormField<String?>(
+                          key: const ValueKey('invoice-filter-member'),
+                          initialValue: _filterMemberId,
+                          isExpanded: true,
+                          items: [
+                            DropdownMenuItem(
+                              value: null,
+                              child: Text(l10n?.invoiceFilterAllMembers ??
+                                  'All members'),
+                            ),
+                            for (final entry in memberOptions.entries)
+                              DropdownMenuItem(
+                                value: entry.key,
+                                child: Text(entry.value,
+                                    overflow: TextOverflow.ellipsis),
+                              ),
+                          ],
+                          onChanged: (value) =>
+                              setState(() => _filterMemberId = value),
+                          decoration: InputDecoration(
+                            labelText:
+                                l10n?.invoiceMemberLabel ?? 'Member',
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                    ],
+                    Expanded(
+                      child: DropdownButtonFormField<String?>(
+                        key: const ValueKey('invoice-filter-period'),
+                        initialValue: _filterPeriod,
+                        isExpanded: true,
+                        items: [
+                          DropdownMenuItem(
+                            value: null,
+                            child: Text(l10n?.invoiceFilterAllMonths ??
+                                'All months'),
+                          ),
+                          for (final period in periodOptions)
+                            DropdownMenuItem(
+                              value: period,
+                              child: Text(
+                                _monthLabel(context, period),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                        ],
+                        onChanged: (value) =>
+                            setState(() => _filterPeriod = value),
+                        decoration: InputDecoration(
+                          labelText:
+                              l10n?.invoiceFilterMonthLabel ?? 'Month',
+                        ),
+                      ),
+                    ),
+                    PopupMenuButton<_InvoiceSort>(
+                      key: const ValueKey('invoice-sort'),
+                      tooltip: l10n?.invoiceSortTooltip ?? 'Sort',
+                      icon: const Icon(Icons.sort),
+                      initialValue: _sort,
+                      onSelected: (value) =>
+                          setState(() => _sort = value),
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          key: const ValueKey('invoice-sort-newest'),
+                          value: _InvoiceSort.newest,
+                          child: Text(l10n?.invoiceSortNewest ??
+                              'Newest first'),
+                        ),
+                        if (showMemberNames)
+                          PopupMenuItem(
+                            key: const ValueKey('invoice-sort-member'),
+                            value: _InvoiceSort.member,
+                            child: Text(l10n?.invoiceSortByMember ??
+                                'By member'),
+                          ),
+                        PopupMenuItem(
+                          key: const ValueKey('invoice-sort-period'),
+                          value: _InvoiceSort.period,
+                          child: Text(
+                              l10n?.invoiceSortByMonth ?? 'By month'),
+                        ),
+                      ],
+                    ),
+                  ]),
+                );
+                return Column(children: [
+                  filterBar,
+                  Expanded(
+                    child: visible.isEmpty
+                        ? EmptyState(
+                            icon: Icons.receipt_long_outlined,
+                            title:
+                                l10n?.invoicesEmpty ?? 'No invoices yet.',
+                          )
+                        : ListView.builder(
                   padding: AppSpacing.mdAll,
-                  itemCount: invoices.length,
+                  itemCount: visible.length,
                   itemBuilder: (context, index) {
-                    final invoice = invoices[index];
+                    final invoice = visible[index];
                     final currency =
                         NumberFormat.simpleCurrency(name: invoice.currency);
                     final rowTitle =
@@ -334,7 +483,9 @@ class InvoicesScreen extends ConsumerWidget {
                       ),
                     );
                   },
-                );
+                ),
+                  ),
+                ]);
               }),
         AsyncError() => Center(
             child: Text(
@@ -345,6 +496,15 @@ class InvoicesScreen extends ConsumerWidget {
         _ => const LoadingView(),
       },
     );
+  }
+
+  /// 'yyyy-MM' → localized month name for the filter dropdown.
+  String _monthLabel(BuildContext context, String period) {
+    final parts = period.split('-');
+    final month = DateTime(int.parse(parts[0]), int.parse(parts[1]));
+    return DateFormat.yMMMM(
+      Localizations.maybeLocaleOf(context)?.toString(),
+    ).format(month);
   }
 
   /// Issue sheet — plain from the FAB, or a REPLACEMENT (0061)

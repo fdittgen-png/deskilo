@@ -2258,6 +2258,48 @@ abstract class AppLocalizations {
   /// **'Adjustment'**
   String get invoiceLineAdjustment;
 
+  /// Archive member filter: no filter
+  ///
+  /// In en, this message translates to:
+  /// **'All members'**
+  String get invoiceFilterAllMembers;
+
+  /// Archive month filter: no filter
+  ///
+  /// In en, this message translates to:
+  /// **'All months'**
+  String get invoiceFilterAllMonths;
+
+  /// Archive month filter label
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get invoiceFilterMonthLabel;
+
+  /// Archive sort menu tooltip
+  ///
+  /// In en, this message translates to:
+  /// **'Sort'**
+  String get invoiceSortTooltip;
+
+  /// Sort: newest issued first (default)
+  ///
+  /// In en, this message translates to:
+  /// **'Newest first'**
+  String get invoiceSortNewest;
+
+  /// Sort: grouped by member name
+  ///
+  /// In en, this message translates to:
+  /// **'By member'**
+  String get invoiceSortByMember;
+
+  /// Sort: newest invoiced month first
+  ///
+  /// In en, this message translates to:
+  /// **'By month'**
+  String get invoiceSortByMonth;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

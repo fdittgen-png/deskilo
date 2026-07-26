@@ -1197,6 +1197,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceLineAdjustment => 'Adjustment';
 
   @override
+  String get invoiceFilterAllMembers => 'All members';
+
+  @override
+  String get invoiceFilterAllMonths => 'All months';
+
+  @override
+  String get invoiceFilterMonthLabel => 'Month';
+
+  @override
+  String get invoiceSortTooltip => 'Sort';
+
+  @override
+  String get invoiceSortNewest => 'Newest first';
+
+  @override
+  String get invoiceSortByMember => 'By member';
+
+  @override
+  String get invoiceSortByMonth => 'By month';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

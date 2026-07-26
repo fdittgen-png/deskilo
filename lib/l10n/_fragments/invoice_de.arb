@@ -37,5 +37,12 @@
   "invoicePdfVoided": "FEHLERHAFT — storniert am",
   "invoicePdfReplaces": "Ersetzt",
   "invoiceNothingToInvoice": "Für diesen Monat wurde nichts erfasst — nichts zu berechnen.",
-  "invoiceLineAdjustment": "Anpassung"
+  "invoiceLineAdjustment": "Anpassung",
+  "invoiceFilterAllMembers": "Alle Mitglieder",
+  "invoiceFilterAllMonths": "Alle Monate",
+  "invoiceFilterMonthLabel": "Monat",
+  "invoiceSortTooltip": "Sortieren",
+  "invoiceSortNewest": "Neueste zuerst",
+  "invoiceSortByMember": "Nach Mitglied",
+  "invoiceSortByMonth": "Nach Monat"
 }

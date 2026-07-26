@@ -37,5 +37,12 @@
   "invoicePdfVoided": "ERRONÉE — annulée le",
   "invoicePdfReplaces": "Remplace",
   "invoiceNothingToInvoice": "Rien de suivi pour ce mois — rien à facturer.",
-  "invoiceLineAdjustment": "Ajustement"
+  "invoiceLineAdjustment": "Ajustement",
+  "invoiceFilterAllMembers": "Tous les membres",
+  "invoiceFilterAllMonths": "Tous les mois",
+  "invoiceFilterMonthLabel": "Mois",
+  "invoiceSortTooltip": "Trier",
+  "invoiceSortNewest": "Plus récentes d'abord",
+  "invoiceSortByMember": "Par membre",
+  "invoiceSortByMonth": "Par mois"
 }
