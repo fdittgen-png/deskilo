@@ -4,7 +4,10 @@
 // status — sorted by date in either direction, with the sum at the foot.
 // The name column follows the reader: an issuer scans members, a member
 // scans their own invoice numbers.
+import 'dart:convert';
+
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/files/file_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -85,6 +88,64 @@ void main() {
     await tester.pumpAndSettle();
     expect(_rowY(tester, ids[0]), lessThan(_rowY(tester, ids[2])),
         reason: 'oldest first after the flip');
+  });
+
+  testWidgets(
+      'ACCOUNTING EXPORT (0074): the SAF-T file covers exactly what the '
+      'register shows — the picked year, nothing else', (tester) async {
+    final money = FakeMoneyRepository();
+    await money.createInvoice(
+        workspaceId: 'ws-1', memberId: 'member-1', period: '2025-11');
+    await money.createInvoice(
+        workspaceId: 'ws-1', memberId: 'member-1', period: '2026-06');
+    money.invoices[0] =
+        money.invoices[0].copyWith(issuedAt: DateTime(2025, 12, 1));
+    money.invoices[1] =
+        money.invoices[1].copyWith(issuedAt: DateTime(2026, 7, 1));
+
+    final saved = <({String name, String body})>[];
+    tester.view.physicalSize = const Size(800, 1400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(money: money),
+          fileSaverProvider.overrideWithValue(
+            ({required bytes, required fileName}) async {
+              saved.add((name: fileName, body: utf8.decode(bytes)));
+              return 'Download/$fileName';
+            },
+          ),
+        ],
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Money'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
+    await tester.tap(find.byKey(const ValueKey('invoices-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-register-button')));
+    await tester.pumpAndSettle();
+
+    // Narrow to 2026, then export.
+    await tester.tap(find.byKey(const ValueKey('invoice-register-year')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('2026').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-accounting-export')));
+    await tester.pumpAndSettle();
+
+    final file = saved.single;
+    expect(file.name, contains('saf-t'));
+    expect(file.name, contains('2026'));
+    expect(file.body, contains('urn:OECD:StandardAuditFile-Tax:2.00'));
+    expect(file.body, contains(money.invoices[1].number));
+    expect(file.body, isNot(contains(money.invoices[0].number)),
+        reason: 'the 2025 invoice is not in a 2026 audit file');
+    expect(file.body, contains('<NumberOfEntries>1</NumberOfEntries>'));
   });
 
   testWidgets('an ISSUER reads MEMBER names — they scan people',

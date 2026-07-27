@@ -273,7 +273,9 @@ Issuers open **Money → Invoices** and land on a three-tab hub under a live sum
 
 **Stamps.** A cancelled invoice carries a large diagonal **ERRONEOUS** across every page of its PDF, in light grey over the content: it cannot be mistaken for a valid document on a desk or a photocopy. The same stamp says **PROFORMA** on a quote, and **COPY** on any invoice rendered by someone other than its issuer — the workspace holds the original.
 
-**The register.** The list icon in the Invoices app bar opens a one-line-per-invoice ledger: **date · name · amount · status**, sorted by date (tap the Date header to flip the direction), with the sum at the foot. The *name* column follows the reader — an issuer scans member names, a member scans their own invoice numbers. Members see only what concerns them: issued, and never a cancelled one.
+**The register.** The list icon in the Invoices app bar opens a one-line-per-invoice ledger: **date · name · amount · status**, sorted by date (tap the Date header to flip the direction), with the sum at the foot, and a **year** picker once there is more than one.
+
+**Handing the period to your accountant.** From the register, issuers export **SAF-T** — the OECD's *Standard Audit File for Tax*, the XML accounting software and tax administrations read. It covers exactly what the register shows, so picking 2026 gives you the 2026 file: the company as your own invoices state it, every customer, every invoice with its lines and totals, and the payments that settled them. Cancelled invoices stay in the file marked *annulled* — an audit file never deletes what happened. What it deliberately leaves out is the **chart of accounts**: DesKilo does not invent account numbers, because a wrong code has to be unbooked by hand. Your accountant maps the invoices onto their own accounts, which is their job and takes them a minute. The *name* column follows the reader — an issuer scans member names, a member scans their own invoice numbers. Members see only what concerns them: issued, and never a cancelled one.
 
 ### Where the e-invoice has to go (EU)
 

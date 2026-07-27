@@ -785,5 +785,21 @@
   "einvoiceConfigTokenSet": "A token is stored (type a new one to replace it).",
   "@einvoiceConfigTokenSet": {
     "description": "Shown instead of the stored token"
+  },
+  "invoiceAccountingExport": "Accounting export (SAF-T)",
+  "@invoiceAccountingExport": {
+    "description": "Register action: the SAF-T file for the accountant (0074)"
+  },
+  "invoiceAccountingExportEmpty": "Nothing to export for this period.",
+  "@invoiceAccountingExportEmpty": {
+    "description": "Refusal when the selected period holds nothing"
+  },
+  "invoiceRegisterYear": "Year",
+  "@invoiceRegisterYear": {
+    "description": "Register filter: which fiscal year the register shows"
+  },
+  "invoiceRegisterAllYears": "All years",
+  "@invoiceRegisterAllYears": {
+    "description": "Register filter: no year restriction"
   }
 }

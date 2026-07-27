@@ -26,6 +26,7 @@ import '../domain/invoice_pdf.dart';
 import '../domain/einvoice_gateway.dart';
 import '../domain/invoice_cii.dart';
 import '../domain/invoice_ubl.dart';
+import '../domain/saf_t.dart';
 import '../domain/invoice_ubl_check.dart';
 import '../domain/ledger_entry.dart';
 import '../providers/money_providers.dart';
@@ -148,6 +149,58 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
   return (
     bytes: pdf.bytes,
     fileName: '${safeFileSlug('facturx ${invoice.number}')}.pdf',
+  );
+}
+
+/// ACCOUNTING EXPORT (0074): one SAF-T file for a period — the OECD's own
+/// XML for handing accounting data to an accountant. Saved to Downloads,
+/// because that is where a file destined for someone else's software goes.
+Future<void> exportAccountingFile(
+  BuildContext context,
+  WidgetRef ref,
+  List<Invoice> invoices, {
+  required String label,
+}) async {
+  final l10n = AppLocalizations.of(context);
+  final workspace = ref.read(currentWorkspaceProvider).value;
+  if (workspace == null) return;
+  if (invoices.isEmpty) {
+    AppSnack.info(
+      context,
+      l10n?.invoiceAccountingExportEmpty ??
+          'Nothing to export for this period.',
+    );
+    return;
+  }
+  final matches = ref.read(invoiceMatchesProvider).value ?? const {};
+  await runGuarded(
+    context,
+    domain: 'money',
+    message: 'accounting export failed',
+    errorText: l10n?.workspaceGenericError ??
+        'Something went wrong. Please try again.',
+    action: () async {
+      final xml = buildSafTFile(
+        invoices: invoices,
+        matches: matches,
+        // The company as the invoices themselves state it; falls back to
+        // the live identity for pre-0069 documents.
+        company: sellerOf(invoices.last, workspace),
+        currency: workspace.currencyCode,
+        softwareVersion: safTSoftwareVersion,
+        createdAt: DateTime.now(),
+        lineText: (line) => invoiceLineText(l10n, line),
+        fallbackDescription: l10n?.invoicesTitle ?? 'Invoice',
+      );
+      final bytes = Uint8List.fromList(utf8.encode(xml));
+      if (!context.mounted) return;
+      await _save(
+        context,
+        ref,
+        bytes: bytes,
+        fileName: '${safeFileSlug('saf-t ${workspace.name} $label')}.xml',
+      );
+    },
   );
 }
 

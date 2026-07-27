@@ -317,7 +317,11 @@ Les émetteurs ouvrent **Argent → Factures** et arrivent sur un hub à trois o
 
 **Tampons.** Une facture annulée porte un grand **ERRONÉE** en diagonale sur chaque page de son PDF, en gris clair par-dessus le contenu : impossible de la confondre avec un document valable sur un bureau ou après photocopie. Le même tampon indique **PROFORMA** sur un devis, et **COPIE** sur toute facture rendue par quelqu'un d'autre que son émetteur — l'espace conserve l'original.
 
-**Le registre.** L'icône liste dans la barre des Factures ouvre un journal d'une ligne par facture : **date · nom · montant · statut**, trié par date (touchez l'en-tête Date pour inverser), avec le total en pied de page. La colonne *nom* suit le lecteur — un émetteur parcourt des membres, un membre parcourt ses propres numéros de facture. Les membres ne voient que ce qui les concerne : les factures émises, jamais une annulée.
+**Le registre.** L'icône liste dans la barre des Factures ouvre un journal d'une ligne par facture : **date · nom · montant · statut**, trié par date (touchez l'en-tête Date pour inverser), avec le total en pied de page et un sélecteur d'**année** dès qu'il y en a plusieurs.
+
+**Confier la période à votre comptable.** Depuis le registre, les émetteurs exportent un fichier **SAF-T** — le *Standard Audit File for Tax* de l'OCDE, le XML que lisent les logiciels comptables et les administrations fiscales. Il couvre exactement ce que le registre affiche : choisir 2026 donne le fichier 2026 — l'entreprise telle que vos propres factures la déclarent, chaque client, chaque facture avec ses lignes et ses totaux, et les paiements qui les ont réglées. Les factures annulées y restent, marquées *annulées* : un fichier d'audit n'efface jamais ce qui a eu lieu. Ce qu'il laisse volontairement de côté, c'est le **plan comptable** : DesKilo n'invente pas de numéros de compte, car un code erroné doit être décomptabilisé à la main. Votre comptable rattache les factures à ses propres comptes — c'est son métier et cela lui prend une minute.
+
+*(Rappel : en France, le fichier légalement exigible en cas de contrôle reste le **FEC**, un fichier à plat et non du XML. Le SAF-T sert à votre comptable et à son logiciel ; dites-le-moi si vous voulez aussi le FEC.)* La colonne *nom* suit le lecteur — un émetteur parcourt des membres, un membre parcourt ses propres numéros de facture. Les membres ne voient que ce qui les concerne : les factures émises, jamais une annulée.
 
 ### Où doit partir la facture électronique (UE)
 

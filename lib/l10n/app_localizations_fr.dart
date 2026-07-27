@@ -1675,6 +1675,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un jeton est enregistré (saisissez-en un nouveau pour le remplacer).';
 
   @override
+  String get invoiceAccountingExport => 'Export comptable (SAF-T)';
+
+  @override
+  String get invoiceAccountingExportEmpty =>
+      'Rien à exporter pour cette période.';
+
+  @override
+  String get invoiceRegisterYear => 'Année';
+
+  @override
+  String get invoiceRegisterAllYears => 'Toutes les années';
+
+  @override
   String get eventTypeMemberJoin => 'Nouveau membre';
 
   @override

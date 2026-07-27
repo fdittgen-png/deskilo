@@ -3044,6 +3044,30 @@ abstract class AppLocalizations {
   /// **'A token is stored (type a new one to replace it).'**
   String get einvoiceConfigTokenSet;
 
+  /// Register action: the SAF-T file for the accountant (0074)
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting export (SAF-T)'**
+  String get invoiceAccountingExport;
+
+  /// Refusal when the selected period holds nothing
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to export for this period.'**
+  String get invoiceAccountingExportEmpty;
+
+  /// Register filter: which fiscal year the register shows
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get invoiceRegisterYear;
+
+  /// Register filter: no year restriction
+  ///
+  /// In en, this message translates to:
+  /// **'All years'**
+  String get invoiceRegisterAllYears;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

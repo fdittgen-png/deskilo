@@ -341,5 +341,9 @@
   "einvoiceConfigSaved": "Piattaforma salvata.",
   "einvoiceConfigCleared": "Piattaforma rimossa.",
   "einvoiceConfigClear": "Rimuovi la piattaforma",
-  "einvoiceConfigTokenSet": "Un token è salvato (digitane uno nuovo per sostituirlo)."
+  "einvoiceConfigTokenSet": "Un token è salvato (digitane uno nuovo per sostituirlo).",
+  "invoiceAccountingExport": "Esportazione contabile (SAF-T)",
+  "invoiceAccountingExportEmpty": "Niente da esportare per questo periodo.",
+  "invoiceRegisterYear": "Anno",
+  "invoiceRegisterAllYears": "Tutti gli anni"
 }

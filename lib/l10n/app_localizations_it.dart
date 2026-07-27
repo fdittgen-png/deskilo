@@ -1672,6 +1672,19 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un token è salvato (digitane uno nuovo per sostituirlo).';
 
   @override
+  String get invoiceAccountingExport => 'Esportazione contabile (SAF-T)';
+
+  @override
+  String get invoiceAccountingExportEmpty =>
+      'Niente da esportare per questo periodo.';
+
+  @override
+  String get invoiceRegisterYear => 'Anno';
+
+  @override
+  String get invoiceRegisterAllYears => 'Tutti gli anni';
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override

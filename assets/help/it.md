@@ -317,7 +317,9 @@ Chi emette apre **Denaro → Fatture** e trova un hub a tre schede sotto una str
 
 **Timbri.** Una fattura annullata porta un grande **ERRATA** in diagonale su ogni pagina del PDF, in grigio chiaro sopra il contenuto: non si confonde con un documento valido su una scrivania né in fotocopia. Lo stesso timbro dice **PROFORMA** su un preventivo e **COPIA** su ogni fattura generata da qualcuno che non sia chi l'ha emessa — l'originale resta allo spazio.
 
-**Il registro.** L'icona elenco nella barra delle Fatture apre un giornale con una riga per fattura: **data · nome · importo · stato**, ordinato per data (tocca l'intestazione Data per invertire), con il totale in fondo. La colonna *nome* segue chi legge — chi emette scorre i membri, un membro scorre i propri numeri di fattura. I membri vedono solo ciò che li riguarda: le fatture emesse, mai una annullata.
+**Il registro.** L'icona elenco nella barra delle Fatture apre un giornale con una riga per fattura: **data · nome · importo · stato**, ordinato per data (tocca l'intestazione Data per invertire), con il totale in fondo e un selettore dell'**anno** quando ce n'è più di uno.
+
+**Consegnare il periodo al commercialista.** Dal registro, chi emette esporta un file **SAF-T** — lo *Standard Audit File for Tax* dell'OCSE, l'XML che leggono i software contabili e le amministrazioni fiscali. Copre esattamente ciò che mostra il registro: scegliere 2026 dà il file del 2026 — l'impresa così come la dichiarano le tue stesse fatture, ogni cliente, ogni fattura con righe e totali, e i pagamenti che le hanno saldate. Le fatture annullate restano dentro, marcate *annullate*: un file di audit non cancella mai ciò che è avvenuto. Ciò che lascia fuori di proposito è il **piano dei conti**: DesKilo non inventa numeri di conto, perché un codice sbagliato va stornato a mano. Il commercialista associa le fatture ai propri conti — è il suo lavoro e gli costa un minuto. La colonna *nome* segue chi legge — chi emette scorre i membri, un membro scorre i propri numeri di fattura. I membri vedono solo ciò che li riguarda: le fatture emesse, mai una annullata.
 
 ### Dove deve andare la fattura elettronica (UE)
 
