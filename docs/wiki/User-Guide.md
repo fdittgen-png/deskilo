@@ -63,6 +63,7 @@ Booking from the plan:
 - **Walk-up check-in**: tap a free seat → the sheet suggests *now* until the workspace default end → confirm. If someone reserved that seat later, your end time is capped and you're told.
 - **Check-in on a reservation**: your reservation opens a check-in window. Check in from the plan or the reminder notification. No-shows are **auto-released** after the configured delay.
 - **Check-out**: manual, or automatic at the reservation end / closing time.
+- **Whole spaces**: **double-tap** a desk, a room, or an empty stretch of floor to act on the **whole table, office or level** — the same sheet as scanning its QR card (§4), with the same period picker and repetition options as a seat.
 - **Time scroller**: pick a from→to window (or Morning / Afternoon / Full day, depending on the workspace granularity) to see occupancy at any future moment.
 - Seats can carry **accessories** (monitor, standing desk…), some with a per-half-day supplement that shows up on your statement.
 - Bookings count against your **monthly days** (§8) — the app blocks or bills you past your plan, depending on what the owner configured for you.
@@ -86,7 +87,7 @@ Every seat, desk, office and level can carry a printed **QR card** (§7). Tap th
 
 - **Seat card** — reserve or check in on that exact seat, on the spot (today's window: morning / afternoon / full day where the workspace uses half-days, otherwise from now for the next hours).
 - **Desk card** — the desk's seats with their live state; pick a free one.
-- **Office or level card** — if the owner made it reservable, the *Office & level reservations* feature is on **and** you hold the personal right (§7), you can reserve or check into the **whole office or floor**; its price per half-day is shown and lands on your bill. Otherwise the sheet tells you why, and an office falls back to its seats.
+- **Office or level card** — if the owner made it reservable, the *Office & level reservations* feature is on **and** you hold the personal right (§7), you can reserve or check into the **whole office or floor** — with the same period picker (morning / afternoon / full day, or free times) and **series** options as a seat; its price per half-day is shown and lands on your bill. Otherwise the sheet tells you why, and an office falls back to its seats.
 
 **Conflicts protect both directions:** an office or level cannot be reserved while any seat inside is already booked in that window — and no seat can be booked while its office or level is reserved as a whole.
 
@@ -122,9 +123,9 @@ All administration lives under **Settings → Administration**. One rule to know
 - **Editor** (app bar): draw your space on a grid — add levels, outline offices, place desks, stamp seats (with orientation, chair type, and amenities), block seats for maintenance. Add a **background photo** per level and **illustration images** you can move and resize. Deleting anything with future reservations makes you resolve them first.
 - **Workspace ID & QR**: your role-bound invites (§2). You can replace the generated workspace ID with a memorable one (4–20 letters/digits), copy it, or share the QR as a PNG.
 - **Availability**: open weekdays, closure days, and the booking granularity — free start/end times, a minute grid (5/15/30/60), half-days, or full days only.
-- **Features**: switch whole modules on or off per workspace — calendar, events, money, services, PDF export, series booking, booking for others, push, seat blocking by admins, accessory supplements, **online payments**, **office & level reservations**, **kiosk mode**, **RFID/NFC badges**, **members directory**, **WhatsApp integration**, **space QR codes**, **co-owners**. Switching a module off removes *all* of its screens and buttons for every member.
+- **Features**: switch whole modules on or off per workspace — calendar, events, money, services, PDF export, series booking, booking for others, push, seat blocking by admins, accessory supplements, **online payments**, **invoicing**, **office & level reservations**, **kiosk mode**, **RFID/NFC badges**, **members directory**, **WhatsApp integration**, **space QR codes**, **co-owners**. Switching a module off removes *all* of its screens and buttons for every member.
 
-  The list is **hierarchical**: a feature that needs another sits indented under it with a *Requires…* note, and is greyed out while its parent is off — *Money* carries services, accessory supplements and online payments; *Office & level reservations* carries the admin assignment right; *Kiosk mode* carries RFID/NFC badges; *Members directory* carries the WhatsApp integration. Switching a parent off takes its whole subtree out of the app; the child's stored choice comes back untouched when the parent returns.
+  The list is **hierarchical**: a feature that needs another sits indented under it with a *Requires…* note, and is greyed out while its parent is off — *Money* carries services, accessory supplements, online payments and invoicing; *Office & level reservations* carries the admin assignment right; *Kiosk mode* carries RFID/NFC badges; *Members directory* carries the WhatsApp integration. Switching a parent off takes its whole subtree out of the app; the child's stored choice comes back untouched when the parent returns.
 
 <p><img src="images/workspace-id-qr.jpg" width="220"> <img src="images/availability-granularity.jpg" width="220"> <img src="images/features-toggles-1.jpg" width="220"> <img src="images/features-toggles-2.jpg" width="220"></p>
 
@@ -247,9 +248,26 @@ Your ledger answers *what do I owe, what am I owed* — and *how much can I stil
 - **Charges**: monthly subscription (a percentage plan), overage, service consumption, accessory supplements, day packages.
 - **Credits**: approved expenses, recorded payments, adjustments.
 - **Statements**: monthly, with **settled / outstanding** status, exportable as a **PDF bill** saved locally.
+- **Invoices**: where the workspace issues invoices (below), yours are always available under **Money → Invoices** — download the PDF, and in EU workspaces the machine-readable e-invoice (XML).
 - **Paying**: DesKilo tracks payments; outstanding bills show the workspace's **payment instructions** (IBAN copies with one tap, PayPal.me opens directly). Record a payment ("I paid") with its method — the other side confirms. If the workspace enabled **online payments** and its server is configured for it, a **Pay online** button lets the member pay the amount owed straight away — with **PayPal, a credit card (Stripe), Mollie, or Wero**, whichever the workspace enabled (several show a chooser).
 - **Expenses**: bought coffee for the space? Submit the expense — another admin approves it (no self-approval) and it credits your next statement.
 - **Services**: owner-defined extras (lockers, printing…) whose consumption lands on your statement after you confirm it.
+
+### Invoicing (owners & billing admins)
+
+*Owners issue invoices; admins too once the owner grants the **Admins issue invoices** delegation. The **Invoicing** feature sits under Money in the feature list (§7).*
+
+An invoice in DesKilo is generated, never composed: its positions are **derived exclusively from the month's tracked data** — subscription, overage, supplements, services, packages — minus the month's payments and credits, so the bottom line **is the balance due**. Each document snapshots the workspace's and the member's postal addresses (set yours in **Settings → Address**; the workspace address is in the workspace settings) and is **digitally signed** at issue — it never changes afterwards. A **detailed annex** (the month's ledger and attendance) can be attached with one switch when issuing.
+
+Issuers open **Money → Invoices** and land on a three-tab hub under a live summary strip:
+
+- **To invoice** — every member whose previous month has billable data and no invoice yet: issue per member (with a preview of the derived positions) or **Invoice all** in one sweep. **One active invoice per member and month** — a month only becomes invoiceable again after its invoice was cancelled.
+- **Open** — issued invoices awaiting settlement. Each card offers **Send a reminder** (records the reminder and shares the PDF with a message — the card shows *Reminded ×N*), **Mark as erroneous** (cancels the invoice for correction: it moves to the archive struck through, and a **replacement** re-derives the same month from the corrected data, referencing the original), and **Mark as paid**.
+- **Archive** — closed invoices, paid or cancelled, filterable by member and month and sortable. Download or share the **PDF**; in EU workspaces every invoice also exports as an **EN 16931 e-invoice (XML)** — the machine-readable format public-sector and business customers ask for.
+
+**Marking as paid means matching a real payment.** The dialog lists the member's registered payments — recorded transfers and confirmed online payments — and you map the invoice to one of them; there is no amount to type. Paid **more**? Create a **credit note** for the excess (a credit on the member's ledger) or force-accept with a mandatory note. Paid **less**? Accept it with a mandatory note. Everyone with invoicing access is notified of paid invoices, and the owner can put an **Invoice payment** validation rule (§6) on them: the match then waits for the quorum — a reject reopens the invoice.
+
+**A paid invoice is definitive.** Once matched it can never be cancelled, replaced or altered — corrections happen before payment, by cancelling the open invoice and issuing its replacement.
 
 ## 9. Kiosk mode (wall tablet)
 

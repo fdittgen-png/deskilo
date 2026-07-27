@@ -63,6 +63,7 @@ Reservar desde el plano:
 - **Registro espontáneo**: toca un asiento libre → la hoja propone *ahora* hasta el fin por defecto del espacio → confirma. Si alguien reservó ese asiento más tarde, tu hora de fin se recorta y se te avisa.
 - **Registro sobre reserva**: tu reserva abre una ventana de check-in. Regístrate desde el plano o desde la notificación de recordatorio. Si no apareces, el asiento se **libera automáticamente** tras el plazo configurado.
 - **Salida**: manual, o automática al final de la reserva / al cierre.
+- **Espacios enteros**: **doble toque** en una mesa, una sala o una zona libre del suelo para actuar sobre la **mesa, oficina o planta entera** — la misma hoja que al escanear su tarjeta QR (§4), con el mismo selector de periodo y las mismas opciones de repetición que un puesto.
 - **Línea de tiempo**: elige una ventana de→a (o Mañana / Tarde / Día completo, según la granularidad del espacio) para ver la ocupación en cualquier momento futuro.
 - Los asientos pueden llevar **accesorios** (monitor, mesa elevable…), algunos con suplemento por media jornada que aparece en tu extracto.
 - Las reservas cuentan contra tus **días mensuales** (§8) — pasado tu plan, la app bloquea o cobra, según lo que el propietario configuró para ti.
@@ -86,7 +87,7 @@ Cada puesto, mesa, oficina y planta puede llevar una **tarjeta QR** impresa (§7
 
 - **Tarjeta de puesto** — reserva o regístrate en ese puesto concreto, al momento (la ventana de hoy: mañana / tarde / día completo donde el espacio usa medias jornadas; si no, desde ahora para las próximas horas).
 - **Tarjeta de mesa** — los puestos de la mesa con su estado en vivo; elige uno libre.
-- **Tarjeta de oficina o planta** — si el propietario la hizo reservable, la función *Reservas de oficina y planta* está activada **y** tienes el derecho personal (§7), puedes reservar o registrarte en la **oficina o planta entera**; se muestra su precio por media jornada y entra en tu factura. Si no, la hoja te dice por qué, y una oficina recae en sus puestos.
+- **Tarjeta de oficina o planta** — si el propietario la hizo reservable, la función *Reservas de oficina y planta* está activada **y** tienes el derecho personal (§7), puedes reservar o registrarte en la **oficina o planta entera** — con el mismo selector de periodo (mañana / tarde / día completo, u horas libres) y las mismas opciones de **serie** que un puesto; se muestra su precio por media jornada y entra en tu factura. Si no, la hoja te dice por qué, y una oficina recae en sus puestos.
 
 **Los conflictos protegen en ambos sentidos:** una oficina o planta no puede reservarse mientras algún puesto de su interior ya esté reservado en esa ventana — y ningún puesto puede reservarse mientras su oficina o planta esté reservada entera.
 
@@ -126,9 +127,9 @@ Toda la administración vive en **Ajustes → Administración**. Una regla que c
 - **Editor** (barra de la app): dibuja tu espacio en una cuadrícula — plantas, oficinas, mesas, asientos (con orientación, tipo de silla y equipamiento), bloqueo de asientos por mantenimiento. Añade una **foto de fondo** por planta e **imágenes de ilustración** que puedes mover y redimensionar. Borrar algo con reservas futuras obliga a resolverlas antes.
 - **ID del espacio & QR**: tus invitaciones ligadas a rol (§2). Puedes sustituir el ID generado por uno memorable (4–20 letras/dígitos), copiarlo o compartir el QR como PNG.
 - **Disponibilidad**: días de apertura, días de cierre y la granularidad — horas de inicio y fin libres, una rejilla de minutos (5/15/30/60), medias jornadas o solo días completos.
-- **Funciones**: activa o desactiva módulos enteros por espacio — calendario, eventos, dinero, servicios, exportación PDF, series, reservar por otros, push, bloqueo de asientos por admins, suplementos de accesorios, **pagos en línea**, **reservas de oficina y planta**, **modo quiosco**, **credenciales RFID/NFC**, **directorio de miembros**, **integración con WhatsApp**, **códigos QR de espacios**, **copropietarios**. Desactivar un módulo elimina *todas* sus pantallas y botones para todos los miembros.
+- **Funciones**: activa o desactiva módulos enteros por espacio — calendario, eventos, dinero, servicios, exportación PDF, series, reservar por otros, push, bloqueo de asientos por admins, suplementos de accesorios, **pagos en línea**, **facturas**, **reservas de oficina y planta**, **modo quiosco**, **credenciales RFID/NFC**, **directorio de miembros**, **integración con WhatsApp**, **códigos QR de espacios**, **copropietarios**. Desactivar un módulo elimina *todas* sus pantallas y botones para todos los miembros.
 
-  La lista es **jerárquica**: una función que necesita otra aparece indentada bajo ella con una nota *Requiere…*, y queda atenuada mientras su padre está desactivado — *Dinero* lleva los servicios, los suplementos de accesorios y los pagos en línea; *Reservas de oficina y planta* lleva el derecho de asignación por admins; *Modo quiosco* lleva las credenciales RFID/NFC; *Directorio de miembros* lleva la integración con WhatsApp. Desactivar un padre saca todo su subárbol de la app; la elección guardada del hijo vuelve intacta cuando el padre regresa.
+  La lista es **jerárquica**: una función que necesita otra aparece indentada bajo ella con una nota *Requiere…*, y queda atenuada mientras su padre está desactivado — *Dinero* lleva los servicios, los suplementos de accesorios, los pagos en línea y las facturas; *Reservas de oficina y planta* lleva el derecho de asignación por admins; *Modo quiosco* lleva las credenciales RFID/NFC; *Directorio de miembros* lleva la integración con WhatsApp. Desactivar un padre saca todo su subárbol de la app; la elección guardada del hijo vuelve intacta cuando el padre regresa.
 
 ![](assets/help/images/workspace-id-qr.jpg)
 
@@ -291,9 +292,26 @@ Tu cuenta responde *qué debo, qué me deben* — y *cuánto puedo reservar aún
 - **Cargos**: suscripción mensual (plan porcentual), exceso, consumo de servicios, suplementos de accesorios, paquetes de días.
 - **Abonos**: gastos aprobados, pagos registrados, ajustes.
 - **Extractos**: mensuales, con estado **saldado / pendiente**, exportables como **factura PDF** guardada localmente.
+- **Facturas**: donde el espacio emite facturas (más abajo), las tuyas están siempre disponibles en **Dinero → Facturas** — descarga el PDF y, en espacios de la UE, la factura electrónica legible por máquina (XML).
 - **Pagar**: DesKilo registra los pagos; una factura pendiente muestra las **instrucciones de pago** del espacio (el IBAN se copia con un toque, PayPal.me se abre directamente). Registra un pago («he pagado») con su método — la otra parte confirma. Si el espacio activó los **pagos en línea** y su servidor está configurado, el botón **Pagar en línea** permite abonar el importe adeudado al instante — con **PayPal, tarjeta (Stripe), Mollie o Wero**, según lo que el espacio haya activado (si hay varios, se muestra un selector).
 - **Gastos**: ¿compraste café para el espacio? Presenta el gasto — otro admin lo aprueba (sin autoaprobación) y el importe se abona en tu próximo extracto.
 - **Servicios**: extras definidos por el propietario (taquillas, impresión…) cuyo consumo llega a tu extracto tras tu confirmación.
+
+### Facturación (propietarios y admins de facturación)
+
+*Los propietarios emiten facturas; los admins también cuando el propietario concede la delegación **Los admins emiten facturas**. La función **Facturas** cuelga de Dinero en la lista de funciones (§7).*
+
+Una factura en DesKilo se genera, nunca se redacta: sus posiciones se **derivan exclusivamente de los datos registrados del mes** — suscripción, exceso, suplementos, servicios, paquetes — menos los pagos y abonos del mes, de modo que la línea final **es el saldo adeudado**. Cada documento captura las direcciones postales del espacio y del miembro (configura la tuya en **Ajustes → Dirección**; la dirección del espacio está en los ajustes del espacio) y se **firma digitalmente** al emitirse — después ya no cambia nunca. Un **anexo detallado** (el libro mayor y la asistencia del mes) puede adjuntarse con un interruptor al emitir.
+
+Quien emite abre **Dinero → Facturas** y llega a un hub de tres pestañas bajo una franja de resumen en vivo:
+
+- **Por facturar** — cada miembro cuyo mes anterior tiene datos facturables y aún sin factura: emite por miembro (con vista previa de las posiciones derivadas) o **Facturar todo** de una pasada. **Una factura activa por miembro y mes** — un mes solo vuelve a ser facturable cuando su factura fue anulada.
+- **Abiertas** — facturas emitidas a la espera de cobro. Cada tarjeta ofrece **Enviar un recordatorio** (registra el recordatorio y comparte el PDF con un mensaje — la tarjeta muestra *Recordado ×N*), **Marcar como errónea** (anula la factura para corregirla: pasa al archivo tachada, y una **sustituta** vuelve a derivar el mismo mes desde los datos corregidos, referenciando la original) y **Marcar como pagada**.
+- **Archivo** — facturas cerradas, pagadas o anuladas, filtrables por miembro y mes y ordenables. Descarga o comparte el **PDF**; en espacios de la UE cada factura también se exporta como **factura electrónica EN 16931 (XML)** — el formato legible por máquina que piden las administraciones públicas y las empresas.
+
+**Marcar como pagada significa emparejar un pago real.** El diálogo lista los pagos registrados del miembro — transferencias anotadas y pagos en línea confirmados — y tú emparejas la factura con uno de ellos; no hay ningún importe que teclear. ¿Pagó **de más**? Crea una **nota de crédito** por el exceso (un abono en la cuenta del miembro) o fuerza la aceptación con una nota obligatoria. ¿Pagó **de menos**? Acéptalo con una nota obligatoria. Todos los que tienen acceso a la facturación reciben notificación de las facturas pagadas, y el propietario puede poner una regla de validación **Pago de factura** (§6): el emparejamiento espera entonces al quórum — un rechazo reabre la factura.
+
+**Una factura pagada es definitiva.** Una vez emparejada no puede anularse, sustituirse ni alterarse — las correcciones ocurren antes del pago, anulando la factura abierta y emitiendo su sustituta.
 
 ## 9. Modo quiosco (tableta de pared)
 

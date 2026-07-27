@@ -63,6 +63,7 @@ Réserver depuis le plan :
 - **Pointage spontané** : touchez une place libre → la feuille propose *maintenant* jusqu'à la fin par défaut de l'espace → confirmez. Si quelqu'un a réservé cette place plus tard, votre heure de fin est plafonnée et on vous le dit.
 - **Pointage sur réservation** : votre réservation ouvre une fenêtre de pointage. Pointez depuis le plan ou depuis la notification de rappel. En cas d'absence, la place est **libérée automatiquement** après le délai configuré.
 - **Départ** : manuel, ou automatique à la fin de la réservation / à la fermeture.
+- **Espaces entiers** : **touchez deux fois** une table, une pièce ou une zone libre du sol pour agir sur **la table, le bureau ou le niveau entier** — la même feuille qu'en scannant sa carte QR (§4), avec le même choix de période et les mêmes options de répétition qu'une place.
 - **Frise temporelle** : choisissez une fenêtre de→à (ou Matin / Après-midi / Journée entière selon la granularité de l'espace) pour voir l'occupation à tout moment futur.
 - Les places peuvent porter des **accessoires** (écran, bureau debout…), certains avec un supplément par demi-journée qui apparaît sur votre relevé.
 - Les réservations comptent dans vos **jours mensuels** (§8) — au-delà de votre forfait, l'application bloque ou facture, selon ce que le propriétaire a configuré pour vous.
@@ -86,7 +87,7 @@ Chaque poste, table, bureau et niveau peut porter une **carte QR** imprimée (§
 
 - **Carte de poste** — réservez ou pointez sur ce poste précis, sur-le-champ (fenêtre du jour : matin / après-midi / journée entière quand l'espace utilise les demi-journées, sinon à partir de maintenant pour les prochaines heures).
 - **Carte de table** — les postes de la table avec leur état en direct ; choisissez-en un libre.
-- **Carte de bureau ou de niveau** — si le propriétaire l'a rendu réservable, que la fonctionnalité *Réservations de bureau et de niveau* est activée **et** que vous détenez le droit personnel (§7), vous pouvez réserver ou pointer sur le **bureau ou l'étage entier** ; son prix par demi-journée est affiché et arrive sur votre facture. Sinon, la feuille vous explique pourquoi, et un bureau se rabat sur ses postes.
+- **Carte de bureau ou de niveau** — si le propriétaire l'a rendu réservable, que la fonctionnalité *Réservations de bureau et de niveau* est activée **et** que vous détenez le droit personnel (§7), vous pouvez réserver ou pointer sur le **bureau ou l'étage entier** — avec le même choix de période (matin / après-midi / journée entière, ou horaires libres) et les mêmes options de **série** qu'une place ; son prix par demi-journée est affiché et arrive sur votre facture. Sinon, la feuille vous explique pourquoi, et un bureau se rabat sur ses postes.
 
 **Les conflits protègent dans les deux sens :** un bureau ou un niveau ne peut pas être réservé tant qu'un poste à l'intérieur est déjà réservé sur cette fenêtre — et aucun poste ne peut être réservé tant que son bureau ou son niveau est réservé en entier.
 
@@ -126,9 +127,9 @@ Toute l'administration vit sous **Réglages → Administration**. Une règle à 
 - **Éditeur** (barre d'app) : dessinez votre espace sur une grille — niveaux, bureaux, tables, places (avec orientation, type de chaise et équipements), blocage de places pour maintenance. Ajoutez une **photo d'arrière-plan** par niveau et des **images d'illustration** déplaçables et redimensionnables. Supprimer un élément portant des réservations futures oblige à les résoudre d'abord.
 - **Identifiant & QR** : vos invitations liées aux rôles (§2). Vous pouvez remplacer l'identifiant généré par un identifiant mémorable (4–20 lettres/chiffres), le copier, ou partager le QR en PNG.
 - **Disponibilité** : jours d'ouverture, jours de fermeture, et granularité — plage horaire libre, grille de minutes (5/15/30/60), demi-journées, ou journées entières uniquement.
-- **Fonctionnalités** : activez ou désactivez des modules entiers par espace — calendrier, événements, argent, services, export PDF, séries, réserver pour autrui, notifications push, blocage de places par les admins, suppléments d'accessoires, **paiements en ligne**, **réservations de bureau et de niveau**, **mode borne**, **badges RFID/NFC**, **annuaire des membres**, **intégration WhatsApp**, **codes QR des espaces**, **copropriétaires**. Désactiver un module retire *tous* ses écrans et boutons pour tous les membres.
+- **Fonctionnalités** : activez ou désactivez des modules entiers par espace — calendrier, événements, argent, services, export PDF, séries, réserver pour autrui, notifications push, blocage de places par les admins, suppléments d'accessoires, **paiements en ligne**, **factures**, **réservations de bureau et de niveau**, **mode borne**, **badges RFID/NFC**, **annuaire des membres**, **intégration WhatsApp**, **codes QR des espaces**, **copropriétaires**. Désactiver un module retire *tous* ses écrans et boutons pour tous les membres.
 
-  La liste est **hiérarchique** : une fonctionnalité qui en nécessite une autre apparaît en retrait sous elle avec une note *Nécessite…*, et est grisée tant que son parent est désactivé — *Argent* porte les services, les suppléments d'accessoires et les paiements en ligne ; *Réservations de bureau et de niveau* porte le droit d'attribution par les admins ; *Mode borne* porte les badges RFID/NFC ; *Annuaire des membres* porte l'intégration WhatsApp. Désactiver un parent retire tout son sous-arbre de l'application ; le choix enregistré de l'enfant revient intact quand le parent est réactivé.
+  La liste est **hiérarchique** : une fonctionnalité qui en nécessite une autre apparaît en retrait sous elle avec une note *Nécessite…*, et est grisée tant que son parent est désactivé — *Argent* porte les services, les suppléments d'accessoires, les paiements en ligne et les factures ; *Réservations de bureau et de niveau* porte le droit d'attribution par les admins ; *Mode borne* porte les badges RFID/NFC ; *Annuaire des membres* porte l'intégration WhatsApp. Désactiver un parent retire tout son sous-arbre de l'application ; le choix enregistré de l'enfant revient intact quand le parent est réactivé.
 
 ![](assets/help/images/workspace-id-qr.jpg)
 
@@ -291,9 +292,26 @@ Votre compte répond à *combien je dois, combien on me doit* — et *combien pu
 - **Débits** : abonnement mensuel (forfait en pourcentage), dépassement, consommation de services, suppléments d'accessoires, forfaits de jours.
 - **Crédits** : dépenses approuvées, paiements enregistrés, ajustements.
 - **Relevés** : mensuels, avec statut **réglé / à régler**, exportables en **facture PDF** enregistrée localement.
+- **Factures** : quand l'espace émet des factures (ci-dessous), les vôtres restent toujours disponibles sous **Argent → Factures** — téléchargez le PDF et, dans les espaces de l'UE, la facture électronique lisible par machine (XML).
 - **Payer** : DesKilo suit les paiements ; une facture à régler affiche les **instructions de paiement** de l'espace (l'IBAN se copie d'un geste, PayPal.me s'ouvre directement). Enregistrez un paiement (« j'ai payé ») avec sa méthode — l'autre partie confirme. Si l'espace a activé les **paiements en ligne** et que son serveur est configuré, un bouton **Payer en ligne** permet de régler le montant dû aussitôt — par **PayPal, carte bancaire (Stripe), Mollie ou Wero**, selon ce que l'espace a activé (plusieurs affichent un choix).
 - **Dépenses** : vous avez acheté du café pour l'espace ? Soumettez la dépense — un autre admin l'approuve (pas d'auto-approbation) et le montant est crédité sur votre prochain relevé.
 - **Services** : extras définis par le propriétaire (casiers, impression…) dont la consommation arrive sur votre relevé après votre confirmation.
+
+### Facturation (propriétaires & admins facturiers)
+
+*Les propriétaires émettent les factures ; les admins aussi dès que le propriétaire accorde la délégation **Les admins émettent des factures**. La fonctionnalité **Factures** se trouve sous Argent dans la liste des fonctionnalités (§7).*
+
+Une facture DesKilo est générée, jamais composée : ses positions sont **dérivées exclusivement des données suivies du mois** — abonnement, dépassement, suppléments, services, forfaits — moins les paiements et crédits du mois, si bien que la dernière ligne **est le solde dû**. Chaque document fige les adresses postales de l'espace et du membre (réglez la vôtre dans **Réglages → Adresse** ; l'adresse de l'espace se trouve dans les réglages de l'espace) et est **signé numériquement** à l'émission — il ne change plus jamais ensuite. Une **annexe détaillée** (le registre et les présences du mois) peut être jointe d'un simple interrupteur au moment d'émettre.
+
+Les émetteurs ouvrent **Argent → Factures** et arrivent sur un hub à trois onglets sous un bandeau de synthèse en direct :
+
+- **À facturer** — chaque membre dont le mois précédent porte des données facturables et pas encore de facture : facturez par membre (avec un aperçu des positions dérivées) ou **Tout facturer** en une passe. **Une seule facture active par membre et par mois** — un mois ne redevient facturable qu'après l'annulation de sa facture.
+- **En cours** — les factures émises en attente de règlement. Chaque carte propose **Envoyer un rappel** (enregistre le rappel et partage le PDF avec un message — la carte affiche *Rappelé ×N*), **Marquer comme erronée** (annule la facture pour correction : elle passe aux archives, barrée, et une **facture de remplacement** re-dérive le même mois depuis les données corrigées, en référençant l'originale), et **Marquer comme payée**.
+- **Archives** — les factures clôturées, payées ou annulées, filtrables par membre et par mois, et triables. Téléchargez ou partagez le **PDF** ; dans les espaces de l'UE, chaque facture s'exporte aussi en **facture électronique EN 16931 (XML)** — le format lisible par machine que demandent les administrations et les clients professionnels.
+
+**Marquer comme payée, c'est rapprocher un paiement réel.** Le dialogue liste les paiements enregistrés du membre — virements saisis et paiements en ligne confirmés — et vous associez la facture à l'un d'eux ; il n'y a aucun montant à saisir. Payé **plus** ? Créez un **avoir pour l'excédent** (un crédit sur le registre du membre) ou forcez l'acceptation avec une note obligatoire. Payé **moins** ? Acceptez avec une note obligatoire. Toutes les personnes ayant accès à la facturation sont notifiées des factures payées, et le propriétaire peut poser une règle de validation **Paiement de facture** (§6) : le rapprochement attend alors le quorum — un rejet rouvre la facture.
+
+**Une facture payée est définitive.** Une fois rapprochée, elle ne peut plus jamais être annulée, remplacée ni modifiée — les corrections se font avant paiement, en annulant la facture en cours et en émettant son remplacement.
 
 ## 9. Mode borne (tablette murale)
 
