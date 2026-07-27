@@ -14,6 +14,7 @@ import '../features/events/presentation/screens/validation_settings_screen.dart'
 import '../features/money/presentation/screens/billing_screen.dart';
 import '../features/money/presentation/screens/money_screen.dart';
 import '../features/money/presentation/screens/invoices_screen.dart';
+import '../features/money/presentation/screens/einvoice_config_screen.dart';
 import '../features/money/presentation/screens/invoice_register_screen.dart';
 import '../features/money/presentation/screens/legal_identity_screen.dart';
 import '../features/money/presentation/screens/services_screen.dart';
@@ -322,6 +323,17 @@ GoRouter router(Ref ref) {
         redirect: (context, state) =>
             featureEnabled(WorkspaceFeature.invoicing) ? null : '/money',
         builder: (context, state) => const InvoiceRegisterScreen(),
+      ),
+      // Where invoices are POSTED (0073) — owner-only.
+      GoRoute(
+        path: '/einvoice-config',
+        redirect: (context, state) {
+          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          return isOwner && featureEnabled(WorkspaceFeature.invoicing)
+              ? null
+              : '/money';
+        },
+        builder: (context, state) => const EInvoiceConfigScreen(),
       ),
       // The workspace's legal identity (0069) — owner-only, and only
       // where invoices exist at all.

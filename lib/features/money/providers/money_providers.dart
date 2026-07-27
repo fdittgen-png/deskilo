@@ -10,6 +10,7 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_money_repository.dart';
 export '../domain/bill_sections.dart' show currentPeriod;
 
+import '../domain/einvoice_gateway.dart';
 import '../domain/fee_band.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
@@ -127,6 +128,40 @@ Future<Map<String, ({int count, DateTime last})>> invoiceReminders(
   return ref
       .read(moneyRepositoryProvider)
       .fetchInvoiceReminders(workspace.id);
+}
+
+/// Whether this workspace can SEND an e-invoice (0073) — the affordance
+/// only shows when the owner has configured a platform and the function is
+/// deployed.
+@Riverpod(keepAlive: true)
+Future<EInvoiceGatewayConfig> eInvoiceGateway(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return EInvoiceGatewayConfig.notConfigured;
+  return ref
+      .read(moneyRepositoryProvider)
+      .fetchEInvoiceGateway(workspace.id);
+}
+
+/// The owner-visible state of the platform credentials (0071): non-secret
+/// fields plus the NAMES of the secrets that are set.
+@riverpod
+Future<EInvoiceProviderStatus> eInvoiceStatus(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) {
+    return const EInvoiceProviderStatus(configured: false);
+  }
+  return ref.read(moneyRepositoryProvider).fetchEInvoiceStatus(workspace.id);
+}
+
+/// invoiceId → its latest transmission (0071), for the detail sheet's
+/// "sent on / accepted by" line.
+@Riverpod(keepAlive: true)
+Future<Map<String, InvoiceTransmission>> invoiceTransmissions(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const {};
+  return ref
+      .read(moneyRepositoryProvider)
+      .fetchInvoiceTransmissions(workspace.id);
 }
 
 /// One "ready to invoice" row of the invoicing hub: a member with

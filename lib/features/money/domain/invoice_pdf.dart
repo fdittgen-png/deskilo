@@ -78,6 +78,10 @@ class InvoicePdfStrings {
   final String page;
 }
 
+/// Named in the PDF metadata — PDF/A wants a producer, and a reader
+/// wondering where a file came from deserves an answer.
+const String _producer = 'DesKilo';
+
 /// DesKilo brand accent — matches the launcher icon red.
 const PdfColor _accent = PdfColor.fromInt(0xFFD32F2F);
 const PdfColor _ink = PdfColors.blueGrey900;
@@ -124,8 +128,46 @@ Future<Uint8List> buildInvoicePdf({
   /// member re-renders it on demand. Ignored on a proforma (which is not a
   /// copy of anything) and on an erroneous invoice (whose own stamp wins).
   bool copy = false,
+  /// FACTUR-X: the EN 16931 invoice as CII, embedded in the PDF itself.
+  /// Turns the document into PDF/A-3 (the format's requirement) carrying
+  /// `factur-x.xml` — one file a human reads and a machine parses, which
+  /// is what French and German small businesses actually exchange.
+  /// Requires [colorProfile] (PDF/A demands an output intent).
+  String facturXml = '',
+  Uint8List? colorProfile,
 }) async {
-  final doc = pw.Document();
+  final hybrid = facturXml.isNotEmpty && colorProfile != null;
+  final doc = pw.Document(
+    title: '${strings.invoiceTitle} ${invoice.number}',
+    author: invoice.workspaceName,
+    creator: _producer,
+    producer: _producer,
+    subject: periodLabel,
+    metadata: hybrid
+        ? PdfaRdf(
+            title: '${strings.invoiceTitle} ${invoice.number}',
+            author: invoice.workspaceName,
+            creator: _producer,
+            producer: _producer,
+            subject: periodLabel,
+            invoiceRdf: PdfaFacturxRdf().create(
+              conformanceLevel: 'EN 16931',
+            ),
+          ).create()
+        : null,
+  );
+  if (hybrid) {
+    // PDF/A-3: an embedded output intent, and the XML as an /Alternative
+    // attachment — the two halves of the same invoice.
+    PdfaColorProfile(doc.document, colorProfile);
+    PdfaAttachedFiles(doc.document, [
+      PdfaAttachedFile(
+        name: 'factur-x.xml',
+        data: facturXml,
+        AFRelationship: '/Alternative',
+      ),
+    ]);
+  }
   final theme = pw.ThemeData.withFont(base: baseFont, bold: boldFont);
   // Composed outside the widget calls (HARD RULE #1 lints inline
   // literals).

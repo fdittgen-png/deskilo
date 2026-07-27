@@ -697,5 +697,93 @@
   "invoiceRegisterTotal": "Total",
   "@invoiceRegisterTotal": {
     "description": "Register footer: sum of the listed invoices"
+  },
+  "invoiceFacturXDownload": "Download Factur-X (PDF)",
+  "@invoiceFacturXDownload": {
+    "description": "E-invoice sheet: the hybrid PDF+XML document (0073)"
+  },
+  "invoiceFacturXShare": "Share Factur-X (PDF)",
+  "@invoiceFacturXShare": {
+    "description": "E-invoice sheet: share the hybrid document"
+  },
+  "invoiceFacturXExplain": "One file: the invoice a human reads, with the machine-readable XML inside it. This is what most platforms expect.",
+  "@invoiceFacturXExplain": {
+    "description": "E-invoice sheet: what the hybrid document is and why it is the default"
+  },
+  "invoiceSendAction": "Send to the platform",
+  "@invoiceSendAction": {
+    "description": "E-invoice sheet: post the document to the platform (0073)"
+  },
+  "invoiceSendAccepted": "Sent — the platform accepted it.",
+  "@invoiceSendAccepted": {
+    "description": "Snackbar: the platform took the document"
+  },
+  "invoiceSendRejected": "The platform refused it.",
+  "@invoiceSendRejected": {
+    "description": "Snackbar: the platform refused it"
+  },
+  "invoiceSentOn": "Sent {date} · {status}",
+  "@invoiceSentOn": {
+    "description": "Detail sheet: when it left and what came back",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceSendStatusAccepted": "accepted",
+  "@invoiceSendStatusAccepted": {
+    "description": "Transmission status word"
+  },
+  "invoiceSendStatusRejected": "rejected",
+  "@invoiceSendStatusRejected": {
+    "description": "Transmission status word"
+  },
+  "invoiceSendStatusFailed": "not delivered",
+  "@invoiceSendStatusFailed": {
+    "description": "Transmission status word"
+  },
+  "einvoiceConfigTitle": "E-invoicing platform",
+  "@einvoiceConfigTitle": {
+    "description": "Owner screen: the e-invoicing platform credentials"
+  },
+  "einvoiceConfigIntro": "Where DesKilo posts your invoices. Any platform that accepts an upload with a token works — a plateforme agréée, a Peppol access point, a national platform. The token is stored server-side and never comes back out.",
+  "@einvoiceConfigIntro": {
+    "description": "Owner screen intro"
+  },
+  "einvoiceConfigEndpoint": "Upload URL",
+  "@einvoiceConfigEndpoint": {
+    "description": "Field label: the upload URL"
+  },
+  "einvoiceConfigToken": "Token or credential",
+  "@einvoiceConfigToken": {
+    "description": "Field label: the credential"
+  },
+  "einvoiceConfigHeader": "Auth header (default Authorization)",
+  "@einvoiceConfigHeader": {
+    "description": "Field label: which header carries the token"
+  },
+  "einvoiceConfigField": "File field name (default file)",
+  "@einvoiceConfigField": {
+    "description": "Field label: the multipart field name"
+  },
+  "einvoiceConfigSaved": "Platform saved.",
+  "@einvoiceConfigSaved": {
+    "description": "Snackbar after saving the platform"
+  },
+  "einvoiceConfigCleared": "Platform removed.",
+  "@einvoiceConfigCleared": {
+    "description": "Snackbar after forgetting the platform"
+  },
+  "einvoiceConfigClear": "Remove the platform",
+  "@einvoiceConfigClear": {
+    "description": "Button: forget the platform"
+  },
+  "einvoiceConfigTokenSet": "A token is stored (type a new one to replace it).",
+  "@einvoiceConfigTokenSet": {
+    "description": "Shown instead of the stored token"
   }
 }

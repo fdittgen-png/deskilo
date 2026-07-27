@@ -80,6 +80,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
       reminder: reminder,
       replacedByNumber: replacedByNumber,
       showMemberName: widget.showMemberNames,
+      transmission: ref.read(invoiceTransmissionsProvider).value?[invoice.id],
     );
     if (action == null || !mounted) return;
     await runInvoiceAction(

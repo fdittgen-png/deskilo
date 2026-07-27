@@ -1604,6 +1604,72 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceRegisterTotal => 'Gesamt';
 
   @override
+  String get invoiceFacturXDownload => 'Factur-X (PDF) herunterladen';
+
+  @override
+  String get invoiceFacturXShare => 'Factur-X (PDF) teilen';
+
+  @override
+  String get invoiceFacturXExplain =>
+      'Eine Datei: die Rechnung für Menschen, mit dem maschinenlesbaren XML darin. Das erwarten die meisten Plattformen.';
+
+  @override
+  String get invoiceSendAction => 'An die Plattform senden';
+
+  @override
+  String get invoiceSendAccepted =>
+      'Gesendet — die Plattform hat sie angenommen.';
+
+  @override
+  String get invoiceSendRejected => 'Die Plattform hat sie abgelehnt.';
+
+  @override
+  String invoiceSentOn(String date, String status) {
+    return 'Gesendet am $date · $status';
+  }
+
+  @override
+  String get invoiceSendStatusAccepted => 'angenommen';
+
+  @override
+  String get invoiceSendStatusRejected => 'abgelehnt';
+
+  @override
+  String get invoiceSendStatusFailed => 'nicht übermittelt';
+
+  @override
+  String get einvoiceConfigTitle => 'E-Rechnungs-Plattform';
+
+  @override
+  String get einvoiceConfigIntro =>
+      'Wohin DesKilo deine Rechnungen sendet. Jede Plattform, die einen Upload mit Token annimmt, funktioniert — eine zugelassene Plattform, ein Peppol Access Point, eine nationale Plattform. Das Token liegt serverseitig und kommt nie zurück.';
+
+  @override
+  String get einvoiceConfigEndpoint => 'Upload-URL';
+
+  @override
+  String get einvoiceConfigToken => 'Token oder Zugangsdaten';
+
+  @override
+  String get einvoiceConfigHeader => 'Auth-Header (Standard Authorization)';
+
+  @override
+  String get einvoiceConfigField => 'Feldname der Datei (Standard file)';
+
+  @override
+  String get einvoiceConfigSaved => 'Plattform gespeichert.';
+
+  @override
+  String get einvoiceConfigCleared => 'Plattform entfernt.';
+
+  @override
+  String get einvoiceConfigClear => 'Plattform entfernen';
+
+  @override
+  String get einvoiceConfigTokenSet =>
+      'Ein Token ist gespeichert (neues eingeben, um es zu ersetzen).';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

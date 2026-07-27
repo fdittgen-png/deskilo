@@ -1593,6 +1593,71 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceRegisterTotal => 'Total';
 
   @override
+  String get invoiceFacturXDownload => 'Download Factur-X (PDF)';
+
+  @override
+  String get invoiceFacturXShare => 'Share Factur-X (PDF)';
+
+  @override
+  String get invoiceFacturXExplain =>
+      'One file: the invoice a human reads, with the machine-readable XML inside it. This is what most platforms expect.';
+
+  @override
+  String get invoiceSendAction => 'Send to the platform';
+
+  @override
+  String get invoiceSendAccepted => 'Sent — the platform accepted it.';
+
+  @override
+  String get invoiceSendRejected => 'The platform refused it.';
+
+  @override
+  String invoiceSentOn(String date, String status) {
+    return 'Sent $date · $status';
+  }
+
+  @override
+  String get invoiceSendStatusAccepted => 'accepted';
+
+  @override
+  String get invoiceSendStatusRejected => 'rejected';
+
+  @override
+  String get invoiceSendStatusFailed => 'not delivered';
+
+  @override
+  String get einvoiceConfigTitle => 'E-invoicing platform';
+
+  @override
+  String get einvoiceConfigIntro =>
+      'Where DesKilo posts your invoices. Any platform that accepts an upload with a token works — a plateforme agréée, a Peppol access point, a national platform. The token is stored server-side and never comes back out.';
+
+  @override
+  String get einvoiceConfigEndpoint => 'Upload URL';
+
+  @override
+  String get einvoiceConfigToken => 'Token or credential';
+
+  @override
+  String get einvoiceConfigHeader => 'Auth header (default Authorization)';
+
+  @override
+  String get einvoiceConfigField => 'File field name (default file)';
+
+  @override
+  String get einvoiceConfigSaved => 'Platform saved.';
+
+  @override
+  String get einvoiceConfigCleared => 'Platform removed.';
+
+  @override
+  String get einvoiceConfigClear => 'Remove the platform';
+
+  @override
+  String get einvoiceConfigTokenSet =>
+      'A token is stored (type a new one to replace it).';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

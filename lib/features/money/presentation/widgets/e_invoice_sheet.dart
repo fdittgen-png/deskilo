@@ -9,6 +9,13 @@ import '../../domain/invoice_ubl_check.dart';
 
 /// What to do with the generated XML.
 enum EInvoiceExport {
+  /// Post the document to the workspace's platform (0073).
+  send,
+
+  /// The hybrid document: PDF with the XML inside (Factur-X).
+  facturXDownload,
+  facturXShare,
+
   download,
   share,
 
@@ -53,6 +60,7 @@ Future<EInvoiceExport?> showEInvoiceSheet(
   required EInvoiceRoute route,
   required EInvoiceReadiness readiness,
   required bool canFixIdentity,
+  bool canSend = false,
 }) =>
     showModalBottomSheet<EInvoiceExport>(
       context: context,
@@ -63,6 +71,7 @@ Future<EInvoiceExport?> showEInvoiceSheet(
         route: route,
         readiness: readiness,
         canFixIdentity: canFixIdentity,
+        canSend: canSend,
       ),
     );
 
@@ -71,6 +80,7 @@ class _EInvoiceBody extends StatelessWidget {
     required this.route,
     required this.readiness,
     required this.canFixIdentity,
+    required this.canSend,
   });
 
   final EInvoiceRoute route;
@@ -81,6 +91,10 @@ class _EInvoiceBody extends StatelessWidget {
   /// Only an issuer can complete the workspace's legal identity — a
   /// member is shown what is missing without a button they cannot use.
   final bool canFixIdentity;
+
+  /// A platform is configured and the function is deployed (0073): the
+  /// document can LEAVE, not just be downloaded.
+  final bool canSend;
 
   @override
   Widget build(BuildContext context) {
@@ -213,11 +227,58 @@ class _EInvoiceBody extends StatelessWidget {
                 ),
               const SizedBox(height: AppSpacing.lg),
               if (readiness.ready) ...[
-                FilledButton.icon(
+                // Sending beats saving: if the platform is there, the file
+                // never has to touch the user's downloads folder.
+                if (canSend) ...[
+                  FilledButton.icon(
+                    key: const ValueKey('invoice-einvoice-send'),
+                    onPressed: () =>
+                        Navigator.of(context).pop(EInvoiceExport.send),
+                    icon: const Icon(Icons.send_outlined),
+                    label: Text(
+                      l10n?.invoiceSendAction ?? 'Send to the platform',
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                ],
+                // The hybrid document first: one file, both readers.
+                (canSend ? OutlinedButton.icon : FilledButton.icon)(
+                  key: const ValueKey('invoice-facturx-download'),
+                  onPressed: () => Navigator.of(context)
+                      .pop(EInvoiceExport.facturXDownload),
+                  icon: const Icon(Icons.picture_as_pdf_outlined),
+                  label: Text(
+                    l10n?.invoiceFacturXDownload ??
+                        'Download Factur-X (PDF)',
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                OutlinedButton.icon(
+                  key: const ValueKey('invoice-facturx-share'),
+                  onPressed: () =>
+                      Navigator.of(context).pop(EInvoiceExport.facturXShare),
+                  icon: const Icon(Icons.share_outlined),
+                  label: Text(
+                    l10n?.invoiceFacturXShare ?? 'Share Factur-X (PDF)',
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: AppSpacing.sm,
+                    bottom: AppSpacing.md,
+                  ),
+                  child: Text(
+                    l10n?.invoiceFacturXExplain ??
+                        'One file: the invoice a human reads, with the '
+                            'machine-readable XML inside it.',
+                    style: theme.textTheme.bodySmall?.copyWith(color: muted),
+                  ),
+                ),
+                OutlinedButton.icon(
                   key: const ValueKey('invoice-einvoice-download'),
                   onPressed: () =>
                       Navigator.of(context).pop(EInvoiceExport.download),
-                  icon: const Icon(Icons.download_outlined),
+                  icon: const Icon(Icons.code_outlined),
                   label: Text(
                     l10n?.invoiceEInvoiceDownload ??
                         'Download e-invoice (XML)',

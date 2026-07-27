@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:convert' show base64Encode;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/invoice.dart';
+import '../domain/einvoice_gateway.dart';
 import '../domain/fee_band.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
@@ -452,6 +454,143 @@ class SupabaseMoneyRepository implements MoneyRepository {
         st,
       );
     }
+  }
+
+  // ── e-invoice transmission (0071/0073) ──────────────────────────────
+
+  /// Same seam as the payment function: a 404 means "not deployed", which
+  /// is a configuration answer, not an error.
+  Future<Map<String, dynamic>?> _invokeSend(Map<String, dynamic> body) async {
+    try {
+      final response = await _client.functions.invoke(
+        'send-e-invoice',
+        body: body,
+      );
+      final data = response.data;
+      return data is Map ? Map<String, dynamic>.from(data) : null;
+    } on FunctionException catch (e, st) {
+      if (e.status == 404) return null;
+      // A 409/502 carries the platform's own words in the body — surface
+      // them rather than a generic failure.
+      final details = e.details;
+      if (details is Map) return Map<String, dynamic>.from(details);
+      // trace-exempt: rethrown for the caller's runGuarded to trace.
+      Error.throwWithStackTrace(
+        PaymentGatewayException(
+          e.status,
+          e.details?.toString() ?? e.reasonPhrase ?? 'function error',
+        ),
+        st,
+      );
+    }
+  }
+
+  @override
+  Future<EInvoiceGatewayConfig> fetchEInvoiceGateway(
+    String workspaceId,
+  ) async {
+    final data = await _invokeSend({
+      'action': 'config',
+      'workspace_id': workspaceId,
+    });
+    if (data == null) return EInvoiceGatewayConfig.notConfigured;
+    return EInvoiceGatewayConfig(
+      configured: data['configured'] == true,
+      provider: data['provider'] as String? ?? 'generic',
+      missing: [
+        for (final field in (data['missing'] as List? ?? const []))
+          field as String,
+      ],
+    );
+  }
+
+  @override
+  Future<EInvoiceSubmission> sendEInvoice({
+    required String workspaceId,
+    required String invoiceId,
+    required String fileName,
+    required String mimeType,
+    required List<int> bytes,
+  }) async {
+    final data = await _invokeSend({
+      'workspace_id': workspaceId,
+      'invoice_id': invoiceId,
+      'file_name': fileName,
+      'mime_type': mimeType,
+      'content_base64': base64Encode(bytes),
+    });
+    if (data == null) {
+      return const EInvoiceSubmission(
+        status: EInvoiceSubmissionStatus.failed,
+        detail: 'not_deployed',
+      );
+    }
+    final status = data['status'] as String?;
+    return EInvoiceSubmission(
+      status: EInvoiceSubmissionStatus.values.firstWhere(
+        (s) => s.name == status,
+        orElse: () => EInvoiceSubmissionStatus.failed,
+      ),
+      externalId: data['external_id'] as String? ?? '',
+      detail: data['detail'] as String? ?? data['error'] as String? ?? '',
+    );
+  }
+
+  @override
+  Future<Map<String, InvoiceTransmission>> fetchInvoiceTransmissions(
+    String workspaceId,
+  ) async {
+    final rows = await _client
+        .from('invoice_transmissions')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('sent_at', ascending: false);
+    final latest = <String, InvoiceTransmission>{};
+    for (final row in rows) {
+      // Ordered newest first: the first row per invoice is the current one.
+      final transmission = InvoiceTransmission.fromRow(row);
+      latest.putIfAbsent(transmission.invoiceId, () => transmission);
+    }
+    return latest;
+  }
+
+  @override
+  Future<void> setEInvoiceCredentials(
+    String workspaceId,
+    Map<String, String> config,
+  ) async {
+    await _client.rpc<void>('set_einvoice_credentials', params: {
+      'p_workspace_id': workspaceId,
+      'p_config': config,
+    });
+  }
+
+  @override
+  Future<void> clearEInvoiceCredentials(String workspaceId) async {
+    await _client.rpc<void>('clear_einvoice_credentials', params: {
+      'p_workspace_id': workspaceId,
+    });
+  }
+
+  @override
+  Future<EInvoiceProviderStatus> fetchEInvoiceStatus(
+    String workspaceId,
+  ) async {
+    final data = await _client.rpc<dynamic>('einvoice_status', params: {
+      'p_workspace_id': workspaceId,
+    });
+    final map = data is Map ? Map<String, dynamic>.from(data) : const {};
+    return EInvoiceProviderStatus(
+      configured: map['configured'] == true,
+      fields: {
+        for (final entry in (map['fields'] as Map? ?? const {}).entries)
+          entry.key as String: '${entry.value}',
+      },
+      secretsSet: [
+        for (final name in (map['secrets_set'] as List? ?? const []))
+          name as String,
+      ],
+    );
   }
 
   @override

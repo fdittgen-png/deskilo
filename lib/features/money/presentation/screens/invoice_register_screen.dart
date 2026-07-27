@@ -279,6 +279,7 @@ class _InvoiceRegisterScreenState
       isEu: isEuCountry(countryCode),
       reminder: reminder,
       showMemberName: showMemberName,
+      transmission: ref.read(invoiceTransmissionsProvider).value?[invoice.id],
     );
     if (action == null || !mounted) return;
     await runInvoiceAction(
