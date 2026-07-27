@@ -172,6 +172,9 @@ class SupabaseMoneyRepository implements MoneyRepository {
             description: row['description'] as String,
             period: row['period'] as String,
             createdAt: DateTime.parse(row['created_at'] as String),
+            occurredOn: row['occurred_on'] == null
+                ? null
+                : DateTime.parse(row['occurred_on'] as String),
           ),
         )
         .toList();
@@ -184,6 +187,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
     required int amountCents,
     String note = '',
     PaymentMethod? method,
+    DateTime? paidOn,
+    String? period,
   }) async {
     final result = await _client.rpc<dynamic>('record_payment', params: {
       'p_workspace_id': workspaceId,
@@ -191,6 +196,13 @@ class SupabaseMoneyRepository implements MoneyRepository {
       'p_amount_cents': amountCents,
       'p_note': note,
       'p_method': method?.wireName ?? '',
+      // 0070 — a date, not a timestamp: what matters is the DAY the money
+      // moved, in the payer's own calendar.
+      'p_paid_on': paidOn == null
+          ? null
+          : '${paidOn.year}-${paidOn.month.toString().padLeft(2, '0')}'
+              '-${paidOn.day.toString().padLeft(2, '0')}',
+      'p_period': period,
     });
     return result as String;
   }

@@ -13,7 +13,9 @@ import '../../../../core/trace/dev_mode.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/country/country_catalog.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/presentation/country_names.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -732,19 +734,26 @@ class _AddressDialog extends ConsumerStatefulWidget {
 
 class _AddressDialogState extends ConsumerState<_AddressDialog> {
   late final TextEditingController _controller;
+  late final TextEditingController _vatId;
+  String? _countryCode;
   bool _saving = false;
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(
-      text: ref.read(myProfileProvider).value?.address ?? '',
-    );
+    final profile = ref.read(myProfileProvider).value;
+    _controller = TextEditingController(text: profile?.address ?? '');
+    _vatId = TextEditingController(text: profile?.vatId ?? '');
+    // 0069 — the country an EN 16931 invoice must state about the
+    // customer (BT-55); unset means "wherever the workspace is".
+    final stored = profile?.countryCode ?? '';
+    _countryCode = stored.isEmpty ? null : stored;
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _vatId.dispose();
     super.dispose();
   }
 
@@ -757,8 +766,14 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
       message: 'address update failed',
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
-      action: () =>
-          ref.read(profileRepositoryProvider).updateAddress(_controller.text),
+      action: () async {
+        final repository = ref.read(profileRepositoryProvider);
+        await repository.updateAddress(_controller.text);
+        await repository.updateTaxIdentity(
+          countryCode: _countryCode ?? '',
+          vatId: _vatId.text,
+        );
+      },
     )) {
       if (mounted) setState(() => _saving = false);
       return;
@@ -774,14 +789,46 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
     final l10n = AppLocalizations.of(context);
     return AlertDialog(
       title: Text(l10n?.addressTitle ?? 'Address'),
-      content: TextField(
-        key: const ValueKey('address-field'),
-        controller: _controller,
-        maxLines: 3,
-        maxLength: 400,
-        decoration: InputDecoration(
-          labelText: l10n?.addressTitle ?? 'Address',
-        ),
+      content: SingleChildScrollView(
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          TextField(
+            key: const ValueKey('address-field'),
+            controller: _controller,
+            maxLines: 3,
+            maxLength: 400,
+            decoration: InputDecoration(
+              labelText: l10n?.addressTitle ?? 'Address',
+            ),
+          ),
+          // 0069 — what the e-invoice needs beyond the street: the
+          // country, and the VAT id of a member who invoices as a
+          // business.
+          DropdownButtonFormField<String>(
+            key: const ValueKey('address-country'),
+            initialValue: _countryCode,
+            isExpanded: true,
+            items: [
+              for (final country in CountryCatalog.countries)
+                DropdownMenuItem(
+                  value: country.code,
+                  child: Text(localizedCountryName(l10n, country.code)),
+                ),
+            ],
+            onChanged: (value) => setState(() => _countryCode = value),
+            decoration: InputDecoration(
+              labelText: l10n?.addressCountryLabel ?? 'Country',
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            key: const ValueKey('address-vat-id'),
+            controller: _vatId,
+            textCapitalization: TextCapitalization.characters,
+            decoration: InputDecoration(
+              labelText: l10n?.addressVatIdLabel ?? 'VAT number',
+            ),
+          ),
+        ]),
       ),
       actions: [
         TextButton(

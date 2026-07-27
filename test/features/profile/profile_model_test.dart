@@ -16,6 +16,9 @@ void main() {
         'whatsapp': '+33612345678',
         'status_text': 'In a call · back at 14:00',
         'address': '12 Rue des Halles, 34120 Pézenas',
+        // 0069 — the two facts an e-invoice needs about the customer.
+        'country_code': 'FR',
+        'vat_id': 'FR12812345678',
         'last_seen_at': '2026-07-11T09:30:00.000Z',
         'avatar_path': 'user-1/avatar',
       };
@@ -27,6 +30,8 @@ void main() {
       expect(profile.statusText, 'In a call · back at 14:00');
       expect(profile.hasStatus, isTrue);
       expect(profile.address, '12 Rue des Halles, 34120 Pézenas');
+      expect(profile.countryCode, 'FR');
+      expect(profile.vatId, 'FR12812345678');
       expect(profile.lastSeenAt, DateTime.utc(2026, 7, 11, 9, 30));
       expect(profile.hasAvatar, isTrue);
       expect(profile.avatarPath, 'user-1/avatar');
@@ -42,6 +47,8 @@ void main() {
 
       expect(profile.whatsapp, '');
       expect(profile.sharesWhatsapp, isFalse);
+      expect(profile.countryCode, '', reason: 'pre-0069 rows carry none');
+      expect(profile.vatId, '');
       expect(profile.statusText, '');
       expect(profile.hasStatus, isFalse);
       expect(profile.lastSeenAt, isNull);

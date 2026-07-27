@@ -1362,6 +1362,237 @@ class AppLocalizationsEn extends AppLocalizations {
       'No registered payment to match — record or confirm it first.';
 
   @override
+  String get invoiceStatusOpen => 'Open';
+
+  @override
+  String invoiceCountShown(int count) {
+    return '$count invoices';
+  }
+
+  @override
+  String get invoiceFilterNoMatch => 'No invoice matches these filters.';
+
+  @override
+  String get invoiceFilterClear => 'Clear filters';
+
+  @override
+  String invoiceReplacedBy(String number) {
+    return 'Replaced by $number';
+  }
+
+  @override
+  String invoiceMatchSummary(String amount, String date) {
+    return 'Paid $amount on $date';
+  }
+
+  @override
+  String invoiceRemindedLast(String date) {
+    return 'last reminder $date';
+  }
+
+  @override
+  String invoiceAnnexSummary(int movements, int checkIns) {
+    return 'Annex: $movements movements, $checkIns check-ins';
+  }
+
+  @override
+  String get invoicePickMember =>
+      'Pick a member to see what their month tracked.';
+
+  @override
+  String get invoiceRunningMonth =>
+      'This month is still running — its positions can still change, and a month can only be invoiced once.';
+
+  @override
+  String invoiceIssueAllConfirm(int count, String month, String total) {
+    return 'Issue $count invoices for $month, $total in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.';
+  }
+
+  @override
+  String invoiceIssuedPartial(int issued, int failed) {
+    return '$issued issued, $failed failed.';
+  }
+
+  @override
+  String get invoiceEInvoiceAction => 'E-invoice (XML)';
+
+  @override
+  String get invoiceEInvoiceExplain =>
+      'The machine-readable EN 16931 invoice — the file tax administrations and business customers ask for.';
+
+  @override
+  String invoiceEInvoiceBusinessRoute(String channel, String format) {
+    return 'Business customers: send it through $channel as $format.';
+  }
+
+  @override
+  String invoiceEInvoicePublicRoute(String channel) {
+    return 'Public-sector customers: $channel.';
+  }
+
+  @override
+  String get invoiceEInvoiceTransportPeppol =>
+      'An access point delivers it to the customer — no government platform in between.';
+
+  @override
+  String get invoiceEInvoiceTransportClearance =>
+      'The national platform receives the invoice first and hands it on — sending it straight to the customer is not an option.';
+
+  @override
+  String get invoiceEInvoiceTransportAccredited =>
+      'An accredited platform carries the invoice and reports it to the tax administration for you.';
+
+  @override
+  String get invoiceEInvoiceTransportBilateral =>
+      'No channel is imposed: e-mail, a portal or Peppol — whatever you agree with the customer.';
+
+  @override
+  String invoiceEInvoiceFormatMismatch(String channel, String format) {
+    return '$channel only accepts $format: this EN 16931 file serves Peppol, public buyers and foreign customers — your platform or accountant converts the rest.';
+  }
+
+  @override
+  String get invoiceEInvoiceReady => 'Ready — this file satisfies EN 16931.';
+
+  @override
+  String get invoiceEInvoiceBlockedTitle =>
+      'A validator would reject this file:';
+
+  @override
+  String get invoiceEInvoiceIncompleteTitle =>
+      'Valid, but the strict national profiles also want:';
+
+  @override
+  String get invoiceGapVatNotSupported =>
+      'The workspace charges VAT, and DesKilo does not compute VAT per position yet — no truthful tax breakdown can be produced.';
+
+  @override
+  String get invoiceGapMissingVatId =>
+      'The VAT number is missing — an exempt seller must state one.';
+
+  @override
+  String get invoiceGapMissingLegalId =>
+      'The company registration number is missing (SIREN, HRB, CIF…) — nothing identifies you on the invoice.';
+
+  @override
+  String get invoiceGapMissingExemptionReason =>
+      'The reason for not charging VAT is missing.';
+
+  @override
+  String get invoiceGapMissingSellerCountry =>
+      'The workspace country is missing.';
+
+  @override
+  String get invoiceGapMissingBuyerCountry =>
+      'The customer\'s country is missing.';
+
+  @override
+  String get invoiceGapNoChargeLines =>
+      'This invoice has no charge line — its month was fully covered by payments, so there is no invoice to send.';
+
+  @override
+  String get invoiceGapMissingSellerCity => 'the city of the workspace address';
+
+  @override
+  String get invoiceGapMissingSellerPostalCode =>
+      'the post code of the workspace address';
+
+  @override
+  String get invoiceEInvoiceFixIdentity => 'Complete the legal identity';
+
+  @override
+  String get legalIdentityTitle => 'Legal identity & e-invoicing';
+
+  @override
+  String get legalIdentitySubtitle =>
+      'VAT regime and registration numbers — required by the e-invoice';
+
+  @override
+  String get legalIdentityIntro =>
+      'What an EN 16931 e-invoice must state about you. Invoices already issued keep the identity they were signed with.';
+
+  @override
+  String get legalIdentityRegime => 'VAT regime';
+
+  @override
+  String get legalIdentityRegimeNotSubject => 'Outside the scope of VAT';
+
+  @override
+  String get legalIdentityRegimeExempt => 'VAT-exempt (small-business scheme)';
+
+  @override
+  String get legalIdentityRegimeVatRegistered => 'VAT-registered (charges VAT)';
+
+  @override
+  String get legalIdentityRegimeHint =>
+      'The regime decides which number the norm requires: a registration number outside the scope of VAT, a VAT number when exempt.';
+
+  @override
+  String get legalIdentityVatId => 'VAT number';
+
+  @override
+  String get legalIdentityLegalId => 'Company registration number';
+
+  @override
+  String get legalIdentityExemptionReason => 'Why no VAT is charged';
+
+  @override
+  String get legalIdentityStreet => 'Street';
+
+  @override
+  String get legalIdentityCity => 'City';
+
+  @override
+  String get legalIdentityPostalCode => 'Post code';
+
+  @override
+  String get legalIdentitySaved => 'Legal identity saved.';
+
+  @override
+  String get legalIdentityVatWarning =>
+      'DesKilo does not compute VAT per position yet: with this regime the XML export stays disabled. The PDF is unaffected.';
+
+  @override
+  String get addressCountryLabel => 'Country';
+
+  @override
+  String get addressVatIdLabel => 'VAT number (if you invoice as a business)';
+
+  @override
+  String get invoiceProformaAction => 'Proforma invoice';
+
+  @override
+  String get invoicePdfProforma => 'Proforma';
+
+  @override
+  String get invoiceProformaShared => 'Proforma shared.';
+
+  @override
+  String get invoiceProformaNothing =>
+      'Nothing tracked for this month — no proforma to send.';
+
+  @override
+  String get invoicePdfCopy => 'Copy';
+
+  @override
+  String get invoiceStatusPartiallyPaid => 'Partially paid';
+
+  @override
+  String get invoiceRegisterTitle => 'Invoice register';
+
+  @override
+  String get invoiceRegisterDate => 'Date';
+
+  @override
+  String get invoiceRegisterName => 'Name';
+
+  @override
+  String get invoiceRegisterAmount => 'Amount';
+
+  @override
+  String get invoiceRegisterTotal => 'Total';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override
@@ -1839,6 +2070,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paymentMethodWise => 'Wise';
+
+  @override
+  String get moneyPaymentDateLabel => 'Payment date';
+
+  @override
+  String get moneyPaymentPeriodLabel => 'Applies to';
 
   @override
   String get planNoLevels => 'The workspace has no floor plan yet.';

@@ -14,6 +14,8 @@ import '../features/events/presentation/screens/validation_settings_screen.dart'
 import '../features/money/presentation/screens/billing_screen.dart';
 import '../features/money/presentation/screens/money_screen.dart';
 import '../features/money/presentation/screens/invoices_screen.dart';
+import '../features/money/presentation/screens/invoice_register_screen.dart';
+import '../features/money/presentation/screens/legal_identity_screen.dart';
 import '../features/money/presentation/screens/services_screen.dart';
 import '../features/plan/presentation/screens/accessories_screen.dart';
 import '../features/plan/presentation/screens/plan_screen.dart';
@@ -312,6 +314,26 @@ GoRouter router(Ref ref) {
         redirect: (context, state) =>
             featureEnabled(WorkspaceFeature.invoicing) ? null : '/money',
         builder: (context, state) => const InvoicesScreen(),
+      ),
+      // The sortable register (0072): every member reads their own, an
+      // issuer the whole workspace's.
+      GoRoute(
+        path: '/invoice-register',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.invoicing) ? null : '/money',
+        builder: (context, state) => const InvoiceRegisterScreen(),
+      ),
+      // The workspace's legal identity (0069) — owner-only, and only
+      // where invoices exist at all.
+      GoRoute(
+        path: '/legal-identity',
+        redirect: (context, state) {
+          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          return isOwner && featureEnabled(WorkspaceFeature.invoicing)
+              ? null
+              : '/money';
+        },
+        builder: (context, state) => const LegalIdentityScreen(),
       ),
       GoRoute(
         path: '/services',

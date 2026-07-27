@@ -248,8 +248,8 @@ Your ledger answers *what do I owe, what am I owed* — and *how much can I stil
 - **Charges**: monthly subscription (a percentage plan), overage, service consumption, accessory supplements, day packages.
 - **Credits**: approved expenses, recorded payments, adjustments.
 - **Statements**: monthly, with **settled / outstanding** status, exportable as a **PDF bill** saved locally.
-- **Invoices**: where the workspace issues invoices (below), yours are always available under **Money → Invoices** — download the PDF, and in EU workspaces the machine-readable e-invoice (XML).
-- **Paying**: DesKilo tracks payments; outstanding bills show the workspace's **payment instructions** (IBAN copies with one tap, PayPal.me opens directly). Record a payment ("I paid") with its method — the other side confirms. If the workspace enabled **online payments** and its server is configured for it, a **Pay online** button lets the member pay the amount owed straight away — with **PayPal, a credit card (Stripe), Mollie, or Wero**, whichever the workspace enabled (several show a chooser).
+- **Invoices**: where the workspace issues invoices (below), yours are always available under **Money → Invoices** — tap one to read it in the app (positions, balance, status), download the PDF, and in EU workspaces export the machine-readable e-invoice (XML).
+- **Paying**: DesKilo tracks payments; outstanding bills show the workspace's **payment instructions** (IBAN copies with one tap, PayPal.me opens directly). Record a payment ("I paid") with its method, the **date the money moved** (defaults to today) and the **month it settles** (defaults to the running one, one step back for arrears, one forward for a prepayment) — the other side confirms. That month decides which bill and which invoice the credit lands on. If the workspace enabled **online payments** and its server is configured for it, a **Pay online** button lets the member pay the amount owed straight away — with **PayPal, a credit card (Stripe), Mollie, or Wero**, whichever the workspace enabled (several show a chooser).
 - **Expenses**: bought coffee for the space? Submit the expense — another admin approves it (no self-approval) and it credits your next statement.
 - **Services**: owner-defined extras (lockers, printing…) whose consumption lands on your statement after you confirm it.
 
@@ -261,13 +261,34 @@ An invoice in DesKilo is generated, never composed: its positions are **derived 
 
 Issuers open **Money → Invoices** and land on a three-tab hub under a live summary strip:
 
-- **To invoice** — every member whose previous month has billable data and no invoice yet: issue per member (with a preview of the derived positions) or **Invoice all** in one sweep. **One active invoice per member and month** — a month only becomes invoiceable again after its invoice was cancelled.
-- **Open** — issued invoices awaiting settlement. Each card offers **Send a reminder** (records the reminder and shares the PDF with a message — the card shows *Reminded ×N*), **Mark as erroneous** (cancels the invoice for correction: it moves to the archive struck through, and a **replacement** re-derives the same month from the corrected data, referencing the original), and **Mark as paid**.
-- **Archive** — closed invoices, paid or cancelled, filterable by member and month and sortable. Download or share the **PDF**; in EU workspaces every invoice also exports as an **EN 16931 e-invoice (XML)** — the machine-readable format public-sector and business customers ask for.
+- **To invoice** — every member whose previous month has billable data and no invoice yet, with what the month adds up to: issue per member (with a preview of the derived positions) or **Invoice all** in one sweep — which asks for confirmation first, naming the count, the month and the total. **One active invoice per member and month** — a month only becomes invoiceable again after its invoice was cancelled. The issue sheet opens on the **completed month** (the moment its numbers stop moving); pick the running month instead and it warns you, because that month can only be invoiced once.
+- **Open** — issued invoices awaiting settlement, oldest first; anything waiting longer than 30 days turns red, in the card and in the summary strip. **Tap a card to read the invoice**; the buttons act on it: **Send a reminder** (records the reminder and shares the PDF with a message — the card shows *Reminded ×N*), **Mark as erroneous** (cancels the invoice for correction: it moves to the archive struck through, and a **replacement** re-derives the same month from the corrected data, referencing the original), and **Mark as paid**.
+- **Archive** — closed invoices, paid or cancelled, filterable by member and month and sortable; the bar under the filters says how many invoices match and **Clear filters** brings the whole archive back. Each row carries its status, its month and its amount, with **Download PDF** right there. **Tap a row to open the invoice** — positions, balance, who it was billed to, where it stands, which invoice it replaces or was replaced by, the payment that closed it, the reminders sent, its signature — and every action it still allows, spelled out: share the PDF, export the **e-invoice (XML)**, remind, mark as paid, mark erroneous, issue a replacement.
 
 **Marking as paid means matching a real payment.** The dialog lists the member's registered payments — recorded transfers and confirmed online payments — and you map the invoice to one of them; there is no amount to type. Paid **more**? Create a **credit note** for the excess (a credit on the member's ledger) or force-accept with a mandatory note. Paid **less**? Accept it with a mandatory note. Everyone with invoicing access is notified of paid invoices, and the owner can put an **Invoice payment** validation rule (§6) on them: the match then waits for the quorum — a reject reopens the invoice.
 
-**A paid invoice is definitive.** Once matched it can never be cancelled, replaced or altered — corrections happen before payment, by cancelling the open invoice and issuing its replacement.
+**A paid invoice is definitive.** Once matched it can never be cancelled, replaced or altered — corrections happen before payment, by cancelling the open invoice and issuing its replacement. A payment that did **not** cover the whole amount, accepted with a note, shows as **partially paid** rather than paid.
+
+**Proforma.** Both hub tabs carry a proforma action: on **To invoice** it renders the month's derived positions as a quote — no number, no signature, stamped PROFORMA, and **nothing is issued**; on **Open** it re-renders the issued invoice as a payment request that cannot pass for the original. On the Open cards every action is an icon with a tooltip (cancel · proforma · reminder · mark as paid) — three labels side by side ran off the card.
+
+**Stamps.** A cancelled invoice carries a large diagonal **ERRONEOUS** across every page of its PDF, in light grey over the content: it cannot be mistaken for a valid document on a desk or a photocopy. The same stamp says **PROFORMA** on a quote, and **COPY** on any invoice rendered by someone other than its issuer — the workspace holds the original.
+
+**The register.** The list icon in the Invoices app bar opens a one-line-per-invoice ledger: **date · name · amount · status**, sorted by date (tap the Date header to flip the direction), with the sum at the foot. The *name* column follows the reader — an issuer scans member names, a member scans their own invoice numbers. Members see only what concerns them: issued, and never a cancelled one.
+
+### Where the e-invoice has to go (EU)
+
+The **e-invoice (XML)** action opens a sheet that answers this for the workspace's own country before handing the file over: which channel business customers expect it on, whether a platform sits in the path, and which channel public buyers use. Four models exist in the union:
+
+- **Peppol** — an access point delivers the file to the customer; no government platform in between. Belgium's B2B mandate works exactly this way, and Peppol is how public buyers are reached across the EU (Directive 2014/55/EU makes every authority able to receive an EN 16931 invoice).
+- **Accredited platforms** — France: you pick a *plateforme agréée* (the renamed PDP), it routes the invoice and reports the data to the tax administration. The public portal is a directory, not a mailbox. Public-sector invoices stay on **Chorus Pro**.
+- **Clearance platforms** — Italy (**SdI**, FatturaPA), Poland (**KSeF**, FA(3)), Romania (**RO e-Factura** via the SPV, CIUS-RO): the platform receives the invoice *first* and passes it on; sending straight to the customer is not an option. Each mandates its own syntax, so the sheet warns that the EN 16931 file DesKilo exports is not the one they accept — use it for Peppol, public buyers and foreign customers, and let your platform or accountant convert.
+- **No imposed channel** — Germany today: receiving has been mandatory since 2025 and issuing phases in, but an e-mail attachment is a legal e-invoice; XRechnung and ZUGFeRD are the expected syntaxes. Public sector: **OZG-RE / ZRE**, or Peppol.
+
+DesKilo never transmits anything itself — it produces the file, you or your platform send it.
+
+**Before the first export, fill in the legal identity.** In *Workspace settings → **Legal identity & e-invoicing*** the owner declares the **VAT regime** and the number the norm demands with it: outside the scope of VAT, a **company registration number** (SIREN, HRB, CIF…); VAT-exempt under a small-business scheme, a **VAT number** plus the reason no VAT is charged. Members add their **country** — and their VAT number if they invoice as a business — beside their address in *Settings → Address*. DesKilo checks all of this **before** producing the file and refuses with the missing item named, because an invoice a platform rejects is worse than no invoice. A **VAT-charging workspace** cannot export yet: DesKilo does not price VAT per position, and it will not declare a zero it does not believe. The PDF is never affected.
+
+Mandate calendars keep moving: check your own tax administration before the deadline that concerns you.
 
 ## 9. Kiosk mode (wall tablet)
 
@@ -281,7 +302,7 @@ Mount an Android tablet or iPad by the door and let people check in as they walk
    - Or tap **Scan the QR badge** — the tablet reads the printed badge **with its own camera** (front camera by default, since a wall tablet's back lens faces the wall; switch in *Settings → Scan with the front camera*). A USB/Bluetooth wedge scanner or typing the code works too.
 5. **Nothing happens without your say-so:** the kiosk identifies the badge, closes the readers, and shows a summary — *who* it recognized, *what* will happen, *where* and *when*. Only **Confirm** executes and refreshes the plan; **Reject** discards.
 
-Your identity exists only for the moment of the operation: the credential is sent once to the server, the booking is made **in your name**, and nothing is stored on the tablet — you are "signed out" the instant it completes. (Per-operation Google/Facebook sign-in is still on the roadmap; **iPads have no NFC**, so there the camera QR path is the way.)
+Your identity exists only for the moment of the operation: the credential is sent once to the server, the booking is made **in your name**, and nothing is stored on the tablet — you are "signed out" the instant it completes. (Per-operation Google sign-in is still on the roadmap; **iPads have no NFC**, so there the camera QR path is the way.)
 
 ## 10. Notifications
 

@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/links/link_launcher.dart';
+import '../../../../core/presence/presence_rules.dart';
 import '../../../../core/theme/app_elevation.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -44,8 +47,47 @@ import '../../providers/directory_providers.dart';
 /// Deliberately NOT role-gated (unlike /members, the owner management
 /// screen): visibility of names and WhatsApp numbers inside a workspace
 /// is exactly what the profiles RLS already grants.
-class DirectoryScreen extends ConsumerWidget {
+class DirectoryScreen extends ConsumerStatefulWidget {
   const DirectoryScreen({super.key});
+
+  @override
+  ConsumerState<DirectoryScreen> createState() => _DirectoryScreenState();
+}
+
+class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
+  /// Presence decays: the profile snapshot is fetched once, so after
+  /// [PresenceRules.onlineWindow] on an open screen EVERYONE drifted to
+  /// "offline" while their heartbeats kept arriving. Re-read it on the
+  /// heartbeat's own cadence — and let `now` advance with it, so the
+  /// relative labels count up instead of freezing.
+  Timer? _presenceTimer;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // The shell keeps every branch mounted behind the visible one
+    // (IndexedStack): TickerMode is the framework's own "am I the child
+    // on screen" signal, so a hidden directory polls nothing.
+    _armPresence(visible: TickerMode.valuesOf(context).enabled);
+  }
+
+  void _armPresence({required bool visible}) {
+    if (visible == (_presenceTimer != null)) return;
+    _presenceTimer?.cancel();
+    _presenceTimer = visible
+        ? Timer.periodic(PresenceRules.heartbeatInterval, (_) {
+            if (!mounted) return;
+            ref.invalidate(memberProfilesProvider);
+            setState(() {});
+          })
+        : null;
+  }
+
+  @override
+  void dispose() {
+    _presenceTimer?.cancel();
+    super.dispose();
+  }
 
   Future<void> _refresh(WidgetRef ref) async {
     ref
@@ -92,7 +134,7 @@ class DirectoryScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final now = DateTime.now();
     final membersAsync = ref.watch(workspaceMembersProvider);
@@ -159,6 +201,7 @@ class DirectoryScreen extends ConsumerWidget {
                       presence: resolveDirectoryPresence(
                         lastSeenAt: profiles[member.userId]?.lastSeenAt,
                         now: now,
+                        isSelf: member.id == myMemberId,
                       ),
                       reservationInfo: resolveReservationInfo(
                         memberId: member.id,

@@ -35,12 +35,20 @@ class DirectoryPresence {
 /// [PresenceRules.onlineWindow] ([resolvePresence], #223), otherwise
 /// **offline** carrying `lastSeenAt` for the relative label (null =
 /// never seen, no chip).
+///
+/// [isSelf] short-circuits to online: the signed-in member is reading
+/// this very screen, so their own presence is a fact, not a fetched
+/// timestamp. Their stored heartbeat is at most a few minutes old but the
+/// snapshot the directory holds can be much older, which used to show
+/// people "20 min" away from themselves.
 DirectoryPresence resolveDirectoryPresence({
   required DateTime? lastSeenAt,
   required DateTime now,
+  bool isSelf = false,
 }) {
-  if (resolvePresence(lastSeenAt: lastSeenAt, now: now) ==
-      PresenceStatus.online) {
+  if (isSelf ||
+      resolvePresence(lastSeenAt: lastSeenAt, now: now) ==
+          PresenceStatus.online) {
     return const DirectoryPresence._(DirectoryPresenceKind.online);
   }
   return DirectoryPresence._(DirectoryPresenceKind.offline,

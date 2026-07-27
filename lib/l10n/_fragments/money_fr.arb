@@ -50,5 +50,7 @@
   "paymentMethodOther": "Autre",
   "paymentMethodWero": "Wero",
   "paymentMethodLydia": "Lydia",
-  "paymentMethodWise": "Wise"
+  "paymentMethodWise": "Wise",
+  "moneyPaymentDateLabel": "Date du paiement",
+  "moneyPaymentPeriodLabel": "S’applique à"
 }

@@ -1066,11 +1066,306 @@ as String,
 }
 
 /// @nodoc
+mixin _$InvoiceParty {
+
+ String get name;/// BT-35 — one line; legacy free-text addresses land here whole.
+ String get street;/// BT-37.
+ String get city;/// BT-38.
+ String get postalCode;/// BT-40 / BT-55 — ISO 3166-1 alpha-2, mandatory on both parties.
+ String get country;/// BT-31 (seller) / BT-48 (buyer).
+ String get vatId;/// BT-30, the company register number — the seller identifier a
+/// category-O invoice is allowed to carry.
+ String get legalId;/// Wire value of [VatRegime]; seller only.
+ String get vatRegime;/// Free-text exemption reason (BT-120); seller only.
+ String get taxExemptionReason;
+/// Create a copy of InvoiceParty
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$InvoicePartyCopyWith<InvoiceParty> get copyWith => _$InvoicePartyCopyWithImpl<InvoiceParty>(this as InvoiceParty, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InvoiceParty&&(identical(other.name, name) || other.name == name)&&(identical(other.street, street) || other.street == street)&&(identical(other.city, city) || other.city == city)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.country, country) || other.country == country)&&(identical(other.vatId, vatId) || other.vatId == vatId)&&(identical(other.legalId, legalId) || other.legalId == legalId)&&(identical(other.vatRegime, vatRegime) || other.vatRegime == vatRegime)&&(identical(other.taxExemptionReason, taxExemptionReason) || other.taxExemptionReason == taxExemptionReason));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,name,street,city,postalCode,country,vatId,legalId,vatRegime,taxExemptionReason);
+
+@override
+String toString() {
+  return 'InvoiceParty(name: $name, street: $street, city: $city, postalCode: $postalCode, country: $country, vatId: $vatId, legalId: $legalId, vatRegime: $vatRegime, taxExemptionReason: $taxExemptionReason)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $InvoicePartyCopyWith<$Res>  {
+  factory $InvoicePartyCopyWith(InvoiceParty value, $Res Function(InvoiceParty) _then) = _$InvoicePartyCopyWithImpl;
+@useResult
+$Res call({
+ String name, String street, String city, String postalCode, String country, String vatId, String legalId, String vatRegime, String taxExemptionReason
+});
+
+
+
+
+}
+/// @nodoc
+class _$InvoicePartyCopyWithImpl<$Res>
+    implements $InvoicePartyCopyWith<$Res> {
+  _$InvoicePartyCopyWithImpl(this._self, this._then);
+
+  final InvoiceParty _self;
+  final $Res Function(InvoiceParty) _then;
+
+/// Create a copy of InvoiceParty
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? street = null,Object? city = null,Object? postalCode = null,Object? country = null,Object? vatId = null,Object? legalId = null,Object? vatRegime = null,Object? taxExemptionReason = null,}) {
+  return _then(_self.copyWith(
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,street: null == street ? _self.street : street // ignore: cast_nullable_to_non_nullable
+as String,city: null == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
+as String,postalCode: null == postalCode ? _self.postalCode : postalCode // ignore: cast_nullable_to_non_nullable
+as String,country: null == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
+as String,vatId: null == vatId ? _self.vatId : vatId // ignore: cast_nullable_to_non_nullable
+as String,legalId: null == legalId ? _self.legalId : legalId // ignore: cast_nullable_to_non_nullable
+as String,vatRegime: null == vatRegime ? _self.vatRegime : vatRegime // ignore: cast_nullable_to_non_nullable
+as String,taxExemptionReason: null == taxExemptionReason ? _self.taxExemptionReason : taxExemptionReason // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [InvoiceParty].
+extension InvoicePartyPatterns on InvoiceParty {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _InvoiceParty value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _InvoiceParty() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _InvoiceParty value)  $default,){
+final _that = this;
+switch (_that) {
+case _InvoiceParty():
+return $default(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _InvoiceParty value)?  $default,){
+final _that = this;
+switch (_that) {
+case _InvoiceParty() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String street,  String city,  String postalCode,  String country,  String vatId,  String legalId,  String vatRegime,  String taxExemptionReason)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _InvoiceParty() when $default != null:
+return $default(_that.name,_that.street,_that.city,_that.postalCode,_that.country,_that.vatId,_that.legalId,_that.vatRegime,_that.taxExemptionReason);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String street,  String city,  String postalCode,  String country,  String vatId,  String legalId,  String vatRegime,  String taxExemptionReason)  $default,) {final _that = this;
+switch (_that) {
+case _InvoiceParty():
+return $default(_that.name,_that.street,_that.city,_that.postalCode,_that.country,_that.vatId,_that.legalId,_that.vatRegime,_that.taxExemptionReason);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String street,  String city,  String postalCode,  String country,  String vatId,  String legalId,  String vatRegime,  String taxExemptionReason)?  $default,) {final _that = this;
+switch (_that) {
+case _InvoiceParty() when $default != null:
+return $default(_that.name,_that.street,_that.city,_that.postalCode,_that.country,_that.vatId,_that.legalId,_that.vatRegime,_that.taxExemptionReason);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _InvoiceParty implements InvoiceParty {
+  const _InvoiceParty({this.name = '', this.street = '', this.city = '', this.postalCode = '', this.country = '', this.vatId = '', this.legalId = '', this.vatRegime = 'not_subject', this.taxExemptionReason = ''});
+  
+
+@override@JsonKey() final  String name;
+/// BT-35 — one line; legacy free-text addresses land here whole.
+@override@JsonKey() final  String street;
+/// BT-37.
+@override@JsonKey() final  String city;
+/// BT-38.
+@override@JsonKey() final  String postalCode;
+/// BT-40 / BT-55 — ISO 3166-1 alpha-2, mandatory on both parties.
+@override@JsonKey() final  String country;
+/// BT-31 (seller) / BT-48 (buyer).
+@override@JsonKey() final  String vatId;
+/// BT-30, the company register number — the seller identifier a
+/// category-O invoice is allowed to carry.
+@override@JsonKey() final  String legalId;
+/// Wire value of [VatRegime]; seller only.
+@override@JsonKey() final  String vatRegime;
+/// Free-text exemption reason (BT-120); seller only.
+@override@JsonKey() final  String taxExemptionReason;
+
+/// Create a copy of InvoiceParty
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$InvoicePartyCopyWith<_InvoiceParty> get copyWith => __$InvoicePartyCopyWithImpl<_InvoiceParty>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InvoiceParty&&(identical(other.name, name) || other.name == name)&&(identical(other.street, street) || other.street == street)&&(identical(other.city, city) || other.city == city)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.country, country) || other.country == country)&&(identical(other.vatId, vatId) || other.vatId == vatId)&&(identical(other.legalId, legalId) || other.legalId == legalId)&&(identical(other.vatRegime, vatRegime) || other.vatRegime == vatRegime)&&(identical(other.taxExemptionReason, taxExemptionReason) || other.taxExemptionReason == taxExemptionReason));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,name,street,city,postalCode,country,vatId,legalId,vatRegime,taxExemptionReason);
+
+@override
+String toString() {
+  return 'InvoiceParty(name: $name, street: $street, city: $city, postalCode: $postalCode, country: $country, vatId: $vatId, legalId: $legalId, vatRegime: $vatRegime, taxExemptionReason: $taxExemptionReason)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$InvoicePartyCopyWith<$Res> implements $InvoicePartyCopyWith<$Res> {
+  factory _$InvoicePartyCopyWith(_InvoiceParty value, $Res Function(_InvoiceParty) _then) = __$InvoicePartyCopyWithImpl;
+@override @useResult
+$Res call({
+ String name, String street, String city, String postalCode, String country, String vatId, String legalId, String vatRegime, String taxExemptionReason
+});
+
+
+
+
+}
+/// @nodoc
+class __$InvoicePartyCopyWithImpl<$Res>
+    implements _$InvoicePartyCopyWith<$Res> {
+  __$InvoicePartyCopyWithImpl(this._self, this._then);
+
+  final _InvoiceParty _self;
+  final $Res Function(_InvoiceParty) _then;
+
+/// Create a copy of InvoiceParty
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? street = null,Object? city = null,Object? postalCode = null,Object? country = null,Object? vatId = null,Object? legalId = null,Object? vatRegime = null,Object? taxExemptionReason = null,}) {
+  return _then(_InvoiceParty(
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,street: null == street ? _self.street : street // ignore: cast_nullable_to_non_nullable
+as String,city: null == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
+as String,postalCode: null == postalCode ? _self.postalCode : postalCode // ignore: cast_nullable_to_non_nullable
+as String,country: null == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
+as String,vatId: null == vatId ? _self.vatId : vatId // ignore: cast_nullable_to_non_nullable
+as String,legalId: null == legalId ? _self.legalId : legalId // ignore: cast_nullable_to_non_nullable
+as String,vatRegime: null == vatRegime ? _self.vatRegime : vatRegime // ignore: cast_nullable_to_non_nullable
+as String,taxExemptionReason: null == taxExemptionReason ? _self.taxExemptionReason : taxExemptionReason // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$Invoice {
 
  String get id; String get workspaceId; String get memberId; String get number; DateTime get issuedAt; String? get period; String get title; List<InvoiceLine> get lines; int get totalCents; String get currency; String get memberName; String get memberAddress; String get workspaceName; String get workspaceAddress; String get issuerName; String get signature; DateTime? get voidedAt; String get voidedByName; String? get replacesInvoiceId; String get replacesNumber;// 0064 — the optional SNAPSHOTTED annex; compact invoices carry
 // neither.
- bool get detailed; List<InvoiceDetailEntry> get detailLedger; List<InvoiceAttendance> get attendance;
+ bool get detailed; List<InvoiceDetailEntry> get detailLedger; List<InvoiceAttendance> get attendance;// 0069 — the parties' legal identity, snapshotted for the e-invoice.
+// Null on pre-0069 documents.
+ InvoiceParty? get sellerParty; InvoiceParty? get buyerParty;
 /// Create a copy of Invoice
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1081,16 +1376,16 @@ $InvoiceCopyWith<Invoice> get copyWith => _$InvoiceCopyWithImpl<Invoice>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Invoice&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.number, number) || other.number == number)&&(identical(other.issuedAt, issuedAt) || other.issuedAt == issuedAt)&&(identical(other.period, period) || other.period == period)&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other.lines, lines)&&(identical(other.totalCents, totalCents) || other.totalCents == totalCents)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.memberName, memberName) || other.memberName == memberName)&&(identical(other.memberAddress, memberAddress) || other.memberAddress == memberAddress)&&(identical(other.workspaceName, workspaceName) || other.workspaceName == workspaceName)&&(identical(other.workspaceAddress, workspaceAddress) || other.workspaceAddress == workspaceAddress)&&(identical(other.issuerName, issuerName) || other.issuerName == issuerName)&&(identical(other.signature, signature) || other.signature == signature)&&(identical(other.voidedAt, voidedAt) || other.voidedAt == voidedAt)&&(identical(other.voidedByName, voidedByName) || other.voidedByName == voidedByName)&&(identical(other.replacesInvoiceId, replacesInvoiceId) || other.replacesInvoiceId == replacesInvoiceId)&&(identical(other.replacesNumber, replacesNumber) || other.replacesNumber == replacesNumber)&&(identical(other.detailed, detailed) || other.detailed == detailed)&&const DeepCollectionEquality().equals(other.detailLedger, detailLedger)&&const DeepCollectionEquality().equals(other.attendance, attendance));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Invoice&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.number, number) || other.number == number)&&(identical(other.issuedAt, issuedAt) || other.issuedAt == issuedAt)&&(identical(other.period, period) || other.period == period)&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other.lines, lines)&&(identical(other.totalCents, totalCents) || other.totalCents == totalCents)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.memberName, memberName) || other.memberName == memberName)&&(identical(other.memberAddress, memberAddress) || other.memberAddress == memberAddress)&&(identical(other.workspaceName, workspaceName) || other.workspaceName == workspaceName)&&(identical(other.workspaceAddress, workspaceAddress) || other.workspaceAddress == workspaceAddress)&&(identical(other.issuerName, issuerName) || other.issuerName == issuerName)&&(identical(other.signature, signature) || other.signature == signature)&&(identical(other.voidedAt, voidedAt) || other.voidedAt == voidedAt)&&(identical(other.voidedByName, voidedByName) || other.voidedByName == voidedByName)&&(identical(other.replacesInvoiceId, replacesInvoiceId) || other.replacesInvoiceId == replacesInvoiceId)&&(identical(other.replacesNumber, replacesNumber) || other.replacesNumber == replacesNumber)&&(identical(other.detailed, detailed) || other.detailed == detailed)&&const DeepCollectionEquality().equals(other.detailLedger, detailLedger)&&const DeepCollectionEquality().equals(other.attendance, attendance)&&(identical(other.sellerParty, sellerParty) || other.sellerParty == sellerParty)&&(identical(other.buyerParty, buyerParty) || other.buyerParty == buyerParty));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,id,workspaceId,memberId,number,issuedAt,period,title,const DeepCollectionEquality().hash(lines),totalCents,currency,memberName,memberAddress,workspaceName,workspaceAddress,issuerName,signature,voidedAt,voidedByName,replacesInvoiceId,replacesNumber,detailed,const DeepCollectionEquality().hash(detailLedger),const DeepCollectionEquality().hash(attendance)]);
+int get hashCode => Object.hashAll([runtimeType,id,workspaceId,memberId,number,issuedAt,period,title,const DeepCollectionEquality().hash(lines),totalCents,currency,memberName,memberAddress,workspaceName,workspaceAddress,issuerName,signature,voidedAt,voidedByName,replacesInvoiceId,replacesNumber,detailed,const DeepCollectionEquality().hash(detailLedger),const DeepCollectionEquality().hash(attendance),sellerParty,buyerParty]);
 
 @override
 String toString() {
-  return 'Invoice(id: $id, workspaceId: $workspaceId, memberId: $memberId, number: $number, issuedAt: $issuedAt, period: $period, title: $title, lines: $lines, totalCents: $totalCents, currency: $currency, memberName: $memberName, memberAddress: $memberAddress, workspaceName: $workspaceName, workspaceAddress: $workspaceAddress, issuerName: $issuerName, signature: $signature, voidedAt: $voidedAt, voidedByName: $voidedByName, replacesInvoiceId: $replacesInvoiceId, replacesNumber: $replacesNumber, detailed: $detailed, detailLedger: $detailLedger, attendance: $attendance)';
+  return 'Invoice(id: $id, workspaceId: $workspaceId, memberId: $memberId, number: $number, issuedAt: $issuedAt, period: $period, title: $title, lines: $lines, totalCents: $totalCents, currency: $currency, memberName: $memberName, memberAddress: $memberAddress, workspaceName: $workspaceName, workspaceAddress: $workspaceAddress, issuerName: $issuerName, signature: $signature, voidedAt: $voidedAt, voidedByName: $voidedByName, replacesInvoiceId: $replacesInvoiceId, replacesNumber: $replacesNumber, detailed: $detailed, detailLedger: $detailLedger, attendance: $attendance, sellerParty: $sellerParty, buyerParty: $buyerParty)';
 }
 
 
@@ -1101,11 +1396,11 @@ abstract mixin class $InvoiceCopyWith<$Res>  {
   factory $InvoiceCopyWith(Invoice value, $Res Function(Invoice) _then) = _$InvoiceCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, String memberId, String number, DateTime issuedAt, String? period, String title, List<InvoiceLine> lines, int totalCents, String currency, String memberName, String memberAddress, String workspaceName, String workspaceAddress, String issuerName, String signature, DateTime? voidedAt, String voidedByName, String? replacesInvoiceId, String replacesNumber, bool detailed, List<InvoiceDetailEntry> detailLedger, List<InvoiceAttendance> attendance
+ String id, String workspaceId, String memberId, String number, DateTime issuedAt, String? period, String title, List<InvoiceLine> lines, int totalCents, String currency, String memberName, String memberAddress, String workspaceName, String workspaceAddress, String issuerName, String signature, DateTime? voidedAt, String voidedByName, String? replacesInvoiceId, String replacesNumber, bool detailed, List<InvoiceDetailEntry> detailLedger, List<InvoiceAttendance> attendance, InvoiceParty? sellerParty, InvoiceParty? buyerParty
 });
 
 
-
+$InvoicePartyCopyWith<$Res>? get sellerParty;$InvoicePartyCopyWith<$Res>? get buyerParty;
 
 }
 /// @nodoc
@@ -1118,7 +1413,7 @@ class _$InvoiceCopyWithImpl<$Res>
 
 /// Create a copy of Invoice
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? memberId = null,Object? number = null,Object? issuedAt = null,Object? period = freezed,Object? title = null,Object? lines = null,Object? totalCents = null,Object? currency = null,Object? memberName = null,Object? memberAddress = null,Object? workspaceName = null,Object? workspaceAddress = null,Object? issuerName = null,Object? signature = null,Object? voidedAt = freezed,Object? voidedByName = null,Object? replacesInvoiceId = freezed,Object? replacesNumber = null,Object? detailed = null,Object? detailLedger = null,Object? attendance = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? memberId = null,Object? number = null,Object? issuedAt = null,Object? period = freezed,Object? title = null,Object? lines = null,Object? totalCents = null,Object? currency = null,Object? memberName = null,Object? memberAddress = null,Object? workspaceName = null,Object? workspaceAddress = null,Object? issuerName = null,Object? signature = null,Object? voidedAt = freezed,Object? voidedByName = null,Object? replacesInvoiceId = freezed,Object? replacesNumber = null,Object? detailed = null,Object? detailLedger = null,Object? attendance = null,Object? sellerParty = freezed,Object? buyerParty = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -1143,10 +1438,36 @@ as String?,replacesNumber: null == replacesNumber ? _self.replacesNumber : repla
 as String,detailed: null == detailed ? _self.detailed : detailed // ignore: cast_nullable_to_non_nullable
 as bool,detailLedger: null == detailLedger ? _self.detailLedger : detailLedger // ignore: cast_nullable_to_non_nullable
 as List<InvoiceDetailEntry>,attendance: null == attendance ? _self.attendance : attendance // ignore: cast_nullable_to_non_nullable
-as List<InvoiceAttendance>,
+as List<InvoiceAttendance>,sellerParty: freezed == sellerParty ? _self.sellerParty : sellerParty // ignore: cast_nullable_to_non_nullable
+as InvoiceParty?,buyerParty: freezed == buyerParty ? _self.buyerParty : buyerParty // ignore: cast_nullable_to_non_nullable
+as InvoiceParty?,
   ));
 }
+/// Create a copy of Invoice
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$InvoicePartyCopyWith<$Res>? get sellerParty {
+    if (_self.sellerParty == null) {
+    return null;
+  }
 
+  return $InvoicePartyCopyWith<$Res>(_self.sellerParty!, (value) {
+    return _then(_self.copyWith(sellerParty: value));
+  });
+}/// Create a copy of Invoice
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$InvoicePartyCopyWith<$Res>? get buyerParty {
+    if (_self.buyerParty == null) {
+    return null;
+  }
+
+  return $InvoicePartyCopyWith<$Res>(_self.buyerParty!, (value) {
+    return _then(_self.copyWith(buyerParty: value));
+  });
+}
 }
 
 
@@ -1225,10 +1546,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String memberId,  String number,  DateTime issuedAt,  String? period,  String title,  List<InvoiceLine> lines,  int totalCents,  String currency,  String memberName,  String memberAddress,  String workspaceName,  String workspaceAddress,  String issuerName,  String signature,  DateTime? voidedAt,  String voidedByName,  String? replacesInvoiceId,  String replacesNumber,  bool detailed,  List<InvoiceDetailEntry> detailLedger,  List<InvoiceAttendance> attendance)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String memberId,  String number,  DateTime issuedAt,  String? period,  String title,  List<InvoiceLine> lines,  int totalCents,  String currency,  String memberName,  String memberAddress,  String workspaceName,  String workspaceAddress,  String issuerName,  String signature,  DateTime? voidedAt,  String voidedByName,  String? replacesInvoiceId,  String replacesNumber,  bool detailed,  List<InvoiceDetailEntry> detailLedger,  List<InvoiceAttendance> attendance,  InvoiceParty? sellerParty,  InvoiceParty? buyerParty)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Invoice() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.memberId,_that.number,_that.issuedAt,_that.period,_that.title,_that.lines,_that.totalCents,_that.currency,_that.memberName,_that.memberAddress,_that.workspaceName,_that.workspaceAddress,_that.issuerName,_that.signature,_that.voidedAt,_that.voidedByName,_that.replacesInvoiceId,_that.replacesNumber,_that.detailed,_that.detailLedger,_that.attendance);case _:
+return $default(_that.id,_that.workspaceId,_that.memberId,_that.number,_that.issuedAt,_that.period,_that.title,_that.lines,_that.totalCents,_that.currency,_that.memberName,_that.memberAddress,_that.workspaceName,_that.workspaceAddress,_that.issuerName,_that.signature,_that.voidedAt,_that.voidedByName,_that.replacesInvoiceId,_that.replacesNumber,_that.detailed,_that.detailLedger,_that.attendance,_that.sellerParty,_that.buyerParty);case _:
   return orElse();
 
 }
@@ -1246,10 +1567,10 @@ return $default(_that.id,_that.workspaceId,_that.memberId,_that.number,_that.iss
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String memberId,  String number,  DateTime issuedAt,  String? period,  String title,  List<InvoiceLine> lines,  int totalCents,  String currency,  String memberName,  String memberAddress,  String workspaceName,  String workspaceAddress,  String issuerName,  String signature,  DateTime? voidedAt,  String voidedByName,  String? replacesInvoiceId,  String replacesNumber,  bool detailed,  List<InvoiceDetailEntry> detailLedger,  List<InvoiceAttendance> attendance)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String memberId,  String number,  DateTime issuedAt,  String? period,  String title,  List<InvoiceLine> lines,  int totalCents,  String currency,  String memberName,  String memberAddress,  String workspaceName,  String workspaceAddress,  String issuerName,  String signature,  DateTime? voidedAt,  String voidedByName,  String? replacesInvoiceId,  String replacesNumber,  bool detailed,  List<InvoiceDetailEntry> detailLedger,  List<InvoiceAttendance> attendance,  InvoiceParty? sellerParty,  InvoiceParty? buyerParty)  $default,) {final _that = this;
 switch (_that) {
 case _Invoice():
-return $default(_that.id,_that.workspaceId,_that.memberId,_that.number,_that.issuedAt,_that.period,_that.title,_that.lines,_that.totalCents,_that.currency,_that.memberName,_that.memberAddress,_that.workspaceName,_that.workspaceAddress,_that.issuerName,_that.signature,_that.voidedAt,_that.voidedByName,_that.replacesInvoiceId,_that.replacesNumber,_that.detailed,_that.detailLedger,_that.attendance);}
+return $default(_that.id,_that.workspaceId,_that.memberId,_that.number,_that.issuedAt,_that.period,_that.title,_that.lines,_that.totalCents,_that.currency,_that.memberName,_that.memberAddress,_that.workspaceName,_that.workspaceAddress,_that.issuerName,_that.signature,_that.voidedAt,_that.voidedByName,_that.replacesInvoiceId,_that.replacesNumber,_that.detailed,_that.detailLedger,_that.attendance,_that.sellerParty,_that.buyerParty);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -1263,10 +1584,10 @@ return $default(_that.id,_that.workspaceId,_that.memberId,_that.number,_that.iss
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String memberId,  String number,  DateTime issuedAt,  String? period,  String title,  List<InvoiceLine> lines,  int totalCents,  String currency,  String memberName,  String memberAddress,  String workspaceName,  String workspaceAddress,  String issuerName,  String signature,  DateTime? voidedAt,  String voidedByName,  String? replacesInvoiceId,  String replacesNumber,  bool detailed,  List<InvoiceDetailEntry> detailLedger,  List<InvoiceAttendance> attendance)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String memberId,  String number,  DateTime issuedAt,  String? period,  String title,  List<InvoiceLine> lines,  int totalCents,  String currency,  String memberName,  String memberAddress,  String workspaceName,  String workspaceAddress,  String issuerName,  String signature,  DateTime? voidedAt,  String voidedByName,  String? replacesInvoiceId,  String replacesNumber,  bool detailed,  List<InvoiceDetailEntry> detailLedger,  List<InvoiceAttendance> attendance,  InvoiceParty? sellerParty,  InvoiceParty? buyerParty)?  $default,) {final _that = this;
 switch (_that) {
 case _Invoice() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.memberId,_that.number,_that.issuedAt,_that.period,_that.title,_that.lines,_that.totalCents,_that.currency,_that.memberName,_that.memberAddress,_that.workspaceName,_that.workspaceAddress,_that.issuerName,_that.signature,_that.voidedAt,_that.voidedByName,_that.replacesInvoiceId,_that.replacesNumber,_that.detailed,_that.detailLedger,_that.attendance);case _:
+return $default(_that.id,_that.workspaceId,_that.memberId,_that.number,_that.issuedAt,_that.period,_that.title,_that.lines,_that.totalCents,_that.currency,_that.memberName,_that.memberAddress,_that.workspaceName,_that.workspaceAddress,_that.issuerName,_that.signature,_that.voidedAt,_that.voidedByName,_that.replacesInvoiceId,_that.replacesNumber,_that.detailed,_that.detailLedger,_that.attendance,_that.sellerParty,_that.buyerParty);case _:
   return null;
 
 }
@@ -1278,7 +1599,7 @@ return $default(_that.id,_that.workspaceId,_that.memberId,_that.number,_that.iss
 
 
 class _Invoice extends Invoice {
-  const _Invoice({required this.id, required this.workspaceId, required this.memberId, required this.number, required this.issuedAt, this.period, required this.title, required final  List<InvoiceLine> lines, required this.totalCents, required this.currency, required this.memberName, required this.memberAddress, required this.workspaceName, required this.workspaceAddress, required this.issuerName, required this.signature, this.voidedAt, this.voidedByName = '', this.replacesInvoiceId, this.replacesNumber = '', this.detailed = false, final  List<InvoiceDetailEntry> detailLedger = const [], final  List<InvoiceAttendance> attendance = const []}): _lines = lines,_detailLedger = detailLedger,_attendance = attendance,super._();
+  const _Invoice({required this.id, required this.workspaceId, required this.memberId, required this.number, required this.issuedAt, this.period, required this.title, required final  List<InvoiceLine> lines, required this.totalCents, required this.currency, required this.memberName, required this.memberAddress, required this.workspaceName, required this.workspaceAddress, required this.issuerName, required this.signature, this.voidedAt, this.voidedByName = '', this.replacesInvoiceId, this.replacesNumber = '', this.detailed = false, final  List<InvoiceDetailEntry> detailLedger = const [], final  List<InvoiceAttendance> attendance = const [], this.sellerParty, this.buyerParty}): _lines = lines,_detailLedger = detailLedger,_attendance = attendance,super._();
   
 
 @override final  String id;
@@ -1324,6 +1645,10 @@ class _Invoice extends Invoice {
   return EqualUnmodifiableListView(_attendance);
 }
 
+// 0069 — the parties' legal identity, snapshotted for the e-invoice.
+// Null on pre-0069 documents.
+@override final  InvoiceParty? sellerParty;
+@override final  InvoiceParty? buyerParty;
 
 /// Create a copy of Invoice
 /// with the given fields replaced by the non-null parameter values.
@@ -1335,16 +1660,16 @@ _$InvoiceCopyWith<_Invoice> get copyWith => __$InvoiceCopyWithImpl<_Invoice>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Invoice&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.number, number) || other.number == number)&&(identical(other.issuedAt, issuedAt) || other.issuedAt == issuedAt)&&(identical(other.period, period) || other.period == period)&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other._lines, _lines)&&(identical(other.totalCents, totalCents) || other.totalCents == totalCents)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.memberName, memberName) || other.memberName == memberName)&&(identical(other.memberAddress, memberAddress) || other.memberAddress == memberAddress)&&(identical(other.workspaceName, workspaceName) || other.workspaceName == workspaceName)&&(identical(other.workspaceAddress, workspaceAddress) || other.workspaceAddress == workspaceAddress)&&(identical(other.issuerName, issuerName) || other.issuerName == issuerName)&&(identical(other.signature, signature) || other.signature == signature)&&(identical(other.voidedAt, voidedAt) || other.voidedAt == voidedAt)&&(identical(other.voidedByName, voidedByName) || other.voidedByName == voidedByName)&&(identical(other.replacesInvoiceId, replacesInvoiceId) || other.replacesInvoiceId == replacesInvoiceId)&&(identical(other.replacesNumber, replacesNumber) || other.replacesNumber == replacesNumber)&&(identical(other.detailed, detailed) || other.detailed == detailed)&&const DeepCollectionEquality().equals(other._detailLedger, _detailLedger)&&const DeepCollectionEquality().equals(other._attendance, _attendance));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Invoice&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.number, number) || other.number == number)&&(identical(other.issuedAt, issuedAt) || other.issuedAt == issuedAt)&&(identical(other.period, period) || other.period == period)&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other._lines, _lines)&&(identical(other.totalCents, totalCents) || other.totalCents == totalCents)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.memberName, memberName) || other.memberName == memberName)&&(identical(other.memberAddress, memberAddress) || other.memberAddress == memberAddress)&&(identical(other.workspaceName, workspaceName) || other.workspaceName == workspaceName)&&(identical(other.workspaceAddress, workspaceAddress) || other.workspaceAddress == workspaceAddress)&&(identical(other.issuerName, issuerName) || other.issuerName == issuerName)&&(identical(other.signature, signature) || other.signature == signature)&&(identical(other.voidedAt, voidedAt) || other.voidedAt == voidedAt)&&(identical(other.voidedByName, voidedByName) || other.voidedByName == voidedByName)&&(identical(other.replacesInvoiceId, replacesInvoiceId) || other.replacesInvoiceId == replacesInvoiceId)&&(identical(other.replacesNumber, replacesNumber) || other.replacesNumber == replacesNumber)&&(identical(other.detailed, detailed) || other.detailed == detailed)&&const DeepCollectionEquality().equals(other._detailLedger, _detailLedger)&&const DeepCollectionEquality().equals(other._attendance, _attendance)&&(identical(other.sellerParty, sellerParty) || other.sellerParty == sellerParty)&&(identical(other.buyerParty, buyerParty) || other.buyerParty == buyerParty));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,id,workspaceId,memberId,number,issuedAt,period,title,const DeepCollectionEquality().hash(_lines),totalCents,currency,memberName,memberAddress,workspaceName,workspaceAddress,issuerName,signature,voidedAt,voidedByName,replacesInvoiceId,replacesNumber,detailed,const DeepCollectionEquality().hash(_detailLedger),const DeepCollectionEquality().hash(_attendance)]);
+int get hashCode => Object.hashAll([runtimeType,id,workspaceId,memberId,number,issuedAt,period,title,const DeepCollectionEquality().hash(_lines),totalCents,currency,memberName,memberAddress,workspaceName,workspaceAddress,issuerName,signature,voidedAt,voidedByName,replacesInvoiceId,replacesNumber,detailed,const DeepCollectionEquality().hash(_detailLedger),const DeepCollectionEquality().hash(_attendance),sellerParty,buyerParty]);
 
 @override
 String toString() {
-  return 'Invoice(id: $id, workspaceId: $workspaceId, memberId: $memberId, number: $number, issuedAt: $issuedAt, period: $period, title: $title, lines: $lines, totalCents: $totalCents, currency: $currency, memberName: $memberName, memberAddress: $memberAddress, workspaceName: $workspaceName, workspaceAddress: $workspaceAddress, issuerName: $issuerName, signature: $signature, voidedAt: $voidedAt, voidedByName: $voidedByName, replacesInvoiceId: $replacesInvoiceId, replacesNumber: $replacesNumber, detailed: $detailed, detailLedger: $detailLedger, attendance: $attendance)';
+  return 'Invoice(id: $id, workspaceId: $workspaceId, memberId: $memberId, number: $number, issuedAt: $issuedAt, period: $period, title: $title, lines: $lines, totalCents: $totalCents, currency: $currency, memberName: $memberName, memberAddress: $memberAddress, workspaceName: $workspaceName, workspaceAddress: $workspaceAddress, issuerName: $issuerName, signature: $signature, voidedAt: $voidedAt, voidedByName: $voidedByName, replacesInvoiceId: $replacesInvoiceId, replacesNumber: $replacesNumber, detailed: $detailed, detailLedger: $detailLedger, attendance: $attendance, sellerParty: $sellerParty, buyerParty: $buyerParty)';
 }
 
 
@@ -1355,11 +1680,11 @@ abstract mixin class _$InvoiceCopyWith<$Res> implements $InvoiceCopyWith<$Res> {
   factory _$InvoiceCopyWith(_Invoice value, $Res Function(_Invoice) _then) = __$InvoiceCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, String memberId, String number, DateTime issuedAt, String? period, String title, List<InvoiceLine> lines, int totalCents, String currency, String memberName, String memberAddress, String workspaceName, String workspaceAddress, String issuerName, String signature, DateTime? voidedAt, String voidedByName, String? replacesInvoiceId, String replacesNumber, bool detailed, List<InvoiceDetailEntry> detailLedger, List<InvoiceAttendance> attendance
+ String id, String workspaceId, String memberId, String number, DateTime issuedAt, String? period, String title, List<InvoiceLine> lines, int totalCents, String currency, String memberName, String memberAddress, String workspaceName, String workspaceAddress, String issuerName, String signature, DateTime? voidedAt, String voidedByName, String? replacesInvoiceId, String replacesNumber, bool detailed, List<InvoiceDetailEntry> detailLedger, List<InvoiceAttendance> attendance, InvoiceParty? sellerParty, InvoiceParty? buyerParty
 });
 
 
-
+@override $InvoicePartyCopyWith<$Res>? get sellerParty;@override $InvoicePartyCopyWith<$Res>? get buyerParty;
 
 }
 /// @nodoc
@@ -1372,7 +1697,7 @@ class __$InvoiceCopyWithImpl<$Res>
 
 /// Create a copy of Invoice
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? memberId = null,Object? number = null,Object? issuedAt = null,Object? period = freezed,Object? title = null,Object? lines = null,Object? totalCents = null,Object? currency = null,Object? memberName = null,Object? memberAddress = null,Object? workspaceName = null,Object? workspaceAddress = null,Object? issuerName = null,Object? signature = null,Object? voidedAt = freezed,Object? voidedByName = null,Object? replacesInvoiceId = freezed,Object? replacesNumber = null,Object? detailed = null,Object? detailLedger = null,Object? attendance = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? memberId = null,Object? number = null,Object? issuedAt = null,Object? period = freezed,Object? title = null,Object? lines = null,Object? totalCents = null,Object? currency = null,Object? memberName = null,Object? memberAddress = null,Object? workspaceName = null,Object? workspaceAddress = null,Object? issuerName = null,Object? signature = null,Object? voidedAt = freezed,Object? voidedByName = null,Object? replacesInvoiceId = freezed,Object? replacesNumber = null,Object? detailed = null,Object? detailLedger = null,Object? attendance = null,Object? sellerParty = freezed,Object? buyerParty = freezed,}) {
   return _then(_Invoice(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -1397,11 +1722,37 @@ as String?,replacesNumber: null == replacesNumber ? _self.replacesNumber : repla
 as String,detailed: null == detailed ? _self.detailed : detailed // ignore: cast_nullable_to_non_nullable
 as bool,detailLedger: null == detailLedger ? _self._detailLedger : detailLedger // ignore: cast_nullable_to_non_nullable
 as List<InvoiceDetailEntry>,attendance: null == attendance ? _self._attendance : attendance // ignore: cast_nullable_to_non_nullable
-as List<InvoiceAttendance>,
+as List<InvoiceAttendance>,sellerParty: freezed == sellerParty ? _self.sellerParty : sellerParty // ignore: cast_nullable_to_non_nullable
+as InvoiceParty?,buyerParty: freezed == buyerParty ? _self.buyerParty : buyerParty // ignore: cast_nullable_to_non_nullable
+as InvoiceParty?,
   ));
 }
 
+/// Create a copy of Invoice
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$InvoicePartyCopyWith<$Res>? get sellerParty {
+    if (_self.sellerParty == null) {
+    return null;
+  }
 
+  return $InvoicePartyCopyWith<$Res>(_self.sellerParty!, (value) {
+    return _then(_self.copyWith(sellerParty: value));
+  });
+}/// Create a copy of Invoice
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$InvoicePartyCopyWith<$Res>? get buyerParty {
+    if (_self.buyerParty == null) {
+    return null;
+  }
+
+  return $InvoicePartyCopyWith<$Res>(_self.buyerParty!, (value) {
+    return _then(_self.copyWith(buyerParty: value));
+  });
+}
 }
 
 // dart format on

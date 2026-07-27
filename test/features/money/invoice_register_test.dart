@@ -1,0 +1,133 @@
+// SPDX-License-Identifier: 0BSD
+//
+// The invoice REGISTER (0072): one line per invoice — date, name, amount,
+// status — sorted by date in either direction, with the sum at the foot.
+// The name column follows the reader: an issuer scans members, a member
+// scans their own invoice numbers.
+import 'package:deskilo/app/app.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import '../../helpers/fake_money_repository.dart';
+import '../../helpers/mock_providers.dart';
+
+/// Three invoices across three months for two members, in a deliberately
+/// unsorted issue order.
+Future<FakeMoneyRepository> _seed() async {
+  final money = FakeMoneyRepository();
+  await money.createInvoice(
+      workspaceId: 'ws-1', memberId: 'member-1', period: '2026-05');
+  await money.createInvoice(
+      workspaceId: 'ws-1', memberId: 'member-2', period: '2026-06');
+  await money.createInvoice(
+      workspaceId: 'ws-1', memberId: 'member-1', period: '2026-07');
+  // The oldest issue date belongs to the FIRST created one; the fake
+  // stamps issuedAt with now(), so nudge them apart explicitly.
+  for (var i = 0; i < money.invoices.length; i++) {
+    money.invoices[i] = money.invoices[i].copyWith(
+      issuedAt: DateTime(2026, 5 + i, 3),
+    );
+  }
+  return money;
+}
+
+Future<FakeMoneyRepository> _pumpRegister(
+  WidgetTester tester, {
+  FakeMoneyRepository? money,
+  FakeWorkspaceRepository? workspace,
+}) async {
+  tester.view.physicalSize = const Size(800, 1400);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.reset);
+  money ??= await _seed();
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: standardTestOverrides(money: money, workspace: workspace),
+      child: const DeskiloApp(),
+    ),
+  );
+  await tester.pumpAndSettle();
+  await tester.tap(find.text('Money'));
+  await tester.pumpAndSettle();
+  await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
+  await tester.tap(find.byKey(const ValueKey('invoices-button')));
+  await tester.pumpAndSettle();
+  await tester.tap(find.byKey(const ValueKey('invoice-register-button')));
+  await tester.pumpAndSettle();
+  return money;
+}
+
+double _rowY(WidgetTester tester, String id) =>
+    tester.getTopLeft(find.byKey(ValueKey('invoice-register-$id'))).dy;
+
+void main() {
+  testWidgets(
+      'the register lists every invoice by date, newest first, and sums '
+      'them; tapping the date header flips the order', (tester) async {
+    final money = await _pumpRegister(tester);
+    final ids = money.invoices.map((i) => i.id).toList();
+
+    expect(find.byKey(ValueKey('invoice-register-${ids[0]}')),
+        findsOneWidget);
+    expect(_rowY(tester, ids[2]), lessThan(_rowY(tester, ids[0])),
+        reason: 'newest first by default');
+
+    // 3 × the fake statement total (150.00 + 16.00).
+    expect(
+      tester
+          .widget<Text>(find.byKey(const ValueKey('invoice-register-total')))
+          .data,
+      '€498.00',
+    );
+
+    await tester.tap(find.byKey(const ValueKey('invoice-register-sort-date')));
+    await tester.pumpAndSettle();
+    expect(_rowY(tester, ids[0]), lessThan(_rowY(tester, ids[2])),
+        reason: 'oldest first after the flip');
+  });
+
+  testWidgets('an ISSUER reads MEMBER names — they scan people',
+      (tester) async {
+    await _pumpRegister(tester);
+
+    expect(find.text('Flo'), findsWidgets);
+    expect(find.text('Ana'), findsOneWidget);
+  });
+
+  testWidgets(
+      'a MEMBER reads INVOICE numbers — nobody needs to be told their own '
+      'name in every row', (tester) async {
+    final money = await _seed();
+    final member = FakeWorkspaceRepository.withWorkspace();
+    member.myMember =
+        member.myMember.copyWith(isOwner: false, isAdmin: false);
+    await _pumpRegister(tester, money: money, workspace: member);
+
+    expect(find.text('Flo'), findsNothing);
+    expect(find.text(money.invoices.first.number), findsOneWidget);
+  });
+
+  testWidgets(
+      'a MEMBER register hides erroneous invoices and names a partial '
+      'payment for what it is', (tester) async {
+    final money = await _seed();
+    final wrong = money.invoices.first.id;
+    await money.voidInvoice(wrong);
+    final partial = money.invoices.last.id;
+    await money.matchInvoice(
+      invoiceId: partial,
+      paymentLedgerId: money.seedPayment('member-1', 5000),
+      resolution: 'under_accepted',
+      note: 'Rest next month',
+    );
+    final member = FakeWorkspaceRepository.withWorkspace();
+    member.myMember =
+        member.myMember.copyWith(isOwner: false, isAdmin: false);
+    await _pumpRegister(tester, money: money, workspace: member);
+
+    expect(find.byKey(ValueKey('invoice-register-$wrong')), findsNothing,
+        reason: 'a cancelled invoice owes the member nothing');
+    expect(find.text('Partially paid'), findsOneWidget);
+  });
+}

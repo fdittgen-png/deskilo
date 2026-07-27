@@ -89,6 +89,31 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setLegalIdentity(
+    String workspaceId, {
+    required String vatRegime,
+    required String vatId,
+    required String legalId,
+    required String taxExemptionReason,
+    required String street,
+    required String city,
+    required String postalCode,
+  }) async {
+    // Owner-only via workspaces_update RLS; the 0069 column checks cap
+    // every field. Written as one row update so an identity can never be
+    // half-declared.
+    await _client.from('workspaces').update({
+      'vat_regime': vatRegime,
+      'vat_id': vatId.trim(),
+      'legal_id': legalId.trim(),
+      'tax_exemption_reason': taxExemptionReason.trim(),
+      'street': street.trim(),
+      'city': city.trim(),
+      'postal_code': postalCode.trim(),
+    }).eq('id', workspaceId);
+  }
+
+  @override
   Future<void> setWorkspaceAddress(String workspaceId, String address) async {
     // Owner-only via workspaces_update RLS; 0060 caps at 400 chars.
     await _client
@@ -180,6 +205,13 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         address: row['address'] as String? ?? '',
         deskOpacity: (row['desk_opacity'] as num?)?.toInt() ?? 100,
         invitationTemplate: row['invitation_template'] as String? ?? '',
+        vatRegime: row['vat_regime'] as String? ?? 'not_subject',
+        vatId: row['vat_id'] as String? ?? '',
+        legalId: row['legal_id'] as String? ?? '',
+        taxExemptionReason: row['tax_exemption_reason'] as String? ?? '',
+        street: row['street'] as String? ?? '',
+        city: row['city'] as String? ?? '',
+        postalCode: row['postal_code'] as String? ?? '',
       );
 
   @override

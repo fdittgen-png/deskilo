@@ -69,6 +69,61 @@ sealed class InvoiceMatch with _$InvoiceMatch {
   bool get pending => status == 'pending';
 }
 
+/// One party of an invoice as the document FROZE it (0069) — the legal
+/// identity EN 16931 needs and the flat 0060 snapshot never carried.
+///
+/// One shape for both sides: the buyer simply leaves the seller-only
+/// fields ([legalId], [vatRegime], [taxExemptionReason]) empty. Legacy
+/// invoices carry no parties at all; the presentation layer rebuilds them
+/// from the flat snapshot plus the live workspace identity (sellerOf).
+@freezed
+sealed class InvoiceParty with _$InvoiceParty {
+  const factory InvoiceParty({
+    @Default('') String name,
+
+    /// BT-35 — one line; legacy free-text addresses land here whole.
+    @Default('') String street,
+
+    /// BT-37.
+    @Default('') String city,
+
+    /// BT-38.
+    @Default('') String postalCode,
+
+    /// BT-40 / BT-55 — ISO 3166-1 alpha-2, mandatory on both parties.
+    @Default('') String country,
+
+    /// BT-31 (seller) / BT-48 (buyer).
+    @Default('') String vatId,
+
+    /// BT-30, the company register number — the seller identifier a
+    /// category-O invoice is allowed to carry.
+    @Default('') String legalId,
+
+    /// Wire value of [VatRegime]; seller only.
+    @Default('not_subject') String vatRegime,
+
+    /// Free-text exemption reason (BT-120); seller only.
+    @Default('') String taxExemptionReason,
+  }) = _InvoiceParty;
+
+  /// Reads one party out of the invoice's `parties` jsonb. Named away
+  /// from `fromJson` on purpose: that name would make freezed reach for
+  /// json_serializable and demand a generated part file.
+  factory InvoiceParty.fromSnapshot(Map<dynamic, dynamic> json) =>
+      InvoiceParty(
+        name: json['name'] as String? ?? '',
+        street: json['street'] as String? ?? '',
+        city: json['city'] as String? ?? '',
+        postalCode: json['postal_code'] as String? ?? '',
+        country: json['country'] as String? ?? '',
+        vatId: json['vat_id'] as String? ?? '',
+        legalId: json['legal_id'] as String? ?? '',
+        vatRegime: json['vat_regime'] as String? ?? 'not_subject',
+        taxExemptionReason: json['tax_exemption_reason'] as String? ?? '',
+      );
+}
+
 /// An IMMUTABLE invoice from the archive (0060): every displayed detail
 /// is a SNAPSHOT taken at issue time — names, addresses and the issuer
 /// can change later without ever rewriting an issued document. The
@@ -109,6 +164,10 @@ sealed class Invoice with _$Invoice {
     @Default(false) bool detailed,
     @Default([]) List<InvoiceDetailEntry> detailLedger,
     @Default([]) List<InvoiceAttendance> attendance,
+    // 0069 — the parties' legal identity, snapshotted for the e-invoice.
+    // Null on pre-0069 documents.
+    InvoiceParty? sellerParty,
+    InvoiceParty? buyerParty,
   }) = _Invoice;
 
   bool get isVoided => voidedAt != null;
@@ -155,6 +214,14 @@ sealed class Invoice with _$Invoice {
               amountCents: (entry['amount_cents'] as num?)?.toInt() ?? 0,
             ),
         ],
+        sellerParty: switch ((row['parties'] as Map?)?['seller']) {
+          final Map<dynamic, dynamic> seller => InvoiceParty.fromSnapshot(seller),
+          _ => null,
+        },
+        buyerParty: switch ((row['parties'] as Map?)?['buyer']) {
+          final Map<dynamic, dynamic> buyer => InvoiceParty.fromSnapshot(buyer),
+          _ => null,
+        },
         attendance: [
           for (final entry in ((row['details'] as Map?)?['attendance']
                   as List? ??

@@ -25,6 +25,15 @@ abstract class ProfileRepository {
   /// Postal address (0060), printed on invoices; '' clears it.
   Future<void> updateAddress(String address);
 
+  /// The two facts an EN 16931 e-invoice needs about the CUSTOMER (0069):
+  /// the address country (BT-55, mandatory — '' lets the invoice fall back
+  /// to the workspace's country) and the VAT id of a business member
+  /// (BT-48; '' = none). Self-only.
+  Future<void> updateTaxIdentity({
+    required String countryCode,
+    required String vatId,
+  });
+
   /// Foreground heartbeat: stamps my `last_seen_at` via the self-scoped
   /// `touch_last_seen` RPC (0028).
   Future<void> touchLastSeen();

@@ -339,8 +339,13 @@ class FakeMoneyRepository implements MoneyRepository {
   final fetchedPeriods = <String>[];
 
   final ledger = <LedgerEntry>[];
-  final recordedPayments =
-      <({int amountCents, String note, PaymentMethod? method})>[];
+  final recordedPayments = <({
+    int amountCents,
+    String note,
+    PaymentMethod? method,
+    DateTime? paidOn,
+    String? period,
+  })>[];
 
   @override
   Future<Statement> fetchStatement(String memberId, String period) async {
@@ -359,9 +364,16 @@ class FakeMoneyRepository implements MoneyRepository {
     required int amountCents,
     String note = '',
     PaymentMethod? method,
+    DateTime? paidOn,
+    String? period,
   }) async {
-    recordedPayments
-        .add((amountCents: amountCents, note: note, method: method));
+    recordedPayments.add((
+      amountCents: amountCents,
+      note: note,
+      method: method,
+      paidOn: paidOn,
+      period: period,
+    ));
     return 'evt-payment-${recordedPayments.length}';
   }
 

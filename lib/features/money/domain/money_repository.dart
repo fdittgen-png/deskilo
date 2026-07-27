@@ -77,12 +77,19 @@ abstract class MoneyRepository {
   /// Returns the pending event id. [method] is how the money moved
   /// (#154); null = not specified (renders method-less, like pre-#154
   /// events).
+  ///
+  /// [paidOn] is the day the money actually moved (0070) — recording on
+  /// the 26th a transfer made on the 3rd must not date it the 26th; null
+  /// = today. [period] is the month the payment SETTLES, which decides
+  /// which bill and which invoice it lands on; null = the current month.
   Future<String> recordPayment({
     required String workspaceId,
     required String memberId,
     required int amountCents,
     String note,
     PaymentMethod? method,
+    DateTime? paidOn,
+    String? period,
   });
 
   /// Fee bands of the workspace ordered by [FeeBand.fromPct]

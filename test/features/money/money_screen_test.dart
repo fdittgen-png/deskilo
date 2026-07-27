@@ -493,6 +493,62 @@ void main() {
     );
   });
 
+  testWidgets(
+      'the payment sheet declares WHEN the money moved and WHICH month it '
+      'settles — today and the running month by default (0070)',
+      (tester) async {
+    final money = await pumpMoney(tester);
+    final today = DateTime.now();
+    final previous = DateTime(today.year, today.month - 1);
+    final previousPeriod =
+        '${previous.year}-${previous.month.toString().padLeft(2, '0')}';
+
+    await tester.scrollUntilVisible(find.text('Record a payment'), 100);
+    await tester.tap(find.text('Record a payment'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.widgetWithText(TextField, 'Amount'), '80');
+
+    // Defaults: today, and the month that is running.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('payment-date-tile')),
+        matching: find.text(DateFormat.yMMMd('en').format(
+          DateTime(today.year, today.month, today.day),
+        )),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      tester
+          .widget<Text>(find.byKey(const ValueKey('payment-period-label')))
+          .data,
+      DateFormat.yMMMM('en').format(DateTime(today.year, today.month)),
+    );
+    // Forward is capped at the running month + one (a prepayment); the
+    // chevron is inert beyond it.
+    await tester.tap(find.byKey(const ValueKey('payment-period-next')));
+    await tester.pumpAndSettle();
+    final next = tester.widget<IconButton>(
+        find.byKey(const ValueKey('payment-period-next')));
+    expect(next.onPressed, isNull);
+
+    // Settling last month's arrears: two taps back.
+    await tester.tap(find.byKey(const ValueKey('payment-period-prev')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('payment-period-prev')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Submit for confirmation'));
+    await tester.pumpAndSettle();
+
+    final payment = money.recordedPayments.single;
+    expect(payment.amountCents, 8000);
+    expect(payment.period, previousPeriod,
+        reason: 'the credit must land on the month it settles');
+    expect(payment.paidOn, DateTime(today.year, today.month, today.day),
+        reason: 'the date defaults to today, never to null');
+  });
+
   testWidgets('tapping a method chip records the payment method (#154)',
       (tester) async {
     final money = await pumpMoney(tester);

@@ -220,7 +220,7 @@ Future<Uint8List> buildBillPdf({
                     ? _creditFallback(strings, entry)
                     : entry.description,
                 credit(entry.amountCents),
-                detail: dateFormat.format(entry.createdAt.toLocal()),
+                detail: dateFormat.format(entry.on.toLocal()),
               ),
           ]),
         pw.Divider(thickness: 1, color: PdfColors.grey800),
