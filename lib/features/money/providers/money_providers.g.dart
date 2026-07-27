@@ -503,3 +503,51 @@ final class InvoicesProvider
 }
 
 String _$invoicesHash() => r'1750a78bf092e310a8b152b40bc7f4facd84c06d';
+
+/// invoiceId → reminder count + last instant (0066), for the archive
+/// badges.
+
+@ProviderFor(invoiceReminders)
+final invoiceRemindersProvider = InvoiceRemindersProvider._();
+
+/// invoiceId → reminder count + last instant (0066), for the archive
+/// badges.
+
+final class InvoiceRemindersProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, ({int count, DateTime last})>>,
+          Map<String, ({int count, DateTime last})>,
+          FutureOr<Map<String, ({int count, DateTime last})>>
+        >
+    with
+        $FutureModifier<Map<String, ({int count, DateTime last})>>,
+        $FutureProvider<Map<String, ({int count, DateTime last})>> {
+  /// invoiceId → reminder count + last instant (0066), for the archive
+  /// badges.
+  InvoiceRemindersProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'invoiceRemindersProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$invoiceRemindersHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, ({int count, DateTime last})>>
+  $createElement($ProviderPointer pointer) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, ({int count, DateTime last})>> create(Ref ref) {
+    return invoiceReminders(ref);
+  }
+}
+
+String _$invoiceRemindersHash() => r'5528bee535a265ed0f9ba1da6ee36544cc3a428c';

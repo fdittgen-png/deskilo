@@ -1254,6 +1254,28 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoicePdfPage => 'Pagina';
 
   @override
+  String get invoiceRemindAction => 'Invia un promemoria';
+
+  @override
+  String get invoiceReminded => 'Promemoria registrato.';
+
+  @override
+  String invoiceRemindedBadge(int count) {
+    return 'Sollecitato ×$count';
+  }
+
+  @override
+  String invoiceReminderMessage(String number, String amount) {
+    return 'Promemoria: fattura $number — saldo dovuto $amount.';
+  }
+
+  @override
+  String get invoiceEInvoiceDownload => 'Scarica fattura elettronica (XML)';
+
+  @override
+  String get invoiceEInvoiceShare => 'Condividi fattura elettronica (XML)';
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:async';
+import 'dart:convert' show utf8;
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice.dart';
 import '../../domain/invoice_pdf.dart';
+import '../../domain/invoice_ubl.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_line_text.dart';
@@ -185,6 +187,99 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     );
   }
 
+  /// Records a payment reminder (0066) and hands the invoice PDF to
+  /// the share sheet with a localized reminder message — mail,
+  /// WhatsApp, whatever the device offers.
+  Future<void> _remind(
+    BuildContext context,
+    WidgetRef ref,
+    Invoice invoice,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final currency = NumberFormat.simpleCurrency(name: invoice.currency);
+    final message = l10n?.invoiceReminderMessage(
+          invoice.number,
+          currency.format(invoice.totalCents / 100),
+        ) ??
+        'Friendly reminder: invoice ${invoice.number} — balance due '
+            '${currency.format(invoice.totalCents / 100)}.';
+    if (!await runGuarded(
+      context,
+      domain: 'money',
+      message: 'invoice reminder failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        // PDF first — it captures its context-derived values before any
+        // await (use_build_context_synchronously).
+        final pdf = await _pdf(context, invoice);
+        await ref.read(moneyRepositoryProvider).remindInvoice(invoice.id);
+        await ref.read(fileSharerProvider)(
+          bytes: Uint8List.fromList(pdf.bytes),
+          fileName: pdf.fileName,
+          mimeType: 'application/pdf',
+          text: message,
+        );
+      },
+    )) {
+      return;
+    }
+    ref.invalidate(invoiceRemindersProvider);
+    if (!context.mounted) return;
+    AppSnack.success(
+        context, l10n?.invoiceReminded ?? 'Reminder recorded.');
+  }
+
+  /// EN 16931 e-invoice (0066): UBL 2.1 XML for EU workspaces —
+  /// downloaded to Downloads or handed to the share sheet.
+  Future<void> _eInvoice(
+    BuildContext context,
+    WidgetRef ref,
+    Invoice invoice, {
+    required String countryCode,
+    required bool share,
+  }) async {
+    final l10n = AppLocalizations.of(context);
+    await runGuarded(
+      context,
+      domain: 'money',
+      message: 'e-invoice export failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        final xml = buildInvoiceUbl(
+          invoice: invoice,
+          countryCode: countryCode,
+          lineText: (line) => invoiceLineText(l10n, line),
+        );
+        final bytes = Uint8List.fromList(utf8.encode(xml));
+        final fileName = '${safeFileSlug(invoice.number)}.xml';
+        if (share) {
+          await ref.read(fileSharerProvider)(
+            bytes: bytes,
+            fileName: fileName,
+            mimeType: 'application/xml',
+          );
+          return;
+        }
+        final path = await ref.read(fileSaverProvider)(
+          bytes: bytes,
+          fileName: fileName,
+        );
+        if (!context.mounted) return;
+        if (path == null) {
+          AppSnack.error(
+              context, l10n?.commonSaveFailed ?? 'Could not save.');
+        } else {
+          AppSnack.success(
+            context,
+            l10n?.commonSavedTo(path) ?? 'Saved to $path',
+          );
+        }
+      },
+    );
+  }
+
   Future<void> _share(
     BuildContext context,
     WidgetRef ref,
@@ -212,6 +307,12 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final invoicesAsync = ref.watch(invoicesProvider);
+    final reminders =
+        ref.watch(invoiceRemindersProvider).value ?? const {};
+    final countryCode =
+        ref.watch(currentWorkspaceProvider).value?.countryCode ?? '';
+    // 2014/55/EU: the e-invoice affordance shows for EU workspaces.
+    final isEu = isEuCountry(countryCode);
     final me = ref.watch(myMemberProvider).value;
     final features = ref.watch(enabledFeaturesSyncProvider);
     // Owner always; admins only with the delegation flag — the server
@@ -437,6 +538,12 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                           if (invoice.replacesNumber.isNotEmpty)
                             '${l10n?.invoicePdfReplaces ?? 'Replaces'} '
                                 '${invoice.replacesNumber}',
+                          if (showMemberNames &&
+                              reminders[invoice.id] != null)
+                            l10n?.invoiceRemindedBadge(
+                                    reminders[invoice.id]!.count) ??
+                                'Reminded ×'
+                                    '${reminders[invoice.id]!.count}',
                         ].join(' · ')),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -457,18 +564,59 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                               onPressed: () =>
                                   _share(context, ref, invoice),
                             ),
-                            if (canIssue &&
-                                (!invoice.isVoided ||
-                                    !replacedIds.contains(invoice.id)))
+                            if (isEu ||
+                                (canIssue &&
+                                    (!invoice.isVoided ||
+                                        !replacedIds
+                                            .contains(invoice.id))))
                               PopupMenuButton<String>(
                                 key: ValueKey('invoice-menu-${invoice.id}'),
                                 onSelected: (action) => switch (action) {
                                   'void' => _void(context, ref, invoice),
+                                  'remind' =>
+                                    _remind(context, ref, invoice),
+                                  'exml-down' => _eInvoice(
+                                      context, ref, invoice,
+                                      countryCode: countryCode,
+                                      share: false),
+                                  'exml-share' => _eInvoice(
+                                      context, ref, invoice,
+                                      countryCode: countryCode,
+                                      share: true),
                                   _ => _createSheet(context, ref,
                                       replaces: invoice),
                                 },
                                 itemBuilder: (context) => [
-                                  if (!invoice.isVoided)
+                                  if (isEu) ...[
+                                    PopupMenuItem(
+                                      key: const ValueKey(
+                                          'invoice-einvoice-download'),
+                                      value: 'exml-down',
+                                      child: Text(
+                                          l10n?.invoiceEInvoiceDownload ??
+                                              'Download e-invoice (XML)'),
+                                    ),
+                                    PopupMenuItem(
+                                      key: const ValueKey(
+                                          'invoice-einvoice-share'),
+                                      value: 'exml-share',
+                                      child: Text(
+                                          l10n?.invoiceEInvoiceShare ??
+                                              'Share e-invoice (XML)'),
+                                    ),
+                                  ],
+                                  if (canIssue &&
+                                      !invoice.isVoided &&
+                                      invoice.totalCents > 0)
+                                    PopupMenuItem(
+                                      key: const ValueKey(
+                                          'invoice-remind-action'),
+                                      value: 'remind',
+                                      child: Text(
+                                          l10n?.invoiceRemindAction ??
+                                              'Send a reminder'),
+                                    ),
+                                  if (canIssue && !invoice.isVoided)
                                     PopupMenuItem(
                                       key: const ValueKey(
                                           'invoice-void-action'),
@@ -476,7 +624,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                                       child: Text(l10n?.invoiceVoidAction ??
                                           'Mark erroneous'),
                                     ),
-                                  if (!replacedIds.contains(invoice.id))
+                                  if (canIssue &&
+                                      !replacedIds.contains(invoice.id))
                                     PopupMenuItem(
                                       key: const ValueKey(
                                           'invoice-replace-action'),

@@ -381,6 +381,29 @@
   "invoicePdfActivity": "Mouvements & paiements",
   "invoicePdfReserved": "réservé",
   "invoicePdfPage": "Page",
+  "invoiceRemindAction": "Envoyer un rappel",
+  "invoiceReminded": "Rappel enregistré.",
+  "invoiceRemindedBadge": "Rappelé ×{count}",
+  "@invoiceRemindedBadge": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceReminderMessage": "Rappel amical : facture {number} — solde dû {amount}.",
+  "@invoiceReminderMessage": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEInvoiceDownload": "Télécharger la facture électronique (XML)",
+  "invoiceEInvoiceShare": "Partager la facture électronique (XML)",
   "eventTypeMemberJoin": "Nouveau membre",
   "memberStatusPending": "En attente",
   "pendingApprovalTitle": "En attente d'approbation",

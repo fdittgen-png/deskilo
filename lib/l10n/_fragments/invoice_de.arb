@@ -53,5 +53,28 @@
   "invoicePdfAttendance": "Check-ins",
   "invoicePdfActivity": "Buchungen & Zahlungen",
   "invoicePdfReserved": "reserviert",
-  "invoicePdfPage": "Seite"
+  "invoicePdfPage": "Seite",
+  "invoiceRemindAction": "Zahlungserinnerung senden",
+  "invoiceReminded": "Erinnerung erfasst.",
+  "invoiceRemindedBadge": "Erinnert ×{count}",
+  "@invoiceRemindedBadge": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceReminderMessage": "Freundliche Erinnerung: Rechnung {number} — offener Saldo {amount}.",
+  "@invoiceReminderMessage": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEInvoiceDownload": "E-Rechnung herunterladen (XML)",
+  "invoiceEInvoiceShare": "E-Rechnung teilen (XML)"
 }

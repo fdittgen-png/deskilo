@@ -14,6 +14,7 @@ typedef FileSharer = Future<void> Function({
   required Uint8List bytes,
   required String fileName,
   required String mimeType,
+  String? text,
 });
 
 @Riverpod(keepAlive: true)
@@ -21,8 +22,12 @@ FileSharer fileSharer(Ref ref) => ({
       required Uint8List bytes,
       required String fileName,
       required String mimeType,
+      String? text,
     }) async {
-      await SharePlus.instance.share(ShareParams(files: [
-        XFile.fromData(bytes, name: fileName, mimeType: mimeType),
-      ]));
+      await SharePlus.instance.share(ShareParams(
+        text: text,
+        files: [
+          XFile.fromData(bytes, name: fileName, mimeType: mimeType),
+        ],
+      ));
     };

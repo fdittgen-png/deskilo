@@ -2354,6 +2354,42 @@ abstract class AppLocalizations {
   /// **'Page'**
   String get invoicePdfPage;
 
+  /// Issuer menu: record + share a payment reminder (0066)
+  ///
+  /// In en, this message translates to:
+  /// **'Send a reminder'**
+  String get invoiceRemindAction;
+
+  /// Snackbar after a reminder was recorded
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder recorded.'**
+  String get invoiceReminded;
+
+  /// Archive row badge: reminder count
+  ///
+  /// In en, this message translates to:
+  /// **'Reminded ×{count}'**
+  String invoiceRemindedBadge(int count);
+
+  /// Share-sheet text accompanying the reminded invoice PDF
+  ///
+  /// In en, this message translates to:
+  /// **'Friendly reminder: invoice {number} — balance due {amount}.'**
+  String invoiceReminderMessage(String number, String amount);
+
+  /// Menu: save the EN 16931 UBL XML to Downloads (EU workspaces)
+  ///
+  /// In en, this message translates to:
+  /// **'Download e-invoice (XML)'**
+  String get invoiceEInvoiceDownload;
+
+  /// Menu: share the EN 16931 UBL XML (EU workspaces)
+  ///
+  /// In en, this message translates to:
+  /// **'Share e-invoice (XML)'**
+  String get invoiceEInvoiceShare;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

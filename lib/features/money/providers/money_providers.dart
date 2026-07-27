@@ -103,3 +103,16 @@ Future<List<Invoice>> invoices(Ref ref) async {
   if (workspace == null) return const [];
   return ref.watch(moneyRepositoryProvider).fetchInvoices(workspace.id);
 }
+
+/// invoiceId → reminder count + last instant (0066), for the archive
+/// badges.
+@Riverpod(keepAlive: true)
+Future<Map<String, ({int count, DateTime last})>> invoiceReminders(
+  Ref ref,
+) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const {};
+  return ref
+      .read(moneyRepositoryProvider)
+      .fetchInvoiceReminders(workspace.id);
+}

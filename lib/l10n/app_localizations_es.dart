@@ -1251,6 +1251,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoicePdfPage => 'Página';
 
   @override
+  String get invoiceRemindAction => 'Enviar un recordatorio';
+
+  @override
+  String get invoiceReminded => 'Recordatorio registrado.';
+
+  @override
+  String invoiceRemindedBadge(int count) {
+    return 'Recordado ×$count';
+  }
+
+  @override
+  String invoiceReminderMessage(String number, String amount) {
+    return 'Recordatorio amistoso: factura $number — saldo pendiente $amount.';
+  }
+
+  @override
+  String get invoiceEInvoiceDownload => 'Descargar factura electrónica (XML)';
+
+  @override
+  String get invoiceEInvoiceShare => 'Compartir factura electrónica (XML)';
+
+  @override
   String get eventTypeMemberJoin => 'Nuevo miembro';
 
   @override

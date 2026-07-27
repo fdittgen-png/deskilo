@@ -792,7 +792,8 @@ List<Override> standardTestOverrides({
     // Share seam (0060): the real one opens a system share sheet.
     fileSharerProvider.overrideWithValue(
       fileSharer ??
-          ({required bytes, required fileName, required mimeType}) async {},
+          ({required bytes, required fileName, required mimeType, text})
+              async {},
     ),
   ];
 }
