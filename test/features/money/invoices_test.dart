@@ -21,13 +21,22 @@ import '../../helpers/mock_providers.dart';
 
 /// A fake archive seeded with one derived invoice for the current month
 /// (the default fake statement: 150.00 subscription + 16.00 overage).
-Future<FakeMoneyRepository> seededMoney() async {
+Future<FakeMoneyRepository> seededMoney({bool matched = true}) async {
   final money = FakeMoneyRepository();
-  await money.createInvoice(
+  final id = await money.createInvoice(
     workspaceId: 'ws-1',
     memberId: 'member-1',
     period: '2026-07',
   );
+  // 0067 — the hub's archive holds CLOSED invoices only; row-affordance
+  // tests want their seed there, so it ships matched.
+  if (matched) {
+    await money.matchInvoice(
+      invoiceId: id,
+      paidCents: money.invoices.single.totalCents,
+      resolution: 'exact',
+    );
+  }
   return money;
 }
 
@@ -317,19 +326,31 @@ void main() {
         reason: 'the replacement carries the corrected derivation');
     expect(replacement.period, wrong.period);
     expect(voided.isVoided, isTrue);
+    // The voided one stays archived; the fresh replacement is OPEN
+    // (unmatched, 0067) and shows on the Open tab.
     expect(find.text('Erroneous'), findsOneWidget);
-    expect(find.textContaining('Replaces ${wrong.number}'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(ValueKey('invoice-open-${replacement.id}')),
+        findsOneWidget);
   });
 
   testWidgets(
       'a voided-and-replaced invoice offers NO issuer actions — its '
       'menu keeps only the EU e-invoice entries (0066)', (tester) async {
     final money = await seededMoney();
-    await money.createInvoice(
+    final replacementId = await money.createInvoice(
       workspaceId: 'ws-1',
       memberId: 'member-1',
       period: '2026-07',
       replacesId: 'inv-1',
+    );
+    await money.matchInvoice(
+      invoiceId: replacementId,
+      paidCents: money.invoices
+          .firstWhere((i) => i.id == replacementId)
+          .totalCents,
+      resolution: 'exact',
     );
     await pumpInvoices(tester, money: money);
 
@@ -395,13 +416,21 @@ void main() {
       'ARCHIVE FILTERS: member and month narrow the list; sort by month '
       'reorders it', (tester) async {
     final money = FakeMoneyRepository();
-    // Flo: June + May; Ana (member-2): July.
+    // Flo: June + May; Ana (member-2): July — all matched (the archive
+    // shows closed invoices, 0067).
     await money.createInvoice(
         workspaceId: 'ws-1', memberId: 'member-1', period: '2026-05');
     await money.createInvoice(
         workspaceId: 'ws-1', memberId: 'member-1', period: '2026-06');
     await money.createInvoice(
         workspaceId: 'ws-1', memberId: 'member-2', period: '2026-07');
+    for (final invoice in List.of(money.invoices)) {
+      await money.matchInvoice(
+        invoiceId: invoice.id,
+        paidCents: invoice.totalCents,
+        resolution: 'exact',
+      );
+    }
     await pumpInvoices(tester, money: money);
 
     expect(find.byType(ListTile), findsNWidgets(3));
@@ -656,14 +685,9 @@ void main() {
   });
 
   testWidgets(
-      'HUB Open tab: an unpaid invoice shows its LIVE solde, age and a '
-      'direct Remind button; a settled month drops off', (tester) async {
-    final money = FakeMoneyRepository();
-    final prev = DateTime(DateTime.now().year, DateTime.now().month - 1);
-    final prevPeriod =
-        '${prev.year}-${prev.month.toString().padLeft(2, '0')}';
-    await money.createInvoice(
-        workspaceId: 'ws-1', memberId: 'member-1', period: prevPeriod);
+      'LIFECYCLE (0067): an issued invoice stays OPEN until matched; an '
+      'exact match archives it with the Paid badge', (tester) async {
+    final money = await seededMoney(matched: false);
     final sharedTexts = <String?>[];
     await pumpInvoices(
       tester,
@@ -675,12 +699,14 @@ void main() {
     );
     final invoice = money.invoices.single;
 
+    // Open tab: the invoice with the summary strip, remind and match.
     await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
     await tester.pumpAndSettle();
     expect(find.byKey(ValueKey('invoice-open-${invoice.id}')),
         findsOneWidget);
     expect(find.textContaining('outstanding'), findsOneWidget);
 
+    // Reminders still work from here.
     await tester.runAsync(() async {
       await tester
           .tap(find.byKey(ValueKey('invoice-remind-${invoice.id}')));
@@ -690,12 +716,134 @@ void main() {
     expect(money.invoiceReminders[invoice.id], hasLength(1));
     expect(sharedTexts.single, contains(invoice.number));
 
-    // The month gets fully paid: zero statement + covering payment →
-    // the live solde is gone and the invoice leaves the Open tab.
-    money.statements[prevPeriod] = money.statement.copyWith(
-        period: prevPeriod, feeCents: 0, overageCents: 0, extraHalfDays: 0);
-    // A hub refresh happens whenever the archive changes; issuing the
-    // CURRENT month from the FAB is such a change.
+    // The exact match closes it.
+    await tester.tap(find.byKey(ValueKey('invoice-match-${invoice.id}')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-match-confirm')));
+    await tester.pumpAndSettle();
+
+    // (The snack queues behind the reminder snack — the store is the
+    // truth here.)
+    expect(money.invoiceMatchesStore[invoice.id]!.resolution, 'exact');
+    expect(find.byKey(ValueKey('invoice-open-${invoice.id}')),
+        findsNothing, reason: 'a matched invoice leaves the Open tab');
+    await tester.tap(find.byKey(const ValueKey('invoice-tab-archive')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(ValueKey('invoice-${invoice.id}')), findsOneWidget,
+        reason: 'only matched invoices archive');
+    expect(find.textContaining('Paid'), findsOneWidget);
+  });
+
+  testWidgets(
+      'OVERPAYMENT (0067): the dialog offers forced-OK or a credit note '
+      '— the credit note lands the excess on the ledger', (tester) async {
+    final money = await seededMoney(matched: false);
+    await pumpInvoices(tester, money: money);
+    final invoice = money.invoices.single;
+
+    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(ValueKey('invoice-match-${invoice.id}')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('invoice-match-amount')),
+      '200',
+    );
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('invoice-match-credit-note')),
+        findsOneWidget);
+    expect(
+        find.byKey(const ValueKey('invoice-match-force')), findsOneWidget);
+    // Credit note is preselected — confirm.
+    await tester.tap(find.byKey(const ValueKey('invoice-match-confirm')));
+    await tester.pumpAndSettle();
+
+    final match = money.invoiceMatchesStore[invoice.id]!;
+    expect(match.resolution, 'over_credit_note');
+    expect(match.paidCents, 20000);
+    final credit = money.ledger.last;
+    expect(credit.kind, LedgerKind.credit);
+    expect(credit.amountCents, 20000 - invoice.totalCents,
+        reason: 'the excess becomes a ledger credit note');
+    expect(credit.description, contains(invoice.number));
+  });
+
+  testWidgets(
+      'UNDERPAYMENT (0067): accepting less REQUIRES a note — the inline '
+      'error blocks an empty one', (tester) async {
+    final money = await seededMoney(matched: false);
+    await pumpInvoices(tester, money: money);
+    final invoice = money.invoices.single;
+
+    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(ValueKey('invoice-match-${invoice.id}')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('invoice-match-amount')),
+      '100',
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-match-confirm')));
+    await tester.pumpAndSettle();
+    expect(find.text('A note is required.'), findsOneWidget);
+    expect(money.invoiceMatchesStore, isEmpty);
+
+    await tester.enterText(
+      find.byKey(const ValueKey('invoice-match-note')),
+      'Hardship agreed with Flo',
+    );
+    await tester.tap(find.byKey(const ValueKey('invoice-match-confirm')));
+    await tester.pumpAndSettle();
+    final match = money.invoiceMatchesStore[invoice.id]!;
+    expect(match.resolution, 'under_accepted');
+    expect(match.note, 'Hardship agreed with Flo');
+  });
+
+  testWidgets(
+      'VALIDATION (0067): with a rule configured the match awaits the '
+      'quorum — the card shows the chip and no further actions',
+      (tester) async {
+    final money = await seededMoney(matched: false)
+      ..matchPolicyConfigured = true;
+    await pumpInvoices(tester, money: money);
+    final invoice = money.invoices.single;
+
+    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(ValueKey('invoice-match-${invoice.id}')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-match-confirm')));
+    await tester.pumpAndSettle();
+
+    expect(money.invoiceMatchesStore[invoice.id]!.pending, isTrue);
+    expect(
+      find.byKey(ValueKey('invoice-match-pending-${invoice.id}')),
+      findsOneWidget,
+      reason: 'the pending match stays on Open, awaiting validation',
+    );
+    expect(find.byKey(ValueKey('invoice-match-${invoice.id}')),
+        findsNothing);
+    expect(find.byKey(ValueKey('invoice-remind-${invoice.id}')),
+        findsNothing);
+    // Rejected by the quorum → the match disappears server-side and the
+    // invoice reopens.
+    money.invoiceMatchesStore.remove(invoice.id);
+    await tester.tap(find.byKey(const ValueKey('invoice-tab-archive')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(ValueKey('invoice-match-${invoice.id}')),
+        findsNothing, reason: 'stale providers: refresh happens on the '
+            'next archive change; the chip is gone after re-derive');
+  });
+
+  testWidgets(
+      'ONE ACTIVE INVOICE PER MONTH (0067): issuing the same month again '
+      'refuses with the pinned message', (tester) async {
+    final money = await seededMoney(matched: false);
+    await pumpInvoices(tester, money: money);
+
     await tester.tap(find.byKey(const ValueKey('invoice-create-button')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('invoice-member-dropdown')));
@@ -704,11 +852,12 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('invoice-submit')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(ValueKey('invoice-open-${invoice.id}')),
-        findsNothing,
-        reason: 'a settled month is no longer open');
+
+    expect(
+      find.text('This month is already invoiced for this member.'),
+      findsOneWidget,
+    );
+    expect(money.invoices, hasLength(1));
   });
 }
 

@@ -54,6 +54,20 @@ abstract class MoneyRepository {
     String workspaceId,
   );
 
+  /// Matches an open invoice to its payment (RPC `match_invoice`, 0067).
+  /// [resolution] ∈ exact | over_forced | over_credit_note |
+  /// under_accepted; the forced paths REQUIRE [note].
+  Future<void> matchInvoice({
+    required String invoiceId,
+    required int paidCents,
+    required String resolution,
+    String note = '',
+  });
+
+  /// invoiceId → its match (0067). status 'pending' while a validation
+  /// quorum decides; a reject deletes the row (the invoice reopens).
+  Future<Map<String, InvoiceMatch>> fetchInvoiceMatches(String workspaceId);
+
   Future<Statement> fetchStatement(String memberId, String period);
 
   Future<List<LedgerEntry>> fetchLedger(String memberId);

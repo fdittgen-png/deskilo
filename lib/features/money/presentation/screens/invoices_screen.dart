@@ -31,6 +31,7 @@ import '../../domain/invoice_ubl.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_line_text.dart';
+import '../../../events/providers/event_providers.dart';
 import '../widgets/invoicing_dashboard.dart';
 
 /// The invoice ARCHIVE (0060): every member sees their own invoices,
@@ -304,6 +305,47 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     );
   }
 
+  /// Matches an open invoice to its payment (0067) — the only way an
+  /// invoice closes and archives. Over/under payments resolve in the
+  /// dialog; the server re-validates and files the invoice_payment
+  /// event (pending when a validation rule exists).
+  Future<void> _match(
+    BuildContext context,
+    WidgetRef ref,
+    Invoice invoice,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final currency = NumberFormat.simpleCurrency(name: invoice.currency);
+    final choice = await showDialog<MatchChoice>(
+      context: context,
+      builder: (context) => MatchInvoiceDialog(
+        dueCents: invoice.totalCents,
+        currency: currency,
+      ),
+    );
+    if (choice == null || !context.mounted) return;
+    if (!await runGuarded(
+      context,
+      domain: 'money',
+      message: 'invoice match failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => ref.read(moneyRepositoryProvider).matchInvoice(
+            invoiceId: invoice.id,
+            paidCents: choice.paidCents,
+            resolution: choice.resolution,
+            note: choice.note,
+          ),
+    )) {
+      return;
+    }
+    ref.invalidate(invoiceMatchesProvider);
+    ref.invalidate(invoicesProvider);
+    invalidateBookingData(ref);
+    if (!context.mounted) return;
+    AppSnack.success(context, l10n?.invoiceMatched ?? 'Invoice matched.');
+  }
+
   /// One tap invoices every listed member for [period] (invoicing hub)
   /// — per-member guarded so one failing statement does not stop the
   /// sweep.
@@ -391,9 +433,19 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                   for (final invoice in invoices) ?invoice.period,
                 }.toList()
                   ..sort((a, b) => b.compareTo(a));
+                // 0067 — in the hub, the archive holds only CLOSED
+                // invoices: matched (validated) or voided; open ones
+                // live on the Open tab. Members (no tabs) see all of
+                // their invoices here.
+                final matches =
+                    ref.watch(invoiceMatchesProvider).value ?? const {};
+                bool archived(Invoice invoice) =>
+                    invoice.isVoided ||
+                    (matches[invoice.id]?.pending == false);
                 final visible = [
                   for (final invoice in invoices)
-                    if ((_filterMemberId == null ||
+                    if ((!canIssue || archived(invoice)) &&
+                        (_filterMemberId == null ||
                             invoice.memberId == _filterMemberId) &&
                         (_filterPeriod == null ||
                             invoice.period == _filterPeriod))
@@ -573,6 +625,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                                     reminders[invoice.id]!.count) ??
                                 'Reminded ×'
                                     '${reminders[invoice.id]!.count}',
+                          if (matches[invoice.id]?.pending == false)
+                            l10n?.invoiceMatchedBadge ?? 'Paid',
                         ].join(' · ')),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -736,6 +790,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
               OpenInvoicesTab(
                 currency: currency,
                 onRemind: (entry) => _remind(context, ref, entry.invoice),
+                onMatch: (entry) => _match(context, ref, entry.invoice),
               ),
               archiveBody,
             ]),
@@ -807,20 +862,27 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     );
     if (result == null || !context.mounted) return;
 
-    if (!await runGuarded(
-      context,
-      domain: 'money',
-      message: 'invoice issue failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () => ref.read(moneyRepositoryProvider).createInvoice(
+    try {
+      await ref.read(moneyRepositoryProvider).createInvoice(
             workspaceId: workspace.id,
             memberId: result.memberId,
             period: result.period,
             replacesId: replaces?.id,
             detailed: result.detailed,
-          ),
-    )) {
+          );
+    } catch (e, st) {
+      TraceLogger.instance.error('money', 'invoice issue failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      // 0067 — one active invoice per member+month (pinned substring).
+      AppSnack.error(
+        context,
+        e.toString().contains('already invoiced')
+            ? (l10n?.invoiceAlreadyInvoiced ??
+                'This month is already invoiced for this member.')
+            : (l10n?.workspaceGenericError ??
+                'Something went wrong. Please try again.'),
+      );
       return;
     }
     ref.invalidate(invoicesProvider);

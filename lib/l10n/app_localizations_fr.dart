@@ -1320,6 +1320,55 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get eventTypeInvoicePayment => 'Paiement de facture';
+
+  @override
+  String eventInvoicePaid(String number, String amount) {
+    return 'Facture $number payée — $amount';
+  }
+
+  @override
+  String get invoiceMatchAction => 'Marquer comme payée';
+
+  @override
+  String get invoiceMatchAmountLabel => 'Montant reçu';
+
+  @override
+  String get invoiceMatchNoteLabel => 'Note';
+
+  @override
+  String get invoiceMatchNoteRequired => 'Une note est obligatoire.';
+
+  @override
+  String invoiceMatchOver(String excess) {
+    return 'Le membre a payé $excess de plus.';
+  }
+
+  @override
+  String get invoiceMatchCreditNote => 'Créer un avoir pour l\'excédent';
+
+  @override
+  String get invoiceMatchForce => 'Accepter quand même (justifier)';
+
+  @override
+  String invoiceMatchUnder(String missing) {
+    return 'Le membre a payé $missing de moins — accepter exige une note.';
+  }
+
+  @override
+  String get invoiceMatched => 'Facture rapprochée.';
+
+  @override
+  String get invoiceMatchPendingBadge => 'En attente de validation';
+
+  @override
+  String get invoiceMatchedBadge => 'Payée';
+
+  @override
+  String get invoiceAlreadyInvoiced =>
+      'Ce mois est déjà facturé pour ce membre.';
+
+  @override
   String get eventTypeMemberJoin => 'Nouveau membre';
 
   @override

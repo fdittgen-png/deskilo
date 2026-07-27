@@ -118,5 +118,43 @@
         "type": "int"
       }
     }
-  }
+  },
+  "eventTypeInvoicePayment": "Pagamento fattura",
+  "eventInvoicePaid": "Fattura {number} pagata — {amount}",
+  "@eventInvoicePaid": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMatchAction": "Segna come pagata",
+  "invoiceMatchAmountLabel": "Importo ricevuto",
+  "invoiceMatchNoteLabel": "Nota",
+  "invoiceMatchNoteRequired": "È richiesta una nota.",
+  "invoiceMatchOver": "Il membro ha pagato {excess} in più.",
+  "@invoiceMatchOver": {
+    "placeholders": {
+      "excess": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMatchCreditNote": "Crea una nota di credito per l'eccedenza",
+  "invoiceMatchForce": "Accetta comunque (motivare)",
+  "invoiceMatchUnder": "Il membro ha pagato {missing} in meno — accettare richiede una nota.",
+  "@invoiceMatchUnder": {
+    "placeholders": {
+      "missing": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMatched": "Fattura riconciliata.",
+  "invoiceMatchPendingBadge": "In attesa di convalida",
+  "invoiceMatchedBadge": "Pagata",
+  "invoiceAlreadyInvoiced": "Questo mese è già fatturato per questo membro."
 }

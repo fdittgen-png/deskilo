@@ -82,6 +82,11 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
               ? l10n?.eventRolePromote(actor)
               : l10n?.eventRoleDemote(actor)) ??
           '$actor changes a role',
+      (EventType.invoicePayment, _) => l10n?.eventInvoicePaid(
+            event.payload['number'] as String? ?? '',
+            amount,
+          ) ??
+          'Invoice ${event.payload['number']} paid — $amount',
       _ => '${_typeLabel(l10n, event.type)} · ${event.action.name}',
     };
     // Service charges name no actor in the title, so always say whose bill
@@ -106,6 +111,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.memberJoin => l10n?.eventTypeMemberJoin ?? 'New member',
       EventType.spaceReservation =>
         l10n?.eventTypeSpaceReservation ?? 'Whole-space reservations',
+      EventType.invoicePayment =>
+        l10n?.eventTypeInvoicePayment ?? 'Invoice payment',
     };
   }
 
@@ -122,6 +129,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.memberJoin => Icons.person_add_alt,
       EventType.spaceReservation => Icons.meeting_room_outlined,
       EventType.roleChange => Icons.admin_panel_settings_outlined,
+      EventType.invoicePayment => Icons.price_check_outlined,
     };
   }
 

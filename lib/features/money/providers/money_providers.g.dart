@@ -504,6 +504,52 @@ final class InvoicesProvider
 
 String _$invoicesHash() => r'1750a78bf092e310a8b152b40bc7f4facd84c06d';
 
+/// invoiceId → its payment match (0067) — the invoice lifecycle state.
+
+@ProviderFor(invoiceMatches)
+final invoiceMatchesProvider = InvoiceMatchesProvider._();
+
+/// invoiceId → its payment match (0067) — the invoice lifecycle state.
+
+final class InvoiceMatchesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, InvoiceMatch>>,
+          Map<String, InvoiceMatch>,
+          FutureOr<Map<String, InvoiceMatch>>
+        >
+    with
+        $FutureModifier<Map<String, InvoiceMatch>>,
+        $FutureProvider<Map<String, InvoiceMatch>> {
+  /// invoiceId → its payment match (0067) — the invoice lifecycle state.
+  InvoiceMatchesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'invoiceMatchesProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$invoiceMatchesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, InvoiceMatch>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, InvoiceMatch>> create(Ref ref) {
+    return invoiceMatches(ref);
+  }
+}
+
+String _$invoiceMatchesHash() => r'3d539ac3cb33fb5c67caa92edc50d1d4d14cbffb';
+
 /// invoiceId → reminder count + last instant (0066), for the archive
 /// badges.
 
@@ -626,4 +672,4 @@ final class InvoicingOverviewProvider
   }
 }
 
-String _$invoicingOverviewHash() => r'5e234a2500f15792107dd9832bb627b874a9e401';
+String _$invoicingOverviewHash() => r'c88f05b399ee8c31231c7d7bd859ae4a78a7564c';

@@ -1315,6 +1315,56 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get eventTypeInvoicePayment => 'Rechnungszahlung';
+
+  @override
+  String eventInvoicePaid(String number, String amount) {
+    return 'Rechnung $number bezahlt — $amount';
+  }
+
+  @override
+  String get invoiceMatchAction => 'Als bezahlt markieren';
+
+  @override
+  String get invoiceMatchAmountLabel => 'Erhaltener Betrag';
+
+  @override
+  String get invoiceMatchNoteLabel => 'Notiz';
+
+  @override
+  String get invoiceMatchNoteRequired => 'Eine Notiz ist erforderlich.';
+
+  @override
+  String invoiceMatchOver(String excess) {
+    return 'Das Mitglied hat $excess mehr gezahlt.';
+  }
+
+  @override
+  String get invoiceMatchCreditNote =>
+      'Gutschrift über den Überschuss erstellen';
+
+  @override
+  String get invoiceMatchForce => 'Trotzdem akzeptieren (mit Begründung)';
+
+  @override
+  String invoiceMatchUnder(String missing) {
+    return 'Das Mitglied hat $missing weniger gezahlt — Akzeptieren erfordert eine Notiz.';
+  }
+
+  @override
+  String get invoiceMatched => 'Rechnung abgeglichen.';
+
+  @override
+  String get invoiceMatchPendingBadge => 'Wartet auf Validierung';
+
+  @override
+  String get invoiceMatchedBadge => 'Bezahlt';
+
+  @override
+  String get invoiceAlreadyInvoiced =>
+      'Dieser Monat ist für dieses Mitglied bereits berechnet.';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

@@ -46,6 +46,27 @@ sealed class InvoiceAttendance with _$InvoiceAttendance {
   }) = _InvoiceAttendance;
 }
 
+/// An invoice's payment MATCH (0067): the lifecycle metadata beside the
+/// immutable document. `pending` while a validation quorum decides;
+/// rejects delete the match (the invoice reopens), so a loaded match is
+/// either awaiting validation or standing.
+@freezed
+sealed class InvoiceMatch with _$InvoiceMatch {
+  const factory InvoiceMatch({
+    required String invoiceId,
+    required int paidCents,
+    required String resolution,
+    @Default('') String note,
+    @Default('confirmed') String status,
+    required DateTime matchedAt,
+    @Default('') String byName,
+  }) = _InvoiceMatch;
+
+  const InvoiceMatch._();
+
+  bool get pending => status == 'pending';
+}
+
 /// An IMMUTABLE invoice from the archive (0060): every displayed detail
 /// is a SNAPSHOT taken at issue time — names, addresses and the issuer
 /// can change later without ever rewriting an issued document. The

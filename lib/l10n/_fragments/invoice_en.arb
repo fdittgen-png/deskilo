@@ -296,5 +296,79 @@
         "type": "int"
       }
     }
+  },
+  "eventTypeInvoicePayment": "Invoice payment",
+  "@eventTypeInvoicePayment": {
+    "description": "Event type label + validation settings card (0067)"
+  },
+  "eventInvoicePaid": "Invoice {number} paid — {amount}",
+  "@eventInvoicePaid": {
+    "description": "Events feed line for a matched invoice payment",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMatchAction": "Mark as paid",
+  "@invoiceMatchAction": {
+    "description": "Open card button + match dialog title/confirm (0067)"
+  },
+  "invoiceMatchAmountLabel": "Amount received",
+  "@invoiceMatchAmountLabel": {
+    "description": "Match dialog: received amount field"
+  },
+  "invoiceMatchNoteLabel": "Note",
+  "@invoiceMatchNoteLabel": {
+    "description": "Match dialog: note field"
+  },
+  "invoiceMatchNoteRequired": "A note is required.",
+  "@invoiceMatchNoteRequired": {
+    "description": "Match dialog inline error on the forced paths"
+  },
+  "invoiceMatchOver": "The member paid {excess} more.",
+  "@invoiceMatchOver": {
+    "description": "Match dialog: overpayment hint",
+    "placeholders": {
+      "excess": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMatchCreditNote": "Create a credit note for the excess",
+  "@invoiceMatchCreditNote": {
+    "description": "Overpayment resolution: credit note"
+  },
+  "invoiceMatchForce": "Accept anyway (note why)",
+  "@invoiceMatchForce": {
+    "description": "Overpayment resolution: forced accept"
+  },
+  "invoiceMatchUnder": "The member paid {missing} less — accepting requires a note.",
+  "@invoiceMatchUnder": {
+    "description": "Match dialog: underpayment hint",
+    "placeholders": {
+      "missing": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMatched": "Invoice matched.",
+  "@invoiceMatched": {
+    "description": "Snackbar after a successful match"
+  },
+  "invoiceMatchPendingBadge": "Awaiting validation",
+  "@invoiceMatchPendingBadge": {
+    "description": "Open card chip while the quorum decides"
+  },
+  "invoiceMatchedBadge": "Paid",
+  "@invoiceMatchedBadge": {
+    "description": "Archive row badge: matched invoice"
+  },
+  "invoiceAlreadyInvoiced": "This month is already invoiced for this member.",
+  "@invoiceAlreadyInvoiced": {
+    "description": "Pinned 0067 error: one active invoice per member+month"
   }
 }

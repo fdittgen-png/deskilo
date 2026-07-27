@@ -106,6 +106,16 @@ Future<List<Invoice>> invoices(Ref ref) async {
   return ref.watch(moneyRepositoryProvider).fetchInvoices(workspace.id);
 }
 
+/// invoiceId → its payment match (0067) — the invoice lifecycle state.
+@Riverpod(keepAlive: true)
+Future<Map<String, InvoiceMatch>> invoiceMatches(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const {};
+  return ref
+      .read(moneyRepositoryProvider)
+      .fetchInvoiceMatches(workspace.id);
+}
+
 /// invoiceId → reminder count + last instant (0066), for the archive
 /// badges.
 @Riverpod(keepAlive: true)
@@ -123,10 +133,10 @@ Future<Map<String, ({int count, DateTime last})>> invoiceReminders(
 /// derivable positions for the month and no invoice yet.
 typedef ToInvoiceEntry = ({String memberId, String name, int totalCents});
 
-/// One OPEN invoice: issued, not voided/replaced, and the month's LIVE
-/// solde is still positive — payments recorded after issue settle it
-/// automatically.
-typedef OpenInvoiceEntry = ({Invoice invoice, int liveSoldeCents});
+/// One OPEN invoice (0067 lifecycle): issued, not voided/replaced and
+/// without a match yet — or with a match still awaiting its validation
+/// quorum ([pendingMatch]). Only matching closes an invoice.
+typedef OpenInvoiceEntry = ({Invoice invoice, InvoiceMatch? pendingMatch});
 
 /// What the invoicing hub shows the issuer (field request: "the user
 /// sees what to invoice, what to remind, what has been invoiced").
@@ -205,35 +215,17 @@ Future<InvoicingOverview> invoicingOverview(Ref ref) async {
       .toList()
     ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
-  final candidates = [
+  // 0067 — the lifecycle is EXPLICIT: an invoice stays open until it
+  // is matched (a pending match still shows here, awaiting its
+  // quorum); only voiding or a standing match removes it.
+  final matches = await ref.watch(invoiceMatchesProvider.future);
+  final open = [
     for (final invoice in invoices)
       if (!invoice.isVoided &&
           !replacedIds.contains(invoice.id) &&
-          invoice.totalCents > 0)
-        invoice,
-  ];
-  final open = (await Future.wait([
-    for (final invoice in candidates)
-      invoice.period == null
-          ? Future<OpenInvoiceEntry?>.value(
-              (invoice: invoice, liveSoldeCents: invoice.totalCents))
-          : repo
-              .previewInvoice(
-                workspaceId: workspace.id,
-                memberId: invoice.memberId,
-                period: invoice.period!,
-              )
-              .then<OpenInvoiceEntry?>(
-                (preview) => preview.totalCents > 0
-                    ? (invoice: invoice, liveSoldeCents: preview.totalCents)
-                    : null,
-                onError: (Object e, StackTrace st) =>
-                    (invoice: invoice, liveSoldeCents: invoice.totalCents),
-              ),
-  ]))
-      .whereType<OpenInvoiceEntry>()
-      .toList()
-    ..sort((a, b) => a.invoice.issuedAt.compareTo(b.invoice.issuedAt));
+          (matches[invoice.id] == null || matches[invoice.id]!.pending))
+        (invoice: invoice, pendingMatch: matches[invoice.id]),
+  ]..sort((a, b) => a.invoice.issuedAt.compareTo(b.invoice.issuedAt));
 
   return (period: period, toInvoice: toInvoice, open: open);
 }

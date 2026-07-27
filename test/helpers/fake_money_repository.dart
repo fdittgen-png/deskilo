@@ -103,6 +103,14 @@ class FakeMoneyRepository implements MoneyRepository {
     String? replacesId,
     bool detailed = false,
   }) async {
+    // Server contract (0067): one ACTIVE invoice per member+month.
+    if (invoices.any((i) =>
+        i.memberId == memberId &&
+        i.period == period &&
+        !i.isVoided &&
+        i.id != replacesId)) {
+      throw StateError('period already invoiced for this member');
+    }
     final lines = derivedLines(memberId, period);
     if (lines.isEmpty) throw StateError('nothing to invoice for this period');
     var replacesNumber = '';
@@ -195,6 +203,74 @@ class FakeMoneyRepository implements MoneyRepository {
               last: entry.value.last,
             ),
       };
+
+  /// invoiceId → its match (0067). Mirrors the server contract:
+  /// resolution/amount/note validation, pending while a validation
+  /// policy is simulated, credit note as a ledger credit adjustment.
+  final invoiceMatchesStore = <String, InvoiceMatch>{};
+
+  /// When true, matches land PENDING (a validation policy exists).
+  bool matchPolicyConfigured = false;
+
+  @override
+  Future<void> matchInvoice({
+    required String invoiceId,
+    required int paidCents,
+    required String resolution,
+    String note = '',
+  }) async {
+    final invoice = invoices.where((i) => i.id == invoiceId).firstOrNull;
+    if (invoice == null) throw StateError('unknown invoice');
+    if (invoice.isVoided) throw StateError('invoice is voided');
+    if (invoiceMatchesStore.containsKey(invoiceId)) {
+      throw StateError('invoice already matched');
+    }
+    final trimmed = note.trim();
+    if (resolution == 'exact' && paidCents != invoice.totalCents) {
+      throw StateError('amount does not match the invoice');
+    }
+    if ((resolution == 'over_forced' || resolution == 'over_credit_note') &&
+        paidCents <= invoice.totalCents) {
+      throw StateError('amount does not exceed the invoice');
+    }
+    if (resolution == 'under_accepted' &&
+        paidCents >= invoice.totalCents) {
+      throw StateError('amount is not below the invoice');
+    }
+    if ((resolution == 'over_forced' || resolution == 'under_accepted') &&
+        trimmed.isEmpty) {
+      throw StateError('a note is required');
+    }
+    if (resolution == 'over_credit_note') {
+      ledger.add(LedgerEntry(
+        id: 'ledger-credit-${ledger.length + 1}',
+        memberId: invoice.memberId,
+        kind: LedgerKind.credit,
+        category: LedgerCategory.adjustment,
+        amountCents: paidCents - invoice.totalCents,
+        description: 'Credit note ${invoice.number}'
+            '${trimmed.isEmpty ? '' : ' — $trimmed'}',
+        period:
+            '${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}',
+        createdAt: DateTime.now(),
+      ));
+    }
+    invoiceMatchesStore[invoiceId] = InvoiceMatch(
+      invoiceId: invoiceId,
+      paidCents: paidCents,
+      resolution: resolution,
+      note: trimmed,
+      status: matchPolicyConfigured ? 'pending' : 'confirmed',
+      matchedAt: DateTime.now(),
+      byName: 'Flo',
+    );
+  }
+
+  @override
+  Future<Map<String, InvoiceMatch>> fetchInvoiceMatches(
+    String workspaceId,
+  ) async =>
+      Map.of(invoiceMatchesStore);
 
   FakeMoneyRepository({FakeEventRepository? events}) : _events = events;
 

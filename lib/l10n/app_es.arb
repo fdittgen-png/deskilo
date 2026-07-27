@@ -446,6 +446,44 @@
       }
     }
   },
+  "eventTypeInvoicePayment": "Pago de factura",
+  "eventInvoicePaid": "Factura {number} pagada — {amount}",
+  "@eventInvoicePaid": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMatchAction": "Marcar como pagada",
+  "invoiceMatchAmountLabel": "Importe recibido",
+  "invoiceMatchNoteLabel": "Nota",
+  "invoiceMatchNoteRequired": "Se requiere una nota.",
+  "invoiceMatchOver": "El miembro pagó {excess} de más.",
+  "@invoiceMatchOver": {
+    "placeholders": {
+      "excess": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMatchCreditNote": "Crear una nota de crédito por el exceso",
+  "invoiceMatchForce": "Aceptar de todos modos (justificar)",
+  "invoiceMatchUnder": "El miembro pagó {missing} de menos — aceptar requiere una nota.",
+  "@invoiceMatchUnder": {
+    "placeholders": {
+      "missing": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMatched": "Factura conciliada.",
+  "invoiceMatchPendingBadge": "Pendiente de validación",
+  "invoiceMatchedBadge": "Pagada",
+  "invoiceAlreadyInvoiced": "Este mes ya está facturado para este miembro.",
   "eventTypeMemberJoin": "Nuevo miembro",
   "memberStatusPending": "Pendiente",
   "pendingApprovalTitle": "Esperando aprobación",
