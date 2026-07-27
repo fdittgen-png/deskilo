@@ -1252,6 +1252,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicePdfPage => 'Seite';
 
   @override
+  String get invoiceRemindAction => 'Zahlungserinnerung senden';
+
+  @override
+  String get invoiceReminded => 'Erinnerung erfasst.';
+
+  @override
+  String invoiceRemindedBadge(int count) {
+    return 'Erinnert ×$count';
+  }
+
+  @override
+  String invoiceReminderMessage(String number, String amount) {
+    return 'Freundliche Erinnerung: Rechnung $number — offener Saldo $amount.';
+  }
+
+  @override
+  String get invoiceEInvoiceDownload => 'E-Rechnung herunterladen (XML)';
+
+  @override
+  String get invoiceEInvoiceShare => 'E-Rechnung teilen (XML)';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

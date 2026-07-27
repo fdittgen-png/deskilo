@@ -45,6 +45,15 @@ abstract class MoneyRepository {
   /// one-way change the server permits on an issued invoice.
   Future<void> voidInvoice(String invoiceId);
 
+  /// Records a payment reminder (RPC `record_invoice_reminder`, 0066)
+  /// — collection metadata beside the immutable document.
+  Future<void> remindInvoice(String invoiceId);
+
+  /// invoiceId → reminder count + last reminder instant (0066).
+  Future<Map<String, ({int count, DateTime last})>> fetchInvoiceReminders(
+    String workspaceId,
+  );
+
   Future<Statement> fetchStatement(String memberId, String period);
 
   Future<List<LedgerEntry>> fetchLedger(String memberId);

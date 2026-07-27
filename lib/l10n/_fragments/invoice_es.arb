@@ -53,5 +53,28 @@
   "invoicePdfAttendance": "Asistencias",
   "invoicePdfActivity": "Movimientos y pagos",
   "invoicePdfReserved": "reservado",
-  "invoicePdfPage": "Página"
+  "invoicePdfPage": "Página",
+  "invoiceRemindAction": "Enviar un recordatorio",
+  "invoiceReminded": "Recordatorio registrado.",
+  "invoiceRemindedBadge": "Recordado ×{count}",
+  "@invoiceRemindedBadge": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceReminderMessage": "Recordatorio amistoso: factura {number} — saldo pendiente {amount}.",
+  "@invoiceReminderMessage": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEInvoiceDownload": "Descargar factura electrónica (XML)",
+  "invoiceEInvoiceShare": "Compartir factura electrónica (XML)"
 }

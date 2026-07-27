@@ -1641,6 +1641,43 @@
   "@invoicePdfPage": {
     "description": "PDF footer page label"
   },
+  "invoiceRemindAction": "Send a reminder",
+  "@invoiceRemindAction": {
+    "description": "Issuer menu: record + share a payment reminder (0066)"
+  },
+  "invoiceReminded": "Reminder recorded.",
+  "@invoiceReminded": {
+    "description": "Snackbar after a reminder was recorded"
+  },
+  "invoiceRemindedBadge": "Reminded ×{count}",
+  "@invoiceRemindedBadge": {
+    "description": "Archive row badge: reminder count",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceReminderMessage": "Friendly reminder: invoice {number} — balance due {amount}.",
+  "@invoiceReminderMessage": {
+    "description": "Share-sheet text accompanying the reminded invoice PDF",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEInvoiceDownload": "Download e-invoice (XML)",
+  "@invoiceEInvoiceDownload": {
+    "description": "Menu: save the EN 16931 UBL XML to Downloads (EU workspaces)"
+  },
+  "invoiceEInvoiceShare": "Share e-invoice (XML)",
+  "@invoiceEInvoiceShare": {
+    "description": "Menu: share the EN 16931 UBL XML (EU workspaces)"
+  },
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
   "pendingApprovalTitle": "Awaiting approval",

@@ -72,6 +72,33 @@ class SupabaseMoneyRepository implements MoneyRepository {
         .rpc<void>('void_invoice', params: {'p_invoice_id': invoiceId});
   }
 
+  @override
+  Future<void> remindInvoice(String invoiceId) async {
+    await _client.rpc<void>('record_invoice_reminder',
+        params: {'p_invoice_id': invoiceId});
+  }
+
+  @override
+  Future<Map<String, ({int count, DateTime last})>> fetchInvoiceReminders(
+    String workspaceId,
+  ) async {
+    final rows = await _client
+        .from('invoice_reminders')
+        .select('invoice_id, sent_at')
+        .eq('workspace_id', workspaceId);
+    final result = <String, ({int count, DateTime last})>{};
+    for (final row in rows) {
+      final id = row['invoice_id'] as String;
+      final at = DateTime.parse(row['sent_at'] as String).toLocal();
+      final prev = result[id];
+      result[id] = (
+        count: (prev?.count ?? 0) + 1,
+        last: prev == null || at.isAfter(prev.last) ? at : prev.last,
+      );
+    }
+    return result;
+  }
+
   SupabaseMoneyRepository(this._client);
 
   final SupabaseClient _client;

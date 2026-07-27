@@ -236,7 +236,7 @@ void main() {
     final money = await pumpInvoices(
       tester,
       money: await seededMoney(),
-      sharer: ({required bytes, required fileName, required mimeType}) async {
+      sharer: ({required bytes, required fileName, required mimeType, text}) async {
         shared.add((name: fileName, mime: mimeType, bytes: bytes));
       },
     );
@@ -315,8 +315,8 @@ void main() {
   });
 
   testWidgets(
-      'a replaced invoice offers no second replacement; a voided-and-'
-      'replaced one has no menu at all', (tester) async {
+      'a voided-and-replaced invoice offers NO issuer actions — its '
+      'menu keeps only the EU e-invoice entries (0066)', (tester) async {
     final money = await seededMoney();
     await money.createInvoice(
       workspaceId: 'ws-1',
@@ -326,8 +326,22 @@ void main() {
     );
     await pumpInvoices(tester, money: money);
 
-    expect(find.byKey(const ValueKey('invoice-menu-inv-1')), findsNothing);
-    expect(find.byKey(const ValueKey('invoice-menu-inv-2')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('invoice-menu-inv-1')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('invoice-void-action')), findsNothing);
+    expect(
+        find.byKey(const ValueKey('invoice-replace-action')), findsNothing);
+    expect(find.byKey(const ValueKey('invoice-remind-action')), findsNothing,
+        reason: 'a voided invoice is not reminded');
+    expect(find.byKey(const ValueKey('invoice-einvoice-share')),
+        findsOneWidget);
+    // Close the menu; the replacement keeps its full issuer menu.
+    await tester.tapAt(const Offset(10, 10));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-menu-inv-2')));
+    await tester.pumpAndSettle();
+    expect(
+        find.byKey(const ValueKey('invoice-void-action')), findsOneWidget);
   });
 
   testWidgets(
@@ -481,6 +495,91 @@ void main() {
     expect(invoice.detailLedger.single.amountCents, -5000,
         reason: 'annex credits are signed like the positions');
     expect(invoice.attendance.single.space, 'A1 · Window desk');
+  });
+  testWidgets(
+      'REMINDER (0066): the owner records a reminder — the PDF goes to '
+      'the share sheet with the message, and the row shows the badge',
+      (tester) async {
+    final shared = <({String name, String mime, String? text})>[];
+    final money = await pumpInvoices(
+      tester,
+      money: await seededMoney(),
+      sharer: ({required bytes, required fileName, required mimeType, text})
+          async {
+        shared.add((name: fileName, mime: mimeType, text: text));
+      },
+    );
+    final invoice = money.invoices.single;
+
+    await tester.tap(find.byKey(ValueKey('invoice-menu-${invoice.id}')));
+    await tester.pumpAndSettle();
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const ValueKey('invoice-remind-action')));
+      await tester.pump();
+    });
+    await tester.pumpAndSettle();
+
+    expect(money.invoiceReminders[invoice.id], hasLength(1));
+    expect(shared.single.mime, 'application/pdf');
+    expect(shared.single.text, contains(invoice.number),
+        reason: 'the share text names the invoice');
+    expect(find.text('Reminder recorded.'), findsOneWidget);
+    expect(find.textContaining('Reminded ×1'), findsOneWidget,
+        reason: 'the archive badge reflects the recorded reminder');
+  });
+
+  testWidgets(
+      'E-INVOICE (0066, EU workspace): even a PLAIN member shares the '
+      'EN 16931 XML from the row menu', (tester) async {
+    final shared = <({String name, String mime, Uint8List bytes})>[];
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.myMember =
+        workspace.myMember.copyWith(isOwner: false, isAdmin: false);
+    final money = await pumpInvoices(
+      tester,
+      money: await seededMoney(),
+      workspace: workspace,
+      sharer: ({required bytes, required fileName, required mimeType, text})
+          async {
+        shared.add((name: fileName, mime: mimeType, bytes: bytes));
+      },
+    );
+    final invoice = money.invoices.single;
+
+    // The fake workspace is DE — EU, so the menu exists for everyone.
+    await tester.tap(find.byKey(ValueKey('invoice-menu-${invoice.id}')));
+    await tester.pumpAndSettle();
+    // Issuer-only entries stay hidden for the plain member.
+    expect(find.byKey(const ValueKey('invoice-remind-action')), findsNothing);
+    expect(find.byKey(const ValueKey('invoice-void-action')), findsNothing);
+    await tester
+        .tap(find.byKey(const ValueKey('invoice-einvoice-share')));
+    await tester.pumpAndSettle();
+
+    expect(shared.single.name, 'inv-2026-0001.xml');
+    expect(shared.single.mime, 'application/xml');
+    final xml = String.fromCharCodes(shared.single.bytes);
+    expect(xml, contains('urn:cen.eu:en16931:2017'));
+    expect(xml, contains('INV-2026-0001'));
+  });
+
+  testWidgets(
+      'outside the EU there is no e-invoice affordance — a plain member '
+      'has no row menu at all', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.workspaces[0] =
+        workspace.workspaces[0].copyWith(countryCode: 'CH');
+    workspace.myMember =
+        workspace.myMember.copyWith(isOwner: false, isAdmin: false);
+    final money = await pumpInvoices(
+      tester,
+      money: await seededMoney(),
+      workspace: workspace,
+    );
+    expect(
+      find.byKey(ValueKey('invoice-menu-${money.invoices.single.id}')),
+      findsNothing,
+    );
   });
 }
 

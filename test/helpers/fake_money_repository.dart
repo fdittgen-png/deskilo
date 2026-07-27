@@ -172,6 +172,30 @@ class FakeMoneyRepository implements MoneyRepository {
         .copyWith(voidedAt: DateTime.now(), voidedByName: 'Flo');
   }
 
+  /// invoiceId → reminder instants (0066).
+  final invoiceReminders = <String, List<DateTime>>{};
+
+  @override
+  Future<void> remindInvoice(String invoiceId) async {
+    final invoice = invoices.where((i) => i.id == invoiceId).firstOrNull;
+    if (invoice == null) throw StateError('unknown invoice');
+    if (invoice.isVoided) throw StateError('invoice is voided');
+    invoiceReminders.putIfAbsent(invoiceId, () => []).add(DateTime.now());
+  }
+
+  @override
+  Future<Map<String, ({int count, DateTime last})>> fetchInvoiceReminders(
+    String workspaceId,
+  ) async =>
+      {
+        for (final entry in invoiceReminders.entries)
+          if (entry.value.isNotEmpty)
+            entry.key: (
+              count: entry.value.length,
+              last: entry.value.last,
+            ),
+      };
+
   FakeMoneyRepository({FakeEventRepository? events}) : _events = events;
 
   /// When wired, [recordServiceCharge] also files the pending
