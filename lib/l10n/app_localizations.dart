@@ -2456,6 +2456,90 @@ abstract class AppLocalizations {
   /// **'{count} invoices issued.'**
   String invoiceIssuedCount(int count);
 
+  /// Event type label + validation settings card (0067)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice payment'**
+  String get eventTypeInvoicePayment;
+
+  /// Events feed line for a matched invoice payment
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {number} paid — {amount}'**
+  String eventInvoicePaid(String number, String amount);
+
+  /// Open card button + match dialog title/confirm (0067)
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as paid'**
+  String get invoiceMatchAction;
+
+  /// Match dialog: received amount field
+  ///
+  /// In en, this message translates to:
+  /// **'Amount received'**
+  String get invoiceMatchAmountLabel;
+
+  /// Match dialog: note field
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get invoiceMatchNoteLabel;
+
+  /// Match dialog inline error on the forced paths
+  ///
+  /// In en, this message translates to:
+  /// **'A note is required.'**
+  String get invoiceMatchNoteRequired;
+
+  /// Match dialog: overpayment hint
+  ///
+  /// In en, this message translates to:
+  /// **'The member paid {excess} more.'**
+  String invoiceMatchOver(String excess);
+
+  /// Overpayment resolution: credit note
+  ///
+  /// In en, this message translates to:
+  /// **'Create a credit note for the excess'**
+  String get invoiceMatchCreditNote;
+
+  /// Overpayment resolution: forced accept
+  ///
+  /// In en, this message translates to:
+  /// **'Accept anyway (note why)'**
+  String get invoiceMatchForce;
+
+  /// Match dialog: underpayment hint
+  ///
+  /// In en, this message translates to:
+  /// **'The member paid {missing} less — accepting requires a note.'**
+  String invoiceMatchUnder(String missing);
+
+  /// Snackbar after a successful match
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice matched.'**
+  String get invoiceMatched;
+
+  /// Open card chip while the quorum decides
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting validation'**
+  String get invoiceMatchPendingBadge;
+
+  /// Archive row badge: matched invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get invoiceMatchedBadge;
+
+  /// Pinned 0067 error: one active invoice per member+month
+  ///
+  /// In en, this message translates to:
+  /// **'This month is already invoiced for this member.'**
+  String get invoiceAlreadyInvoiced;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

@@ -792,6 +792,275 @@ as String,
 }
 
 /// @nodoc
+mixin _$InvoiceMatch {
+
+ String get invoiceId; int get paidCents; String get resolution; String get note; String get status; DateTime get matchedAt; String get byName;
+/// Create a copy of InvoiceMatch
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$InvoiceMatchCopyWith<InvoiceMatch> get copyWith => _$InvoiceMatchCopyWithImpl<InvoiceMatch>(this as InvoiceMatch, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InvoiceMatch&&(identical(other.invoiceId, invoiceId) || other.invoiceId == invoiceId)&&(identical(other.paidCents, paidCents) || other.paidCents == paidCents)&&(identical(other.resolution, resolution) || other.resolution == resolution)&&(identical(other.note, note) || other.note == note)&&(identical(other.status, status) || other.status == status)&&(identical(other.matchedAt, matchedAt) || other.matchedAt == matchedAt)&&(identical(other.byName, byName) || other.byName == byName));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,invoiceId,paidCents,resolution,note,status,matchedAt,byName);
+
+@override
+String toString() {
+  return 'InvoiceMatch(invoiceId: $invoiceId, paidCents: $paidCents, resolution: $resolution, note: $note, status: $status, matchedAt: $matchedAt, byName: $byName)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $InvoiceMatchCopyWith<$Res>  {
+  factory $InvoiceMatchCopyWith(InvoiceMatch value, $Res Function(InvoiceMatch) _then) = _$InvoiceMatchCopyWithImpl;
+@useResult
+$Res call({
+ String invoiceId, int paidCents, String resolution, String note, String status, DateTime matchedAt, String byName
+});
+
+
+
+
+}
+/// @nodoc
+class _$InvoiceMatchCopyWithImpl<$Res>
+    implements $InvoiceMatchCopyWith<$Res> {
+  _$InvoiceMatchCopyWithImpl(this._self, this._then);
+
+  final InvoiceMatch _self;
+  final $Res Function(InvoiceMatch) _then;
+
+/// Create a copy of InvoiceMatch
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? invoiceId = null,Object? paidCents = null,Object? resolution = null,Object? note = null,Object? status = null,Object? matchedAt = null,Object? byName = null,}) {
+  return _then(_self.copyWith(
+invoiceId: null == invoiceId ? _self.invoiceId : invoiceId // ignore: cast_nullable_to_non_nullable
+as String,paidCents: null == paidCents ? _self.paidCents : paidCents // ignore: cast_nullable_to_non_nullable
+as int,resolution: null == resolution ? _self.resolution : resolution // ignore: cast_nullable_to_non_nullable
+as String,note: null == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
+as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as String,matchedAt: null == matchedAt ? _self.matchedAt : matchedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,byName: null == byName ? _self.byName : byName // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [InvoiceMatch].
+extension InvoiceMatchPatterns on InvoiceMatch {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _InvoiceMatch value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _InvoiceMatch() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _InvoiceMatch value)  $default,){
+final _that = this;
+switch (_that) {
+case _InvoiceMatch():
+return $default(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _InvoiceMatch value)?  $default,){
+final _that = this;
+switch (_that) {
+case _InvoiceMatch() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String invoiceId,  int paidCents,  String resolution,  String note,  String status,  DateTime matchedAt,  String byName)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _InvoiceMatch() when $default != null:
+return $default(_that.invoiceId,_that.paidCents,_that.resolution,_that.note,_that.status,_that.matchedAt,_that.byName);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String invoiceId,  int paidCents,  String resolution,  String note,  String status,  DateTime matchedAt,  String byName)  $default,) {final _that = this;
+switch (_that) {
+case _InvoiceMatch():
+return $default(_that.invoiceId,_that.paidCents,_that.resolution,_that.note,_that.status,_that.matchedAt,_that.byName);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String invoiceId,  int paidCents,  String resolution,  String note,  String status,  DateTime matchedAt,  String byName)?  $default,) {final _that = this;
+switch (_that) {
+case _InvoiceMatch() when $default != null:
+return $default(_that.invoiceId,_that.paidCents,_that.resolution,_that.note,_that.status,_that.matchedAt,_that.byName);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _InvoiceMatch extends InvoiceMatch {
+  const _InvoiceMatch({required this.invoiceId, required this.paidCents, required this.resolution, this.note = '', this.status = 'confirmed', required this.matchedAt, this.byName = ''}): super._();
+  
+
+@override final  String invoiceId;
+@override final  int paidCents;
+@override final  String resolution;
+@override@JsonKey() final  String note;
+@override@JsonKey() final  String status;
+@override final  DateTime matchedAt;
+@override@JsonKey() final  String byName;
+
+/// Create a copy of InvoiceMatch
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$InvoiceMatchCopyWith<_InvoiceMatch> get copyWith => __$InvoiceMatchCopyWithImpl<_InvoiceMatch>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InvoiceMatch&&(identical(other.invoiceId, invoiceId) || other.invoiceId == invoiceId)&&(identical(other.paidCents, paidCents) || other.paidCents == paidCents)&&(identical(other.resolution, resolution) || other.resolution == resolution)&&(identical(other.note, note) || other.note == note)&&(identical(other.status, status) || other.status == status)&&(identical(other.matchedAt, matchedAt) || other.matchedAt == matchedAt)&&(identical(other.byName, byName) || other.byName == byName));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,invoiceId,paidCents,resolution,note,status,matchedAt,byName);
+
+@override
+String toString() {
+  return 'InvoiceMatch(invoiceId: $invoiceId, paidCents: $paidCents, resolution: $resolution, note: $note, status: $status, matchedAt: $matchedAt, byName: $byName)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$InvoiceMatchCopyWith<$Res> implements $InvoiceMatchCopyWith<$Res> {
+  factory _$InvoiceMatchCopyWith(_InvoiceMatch value, $Res Function(_InvoiceMatch) _then) = __$InvoiceMatchCopyWithImpl;
+@override @useResult
+$Res call({
+ String invoiceId, int paidCents, String resolution, String note, String status, DateTime matchedAt, String byName
+});
+
+
+
+
+}
+/// @nodoc
+class __$InvoiceMatchCopyWithImpl<$Res>
+    implements _$InvoiceMatchCopyWith<$Res> {
+  __$InvoiceMatchCopyWithImpl(this._self, this._then);
+
+  final _InvoiceMatch _self;
+  final $Res Function(_InvoiceMatch) _then;
+
+/// Create a copy of InvoiceMatch
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? invoiceId = null,Object? paidCents = null,Object? resolution = null,Object? note = null,Object? status = null,Object? matchedAt = null,Object? byName = null,}) {
+  return _then(_InvoiceMatch(
+invoiceId: null == invoiceId ? _self.invoiceId : invoiceId // ignore: cast_nullable_to_non_nullable
+as String,paidCents: null == paidCents ? _self.paidCents : paidCents // ignore: cast_nullable_to_non_nullable
+as int,resolution: null == resolution ? _self.resolution : resolution // ignore: cast_nullable_to_non_nullable
+as String,note: null == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
+as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as String,matchedAt: null == matchedAt ? _self.matchedAt : matchedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,byName: null == byName ? _self.byName : byName // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$Invoice {
 
  String get id; String get workspaceId; String get memberId; String get number; DateTime get issuedAt; String? get period; String get title; List<InvoiceLine> get lines; int get totalCents; String get currency; String get memberName; String get memberAddress; String get workspaceName; String get workspaceAddress; String get issuerName; String get signature; DateTime? get voidedAt; String get voidedByName; String? get replacesInvoiceId; String get replacesNumber;// 0064 — the optional SNAPSHOTTED annex; compact invoices carry

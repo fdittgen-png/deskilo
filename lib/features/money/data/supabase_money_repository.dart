@@ -79,6 +79,44 @@ class SupabaseMoneyRepository implements MoneyRepository {
   }
 
   @override
+  Future<void> matchInvoice({
+    required String invoiceId,
+    required int paidCents,
+    required String resolution,
+    String note = '',
+  }) async {
+    await _client.rpc<void>('match_invoice', params: {
+      'p_invoice_id': invoiceId,
+      'p_paid_cents': paidCents,
+      'p_resolution': resolution,
+      'p_note': note,
+    });
+  }
+
+  @override
+  Future<Map<String, InvoiceMatch>> fetchInvoiceMatches(
+    String workspaceId,
+  ) async {
+    final rows = await _client
+        .from('invoice_matches')
+        .select('invoice_id, paid_cents, resolution, note, status, '
+            'matched_at, by_name')
+        .eq('workspace_id', workspaceId);
+    return {
+      for (final row in rows)
+        row['invoice_id'] as String: InvoiceMatch(
+          invoiceId: row['invoice_id'] as String,
+          paidCents: (row['paid_cents'] as num).toInt(),
+          resolution: row['resolution'] as String,
+          note: row['note'] as String? ?? '',
+          status: row['status'] as String? ?? 'confirmed',
+          matchedAt: DateTime.parse(row['matched_at'] as String).toLocal(),
+          byName: row['by_name'] as String? ?? '',
+        ),
+    };
+  }
+
+  @override
   Future<Map<String, ({int count, DateTime last})>> fetchInvoiceReminders(
     String workspaceId,
   ) async {

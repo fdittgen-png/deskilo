@@ -7,6 +7,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/format/cents.dart';
 import '../../providers/money_providers.dart';
 
 /// The issuer's invoicing summary strip (field request: "everything an
@@ -23,7 +24,7 @@ class InvoicingSummaryBar extends ConsumerWidget {
     final overview = ref.watch(invoicingOverviewProvider).value;
     if (overview == null) return const SizedBox.shrink();
     final outstanding =
-        overview.open.fold(0, (sum, e) => sum + e.liveSoldeCents);
+        overview.open.fold(0, (sum, e) => sum + e.invoice.totalCents);
     final parts = <String>[
       if (overview.toInvoice.isNotEmpty)
         l10n?.invoiceSummaryToInvoice(overview.toInvoice.length) ??
@@ -124,10 +125,14 @@ class OpenInvoicesTab extends ConsumerWidget {
     super.key,
     required this.currency,
     required this.onRemind,
+    required this.onMatch,
   });
 
   final NumberFormat currency;
   final void Function(OpenInvoiceEntry entry) onRemind;
+
+  /// Opens the match dialog (0067): the ONLY way an invoice closes.
+  final void Function(OpenInvoiceEntry entry) onMatch;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -165,7 +170,7 @@ class OpenInvoicesTab extends ConsumerWidget {
                       ),
                     ),
                     Text(
-                      currency.format(entry.liveSoldeCents / 100),
+                      currency.format(entry.invoice.totalCents / 100),
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall
@@ -173,31 +178,56 @@ class OpenInvoicesTab extends ConsumerWidget {
                     ),
                   ]),
                   const SizedBox(height: 2),
-                  Row(children: [
-                    Expanded(
-                      child: Text(
-                        [
-                          dateFormat.format(entry.invoice.issuedAt),
-                          l10n?.invoiceOpenAge(DateTime.now()
-                                  .difference(entry.invoice.issuedAt)
-                                  .inDays) ??
-                              '${DateTime.now().difference(entry.invoice.issuedAt).inDays}d',
-                          if (reminders[entry.invoice.id] != null)
-                            l10n?.invoiceRemindedBadge(
-                                    reminders[entry.invoice.id]!.count) ??
-                                'Reminded ×'
-                                    '${reminders[entry.invoice.id]!.count}',
-                        ].join(' · '),
-                        style: Theme.of(context).textTheme.bodySmall,
+                  Text(
+                    [
+                      dateFormat.format(entry.invoice.issuedAt),
+                      l10n?.invoiceOpenAge(DateTime.now()
+                              .difference(entry.invoice.issuedAt)
+                              .inDays) ??
+                          '${DateTime.now().difference(entry.invoice.issuedAt).inDays}d',
+                      if (reminders[entry.invoice.id] != null)
+                        l10n?.invoiceRemindedBadge(
+                                reminders[entry.invoice.id]!.count) ??
+                            'Reminded ×'
+                                '${reminders[entry.invoice.id]!.count}',
+                    ].join(' · '),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  if (entry.pendingMatch != null)
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Chip(
+                          key: ValueKey(
+                              'invoice-match-pending-${entry.invoice.id}'),
+                          avatar:
+                              const Icon(Icons.how_to_vote_outlined, size: 18),
+                          label: Text(l10n?.invoiceMatchPendingBadge ??
+                              'Awaiting validation'),
+                        ),
                       ),
+                    )
+                  else
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          key: ValueKey(
+                              'invoice-remind-${entry.invoice.id}'),
+                          onPressed: () => onRemind(entry),
+                          child: Text(l10n?.invoiceRemindAction ??
+                              'Send a reminder'),
+                        ),
+                        FilledButton.tonal(
+                          key:
+                              ValueKey('invoice-match-${entry.invoice.id}'),
+                          onPressed: () => onMatch(entry),
+                          child: Text(
+                              l10n?.invoiceMatchAction ?? 'Mark as paid'),
+                        ),
+                      ],
                     ),
-                    TextButton(
-                      key: ValueKey('invoice-remind-${entry.invoice.id}'),
-                      onPressed: () => onRemind(entry),
-                      child: Text(
-                          l10n?.invoiceRemindAction ?? 'Send a reminder'),
-                    ),
-                  ]),
                 ],
               ),
             ),
@@ -212,4 +242,159 @@ String _monthLabel(BuildContext context, String period) {
   return DateFormat.yMMMM(
     Localizations.maybeLocaleOf(context)?.toString(),
   ).format(DateTime(int.parse(parts[0]), int.parse(parts[1])));
+}
+
+/// What the match dialog returns (0067).
+typedef MatchChoice = ({int paidCents, String resolution, String note});
+
+/// The payment-match dialog: amount received + the resolution the
+/// difference demands — exact, overpaid (forced with a mandatory note
+/// OR a credit note over the excess), underpaid accepted with a
+/// mandatory note.
+class MatchInvoiceDialog extends StatefulWidget {
+  const MatchInvoiceDialog({
+    super.key,
+    required this.dueCents,
+    required this.currency,
+  });
+
+  final int dueCents;
+  final NumberFormat currency;
+
+  @override
+  State<MatchInvoiceDialog> createState() => _MatchInvoiceDialogState();
+}
+
+class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
+  late final _amount =
+      TextEditingController(text: centsToMajor(widget.dueCents));
+  final _note = TextEditingController();
+  String _overResolution = 'over_credit_note';
+  String? _error;
+
+  @override
+  void dispose() {
+    _amount.dispose();
+    _note.dispose();
+    super.dispose();
+  }
+
+  int? get _paidCents => parseCentsInput(_amount.text);
+
+  void _submit() {
+    final l10n = AppLocalizations.of(context);
+    final paid = _paidCents;
+    if (paid == null) return;
+    final resolution = paid == widget.dueCents
+        ? 'exact'
+        : paid > widget.dueCents
+            ? _overResolution
+            : 'under_accepted';
+    final noteRequired =
+        resolution == 'over_forced' || resolution == 'under_accepted';
+    if (noteRequired && _note.text.trim().isEmpty) {
+      setState(() =>
+          _error = l10n?.invoiceMatchNoteRequired ?? 'A note is required.');
+      return;
+    }
+    Navigator.of(context).pop<MatchChoice>((
+      paidCents: paid,
+      resolution: resolution,
+      note: _note.text.trim(),
+    ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final paid = _paidCents;
+    final over = paid != null && paid > widget.dueCents;
+    final under = paid != null && paid < widget.dueCents;
+    return AlertDialog(
+      title: Text(l10n?.invoiceMatchAction ?? 'Mark as paid'),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              key: const ValueKey('invoice-match-amount'),
+              controller: _amount,
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              decoration: InputDecoration(
+                labelText:
+                    l10n?.invoiceMatchAmountLabel ?? 'Amount received',
+              ),
+              onChanged: (_) => setState(() => _error = null),
+            ),
+            if (over) ...[
+              const SizedBox(height: 8),
+              Text(
+                l10n?.invoiceMatchOver(widget.currency
+                        .format((paid - widget.dueCents) / 100)) ??
+                    'The member paid '
+                        '${widget.currency.format((paid - widget.dueCents) / 100)}'
+                        ' more.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              RadioGroup<String>(
+                groupValue: _overResolution,
+                onChanged: (v) =>
+                    setState(() => _overResolution = v ?? _overResolution),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  RadioListTile<String>(
+                    key: const ValueKey('invoice-match-credit-note'),
+                    value: 'over_credit_note',
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(l10n?.invoiceMatchCreditNote ??
+                        'Create a credit note for the excess'),
+                  ),
+                  RadioListTile<String>(
+                    key: const ValueKey('invoice-match-force'),
+                    value: 'over_forced',
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(l10n?.invoiceMatchForce ??
+                        'Accept anyway (note why)'),
+                  ),
+                ]),
+              ),
+            ],
+            if (under) ...[
+              const SizedBox(height: 8),
+              Text(
+                l10n?.invoiceMatchUnder(widget.currency
+                        .format((widget.dueCents - paid) / 100)) ??
+                    'The member paid '
+                        '${widget.currency.format((widget.dueCents - paid) / 100)}'
+                        ' less — accepting requires a note.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+            const SizedBox(height: 8),
+            TextField(
+              key: const ValueKey('invoice-match-note'),
+              controller: _note,
+              maxLines: 2,
+              decoration: InputDecoration(
+                labelText: l10n?.invoiceMatchNoteLabel ?? 'Note',
+                errorText: _error,
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n?.commonCancel ?? 'Cancel'),
+        ),
+        FilledButton(
+          key: const ValueKey('invoice-match-confirm'),
+          onPressed: paid == null ? null : _submit,
+          child: Text(l10n?.invoiceMatchAction ?? 'Mark as paid'),
+        ),
+      ],
+    );
+  }
 }

@@ -31,7 +31,12 @@ enum EventType {
   /// A whole-SPACE reservation (desk/office/level, 0059) awaiting the
   /// validation quorum: the booking blocks the space immediately, a
   /// reject cancels it.
-  spaceReservation('space_reservation');
+  spaceReservation('space_reservation'),
+
+  /// An invoice matched to its payment (0067): everyone with invoicing
+  /// access sees it; with a configured rule the match awaits the
+  /// quorum — a reject REOPENS the invoice.
+  invoicePayment('invoice_payment');
 
   const EventType([String? dbName]) : _dbName = dbName;
 

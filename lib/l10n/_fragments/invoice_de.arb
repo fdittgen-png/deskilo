@@ -118,5 +118,43 @@
         "type": "int"
       }
     }
-  }
+  },
+  "eventTypeInvoicePayment": "Rechnungszahlung",
+  "eventInvoicePaid": "Rechnung {number} bezahlt — {amount}",
+  "@eventInvoicePaid": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMatchAction": "Als bezahlt markieren",
+  "invoiceMatchAmountLabel": "Erhaltener Betrag",
+  "invoiceMatchNoteLabel": "Notiz",
+  "invoiceMatchNoteRequired": "Eine Notiz ist erforderlich.",
+  "invoiceMatchOver": "Das Mitglied hat {excess} mehr gezahlt.",
+  "@invoiceMatchOver": {
+    "placeholders": {
+      "excess": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMatchCreditNote": "Gutschrift über den Überschuss erstellen",
+  "invoiceMatchForce": "Trotzdem akzeptieren (mit Begründung)",
+  "invoiceMatchUnder": "Das Mitglied hat {missing} weniger gezahlt — Akzeptieren erfordert eine Notiz.",
+  "@invoiceMatchUnder": {
+    "placeholders": {
+      "missing": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMatched": "Rechnung abgeglichen.",
+  "invoiceMatchPendingBadge": "Wartet auf Validierung",
+  "invoiceMatchedBadge": "Bezahlt",
+  "invoiceAlreadyInvoiced": "Dieser Monat ist für dieses Mitglied bereits berechnet."
 }

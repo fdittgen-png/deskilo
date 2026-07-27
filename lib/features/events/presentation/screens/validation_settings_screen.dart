@@ -25,6 +25,7 @@ const _cardTypes = [
   EventType.memberJoin,
   EventType.reservation,
   EventType.spaceReservation,
+  EventType.invoicePayment,
   EventType.adjustment,
 ];
 
@@ -52,6 +53,8 @@ class ValidationSettingsScreen extends ConsumerWidget {
       EventType.memberJoin => l10n?.eventTypeMemberJoin ?? 'New member',
       EventType.spaceReservation =>
         l10n?.eventTypeSpaceReservation ?? 'Whole-space reservations',
+      EventType.invoicePayment =>
+        l10n?.eventTypeInvoicePayment ?? 'Invoice payment',
     };
   }
 
