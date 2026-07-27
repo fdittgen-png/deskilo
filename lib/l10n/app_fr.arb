@@ -404,6 +404,48 @@
   },
   "invoiceEInvoiceDownload": "Télécharger la facture électronique (XML)",
   "invoiceEInvoiceShare": "Partager la facture électronique (XML)",
+  "invoiceTabToInvoice": "À facturer",
+  "invoiceTabOpen": "En cours",
+  "invoiceTabArchive": "Archives",
+  "invoiceIssueAll": "Tout facturer",
+  "invoiceIssueOne": "Facturer",
+  "invoiceAllCaughtUp": "Tout est à jour — rien à facturer.",
+  "invoiceNoOpen": "Aucune facture en cours.",
+  "invoiceSummaryToInvoice": "{count} à facturer",
+  "@invoiceSummaryToInvoice": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceSummaryOpen": "{count} en cours · {amount} dus",
+  "@invoiceSummaryOpen": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceOpenAge": "{days} jours",
+  "@invoiceOpenAge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceIssuedCount": "{count} factures émises.",
+  "@invoiceIssuedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "eventTypeMemberJoin": "Nouveau membre",
   "memberStatusPending": "En attente",
   "pendingApprovalTitle": "En attente d'approbation",

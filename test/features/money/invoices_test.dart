@@ -61,6 +61,13 @@ Future<FakeMoneyRepository> pumpInvoices(
   await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
   await tester.tap(find.byKey(const ValueKey('invoices-button')));
   await tester.pumpAndSettle();
+  // Issuers land on the hub — these tests exercise the ARCHIVE tab;
+  // hub tabs have their own tests below. Members have no tabs.
+  final archiveTab = find.byKey(const ValueKey('invoice-tab-archive'));
+  if (archiveTab.evaluate().isNotEmpty) {
+    await tester.tap(archiveTab);
+    await tester.pumpAndSettle();
+  }
   return money;
 }
 
@@ -580,6 +587,128 @@ void main() {
       find.byKey(ValueKey('invoice-menu-${money.invoices.single.id}')),
       findsNothing,
     );
+  });
+  testWidgets(
+      'INVOICING HUB: the To-invoice tab lists last month\'s uninvoiced '
+      'members with the derived total; Issue prefills member + month; '
+      'the member then leaves the list', (tester) async {
+    final money = FakeMoneyRepository();
+    await pumpInvoices(tester, money: money);
+    final prev = DateTime(DateTime.now().year, DateTime.now().month - 1);
+    final prevPeriod =
+        '${prev.year}-${prev.month.toString().padLeft(2, '0')}';
+
+    await tester.tap(find.byKey(const ValueKey('invoice-tab-todo')));
+    await tester.pumpAndSettle();
+
+    // Flo's previous month derives 150.00 + 16.00 → listed.
+    expect(find.byKey(const ValueKey('invoice-todo-member-1')),
+        findsOneWidget);
+    expect(find.textContaining('1 to invoice'), findsOneWidget,
+        reason: 'the summary strip counts the pending month');
+
+    await tester.tap(find.byKey(const ValueKey('invoice-issue-member-1')));
+    await tester.pumpAndSettle();
+    // The issue sheet opens PREFILLED on the member and the month.
+    expect(find.text('Subscription 50%'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('invoice-submit')));
+    await tester.pumpAndSettle();
+
+    expect(money.invoices.single.period, prevPeriod);
+    expect(money.invoices.single.memberId, 'member-1');
+    expect(find.byKey(const ValueKey('invoice-todo-member-1')),
+        findsNothing,
+        reason: 'an invoiced member leaves the to-invoice list');
+    expect(
+      find.byKey(const ValueKey('invoice-issue-all')),
+      findsNothing,
+      reason: 'nothing left — the sweep disappears with the list',
+    );
+  });
+
+  testWidgets(
+      'HUB sweep: Invoice all issues one invoice per listed member',
+      (tester) async {
+    final money = FakeMoneyRepository();
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'};
+    workspace.otherMembers.add(workspace.myMember.copyWith(
+      id: 'member-2',
+      userId: 'user-2',
+      isOwner: false,
+      isAdmin: false,
+    ));
+    await pumpInvoices(tester, money: money, workspace: workspace);
+
+    await tester.tap(find.byKey(const ValueKey('invoice-tab-todo')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('invoice-todo-member-2')),
+        findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('invoice-issue-all')));
+    await tester.pumpAndSettle();
+
+    expect(money.invoices, hasLength(2));
+    expect(money.invoices.map((i) => i.memberId).toSet(),
+        {'member-1', 'member-2'});
+    expect(find.text('2 invoices issued.'), findsOneWidget);
+    expect(find.textContaining('nothing to invoice'), findsOneWidget);
+  });
+
+  testWidgets(
+      'HUB Open tab: an unpaid invoice shows its LIVE solde, age and a '
+      'direct Remind button; a settled month drops off', (tester) async {
+    final money = FakeMoneyRepository();
+    final prev = DateTime(DateTime.now().year, DateTime.now().month - 1);
+    final prevPeriod =
+        '${prev.year}-${prev.month.toString().padLeft(2, '0')}';
+    await money.createInvoice(
+        workspaceId: 'ws-1', memberId: 'member-1', period: prevPeriod);
+    final sharedTexts = <String?>[];
+    await pumpInvoices(
+      tester,
+      money: money,
+      sharer: ({required bytes, required fileName, required mimeType, text})
+          async {
+        sharedTexts.add(text);
+      },
+    );
+    final invoice = money.invoices.single;
+
+    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(ValueKey('invoice-open-${invoice.id}')),
+        findsOneWidget);
+    expect(find.textContaining('outstanding'), findsOneWidget);
+
+    await tester.runAsync(() async {
+      await tester
+          .tap(find.byKey(ValueKey('invoice-remind-${invoice.id}')));
+      await tester.pump();
+    });
+    await tester.pumpAndSettle();
+    expect(money.invoiceReminders[invoice.id], hasLength(1));
+    expect(sharedTexts.single, contains(invoice.number));
+
+    // The month gets fully paid: zero statement + covering payment →
+    // the live solde is gone and the invoice leaves the Open tab.
+    money.statements[prevPeriod] = money.statement.copyWith(
+        period: prevPeriod, feeCents: 0, overageCents: 0, extraHalfDays: 0);
+    // A hub refresh happens whenever the archive changes; issuing the
+    // CURRENT month from the FAB is such a change.
+    await tester.tap(find.byKey(const ValueKey('invoice-create-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-member-dropdown')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Flo').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-submit')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(ValueKey('invoice-open-${invoice.id}')),
+        findsNothing,
+        reason: 'a settled month is no longer open');
   });
 }
 

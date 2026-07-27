@@ -76,5 +76,47 @@
     }
   },
   "invoiceEInvoiceDownload": "Descargar factura electrónica (XML)",
-  "invoiceEInvoiceShare": "Compartir factura electrónica (XML)"
+  "invoiceEInvoiceShare": "Compartir factura electrónica (XML)",
+  "invoiceTabToInvoice": "Por facturar",
+  "invoiceTabOpen": "Abiertas",
+  "invoiceTabArchive": "Archivo",
+  "invoiceIssueAll": "Facturar todo",
+  "invoiceIssueOne": "Facturar",
+  "invoiceAllCaughtUp": "Todo al día — nada que facturar.",
+  "invoiceNoOpen": "No hay facturas abiertas.",
+  "invoiceSummaryToInvoice": "{count} por facturar",
+  "@invoiceSummaryToInvoice": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceSummaryOpen": "{count} abiertas · {amount} pendiente",
+  "@invoiceSummaryOpen": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceOpenAge": "{days} días",
+  "@invoiceOpenAge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceIssuedCount": "{count} facturas emitidas.",
+  "@invoiceIssuedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

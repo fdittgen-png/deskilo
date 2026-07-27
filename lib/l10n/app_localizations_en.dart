@@ -1268,6 +1268,47 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceEInvoiceShare => 'Share e-invoice (XML)';
 
   @override
+  String get invoiceTabToInvoice => 'To invoice';
+
+  @override
+  String get invoiceTabOpen => 'Open';
+
+  @override
+  String get invoiceTabArchive => 'Archive';
+
+  @override
+  String get invoiceIssueAll => 'Invoice all';
+
+  @override
+  String get invoiceIssueOne => 'Issue';
+
+  @override
+  String get invoiceAllCaughtUp => 'All caught up — nothing to invoice.';
+
+  @override
+  String get invoiceNoOpen => 'No open invoices.';
+
+  @override
+  String invoiceSummaryToInvoice(int count) {
+    return '$count to invoice';
+  }
+
+  @override
+  String invoiceSummaryOpen(int count, String amount) {
+    return '$count open · $amount outstanding';
+  }
+
+  @override
+  String invoiceOpenAge(int days) {
+    return '$days days';
+  }
+
+  @override
+  String invoiceIssuedCount(int count) {
+    return '$count invoices issued.';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

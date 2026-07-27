@@ -1276,6 +1276,47 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceEInvoiceShare => 'Condividi fattura elettronica (XML)';
 
   @override
+  String get invoiceTabToInvoice => 'Da fatturare';
+
+  @override
+  String get invoiceTabOpen => 'Aperte';
+
+  @override
+  String get invoiceTabArchive => 'Archivio';
+
+  @override
+  String get invoiceIssueAll => 'Fattura tutto';
+
+  @override
+  String get invoiceIssueOne => 'Fattura';
+
+  @override
+  String get invoiceAllCaughtUp => 'Tutto in ordine — niente da fatturare.';
+
+  @override
+  String get invoiceNoOpen => 'Nessuna fattura aperta.';
+
+  @override
+  String invoiceSummaryToInvoice(int count) {
+    return '$count da fatturare';
+  }
+
+  @override
+  String invoiceSummaryOpen(int count, String amount) {
+    return '$count aperte · $amount in sospeso';
+  }
+
+  @override
+  String invoiceOpenAge(int days) {
+    return '$days giorni';
+  }
+
+  @override
+  String invoiceIssuedCount(int count) {
+    return '$count fatture emesse.';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override

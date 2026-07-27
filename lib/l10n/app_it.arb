@@ -404,6 +404,48 @@
   },
   "invoiceEInvoiceDownload": "Scarica fattura elettronica (XML)",
   "invoiceEInvoiceShare": "Condividi fattura elettronica (XML)",
+  "invoiceTabToInvoice": "Da fatturare",
+  "invoiceTabOpen": "Aperte",
+  "invoiceTabArchive": "Archivio",
+  "invoiceIssueAll": "Fattura tutto",
+  "invoiceIssueOne": "Fattura",
+  "invoiceAllCaughtUp": "Tutto in ordine — niente da fatturare.",
+  "invoiceNoOpen": "Nessuna fattura aperta.",
+  "invoiceSummaryToInvoice": "{count} da fatturare",
+  "@invoiceSummaryToInvoice": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceSummaryOpen": "{count} aperte · {amount} in sospeso",
+  "@invoiceSummaryOpen": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceOpenAge": "{days} giorni",
+  "@invoiceOpenAge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceIssuedCount": "{count} fatture emesse.",
+  "@invoiceIssuedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "eventTypeMemberJoin": "Nuovo membro",
   "memberStatusPending": "In attesa",
   "pendingApprovalTitle": "In attesa di approvazione",

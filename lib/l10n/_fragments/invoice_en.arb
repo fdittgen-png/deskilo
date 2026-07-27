@@ -229,5 +229,72 @@
   "invoiceEInvoiceShare": "Share e-invoice (XML)",
   "@invoiceEInvoiceShare": {
     "description": "Menu: share the EN 16931 UBL XML (EU workspaces)"
+  },
+  "invoiceTabToInvoice": "To invoice",
+  "@invoiceTabToInvoice": {
+    "description": "Invoicing hub tab: uninvoiced members of the previous month"
+  },
+  "invoiceTabOpen": "Open",
+  "@invoiceTabOpen": {
+    "description": "Invoicing hub tab: invoices with a positive live solde"
+  },
+  "invoiceTabArchive": "Archive",
+  "@invoiceTabArchive": {
+    "description": "Invoicing hub tab: the full archive"
+  },
+  "invoiceIssueAll": "Invoice all",
+  "@invoiceIssueAll": {
+    "description": "Sweep button: issue for every listed member"
+  },
+  "invoiceIssueOne": "Issue",
+  "@invoiceIssueOne": {
+    "description": "Per-member issue button on the to-invoice list"
+  },
+  "invoiceAllCaughtUp": "All caught up — nothing to invoice.",
+  "@invoiceAllCaughtUp": {
+    "description": "To-invoice tab empty state"
+  },
+  "invoiceNoOpen": "No open invoices.",
+  "@invoiceNoOpen": {
+    "description": "Open tab empty state"
+  },
+  "invoiceSummaryToInvoice": "{count} to invoice",
+  "@invoiceSummaryToInvoice": {
+    "description": "Summary strip: pending count",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceSummaryOpen": "{count} open · {amount} outstanding",
+  "@invoiceSummaryOpen": {
+    "description": "Summary strip: open count + outstanding amount",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceOpenAge": "{days} days",
+  "@invoiceOpenAge": {
+    "description": "Open row: days since the invoice was issued",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceIssuedCount": "{count} invoices issued.",
+  "@invoiceIssuedCount": {
+    "description": "Snackbar after the invoice-all sweep",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }
