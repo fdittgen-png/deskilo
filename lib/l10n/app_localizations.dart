@@ -2546,6 +2546,384 @@ abstract class AppLocalizations {
   /// **'No registered payment to match — record or confirm it first.'**
   String get invoiceMatchNoPayments;
 
+  /// Lifecycle chip: issued, still waiting for its payment
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get invoiceStatusOpen;
+
+  /// Archive: how many invoices the current filters show
+  ///
+  /// In en, this message translates to:
+  /// **'{count} invoices'**
+  String invoiceCountShown(int count);
+
+  /// Archive empty state while filtering — NOT an empty archive
+  ///
+  /// In en, this message translates to:
+  /// **'No invoice matches these filters.'**
+  String get invoiceFilterNoMatch;
+
+  /// Archive: back to the unfiltered list
+  ///
+  /// In en, this message translates to:
+  /// **'Clear filters'**
+  String get invoiceFilterClear;
+
+  /// Detail sheet: the correction chain, downstream (0061)
+  ///
+  /// In en, this message translates to:
+  /// **'Replaced by {number}'**
+  String invoiceReplacedBy(String number);
+
+  /// Detail sheet: the payment that closed the invoice (0067)
+  ///
+  /// In en, this message translates to:
+  /// **'Paid {amount} on {date}'**
+  String invoiceMatchSummary(String amount, String date);
+
+  /// Detail sheet: when the last reminder went out (0066)
+  ///
+  /// In en, this message translates to:
+  /// **'last reminder {date}'**
+  String invoiceRemindedLast(String date);
+
+  /// Detail sheet: what the snapshotted annex carries (0064)
+  ///
+  /// In en, this message translates to:
+  /// **'Annex: {movements} movements, {checkIns} check-ins'**
+  String invoiceAnnexSummary(int movements, int checkIns);
+
+  /// Issue sheet placeholder before a member is chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a member to see what their month tracked.'**
+  String get invoicePickMember;
+
+  /// Issue sheet warning when the picked month is the current one (0067)
+  ///
+  /// In en, this message translates to:
+  /// **'This month is still running — its positions can still change, and a month can only be invoiced once.'**
+  String get invoiceRunningMonth;
+
+  /// Confirm dialog of the invoice-all sweep
+  ///
+  /// In en, this message translates to:
+  /// **'Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.'**
+  String invoiceIssueAllConfirm(int count, String month, String total);
+
+  /// Sweep result when some members could not be invoiced
+  ///
+  /// In en, this message translates to:
+  /// **'{issued} issued, {failed} failed.'**
+  String invoiceIssuedPartial(int issued, int failed);
+
+  /// Detail sheet action opening the e-invoice sheet
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoice (XML)'**
+  String get invoiceEInvoiceAction;
+
+  /// E-invoice sheet: what the XML is
+  ///
+  /// In en, this message translates to:
+  /// **'The machine-readable EN 16931 invoice — the file tax administrations and business customers ask for.'**
+  String get invoiceEInvoiceExplain;
+
+  /// E-invoice sheet: the domestic B2B channel and its syntax
+  ///
+  /// In en, this message translates to:
+  /// **'Business customers: send it through {channel} as {format}.'**
+  String invoiceEInvoiceBusinessRoute(String channel, String format);
+
+  /// E-invoice sheet: the B2G channel (Directive 2014/55/EU)
+  ///
+  /// In en, this message translates to:
+  /// **'Public-sector customers: {channel}.'**
+  String invoiceEInvoicePublicRoute(String channel);
+
+  /// E-invoice sheet: how the file travels on Peppol
+  ///
+  /// In en, this message translates to:
+  /// **'An access point delivers it to the customer — no government platform in between.'**
+  String get invoiceEInvoiceTransportPeppol;
+
+  /// E-invoice sheet: clearance model (SdI, KSeF, e-Factura)
+  ///
+  /// In en, this message translates to:
+  /// **'The national platform receives the invoice first and hands it on — sending it straight to the customer is not an option.'**
+  String get invoiceEInvoiceTransportClearance;
+
+  /// E-invoice sheet: accredited-platform model (France)
+  ///
+  /// In en, this message translates to:
+  /// **'An accredited platform carries the invoice and reports it to the tax administration for you.'**
+  String get invoiceEInvoiceTransportAccredited;
+
+  /// E-invoice sheet: no transmission mandate (Germany today)
+  ///
+  /// In en, this message translates to:
+  /// **'No channel is imposed: e-mail, a portal or Peppol — whatever you agree with the customer.'**
+  String get invoiceEInvoiceTransportBilateral;
+
+  /// E-invoice sheet warning where the domestic mandate runs on a national syntax
+  ///
+  /// In en, this message translates to:
+  /// **'{channel} only accepts {format}: this EN 16931 file serves Peppol, public buyers and foreign customers — your platform or accountant converts the rest.'**
+  String invoiceEInvoiceFormatMismatch(String channel, String format);
+
+  /// E-invoice sheet: the file satisfies the norm
+  ///
+  /// In en, this message translates to:
+  /// **'Ready — this file satisfies EN 16931.'**
+  String get invoiceEInvoiceReady;
+
+  /// E-invoice sheet: header above the fatal gaps
+  ///
+  /// In en, this message translates to:
+  /// **'A validator would reject this file:'**
+  String get invoiceEInvoiceBlockedTitle;
+
+  /// E-invoice sheet: header above the non-fatal gaps
+  ///
+  /// In en, this message translates to:
+  /// **'Valid, but the strict national profiles also want:'**
+  String get invoiceEInvoiceIncompleteTitle;
+
+  /// Gap: the workspace charges VAT, which the app cannot break down
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace charges VAT, and DesKilo does not compute VAT per position yet — no truthful tax breakdown can be produced.'**
+  String get invoiceGapVatNotSupported;
+
+  /// Gap: BR-E-02 — exempt seller without a VAT identifier
+  ///
+  /// In en, this message translates to:
+  /// **'The VAT number is missing — an exempt seller must state one.'**
+  String get invoiceGapMissingVatId;
+
+  /// Gap: BR-CO-26 — no seller identifier at all
+  ///
+  /// In en, this message translates to:
+  /// **'The company registration number is missing (SIREN, HRB, CIF…) — nothing identifies you on the invoice.'**
+  String get invoiceGapMissingLegalId;
+
+  /// Gap: BR-E-10 — no exemption reason
+  ///
+  /// In en, this message translates to:
+  /// **'The reason for not charging VAT is missing.'**
+  String get invoiceGapMissingExemptionReason;
+
+  /// Gap: BR-09 — seller country
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace country is missing.'**
+  String get invoiceGapMissingSellerCountry;
+
+  /// Gap: BR-11 — buyer country
+  ///
+  /// In en, this message translates to:
+  /// **'The customer\'s country is missing.'**
+  String get invoiceGapMissingBuyerCountry;
+
+  /// Gap: BR-16 — an invoice needs at least one line
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice has no charge line — its month was fully covered by payments, so there is no invoice to send.'**
+  String get invoiceGapNoChargeLines;
+
+  /// Gap: seller city (national CIUS / Peppol)
+  ///
+  /// In en, this message translates to:
+  /// **'the city of the workspace address'**
+  String get invoiceGapMissingSellerCity;
+
+  /// Gap: seller post code (national CIUS / Peppol)
+  ///
+  /// In en, this message translates to:
+  /// **'the post code of the workspace address'**
+  String get invoiceGapMissingSellerPostalCode;
+
+  /// E-invoice sheet: jump to the legal-identity screen
+  ///
+  /// In en, this message translates to:
+  /// **'Complete the legal identity'**
+  String get invoiceEInvoiceFixIdentity;
+
+  /// Screen title: the workspace legal identity
+  ///
+  /// In en, this message translates to:
+  /// **'Legal identity & e-invoicing'**
+  String get legalIdentityTitle;
+
+  /// Workspace-settings tile subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'VAT regime and registration numbers — required by the e-invoice'**
+  String get legalIdentitySubtitle;
+
+  /// Screen intro paragraph
+  ///
+  /// In en, this message translates to:
+  /// **'What an EN 16931 e-invoice must state about you. Invoices already issued keep the identity they were signed with.'**
+  String get legalIdentityIntro;
+
+  /// VAT regime dropdown label
+  ///
+  /// In en, this message translates to:
+  /// **'VAT regime'**
+  String get legalIdentityRegime;
+
+  /// VAT regime option: category O
+  ///
+  /// In en, this message translates to:
+  /// **'Outside the scope of VAT'**
+  String get legalIdentityRegimeNotSubject;
+
+  /// VAT regime option: category E
+  ///
+  /// In en, this message translates to:
+  /// **'VAT-exempt (small-business scheme)'**
+  String get legalIdentityRegimeExempt;
+
+  /// VAT regime option: charges VAT
+  ///
+  /// In en, this message translates to:
+  /// **'VAT-registered (charges VAT)'**
+  String get legalIdentityRegimeVatRegistered;
+
+  /// Explains that the regime drives which id is required
+  ///
+  /// In en, this message translates to:
+  /// **'The regime decides which number the norm requires: a registration number outside the scope of VAT, a VAT number when exempt.'**
+  String get legalIdentityRegimeHint;
+
+  /// VAT number field label
+  ///
+  /// In en, this message translates to:
+  /// **'VAT number'**
+  String get legalIdentityVatId;
+
+  /// Company registration number field label
+  ///
+  /// In en, this message translates to:
+  /// **'Company registration number'**
+  String get legalIdentityLegalId;
+
+  /// Exemption reason field label
+  ///
+  /// In en, this message translates to:
+  /// **'Why no VAT is charged'**
+  String get legalIdentityExemptionReason;
+
+  /// Street field label
+  ///
+  /// In en, this message translates to:
+  /// **'Street'**
+  String get legalIdentityStreet;
+
+  /// City field label
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get legalIdentityCity;
+
+  /// Post code field label
+  ///
+  /// In en, this message translates to:
+  /// **'Post code'**
+  String get legalIdentityPostalCode;
+
+  /// Snackbar after saving the legal identity
+  ///
+  /// In en, this message translates to:
+  /// **'Legal identity saved.'**
+  String get legalIdentitySaved;
+
+  /// Warning shown for the VAT-registered regime
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo does not compute VAT per position yet: with this regime the XML export stays disabled. The PDF is unaffected.'**
+  String get legalIdentityVatWarning;
+
+  /// Country field on the member address sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get addressCountryLabel;
+
+  /// Member VAT number field on the address sheet
+  ///
+  /// In en, this message translates to:
+  /// **'VAT number (if you invoice as a business)'**
+  String get addressVatIdLabel;
+
+  /// Tooltip of the proforma action on the hub rows (0072)
+  ///
+  /// In en, this message translates to:
+  /// **'Proforma invoice'**
+  String get invoiceProformaAction;
+
+  /// The word a proforma document carries in its header and as its watermark
+  ///
+  /// In en, this message translates to:
+  /// **'Proforma'**
+  String get invoicePdfProforma;
+
+  /// Snackbar after a proforma was handed to the share sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Proforma shared.'**
+  String get invoiceProformaShared;
+
+  /// Refusal when the month has nothing to put on a proforma
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing tracked for this month — no proforma to send.'**
+  String get invoiceProformaNothing;
+
+  /// The word stamped across a member's own render of an invoice (0072)
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get invoicePdfCopy;
+
+  /// Lifecycle chip: matched to a payment that did not cover the whole invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Partially paid'**
+  String get invoiceStatusPartiallyPaid;
+
+  /// Screen title of the sortable invoice register (0072)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice register'**
+  String get invoiceRegisterTitle;
+
+  /// Register column header, and its sort control
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get invoiceRegisterDate;
+
+  /// Register column header: the member for an issuer, the invoice number for a member
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get invoiceRegisterName;
+
+  /// Register column header
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get invoiceRegisterAmount;
+
+  /// Register footer: sum of the listed invoices
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get invoiceRegisterTotal;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:
@@ -3433,6 +3811,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Wise'**
   String get paymentMethodWise;
+
+  /// Payment sheet: the day the money actually moved (0070)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment date'**
+  String get moneyPaymentDateLabel;
+
+  /// Payment sheet: the month the payment settles — decides which bill and invoice it lands on
+  ///
+  /// In en, this message translates to:
+  /// **'Applies to'**
+  String get moneyPaymentPeriodLabel;
 
   /// Empty state of the Plan tab before the owner drew levels
   ///

@@ -30,8 +30,8 @@ void main() {
     return auth;
   }
 
-  testWidgets('the auth screen offers all four providers and a tap starts '
-      'the OAuth flow', (tester) async {
+  testWidgets('the auth screen offers GOOGLE ONLY and a tap starts the '
+      'OAuth flow', (tester) async {
     final auth = await pumpSignedOut(tester);
 
     for (final provider in SocialProvider.values) {
@@ -40,6 +40,13 @@ void main() {
         findsOneWidget,
         reason: '${provider.name} button missing',
       );
+    }
+
+    // Retired 2026-07-27: never configured server-side, so every tap
+    // ended in a provider error.
+    for (final retired in ['microsoft', 'apple', 'facebook']) {
+      expect(find.byKey(ValueKey('auth-social-$retired')), findsNothing,
+          reason: '$retired must not be offered');
     }
 
     await tester.tap(find.byKey(const ValueKey('auth-social-google')));
@@ -52,10 +59,10 @@ void main() {
     final auth = await pumpSignedOut(tester);
     auth.socialError = const AuthException('provider is not enabled');
 
-    await tester.tap(find.byKey(const ValueKey('auth-social-facebook')));
+    await tester.tap(find.byKey(const ValueKey('auth-social-google')));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Facebook'), findsWidgets);
+    expect(find.textContaining('Google'), findsWidgets);
     expect(auth.socialSignIns, isEmpty);
   });
 
@@ -77,8 +84,8 @@ void main() {
     return auth;
   }
 
-  testWidgets('linked accounts: the email identity lists, the four '
-      'socials offer Link, linking adds the identity', (tester) async {
+  testWidgets('linked accounts: the email identity lists, Google offers '
+      'Link, linking adds the identity', (tester) async {
     final auth = await pumpLinkedAccounts(tester);
 
     expect(find.byType(LinkedAccountsScreen), findsOneWidget);
@@ -90,13 +97,13 @@ void main() {
       );
     }
 
-    await tester.tap(find.byKey(const ValueKey('link-microsoft')));
+    await tester.tap(find.byKey(const ValueKey('link-google')));
     await tester.pumpAndSettle();
 
-    expect(auth.socialLinks, [SocialProvider.microsoft]);
-    // The reloaded list now shows Microsoft as linked with an Unlink.
-    expect(find.byKey(const ValueKey('unlink-azure')), findsOneWidget);
-    expect(find.byKey(const ValueKey('link-microsoft')), findsNothing);
+    expect(auth.socialLinks, [SocialProvider.google]);
+    // The reloaded list now shows Google as linked with an Unlink.
+    expect(find.byKey(const ValueKey('unlink-google')), findsOneWidget);
+    expect(find.byKey(const ValueKey('link-google')), findsNothing);
   });
 
   testWidgets('unlink removes the identity; the last one has no unlink '

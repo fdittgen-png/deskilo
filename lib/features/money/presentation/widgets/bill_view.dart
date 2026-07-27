@@ -636,7 +636,7 @@ class _CreditsCard extends StatelessWidget {
                     : entry.description,
                 detail: DateFormat.yMMMd(
                   Localizations.maybeLocaleOf(context)?.toString(),
-                ).format(entry.createdAt.toLocal()),
+                ).format(entry.on.toLocal()),
                 value: '+${money(entry.amountCents)}',
               ),
           ],

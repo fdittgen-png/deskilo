@@ -1371,6 +1371,240 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessun pagamento registrato da riconciliare — registralo o confermalo prima.';
 
   @override
+  String get invoiceStatusOpen => 'Aperta';
+
+  @override
+  String invoiceCountShown(int count) {
+    return '$count fatture';
+  }
+
+  @override
+  String get invoiceFilterNoMatch =>
+      'Nessuna fattura corrisponde a questi filtri.';
+
+  @override
+  String get invoiceFilterClear => 'Azzera i filtri';
+
+  @override
+  String invoiceReplacedBy(String number) {
+    return 'Sostituita da $number';
+  }
+
+  @override
+  String invoiceMatchSummary(String amount, String date) {
+    return 'Pagata $amount il $date';
+  }
+
+  @override
+  String invoiceRemindedLast(String date) {
+    return 'ultimo sollecito $date';
+  }
+
+  @override
+  String invoiceAnnexSummary(int movements, int checkIns) {
+    return 'Allegato: $movements movimenti, $checkIns check-in';
+  }
+
+  @override
+  String get invoicePickMember =>
+      'Scegli un membro per vedere cosa ha registrato il suo mese.';
+
+  @override
+  String get invoiceRunningMonth =>
+      'Questo mese è ancora in corso — le sue voci possono cambiare, e un mese si fattura una sola volta.';
+
+  @override
+  String invoiceIssueAllConfirm(int count, String month, String total) {
+    return 'Emettere $count fatture per $month, $total in totale? Una fattura emessa non si modifica più — un errore si corregge con una sostituzione.';
+  }
+
+  @override
+  String invoiceIssuedPartial(int issued, int failed) {
+    return '$issued emesse, $failed non riuscite.';
+  }
+
+  @override
+  String get invoiceEInvoiceAction => 'Fattura elettronica (XML)';
+
+  @override
+  String get invoiceEInvoiceExplain =>
+      'La fattura EN 16931 leggibile dalle macchine — il file richiesto dalle amministrazioni e dai clienti business.';
+
+  @override
+  String invoiceEInvoiceBusinessRoute(String channel, String format) {
+    return 'Clienti business: inviala tramite $channel nel formato $format.';
+  }
+
+  @override
+  String invoiceEInvoicePublicRoute(String channel) {
+    return 'Clienti della pubblica amministrazione: $channel.';
+  }
+
+  @override
+  String get invoiceEInvoiceTransportPeppol =>
+      'Un access point la consegna al cliente — nessuna piattaforma pubblica nel percorso.';
+
+  @override
+  String get invoiceEInvoiceTransportClearance =>
+      'La piattaforma nazionale riceve prima la fattura e la inoltra — inviarla direttamente al cliente non è possibile.';
+
+  @override
+  String get invoiceEInvoiceTransportAccredited =>
+      'Una piattaforma accreditata trasporta la fattura e comunica i dati all\'amministrazione fiscale per te.';
+
+  @override
+  String get invoiceEInvoiceTransportBilateral =>
+      'Nessun canale è imposto: e-mail, un portale o Peppol — come concordato con il cliente.';
+
+  @override
+  String invoiceEInvoiceFormatMismatch(String channel, String format) {
+    return '$channel accetta solo $format: questo file EN 16931 serve per Peppol, la pubblica amministrazione e i clienti esteri — il resto lo converte la tua piattaforma.';
+  }
+
+  @override
+  String get invoiceEInvoiceReady =>
+      'Pronto — questo file soddisfa la EN 16931.';
+
+  @override
+  String get invoiceEInvoiceBlockedTitle =>
+      'Un validatore rifiuterebbe questo file:';
+
+  @override
+  String get invoiceEInvoiceIncompleteTitle =>
+      'Valido, ma i profili nazionali più severi chiedono anche:';
+
+  @override
+  String get invoiceGapVatNotSupported =>
+      'Lo spazio applica l\'IVA e DesKilo non la calcola ancora per voce — non è possibile produrre una ripartizione fiscale veritiera.';
+
+  @override
+  String get invoiceGapMissingVatId =>
+      'Manca la partita IVA — un venditore esente deve indicarla.';
+
+  @override
+  String get invoiceGapMissingLegalId =>
+      'Manca il numero di registrazione (SIREN, HRB, CIF…) — nulla ti identifica sulla fattura.';
+
+  @override
+  String get invoiceGapMissingExemptionReason =>
+      'Manca il motivo per cui non si applica l\'IVA.';
+
+  @override
+  String get invoiceGapMissingSellerCountry => 'Manca il paese dello spazio.';
+
+  @override
+  String get invoiceGapMissingBuyerCountry => 'Manca il paese del cliente.';
+
+  @override
+  String get invoiceGapNoChargeLines =>
+      'Questa fattura non ha righe di addebito — il mese era interamente coperto dai pagamenti, quindi non c’è nulla da trasmettere.';
+
+  @override
+  String get invoiceGapMissingSellerCity =>
+      'la città dell\'indirizzo dello spazio';
+
+  @override
+  String get invoiceGapMissingSellerPostalCode =>
+      'il codice postale dell\'indirizzo dello spazio';
+
+  @override
+  String get invoiceEInvoiceFixIdentity => 'Completare l\'identità legale';
+
+  @override
+  String get legalIdentityTitle => 'Identità legale e fatturazione elettronica';
+
+  @override
+  String get legalIdentitySubtitle =>
+      'Regime IVA e numeri di registrazione — richiesti dalla fattura elettronica';
+
+  @override
+  String get legalIdentityIntro =>
+      'Ciò che una fattura elettronica EN 16931 deve dichiarare su di te. Le fatture già emesse conservano l’identità con cui sono state firmate.';
+
+  @override
+  String get legalIdentityRegime => 'Regime IVA';
+
+  @override
+  String get legalIdentityRegimeNotSubject =>
+      'Fuori dal campo di applicazione dell\'IVA';
+
+  @override
+  String get legalIdentityRegimeExempt => 'Esente IVA (regime forfettario)';
+
+  @override
+  String get legalIdentityRegimeVatRegistered => 'Soggetto IVA (applica IVA)';
+
+  @override
+  String get legalIdentityRegimeHint =>
+      'Il regime decide quale numero richiede la norma: un numero di registrazione fuori campo IVA, una partita IVA se esente.';
+
+  @override
+  String get legalIdentityVatId => 'Partita IVA';
+
+  @override
+  String get legalIdentityLegalId => 'Numero di registrazione';
+
+  @override
+  String get legalIdentityExemptionReason =>
+      'Motivo del mancato addebito dell\'IVA';
+
+  @override
+  String get legalIdentityStreet => 'Via';
+
+  @override
+  String get legalIdentityCity => 'Città';
+
+  @override
+  String get legalIdentityPostalCode => 'Codice postale';
+
+  @override
+  String get legalIdentitySaved => 'Identità legale salvata.';
+
+  @override
+  String get legalIdentityVatWarning =>
+      'DesKilo non calcola ancora l\'IVA per voce: con questo regime l\'esportazione XML resta disattivata. Il PDF non è interessato.';
+
+  @override
+  String get addressCountryLabel => 'Paese';
+
+  @override
+  String get addressVatIdLabel => 'Partita IVA (se fatturi come impresa)';
+
+  @override
+  String get invoiceProformaAction => 'Fattura proforma';
+
+  @override
+  String get invoicePdfProforma => 'Proforma';
+
+  @override
+  String get invoiceProformaShared => 'Proforma condivisa.';
+
+  @override
+  String get invoiceProformaNothing =>
+      'Nessun dato registrato per questo mese — nessuna proforma da inviare.';
+
+  @override
+  String get invoicePdfCopy => 'Copia';
+
+  @override
+  String get invoiceStatusPartiallyPaid => 'Parzialmente pagata';
+
+  @override
+  String get invoiceRegisterTitle => 'Registro fatture';
+
+  @override
+  String get invoiceRegisterDate => 'Data';
+
+  @override
+  String get invoiceRegisterName => 'Nome';
+
+  @override
+  String get invoiceRegisterAmount => 'Importo';
+
+  @override
+  String get invoiceRegisterTotal => 'Totale';
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override
@@ -1851,6 +2085,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get paymentMethodWise => 'Wise';
+
+  @override
+  String get moneyPaymentDateLabel => 'Data del pagamento';
+
+  @override
+  String get moneyPaymentPeriodLabel => 'Si applica a';
 
   @override
   String get planNoLevels => 'Lo spazio non ha ancora una piantina.';

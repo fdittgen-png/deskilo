@@ -19,6 +19,8 @@ class Profile {
     this.whatsapp = '',
     this.statusText = '',
     this.address = '',
+    this.countryCode = '',
+    this.vatId = '',
     this.lastSeenAt,
     this.avatarPath,
   });
@@ -39,6 +41,15 @@ class Profile {
 
   /// Postal address (0060): printed on invoices; self-edited.
   final String address;
+
+  /// ISO 3166-1 alpha-2 country of the postal address (0069). Mandatory
+  /// on an EN 16931 e-invoice (BT-55); '' = not set, and the invoice then
+  /// snapshots the workspace's own country.
+  final String countryCode;
+
+  /// The member's VAT identification number (BT-48), for members who
+  /// invoice as a business; '' = none (a private member has none).
+  final String vatId;
 
   /// Last foreground heartbeat (UTC); null until the first beat.
   final DateTime? lastSeenAt;
@@ -65,6 +76,8 @@ class Profile {
         whatsapp: db['whatsapp'] as String? ?? '',
         statusText: db['status_text'] as String? ?? '',
         address: db['address'] as String? ?? '',
+        countryCode: db['country_code'] as String? ?? '',
+        vatId: db['vat_id'] as String? ?? '',
         lastSeenAt: db['last_seen_at'] == null
             ? null
             : DateTime.parse(db['last_seen_at'] as String).toUtc(),
@@ -77,6 +90,8 @@ class Profile {
         'whatsapp': whatsapp,
         'status_text': statusText,
         'address': address,
+        'country_code': countryCode,
+        'vat_id': vatId,
         'last_seen_at': lastSeenAt?.toUtc().toIso8601String(),
         'avatar_path': avatarPath,
       };
@@ -86,6 +101,8 @@ class Profile {
     String? whatsapp,
     String? statusText,
     String? address,
+    String? countryCode,
+    String? vatId,
     DateTime? lastSeenAt,
     String? avatarPath,
   }) =>
@@ -95,6 +112,8 @@ class Profile {
         whatsapp: whatsapp ?? this.whatsapp,
         statusText: statusText ?? this.statusText,
         address: address ?? this.address,
+        countryCode: countryCode ?? this.countryCode,
+        vatId: vatId ?? this.vatId,
         lastSeenAt: lastSeenAt ?? this.lastSeenAt,
         avatarPath: avatarPath ?? this.avatarPath,
       );

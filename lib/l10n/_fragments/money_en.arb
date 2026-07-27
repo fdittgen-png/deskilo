@@ -231,5 +231,13 @@
   "paymentMethodWise": "Wise",
   "@paymentMethodWise": {
     "description": "Payment-method chip/label: Wise — brand name, identical in every locale (#192)."
+  },
+  "moneyPaymentDateLabel": "Payment date",
+  "@moneyPaymentDateLabel": {
+    "description": "Payment sheet: the day the money actually moved (0070)"
+  },
+  "moneyPaymentPeriodLabel": "Applies to",
+  "@moneyPaymentPeriodLabel": {
+    "description": "Payment sheet: the month the payment settles — decides which bill and invoice it lands on"
   }
 }

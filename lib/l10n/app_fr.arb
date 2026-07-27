@@ -485,6 +485,160 @@
   "invoiceAlreadyInvoiced": "Ce mois est déjà facturé pour ce membre.",
   "invoiceMatchPickPayment": "Sélectionner le paiement enregistré",
   "invoiceMatchNoPayments": "Aucun paiement enregistré à rapprocher — enregistrez-le ou confirmez-le d'abord.",
+  "invoiceStatusOpen": "En cours",
+  "invoiceCountShown": "{count} factures",
+  "@invoiceCountShown": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceFilterNoMatch": "Aucune facture ne correspond à ces filtres.",
+  "invoiceFilterClear": "Réinitialiser les filtres",
+  "invoiceReplacedBy": "Remplacée par {number}",
+  "@invoiceReplacedBy": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMatchSummary": "Payée {amount} le {date}",
+  "@invoiceMatchSummary": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceRemindedLast": "dernière relance {date}",
+  "@invoiceRemindedLast": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceAnnexSummary": "Annexe : {movements} mouvements, {checkIns} pointages",
+  "@invoiceAnnexSummary": {
+    "placeholders": {
+      "movements": {
+        "type": "int"
+      },
+      "checkIns": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicePickMember": "Choisissez un membre pour voir ce que son mois a enregistré.",
+  "invoiceRunningMonth": "Ce mois est en cours — ses positions peuvent encore changer, et un mois ne se facture qu'une seule fois.",
+  "invoiceIssueAllConfirm": "Émettre {count} factures pour {month}, {total} au total ? Une facture émise ne se modifie plus — une erreur se corrige par un remplacement.",
+  "@invoiceIssueAllConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "month": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceIssuedPartial": "{issued} émises, {failed} en échec.",
+  "@invoiceIssuedPartial": {
+    "placeholders": {
+      "issued": {
+        "type": "int"
+      },
+      "failed": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceEInvoiceAction": "Facture électronique (XML)",
+  "invoiceEInvoiceExplain": "La facture EN 16931 lisible par machine — le fichier que réclament les administrations et les clients professionnels.",
+  "invoiceEInvoiceBusinessRoute": "Clients professionnels : transmettez-la via {channel} au format {format}.",
+  "@invoiceEInvoiceBusinessRoute": {
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      },
+      "format": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEInvoicePublicRoute": "Clients du secteur public : {channel}.",
+  "@invoiceEInvoicePublicRoute": {
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEInvoiceTransportPeppol": "Un point d'accès la livre au client — aucune plateforme publique dans le circuit.",
+  "invoiceEInvoiceTransportClearance": "La plateforme nationale reçoit la facture d'abord et la transmet — l'envoi direct au client n'est pas possible.",
+  "invoiceEInvoiceTransportAccredited": "Une plateforme agréée transporte la facture et transmet les données à l'administration fiscale pour vous.",
+  "invoiceEInvoiceTransportBilateral": "Aucun canal imposé : e-mail, portail ou Peppol — comme convenu avec le client.",
+  "invoiceEInvoiceFormatMismatch": "{channel} n'accepte que le format {format} : ce fichier EN 16931 sert pour Peppol, les acheteurs publics et les clients étrangers — votre plateforme ou votre comptable convertit le reste.",
+  "@invoiceEInvoiceFormatMismatch": {
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      },
+      "format": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEInvoiceReady": "Prêt — ce fichier satisfait la norme EN 16931.",
+  "invoiceEInvoiceBlockedTitle": "Un validateur rejetterait ce fichier :",
+  "invoiceEInvoiceIncompleteTitle": "Valide, mais les profils nationaux stricts demandent aussi :",
+  "invoiceGapVatNotSupported": "L'espace facture la TVA, et DesKilo ne calcule pas encore la TVA par position — aucune ventilation fiscale sincère n'est possible.",
+  "invoiceGapMissingVatId": "Le numéro de TVA manque — un vendeur exonéré doit l'indiquer.",
+  "invoiceGapMissingLegalId": "Le numéro d'immatriculation manque (SIREN, HRB, CIF…) — rien ne vous identifie sur la facture.",
+  "invoiceGapMissingExemptionReason": "Le motif de non-assujettissement à la TVA manque.",
+  "invoiceGapMissingSellerCountry": "Le pays de l'espace manque.",
+  "invoiceGapMissingBuyerCountry": "Le pays du client manque.",
+  "invoiceGapNoChargeLines": "Cette facture n'a aucune ligne de charge — son mois était entièrement couvert par des paiements, il n'y a donc rien à transmettre.",
+  "invoiceGapMissingSellerCity": "la ville de l'adresse de l'espace",
+  "invoiceGapMissingSellerPostalCode": "le code postal de l'adresse de l'espace",
+  "invoiceEInvoiceFixIdentity": "Compléter l'identité légale",
+  "legalIdentityTitle": "Identité légale et facturation électronique",
+  "legalIdentitySubtitle": "Régime de TVA et numéros d'immatriculation — exigés par la facture électronique",
+  "legalIdentityIntro": "Ce qu'une facture électronique EN 16931 doit indiquer à votre sujet. Les factures déjà émises conservent l'identité avec laquelle elles ont été signées.",
+  "legalIdentityRegime": "Régime de TVA",
+  "legalIdentityRegimeNotSubject": "Hors du champ de la TVA",
+  "legalIdentityRegimeExempt": "Exonéré de TVA (franchise en base)",
+  "legalIdentityRegimeVatRegistered": "Assujetti à la TVA (facture la TVA)",
+  "legalIdentityRegimeHint": "Le régime détermine le numéro exigé par la norme : un numéro d’immatriculation hors champ de la TVA, un numéro de TVA en franchise.",
+  "legalIdentityVatId": "Numéro de TVA",
+  "legalIdentityLegalId": "Numéro d'immatriculation",
+  "legalIdentityExemptionReason": "Motif de non-application de la TVA",
+  "legalIdentityStreet": "Rue",
+  "legalIdentityCity": "Ville",
+  "legalIdentityPostalCode": "Code postal",
+  "legalIdentitySaved": "Identité légale enregistrée.",
+  "legalIdentityVatWarning": "DesKilo ne calcule pas encore la TVA par position : avec ce régime, l'export XML reste désactivé. Le PDF n'est pas concerné.",
+  "addressCountryLabel": "Pays",
+  "addressVatIdLabel": "Numéro de TVA (si vous facturez en tant que professionnel)",
+  "invoiceProformaAction": "Facture proforma",
+  "invoicePdfProforma": "Proforma",
+  "invoiceProformaShared": "Proforma partagée.",
+  "invoiceProformaNothing": "Rien de suivi pour ce mois — aucune proforma à envoyer.",
+  "invoicePdfCopy": "Copie",
+  "invoiceStatusPartiallyPaid": "Partiellement payée",
+  "invoiceRegisterTitle": "Registre des factures",
+  "invoiceRegisterDate": "Date",
+  "invoiceRegisterName": "Nom",
+  "invoiceRegisterAmount": "Montant",
+  "invoiceRegisterTotal": "Total",
   "eventTypeMemberJoin": "Nouveau membre",
   "memberStatusPending": "En attente",
   "pendingApprovalTitle": "En attente d'approbation",
@@ -633,6 +787,8 @@
   "paymentMethodWero": "Wero",
   "paymentMethodLydia": "Lydia",
   "paymentMethodWise": "Wise",
+  "moneyPaymentDateLabel": "Date du paiement",
+  "moneyPaymentPeriodLabel": "S’applique à",
   "planNoLevels": "L'espace n'a pas encore de plan.",
   "planLevelLabel": "Étage",
   "planCheckInTitle": "Arrivée",

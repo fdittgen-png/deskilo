@@ -66,12 +66,9 @@ class SupabaseAuthRepository implements AuthRepository {
     await _client.auth.updateUser(UserAttributes(password: newPassword));
   }
 
-  /// Brand → Supabase provider; Microsoft is 'azure' on the server side.
+  /// Brand → Supabase provider.
   static OAuthProvider _oauth(SocialProvider provider) => switch (provider) {
         SocialProvider.google => OAuthProvider.google,
-        SocialProvider.microsoft => OAuthProvider.azure,
-        SocialProvider.apple => OAuthProvider.apple,
-        SocialProvider.facebook => OAuthProvider.facebook,
       };
 
   /// Mobile returns into the app over the deskilo:// scheme (registered

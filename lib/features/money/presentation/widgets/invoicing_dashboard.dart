@@ -3,16 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/ledger_entry.dart';
 import '../../providers/money_providers.dart';
+import '../period_label.dart';
+
+/// How old an open invoice has to be before the hub starts pointing at it.
+const _overdueDays = 30;
 
 /// The issuer's invoicing summary strip (field request: "everything an
-/// invoicing tool would need"): how many months wait to be invoiced
-/// and how much is outstanding, at a glance.
+/// invoicing tool would need"): how many months wait to be invoiced and
+/// how much is outstanding, at a glance.
+///
+/// Two pills rather than one grey sentence — and the money turns red once
+/// something has been waiting longer than [_overdueDays].
 class InvoicingSummaryBar extends ConsumerWidget {
   const InvoicingSummaryBar({super.key, required this.currency});
 
@@ -23,31 +31,84 @@ class InvoicingSummaryBar extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final overview = ref.watch(invoicingOverviewProvider).value;
     if (overview == null) return const SizedBox.shrink();
+    if (overview.toInvoice.isEmpty && overview.open.isEmpty) {
+      return const SizedBox.shrink();
+    }
     final outstanding =
         overview.open.fold(0, (sum, e) => sum + e.invoice.totalCents);
-    final parts = <String>[
-      if (overview.toInvoice.isNotEmpty)
-        l10n?.invoiceSummaryToInvoice(overview.toInvoice.length) ??
-            '${overview.toInvoice.length} to invoice',
-      if (overview.open.isNotEmpty)
-        l10n?.invoiceSummaryOpen(
-              overview.open.length,
-              currency.format(outstanding / 100),
-            ) ??
-            '${overview.open.length} open · '
-                '${currency.format(outstanding / 100)} outstanding',
-    ];
-    if (parts.isEmpty) return const SizedBox.shrink();
+    final now = DateTime.now();
+    final overdue = overview.open.any(
+      (e) => now.difference(e.invoice.issuedAt).inDays >= _overdueDays,
+    );
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-      child: Text(
-        parts.join('   ·   '),
-        key: const ValueKey('invoicing-summary'),
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-              fontWeight: FontWeight.w600,
-            ),
+      key: const ValueKey('invoicing-summary'),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.lg,
+        AppSpacing.sm,
+        AppSpacing.lg,
+        0,
       ),
+      child: Wrap(
+        spacing: AppSpacing.sm,
+        runSpacing: AppSpacing.xs,
+        children: [
+          if (overview.toInvoice.isNotEmpty)
+            _Pill(
+              icon: Icons.pending_actions_outlined,
+              text: l10n?.invoiceSummaryToInvoice(overview.toInvoice.length) ??
+                  '${overview.toInvoice.length} to invoice',
+            ),
+          if (overview.open.isNotEmpty)
+            _Pill(
+              icon: Icons.hourglass_bottom_outlined,
+              alert: overdue,
+              text: l10n?.invoiceSummaryOpen(
+                    overview.open.length,
+                    currency.format(outstanding / 100),
+                  ) ??
+                  '${overview.open.length} open · '
+                      '${currency.format(outstanding / 100)} outstanding',
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Pill extends StatelessWidget {
+  const _Pill({required this.icon, required this.text, this.alert = false});
+
+  final IconData icon;
+  final String text;
+  final bool alert;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final background =
+        alert ? colors.errorContainer : colors.surfaceContainerHighest;
+    final foreground =
+        alert ? colors.onErrorContainer : colors.onSurfaceVariant;
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.xs,
+      ),
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: AppRadius.xlAll,
+      ),
+      child: Row(mainAxisSize: MainAxisSize.min, children: [
+        Icon(icon, size: 16, color: foreground),
+        const SizedBox(width: AppSpacing.xs),
+        Text(
+          text,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: foreground,
+                fontWeight: FontWeight.w600,
+              ),
+        ),
+      ]),
     );
   }
 }
@@ -60,10 +121,15 @@ class ToInvoiceTab extends ConsumerWidget {
     required this.currency,
     required this.onIssue,
     required this.onIssueAll,
+    required this.onProforma,
   });
 
   final NumberFormat currency;
   final void Function(String memberId, String period) onIssue;
+
+  /// Shares the month as a PROFORMA — what the member will owe, before
+  /// anything is issued.
+  final void Function(String memberId, String period) onProforma;
   final void Function(List<ToInvoiceEntry> entries, String period)
       onIssueAll;
 
@@ -80,21 +146,33 @@ class ToInvoiceTab extends ConsumerWidget {
             'All caught up — nothing to invoice.',
       );
     }
-    final monthLabel = _monthLabel(context, overview.period);
+    final total =
+        overview.toInvoice.fold(0, (sum, e) => sum + e.totalCents);
     return ListView(
       padding: AppSpacing.mdAll,
       children: [
         Row(children: [
           Expanded(
-            child: Text(
-              monthLabel,
-              style: Theme.of(context).textTheme.titleMedium,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  monthLabel(context, overview.period),
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                // What the sweep is worth, before it runs.
+                Text(
+                  currency.format(total / 100),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                ),
+              ],
             ),
           ),
           FilledButton.tonalIcon(
             key: const ValueKey('invoice-issue-all'),
-            onPressed: () =>
-                onIssueAll(overview.toInvoice, overview.period),
+            onPressed: () => onIssueAll(overview.toInvoice, overview.period),
             icon: const Icon(Icons.playlist_add_check_outlined),
             label: Text(l10n?.invoiceIssueAll ?? 'Invoice all'),
           ),
@@ -106,11 +184,20 @@ class ToInvoiceTab extends ConsumerWidget {
               key: ValueKey('invoice-todo-${entry.memberId}'),
               title: Text(entry.name),
               subtitle: Text(currency.format(entry.totalCents / 100)),
-              trailing: FilledButton(
-                key: ValueKey('invoice-issue-${entry.memberId}'),
-                onPressed: () => onIssue(entry.memberId, overview.period),
-                child: Text(l10n?.invoiceIssueOne ?? 'Issue'),
-              ),
+              trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                IconButton(
+                  key: ValueKey('invoice-proforma-${entry.memberId}'),
+                  tooltip: l10n?.invoiceProformaAction ?? 'Proforma invoice',
+                  icon: const Icon(Icons.description_outlined),
+                  onPressed: () =>
+                      onProforma(entry.memberId, overview.period),
+                ),
+                FilledButton(
+                  key: ValueKey('invoice-issue-${entry.memberId}'),
+                  onPressed: () => onIssue(entry.memberId, overview.period),
+                  child: Text(l10n?.invoiceIssueOne ?? 'Issue'),
+                ),
+              ]),
             ),
           ),
       ],
@@ -124,12 +211,18 @@ class OpenInvoicesTab extends ConsumerWidget {
   const OpenInvoicesTab({
     super.key,
     required this.currency,
+    required this.onOpen,
     required this.onRemind,
     required this.onMatch,
     required this.onVoid,
+    required this.onProforma,
   });
 
   final NumberFormat currency;
+
+  /// Reading the document: the same detail sheet the archive opens.
+  final void Function(OpenInvoiceEntry entry) onOpen;
+
   final void Function(OpenInvoiceEntry entry) onRemind;
 
   /// Opens the match dialog (0067): the ONLY way an invoice closes.
@@ -138,6 +231,11 @@ class OpenInvoicesTab extends ConsumerWidget {
   /// Tags the OPEN invoice erronée so it can be corrected (0068 field
   /// decision: en-cours invoices are cancellable; PAID ones are not).
   final void Function(OpenInvoiceEntry entry) onVoid;
+
+  /// Re-renders the issued invoice as a PROFORMA payment request — same
+  /// figures, no signature, and stamped so it cannot pass for the
+  /// original.
+  final void Function(OpenInvoiceEntry entry) onProforma;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -161,7 +259,11 @@ class OpenInvoicesTab extends ConsumerWidget {
         for (final entry in overview.open)
           Card(
             key: ValueKey('invoice-open-${entry.invoice.id}'),
-            child: Padding(
+            child: InkWell(
+              // The card reads the invoice; the buttons act on it.
+              onTap: () => onOpen(entry),
+              borderRadius: AppRadius.lgAll,
+              child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 12, 8, 4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,21 +285,7 @@ class OpenInvoicesTab extends ConsumerWidget {
                     ),
                   ]),
                   const SizedBox(height: 2),
-                  Text(
-                    [
-                      dateFormat.format(entry.invoice.issuedAt),
-                      l10n?.invoiceOpenAge(DateTime.now()
-                              .difference(entry.invoice.issuedAt)
-                              .inDays) ??
-                          '${DateTime.now().difference(entry.invoice.issuedAt).inDays}d',
-                      if (reminders[entry.invoice.id] != null)
-                        l10n?.invoiceRemindedBadge(
-                                reminders[entry.invoice.id]!.count) ??
-                            'Reminded ×'
-                                '${reminders[entry.invoice.id]!.count}',
-                    ].join(' · '),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
+                  _openSubtitle(context, l10n, entry, reminders, dateFormat),
                   if (entry.pendingMatch != null)
                     Align(
                       alignment: Alignment.centerRight,
@@ -214,6 +302,10 @@ class OpenInvoicesTab extends ConsumerWidget {
                       ),
                     )
                   else
+                    // Icons, not sentences: three localized labels side by
+                    // side ran off the card on a phone (field report).
+                    // Every one keeps its tooltip, and the card itself
+                    // opens the invoice where the actions are spelled out.
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -225,36 +317,80 @@ class OpenInvoicesTab extends ConsumerWidget {
                           icon: const Icon(Icons.block_outlined),
                           onPressed: () => onVoid(entry),
                         ),
-                        TextButton(
+                        IconButton(
+                          key: ValueKey(
+                              'invoice-proforma-${entry.invoice.id}'),
+                          tooltip: l10n?.invoiceProformaAction ??
+                              'Proforma invoice',
+                          icon: const Icon(Icons.description_outlined),
+                          onPressed: () => onProforma(entry),
+                        ),
+                        IconButton(
                           key: ValueKey(
                               'invoice-remind-${entry.invoice.id}'),
+                          tooltip: l10n?.invoiceRemindAction ??
+                              'Send a reminder',
+                          icon: const Icon(Icons.notifications_outlined),
                           onPressed: () => onRemind(entry),
-                          child: Text(l10n?.invoiceRemindAction ??
-                              'Send a reminder'),
                         ),
-                        FilledButton.tonal(
+                        IconButton.filledTonal(
                           key:
                               ValueKey('invoice-match-${entry.invoice.id}'),
+                          tooltip:
+                              l10n?.invoiceMatchAction ?? 'Mark as paid',
+                          icon: const Icon(Icons.price_check_outlined),
                           onPressed: () => onMatch(entry),
-                          child: Text(
-                              l10n?.invoiceMatchAction ?? 'Mark as paid'),
                         ),
                       ],
                     ),
                 ],
+              ),
               ),
             ),
           ),
       ],
     );
   }
-}
 
-String _monthLabel(BuildContext context, String period) {
-  final parts = period.split('-');
-  return DateFormat.yMMMM(
-    Localizations.maybeLocaleOf(context)?.toString(),
-  ).format(DateTime(int.parse(parts[0]), int.parse(parts[1])));
+  /// Issue date · age · reminders — with the AGE in error colors once the
+  /// invoice has been waiting too long, so a collections list can be read
+  /// at a glance instead of parsed word by word.
+  Widget _openSubtitle(
+    BuildContext context,
+    AppLocalizations? l10n,
+    OpenInvoiceEntry entry,
+    Map<String, ({int count, DateTime last})> reminders,
+    DateFormat dateFormat,
+  ) {
+    final theme = Theme.of(context);
+    final muted = theme.textTheme.bodySmall?.copyWith(
+      color: theme.colorScheme.onSurfaceVariant,
+    );
+    final days = DateTime.now().difference(entry.invoice.issuedAt).inDays;
+    final reminder = reminders[entry.invoice.id];
+    return Text.rich(
+      TextSpan(style: muted, children: [
+        TextSpan(text: dateFormat.format(entry.invoice.issuedAt)),
+        const TextSpan(text: ' · '),
+        TextSpan(
+          text: l10n?.invoiceOpenAge(days) ?? '${days}d',
+          style: days >= _overdueDays
+              ? muted?.copyWith(
+                  color: theme.colorScheme.error,
+                  fontWeight: FontWeight.bold,
+                )
+              : null,
+        ),
+        if (reminder != null) ...[
+          const TextSpan(text: ' · '),
+          TextSpan(
+            text: l10n?.invoiceRemindedBadge(reminder.count) ??
+                'Reminded ×${reminder.count}',
+          ),
+        ],
+      ]),
+    );
+  }
 }
 
 /// What the match dialog returns (0068): the selected REGISTERED
@@ -380,7 +516,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
                         dense: true,
                         title: Text(
                           '${widget.currency.format(entry.amountCents / 100)}'
-                          ' · ${dateFormat.format(entry.createdAt)}'
+                          ' · ${dateFormat.format(entry.on)}'
                           '${entry.description.isEmpty ? '' : ' · ${entry.description}'}',
                         ),
                       ),

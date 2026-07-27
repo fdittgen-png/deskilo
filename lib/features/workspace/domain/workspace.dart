@@ -48,6 +48,30 @@ sealed class Workspace with _$Workspace {
     /// Postal address (0060): printed on invoices; owner-edited.
     @Default('') String address,
 
+    /// LEGAL IDENTITY (0069) — what an EN 16931 e-invoice cannot omit.
+    /// [vatRegime] is the wire value of `VatRegime` (money domain) and
+    /// decides which of the two identifiers is required: category `E`
+    /// needs [vatId] (BR-E-02), category `O` needs [legalId] and must NOT
+    /// carry a VAT id at all (BR-O-02 / BR-CO-26).
+    @Default('not_subject') String vatRegime,
+
+    /// BT-31, the VAT identification number ('FR12345678901').
+    @Default('') String vatId,
+
+    /// BT-30, the company register identifier (SIREN/SIRET, HRB, CIF…).
+    @Default('') String legalId,
+
+    /// BT-120, why no VAT is charged, in the owner's own words. Category
+    /// `E` requires a reason; a VATEX code is added automatically where
+    /// the code lists have one.
+    @Default('') String taxExemptionReason,
+
+    /// Structured address parts (BT-35/37/38) beside [address], which
+    /// stays the free-text block the PDF letterhead prints.
+    @Default('') String street,
+    @Default('') String city,
+    @Default('') String postalCode,
+
     /// Desk fill opacity percentage (0040): 100 = solid (default), lower
     /// makes desks translucent so a level's background photo shows through.
     /// Clamped 20..100 by the column check.

@@ -178,6 +178,30 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     // StatefulBuilder below; null = not specified (kept valid so old
     // habits keep working).
     PaymentMethod? method;
+    // 0070 — WHEN the money moved (defaults to today) and WHICH month it
+    // settles (defaults to the running one). Both were assumed until now:
+    // the ledger dated every payment the day it was typed in and booked it
+    // to the current month, so a transfer entered late landed on the wrong
+    // bill — and on the wrong invoice.
+    final today = DateTime.now();
+    var paidOn = DateTime(today.year, today.month, today.day);
+    var period = currentPeriod();
+    final locale = Localizations.maybeLocaleOf(context)?.toString();
+    final dayFormat = DateFormat.yMMMd(locale);
+    final monthFormat = DateFormat.yMMMM(locale);
+    DateTime monthOf(String p) => DateTime(
+          int.parse(p.split('-')[0]),
+          int.parse(p.split('-')[1]),
+        );
+    // A month back is history (settling arrears); a month forward is a
+    // prepayment. Further forward is a typo, not an intent.
+    final periodCeiling = DateTime(today.year, today.month + 1);
+    void shiftPeriod(void Function(void Function()) setSheetState, int delta) {
+      final next = DateTime(monthOf(period).year, monthOf(period).month + delta);
+      if (next.isAfter(periodCeiling)) return;
+      setSheetState(() => period =
+          '${next.year}-${next.month.toString().padLeft(2, '0')}');
+    }
     final submitted = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
@@ -216,7 +240,53 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                     ),
                 ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 4),
+              // WHEN the money moved.
+              ListTile(
+                key: const ValueKey('payment-date-tile'),
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.event_outlined),
+                title: Text(l10n?.moneyPaymentDateLabel ?? 'Payment date'),
+                subtitle: Text(dayFormat.format(paidOn)),
+                onTap: () async {
+                  final picked = await showDatePicker(
+                    context: context,
+                    initialDate: paidOn,
+                    firstDate: DateTime(today.year - 2),
+                    lastDate: DateTime(today.year, today.month, today.day),
+                    helpText: l10n?.moneyPaymentDateLabel ?? 'Payment date',
+                  );
+                  if (picked != null) setSheetState(() => paidOn = picked);
+                },
+              ),
+              // WHICH month it settles — the bill and the invoice this
+              // credit lands on.
+              ListTile(
+                key: const ValueKey('payment-period-tile'),
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.calendar_month_outlined),
+                title: Text(l10n?.moneyPaymentPeriodLabel ?? 'Applies to'),
+                subtitle: Text(
+                  monthFormat.format(monthOf(period)),
+                  key: const ValueKey('payment-period-label'),
+                ),
+                trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                  IconButton(
+                    key: const ValueKey('payment-period-prev'),
+                    icon: const Icon(Icons.chevron_left),
+                    onPressed: () => shiftPeriod(setSheetState, -1),
+                  ),
+                  IconButton(
+                    key: const ValueKey('payment-period-next'),
+                    icon: const Icon(Icons.chevron_right),
+                    onPressed: monthOf(period).isAfter(
+                            DateTime(today.year, today.month))
+                        ? null
+                        : () => shiftPeriod(setSheetState, 1),
+                  ),
+                ]),
+              ),
+              const SizedBox(height: 4),
               TextField(
                 controller: note,
                 decoration: InputDecoration(
@@ -250,6 +320,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             amountCents: cents,
             note: note.text.trim(),
             method: method,
+            paidOn: paidOn,
+            period: period,
           ),
     )) {
       return;

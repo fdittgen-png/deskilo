@@ -77,6 +77,23 @@ class SupabaseProfileRepository implements ProfileRepository {
   }
 
   @override
+  Future<void> updateTaxIdentity({
+    required String countryCode,
+    required String vatId,
+  }) async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) {
+      throw StateError('cannot update the profile while signed out');
+    }
+    // Self-only via profiles_update RLS; the 0069 column checks enforce
+    // the two-letter shape and the length.
+    await _client.from('profiles').update({
+      'country_code': countryCode.trim().toUpperCase(),
+      'vat_id': vatId.trim(),
+    }).eq('id', userId);
+  }
+
+  @override
   Future<void> touchLastSeen() async {
     await _client.rpc<dynamic>('touch_last_seen');
   }

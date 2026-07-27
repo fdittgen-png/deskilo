@@ -182,6 +182,19 @@ void main() {
       expect(presence.kind, DirectoryPresenceKind.online);
     });
 
+    test('the SIGNED-IN member is online however old the snapshot is — '
+        'they are the one reading the screen', () {
+      final presence = resolveDirectoryPresence(
+        lastSeenAt: _now.subtract(const Duration(hours: 3)),
+        now: _now,
+        isSelf: true,
+      );
+
+      expect(presence.kind, DirectoryPresenceKind.online,
+          reason: 'the directory holds a fetched snapshot; your own '
+              'presence is a fact, not a timestamp');
+    });
+
     test('a stale heartbeat is offline and carries lastSeenAt for the '
         'relative label', () {
       final lastSeen = _now.subtract(const Duration(hours: 2));

@@ -70,6 +70,22 @@ abstract class WorkspaceRepository {
   /// The workspace's postal address (0060), printed on invoices.
   Future<void> setWorkspaceAddress(String workspaceId, String address);
 
+  /// Owner-only (RLS workspaces_update): the LEGAL IDENTITY an EN 16931
+  /// e-invoice requires (0069) — VAT regime plus the identifier that
+  /// regime demands, the exemption reason and the structured address.
+  /// Written atomically: a half-declared identity would produce XML that
+  /// fails validation in a different way each time.
+  Future<void> setLegalIdentity(
+    String workspaceId, {
+    required String vatRegime,
+    required String vatId,
+    required String legalId,
+    required String taxExemptionReason,
+    required String street,
+    required String city,
+    required String postalCode,
+  });
+
   /// Owner-only (workspaces_update RLS): set the invitation message
   /// template (0049) — trimmed, '' means "use the localized default".
   /// Length capped at [invitationTemplateMaxLength] by the column check.

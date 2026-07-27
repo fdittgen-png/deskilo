@@ -374,5 +374,328 @@
   "invoiceMatchNoPayments": "No registered payment to match — record or confirm it first.",
   "@invoiceMatchNoPayments": {
     "description": "Match dialog: no unconsumed registered payments exist"
+  },
+  "invoiceStatusOpen": "Open",
+  "@invoiceStatusOpen": {
+    "description": "Lifecycle chip: issued, still waiting for its payment"
+  },
+  "invoiceCountShown": "{count} invoices",
+  "@invoiceCountShown": {
+    "description": "Archive: how many invoices the current filters show",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceFilterNoMatch": "No invoice matches these filters.",
+  "@invoiceFilterNoMatch": {
+    "description": "Archive empty state while filtering — NOT an empty archive"
+  },
+  "invoiceFilterClear": "Clear filters",
+  "@invoiceFilterClear": {
+    "description": "Archive: back to the unfiltered list"
+  },
+  "invoiceReplacedBy": "Replaced by {number}",
+  "@invoiceReplacedBy": {
+    "description": "Detail sheet: the correction chain, downstream (0061)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMatchSummary": "Paid {amount} on {date}",
+  "@invoiceMatchSummary": {
+    "description": "Detail sheet: the payment that closed the invoice (0067)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceRemindedLast": "last reminder {date}",
+  "@invoiceRemindedLast": {
+    "description": "Detail sheet: when the last reminder went out (0066)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceAnnexSummary": "Annex: {movements} movements, {checkIns} check-ins",
+  "@invoiceAnnexSummary": {
+    "description": "Detail sheet: what the snapshotted annex carries (0064)",
+    "placeholders": {
+      "movements": {
+        "type": "int"
+      },
+      "checkIns": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicePickMember": "Pick a member to see what their month tracked.",
+  "@invoicePickMember": {
+    "description": "Issue sheet placeholder before a member is chosen"
+  },
+  "invoiceRunningMonth": "This month is still running — its positions can still change, and a month can only be invoiced once.",
+  "@invoiceRunningMonth": {
+    "description": "Issue sheet warning when the picked month is the current one (0067)"
+  },
+  "invoiceIssueAllConfirm": "Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.",
+  "@invoiceIssueAllConfirm": {
+    "description": "Confirm dialog of the invoice-all sweep",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "month": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceIssuedPartial": "{issued} issued, {failed} failed.",
+  "@invoiceIssuedPartial": {
+    "description": "Sweep result when some members could not be invoiced",
+    "placeholders": {
+      "issued": {
+        "type": "int"
+      },
+      "failed": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceEInvoiceAction": "E-invoice (XML)",
+  "@invoiceEInvoiceAction": {
+    "description": "Detail sheet action opening the e-invoice sheet"
+  },
+  "invoiceEInvoiceExplain": "The machine-readable EN 16931 invoice — the file tax administrations and business customers ask for.",
+  "@invoiceEInvoiceExplain": {
+    "description": "E-invoice sheet: what the XML is"
+  },
+  "invoiceEInvoiceBusinessRoute": "Business customers: send it through {channel} as {format}.",
+  "@invoiceEInvoiceBusinessRoute": {
+    "description": "E-invoice sheet: the domestic B2B channel and its syntax",
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      },
+      "format": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEInvoicePublicRoute": "Public-sector customers: {channel}.",
+  "@invoiceEInvoicePublicRoute": {
+    "description": "E-invoice sheet: the B2G channel (Directive 2014/55/EU)",
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEInvoiceTransportPeppol": "An access point delivers it to the customer — no government platform in between.",
+  "@invoiceEInvoiceTransportPeppol": {
+    "description": "E-invoice sheet: how the file travels on Peppol"
+  },
+  "invoiceEInvoiceTransportClearance": "The national platform receives the invoice first and hands it on — sending it straight to the customer is not an option.",
+  "@invoiceEInvoiceTransportClearance": {
+    "description": "E-invoice sheet: clearance model (SdI, KSeF, e-Factura)"
+  },
+  "invoiceEInvoiceTransportAccredited": "An accredited platform carries the invoice and reports it to the tax administration for you.",
+  "@invoiceEInvoiceTransportAccredited": {
+    "description": "E-invoice sheet: accredited-platform model (France)"
+  },
+  "invoiceEInvoiceTransportBilateral": "No channel is imposed: e-mail, a portal or Peppol — whatever you agree with the customer.",
+  "@invoiceEInvoiceTransportBilateral": {
+    "description": "E-invoice sheet: no transmission mandate (Germany today)"
+  },
+  "invoiceEInvoiceFormatMismatch": "{channel} only accepts {format}: this EN 16931 file serves Peppol, public buyers and foreign customers — your platform or accountant converts the rest.",
+  "@invoiceEInvoiceFormatMismatch": {
+    "description": "E-invoice sheet warning where the domestic mandate runs on a national syntax",
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      },
+      "format": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEInvoiceReady": "Ready — this file satisfies EN 16931.",
+  "@invoiceEInvoiceReady": {
+    "description": "E-invoice sheet: the file satisfies the norm"
+  },
+  "invoiceEInvoiceBlockedTitle": "A validator would reject this file:",
+  "@invoiceEInvoiceBlockedTitle": {
+    "description": "E-invoice sheet: header above the fatal gaps"
+  },
+  "invoiceEInvoiceIncompleteTitle": "Valid, but the strict national profiles also want:",
+  "@invoiceEInvoiceIncompleteTitle": {
+    "description": "E-invoice sheet: header above the non-fatal gaps"
+  },
+  "invoiceGapVatNotSupported": "The workspace charges VAT, and DesKilo does not compute VAT per position yet — no truthful tax breakdown can be produced.",
+  "@invoiceGapVatNotSupported": {
+    "description": "Gap: the workspace charges VAT, which the app cannot break down"
+  },
+  "invoiceGapMissingVatId": "The VAT number is missing — an exempt seller must state one.",
+  "@invoiceGapMissingVatId": {
+    "description": "Gap: BR-E-02 — exempt seller without a VAT identifier"
+  },
+  "invoiceGapMissingLegalId": "The company registration number is missing (SIREN, HRB, CIF…) — nothing identifies you on the invoice.",
+  "@invoiceGapMissingLegalId": {
+    "description": "Gap: BR-CO-26 — no seller identifier at all"
+  },
+  "invoiceGapMissingExemptionReason": "The reason for not charging VAT is missing.",
+  "@invoiceGapMissingExemptionReason": {
+    "description": "Gap: BR-E-10 — no exemption reason"
+  },
+  "invoiceGapMissingSellerCountry": "The workspace country is missing.",
+  "@invoiceGapMissingSellerCountry": {
+    "description": "Gap: BR-09 — seller country"
+  },
+  "invoiceGapMissingBuyerCountry": "The customer's country is missing.",
+  "@invoiceGapMissingBuyerCountry": {
+    "description": "Gap: BR-11 — buyer country"
+  },
+  "invoiceGapNoChargeLines": "This invoice has no charge line — its month was fully covered by payments, so there is no invoice to send.",
+  "@invoiceGapNoChargeLines": {
+    "description": "Gap: BR-16 — an invoice needs at least one line"
+  },
+  "invoiceGapMissingSellerCity": "the city of the workspace address",
+  "@invoiceGapMissingSellerCity": {
+    "description": "Gap: seller city (national CIUS / Peppol)"
+  },
+  "invoiceGapMissingSellerPostalCode": "the post code of the workspace address",
+  "@invoiceGapMissingSellerPostalCode": {
+    "description": "Gap: seller post code (national CIUS / Peppol)"
+  },
+  "invoiceEInvoiceFixIdentity": "Complete the legal identity",
+  "@invoiceEInvoiceFixIdentity": {
+    "description": "E-invoice sheet: jump to the legal-identity screen"
+  },
+  "legalIdentityTitle": "Legal identity & e-invoicing",
+  "@legalIdentityTitle": {
+    "description": "Screen title: the workspace legal identity"
+  },
+  "legalIdentitySubtitle": "VAT regime and registration numbers — required by the e-invoice",
+  "@legalIdentitySubtitle": {
+    "description": "Workspace-settings tile subtitle"
+  },
+  "legalIdentityIntro": "What an EN 16931 e-invoice must state about you. Invoices already issued keep the identity they were signed with.",
+  "@legalIdentityIntro": {
+    "description": "Screen intro paragraph"
+  },
+  "legalIdentityRegime": "VAT regime",
+  "@legalIdentityRegime": {
+    "description": "VAT regime dropdown label"
+  },
+  "legalIdentityRegimeNotSubject": "Outside the scope of VAT",
+  "@legalIdentityRegimeNotSubject": {
+    "description": "VAT regime option: category O"
+  },
+  "legalIdentityRegimeExempt": "VAT-exempt (small-business scheme)",
+  "@legalIdentityRegimeExempt": {
+    "description": "VAT regime option: category E"
+  },
+  "legalIdentityRegimeVatRegistered": "VAT-registered (charges VAT)",
+  "@legalIdentityRegimeVatRegistered": {
+    "description": "VAT regime option: charges VAT"
+  },
+  "legalIdentityRegimeHint": "The regime decides which number the norm requires: a registration number outside the scope of VAT, a VAT number when exempt.",
+  "@legalIdentityRegimeHint": {
+    "description": "Explains that the regime drives which id is required"
+  },
+  "legalIdentityVatId": "VAT number",
+  "@legalIdentityVatId": {
+    "description": "VAT number field label"
+  },
+  "legalIdentityLegalId": "Company registration number",
+  "@legalIdentityLegalId": {
+    "description": "Company registration number field label"
+  },
+  "legalIdentityExemptionReason": "Why no VAT is charged",
+  "@legalIdentityExemptionReason": {
+    "description": "Exemption reason field label"
+  },
+  "legalIdentityStreet": "Street",
+  "@legalIdentityStreet": {
+    "description": "Street field label"
+  },
+  "legalIdentityCity": "City",
+  "@legalIdentityCity": {
+    "description": "City field label"
+  },
+  "legalIdentityPostalCode": "Post code",
+  "@legalIdentityPostalCode": {
+    "description": "Post code field label"
+  },
+  "legalIdentitySaved": "Legal identity saved.",
+  "@legalIdentitySaved": {
+    "description": "Snackbar after saving the legal identity"
+  },
+  "legalIdentityVatWarning": "DesKilo does not compute VAT per position yet: with this regime the XML export stays disabled. The PDF is unaffected.",
+  "@legalIdentityVatWarning": {
+    "description": "Warning shown for the VAT-registered regime"
+  },
+  "addressCountryLabel": "Country",
+  "@addressCountryLabel": {
+    "description": "Country field on the member address sheet"
+  },
+  "addressVatIdLabel": "VAT number (if you invoice as a business)",
+  "@addressVatIdLabel": {
+    "description": "Member VAT number field on the address sheet"
+  },
+  "invoiceProformaAction": "Proforma invoice",
+  "@invoiceProformaAction": {
+    "description": "Tooltip of the proforma action on the hub rows (0072)"
+  },
+  "invoicePdfProforma": "Proforma",
+  "@invoicePdfProforma": {
+    "description": "The word a proforma document carries in its header and as its watermark"
+  },
+  "invoiceProformaShared": "Proforma shared.",
+  "@invoiceProformaShared": {
+    "description": "Snackbar after a proforma was handed to the share sheet"
+  },
+  "invoiceProformaNothing": "Nothing tracked for this month — no proforma to send.",
+  "@invoiceProformaNothing": {
+    "description": "Refusal when the month has nothing to put on a proforma"
+  },
+  "invoicePdfCopy": "Copy",
+  "@invoicePdfCopy": {
+    "description": "The word stamped across a member's own render of an invoice (0072)"
+  },
+  "invoiceStatusPartiallyPaid": "Partially paid",
+  "@invoiceStatusPartiallyPaid": {
+    "description": "Lifecycle chip: matched to a payment that did not cover the whole invoice"
+  },
+  "invoiceRegisterTitle": "Invoice register",
+  "@invoiceRegisterTitle": {
+    "description": "Screen title of the sortable invoice register (0072)"
+  },
+  "invoiceRegisterDate": "Date",
+  "@invoiceRegisterDate": {
+    "description": "Register column header, and its sort control"
+  },
+  "invoiceRegisterName": "Name",
+  "@invoiceRegisterName": {
+    "description": "Register column header: the member for an issuer, the invoice number for a member"
+  },
+  "invoiceRegisterAmount": "Amount",
+  "@invoiceRegisterAmount": {
+    "description": "Register column header"
+  },
+  "invoiceRegisterTotal": "Total",
+  "@invoiceRegisterTotal": {
+    "description": "Register footer: sum of the listed invoices"
   }
 }

@@ -13,6 +13,21 @@ class FakeProfileRepository implements ProfileRepository {
     if (mine != null) _replaceMine(mine.copyWith(address: address.trim()));
   }
 
+  @override
+  Future<void> updateTaxIdentity({
+    required String countryCode,
+    required String vatId,
+  }) async {
+    if (failing) throw StateError('tax identity write failed');
+    final mine = _mine;
+    if (mine != null) {
+      _replaceMine(mine.copyWith(
+        countryCode: countryCode.trim().toUpperCase(),
+        vatId: vatId.trim(),
+      ));
+    }
+  }
+
   FakeProfileRepository({List<Profile>? profiles, this.myUserId = 'user-1'})
       : profiles = profiles ??
             [const Profile(id: 'user-1', displayName: 'Test User')];

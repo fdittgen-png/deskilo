@@ -376,6 +376,32 @@ void main() {
     expect(launched.single.toString(), 'https://wa.me/491701234567');
   });
 
+  testWidgets(
+      'MY OWN row reads Online even when the fetched snapshot is stale — '
+      'the heartbeat keeps writing while the screen holds one fetch',
+      (tester) async {
+    final seeded = _seed();
+    // What the app actually holds after the directory has been open for a
+    // while: my server heartbeat is fresh, the snapshot in hand is not.
+    final stale = FakeProfileRepository(profiles: [
+      Profile(
+        id: 'user-1',
+        displayName: 'Flo',
+        lastSeenAt: DateTime.now().subtract(const Duration(minutes: 20)),
+      ),
+    ]);
+    await _pumpDirectory(
+      tester,
+      workspace: seeded.workspace,
+      reservations: seeded.reservations,
+      floorPlan: seeded.floorPlan,
+      profile: stale,
+    );
+
+    expect(_chipText(tester, 'member-1'), 'Online',
+        reason: 'you cannot be 20 minutes away from yourself');
+  });
+
   testWidgets('no active members renders the EmptyState', (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace()
       ..myMember = _member(1, status: MemberStatus.paused)

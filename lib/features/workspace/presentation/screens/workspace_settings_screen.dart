@@ -5,6 +5,7 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
@@ -965,6 +966,20 @@ class _WorkspaceSettingsScreenState
                       labelText: l10n?.workspaceAddressLabel ??
                           'Workspace address',
                     ),
+                  ),
+                  // 0069 — the legal identity the e-invoice needs lives
+                  // on its own screen: the regime decides which fields
+                  // even apply.
+                  ListTile(
+                    key: const Key('workspaceSettingsLegalIdentity'),
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.badge_outlined),
+                    title: Text(l10n?.legalIdentityTitle ??
+                        'Legal identity & e-invoicing'),
+                    subtitle: Text(l10n?.legalIdentitySubtitle ??
+                        'VAT regime and registration numbers'),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => context.push('/legal-identity'),
                   ),
                   const SizedBox(height: 12),
                   TextFormField(

@@ -1369,6 +1369,241 @@ class AppLocalizationsDe extends AppLocalizations {
       'Keine registrierte Zahlung zum Abgleich — zuerst erfassen oder bestätigen.';
 
   @override
+  String get invoiceStatusOpen => 'Offen';
+
+  @override
+  String invoiceCountShown(int count) {
+    return '$count Rechnungen';
+  }
+
+  @override
+  String get invoiceFilterNoMatch =>
+      'Keine Rechnung entspricht diesen Filtern.';
+
+  @override
+  String get invoiceFilterClear => 'Filter zurücksetzen';
+
+  @override
+  String invoiceReplacedBy(String number) {
+    return 'Ersetzt durch $number';
+  }
+
+  @override
+  String invoiceMatchSummary(String amount, String date) {
+    return 'Bezahlt $amount am $date';
+  }
+
+  @override
+  String invoiceRemindedLast(String date) {
+    return 'letzte Mahnung $date';
+  }
+
+  @override
+  String invoiceAnnexSummary(int movements, int checkIns) {
+    return 'Anhang: $movements Bewegungen, $checkIns Check-ins';
+  }
+
+  @override
+  String get invoicePickMember =>
+      'Ein Mitglied wählen, um zu sehen, was dieser Monat erfasst hat.';
+
+  @override
+  String get invoiceRunningMonth =>
+      'Dieser Monat läuft noch — seine Positionen können sich noch ändern, und ein Monat lässt sich nur einmal abrechnen.';
+
+  @override
+  String invoiceIssueAllConfirm(int count, String month, String total) {
+    return '$count Rechnungen für $month über insgesamt $total ausstellen? Eine ausgestellte Rechnung lässt sich nicht mehr ändern — ein Fehler wird durch eine Ersatzrechnung korrigiert.';
+  }
+
+  @override
+  String invoiceIssuedPartial(int issued, int failed) {
+    return '$issued ausgestellt, $failed fehlgeschlagen.';
+  }
+
+  @override
+  String get invoiceEInvoiceAction => 'E-Rechnung (XML)';
+
+  @override
+  String get invoiceEInvoiceExplain =>
+      'Die maschinenlesbare EN-16931-Rechnung — die Datei, die Finanzverwaltungen und Geschäftskunden verlangen.';
+
+  @override
+  String invoiceEInvoiceBusinessRoute(String channel, String format) {
+    return 'Geschäftskunden: über $channel als $format übermitteln.';
+  }
+
+  @override
+  String invoiceEInvoicePublicRoute(String channel) {
+    return 'Öffentliche Auftraggeber: $channel.';
+  }
+
+  @override
+  String get invoiceEInvoiceTransportPeppol =>
+      'Ein Access Point liefert sie an den Kunden — keine staatliche Plattform dazwischen.';
+
+  @override
+  String get invoiceEInvoiceTransportClearance =>
+      'Die nationale Plattform erhält die Rechnung zuerst und leitet sie weiter — ein direkter Versand an den Kunden ist nicht möglich.';
+
+  @override
+  String get invoiceEInvoiceTransportAccredited =>
+      'Eine zugelassene Plattform übermittelt die Rechnung und meldet die Daten an die Finanzverwaltung.';
+
+  @override
+  String get invoiceEInvoiceTransportBilateral =>
+      'Kein Kanal ist vorgeschrieben: E-Mail, Portal oder Peppol — wie mit dem Kunden vereinbart.';
+
+  @override
+  String invoiceEInvoiceFormatMismatch(String channel, String format) {
+    return '$channel akzeptiert nur $format: Diese EN-16931-Datei dient für Peppol, öffentliche Auftraggeber und ausländische Kunden — den Rest konvertiert die Plattform.';
+  }
+
+  @override
+  String get invoiceEInvoiceReady => 'Bereit — diese Datei erfüllt EN 16931.';
+
+  @override
+  String get invoiceEInvoiceBlockedTitle =>
+      'Ein Validator würde diese Datei ablehnen:';
+
+  @override
+  String get invoiceEInvoiceIncompleteTitle =>
+      'Gültig, doch die strengen nationalen Profile wollen zusätzlich:';
+
+  @override
+  String get invoiceGapVatNotSupported =>
+      'Der Workspace berechnet Umsatzsteuer, und DesKilo rechnet noch nicht pro Position — eine wahrheitsgemäße Steueraufteilung ist nicht möglich.';
+
+  @override
+  String get invoiceGapMissingVatId =>
+      'Die Umsatzsteuer-Identifikationsnummer fehlt — ein steuerbefreiter Verkäufer muss sie angeben.';
+
+  @override
+  String get invoiceGapMissingLegalId =>
+      'Die Registernummer fehlt (SIREN, HRB, CIF…) — nichts identifiziert dich auf der Rechnung.';
+
+  @override
+  String get invoiceGapMissingExemptionReason =>
+      'Der Grund für die Steuerbefreiung fehlt.';
+
+  @override
+  String get invoiceGapMissingSellerCountry => 'Das Land des Workspace fehlt.';
+
+  @override
+  String get invoiceGapMissingBuyerCountry => 'Das Land des Kunden fehlt.';
+
+  @override
+  String get invoiceGapNoChargeLines =>
+      'Diese Rechnung hat keine Belastungsposition — ihr Monat war vollständig durch Zahlungen gedeckt, es gibt nichts zu übermitteln.';
+
+  @override
+  String get invoiceGapMissingSellerCity => 'die Stadt der Workspace-Adresse';
+
+  @override
+  String get invoiceGapMissingSellerPostalCode =>
+      'die Postleitzahl der Workspace-Adresse';
+
+  @override
+  String get invoiceEInvoiceFixIdentity =>
+      'Rechtliche Identität vervollständigen';
+
+  @override
+  String get legalIdentityTitle => 'Rechtliche Identität & E-Rechnung';
+
+  @override
+  String get legalIdentitySubtitle =>
+      'Steuerregime und Registernummern — von der E-Rechnung verlangt';
+
+  @override
+  String get legalIdentityIntro =>
+      'Was eine EN-16931-E-Rechnung über dich aussagen muss. Bereits ausgestellte Rechnungen behalten die Identität, mit der sie signiert wurden.';
+
+  @override
+  String get legalIdentityRegime => 'Steuerregime';
+
+  @override
+  String get legalIdentityRegimeNotSubject =>
+      'Nicht der Umsatzsteuer unterliegend';
+
+  @override
+  String get legalIdentityRegimeExempt =>
+      'Umsatzsteuerfrei (Kleinunternehmerregelung)';
+
+  @override
+  String get legalIdentityRegimeVatRegistered =>
+      'Umsatzsteuerpflichtig (berechnet USt.)';
+
+  @override
+  String get legalIdentityRegimeHint =>
+      'Das Regime entscheidet, welche Nummer die Norm verlangt: eine Registernummer außerhalb der Umsatzsteuer, eine USt-IdNr. bei Steuerbefreiung.';
+
+  @override
+  String get legalIdentityVatId => 'Umsatzsteuer-ID';
+
+  @override
+  String get legalIdentityLegalId => 'Registernummer';
+
+  @override
+  String get legalIdentityExemptionReason => 'Grund der Steuerbefreiung';
+
+  @override
+  String get legalIdentityStreet => 'Straße';
+
+  @override
+  String get legalIdentityCity => 'Stadt';
+
+  @override
+  String get legalIdentityPostalCode => 'Postleitzahl';
+
+  @override
+  String get legalIdentitySaved => 'Rechtliche Identität gespeichert.';
+
+  @override
+  String get legalIdentityVatWarning =>
+      'DesKilo rechnet die Umsatzsteuer noch nicht pro Position: Mit diesem Regime bleibt der XML-Export deaktiviert. Das PDF ist nicht betroffen.';
+
+  @override
+  String get addressCountryLabel => 'Land';
+
+  @override
+  String get addressVatIdLabel =>
+      'Umsatzsteuer-ID (wenn du als Unternehmen abrechnest)';
+
+  @override
+  String get invoiceProformaAction => 'Proforma-Rechnung';
+
+  @override
+  String get invoicePdfProforma => 'Proforma';
+
+  @override
+  String get invoiceProformaShared => 'Proforma geteilt.';
+
+  @override
+  String get invoiceProformaNothing =>
+      'Für diesen Monat wurde nichts erfasst — keine Proforma zu senden.';
+
+  @override
+  String get invoicePdfCopy => 'Kopie';
+
+  @override
+  String get invoiceStatusPartiallyPaid => 'Teilweise bezahlt';
+
+  @override
+  String get invoiceRegisterTitle => 'Rechnungsregister';
+
+  @override
+  String get invoiceRegisterDate => 'Datum';
+
+  @override
+  String get invoiceRegisterName => 'Name';
+
+  @override
+  String get invoiceRegisterAmount => 'Betrag';
+
+  @override
+  String get invoiceRegisterTotal => 'Gesamt';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override
@@ -1852,6 +2087,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get paymentMethodWise => 'Wise';
+
+  @override
+  String get moneyPaymentDateLabel => 'Zahlungsdatum';
+
+  @override
+  String get moneyPaymentPeriodLabel => 'Gilt für';
 
   @override
   String get planNoLevels => 'Der Workspace hat noch keinen Plan.';

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:pdf/pdf.dart';
@@ -16,6 +17,9 @@ class InvoicePdfStrings {
     required this.total,
     required this.signature,
     required this.voided,
+    this.voidedWatermark = '',
+    this.proforma = '',
+    this.copy = '',
     required this.replaces,
     required this.description,
     required this.charges,
@@ -38,6 +42,19 @@ class InvoicePdfStrings {
 
   /// Banner on an invoice tagged erroneous (0061).
   final String voided;
+
+  /// ONE word for the diagonal watermark of an erroneous invoice — the
+  /// banner's sentence is too long to read across a page. '' = no
+  /// watermark (kept optional so older callers still compile).
+  final String voidedWatermark;
+
+  /// The word a PROFORMA document carries, in its header and across the
+  /// page. Only read when [buildInvoicePdf] is asked for a proforma.
+  final String proforma;
+
+  /// The word stamped across a COPY — what a member renders of an invoice
+  /// they did not issue. Only read when [buildInvoicePdf] is asked for one.
+  final String copy;
 
   /// Label before the replaced invoice's number on a replacement (0061).
   final String replaces;
@@ -66,6 +83,14 @@ const PdfColor _accent = PdfColor.fromInt(0xFFD32F2F);
 const PdfColor _ink = PdfColors.blueGrey900;
 const PdfColor _muted = PdfColors.blueGrey600;
 const PdfColor _hairline = PdfColors.blueGrey200;
+
+/// Light grey of the erroneous watermark. Painted at half opacity OVER
+/// the content: as a background it disappeared behind the billed-to card
+/// and the period box, which swallowed half the word. Over white it lands
+/// at the same light grey; over a figure it only greys the stroke, so
+/// every amount stays readable.
+const PdfColor _watermark = PdfColors.grey400;
+const double _watermarkOpacity = 0.5;
 const PdfColor _zebra = PdfColor.fromInt(0xFFF6F7F9);
 
 /// The archive PDF of one invoice — professional layout (field
@@ -84,12 +109,31 @@ Future<Uint8List> buildInvoicePdf({
   required String dateLabel,
   required pw.Font baseFont,
   required pw.Font boldFont,
+  /// What the invoice COVERS, in words ('July 2026'). The stored
+  /// [Invoice.title] is the raw period ('2026-07'), which no reader should
+  /// have to decode; empty falls back to it (legacy 0060 free-form titles).
+  String periodLabel = '',
+  /// Renders the SAME figures as a proforma: a quote for a month, not a
+  /// document of record. It carries no signature (there is nothing to
+  /// certify), says PROFORMA where an invoice says its number, and wears
+  /// the same diagonal watermark so the two can never be confused on a
+  /// desk. An issued invoice can also be re-rendered this way — as a
+  /// payment request that does not pass for the original.
+  bool proforma = false,
+  /// Stamps the render as a duplicate: the issuer holds the original, the
+  /// member re-renders it on demand. Ignored on a proforma (which is not a
+  /// copy of anything) and on an erroneous invoice (whose own stamp wins).
+  bool copy = false,
 }) async {
   final doc = pw.Document();
   final theme = pw.ThemeData.withFont(base: baseFont, bold: boldFont);
   // Composed outside the widget calls (HARD RULE #1 lints inline
   // literals).
-  final numberLine = '${strings.invoiceTitle} ${invoice.number}';
+  final numberLine = proforma
+      ? (invoice.number.isEmpty
+          ? strings.proforma
+          : '${strings.proforma} · ${invoice.number}')
+      : '${strings.invoiceTitle} ${invoice.number}';
   final issuedOnLine = '${strings.issuedOn} $dateLabel';
   final issuedByLine = '${strings.issuedBy} ${invoice.issuerName}';
   final replacesLine = '${strings.replaces} ${invoice.replacesNumber}';
@@ -119,11 +163,50 @@ Future<Uint8List> buildInvoicePdf({
                     bold ? pw.FontWeight.bold : pw.FontWeight.normal)),
       );
 
+  // An erroneous invoice must be unmistakable even at arm's length, or
+  // photocopied, or seen upside down on someone's desk (0071): the word
+  // runs across the whole sheet, diagonally, BEHIND the content — every
+  // page of it, annex included.
+  final watermark = proforma
+      ? strings.proforma.toUpperCase()
+      : invoice.isVoided && strings.voidedWatermark.isNotEmpty
+          ? strings.voidedWatermark.toUpperCase()
+          : copy
+              ? strings.copy.toUpperCase()
+              : '';
+  // Its size follows its LENGTH: 'ERRATA' and 'FEHLERHAFT' must both land
+  // inside the sheet. (The package's own Watermark scales to the rotated
+  // bounding box it computes, which runs the ends off the corners.)
+  final markSize = math.min(120.0, 820 / math.max(watermark.length, 1));
+
   doc.addPage(
     pw.MultiPage(
-      pageFormat: PdfPageFormat.a4,
-      theme: theme,
-      margin: const pw.EdgeInsets.fromLTRB(48, 44, 48, 44),
+      pageTheme: pw.PageTheme(
+        pageFormat: PdfPageFormat.a4,
+        theme: theme,
+        margin: const pw.EdgeInsets.fromLTRB(48, 44, 48, 44),
+        buildForeground: watermark.isEmpty
+            ? null
+            : (context) => pw.FullPage(
+                  ignoreMargins: true,
+                  child: pw.Opacity(
+                    opacity: _watermarkOpacity,
+                    child: pw.Center(
+                      child: pw.Transform.rotate(
+                        angle: math.pi / 4,
+                        child: pw.Text(
+                          watermark,
+                          style: pw.TextStyle(
+                            fontSize: markSize,
+                            color: _watermark,
+                            fontWeight: pw.FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+      ),
       footer: (context) => pw.Container(
         alignment: pw.Alignment.centerRight,
         padding: const pw.EdgeInsets.only(top: 8),
@@ -182,7 +265,7 @@ Future<Uint8List> buildInvoicePdf({
             height: 2,
             color: _accent),
         // ── Erroneous banner (0061) ───────────────────────────────
-        if (invoice.isVoided)
+        if (invoice.isVoided && !proforma)
           pw.Container(
             margin: const pw.EdgeInsets.only(bottom: 12),
             padding:
@@ -236,7 +319,8 @@ Future<Uint8List> buildInvoicePdf({
                 border: pw.Border.all(color: _hairline),
                 borderRadius: const pw.BorderRadius.all(pw.Radius.circular(4)),
               ),
-              child: pw.Text(invoice.title,
+              child: pw.Text(
+                  periodLabel.isEmpty ? invoice.title : periodLabel,
                   style: pw.TextStyle(
                       fontSize: 12,
                       fontWeight: pw.FontWeight.bold,
@@ -450,6 +534,9 @@ Future<Uint8List> buildInvoicePdf({
         ],
         pw.SizedBox(height: 24),
         // ── Digital signature ─────────────────────────────────────
+        // A proforma has none: nothing was issued, so there is nothing to
+        // fingerprint.
+        if (!proforma)
         pw.Container(
           padding: const pw.EdgeInsets.only(top: 6),
           decoration: const pw.BoxDecoration(
