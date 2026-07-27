@@ -2924,6 +2924,126 @@ abstract class AppLocalizations {
   /// **'Total'**
   String get invoiceRegisterTotal;
 
+  /// E-invoice sheet: the hybrid PDF+XML document (0073)
+  ///
+  /// In en, this message translates to:
+  /// **'Download Factur-X (PDF)'**
+  String get invoiceFacturXDownload;
+
+  /// E-invoice sheet: share the hybrid document
+  ///
+  /// In en, this message translates to:
+  /// **'Share Factur-X (PDF)'**
+  String get invoiceFacturXShare;
+
+  /// E-invoice sheet: what the hybrid document is and why it is the default
+  ///
+  /// In en, this message translates to:
+  /// **'One file: the invoice a human reads, with the machine-readable XML inside it. This is what most platforms expect.'**
+  String get invoiceFacturXExplain;
+
+  /// E-invoice sheet: post the document to the platform (0073)
+  ///
+  /// In en, this message translates to:
+  /// **'Send to the platform'**
+  String get invoiceSendAction;
+
+  /// Snackbar: the platform took the document
+  ///
+  /// In en, this message translates to:
+  /// **'Sent — the platform accepted it.'**
+  String get invoiceSendAccepted;
+
+  /// Snackbar: the platform refused it
+  ///
+  /// In en, this message translates to:
+  /// **'The platform refused it.'**
+  String get invoiceSendRejected;
+
+  /// Detail sheet: when it left and what came back
+  ///
+  /// In en, this message translates to:
+  /// **'Sent {date} · {status}'**
+  String invoiceSentOn(String date, String status);
+
+  /// Transmission status word
+  ///
+  /// In en, this message translates to:
+  /// **'accepted'**
+  String get invoiceSendStatusAccepted;
+
+  /// Transmission status word
+  ///
+  /// In en, this message translates to:
+  /// **'rejected'**
+  String get invoiceSendStatusRejected;
+
+  /// Transmission status word
+  ///
+  /// In en, this message translates to:
+  /// **'not delivered'**
+  String get invoiceSendStatusFailed;
+
+  /// Owner screen: the e-invoicing platform credentials
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoicing platform'**
+  String get einvoiceConfigTitle;
+
+  /// Owner screen intro
+  ///
+  /// In en, this message translates to:
+  /// **'Where DesKilo posts your invoices. Any platform that accepts an upload with a token works — a plateforme agréée, a Peppol access point, a national platform. The token is stored server-side and never comes back out.'**
+  String get einvoiceConfigIntro;
+
+  /// Field label: the upload URL
+  ///
+  /// In en, this message translates to:
+  /// **'Upload URL'**
+  String get einvoiceConfigEndpoint;
+
+  /// Field label: the credential
+  ///
+  /// In en, this message translates to:
+  /// **'Token or credential'**
+  String get einvoiceConfigToken;
+
+  /// Field label: which header carries the token
+  ///
+  /// In en, this message translates to:
+  /// **'Auth header (default Authorization)'**
+  String get einvoiceConfigHeader;
+
+  /// Field label: the multipart field name
+  ///
+  /// In en, this message translates to:
+  /// **'File field name (default file)'**
+  String get einvoiceConfigField;
+
+  /// Snackbar after saving the platform
+  ///
+  /// In en, this message translates to:
+  /// **'Platform saved.'**
+  String get einvoiceConfigSaved;
+
+  /// Snackbar after forgetting the platform
+  ///
+  /// In en, this message translates to:
+  /// **'Platform removed.'**
+  String get einvoiceConfigCleared;
+
+  /// Button: forget the platform
+  ///
+  /// In en, this message translates to:
+  /// **'Remove the platform'**
+  String get einvoiceConfigClear;
+
+  /// Shown instead of the stored token
+  ///
+  /// In en, this message translates to:
+  /// **'A token is stored (type a new one to replace it).'**
+  String get einvoiceConfigTokenSet;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -231,7 +232,19 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               ),
             ),
           ]),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: AppSpacing.md),
+          // The other half of the same question: who receives the file.
+          ListTile(
+            key: const ValueKey('legal-identity-platform'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.cloud_upload_outlined),
+            title: Text(
+              l10n?.einvoiceConfigTitle ?? 'E-invoicing platform',
+            ),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/einvoice-config'),
+          ),
+          const SizedBox(height: AppSpacing.md),
           FilledButton(
             key: const ValueKey('legal-identity-save'),
             onPressed: _saving ? null : _save,

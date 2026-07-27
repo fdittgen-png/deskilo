@@ -598,6 +598,157 @@ final class InvoiceRemindersProvider
 
 String _$invoiceRemindersHash() => r'5528bee535a265ed0f9ba1da6ee36544cc3a428c';
 
+/// Whether this workspace can SEND an e-invoice (0073) — the affordance
+/// only shows when the owner has configured a platform and the function is
+/// deployed.
+
+@ProviderFor(eInvoiceGateway)
+final eInvoiceGatewayProvider = EInvoiceGatewayProvider._();
+
+/// Whether this workspace can SEND an e-invoice (0073) — the affordance
+/// only shows when the owner has configured a platform and the function is
+/// deployed.
+
+final class EInvoiceGatewayProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<EInvoiceGatewayConfig>,
+          EInvoiceGatewayConfig,
+          FutureOr<EInvoiceGatewayConfig>
+        >
+    with
+        $FutureModifier<EInvoiceGatewayConfig>,
+        $FutureProvider<EInvoiceGatewayConfig> {
+  /// Whether this workspace can SEND an e-invoice (0073) — the affordance
+  /// only shows when the owner has configured a platform and the function is
+  /// deployed.
+  EInvoiceGatewayProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'eInvoiceGatewayProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$eInvoiceGatewayHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<EInvoiceGatewayConfig> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<EInvoiceGatewayConfig> create(Ref ref) {
+    return eInvoiceGateway(ref);
+  }
+}
+
+String _$eInvoiceGatewayHash() => r'92f62c9e97f81e9a65f6ce84a83fe9958829651f';
+
+/// The owner-visible state of the platform credentials (0071): non-secret
+/// fields plus the NAMES of the secrets that are set.
+
+@ProviderFor(eInvoiceStatus)
+final eInvoiceStatusProvider = EInvoiceStatusProvider._();
+
+/// The owner-visible state of the platform credentials (0071): non-secret
+/// fields plus the NAMES of the secrets that are set.
+
+final class EInvoiceStatusProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<EInvoiceProviderStatus>,
+          EInvoiceProviderStatus,
+          FutureOr<EInvoiceProviderStatus>
+        >
+    with
+        $FutureModifier<EInvoiceProviderStatus>,
+        $FutureProvider<EInvoiceProviderStatus> {
+  /// The owner-visible state of the platform credentials (0071): non-secret
+  /// fields plus the NAMES of the secrets that are set.
+  EInvoiceStatusProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'eInvoiceStatusProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$eInvoiceStatusHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<EInvoiceProviderStatus> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<EInvoiceProviderStatus> create(Ref ref) {
+    return eInvoiceStatus(ref);
+  }
+}
+
+String _$eInvoiceStatusHash() => r'3003ae3fe1a9d6dc1dc7d13cd5ab0c675cb27557';
+
+/// invoiceId → its latest transmission (0071), for the detail sheet's
+/// "sent on / accepted by" line.
+
+@ProviderFor(invoiceTransmissions)
+final invoiceTransmissionsProvider = InvoiceTransmissionsProvider._();
+
+/// invoiceId → its latest transmission (0071), for the detail sheet's
+/// "sent on / accepted by" line.
+
+final class InvoiceTransmissionsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, InvoiceTransmission>>,
+          Map<String, InvoiceTransmission>,
+          FutureOr<Map<String, InvoiceTransmission>>
+        >
+    with
+        $FutureModifier<Map<String, InvoiceTransmission>>,
+        $FutureProvider<Map<String, InvoiceTransmission>> {
+  /// invoiceId → its latest transmission (0071), for the detail sheet's
+  /// "sent on / accepted by" line.
+  InvoiceTransmissionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'invoiceTransmissionsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$invoiceTransmissionsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, InvoiceTransmission>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, InvoiceTransmission>> create(Ref ref) {
+    return invoiceTransmissions(ref);
+  }
+}
+
+String _$invoiceTransmissionsHash() =>
+    r'14674c21ad83c1552830a9c8a4d19a680b33c689';
+
 /// The invoicing overview (issuers only — callers gate on canIssue).
 ///
 ///  * TO INVOICE: every active non-kiosk member whose PREVIOUS month

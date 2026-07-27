@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'einvoice_gateway.dart';
 import 'fee_band.dart';
 
 import 'invoice.dart';import 'ledger_entry.dart';
@@ -210,6 +211,44 @@ abstract class MoneyRepository {
 
   /// Owner-only: remove a provider's server credentials entirely.
   Future<void> clearPaymentProvider(String workspaceId, PaymentProvider provider);
+
+  /// Can this workspace SEND an e-invoice, and what does it still need
+  /// (0073)? An undeployed function maps to
+  /// [EInvoiceGatewayConfig.notConfigured], never a throw — the app hides
+  /// the affordance rather than offering a button that cannot work.
+  Future<EInvoiceGatewayConfig> fetchEInvoiceGateway(String workspaceId);
+
+  /// Posts an issued invoice's document to the workspace's e-invoicing
+  /// platform (Edge Function `send-e-invoice`). The CLIENT builds the
+  /// bytes with the same builder the download uses; the function holds the
+  /// credential and records the attempt.
+  Future<EInvoiceSubmission> sendEInvoice({
+    required String workspaceId,
+    required String invoiceId,
+    required String fileName,
+    required String mimeType,
+    required List<int> bytes,
+  });
+
+  /// invoiceId → its LATEST transmission (0071); invoices never sent are
+  /// absent. Admin-readable.
+  Future<Map<String, InvoiceTransmission>> fetchInvoiceTransmissions(
+    String workspaceId,
+  );
+
+  /// Owner-only: merge the platform credentials (blank fields keep their
+  /// stored value, so an endpoint changes without re-typing a token).
+  Future<void> setEInvoiceCredentials(
+    String workspaceId,
+    Map<String, String> config,
+  );
+
+  /// Owner-only: forget the platform entirely.
+  Future<void> clearEInvoiceCredentials(String workspaceId);
+
+  /// Owner-only: the non-secret fields as stored plus the NAMES of the
+  /// secrets that are set — never a secret's value.
+  Future<EInvoiceProviderStatus> fetchEInvoiceStatus(String workspaceId);
 
   /// Starts an online payment with [provider] for [amountCents] of the
   /// member's bill (docs/design/payments-integration.md). Returns the

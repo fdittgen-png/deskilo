@@ -311,5 +311,35 @@
   "invoiceRegisterDate": "Datum",
   "invoiceRegisterName": "Name",
   "invoiceRegisterAmount": "Betrag",
-  "invoiceRegisterTotal": "Gesamt"
+  "invoiceRegisterTotal": "Gesamt",
+  "invoiceFacturXDownload": "Factur-X (PDF) herunterladen",
+  "invoiceFacturXShare": "Factur-X (PDF) teilen",
+  "invoiceFacturXExplain": "Eine Datei: die Rechnung für Menschen, mit dem maschinenlesbaren XML darin. Das erwarten die meisten Plattformen.",
+  "invoiceSendAction": "An die Plattform senden",
+  "invoiceSendAccepted": "Gesendet — die Plattform hat sie angenommen.",
+  "invoiceSendRejected": "Die Plattform hat sie abgelehnt.",
+  "invoiceSentOn": "Gesendet am {date} · {status}",
+  "@invoiceSentOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceSendStatusAccepted": "angenommen",
+  "invoiceSendStatusRejected": "abgelehnt",
+  "invoiceSendStatusFailed": "nicht übermittelt",
+  "einvoiceConfigTitle": "E-Rechnungs-Plattform",
+  "einvoiceConfigIntro": "Wohin DesKilo deine Rechnungen sendet. Jede Plattform, die einen Upload mit Token annimmt, funktioniert — eine zugelassene Plattform, ein Peppol Access Point, eine nationale Plattform. Das Token liegt serverseitig und kommt nie zurück.",
+  "einvoiceConfigEndpoint": "Upload-URL",
+  "einvoiceConfigToken": "Token oder Zugangsdaten",
+  "einvoiceConfigHeader": "Auth-Header (Standard Authorization)",
+  "einvoiceConfigField": "Feldname der Datei (Standard file)",
+  "einvoiceConfigSaved": "Plattform gespeichert.",
+  "einvoiceConfigCleared": "Plattform entfernt.",
+  "einvoiceConfigClear": "Plattform entfernen",
+  "einvoiceConfigTokenSet": "Ein Token ist gespeichert (neues eingeben, um es zu ersetzen)."
 }

@@ -105,6 +105,8 @@ class InvoicesScreen extends ConsumerWidget {
         isEu: isEu,
         reminder: reminders[entry.invoice.id],
         showMemberName: showMemberNames,
+        transmission:
+            ref.read(invoiceTransmissionsProvider).value?[entry.invoice.id],
       );
       if (action == null || !context.mounted) return;
       await runInvoiceAction(

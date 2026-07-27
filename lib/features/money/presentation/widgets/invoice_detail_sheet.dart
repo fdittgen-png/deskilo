@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/einvoice_gateway.dart';
 import '../../domain/invoice.dart';
 import '../invoice_line_text.dart';
 import '../invoice_status.dart';
@@ -38,6 +39,7 @@ Future<InvoiceAction?> showInvoiceDetailSheet(
   ({int count, DateTime last})? reminder,
   String replacedByNumber = '',
   bool showMemberName = false,
+  InvoiceTransmission? transmission,
 }) =>
     showModalBottomSheet<InvoiceAction>(
       context: context,
@@ -52,6 +54,7 @@ Future<InvoiceAction?> showInvoiceDetailSheet(
         reminder: reminder,
         replacedByNumber: replacedByNumber,
         showMemberName: showMemberName,
+        transmission: transmission,
       ),
     );
 
@@ -64,6 +67,7 @@ class _InvoiceDetailBody extends StatelessWidget {
     required this.reminder,
     required this.replacedByNumber,
     required this.showMemberName,
+    required this.transmission,
   });
 
   final Invoice invoice;
@@ -73,6 +77,9 @@ class _InvoiceDetailBody extends StatelessWidget {
   final ({int count, DateTime last})? reminder;
   final String replacedByNumber;
   final bool showMemberName;
+
+  /// The last attempt at posting this invoice to the platform (0073).
+  final InvoiceTransmission? transmission;
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +92,17 @@ class _InvoiceDetailBody extends StatelessWidget {
     );
     final status = invoiceLifecycleOf(invoice, match);
     final standingMatch = match != null && !match!.pending ? match : null;
+    final sent = transmission;
+    // The platform's answer, in the reader's language.
+    final sentStatus = switch (sent?.status) {
+      EInvoiceSubmissionStatus.accepted =>
+        l10n?.invoiceSendStatusAccepted ?? 'accepted',
+      EInvoiceSubmissionStatus.rejected =>
+        l10n?.invoiceSendStatusRejected ?? 'rejected',
+      EInvoiceSubmissionStatus.failed =>
+        l10n?.invoiceSendStatusFailed ?? 'not delivered',
+      null => '',
+    };
 
     Widget line(String text) => Padding(
           padding: const EdgeInsets.only(top: AppSpacing.xs),
@@ -193,6 +211,15 @@ class _InvoiceDetailBody extends StatelessWidget {
                     '${l10n?.invoiceRemindedLast(
                           dateFormat.format(reminder!.last),
                         ) ?? 'last ${dateFormat.format(reminder!.last)}'}'),
+              // Did it LEAVE, and what came back (0073).
+              if (sent != null)
+                line(l10n?.invoiceSentOn(
+                      dateFormat.format(sent.sentAt),
+                      sentStatus,
+                    ) ??
+                    'Sent ${dateFormat.format(sent.sentAt)} · $sentStatus'),
+              if (sent != null && sent.externalId.isNotEmpty)
+                line(sent.externalId),
               if (invoice.detailed)
                 line(l10n?.invoiceAnnexSummary(
                       invoice.detailLedger.length,

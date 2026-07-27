@@ -639,6 +639,36 @@
   "invoiceRegisterName": "Nombre",
   "invoiceRegisterAmount": "Importe",
   "invoiceRegisterTotal": "Total",
+  "invoiceFacturXDownload": "Descargar Factur-X (PDF)",
+  "invoiceFacturXShare": "Compartir Factur-X (PDF)",
+  "invoiceFacturXExplain": "Un solo archivo: la factura que lee una persona, con el XML legible por máquina dentro. Es lo que esperan la mayoría de las plataformas.",
+  "invoiceSendAction": "Enviar a la plataforma",
+  "invoiceSendAccepted": "Enviada — la plataforma la aceptó.",
+  "invoiceSendRejected": "La plataforma la rechazó.",
+  "invoiceSentOn": "Enviada el {date} · {status}",
+  "@invoiceSentOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceSendStatusAccepted": "aceptada",
+  "invoiceSendStatusRejected": "rechazada",
+  "invoiceSendStatusFailed": "no transmitida",
+  "einvoiceConfigTitle": "Plataforma de facturación electrónica",
+  "einvoiceConfigIntro": "Donde DesKilo deposita tus facturas. Sirve cualquier plataforma que acepte una subida con un token — una plataforma autorizada, un punto de acceso Peppol, una plataforma nacional. El token se guarda en el servidor y nunca sale.",
+  "einvoiceConfigEndpoint": "URL de subida",
+  "einvoiceConfigToken": "Token o credencial",
+  "einvoiceConfigHeader": "Cabecera de autenticación (Authorization por defecto)",
+  "einvoiceConfigField": "Nombre del campo de archivo (file por defecto)",
+  "einvoiceConfigSaved": "Plataforma guardada.",
+  "einvoiceConfigCleared": "Plataforma eliminada.",
+  "einvoiceConfigClear": "Eliminar la plataforma",
+  "einvoiceConfigTokenSet": "Hay un token guardado (escribe uno nuevo para reemplazarlo).",
   "eventTypeMemberJoin": "Nuevo miembro",
   "memberStatusPending": "Pendiente",
   "pendingApprovalTitle": "Esperando aprobación",

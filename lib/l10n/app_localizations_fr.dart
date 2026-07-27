@@ -1609,6 +1609,72 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceRegisterTotal => 'Total';
 
   @override
+  String get invoiceFacturXDownload => 'Télécharger le Factur-X (PDF)';
+
+  @override
+  String get invoiceFacturXShare => 'Partager le Factur-X (PDF)';
+
+  @override
+  String get invoiceFacturXExplain =>
+      'Un seul fichier : la facture qu\'un humain lit, avec le XML lisible par machine à l\'intérieur. C\'est ce qu\'attendent la plupart des plateformes.';
+
+  @override
+  String get invoiceSendAction => 'Envoyer à la plateforme';
+
+  @override
+  String get invoiceSendAccepted => 'Envoyée — la plateforme l’a acceptée.';
+
+  @override
+  String get invoiceSendRejected => 'La plateforme l’a refusée.';
+
+  @override
+  String invoiceSentOn(String date, String status) {
+    return 'Envoyée le $date · $status';
+  }
+
+  @override
+  String get invoiceSendStatusAccepted => 'acceptée';
+
+  @override
+  String get invoiceSendStatusRejected => 'refusée';
+
+  @override
+  String get invoiceSendStatusFailed => 'non transmise';
+
+  @override
+  String get einvoiceConfigTitle => 'Plateforme de facturation électronique';
+
+  @override
+  String get einvoiceConfigIntro =>
+      'Là où DesKilo dépose vos factures. Toute plateforme acceptant un envoi avec un jeton fonctionne — une plateforme agréée, un point d\'accès Peppol, une plateforme nationale. Le jeton est stocké côté serveur et n\'en ressort jamais.';
+
+  @override
+  String get einvoiceConfigEndpoint => 'URL de dépôt';
+
+  @override
+  String get einvoiceConfigToken => 'Jeton ou identifiant';
+
+  @override
+  String get einvoiceConfigHeader =>
+      'En-tête d’authentification (Authorization par défaut)';
+
+  @override
+  String get einvoiceConfigField => 'Nom du champ fichier (file par défaut)';
+
+  @override
+  String get einvoiceConfigSaved => 'Plateforme enregistrée.';
+
+  @override
+  String get einvoiceConfigCleared => 'Plateforme supprimée.';
+
+  @override
+  String get einvoiceConfigClear => 'Supprimer la plateforme';
+
+  @override
+  String get einvoiceConfigTokenSet =>
+      'Un jeton est enregistré (saisissez-en un nouveau pour le remplacer).';
+
+  @override
   String get eventTypeMemberJoin => 'Nouveau membre';
 
   @override

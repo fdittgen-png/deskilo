@@ -1,0 +1,199 @@
+// SPDX-License-Identifier: 0BSD
+//
+// send-e-invoice — posts an issued invoice to the workspace's e-invoicing
+// platform, so "Envoyer" sends instead of handing the user a file.
+//
+// The CLIENT builds the document (Factur-X PDF or EN 16931 XML) with the
+// same builders that produce the download, and posts the bytes here; this
+// function holds the credential and does the transmission. That split is
+// deliberate: the platform token must never reach a phone, and the
+// document must never be rebuilt from a second, divergent code path.
+//
+// Providers: 'generic' — any platform that accepts an HTTP upload with a
+// bearer/basic credential (that covers most plateformes agréées, Peppol
+// access points and clearance-platform upload APIs). Named adapters can
+// join REQUIRED/submit() without touching the client.
+//
+// Every attempt is logged to invoice_transmissions, accepted or not: a
+// document that may or may not have left is worse than one that failed.
+
+import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
+
+const json = (body: unknown, status = 200) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+
+/** Fields the generic adapter needs before it can send anything. */
+const REQUIRED = ["endpoint", "auth_value"];
+
+type Config = Record<string, string>;
+
+async function sha256(bytes: Uint8Array): Promise<string> {
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return [...new Uint8Array(digest)]
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+/** POSTs the document as multipart/form-data — the shape upload endpoints
+ * agree on. `auth_header` defaults to Authorization, `field_name` to file. */
+async function submitGeneric(
+  cfg: Config,
+  fileName: string,
+  mimeType: string,
+  bytes: Uint8Array,
+): Promise<{ status: "accepted" | "rejected"; externalId: string; detail: string }> {
+  const form = new FormData();
+  form.append(
+    cfg.field_name || "file",
+    new Blob([bytes], { type: mimeType }),
+    fileName,
+  );
+  const res = await fetch(cfg.endpoint, {
+    method: "POST",
+    headers: { [cfg.auth_header || "Authorization"]: cfg.auth_value },
+    body: form,
+  });
+  const text = await res.text();
+  if (!res.ok) {
+    return {
+      status: "rejected",
+      externalId: "",
+      detail: `${res.status} ${text}`.slice(0, 500),
+    };
+  }
+  // Most platforms answer JSON with an id under one of these names.
+  let externalId = "";
+  try {
+    const body = JSON.parse(text);
+    externalId = String(
+      body.id ?? body.documentId ?? body.document_id ?? body.guid ??
+        body.transmissionId ?? "",
+    );
+  } catch {
+    // A plain-text acknowledgement is still an acknowledgement.
+    externalId = text.trim().slice(0, 120);
+  }
+  return { status: "accepted", externalId, detail: text.slice(0, 500) };
+}
+
+Deno.serve(async (req) => {
+  if (req.method !== "POST") return json({ error: "method not allowed" }, 405);
+
+  const url = Deno.env.get("SUPABASE_URL")!;
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+  const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
+  const authorization = req.headers.get("Authorization") ?? "";
+
+  let payload: {
+    workspace_id?: string;
+    invoice_id?: string;
+    file_name?: string;
+    mime_type?: string;
+    content_base64?: string;
+    action?: string;
+  };
+  try {
+    payload = await req.json();
+  } catch {
+    return json({ error: "invalid body" }, 400);
+  }
+  const workspaceId = payload.workspace_id ?? "";
+  if (!workspaceId) return json({ error: "workspace_id required" }, 400);
+
+  const admin: SupabaseClient = createClient(url, serviceKey);
+  const { data: credentials } = await admin
+    .from("einvoice_credentials")
+    .select("provider, config")
+    .eq("workspace_id", workspaceId)
+    .maybeSingle();
+  const cfg = (credentials?.config ?? {}) as Config;
+  const missing = REQUIRED.filter((field) => !cfg[field]);
+
+  // The client asks first whether sending is even possible, so it can hide
+  // the affordance instead of offering a button that cannot work.
+  if (payload.action === "config") {
+    return json({
+      configured: missing.length === 0,
+      provider: credentials?.provider ?? "generic",
+      missing,
+    });
+  }
+
+  if (missing.length > 0) {
+    return json({ error: "not_configured", missing }, 409);
+  }
+
+  // WHO is asking: the caller's own JWT, checked against the workspace.
+  // The service role must never send on behalf of a stranger.
+  const caller = createClient(url, anonKey, {
+    global: { headers: { Authorization: authorization } },
+  });
+  const { data: me } = await caller
+    .from("members")
+    .select("id, is_admin, is_owner, status")
+    .eq("workspace_id", workspaceId)
+    .maybeSingle();
+  if (!me || me.status !== "active" || !(me.is_admin || me.is_owner)) {
+    return json({ error: "not an admin of this workspace" }, 403);
+  }
+
+  const invoiceId = payload.invoice_id ?? "";
+  const content = payload.content_base64 ?? "";
+  if (!invoiceId || !content) {
+    return json({ error: "invoice_id and content_base64 required" }, 400);
+  }
+  const { data: invoice } = await admin
+    .from("invoices")
+    .select("id, number, workspace_id")
+    .eq("id", invoiceId)
+    .maybeSingle();
+  if (!invoice || invoice.workspace_id !== workspaceId) {
+    return json({ error: "unknown invoice" }, 404);
+  }
+
+  const bytes = Uint8Array.from(atob(content), (c) => c.charCodeAt(0));
+  const hash = await sha256(bytes);
+  const fileName = payload.file_name || `${invoice.number}.pdf`;
+  const mimeType = payload.mime_type || "application/pdf";
+
+  let outcome: {
+    status: "accepted" | "rejected" | "failed";
+    externalId: string;
+    detail: string;
+  };
+  try {
+    outcome = await submitGeneric(cfg, fileName, mimeType, bytes);
+  } catch (error) {
+    outcome = {
+      status: "failed",
+      externalId: "",
+      detail: String(error).slice(0, 500),
+    };
+  }
+
+  const { data: profile } = await admin
+    .from("profiles")
+    .select("display_name")
+    .eq("id", (await caller.auth.getUser()).data.user?.id ?? "")
+    .maybeSingle();
+
+  await admin.from("invoice_transmissions").insert({
+    workspace_id: workspaceId,
+    invoice_id: invoiceId,
+    provider: credentials?.provider ?? "generic",
+    status: outcome.status,
+    external_id: outcome.externalId,
+    document_hash: hash,
+    detail: outcome.detail,
+    by_name: profile?.display_name ?? "",
+  });
+
+  return json({
+    status: outcome.status,
+    external_id: outcome.externalId,
+    detail: outcome.detail,
+  }, outcome.status === "accepted" ? 200 : 502);
+});

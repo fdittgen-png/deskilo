@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
@@ -376,6 +377,89 @@ class FakeMoneyRepository implements MoneyRepository {
     ));
     return 'evt-payment-${recordedPayments.length}';
   }
+
+  // ── e-invoice transmission (0071/0073) ──────────────────────────────
+
+  /// What the fake platform answers. Unconfigured by default, so tests
+  /// that do not care never see a Send button.
+  EInvoiceGatewayConfig einvoiceGateway = EInvoiceGatewayConfig.notConfigured;
+
+  /// The next submission's outcome, and what was actually posted.
+  EInvoiceSubmissionStatus einvoiceOutcome =
+      EInvoiceSubmissionStatus.accepted;
+  final sentEInvoices = <({String invoiceId, String fileName, int bytes})>[];
+  final transmissions = <String, InvoiceTransmission>{};
+  final einvoiceConfig = <String, String>{};
+
+  @override
+  Future<EInvoiceGatewayConfig> fetchEInvoiceGateway(
+    String workspaceId,
+  ) async =>
+      einvoiceGateway;
+
+  @override
+  Future<EInvoiceSubmission> sendEInvoice({
+    required String workspaceId,
+    required String invoiceId,
+    required String fileName,
+    required String mimeType,
+    required List<int> bytes,
+  }) async {
+    sentEInvoices.add((
+      invoiceId: invoiceId,
+      fileName: fileName,
+      bytes: bytes.length,
+    ));
+    transmissions[invoiceId] = InvoiceTransmission(
+      invoiceId: invoiceId,
+      status: einvoiceOutcome,
+      sentAt: DateTime.now(),
+      externalId: 'platform-${sentEInvoices.length}',
+    );
+    return EInvoiceSubmission(
+      status: einvoiceOutcome,
+      externalId: 'platform-${sentEInvoices.length}',
+      detail: einvoiceOutcome == EInvoiceSubmissionStatus.accepted
+          ? ''
+          : 'the platform said no',
+    );
+  }
+
+  @override
+  Future<Map<String, InvoiceTransmission>> fetchInvoiceTransmissions(
+    String workspaceId,
+  ) async =>
+      Map.of(transmissions);
+
+  @override
+  Future<void> setEInvoiceCredentials(
+    String workspaceId,
+    Map<String, String> config,
+  ) async {
+    // Mirrors the RPC: blank fields keep their stored value.
+    config.forEach((key, value) {
+      if (value.trim().isNotEmpty) einvoiceConfig[key] = value.trim();
+    });
+  }
+
+  @override
+  Future<void> clearEInvoiceCredentials(String workspaceId) async =>
+      einvoiceConfig.clear();
+
+  @override
+  Future<EInvoiceProviderStatus> fetchEInvoiceStatus(
+    String workspaceId,
+  ) async =>
+      EInvoiceProviderStatus(
+        configured: einvoiceConfig.isNotEmpty,
+        fields: {
+          for (final entry in einvoiceConfig.entries)
+            if (entry.key != 'auth_value') entry.key: entry.value,
+        },
+        secretsSet: [
+          if (einvoiceConfig.containsKey('auth_value')) 'auth_value',
+        ],
+      );
 
   /// Mirrors the migration's default seed: (0,25] Flex-like, (25,50]
   /// Half-like, (50,100] Full-like (#128).

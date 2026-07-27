@@ -228,6 +228,77 @@ void main() {
   });
 
   test(
+      'FACTUR-X (0073): the PDF becomes PDF/A-3 and carries the CII invoice '
+      'as factur-x.xml — one file for both readers', () async {
+    final invoice = Invoice(
+      id: 'inv-4',
+      workspaceId: 'ws-1',
+      memberId: 'member-1',
+      number: 'INV-2026-0006',
+      issuedAt: DateTime(2026, 7, 27),
+      period: '2026-06',
+      title: '2026-06',
+      lines: const [
+        InvoiceLine(kind: 'subscription', label: '100', amountCents: 25000),
+      ],
+      totalCents: 25000,
+      currency: 'EUR',
+      memberName: 'Ana Martin',
+      memberAddress: '1 Rue Test, 34120 Pezenas',
+      workspaceName: 'Test Space',
+      workspaceAddress: '2 Place du Marche, 34120 Pezenas',
+      issuerName: 'Flo',
+      signature: 'b' * 64,
+    );
+    const xml = '<rsm:CrossIndustryInvoice>probe</rsm:CrossIndustryInvoice>';
+
+    final bytes = await buildInvoicePdf(
+      invoice: invoice,
+      strings: _strings,
+      money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
+      lineText: (line) => invoiceLineText(null, line),
+      activityText: (entry) => annexEntryText(null, entry),
+      dateLabel: 'Jul 27, 2026',
+      facturXml: xml,
+      colorProfile: Uint8List.fromList(
+        File('assets/pdf/sRGB2014.icc').readAsBytesSync(),
+      ),
+      baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+    );
+
+    final raw = String.fromCharCodes(bytes);
+    expect(raw, contains('/EmbeddedFile'));
+    expect(raw, contains('factur-x.xml'),
+        reason: 'the format mandates that exact file name');
+    expect(raw, contains('AFRelationship'));
+    expect(raw, contains('/Alternative'));
+    expect(raw, contains(xml),
+        reason: 'the attachment is stored uncompressed and IS the invoice');
+    expect(raw, contains('<pdfaid:part>3</pdfaid:part>'),
+        reason: 'PDF/A-3 — Factur-X exists nowhere else');
+    expect(raw, contains('<fx:DocumentType>INVOICE</fx:DocumentType>'));
+    expect(raw, contains('EN 16931'),
+        reason: 'the declared conformance level, not a downgraded BASIC');
+    // The output intent PDF/A demands.
+    expect(raw, contains('/OutputIntent'));
+
+    // Without a colour profile it stays an ordinary PDF: no half-Factur-X.
+    final plain = await buildInvoicePdf(
+      invoice: invoice,
+      strings: _strings,
+      money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
+      lineText: (line) => invoiceLineText(null, line),
+      activityText: (entry) => annexEntryText(null, entry),
+      dateLabel: 'Jul 27, 2026',
+      facturXml: xml,
+      baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+    );
+    expect(String.fromCharCodes(plain), isNot(contains('factur-x.xml')));
+  });
+
+  test(
       'a PROFORMA carries the same figures with NO signature and its own '
       'diagonal stamp — a quote, not a document of record (0072)', () async {
     final invoice = Invoice(

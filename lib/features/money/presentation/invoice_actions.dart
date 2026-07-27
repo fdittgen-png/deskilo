@@ -23,6 +23,8 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../domain/e_invoice_routing.dart';
 import '../domain/invoice.dart';
 import '../domain/invoice_pdf.dart';
+import '../domain/einvoice_gateway.dart';
+import '../domain/invoice_cii.dart';
 import '../domain/invoice_ubl.dart';
 import '../domain/invoice_ubl_check.dart';
 import '../domain/ledger_entry.dart';
@@ -47,6 +49,8 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   Invoice invoice, {
   bool proforma = false,
   bool copy = false,
+  String facturXml = '',
+  Uint8List? colorProfile,
 }) async {
   final l10n = AppLocalizations.of(context);
   final currency = NumberFormat.simpleCurrency(name: invoice.currency);
@@ -95,6 +99,8 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     periodLabel: periodLabel,
     proforma: proforma,
     copy: copy,
+    facturXml: facturXml,
+    colorProfile: colorProfile,
     baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
     boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
   );
@@ -105,6 +111,109 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
           '${invoice.number.isEmpty ? '${invoice.memberName} $periodLabel' : invoice.number}')
       : safeFileSlug(invoice.number);
   return (bytes: bytes, fileName: '$stem.pdf');
+}
+
+/// FACTUR-X: one PDF that carries the EN 16931 invoice inside it (as CII,
+/// the syntax the format mandates). A human opens it and sees the invoice;
+/// a platform opens it and finds `factur-x.xml`. This is what French and
+/// German small businesses actually hand to their platform.
+Future<({List<int> bytes, String fileName})> buildFacturXFile(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice, {
+  required InvoiceParty seller,
+  required InvoiceParty buyer,
+  required String iban,
+}) async {
+  final l10n = AppLocalizations.of(context);
+  final xml = buildInvoiceCii(
+    invoice: invoice,
+    seller: seller,
+    buyer: buyer,
+    iban: iban,
+    lineText: (line) => invoiceLineText(l10n, line),
+  );
+  // PDF/A-3 cannot exist without an embedded output intent.
+  final icc = await rootBundle.load('assets/pdf/sRGB2014.icc');
+  if (!context.mounted) {
+    return (bytes: const <int>[], fileName: '');
+  }
+  final pdf = await buildInvoicePdfFile(
+    context,
+    invoice,
+    copy: _rendersCopy(ref),
+    facturXml: xml,
+    colorProfile: icc.buffer.asUint8List(),
+  );
+  return (
+    bytes: pdf.bytes,
+    fileName: '${safeFileSlug('facturx ${invoice.number}')}.pdf',
+  );
+}
+
+/// SENDS the invoice: builds the Factur-X document and posts it to the
+/// workspace's platform through the edge function, which holds the
+/// credential and records the attempt (0073). The document that leaves is
+/// byte-for-byte the one the download produces — one builder, no second
+/// truth.
+Future<void> sendEInvoice(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice, {
+  required InvoiceParty seller,
+  required InvoiceParty buyer,
+  required String iban,
+  required String workspaceId,
+}) async {
+  final l10n = AppLocalizations.of(context);
+  EInvoiceSubmission? result;
+  if (!await runGuarded(
+    context,
+    domain: 'money',
+    message: 'e-invoice submission failed',
+    errorText: l10n?.workspaceGenericError ??
+        'Something went wrong. Please try again.',
+    action: () async {
+      final file = await buildFacturXFile(
+        context,
+        ref,
+        invoice,
+        seller: seller,
+        buyer: buyer,
+        iban: iban,
+      );
+      if (file.fileName.isEmpty) return;
+      result = await ref.read(moneyRepositoryProvider).sendEInvoice(
+            workspaceId: workspaceId,
+            invoiceId: invoice.id,
+            fileName: file.fileName,
+            mimeType: 'application/pdf',
+            bytes: file.bytes,
+          );
+    },
+  )) {
+    return;
+  }
+  ref.invalidate(invoiceTransmissionsProvider);
+  if (!context.mounted) return;
+  final submission = result;
+  if (submission == null) return;
+  if (submission.accepted) {
+    AppSnack.success(
+      context,
+      l10n?.invoiceSendAccepted ?? 'Sent — the platform accepted it.',
+    );
+    return;
+  }
+  // The platform's own words beat a generic failure: they are what the
+  // owner has to act on.
+  AppSnack.error(
+    context,
+    submission.detail.isEmpty
+        ? (l10n?.invoiceSendRejected ?? 'The platform refused it.')
+        : '${l10n?.invoiceSendRejected ?? 'The platform refused it.'} '
+            '${submission.detail}',
+  );
 }
 
 /// Renders the month as a PROFORMA and hands it to the share sheet — the
@@ -391,15 +500,75 @@ Future<void> exportEInvoice(
     buyer: buyer,
   );
   final me = ref.read(myMemberProvider).value;
+  // AWAIT the probe: a cached `.value` is null on the first open, which
+  // would hide the Send button exactly when it is most wanted.
+  EInvoiceGatewayConfig gateway;
+  try {
+    gateway = await ref.read(eInvoiceGatewayProvider.future);
+  } catch (e, st) {
+    TraceLogger.instance.warn('money', 'e-invoice gateway probe failed',
+        error: e, stackTrace: st);
+    gateway = EInvoiceGatewayConfig.notConfigured;
+  }
+  if (!context.mounted) return;
   final export = await showEInvoiceSheet(
     context,
     route: route,
     readiness: readiness,
     canFixIdentity: me?.actsAsOwner ?? false,
+    // Only an issuer sends, and only when a platform is configured.
+    canSend: gateway.configured &&
+        (me?.actsAsOwner == true || me?.canAdminister == true),
   );
   if (export == null || !context.mounted) return;
   if (export == EInvoiceExport.fixIdentity) {
     context.push('/legal-identity');
+    return;
+  }
+  final l10nForFile = AppLocalizations.of(context);
+  if (export == EInvoiceExport.send) {
+    await sendEInvoice(
+      context,
+      ref,
+      invoice,
+      seller: seller,
+      buyer: buyer,
+      iban: workspaceIban(workspace),
+      workspaceId: workspace.id,
+    );
+    return;
+  }
+  if (export == EInvoiceExport.facturXDownload ||
+      export == EInvoiceExport.facturXShare) {
+    await runGuarded(
+      context,
+      domain: 'money',
+      message: 'factur-x export failed',
+      errorText: l10nForFile?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        final file = await buildFacturXFile(
+          context,
+          ref,
+          invoice,
+          seller: seller,
+          buyer: buyer,
+          iban: workspaceIban(workspace),
+        );
+        if (file.fileName.isEmpty) return;
+        final bytes = Uint8List.fromList(file.bytes);
+        if (export == EInvoiceExport.facturXShare) {
+          await ref.read(fileSharerProvider)(
+            bytes: bytes,
+            fileName: file.fileName,
+            mimeType: 'application/pdf',
+          );
+          return;
+        }
+        if (!context.mounted) return;
+        await _save(context, ref, bytes: bytes, fileName: file.fileName);
+      },
+    );
     return;
   }
   final l10n = AppLocalizations.of(context);

@@ -639,6 +639,36 @@
   "invoiceRegisterName": "Nom",
   "invoiceRegisterAmount": "Montant",
   "invoiceRegisterTotal": "Total",
+  "invoiceFacturXDownload": "Télécharger le Factur-X (PDF)",
+  "invoiceFacturXShare": "Partager le Factur-X (PDF)",
+  "invoiceFacturXExplain": "Un seul fichier : la facture qu'un humain lit, avec le XML lisible par machine à l'intérieur. C'est ce qu'attendent la plupart des plateformes.",
+  "invoiceSendAction": "Envoyer à la plateforme",
+  "invoiceSendAccepted": "Envoyée — la plateforme l’a acceptée.",
+  "invoiceSendRejected": "La plateforme l’a refusée.",
+  "invoiceSentOn": "Envoyée le {date} · {status}",
+  "@invoiceSentOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceSendStatusAccepted": "acceptée",
+  "invoiceSendStatusRejected": "refusée",
+  "invoiceSendStatusFailed": "non transmise",
+  "einvoiceConfigTitle": "Plateforme de facturation électronique",
+  "einvoiceConfigIntro": "Là où DesKilo dépose vos factures. Toute plateforme acceptant un envoi avec un jeton fonctionne — une plateforme agréée, un point d'accès Peppol, une plateforme nationale. Le jeton est stocké côté serveur et n'en ressort jamais.",
+  "einvoiceConfigEndpoint": "URL de dépôt",
+  "einvoiceConfigToken": "Jeton ou identifiant",
+  "einvoiceConfigHeader": "En-tête d’authentification (Authorization par défaut)",
+  "einvoiceConfigField": "Nom du champ fichier (file par défaut)",
+  "einvoiceConfigSaved": "Plateforme enregistrée.",
+  "einvoiceConfigCleared": "Plateforme supprimée.",
+  "einvoiceConfigClear": "Supprimer la plateforme",
+  "einvoiceConfigTokenSet": "Un jeton est enregistré (saisissez-en un nouveau pour le remplacer).",
   "eventTypeMemberJoin": "Nouveau membre",
   "memberStatusPending": "En attente",
   "pendingApprovalTitle": "En attente d'approbation",

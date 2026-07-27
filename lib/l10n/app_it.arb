@@ -639,6 +639,36 @@
   "invoiceRegisterName": "Nome",
   "invoiceRegisterAmount": "Importo",
   "invoiceRegisterTotal": "Totale",
+  "invoiceFacturXDownload": "Scarica Factur-X (PDF)",
+  "invoiceFacturXShare": "Condividi Factur-X (PDF)",
+  "invoiceFacturXExplain": "Un unico file: la fattura che legge una persona, con l'XML leggibile dalle macchine al suo interno. È ciò che si aspettano la maggior parte delle piattaforme.",
+  "invoiceSendAction": "Invia alla piattaforma",
+  "invoiceSendAccepted": "Inviata — la piattaforma l’ha accettata.",
+  "invoiceSendRejected": "La piattaforma l’ha rifiutata.",
+  "invoiceSentOn": "Inviata il {date} · {status}",
+  "@invoiceSentOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceSendStatusAccepted": "accettata",
+  "invoiceSendStatusRejected": "rifiutata",
+  "invoiceSendStatusFailed": "non trasmessa",
+  "einvoiceConfigTitle": "Piattaforma di fatturazione elettronica",
+  "einvoiceConfigIntro": "Dove DesKilo deposita le tue fatture. Va bene qualsiasi piattaforma che accetti un upload con un token — una piattaforma accreditata, un access point Peppol, una piattaforma nazionale. Il token resta sul server e non torna mai indietro.",
+  "einvoiceConfigEndpoint": "URL di caricamento",
+  "einvoiceConfigToken": "Token o credenziale",
+  "einvoiceConfigHeader": "Header di autenticazione (Authorization per impostazione predefinita)",
+  "einvoiceConfigField": "Nome del campo file (file per impostazione predefinita)",
+  "einvoiceConfigSaved": "Piattaforma salvata.",
+  "einvoiceConfigCleared": "Piattaforma rimossa.",
+  "einvoiceConfigClear": "Rimuovi la piattaforma",
+  "einvoiceConfigTokenSet": "Un token è salvato (digitane uno nuovo per sostituirlo).",
   "eventTypeMemberJoin": "Nuovo membro",
   "memberStatusPending": "In attesa",
   "pendingApprovalTitle": "In attesa di approvazione",

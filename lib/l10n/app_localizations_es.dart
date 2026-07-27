@@ -1601,6 +1601,73 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceRegisterTotal => 'Total';
 
   @override
+  String get invoiceFacturXDownload => 'Descargar Factur-X (PDF)';
+
+  @override
+  String get invoiceFacturXShare => 'Compartir Factur-X (PDF)';
+
+  @override
+  String get invoiceFacturXExplain =>
+      'Un solo archivo: la factura que lee una persona, con el XML legible por máquina dentro. Es lo que esperan la mayoría de las plataformas.';
+
+  @override
+  String get invoiceSendAction => 'Enviar a la plataforma';
+
+  @override
+  String get invoiceSendAccepted => 'Enviada — la plataforma la aceptó.';
+
+  @override
+  String get invoiceSendRejected => 'La plataforma la rechazó.';
+
+  @override
+  String invoiceSentOn(String date, String status) {
+    return 'Enviada el $date · $status';
+  }
+
+  @override
+  String get invoiceSendStatusAccepted => 'aceptada';
+
+  @override
+  String get invoiceSendStatusRejected => 'rechazada';
+
+  @override
+  String get invoiceSendStatusFailed => 'no transmitida';
+
+  @override
+  String get einvoiceConfigTitle => 'Plataforma de facturación electrónica';
+
+  @override
+  String get einvoiceConfigIntro =>
+      'Donde DesKilo deposita tus facturas. Sirve cualquier plataforma que acepte una subida con un token — una plataforma autorizada, un punto de acceso Peppol, una plataforma nacional. El token se guarda en el servidor y nunca sale.';
+
+  @override
+  String get einvoiceConfigEndpoint => 'URL de subida';
+
+  @override
+  String get einvoiceConfigToken => 'Token o credencial';
+
+  @override
+  String get einvoiceConfigHeader =>
+      'Cabecera de autenticación (Authorization por defecto)';
+
+  @override
+  String get einvoiceConfigField =>
+      'Nombre del campo de archivo (file por defecto)';
+
+  @override
+  String get einvoiceConfigSaved => 'Plataforma guardada.';
+
+  @override
+  String get einvoiceConfigCleared => 'Plataforma eliminada.';
+
+  @override
+  String get einvoiceConfigClear => 'Eliminar la plataforma';
+
+  @override
+  String get einvoiceConfigTokenSet =>
+      'Hay un token guardado (escribe uno nuevo para reemplazarlo).';
+
+  @override
   String get eventTypeMemberJoin => 'Nuevo miembro';
 
   @override

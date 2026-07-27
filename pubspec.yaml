@@ -90,3 +90,7 @@ flutter:
     - assets/help/images/
     # Brand icon on the boot splash — same artwork as the launcher icon.
     - assets/icon/icon_full.png
+    # sRGB output intent (from the `pdf` package, freely redistributable):
+    # PDF/A-3 demands an embedded colour profile, and Factur-X demands
+    # PDF/A-3.
+    - assets/pdf/
