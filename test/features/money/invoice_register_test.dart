@@ -137,6 +137,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('invoice-accounting-export')));
     await tester.pumpAndSettle();
+    // The fake workspace is DE: no FEC to choose, so the sheet is skipped
+    // and SAF-T is produced straight away.
+    expect(find.byKey(const ValueKey('accounting-export-fec')), findsNothing);
 
     final file = saved.single;
     expect(file.name, contains('saf-t'));
@@ -146,6 +149,78 @@ void main() {
     expect(file.body, isNot(contains(money.invoices[0].number)),
         reason: 'the 2025 invoice is not in a 2026 audit file');
     expect(file.body, contains('<NumberOfEntries>1</NumberOfEntries>'));
+  });
+
+  testWidgets(
+      'FEC (0075): a FRENCH workspace chooses its format, states the '
+      'accounts, and gets the file named after its SIREN', (tester) async {
+    final money = FakeMoneyRepository();
+    await money.createInvoice(
+        workspaceId: 'ws-1', memberId: 'member-1', period: '2026-06');
+    money.invoices[0] =
+        money.invoices[0].copyWith(issuedAt: DateTime(2026, 7, 1));
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+      countryCode: 'FR',
+      legalId: '812 345 678',
+      city: 'Pézenas',
+      postalCode: '34120',
+    );
+
+    final saved = <({String name, String body})>[];
+    tester.view.physicalSize = const Size(800, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(money: money, workspace: workspace),
+          fileSaverProvider.overrideWithValue(
+            ({required bytes, required fileName}) async {
+              saved.add((name: fileName, body: utf8.decode(bytes)));
+              return 'Download/$fileName';
+            },
+          ),
+        ],
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Money'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
+    await tester.tap(find.byKey(const ValueKey('invoices-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-register-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-accounting-export')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('accounting-export-fec')));
+    await tester.pumpAndSettle();
+    // The accounts are shown before anything is booked with them.
+    expect(
+      tester
+          .widget<TextField>(
+              find.byKey(const ValueKey('fec-account-customers')))
+          .controller!
+          .text,
+      '411000',
+    );
+    await tester.enterText(
+        find.byKey(const ValueKey('fec-account-revenue')), '70610');
+    await tester.tap(find.byKey(const ValueKey('fec-accounts-confirm')));
+    await tester.pumpAndSettle();
+
+    final file = saved.single;
+    expect(file.name, '812345678FEC20261231.txt');
+    final lines = file.body.split('\r\n');
+    expect(lines.first.split('\t').first, 'JournalCode');
+    expect(lines[1], contains('411000'));
+    expect(lines[2], contains('70610'),
+        reason: 'the account the owner typed, not the default');
+    expect(lines[1], contains('166,00'),
+        reason: 'French decimals, and the invoice total from the fake');
   });
 
   testWidgets('an ISSUER reads MEMBER names — they scan people',

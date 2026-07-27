@@ -1688,6 +1688,35 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceRegisterAllYears => 'Toutes les années';
 
   @override
+  String get invoiceExportSafT => 'SAF-T (XML, international)';
+
+  @override
+  String get invoiceExportFec => 'FEC (France, exigé en cas de contrôle)';
+
+  @override
+  String get invoiceExportChoose => 'Export comptable';
+
+  @override
+  String get fecAccountsTitle => 'Comptes à utiliser';
+
+  @override
+  String get fecAccountsIntro =>
+      'Un FEC est fait d\'écritures comptables : il lui faut des numéros de compte. Voici les comptes du plan comptable général — remplacez-les par ceux de votre comptable si besoin.';
+
+  @override
+  String get fecAccountCustomers => 'Clients';
+
+  @override
+  String get fecAccountRevenue => 'Ventes';
+
+  @override
+  String get fecAccountBank => 'Banque';
+
+  @override
+  String get fecMissingSiren =>
+      'Le FEC porte le nom de votre numéro d\'immatriculation — renseignez-le d\'abord dans Identité légale.';
+
+  @override
   String get eventTypeMemberJoin => 'Nouveau membre';
 
   @override

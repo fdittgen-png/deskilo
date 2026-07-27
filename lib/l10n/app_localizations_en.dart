@@ -1671,6 +1671,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceRegisterAllYears => 'All years';
 
   @override
+  String get invoiceExportSafT => 'SAF-T (XML, international)';
+
+  @override
+  String get invoiceExportFec => 'FEC (France, required in an audit)';
+
+  @override
+  String get invoiceExportChoose => 'Export for accounting';
+
+  @override
+  String get fecAccountsTitle => 'Accounts to book';
+
+  @override
+  String get fecAccountsIntro =>
+      'A FEC is made of accounting entries, so it needs account numbers. These are the French chart defaults — change them to your accountant\'s.';
+
+  @override
+  String get fecAccountCustomers => 'Customers';
+
+  @override
+  String get fecAccountRevenue => 'Revenue';
+
+  @override
+  String get fecAccountBank => 'Bank';
+
+  @override
+  String get fecMissingSiren =>
+      'The FEC is named after your registration number — fill it in under Legal identity first.';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

@@ -345,5 +345,14 @@
   "invoiceAccountingExport": "Buchhaltungs-Export (SAF-T)",
   "invoiceAccountingExportEmpty": "Für diesen Zeitraum gibt es nichts zu exportieren.",
   "invoiceRegisterYear": "Jahr",
-  "invoiceRegisterAllYears": "Alle Jahre"
+  "invoiceRegisterAllYears": "Alle Jahre",
+  "invoiceExportSafT": "SAF-T (XML, international)",
+  "invoiceExportFec": "FEC (Frankreich, im Prüfungsfall verlangt)",
+  "invoiceExportChoose": "Buchhaltungs-Export",
+  "fecAccountsTitle": "Zu buchende Konten",
+  "fecAccountsIntro": "Ein FEC besteht aus Buchungen und braucht daher Kontonummern. Dies sind die Standardkonten des französischen Kontenrahmens — ersetze sie durch die deiner Buchhaltung.",
+  "fecAccountCustomers": "Kunden",
+  "fecAccountRevenue": "Erlöse",
+  "fecAccountBank": "Bank",
+  "fecMissingSiren": "Der FEC-Dateiname enthält die Registernummer — trage sie zuerst unter Rechtliche Identität ein."
 }

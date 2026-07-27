@@ -345,5 +345,14 @@
   "invoiceAccountingExport": "Export comptable (SAF-T)",
   "invoiceAccountingExportEmpty": "Rien à exporter pour cette période.",
   "invoiceRegisterYear": "Année",
-  "invoiceRegisterAllYears": "Toutes les années"
+  "invoiceRegisterAllYears": "Toutes les années",
+  "invoiceExportSafT": "SAF-T (XML, international)",
+  "invoiceExportFec": "FEC (France, exigé en cas de contrôle)",
+  "invoiceExportChoose": "Export comptable",
+  "fecAccountsTitle": "Comptes à utiliser",
+  "fecAccountsIntro": "Un FEC est fait d'écritures comptables : il lui faut des numéros de compte. Voici les comptes du plan comptable général — remplacez-les par ceux de votre comptable si besoin.",
+  "fecAccountCustomers": "Clients",
+  "fecAccountRevenue": "Ventes",
+  "fecAccountBank": "Banque",
+  "fecMissingSiren": "Le FEC porte le nom de votre numéro d'immatriculation — renseignez-le d'abord dans Identité légale."
 }
