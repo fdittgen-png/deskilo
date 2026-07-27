@@ -63,6 +63,7 @@ Prenotare dalla planimetria:
 - **Check-in al volo**: tocca un posto libero → la scheda propone *adesso* fino alla fine predefinita dello spazio → conferma. Se qualcuno ha prenotato quel posto più tardi, la tua ora di fine viene limitata e te lo diciamo.
 - **Check-in su prenotazione**: la tua prenotazione apre una finestra di check-in. Fai check-in dalla planimetria o dalla notifica di promemoria. In caso di assenza, il posto viene **liberato automaticamente** dopo il ritardo configurato.
 - **Check-out**: manuale, o automatico alla fine della prenotazione / alla chiusura.
+- **Spazi interi**: **tocca due volte** un tavolo, una stanza o un tratto libero del pavimento per agire sull'**intero tavolo, ufficio o piano** — la stessa scheda della scansione del suo QR (§4), con lo stesso selettore di periodo e le stesse opzioni di ripetizione di una postazione.
 - **Linea temporale**: scegli una finestra da→a (o Mattina / Pomeriggio / Giornata intera, secondo la granularità dello spazio) per vedere l'occupazione in qualsiasi momento futuro.
 - I posti possono avere **accessori** (monitor, scrivania regolabile…), alcuni con supplemento per mezza giornata che compare sul tuo estratto.
 - Le prenotazioni contano sui tuoi **giorni mensili** (§8) — oltre il tuo piano, l'app blocca o addebita, secondo ciò che il proprietario ha configurato per te.
@@ -86,7 +87,7 @@ Ogni postazione, tavolo, ufficio e piano può avere una **scheda QR** stampata (
 
 - **Scheda postazione** — prenota o fai check-in su quella precisa postazione, al momento (finestra di oggi: mattina / pomeriggio / giornata intera dove lo spazio usa le mezze giornate, altrimenti da adesso per le prossime ore).
 - **Scheda tavolo** — le postazioni del tavolo con il loro stato in tempo reale; scegline una libera.
-- **Scheda ufficio o piano** — se il proprietario lo ha reso prenotabile, la funzionalità *Prenotazioni di ufficio e piano* è attiva **e** possiedi il diritto personale (§7), puoi prenotare o fare check-in sull'**intero ufficio o piano**; il suo prezzo per mezza giornata viene mostrato e finisce sulla tua fattura. Altrimenti la scheda ti spiega perché, e un ufficio ripiega sulle sue postazioni.
+- **Scheda ufficio o piano** — se il proprietario lo ha reso prenotabile, la funzionalità *Prenotazioni di ufficio e piano* è attiva **e** possiedi il diritto personale (§7), puoi prenotare o fare check-in sull'**intero ufficio o piano** — con lo stesso selettore di periodo (mattina / pomeriggio / giornata intera, o orari liberi) e le stesse opzioni di **serie** di una postazione; il suo prezzo per mezza giornata viene mostrato e finisce sulla tua fattura. Altrimenti la scheda ti spiega perché, e un ufficio ripiega sulle sue postazioni.
 
 **I conflitti proteggono in entrambe le direzioni:** un ufficio o un piano non può essere prenotato mentre una postazione al suo interno è già prenotata in quella finestra — e nessuna postazione può essere prenotata mentre il suo ufficio o piano è prenotato per intero.
 
@@ -126,9 +127,9 @@ Tutta l'amministrazione vive in **Impostazioni → Amministrazione**. Una sola r
 - **Editor** (barra dell'app): disegna il tuo spazio su una griglia — livelli, uffici, tavoli, posti (con orientamento, tipo di sedia e dotazioni), blocco posti per manutenzione. Aggiungi una **foto di sfondo** per livello e **immagini illustrative** spostabili e ridimensionabili. Eliminare qualcosa con prenotazioni future obbliga prima a risolverle.
 - **ID spazio & QR**: i tuoi inviti legati ai ruoli (§2). Puoi sostituire l'ID generato con uno memorizzabile (4–20 lettere/cifre), copiarlo, o condividere il QR come PNG.
 - **Disponibilità**: giorni di apertura, giorni di chiusura e granularità — orari liberi di inizio/fine, una griglia di minuti (5/15/30/60), mezze giornate o solo giornate intere.
-- **Funzionalità**: attiva o disattiva interi moduli per spazio — calendario, eventi, denaro, servizi, esportazione PDF, serie, prenotare per altri, push, blocco posti da parte degli admin, supplementi accessori, **pagamenti online**, **prenotazioni di ufficio e piano**, **modalità chiosco**, **badge RFID/NFC**, **elenco dei membri**, **integrazione WhatsApp**, **codici QR degli spazi**, **comproprietari**. Disattivare un modulo rimuove *tutte* le sue schermate e i suoi pulsanti per ogni membro.
+- **Funzionalità**: attiva o disattiva interi moduli per spazio — calendario, eventi, denaro, servizi, esportazione PDF, serie, prenotare per altri, push, blocco posti da parte degli admin, supplementi accessori, **pagamenti online**, **fatture**, **prenotazioni di ufficio e piano**, **modalità chiosco**, **badge RFID/NFC**, **elenco dei membri**, **integrazione WhatsApp**, **codici QR degli spazi**, **comproprietari**. Disattivare un modulo rimuove *tutte* le sue schermate e i suoi pulsanti per ogni membro.
 
-  L'elenco è **gerarchico**: una funzionalità che ne richiede un'altra compare rientrata sotto di essa con una nota *Richiede…*, ed è in grigio finché la funzionalità madre è disattivata — *Denaro* porta con sé servizi, supplementi accessori e pagamenti online; *Prenotazioni di ufficio e piano* porta il diritto di assegnazione degli admin; *Modalità chiosco* porta i badge RFID/NFC; *Elenco dei membri* porta l'integrazione WhatsApp. Disattivare una funzionalità madre toglie dall'app tutto il suo sottoalbero; la scelta salvata della funzionalità figlia torna intatta quando la madre riappare.
+  L'elenco è **gerarchico**: una funzionalità che ne richiede un'altra compare rientrata sotto di essa con una nota *Richiede…*, ed è in grigio finché la funzionalità madre è disattivata — *Denaro* porta con sé servizi, supplementi accessori, pagamenti online e fatture; *Prenotazioni di ufficio e piano* porta il diritto di assegnazione degli admin; *Modalità chiosco* porta i badge RFID/NFC; *Elenco dei membri* porta l'integrazione WhatsApp. Disattivare una funzionalità madre toglie dall'app tutto il suo sottoalbero; la scelta salvata della funzionalità figlia torna intatta quando la madre riappare.
 
 ![](assets/help/images/workspace-id-qr.jpg)
 
@@ -291,9 +292,26 @@ Il tuo conto risponde a *quanto devo, quanto mi devono* — e *quanto posso anco
 - **Addebiti**: abbonamento mensile (piano percentuale), extra, consumo di servizi, supplementi accessori, pacchetti di giorni.
 - **Accrediti**: spese approvate, pagamenti registrati, rettifiche.
 - **Estratti**: mensili, con stato **saldato / da saldare**, esportabili come **fattura PDF** salvata localmente.
+- **Fatture**: dove lo spazio emette fatture (più sotto), le tue restano sempre disponibili in **Denaro → Fatture** — scarica il PDF e, negli spazi UE, la fattura elettronica leggibile dalle macchine (XML).
 - **Pagare**: DesKilo tiene traccia dei pagamenti; una fattura da saldare mostra le **istruzioni di pagamento** dello spazio (l'IBAN si copia con un tocco, PayPal.me si apre direttamente). Registra un pagamento («ho pagato») con il metodo — l'altra parte conferma. Se lo spazio ha attivato i **pagamenti online** e il suo server è configurato, il pulsante **Paga online** consente di saldare subito l'importo dovuto — con **PayPal, carta (Stripe), Mollie o Wero**, secondo ciò che lo spazio ha attivato (se più di uno, appare un selettore).
 - **Spese**: hai comprato il caffè per lo spazio? Presenta la spesa — un altro admin la approva (niente auto-approvazione) e l'importo viene accreditato sul prossimo estratto.
 - **Servizi**: extra definiti dal proprietario (armadietti, stampe…) il cui consumo arriva sul tuo estratto dopo la tua conferma.
+
+### Fatture (proprietari e admin di fatturazione)
+
+*I proprietari emettono le fatture; anche gli admin, quando il proprietario concede la delega **Gli admin emettono fatture**. La funzionalità **Fatture** sta sotto Denaro nell'elenco delle funzionalità (§7).*
+
+Una fattura in DesKilo viene generata, mai composta: le sue posizioni sono **derivate esclusivamente dai dati tracciati del mese** — abbonamento, extra, supplementi, servizi, pacchetti — meno i pagamenti e gli accrediti del mese, così la riga finale **è il saldo dovuto**. Ogni documento fotografa gli indirizzi postali dello spazio e del membro (imposta il tuo in **Impostazioni → Indirizzo**; l'indirizzo dello spazio sta nelle impostazioni dello spazio) ed è **firmato digitalmente** all'emissione — dopo non cambia più. Un **allegato dettagliato** (il libro mastro e le presenze del mese) si aggiunge con un interruttore al momento dell'emissione.
+
+Chi emette apre **Denaro → Fatture** e trova un hub a tre schede sotto una striscia di riepilogo in tempo reale:
+
+- **Da fatturare** — ogni membro il cui mese precedente ha dati fatturabili e nessuna fattura: emetti per membro (con l'anteprima delle posizioni derivate) o **Fattura tutto** in un colpo solo. **Una sola fattura attiva per membro e mese** — un mese torna fatturabile solo dopo che la sua fattura è stata annullata.
+- **Aperte** — fatture emesse in attesa di saldo. Ogni scheda offre **Invia un promemoria** (registra il sollecito e condivide il PDF con un messaggio — la scheda mostra *Sollecitato ×N*), **Segna come errata** (annulla la fattura per correggerla: passa nell'archivio barrata, e una **sostitutiva** ri-deriva lo stesso mese dai dati corretti, citando l'originale) e **Segna come pagata**.
+- **Archivio** — fatture chiuse, pagate o annullate, filtrabili per membro e mese e ordinabili. Scarica o condividi il **PDF**; negli spazi UE ogni fattura si esporta anche come **fattura elettronica EN 16931 (XML)** — il formato leggibile dalle macchine richiesto da enti pubblici e clienti business.
+
+**Segnare come pagata significa abbinare un pagamento reale.** La finestra elenca i pagamenti registrati del membro — bonifici registrati e pagamenti online confermati — e tu abbini la fattura a uno di essi; non c'è alcun importo da digitare. Ha pagato **di più**? Crea una **nota di credito** per l'eccedenza (un accredito sul libro mastro del membro) oppure forza l'accettazione con una nota obbligatoria. Ha pagato **di meno**? Accettalo con una nota obbligatoria. Tutti coloro che hanno accesso alla fatturazione vengono avvisati delle fatture pagate, e il proprietario può mettere una regola di validazione **Pagamento fattura** (§6): l'abbinamento resta allora in attesa del quorum — un rifiuto riapre la fattura.
+
+**Una fattura pagata è definitiva.** Una volta abbinata non può più essere annullata, sostituita o modificata — le correzioni avvengono prima del pagamento, annullando la fattura aperta ed emettendo la sua sostitutiva.
 
 ## 9. Modalità chiosco (tablet a parete)
 

@@ -63,6 +63,7 @@ Buchen vom Plan aus:
 - **Spontanes Einchecken**: Tippe einen freien Platz → das Formular schlägt *jetzt* bis zum Standard-Ende des Workspace vor → bestätigen. Hat jemand den Platz später reserviert, wird deine Endzeit gekappt und du erfährst es.
 - **Einchecken auf Reservierung**: Deine Reservierung öffnet ein Check-in-Fenster. Checke vom Plan oder aus der Erinnerung ein. Bei Nichterscheinen wird der Platz nach der konfigurierten Frist **automatisch freigegeben**.
 - **Auschecken**: manuell, oder automatisch zum Reservierungsende / bei Schließung.
+- **Ganze Räume**: **Doppeltippe** einen Tisch, einen Raum oder eine freie Stelle der Etage, um den **ganzen Tisch, das Büro oder die Etage** zu buchen — dasselbe Formular wie beim Scan seiner QR-Karte (§4), mit derselben Zeitraum-Auswahl und denselben Wiederholungsoptionen wie ein Platz.
 - **Zeitleiste**: Wähle ein von→bis-Fenster (oder Vormittag / Nachmittag / Ganzer Tag, je nach Granularität), um die Belegung zu jedem künftigen Zeitpunkt zu sehen.
 - Plätze können **Zubehör** tragen (Monitor, Stehpult…), teils mit Aufpreis je Halbtag, der auf deiner Abrechnung erscheint.
 - Buchungen zählen gegen deine **Monatstage** (§8) — jenseits deines Tarifs blockt oder berechnet die App, je nachdem, was die Inhaberin für dich eingestellt hat.
@@ -86,7 +87,7 @@ Jeder Platz, Tisch, jedes Büro und jede Etage kann eine gedruckte **QR-Karte** 
 
 - **Platz-Karte** — reserviere oder checke direkt auf genau diesem Platz ein (heutiges Fenster: Vormittag / Nachmittag / Ganzer Tag, wo der Workspace Halbtage nutzt, sonst ab jetzt für die nächsten Stunden).
 - **Tisch-Karte** — die Plätze des Tischs mit ihrem Live-Status; wähle einen freien.
-- **Büro- oder Etagen-Karte** — hat die Inhaberin sie reservierbar gemacht, ist die Funktion *Büro- & Etagen-Reservierungen* eingeschaltet **und** hast du das persönliche Recht (§7), kannst du das **ganze Büro oder die ganze Etage** reservieren oder dort einchecken; der Preis je Halbtag wird angezeigt und landet auf deiner Rechnung. Andernfalls sagt dir das Formular, warum nicht — und ein Büro fällt auf seine Plätze zurück.
+- **Büro- oder Etagen-Karte** — hat die Inhaberin sie reservierbar gemacht, ist die Funktion *Büro- & Etagen-Reservierungen* eingeschaltet **und** hast du das persönliche Recht (§7), kannst du das **ganze Büro oder die ganze Etage** reservieren oder dort einchecken — mit derselben Zeitraum-Auswahl (Vormittag / Nachmittag / Ganzer Tag, oder freie Zeiten) und denselben **Serien**-Optionen wie ein Platz; der Preis je Halbtag wird angezeigt und landet auf deiner Rechnung. Andernfalls sagt dir das Formular, warum nicht — und ein Büro fällt auf seine Plätze zurück.
 
 **Konflikte schützen in beide Richtungen:** Ein Büro oder eine Etage kann nicht reserviert werden, solange irgendein Platz darin in diesem Fenster schon gebucht ist — und kein Platz kann gebucht werden, solange sein Büro oder seine Etage als Ganzes reserviert ist.
 
@@ -126,9 +127,9 @@ Die gesamte Administration liegt unter **Einstellungen → Administration**. Ein
 - **Editor** (App-Leiste): Zeichne deinen Raum auf einem Raster — Etagen, Büros, Tische, Plätze (mit Ausrichtung, Stuhltyp und Ausstattung), Platzsperren für Wartung. Füge pro Etage ein **Hintergrundfoto** und verschieb- und skalierbare **Illustrationsbilder** hinzu. Löschen mit künftigen Reservierungen erzwingt erst deren Auflösung.
 - **Workspace-ID & QR**: deine rollengebundenen Einladungen (§2). Die generierte ID lässt sich durch eine merkbare ersetzen (4–20 Buchstaben/Ziffern), kopieren, und der QR als PNG teilen.
 - **Verfügbarkeit**: Öffnungstage, Schließtage und die Granularität — freie Start-/Endzeiten, ein Minutenraster (5/15/30/60), Halbtage oder nur ganze Tage.
-- **Funktionen**: Ganze Module pro Workspace ein-/ausschalten — Kalender, Ereignisse, Geld, Services, PDF-Export, Serienbuchung, Buchen für andere, Push, Platzsperren durch Admins, Zubehör-Aufpreise, **Online-Zahlungen**, **Büro- & Etagen-Reservierungen**, **Kiosk-Modus**, **RFID-/NFC-Badges**, **Mitgliederverzeichnis**, **WhatsApp-Integration**, **Raum-QR-Codes**, **Mit-Inhaberinnen**. Ein ausgeschaltetes Modul entfernt *alle* seine Bildschirme und Buttons für jedes Mitglied.
+- **Funktionen**: Ganze Module pro Workspace ein-/ausschalten — Kalender, Ereignisse, Geld, Services, PDF-Export, Serienbuchung, Buchen für andere, Push, Platzsperren durch Admins, Zubehör-Aufpreise, **Online-Zahlungen**, **Rechnungen**, **Büro- & Etagen-Reservierungen**, **Kiosk-Modus**, **RFID-/NFC-Badges**, **Mitgliederverzeichnis**, **WhatsApp-Integration**, **Raum-QR-Codes**, **Mit-Inhaberinnen**. Ein ausgeschaltetes Modul entfernt *alle* seine Bildschirme und Buttons für jedes Mitglied.
 
-  Die Liste ist **hierarchisch**: Eine Funktion, die eine andere benötigt, steht eingerückt darunter mit dem Hinweis *Benötigt…* und ist ausgegraut, solange ihr Elternteil aus ist — *Geld* trägt Services, Zubehör-Aufpreise und Online-Zahlungen; *Büro- & Etagen-Reservierungen* tragen das Zuweisungsrecht der Admins; *Kiosk-Modus* trägt die RFID-/NFC-Badges; *Mitgliederverzeichnis* trägt die WhatsApp-Integration. Ein ausgeschaltetes Elternteil nimmt seinen ganzen Teilbaum aus der App; die gespeicherte Wahl des Kindes kommt unangetastet zurück, sobald das Elternteil wiederkehrt.
+  Die Liste ist **hierarchisch**: Eine Funktion, die eine andere benötigt, steht eingerückt darunter mit dem Hinweis *Benötigt…* und ist ausgegraut, solange ihr Elternteil aus ist — *Geld* trägt Services, Zubehör-Aufpreise, Online-Zahlungen und Rechnungen; *Büro- & Etagen-Reservierungen* tragen das Zuweisungsrecht der Admins; *Kiosk-Modus* trägt die RFID-/NFC-Badges; *Mitgliederverzeichnis* trägt die WhatsApp-Integration. Ein ausgeschaltetes Elternteil nimmt seinen ganzen Teilbaum aus der App; die gespeicherte Wahl des Kindes kommt unangetastet zurück, sobald das Elternteil wiederkehrt.
 
 ![](assets/help/images/workspace-id-qr.jpg)
 
@@ -291,9 +292,26 @@ Dein Konto beantwortet *was schulde ich, was schuldet man mir* — und *wie viel
 - **Belastungen**: Monatsabo (Prozent-Tarif), Mehrverbrauch, Service-Konsum, Zubehör-Aufpreise, Tagespakete.
 - **Gutschriften**: genehmigte Ausgaben, erfasste Zahlungen, Anpassungen.
 - **Abrechnungen**: monatlich, mit Status **beglichen / offen**, exportierbar als **PDF-Rechnung**, lokal gespeichert.
+- **Rechnungen**: Stellt der Workspace Rechnungen aus (unten), findest du deine jederzeit unter **Geld → Rechnungen** — als PDF zum Herunterladen, in EU-Workspaces auch als maschinenlesbare E-Rechnung (XML).
 - **Zahlen**: DesKilo erfasst Zahlungen; offene Rechnungen zeigen die **Zahlungshinweise** des Workspace (IBAN mit einem Tipp kopiert, PayPal.me öffnet direkt). Erfasse eine Zahlung („ich habe gezahlt") mit Methode — die Gegenseite bestätigt. Hat der Workspace **Online-Zahlungen** aktiviert und ist sein Server dafür eingerichtet, lässt **Online bezahlen** den offenen Betrag sofort begleichen — per **PayPal, Kreditkarte (Stripe), Mollie oder Wero**, je nachdem was der Workspace aktiviert hat (mehrere zeigen eine Auswahl).
 - **Ausgaben**: Kaffee für den Raum gekauft? Reiche die Ausgabe ein — ein anderer Admin genehmigt (keine Selbstgenehmigung) und der Betrag wird deiner nächsten Abrechnung gutgeschrieben.
 - **Services**: von der Inhaberin definierte Extras (Schließfächer, Druck…), deren Konsum nach deiner Bestätigung auf der Abrechnung landet.
+
+### Rechnungsstellung (Inhaberinnen & Abrechnungs-Admins)
+
+*Inhaberinnen stellen Rechnungen aus; Admins auch, sobald die Inhaberin die Delegation **Admins stellen Rechnungen aus** erteilt. Die Funktion **Rechnungen** steht in der Funktionsliste (§7) unter Geld.*
+
+Eine Rechnung in DesKilo wird generiert, nie verfasst: Ihre Positionen werden **ausschließlich aus den erfassten Daten des Monats abgeleitet** — Abo, Mehrverbrauch, Aufpreise, Services, Pakete — abzüglich der Zahlungen und Gutschriften des Monats, sodass die Schlusszeile **der geschuldete Saldo ist**. Jedes Dokument hält die Postadressen des Workspace und des Mitglieds fest (deine setzt du unter **Einstellungen → Adresse**; die Workspace-Adresse steht in den Workspace-Einstellungen) und wird beim Ausstellen **digital signiert** — danach ändert es sich nie mehr. Ein **detaillierter Anhang** (Kontobewegungen und Anwesenheit des Monats) lässt sich beim Ausstellen mit einem Schalter beilegen.
+
+Aussteller öffnen **Geld → Rechnungen** und landen auf einem Hub mit drei Tabs unter einer Live-Übersichtsleiste:
+
+- **Zu berechnen** — jedes Mitglied, dessen Vormonat abrechenbare Daten und noch keine Rechnung hat: pro Mitglied ausstellen (mit Vorschau der abgeleiteten Positionen) oder **Alle berechnen** in einem Durchgang. **Eine aktive Rechnung pro Mitglied und Monat** — ein Monat wird erst wieder berechenbar, nachdem seine Rechnung storniert wurde.
+- **Offen** — ausgestellte Rechnungen, die auf Begleichung warten. Jede Karte bietet **Zahlungserinnerung senden** (erfasst die Erinnerung und teilt das PDF mit einer Nachricht — die Karte zeigt *Erinnert ×N*), **Als fehlerhaft markieren** (storniert die Rechnung zur Korrektur: Sie wandert durchgestrichen ins Archiv, und eine **Ersatzrechnung** leitet denselben Monat aus den korrigierten Daten neu ab und verweist auf das Original) und **Als bezahlt markieren**.
+- **Archiv** — geschlossene Rechnungen, bezahlt oder storniert, filterbar nach Mitglied und Monat und sortierbar. Lade das **PDF** herunter oder teile es; in EU-Workspaces exportiert jede Rechnung zusätzlich als **E-Rechnung nach EN 16931 (XML)** — das maschinenlesbare Format, das öffentliche Auftraggeber und Geschäftskunden verlangen.
+
+**Als bezahlt markieren heißt: eine echte Zahlung zuordnen.** Der Dialog listet die registrierten Zahlungen des Mitglieds — erfasste Überweisungen und bestätigte Online-Zahlungen — und du ordnest die Rechnung einer davon zu; es gibt keinen Betrag einzutippen. **Mehr** gezahlt? Erstelle eine **Gutschrift über den Überschuss** (eine Gutschrift auf dem Konto des Mitglieds) oder akzeptiere erzwungen mit einer Pflichtnotiz. **Weniger** gezahlt? Akzeptiere mit einer Pflichtnotiz. Alle mit Rechnungszugriff werden über bezahlte Rechnungen benachrichtigt, und die Inhaberin kann eine Validierungsregel **Rechnungszahlung** (§6) darauf legen: Die Zuordnung wartet dann auf das Quorum — eine Ablehnung öffnet die Rechnung wieder.
+
+**Eine bezahlte Rechnung ist endgültig.** Einmal zugeordnet kann sie nie mehr storniert, ersetzt oder geändert werden — Korrekturen passieren vor der Zahlung, indem die offene Rechnung storniert und ihre Ersatzrechnung ausgestellt wird.
 
 ## 9. Kiosk-Modus (Wandtablet)
 
