@@ -29,11 +29,13 @@ Future<FakeMoneyRepository> seededMoney({bool matched = true}) async {
     period: '2026-07',
   );
   // 0067 — the hub's archive holds CLOSED invoices only; row-affordance
-  // tests want their seed there, so it ships matched.
+  // tests want their seed there, so it ships matched (0068: against a
+  // seeded registered payment).
   if (matched) {
     await money.matchInvoice(
       invoiceId: id,
-      paidCents: money.invoices.single.totalCents,
+      paymentLedgerId:
+          money.seedPayment('member-1', money.invoices.single.totalCents),
       resolution: 'exact',
     );
   }
@@ -273,12 +275,15 @@ void main() {
       'the owner tags an invoice ERRONEOUS (0061): confirm → voided, '
       'struck through with the chip — the row stays in the archive',
       (tester) async {
-    final money = await pumpInvoices(tester, money: await seededMoney());
+    final money =
+        await pumpInvoices(tester, money: await seededMoney(matched: false));
     final invoice = money.invoices.single;
 
-    await tester.tap(find.byKey(ValueKey('invoice-menu-${invoice.id}')));
+    // 0068 — an invoice EN COURS is corrected from the Open tab.
+    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('invoice-void-action')));
+    await tester
+        .tap(find.byKey(ValueKey('invoice-void-open-${invoice.id}')));
     await tester.pumpAndSettle();
     expect(money.invoices.single.isVoided, isFalse);
     await tester.tap(find.byKey(const ValueKey('invoice-void-confirm')));
@@ -286,6 +291,10 @@ void main() {
 
     expect(money.invoices.single.isVoided, isTrue);
     expect(find.text('Invoice marked as erroneous.'), findsOneWidget);
+    expect(find.byKey(ValueKey('invoice-open-${invoice.id}')), findsNothing,
+        reason: 'the voided invoice leaves the Open tab');
+    await tester.tap(find.byKey(const ValueKey('invoice-tab-archive')));
+    await tester.pumpAndSettle();
     expect(find.text('Erroneous'), findsOneWidget);
     expect(find.byKey(ValueKey('invoice-${invoice.id}')), findsOneWidget);
   });
@@ -294,8 +303,11 @@ void main() {
       'REPLACE (0061/0062): the replacement RE-DERIVES the same month '
       'from the corrected data and references the erroneous invoice',
       (tester) async {
-    final money = await seededMoney();
+    final money = await seededMoney(matched: false);
     final wrong = money.invoices.single;
+    // 0068 — correction path: void first, then replace from the
+    // voided archive row.
+    await money.voidInvoice(wrong.id);
     // The underlying data was corrected since the wrong invoice: the
     // member's subscription fee changed.
     money.statement = money.statement.copyWith(feeCents: 20000);
@@ -347,9 +359,11 @@ void main() {
     );
     await money.matchInvoice(
       invoiceId: replacementId,
-      paidCents: money.invoices
-          .firstWhere((i) => i.id == replacementId)
-          .totalCents,
+      paymentLedgerId: money.seedPayment(
+          'member-1',
+          money.invoices
+              .firstWhere((i) => i.id == replacementId)
+              .totalCents),
       resolution: 'exact',
     );
     await pumpInvoices(tester, money: money);
@@ -363,13 +377,18 @@ void main() {
         reason: 'a voided invoice is not reminded');
     expect(find.byKey(const ValueKey('invoice-einvoice-share')),
         findsOneWidget);
-    // Close the menu; the replacement keeps its full issuer menu.
+    // Close the menu; the MATCHED replacement is definitive (0068):
+    // its menu also keeps only the e-invoice entries.
     await tester.tapAt(const Offset(10, 10));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('invoice-menu-inv-2')));
     await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('invoice-void-action')), findsNothing);
     expect(
-        find.byKey(const ValueKey('invoice-void-action')), findsOneWidget);
+        find.byKey(const ValueKey('invoice-replace-action')), findsNothing);
+    expect(find.byKey(const ValueKey('invoice-remind-action')), findsNothing);
+    expect(find.byKey(const ValueKey('invoice-einvoice-share')),
+        findsOneWidget);
   });
 
   testWidgets(
@@ -427,7 +446,8 @@ void main() {
     for (final invoice in List.of(money.invoices)) {
       await money.matchInvoice(
         invoiceId: invoice.id,
-        paidCents: invoice.totalCents,
+        paymentLedgerId:
+            money.seedPayment(invoice.memberId, invoice.totalCents),
         resolution: 'exact',
       );
     }
@@ -539,7 +559,7 @@ void main() {
     final shared = <({String name, String mime, String? text})>[];
     final money = await pumpInvoices(
       tester,
-      money: await seededMoney(),
+      money: await seededMoney(matched: false),
       sharer: ({required bytes, required fileName, required mimeType, text})
           async {
         shared.add((name: fileName, mime: mimeType, text: text));
@@ -547,10 +567,12 @@ void main() {
     );
     final invoice = money.invoices.single;
 
-    await tester.tap(find.byKey(ValueKey('invoice-menu-${invoice.id}')));
+    // 0068 — an invoice EN COURS is reminded from its Open card.
+    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
     await tester.pumpAndSettle();
     await tester.runAsync(() async {
-      await tester.tap(find.byKey(const ValueKey('invoice-remind-action')));
+      await tester
+          .tap(find.byKey(ValueKey('invoice-remind-${invoice.id}')));
       await tester.pump();
     });
     await tester.pumpAndSettle();
@@ -561,7 +583,30 @@ void main() {
         reason: 'the share text names the invoice');
     expect(find.text('Reminder recorded.'), findsOneWidget);
     expect(find.textContaining('Reminded ×1'), findsOneWidget,
-        reason: 'the archive badge reflects the recorded reminder');
+        reason: 'the open card reflects the recorded reminder');
+  });
+
+  testWidgets(
+      'MATCH with NO registered payment (0068): the dialog explains that '
+      'the payment must be recorded first and confirm stays inert',
+      (tester) async {
+    final money = await seededMoney(matched: false);
+    await pumpInvoices(tester, money: money);
+    final invoice = money.invoices.single;
+
+    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(ValueKey('invoice-match-${invoice.id}')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('invoice-match-no-payments')),
+        findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('invoice-match-confirm')));
+    await tester.pumpAndSettle();
+    expect(money.invoiceMatchesStore, isEmpty,
+        reason: 'nothing to map — the confirm cannot create a match');
+    expect(find.byKey(const ValueKey('invoice-match-confirm')),
+        findsOneWidget, reason: 'the dialog stays open');
   });
 
   testWidgets(
@@ -716,8 +761,16 @@ void main() {
     expect(money.invoiceReminders[invoice.id], hasLength(1));
     expect(sharedTexts.single, contains(invoice.number));
 
-    // The exact match closes it.
+    // The exact match closes it — 0068: mapped to the REGISTERED
+    // payment, never a typed amount.
+    final payId =
+        money.seedPayment('member-1', invoice.totalCents, description: 'IBAN');
     await tester.tap(find.byKey(ValueKey('invoice-match-${invoice.id}')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('invoice-match-amount')), findsNothing,
+        reason: 'no typed amount — the payment picker is the only input');
+    await tester
+        .tap(find.byKey(ValueKey('invoice-match-payment-$payId')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('invoice-match-confirm')));
     await tester.pumpAndSettle();
@@ -725,6 +778,8 @@ void main() {
     // (The snack queues behind the reminder snack — the store is the
     // truth here.)
     expect(money.invoiceMatchesStore[invoice.id]!.resolution, 'exact');
+    expect(money.invoiceMatchesStore[invoice.id]!.paymentLedgerId, payId,
+        reason: 'the match records WHICH payment settled the invoice');
     expect(find.byKey(ValueKey('invoice-open-${invoice.id}')),
         findsNothing, reason: 'a matched invoice leaves the Open tab');
     await tester.tap(find.byKey(const ValueKey('invoice-tab-archive')));
@@ -741,14 +796,13 @@ void main() {
     await pumpInvoices(tester, money: money);
     final invoice = money.invoices.single;
 
+    final payId = money.seedPayment('member-1', 20000);
     await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(ValueKey('invoice-match-${invoice.id}')));
     await tester.pumpAndSettle();
-    await tester.enterText(
-      find.byKey(const ValueKey('invoice-match-amount')),
-      '200',
-    );
+    await tester
+        .tap(find.byKey(ValueKey('invoice-match-payment-$payId')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('invoice-match-credit-note')),
         findsOneWidget);
@@ -775,14 +829,13 @@ void main() {
     await pumpInvoices(tester, money: money);
     final invoice = money.invoices.single;
 
+    final payId = money.seedPayment('member-1', 10000);
     await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(ValueKey('invoice-match-${invoice.id}')));
     await tester.pumpAndSettle();
-    await tester.enterText(
-      find.byKey(const ValueKey('invoice-match-amount')),
-      '100',
-    );
+    await tester
+        .tap(find.byKey(ValueKey('invoice-match-payment-$payId')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('invoice-match-confirm')));
     await tester.pumpAndSettle();
@@ -809,9 +862,13 @@ void main() {
     await pumpInvoices(tester, money: money);
     final invoice = money.invoices.single;
 
+    final payId = money.seedPayment('member-1', invoice.totalCents);
     await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(ValueKey('invoice-match-${invoice.id}')));
+    await tester.pumpAndSettle();
+    await tester
+        .tap(find.byKey(ValueKey('invoice-match-payment-$payId')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('invoice-match-confirm')));
     await tester.pumpAndSettle();

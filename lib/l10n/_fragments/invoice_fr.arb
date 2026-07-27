@@ -132,7 +132,6 @@
     }
   },
   "invoiceMatchAction": "Marquer comme payée",
-  "invoiceMatchAmountLabel": "Montant reçu",
   "invoiceMatchNoteLabel": "Note",
   "invoiceMatchNoteRequired": "Une note est obligatoire.",
   "invoiceMatchOver": "Le membre a payé {excess} de plus.",
@@ -156,5 +155,7 @@
   "invoiceMatched": "Facture rapprochée.",
   "invoiceMatchPendingBadge": "En attente de validation",
   "invoiceMatchedBadge": "Payée",
-  "invoiceAlreadyInvoiced": "Ce mois est déjà facturé pour ce membre."
+  "invoiceAlreadyInvoiced": "Ce mois est déjà facturé pour ce membre.",
+  "invoiceMatchPickPayment": "Sélectionner le paiement enregistré",
+  "invoiceMatchNoPayments": "Aucun paiement enregistré à rapprocher — enregistrez-le ou confirmez-le d'abord."
 }

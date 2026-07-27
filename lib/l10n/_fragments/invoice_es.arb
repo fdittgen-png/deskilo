@@ -132,7 +132,6 @@
     }
   },
   "invoiceMatchAction": "Marcar como pagada",
-  "invoiceMatchAmountLabel": "Importe recibido",
   "invoiceMatchNoteLabel": "Nota",
   "invoiceMatchNoteRequired": "Se requiere una nota.",
   "invoiceMatchOver": "El miembro pagó {excess} de más.",
@@ -156,5 +155,7 @@
   "invoiceMatched": "Factura conciliada.",
   "invoiceMatchPendingBadge": "Pendiente de validación",
   "invoiceMatchedBadge": "Pagada",
-  "invoiceAlreadyInvoiced": "Este mes ya está facturado para este miembro."
+  "invoiceAlreadyInvoiced": "Este mes ya está facturado para este miembro.",
+  "invoiceMatchPickPayment": "Selecciona el pago registrado",
+  "invoiceMatchNoPayments": "No hay pago registrado que conciliar — regístralo o confírmalo primero."
 }

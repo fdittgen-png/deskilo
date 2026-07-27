@@ -2474,12 +2474,6 @@ abstract class AppLocalizations {
   /// **'Mark as paid'**
   String get invoiceMatchAction;
 
-  /// Match dialog: received amount field
-  ///
-  /// In en, this message translates to:
-  /// **'Amount received'**
-  String get invoiceMatchAmountLabel;
-
   /// Match dialog: note field
   ///
   /// In en, this message translates to:
@@ -2539,6 +2533,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This month is already invoiced for this member.'**
   String get invoiceAlreadyInvoiced;
+
+  /// Match dialog: caption above the payment picker (0068)
+  ///
+  /// In en, this message translates to:
+  /// **'Select the registered payment'**
+  String get invoiceMatchPickPayment;
+
+  /// Match dialog: no unconsumed registered payments exist
+  ///
+  /// In en, this message translates to:
+  /// **'No registered payment to match — record or confirm it first.'**
+  String get invoiceMatchNoPayments;
 
   /// No description provided for @eventTypeMemberJoin.
   ///

@@ -1328,9 +1328,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceMatchAction => 'Segna come pagata';
 
   @override
-  String get invoiceMatchAmountLabel => 'Importo ricevuto';
-
-  @override
   String get invoiceMatchNoteLabel => 'Nota';
 
   @override
@@ -1365,6 +1362,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get invoiceAlreadyInvoiced =>
       'Questo mese è già fatturato per questo membro.';
+
+  @override
+  String get invoiceMatchPickPayment => 'Seleziona il pagamento registrato';
+
+  @override
+  String get invoiceMatchNoPayments =>
+      'Nessun pagamento registrato da riconciliare — registralo o confermalo prima.';
 
   @override
   String get eventTypeMemberJoin => 'Nuovo membro';
