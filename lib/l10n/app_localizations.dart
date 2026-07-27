@@ -2390,6 +2390,72 @@ abstract class AppLocalizations {
   /// **'Share e-invoice (XML)'**
   String get invoiceEInvoiceShare;
 
+  /// Invoicing hub tab: uninvoiced members of the previous month
+  ///
+  /// In en, this message translates to:
+  /// **'To invoice'**
+  String get invoiceTabToInvoice;
+
+  /// Invoicing hub tab: invoices with a positive live solde
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get invoiceTabOpen;
+
+  /// Invoicing hub tab: the full archive
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get invoiceTabArchive;
+
+  /// Sweep button: issue for every listed member
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice all'**
+  String get invoiceIssueAll;
+
+  /// Per-member issue button on the to-invoice list
+  ///
+  /// In en, this message translates to:
+  /// **'Issue'**
+  String get invoiceIssueOne;
+
+  /// To-invoice tab empty state
+  ///
+  /// In en, this message translates to:
+  /// **'All caught up — nothing to invoice.'**
+  String get invoiceAllCaughtUp;
+
+  /// Open tab empty state
+  ///
+  /// In en, this message translates to:
+  /// **'No open invoices.'**
+  String get invoiceNoOpen;
+
+  /// Summary strip: pending count
+  ///
+  /// In en, this message translates to:
+  /// **'{count} to invoice'**
+  String invoiceSummaryToInvoice(int count);
+
+  /// Summary strip: open count + outstanding amount
+  ///
+  /// In en, this message translates to:
+  /// **'{count} open · {amount} outstanding'**
+  String invoiceSummaryOpen(int count, String amount);
+
+  /// Open row: days since the invoice was issued
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String invoiceOpenAge(int days);
+
+  /// Snackbar after the invoice-all sweep
+  ///
+  /// In en, this message translates to:
+  /// **'{count} invoices issued.'**
+  String invoiceIssuedCount(int count);
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

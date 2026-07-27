@@ -31,6 +31,7 @@ import '../../domain/invoice_ubl.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_line_text.dart';
+import '../widgets/invoicing_dashboard.dart';
 
 /// The invoice ARCHIVE (0060): every member sees their own invoices,
 /// admins see the workspace's. Each row downloads or shares the signed
@@ -303,6 +304,40 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     );
   }
 
+  /// One tap invoices every listed member for [period] (invoicing hub)
+  /// — per-member guarded so one failing statement does not stop the
+  /// sweep.
+  Future<void> _issueAll(
+    BuildContext context,
+    WidgetRef ref,
+    List<ToInvoiceEntry> entries,
+    String period,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    var issued = 0;
+    for (final entry in entries) {
+      try {
+        await ref.read(moneyRepositoryProvider).createInvoice(
+              workspaceId: workspace.id,
+              memberId: entry.memberId,
+              period: period,
+            );
+        issued++;
+      } catch (e, st) {
+        TraceLogger.instance.error('money', 'invoice sweep entry failed',
+            error: e, stackTrace: st);
+      }
+    }
+    ref.invalidate(invoicesProvider);
+    if (!context.mounted) return;
+    AppSnack.success(
+      context,
+      l10n?.invoiceIssuedCount(issued) ?? '$issued invoices issued.',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -326,17 +361,11 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       Localizations.maybeLocaleOf(context)?.toString(),
     );
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n?.invoicesTitle ?? 'Invoices')),
-      floatingActionButton: canIssue
-          ? FloatingActionButton.extended(
-              key: const ValueKey('invoice-create-button'),
-              onPressed: () => _createSheet(context, ref),
-              icon: const Icon(Icons.receipt_long_outlined),
-              label: Text(l10n?.invoiceCreate ?? 'New invoice'),
-            )
-          : null,
-      body: switch (invoicesAsync) {
+    final currency = NumberFormat.simpleCurrency(
+      name: ref.watch(currentWorkspaceProvider).value?.currencyCode ??
+          'EUR',
+    );
+    final archiveBody = switch (invoicesAsync) {
         AsyncData(value: final invoices) => invoices.isEmpty
             ? EmptyState(
                 icon: Icons.receipt_long_outlined,
@@ -652,7 +681,67 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
             ),
           ),
         _ => const LoadingView(),
-      },
+    };
+
+    // The invoicing HUB (field request): issuers see what to invoice,
+    // what is open (and needs reminding) and the archive; members keep
+    // their plain archive.
+    if (!canIssue) {
+      return Scaffold(
+        appBar: AppBar(title: Text(l10n?.invoicesTitle ?? 'Invoices')),
+        body: archiveBody,
+      );
+    }
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(l10n?.invoicesTitle ?? 'Invoices'),
+          bottom: TabBar(tabs: [
+            Tab(
+              key: const ValueKey('invoice-tab-todo'),
+              text: l10n?.invoiceTabToInvoice ?? 'To invoice',
+            ),
+            Tab(
+              key: const ValueKey('invoice-tab-open'),
+              text: l10n?.invoiceTabOpen ?? 'Open',
+            ),
+            Tab(
+              key: const ValueKey('invoice-tab-archive'),
+              text: l10n?.invoiceTabArchive ?? 'Archive',
+            ),
+          ]),
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          key: const ValueKey('invoice-create-button'),
+          onPressed: () => _createSheet(context, ref),
+          icon: const Icon(Icons.receipt_long_outlined),
+          label: Text(l10n?.invoiceCreate ?? 'New invoice'),
+        ),
+        body: Column(children: [
+          InvoicingSummaryBar(currency: currency),
+          Expanded(
+            child: TabBarView(children: [
+              ToInvoiceTab(
+                currency: currency,
+                onIssue: (memberId, period) => _createSheet(
+                  context,
+                  ref,
+                  memberId: memberId,
+                  period: period,
+                ),
+                onIssueAll: (entries, period) =>
+                    _issueAll(context, ref, entries, period),
+              ),
+              OpenInvoicesTab(
+                currency: currency,
+                onRemind: (entry) => _remind(context, ref, entry.invoice),
+              ),
+              archiveBody,
+            ]),
+          ),
+        ]),
+      ),
     );
   }
 
@@ -675,6 +764,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     BuildContext context,
     WidgetRef ref, {
     Invoice? replaces,
+    String? memberId,
+    String? period,
   }) async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
@@ -705,10 +796,11 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
         ),
         // Only preselect a member the dropdown actually offers — the
         // wrong invoice may target a member who has left since.
-        initialMemberId: members.any((m) => m.id == replaces?.memberId)
-            ? replaces?.memberId
-            : null,
-        initialPeriod: replaces?.period,
+        initialMemberId:
+            members.any((m) => m.id == (memberId ?? replaces?.memberId))
+                ? (memberId ?? replaces?.memberId)
+                : null,
+        initialPeriod: period ?? replaces?.period,
         initialDetailed: replaces?.detailed ?? false,
         replacesNumber: replaces?.number,
       ),

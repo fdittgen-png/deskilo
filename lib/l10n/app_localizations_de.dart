@@ -1274,6 +1274,47 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceEInvoiceShare => 'E-Rechnung teilen (XML)';
 
   @override
+  String get invoiceTabToInvoice => 'Zu berechnen';
+
+  @override
+  String get invoiceTabOpen => 'Offen';
+
+  @override
+  String get invoiceTabArchive => 'Archiv';
+
+  @override
+  String get invoiceIssueAll => 'Alle berechnen';
+
+  @override
+  String get invoiceIssueOne => 'Berechnen';
+
+  @override
+  String get invoiceAllCaughtUp => 'Alles erledigt — nichts zu berechnen.';
+
+  @override
+  String get invoiceNoOpen => 'Keine offenen Rechnungen.';
+
+  @override
+  String invoiceSummaryToInvoice(int count) {
+    return '$count zu berechnen';
+  }
+
+  @override
+  String invoiceSummaryOpen(int count, String amount) {
+    return '$count offen · $amount ausstehend';
+  }
+
+  @override
+  String invoiceOpenAge(int days) {
+    return '$days Tage';
+  }
+
+  @override
+  String invoiceIssuedCount(int count) {
+    return '$count Rechnungen ausgestellt.';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

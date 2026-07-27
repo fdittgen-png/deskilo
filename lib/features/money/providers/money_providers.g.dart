@@ -551,3 +551,79 @@ final class InvoiceRemindersProvider
 }
 
 String _$invoiceRemindersHash() => r'5528bee535a265ed0f9ba1da6ee36544cc3a428c';
+
+/// The invoicing overview (issuers only — callers gate on canIssue).
+///
+///  * TO INVOICE: every active non-kiosk member whose PREVIOUS month
+///    derives positions and has no non-voided invoice covering it.
+///  * OPEN: non-voided, non-replaced invoices whose month's LIVE solde
+///    (re-derived) is still positive; the live amount is what is shown
+///    as outstanding. Legacy invoices without a period fall back to
+///    their stored total.
+///
+/// Derivations run in parallel; the provider re-evaluates when the
+/// archive changes (issue/void/replace all invalidate invoicesProvider).
+
+@ProviderFor(invoicingOverview)
+final invoicingOverviewProvider = InvoicingOverviewProvider._();
+
+/// The invoicing overview (issuers only — callers gate on canIssue).
+///
+///  * TO INVOICE: every active non-kiosk member whose PREVIOUS month
+///    derives positions and has no non-voided invoice covering it.
+///  * OPEN: non-voided, non-replaced invoices whose month's LIVE solde
+///    (re-derived) is still positive; the live amount is what is shown
+///    as outstanding. Legacy invoices without a period fall back to
+///    their stored total.
+///
+/// Derivations run in parallel; the provider re-evaluates when the
+/// archive changes (issue/void/replace all invalidate invoicesProvider).
+
+final class InvoicingOverviewProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<InvoicingOverview>,
+          InvoicingOverview,
+          FutureOr<InvoicingOverview>
+        >
+    with
+        $FutureModifier<InvoicingOverview>,
+        $FutureProvider<InvoicingOverview> {
+  /// The invoicing overview (issuers only — callers gate on canIssue).
+  ///
+  ///  * TO INVOICE: every active non-kiosk member whose PREVIOUS month
+  ///    derives positions and has no non-voided invoice covering it.
+  ///  * OPEN: non-voided, non-replaced invoices whose month's LIVE solde
+  ///    (re-derived) is still positive; the live amount is what is shown
+  ///    as outstanding. Legacy invoices without a period fall back to
+  ///    their stored total.
+  ///
+  /// Derivations run in parallel; the provider re-evaluates when the
+  /// archive changes (issue/void/replace all invalidate invoicesProvider).
+  InvoicingOverviewProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'invoicingOverviewProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$invoicingOverviewHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<InvoicingOverview> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<InvoicingOverview> create(Ref ref) {
+    return invoicingOverview(ref);
+  }
+}
+
+String _$invoicingOverviewHash() => r'5e234a2500f15792107dd9832bb627b874a9e401';

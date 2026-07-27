@@ -404,6 +404,48 @@
   },
   "invoiceEInvoiceDownload": "E-Rechnung herunterladen (XML)",
   "invoiceEInvoiceShare": "E-Rechnung teilen (XML)",
+  "invoiceTabToInvoice": "Zu berechnen",
+  "invoiceTabOpen": "Offen",
+  "invoiceTabArchive": "Archiv",
+  "invoiceIssueAll": "Alle berechnen",
+  "invoiceIssueOne": "Berechnen",
+  "invoiceAllCaughtUp": "Alles erledigt — nichts zu berechnen.",
+  "invoiceNoOpen": "Keine offenen Rechnungen.",
+  "invoiceSummaryToInvoice": "{count} zu berechnen",
+  "@invoiceSummaryToInvoice": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceSummaryOpen": "{count} offen · {amount} ausstehend",
+  "@invoiceSummaryOpen": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceOpenAge": "{days} Tage",
+  "@invoiceOpenAge": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceIssuedCount": "{count} Rechnungen ausgestellt.",
+  "@invoiceIssuedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "eventTypeMemberJoin": "Neues Mitglied",
   "memberStatusPending": "Ausstehend",
   "pendingApprovalTitle": "Warten auf Freigabe",
