@@ -1331,9 +1331,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceMatchAction => 'Marquer comme payée';
 
   @override
-  String get invoiceMatchAmountLabel => 'Montant reçu';
-
-  @override
   String get invoiceMatchNoteLabel => 'Note';
 
   @override
@@ -1367,6 +1364,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get invoiceAlreadyInvoiced =>
       'Ce mois est déjà facturé pour ce membre.';
+
+  @override
+  String get invoiceMatchPickPayment => 'Sélectionner le paiement enregistré';
+
+  @override
+  String get invoiceMatchNoPayments =>
+      'Aucun paiement enregistré à rapprocher — enregistrez-le ou confirmez-le d\'abord.';
 
   @override
   String get eventTypeMemberJoin => 'Nouveau membre';

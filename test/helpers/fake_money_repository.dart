@@ -175,6 +175,10 @@ class FakeMoneyRepository implements MoneyRepository {
   Future<void> voidInvoice(String invoiceId) async {
     final i = invoices.indexWhere((inv) => inv.id == invoiceId);
     if (i < 0) throw StateError('unknown invoice');
+    // 0068 — a paid invoice is definitive.
+    if (invoiceMatchesStore.containsKey(invoiceId)) {
+      throw StateError('invoice is matched');
+    }
     if (invoices[i].isVoided) throw StateError('invoice already voided');
     invoices[i] = invoices[i]
         .copyWith(voidedAt: DateTime.now(), voidedByName: 'Flo');
@@ -212,10 +216,29 @@ class FakeMoneyRepository implements MoneyRepository {
   /// When true, matches land PENDING (a validation policy exists).
   bool matchPolicyConfigured = false;
 
+  /// Seeds a CONFIRMED registered payment (0068) — what record_payment
+  /// or an online settlement leaves on the ledger; returns its id.
+  String seedPayment(String memberId, int amountCents,
+      {String description = ''}) {
+    final id = 'pay-${ledger.length + 1}';
+    final now = DateTime.now();
+    ledger.add(LedgerEntry(
+      id: id,
+      memberId: memberId,
+      kind: LedgerKind.credit,
+      category: LedgerCategory.payment,
+      amountCents: amountCents,
+      description: description,
+      period: '${now.year}-${now.month.toString().padLeft(2, '0')}',
+      createdAt: now,
+    ));
+    return id;
+  }
+
   @override
   Future<void> matchInvoice({
     required String invoiceId,
-    required int paidCents,
+    required String paymentLedgerId,
     required String resolution,
     String note = '',
   }) async {
@@ -225,6 +248,20 @@ class FakeMoneyRepository implements MoneyRepository {
     if (invoiceMatchesStore.containsKey(invoiceId)) {
       throw StateError('invoice already matched');
     }
+    // 0068 — the amount comes FROM the selected registered payment.
+    final payment = ledger
+        .where((entry) =>
+            entry.id == paymentLedgerId &&
+            entry.memberId == invoice.memberId &&
+            entry.kind == LedgerKind.credit &&
+            entry.category == LedgerCategory.payment)
+        .firstOrNull;
+    if (payment == null) throw StateError('unknown payment');
+    if (invoiceMatchesStore.values
+        .any((m) => m.paymentLedgerId == paymentLedgerId)) {
+      throw StateError('payment already matched');
+    }
+    final paidCents = payment.amountCents;
     final trimmed = note.trim();
     if (resolution == 'exact' && paidCents != invoice.totalCents) {
       throw StateError('amount does not match the invoice');
@@ -261,6 +298,7 @@ class FakeMoneyRepository implements MoneyRepository {
       resolution: resolution,
       note: trimmed,
       status: matchPolicyConfigured ? 'pending' : 'confirmed',
+      paymentLedgerId: paymentLedgerId,
       matchedAt: DateTime.now(),
       byName: 'Flo',
     );

@@ -7,7 +7,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../core/format/cents.dart';
+import '../../domain/ledger_entry.dart';
 import '../../providers/money_providers.dart';
 
 /// The issuer's invoicing summary strip (field request: "everything an
@@ -126,6 +126,7 @@ class OpenInvoicesTab extends ConsumerWidget {
     required this.currency,
     required this.onRemind,
     required this.onMatch,
+    required this.onVoid,
   });
 
   final NumberFormat currency;
@@ -133,6 +134,10 @@ class OpenInvoicesTab extends ConsumerWidget {
 
   /// Opens the match dialog (0067): the ONLY way an invoice closes.
   final void Function(OpenInvoiceEntry entry) onMatch;
+
+  /// Tags the OPEN invoice erronée so it can be corrected (0068 field
+  /// decision: en-cours invoices are cancellable; PAID ones are not).
+  final void Function(OpenInvoiceEntry entry) onVoid;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -212,6 +217,14 @@ class OpenInvoicesTab extends ConsumerWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
+                        IconButton(
+                          key: ValueKey(
+                              'invoice-void-open-${entry.invoice.id}'),
+                          tooltip: l10n?.invoiceVoidAction ??
+                              'Mark erroneous',
+                          icon: const Icon(Icons.block_outlined),
+                          onPressed: () => onVoid(entry),
+                        ),
                         TextButton(
                           key: ValueKey(
                               'invoice-remind-${entry.invoice.id}'),
@@ -244,47 +257,59 @@ String _monthLabel(BuildContext context, String period) {
   ).format(DateTime(int.parse(parts[0]), int.parse(parts[1])));
 }
 
-/// What the match dialog returns (0067).
-typedef MatchChoice = ({int paidCents, String resolution, String note});
+/// What the match dialog returns (0068): the selected REGISTERED
+/// payment plus the resolution its amount demands.
+typedef MatchChoice = ({
+  String paymentLedgerId,
+  String resolution,
+  String note,
+});
 
-/// The payment-match dialog: amount received + the resolution the
-/// difference demands — exact, overpaid (forced with a mandatory note
-/// OR a credit note over the excess), underpaid accepted with a
-/// mandatory note.
+/// The payment-match dialog (0068): the user MAPS the invoice to one
+/// of the member's registered payments — confirmed ledger payment
+/// credits, which is also where online payments land — never a typed
+/// amount. The selected payment's amount drives the resolution: exact,
+/// overpaid (forced with a mandatory note OR a credit note over the
+/// excess), underpaid accepted with a mandatory note.
 class MatchInvoiceDialog extends StatefulWidget {
   const MatchInvoiceDialog({
     super.key,
     required this.dueCents,
     required this.currency,
+    required this.payments,
   });
 
   final int dueCents;
   final NumberFormat currency;
+
+  /// The member's not-yet-consumed registered payments.
+  final List<LedgerEntry> payments;
 
   @override
   State<MatchInvoiceDialog> createState() => _MatchInvoiceDialogState();
 }
 
 class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
-  late final _amount =
-      TextEditingController(text: centsToMajor(widget.dueCents));
   final _note = TextEditingController();
+  String? _paymentId;
   String _overResolution = 'over_credit_note';
   String? _error;
 
   @override
   void dispose() {
-    _amount.dispose();
     _note.dispose();
     super.dispose();
   }
 
-  int? get _paidCents => parseCentsInput(_amount.text);
+  LedgerEntry? get _payment => widget.payments
+      .where((entry) => entry.id == _paymentId)
+      .firstOrNull;
 
   void _submit() {
     final l10n = AppLocalizations.of(context);
-    final paid = _paidCents;
-    if (paid == null) return;
+    final payment = _payment;
+    if (payment == null) return;
+    final paid = payment.amountCents;
     final resolution = paid == widget.dueCents
         ? 'exact'
         : paid > widget.dueCents
@@ -298,7 +323,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
       return;
     }
     Navigator.of(context).pop<MatchChoice>((
-      paidCents: paid,
+      paymentLedgerId: payment.id,
       resolution: resolution,
       note: _note.text.trim(),
     ));
@@ -307,7 +332,11 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final paid = _paidCents;
+    final dateFormat = DateFormat.yMMMd(
+      Localizations.maybeLocaleOf(context)?.toString(),
+    );
+    final payment = _payment;
+    final paid = payment?.amountCents;
     final over = paid != null && paid > widget.dueCents;
     final under = paid != null && paid < widget.dueCents;
     return AlertDialog(
@@ -317,17 +346,47 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              key: const ValueKey('invoice-match-amount'),
-              controller: _amount,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              decoration: InputDecoration(
-                labelText:
-                    l10n?.invoiceMatchAmountLabel ?? 'Amount received',
-              ),
-              onChanged: (_) => setState(() => _error = null),
+            Text(
+              l10n?.invoiceMatchPickPayment ??
+                  'Select the registered payment',
+              style: Theme.of(context).textTheme.bodySmall,
             ),
+            if (widget.payments.isEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Text(
+                  l10n?.invoiceMatchNoPayments ??
+                      'No registered payment to match — record or '
+                          'confirm it first.',
+                  key: const ValueKey('invoice-match-no-payments'),
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              )
+            else
+              RadioGroup<String>(
+                groupValue: _paymentId,
+                onChanged: (value) => setState(() {
+                  _paymentId = value;
+                  _error = null;
+                }),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    for (final entry in widget.payments)
+                      RadioListTile<String>(
+                        key: ValueKey('invoice-match-payment-${entry.id}'),
+                        value: entry.id,
+                        contentPadding: EdgeInsets.zero,
+                        dense: true,
+                        title: Text(
+                          '${widget.currency.format(entry.amountCents / 100)}'
+                          ' · ${dateFormat.format(entry.createdAt)}'
+                          '${entry.description.isEmpty ? '' : ' · ${entry.description}'}',
+                        ),
+                      ),
+                  ],
+                ),
+              ),
             if (over) ...[
               const SizedBox(height: 8),
               Text(
@@ -391,7 +450,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
         ),
         FilledButton(
           key: const ValueKey('invoice-match-confirm'),
-          onPressed: paid == null ? null : _submit,
+          onPressed: payment == null ? null : _submit,
           child: Text(l10n?.invoiceMatchAction ?? 'Mark as paid'),
         ),
       ],

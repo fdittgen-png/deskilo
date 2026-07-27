@@ -27,6 +27,7 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice.dart';
 import '../../domain/invoice_pdf.dart';
+import '../../domain/ledger_entry.dart';
 import '../../domain/invoice_ubl.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../providers/money_providers.dart';
@@ -316,11 +317,28 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
   ) async {
     final l10n = AppLocalizations.of(context);
     final currency = NumberFormat.simpleCurrency(name: invoice.currency);
+    // 0068 — the candidates: the member's registered payments (incl.
+    // settled online payments) not yet consumed by another match.
+    final repo = ref.read(moneyRepositoryProvider);
+    final ledger = await repo.fetchLedger(invoice.memberId);
+    final matches = ref.read(invoiceMatchesProvider).value ?? const {};
+    final consumed = {
+      for (final match in matches.values) ?match.paymentLedgerId,
+    };
+    final payments = [
+      for (final entry in ledger)
+        if (entry.kind == LedgerKind.credit &&
+            entry.category == LedgerCategory.payment &&
+            !consumed.contains(entry.id))
+          entry,
+    ]..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    if (!context.mounted) return;
     final choice = await showDialog<MatchChoice>(
       context: context,
       builder: (context) => MatchInvoiceDialog(
         dueCents: invoice.totalCents,
         currency: currency,
+        payments: payments,
       ),
     );
     if (choice == null || !context.mounted) return;
@@ -332,7 +350,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           'Something went wrong. Please try again.',
       action: () => ref.read(moneyRepositoryProvider).matchInvoice(
             invoiceId: invoice.id,
-            paidCents: choice.paidCents,
+            paymentLedgerId: choice.paymentLedgerId,
             resolution: choice.resolution,
             note: choice.note,
           ),
@@ -580,20 +598,21 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                     return Card(
                       child: ListTile(
                         key: ValueKey('invoice-${invoice.id}'),
-                        title: Row(children: [
-                          Flexible(
-                            child: Text(
-                              rowTitle,
-                              overflow: TextOverflow.ellipsis,
-                              style: invoice.isVoided
-                                  ? const TextStyle(
-                                      decoration:
-                                          TextDecoration.lineThrough)
-                                  : null,
-                            ),
+                        // 0068 field report: the number must stay
+                        // READABLE — wrap instead of ellipsizing.
+                        title: Wrap(
+                            spacing: 8,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                          Text(
+                            rowTitle,
+                            style: invoice.isVoided
+                                ? const TextStyle(
+                                    decoration:
+                                        TextDecoration.lineThrough)
+                                : null,
                           ),
                           if (invoice.isVoided) ...[
-                            const SizedBox(width: 8),
                             Container(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 6, vertical: 2),
@@ -649,6 +668,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                             ),
                             if (isEu ||
                                 (canIssue &&
+                                    matches[invoice.id] == null &&
                                     (!invoice.isVoided ||
                                         !replacedIds
                                             .contains(invoice.id))))
@@ -689,6 +709,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                                     ),
                                   ],
                                   if (canIssue &&
+                                      matches[invoice.id] == null &&
                                       !invoice.isVoided &&
                                       invoice.totalCents > 0)
                                     PopupMenuItem(
@@ -699,7 +720,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                                           l10n?.invoiceRemindAction ??
                                               'Send a reminder'),
                                     ),
-                                  if (canIssue && !invoice.isVoided)
+                                  if (canIssue &&
+                                      matches[invoice.id] == null &&
+                                      !invoice.isVoided)
                                     PopupMenuItem(
                                       key: const ValueKey(
                                           'invoice-void-action'),
@@ -708,6 +731,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                                           'Mark erroneous'),
                                     ),
                                   if (canIssue &&
+                                      matches[invoice.id] == null &&
                                       !replacedIds.contains(invoice.id))
                                     PopupMenuItem(
                                       key: const ValueKey(
@@ -791,6 +815,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                 currency: currency,
                 onRemind: (entry) => _remind(context, ref, entry.invoice),
                 onMatch: (entry) => _match(context, ref, entry.invoice),
+                onVoid: (entry) => _void(context, ref, entry.invoice),
               ),
               archiveBody,
             ]),

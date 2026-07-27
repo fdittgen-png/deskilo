@@ -132,7 +132,6 @@
     }
   },
   "invoiceMatchAction": "Als bezahlt markieren",
-  "invoiceMatchAmountLabel": "Erhaltener Betrag",
   "invoiceMatchNoteLabel": "Notiz",
   "invoiceMatchNoteRequired": "Eine Notiz ist erforderlich.",
   "invoiceMatchOver": "Das Mitglied hat {excess} mehr gezahlt.",
@@ -156,5 +155,7 @@
   "invoiceMatched": "Rechnung abgeglichen.",
   "invoiceMatchPendingBadge": "Wartet auf Validierung",
   "invoiceMatchedBadge": "Bezahlt",
-  "invoiceAlreadyInvoiced": "Dieser Monat ist für dieses Mitglied bereits berechnet."
+  "invoiceAlreadyInvoiced": "Dieser Monat ist für dieses Mitglied bereits berechnet.",
+  "invoiceMatchPickPayment": "Registrierte Zahlung auswählen",
+  "invoiceMatchNoPayments": "Keine registrierte Zahlung zum Abgleich — zuerst erfassen oder bestätigen."
 }

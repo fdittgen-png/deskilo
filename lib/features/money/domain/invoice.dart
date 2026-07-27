@@ -58,6 +58,8 @@ sealed class InvoiceMatch with _$InvoiceMatch {
     required String resolution,
     @Default('') String note,
     @Default('confirmed') String status,
+    // 0068 — the REGISTERED payment this match consumed.
+    String? paymentLedgerId,
     required DateTime matchedAt,
     @Default('') String byName,
   }) = _InvoiceMatch;

@@ -1326,9 +1326,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceMatchAction => 'Als bezahlt markieren';
 
   @override
-  String get invoiceMatchAmountLabel => 'Erhaltener Betrag';
-
-  @override
   String get invoiceMatchNoteLabel => 'Notiz';
 
   @override
@@ -1363,6 +1360,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get invoiceAlreadyInvoiced =>
       'Dieser Monat ist für dieses Mitglied bereits berechnet.';
+
+  @override
+  String get invoiceMatchPickPayment => 'Registrierte Zahlung auswählen';
+
+  @override
+  String get invoiceMatchNoPayments =>
+      'Keine registrierte Zahlung zum Abgleich — zuerst erfassen oder bestätigen.';
 
   @override
   String get eventTypeMemberJoin => 'Neues Mitglied';

@@ -54,12 +54,14 @@ abstract class MoneyRepository {
     String workspaceId,
   );
 
-  /// Matches an open invoice to its payment (RPC `match_invoice`, 0067).
-  /// [resolution] ∈ exact | over_forced | over_credit_note |
-  /// under_accepted; the forced paths REQUIRE [note].
+  /// Matches an open invoice to a REGISTERED payment (RPC
+  /// `match_invoice`, 0068): the amount comes from the selected ledger
+  /// payment — never typed. [resolution] ∈ exact | over_forced |
+  /// over_credit_note | under_accepted; the forced paths REQUIRE
+  /// [note].
   Future<void> matchInvoice({
     required String invoiceId,
-    required int paidCents,
+    required String paymentLedgerId,
     required String resolution,
     String note = '',
   });

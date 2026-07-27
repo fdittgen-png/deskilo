@@ -459,7 +459,6 @@
     }
   },
   "invoiceMatchAction": "Marquer comme payée",
-  "invoiceMatchAmountLabel": "Montant reçu",
   "invoiceMatchNoteLabel": "Note",
   "invoiceMatchNoteRequired": "Une note est obligatoire.",
   "invoiceMatchOver": "Le membre a payé {excess} de plus.",
@@ -484,6 +483,8 @@
   "invoiceMatchPendingBadge": "En attente de validation",
   "invoiceMatchedBadge": "Payée",
   "invoiceAlreadyInvoiced": "Ce mois est déjà facturé pour ce membre.",
+  "invoiceMatchPickPayment": "Sélectionner le paiement enregistré",
+  "invoiceMatchNoPayments": "Aucun paiement enregistré à rapprocher — enregistrez-le ou confirmez-le d'abord.",
   "eventTypeMemberJoin": "Nouveau membre",
   "memberStatusPending": "En attente",
   "pendingApprovalTitle": "En attente d'approbation",

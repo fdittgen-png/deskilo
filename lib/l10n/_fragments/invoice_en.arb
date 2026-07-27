@@ -317,10 +317,6 @@
   "@invoiceMatchAction": {
     "description": "Open card button + match dialog title/confirm (0067)"
   },
-  "invoiceMatchAmountLabel": "Amount received",
-  "@invoiceMatchAmountLabel": {
-    "description": "Match dialog: received amount field"
-  },
   "invoiceMatchNoteLabel": "Note",
   "@invoiceMatchNoteLabel": {
     "description": "Match dialog: note field"
@@ -370,5 +366,13 @@
   "invoiceAlreadyInvoiced": "This month is already invoiced for this member.",
   "@invoiceAlreadyInvoiced": {
     "description": "Pinned 0067 error: one active invoice per member+month"
+  },
+  "invoiceMatchPickPayment": "Select the registered payment",
+  "@invoiceMatchPickPayment": {
+    "description": "Match dialog: caption above the payment picker (0068)"
+  },
+  "invoiceMatchNoPayments": "No registered payment to match — record or confirm it first.",
+  "@invoiceMatchNoPayments": {
+    "description": "Match dialog: no unconsumed registered payments exist"
   }
 }

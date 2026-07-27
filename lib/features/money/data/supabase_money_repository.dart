@@ -81,13 +81,13 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override
   Future<void> matchInvoice({
     required String invoiceId,
-    required int paidCents,
+    required String paymentLedgerId,
     required String resolution,
     String note = '',
   }) async {
     await _client.rpc<void>('match_invoice', params: {
       'p_invoice_id': invoiceId,
-      'p_paid_cents': paidCents,
+      'p_payment_ledger_id': paymentLedgerId,
       'p_resolution': resolution,
       'p_note': note,
     });
@@ -100,7 +100,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     final rows = await _client
         .from('invoice_matches')
         .select('invoice_id, paid_cents, resolution, note, status, '
-            'matched_at, by_name')
+            'payment_ledger_id, matched_at, by_name')
         .eq('workspace_id', workspaceId);
     return {
       for (final row in rows)
@@ -110,6 +110,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
           resolution: row['resolution'] as String,
           note: row['note'] as String? ?? '',
           status: row['status'] as String? ?? 'confirmed',
+          paymentLedgerId: row['payment_ledger_id'] as String?,
           matchedAt: DateTime.parse(row['matched_at'] as String).toLocal(),
           byName: row['by_name'] as String? ?? '',
         ),
