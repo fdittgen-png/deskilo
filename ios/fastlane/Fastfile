@@ -173,6 +173,21 @@ platform :ios do
     upload_testflight(changelog: options[:changelog])
   end
 
+  desc "Fetch (or, in the sync workflow, mint) the DEVELOPER ID certificate"
+  desc "the macOS build is signed and notarised with. A different animal"
+  desc "from the App Store certificate: Developer ID is what lets a DMG"
+  desc "downloaded from anywhere open on a double-click."
+  lane :match_developer_id do |options|
+    match(
+      type: "developer_id",
+      api_key: asc_api_key,
+      app_identifier: ["de.deskilo.app"],
+      # Minting is a portal write, so only the explicit sync run may do it.
+      readonly: !options[:write],
+      platform: "macos",
+    )
+  end
+
   desc "Push the App Store listing (text + URLs) from fastlane/metadata/ios."
   desc "Text only: no binary, no screenshots, nothing submitted for review —"
   desc "so it is safe to re-run at any time. Five locales, the same five the"

@@ -24,6 +24,24 @@
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>$(PRODUCT_COPYRIGHT)</string>
+	<!-- The OAuth callback returns over deskilo://, the same scheme
+	     Android and iOS register. Without this the sign-in lands on
+	     Supabase's Site URL (localhost:3000) and the browser reports it
+	     cannot connect — which is exactly what happened on the first
+	     macOS build. -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>de.deskilo.app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>deskilo</string>
+			</array>
+		</dict>
+	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>DesKilo scans workspace invite and check-in QR codes.</string>
 	<key>NSMainNibFile</key>
