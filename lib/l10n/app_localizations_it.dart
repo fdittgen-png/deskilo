@@ -553,6 +553,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get commonSaveFailed => 'Impossibile salvare il file.';
 
   @override
+  String get commonRetry => 'Riprova';
+
+  @override
   String get consumptionAdd => 'Aggiungi consumo';
 
   @override
@@ -1475,7 +1478,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceGapVatNotSupported =>
-      'Lo spazio applica l\'IVA e DesKilo non la calcola ancora per voce — non è possibile produrre una ripartizione fiscale veritiera.';
+      'Lo spazio applica l\'IVA ma questa fattura non porta alcuna aliquota — aggiungi le aliquote ed emettila di nuovo.';
 
   @override
   String get invoiceGapMissingVatId =>
@@ -1562,7 +1565,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get legalIdentityVatWarning =>
-      'DesKilo non calcola ancora l\'IVA per voce: con questo regime l\'esportazione XML resta disattivata. Il PDF non è interessato.';
+      'Questo spazio applica l\'IVA ma non è configurata alcuna aliquota: le fatture non espongono imposta e l\'export XML resta disattivato.';
 
   @override
   String get addressCountryLabel => 'Paese';
@@ -1712,6 +1715,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get fecMissingSiren =>
       'Il FEC prende il nome dal numero di registrazione — inseriscilo prima in Identità legale.';
+
+  @override
+  String get invoiceEInvoiceStaleIdentity =>
+      'La tua identità legale ora è completa, ma questa fattura è stata firmata prima e conserva ciò con cui è stata emessa. Segnala come errata ed emetti una sostitutiva perché porti la nuova identità.';
+
+  @override
+  String get einvoiceConfigUnavailable =>
+      'Impossibile caricare la configurazione della piattaforma. Controlla la connessione e riprova.';
 
   @override
   String get eventTypeMemberJoin => 'Nuovo membro';
@@ -2739,6 +2750,79 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get validationSaved => 'Regola di validazione salvata.';
+
+  @override
+  String get vatTitle => 'IVA';
+
+  @override
+  String get vatIntro =>
+      'In DesKilo i prezzi sono IVA inclusa. Aggiungere aliquote non cambia nulla di ciò che i membri pagano: l\'imposta viene estratta dal prezzo già applicato e mostrata in fattura.';
+
+  @override
+  String get vatRegimeHint =>
+      'Questo spazio non è dichiarato soggetto a IVA, quindi le fatture non la espongono. Si cambia in Identità legale.';
+
+  @override
+  String get vatEmpty => 'Nessuna aliquota — le fatture non espongono IVA.';
+
+  @override
+  String get vatSeed => 'Usa le aliquote consuete';
+
+  @override
+  String get vatAddRate => 'Aggiungi un\'aliquota';
+
+  @override
+  String get vatRateLabelField => 'Nome';
+
+  @override
+  String get vatRatePercentField => 'Aliquota %';
+
+  @override
+  String get vatRateDefaultTooltip =>
+      'Aliquota predefinita — usata dagli abbonamenti e da tutto ciò che non ne ha una propria';
+
+  @override
+  String get vatRateRemoveTooltip => 'Rimuovi';
+
+  @override
+  String get vatSaved => 'Aliquote IVA salvate.';
+
+  @override
+  String get vatNeedsDefault =>
+      'Segna esattamente un\'aliquota come predefinita.';
+
+  @override
+  String get vatRateIncomplete =>
+      'Ogni aliquota richiede un nome e una percentuale tra 0 e 99,99.';
+
+  @override
+  String get vatRatesTile => 'Aliquote IVA';
+
+  @override
+  String get vatAccountField => 'Conto IVA';
+
+  @override
+  String get vatAccountHint =>
+      'Conto su cui l\'esportazione contabile registra l\'IVA incassata. Vuoto = 445710.';
+
+  @override
+  String get vatServiceRate => 'Aliquota IVA';
+
+  @override
+  String get vatServiceRateDefault => 'Predefinita dello spazio';
+
+  @override
+  String get vatPdfNet => 'Imponibile';
+
+  @override
+  String get vatPdfVat => 'IVA';
+
+  @override
+  String get fecAccountVat => 'IVA incassata';
+
+  @override
+  String get vatKeptRate =>
+      'Un\'aliquota ancora usata da una fattura o da un servizio viene conservata, disattivata.';
 
   @override
   String get onboardingTitle => 'Benvenuto su DesKilo';

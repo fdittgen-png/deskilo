@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'vat_rate.dart';
+
 part 'invoice.freezed.dart';
 
 /// One position of an invoice. Since 0062 positions are DERIVED from
@@ -17,6 +19,12 @@ sealed class InvoiceLine with _$InvoiceLine {
     required String label,
     @Default(1) int quantity,
     required int amountCents,
+
+    /// The VAT rate this position was taxed at (0072). Prices are
+    /// INCLUSIVE, so [amountCents] is the gross and the tax is extracted
+    /// from it with `vatSplit`. 0 = no VAT (every pre-0072 line, and every
+    /// credit — money moving is not a supply).
+    @Default(0.0) double vatPercent,
   }) = _InvoiceLine;
 }
 
@@ -168,9 +176,48 @@ sealed class Invoice with _$Invoice {
     // Null on pre-0069 documents.
     InvoiceParty? sellerParty,
     InvoiceParty? buyerParty,
+    // 0072 — the VAT breakdown as issued, one entry per rate. Empty on
+    // pre-0072 invoices and on workspaces that charge no VAT.
+    @Default([]) List<InvoiceVatTotal> vatTotals,
   }) = _Invoice;
 
+  /// Sum of the positive positions — the gross the invoice charges before
+  /// its month's payments are netted off.
+  int get chargesCents => lines
+      .where((line) => line.amountCents > 0)
+      .fold(0, (sum, line) => sum + line.amountCents);
+
+  /// The tax contained in those charges. 0 when no VAT applies.
+  int get vatCents =>
+      vatTotals.fold(0, (sum, total) => sum + total.vatCents);
+
+  /// The charges without their tax.
+  int get netCents => vatTotals.isEmpty
+      ? chargesCents
+      : vatTotals.fold(0, (sum, total) => sum + total.netCents);
+
+  /// Whether this document actually carries tax — the PDF and the exports
+  /// only show a breakdown when there is one.
+  bool get hasVat => vatCents > 0;
+
   bool get isVoided => voidedAt != null;
+
+  /// The breakdown the documents render, one entry per rate.
+  ///
+  /// The SNAPSHOT wins whenever there is one: it is what the signature
+  /// covers. Only a pre-0072 invoice falls back to deriving it, and there
+  /// every line carries 0 %, so the fallback yields the single zero-rated
+  /// entry those documents always showed.
+  List<InvoiceVatTotal> vatBreakdown({required String zeroCategory}) =>
+      vatTotals.isNotEmpty
+          ? vatTotals
+          : vatTotalsOf(
+              [
+                for (final line in lines)
+                  (amountCents: line.amountCents, vatPercent: line.vatPercent),
+              ],
+              zeroCategory: zeroCategory,
+            );
 
   factory Invoice.fromRow(Map<String, dynamic> row) => Invoice(
         id: row['id'] as String,
@@ -187,6 +234,8 @@ sealed class Invoice with _$Invoice {
               label: line['label'] as String? ?? '',
               quantity: (line['quantity'] as num?)?.toInt() ?? 1,
               amountCents: (line['amount_cents'] as num).toInt(),
+              vatPercent:
+                  (line['vat_percent'] as num?)?.toDouble() ?? 0,
             ),
         ],
         totalCents: (row['total_cents'] as num).toInt(),
@@ -213,6 +262,10 @@ sealed class Invoice with _$Invoice {
               label: entry['description'] as String? ?? '',
               amountCents: (entry['amount_cents'] as num?)?.toInt() ?? 0,
             ),
+        ],
+        vatTotals: [
+          for (final total in (row['vat_totals'] as List? ?? const []))
+            InvoiceVatTotal.fromJson(total as Map),
         ],
         sellerParty: switch ((row['parties'] as Map?)?['seller']) {
           final Map<dynamic, dynamic> seller => InvoiceParty.fromSnapshot(seller),

@@ -273,7 +273,7 @@
   "invoiceEInvoiceReady": "Listo — este archivo cumple EN 16931.",
   "invoiceEInvoiceBlockedTitle": "Un validador rechazaría este archivo:",
   "invoiceEInvoiceIncompleteTitle": "Válido, pero los perfiles nacionales estrictos piden además:",
-  "invoiceGapVatNotSupported": "El espacio cobra IVA y DesKilo aún no calcula el IVA por posición — no se puede producir un desglose fiscal veraz.",
+  "invoiceGapVatNotSupported": "El espacio cobra IVA pero esta factura no lleva ningún tipo: añade tus tipos de IVA y vuelve a emitirla.",
   "invoiceGapMissingVatId": "Falta el número de IVA — un vendedor exento debe indicarlo.",
   "invoiceGapMissingLegalId": "Falta el número de registro (SIREN, HRB, CIF…) — nada te identifica en la factura.",
   "invoiceGapMissingExemptionReason": "Falta el motivo por el que no se cobra IVA.",
@@ -298,7 +298,7 @@
   "legalIdentityCity": "Ciudad",
   "legalIdentityPostalCode": "Código postal",
   "legalIdentitySaved": "Identidad legal guardada.",
-  "legalIdentityVatWarning": "DesKilo aún no calcula el IVA por posición: con este régimen la exportación XML queda desactivada. El PDF no se ve afectado.",
+  "legalIdentityVatWarning": "Este espacio cobra IVA pero no hay ningún tipo configurado: las facturas no muestran impuesto y la exportación XML sigue desactivada.",
   "addressCountryLabel": "País",
   "addressVatIdLabel": "Número de IVA (si facturas como empresa)",
   "invoiceProformaAction": "Factura proforma",
@@ -354,5 +354,7 @@
   "fecAccountCustomers": "Clientes",
   "fecAccountRevenue": "Ventas",
   "fecAccountBank": "Banco",
-  "fecMissingSiren": "El FEC se nombra con tu número de registro — rellénalo primero en Identidad legal."
+  "fecMissingSiren": "El FEC se nombra con tu número de registro — rellénalo primero en Identidad legal.",
+  "invoiceEInvoiceStaleIdentity": "Tu identidad legal ya está completa, pero esta factura se firmó antes y conserva aquello con lo que se emitió. Márcala como errónea y emite una sustitución para que lleve la nueva identidad.",
+  "einvoiceConfigUnavailable": "No se pudo cargar la configuración de la plataforma. Comprueba la conexión e inténtalo de nuevo."
 }

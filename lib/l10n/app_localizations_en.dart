@@ -549,6 +549,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonSaveFailed => 'Could not save the file.';
 
   @override
+  String get commonRetry => 'Try again';
+
+  @override
   String get consumptionAdd => 'Add consumption';
 
   @override
@@ -1464,7 +1467,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceGapVatNotSupported =>
-      'The workspace charges VAT, and DesKilo does not compute VAT per position yet — no truthful tax breakdown can be produced.';
+      'The workspace charges VAT but this invoice carries no rate — add your VAT rates, then issue it again.';
 
   @override
   String get invoiceGapMissingVatId =>
@@ -1550,7 +1553,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get legalIdentityVatWarning =>
-      'DesKilo does not compute VAT per position yet: with this regime the XML export stays disabled. The PDF is unaffected.';
+      'This workspace charges VAT but no rate is set up: invoices show no tax and the XML export stays disabled until you add one.';
 
   @override
   String get addressCountryLabel => 'Country';
@@ -1698,6 +1701,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get fecMissingSiren =>
       'The FEC is named after your registration number — fill it in under Legal identity first.';
+
+  @override
+  String get invoiceEInvoiceStaleIdentity =>
+      'Your legal identity is complete now, but this invoice was signed before it and keeps what it was issued with. Mark it erroneous and issue a replacement to carry the new identity.';
+
+  @override
+  String get einvoiceConfigUnavailable =>
+      'The platform settings could not be loaded. Check your connection and try again.';
 
   @override
   String get eventTypeMemberJoin => 'New member';
@@ -2718,6 +2729,78 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get validationSaved => 'Validation rule saved.';
+
+  @override
+  String get vatTitle => 'VAT';
+
+  @override
+  String get vatIntro =>
+      'Prices in DesKilo include VAT. Adding rates changes nothing about what members pay — the tax is extracted from the price you already charge and shown on the invoice.';
+
+  @override
+  String get vatRegimeHint =>
+      'This workspace is not declared VAT-registered, so invoices show no VAT. Change that under Legal identity.';
+
+  @override
+  String get vatEmpty => 'No rate yet — invoices show no VAT.';
+
+  @override
+  String get vatSeed => 'Use the usual rates';
+
+  @override
+  String get vatAddRate => 'Add a rate';
+
+  @override
+  String get vatRateLabelField => 'Name';
+
+  @override
+  String get vatRatePercentField => 'Rate %';
+
+  @override
+  String get vatRateDefaultTooltip =>
+      'Default rate — used by subscriptions and by anything without its own rate';
+
+  @override
+  String get vatRateRemoveTooltip => 'Remove';
+
+  @override
+  String get vatSaved => 'VAT rates saved.';
+
+  @override
+  String get vatNeedsDefault => 'Mark exactly one rate as the default.';
+
+  @override
+  String get vatRateIncomplete =>
+      'Every rate needs a name and a percentage between 0 and 99.99.';
+
+  @override
+  String get vatRatesTile => 'VAT rates';
+
+  @override
+  String get vatAccountField => 'VAT account';
+
+  @override
+  String get vatAccountHint =>
+      'Where the accounting export books collected VAT. Empty = 445710.';
+
+  @override
+  String get vatServiceRate => 'VAT rate';
+
+  @override
+  String get vatServiceRateDefault => 'Workspace default';
+
+  @override
+  String get vatPdfNet => 'Net';
+
+  @override
+  String get vatPdfVat => 'VAT';
+
+  @override
+  String get fecAccountVat => 'Collected VAT';
+
+  @override
+  String get vatKeptRate =>
+      'A rate still used by an invoice or a service is kept, deactivated.';
 
   @override
   String get onboardingTitle => 'Welcome to DesKilo';

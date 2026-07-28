@@ -83,6 +83,7 @@ Future<FecAccounts?> showFecAccountsDialog(
   final customers = TextEditingController(text: initial.customers);
   final revenue = TextEditingController(text: initial.revenue);
   final bank = TextEditingController(text: initial.bank);
+  final vat = TextEditingController(text: initial.vat);
   return showDialog<FecAccounts>(
     context: context,
     builder: (context) => AlertDialog(
@@ -113,6 +114,14 @@ Future<FecAccounts?> showFecAccountsDialog(
             ),
           ),
           TextField(
+            key: const ValueKey('fec-account-vat'),
+            controller: vat,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              labelText: l10n?.fecAccountVat ?? 'Collected VAT',
+            ),
+          ),
+          TextField(
             key: const ValueKey('fec-account-bank'),
             controller: bank,
             keyboardType: TextInputType.number,
@@ -133,6 +142,7 @@ Future<FecAccounts?> showFecAccountsDialog(
             customers: customers.text.trim(),
             revenue: revenue.text.trim(),
             bank: bank.text.trim(),
+            vat: vat.text.trim(),
           )),
           child: Text(l10n?.commonSave ?? 'Save'),
         ),

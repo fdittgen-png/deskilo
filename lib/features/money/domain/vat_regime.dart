@@ -10,9 +10,11 @@
 ///    legal registration number (BT-30) carries it.
 ///  * [exempt] → category `E`. BR-E-02 REQUIRES a seller VAT (or tax
 ///    registration) identifier and BR-E-10 an exemption reason.
-///  * [vatRegistered] → the app does not track VAT rates per position, so
-///    no truthful breakdown can be produced; the export refuses instead of
-///    declaring a zero tax that the seller does owe.
+///  * [vatRegistered] → category `S`. BR-S-02 REQUIRES a seller VAT
+///    identifier and BR-S-05 the rate on every position, which is what the
+///    workspace's VAT rates (0072) supply. An invoice issued before any
+///    rate existed carries none, and the export still refuses it rather
+///    than declare a zero tax the seller does owe.
 enum VatRegime {
   /// Services outside the scope of VAT.
   notSubject,
@@ -62,8 +64,9 @@ extension VatRegimeRules on VatRegime {
       };
 
   /// Whether a seller VAT / tax registration identifier is REQUIRED
-  /// (category E) — or forbidden (category O, BR-O-02).
-  bool get requiresVatId => this == VatRegime.exempt;
+  /// (category E per BR-E-02, category S per BR-S-02) — or forbidden
+  /// (category O, BR-O-02).
+  bool get requiresVatId => this != VatRegime.notSubject;
 
   /// Category O must not carry one.
   bool get forbidsVatId => this == VatRegime.notSubject;

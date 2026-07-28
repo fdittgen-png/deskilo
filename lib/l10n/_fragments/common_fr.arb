@@ -12,5 +12,6 @@
   "comingSoon": "Bientôt disponible",
   "shellReserveButton": "Réserver",
   "commonSavedTo": "Enregistré dans {path}",
-  "commonSaveFailed": "Impossible d'enregistrer le fichier."
+  "commonSaveFailed": "Impossible d'enregistrer le fichier.",
+  "commonRetry": "Réessayer"
 }

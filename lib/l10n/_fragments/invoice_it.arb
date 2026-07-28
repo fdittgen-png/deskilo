@@ -273,7 +273,7 @@
   "invoiceEInvoiceReady": "Pronto — questo file soddisfa la EN 16931.",
   "invoiceEInvoiceBlockedTitle": "Un validatore rifiuterebbe questo file:",
   "invoiceEInvoiceIncompleteTitle": "Valido, ma i profili nazionali più severi chiedono anche:",
-  "invoiceGapVatNotSupported": "Lo spazio applica l'IVA e DesKilo non la calcola ancora per voce — non è possibile produrre una ripartizione fiscale veritiera.",
+  "invoiceGapVatNotSupported": "Lo spazio applica l'IVA ma questa fattura non porta alcuna aliquota — aggiungi le aliquote ed emettila di nuovo.",
   "invoiceGapMissingVatId": "Manca la partita IVA — un venditore esente deve indicarla.",
   "invoiceGapMissingLegalId": "Manca il numero di registrazione (SIREN, HRB, CIF…) — nulla ti identifica sulla fattura.",
   "invoiceGapMissingExemptionReason": "Manca il motivo per cui non si applica l'IVA.",
@@ -298,7 +298,7 @@
   "legalIdentityCity": "Città",
   "legalIdentityPostalCode": "Codice postale",
   "legalIdentitySaved": "Identità legale salvata.",
-  "legalIdentityVatWarning": "DesKilo non calcola ancora l'IVA per voce: con questo regime l'esportazione XML resta disattivata. Il PDF non è interessato.",
+  "legalIdentityVatWarning": "Questo spazio applica l'IVA ma non è configurata alcuna aliquota: le fatture non espongono imposta e l'export XML resta disattivato.",
   "addressCountryLabel": "Paese",
   "addressVatIdLabel": "Partita IVA (se fatturi come impresa)",
   "invoiceProformaAction": "Fattura proforma",
@@ -354,5 +354,7 @@
   "fecAccountCustomers": "Clienti",
   "fecAccountRevenue": "Ricavi",
   "fecAccountBank": "Banca",
-  "fecMissingSiren": "Il FEC prende il nome dal numero di registrazione — inseriscilo prima in Identità legale."
+  "fecMissingSiren": "Il FEC prende il nome dal numero di registrazione — inseriscilo prima in Identità legale.",
+  "invoiceEInvoiceStaleIdentity": "La tua identità legale ora è completa, ma questa fattura è stata firmata prima e conserva ciò con cui è stata emessa. Segnala come errata ed emetti una sostitutiva perché porti la nuova identità.",
+  "einvoiceConfigUnavailable": "Impossibile caricare la configurazione della piattaforma. Controlla la connessione e riprova."
 }

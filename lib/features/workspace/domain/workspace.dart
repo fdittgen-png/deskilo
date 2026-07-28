@@ -72,6 +72,11 @@ sealed class Workspace with _$Workspace {
     @Default('') String city,
     @Default('') String postalCode,
 
+    /// The account VAT is booked to in the FEC export (0072); '' = the
+    /// French default 445710. Only the accounting export reads it — the
+    /// app books nothing itself.
+    @Default('') String vatAccount,
+
     /// Desk fill opacity percentage (0040): 100 = solid (default), lower
     /// makes desks translucent so a level's background photo shows through.
     /// Clamped 20..100 by the column check.

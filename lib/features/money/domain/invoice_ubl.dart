@@ -2,6 +2,7 @@
 import 'package:xml/xml.dart';
 
 import 'invoice.dart';
+import 'vat_rate.dart';
 import 'vat_regime.dart';
 
 /// The 27 EU member states — the e-invoice affordance shows only for
@@ -27,12 +28,20 @@ bool isEuCountry(String countryCode) =>
 ///    already received;
 ///  * the invoice total (solde) → `PayableAmount` (BT-115).
 ///
-/// Tax coding follows the seller's declared [VatRegime] (0069), because
-/// the norm's fatal rules differ per category:
+/// Tax coding follows the seller's declared [VatRegime] (0069) and the
+/// invoice's own VAT breakdown (0072), because the norm's fatal rules
+/// differ per category:
 ///  * `O` — outside the scope of VAT: no rate, no seller tax identifier
 ///    (BR-O-02/BR-O-05), reason code `VATEX-EU-O` (BR-O-10);
 ///  * `E` — exempt: rate 0, seller VAT identifier and an exemption reason
-///    required (BR-E-02/BR-E-05/BR-E-10).
+///    required (BR-E-02/BR-E-05/BR-E-10);
+///  * `S` — taxed: one `TaxSubtotal` per rate, each with its percentage
+///    (BR-S-05), and the seller's VAT identifier (BR-S-02).
+///
+/// Because DesKilo's prices are VAT-INCLUSIVE, every amount the norm wants
+/// tax-exclusive (BT-131 line net, BT-109 total net) is the EXTRACTED net
+/// from [vatSplit]; BT-112 stays the gross the member actually pays, so
+/// BR-CO-15 (net + tax = gross) holds by construction.
 ///
 /// Element order follows the UBL 2.1 XSD sequence — a schema-invalid
 /// document is rejected before any business rule is even evaluated.
@@ -53,6 +62,9 @@ String buildInvoiceUbl({
   final charges =
       invoice.lines.where((l) => l.amountCents > 0).toList(growable: false);
   final chargesCents = charges.fold(0, (sum, l) => sum + l.amountCents);
+  final breakdown = invoice.vatBreakdown(zeroCategory: category);
+  final netCents = breakdown.fold(0, (sum, t) => sum + t.netCents);
+  final taxCents = breakdown.fold(0, (sum, t) => sum + t.vatCents);
   final prepaidCents = -invoice.lines
       .where((l) => l.amountCents < 0)
       .fold(0, (sum, l) => sum + l.amountCents);
@@ -155,30 +167,39 @@ String buildInvoiceUbl({
     }
 
     builder.element('cac:TaxTotal', nest: () {
-      money('TaxAmount', 0);
-      builder.element('cac:TaxSubtotal', nest: () {
-        money('TaxableAmount', chargesCents);
-        money('TaxAmount', 0);
-        builder.element('cac:TaxCategory', nest: () {
-          cbc('ID', category);
-          // BR-E-05 wants the 0 rate spelled out; BR-O-05 forbids a rate.
-          if (regime == VatRegime.exempt) cbc('Percent', '0');
-          if (exemptionCode.isNotEmpty) {
-            cbc('TaxExemptionReasonCode', exemptionCode);
-          }
-          if (seller.taxExemptionReason.isNotEmpty) {
-            cbc('TaxExemptionReason', seller.taxExemptionReason);
-          }
-          builder.element('cac:TaxScheme', nest: () {
-            cbc('ID', 'VAT');
+      money('TaxAmount', taxCents);
+      // One subtotal per rate (BR-CO-18): the breakdown is per rate, not
+      // per line, and its sum is the tax above.
+      for (final total in breakdown) {
+        builder.element('cac:TaxSubtotal', nest: () {
+          money('TaxableAmount', total.netCents);
+          money('TaxAmount', total.vatCents);
+          builder.element('cac:TaxCategory', nest: () {
+            cbc('ID', total.category);
+            // BR-S-05 wants the real rate; BR-E-05 the 0 spelled out;
+            // BR-O-05 forbids a rate at all.
+            if (total.category != 'O') cbc('Percent', _percent(total.percent));
+            if (total.category != 'S') {
+              if (exemptionCode.isNotEmpty) {
+                cbc('TaxExemptionReasonCode', exemptionCode);
+              }
+              if (seller.taxExemptionReason.isNotEmpty) {
+                cbc('TaxExemptionReason', seller.taxExemptionReason);
+              }
+            }
+            builder.element('cac:TaxScheme', nest: () {
+              cbc('ID', 'VAT');
+            });
           });
         });
-      });
+      }
     });
 
     builder.element('cac:LegalMonetaryTotal', nest: () {
-      money('LineExtensionAmount', chargesCents);
-      money('TaxExclusiveAmount', chargesCents);
+      // BR-CO-10/13: the sum of the line nets IS the tax-exclusive total.
+      money('LineExtensionAmount', netCents);
+      money('TaxExclusiveAmount', netCents);
+      // BR-CO-15 — and the gross is what the member was always charged.
       money('TaxInclusiveAmount', chargesCents);
       if (prepaidCents > 0) money('PrepaidAmount', prepaidCents);
       money('PayableAmount', invoice.totalCents);
@@ -191,16 +212,20 @@ String buildInvoiceUbl({
       final quantity = line.quantity > 1 && line.amountCents % line.quantity == 0
           ? line.quantity
           : 1;
-      final unitCents = line.amountCents ~/ quantity;
+      // The norm's line amount is tax-EXCLUSIVE (BT-131), so the gross
+      // price is split exactly as the breakdown above splits it.
+      final lineNet = vatSplit(line.amountCents, line.vatPercent).netCents;
+      final unitCents = lineNet ~/ quantity;
+      final lineCategory = line.vatPercent > 0 ? 'S' : category;
       builder.element('cac:InvoiceLine', nest: () {
         cbc('ID', '${i + 1}');
         cbc('InvoicedQuantity', '$quantity', {'unitCode': 'C62'});
-        money('LineExtensionAmount', line.amountCents);
+        money('LineExtensionAmount', lineNet);
         builder.element('cac:Item', nest: () {
           cbc('Name', lineText(line));
           builder.element('cac:ClassifiedTaxCategory', nest: () {
-            cbc('ID', category);
-            if (regime == VatRegime.exempt) cbc('Percent', '0');
+            cbc('ID', lineCategory);
+            if (lineCategory != 'O') cbc('Percent', _percent(line.vatPercent));
             builder.element('cac:TaxScheme', nest: () {
               cbc('ID', 'VAT');
             });
@@ -214,6 +239,13 @@ String buildInvoiceUbl({
   });
   return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
 }
+
+/// A rate as the norm writes it: '20' or '5.5', never '20.0' — the code
+/// lists compare percentages as decimals, and a trailing zero has tripped
+/// national validators before.
+String _percent(double percent) => percent == percent.roundToDouble()
+    ? percent.toStringAsFixed(0)
+    : percent.toString();
 
 /// 'yyyy-MM' → the month's first and last calendar day.
 ({String start, String end})? _periodDates(String? period) {

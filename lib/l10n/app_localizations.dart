@@ -1094,6 +1094,12 @@ abstract class AppLocalizations {
   /// **'Could not save the file.'**
   String get commonSaveFailed;
 
+  /// Generic retry button
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get commonRetry;
+
   /// Button + sheet title recording my own consumed services (#129)
   ///
   /// In en, this message translates to:
@@ -2693,7 +2699,7 @@ abstract class AppLocalizations {
   /// Gap: the workspace charges VAT, which the app cannot break down
   ///
   /// In en, this message translates to:
-  /// **'The workspace charges VAT, and DesKilo does not compute VAT per position yet — no truthful tax breakdown can be produced.'**
+  /// **'The workspace charges VAT but this invoice carries no rate — add your VAT rates, then issue it again.'**
   String get invoiceGapVatNotSupported;
 
   /// Gap: BR-E-02 — exempt seller without a VAT identifier
@@ -2843,7 +2849,7 @@ abstract class AppLocalizations {
   /// Warning shown for the VAT-registered regime
   ///
   /// In en, this message translates to:
-  /// **'DesKilo does not compute VAT per position yet: with this regime the XML export stays disabled. The PDF is unaffected.'**
+  /// **'This workspace charges VAT but no rate is set up: invoices show no tax and the XML export stays disabled until you add one.'**
   String get legalIdentityVatWarning;
 
   /// Country field on the member address sheet
@@ -3121,6 +3127,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The FEC is named after your registration number — fill it in under Legal identity first.'**
   String get fecMissingSiren;
+
+  /// Explains that the invoice snapshot predates the completed legal identity
+  ///
+  /// In en, this message translates to:
+  /// **'Your legal identity is complete now, but this invoice was signed before it and keeps what it was issued with. Mark it erroneous and issue a replacement to carry the new identity.'**
+  String get invoiceEInvoiceStaleIdentity;
+
+  /// Shown when the e-invoice platform status probe fails
+  ///
+  /// In en, this message translates to:
+  /// **'The platform settings could not be loaded. Check your connection and try again.'**
+  String get einvoiceConfigUnavailable;
 
   /// No description provided for @eventTypeMemberJoin.
   ///
@@ -4981,6 +4999,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Validation rule saved.'**
   String get validationSaved;
+
+  /// VAT settings screen title
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get vatTitle;
+
+  /// Explains that prices are VAT-inclusive and the tax is extracted
+  ///
+  /// In en, this message translates to:
+  /// **'Prices in DesKilo include VAT. Adding rates changes nothing about what members pay — the tax is extracted from the price you already charge and shown on the invoice.'**
+  String get vatIntro;
+
+  /// Shown when the workspace regime is not VAT-registered
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace is not declared VAT-registered, so invoices show no VAT. Change that under Legal identity.'**
+  String get vatRegimeHint;
+
+  /// No VAT rate configured yet
+  ///
+  /// In en, this message translates to:
+  /// **'No rate yet — invoices show no VAT.'**
+  String get vatEmpty;
+
+  /// Button seeding the country's usual rates
+  ///
+  /// In en, this message translates to:
+  /// **'Use the usual rates'**
+  String get vatSeed;
+
+  /// Adds an empty rate row
+  ///
+  /// In en, this message translates to:
+  /// **'Add a rate'**
+  String get vatAddRate;
+
+  /// Rate name field ('Standard')
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get vatRateLabelField;
+
+  /// Rate percentage field
+  ///
+  /// In en, this message translates to:
+  /// **'Rate %'**
+  String get vatRatePercentField;
+
+  /// Tooltip of the default-rate radio
+  ///
+  /// In en, this message translates to:
+  /// **'Default rate — used by subscriptions and by anything without its own rate'**
+  String get vatRateDefaultTooltip;
+
+  /// Tooltip of the remove-rate button
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get vatRateRemoveTooltip;
+
+  /// Confirmation after saving the rates
+  ///
+  /// In en, this message translates to:
+  /// **'VAT rates saved.'**
+  String get vatSaved;
+
+  /// Validation: exactly one default is required
+  ///
+  /// In en, this message translates to:
+  /// **'Mark exactly one rate as the default.'**
+  String get vatNeedsDefault;
+
+  /// Validation: a rate needs a name and a percentage
+  ///
+  /// In en, this message translates to:
+  /// **'Every rate needs a name and a percentage between 0 and 99.99.'**
+  String get vatRateIncomplete;
+
+  /// Tile leading to the VAT rate editor
+  ///
+  /// In en, this message translates to:
+  /// **'VAT rates'**
+  String get vatRatesTile;
+
+  /// FEC account for collected VAT
+  ///
+  /// In en, this message translates to:
+  /// **'VAT account'**
+  String get vatAccountField;
+
+  /// Explains the VAT account and its default
+  ///
+  /// In en, this message translates to:
+  /// **'Where the accounting export books collected VAT. Empty = 445710.'**
+  String get vatAccountHint;
+
+  /// VAT rate picker in the service and package editors
+  ///
+  /// In en, this message translates to:
+  /// **'VAT rate'**
+  String get vatServiceRate;
+
+  /// Picker entry meaning the workspace default rate
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace default'**
+  String get vatServiceRateDefault;
+
+  /// Invoice PDF: the net (tax-exclusive) subtotal
+  ///
+  /// In en, this message translates to:
+  /// **'Net'**
+  String get vatPdfNet;
+
+  /// Invoice PDF: the VAT caption, followed by the rate
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get vatPdfVat;
+
+  /// FEC export: label of the collected-VAT account
+  ///
+  /// In en, this message translates to:
+  /// **'Collected VAT'**
+  String get fecAccountVat;
+
+  /// Explains that a referenced rate is deactivated, not deleted
+  ///
+  /// In en, this message translates to:
+  /// **'A rate still used by an invoice or a service is kept, deactivated.'**
+  String get vatKeptRate;
 
   /// App-bar title of the first-run onboarding screen
   ///

@@ -549,6 +549,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get commonSaveFailed => 'No se pudo guardar el archivo.';
 
   @override
+  String get commonRetry => 'Reintentar';
+
+  @override
   String get consumptionAdd => 'Añadir consumo';
 
   @override
@@ -1471,7 +1474,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceGapVatNotSupported =>
-      'El espacio cobra IVA y DesKilo aún no calcula el IVA por posición — no se puede producir un desglose fiscal veraz.';
+      'El espacio cobra IVA pero esta factura no lleva ningún tipo: añade tus tipos de IVA y vuelve a emitirla.';
 
   @override
   String get invoiceGapMissingVatId =>
@@ -1558,7 +1561,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get legalIdentityVatWarning =>
-      'DesKilo aún no calcula el IVA por posición: con este régimen la exportación XML queda desactivada. El PDF no se ve afectado.';
+      'Este espacio cobra IVA pero no hay ningún tipo configurado: las facturas no muestran impuesto y la exportación XML sigue desactivada.';
 
   @override
   String get addressCountryLabel => 'País';
@@ -1708,6 +1711,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get fecMissingSiren =>
       'El FEC se nombra con tu número de registro — rellénalo primero en Identidad legal.';
+
+  @override
+  String get invoiceEInvoiceStaleIdentity =>
+      'Tu identidad legal ya está completa, pero esta factura se firmó antes y conserva aquello con lo que se emitió. Márcala como errónea y emite una sustitución para que lleve la nueva identidad.';
+
+  @override
+  String get einvoiceConfigUnavailable =>
+      'No se pudo cargar la configuración de la plataforma. Comprueba la conexión e inténtalo de nuevo.';
 
   @override
   String get eventTypeMemberJoin => 'Nuevo miembro';
@@ -2734,6 +2745,80 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get validationSaved => 'Regla de validación guardada.';
+
+  @override
+  String get vatTitle => 'IVA';
+
+  @override
+  String get vatIntro =>
+      'En DesKilo los precios incluyen IVA. Añadir tipos no cambia nada de lo que pagan los miembros: el impuesto se extrae del precio que ya cobras y se muestra en la factura.';
+
+  @override
+  String get vatRegimeHint =>
+      'Este espacio no está declarado como sujeto a IVA, así que las facturas no lo muestran. Eso se cambia en Identidad legal.';
+
+  @override
+  String get vatEmpty =>
+      'Aún no hay ningún tipo: las facturas no muestran IVA.';
+
+  @override
+  String get vatSeed => 'Usar los tipos habituales';
+
+  @override
+  String get vatAddRate => 'Añadir un tipo';
+
+  @override
+  String get vatRateLabelField => 'Nombre';
+
+  @override
+  String get vatRatePercentField => 'Tipo %';
+
+  @override
+  String get vatRateDefaultTooltip =>
+      'Tipo por defecto: lo usan las cuotas y todo lo que no tenga tipo propio';
+
+  @override
+  String get vatRateRemoveTooltip => 'Quitar';
+
+  @override
+  String get vatSaved => 'Tipos de IVA guardados.';
+
+  @override
+  String get vatNeedsDefault =>
+      'Marca exactamente un tipo como predeterminado.';
+
+  @override
+  String get vatRateIncomplete =>
+      'Cada tipo necesita un nombre y un porcentaje entre 0 y 99,99.';
+
+  @override
+  String get vatRatesTile => 'Tipos de IVA';
+
+  @override
+  String get vatAccountField => 'Cuenta de IVA';
+
+  @override
+  String get vatAccountHint =>
+      'Cuenta donde la exportación contable registra el IVA recaudado. Vacío = 445710.';
+
+  @override
+  String get vatServiceRate => 'Tipo de IVA';
+
+  @override
+  String get vatServiceRateDefault => 'Tipo por defecto del espacio';
+
+  @override
+  String get vatPdfNet => 'Base';
+
+  @override
+  String get vatPdfVat => 'IVA';
+
+  @override
+  String get fecAccountVat => 'IVA recaudado';
+
+  @override
+  String get vatKeptRate =>
+      'Un tipo que todavía usa una factura o un servicio se conserva, desactivado.';
 
   @override
   String get onboardingTitle => 'Bienvenido a DesKilo';

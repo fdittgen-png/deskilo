@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'einvoice_gateway.dart';
+import 'vat_rate.dart';
 import 'fee_band.dart';
 
 import 'invoice.dart';import 'ledger_entry.dart';
@@ -123,9 +124,10 @@ abstract class MoneyRepository {
     String workspaceId, {
     required String name,
     required int priceCents,
+    String? vatRateId,
   });
 
-  /// Owner-only: partial update of name, price and active flag.
+  /// Owner-only: partial update of name, price, VAT rate and active flag.
   /// Deactivate = `updateService(active: false)` — services are never
   /// deleted (bill lines reference them).
   Future<ServiceItem> updateService(
@@ -133,7 +135,18 @@ abstract class MoneyRepository {
     String? name,
     int? priceCents,
     bool? active,
+    String? vatRateId,
   });
+
+  /// The VAT rates the workspace charges (0072), member-readable: they
+  /// appear on the bill and on every invoice.
+  Future<List<VatRate>> fetchVatRates(String workspaceId);
+
+  /// Owner-only (RPC `set_vat_rates`): replaces the whole rate set
+  /// atomically. Exactly one rate must be the default. A rate a service
+  /// still points at is deactivated rather than deleted, so no catalogue
+  /// entry is ever silently re-taxed.
+  Future<void> setVatRates(String workspaceId, List<VatRate> rates);
 
   /// Records consumed services onto the monthly bill (#129, ADR 0008).
   /// Creates a PENDING service_charge event with a name+price snapshot —
@@ -170,6 +183,7 @@ abstract class MoneyRepository {
     required String name,
     required int days,
     required int priceCents,
+    String? vatRateId,
   });
 
   /// Owner-only: partial update. Deactivate = `updatePackage(active: false)`
@@ -180,6 +194,7 @@ abstract class MoneyRepository {
     int? days,
     int? priceCents,
     bool? active,
+    String? vatRateId,
   });
 
   /// Buys a package (RPC `buy_package`): raises the caller's cap for the

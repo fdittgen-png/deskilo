@@ -17,6 +17,7 @@ import '../features/money/presentation/screens/invoices_screen.dart';
 import '../features/money/presentation/screens/einvoice_config_screen.dart';
 import '../features/money/presentation/screens/invoice_register_screen.dart';
 import '../features/money/presentation/screens/legal_identity_screen.dart';
+import '../features/money/presentation/screens/vat_screen.dart';
 import '../features/money/presentation/screens/services_screen.dart';
 import '../features/plan/presentation/screens/accessories_screen.dart';
 import '../features/plan/presentation/screens/plan_screen.dart';
@@ -346,6 +347,18 @@ GoRouter router(Ref ref) {
               : '/money';
         },
         builder: (context, state) => const LegalIdentityScreen(),
+      ),
+      // The workspace's VAT rates (0072) — owner-only, like the identity
+      // they belong to.
+      GoRoute(
+        path: '/vat',
+        redirect: (context, state) {
+          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          return isOwner && featureEnabled(WorkspaceFeature.invoicing)
+              ? null
+              : '/money';
+        },
+        builder: (context, state) => const VatScreen(),
       ),
       GoRoute(
         path: '/services',

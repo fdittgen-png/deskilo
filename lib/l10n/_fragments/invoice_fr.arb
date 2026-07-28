@@ -273,7 +273,7 @@
   "invoiceEInvoiceReady": "Prêt — ce fichier satisfait la norme EN 16931.",
   "invoiceEInvoiceBlockedTitle": "Un validateur rejetterait ce fichier :",
   "invoiceEInvoiceIncompleteTitle": "Valide, mais les profils nationaux stricts demandent aussi :",
-  "invoiceGapVatNotSupported": "L'espace facture la TVA, et DesKilo ne calcule pas encore la TVA par position — aucune ventilation fiscale sincère n'est possible.",
+  "invoiceGapVatNotSupported": "L'espace facture la TVA mais cette facture ne porte aucun taux — ajoutez vos taux de TVA, puis émettez-la à nouveau.",
   "invoiceGapMissingVatId": "Le numéro de TVA manque — un vendeur exonéré doit l'indiquer.",
   "invoiceGapMissingLegalId": "Le numéro d'immatriculation manque (SIREN, HRB, CIF…) — rien ne vous identifie sur la facture.",
   "invoiceGapMissingExemptionReason": "Le motif de non-assujettissement à la TVA manque.",
@@ -298,7 +298,7 @@
   "legalIdentityCity": "Ville",
   "legalIdentityPostalCode": "Code postal",
   "legalIdentitySaved": "Identité légale enregistrée.",
-  "legalIdentityVatWarning": "DesKilo ne calcule pas encore la TVA par position : avec ce régime, l'export XML reste désactivé. Le PDF n'est pas concerné.",
+  "legalIdentityVatWarning": "Cet espace facture la TVA mais aucun taux n'est configuré : les factures n'affichent pas de taxe et l'export XML reste désactivé tant qu'il n'y en a pas.",
   "addressCountryLabel": "Pays",
   "addressVatIdLabel": "Numéro de TVA (si vous facturez en tant que professionnel)",
   "invoiceProformaAction": "Facture proforma",
@@ -354,5 +354,7 @@
   "fecAccountCustomers": "Clients",
   "fecAccountRevenue": "Ventes",
   "fecAccountBank": "Banque",
-  "fecMissingSiren": "Le FEC porte le nom de votre numéro d'immatriculation — renseignez-le d'abord dans Identité légale."
+  "fecMissingSiren": "Le FEC porte le nom de votre numéro d'immatriculation — renseignez-le d'abord dans Identité légale.",
+  "invoiceEInvoiceStaleIdentity": "Votre identité légale est complète, mais cette facture a été signée avant et conserve ce avec quoi elle a été émise. Marquez-la erronée puis émettez un remplacement pour porter la nouvelle identité.",
+  "einvoiceConfigUnavailable": "Impossible de charger la configuration de la plateforme. Vérifiez votre connexion et réessayez."
 }

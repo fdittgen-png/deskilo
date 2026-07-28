@@ -13,5 +13,9 @@ sealed class ServiceItem with _$ServiceItem {
     required String name,
     required int priceCents,
     required bool active,
+
+    /// Which VAT rate this service is taxed at (0072); '' = the
+    /// workspace's default rate. The price stays VAT-INCLUSIVE either way.
+    @Default('') String vatRateId,
   }) = _ServiceItem;
 }

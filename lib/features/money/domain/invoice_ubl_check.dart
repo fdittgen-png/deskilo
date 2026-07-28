@@ -9,11 +9,15 @@ import 'vat_regime.dart';
 /// — in its own words, before the file leaves the phone. Exporting an XML
 /// that a platform silently rejects is worse than not exporting at all.
 enum EInvoiceGap {
-  /// The workspace charges VAT and the app cannot compute a truthful
-  /// breakdown (no per-position rates). Blocking, and not fixable here.
+  /// The workspace charges VAT but the invoice carries NO breakdown —
+  /// either it was issued before VAT management (0072) or no rate was
+  /// configured when it was. Declaring a zero tax the seller does owe is
+  /// worse than refusing, so this blocks; adding the rates and issuing a
+  /// replacement clears it.
   vatNotSupported,
 
-  /// Category `E` without the seller VAT identifier (BR-E-02).
+  /// Category `E` or `S` without the seller VAT identifier (BR-E-02 /
+  /// BR-S-02).
   missingVatId,
 
   /// Category `O` without a company registration number — nothing would
@@ -97,7 +101,10 @@ EInvoiceReadiness checkEInvoiceReadiness({
   final hasExemptionReason = seller.taxExemptionReason.isNotEmpty ||
       regime.exemptionReasonCode(seller.country).isNotEmpty;
   return EInvoiceReadiness([
-    if (regime == VatRegime.vatRegistered) EInvoiceGap.vatNotSupported,
+    // A VAT-charging seller must show tax. With the breakdown present the
+    // document is as valid as any other — that is the whole point of 0072.
+    if (regime == VatRegime.vatRegistered && invoice.vatCents == 0)
+      EInvoiceGap.vatNotSupported,
     if (regime.requiresVatId && seller.vatId.isEmpty)
       EInvoiceGap.missingVatId,
     if (regime.forbidsVatId && seller.legalId.isEmpty)

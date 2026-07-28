@@ -11,6 +11,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/vat_regime.dart';
+import '../../providers/money_providers.dart';
 
 /// The workspace's LEGAL IDENTITY (0069) — owner-only, and the reason the
 /// e-invoice export can be valid at all.
@@ -35,6 +36,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   final _street = TextEditingController();
   final _city = TextEditingController();
   final _postalCode = TextEditingController();
+  final _vatAccount = TextEditingController();
   VatRegime _regime = VatRegime.notSubject;
   bool _loaded = false;
   bool _saving = false;
@@ -47,6 +49,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     _street.dispose();
     _city.dispose();
     _postalCode.dispose();
+    _vatAccount.dispose();
     super.dispose();
   }
 
@@ -70,6 +73,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             street: _street.text,
             city: _city.text,
             postalCode: _postalCode.text,
+            vatAccount: _vatAccount.text,
           ),
     );
     if (!mounted) return;
@@ -87,6 +91,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
+    final rates = ref.watch(vatRatesProvider).value ?? const [];
     if (workspace == null) {
       return Scaffold(
         appBar: AppBar(
@@ -107,6 +112,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           workspace.street.isNotEmpty ? workspace.street : workspace.address;
       _city.text = workspace.city;
       _postalCode.text = workspace.postalCode;
+      _vatAccount.text = workspace.vatAccount;
     }
 
     return Scaffold(
@@ -162,13 +168,42 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                   'The regime decides which number the norm requires.',
             ),
           ),
-          if (_regime == VatRegime.vatRegistered)
+          // Only a workspace that charges VAT and has no rate to charge
+          // it at is in trouble — the rest is a link, not a warning.
+          if (_regime == VatRegime.vatRegistered && rates.isEmpty)
             InlineBanner(
               key: const ValueKey('legal-identity-vat-warning'),
               icon: Icons.warning_amber_outlined,
               text: l10n?.legalIdentityVatWarning ??
-                  'DesKilo does not compute VAT per position yet: with this '
-                      'regime the XML export stays disabled.',
+                  'This workspace charges VAT but no rate is set up: '
+                      'invoices show no tax and the XML export stays '
+                      'disabled until you add one.',
+            ),
+          ListTile(
+            key: const ValueKey('legal-identity-vat-rates'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.percent),
+            title: Text(l10n?.vatRatesTile ?? 'VAT rates'),
+            subtitle: rates.isEmpty
+                ? Text(l10n?.vatEmpty ?? 'No rate yet — invoices show no VAT.')
+                : Text(rates
+                    .map((rate) => '${rate.label} '
+                        '(${rate.percent == rate.percent.roundToDouble() ? rate.percent.toStringAsFixed(0) : rate.percent})')
+                    .join(' · ')),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/vat'),
+          ),
+          if (_regime == VatRegime.vatRegistered)
+            TextField(
+              key: const ValueKey('legal-identity-vat-account'),
+              controller: _vatAccount,
+              decoration: InputDecoration(
+                labelText: l10n?.vatAccountField ?? 'VAT account',
+                helperMaxLines: 3,
+                helperText: l10n?.vatAccountHint ??
+                    'Where the accounting export books collected VAT. '
+                        'Empty = 445710.',
+              ),
             ),
           const SizedBox(height: AppSpacing.md),
           // Only the identifier the declared regime needs — the other one

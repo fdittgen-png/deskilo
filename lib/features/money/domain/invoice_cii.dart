@@ -2,6 +2,7 @@
 import 'package:xml/xml.dart';
 
 import 'invoice.dart';
+import 'vat_rate.dart';
 import 'vat_regime.dart';
 
 /// EN 16931 as UN/CEFACT **CII** (Cross Industry Invoice, D16B) — the
@@ -12,6 +13,11 @@ import 'vat_regime.dart';
 /// Profile: `urn:cen.eu:en16931:2017` (Factur-X EN 16931 / COMFORT) — the
 /// app's positions carry enough for the full norm profile, so there is no
 /// reason to downgrade to BASIC.
+///
+/// Tax follows the invoice's own breakdown (0072): one
+/// `ApplicableTradeTax` per rate in the settlement group, and the
+/// tax-exclusive amounts are the nets EXTRACTED from the VAT-inclusive
+/// prices ([vatSplit]) — the same arithmetic the server signed.
 ///
 /// Element ORDER is the whole game in CII: every group is an XSD sequence,
 /// and a document out of order is rejected before a single business rule is
@@ -35,6 +41,9 @@ String buildInvoiceCii({
   final charges =
       invoice.lines.where((l) => l.amountCents > 0).toList(growable: false);
   final chargesCents = charges.fold(0, (sum, l) => sum + l.amountCents);
+  final breakdown = invoice.vatBreakdown(zeroCategory: category);
+  final netCents = breakdown.fold(0, (sum, t) => sum + t.netCents);
+  final taxCents = breakdown.fold(0, (sum, t) => sum + t.vatCents);
   final prepaidCents = -invoice.lines
       .where((l) => l.amountCents < 0)
       .fold(0, (sum, l) => sum + l.amountCents);
@@ -96,7 +105,11 @@ String buildInvoiceCii({
             line.quantity > 1 && line.amountCents % line.quantity == 0
                 ? line.quantity
                 : 1;
-        final unitCents = line.amountCents ~/ quantity;
+        // BT-131/BT-146 are tax-exclusive: split the gross like the
+        // breakdown does.
+        final lineNet = vatSplit(line.amountCents, line.vatPercent).netCents;
+        final unitCents = lineNet ~/ quantity;
+        final lineCategory = line.vatPercent > 0 ? 'S' : category;
         builder.element('ram:IncludedSupplyChainTradeLineItem', nest: () {
           builder.element('ram:AssociatedDocumentLineDocument', nest: () {
             ram('LineID', '${i + 1}');
@@ -115,17 +128,17 @@ String buildInvoiceCii({
           builder.element('ram:SpecifiedLineTradeSettlement', nest: () {
             builder.element('ram:ApplicableTradeTax', nest: () {
               ram('TypeCode', 'VAT');
-              ram('CategoryCode', category);
-              // BR-E-05 wants the zero rate spelled out; BR-O-05 forbids
-              // any rate at all.
-              if (regime == VatRegime.exempt) {
-                ram('RateApplicablePercent', '0');
+              ram('CategoryCode', lineCategory);
+              // BR-S-05 wants the real rate, BR-E-05 the zero spelled
+              // out; BR-O-05 forbids any rate at all.
+              if (lineCategory != 'O') {
+                ram('RateApplicablePercent', _percent(line.vatPercent));
               }
             });
             builder.element(
                 'ram:SpecifiedTradeSettlementLineMonetarySummation',
                 nest: () {
-              money('LineTotalAmount', line.amountCents);
+              money('LineTotalAmount', lineNet);
             });
           });
         });
@@ -181,19 +194,25 @@ String buildInvoiceCii({
             });
           });
         }
-        builder.element('ram:ApplicableTradeTax', nest: () {
-          money('CalculatedAmount', 0);
-          ram('TypeCode', 'VAT');
-          if (seller.taxExemptionReason.isNotEmpty) {
-            ram('ExemptionReason', seller.taxExemptionReason);
-          }
-          money('BasisAmount', chargesCents);
-          ram('CategoryCode', category);
-          if (exemptionCode.isNotEmpty) {
-            ram('ExemptionReasonCode', exemptionCode);
-          }
-          if (regime == VatRegime.exempt) ram('RateApplicablePercent', '0');
-        });
+        // One group per rate — CII's equivalent of the UBL subtotals.
+        for (final total in breakdown) {
+          builder.element('ram:ApplicableTradeTax', nest: () {
+            money('CalculatedAmount', total.vatCents);
+            ram('TypeCode', 'VAT');
+            if (total.category != 'S' &&
+                seller.taxExemptionReason.isNotEmpty) {
+              ram('ExemptionReason', seller.taxExemptionReason);
+            }
+            money('BasisAmount', total.netCents);
+            ram('CategoryCode', total.category);
+            if (total.category != 'S' && exemptionCode.isNotEmpty) {
+              ram('ExemptionReasonCode', exemptionCode);
+            }
+            if (total.category != 'O') {
+              ram('RateApplicablePercent', _percent(total.percent));
+            }
+          });
+        }
         final period = _periodDates(invoice.period);
         if (period != null) {
           builder.element('ram:BillingSpecifiedPeriod', nest: () {
@@ -203,9 +222,10 @@ String buildInvoiceCii({
         }
         builder.element('ram:SpecifiedTradeSettlementHeaderMonetarySummation',
             nest: () {
-          money('LineTotalAmount', chargesCents);
-          money('TaxBasisTotalAmount', chargesCents);
-          money('TaxTotalAmount', 0, {'currencyID': currency});
+          money('LineTotalAmount', netCents);
+          money('TaxBasisTotalAmount', netCents);
+          money('TaxTotalAmount', taxCents, {'currencyID': currency});
+          // The grand total is the gross the member was charged.
           money('GrandTotalAmount', chargesCents);
           if (prepaidCents > 0) money('TotalPrepaidAmount', prepaidCents);
           // The solde — what is left to pay.
@@ -221,6 +241,11 @@ String buildInvoiceCii({
   });
   return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
 }
+
+/// '20' or '5.5' — never '20.0'; see the UBL builder's note.
+String _percent(double percent) => percent == percent.roundToDouble()
+    ? percent.toStringAsFixed(0)
+    : percent.toString();
 
 /// 'yyyy-MM' → the month's first and last day.
 ({DateTime start, DateTime end})? _periodDates(String? period) {

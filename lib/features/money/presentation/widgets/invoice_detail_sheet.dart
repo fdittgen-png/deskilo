@@ -173,6 +173,28 @@ class _InvoiceDetailBody extends StatelessWidget {
                   ]),
                 ),
               const Divider(),
+              // What of the charges is tax (0072). Shown as an explanation
+              // of the amount, never as an addition to it: the prices the
+              // member agreed to already include it.
+              for (final total in invoice.vatTotals)
+                if (total.vatCents > 0)
+                  Padding(
+                    key: ValueKey('invoice-detail-vat-${total.percent}'),
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Row(children: [
+                      Expanded(
+                        child: Text(
+                          '${l10n?.vatPdfVat ?? 'VAT'} '
+                          '${_percentLabel(total.percent)}',
+                          style: TextStyle(color: theme.hintColor),
+                        ),
+                      ),
+                      Text(
+                        currency.format(total.vatCents / 100),
+                        style: TextStyle(color: theme.hintColor),
+                      ),
+                    ]),
+                  ),
               Row(children: [
                 Expanded(
                   child: Text(
@@ -343,3 +365,7 @@ class _InvoiceDetailBody extends StatelessWidget {
     );
   }
 }
+
+/// '20 %', '5.5 %' — a rate beside its caption.
+String _percentLabel(double percent) =>
+    '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';

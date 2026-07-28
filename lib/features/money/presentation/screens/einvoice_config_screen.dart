@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -125,9 +126,30 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
       appBar: AppBar(
         title: Text(l10n?.einvoiceConfigTitle ?? 'E-invoicing platform'),
       ),
-      body: status == null
-          ? const LoadingView()
-          : ListView(
+      // An unreachable probe used to leave the screen spinning for ever
+      // (field report): a failing RPC is now something the owner can see
+      // and retry, not a blank page.
+      body: switch (statusAsync) {
+        AsyncError() => ListView(
+            padding: AppSpacing.gutterAll,
+            children: [
+              InlineBanner(
+                key: const ValueKey('einvoice-config-error'),
+                icon: Icons.cloud_off_outlined,
+                text: l10n?.einvoiceConfigUnavailable ??
+                    'The platform settings could not be loaded. Check your '
+                        'connection and try again.',
+              ),
+              const SizedBox(height: AppSpacing.md),
+              FilledButton(
+                key: const ValueKey('einvoice-config-retry'),
+                onPressed: () => ref.invalidate(eInvoiceStatusProvider),
+                child: Text(l10n?.commonRetry ?? 'Try again'),
+              ),
+            ],
+          ),
+        _ when status == null => const LoadingView(),
+        _ => ListView(
               padding: AppSpacing.gutterAll,
               children: [
                 Text(
@@ -200,6 +222,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                 ],
               ],
             ),
+      },
     );
   }
 }

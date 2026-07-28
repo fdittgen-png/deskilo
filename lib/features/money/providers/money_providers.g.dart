@@ -457,6 +457,106 @@ final class AllPackagesProvider
 
 String _$allPackagesHash() => r'9d0f934aac44c544d100dcca18203008e973c47e';
 
+/// The workspace's VAT rates (0072). Member-readable: the rate is on the
+/// bill and on every invoice, so it is not owner-only data.
+///
+/// Empty means VAT is off — every amount is then whatever the workspace's
+/// regime says it is, and nothing about the bill changes.
+
+@ProviderFor(vatRates)
+final vatRatesProvider = VatRatesProvider._();
+
+/// The workspace's VAT rates (0072). Member-readable: the rate is on the
+/// bill and on every invoice, so it is not owner-only data.
+///
+/// Empty means VAT is off — every amount is then whatever the workspace's
+/// regime says it is, and nothing about the bill changes.
+
+final class VatRatesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<VatRate>>,
+          List<VatRate>,
+          FutureOr<List<VatRate>>
+        >
+    with $FutureModifier<List<VatRate>>, $FutureProvider<List<VatRate>> {
+  /// The workspace's VAT rates (0072). Member-readable: the rate is on the
+  /// bill and on every invoice, so it is not owner-only data.
+  ///
+  /// Empty means VAT is off — every amount is then whatever the workspace's
+  /// regime says it is, and nothing about the bill changes.
+  VatRatesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'vatRatesProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$vatRatesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<VatRate>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<VatRate>> create(Ref ref) {
+    return vatRates(ref);
+  }
+}
+
+String _$vatRatesHash() => r'df4434126bc231e40ce949776c6a544c3dcd55cc';
+
+/// The percentage an item with no rate of its own is taxed at — the mirror
+/// of `workspace_default_vat_percent`, for previews only. The server is
+/// still what stamps the ledger.
+
+@ProviderFor(defaultVatPercent)
+final defaultVatPercentProvider = DefaultVatPercentProvider._();
+
+/// The percentage an item with no rate of its own is taxed at — the mirror
+/// of `workspace_default_vat_percent`, for previews only. The server is
+/// still what stamps the ledger.
+
+final class DefaultVatPercentProvider
+    extends $FunctionalProvider<AsyncValue<double>, double, FutureOr<double>>
+    with $FutureModifier<double>, $FutureProvider<double> {
+  /// The percentage an item with no rate of its own is taxed at — the mirror
+  /// of `workspace_default_vat_percent`, for previews only. The server is
+  /// still what stamps the ledger.
+  DefaultVatPercentProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'defaultVatPercentProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$defaultVatPercentHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<double> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<double> create(Ref ref) {
+    return defaultVatPercent(ref);
+  }
+}
+
+String _$defaultVatPercentHash() => r'03c79715bfe2c78330ab759b724dd15d5a707005';
+
 /// The invoice archive (0060): RLS scopes rows — members their own,
 /// admins the whole workspace.
 

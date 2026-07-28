@@ -89,6 +89,8 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       description: l10n?.invoicePdfDescription ?? 'Description',
       charges: l10n?.invoicePdfCharges ?? 'Charges',
       payments: l10n?.invoicePdfPayments ?? 'Payments',
+      net: l10n?.vatPdfNet ?? 'Net',
+      vat: l10n?.vatPdfVat ?? 'VAT',
       annex: l10n?.invoicePdfAnnex ?? 'Annex — details',
       attendance: l10n?.invoicePdfAttendance ?? 'Check-ins',
       activity: l10n?.invoicePdfActivity ?? 'Bookings & payments',
@@ -196,7 +198,14 @@ Future<void> exportAccountingFile(
       );
       return;
     }
-    final accounts = await showFecAccountsDialog(context);
+    // The owner's own VAT account (0072) if they set one — the dialog is
+    // where it can still be corrected.
+    final accounts = await showFecAccountsDialog(
+      context,
+      initial: workspace.vatAccount.isEmpty
+          ? const FecAccounts()
+          : FecAccounts(vat: workspace.vatAccount),
+    );
     if (accounts == null || !context.mounted) return;
     await runGuarded(
       context,
@@ -214,6 +223,7 @@ Future<void> exportAccountingFile(
           customersLabel: l10n?.fecAccountCustomers ?? 'Clients',
           revenueLabel: l10n?.fecAccountRevenue ?? 'Ventes',
           bankLabel: l10n?.fecAccountBank ?? 'Banque',
+          vatLabel: l10n?.fecAccountVat ?? 'TVA collectée',
         );
         // The fiscal year closes on 31 December of the latest invoiced
         // year — the only close date the app can know.
@@ -610,6 +620,16 @@ Future<void> exportEInvoice(
     seller: seller,
     buyer: buyer,
   );
+  // The same judgement against the LIVE identity: if that one passes, the
+  // owner is not missing anything — the document is simply older than the
+  // identity, and only a replacement can carry the new one.
+  final identityFixedSince = invoice.sellerParty != null &&
+      !readiness.ready &&
+      checkEInvoiceReadiness(
+        invoice: invoice,
+        seller: workspaceParty(workspace),
+        buyer: buyer,
+      ).ready;
   final me = ref.read(myMemberProvider).value;
   // AWAIT the probe: a cached `.value` is null on the first open, which
   // would hide the Send button exactly when it is most wanted.
@@ -627,6 +647,7 @@ Future<void> exportEInvoice(
     route: route,
     readiness: readiness,
     canFixIdentity: me?.actsAsOwner ?? false,
+    identityFixedSince: identityFixedSince,
     // Only an issuer sends, and only when a platform is configured.
     canSend: gateway.configured &&
         (me?.actsAsOwner == true || me?.canAdminister == true),

@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: 0BSD
 import 'invoice.dart';
+import 'vat_regime.dart';
 
-/// The three accounts a FEC cannot be written without. Defaults follow the
+/// The accounts a FEC cannot be written without. Defaults follow the
 /// French *plan comptable général*; an accountant using a different chart
 /// corrects them at export time — which is also the moment the exporter
 /// shows what it is about to book, rather than inventing it silently.
@@ -10,6 +11,7 @@ class FecAccounts {
     this.customers = '411000',
     this.revenue = '706000',
     this.bank = '512000',
+    this.vat = '445710',
   });
 
   /// PCG 411 — Clients (the receivable).
@@ -20,6 +22,10 @@ class FecAccounts {
 
   /// PCG 512 — Banques (where the money lands).
   final String bank;
+
+  /// PCG 44571 — TVA collectée. Only used when the invoice carries VAT
+  /// (0072); a workspace that charges none never books to it.
+  final String vat;
 }
 
 /// Journal codes and labels. Two journals are enough for an invoicing-only
@@ -70,8 +76,11 @@ String fecFileName(String legalId, DateTime fiscalYearEnd) {
 /// accounting entry, with the column names as its first line.
 ///
 /// What gets booked, per non-voided invoice:
-///  * journal **VE** — the receivable and the revenue, at the invoice's
-///    CHARGES total (its gross), debit customers / credit revenue;
+///  * journal **VE** — the receivable at the invoice's CHARGES total (its
+///    gross, debit customers), against the revenue NET of tax and the
+///    collected VAT (credit revenue + credit 44571), one pair per rate.
+///    Without VAT the tax line is absent and the entry is the plain two
+///    lines it always was;
 ///  * journal **BQ** — every credit the invoice netted (the month's
 ///    payments, snapshotted on the document), debit bank / credit
 ///    customers, lettered with the invoice number;
@@ -96,6 +105,7 @@ String buildFecFile({
   String customersLabel = 'Clients',
   String revenueLabel = 'Prestations de services',
   String bankLabel = 'Banques',
+  String vatLabel = 'TVA collectée',
 }) {
   String money(int cents) =>
       (cents / 100).toStringAsFixed(2).replaceAll('.', ',');
@@ -183,24 +193,56 @@ String buildFecFile({
       letter: invoice.number,
       validDate: invoice.issuedAt,
     );
-    // …and what earned it.
-    write(
-      journal: _salesJournal,
-      journalLabel: _salesJournalLabel,
-      number: entry,
-      date: invoice.issuedAt,
-      account: accounts.revenue,
-      accountLabel: revenueLabel,
-      auxNumber: '',
-      auxLabel: '',
-      pieceRef: invoice.number,
-      pieceDate: invoice.issuedAt,
-      label: label,
-      debitCents: 0,
-      creditCents: charges,
-      letter: invoice.number,
-      validDate: invoice.issuedAt,
-    );
+    // …and what earned it, rate by rate: the revenue is what was sold
+    // net, the VAT is money collected for the state.
+    final zeroCategory =
+        vatRegimeFromWire(invoice.sellerParty?.vatRegime ?? company.vatRegime)
+            .taxCategoryCode;
+    final breakdown = invoice.vatBreakdown(zeroCategory: zeroCategory);
+    final manyRates = breakdown.length > 1;
+    for (final total in breakdown) {
+      // With several rates the entry label says which one, so a human
+      // reading the journal can tell the lines apart.
+      final rateLabel = manyRates || total.percent > 0
+          ? '$label ${_percent(total.percent)} %'
+          : label;
+      write(
+        journal: _salesJournal,
+        journalLabel: _salesJournalLabel,
+        number: entry,
+        date: invoice.issuedAt,
+        account: accounts.revenue,
+        accountLabel: revenueLabel,
+        auxNumber: '',
+        auxLabel: '',
+        pieceRef: invoice.number,
+        pieceDate: invoice.issuedAt,
+        label: rateLabel,
+        debitCents: 0,
+        creditCents: total.netCents,
+        letter: invoice.number,
+        validDate: invoice.issuedAt,
+      );
+      if (total.vatCents > 0) {
+        write(
+          journal: _salesJournal,
+          journalLabel: _salesJournalLabel,
+          number: entry,
+          date: invoice.issuedAt,
+          account: accounts.vat,
+          accountLabel: vatLabel,
+          auxNumber: '',
+          auxLabel: '',
+          pieceRef: invoice.number,
+          pieceDate: invoice.issuedAt,
+          label: rateLabel,
+          debitCents: 0,
+          creditCents: total.vatCents,
+          letter: invoice.number,
+          validDate: invoice.issuedAt,
+        );
+      }
+    }
 
     // The credits the invoice netted: money that had already arrived.
     for (final line in invoice.lines.where((l) => l.amountCents < 0)) {
@@ -295,3 +337,9 @@ String buildFecFile({
     for (final row in rows) row.join('\t'),
   ].join('\r\n');
 }
+
+/// '20' or '5,5' — a rate as it reads in a French journal, where the
+/// comma is the decimal separator.
+String _percent(double percent) => percent == percent.roundToDouble()
+    ? percent.toStringAsFixed(0)
+    : percent.toString().replaceAll('.', ',');

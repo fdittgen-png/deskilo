@@ -98,6 +98,7 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
     required String street,
     required String city,
     required String postalCode,
+    required String vatAccount,
   }) async {
     // Owner-only via workspaces_update RLS; the 0069 column checks cap
     // every field. Written as one row update so an identity can never be
@@ -110,6 +111,7 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
       'street': street.trim(),
       'city': city.trim(),
       'postal_code': postalCode.trim(),
+      'vat_account': vatAccount.trim(),
     }).eq('id', workspaceId);
   }
 
@@ -212,6 +214,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         street: row['street'] as String? ?? '',
         city: row['city'] as String? ?? '',
         postalCode: row['postal_code'] as String? ?? '',
+        vatAccount: row['vat_account'] as String? ?? '',
       );
 
   @override

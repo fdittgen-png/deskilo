@@ -28,8 +28,8 @@ enum EInvoiceExport {
 String eInvoiceGapText(AppLocalizations? l10n, EInvoiceGap gap) =>
     switch (gap) {
       EInvoiceGap.vatNotSupported => l10n?.invoiceGapVatNotSupported ??
-          'The workspace charges VAT, and DesKilo does not compute VAT per '
-              'position yet.',
+          'The workspace charges VAT but this invoice carries no rate — '
+              'add your VAT rates, then issue it again.',
       EInvoiceGap.missingVatId => l10n?.invoiceGapMissingVatId ??
           'The VAT number is missing — an exempt seller must state one.',
       EInvoiceGap.missingLegalId => l10n?.invoiceGapMissingLegalId ??
@@ -61,6 +61,7 @@ Future<EInvoiceExport?> showEInvoiceSheet(
   required EInvoiceReadiness readiness,
   required bool canFixIdentity,
   bool canSend = false,
+  bool identityFixedSince = false,
 }) =>
     showModalBottomSheet<EInvoiceExport>(
       context: context,
@@ -72,6 +73,7 @@ Future<EInvoiceExport?> showEInvoiceSheet(
         readiness: readiness,
         canFixIdentity: canFixIdentity,
         canSend: canSend,
+        identityFixedSince: identityFixedSince,
       ),
     );
 
@@ -81,6 +83,7 @@ class _EInvoiceBody extends StatelessWidget {
     required this.readiness,
     required this.canFixIdentity,
     required this.canSend,
+    this.identityFixedSince = false,
   });
 
   final EInvoiceRoute route;
@@ -95,6 +98,11 @@ class _EInvoiceBody extends StatelessWidget {
   /// A platform is configured and the function is deployed (0073): the
   /// document can LEAVE, not just be downloaded.
   final bool canSend;
+
+  /// The workspace's identity WOULD satisfy the norm — it is this
+  /// document's snapshot that does not. Without saying so, the sheet asks
+  /// for a number the owner is looking at, already filled in.
+  final bool identityFixedSince;
 
   @override
   Widget build(BuildContext context) {
@@ -215,6 +223,20 @@ class _EInvoiceBody extends StatelessWidget {
                       '• ${eInvoiceGapText(l10n, gap)}',
                   ].join('\n'),
                 ),
+              // Why a complete identity still leaves a rejected file: the
+              // document answers for the identity it was SIGNED with.
+              if (!readiness.ready && identityFixedSince) ...[
+                const SizedBox(height: AppSpacing.sm),
+                InlineBanner(
+                  key: const ValueKey('invoice-einvoice-stale-identity'),
+                  icon: Icons.history_outlined,
+                  text: l10n?.invoiceEInvoiceStaleIdentity ??
+                      'Your legal identity is complete now, but this '
+                          'invoice was signed before it and keeps what it '
+                          'was issued with. Mark it erroneous and issue a '
+                          'replacement to carry the new identity.',
+                ),
+              ],
               if (readiness.ready && readiness.warnings.isNotEmpty)
                 fact(
                   Icons.info_outlined,
@@ -295,6 +317,7 @@ class _EInvoiceBody extends StatelessWidget {
                   ),
                 ),
               ] else if (canFixIdentity &&
+                  !identityFixedSince &&
                   readiness.blocking.any((g) => g.fixableInSettings))
                 FilledButton.icon(
                   key: const ValueKey('invoice-einvoice-fix-identity'),

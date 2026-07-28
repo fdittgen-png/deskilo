@@ -12,6 +12,7 @@ import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice.dart';
+import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_line_text.dart';
 
@@ -309,6 +310,35 @@ class _InvoiceFormState extends State<_InvoiceForm> {
               ),
             ),
           const Divider(),
+          // The VAT the document will carry (0072) — computed here exactly
+          // as the server computes it at issue time.
+          for (final total in vatTotalsOf(
+            [
+              for (final line in lines)
+                (amountCents: line.amountCents, vatPercent: line.vatPercent),
+            ],
+            // Only taxed rates are shown, so the zero category never
+            // reaches the screen.
+            zeroCategory: 'O',
+          ))
+            if (total.vatCents > 0)
+              Padding(
+                key: ValueKey('invoice-preview-vat-${total.percent}'),
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Row(children: [
+                  Expanded(
+                    child: Text(
+                      '${l10n?.vatPdfVat ?? 'VAT'} '
+                      '${total.percent == total.percent.roundToDouble() ? total.percent.toStringAsFixed(0) : total.percent} %',
+                      style: TextStyle(color: Theme.of(context).hintColor),
+                    ),
+                  ),
+                  Text(
+                    widget.currency.format(total.vatCents / 100),
+                    style: TextStyle(color: Theme.of(context).hintColor),
+                  ),
+                ]),
+              ),
           Row(
             key: const ValueKey('invoice-preview-total'),
             children: [

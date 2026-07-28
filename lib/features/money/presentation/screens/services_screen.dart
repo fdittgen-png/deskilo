@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/trace/trace_logger.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
@@ -10,7 +11,9 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/service_item.dart';
+import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
+import '../widgets/vat_rate_field.dart';
 
 /// Owner-only consumable-service catalog editor (#123): name and price
 /// are configurable; services are deactivated, never deleted (bill lines
@@ -27,10 +30,21 @@ class ServicesScreen extends ConsumerWidget {
     if (workspace == null) return;
     final l10n = AppLocalizations.of(context);
 
+    // AWAIT the rates: a cached `.value` is null the first time the sheet
+    // opens, which would hide the VAT field exactly when it is needed.
+    List<VatRate> rates;
+    try {
+      rates = await ref.read(vatRatesProvider.future);
+    } catch (e, st) {
+      TraceLogger.instance
+          .warn('money', 'vat rates fetch failed', error: e, stackTrace: st);
+      rates = const [];
+    }
+    if (!context.mounted) return;
     final result = await showModalBottomSheet<_ServiceDraft>(
       context: context,
       isScrollControlled: true,
-      builder: (context) => _ServiceSheet(service: service),
+      builder: (context) => _ServiceSheet(service: service, rates: rates),
     );
     if (result == null || !context.mounted) return;
 
@@ -47,6 +61,7 @@ class ServicesScreen extends ConsumerWidget {
             workspace.id,
             name: result.name,
             priceCents: result.priceCents,
+            vatRateId: result.vatRateId,
           );
         } else {
           await repo.updateService(
@@ -54,6 +69,7 @@ class ServicesScreen extends ConsumerWidget {
             name: result.name,
             priceCents: result.priceCents,
             active: result.active,
+            vatRateId: result.vatRateId,
           );
         }
       },
@@ -128,17 +144,22 @@ class _ServiceDraft {
     required this.name,
     required this.priceCents,
     required this.active,
+    required this.vatRateId,
   });
 
   final String name;
   final int priceCents;
   final bool active;
+
+  /// '' = the workspace's default rate.
+  final String vatRateId;
 }
 
 class _ServiceSheet extends StatefulWidget {
-  const _ServiceSheet({this.service});
+  const _ServiceSheet({this.service, this.rates = const []});
 
   final ServiceItem? service;
+  final List<VatRate> rates;
 
   @override
   State<_ServiceSheet> createState() => _ServiceSheetState();
@@ -148,6 +169,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
   late final TextEditingController _name;
   late final TextEditingController _price;
   late bool _active;
+  late String _vatRateId;
 
   @override
   void initState() {
@@ -158,6 +180,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
       text: service == null ? '' : centsToMajor(service.priceCents),
     );
     _active = service?.active ?? true;
+    _vatRateId = service?.vatRateId ?? '';
   }
 
   @override
@@ -176,6 +199,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
         name: name,
         priceCents: price,
         active: _active,
+        vatRateId: _vatRateId,
       ),
     );
   }
@@ -218,6 +242,13 @@ class _ServiceSheetState extends State<_ServiceSheet> {
             decoration: InputDecoration(
               labelText: l10n?.servicesPrice ?? 'Price',
             ),
+          ),
+          // The price stays what the member pays; the rate only decides
+          // how much of it is tax.
+          VatRateField(
+            rates: widget.rates,
+            value: _vatRateId,
+            onChanged: (id) => setState(() => _vatRateId = id),
           ),
           if (widget.service != null)
             SwitchListTile(

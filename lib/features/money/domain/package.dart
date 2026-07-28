@@ -16,6 +16,10 @@ sealed class Package with _$Package {
     required int days,
     required int priceCents,
     @Default(true) bool active,
+
+    /// Which VAT rate this package is taxed at (0072); '' = the
+    /// workspace's default rate.
+    @Default('') String vatRateId,
   }) = _Package;
 
   factory Package.fromRow(Map<String, dynamic> row) => Package(
@@ -25,5 +29,6 @@ sealed class Package with _$Package {
         days: row['days'] as int,
         priceCents: row['price_cents'] as int,
         active: row['active'] as bool? ?? true,
+        vatRateId: row['vat_rate_id'] as String? ?? '',
       );
 }
