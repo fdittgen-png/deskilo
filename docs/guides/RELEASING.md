@@ -145,7 +145,25 @@ gh workflow run macos-app.yml -f ref=master     # → DesKilo-X.Y.Z.dmg artifact
 - `flutter build macos --release` plus `hdiutil`: the DMG is the
   drag-into-Applications window, no extra tooling. Also runs on PRs touching
   `macos/**` and attaches the DMG to the release on a `v*` tag.
-- **Signed with Developer ID and notarised by Apple.** Not polish: since
+- **The Developer ID certificate must be created by the ACCOUNT HOLDER.**
+  An App Store Connect API key cannot mint one — Apple answers *"This
+  request is forbidden for security reasons - This operation can only be
+  performed by the Account Holder"*. Create it once in Xcode (Settings →
+  Accounts → Manage Certificates → ＋ → Developer ID Application), export
+  the certificate and its private key, then push them into the certs repo:
+
+  ```bash
+  cd ios
+  MATCH_PASSWORD=<the DesKilo passphrase> \
+    bundle exec fastlane match import --type developer_id \
+    --git_url git@github.com:fdittgen-png/deskilo-ios-certs.git
+  ```
+
+  Until that exists the workflow still builds: it produces a DMG named
+  `-unsigned` and logs a warning. It does NOT fail, because a macOS
+  pipeline that produces nothing is worse than one that produces something
+  honestly labelled.
+- **Once signed: notarised by Apple.** Not polish: since
   macOS 15 a downloaded app Apple has not notarised is refused outright
   ("Apple n'a pas pu confirmer que DesKilo ne contenait pas de logiciel
   malveillant") and the old right-click → Open bypass is gone. The
