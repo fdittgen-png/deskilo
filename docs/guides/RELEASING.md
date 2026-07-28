@@ -102,10 +102,16 @@ gh workflow run ios-testflight.yml                       # build + TestFlight
 gh workflow run ios-testers.yml -f email=someone@example.com  # invite a tester
 ```
 
-- Signing: **fastlane match** against the shared team repo
-  `tankstellen-ios-certs` (the distribution cert is per-team; DesKilo only
-  adds its own `de.deskilo.app` appstore profile — created by the
-  `sync_certs` run, which also registers the bundle id at Apple).
+- Signing: **fastlane match** against DesKilo's own private repo
+  `deskilo-ios-certs`, with its own `MATCH_PASSWORD`. The first
+  `sync_certs` run mints an Apple Distribution certificate and the
+  `de.deskilo.app` profile into it. (Sharing tankstellen's certs repo was
+  the original plan; its passphrase proved unrecoverable, and re-encrypting
+  a repo Sparkilo depends on to fix a DesKilo problem is not a trade worth
+  making. Apple allows three distribution certificates per team, and
+  minting one leaves the existing one alone.)
+- **Losing `MATCH_PASSWORD` means redoing this**: the repo's contents are
+  useless without it. Store it where the tankstellen one should have been.
 - Secrets in place: `APP_STORE_CONNECT_API_KEY_ID` / `_BASE64` (key
   `CG5N5AKMH9`, .p8 also in `~/Downloads` — back it up, Apple won't
   re-issue it), `MATCH_DEPLOY_KEY` (write deploy key `deskilo-ci` on the
