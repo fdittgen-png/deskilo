@@ -60,11 +60,28 @@ jobs:
       - name: Package MSI
         shell: pwsh
         run: |
+          # ABSOLUTE path: WiX resolves a <Files Include> wildcard relative
+          # to the .wxs, not to the working directory, so a repo-relative
+          # PublishDir silently harvested NOTHING — every MSI built before
+          # this fix was 6 KB of shortcut with no application in it.
+          $publish = (Resolve-Path build\windows\x64\runner\Release).Path
+          if (-not (Test-Path (Join-Path $publish 'deskilo.exe'))) {
+            throw "No deskilo.exe in $publish — the Flutter build did not produce a release bundle."
+          }
+          $msi = "build\DesKilo-${{ steps.version.outputs.raw }}.msi"
           wix build windows/installer/deskilo.wxs `
             -arch x64 `
             -d ProductVersion=${{ steps.version.outputs.msi }} `
-            -d PublishDir=build\windows\x64\runner\Release `
-            -o build\DesKilo-${{ steps.version.outputs.raw }}.msi
+            -d PublishDir=$publish `
+            -o $msi
+          # An empty harvest is not an error to WiX, so the size is the
+          # only thing standing between a green run and an installer that
+          # installs nothing.
+          $size = (Get-Item $msi).Length
+          Write-Host ("MSI size: {0:N1} MB" -f ($size / 1MB))
+          if ($size -lt 10MB) {
+            throw "MSI is only $size bytes — the payload harvest matched nothing."
+          }
 
       - uses: actions/upload-artifact@v4
         with:
