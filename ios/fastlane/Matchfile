@@ -1,11 +1,18 @@
 # SPDX-License-Identifier: MIT
 
-# DesKilo shares the team-wide certs repo with Sparkilo: the Apple
-# distribution certificate is per-team, so match only adds a provisioning
-# profile for de.deskilo.app next to the tankstellen ones. CI clones via a
-# deploy key (webfactory/ssh-agent in the workflow); local devs use their
-# personal GitHub SSH key.
-git_url("git@github.com:fdittgen-png/tankstellen-ios-certs.git")
+# DesKilo keeps its OWN certs repo, with its own passphrase.
+#
+# Sharing tankstellen's was the first design (one distribution certificate
+# for the team, one repo), and it is the tidier one — but it hinges on a
+# passphrase that turned out to be unrecoverable, and re-encrypting a repo
+# Sparkilo depends on to solve a DesKilo problem is not a trade worth
+# making. So: a second repo, a second passphrase, and a second Apple
+# Distribution certificate minted on first sync (Apple allows three per
+# team; creating one does not touch the one tankstellen holds).
+#
+# CI clones via a deploy key (webfactory/ssh-agent in the workflow); local
+# devs use their personal GitHub SSH key.
+git_url("git@github.com:fdittgen-png/deskilo-ios-certs.git")
 storage_mode("git")
 
 type("appstore")
