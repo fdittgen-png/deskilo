@@ -90,8 +90,16 @@ Pipeline (`ios-testflight.yml`, tankstellen mirror, dispatch-only to spare
 macOS minutes):
 
 ```bash
-gh workflow run ios-testflight.yml -f sync_certs=true   # once: mint the profile
-gh workflow run ios-testflight.yml                      # build + TestFlight
+# ONE-TIME, in this order:
+gh secret set MATCH_PASSWORD -R fdittgen-png/deskilo                 # 1Password
+gh secret set APP_STORE_CONNECT_API_ISSUER_ID -R fdittgen-png/deskilo \
+  --body ae6fe867-5d68-454a-a38b-5f9a98a5be24                        # team-wide
+gh workflow run ios-testflight.yml -f create_app=true    # ASC app record
+gh workflow run ios-testflight.yml -f sync_certs=true    # mint the profile
+
+# THEN, per build:
+gh workflow run ios-testflight.yml                       # build + TestFlight
+gh workflow run ios-testers.yml -f email=someone@example.com  # invite a tester
 ```
 
 - Signing: **fastlane match** against the shared team repo
@@ -102,16 +110,25 @@ gh workflow run ios-testflight.yml                      # build + TestFlight
   `CG5N5AKMH9`, .p8 also in `~/Downloads` — back it up, Apple won't
   re-issue it), `MATCH_DEPLOY_KEY` (write deploy key `deskilo-ci` on the
   certs repo — may be downgraded to read-only after the first sync).
-- Secrets still owner-provided: `APP_STORE_CONNECT_API_ISSUER_ID`
-  (App Store Connect → Users and Access → Integrations, shown above the key
-  list) and `MATCH_PASSWORD` (the certs-repo passphrase, same as
-  tankstellen's).
-- Owner-only, no API exists: create the **app record** in App Store Connect
-  (My Apps → ＋ → New App → iOS, name *DesKilo*, bundle id `de.deskilo.app`,
-  any SKU) and add internal testers under TestFlight → Internal Testing.
-- Uploads are internal-only (instant, no review, ≤100 testers); external
-  groups + Beta App Review land later by porting tankstellen's
-  `upload_testflight` extras.
+- **`MATCH_PASSWORD` is the one thing only the owner has**: the
+  certs-repo passphrase, same value as tankstellen's, in 1Password. Without
+  it match cannot decrypt the repo and the run dies with *"Invalid password
+  passed via 'MATCH_PASSWORD'"* — which is exactly how the 2026-07-09 run
+  failed. `APP_STORE_CONNECT_API_ISSUER_ID` is the team-wide issuer UUID
+  (App Store Connect → Users and Access → Integrations, above the key list);
+  the command above carries it.
+- The **app record** at Apple no longer needs the Console: `-f
+  create_app=true` runs `fastlane produce` (lane `create_app_record`), which
+  claims `de.deskilo.app` and creates the record TestFlight hangs off.
+  Apple has no equivalent of Play binding a package on first upload, so this
+  must happen before the first `pilot` upload. Idempotent.
+- **Testers**: `ios-testers.yml` (lane `manage_testers`, ported from
+  tankstellen) enrolls an address through the ASC API — external groups by
+  email, internal groups by inviting the tester as a Users-and-Access user
+  scoped to this app. Dispatch-only: it sends a real invitation email.
+- Uploads are internal-only for now (instant, no review, ≤100 testers). An
+  **external** tester means the build passes Beta App Review first; port
+  tankstellen's `configure_beta_review` when that day comes.
 
 ## Release checklist (every release)
 
