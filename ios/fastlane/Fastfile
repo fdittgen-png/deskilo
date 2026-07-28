@@ -46,10 +46,23 @@ platform :ios do
     build_number = options[:build_number] || ENV["IOS_BUILD_NUMBER"] || Time.now.strftime("%Y%m%d")
     profile_name = ENV["sigh_de.deskilo.app_appstore_profile-name"] || "match AppStore de.deskilo.app"
 
-    # Unique CFBundleVersion per upload — ASC rejects re-uploads of the same.
-    increment_build_number(
-      xcodeproj: "Runner.xcodeproj",
-      build_number: build_number,
+    # MANUAL signing for the archive. The project ships with Flutter's
+    # default (automatic, "iPhone Developer", no profile specifier), so
+    # xcodebuild goes looking for a profile nobody told it about and fails
+    # with "No profiles for 'de.deskilo.app' were found" — even though
+    # match has just installed exactly that profile. tankstellen has the
+    # same three settings baked into its .pbxproj; doing it here instead
+    # keeps the checked-in project on automatic signing, so opening it in
+    # Xcode with a personal team still works.
+    update_code_signing_settings(
+      path: "Runner.xcodeproj",
+      use_automatic_signing: false,
+      team_id: "C4Y5RDF8P9",
+      code_sign_identity: "Apple Distribution",
+      bundle_identifier: "de.deskilo.app",
+      profile_name: profile_name,
+      targets: ["Runner"],
+      build_configurations: ["Release"],
     )
 
     # `flutter build ipa` doesn't expose manual-signing options for
@@ -57,7 +70,13 @@ platform :ios do
     # drive xcodebuild. Bundler env is stripped so flutter's internal
     # `pod install` finds a loadable CocoaPods (tankstellen lesson).
     Bundler.with_unbundled_env do
+      # The build number goes in HERE, not through agvtool: the project's
+      # CURRENT_PROJECT_VERSION is $(FLUTTER_BUILD_NUMBER), so Flutter's own
+      # flag is what actually reaches CFBundleVersion. (agvtool answered
+      # `Cannot find "Runner.xcodeproj/../YES"` and left the version alone,
+      # which App Store Connect would have rejected as a duplicate upload.)
       sh("flutter build ios --release --no-codesign " \
+         "--build-number=#{build_number} " \
          "--obfuscate --split-debug-info=../build/symbols")
     end
 
