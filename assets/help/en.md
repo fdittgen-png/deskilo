@@ -378,4 +378,6 @@ Minimal data: name, email, plan, bookings, ledger. You control your photo, your 
 
 ## 12. Platforms
 
-Android (Google Play and F-Droid), iPhone/iPad, and desktop — macOS, and Windows with an **MSI installer** built from every release. Your data follows your account.
+Android (Google Play and F-Droid), iPhone/iPad, desktop — **macOS** (a DMG: drag DesKilo into Applications) and **Windows** (an MSI installer) built from every release — and the **browser**: the same app, nothing to install, at the address your workspace publishes. Your data follows your account, so a desk booked on a phone shows up in a browser tab a second later.
+
+What the browser cannot do is what a page is not allowed to do: read an NFC badge, or scan a QR code with a camera the way the kiosk does. Everything else — plan, bookings, members, money, invoices, PDF downloads — is the same app. On first launch of the macOS DMG, right-click the app and choose *Open*: the build is not yet notarised by Apple, so a plain double-click gets a Gatekeeper warning.
