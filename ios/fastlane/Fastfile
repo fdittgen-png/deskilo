@@ -98,24 +98,20 @@ platform :ios do
     )
   end
 
-  desc "Create the App Store Connect record for de.deskilo.app (run ONCE)."
-  desc "pilot cannot upload to an app that does not exist yet, and Apple has"
-  desc "no way to create it from an IPA the way Play binds a package on first"
-  desc "upload. Idempotent: an existing bundle id / app record is left alone."
-  desc "Needs an App-Manager-or-Admin scoped API key."
+  desc "Make sure Apple knows about de.deskilo.app, and SAY what it knows."
+  desc "Registers the bundle id if missing (that part an API key may do) and"
+  desc "then reports every app record the key can see with its bundle id —"
+  desc "because the one thing a key may NOT do is create an app, and a record"
+  desc "bound to the wrong bundle id fails at the END of a 20-minute build."
   lane :create_app_record do
-    # NOT `produce`: that action only speaks Apple-ID auth (username +
-    # an interactive 2FA session), which CI has no way to hold. The same
-    # work through ConnectAPI takes the API key we already use everywhere
-    # else — the pattern manage_testers uses.
     require "spaceship"
     Spaceship::ConnectAPI.token =
       Spaceship::ConnectAPI::Token.from(hash: asc_api_key)
 
     identifier = "de.deskilo.app"
 
-    # 1. The bundle id, in the Developer Portal. App.create rejects an
-    # identifier Apple has never seen.
+    # 1. The bundle id, in the Developer Portal. An app record cannot be
+    # bound to an identifier Apple has never seen.
     bundle = Spaceship::ConnectAPI::BundleId.find(identifier)
     if bundle.nil?
       UI.message("Registering bundle id #{identifier}…")
@@ -124,28 +120,31 @@ platform :ios do
         identifier: identifier,
         platform: Spaceship::ConnectAPI::BundleIdPlatform::IOS,
       )
+      UI.success("Registered #{identifier}.")
     else
-      UI.success("Bundle id #{identifier} already registered.")
+      UI.success("Bundle id #{identifier} is registered.")
     end
 
-    # 2. The App Store Connect record TestFlight hangs off.
+    # 2. What App Store Connect actually holds. Apple forbids 'apps' CREATE
+    # to API keys of every role ("The resource 'apps' does not allow
+    # 'CREATE'"), so the record is made in the web UI — and this lane's job
+    # is to tell you whether the one you made points at the right thing.
     app = Spaceship::ConnectAPI::App.find(identifier)
     if app
-      UI.success("App record already exists (#{app.name}, id #{app.id}).")
+      UI.success("App record OK: #{app.name} (id #{app.id}) → #{app.bundle_id}")
       next
     end
-    UI.message("Creating the App Store Connect record…")
-    app = Spaceship::ConnectAPI::App.create(
-      name: "DesKilo",
-      version_string: "0.1.0",
-      sku: "deskilo-app",
-      # A locale Apple accepts as a primary one; the listing itself is
-      # written later, or by hand.
-      primary_locale: "en-GB",
-      bundle_id: identifier,
-      platforms: ["IOS"],
-    )
-    UI.success("Created app #{app.id} for #{identifier}.")
+
+    UI.important("No app record is bound to #{identifier}.")
+    UI.important("App Store Connect holds these apps:")
+    Spaceship::ConnectAPI::App.all.each do |a|
+      UI.important("  · #{a.name} — #{a.bundle_id} (id #{a.id})")
+    end
+    UI.user_error!(
+      "Create the app in App Store Connect (Apps → +) with bundle id " \
+      "#{identifier}, or fix the bundle id of an existing record under " \
+      "App Information — it stays editable until the first build is " \
+      "uploaded. An API key may not create apps, whatever its role.")
   end
 
   desc "End-to-end CI release: fetch certs, build, upload to TestFlight."
