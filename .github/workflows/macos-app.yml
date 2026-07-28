@@ -92,7 +92,15 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts
 
-      - name: Fetch (or mint) the Developer ID certificate
+      - name: Fetch the Developer ID certificate
+        # NOT fatal when it is missing. Apple refuses to mint a Developer
+        # ID certificate through an API key — "This operation can only be
+        # performed by the Account Holder" — so until one is imported by
+        # hand the build still has to produce something. It produces an
+        # unsigned DMG and says so, rather than failing and leaving macOS
+        # with no artifact at all.
+        continue-on-error: true
+        id: devid
         if: ${{ github.event_name != 'pull_request' }}
         working-directory: ios
         env:
@@ -120,7 +128,10 @@ jobs:
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
 
       - name: Sign, package and notarise
-        if: ${{ inputs.sync_certs != true && github.event_name != 'pull_request' }}
+        id: notarise
+        continue-on-error: true
+        if: ${{ inputs.sync_certs != true && github.event_name != 'pull_request'
+                && steps.devid.outcome == 'success' }}
         env:
           ASC_KEY: ${{ env.ASC_API_KEY_FILEPATH }}
           ASC_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
@@ -136,11 +147,17 @@ jobs:
           export IDENTITY
           bash scripts/sign_and_notarize_macos.sh
 
-      - name: Package unsigned (pull requests only)
+      - name: Package unsigned
         # A PR proves the build and the packaging still work; it cannot
         # prove the signature, and pretending otherwise would ship a DMG
-        # nobody can open.
-        if: ${{ github.event_name == 'pull_request' }}
+        # nobody can open. Same for a run whose Developer ID certificate
+        # is not there yet — the NAME carries the warning, because a file
+        # called DesKilo.dmg that macOS refuses is worse than one that
+        # admits what it is.
+        if: ${{ inputs.sync_certs != true
+                && (github.event_name == 'pull_request'
+                    || steps.devid.outcome != 'success'
+                    || steps.notarise.outcome != 'success') }}
         run: |
           set -euo pipefail
           STAGE="$RUNNER_TEMP/dmg"
@@ -150,6 +167,15 @@ jobs:
           hdiutil create -volname "DesKilo $VERSION" -srcfolder "$STAGE" \
             -ov -format UDZO "build/macos/dmg/DesKilo-$VERSION-unsigned.dmg"
           echo "DMG_PATH=build/macos/dmg/DesKilo-$VERSION-unsigned.dmg" >> "$GITHUB_ENV"
+
+      - name: Say plainly what this DMG is
+        if: ${{ inputs.sync_certs != true }}
+        run: |
+          if [[ "$DMG_PATH" == *unsigned* ]]; then
+            echo "::warning::UNSIGNED build. macOS 15+ REFUSES to open a downloaded app that Apple has not notarised, and the right-click → Open bypass is gone: a user has to allow it under System Settings → Privacy & Security. Import a Developer ID certificate to fix this properly (see docs/guides/RELEASING.md)."
+          else
+            echo "Notarised: opens on a double-click."
+          fi
 
       - uses: actions/upload-artifact@v4
         if: ${{ inputs.sync_certs != true }}
