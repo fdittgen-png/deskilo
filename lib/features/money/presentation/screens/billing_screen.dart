@@ -12,6 +12,7 @@ import '../../domain/fee_band.dart';
 import '../../domain/package.dart';
 import '../../domain/subscription_levels.dart';
 import '../../providers/money_providers.dart';
+import '../widgets/vat_rate_field.dart';
 
 /// Owner-only billing editor (#128, ADR 0008): the fee bands pricing the
 /// percentage subscriptions, and the subscription levels members may pick
@@ -86,6 +87,12 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
   final _pkgName = TextEditingController();
   final _pkgDays = TextEditingController();
   final _pkgPrice = TextEditingController();
+
+  /// VAT rate of the package about to be added; '' = the workspace
+  /// default. Like the price and the day count, it belongs to the package
+  /// as created — a package already sold is deactivated and re-added
+  /// rather than re-taxed.
+  String _pkgVatRateId = '';
 
   @override
   void initState() {
@@ -282,6 +289,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
             name: name,
             days: days,
             priceCents: price,
+            vatRateId: _pkgVatRateId,
           ),
     )) {
       return;
@@ -289,6 +297,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     _pkgName.clear();
     _pkgDays.clear();
     _pkgPrice.clear();
+    setState(() => _pkgVatRateId = '');
     ref.invalidate(allPackagesProvider);
     ref.invalidate(packagesProvider);
     if (!mounted) return;
@@ -545,6 +554,11 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               onPressed: _addPackage,
             ),
           ],
+        ),
+        VatRateField(
+          rates: ref.watch(vatRatesProvider).value ?? const [],
+          value: _pkgVatRateId,
+          onChanged: (id) => setState(() => _pkgVatRateId = id),
         ),
       ],
     );

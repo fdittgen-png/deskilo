@@ -24,6 +24,8 @@ class InvoicePdfStrings {
     required this.description,
     required this.charges,
     required this.payments,
+    this.net = '',
+    this.vat = '',
     required this.annex,
     required this.attendance,
     required this.activity,
@@ -65,6 +67,12 @@ class InvoicePdfStrings {
   /// Subtotal captions above the balance (0063).
   final String charges;
   final String payments;
+
+  /// VAT captions (0072), only printed when the invoice carries tax: the
+  /// net subtotal and the word before each rate ('VAT 20 %'). Defaulted so
+  /// a caller from before VAT existed still compiles.
+  final String net;
+  final String vat;
 
   /// Annex section titles (0064).
   final String annex;
@@ -186,6 +194,14 @@ Future<Uint8List> buildInvoicePdf({
   final paymentsCents = invoice.lines
       .where((l) => l.amountCents < 0)
       .fold(0, (sum, l) => sum + l.amountCents);
+  // The VAT contained in the charges (0072). Prices are VAT-inclusive, so
+  // the breakdown EXPLAINS the total rather than adding to it — which is
+  // why the net sits above the charges line, not beside it.
+  final vatTotals = invoice.vatTotals.where((t) => t.vatCents > 0).toList();
+  final showVat = vatTotals.isNotEmpty;
+  /// '20 %', '5.5 %' — beside the caption, so one row reads 'VAT 20 %'.
+  String ratePercent(double percent) =>
+      '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
 
   pw.Widget label(String text) => pw.Text(text,
       style: pw.TextStyle(
@@ -373,10 +389,16 @@ Future<Uint8List> buildInvoicePdf({
         pw.SizedBox(height: 16),
         // ── Positions ─────────────────────────────────────────────
         pw.Table(
-          columnWidths: const {
-            0: pw.FlexColumnWidth(4),
-            1: pw.FlexColumnWidth(1.2),
-          },
+          columnWidths: showVat
+              ? const {
+                  0: pw.FlexColumnWidth(4),
+                  1: pw.FlexColumnWidth(0.8),
+                  2: pw.FlexColumnWidth(1.2),
+                }
+              : const {
+                  0: pw.FlexColumnWidth(4),
+                  1: pw.FlexColumnWidth(1.2),
+                },
           children: [
             pw.TableRow(
               decoration: const pw.BoxDecoration(color: _ink),
@@ -390,6 +412,17 @@ Future<Uint8List> buildInvoicePdf({
                           color: PdfColors.white,
                           fontWeight: pw.FontWeight.bold)),
                 ),
+                if (showVat)
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.symmetric(
+                        vertical: 5, horizontal: 8),
+                    child: pw.Text(strings.vat,
+                        textAlign: pw.TextAlign.right,
+                        style: pw.TextStyle(
+                            fontSize: 9,
+                            color: PdfColors.white,
+                            fontWeight: pw.FontWeight.bold)),
+                  ),
                 pw.Padding(
                   padding: const pw.EdgeInsets.symmetric(
                       vertical: 5, horizontal: 8),
@@ -414,6 +447,20 @@ Future<Uint8List> buildInvoicePdf({
                         style:
                             const pw.TextStyle(fontSize: 10, color: _ink)),
                   ),
+                  if (showVat)
+                    pw.Padding(
+                      padding: const pw.EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 8),
+                      // A credit line is money moving, not a supply: it
+                      // carries no rate to print.
+                      child: pw.Text(
+                          line.amountCents > 0
+                              ? ratePercent(line.vatPercent)
+                              : '',
+                          textAlign: pw.TextAlign.right,
+                          style: const pw.TextStyle(
+                              fontSize: 9, color: _muted)),
+                    ),
                   amountCell(line.amountCents),
                 ],
               ),
@@ -427,6 +474,35 @@ Future<Uint8List> buildInvoicePdf({
             pw.SizedBox(
               width: 220,
               child: pw.Column(children: [
+                if (showVat) ...[
+                  pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Text(strings.net,
+                            style: const pw.TextStyle(
+                                fontSize: 9, color: _muted)),
+                        pw.Text(money(invoice.netCents),
+                            style: const pw.TextStyle(
+                                fontSize: 9, color: _muted)),
+                      ]),
+                  for (final total in vatTotals)
+                    pw.Padding(
+                      padding: const pw.EdgeInsets.only(top: 2),
+                      child: pw.Row(
+                          mainAxisAlignment:
+                              pw.MainAxisAlignment.spaceBetween,
+                          children: [
+                            pw.Text(
+                                '${strings.vat} ${ratePercent(total.percent)}',
+                                style: const pw.TextStyle(
+                                    fontSize: 9, color: _muted)),
+                            pw.Text(money(total.vatCents),
+                                style: const pw.TextStyle(
+                                    fontSize: 9, color: _muted)),
+                          ]),
+                    ),
+                  pw.SizedBox(height: 2),
+                ],
                 pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [

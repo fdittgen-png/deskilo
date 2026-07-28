@@ -12,6 +12,7 @@ import '../domain/payment_method.dart';
 import '../domain/payment_provider.dart';
 import '../domain/service_item.dart';
 import '../domain/statement.dart';
+import '../domain/vat_rate.dart';
 import '../domain/subscription_levels.dart';
 
 class SupabaseMoneyRepository implements MoneyRepository {
@@ -62,6 +63,9 @@ class SupabaseMoneyRepository implements MoneyRepository {
             label: line['label'] as String? ?? '',
             quantity: (line['quantity'] as num?)?.toInt() ?? 1,
             amountCents: (line['amount_cents'] as num).toInt(),
+            // 0072 — so the preview can show the same VAT the document
+            // will carry.
+            vatPercent: (line['vat_percent'] as num?)?.toDouble() ?? 0,
           ),
       ],
       totalCents: (raw['total_cents'] as num?)?.toInt() ?? 0,
@@ -315,7 +319,28 @@ class SupabaseMoneyRepository implements MoneyRepository {
         name: row['name'] as String,
         priceCents: row['price_cents'] as int,
         active: row['active'] as bool,
+        vatRateId: row['vat_rate_id'] as String? ?? '',
       );
+
+  // ── VAT rates (0072) ────────────────────────────────────────────────
+
+  @override
+  Future<List<VatRate>> fetchVatRates(String workspaceId) async {
+    final rows = await _client
+        .from('vat_rates')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('percent', ascending: false);
+    return rows.map(VatRate.fromRow).toList();
+  }
+
+  @override
+  Future<void> setVatRates(String workspaceId, List<VatRate> rates) async {
+    await _client.rpc<void>('set_vat_rates', params: {
+      'p_workspace_id': workspaceId,
+      'p_rates': [for (final rate in rates) rate.toJson()],
+    });
+  }
 
   @override
   Future<List<ServiceItem>> fetchServices(
@@ -334,6 +359,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     String workspaceId, {
     required String name,
     required int priceCents,
+    String? vatRateId,
   }) async {
     final row = await _client
         .from('services')
@@ -341,6 +367,9 @@ class SupabaseMoneyRepository implements MoneyRepository {
           'workspace_id': workspaceId,
           'name': name,
           'price_cents': priceCents,
+          // '' means "the workspace default", which the column stores as
+          // NULL — the resolution lives in one place, the server.
+          'vat_rate_id': (vatRateId ?? '').isEmpty ? null : vatRateId,
         })
         .select()
         .single();
@@ -353,6 +382,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     String? name,
     int? priceCents,
     bool? active,
+    String? vatRateId,
   }) async {
     final row = await _client
         .from('services')
@@ -360,6 +390,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
           'name': ?name,
           'price_cents': ?priceCents,
           'active': ?active,
+          if (vatRateId != null)
+            'vat_rate_id': vatRateId.isEmpty ? null : vatRateId,
         })
         .eq('id', serviceId)
         .select()
@@ -385,6 +417,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     required String name,
     required int days,
     required int priceCents,
+    String? vatRateId,
   }) async {
     final row = await _client
         .from('packages')
@@ -393,6 +426,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
           'name': name,
           'days': days,
           'price_cents': priceCents,
+          'vat_rate_id': (vatRateId ?? '').isEmpty ? null : vatRateId,
         })
         .select()
         .single();
@@ -406,6 +440,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     int? days,
     int? priceCents,
     bool? active,
+    String? vatRateId,
   }) async {
     final row = await _client
         .from('packages')
@@ -414,6 +449,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
           'days': ?days,
           'price_cents': ?priceCents,
           'active': ?active,
+          if (vatRateId != null)
+            'vat_rate_id': vatRateId.isEmpty ? null : vatRateId,
         })
         .eq('id', packageId)
         .select()

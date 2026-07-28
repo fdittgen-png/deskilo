@@ -2,6 +2,7 @@
 import 'package:xml/xml.dart';
 
 import 'invoice.dart';
+import 'vat_rate.dart';
 import 'vat_regime.dart';
 
 /// The app version SAF-T records as the producing software
@@ -28,6 +29,9 @@ const String safTSoftwareVersion = '0.1.0';
 ///
 /// Amounts are the invoice's own snapshot: charges as lines, the month's
 /// payments as `Payments`, and the solde as the invoice's `GrossTotal`.
+/// Line amounts are tax-EXCLUSIVE, as SAF-T defines them — with DesKilo's
+/// VAT-inclusive prices that means the extracted net, and the tax sits
+/// beside it in `TaxInformation` (0072).
 String buildSafTFile({
   required List<Invoice> invoices,
   required Map<String, InvoiceMatch> matches,
@@ -43,7 +47,12 @@ String buildSafTFile({
   String day(DateTime date) => date.toIso8601String().split('T').first;
 
   final regime = vatRegimeFromWire(company.vatRegime);
-  final taxCode = regime.taxCategoryCode;
+  final zeroCategory = regime.taxCategoryCode;
+  /// A TaxTable code has to be unique per rate, so a taxed rate carries
+  /// its percentage: 'S20', 'S5.5'. A zero rate is just its category.
+  String taxCode(double percent) =>
+      percent > 0 ? 'S${_percent(percent)}' : zeroCategory;
+  String percentage(double percent) => percent.toStringAsFixed(2);
   // Oldest first: an audit file reads like a journal.
   final ordered = [...invoices]
     ..sort((a, b) => a.issuedAt.compareTo(b.issuedAt));
@@ -141,18 +150,30 @@ String buildSafTFile({
           }
         });
       }
+      // Every rate the file actually uses, once — a TaxTable listing a
+      // rate no line carries invites the question of why it is there.
+      final rates = <double>{
+        for (final invoice in ordered)
+          for (final total in invoice.vatBreakdown(zeroCategory: zeroCategory))
+            total.percent,
+      }.toList()
+        ..sort((a, b) => b.compareTo(a));
       builder.element('TaxTable', nest: () {
-        builder.element('TaxTableEntry', nest: () {
-          tag('TaxType', 'VAT');
-          tag('TaxCode', taxCode);
-          tag(
-            'Description',
-            company.taxExemptionReason.isEmpty
-                ? 'No VAT charged'
-                : company.taxExemptionReason,
-          );
-          tag('TaxPercentage', '0.00');
-        });
+        for (final percent in rates.isEmpty ? const [0.0] : rates) {
+          builder.element('TaxTableEntry', nest: () {
+            tag('TaxType', 'VAT');
+            tag('TaxCode', taxCode(percent));
+            tag(
+              'Description',
+              percent > 0
+                  ? 'VAT ${_percent(percent)}%'
+                  : company.taxExemptionReason.isEmpty
+                      ? 'No VAT charged'
+                      : company.taxExemptionReason,
+            );
+            tag('TaxPercentage', percentage(percent));
+          });
+        }
       });
     });
 
@@ -187,34 +208,41 @@ String buildSafTFile({
             final charges = invoice.lines
                 .where((l) => l.amountCents > 0)
                 .toList(growable: false);
-            final chargesCents =
-                charges.fold(0, (sum, l) => sum + l.amountCents);
+            final breakdown =
+                invoice.vatBreakdown(zeroCategory: zeroCategory);
+            final netCents = breakdown.fold(0, (sum, t) => sum + t.netCents);
+            final taxCents = breakdown.fold(0, (sum, t) => sum + t.vatCents);
             for (final (i, line) in charges.indexed) {
               final quantity =
                   line.quantity > 1 && line.amountCents % line.quantity == 0
                       ? line.quantity
                       : 1;
+              final split = vatSplit(line.amountCents, line.vatPercent);
               builder.element('Line', nest: () {
                 tag('LineNumber', '${i + 1}');
                 final text = lineText(line);
                 tag('Description', text.isEmpty ? fallbackDescription : text);
                 tag('Quantity', '$quantity');
                 tag('UnitOfMeasure', 'UN');
-                tag('UnitPrice', amount(line.amountCents ~/ quantity));
-                tag('CreditAmount', amount(line.amountCents));
+                tag('UnitPrice', amount(split.netCents ~/ quantity));
+                tag('CreditAmount', amount(split.netCents));
                 builder.element('TaxInformation', nest: () {
                   tag('TaxType', 'VAT');
-                  tag('TaxCode', taxCode);
-                  tag('TaxPercentage', '0.00');
+                  tag('TaxCode', taxCode(line.vatPercent));
+                  tag('TaxPercentage', percentage(line.vatPercent));
+                  if (split.vatCents > 0) {
+                    tag('TaxAmount', amount(split.vatCents));
+                  }
                 });
-                if (company.taxExemptionReason.isNotEmpty) {
+                if (line.vatPercent == 0 &&
+                    company.taxExemptionReason.isNotEmpty) {
                   tag('TaxExemptionReason', company.taxExemptionReason);
                 }
               });
             }
             builder.element('DocumentTotals', nest: () {
-              tag('TaxPayable', '0.00');
-              tag('NetTotal', amount(chargesCents));
+              tag('TaxPayable', amount(taxCents));
+              tag('NetTotal', amount(netCents));
               // The solde: charges minus what the month already paid.
               tag('GrossTotal', amount(invoice.totalCents));
             });
@@ -256,3 +284,9 @@ String buildSafTFile({
   });
   return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
 }
+
+/// '20' or '5.5' — a percentage without a pointless trailing zero, used
+/// where it becomes part of a CODE rather than an amount.
+String _percent(double percent) => percent == percent.roundToDouble()
+    ? percent.toStringAsFixed(0)
+    : percent.toString();

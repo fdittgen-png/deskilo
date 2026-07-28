@@ -542,7 +542,7 @@
   "@invoiceEInvoiceIncompleteTitle": {
     "description": "E-invoice sheet: header above the non-fatal gaps"
   },
-  "invoiceGapVatNotSupported": "The workspace charges VAT, and DesKilo does not compute VAT per position yet — no truthful tax breakdown can be produced.",
+  "invoiceGapVatNotSupported": "The workspace charges VAT but this invoice carries no rate — add your VAT rates, then issue it again.",
   "@invoiceGapVatNotSupported": {
     "description": "Gap: the workspace charges VAT, which the app cannot break down"
   },
@@ -642,7 +642,7 @@
   "@legalIdentitySaved": {
     "description": "Snackbar after saving the legal identity"
   },
-  "legalIdentityVatWarning": "DesKilo does not compute VAT per position yet: with this regime the XML export stays disabled. The PDF is unaffected.",
+  "legalIdentityVatWarning": "This workspace charges VAT but no rate is set up: invoices show no tax and the XML export stays disabled until you add one.",
   "@legalIdentityVatWarning": {
     "description": "Warning shown for the VAT-registered regime"
   },
@@ -837,5 +837,13 @@
   "fecMissingSiren": "The FEC is named after your registration number — fill it in under Legal identity first.",
   "@fecMissingSiren": {
     "description": "Refusal: the FEC file name is built from the SIREN, which is not set"
+  },
+  "invoiceEInvoiceStaleIdentity": "Your legal identity is complete now, but this invoice was signed before it and keeps what it was issued with. Mark it erroneous and issue a replacement to carry the new identity.",
+  "@invoiceEInvoiceStaleIdentity": {
+    "description": "Explains that the invoice snapshot predates the completed legal identity"
+  },
+  "einvoiceConfigUnavailable": "The platform settings could not be loaded. Check your connection and try again.",
+  "@einvoiceConfigUnavailable": {
+    "description": "Shown when the e-invoice platform status probe fails"
   }
 }

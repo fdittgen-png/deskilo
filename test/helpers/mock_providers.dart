@@ -580,6 +580,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     required String street,
     required String city,
     required String postalCode,
+    required String vatAccount,
   }) async {
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
     if (i < 0) return;
@@ -591,6 +592,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       street: street.trim(),
       city: city.trim(),
       postalCode: postalCode.trim(),
+      vatAccount: vatAccount.trim(),
     );
   }
 

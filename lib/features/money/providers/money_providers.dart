@@ -18,6 +18,7 @@ import '../domain/package.dart';
 import '../domain/service_item.dart';
 import '../domain/statement.dart';
 import '../domain/subscription_levels.dart';
+import '../domain/vat_rate.dart';
 
 part 'money_providers.g.dart';
 
@@ -96,6 +97,30 @@ Future<List<Package>> allPackages(Ref ref) async {
   return ref
       .watch(moneyRepositoryProvider)
       .fetchPackages(workspace.id, includeInactive: true);
+}
+
+/// The workspace's VAT rates (0072). Member-readable: the rate is on the
+/// bill and on every invoice, so it is not owner-only data.
+///
+/// Empty means VAT is off — every amount is then whatever the workspace's
+/// regime says it is, and nothing about the bill changes.
+@Riverpod(keepAlive: true)
+Future<List<VatRate>> vatRates(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return ref.watch(moneyRepositoryProvider).fetchVatRates(workspace.id);
+}
+
+/// The percentage an item with no rate of its own is taxed at — the mirror
+/// of `workspace_default_vat_percent`, for previews only. The server is
+/// still what stamps the ledger.
+@riverpod
+Future<double> defaultVatPercent(Ref ref) async {
+  final rates = await ref.watch(vatRatesProvider.future);
+  for (final rate in rates) {
+    if (rate.isDefault) return rate.percent;
+  }
+  return 0;
 }
 
 /// The invoice archive (0060): RLS scopes rows — members their own,

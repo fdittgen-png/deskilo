@@ -273,7 +273,7 @@
   "invoiceEInvoiceReady": "Bereit — diese Datei erfüllt EN 16931.",
   "invoiceEInvoiceBlockedTitle": "Ein Validator würde diese Datei ablehnen:",
   "invoiceEInvoiceIncompleteTitle": "Gültig, doch die strengen nationalen Profile wollen zusätzlich:",
-  "invoiceGapVatNotSupported": "Der Workspace berechnet Umsatzsteuer, und DesKilo rechnet noch nicht pro Position — eine wahrheitsgemäße Steueraufteilung ist nicht möglich.",
+  "invoiceGapVatNotSupported": "Der Space verlangt Mehrwertsteuer, diese Rechnung trägt aber keinen Satz — Sätze anlegen und die Rechnung neu ausstellen.",
   "invoiceGapMissingVatId": "Die Umsatzsteuer-Identifikationsnummer fehlt — ein steuerbefreiter Verkäufer muss sie angeben.",
   "invoiceGapMissingLegalId": "Die Registernummer fehlt (SIREN, HRB, CIF…) — nichts identifiziert dich auf der Rechnung.",
   "invoiceGapMissingExemptionReason": "Der Grund für die Steuerbefreiung fehlt.",
@@ -298,7 +298,7 @@
   "legalIdentityCity": "Stadt",
   "legalIdentityPostalCode": "Postleitzahl",
   "legalIdentitySaved": "Rechtliche Identität gespeichert.",
-  "legalIdentityVatWarning": "DesKilo rechnet die Umsatzsteuer noch nicht pro Position: Mit diesem Regime bleibt der XML-Export deaktiviert. Das PDF ist nicht betroffen.",
+  "legalIdentityVatWarning": "Dieser Space verlangt Mehrwertsteuer, es ist aber kein Satz angelegt: Rechnungen weisen keine Steuer aus und der XML-Export bleibt deaktiviert.",
   "addressCountryLabel": "Land",
   "addressVatIdLabel": "Umsatzsteuer-ID (wenn du als Unternehmen abrechnest)",
   "invoiceProformaAction": "Proforma-Rechnung",
@@ -354,5 +354,7 @@
   "fecAccountCustomers": "Kunden",
   "fecAccountRevenue": "Erlöse",
   "fecAccountBank": "Bank",
-  "fecMissingSiren": "Der FEC-Dateiname enthält die Registernummer — trage sie zuerst unter Rechtliche Identität ein."
+  "fecMissingSiren": "Der FEC-Dateiname enthält die Registernummer — trage sie zuerst unter Rechtliche Identität ein.",
+  "invoiceEInvoiceStaleIdentity": "Ihre rechtliche Identität ist jetzt vollständig, diese Rechnung wurde aber vorher signiert und behält, womit sie ausgestellt wurde. Als fehlerhaft markieren und eine Ersatzrechnung ausstellen, damit sie die neue Identität trägt.",
+  "einvoiceConfigUnavailable": "Die Plattform-Einstellungen konnten nicht geladen werden. Verbindung prüfen und erneut versuchen."
 }

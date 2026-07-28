@@ -84,6 +84,7 @@ abstract class WorkspaceRepository {
     required String street,
     required String city,
     required String postalCode,
+    required String vatAccount,
   });
 
   /// Owner-only (workspaces_update RLS): set the invitation message

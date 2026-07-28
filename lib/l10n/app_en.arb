@@ -749,6 +749,10 @@
   "@commonSaveFailed": {
     "description": "Error snackbar when a local file export fails."
   },
+  "commonRetry": "Try again",
+  "@commonRetry": {
+    "description": "Generic retry button"
+  },
   "consumptionAdd": "Add consumption",
   "@consumptionAdd": {
     "description": "Button + sheet title recording my own consumed services (#129)"
@@ -1990,7 +1994,7 @@
   "@invoiceEInvoiceIncompleteTitle": {
     "description": "E-invoice sheet: header above the non-fatal gaps"
   },
-  "invoiceGapVatNotSupported": "The workspace charges VAT, and DesKilo does not compute VAT per position yet — no truthful tax breakdown can be produced.",
+  "invoiceGapVatNotSupported": "The workspace charges VAT but this invoice carries no rate — add your VAT rates, then issue it again.",
   "@invoiceGapVatNotSupported": {
     "description": "Gap: the workspace charges VAT, which the app cannot break down"
   },
@@ -2090,7 +2094,7 @@
   "@legalIdentitySaved": {
     "description": "Snackbar after saving the legal identity"
   },
-  "legalIdentityVatWarning": "DesKilo does not compute VAT per position yet: with this regime the XML export stays disabled. The PDF is unaffected.",
+  "legalIdentityVatWarning": "This workspace charges VAT but no rate is set up: invoices show no tax and the XML export stays disabled until you add one.",
   "@legalIdentityVatWarning": {
     "description": "Warning shown for the VAT-registered regime"
   },
@@ -2285,6 +2289,14 @@
   "fecMissingSiren": "The FEC is named after your registration number — fill it in under Legal identity first.",
   "@fecMissingSiren": {
     "description": "Refusal: the FEC file name is built from the SIREN, which is not set"
+  },
+  "invoiceEInvoiceStaleIdentity": "Your legal identity is complete now, but this invoice was signed before it and keeps what it was issued with. Mark it erroneous and issue a replacement to carry the new identity.",
+  "@invoiceEInvoiceStaleIdentity": {
+    "description": "Explains that the invoice snapshot predates the completed legal identity"
+  },
+  "einvoiceConfigUnavailable": "The platform settings could not be loaded. Check your connection and try again.",
+  "@einvoiceConfigUnavailable": {
+    "description": "Shown when the e-invoice platform status probe fails"
   },
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
@@ -3564,6 +3576,94 @@
   "validationSaved": "Validation rule saved.",
   "@validationSaved": {
     "description": "Snackbar after a policy row was stored successfully"
+  },
+  "vatTitle": "VAT",
+  "@vatTitle": {
+    "description": "VAT settings screen title"
+  },
+  "vatIntro": "Prices in DesKilo include VAT. Adding rates changes nothing about what members pay — the tax is extracted from the price you already charge and shown on the invoice.",
+  "@vatIntro": {
+    "description": "Explains that prices are VAT-inclusive and the tax is extracted"
+  },
+  "vatRegimeHint": "This workspace is not declared VAT-registered, so invoices show no VAT. Change that under Legal identity.",
+  "@vatRegimeHint": {
+    "description": "Shown when the workspace regime is not VAT-registered"
+  },
+  "vatEmpty": "No rate yet — invoices show no VAT.",
+  "@vatEmpty": {
+    "description": "No VAT rate configured yet"
+  },
+  "vatSeed": "Use the usual rates",
+  "@vatSeed": {
+    "description": "Button seeding the country's usual rates"
+  },
+  "vatAddRate": "Add a rate",
+  "@vatAddRate": {
+    "description": "Adds an empty rate row"
+  },
+  "vatRateLabelField": "Name",
+  "@vatRateLabelField": {
+    "description": "Rate name field ('Standard')"
+  },
+  "vatRatePercentField": "Rate %",
+  "@vatRatePercentField": {
+    "description": "Rate percentage field"
+  },
+  "vatRateDefaultTooltip": "Default rate — used by subscriptions and by anything without its own rate",
+  "@vatRateDefaultTooltip": {
+    "description": "Tooltip of the default-rate radio"
+  },
+  "vatRateRemoveTooltip": "Remove",
+  "@vatRateRemoveTooltip": {
+    "description": "Tooltip of the remove-rate button"
+  },
+  "vatSaved": "VAT rates saved.",
+  "@vatSaved": {
+    "description": "Confirmation after saving the rates"
+  },
+  "vatNeedsDefault": "Mark exactly one rate as the default.",
+  "@vatNeedsDefault": {
+    "description": "Validation: exactly one default is required"
+  },
+  "vatRateIncomplete": "Every rate needs a name and a percentage between 0 and 99.99.",
+  "@vatRateIncomplete": {
+    "description": "Validation: a rate needs a name and a percentage"
+  },
+  "vatRatesTile": "VAT rates",
+  "@vatRatesTile": {
+    "description": "Tile leading to the VAT rate editor"
+  },
+  "vatAccountField": "VAT account",
+  "@vatAccountField": {
+    "description": "FEC account for collected VAT"
+  },
+  "vatAccountHint": "Where the accounting export books collected VAT. Empty = 445710.",
+  "@vatAccountHint": {
+    "description": "Explains the VAT account and its default"
+  },
+  "vatServiceRate": "VAT rate",
+  "@vatServiceRate": {
+    "description": "VAT rate picker in the service and package editors"
+  },
+  "vatServiceRateDefault": "Workspace default",
+  "@vatServiceRateDefault": {
+    "description": "Picker entry meaning the workspace default rate"
+  },
+  "vatPdfNet": "Net",
+  "@vatPdfNet": {
+    "description": "Invoice PDF: the net (tax-exclusive) subtotal"
+  },
+  "vatPdfVat": "VAT",
+  "@vatPdfVat": {
+    "description": "Invoice PDF: the VAT caption, followed by the rate"
+  },
+  "fecAccountVat": "Collected VAT",
+  "@fecAccountVat": {
+    "description": "FEC export: label of the collected-VAT account"
+  },
+  "vatKeptRate": "A rate still used by an invoice or a service is kept, deactivated.",
+  "@vatKeptRate": {
+    "description": "Explains that a referenced rate is deactivated, not deleted"
   },
   "onboardingTitle": "Welcome to DesKilo",
   "@onboardingTitle": {

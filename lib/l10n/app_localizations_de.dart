@@ -552,6 +552,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get commonSaveFailed => 'Datei konnte nicht gespeichert werden.';
 
   @override
+  String get commonRetry => 'Erneut versuchen';
+
+  @override
   String get consumptionAdd => 'Verbrauch erfassen';
 
   @override
@@ -1472,7 +1475,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceGapVatNotSupported =>
-      'Der Workspace berechnet Umsatzsteuer, und DesKilo rechnet noch nicht pro Position — eine wahrheitsgemäße Steueraufteilung ist nicht möglich.';
+      'Der Space verlangt Mehrwertsteuer, diese Rechnung trägt aber keinen Satz — Sätze anlegen und die Rechnung neu ausstellen.';
 
   @override
   String get invoiceGapMissingVatId =>
@@ -1560,7 +1563,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get legalIdentityVatWarning =>
-      'DesKilo rechnet die Umsatzsteuer noch nicht pro Position: Mit diesem Regime bleibt der XML-Export deaktiviert. Das PDF ist nicht betroffen.';
+      'Dieser Space verlangt Mehrwertsteuer, es ist aber kein Satz angelegt: Rechnungen weisen keine Steuer aus und der XML-Export bleibt deaktiviert.';
 
   @override
   String get addressCountryLabel => 'Land';
@@ -1710,6 +1713,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get fecMissingSiren =>
       'Der FEC-Dateiname enthält die Registernummer — trage sie zuerst unter Rechtliche Identität ein.';
+
+  @override
+  String get invoiceEInvoiceStaleIdentity =>
+      'Ihre rechtliche Identität ist jetzt vollständig, diese Rechnung wurde aber vorher signiert und behält, womit sie ausgestellt wurde. Als fehlerhaft markieren und eine Ersatzrechnung ausstellen, damit sie die neue Identität trägt.';
+
+  @override
+  String get einvoiceConfigUnavailable =>
+      'Die Plattform-Einstellungen konnten nicht geladen werden. Verbindung prüfen und erneut versuchen.';
 
   @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
@@ -2739,6 +2750,79 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get validationSaved => 'Validierungsregel gespeichert.';
+
+  @override
+  String get vatTitle => 'Mehrwertsteuer';
+
+  @override
+  String get vatIntro =>
+      'Preise in DesKilo sind Bruttopreise. Sätze anzulegen ändert nichts daran, was Mitglieder zahlen — die Steuer wird aus dem bestehenden Preis herausgerechnet und auf der Rechnung ausgewiesen.';
+
+  @override
+  String get vatRegimeHint =>
+      'Dieser Space ist nicht als umsatzsteuerpflichtig deklariert, Rechnungen weisen daher keine Steuer aus. Das ändert sich unter Rechtliche Identität.';
+
+  @override
+  String get vatEmpty =>
+      'Noch kein Satz — Rechnungen weisen keine Mehrwertsteuer aus.';
+
+  @override
+  String get vatSeed => 'Übliche Sätze übernehmen';
+
+  @override
+  String get vatAddRate => 'Satz hinzufügen';
+
+  @override
+  String get vatRateLabelField => 'Name';
+
+  @override
+  String get vatRatePercentField => 'Satz %';
+
+  @override
+  String get vatRateDefaultTooltip =>
+      'Standardsatz — gilt für Abos und alles ohne eigenen Satz';
+
+  @override
+  String get vatRateRemoveTooltip => 'Entfernen';
+
+  @override
+  String get vatSaved => 'Steuersätze gespeichert.';
+
+  @override
+  String get vatNeedsDefault => 'Genau einen Satz als Standard markieren.';
+
+  @override
+  String get vatRateIncomplete =>
+      'Jeder Satz braucht einen Namen und einen Prozentwert zwischen 0 und 99,99.';
+
+  @override
+  String get vatRatesTile => 'Steuersätze';
+
+  @override
+  String get vatAccountField => 'Steuerkonto';
+
+  @override
+  String get vatAccountHint =>
+      'Konto, auf das der Buchhaltungsexport die vereinnahmte Steuer bucht. Leer = 445710.';
+
+  @override
+  String get vatServiceRate => 'Steuersatz';
+
+  @override
+  String get vatServiceRateDefault => 'Standard des Spaces';
+
+  @override
+  String get vatPdfNet => 'Netto';
+
+  @override
+  String get vatPdfVat => 'MwSt.';
+
+  @override
+  String get fecAccountVat => 'Vereinnahmte Steuer';
+
+  @override
+  String get vatKeptRate =>
+      'Ein Satz, den eine Rechnung oder eine Leistung noch nutzt, bleibt erhalten und wird deaktiviert.';
 
   @override
   String get onboardingTitle => 'Willkommen bei DesKilo';

@@ -56,5 +56,9 @@
   "commonSaveFailed": "Could not save the file.",
   "@commonSaveFailed": {
     "description": "Error snackbar when a local file export fails."
+  },
+  "commonRetry": "Try again",
+  "@commonRetry": {
+    "description": "Generic retry button"
   }
 }

@@ -12,5 +12,6 @@
   "comingSoon": "Próximamente",
   "shellReserveButton": "Reservar",
   "commonSavedTo": "Guardado en {path}",
-  "commonSaveFailed": "No se pudo guardar el archivo."
+  "commonSaveFailed": "No se pudo guardar el archivo.",
+  "commonRetry": "Reintentar"
 }

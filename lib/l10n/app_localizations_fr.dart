@@ -552,6 +552,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonSaveFailed => 'Impossible d\'enregistrer le fichier.';
 
   @override
+  String get commonRetry => 'Réessayer';
+
+  @override
   String get consumptionAdd => 'Ajouter une consommation';
 
   @override
@@ -1477,7 +1480,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceGapVatNotSupported =>
-      'L\'espace facture la TVA, et DesKilo ne calcule pas encore la TVA par position — aucune ventilation fiscale sincère n\'est possible.';
+      'L\'espace facture la TVA mais cette facture ne porte aucun taux — ajoutez vos taux de TVA, puis émettez-la à nouveau.';
 
   @override
   String get invoiceGapMissingVatId =>
@@ -1565,7 +1568,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get legalIdentityVatWarning =>
-      'DesKilo ne calcule pas encore la TVA par position : avec ce régime, l\'export XML reste désactivé. Le PDF n\'est pas concerné.';
+      'Cet espace facture la TVA mais aucun taux n\'est configuré : les factures n\'affichent pas de taxe et l\'export XML reste désactivé tant qu\'il n\'y en a pas.';
 
   @override
   String get addressCountryLabel => 'Pays';
@@ -1715,6 +1718,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get fecMissingSiren =>
       'Le FEC porte le nom de votre numéro d\'immatriculation — renseignez-le d\'abord dans Identité légale.';
+
+  @override
+  String get invoiceEInvoiceStaleIdentity =>
+      'Votre identité légale est complète, mais cette facture a été signée avant et conserve ce avec quoi elle a été émise. Marquez-la erronée puis émettez un remplacement pour porter la nouvelle identité.';
+
+  @override
+  String get einvoiceConfigUnavailable =>
+      'Impossible de charger la configuration de la plateforme. Vérifiez votre connexion et réessayez.';
 
   @override
   String get eventTypeMemberJoin => 'Nouveau membre';
@@ -2744,6 +2755,79 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get validationSaved => 'Règle de validation enregistrée.';
+
+  @override
+  String get vatTitle => 'TVA';
+
+  @override
+  String get vatIntro =>
+      'Dans DesKilo les prix sont TTC. Ajouter des taux ne change rien à ce que les membres paient : la taxe est extraite du prix déjà facturé et affichée sur la facture.';
+
+  @override
+  String get vatRegimeHint =>
+      'Cet espace n\'est pas déclaré assujetti à la TVA : les factures n\'en affichent aucune. Cela se change dans Identité légale.';
+
+  @override
+  String get vatEmpty => 'Aucun taux — les factures n\'affichent pas de TVA.';
+
+  @override
+  String get vatSeed => 'Utiliser les taux usuels';
+
+  @override
+  String get vatAddRate => 'Ajouter un taux';
+
+  @override
+  String get vatRateLabelField => 'Nom';
+
+  @override
+  String get vatRatePercentField => 'Taux %';
+
+  @override
+  String get vatRateDefaultTooltip =>
+      'Taux par défaut — utilisé par les abonnements et par tout ce qui n\'a pas son propre taux';
+
+  @override
+  String get vatRateRemoveTooltip => 'Supprimer';
+
+  @override
+  String get vatSaved => 'Taux de TVA enregistrés.';
+
+  @override
+  String get vatNeedsDefault =>
+      'Marquez exactement un taux comme taux par défaut.';
+
+  @override
+  String get vatRateIncomplete =>
+      'Chaque taux demande un nom et un pourcentage entre 0 et 99,99.';
+
+  @override
+  String get vatRatesTile => 'Taux de TVA';
+
+  @override
+  String get vatAccountField => 'Compte de TVA';
+
+  @override
+  String get vatAccountHint =>
+      'Compte où l\'export comptable enregistre la TVA collectée. Vide = 445710.';
+
+  @override
+  String get vatServiceRate => 'Taux de TVA';
+
+  @override
+  String get vatServiceRateDefault => 'Taux par défaut de l\'espace';
+
+  @override
+  String get vatPdfNet => 'Total HT';
+
+  @override
+  String get vatPdfVat => 'TVA';
+
+  @override
+  String get fecAccountVat => 'TVA collectée';
+
+  @override
+  String get vatKeptRate =>
+      'Un taux encore utilisé par une facture ou un service est conservé, désactivé.';
 
   @override
   String get onboardingTitle => 'Bienvenue sur DesKilo';

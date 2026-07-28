@@ -11,6 +11,7 @@ import 'package:deskilo/features/money/domain/payment_provider.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
+import 'package:deskilo/features/money/domain/vat_rate.dart';
 
 import 'fake_event_repository.dart';
 
@@ -555,6 +556,56 @@ class FakeMoneyRepository implements MoneyRepository {
     ),
   ];
 
+  /// The workspace's rates (0072); empty models a workspace that has not
+  /// turned VAT on — which is every workspace before this migration.
+  List<VatRate> vatRates = [];
+
+  @override
+  Future<List<VatRate>> fetchVatRates(String workspaceId) async =>
+      vatRates.where((r) => r.active).toList()
+        ..sort((a, b) => b.percent.compareTo(a.percent));
+
+  @override
+  Future<void> setVatRates(String workspaceId, List<VatRate> rates) async {
+    // Mirror set_vat_rates' precondition rather than accepting a set the
+    // server would reject. An EMPTY set is allowed: that is how VAT is
+    // turned back off.
+    if (rates.isNotEmpty &&
+        rates.where((r) => r.active && r.isDefault).length != 1) {
+      throw StateError('exactly one default rate is required');
+    }
+    vatRates = [
+      for (var i = 0; i < rates.length; i++)
+        rates[i].id.isEmpty
+            ? VatRate(
+                id: 'vat-${i + 1}',
+                label: rates[i].label,
+                percent: rates[i].percent,
+                category: rates[i].category,
+                isDefault: rates[i].isDefault,
+                active: rates[i].active,
+              )
+            : rates[i],
+    ];
+  }
+
+  /// What [recordServiceCharge] and [buyPackage] stamp when the item has no
+  /// rate of its own — the fake's stand-in for
+  /// `workspace_default_vat_percent`.
+  double get _defaultVatPercent => vatRates
+      .where((r) => r.active && r.isDefault)
+      .map((r) => r.percent)
+      .firstOrNull ??
+      0;
+
+  double _vatPercentOf(String vatRateId) => vatRateId.isEmpty
+      ? _defaultVatPercent
+      : vatRates
+              .where((r) => r.id == vatRateId)
+              .map((r) => r.percent)
+              .firstOrNull ??
+          _defaultVatPercent;
+
   @override
   Future<List<ServiceItem>> fetchServices(
     String workspaceId, {
@@ -568,6 +619,7 @@ class FakeMoneyRepository implements MoneyRepository {
     String workspaceId, {
     required String name,
     required int priceCents,
+    String? vatRateId,
   }) async {
     final service = ServiceItem(
       id: 'service-${services.length + 1}',
@@ -575,6 +627,7 @@ class FakeMoneyRepository implements MoneyRepository {
       name: name,
       priceCents: priceCents,
       active: true,
+      vatRateId: vatRateId ?? '',
     );
     services.add(service);
     return service;
@@ -586,6 +639,7 @@ class FakeMoneyRepository implements MoneyRepository {
     String? name,
     int? priceCents,
     bool? active,
+    String? vatRateId,
   }) async {
     final i = services.indexWhere((s) => s.id == serviceId);
     if (i < 0) throw StateError('unknown service');
@@ -593,6 +647,7 @@ class FakeMoneyRepository implements MoneyRepository {
       name: name ?? services[i].name,
       priceCents: priceCents ?? services[i].priceCents,
       active: active ?? services[i].active,
+      vatRateId: vatRateId ?? services[i].vatRateId,
     );
     services[i] = updated;
     return updated;
@@ -654,6 +709,7 @@ class FakeMoneyRepository implements MoneyRepository {
             'price_cents': service.priceCents,
             'quantity': quantity,
             'amount_cents': service.priceCents * quantity,
+            'vat_percent': _vatPercentOf(service.vatRateId),
             'period': period ??
                 '${now.year}-${now.month.toString().padLeft(2, '0')}',
           },
@@ -709,6 +765,7 @@ class FakeMoneyRepository implements MoneyRepository {
     required String name,
     required int days,
     required int priceCents,
+    String? vatRateId,
   }) async {
     final package = Package(
       id: 'package-${packages.length + 1}',
@@ -716,6 +773,7 @@ class FakeMoneyRepository implements MoneyRepository {
       name: name,
       days: days,
       priceCents: priceCents,
+      vatRateId: vatRateId ?? '',
     );
     packages.add(package);
     return package;
@@ -728,6 +786,7 @@ class FakeMoneyRepository implements MoneyRepository {
     int? days,
     int? priceCents,
     bool? active,
+    String? vatRateId,
   }) async {
     final i = packages.indexWhere((p) => p.id == packageId);
     if (i < 0) throw StateError('unknown package');
@@ -736,6 +795,7 @@ class FakeMoneyRepository implements MoneyRepository {
       days: days ?? packages[i].days,
       priceCents: priceCents ?? packages[i].priceCents,
       active: active ?? packages[i].active,
+      vatRateId: vatRateId ?? packages[i].vatRateId,
     );
     packages[i] = updated;
     return updated;
