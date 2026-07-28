@@ -1,0 +1,34 @@
+DesKilo gère toute la vie d'un petit espace de coworking auto-organisé : les postes, qui s'installe où, ce que chacun doit, et les factures en fin de mois. Sans tableur, sans fil de discussion sur qui a payé quoi.
+
+L'ESPACE
+• Dessinez votre espace sur une grille : niveaux, bureaux, postes réservables
+• Touchez un poste sur le plan en direct pour arriver — jamais de double réservation
+• Réservez à l'avance, ponctuellement ou en série, et faites défiler le temps
+• Réservez une salle entière, ou un niveau entier, si l'espace fonctionne ainsi
+• Scannez le QR code d'un espace pour le réserver depuis la porte
+
+LA COMMUNAUTÉ
+• Annuaire des membres, avec qui est là aujourd'hui
+• Invitations par lien ou QR ; les demandes d'adhésion sont confirmées, jamais silencieuses
+• Tout ce qu'un administrateur fait à votre place demande votre confirmation
+• Une tablette murale en mode borne enregistre les arrivées par badge, QR ou caméra
+
+L'ARGENT
+• Formules d'abonnement avec quotas en demi-journées ; dépassement facturé selon vos tranches
+• Un relevé transparent par membre : abonnement, usage, services, paiements
+• Dépenses communes : achetez le café, il est crédité sur votre prochain relevé
+• Carnets de journées pour les membres occasionnels
+• Paiement en ligne via PayPal, Stripe, Mollie ou Wero, si votre espace l'active
+
+LES PAPIERS
+• Factures mensuelles, dérivées de ce qui s'est réellement passé — jamais saisies à la main
+• Signées et immuables : une erreur se corrige par un remplacement, et les deux subsistent
+• TVA, si vous en facturez : taux par prestation, ventilation sur chaque document
+• Factures électroniques EN 16931 (UBL, CII et Factur-X) pour vos clients professionnels et publics
+• Exports comptables que votre comptable lit déjà : SAF-T, et le FEC français
+
+PARTOUT
+Le même compte sur Android, iPhone, iPad, Mac, Windows et dans un navigateur. Un poste réservé au téléphone apparaît une seconde plus tard sur la tablette murale.
+
+CONFIDENTIALITÉ
+Aucun traçage, aucune analyse d'audience, aucune publicité, aucun SDK tiers. Le backend est Supabase dans l'UE, et vous pouvez l'héberger vous-même. DesKilo est libre sous licence 0BSD — tout ce qui précède se vérifie dans le code.
