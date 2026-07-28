@@ -47,7 +47,7 @@ jobs:
   build-and-upload:
     # Pinned like tankstellen: macos-latest migrates under our feet.
     runs-on: macos-15
-    timeout-minutes: 60
+    timeout-minutes: 45
     permissions:
       contents: write
     steps:

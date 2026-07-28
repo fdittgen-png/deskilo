@@ -20,6 +20,20 @@ def asc_api_key
 end
 
 platform :ios do
+  # A DEDICATED, unlocked keychain on CI.
+  #
+  # Without it match imports the certificate into login.keychain, whose
+  # password no one on a headless runner knows — so `codesign` puts up a
+  # prompt nobody can answer and the job sits there until the workflow
+  # timeout kills it. That is exactly how the first TestFlight build died:
+  # normal output until the archive, then 54 minutes of silence.
+  #
+  # `setup_ci` creates a temporary keychain, unlocks it, and sets the
+  # partition list so codesign may use the key unattended.
+  before_all do
+    setup_ci if ENV["CI"] == "true"
+  end
+
   desc "Fetch the appstore distribution cert + profile (readonly on CI)."
   lane :match_appstore do
     match(type: "appstore", api_key: asc_api_key)
