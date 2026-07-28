@@ -41,6 +41,10 @@ class _InvoiceRegisterScreenState
     extends ConsumerState<InvoiceRegisterScreen> {
   bool _newestFirst = true;
 
+  /// null = every year. An accountant works a fiscal year at a time, and
+  /// the SAF-T export takes exactly what the register shows.
+  int? _year;
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -65,18 +69,30 @@ class _InvoiceRegisterScreenState
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.invoiceRegisterTitle ?? 'Invoice register'),
+        actions: [
+          if (canIssue)
+            IconButton(
+              key: const ValueKey('invoice-accounting-export'),
+              tooltip: l10n?.invoiceAccountingExport ??
+                  'Accounting export (SAF-T)',
+              icon: const Icon(Icons.plagiarism_outlined),
+              onPressed: () => exportAccountingFile(
+                context,
+                ref,
+                _visible(invoicesAsync.value ?? const [], canIssue),
+                label: _year?.toString() ??
+                    (l10n?.invoiceRegisterAllYears ?? 'all'),
+              ),
+            ),
+        ],
       ),
       body: switch (invoicesAsync) {
         AsyncData(value: final invoices) => _table(
             context,
             l10n,
-            invoices: [
-              for (final invoice in invoices)
-                // Erroneous documents stay with the people who correct
-                // them; a member's register only carries what they owe or
-                // have paid.
-                if (canIssue || !invoice.isVoided) invoice,
-            ],
+            invoices: _visible(invoices, canIssue),
+            years: {for (final i in invoices) i.issuedAt.year}.toList()
+              ..sort((a, b) => b.compareTo(a)),
             matches: matches,
             reminders: reminders,
             currency: currency,
@@ -95,10 +111,21 @@ class _InvoiceRegisterScreenState
     );
   }
 
+  /// What this reader may see, narrowed to the picked year. Erroneous
+  /// documents stay with the people who correct them; a member's register
+  /// only carries what they owe or have paid.
+  List<Invoice> _visible(List<Invoice> invoices, bool canIssue) => [
+        for (final invoice in invoices)
+          if ((canIssue || !invoice.isVoided) &&
+              (_year == null || invoice.issuedAt.year == _year))
+            invoice,
+      ];
+
   Widget _table(
     BuildContext context,
     AppLocalizations? l10n, {
     required List<Invoice> invoices,
+    required List<int> years,
     required Map<String, InvoiceMatch> matches,
     required Map<String, ({int count, DateTime last})> reminders,
     required NumberFormat currency,
@@ -122,6 +149,34 @@ class _InvoiceRegisterScreenState
     final muted = theme.colorScheme.onSurfaceVariant;
 
     return Column(children: [
+      if (years.length > 1)
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.lg,
+            AppSpacing.md,
+            AppSpacing.lg,
+            0,
+          ),
+          child: DropdownButtonFormField<int?>(
+            key: const ValueKey('invoice-register-year'),
+            initialValue: _year,
+            isExpanded: true,
+            items: [
+              DropdownMenuItem(
+                value: null,
+                child: Text(l10n?.invoiceRegisterAllYears ?? 'All years'),
+              ),
+              for (final year in years)
+                // A year is a number, not copy — but the lint reads the
+                // literal, so the digits go through a variable.
+                DropdownMenuItem(value: year, child: Text(year.toString())),
+            ],
+            onChanged: (value) => setState(() => _year = value),
+            decoration: InputDecoration(
+              labelText: l10n?.invoiceRegisterYear ?? 'Year',
+            ),
+          ),
+        ),
       // Header — the date column is the sort control, both directions.
       Padding(
         padding: const EdgeInsets.fromLTRB(

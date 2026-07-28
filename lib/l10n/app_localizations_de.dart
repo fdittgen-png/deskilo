@@ -1670,6 +1670,48 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein Token ist gespeichert (neues eingeben, um es zu ersetzen).';
 
   @override
+  String get invoiceAccountingExport => 'Buchhaltungs-Export (SAF-T)';
+
+  @override
+  String get invoiceAccountingExportEmpty =>
+      'Für diesen Zeitraum gibt es nichts zu exportieren.';
+
+  @override
+  String get invoiceRegisterYear => 'Jahr';
+
+  @override
+  String get invoiceRegisterAllYears => 'Alle Jahre';
+
+  @override
+  String get invoiceExportSafT => 'SAF-T (XML, international)';
+
+  @override
+  String get invoiceExportFec => 'FEC (Frankreich, im Prüfungsfall verlangt)';
+
+  @override
+  String get invoiceExportChoose => 'Buchhaltungs-Export';
+
+  @override
+  String get fecAccountsTitle => 'Zu buchende Konten';
+
+  @override
+  String get fecAccountsIntro =>
+      'Ein FEC besteht aus Buchungen und braucht daher Kontonummern. Dies sind die Standardkonten des französischen Kontenrahmens — ersetze sie durch die deiner Buchhaltung.';
+
+  @override
+  String get fecAccountCustomers => 'Kunden';
+
+  @override
+  String get fecAccountRevenue => 'Erlöse';
+
+  @override
+  String get fecAccountBank => 'Bank';
+
+  @override
+  String get fecMissingSiren =>
+      'Der FEC-Dateiname enthält die Registernummer — trage sie zuerst unter Rechtliche Identität ein.';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

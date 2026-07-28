@@ -785,5 +785,57 @@
   "einvoiceConfigTokenSet": "A token is stored (type a new one to replace it).",
   "@einvoiceConfigTokenSet": {
     "description": "Shown instead of the stored token"
+  },
+  "invoiceAccountingExport": "Accounting export (SAF-T)",
+  "@invoiceAccountingExport": {
+    "description": "Register action: the SAF-T file for the accountant (0074)"
+  },
+  "invoiceAccountingExportEmpty": "Nothing to export for this period.",
+  "@invoiceAccountingExportEmpty": {
+    "description": "Refusal when the selected period holds nothing"
+  },
+  "invoiceRegisterYear": "Year",
+  "@invoiceRegisterYear": {
+    "description": "Register filter: which fiscal year the register shows"
+  },
+  "invoiceRegisterAllYears": "All years",
+  "@invoiceRegisterAllYears": {
+    "description": "Register filter: no year restriction"
+  },
+  "invoiceExportSafT": "SAF-T (XML, international)",
+  "@invoiceExportSafT": {
+    "description": "Export chooser: the OECD audit file (0074)"
+  },
+  "invoiceExportFec": "FEC (France, required in an audit)",
+  "@invoiceExportFec": {
+    "description": "Export chooser: the French audit file (0075)"
+  },
+  "invoiceExportChoose": "Export for accounting",
+  "@invoiceExportChoose": {
+    "description": "Export chooser title"
+  },
+  "fecAccountsTitle": "Accounts to book",
+  "@fecAccountsTitle": {
+    "description": "Dialog title: which accounts the FEC will book"
+  },
+  "fecAccountsIntro": "A FEC is made of accounting entries, so it needs account numbers. These are the French chart defaults — change them to your accountant's.",
+  "@fecAccountsIntro": {
+    "description": "Dialog body: why it asks"
+  },
+  "fecAccountCustomers": "Customers",
+  "@fecAccountCustomers": {
+    "description": "Field label: the receivable account"
+  },
+  "fecAccountRevenue": "Revenue",
+  "@fecAccountRevenue": {
+    "description": "Field label: the revenue account"
+  },
+  "fecAccountBank": "Bank",
+  "@fecAccountBank": {
+    "description": "Field label: the cash account"
+  },
+  "fecMissingSiren": "The FEC is named after your registration number — fill it in under Legal identity first.",
+  "@fecMissingSiren": {
+    "description": "Refusal: the FEC file name is built from the SIREN, which is not set"
   }
 }

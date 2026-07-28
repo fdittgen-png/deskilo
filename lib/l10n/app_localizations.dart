@@ -3044,6 +3044,84 @@ abstract class AppLocalizations {
   /// **'A token is stored (type a new one to replace it).'**
   String get einvoiceConfigTokenSet;
 
+  /// Register action: the SAF-T file for the accountant (0074)
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting export (SAF-T)'**
+  String get invoiceAccountingExport;
+
+  /// Refusal when the selected period holds nothing
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to export for this period.'**
+  String get invoiceAccountingExportEmpty;
+
+  /// Register filter: which fiscal year the register shows
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get invoiceRegisterYear;
+
+  /// Register filter: no year restriction
+  ///
+  /// In en, this message translates to:
+  /// **'All years'**
+  String get invoiceRegisterAllYears;
+
+  /// Export chooser: the OECD audit file (0074)
+  ///
+  /// In en, this message translates to:
+  /// **'SAF-T (XML, international)'**
+  String get invoiceExportSafT;
+
+  /// Export chooser: the French audit file (0075)
+  ///
+  /// In en, this message translates to:
+  /// **'FEC (France, required in an audit)'**
+  String get invoiceExportFec;
+
+  /// Export chooser title
+  ///
+  /// In en, this message translates to:
+  /// **'Export for accounting'**
+  String get invoiceExportChoose;
+
+  /// Dialog title: which accounts the FEC will book
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts to book'**
+  String get fecAccountsTitle;
+
+  /// Dialog body: why it asks
+  ///
+  /// In en, this message translates to:
+  /// **'A FEC is made of accounting entries, so it needs account numbers. These are the French chart defaults — change them to your accountant\'s.'**
+  String get fecAccountsIntro;
+
+  /// Field label: the receivable account
+  ///
+  /// In en, this message translates to:
+  /// **'Customers'**
+  String get fecAccountCustomers;
+
+  /// Field label: the revenue account
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue'**
+  String get fecAccountRevenue;
+
+  /// Field label: the cash account
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get fecAccountBank;
+
+  /// Refusal: the FEC file name is built from the SIREN, which is not set
+  ///
+  /// In en, this message translates to:
+  /// **'The FEC is named after your registration number — fill it in under Legal identity first.'**
+  String get fecMissingSiren;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:
