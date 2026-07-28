@@ -13,6 +13,15 @@ on:
         required: false
         type: string
         default: Internal build.
+      create_app:
+        description: >-
+          Run ONCE before the very first build: create the App Store Connect
+          record for de.deskilo.app (fastlane produce). Apple has no
+          equivalent of Play's "bind the package on first upload", so pilot
+          cannot upload until the record exists. Idempotent.
+        required: false
+        type: boolean
+        default: false
       sync_certs:
         description: >-
           Repair mode: run write-mode match to (re)generate the de.deskilo.app
@@ -119,7 +128,9 @@ jobs:
           FASTLANE_DISABLE_COLORS: "1"
           FASTLANE_HIDE_CHANGELOG: "1"
         run: |
-          if [ "${{ inputs.sync_certs }}" = "true" ]; then
+          if [ "${{ inputs.create_app }}" = "true" ]; then
+            bundle exec fastlane create_app_record
+          elif [ "${{ inputs.sync_certs }}" = "true" ]; then
             bundle exec fastlane match_sync_appstore
           else
             bundle exec fastlane release_testflight build_number:"${IOS_BUILD_NUMBER}" changelog:"${TESTFLIGHT_CHANGELOG}"
@@ -130,7 +141,7 @@ jobs:
         run: rm -f "$ASC_API_KEY_FILEPATH"
 
       - name: Tag the shipped build (vX.Y.Z+BUILD-ios)
-        if: ${{ inputs.sync_certs != true }}
+        if: ${{ inputs.sync_certs != true && inputs.create_app != true }}
         run: |
           set -euo pipefail
           VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}' | cut -d+ -f1)
@@ -142,7 +153,7 @@ jobs:
           echo "Tagged $TAG"
 
       - name: Upload obfuscation symbols
-        if: ${{ always() && inputs.sync_certs != true }}
+        if: ${{ always() && inputs.sync_certs != true && inputs.create_app != true }}
         uses: actions/upload-artifact@v4
         with:
           name: ios-symbols-${{ steps.bn.outputs.build_number }}
