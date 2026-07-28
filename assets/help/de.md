@@ -378,4 +378,6 @@ Minimale Daten: Name, E-Mail, Tarif, Buchungen, Konto. Du bestimmst dein Foto, d
 
 ## 12. Plattformen
 
-Android (Google Play und F-Droid), iPhone/iPad und Desktop — macOS, und Windows mit einem **MSI-Installer** aus jedem Release. Deine Daten folgen deinem Konto.
+Android (Google Play und F-Droid), iPhone/iPad, Desktop — **macOS** (ein DMG: DesKilo in „Programme“ ziehen) und **Windows** (ein MSI-Installer) aus jedem Release — und der **Browser**: dieselbe App, nichts zu installieren, unter der Adresse, die dein Space veröffentlicht. Deine Daten folgen deinem Konto: ein am Handy gebuchter Platz erscheint eine Sekunde später im Browser-Tab.
+
+Was der Browser nicht kann, ist das, was eine Seite nicht darf: ein NFC-Badge lesen oder einen QR-Code mit der Kamera scannen wie der Kiosk. Alles andere — Plan, Buchungen, Mitglieder, Geld, Rechnungen, PDF-Downloads — ist dieselbe App. Beim ersten Start des macOS-DMG die App rechtsklicken und *Öffnen* wählen: der Build ist noch nicht von Apple notarisiert, ein einfacher Doppelklick führt zur Gatekeeper-Warnung.

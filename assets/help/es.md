@@ -378,4 +378,6 @@ Datos mínimos: nombre, correo, plan, reservas, cuenta. Tú controlas tu foto, t
 
 ## 12. Plataformas
 
-Android (Google Play y F-Droid), iPhone/iPad y escritorio — macOS, y Windows con un **instalador MSI** generado en cada versión. Tus datos siguen a tu cuenta.
+Android (Google Play y F-Droid), iPhone/iPad, escritorio — **macOS** (un DMG: arrastra DesKilo a Aplicaciones) y **Windows** (un instalador MSI) generados en cada versión — y el **navegador**: la misma app, sin instalar nada, en la dirección que publique tu espacio. Tus datos siguen a tu cuenta: un puesto reservado en el móvil aparece un segundo después en una pestaña.
+
+Lo que el navegador no puede hacer es lo que a una página no se le permite: leer una credencial NFC o escanear un QR con la cámara como hace el quiosco. Todo lo demás — plano, reservas, miembros, dinero, facturas, descarga de PDF — es la misma app. Al abrir el DMG de macOS por primera vez, haz clic derecho sobre la app y elige *Abrir*: la compilación aún no está notarizada por Apple, así que un doble clic normal muestra un aviso de Gatekeeper.

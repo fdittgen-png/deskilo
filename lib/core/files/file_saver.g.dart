@@ -9,25 +9,37 @@ part of 'file_saver.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 /// Injectable local-save seam (mirrors [shareLauncher]'s pattern) so widget
-/// tests capture the write instead of touching the filesystem. Every export
-/// lands in the user's DOWNLOADS: Android via the MediaStore channel,
-/// desktop/iOS via the Downloads directory, falling back to app storage.
+/// tests capture the write instead of touching the filesystem.
+///
+/// Which implementation answers depends on where the app runs: on a device
+/// the export lands in the user's Downloads (MediaStore on Android, the
+/// Downloads directory elsewhere); in a browser it goes through the
+/// download machinery, since a page has no folder to write to. Both return
+/// a handle the UI can name in a snackbar.
 
 @ProviderFor(fileSaver)
 final fileSaverProvider = FileSaverProvider._();
 
 /// Injectable local-save seam (mirrors [shareLauncher]'s pattern) so widget
-/// tests capture the write instead of touching the filesystem. Every export
-/// lands in the user's DOWNLOADS: Android via the MediaStore channel,
-/// desktop/iOS via the Downloads directory, falling back to app storage.
+/// tests capture the write instead of touching the filesystem.
+///
+/// Which implementation answers depends on where the app runs: on a device
+/// the export lands in the user's Downloads (MediaStore on Android, the
+/// Downloads directory elsewhere); in a browser it goes through the
+/// download machinery, since a page has no folder to write to. Both return
+/// a handle the UI can name in a snackbar.
 
 final class FileSaverProvider
     extends $FunctionalProvider<FileSaver, FileSaver, FileSaver>
     with $Provider<FileSaver> {
   /// Injectable local-save seam (mirrors [shareLauncher]'s pattern) so widget
-  /// tests capture the write instead of touching the filesystem. Every export
-  /// lands in the user's DOWNLOADS: Android via the MediaStore channel,
-  /// desktop/iOS via the Downloads directory, falling back to app storage.
+  /// tests capture the write instead of touching the filesystem.
+  ///
+  /// Which implementation answers depends on where the app runs: on a device
+  /// the export lands in the user's Downloads (MediaStore on Android, the
+  /// Downloads directory elsewhere); in a browser it goes through the
+  /// download machinery, since a page has no folder to write to. Both return
+  /// a handle the UI can name in a snackbar.
   FileSaverProvider._()
     : super(
         from: null,
@@ -61,4 +73,4 @@ final class FileSaverProvider
   }
 }
 
-String _$fileSaverHash() => r'464b62cf65f5cda05a2b8a92270340b30422b310';
+String _$fileSaverHash() => r'607a5d2bab40420d0f9ff46a41cc2ef4eed2c382';

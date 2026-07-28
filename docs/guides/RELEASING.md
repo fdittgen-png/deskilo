@@ -130,6 +130,44 @@ gh workflow run ios-testers.yml -f email=someone@example.com  # invite a tester
   **external** tester means the build passes Beta App Review first; port
   tankstellen's `configure_beta_review` when that day comes.
 
+## macOS
+
+```bash
+gh workflow run macos-app.yml -f ref=master     # → DesKilo-X.Y.Z.dmg artifact
+```
+
+- `flutter build macos --release` plus `hdiutil`: the DMG is the
+  drag-into-Applications window, no extra tooling. Also runs on PRs touching
+  `macos/**` and attaches the DMG to the release on a `v*` tag.
+- The app is **ad-hoc signed**, so Gatekeeper asks for a right-click → Open
+  once per machine. Removing that prompt needs a **Developer ID Application**
+  certificate and notarisation — a different certificate type from the App
+  Store one in the shared match repo, hence a deliberate later step rather
+  than something to fake. The entitlements (`macos/Runner/Release.entitlements`)
+  already grant the network client, the camera and user-selected file access.
+
+## Web (browser)
+
+```bash
+gh workflow run web.yml                     # artifact only
+gh workflow run web.yml -f deploy=true      # …and publish to GitHub Pages
+```
+
+- Runs on every PR touching `lib/**`, `web/**` or `pubspec.yaml`: a change
+  that only breaks the browser (a `dart:io` import reaching web code, a
+  plugin with no web implementation) fails there instead of in front of a
+  user.
+- **Publishing is opt-in.** `deploy=true` puts the app on the public Pages
+  URL with the committed Supabase URL + publishable key baked in — the same
+  pair every store binary ships (RLS is the boundary, ADR 0002). Pages must
+  be enabled once in repo Settings → Pages → Source: GitHub Actions.
+- `--base-href` is set to `/<repo>/` for a Pages deploy (assets 404 without
+  it), and `index.html` is copied to `404.html` so reloading a deep link
+  works on a static host.
+- What the browser cannot do: NFC badges and camera QR scanning are guarded
+  off (`kIsWeb`), and an export downloads through the browser instead of
+  landing in a Downloads folder (`file_saver_web.dart`).
+
 ## Release checklist (every release)
 
 1. `git tag vX.Y.Z` on master with a green CI run.

@@ -1,0 +1,80 @@
+name: macos-app
+
+# macOS desktop build, packaged as a DMG (windows-msi pattern):
+#   gh workflow run macos-app.yml -f ref=master
+#   gh run download <run-id> --dir /tmp/deskilo-dmg
+# Also builds on PRs touching the macOS target, and attaches the DMG to the
+# release on version tags.
+#
+# SIGNING: the build is ad-hoc signed (Flutter's default for a local
+# release build). Gatekeeper therefore asks for a right-click → Open on
+# first launch, once per machine. Distributing without that prompt needs a
+# Developer ID Application certificate plus notarisation — a different
+# certificate type from the App Store one in the shared match repo, so it
+# is a deliberate later step, not something to fake here.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch, tag or SHA to build
+        required: false
+        default: master
+  pull_request:
+    paths:
+      - .github/workflows/macos-app.yml
+      - macos/**
+  push:
+    tags: ["v*"]
+
+env:
+  FLUTTER_VERSION: "3.41.9"
+
+jobs:
+  dmg:
+    # Pinned like ios-testflight: macos-latest migrates under our feet.
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Build
+        run: |
+          flutter pub get
+          flutter build macos --release
+
+      - name: Package the DMG
+        # hdiutil ships with macOS — no extra tooling, and the result is
+        # the drag-to-Applications window every Mac user expects.
+        run: |
+          set -euo pipefail
+          VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}' | cut -d+ -f1)
+          STAGE="$RUNNER_TEMP/dmg"
+          mkdir -p "$STAGE"
+          cp -R build/macos/Build/Products/Release/DesKilo.app "$STAGE/"
+          ln -s /Applications "$STAGE/Applications"
+          mkdir -p build/macos/dmg
+          hdiutil create -volname "DesKilo $VERSION" \
+            -srcfolder "$STAGE" -ov -format UDZO \
+            "build/macos/dmg/DesKilo-$VERSION.dmg"
+          echo "DMG_PATH=build/macos/dmg/DesKilo-$VERSION.dmg" >> "$GITHUB_ENV"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deskilo-macos-${{ github.sha }}
+          path: ${{ env.DMG_PATH }}
+          retention-days: 14
+
+      - name: Attach to the release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${GITHUB_REF_NAME}" "$DMG_PATH" --clobber

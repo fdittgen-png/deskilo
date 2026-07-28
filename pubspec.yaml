@@ -60,6 +60,11 @@ dependencies:
   # implementation rides the Storage Access Framework, no GMS.
   file_selector: ^1.1.0
   nfc_manager: ^4.2.1
+
+  # Browser download of an export (web target): the page hands the bytes to
+  # the download machinery, since it has no folder to write to. Dart-team
+  # package, already in the tree transitively.
+  web: ^1.1.1
   markdown_widget: ^2.3.2+8
 
 dev_dependencies:

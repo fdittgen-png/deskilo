@@ -380,4 +380,6 @@ Données minimales : nom, e-mail, forfait, réservations, compte. Vous contrôle
 
 ## 12. Plateformes
 
-Android (Google Play et F-Droid), iPhone/iPad, et bureau — macOS, et Windows avec un **installateur MSI** produit à chaque version. Vos données suivent votre compte.
+Android (Google Play et F-Droid), iPhone/iPad, bureau — **macOS** (un DMG : glissez DesKilo dans Applications) et **Windows** (un installateur MSI) produits à chaque version — et le **navigateur** : la même application, rien à installer, à l'adresse que votre espace publie. Vos données suivent votre compte : un poste réservé sur téléphone apparaît dans un onglet une seconde plus tard.
+
+Ce que le navigateur ne peut pas faire est ce qu'une page n'a pas le droit de faire : lire un badge NFC, ou scanner un QR code avec la caméra comme le fait la borne. Tout le reste — plan, réservations, membres, argent, factures, téléchargement des PDF — est identique. Au premier lancement du DMG macOS, faites un clic droit sur l'application puis *Ouvrir* : la build n'est pas encore notariée par Apple, un double-clic simple déclenche donc un avertissement Gatekeeper.

@@ -1,0 +1,106 @@
+name: web
+
+# The browser build (dev-apk pattern):
+#   gh workflow run web.yml                       # artifact only
+#   gh workflow run web.yml -f deploy=true        # …and publish to Pages
+#   gh run download <run-id> --dir /tmp/deskilo-web
+#
+# Also builds on PRs that touch the web target or shared code, so a change
+# that only breaks the browser (a dart:io import reaching web code, a plugin
+# without a web implementation) is caught before merge rather than by a user.
+#
+# PUBLISHING IS OPT-IN. `deploy=true` puts the app on the public internet at
+# the repository's Pages URL — with the committed Supabase URL and
+# publishable key baked in (RLS is the boundary, see ADR 0002), which is the
+# same pair every store binary already ships. Still a deliberate act: leave
+# it false and the run only produces a zip.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch, tag or SHA to build
+        required: false
+        default: master
+      deploy:
+        description: Publish the build to GitHub Pages (public URL)
+        required: false
+        type: boolean
+        default: false
+  pull_request:
+    paths:
+      - .github/workflows/web.yml
+      - web/**
+      - lib/**
+      - pubspec.yaml
+
+env:
+  FLUTTER_VERSION: "3.41.9"
+
+# Pages needs both: id-token to mint the deployment, pages to publish it.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: web-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Build
+        # Pages serves the site under /<repo>/, so the base href has to
+        # match or every asset 404s. A plain artifact build stays at '/'.
+        run: |
+          flutter pub get
+          if [ "${{ inputs.deploy }}" = "true" ]; then
+            BASE="/${GITHUB_REPOSITORY#*/}/"
+          else
+            BASE="/"
+          fi
+          echo "Base href: $BASE"
+          flutter build web --release --base-href "$BASE"
+
+      - name: SPA fallback for deep links
+        # go_router uses real paths; a reload of /money must not 404 on a
+        # static host, and Pages serves 404.html for anything it cannot
+        # find. Serving the app there makes the reload work.
+        run: cp build/web/index.html build/web/404.html
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deskilo-web-${{ github.sha }}
+          path: build/web
+          retention-days: 14
+
+      - name: Upload Pages artifact
+        if: ${{ inputs.deploy == true }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  deploy:
+    # Only ever on an explicit dispatch with deploy=true — never on a PR.
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.deploy == true }}
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
