@@ -145,12 +145,19 @@ gh workflow run macos-app.yml -f ref=master     # → DesKilo-X.Y.Z.dmg artifact
 - `flutter build macos --release` plus `hdiutil`: the DMG is the
   drag-into-Applications window, no extra tooling. Also runs on PRs touching
   `macos/**` and attaches the DMG to the release on a `v*` tag.
-- The app is **ad-hoc signed**, so Gatekeeper asks for a right-click → Open
-  once per machine. Removing that prompt needs a **Developer ID Application**
-  certificate and notarisation — a different certificate type from the App
-  Store one in the shared match repo, hence a deliberate later step rather
-  than something to fake. The entitlements (`macos/Runner/Release.entitlements`)
-  already grant the network client, the camera and user-selected file access.
+- **Signed with Developer ID and notarised by Apple.** Not polish: since
+  macOS 15 a downloaded app Apple has not notarised is refused outright
+  ("Apple n'a pas pu confirmer que DesKilo ne contenait pas de logiciel
+  malveillant") and the old right-click → Open bypass is gone. The
+  certificate lives in the same `deskilo-ios-certs` repo as the App Store
+  one; mint it once with `-f sync_certs=true`.
+- `scripts/sign_and_notarize_macos.sh` signs nested frameworks first and the
+  bundle last, hardened runtime on, then submits the DMG to `notarytool`,
+  staples the ticket into it and asserts `spctl` accepts it — so a build
+  that would be refused on someone's Mac fails in CI instead.
+- **PR builds are unsigned** and named `-unsigned.dmg`: a fork has no access
+  to the signing secrets, and a five-minute Apple round-trip per PR would be
+  absurd. They prove the build and the packaging, nothing more.
 
 ## Web (browser)
 

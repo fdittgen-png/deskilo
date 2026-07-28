@@ -1,0 +1,34 @@
+DesKilo gestiona toda la vida de un espacio de coworking pequeño y autoorganizado: los puestos, quién se sienta dónde, qué debe cada miembro y las facturas de fin de mes. Sin hojas de cálculo ni hilos de chat sobre quién pagó qué.
+
+EL ESPACIO
+• Dibuja tu espacio sobre una cuadrícula: plantas, despachos, mesas, puestos reservables
+• Toca un puesto en el plano en vivo para entrar: nunca hay doble reserva
+• Reserva por adelantado, una vez o en serie, y desplaza el tiempo a cualquier momento
+• Reserva una sala entera, o una planta entera, si tu espacio funciona así
+• Escanea el QR de un espacio para reservarlo desde la puerta
+
+LA COMUNIDAD
+• Directorio de miembros con quién está hoy
+• Invitaciones por enlace o QR; las solicitudes se confirman, nunca en silencio
+• Todo lo que un administrador hace por ti necesita tu confirmación
+• Una tablet de pared en modo quiosco registra entradas por credencial, QR o cámara
+
+EL DINERO
+• Planes con cuotas de media jornada; el exceso se cobra según los tramos que fijes
+• Un extracto transparente por miembro: cuota, uso, servicios, pagos
+• Gastos comunes: compra el café y se te abona en el siguiente extracto
+• Bonos de días para miembros ocasionales
+• Pago en línea con PayPal, Stripe, Mollie o Wero, si tu espacio lo activa
+
+EL PAPELEO
+• Facturas mensuales derivadas de lo que ocurrió de verdad, nunca escritas a mano
+• Firmadas e inmutables: un error se corrige con una sustitución y ambas se conservan
+• IVA, si lo cobras: tipos por servicio y el desglose en cada documento
+• Facturas electrónicas EN 16931 (UBL, CII y Factur-X) para clientes de empresa y del sector público
+• Exportaciones contables que tu asesoría ya lee: SAF-T y el FEC francés
+
+EN TODAS PARTES
+La misma cuenta en Android, iPhone, iPad, Mac, Windows y en el navegador. Un puesto reservado en el móvil aparece un segundo después en la tablet de pared.
+
+PRIVACIDAD
+Sin rastreo, sin analítica, sin publicidad, sin SDK de terceros. El backend es Supabase en la UE y puedes alojarlo tú. DesKilo es código abierto con licencia 0BSD: todo lo anterior se puede leer en el código.

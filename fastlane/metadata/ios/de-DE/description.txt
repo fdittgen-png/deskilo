@@ -1,0 +1,34 @@
+DesKilo führt das ganze Leben eines kleinen, selbstorganisierten Coworking-Space: die Plätze, wer wo sitzt, was jede und jeder schuldet, und die Rechnungen am Monatsende. Ohne Tabelle, ohne Chat-Thread darüber, wer was bezahlt hat.
+
+DER SPACE
+• Zeichnen Sie Ihren Space auf ein Raster: Ebenen, Büros, Tische, buchbare Plätze
+• Platz im Live-Plan antippen und einchecken — doppelt belegen ist unmöglich
+• Vorausbuchen, einmalig oder als Serie, und durch die Zeit scrollen
+• Ganze Räume oder ganze Ebenen buchen, wenn der Space so funktioniert
+• Den QR-Code eines Raums scannen und ihn an der Tür buchen
+
+DIE COMMUNITY
+• Mitgliederverzeichnis mit „wer ist heute da"
+• Einladungen per Link oder QR; Beitritte werden bestätigt, nie stillschweigend
+• Alles, was eine Verwaltung für Sie tut, braucht Ihre Bestätigung
+• Ein Wandtablet im Kiosk-Modus checkt per Badge, QR oder Kamera ein
+
+DAS GELD
+• Tarife mit Halbtages-Kontingenten; Mehrverbrauch nach selbst gesetzten Staffeln
+• Ein transparentes Konto je Mitglied: Beitrag, Nutzung, Leistungen, Zahlungen
+• Gemeinschaftsausgaben: Kaffee kaufen, Gutschrift auf der nächsten Abrechnung
+• Tagespakete für Gelegenheitsnutzer
+• Online zahlen über PayPal, Stripe, Mollie oder Wero, wenn der Space das aktiviert
+
+DER PAPIERKRAM
+• Monatsrechnungen, abgeleitet aus dem, was wirklich passiert ist — nie getippt
+• Signiert und unveränderlich: ein Fehler wird ersetzt, beide Dokumente bleiben
+• Mehrwertsteuer, falls Sie welche berechnen: Sätze je Leistung, Aufteilung auf jedem Dokument
+• E-Rechnungen nach EN 16931 (UBL, CII und Factur-X) für Geschäfts- und Behördenkunden
+• Buchhaltungsexporte, die Ihre Steuerberatung schon liest: SAF-T und der französische FEC
+
+ÜBERALL
+Dasselbe Konto auf Android, iPhone, iPad, Mac, Windows und im Browser. Ein am Handy gebuchter Platz erscheint eine Sekunde später auf dem Wandtablet.
+
+DATENSCHUTZ
+Kein Tracking, keine Analyse, keine Werbung, kein Drittanbieter-SDK. Das Backend ist Supabase in der EU und selbst hostbar. DesKilo ist quelloffen unter 0BSD — alles oben Genannte steht im Code.

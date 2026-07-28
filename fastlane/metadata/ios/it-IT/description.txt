@@ -1,0 +1,34 @@
+DesKilo gestisce tutta la vita di un piccolo spazio di coworking auto-organizzato: le postazioni, chi siede dove, quanto deve ciascuno e le fatture di fine mese. Senza fogli di calcolo né discussioni su chi ha pagato cosa.
+
+LO SPAZIO
+• Disegna il tuo spazio su una griglia: piani, uffici, scrivanie, postazioni prenotabili
+• Tocca una postazione sulla piantina in tempo reale per entrare: mai una doppia prenotazione
+• Prenota in anticipo, una volta o in serie, e scorri il tempo su qualsiasi momento
+• Prenota una stanza intera, o un piano intero, se lo spazio funziona così
+• Scansiona il QR di uno spazio per prenotarlo dalla porta
+
+LA COMUNITÀ
+• Elenco dei membri con chi è presente oggi
+• Inviti via link o QR; le richieste di adesione vengono confermate, mai in silenzio
+• Tutto ciò che un amministratore fa per te richiede la tua conferma
+• Un tablet a muro in modalità chiosco registra gli ingressi con badge, QR o fotocamera
+
+I SOLDI
+• Piani con quote a mezze giornate; l'eccedenza si applica secondo le fasce che imposti
+• Un estratto conto trasparente per ogni membro: quota, utilizzo, servizi, pagamenti
+• Spese comuni: compra il caffè e te lo ritrovi accreditato sul prossimo estratto
+• Carnet di giornate per i membri occasionali
+• Pagamento online con PayPal, Stripe, Mollie o Wero, se lo spazio lo attiva
+
+LE CARTE
+• Fatture mensili derivate da ciò che è realmente accaduto, mai digitate a mano
+• Firmate e immutabili: un errore si corregge con una sostitutiva e restano entrambe
+• IVA, se la applichi: aliquote per servizio e la ripartizione su ogni documento
+• Fatture elettroniche EN 16931 (UBL, CII e Factur-X) per clienti aziendali e pubblici
+• Esportazioni contabili che il tuo commercialista già legge: SAF-T e il FEC francese
+
+OVUNQUE
+Lo stesso account su Android, iPhone, iPad, Mac, Windows e nel browser. Una postazione prenotata dal telefono compare un secondo dopo sul tablet a muro.
+
+PRIVACY
+Nessun tracciamento, nessuna analisi, nessuna pubblicità, nessun SDK di terze parti. Il backend è Supabase nell'UE e puoi ospitarlo tu. DesKilo è open source con licenza 0BSD: tutto quanto sopra si legge nel codice.

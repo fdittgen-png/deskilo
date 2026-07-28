@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: 0BSD
-import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -71,12 +70,25 @@ class SupabaseAuthRepository implements AuthRepository {
         SocialProvider.google => OAuthProvider.google,
       };
 
-  /// Mobile returns into the app over the deskilo:// scheme (registered
-  /// in both native manifests); elsewhere Supabase falls back to the
-  /// project's Site URL.
-  static String? get _redirect => !kIsWeb && (Platform.isAndroid || Platform.isIOS)
-      ? 'deskilo://auth-callback'
-      : null;
+  /// Where the provider sends the browser back to.
+  ///
+  /// Every NATIVE platform returns over the deskilo:// scheme, registered
+  /// in the Android manifest, the iOS and macOS Info.plists and (via the
+  /// MSI) the Windows registry. On the WEB the app is the page, so the
+  /// callback goes to the page's own address.
+  ///
+  /// It used to be null off mobile, which let Supabase fall back to the
+  /// project's Site URL — `http://localhost:3000`, a server that exists on
+  /// nobody's machine. The sign-in ended on "Safari cannot connect".
+  ///
+  /// Every value here must also be listed under Authentication → URL
+  /// Configuration → Redirect URLs in the Supabase project, or the
+  /// provider refuses the redirect.
+  static String get _redirect => kIsWeb
+      // Origin + path, so a deploy under /deskilo/ returns to /deskilo/
+      // rather than to the domain root.
+      ? '${Uri.base.origin}${Uri.base.path}'
+      : 'deskilo://auth-callback';
 
   @override
   Future<void> signInWithSocial(SocialProvider provider) async {

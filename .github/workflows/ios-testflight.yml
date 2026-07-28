@@ -13,6 +13,14 @@ on:
         required: false
         type: string
         default: Internal build.
+      upload_metadata:
+        description: >-
+          Push the App Store listing text (five locales, URLs, categories)
+          from fastlane/metadata/ios. Text only — no binary, no
+          screenshots, nothing submitted for review. Safe to re-run.
+        required: false
+        type: boolean
+        default: false
       create_app:
         description: >-
           Run ONCE before the very first build: create the App Store Connect
@@ -128,7 +136,9 @@ jobs:
           FASTLANE_DISABLE_COLORS: "1"
           FASTLANE_HIDE_CHANGELOG: "1"
         run: |
-          if [ "${{ inputs.create_app }}" = "true" ]; then
+          if [ "${{ inputs.upload_metadata }}" = "true" ]; then
+            bundle exec fastlane upload_metadata
+          elif [ "${{ inputs.create_app }}" = "true" ]; then
             bundle exec fastlane create_app_record
           elif [ "${{ inputs.sync_certs }}" = "true" ]; then
             bundle exec fastlane match_sync_appstore
@@ -141,7 +151,8 @@ jobs:
         run: rm -f "$ASC_API_KEY_FILEPATH"
 
       - name: Tag the shipped build (vX.Y.Z+BUILD-ios)
-        if: ${{ inputs.sync_certs != true && inputs.create_app != true }}
+        if: ${{ inputs.sync_certs != true && inputs.create_app != true
+                && inputs.upload_metadata != true }}
         run: |
           set -euo pipefail
           VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}' | cut -d+ -f1)
@@ -153,7 +164,8 @@ jobs:
           echo "Tagged $TAG"
 
       - name: Upload obfuscation symbols
-        if: ${{ always() && inputs.sync_certs != true && inputs.create_app != true }}
+        if: ${{ always() && inputs.sync_certs != true && inputs.create_app != true
+                && inputs.upload_metadata != true }}
         uses: actions/upload-artifact@v4
         with:
           name: ios-symbols-${{ steps.bn.outputs.build_number }}

@@ -1,0 +1,1 @@
+coworking,reserva,puesto,mesa,espacio,oficina,miembros,factura,facturación,extracto

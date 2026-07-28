@@ -1,0 +1,20 @@
+DesKilo manages a small coworking space: the floor plan and desk bookings,
+the members, the shared ledger and the monthly invoices.
+
+A REVIEWER NEEDS AN ACCOUNT AND A WORKSPACE. Two ways in:
+
+1. Use the demo credentials in the fields above. They belong to a workspace
+   that already has a floor plan, members, a ledger and issued invoices, so
+   every tab has something to show.
+
+2. Or sign up in the app and create a workspace: "Create an account" on the
+   sign-in screen, then "Create a workspace" — the editor opens on an empty
+   grid where a level, a desk and a seat can be drawn in under a minute.
+   A brand-new workspace is empty by design; the money and invoice tabs
+   only fill once bookings exist.
+
+The backend is Supabase (EU, eu-central-1). No account data is shared with
+third parties and the app contains no tracking, analytics or advertising
+SDK. Online payments, when a workspace enables them, are handled on the
+provider's own pages (PayPal, Stripe, Mollie, Wero) — the app only records
+that a payment happened.

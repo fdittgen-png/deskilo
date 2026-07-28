@@ -1,0 +1,34 @@
+DesKilo runs the whole life of a small, self-organised coworking space: the desks, who sits where, what each member owes, and the invoices at the end of the month. No spreadsheet, no group chat thread about who paid what.
+
+THE SPACE
+• Draw your space on a grid: levels, offices, desks, bookable seats
+• Tap a seat on the live floor plan to check in — walk-ups can never double-book
+• Reserve ahead, once or as a repeating series, and scroll time to see any moment of any day
+• Book a whole room, or a whole level, when the space works that way
+• Scan a space's QR code to book it from the door
+
+THE COMMUNITY
+• Members directory with who is in today
+• Invitations by link or QR; join requests are confirmed, never silent
+• Everything an admin does on your behalf needs your confirmation
+• A wall tablet in kiosk mode checks people in by badge, QR or camera
+
+THE MONEY
+• Membership plans with half-day quotas; overage priced by a band you set
+• One transparent ledger per member: subscription, usage, services, payments
+• Community expenses: buy the coffee, get it credited on your next statement
+• Day packs for occasional members
+• Pay online through PayPal, Stripe, Mollie or Wero, if your space enables it
+
+THE PAPERWORK
+• Monthly invoices, derived from what actually happened — never typed by hand
+• Signed and immutable: a mistake is corrected by a replacement, and both stay
+• VAT, if you charge it: rates per service, the breakdown on every document
+• EN 16931 e-invoices (UBL, CII and Factur-X) for business and public customers
+• Accounting exports your accountant already reads: SAF-T, and the French FEC
+
+EVERYWHERE
+The same account on Android, iPhone, iPad, Mac, Windows and in a browser. A desk booked on a phone shows up on the wall tablet a second later.
+
+PRIVACY
+No tracking, no analytics, no advertising, no third-party SDK. The backend is Supabase in the EU, and you can host it yourself. DesKilo is open source under the 0BSD licence — everything above can be read in the code.

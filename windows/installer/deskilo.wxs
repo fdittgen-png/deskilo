@@ -30,6 +30,23 @@
     <StandardDirectory Id="ProgramFiles64Folder">
       <Directory Id="INSTALLFOLDER" Name="DesKilo">
         <Files Include="$(var.PublishDir)\**" />
+
+        <!-- The deskilo:// protocol handler. The OAuth callback returns
+             over this scheme on every platform; Windows learns about it
+             from the installer the way Android learns from its manifest.
+             Without it the sign-in ends on a browser error — which is how
+             the macOS build first surfaced the problem. -->
+        <Component Id="UrlProtocol" Guid="7E2A1C64-51B7-4C3B-9E0A-1F0B2D9C4A11">
+          <RegistryKey Root="HKLM" Key="Software\Classes\deskilo">
+            <RegistryValue Type="string" Value="URL:DesKilo Protocol" />
+            <RegistryValue Name="URL Protocol" Type="string" Value="" />
+          </RegistryKey>
+          <RegistryKey Root="HKLM"
+                       Key="Software\Classes\deskilo\shell\open\command">
+            <RegistryValue Type="string"
+                           Value="&quot;[INSTALLFOLDER]deskilo.exe&quot; &quot;%1&quot;" />
+          </RegistryKey>
+        </Component>
       </Directory>
     </StandardDirectory>
 
