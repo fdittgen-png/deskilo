@@ -234,6 +234,53 @@ platform :ios do
   # internal groups needing a Users-and-Access account — that re-deriving
   # the flow would only re-discover them.
 
+  desc "Create the EXTERNAL beta group, optionally with a public link."
+  desc "An external tester needs no App Store Connect account — only an"
+  desc "email, or nothing at all if the group carries a public link, which"
+  desc "is the TestFlight equivalent of the Play internal-test URL. The"
+  desc "price is Beta App Review on the first build; every build after that"
+  desc "reaches the group directly."
+  desc "Options: name (default 'Coworking externe'), public_link (default"
+  desc "true), limit (public-link tester cap, default 100)."
+  lane :create_external_group do |options|
+    require "spaceship"
+    Spaceship::ConnectAPI.token =
+      Spaceship::ConnectAPI::Token.from(hash: asc_api_key)
+
+    app = Spaceship::ConnectAPI::App.find("de.deskilo.app")
+    UI.user_error!("No app record for de.deskilo.app") if app.nil?
+
+    name = options[:name] || "Coworking externe"
+    wants_link = options[:public_link].to_s != "false"
+
+    group = app.get_beta_groups.find { |g| g.name == name }
+    if group
+      UI.success("Beta group '#{name}' already exists.")
+    else
+      group = Spaceship::ConnectAPI::BetaGroup.create(
+        app_id: app.id,
+        name: name,
+        is_internal_group: false,
+        # Every uploaded build reaches the group without a second action —
+        # the same bargain the internal group already makes.
+        has_access_to_all_builds: true,
+      )
+      UI.success("Created external beta group '#{name}'.")
+    end
+
+    if wants_link
+      # publicLinkEnabled is an UPDATE on the group; the limit is what
+      # stops a shared URL turning into an unbounded invitation.
+      group.update(attributes: {
+        publicLinkEnabled: true,
+        publicLinkLimitEnabled: true,
+        publicLinkLimit: (options[:limit] || 100).to_i,
+      })
+      group = app.get_beta_groups.find { |g| g.name == name }
+      UI.success("Public link: #{group.public_link || '(pending — Apple mints it within a minute)'}")
+    end
+  end
+
   desc "Add external TestFlight tester(s) to the app's beta group(s)."
   desc "Inputs (lane options or ENV): email (required — a single address or a"
   desc "comma-separated list), groups (optional comma list — when omitted, each"
