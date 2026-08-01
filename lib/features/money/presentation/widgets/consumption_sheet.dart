@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import 'package:intl/intl.dart';
 
@@ -41,7 +42,9 @@ Future<void> showConsumptionSheet(
   }
 
   final currency = NumberFormat.simpleCurrency(name: workspace.currencyCode);
-  final period = TextEditingController(text: currentPeriod());
+  final period = TextEditingController(
+    text: currentPeriod(ref.read(clockProvider).now()),
+  );
   var service = services.first;
   var quantity = 1;
   final submitted = await showModalBottomSheet<bool>(

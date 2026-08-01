@@ -11,7 +11,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invite_uri.dart';
-import '../../domain/qr_png.dart';
+import '../qr_png.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/invite_sheet.dart';
 

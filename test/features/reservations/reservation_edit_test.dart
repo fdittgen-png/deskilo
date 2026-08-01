@@ -14,6 +14,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'reserve_hub_test.dart' show pumpHub;
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 
+import '../../helpers/test_clock.dart';
+
 Reservation _mine(
   DateTime day, {
   String id = 'res-own',
@@ -33,7 +35,7 @@ Reservation _mine(
 }
 
 DateTime get _today {
-  final now = DateTime.now();
+  final now = kTestNow;
   return DateTime(now.year, now.month, now.day);
 }
 
@@ -49,7 +51,7 @@ DateTime get _seedDay =>
 Future<void> openDetail(WidgetTester tester) async {
   await tester.tap(find.byKey(const ValueKey('reserve-date-button')));
   await tester.pumpAndSettle();
-  final now = DateTime.now();
+  final now = kTestNow;
   if (_seedDay.month != now.month || _seedDay.year != now.year) {
     await tester.tap(find.byTooltip('Next month'));
     await tester.pumpAndSettle();

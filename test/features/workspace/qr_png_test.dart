@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:ui' as ui;
 
-import 'package:deskilo/features/workspace/domain/qr_png.dart';
+import 'package:deskilo/features/workspace/presentation/qr_png.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

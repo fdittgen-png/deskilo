@@ -10,6 +10,8 @@ import 'package:deskilo/features/money/domain/payment_method.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
+
+import 'test_clock.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 
@@ -127,7 +129,7 @@ class FakeMoneyRepository implements MoneyRepository {
       }
       if (!invoices[i].isVoided) {
         invoices[i] = invoices[i]
-            .copyWith(voidedAt: DateTime.now(), voidedByName: 'Flo');
+            .copyWith(voidedAt: kTestNow, voidedByName: 'Flo');
       }
       replacesNumber = invoices[i].number;
     }
@@ -136,7 +138,7 @@ class FakeMoneyRepository implements MoneyRepository {
       workspaceId: workspaceId,
       memberId: memberId,
       number: 'INV-2026-${_nextInvoice.toString().padLeft(4, '0')}',
-      issuedAt: DateTime.now(),
+      issuedAt: kTestNow,
       period: period,
       title: period,
       lines: lines,
@@ -183,7 +185,7 @@ class FakeMoneyRepository implements MoneyRepository {
     }
     if (invoices[i].isVoided) throw StateError('invoice already voided');
     invoices[i] = invoices[i]
-        .copyWith(voidedAt: DateTime.now(), voidedByName: 'Flo');
+        .copyWith(voidedAt: kTestNow, voidedByName: 'Flo');
   }
 
   /// invoiceId → reminder instants (0066).
@@ -194,7 +196,7 @@ class FakeMoneyRepository implements MoneyRepository {
     final invoice = invoices.where((i) => i.id == invoiceId).firstOrNull;
     if (invoice == null) throw StateError('unknown invoice');
     if (invoice.isVoided) throw StateError('invoice is voided');
-    invoiceReminders.putIfAbsent(invoiceId, () => []).add(DateTime.now());
+    invoiceReminders.putIfAbsent(invoiceId, () => []).add(kTestNow);
   }
 
   @override
@@ -223,7 +225,7 @@ class FakeMoneyRepository implements MoneyRepository {
   String seedPayment(String memberId, int amountCents,
       {String description = ''}) {
     final id = 'pay-${ledger.length + 1}';
-    final now = DateTime.now();
+    final now = kTestNow;
     ledger.add(LedgerEntry(
       id: id,
       memberId: memberId,
@@ -290,8 +292,8 @@ class FakeMoneyRepository implements MoneyRepository {
         description: 'Credit note ${invoice.number}'
             '${trimmed.isEmpty ? '' : ' — $trimmed'}',
         period:
-            '${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}',
-        createdAt: DateTime.now(),
+            '${kTestNow.year}-${kTestNow.month.toString().padLeft(2, '0')}',
+        createdAt: kTestNow,
       ));
     }
     invoiceMatchesStore[invoiceId] = InvoiceMatch(
@@ -301,7 +303,7 @@ class FakeMoneyRepository implements MoneyRepository {
       note: trimmed,
       status: matchPolicyConfigured ? 'pending' : 'confirmed',
       paymentLedgerId: paymentLedgerId,
-      matchedAt: DateTime.now(),
+      matchedAt: kTestNow,
       byName: 'Flo',
     );
   }
@@ -319,8 +321,12 @@ class FakeMoneyRepository implements MoneyRepository {
   /// the record → validate → bill flow through both fakes.
   final FakeEventRepository? _events;
 
-  Statement statement = const Statement(
-    period: '2026-07',
+  // Not const: the period follows the pinned test clock, so the screen
+  // (which asks for the clock's month) and the fake agree. It used to be
+  // the literal '2026-07', which made every bill test pass only during
+  // July 2026.
+  Statement statement = Statement(
+    period: kTestPeriod,
     subscriptionPct: 50,
     feeCents: 15000,
     includedHalfDays: 22,
@@ -414,7 +420,7 @@ class FakeMoneyRepository implements MoneyRepository {
     transmissions[invoiceId] = InvoiceTransmission(
       invoiceId: invoiceId,
       status: einvoiceOutcome,
-      sentAt: DateTime.now(),
+      sentAt: kTestNow,
       externalId: 'platform-${sentEInvoices.length}',
     );
     return EInvoiceSubmission(
@@ -692,7 +698,7 @@ class FakeMoneyRepository implements MoneyRepository {
     // service_charge event — the ledger charge appears on confirmation.
     final events = _events;
     if (events != null) {
-      final now = DateTime.now();
+      final now = kTestNow;
       events.events.add(
         WorkspaceEvent(
           id: 'evt-service-${recordedServiceCharges.length}',

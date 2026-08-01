@@ -27,6 +27,7 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/directory_status.dart';
 import '../../providers/directory_providers.dart';
+import '../../../../core/time/clock.dart';
 
 /// Member directory (#224, epic #222): every member sees the workspace's
 /// ACTIVE members (alphabetical) with live indicators, and a WhatsApp
@@ -136,7 +137,7 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final now = DateTime.now();
+    final now = ref.read(clockProvider).now();
     final membersAsync = ref.watch(workspaceMembersProvider);
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final rawProfiles =

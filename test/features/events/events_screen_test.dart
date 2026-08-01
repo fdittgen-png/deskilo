@@ -36,7 +36,7 @@ WorkspaceEvent event({
       'seat_id': 'seat-4',
     },
     status: status,
-    createdAt: DateTime.now(),
+    createdAt: kTestNow,
   );
 }
 
@@ -62,7 +62,7 @@ WorkspaceEvent serviceChargeEvent({
       'period': '2026-07',
     },
     status: status,
-    createdAt: DateTime.now(),
+    createdAt: kTestNow,
   );
 }
 
@@ -344,7 +344,7 @@ void main() {
           memberId: 'member-3',
           accept: true,
           decidedBySystem: false,
-          decidedAt: DateTime.now(),
+          decidedAt: kTestNow,
         ),
       ],
       otherMembers: [adminMember('member-2'), adminMember('member-3')],

@@ -117,7 +117,12 @@ a new webhook, no client change beyond a method picker.
 
 ## 6. Reconciliation (the settlement RPC)
 
-New migration (not yet written — ship with the first live PSP):
+**Shipped as migration 0045** (`payment_intents` + `settle_online_payment`),
+extended by 0047 (`payment_credentials`) and 0048 (Wero through Mollie). The
+sketch below is what landed; read it as documentation, not as a proposal.
+The one difference from the draft: idempotency is keyed on
+`(provider, order_id)` rather than the capture id, so a provider that
+reports a settlement before it has a capture id still settles exactly once.
 
 ```sql
 create table public.payment_intents (
@@ -186,7 +191,14 @@ Nothing in the app — only server config:
 Until step 2, `create-payment-order` returns `not_configured` and the app
 shows *"Online payments aren't set up yet."* — no error, no charge.
 
-## 8. What ships now (0043 scaffolding)
+## 8. How it started — the 0043 scaffolding
+
+*Historical.* This section describes the inert first cut (PayPal only, no
+migration, no money). Everything below is superseded by §6 and the
+checklist in §9; three more providers and all four webhooks have landed
+since. Kept because the "correct-by-construction inert" shape — a feature
+flag off by default plus an Edge Function that answers `not_configured`
+until its secrets exist — is the pattern any new provider should follow.
 
 - Feature flag `onlinePayments` (default **off**).
 - `MoneyRepository.createPaymentOrder(...)` → invokes the Edge Function;
