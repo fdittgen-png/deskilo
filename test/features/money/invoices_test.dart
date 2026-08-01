@@ -127,7 +127,7 @@ void main() {
       amountCents: 450,
       description: 'Coffee ×3',
       period: currentTestPeriod(),
-      createdAt: DateTime.now(),
+      createdAt: kTestNow,
     ));
     money.ledger.add(LedgerEntry(
       id: 'ledger-2',
@@ -137,7 +137,7 @@ void main() {
       amountCents: 10000,
       description: 'PayPal',
       period: currentTestPeriod(),
-      createdAt: DateTime.now(),
+      createdAt: kTestNow,
     ));
     await pumpInvoices(tester, money: money);
     expect(find.text('No invoices yet.'), findsOneWidget);
@@ -225,7 +225,7 @@ void main() {
     final money = FakeMoneyRepository();
     // Last month tracked nothing — and last month is where the sheet
     // lands, because that is the month whose numbers no longer move.
-    final now = DateTime.now();
+    final now = kTestNow;
     final prev = DateTime(now.year, now.month - 1);
     final prevPeriod =
         '${prev.year}-${prev.month.toString().padLeft(2, '0')}';
@@ -568,7 +568,7 @@ void main() {
       amountCents: 5000,
       description: 'PayPal',
       period: currentTestPeriod(),
-      createdAt: DateTime.now(),
+      createdAt: kTestNow,
     ));
     money.attendanceSeed = const [
       InvoiceAttendance(
@@ -735,7 +735,7 @@ void main() {
       'the member then leaves the list', (tester) async {
     final money = FakeMoneyRepository();
     await pumpInvoices(tester, money: money);
-    final prev = DateTime(DateTime.now().year, DateTime.now().month - 1);
+    final prev = DateTime(kTestNow.year, kTestNow.month - 1);
     final prevPeriod =
         '${prev.year}-${prev.month.toString().padLeft(2, '0')}';
 
@@ -1255,6 +1255,6 @@ void main() {
 /// The period the fake books to when tests issue "now" — mirrors
 /// currentPeriod() without importing intl here.
 String currentTestPeriod() {
-  final now = DateTime.now();
+  final now = kTestNow;
   return '${now.year}-${now.month.toString().padLeft(2, '0')}';
 }

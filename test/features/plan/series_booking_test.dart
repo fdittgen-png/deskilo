@@ -3,6 +3,8 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/test_clock.dart';
+
 import 'plan_screen_test.dart' show pumpPlan, seatCenter;
 import 'time_scroller_test.dart' show pickChipTime;
 
@@ -44,7 +46,7 @@ void main() {
 
   testWidgets('conflicting instances are reported as skipped, not silent',
       (tester) async {
-    final now = DateTime.now();
+    final now = kTestNow;
     final env = await pumpPlan(
       tester,
       seedReservations: (repo) {

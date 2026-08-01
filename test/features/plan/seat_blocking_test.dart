@@ -22,7 +22,7 @@ Future<FakeFloorPlanRepository> pumpPlanForBlocking(
   if (seatBlocked) {
     final seat = plans.seats.single;
     plans.seats[0] = seat.copyWith(
-      blockedFrom: DateTime.now().subtract(const Duration(days: 1)),
+      blockedFrom: kTestNow.subtract(const Duration(days: 1)),
     );
   }
   final workspace =
@@ -84,7 +84,7 @@ void main() {
       'the owner makes a free seat not reservable from the booking sheet',
       (tester) async {
     final plans = await pumpPlanForBlocking(tester);
-    final before = DateTime.now();
+    final before = kTestNow;
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
@@ -100,7 +100,7 @@ void main() {
     expect(call.from, isNotNull);
     expect(call.from!.isBefore(before.toUtc()), isFalse);
     expect(call.to, isNull);
-    expect(plans.seats.single.isBlockedAt(DateTime.now()), isTrue);
+    expect(plans.seats.single.isBlockedAt(kTestNow), isTrue);
   });
 
   testWidgets('the owner makes a blocked seat reservable again',
@@ -124,7 +124,7 @@ void main() {
       plans.lastSeatBlock,
       (seatId: 'seat-4', from: null, to: null),
     );
-    expect(plans.seats.single.isBlockedAt(DateTime.now()), isFalse);
+    expect(plans.seats.single.isBlockedAt(kTestNow), isFalse);
   });
 
   testWidgets('an admin without the feature gets no blocking affordances',
@@ -173,6 +173,6 @@ void main() {
 
     expect(plans.lastSeatBlock?.seatId, 'seat-4');
     expect(plans.lastSeatBlock?.to, isNull);
-    expect(plans.seats.single.isBlockedAt(DateTime.now()), isTrue);
+    expect(plans.seats.single.isBlockedAt(kTestNow), isTrue);
   });
 }

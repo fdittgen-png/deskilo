@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
-import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -52,7 +51,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(saved, hasLength(1));
-    expect(saved.single.$1, 'deskilo-bill-${currentPeriod()}.pdf');
+    expect(saved.single.$1, 'deskilo-bill-$kTestPeriod.pdf');
     // A real PDF was written locally — no share sheet.
     expect(String.fromCharCodes(saved.single.$2.sublist(0, 5)), '%PDF-');
     expect(find.textContaining('/local/deskilo-bill-'), findsOneWidget);

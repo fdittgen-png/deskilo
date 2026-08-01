@@ -36,7 +36,7 @@ WorkspaceEvent pendingForMe(String id) => WorkspaceEvent(
       subjectMemberId: 'member-1',
       payload: const {},
       status: EventStatus.pending,
-      createdAt: DateTime.now(),
+      createdAt: kTestNow,
     );
 
 List<String> tabLabels(WidgetTester tester) => tester

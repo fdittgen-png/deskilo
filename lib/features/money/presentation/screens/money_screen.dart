@@ -13,6 +13,7 @@ import '../../../../core/links/link_launcher.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -52,13 +53,14 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
   @override
   void initState() {
     super.initState();
-    final now = DateTime.now();
+    final now = ref.read(clockProvider).now();
     _month = DateTime(now.year, now.month);
   }
 
   String get _period => DateFormat('yyyy-MM').format(_month);
 
-  bool get _isCurrentPeriod => _period == currentPeriod();
+  bool get _isCurrentPeriod =>
+      _period == currentPeriod(ref.read(clockProvider).now());
 
   void _shiftMonth(int delta) {
     setState(() => _month = DateTime(_month.year, _month.month + delta));
@@ -183,9 +185,9 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     // the ledger dated every payment the day it was typed in and booked it
     // to the current month, so a transfer entered late landed on the wrong
     // bill — and on the wrong invoice.
-    final today = DateTime.now();
+    final today = ref.read(clockProvider).now();
     var paidOn = DateTime(today.year, today.month, today.day);
-    var period = currentPeriod();
+    var period = currentPeriod(today);
     final locale = Localizations.maybeLocaleOf(context)?.toString();
     final dayFormat = DateFormat.yMMMd(locale);
     final monthFormat = DateFormat.yMMMM(locale);
@@ -819,6 +821,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 pendingMoneyEvents: pendingEvents,
                 currencyCode: currencyCode,
                 memberId: member?.id ?? '',
+                nowPeriod: currentPeriod(ref.watch(clockProvider).now()),
                 // #155 — how-to-pay card on an outstanding balance.
                 paymentInstructions: PaymentInstructions.fromDb(
                   workspace?.paymentInstructions ?? const {},

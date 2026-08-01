@@ -43,6 +43,7 @@ import '../../providers/workspace_import_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
 import '../feature_names.dart';
+import '../../../../core/time/clock.dart';
 
 /// Owner-only workspace settings: identity (country/currency/time zone,
 /// #153 — a country pick re-defaults both from [CountryCatalog], a
@@ -396,9 +397,9 @@ class _WorkspaceSettingsScreenState
             strings: strings,
             workspaceName: workspace.name,
             generatedOnLabel: l10n?.workspaceConfigPdfGeneratedOn(
-                  dateFormat.format(DateTime.now()),
+                  dateFormat.format(ref.read(clockProvider).now()),
                 ) ??
-                'Generated on ${dateFormat.format(DateTime.now())}',
+                'Generated on ${dateFormat.format(ref.read(clockProvider).now())}',
             countryLabel: localizedCountryName(l10n, workspace.countryCode),
             currencyCode: workspace.currencyCode,
             timezone: workspace.timezone,

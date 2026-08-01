@@ -216,8 +216,8 @@ void main() {
     await reservations.create(
       workspaceId: 'ws-1',
       seatId: plans.seats.single.id,
-      startsAt: DateTime.now().subtract(const Duration(minutes: 5)),
-      endsAt: DateTime.now().add(const Duration(hours: 2)),
+      startsAt: kTestNow.subtract(const Duration(minutes: 5)),
+      endsAt: kTestNow.add(const Duration(hours: 2)),
     );
     await tester.pumpWidget(
       ProviderScope(

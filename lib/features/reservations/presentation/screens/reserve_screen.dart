@@ -41,6 +41,7 @@ import '../widgets/space_scan.dart';
 import '../widgets/reservation_detail_sheet.dart';
 import '../widgets/month_grid.dart';
 import '../widgets/week_grid.dart';
+import '../../../../core/time/clock.dart';
 
 /// Geometry and ranges of the Reserve hub (#208). Pinned by test — treat
 /// these as part of the visual/behavioural contract, not free-floating
@@ -116,7 +117,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
   @override
   void initState() {
     super.initState();
-    final now = DateTime.now();
+    final now = ref.read(clockProvider).now();
     _today = DateTime(now.year, now.month, now.day);
     _selectedDay = _today;
   }
@@ -172,7 +173,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     if (granularity.isDayBased) {
       return HalfDayWindows.fullDay(_selectedDay);
     }
-    final now = _snapToSlot(DateTime.now());
+    final now = _snapToSlot(ref.read(clockProvider).now());
     final from = DateTime(
       _selectedDay.year,
       _selectedDay.month,
@@ -812,6 +813,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                       ref.watch(memberProfilesProvider).value ?? const {},
                   from: window.start,
                   to: window.end,
+                  now: ref.watch(clockProvider).now(),
                 ),
                 deskOpacity: (ref
                             .watch(currentWorkspaceProvider)

@@ -61,7 +61,7 @@ void main() {
           subjectMemberId: 'member-1',
           payload: const {'amount_cents': 15000},
           status: EventStatus.confirmed,
-          createdAt: DateTime.now(),
+          createdAt: kTestNow,
         ),
         WorkspaceEvent(
           id: 'evt-exp',
@@ -72,7 +72,7 @@ void main() {
           subjectMemberId: 'member-1',
           payload: const {'amount_cents': 4290, 'category': 'supplies'},
           status: EventStatus.confirmed,
-          createdAt: DateTime.now(),
+          createdAt: kTestNow,
         ),
       ]);
     await tester.pumpWidget(

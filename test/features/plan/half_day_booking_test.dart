@@ -69,7 +69,7 @@ bool chipSelected(WidgetTester tester, Key key) =>
 Reservation reservationToday({required int startHour, required int endHour}) {
   // Workspace-clock instants: the canonical windows the chips browse are
   // workspace-anchored, so the seeds must be too.
-  final today = WorkspaceTime.dateOf(DateTime.now());
+  final today = WorkspaceTime.dateOf(kTestNow);
   return Reservation(
     id: 'res-$startHour',
     workspaceId: 'ws-1',
@@ -185,7 +185,7 @@ void main() {
     // wall clock crosses midnight hours earlier — the plan books the
     // workspace's today (day-boundary flake fix).
     final expected =
-        HalfDayWindows.morning(WorkspaceTime.dateOf(DateTime.now()));
+        HalfDayWindows.morning(WorkspaceTime.dateOf(kTestNow));
     expect(created.startsAt.toUtc(), expected.start.toUtc());
     expect(created.endsAt.toUtc(), expected.end.toUtc());
   });
@@ -225,7 +225,7 @@ void main() {
 
     // Pick a mid-month day of the visible month (never today, so the
     // window provably moved; never ambiguous with the header text).
-    final now = DateTime.now();
+    final now = kTestNow;
     final targetDay = now.day == 15 ? 16 : 15;
     await tester.tap(find.byKey(const ValueKey('plan-date-button')));
     await tester.pumpAndSettle();
