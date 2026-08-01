@@ -106,6 +106,13 @@ jobs:
           flutter pub get
           flutter build appbundle --release --build-number=${{ steps.bn.outputs.build_number }}
 
+      # Layers B/C of the libre audit (ADR 0003) on the exact bundle that
+      # ships: zero proprietary type references in the release dex, the
+      # same bar the F-Droid scanner applies. Runs before signing cleanup
+      # and upload — an artifact that fails this must not leave CI.
+      - name: Dex audit — no proprietary bytecode references
+        run: bash scripts/audit_no_gms.sh --artifact build/app/outputs/bundle/release/app-release.aab
+
       - name: Clean up keystore
         if: always()
         run: rm -f android/app/upload-keystore.p12 android/key.properties
