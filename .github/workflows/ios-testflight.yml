@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: 0BSD
+
 name: ios-testflight
 
 # Build a signed iOS IPA on a macOS runner and upload it to TestFlight

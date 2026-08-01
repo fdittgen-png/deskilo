@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: 0BSD
+
 name: android-boot
 
 # App-start validation on a real Android emulator (#86/#87):
