@@ -40,6 +40,7 @@ lib/
     members/      # member directory (status, WhatsApp, reservation chips)
     money/        # ledger, statements, billing, packages, services, PDF export
     kiosk/        # wall-tablet mode: locked plan view + badge-driven actions
+    help/         # in-app help, compiled from the wiki user guides
     profile/      # settings, profiles (multi-workspace), developer screen
 ```
 
@@ -57,8 +58,8 @@ Each feature keeps the same internal shape: `domain/` (freezed models + a pure-D
 
 - `profiles` — 1:1 with `auth.users`, created by trigger on signup.
 - `workspaces` — one coworking community; `invite_code` doubles as the human-readable workspace ID and the **member invite**.
-- `members` — a user's participation in a workspace: `is_admin`, `is_owner` booleans (roles are additive), `status` (`active`/`paused`/`exited`), subscription percentage.
-- `workspace_admin_invites` — one secret **admin invite code** per workspace (0030), readable by owners only.
+- `members` — a user's participation in a workspace: `is_admin`, `is_owner` booleans (roles are additive), `status` (`active`/`paused`/`pending`/`exited`), subscription percentage.
+- `invitations` — **single-use personal invitations** (0051): one code, one role, one expiry, one redemption. This replaced the static per-workspace admin secret of 0030, whose `workspace_admin_invites` table is **dropped** — a forwarded admin code must not mint admins forever. `workspaces.invite_code` stays the open member-level walk-in handle (the printed QR and the human-readable workspace ID). Since 0052 every join lands as a **pending** membership that owner/admins validate through the same quorum as payments and expenses; a pending member sees only the workspace name until then.
 - Floor plan: `levels` → `offices` → `desks` → `seats` (0003), seat blocking (0021), accessories (0022/0023).
 - Booking: `reservations` + conflict-checked RPCs (0005), booking rules & series (0006), availability/open weekdays/closures (0013), granularity incl. minute slots (0025/0032), half-day walk-up (0026), reservation moves (0033), quota enforcement + extra-half-day requests (0031).
 - Money: ledger/payments (0008), expenses (0009), service catalog & consumption (0014/0016), percentage subscriptions with fee bands (0015), payment method & instructions (0019/0020), accessory supplements (0024), per-member over-consumption policy (0041), day packages + self-serve buy (0042).
@@ -69,6 +70,10 @@ Each feature keeps the same internal shape: `domain/` (freezed models + a pure-D
 - Kiosk mode (0043): `members.is_kiosk`, hashed badge tokens (`member_badges`), and the stateless `kiosk_act` RPC that lets a wall tablet act *as* the badge's member without any session on the device.
 - RFID/NFC badges (0046): `member_badges.kind` (`qr` | `nfc`), `register_nfc_badge` stores the card UID as a SHA-256 hash; the kiosk feeds a tapped card's UID into the same `kiosk_act` path as a scanned QR.
 - Per-member reservation cap (0044): owners/admins set how many simultaneous open reservations a member may hold (never their own row), enforced server-side.
+- Bookable spaces beyond the seat: whole levels (0050), whole offices (0057), whole desks (0059), each with its own validation path; series over spaces (0065).
+- Badges, continued: self-service enrollment (0053), kiosk identify (0054), revocation that deletes the hash (0055), per-badge scope and kiosk revert (0056). Co-owner role (0058).
+- **Invoicing (0060–0068)** — `invoices` holds an *immutable* document: its lines are **derived** from the period's tracked data at issue time, then frozen with a SHA-256 `signature` over the whole content, plus a `parties` snapshot so an issued document keeps saying what it said. Corrections never mutate: `replaces_invoice_id` forms a void/replacement chain (0061), and a matched invoice cannot be replaced. Also: derived lines (0062), running balance (0063), an optional detail annex of ledger movements and attendance (0064), reminders (0066), and matching against payments — payment-linked, so *paid* is definitive (0067/0068).
+- **E-invoicing and tax (0069–0073)** — the seller's legal identity is declared rather than guessed (`vat_regime`, `vat_id`, `legal_id`, `tax_exemption_reason`, structured address; `profiles.country_code`/`vat_id` for the buyer), because EN 16931's `BR-CO-26` makes a seller identifier mandatory and the regime decides the whole tax mapping (0069). A payment carries the day the money moved and the month it settles, distinct from the audit stamp (0070). `einvoice_credentials` is a second **deny-all** table for the transmission provider's token (0071), and VAT rates + their grant hardening close the set (0072/0073).
 
 ### Online payments
 
@@ -106,7 +111,7 @@ The router's `refreshListenable` watches `enabledFeaturesProvider`, so toggling 
 
 ## Invites & deep links
 
-Invite QR codes encode `deskilo://join?role=<user|admin>&code=<CODE>` (`InviteUriCodec` in `features/workspace/domain/invite_uri.dart`). The in-app scanner accepts this URL form *and* legacy raw-code QRs, and ignores unrelated QR content. The `role` parameter is informational — the server resolves the actual role from the code.
+Invite QR codes encode `deskilo://join?role=<user|admin>&code=<CODE>` (`InviteUriCodec` in `features/workspace/domain/invite_uri.dart`). The in-app scanner accepts this URL form *and* legacy raw-code QRs, and ignores unrelated QR content. The `role` parameter is informational — the server resolves the actual role from the code, and since 0051 an admin-bearing code is a **personal, single-use, expiring** invitation minted by an owner rather than a standing workspace secret. The same `deskilo://` scheme carries the OAuth callback back into the app on every platform, which is why it is registered in the Android manifest, the iOS `CFBundleURLTypes`, and the Windows installer's registry keys.
 
 ## Internationalization
 
