@@ -308,6 +308,10 @@ class _WorkspaceSettingsScreenState
               .join(', ');
 
           final dateFormat = DateFormat.yMMMd(locale);
+          // Formatted once: the l10n branch and its fallback must carry
+          // the same stamp.
+          final generatedOn =
+              dateFormat.format(ref.read(clockProvider).now());
           final closureLabels = [
             for (final closure in closures)
               closure.reason.trim().isEmpty
@@ -396,10 +400,8 @@ class _WorkspaceSettingsScreenState
           final bytes = await buildWorkspaceConfigPdf(
             strings: strings,
             workspaceName: workspace.name,
-            generatedOnLabel: l10n?.workspaceConfigPdfGeneratedOn(
-                  dateFormat.format(ref.read(clockProvider).now()),
-                ) ??
-                'Generated on ${dateFormat.format(ref.read(clockProvider).now())}',
+            generatedOnLabel: l10n?.workspaceConfigPdfGeneratedOn(generatedOn) ??
+                'Generated on $generatedOn',
             countryLabel: localizedCountryName(l10n, workspace.countryCode),
             currencyCode: workspace.currencyCode,
             timezone: workspace.timezone,

@@ -51,10 +51,14 @@ class BillSections {
 /// post when confirmed right now (the RPCs book to now()'s period). The
 /// ONE definition; money_providers re-exports it (a `billNowPeriod` twin
 /// used to live here).
-/// Pass [now] from `clockProvider` anywhere a widget test will pump this;
-/// the wall-clock default exists for pure-Dart call sites only.
-String currentPeriod([DateTime? now]) =>
-    DateFormat('yyyy-MM').format(now ?? DateTime.now());
+/// [now] comes from `clockProvider` (or a caller that already holds it) —
+/// REQUIRED on purpose. This briefly had a wall-clock default "for
+/// pure-Dart call sites", and the only path that used the default turned
+/// out to be a widget path (the bill-PDF export), which is exactly the
+/// period-flips-with-the-machine-date bug the clock seam exists to kill.
+/// A nullable now with a DateTime.now() fallback is a wall-clock read
+/// wearing a parameter's clothes.
+String currentPeriod(DateTime now) => DateFormat('yyyy-MM').format(now);
 
 /// Groups [ledger] entries and [pendingEvents] into the sections of
 /// [memberId]'s bill for [period] ('yyyy-MM').
@@ -73,9 +77,9 @@ BillSections buildBillSections({
   required String memberId,
   required List<LedgerEntry> ledger,
   required List<WorkspaceEvent> pendingEvents,
-  String? nowPeriod,
+  required String nowPeriod,
 }) {
-  final now = nowPeriod ?? currentPeriod();
+  final now = nowPeriod;
 
   final services = [
     for (final entry in ledger)

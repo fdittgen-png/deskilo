@@ -35,6 +35,15 @@ PATTERN='firebase|google_mobile_ads|google_sign_in|com\.google\.gms|com\.google\
 # code and legitimately present.
 DEX_PATTERN='Lcom/google/(android/gms|firebase|mlkit|android/play)[A-Za-z0-9/$_]*;?'
 
+artifact=""
+if [ "${1:-}" = "--artifact" ]; then
+  artifact="${2:?--artifact needs a path to an .apk or .aab}"
+  if [ ! -f "$artifact" ]; then
+    echo "audit_no_gms: artifact not found: $artifact" >&2
+    exit 1
+  fi
+fi
+
 fail=0
 for file in pubspec.yaml pubspec.lock \
             android/app/build.gradle.kts android/build.gradle.kts \
@@ -46,16 +55,7 @@ for file in pubspec.yaml pubspec.lock \
   fi
 done
 
-artifact=""
-if [ "${1:-}" = "--artifact" ]; then
-  artifact="${2:?--artifact needs a path to an .apk or .aab}"
-fi
-
 if [ -n "$artifact" ]; then
-  if [ ! -f "$artifact" ]; then
-    echo "audit_no_gms: artifact not found: $artifact" >&2
-    exit 1
-  fi
   tmp=$(mktemp -d)
   trap 'rm -rf "$tmp"' EXIT
   # -j flattens paths so one loop covers both layouts: an APK keeps

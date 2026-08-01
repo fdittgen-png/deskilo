@@ -44,12 +44,15 @@ Future<void> showInvoiceIssueSheet(
   if (!context.mounted) return;
 
   final repo = ref.read(moneyRepositoryProvider);
+  // One instant for the whole sheet: the month ceiling and the default
+  // period must not straddle a midnight (or month) tick.
+  final now = ref.read(clockProvider).now();
   final result = await showModalBottomSheet<
       ({String memberId, String period, bool detailed})>(
     context: context,
     isScrollControlled: true,
     builder: (context) => _InvoiceForm(
-      now: ref.read(clockProvider).now(),
+      now: now,
       l10n: l10n,
       members: [
         for (final member in members)
@@ -67,8 +70,7 @@ Future<void> showInvoiceIssueSheet(
           members.any((m) => m.id == (memberId ?? replaces?.memberId))
               ? (memberId ?? replaces?.memberId)
               : null,
-      initialPeriod:
-          period ?? replaces?.period ?? previousPeriodOf(ref.read(clockProvider).now()),
+      initialPeriod: period ?? replaces?.period ?? previousPeriodOf(now),
       initialDetailed: replaces?.detailed ?? false,
       replacesNumber: replaces?.number,
     ),

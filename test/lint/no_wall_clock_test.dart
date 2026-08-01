@@ -16,9 +16,9 @@
 // a widget reading `DateTime.now()` ignores the pinned clock, and a test
 // seeding from `DateTime.now()` disagrees with it.
 
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
+
+import 'lint_sources.dart';
 
 /// Files allowed to read the wall clock, each for a stated reason.
 ///
@@ -52,33 +52,14 @@ void main() {
   test('no wall-clock reads outside the exempt list', () {
     final violations = <String>[];
 
-    for (final root in ['lib', 'test']) {
-      final files = Directory(root)
-          .listSync(recursive: true)
-          .whereType<File>()
-          .where((f) => f.path.endsWith('.dart'))
-          // Generated code is not hand-written and not ours to fix.
-          .where((f) => !f.path.endsWith('.g.dart'))
-          .where((f) => !f.path.endsWith('.freezed.dart'))
-          .where((f) => !f.path.contains('lib/l10n/'))
-          // This file necessarily names the pattern it forbids.
-          .where((f) => f.path != 'test/lint/no_wall_clock_test.dart')
-          .where((f) => !_exempt.containsKey(f.path));
-
-      for (final file in files) {
-        final lines = file.readAsLinesSync();
-        for (var i = 0; i < lines.length; i++) {
-          final line = lines[i].trim();
-          // A comment explaining the rule is not a violation of it.
-          if (line.startsWith('//')) continue;
-          if (line.contains('DateTime.now()')) {
-            // Print the line: a lint failure whose message does not show
-            // the match costs more time than the rule saves.
-            violations.add('${file.path}:${i + 1}: ${lines[i].trim()}');
-          }
-        }
-      }
-    }
+    final files = handWrittenDartFilesIn(['lib', 'test'])
+        // These files necessarily name the pattern they forbid.
+        .where((f) => f.path != 'test/lint/no_wall_clock_test.dart')
+        .where((f) => f.path != 'test/lint/lint_sources.dart')
+        .where((f) => !_exempt.containsKey(f.path));
+    violations.addAll(
+      scanLines(files, (line) => line.contains('DateTime.now()')),
+    );
 
     expect(
       violations,

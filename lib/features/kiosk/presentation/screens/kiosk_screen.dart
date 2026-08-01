@@ -424,7 +424,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                       profiles: ref.watch(memberProfilesProvider).value ??
                           const {},
                       from: now,
-                      now: ref.watch(clockProvider).now(),
+                      now: now,
                     ),
                     deskOpacity:
                         (workspace?.deskOpacity ?? 100) / 100,

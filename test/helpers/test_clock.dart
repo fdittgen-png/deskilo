@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import 'package:deskilo/features/money/domain/bill_sections.dart'
+    show currentPeriod;
 
 /// The instant every widget test believes it is running at.
 ///
@@ -17,7 +19,8 @@
 /// imports them.
 final DateTime kTestNow = DateTime(2026, 5, 13, 10);
 
-/// `kTestNow` as a `yyyy-MM` ledger period — the month a statement, bill
-/// or invoice belongs to when a test does not say otherwise.
-final String kTestPeriod =
-    '${kTestNow.year}-${kTestNow.month.toString().padLeft(2, '0')}';
+/// `kTestNow` as a ledger period — the month a statement, bill or
+/// invoice belongs to when a test does not say otherwise. Derived through
+/// the app's own [currentPeriod] so this can never silently disagree with
+/// the period keys the app actually writes.
+final String kTestPeriod = currentPeriod(kTestNow);
