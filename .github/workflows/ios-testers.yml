@@ -21,9 +21,17 @@ name: iOS TestFlight Testers
 on:
   workflow_dispatch:
     inputs:
+      create_external_group:
+        description: >-
+          Create the external beta group (and its public link) instead of
+          adding a tester. External testers need no Apple account; the
+          first build then goes through Beta App Review once.
+        required: false
+        type: boolean
+        default: false
       email:
         description: 'Tester email(s) to enroll — a single address or a comma-separated list (an invite email is sent to each)'
-        required: true
+        required: false
         type: string
         default: 'fdittgen@gmail.com'
       groups:
@@ -94,6 +102,10 @@ jobs:
           # ASC_API_KEY_FILEPATH was exported by the decode step above.
           FASTLANE_DISABLE_COLORS: '1'
         run: |
+          if [ "${{ inputs.create_external_group }}" = "true" ]; then
+            bundle exec fastlane create_external_group
+            exit 0
+          fi
           bundle exec fastlane manage_testers \
             email:"${{ inputs.email }}" \
             groups:"${{ inputs.groups }}" \
