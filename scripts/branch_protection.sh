@@ -88,12 +88,23 @@ show() {
 }
 
 verify() {
-  if ! gh api "$API" > /dev/null 2>&1; then
-    echo "::error::${REPO}@${BRANCH} has NO branch protection." >&2
-    echo "Expected required checks:" >&2
-    printf '  %s\n' "${TARGET_CHECKS[@]}" >&2
-    echo "Run: $0 apply" >&2
-    return 1
+  # 404 means unprotected; 403 means THIS TOKEN cannot read protection at
+  # all (reading it needs repo admin, which the default Actions token does
+  # not have). Conflating the two makes CI shout "NO protection" the day
+  # after protection was applied — the exact false alarm this script
+  # exists to prevent.
+  local resp
+  if ! resp=$(gh api "$API" 2>&1); then
+    if grep -qiE "HTTP 404|not protected|not found" <<< "$resp"; then
+      echo "::error::${REPO}@${BRANCH} has NO branch protection." >&2
+      echo "Expected required checks:" >&2
+      printf '  %s\n' "${TARGET_CHECKS[@]}" >&2
+      echo "Run: $0 apply" >&2
+      return 1
+    fi
+    echo "::warning::cannot READ branch protection with this token" \
+      "(needs repo admin) — run '$0 verify' locally to check for drift." >&2
+    return 0
   fi
   local drift=0
   if ! diff -u \
