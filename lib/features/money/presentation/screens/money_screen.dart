@@ -59,8 +59,10 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
 
   String get _period => DateFormat('yyyy-MM').format(_month);
 
-  bool get _isCurrentPeriod =>
-      _period == currentPeriod(ref.read(clockProvider).now());
+  /// The running month's period key — the ONE clock read both uses share.
+  String get _nowPeriod => currentPeriod(ref.read(clockProvider).now());
+
+  bool get _isCurrentPeriod => _period == _nowPeriod;
 
   void _shiftMonth(int delta) {
     setState(() => _month = DateTime(_month.year, _month.month + delta));
@@ -130,6 +132,9 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           memberId: member.id,
           ledger: ledger,
           pendingEvents: pendingEvents,
+          // Same nowPeriod as the on-screen BillView — this path used to
+          // fall back to the wall clock and section the PDF differently.
+          nowPeriod: _nowPeriod,
         );
         // Embedded Roboto: base-14 PDF fonts cannot encode '€'/'−' (#133).
         final regular =
@@ -821,7 +826,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 pendingMoneyEvents: pendingEvents,
                 currencyCode: currencyCode,
                 memberId: member?.id ?? '',
-                nowPeriod: currentPeriod(ref.watch(clockProvider).now()),
+                nowPeriod: _nowPeriod,
                 // #155 — how-to-pay card on an outstanding balance.
                 paymentInstructions: PaymentInstructions.fromDb(
                   workspace?.paymentInstructions ?? const {},

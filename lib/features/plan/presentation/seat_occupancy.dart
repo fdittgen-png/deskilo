@@ -107,13 +107,12 @@ Set<String> onlineSeatIdsFor({
 }) {
   if (profiles.isEmpty || members.isEmpty) return const {};
   final userIdOf = {for (final m in members) m.id: m.userId};
-  final presenceNow = now;
   bool online(String memberId) {
     final uid = userIdOf[memberId];
     final profile = uid == null ? null : profiles[uid];
     return resolveDirectoryPresence(
           lastSeenAt: profile?.lastSeenAt,
-          now: presenceNow,
+          now: now,
         ).kind ==
         DirectoryPresenceKind.online;
   }

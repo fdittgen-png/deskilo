@@ -15,31 +15,16 @@
 // understands, and guarding a camera or NFC call site with it is the
 // documented pattern for the web target.
 
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
+
+import 'lint_sources.dart';
 
 void main() {
   test('Platform.isX only inside core/ seams', () {
-    final violations = <String>[];
-    for (final root in ['lib/features', 'lib/app']) {
-      final files = Directory(root)
-          .listSync(recursive: true)
-          .whereType<File>()
-          .where((f) => f.path.endsWith('.dart'))
-          .where((f) => !f.path.endsWith('.g.dart'))
-          .where((f) => !f.path.endsWith('.freezed.dart'));
-      for (final file in files) {
-        final lines = file.readAsLinesSync();
-        for (var i = 0; i < lines.length; i++) {
-          final line = lines[i].trim();
-          if (line.startsWith('//')) continue;
-          if (line.contains('Platform.is')) {
-            violations.add('${file.path}:${i + 1}: $line');
-          }
-        }
-      }
-    }
+    final violations = scanLines(
+      handWrittenDartFilesIn(['lib/features', 'lib/app']),
+      (line) => line.contains('Platform.is'),
+    );
     expect(
       violations,
       isEmpty,

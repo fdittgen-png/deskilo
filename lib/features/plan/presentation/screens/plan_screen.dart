@@ -693,7 +693,8 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final level = levels.where((l) => l.id == selectedId).firstOrNull ??
         levels.first;
 
-    final at = _browse ?? ref.watch(clockProvider).now();
+    final now = ref.watch(clockProvider).now();
+    final at = _browse ?? now;
     // Browsing (#184): occupancy over the whole [at, windowEnd) frame;
     // null in live mode, where the instant semantics apply.
     final windowEnd = _browseEnd;
@@ -844,7 +845,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                               const {},
                       from: at,
                       to: windowEnd,
-                      now: ref.watch(clockProvider).now(),
+                      now: now,
                     ),
                     deskOpacity: (ref
                                 .watch(currentWorkspaceProvider)
@@ -953,11 +954,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
           TextButton(
             key: const ValueKey('plan-date-button'),
             onPressed: () async {
+              final pickerNow = ref.read(clockProvider).now();
               final picked = await showDatePicker(
                 context: context,
                 initialDate: local,
-                firstDate: ref.read(clockProvider).now().subtract(const Duration(days: 365)),
-                lastDate: ref.read(clockProvider).now().add(const Duration(days: 365)),
+                firstDate: pickerNow.subtract(const Duration(days: 365)),
+                lastDate: pickerNow.add(const Duration(days: 365)),
               );
               if (picked == null) return;
               if (!mounted) return;

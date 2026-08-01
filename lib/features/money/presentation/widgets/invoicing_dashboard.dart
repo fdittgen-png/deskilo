@@ -254,6 +254,8 @@ class OpenInvoicesTab extends ConsumerWidget {
     final dateFormat = DateFormat.yMMMd(
       Localizations.maybeLocaleOf(context)?.toString(),
     );
+    // One instant for the whole list, not one clock read per row.
+    final now = ref.read(clockProvider).now();
     return ListView(
       padding: AppSpacing.mdAll,
       children: [
@@ -286,8 +288,8 @@ class OpenInvoicesTab extends ConsumerWidget {
                     ),
                   ]),
                   const SizedBox(height: 2),
-                  _openSubtitle(context, l10n, entry, reminders, dateFormat,
-                      ref.read(clockProvider).now()),
+                  _openSubtitle(
+                      context, l10n, entry, reminders, dateFormat, now),
                   if (entry.pendingMatch != null)
                     Align(
                       alignment: Alignment.centerRight,

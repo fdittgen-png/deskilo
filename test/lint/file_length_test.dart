@@ -16,9 +16,9 @@
 // same baseline entry, the resolved number must be the COMBINED
 // post-merge line count, not either branch's figure.
 
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
+
+import 'lint_sources.dart';
 
 /// Lines a hand-written lib/ file may have without an entry below.
 const int _budget = 600;
@@ -52,18 +52,10 @@ void main() {
     final over = <String>[];
     final stale = <String>[];
 
-    final files = Directory('lib')
-        .listSync(recursive: true)
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.dart'))
-        .where((f) => !f.path.endsWith('.g.dart'))
-        .where((f) => !f.path.endsWith('.freezed.dart'))
-        .where((f) => !f.path.contains('lib/l10n/'));
-
     final seen = <String>{};
-    for (final file in files) {
+    for (final file in handWrittenDartFiles('lib')) {
       seen.add(file.path);
-      final count = file.readAsLinesSync().length;
+      final count = lineCountOf(file);
       final cap = _baseline[file.path] ?? _budget;
       if (count > cap) {
         over.add('${file.path}: $count lines (cap $cap)');

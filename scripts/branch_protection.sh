@@ -61,10 +61,18 @@ TARGET_CHECKS=(
 # serialise merges rather than arming several at once.
 STRICT=false
 
-usage() { sed -n '3,22p' "$0" | sed 's/^# \{0,1\}//'; exit 64; }
+usage() {
+  cat <<'EOF'
+Branch protection as data.
 
-live_contexts() {
-  gh api "$API" --jq '.required_status_checks.contexts[]?' 2>/dev/null || true
+  scripts/branch_protection.sh verify   # report drift, exit 1 if any
+  scripts/branch_protection.sh apply    # idempotent PUT (mutates the repo)
+  scripts/branch_protection.sh show     # print the live configuration
+
+verify is safe anywhere and is what CI calls (advisory). apply is a
+deliberate, manual act. REPO/BRANCH env vars override the defaults.
+EOF
+  exit 64
 }
 
 show() {
@@ -106,21 +114,41 @@ verify() {
       "(needs repo admin) — run '$0 verify' locally to check for drift." >&2
     return 0
   fi
-  local drift=0
-  if ! diff -u \
+  # $resp already holds the whole protection JSON — parse it locally
+  # instead of two more authenticated round-trips (this runs on every PR
+  # push via the advisory CI step).
+  local drift=0 drift_diff
+  if ! drift_diff=$(diff -u \
       <(printf '%s\n' "${TARGET_CHECKS[@]}" | sort) \
-      <(live_contexts | sort) > /tmp/bp-diff.$$; then
+      <(jq -r '.required_status_checks.contexts[]?' <<< "$resp" | sort)); then
     echo "::error::required-check drift (-committed +live):" >&2
-    cat /tmp/bp-diff.$$ >&2
+    echo "$drift_diff" >&2
     drift=1
   fi
-  rm -f /tmp/bp-diff.$$
   local live_strict
-  live_strict=$(gh api "$API" --jq '.required_status_checks.strict')
+  live_strict=$(jq -r '.required_status_checks.strict' <<< "$resp")
   if [ "$live_strict" != "$STRICT" ]; then
     echo "::error::strict mode is '$live_strict', committed target is '$STRICT'." >&2
     drift=1
   fi
+
+  # The rename trap: protection and this script can agree with each other
+  # while ci.yml's job name has moved on — every PR then wedges on a
+  # status no job ever reports again, and a protection-vs-target diff
+  # cannot see it. So also assert every required context is a name some
+  # workflow job still carries.
+  if [ -d .github/workflows ]; then
+    local ctx
+    for ctx in "${TARGET_CHECKS[@]}"; do
+      if ! grep -rqF "name: ${ctx}" .github/workflows/; then
+        echo "::error::required check '${ctx}' matches NO job name under" \
+          ".github/workflows/ — a renamed job would wedge every PR on a" \
+          "status that never arrives." >&2
+        drift=1
+      fi
+    done
+  fi
+
   [ "$drift" -eq 0 ] && echo "branch_protection: live configuration matches the committed target"
   return "$drift"
 }

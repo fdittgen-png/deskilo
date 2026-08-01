@@ -21,6 +21,8 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
+
 /// Every ordered feature→feature import pair that exists today.
 ///
 /// RATCHET: removing a pair is a normal pull request; adding one means
@@ -76,12 +78,7 @@ const Set<String> _knownPairs = {
 
 final _importRe = RegExp("import '([^']+)'");
 
-Iterable<File> _featureFiles() => Directory('lib/features')
-    .listSync(recursive: true)
-    .whereType<File>()
-    .where((f) => f.path.endsWith('.dart'))
-    .where((f) => !f.path.endsWith('.g.dart'))
-    .where((f) => !f.path.endsWith('.freezed.dart'));
+Iterable<File> _featureFiles() => handWrittenDartFiles('lib/features');
 
 /// Resolves [import] against [fromDir] to a repo-relative path, or null
 /// for package/dart imports. Hand-rolled so this test needs no

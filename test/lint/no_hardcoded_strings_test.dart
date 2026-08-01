@@ -7,9 +7,9 @@
 // Ratchet-to-zero baseline: files listed in _baseline are grandfathered.
 // New violations fail; fixing a file means removing it from the baseline.
 
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
+
+import 'lint_sources.dart';
 
 /// Grandfathered files → number of allowed violations. Ratchet DOWN only.
 const Map<String, int> _baseline = {};
@@ -21,11 +21,7 @@ void main() {
   test('no Text() with a hard-coded string literal outside the baseline', () {
     final violations = <String>[];
 
-    final files = Directory('lib')
-        .listSync(recursive: true)
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.dart'))
-        .where((f) => !f.path.contains('lib/l10n/'));
+    final files = handWrittenDartFiles('lib');
 
     for (final file in files) {
       final lines = file.readAsLinesSync();

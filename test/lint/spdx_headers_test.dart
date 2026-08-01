@@ -19,6 +19,8 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
+
 const _spdx = 'SPDX-License-Identifier';
 const _licence = '0BSD';
 
@@ -60,9 +62,7 @@ const _exempt = <String, String>{
 };
 
 bool _generated(String path) =>
-    path.endsWith('.g.dart') ||
-    path.endsWith('.freezed.dart') ||
-    path.contains('/app_localizations');
+    isGenerated(path) || path.contains('/app_localizations');
 
 void main() {
   test('every source file declares $_licence, and none declares anything else',
@@ -98,7 +98,7 @@ void main() {
     expect(
       missing,
       isEmpty,
-      reason: 'No $_spdx header in the first 8 lines:\n'
+      reason: 'No $_spdx header at the top of the file:\n'
           '${missing.join('\n')}\n\n'
           'Add `SPDX-License-Identifier: $_licence` in the file\'s comment '
           'syntax (`//` for Dart, `#` for YAML/shell/Python, `--` for SQL).',
@@ -107,17 +107,18 @@ void main() {
 }
 
 void _check(Iterable<File> files, List<String> missing, List<String> wrong) {
-      for (final file in files) {
-        // The header is a header: read the first lines, not the whole file,
-        // so a stray mention deep in a fixture cannot satisfy the rule.
-        final head = file.readAsLinesSync().take(8).join('\n');
-        if (!head.contains(_spdx)) {
-          missing.add(file.path);
-        } else if (!head.contains('$_spdx: $_licence')) {
-          final line = head
-              .split('\n')
-              .firstWhere((l) => l.contains(_spdx), orElse: () => '');
-          wrong.add('${file.path}: ${line.trim()}');
+  for (final file in files) {
+    // The header is a header: read a fixed PREFIX, not the whole file —
+    // both so a stray mention deep in a fixture cannot satisfy the rule
+    // and so this sweep does not decode megabytes to inspect 8 lines.
+    final head = headOf(file);
+    if (!head.contains(_spdx)) {
+      missing.add(file.path);
+    } else if (!head.contains('$_spdx: $_licence')) {
+      final line = head
+          .split('\n')
+          .firstWhere((l) => l.contains(_spdx), orElse: () => '');
+      wrong.add('${file.path}: ${line.trim()}');
     }
   }
 }

@@ -10,9 +10,9 @@
 //    lib/core/trace/ is excluded — the logger's own IO guards must never
 //    call the logger recursively.
 
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
+
+import 'lint_sources.dart';
 
 final _silentCatch = RegExp(r'catch\s*\(\s*_\s*\)\s*\{\s*\}');
 final _singleParamCatch = RegExp(r'catch\s*\(\s*(\w+)\s*\)');
@@ -41,18 +41,11 @@ String? _catchBlockBody(String content, int catchStart) {
   return null;
 }
 
-Iterable<File> _dartFiles(String root) => Directory(root)
-    .listSync(recursive: true)
-    .whereType<File>()
-    .where((f) => f.path.endsWith('.dart'))
-    .where((f) => !f.path.contains('lib/l10n/'))
-    .where((f) => !f.path.endsWith('.g.dart'))
-    .where((f) => !f.path.endsWith('.freezed.dart'));
 
 void main() {
   test('no silent catch (_) {} anywhere in lib/', () {
     final violations = <String>[];
-    for (final file in _dartFiles('lib')) {
+    for (final file in handWrittenDartFiles('lib')) {
       final content = file.readAsStringSync();
       if (_silentCatch.hasMatch(content)) {
         violations.add(file.path);
@@ -63,7 +56,7 @@ void main() {
 
   test('every catch captures the stack trace (catch (e, st))', () {
     final violations = <String>[];
-    for (final file in _dartFiles('lib')) {
+    for (final file in handWrittenDartFiles('lib')) {
       final lines = file.readAsLinesSync();
       for (var i = 0; i < lines.length; i++) {
         final match = _singleParamCatch.firstMatch(lines[i]);
@@ -86,7 +79,7 @@ void main() {
 
   test('every catch block traces through TraceLogger (#145)', () {
     final violations = <String>[];
-    for (final file in _dartFiles('lib')) {
+    for (final file in handWrittenDartFiles('lib')) {
       // The trace logger's own IO guards must stay logger-free — calling
       // the logger from inside its failure paths would recurse.
       if (file.path.contains('lib/core/trace/')) continue;

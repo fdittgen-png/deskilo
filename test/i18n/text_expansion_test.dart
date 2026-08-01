@@ -23,6 +23,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/fake_floor_plan_repository.dart';
 import '../helpers/mock_providers.dart';
+import '../helpers/navigation.dart';
 
 /// One representative phone: 360 logical px is a Pixel-class width and
 /// the narrowest mainstream device. Portrait, so the landscape split
@@ -71,27 +72,6 @@ void _expectNoOverflow(WidgetTester tester, Locale locale, String surface) {
   );
 }
 
-/// Icons repeat across surfaces (calendar_month is a nav destination AND
-/// a date-picker button), and `.first` happily taps the occluded one —
-/// the warnIfMissed warning then hides a surface never being visited.
-/// Scope every tap to the bar it lives in. The shell bar is the custom
-/// ShellBottomBar, not Material's NavigationBar.
-Future<void> _tapNav(WidgetTester tester, IconData icon) async {
-  await tester.tap(find.descendant(
-    of: find.byType(ShellBottomBar),
-    matching: find.byIcon(icon),
-  ));
-  await tester.pumpAndSettle();
-}
-
-Future<void> _tapAppBar(WidgetTester tester, IconData icon) async {
-  await tester.tap(find.descendant(
-    of: find.byType(AppBar),
-    matching: find.byIcon(icon),
-  ));
-  await tester.pumpAndSettle();
-}
-
 void main() {
   for (final locale in _launchLocales) {
     testWidgets('main surfaces survive ${locale.languageCode} at phone width',
@@ -99,26 +79,39 @@ void main() {
       await _pumpApp(tester, locale);
       _expectNoOverflow(tester, locale, 'boot → Reserve hub');
 
-      await _tapNav(tester, Icons.grid_view_outlined);
+      // Growth guard: this walk hardcodes the destinations, so a NEW
+      // shell destination must fail here (and get added below) instead
+      // of silently shipping with zero expansion coverage.
+      expect(
+        find.descendant(
+          of: find.byType(ShellBottomBar),
+          matching: find.byType(InkWell),
+        ),
+        findsNWidgets(5),
+        reason: 'The shell bar gained or lost a destination — update the '
+            'walk in this test so every surface keeps expansion coverage.',
+      );
+
+      await tapNavIcon(tester, Icons.grid_view_outlined);
       _expectNoOverflow(tester, locale, 'Plan');
 
-      await _tapNav(tester, Icons.calendar_month_outlined);
+      await tapNavIcon(tester, Icons.calendar_month_outlined);
       _expectNoOverflow(tester, locale, 'Calendar');
 
-      await _tapNav(tester, Icons.people_outline);
+      await tapNavIcon(tester, Icons.people_outline);
       _expectNoOverflow(tester, locale, 'Members');
 
-      await _tapNav(tester, Icons.account_balance_wallet_outlined);
+      await tapNavIcon(tester, Icons.account_balance_wallet_outlined);
       _expectNoOverflow(tester, locale, 'Money (bill)');
 
-      await _tapAppBar(tester, Icons.notifications_outlined);
+      await tapAppBarIcon(tester, Icons.notifications_outlined);
       _expectNoOverflow(tester, locale, 'Events');
       // Not pageBack(): it matches the "Back" TOOLTIP, which is localized
       // — the very thing this test varies. The widget type is not.
       await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
 
-      await _tapAppBar(tester, Icons.settings_outlined);
+      await tapAppBarIcon(tester, Icons.settings_outlined);
       _expectNoOverflow(tester, locale, 'Settings');
     });
   }
