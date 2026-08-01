@@ -116,7 +116,7 @@ bool chipSelected(WidgetTester tester, Key key) =>
 Future<void> pickHubDate(WidgetTester tester, DateTime day) async {
   await tester.tap(find.byKey(const ValueKey('reserve-date-button')));
   await tester.pumpAndSettle();
-  final now = DateTime.now();
+  final now = kTestNow;
   if (day.month != now.month || day.year != now.year) {
     await tester.tap(find.byTooltip('Next month'));
     await tester.pumpAndSettle();
@@ -128,7 +128,7 @@ Future<void> pickHubDate(WidgetTester tester, DateTime day) async {
 }
 
 DateTime get _today {
-  final now = DateTime.now();
+  final now = kTestNow;
   return DateTime(now.year, now.month, now.day);
 }
 
@@ -763,7 +763,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('reserve-date-button')));
     await tester.pumpAndSettle();
 
-    final now = DateTime.now();
+    final now = kTestNow;
     final DateTime target;
     if (now.day < 28) {
       target = DateTime(now.year, now.month, now.day + 1);

@@ -4,6 +4,8 @@ import 'package:deskilo/features/events/domain/event_repository.dart';
 import 'package:deskilo/features/events/domain/validation_policy.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 
+import '../helpers/test_clock.dart';
+
 /// In-memory [EventRepository] mimicking respond_to_event semantics
 /// (incl. the #130 quorum: an accept below required_count stays pending).
 class FakeEventRepository implements EventRepository {
@@ -45,13 +47,13 @@ class FakeEventRepository implements EventRepository {
         memberId: respondingMemberId,
         accept: accept,
         decidedBySystem: false,
-        decidedAt: DateTime.now(),
+        decidedAt: kTestNow,
       ),
     );
     if (!accept) {
       events[i] = event.copyWith(
         status: EventStatus.rejected,
-        decidedAt: DateTime.now(),
+        decidedAt: kTestNow,
       );
       return;
     }
@@ -61,7 +63,7 @@ class FakeEventRepository implements EventRepository {
     if (accepts >= required) {
       events[i] = event.copyWith(
         status: EventStatus.confirmed,
-        decidedAt: DateTime.now(),
+        decidedAt: kTestNow,
       );
     }
   }
@@ -104,7 +106,7 @@ class FakeEventRepository implements EventRepository {
       subjectMemberId: respondingMemberId,
       payload: {'period': period, 'half_days': halfDays},
       status: EventStatus.pending,
-      createdAt: DateTime.now(),
+      createdAt: kTestNow,
     );
     events.add(event);
     return event.id;

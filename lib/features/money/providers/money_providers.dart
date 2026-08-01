@@ -19,6 +19,7 @@ import '../domain/service_item.dart';
 import '../domain/statement.dart';
 import '../domain/subscription_levels.dart';
 import '../domain/vat_rate.dart';
+import '../../../core/time/clock.dart';
 
 part 'money_providers.g.dart';
 
@@ -230,13 +231,13 @@ Future<InvoicingOverview> invoicingOverview(Ref ref) async {
   final invoices = await ref.watch(invoicesProvider.future);
   if (workspace == null) {
     return (
-      period: previousPeriodOf(DateTime.now()),
+      period: previousPeriodOf(ref.read(clockProvider).now()),
       toInvoice: const <ToInvoiceEntry>[],
       open: const <OpenInvoiceEntry>[],
     );
   }
   final repo = ref.read(moneyRepositoryProvider);
-  final period = previousPeriodOf(DateTime.now());
+  final period = previousPeriodOf(ref.read(clockProvider).now());
   final members = (await ref.watch(workspaceMembersProvider.future))
       .where((m) => m.status == MemberStatus.active && !m.isKiosk)
       .toList();

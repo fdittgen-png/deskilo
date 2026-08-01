@@ -16,8 +16,8 @@ Reservation todayReservation({
   String? seriesId,
   int startHour = 9,
 }) {
-  final now = DateTime.now();
-  final start = DateTime(now.year, now.month, now.day, startHour);
+  final start =
+      DateTime(kTestNow.year, kTestNow.month, kTestNow.day, startHour);
   return Reservation(
     id: id,
     workspaceId: 'ws-1',
@@ -71,7 +71,7 @@ void main() {
 
     expect(find.byType(VerticalDivider), findsOneWidget);
     // The month grid and the day's reservation both render.
-    expect(find.text('July 2026'), findsOneWidget);
+    expect(find.text('May 2026'), findsOneWidget);
     expect(find.textContaining('A1'), findsOneWidget);
   });
 
@@ -145,7 +145,7 @@ void main() {
 
   testWidgets('cancel this-and-following stops the series from that instance',
       (tester) async {
-    final now = DateTime.now();
+    final now = kTestNow;
     final seed = [
       todayReservation(id: 'res-a', seriesId: 'series-1'),
       todayReservation(id: 'res-b', seriesId: 'series-1')
