@@ -6,6 +6,17 @@
 
 This specification is deliberately free of implementation detail. The framework, visual identity, and working methodology are inherited from the **tankstellen/Sparkilo** project (see §12–§15).
 
+> **Amendments since v1.1.** This document is kept as the owner-validated
+> statement of intent; where a later decision superseded part of it, the ADR
+> is authoritative and the section carries an inline note. As of 2026-08-01:
+> §7.1 plans → **ADR 0008** (percentage subscriptions with fee bands);
+> §7.4 payments → **live PSP integration** shipped (note in §7.4);
+> §12 desktop channels → **settled** (note in §12).
+> Invoicing and e-invoicing (**ADR 0010**, migrations 0060–0073) postdate
+> this document entirely and have no section here — the ADR and the
+> [Architecture](https://github.com/fdittgen-png/deskilo/wiki/Architecture)
+> wiki page carry them.
+
 ---
 
 ## 1. Vision & leitmotiv
@@ -167,6 +178,16 @@ Each member sees, in their money space:
 
 The app **records and tracks** payments; it does **not process** them (no Stripe/PSP in v1 — keeps the F-Droid build clean and fits a trust-based community that pays by bank transfer/cash/Twint/etc.). A payment event = amount + date + method + note, recorded by the member ("I paid") or by an admin ("received from X") — either way the *other* side confirms (§8). Optional per-workspace payment instructions (IBAN, reference format) are shown on unpaid statements. Payment-provider integration is explicitly out of scope for v1 and revisited in v2.
 
+> **Superseded (2026-07).** Provider integration arrived early: PayPal,
+> Stripe, Mollie and Wero are live behind the `onlinePayments` feature flag,
+> **off by default**. The constraint that produced this paragraph is intact —
+> no payment SDK is linked into the app, so the F-Droid build stays clean:
+> all provider calls happen in Supabase Edge Functions and the app merely
+> opens the provider's own hosted page. Manual payment *claims* still need
+> the §8 two-person confirmation; a provider-verified capture does not,
+> because a signed webhook needs no human witness. See
+> `docs/design/payments-integration.md`.
+
 ---
 
 ## 8. Events space & the confirmation protocol
@@ -240,6 +261,14 @@ A dedicated editor space for drawing the physical workspace on a **grid of small
 - **iOS** — App Store via TestFlight; same codebase.
 - **Windows** — Flutter Windows desktop; same codebase, distributed as an installer/MSIX (store or direct download to be decided).
 - **macOS** — Flutter macOS desktop (iMac/MacBook); same codebase, distribution channel (Mac App Store or notarized direct download) to be decided.
+
+> **Settled (2026-07).** Windows ships a **WiX v5 MSI**, macOS a
+> **Developer-ID-signed, Apple-notarised, stapled DMG** — direct download,
+> not the Mac App Store; both are attached to the GitHub release on a `v*`
+> tag. Notarisation is not polish: since macOS 15 a downloaded app Apple has
+> not notarised is refused outright and the right-click → Open bypass is
+> gone. A **browser** target was also added (opt-in GitHub Pages deploy),
+> with NFC and camera QR scanning guarded off.
 - **License**: 0BSD (BSD Zero Clause), SPDX headers in every file.
 - **No** Google Play Services, **no** Firebase, **no** third-party tracking, **no** GPL dependencies (permissive-compatibility rule).
 

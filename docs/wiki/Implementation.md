@@ -12,16 +12,20 @@ windows/                  # Windows runner + WiX MSI authoring (installer/deskil
 assets/fonts/             # Roboto, embedded into PDF bills (base-14 fonts can't encode €)
 docs/
   SPECIFICATION.md        # the product spec (source of truth for behavior)
+  PROJECT_OVERVIEW.md     # consolidated reference across all of the below
   wiki/                   # source of the GitHub wiki pages (this site)
-  decisions/              # ADRs 0001..0008
-  design/                 # design system
+  decisions/              # ADRs 0001..0010
+  design/                 # design system, payments integration
   guides/                 # e.g. RELEASING.md
+  security/               # SUPABASE_RLS_MATRIX.md
 fastlane/ metadata/       # store metadata per locale
 lib/                      # the app (see Architecture page)
+web/                      # browser target (GitHub Pages deploy, opt-in)
 supabase/
-  migrations/             # 0001..0048 — schema, RLS, RPCs (numbered, immutable)
+  migrations/             # 0001..0073 — schema, RLS, RPCs (numbered, immutable)
   functions/              # deployed Edge Functions: create-payment-order,
-                          # paypal-webhook, stripe-webhook, mollie-webhook
+                          # paypal-webhook, stripe-webhook, mollie-webhook,
+                          # send-e-invoice
 test/                     # unit + widget tests, fakes in test/helpers/
 integration_test/         # end-to-end flows
 tool/ tools/ scripts/     # repo tooling
@@ -59,6 +63,7 @@ The macOS runner is sandboxed; entitlements already include the network client (
 ## Backend / migrations
 
 - Migrations are numbered SQL files in `supabase/migrations/`, applied in order to the hosted reference project (and by self-hosters). They are **immutable once applied** — fixes are new migrations.
+- **The file set is the source of truth for a rebuild; the hosted project's migration *rows* are not.** The two can legitimately differ, and both cases in this repo are documented in the file that absorbed them: a single file may have been applied as several rows (`0070_payment_date_and_period.sql` = rows `payment_date_and_period` + `invoice_annex_occurred_on`), and a superseded interim draft can leave a row behind with no file at all (`0051_single_use_invites_member_validation`, replaced by `0051_personal_invitations` + `0052_member_join_validation`, whose section 0 drops the draft's leftovers). When a draft is superseded this way, the replacing file must be written to converge **from either state** — `drop policy if exists` before `create policy`, `drop … if exists` for the abandoned objects — so a fresh deploy and the hosted project end up identical. Say so in the file header; a name mismatch that is not explained reads as drift.
 - Local development is possible with the Supabase CLI (`supabase start`), but the reference deployment is hosted Supabase (decided 2026-07-07).
 - Pattern to follow when adding tables: enable RLS immediately, add select policies with the role-helper functions, keep writes behind `SECURITY DEFINER` RPCs, and `revoke execute … from public, anon` on every new function (see migration 0004).
 - **Secrets tables get zero policies.** `payment_credentials` (0047) enables RLS and adds *no* policies at all — only service-role Edge Functions and owner RPCs reach it, and the status RPC returns key names, never values. Follow this shape for anything secret.
@@ -77,9 +82,11 @@ When a screen or surface belongs to a `WorkspaceFeature`, gate it at **both** la
 
 ```bash
 flutter analyze          # zero tolerance
-flutter test             # full suite (740+ tests)
+flutter test             # full suite (1000+ tests)
 flutter test test/features/<feature>/   # one feature
 ```
+
+Run `flutter test` **bare**. Piping it (`| tail`, `| grep`) hands you the exit code of the pipe, not of the suite, so a red run reads as green — this has shipped a broken commit more than once.
 
 - Widget tests pump the whole `DeskiloApp` with `ProviderScope(overrides: standardTestOverrides(...))` — fakes for auth, workspace, reservations, money, notifications live in `test/helpers/mock_providers.dart`. Fakes mirror server behavior including RLS visibility (e.g. `FakeWorkspaceRepository.adminInviteCode` only answers for owners).
 - Accessibility is tested (`meetsGuideline(androidTapTargetGuideline)`), so every new tappable affordance needs a big-enough target **and its own test that taps it**.
@@ -87,16 +94,19 @@ flutter test test/features/<feature>/   # one feature
 
 ## CI
 
-Every push/PR runs: **analyze · l10n key-parity gate · full test suite · coverage**. Additional workflows: `dev-apk` sideload build, `android-boot` emulator smoke, `play-internal` / `play-listing` (Google Play), `ios-testflight`, and `windows-msi` (Windows build + MSI packaging; also runs on PRs touching `windows/**`).
+Every push/PR runs `ci.yml`: **no-GMS audit · l10n key-parity gate · analyze · full test suite · coverage gate (≥ 45 %)**.
 
-Branch protection: direct pushes to `master` are blocked; PRs need green CI; squash-merge only; head branches auto-delete.
+Nine more workflows cover the rest: `android-boot` (release-launch aliveness on a real emulator — the #86 regression guard), `dev-apk` (sideload build), `play-internal` and `play-listing` (Google Play), `ios-testflight` and `ios-testers` (App Store Connect), `macos-app` (signed + notarised DMG), `windows-msi` (WiX v5 installer), and `web` (browser build; also runs on PRs touching `lib/**`, `web/**` or `pubspec.yaml`). `macos-app`, `windows-msi` and `web` also build on PRs touching their target, so a change that only breaks one platform fails there rather than in front of a user.
+
+Git discipline — branch off `master`, PRs only, green CI before merge, squash-merge, delete the head branch — is **convention, not server-enforced**: `master` currently carries no branch-protection rule and no ruleset. Treat the rules in `AGENT_RULES.md` as binding anyway; nothing but the contributor stops a direct push.
 
 ## Release
 
 - Semver + annotated tag after the release PR merges; release notes generated from PR titles.
-- Android: Play (internal → closed → open → production) + a Google-services-free F-Droid flavor audited by script.
-- iOS: TestFlight via fastlane (owner-held App Store Connect secrets).
-- Desktop: Windows ships as an MSI from the `windows-msi` workflow (per-release asset on `v*` tags); the macOS channel is still an open decision (spec §12).
+- Android: Play (internal → closed → open → production) + a Google-services-free F-Droid build audited by script. No flavor split is needed until a Play-only feature appears.
+- iOS: TestFlight via fastlane (owner-held App Store Connect secrets), internal groups plus an external group with a public link.
+- Desktop: Windows ships as an MSI from the `windows-msi` workflow, macOS as a Developer-ID-signed, Apple-notarised, stapled DMG from `macos-app` — both attached to the release on a `v*` tag. (Spec §12 left the macOS channel open; it is settled as notarised direct download.)
+- Web: an opt-in GitHub Pages deploy from the `web` workflow.
 
 ## Adding a feature — checklist
 
