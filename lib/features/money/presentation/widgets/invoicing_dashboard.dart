@@ -11,6 +11,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/ledger_entry.dart';
 import '../../providers/money_providers.dart';
 import '../period_label.dart';
+import '../../../../core/time/clock.dart';
 
 /// How old an open invoice has to be before the hub starts pointing at it.
 const _overdueDays = 30;
@@ -36,7 +37,7 @@ class InvoicingSummaryBar extends ConsumerWidget {
     }
     final outstanding =
         overview.open.fold(0, (sum, e) => sum + e.invoice.totalCents);
-    final now = DateTime.now();
+    final now = ref.read(clockProvider).now();
     final overdue = overview.open.any(
       (e) => now.difference(e.invoice.issuedAt).inDays >= _overdueDays,
     );
@@ -285,7 +286,8 @@ class OpenInvoicesTab extends ConsumerWidget {
                     ),
                   ]),
                   const SizedBox(height: 2),
-                  _openSubtitle(context, l10n, entry, reminders, dateFormat),
+                  _openSubtitle(context, l10n, entry, reminders, dateFormat,
+                      ref.read(clockProvider).now()),
                   if (entry.pendingMatch != null)
                     Align(
                       alignment: Alignment.centerRight,
@@ -361,12 +363,13 @@ class OpenInvoicesTab extends ConsumerWidget {
     OpenInvoiceEntry entry,
     Map<String, ({int count, DateTime last})> reminders,
     DateFormat dateFormat,
+    DateTime now,
   ) {
     final theme = Theme.of(context);
     final muted = theme.textTheme.bodySmall?.copyWith(
       color: theme.colorScheme.onSurfaceVariant,
     );
-    final days = DateTime.now().difference(entry.invoice.issuedAt).inDays;
+    final days = now.difference(entry.invoice.issuedAt).inDays;
     final reminder = reminders[entry.invoice.id];
     return Text.rich(
       TextSpan(style: muted, children: [

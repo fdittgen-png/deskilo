@@ -13,7 +13,7 @@ void main() {
   testWidgets('booting with an upcoming reservation schedules its reminder',
       (tester) async {
     final notifications = FakeNotificationService();
-    final start = DateTime.now().add(const Duration(hours: 3));
+    final start = kTestNow.add(const Duration(hours: 3));
     final reservations = FakeReservationRepository()
       ..reservations.add(
         Reservation(

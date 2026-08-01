@@ -63,7 +63,7 @@ Offset seatCenter(WidgetTester tester) {
 Reservation foreignReservation({
   ReservationStatus status = ReservationStatus.reserved,
 }) {
-  final now = DateTime.now();
+  final now = kTestNow;
   return Reservation(
     id: 'res-foreign',
     workspaceId: 'ws-1',
@@ -95,7 +95,7 @@ void main() {
 
   testWidgets('walk-up end is capped by the next reservation',
       (tester) async {
-    final now = DateTime.now();
+    final now = kTestNow;
     // The plan looks for "the next reservation" within the live local
     // day — a seed at now+1h crosses midnight on late-evening runs (bit
     // CI at 23:14 UTC), so clamp it inside today like #191 clamped the
@@ -136,7 +136,7 @@ void main() {
   });
 
   testWidgets('tapping my checked-in seat offers check-out', (tester) async {
-    final now = DateTime.now();
+    final now = kTestNow;
     final env = await pumpPlan(
       tester,
       seedReservations: (repo) {
@@ -182,7 +182,7 @@ void main() {
     final plans = FakeFloorPlanRepository()..seedSmallPlan();
     final seat = plans.seats.single;
     plans.seats[0] = seat.copyWith(
-      blockedFrom: DateTime.now().subtract(const Duration(days: 1)),
+      blockedFrom: kTestNow.subtract(const Duration(days: 1)),
     );
     // Open every weekday: this test is about seat blocking, and on a
     // weekend run the closed-day gate (#186) would otherwise fire first.

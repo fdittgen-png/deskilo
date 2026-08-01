@@ -51,7 +51,10 @@ class BillSections {
 /// post when confirmed right now (the RPCs book to now()'s period). The
 /// ONE definition; money_providers re-exports it (a `billNowPeriod` twin
 /// used to live here).
-String currentPeriod() => DateFormat('yyyy-MM').format(DateTime.now());
+/// Pass [now] from `clockProvider` anywhere a widget test will pump this;
+/// the wall-clock default exists for pure-Dart call sites only.
+String currentPeriod([DateTime? now]) =>
+    DateFormat('yyyy-MM').format(now ?? DateTime.now());
 
 /// Groups [ledger] entries and [pendingEvents] into the sections of
 /// [memberId]'s bill for [period] ('yyyy-MM').

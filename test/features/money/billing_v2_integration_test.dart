@@ -301,7 +301,7 @@ void main() {
           openDays: 22,
           usedHalfDays: 44,
         );
-      final now = DateTime.now();
+      final now = kTestNow;
       final previousMonth = DateTime(now.year, now.month - 1);
       final previous = '${previousMonth.year}-'
           '${previousMonth.month.toString().padLeft(2, '0')}';
@@ -408,7 +408,7 @@ void main() {
           category: LedgerCategory.service,
           amountCents: 300,
           description: 'Coffee ×2',
-          period: currentPeriod(),
+          period: kTestPeriod,
         ),
       );
 
@@ -571,13 +571,13 @@ void main() {
     testWidgets('the on-screen services total is the domain total',
         (tester) async {
       final money = FakeMoneyRepository()
-        ..ledger.addAll(crossSurfaceLedger(currentPeriod()));
+        ..ledger.addAll(crossSurfaceLedger(kTestPeriod));
       await pumpMoney(tester, money: money);
 
       final sections = buildBillSections(
-        period: currentPeriod(),
+        period: kTestPeriod,
         memberId: 'member-1',
-        nowPeriod: currentPeriod(),
+        nowPeriod: kTestPeriod,
         ledger: money.ledger,
         pendingEvents: const [],
       );

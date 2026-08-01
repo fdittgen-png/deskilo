@@ -341,7 +341,7 @@ void main() {
         workspaceId: 'ws-1',
         memberId: 'member-2',
         label: 'uid:04a2b3c4d5',
-        createdAt: DateTime.now(),
+        createdAt: kTestNow,
         kind: BadgeKind.nfc,
       ),
     );
