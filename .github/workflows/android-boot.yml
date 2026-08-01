@@ -61,6 +61,14 @@ jobs:
           flutter pub get
           flutter build apk --release --target-platform android-x64
 
+      # Layers B/C of the libre audit (ADR 0003): the F-Droid scanner
+      # reads the shipped bytecode and rejects even a dangling reference
+      # to a proprietary class — a bar the declaration grep in ci.yml
+      # cannot see. This is the release-mode dex this workflow just
+      # built, so the strict layer runs here, where the artifact is.
+      - name: Dex audit — no proprietary bytecode references
+        run: bash scripts/audit_no_gms.sh --artifact build/app/outputs/flutter-apk/app-release.apk
+
       # AVD snapshot caching (#93): a cold emulator boot costs ~8-10 min;
       # the cached snapshot brings later runs down to ~2 min
       # (reactivecircus/android-emulator-runner documented pattern).
