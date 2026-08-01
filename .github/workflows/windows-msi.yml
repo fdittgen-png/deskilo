@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: 0BSD
+
 name: windows-msi
 
 # Windows MSI installer (WiX v5, dev-apk pattern):

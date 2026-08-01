@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: 0BSD
 # ADR 0003 guard: no Google Play Services, no Firebase, no GMS-dependent
 # plugins anywhere in the dependency graph or the Android build.
 # Runs in CI; exits non-zero on any hit.

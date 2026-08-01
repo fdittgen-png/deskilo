@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: 0BSD
 flutter_launcher_icons:
   android: true
   ios: true

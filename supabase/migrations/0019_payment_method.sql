@@ -1,3 +1,4 @@
+-- SPDX-License-Identifier: 0BSD
 -- DesKilo #154 — payment method on recorded payments (spec §7: a payment
 -- event = amount + date + METHOD + note; the method was missing from the
 -- 0008 RPC). A defaulted extra parameter would CREATE AN OVERLOAD next to

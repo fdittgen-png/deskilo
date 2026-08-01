@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: 0BSD
 # Generates the DesKilo launcher icon (#103): flat red field with a white
 # top-down desk + seat glyph — the app's floor-plan motif. Pure stdlib
 # (no Pillow): analytic signed-distance coverage, zlib-compressed PNG.
