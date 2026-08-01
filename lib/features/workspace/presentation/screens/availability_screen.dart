@@ -11,6 +11,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/booking_granularity.dart';
 import '../../domain/closure_day.dart';
 import '../../providers/workspace_providers.dart';
+import '../../../../core/time/clock.dart';
 
 /// Owner-only availability editor (#127): which ISO weekdays (1=Mon..7=Sun,
 /// stored in booking_rules) the workspace is open on, plus one-off closure
@@ -83,7 +84,7 @@ class AvailabilityScreen extends ConsumerWidget {
     if (workspace == null) return;
     final l10n = AppLocalizations.of(context);
 
-    final now = DateTime.now();
+    final now = ref.read(clockProvider).now();
     final day = await showDatePicker(
       context: context,
       initialDate: now,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/time/clock.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
@@ -125,7 +126,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     ref.read(selectedLevelIdProvider.notifier).showTransient(focus.levelId);
     final at = focus.at;
     final from =
-        (at != null && at.isAfter(DateTime.now())) ? at.toLocal() : null;
+        (at != null && at.isAfter(ref.read(clockProvider).now())) ? at.toLocal() : null;
     setState(() {
       _listView = false;
       _highlightedSeatId = focus.seatId;
@@ -487,7 +488,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
 
     // Not a booking at all: start an open-ended maintenance block (#161).
     if (choice.block) {
-      await _setSeatBlock(seat, from: DateTime.now().toUtc());
+      await _setSeatBlock(seat, from: ref.read(clockProvider).now().toUtc());
       return;
     }
 
@@ -692,7 +693,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final level = levels.where((l) => l.id == selectedId).firstOrNull ??
         levels.first;
 
-    final at = _browse ?? DateTime.now();
+    final at = _browse ?? ref.watch(clockProvider).now();
     // Browsing (#184): occupancy over the whole [at, windowEnd) frame;
     // null in live mode, where the instant semantics apply.
     final windowEnd = _browseEnd;
@@ -843,6 +844,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                               const {},
                       from: at,
                       to: windowEnd,
+                      now: ref.watch(clockProvider).now(),
                     ),
                     deskOpacity: (ref
                                 .watch(currentWorkspaceProvider)
@@ -954,8 +956,8 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
               final picked = await showDatePicker(
                 context: context,
                 initialDate: local,
-                firstDate: DateTime.now().subtract(const Duration(days: 365)),
-                lastDate: DateTime.now().add(const Duration(days: 365)),
+                firstDate: ref.read(clockProvider).now().subtract(const Duration(days: 365)),
+                lastDate: ref.read(clockProvider).now().add(const Duration(days: 365)),
               );
               if (picked == null) return;
               if (!mounted) return;
@@ -1092,7 +1094,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         : const <({String id, String name})>[];
     if (!mounted) return;
 
-    final start = _browse ?? DateTime.now();
+    final start = _browse ?? ref.read(clockProvider).now();
     final granularity = _granularity;
     final end = _browseEnd ??
         (granularity == BookingGranularity.halfDay
@@ -1200,7 +1202,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   /// browse mode moves the start, keeping the duration where the day
   /// allows it.
   Future<void> _pickFrom() async {
-    final current = (_browse ?? DateTime.now()).toLocal();
+    final current = (_browse ?? ref.read(clockProvider).now()).toLocal();
     final picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(current),
@@ -1233,7 +1235,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   /// start is rejected with a snackbar instead of silently rolling over to
   /// the next day (the booking sheet's own "Until" keeps its roll-over).
   Future<void> _pickTo() async {
-    final now = DateTime.now();
+    final now = ref.read(clockProvider).now();
     final from = _browse?.toLocal() ?? _snapToSlot(now);
     final currentEnd =
         (_browseEnd ?? _defaultEndFor(_browse ?? now)).toLocal();

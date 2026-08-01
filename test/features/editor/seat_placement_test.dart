@@ -6,6 +6,8 @@ import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/test_clock.dart';
+
 import 'level_canvas_test.dart' show cellCenter, pumpCanvas, seedOffice;
 
 void main() {
@@ -154,7 +156,7 @@ void main() {
       // #168: the editor no longer writes seat.amenities — accessory
       // joins are the write path (see seat_accessories_test.dart).
       expect(saved.amenities, isEmpty);
-      expect(saved.isBlockedAt(DateTime.now()), isTrue);
+      expect(saved.isBlockedAt(kTestNow), isTrue);
     });
 
     testWidgets(

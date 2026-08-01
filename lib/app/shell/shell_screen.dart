@@ -17,6 +17,7 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../router.dart';
 import 'shell_bottom_bar.dart';
+import '../../core/time/clock.dart';
 
 /// App-bar events bell with the pending-confirmation badge (spec §8.1).
 /// #230 moved the events feed off the bottom bar; the badge that used to
@@ -69,7 +70,7 @@ class ShellScreen extends ConsumerWidget {
       final reminders = upcomingCheckInReminders(
         reservations: upcoming,
         myMemberId: member.id,
-        now: DateTime.now(),
+        now: ref.read(clockProvider).now(),
         targetNames: targets,
         titleOf: (target, startsAt) =>
             l10n?.reminderTitle ?? 'Check in soon',

@@ -15,6 +15,7 @@ import '../../domain/invoice.dart';
 import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_line_text.dart';
+import '../../../../core/time/clock.dart';
 
 /// Issues an invoice — plain, or a REPLACEMENT (0061) prefilled from
 /// [replaces]. Since 0062 nothing is typed here: the issuer picks the
@@ -48,6 +49,7 @@ Future<void> showInvoiceIssueSheet(
     context: context,
     isScrollControlled: true,
     builder: (context) => _InvoiceForm(
+      now: ref.read(clockProvider).now(),
       l10n: l10n,
       members: [
         for (final member in members)
@@ -66,7 +68,7 @@ Future<void> showInvoiceIssueSheet(
               ? (memberId ?? replaces?.memberId)
               : null,
       initialPeriod:
-          period ?? replaces?.period ?? previousPeriodOf(DateTime.now()),
+          period ?? replaces?.period ?? previousPeriodOf(ref.read(clockProvider).now()),
       initialDetailed: replaces?.detailed ?? false,
       replacesNumber: replaces?.number,
     ),
@@ -111,6 +113,7 @@ class _InvoiceForm extends StatefulWidget {
     required this.currency,
     required this.preview,
     required this.initialPeriod,
+    required this.now,
     this.initialMemberId,
     this.initialDetailed = false,
     this.replacesNumber,
@@ -123,6 +126,12 @@ class _InvoiceForm extends StatefulWidget {
       String memberId, String period) preview;
   final String? initialMemberId;
   final String initialPeriod;
+
+  /// The running instant, read from `clockProvider` by the caller — this
+  /// sheet is a plain State with no `ref` of its own, and a wall-clock
+  /// read here would put the month ceiling back on the real calendar.
+  final DateTime now;
+
   final bool initialDetailed;
   final String? replacesNumber;
 
@@ -175,7 +184,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
 
   void _shiftMonth(int delta) {
     final next = DateTime(_month.year, _month.month + delta);
-    final now = DateTime.now();
+    final now = widget.now;
     if (next.year > now.year ||
         (next.year == now.year && next.month > now.month)) {
       return;
@@ -197,7 +206,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
     final monthLabel = DateFormat.yMMMM(
       Localizations.maybeLocaleOf(context)?.toString(),
     ).format(_month);
-    final now = DateTime.now();
+    final now = widget.now;
     final atCurrent = _month.year == now.year && _month.month == now.month;
     final preview = _preview;
     final lines = preview?.lines ?? const <InvoiceLine>[];

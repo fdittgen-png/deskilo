@@ -160,7 +160,7 @@ void main() {
   testWidgets(
       'a table ALREADY RESERVED BY ME double-taps into CHECK IN of that '
       'reservation — not a disabled conflict', (tester) async {
-    final now = DateTime.now();
+    final now = kTestNow;
     final env = await pumpHubPlan(
       tester,
       seedReservations: (reservations) => reservations.reservations.add(
@@ -233,7 +233,7 @@ void main() {
 
     final created = env.reservations.reservations.single;
     expect(created.deskId, env.plans.desks.single.id);
-    final now = DateTime.now();
+    final now = kTestNow;
     final expected =
         HalfDayWindows.morning(DateTime(now.year, now.month, now.day));
     expect(created.startsAt.toUtc(), expected.start.toUtc());

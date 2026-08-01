@@ -26,6 +26,7 @@ import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../../plan/presentation/widgets/floor_plan_painter.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
+import '../../../../core/time/clock.dart';
 
 enum EditorTool { select, office, desk, seat, image, erase }
 
@@ -458,7 +459,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     final name = TextEditingController(text: seat.name);
     final chair = TextEditingController(text: seat.chair);
     var orientation = seat.orientation;
-    var blocked = seat.isBlockedAt(DateTime.now());
+    var blocked = seat.isBlockedAt(ref.read(clockProvider).now());
 
     final saved = await showModalBottomSheet<bool>(
       context: context,
@@ -574,7 +575,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       name: name.text.trim().isEmpty ? seat.name : name.text.trim(),
       chair: chair.text.trim(),
       orientation: orientation,
-      blockedFrom: blocked ? (seat.blockedFrom ?? DateTime.now()) : null,
+      blockedFrom: blocked ? (seat.blockedFrom ?? ref.read(clockProvider).now()) : null,
       blockedTo: blocked ? seat.blockedTo : null,
     );
     final problem = validateSeatInPlan(plan, updated);

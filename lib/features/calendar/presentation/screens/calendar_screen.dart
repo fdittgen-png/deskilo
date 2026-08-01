@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/theme/app_elevation.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -44,7 +45,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   @override
   void initState() {
     super.initState();
-    final now = DateTime.now();
+    final now = ref.read(clockProvider).now();
     _month = DateTime(now.year, now.month);
     _selectedDay = DateTime(now.year, now.month, now.day);
   }
@@ -256,7 +257,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
           child: _MonthGrid(
             month: _month,
             selectedDay: _selectedDay,
-            today: DateUtils.dateOnly(DateTime.now()),
+            today: DateUtils.dateOnly(ref.watch(clockProvider).now()),
             // Mine vs others' markers ('when did I reserve what' first): a
             // day with any of MY bookings carries a red dot, a day with
             // only other members' bookings a blue one.

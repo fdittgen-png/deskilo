@@ -103,11 +103,11 @@ Set<String> onlineSeatIdsFor({
   required Map<String, Profile> profiles,
   required DateTime from,
   DateTime? to,
-  DateTime? now,
+  required DateTime now,
 }) {
   if (profiles.isEmpty || members.isEmpty) return const {};
   final userIdOf = {for (final m in members) m.id: m.userId};
-  final presenceNow = now ?? DateTime.now();
+  final presenceNow = now;
   bool online(String memberId) {
     final uid = userIdOf[memberId];
     final profile = uid == null ? null : profiles[uid];

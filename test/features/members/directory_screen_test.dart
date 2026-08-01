@@ -81,7 +81,7 @@ Member _member(
   FakeProfileRepository profile,
   DateTime upcomingStart,
 }) _seed() {
-  final now = DateTime.now();
+  final now = kTestNow;
 
   // Dora's upcoming booking: the NEXT Tuesday at 01:15 strictly after
   // now — 1..7 days out, always inside the 14-day window.
@@ -387,7 +387,7 @@ void main() {
       Profile(
         id: 'user-1',
         displayName: 'Flo',
-        lastSeenAt: DateTime.now().subtract(const Duration(minutes: 20)),
+        lastSeenAt: kTestNow.subtract(const Duration(minutes: 20)),
       ),
     ]);
     await _pumpDirectory(

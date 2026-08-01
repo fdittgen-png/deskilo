@@ -30,7 +30,7 @@ WorkspaceEvent expenseEvent({
       subjectMemberId: actor,
       payload: const {'amount_cents': 20000},
       status: EventStatus.pending,
-      createdAt: DateTime.now(),
+      createdAt: kTestNow,
     );
 
 Member adminMember(String id) => Member(
@@ -65,7 +65,7 @@ EventDecision acceptBy(String memberId, {String eventId = 'evt-exp'}) =>
       memberId: memberId,
       accept: true,
       decidedBySystem: false,
-      decidedAt: DateTime.now(),
+      decidedAt: kTestNow,
     );
 
 /// Pumps the Events tab. The viewer is member-1 — the workspace owner by
