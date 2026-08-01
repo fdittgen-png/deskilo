@@ -4,6 +4,8 @@ import 'dart:typed_data';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:deskilo/features/profile/domain/profile_repository.dart';
 
+import '../helpers/test_clock.dart';
+
 /// In-memory [ProfileRepository] for widget/unit tests (#223).
 class FakeProfileRepository implements ProfileRepository {
   @override
@@ -81,7 +83,7 @@ class FakeProfileRepository implements ProfileRepository {
     if (failing) throw StateError('touchLastSeen failing (test)');
     touchCount += 1;
     final mine = _mine ?? Profile(id: myUserId);
-    _replaceMine(mine.copyWith(lastSeenAt: DateTime.now().toUtc()));
+    _replaceMine(mine.copyWith(lastSeenAt: kTestNow.toUtc()));
   }
 
   /// userId → avatar bytes, seeded by tests or written by [setAvatar].

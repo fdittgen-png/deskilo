@@ -8,6 +8,7 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_reservation_repository.dart';
 import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
+import '../../../core/time/clock.dart';
 
 part 'reservation_providers.g.dart';
 
@@ -40,7 +41,7 @@ Future<List<Reservation>> myUpcomingReservations(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   final member = await ref.watch(myMemberProvider.future);
   if (workspace == null || member == null) return const [];
-  final now = DateTime.now();
+  final now = ref.read(clockProvider).now();
   final window = await ref.watch(reservationRepositoryProvider).fetchWindow(
         workspace.id,
         from: now,

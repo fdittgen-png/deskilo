@@ -22,6 +22,10 @@ import 'package:deskilo/core/scan/front_camera.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/core/scan/qr_scan_widget.dart';
 import 'package:deskilo/core/storage/active_workspace_store.dart';
+import 'package:deskilo/core/time/clock.dart';
+
+import 'test_clock.dart';
+export 'test_clock.dart' show kTestNow, kTestPeriod;
 import 'package:deskilo/features/events/domain/event_repository.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
@@ -499,7 +503,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       workspaceId: workspaceId,
       memberId: memberId,
       label: label,
-      createdAt: DateTime.now(),
+      createdAt: kTestNow,
     ));
     return (badgeId: 'badge-$n', token: 'badge-token-$n');
   }
@@ -521,7 +525,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       memberId: memberId,
       // The fake records the uid in the label so tests can assert it.
       label: label.isEmpty ? 'uid:$uid' : label,
-      createdAt: DateTime.now(),
+      createdAt: kTestNow,
       kind: BadgeKind.nfc,
     ));
   }
@@ -530,7 +534,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   Future<void> revokeMemberBadge(String badgeId) async {
     final i = badges.indexWhere((b) => b.id == badgeId);
     if (i >= 0) {
-      badges[i] = badges[i].copyWith(revokedAt: DateTime.now());
+      badges[i] = badges[i].copyWith(revokedAt: kTestNow);
     }
   }
 
@@ -762,6 +766,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 /// of one workspace. Always start from these and add feature-specific
 /// overrides on top.
 List<Override> standardTestOverrides({
+  Clock? clock,
   AuthRepository? auth,
   WorkspaceRepository? workspace,
   FloorPlanRepository? floorPlan,
@@ -780,6 +785,9 @@ List<Override> standardTestOverrides({
   FileSharer? fileSharer,
 }) {
   return [
+    // The clock is defaulted here rather than per-test so a screen that
+    // starts reading it does not quietly re-arm the time bomb.
+    clockProvider.overrideWithValue(clock ?? FixedClock(kTestNow)),
     authRepositoryProvider
         .overrideWithValue(auth ?? FakeAuthRepository.signedIn()),
     workspaceRepositoryProvider.overrideWithValue(
@@ -835,6 +843,9 @@ class InMemoryCacheStore implements CacheStore {
   Future<void> put(String key, Object? payload,
       {required Duration ttl}) async {
     entries[key] =
+        // Real clock on purpose: freshness is measured against the wall
+        // clock inside CacheStore, so a pinned storedAt would make every
+        // entry read as expired.
         CacheEntry(payload: payload, storedAt: DateTime.now(), ttl: ttl);
   }
 

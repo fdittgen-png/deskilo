@@ -9,6 +9,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/reservation.dart';
+import '../../../../core/time/clock.dart';
 
 /// Fixed geometry of the month availability calendar. Pinned by test.
 abstract final class MonthGridMetrics {
@@ -85,7 +86,7 @@ class MonthGrid extends ConsumerWidget {
       cells.add(DateTime(last.year, last.month, last.day + 1));
     }
 
-    final today = DateTime.now();
+    final today = ref.watch(clockProvider).now();
     final weekdayFormat = DateFormat.E();
     // One occupancy fold for the whole grid instead of one reservation
     // scan per cell (perf audit).

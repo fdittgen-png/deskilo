@@ -81,7 +81,7 @@ void main() {
   testWidgets(
       'tapping a seat reservation opens the detail sheet with the full '
       'location chain and the seat accessories', (tester) async {
-    final now = DateTime.now();
+    final now = kTestNow;
     final accessories = FakeAccessoryRepository()..seedSmallCatalog();
     accessories.seatAccessories['seat-4'] = {'accessory-1', 'accessory-2'};
     await pumpCalendarApp(
@@ -110,7 +110,7 @@ void main() {
 
   testWidgets('an office reservation shows level · office and no accessories',
       (tester) async {
-    final now = DateTime.now();
+    final now = kTestNow;
     await pumpCalendarApp(
       tester,
       seed: [
@@ -132,7 +132,7 @@ void main() {
   testWidgets(
       'Show on plan jumps to the Plan tab on the seat\'s level, highlights '
       'the seat and does NOT persist the default level', (tester) async {
-    final now = DateTime.now();
+    final now = kTestNow;
     final store = await pumpCalendarApp(
       tester,
       seed: [
@@ -162,7 +162,7 @@ void main() {
   testWidgets(
       'a future reservation browses the plan at the reservation start',
       (tester) async {
-    final now = DateTime.now();
+    final now = kTestNow;
     final start = DateTime(now.year, now.month, now.day + 1, 9);
     await pumpCalendarApp(
       tester,

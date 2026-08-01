@@ -4,7 +4,6 @@ import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
-import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -74,7 +73,7 @@ void main() {
     await pumpMoney(tester);
 
     expect(
-      find.text(DateFormat.yMMMM('en').format(DateTime.now())),
+      find.text(DateFormat.yMMMM('en').format(kTestNow)),
       findsOneWidget,
     );
     expect(find.text('Subscription 50%'), findsOneWidget);
@@ -181,7 +180,7 @@ void main() {
         amountCents: 4000,
         description: '5-day pack (5d)',
         period: money.statement.period,
-        createdAt: DateTime.now(),
+        createdAt: kTestNow,
       ),
     );
     await pumpMoney(tester, money: money);
@@ -329,7 +328,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    final period = currentPeriod();
+    final period = kTestPeriod;
     final money = FakeMoneyRepository();
     money.ledger.addAll([
       LedgerEntry(
@@ -340,7 +339,7 @@ void main() {
         amountCents: 300,
         description: 'Coffee x2',
         period: period,
-        createdAt: DateTime.now(),
+        createdAt: kTestNow,
       ),
       LedgerEntry(
         id: 'l-payment',
@@ -350,7 +349,7 @@ void main() {
         amountCents: 15000,
         description: 'Bank transfer',
         period: period,
-        createdAt: DateTime.now(),
+        createdAt: kTestNow,
       ),
     ]);
     final events = FakeEventRepository();
@@ -369,7 +368,7 @@ void main() {
           'period': period,
         },
         status: EventStatus.pending,
-        createdAt: DateTime.now(),
+        createdAt: kTestNow,
       ),
     );
     await pumpMoney(tester, money: money, events: events);
@@ -405,7 +404,7 @@ void main() {
   testWidgets(
       'the period chevrons query the neighbouring month and the forward '
       'chevron stops at the current period', (tester) async {
-    final previous = previousPeriod(currentPeriod());
+    final previous = previousPeriod(kTestPeriod);
     final money = FakeMoneyRepository();
     money.statements[previous] = money.statement.copyWith(
       period: previous,
@@ -452,7 +451,7 @@ void main() {
         subjectMemberId: 'member-1',
         payload: const {'amount_cents': 5000, 'note': 'transfer'},
         status: EventStatus.pending,
-        createdAt: DateTime.now(),
+        createdAt: kTestNow,
       ),
     );
     await pumpMoney(tester, events: events);
@@ -498,7 +497,7 @@ void main() {
       'settles — today and the running month by default (0070)',
       (tester) async {
     final money = await pumpMoney(tester);
-    final today = DateTime.now();
+    final today = kTestNow;
     final previous = DateTime(today.year, today.month - 1);
     final previousPeriod =
         '${previous.year}-${previous.month.toString().padLeft(2, '0')}';
@@ -777,7 +776,7 @@ void main() {
     expect(recorded.subjectMemberId, 'member-1');
     expect(recorded.serviceId, 'service-coffee');
     expect(recorded.quantity, 2);
-    expect(recorded.period, currentPeriod());
+    expect(recorded.period, kTestPeriod);
     expect(
       find.text('Consumption recorded — waiting for confirmation.'),
       findsOneWidget,

@@ -10,6 +10,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/time/clock.dart';
 
 /// Which trace levels the list shows.
 enum _TraceFilter { all, errors, warnings }
@@ -42,7 +43,7 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
     final save = ref.read(fileSaverProvider);
     try {
       final content = await logger.exportContent();
-      final stamp = DateFormat('yyyyMMdd-HHmm').format(DateTime.now());
+      final stamp = DateFormat('yyyyMMdd-HHmm').format(ref.read(clockProvider).now());
       final path = await save(
         bytes: utf8.encode(content),
         fileName: 'deskilo-trace-$stamp.log',

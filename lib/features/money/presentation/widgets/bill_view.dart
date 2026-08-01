@@ -27,6 +27,7 @@ class BillView extends StatelessWidget {
     required this.pendingMoneyEvents,
     required this.currencyCode,
     required this.memberId,
+    required this.nowPeriod,
     this.paymentInstructions = const PaymentInstructions(),
     this.onlinePaymentsEnabled = false,
     this.onPayOnline,
@@ -37,6 +38,12 @@ class BillView extends StatelessWidget {
   final List<WorkspaceEvent> pendingMoneyEvents;
   final String currencyCode;
   final String memberId;
+
+  /// The running month, read from `clockProvider` by the caller. Open
+  /// positions only ever show on the CURRENT period, so letting this
+  /// default to the wall clock made the section appear or vanish
+  /// depending on the date the test ran.
+  final String nowPeriod;
 
   /// #155 — the workspace's how-to-pay details; rendered below the
   /// balance footer only while the statement is outstanding.
@@ -62,6 +69,7 @@ class BillView extends StatelessWidget {
       memberId: memberId,
       ledger: ledger,
       pendingEvents: pendingMoneyEvents,
+      nowPeriod: nowPeriod,
     );
 
     return Column(

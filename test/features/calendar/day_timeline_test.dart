@@ -24,7 +24,7 @@ Reservation todayReservation({
   String? officeId,
   int startHour = 9,
 }) {
-  final now = DateTime.now();
+  final now = kTestNow;
   final start = DateTime(now.year, now.month, now.day, startHour);
   return Reservation(
     id: id,

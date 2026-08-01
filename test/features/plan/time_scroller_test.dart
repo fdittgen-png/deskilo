@@ -5,6 +5,8 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/test_clock.dart';
+
 import 'plan_screen_test.dart' show foreignReservation, pumpPlan, seatCenter;
 
 /// Taps the header time chip [chipKey] ('plan-from-chip'/'plan-to-chip'),
@@ -159,7 +161,7 @@ void main() {
   testWidgets(
       'a reservation 10:00–11:00 renders occupied for the 09:00–12:00 '
       'window but free for 11:00–12:00', (tester) async {
-    final now = DateTime.now();
+    final now = kTestNow;
     final start = DateTime(now.year, now.month, now.day, 10);
     await pumpPlan(
       tester,

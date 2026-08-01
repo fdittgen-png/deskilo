@@ -33,6 +33,7 @@ import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../device_pin.dart';
+import '../../../../core/time/clock.dart';
 
 /// Server error substring when a presented badge is unknown/revoked
 /// (kiosk_act, migration 0043) — pinned by test like the other guards.
@@ -96,7 +97,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
   ({DateTime start, DateTime end}) _actionWindow() => walkUpWindow(
         ref.read(bookingGranularityProvider).value ??
             BookingGranularity.flexible,
-        DateTime.now(),
+        ref.read(clockProvider).now(),
       );
 
   Future<void> _onSeatTap(Seat seat) =>
@@ -327,7 +328,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     final level =
         levels.where((l) => l.id == _levelId).firstOrNull ?? levels.first;
     final planAsync = ref.watch(floorPlanProvider(level.id));
-    final now = DateTime.now();
+    final now = ref.read(clockProvider).now();
     final reservations =
         ref.watch(reservationsForDayProvider(dayKeyOf(now))).value ??
             const [];
@@ -423,6 +424,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                       profiles: ref.watch(memberProfilesProvider).value ??
                           const {},
                       from: now,
+                      now: ref.watch(clockProvider).now(),
                     ),
                     deskOpacity:
                         (workspace?.deskOpacity ?? 100) / 100,

@@ -28,6 +28,7 @@ import '../../domain/space_code.dart';
 import '../../domain/walk_up_window.dart';
 import '../../providers/reservation_providers.dart';
 import 'booking_range_text.dart';
+import '../../../../core/time/clock.dart';
 
 /// The scan-to-book entry (field request): scan a desk/office/level QR
 /// card → the space sheet shows exactly the actions this member is
@@ -280,7 +281,7 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
   ({DateTime start, DateTime end}) get _window => walkUpWindow(
         ref.read(bookingGranularityProvider).value ??
             BookingGranularity.flexible,
-        DateTime.now(),
+        ref.read(clockProvider).now(),
       );
 
   List<Reservation> _reservations(({DateTime start, DateTime end}) window) =>

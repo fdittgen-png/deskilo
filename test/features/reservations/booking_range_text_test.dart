@@ -10,6 +10,8 @@ import 'package:deskilo/features/reservations/presentation/widgets/booking_range
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/test_clock.dart';
+
 import 'reserve_hub_test.dart' show pumpHub;
 
 void main() {
@@ -58,7 +60,7 @@ void main() {
   testWidgets('the detail sheet shows the date, the labeled window and '
       'the repetition modality', (tester) async {
     WorkspaceTime.install('Europe/Berlin');
-    final now = DateTime.now();
+    final now = kTestNow;
     final today = DateTime(now.year, now.month, now.day);
     final window = HalfDayWindows.fullDay(today);
     await pumpHub(tester, seed: [
