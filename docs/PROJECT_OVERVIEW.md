@@ -1001,15 +1001,17 @@ Convergence from either state was **verified**, not assumed: `0052` uses `drop p
 
 This does supersede an earlier project note that `0071`/`0072` were unapplied: they are applied, along with `0073`.
 
-### B. Branch protection is documented but does not exist ⚠️
+### B. Branch protection is documented but does not exist — **FIXED (applied 2026-08-01)** ✅
 
-`docs/wiki/Implementation.md` states: *"Branch protection: direct pushes to `master` are blocked; PRs need green CI; squash-merge only; head branches auto-delete."* `CONTRIBUTING.md` and `AGENT_RULES.md` list direct commits and force-pushes to `master` as forbidden.
+For three weeks the docs claimed direct pushes to `master` were blocked while the API reported no protection and no rulesets — the rules were honoured by convention alone.
 
-The GitHub API reports **no branch protection** on `master` (`404 Branch not protected`) and **no rulesets** (`[]`). The rules are honored by convention only; nothing on the server enforces them, and nothing requires CI to be green before a merge.
+Resolved the durable way, not just the one-click way: the required-check set lives as **data** in `scripts/branch_protection.sh` (verify / apply / show), `apply` was run with the owner's authorization, and `verify` confirms the live configuration matches the committed target. `master` now requires the `analyze · l10n gate · test · coverage` context, blocks force-pushes and deletions, and demands linear history. Strict mode is deliberately off (no merge queue → quadratic CI; serialise merges instead) and `enforce_admins` is off (the solo maintainer keeps an admin escape hatch). An advisory CI step reports drift.
 
-`Implementation.md` now describes this accurately, but the underlying choice is still open: either enable a ruleset that matches the documented rules, or keep them as convention deliberately (reasonable for a solo maintainer who self-merges).
+### C. Two date-dependent tests fail from 2026-08-01 — **FIXED (clock seam)** ✅
 
-### C. Two date-dependent tests fail from 2026-08-01 ⚠️ NEW
+Resolved by the `clockProvider` seam: `SystemClock` in the app, `FixedClock(kTestNow)` pinned by `standardTestOverrides`, ~50 `lib/` call sites migrated, and `test/lint/no_wall_clock_test.dart` guarding both halves with a shrink-only exempt list. Making `seat_occupancy`'s `now` required (instead of wall-clock-defaulted) surfaced three real presence-dot bugs on Plan, kiosk and the Reserve hub. Original finding kept below for the record.
+
+#### Original finding (2026-08-01, superseded)
 
 `flutter test` on `master` is **1 011 passed / 2 failed** as of 2026-08-01. CI's last run (2026-07-28) was green — these are time bombs that went off at the month boundary, not a regression from any commit:
 
