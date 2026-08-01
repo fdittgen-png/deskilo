@@ -45,9 +45,39 @@ jobs:
       - name: Tests with coverage
         run: flutter test --coverage
 
-      - name: Coverage gate (>= 45%)
+      # RATCHET — this number may only ever go UP.
+      #
+      # It sat at 45% while the suite covered 68%: a gate 23 points below
+      # the floor has never failed a build and therefore never influenced
+      # a single decision. That is not a control, it is a decoration.
+      #
+      # 65% leaves ~3 points of headroom — a normal PR will not trip it, a
+      # large feature landing without tests will. Raise it when the margin
+      # grows; never lower it to make a branch green.
+      - name: Coverage gate (>= 65%)
         run: |
-          pct=$(awk '/^LF:/{lf+=substr($0,4)} /^LH:/{lh+=substr($0,4)} END{printf "%.1f", lh*100/lf}' coverage/lcov.info)
-          echo "line coverage: ${pct}%"
-          awk -v p="$pct" 'BEGIN{exit !(p >= 45)}' \
-            || { echo "::error::coverage ${pct}% is below the 45% gate"; exit 1; }
+          # Integer tenths, not floats: printf "%.1f" emits a COMMA decimal
+          # separator under a non-English locale, and the comparison then
+          # silently truncates. Runners are C-locale today; this does not
+          # depend on that staying true.
+          read -r hit found <<< "$(awk '
+            /^LF:/ { found += substr($0, 4) }
+            /^LH:/ { hit   += substr($0, 4) }
+            END    { print hit, found }' coverage/lcov.info)"
+          tenths=$(( hit * 1000 / found ))
+          echo "line coverage: $(( tenths / 10 )).$(( tenths % 10 ))% ($hit/$found lines)"
+          if [ "$tenths" -lt 650 ]; then
+            echo "::error::coverage $(( tenths / 10 )).$(( tenths % 10 ))% is below the 65% gate"
+            exit 1
+          fi
+
+      # ADVISORY, deliberately non-blocking: this repository has no branch
+      # protection at all, so a hard failure here would redden every pull
+      # request without any of them being at fault. It reports the drift so
+      # the gap stays visible instead of living only in a document.
+      # Promote it to a required check the day `apply` has been run.
+      - name: Branch protection drift (advisory)
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/branch_protection.sh verify
