@@ -23,7 +23,7 @@ WorkspaceEvent pendingForMe(String id) => WorkspaceEvent(
       subjectMemberId: 'member-1',
       payload: const {},
       status: EventStatus.pending,
-      createdAt: DateTime.now(),
+      createdAt: kTestNow,
     );
 
 Future<void> pumpApp(

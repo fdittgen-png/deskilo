@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -411,7 +412,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
       _scheduleAutoScroll(visibleReservations);
     }
 
-    final now = DateTime.now();
+    final now = ref.watch(clockProvider).now();
     final isToday = DateUtils.isSameDay(now, widget.day);
 
     return SingleChildScrollView(

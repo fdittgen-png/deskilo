@@ -39,6 +39,7 @@ import 'widgets/e_invoice_sheet.dart';
 import 'widgets/invoice_detail_sheet.dart';
 import 'widgets/invoice_form_sheet.dart';
 import 'widgets/invoicing_dashboard.dart';
+import '../../../core/time/clock.dart';
 
 /// Everything an issued invoice can be PUT THROUGH, extracted out of the
 /// screen (0069): the archive rows, the open cards and the detail sheet all
@@ -256,7 +257,7 @@ Future<void> exportAccountingFile(
         company: company,
         currency: workspace.currencyCode,
         softwareVersion: safTSoftwareVersion,
-        createdAt: DateTime.now(),
+        createdAt: ref.read(clockProvider).now(),
         lineText: (line) => invoiceLineText(l10n, line),
         fallbackDescription: l10n?.invoicesTitle ?? 'Invoice',
       );
@@ -408,7 +409,7 @@ Future<Invoice?> proformaForMonth(
     workspaceId: workspace.id,
     memberId: memberId,
     number: '',
-    issuedAt: DateTime.now(),
+    issuedAt: ref.read(clockProvider).now(),
     period: period,
     title: period,
     lines: preview.lines,

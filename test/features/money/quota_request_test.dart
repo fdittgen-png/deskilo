@@ -12,7 +12,6 @@ import 'package:deskilo/features/money/domain/quota_rules.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
 
@@ -53,7 +52,7 @@ void main() {
     expect(request.payload['half_days'], 4);
     expect(
       request.payload['period'],
-      DateFormat('yyyy-MM').format(DateTime.now()),
+      kTestPeriod,
     );
     expect(
       find.text('Request sent — waiting for validation.'),

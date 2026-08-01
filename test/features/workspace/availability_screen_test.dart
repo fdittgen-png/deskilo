@@ -217,7 +217,7 @@ void main() {
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
 
-    final today = DateTime.now();
+    final today = kTestNow;
     final created = workspace.closureDays.single;
     expect(created.workspaceId, 'ws-1');
     expect(created.day, DateTime(today.year, today.month, today.day));

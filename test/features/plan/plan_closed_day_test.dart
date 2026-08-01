@@ -32,7 +32,7 @@ const _serverClosedMessage =
 
 /// Every ISO weekday except today's — makes the live "now" day closed.
 List<int> allWeekdaysExceptToday() {
-  final today = DateTime.now().weekday;
+  final today = kTestNow.weekday;
   return [
     for (var day = 1; day <= 7; day++)
       if (day != today) day,
@@ -139,7 +139,7 @@ void main() {
 
   testWidgets('a closure day closes an otherwise open weekday',
       (tester) async {
-    final today = DateTime.now();
+    final today = kTestNow;
     await pumpAvailabilityPlan(
       tester,
       closures: [
@@ -245,7 +245,7 @@ void main() {
   testWidgets(
       'a closed-day refusal from the check-in RPC on my reservation maps '
       'to the closed-day message', (tester) async {
-    final now = DateTime.now();
+    final now = kTestNow;
     final reservations = ThrowingReservationRepository(
       const PostgrestException(message: _serverClosedMessage),
     )..reservations.add(
