@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart' show mapEquals, setEquals;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import '../../../../core/theme/office_colors.dart';
 import '../../../../core/theme/seat_state_colors.dart';
@@ -27,6 +28,9 @@ class FloorPlanPainter extends CustomPainter {
     this.highlightedSeatId,
     this.deskOpacity = 1,
     this.onlineSeatIds = const {},
+    this.semanticLabels,
+    this.semanticsDirection = TextDirection.ltr,
+    this.onSeatSemanticTap,
     this.marquee,
     this.marqueeValid = true,
     this.selection,
@@ -66,6 +70,23 @@ class FloorPlanPainter extends CustomPainter {
   /// Seat ids whose occupant is currently online (presence heartbeat): the
   /// seat avatar gets a green online dot. Live mode only.
   final Set<String> onlineSeatIds;
+
+  /// A11y (#402): seat id → the full localized label a screen reader
+  /// announces ("A1 · free", "A1 · occupied — Ana"). Null = no semantics
+  /// (the editor's schematic mode). Composed by the CALLER, which has the
+  /// l10n context this painter deliberately does not.
+  final Map<String, String>? semanticLabels;
+
+  /// Reading direction of the semantic labels — a labeled node without
+  /// one is a framework assertion. The caller passes the ambient
+  /// Directionality so RTL locales read correctly if ever added.
+  final TextDirection semanticsDirection;
+
+  /// Tap action exposed through the semantics node — the same handler the
+  /// canvas's gesture detector resolves by cell math, so TalkBack's
+  /// double-tap opens the same sheet a touch does. Excluded from
+  /// [shouldRepaint]: callbacks never change what is painted.
+  final ValueChanged<Seat>? onSeatSemanticTap;
 
   /// In-progress drag rectangle (grid cells) while drawing a new element.
   final GridRect? marquee;
@@ -426,4 +447,27 @@ class FloorPlanPainter extends CustomPainter {
       oldDelegate.deskOpacity != deskOpacity ||
       !setEquals(oldDelegate.onlineSeatIds, onlineSeatIds) ||
       oldDelegate.cellSize != cellSize;
+
+  /// One semantics node per seat (#402). Without this, the app's core
+  /// surface is a single unlabeled picture to TalkBack/VoiceOver — the
+  /// hidden cost of choosing a canvas over widgets, paid here.
+  @override
+  SemanticsBuilderCallback? get semanticsBuilder {
+    final labels = semanticLabels;
+    if (labels == null) return null;
+    return (Size size) => [
+          for (final seat in plan.seats)
+            CustomPainterSemantics(
+              rect: _toPx(seat.footprint),
+              properties: SemanticsProperties(
+                label: labels[seat.id] ?? seat.name,
+                textDirection: semanticsDirection,
+                button: onSeatSemanticTap != null,
+                onTap: onSeatSemanticTap == null
+                    ? null
+                    : () => onSeatSemanticTap!(seat),
+              ),
+            ),
+        ];
+  }
 }

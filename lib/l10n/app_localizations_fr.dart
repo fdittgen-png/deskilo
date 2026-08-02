@@ -2454,6 +2454,21 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ici, les réservations se font par demi-journée.';
 
   @override
+  String get a11ySeatFree => 'libre';
+
+  @override
+  String get a11ySeatReserved => 'réservé';
+
+  @override
+  String get a11ySeatOccupied => 'occupé';
+
+  @override
+  String get a11ySeatMine => 'votre place';
+
+  @override
+  String get a11ySeatBlocked => 'indisponible';
+
+  @override
   String get whatsappTitle => 'WhatsApp';
 
   @override

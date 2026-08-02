@@ -26,7 +26,7 @@ class BootSplash extends ConsumerWidget {
     // (boot.dart caps and tolerates everything).
     final ready = !ref.watch(bootReadyProvider).isLoading;
     return AnimatedSwitcher(
-      duration: AppMotion.viewSwitch,
+      duration: AppMotion.viewSwitchOf(context),
       child: ready
           ? (child ?? const SizedBox.shrink())
           : const _SplashScreen(),

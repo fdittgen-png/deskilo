@@ -246,5 +246,25 @@
   "planHalfDayError": "Bookings here are per half day.",
   "@planHalfDayError": {
     "description": "Snackbar when the server rejects a booking for violating the half-day granularity (enforce_booking_rules, migration 0025, #201)"
+  },
+  "a11ySeatFree": "free",
+  "@a11ySeatFree": {
+    "description": "Screen-reader state of a free seat on the floor plan (#402)."
+  },
+  "a11ySeatReserved": "reserved",
+  "@a11ySeatReserved": {
+    "description": "Screen-reader state of a reserved seat."
+  },
+  "a11ySeatOccupied": "occupied",
+  "@a11ySeatOccupied": {
+    "description": "Screen-reader state of an occupied seat."
+  },
+  "a11ySeatMine": "your seat",
+  "@a11ySeatMine": {
+    "description": "Screen-reader state of the signed-in member’s own seat."
+  },
+  "a11ySeatBlocked": "not available",
+  "@a11ySeatBlocked": {
+    "description": "Screen-reader state of a blocked seat."
   }
 }

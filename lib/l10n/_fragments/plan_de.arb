@@ -50,5 +50,10 @@
   "planAfternoonChip": "Nachmittag",
   "planFullDayChip": "Ganzer Tag",
   "planHalfDayError": "Buchungen erfolgen hier pro halbem Tag.",
-  "planLevelTooltip": "Etage"
+  "planLevelTooltip": "Etage",
+  "a11ySeatFree": "frei",
+  "a11ySeatReserved": "reserviert",
+  "a11ySeatOccupied": "besetzt",
+  "a11ySeatMine": "dein Platz",
+  "a11ySeatBlocked": "nicht verfügbar"
 }

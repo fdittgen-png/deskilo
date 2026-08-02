@@ -35,7 +35,7 @@ class _LoadingViewState extends State<LoadingView> {
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       opacity: _visible ? 1 : 0,
-      duration: AppMotion.loadingFadeIn,
+      duration: AppMotion.loadingFadeInOf(context),
       child: const Center(child: CircularProgressIndicator()),
     );
   }

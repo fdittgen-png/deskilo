@@ -3,6 +3,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
+import '../../../../l10n/app_localizations.dart';
+
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/canvas_controls.dart';
 import '../../domain/desk.dart';
@@ -95,6 +97,28 @@ class _PlanCanvasState extends State<PlanCanvas> {
     super.dispose();
   }
 
+  /// "A1 · occupied — Ana": name, localized state, occupant when shown.
+  /// Composed here because the painter has no l10n (#402).
+  Map<String, String> _semanticLabels(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    String stateName(SeatState? state) => switch (state) {
+          SeatState.reserved => l10n?.a11ySeatReserved ?? 'reserved',
+          SeatState.occupied => l10n?.a11ySeatOccupied ?? 'occupied',
+          SeatState.mine => l10n?.a11ySeatMine ?? 'your seat',
+          SeatState.blocked => l10n?.a11ySeatBlocked ?? 'not available',
+          SeatState.free || null => l10n?.a11ySeatFree ?? 'free',
+        };
+    return {
+      for (final seat in widget.plan.seats)
+        seat.id: [
+          seat.name,
+          stateName(widget.seatStates[seat.id]),
+          if ((widget.seatLabels[seat.id] ?? '').isNotEmpty)
+            widget.seatLabels[seat.id]!,
+        ].join(' · '),
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -138,6 +162,9 @@ class _PlanCanvasState extends State<PlanCanvas> {
                 brightness: Theme.of(context).brightness,
                 seatStates: widget.seatStates,
                 seatLabels: widget.seatLabels,
+                semanticLabels: _semanticLabels(context),
+                semanticsDirection: Directionality.of(context),
+                onSeatSemanticTap: widget.onSeatTap,
                 highlightedSeatId: widget.highlightedSeatId,
                 onlineSeatIds: widget.onlineSeatIds,
                 deskOpacity: widget.deskOpacity,

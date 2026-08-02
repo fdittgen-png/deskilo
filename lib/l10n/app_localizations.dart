@@ -4454,6 +4454,36 @@ abstract class AppLocalizations {
   /// **'Bookings here are per half day.'**
   String get planHalfDayError;
 
+  /// Screen-reader state of a free seat on the floor plan (#402).
+  ///
+  /// In en, this message translates to:
+  /// **'free'**
+  String get a11ySeatFree;
+
+  /// Screen-reader state of a reserved seat.
+  ///
+  /// In en, this message translates to:
+  /// **'reserved'**
+  String get a11ySeatReserved;
+
+  /// Screen-reader state of an occupied seat.
+  ///
+  /// In en, this message translates to:
+  /// **'occupied'**
+  String get a11ySeatOccupied;
+
+  /// Screen-reader state of the signed-in member’s own seat.
+  ///
+  /// In en, this message translates to:
+  /// **'your seat'**
+  String get a11ySeatMine;
+
+  /// Screen-reader state of a blocked seat.
+  ///
+  /// In en, this message translates to:
+  /// **'not available'**
+  String get a11ySeatBlocked;
+
   /// Settings tile and dialog title of the opt-in WhatsApp number on my profile (#223)
   ///
   /// In en, this message translates to:

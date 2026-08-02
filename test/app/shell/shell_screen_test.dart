@@ -73,6 +73,11 @@ void main() {
     await pumpApp(tester);
 
     await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+    // #402: the iOS floor (44dp) and the LABELED guideline — every
+    // tappable must carry a semantic label, or it reads as "button" to a
+    // screen reader.
+    await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
     handle.dispose();
   });
 }

@@ -73,6 +73,23 @@ void _expectNoOverflow(WidgetTester tester, Locale locale, String surface) {
 }
 
 void main() {
+  testWidgets(
+      'the German walk survives a 1.3× text scale — large-font users '
+      'expand every string at once, like a longer language does (#402)',
+      (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 1.3;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    const locale = Locale('de');
+    await _pumpApp(tester, locale);
+    _expectNoOverflow(tester, locale, 'boot → Reserve hub @1.3×');
+    await tapNavIcon(tester, Icons.grid_view_outlined);
+    _expectNoOverflow(tester, locale, 'Plan @1.3×');
+    await tapNavIcon(tester, Icons.account_balance_wallet_outlined);
+    _expectNoOverflow(tester, locale, 'Money @1.3×');
+    await tapAppBarIcon(tester, Icons.settings_outlined);
+    _expectNoOverflow(tester, locale, 'Settings @1.3×');
+  });
+
   for (final locale in _launchLocales) {
     testWidgets('main surfaces survive ${locale.languageCode} at phone width',
         (tester) async {
