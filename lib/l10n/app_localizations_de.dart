@@ -2292,6 +2292,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get planCheckInButton => 'Einchecken';
 
   @override
+  String get planCheckInNotYetError =>
+      'Der Check-in öffnet 15 Minuten vor Beginn.';
+
+  @override
+  String get planCheckInOverError =>
+      'Diese Reservierung ist vorbei — Check-in ist nicht mehr möglich.';
+
+  @override
+  String planCheckInOpensAt(String time) {
+    return 'Check-in öffnet um $time';
+  }
+
+  @override
+  String planCheckInFor(String name) {
+    return '$name einchecken';
+  }
+
+  @override
   String get planCheckOutButton => 'Auschecken';
 
   @override

@@ -47,6 +47,16 @@ String bookingErrorText(
     return l10n?.planSlotError(step) ??
         'Bookings must start and end on the $step-minute grid.';
   }
+  // Presence rule (#408, migration 0077): check-in only inside
+  // [starts − 15 min, end).
+  if (message.contains('check-in window not open yet')) {
+    return l10n?.planCheckInNotYetError ??
+        'Check-in opens 15 minutes before the start.';
+  }
+  if (message.contains('check-in window closed')) {
+    return l10n?.planCheckInOverError ??
+        'This reservation is over — check-in is no longer possible.';
+  }
   // Whole-space paths (0050/0057): grant refusals and occupancy
   // conflicts share these pinned substrings across office and level.
   if (message.contains('not allowed to reserve a level')) {

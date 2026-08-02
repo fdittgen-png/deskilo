@@ -866,6 +866,32 @@
   "planStartNow": "Beginnt jetzt",
   "planUntilLabel": "Bis",
   "planCheckInButton": "Einchecken",
+  "planCheckInNotYetError": "Der Check-in öffnet 15 Minuten vor Beginn.",
+  "@planCheckInNotYetError": {
+    "description": "Error when checking in before the 15-minute window opens (#408)"
+  },
+  "planCheckInOverError": "Diese Reservierung ist vorbei — Check-in ist nicht mehr möglich.",
+  "@planCheckInOverError": {
+    "description": "Error/hint when checking in after the reservation ended (#408)"
+  },
+  "planCheckInOpensAt": "Check-in öffnet um {time}",
+  "@planCheckInOpensAt": {
+    "description": "Disabled check-in tile hint with the window-opening time (#408)",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "planCheckInFor": "{name} einchecken",
+  "@planCheckInFor": {
+    "description": "Admin action: check in another member who is present (#408)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "planCheckOutButton": "Auschecken",
   "planCancelReservationButton": "Reservierung stornieren",
   "planSeatBlocked": "Dieser Platz ist wegen Wartung gesperrt.",

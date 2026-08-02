@@ -4184,6 +4184,30 @@ abstract class AppLocalizations {
   /// **'Check in'**
   String get planCheckInButton;
 
+  /// Error when checking in before the 15-minute window opens (#408)
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in opens 15 minutes before the start.'**
+  String get planCheckInNotYetError;
+
+  /// Error/hint when checking in after the reservation ended (#408)
+  ///
+  /// In en, this message translates to:
+  /// **'This reservation is over — check-in is no longer possible.'**
+  String get planCheckInOverError;
+
+  /// Disabled check-in tile hint with the window-opening time (#408)
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in opens at {time}'**
+  String planCheckInOpensAt(String time);
+
+  /// Admin action: check in another member who is present (#408)
+  ///
+  /// In en, this message translates to:
+  /// **'Check in {name}'**
+  String planCheckInFor(String name);
+
   /// Action ending the current presence on a seat
   ///
   /// In en, this message translates to:

@@ -26,7 +26,10 @@ const int _budget = 600;
 /// Grandfathered files at their size when this ratchet landed
 /// (2026-08-01), rounded up to the next 10 for edit headroom.
 const Map<String, int> _baseline = {
-  'lib/features/plan/presentation/screens/plan_screen.dart': 1510,
+  // 1510→1530 (2026-08-02): #408 presence rule — the sheets moved to
+  // check_in_sheets.dart; what remains is the admin-for-others gate and
+  // its action/error handling, which need the screen's ref and context.
+  'lib/features/plan/presentation/screens/plan_screen.dart': 1530,
   // 1290→1330 (2026-08-02): #395 Excel-export tile — feature lines, the
   // orchestration itself lives in excel_export.dart.
   'lib/features/workspace/presentation/screens/workspace_settings_screen.dart':

@@ -44,6 +44,7 @@ import '../../providers/default_level_controller.dart';
 import '../../providers/floor_plan_providers.dart';
 import '../../providers/plan_focus_controller.dart';
 import '../seat_occupancy.dart';
+import '../widgets/check_in_sheets.dart';
 import '../widgets/plan_canvas.dart';
 
 /// Default walk-up duration when nothing caps it earlier (spec §4.2;
@@ -323,6 +324,15 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         if (other == null) return;
         final names = ref.read(memberNamesProvider).value ?? const {};
         final name = names[other.memberId] ?? '';
+        // Presence rule (#408): an admin may check in the member standing
+        // at the seat — live mode only, inside the check-in window, gated
+        // like booking for others. The server re-checks all of it (0077).
+        if (_browse == null &&
+            _canCheckInForOthers &&
+            other.checkInWindowOpen(ref.read(clockProvider).now())) {
+          await _checkInOtherSheet(seat, other, name);
+          return;
+        }
         final template = state == SeatState.occupied
             ? (l10n?.planOccupiedBy(name) ?? 'Occupied by $name')
             : (l10n?.planReservedBy(name) ?? 'Reserved by $name');
@@ -333,6 +343,54 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
           replace: true,
         );
     }
+  }
+
+  /// Whether the signed-in member may check in ANOTHER member's
+  /// reservation (#408): admins/owners while the bookForOthers feature
+  /// is on — the same gate as the "Book for" picker.
+  bool get _canCheckInForOthers =>
+      ref
+          .read(enabledFeaturesSyncProvider)
+          .contains(WorkspaceFeature.bookForOthers) &&
+      (ref.read(myMemberProvider).value?.canAdminister ?? false);
+
+  /// Sheet on another member's reserved seat for admins (#408): the
+  /// member is standing there, check them in directly. The kiosk
+  /// precedent — the subject confirmed the reservation; no pending
+  /// event. Authorization and window are re-checked server-side (0077).
+  Future<void> _checkInOtherSheet(
+    Seat seat,
+    Reservation other,
+    String name,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final confirmed = await showCheckInOtherSheet(
+      context,
+      seat: seat,
+      other: other,
+      name: name,
+    );
+    if (confirmed != true || !mounted) return;
+    try {
+      await ref.read(reservationRepositoryProvider).checkIn(other.id);
+    } catch (e, st) {
+      debugPrint('check-in for other failed: $e\n$st');
+      TraceLogger.instance.error('plan', 'check-in for other failed',
+          error: e, stackTrace: st);
+      if (!mounted) return;
+      AppSnack.error(
+        context,
+        _errorText(
+          l10n,
+          e,
+          l10n?.workspaceGenericError ??
+              'Something went wrong. Please try again.',
+        ),
+        replace: true,
+      );
+      return;
+    }
+    invalidateBookingData(ref);
   }
 
   /// Whether the signed-in member may toggle seat maintenance blocks
@@ -590,44 +648,13 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
 
   Future<void> _mySeatSheet(Seat seat, Reservation mine) async {
     final l10n = AppLocalizations.of(context);
-    final action = await showModalBottomSheet<String>(
-      context: context,
-      builder: (context) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              title: Text(
-                seat.name.isEmpty ? (l10n?.planYourSeat ?? 'Your seat') : seat.name,
-              ),
-              subtitle: Text(
-                '${DateFormat.Hm().format(mine.startsAt.toLocal())} – '
-                '${DateFormat.Hm().format(mine.endsAt.toLocal())}',
-              ),
-            ),
-            if (mine.status == ReservationStatus.checkedIn)
-              ListTile(
-                leading: const Icon(Icons.logout),
-                title: Text(l10n?.planCheckOutButton ?? 'Check out'),
-                onTap: () => Navigator.of(context).pop('checkout'),
-              )
-            else
-              ListTile(
-                leading: const Icon(Icons.login),
-                title: Text(l10n?.planCheckInButton ?? 'Check in'),
-                onTap: () => Navigator.of(context).pop('checkin'),
-              ),
-            ListTile(
-              leading: const Icon(Icons.cancel_outlined),
-              title: Text(
-                l10n?.planCancelReservationButton ?? 'Cancel reservation',
-              ),
-              onTap: () => Navigator.of(context).pop('cancel'),
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
+    // Presence rule (#408): check-in means "I am standing here NOW" —
+    // the real clock decides, never the browsed instant.
+    final action = await showMySeatSheet(
+      context,
+      seat: seat,
+      mine: mine,
+      now: ref.read(clockProvider).now(),
     );
     if (action == null) return;
     final repo = ref.read(reservationRepositoryProvider);
