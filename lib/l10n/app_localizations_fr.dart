@@ -1044,6 +1044,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'Nommer des copropriétaires : permissions de propriétaire immédiates (actif) ou succession en attente (passif).';
 
   @override
+  String get featureAutoCheckInOut => 'Arrivée/départ auto en fin de journée';
+
+  @override
+  String get featureDataExport => 'Export des données (Excel)';
+
+  @override
+  String get featureAutoCheckInOutDesc =>
+      'Les réservations sans arrivée ou départ enregistrés se clôturent seules une fois leur créneau passé.';
+
+  @override
+  String get featureDataExportDesc =>
+      'Télécharger toutes les données de l’espace dans un classeur Excel.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override

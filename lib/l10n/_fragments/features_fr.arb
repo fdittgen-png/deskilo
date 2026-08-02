@@ -39,5 +39,9 @@
   "featureSpaceQrCodesDesc": "Cartes QR imprimables par poste, table, bureau et niveau — scanner pour réserver ou pointer.",
   "featureRequires": "Nécessite {feature}",
   "featureCoOwner": "Copropriétaires",
-  "featureCoOwnerDesc": "Nommer des copropriétaires : permissions de propriétaire immédiates (actif) ou succession en attente (passif)."
+  "featureCoOwnerDesc": "Nommer des copropriétaires : permissions de propriétaire immédiates (actif) ou succession en attente (passif).",
+  "featureAutoCheckInOut": "Arrivée/départ auto en fin de journée",
+  "featureDataExport": "Export des données (Excel)",
+  "featureAutoCheckInOutDesc": "Les réservations sans arrivée ou départ enregistrés se clôturent seules une fois leur créneau passé.",
+  "featureDataExportDesc": "Télécharger toutes les données de l’espace dans un classeur Excel."
 }

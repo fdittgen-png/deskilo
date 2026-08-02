@@ -44,4 +44,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureAdminInvoicing ?? 'Admins issue invoices',
       WorkspaceFeature.adminLevelAssign =>
         l10n?.featureAdminLevelAssign ?? 'Admins can assign levels',
+      WorkspaceFeature.autoCheckInOut =>
+        l10n?.featureAutoCheckInOut ?? 'Auto check-in/out at day end',
+      WorkspaceFeature.dataExport =>
+        l10n?.featureDataExport ?? 'Data export (Excel)',
     };

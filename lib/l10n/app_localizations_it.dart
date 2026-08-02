@@ -1042,6 +1042,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nominare comproprietari: permessi da proprietario subito (attivo) o successione in attesa (passivo).';
 
   @override
+  String get featureAutoCheckInOut => 'Check-in/out automatico a fine giornata';
+
+  @override
+  String get featureDataExport => 'Esportazione dati (Excel)';
+
+  @override
+  String get featureAutoCheckInOutDesc =>
+      'Le prenotazioni senza check-in o check-out si completano da sole una volta trascorso il loro orario.';
+
+  @override
+  String get featureDataExportDesc =>
+      'Scaricare tutti i dati dello spazio in una cartella Excel.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override

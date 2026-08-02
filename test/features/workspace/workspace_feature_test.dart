@@ -12,6 +12,7 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.levelBooking,
   WorkspaceFeature.adminLevelAssign,
   WorkspaceFeature.adminInvoicing,
+  WorkspaceFeature.autoCheckInOut,
 };
 
 /// Every other feature ships ON.
@@ -22,7 +23,7 @@ void main() {
   test(
       'manifest covers every feature; only adminSeatBlocking, '
       'accessorySupplements, onlinePayments, levelBooking, '
-      'adminLevelAssign and adminInvoicing default OFF', () {
+      'adminLevelAssign, adminInvoicing and autoCheckInOut default OFF', () {
     expect(featureManifest.keys, containsAll(WorkspaceFeature.values));
     for (final entry in featureManifest.values) {
       expect(
@@ -56,6 +57,7 @@ void main() {
       'levelBooking': true,
       'adminLevelAssign': true,
       'adminInvoicing': true,
+      'autoCheckInOut': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);
@@ -64,6 +66,7 @@ void main() {
     expect(enabled.contains(WorkspaceFeature.levelBooking), isTrue);
     expect(enabled.contains(WorkspaceFeature.adminLevelAssign), isTrue);
     expect(enabled.contains(WorkspaceFeature.adminInvoicing), isTrue);
+    expect(enabled.contains(WorkspaceFeature.autoCheckInOut), isTrue);
     expect(enabled, WorkspaceFeature.values.toSet());
   });
 
