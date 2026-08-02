@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
-import 'package:deskilo/core/trace/dev_mode.dart';
 import 'package:deskilo/core/trace/trace_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,19 +8,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'dart:typed_data';
 
 import '../../helpers/mock_providers.dart';
-
-/// In-memory [DevModeStore] so tests never touch SharedPreferences.
-class InMemoryDevModeStore implements DevModeStore {
-  InMemoryDevModeStore({this.enabled = false});
-
-  bool enabled;
-
-  @override
-  Future<bool> read() async => enabled;
-
-  @override
-  Future<void> write(bool enabled) async => this.enabled = enabled;
-}
 
 TraceLogger seededLogger() {
   final logger = TraceLogger()
@@ -49,9 +35,8 @@ Future<void> pumpSettings(
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
-        ...standardTestOverrides(),
+        ...standardTestOverrides(devMode: devMode),
         traceLoggerProvider.overrideWithValue(logger),
-        devModeStoreProvider.overrideWithValue(devMode),
         fileSaverProvider.overrideWithValue(
             saver ?? ({required bytes, required fileName}) async => '/local/f'),
       ],

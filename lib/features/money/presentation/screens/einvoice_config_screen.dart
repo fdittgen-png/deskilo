@@ -34,6 +34,11 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
   final _token = TextEditingController();
   final _header = TextEditingController();
   final _field = TextEditingController();
+  // Test environments (#393): rehearsal endpoints beside the real one.
+  final _uatEndpoint = TextEditingController();
+  final _uatToken = TextEditingController();
+  final _devEndpoint = TextEditingController();
+  final _devToken = TextEditingController();
   bool _saving = false;
   bool _loaded = false;
 
@@ -43,6 +48,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
     _token.dispose();
     _header.dispose();
     _field.dispose();
+    _uatEndpoint.dispose();
+    _uatToken.dispose();
+    _devEndpoint.dispose();
+    _devToken.dispose();
     super.dispose();
   }
 
@@ -66,6 +75,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
               'auth_value': _token.text.trim(),
               'auth_header': _header.text.trim(),
               'field_name': _field.text.trim(),
+              'endpoint_uat': _uatEndpoint.text.trim(),
+              'auth_value_uat': _uatToken.text.trim(),
+              'endpoint_dev': _devEndpoint.text.trim(),
+              'auth_value_dev': _devToken.text.trim(),
             },
           ),
     );
@@ -73,6 +86,8 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
     setState(() => _saving = false);
     if (!saved) return;
     _token.clear();
+    _uatToken.clear();
+    _devToken.clear();
     ref
       ..invalidate(eInvoiceStatusProvider)
       ..invalidate(eInvoiceGatewayProvider);
@@ -100,6 +115,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
     _token.clear();
     _header.clear();
     _field.clear();
+    _uatEndpoint.clear();
+    _uatToken.clear();
+    _devEndpoint.clear();
+    _devToken.clear();
     ref
       ..invalidate(eInvoiceStatusProvider)
       ..invalidate(eInvoiceGatewayProvider);
@@ -120,6 +139,11 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
       _endpoint.text = status.fields['endpoint'] ?? '';
       _header.text = status.fields['auth_header'] ?? '';
       _field.text = status.fields['field_name'] ?? '';
+      // Pre-0074 the server reports suffixed endpoints as secrets instead
+      // of echoing them; the fields then simply start blank. Saving still
+      // works — degraded read-back, never broken config.
+      _uatEndpoint.text = status.fields['endpoint_uat'] ?? '';
+      _devEndpoint.text = status.fields['endpoint_dev'] ?? '';
     }
 
     return Scaffold(
@@ -199,6 +223,70 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                   controller: _field,
                   decoration: InputDecoration(
                     labelText: l10n?.einvoiceConfigField ?? 'File field name',
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.lg),
+                Text(
+                  l10n?.einvoiceTestEnvsTitle ??
+                      'Test environments (UAT / Dev)',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  l10n?.einvoiceTestEnvsHelp ??
+                      'Separate endpoints and tokens for rehearsals. The '
+                          'choice appears at send time only while developer '
+                          'mode is on.',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                TextField(
+                  key: const ValueKey('einvoice-endpoint-uat'),
+                  controller: _uatEndpoint,
+                  keyboardType: TextInputType.url,
+                  decoration: InputDecoration(
+                    labelText: l10n?.einvoiceUatEndpoint ?? 'UAT upload URL',
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                TextField(
+                  key: const ValueKey('einvoice-token-uat'),
+                  controller: _uatToken,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText:
+                        l10n?.einvoiceUatToken ?? 'UAT token or credential',
+                    helperText: status.secretsSet.contains('auth_value_uat')
+                        ? (l10n?.einvoiceConfigTokenSet ??
+                            'A token is stored (type a new one to replace '
+                                'it).')
+                        : null,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                TextField(
+                  key: const ValueKey('einvoice-endpoint-dev'),
+                  controller: _devEndpoint,
+                  keyboardType: TextInputType.url,
+                  decoration: InputDecoration(
+                    labelText: l10n?.einvoiceDevEndpoint ?? 'Dev upload URL',
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                TextField(
+                  key: const ValueKey('einvoice-token-dev'),
+                  controller: _devToken,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText:
+                        l10n?.einvoiceDevToken ?? 'Dev token or credential',
+                    helperText: status.secretsSet.contains('auth_value_dev')
+                        ? (l10n?.einvoiceConfigTokenSet ??
+                            'A token is stored (type a new one to replace '
+                                'it).')
+                        : null,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.lg),

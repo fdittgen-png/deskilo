@@ -538,6 +538,11 @@ class SupabaseMoneyRepository implements MoneyRepository {
         for (final field in (data['missing'] as List? ?? const []))
           field as String,
       ],
+      environments: {
+        for (final entry
+            in (data['environments'] as Map? ?? const {}).entries)
+          entry.key as String: entry.value == true,
+      },
     );
   }
 
@@ -548,6 +553,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     required String fileName,
     required String mimeType,
     required List<int> bytes,
+    String environment = 'prod',
   }) async {
     final data = await _invokeSend({
       'workspace_id': workspaceId,
@@ -555,6 +561,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
       'file_name': fileName,
       'mime_type': mimeType,
       'content_base64': base64Encode(bytes),
+      'environment': environment,
     });
     if (data == null) {
       return const EInvoiceSubmission(

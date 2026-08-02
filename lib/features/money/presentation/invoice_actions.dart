@@ -32,6 +32,7 @@ import '../domain/invoice_ubl_check.dart';
 import '../domain/ledger_entry.dart';
 import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
+import 'widgets/einvoice_environment_picker.dart';
 import 'invoice_line_text.dart';
 import 'period_label.dart';
 import 'widgets/accounting_export_sheet.dart';
@@ -286,6 +287,7 @@ Future<void> sendEInvoice(
   required InvoiceParty buyer,
   required String iban,
   required String workspaceId,
+  String environment = 'prod',
 }) async {
   final l10n = AppLocalizations.of(context);
   EInvoiceSubmission? result;
@@ -311,6 +313,7 @@ Future<void> sendEInvoice(
             fileName: file.fileName,
             mimeType: 'application/pdf',
             bytes: file.bytes,
+            environment: environment,
           );
     },
   )) {
@@ -323,7 +326,10 @@ Future<void> sendEInvoice(
   if (submission.accepted) {
     AppSnack.success(
       context,
-      l10n?.invoiceSendAccepted ?? 'Sent — the platform accepted it.',
+      environment == 'prod'
+          ? (l10n?.invoiceSendAccepted ?? 'Sent — the platform accepted it.')
+          : (l10n?.invoiceSendAcceptedTest(environment.toUpperCase()) ??
+              'Test send accepted (${environment.toUpperCase()}).'),
     );
     return;
   }
@@ -660,6 +666,11 @@ Future<void> exportEInvoice(
   }
   final l10nForFile = AppLocalizations.of(context);
   if (export == EInvoiceExport.send) {
+    // Dev mode + a configured test platform → choose the target (#393);
+    // anyone else goes straight to production, no extra tap.
+    final environment =
+        await pickEInvoiceEnvironment(context, ref, gateway: gateway);
+    if (environment == null || !context.mounted) return;
     await sendEInvoice(
       context,
       ref,
@@ -668,6 +679,7 @@ Future<void> exportEInvoice(
       buyer: buyer,
       iban: workspaceIban(workspace),
       workspaceId: workspace.id,
+      environment: environment,
     );
     return;
   }

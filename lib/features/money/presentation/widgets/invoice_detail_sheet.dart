@@ -233,13 +233,17 @@ class _InvoiceDetailBody extends StatelessWidget {
                     '${l10n?.invoiceRemindedLast(
                           dateFormat.format(reminder!.last),
                         ) ?? 'last ${dateFormat.format(reminder!.last)}'}'),
-              // Did it LEAVE, and what came back (0073).
+              // Did it LEAVE, and what came back (0073). A rehearsal
+              // names its environment so it never reads as the real
+              // submission (#393).
               if (sent != null)
-                line(l10n?.invoiceSentOn(
+                line('${l10n?.invoiceSentOn(
                       dateFormat.format(sent.sentAt),
                       sentStatus,
-                    ) ??
-                    'Sent ${dateFormat.format(sent.sentAt)} · $sentStatus'),
+                    ) ?? 'Sent ${dateFormat.format(sent.sentAt)} · '
+                        '$sentStatus'}${sent.isTestSend ? ' · '
+                        '${sent.environment.toUpperCase()} '
+                        '(${l10n?.invoiceSentTestChip ?? 'test'})' : ''}'),
               if (sent != null && sent.externalId.isNotEmpty)
                 line(sent.externalId),
               if (invoice.detailed)

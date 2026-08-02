@@ -28,7 +28,34 @@ const json = (body: unknown, status = 200) =>
 /** Fields the generic adapter needs before it can send anything. */
 const REQUIRED = ["endpoint", "auth_value"];
 
+/** Where a document may be sent. 'prod' is the unsuffixed key set that
+ * predates environments; 'uat'/'dev' read the suffixed keys (0074). */
+const ENVIRONMENTS = ["prod", "uat", "dev"] as const;
+type Environment = (typeof ENVIRONMENTS)[number];
+
 type Config = Record<string, string>;
+
+/** The config as one environment sees it. endpoint and auth_value are
+ * STRICTLY per-environment — no fallback to prod, because a UAT document
+ * silently reaching the production platform is the exact accident this
+ * feature exists to prevent. Header and field name fall back to the
+ * production values, then to the adapter defaults: they describe the
+ * upload shape, not the destination. */
+function configFor(cfg: Config, env: Environment): Config {
+  if (env === "prod") return cfg;
+  return {
+    ...cfg,
+    endpoint: cfg[`endpoint_${env}`] ?? "",
+    auth_value: cfg[`auth_value_${env}`] ?? "",
+    auth_header: cfg[`auth_header_${env}`] || cfg.auth_header || "",
+    field_name: cfg[`field_name_${env}`] || cfg.field_name || "",
+  };
+}
+
+function missingFor(cfg: Config, env: Environment): string[] {
+  const scoped = configFor(cfg, env);
+  return REQUIRED.filter((field) => !scoped[field]);
+}
 
 async function sha256(bytes: Uint8Array): Promise<string> {
   const digest = await crypto.subtle.digest("SHA-256", bytes);
@@ -94,6 +121,7 @@ Deno.serve(async (req) => {
     mime_type?: string;
     content_base64?: string;
     action?: string;
+    environment?: string;
   };
   try {
     payload = await req.json();
@@ -110,20 +138,31 @@ Deno.serve(async (req) => {
     .eq("workspace_id", workspaceId)
     .maybeSingle();
   const cfg = (credentials?.config ?? {}) as Config;
-  const missing = REQUIRED.filter((field) => !cfg[field]);
+  const environment = (
+    ENVIRONMENTS as readonly string[]
+  ).includes(payload.environment ?? "")
+    ? (payload.environment as Environment)
+    : "prod";
+  const missing = missingFor(cfg, environment);
 
   // The client asks first whether sending is even possible, so it can hide
-  // the affordance instead of offering a button that cannot work.
+  // the affordance instead of offering a button that cannot work. The
+  // per-environment map doubles as the deployment probe: a client only
+  // offers the UAT/dev choice when this function demonstrably understands
+  // it — an older function would ignore the parameter and send to prod.
   if (payload.action === "config") {
     return json({
-      configured: missing.length === 0,
+      configured: missingFor(cfg, "prod").length === 0,
       provider: credentials?.provider ?? "generic",
-      missing,
+      missing: missingFor(cfg, "prod"),
+      environments: Object.fromEntries(
+        ENVIRONMENTS.map((env) => [env, missingFor(cfg, env).length === 0]),
+      ),
     });
   }
 
   if (missing.length > 0) {
-    return json({ error: "not_configured", missing }, 409);
+    return json({ error: "not_configured", missing, environment }, 409);
   }
 
   // WHO is asking: the caller's own JWT, checked against the workspace.
@@ -165,7 +204,12 @@ Deno.serve(async (req) => {
     detail: string;
   };
   try {
-    outcome = await submitGeneric(cfg, fileName, mimeType, bytes);
+    outcome = await submitGeneric(
+      configFor(cfg, environment),
+      fileName,
+      mimeType,
+      bytes,
+    );
   } catch (error) {
     outcome = {
       status: "failed",
@@ -189,11 +233,13 @@ Deno.serve(async (req) => {
     document_hash: hash,
     detail: outcome.detail,
     by_name: profile?.display_name ?? "",
+    environment,
   });
 
   return json({
     status: outcome.status,
     external_id: outcome.externalId,
     detail: outcome.detail,
+    environment,
   }, outcome.status === "accepted" ? 200 : 502);
 });

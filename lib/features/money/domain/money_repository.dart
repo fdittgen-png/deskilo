@@ -243,6 +243,7 @@ abstract class MoneyRepository {
     required String fileName,
     required String mimeType,
     required List<int> bytes,
+    String environment = 'prod',
   });
 
   /// invoiceId → its LATEST transmission (0071); invoices never sent are

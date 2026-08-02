@@ -3140,6 +3140,90 @@ abstract class AppLocalizations {
   /// **'The platform settings could not be loaded. Check your connection and try again.'**
   String get einvoiceConfigUnavailable;
 
+  /// Title of the environment picker sheet (#393), shown only in developer mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to which platform?'**
+  String get einvoiceEnvTitle;
+
+  /// Environment label: the real platform.
+  ///
+  /// In en, this message translates to:
+  /// **'Production'**
+  String get einvoiceEnvProd;
+
+  /// Environment label: the UAT endpoint.
+  ///
+  /// In en, this message translates to:
+  /// **'UAT (test platform)'**
+  String get einvoiceEnvUat;
+
+  /// Environment label: the dev endpoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Dev (test platform)'**
+  String get einvoiceEnvDev;
+
+  /// Subtitle under the production option.
+  ///
+  /// In en, this message translates to:
+  /// **'The real submission.'**
+  String get einvoiceEnvProdHint;
+
+  /// Subtitle under a test-environment option.
+  ///
+  /// In en, this message translates to:
+  /// **'A rehearsal — logged as a test send.'**
+  String get einvoiceEnvTestHint;
+
+  /// Success snack for a non-production send — a rehearsal must never read like the real submission.
+  ///
+  /// In en, this message translates to:
+  /// **'Test send accepted ({env}).'**
+  String invoiceSendAcceptedTest(String env);
+
+  /// Section title on the platform config screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Test environments (UAT / Dev)'**
+  String get einvoiceTestEnvsTitle;
+
+  /// Help text under the test-environments section.
+  ///
+  /// In en, this message translates to:
+  /// **'Separate endpoints and tokens for rehearsals. The choice appears at send time only while developer mode is on.'**
+  String get einvoiceTestEnvsHelp;
+
+  /// Field label.
+  ///
+  /// In en, this message translates to:
+  /// **'UAT upload URL'**
+  String get einvoiceUatEndpoint;
+
+  /// Field label.
+  ///
+  /// In en, this message translates to:
+  /// **'UAT token or credential'**
+  String get einvoiceUatToken;
+
+  /// Field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Dev upload URL'**
+  String get einvoiceDevEndpoint;
+
+  /// Field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Dev token or credential'**
+  String get einvoiceDevToken;
+
+  /// Tiny chip on a transmission row whose environment is not production.
+  ///
+  /// In en, this message translates to:
+  /// **'test'**
+  String get invoiceSentTestChip;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

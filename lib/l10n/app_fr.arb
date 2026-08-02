@@ -685,6 +685,27 @@
   "fecMissingSiren": "Le FEC porte le nom de votre numéro d'immatriculation — renseignez-le d'abord dans Identité légale.",
   "invoiceEInvoiceStaleIdentity": "Votre identité légale est complète, mais cette facture a été signée avant et conserve ce avec quoi elle a été émise. Marquez-la erronée puis émettez un remplacement pour porter la nouvelle identité.",
   "einvoiceConfigUnavailable": "Impossible de charger la configuration de la plateforme. Vérifiez votre connexion et réessayez.",
+  "einvoiceEnvTitle": "Envoyer vers quelle plateforme ?",
+  "einvoiceEnvProd": "Production",
+  "einvoiceEnvUat": "UAT (plateforme de test)",
+  "einvoiceEnvDev": "Dev (plateforme de test)",
+  "einvoiceEnvProdHint": "La transmission réelle.",
+  "einvoiceEnvTestHint": "Une répétition — journalisée comme envoi de test.",
+  "invoiceSendAcceptedTest": "Envoi de test accepté ({env}).",
+  "@invoiceSendAcceptedTest": {
+    "placeholders": {
+      "env": {
+        "type": "String"
+      }
+    }
+  },
+  "einvoiceTestEnvsTitle": "Environnements de test (UAT / Dev)",
+  "einvoiceTestEnvsHelp": "Points d'accès et jetons distincts pour les répétitions. Le choix apparaît à l'envoi uniquement quand le mode développeur est actif.",
+  "einvoiceUatEndpoint": "URL d’envoi UAT",
+  "einvoiceUatToken": "Jeton ou identifiant UAT",
+  "einvoiceDevEndpoint": "URL d’envoi Dev",
+  "einvoiceDevToken": "Jeton ou identifiant Dev",
+  "invoiceSentTestChip": "test",
   "eventTypeMemberJoin": "Nouveau membre",
   "memberStatusPending": "En attente",
   "pendingApprovalTitle": "En attente d'approbation",

@@ -7,7 +7,6 @@ import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_picker.dart';
-import 'package:deskilo/core/trace/dev_mode.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
@@ -16,16 +15,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/mock_providers.dart';
-
-class _InMemoryDevModeStore implements DevModeStore {
-  bool enabled = false;
-
-  @override
-  Future<bool> read() async => enabled;
-
-  @override
-  Future<void> write(bool enabled) async => this.enabled = enabled;
-}
 
 // A 1×1 transparent PNG — enough for MemoryImage/codec to accept.
 final _png = Uint8List.fromList([
@@ -45,7 +34,7 @@ Future<void> pumpSettings(
     ProviderScope(
       overrides: [
         ...standardTestOverrides(profile: profile),
-        devModeStoreProvider.overrideWithValue(_InMemoryDevModeStore()),
+        
         filePickerProvider.overrideWithValue(
           (XTypeGroup group) async =>
               XFile.fromData(_png, name: 'me.png', mimeType: 'image/png'),

@@ -35,7 +35,9 @@ const Map<String, int> _baseline = {
   'lib/features/money/presentation/screens/money_screen.dart': 980,
   'lib/features/workspace/presentation/screens/members_screen.dart': 910,
   'lib/features/members/presentation/screens/directory_screen.dart': 900,
-  'lib/features/money/presentation/invoice_actions.dart': 900,
+  // 900→920 (2026-08-01): #393 environment picker threaded through the
+  // send flow — feature lines, not accretion; picker itself is its own file.
+  'lib/features/money/presentation/invoice_actions.dart': 920,
   'lib/features/workspace/domain/workspace_xml.dart': 800,
   'lib/features/reservations/presentation/widgets/week_grid.dart': 770,
   'lib/features/money/data/supabase_money_repository.dart': 750,

@@ -4,7 +4,6 @@
 // pins the normalization rule (+ + digits) on the exact repository call
 // the UI makes; emptying the field clears the share again.
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/core/trace/dev_mode.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,17 +11,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/mock_providers.dart';
-
-/// In-memory [DevModeStore]; settings watches it, keep it off the channels.
-class _InMemoryDevModeStore implements DevModeStore {
-  bool enabled = false;
-
-  @override
-  Future<bool> read() async => enabled;
-
-  @override
-  Future<void> write(bool enabled) async => this.enabled = enabled;
-}
 
 Future<void> pumpSettings(
   WidgetTester tester,
@@ -32,7 +20,6 @@ Future<void> pumpSettings(
     ProviderScope(
       overrides: [
         ...standardTestOverrides(profile: profile),
-        devModeStoreProvider.overrideWithValue(_InMemoryDevModeStore()),
       ],
       child: const DeskiloApp(),
     ),
