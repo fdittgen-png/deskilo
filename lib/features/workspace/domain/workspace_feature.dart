@@ -26,7 +26,9 @@ enum WorkspaceFeature {
   spaceQrCodes,
   coOwner,
   invoicing,
-  adminInvoicing;
+  adminInvoicing,
+  autoCheckInOut,
+  dataExport;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -142,6 +144,17 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // safety net stays on regardless — this gates the appointment UI.
   WorkspaceFeature.coOwner:
       FeatureManifestEntry(feature: WorkspaceFeature.coOwner),
+  // End-of-day sweep (#396): reservations never checked in/out complete
+  // themselves once their time has passed. Default OFF — it rewrites
+  // attendance records, which is an explicit owner decision.
+  WorkspaceFeature.autoCheckInOut: FeatureManifestEntry(
+    feature: WorkspaceFeature.autoCheckInOut,
+    defaultOn: false,
+  ),
+  // Owner data export as an Excel workbook (#395). A read-only
+  // convenience, so it follows the default-on rule.
+  WorkspaceFeature.dataExport:
+      FeatureManifestEntry(feature: WorkspaceFeature.dataExport),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start

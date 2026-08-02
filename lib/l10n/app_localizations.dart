@@ -1964,6 +1964,30 @@ abstract class AppLocalizations {
   /// **'Appoint co-owners: owner permissions now (active) or succession-in-waiting (passive).'**
   String get featureCoOwnerDesc;
 
+  /// Feature toggle (#396): reservations never checked in or out complete themselves once their time has passed.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto check-in/out at day end'**
+  String get featureAutoCheckInOut;
+
+  /// Feature toggle (#395): the owner can download the workspace data as an Excel workbook.
+  ///
+  /// In en, this message translates to:
+  /// **'Data export (Excel)'**
+  String get featureDataExport;
+
+  /// Description under the auto check-in/out feature toggle (#396).
+  ///
+  /// In en, this message translates to:
+  /// **'Reservations never checked in or out complete themselves once their time has passed.'**
+  String get featureAutoCheckInOutDesc;
+
+  /// Description under the data-export feature toggle (#395).
+  ///
+  /// In en, this message translates to:
+  /// **'Download all workspace data as an Excel workbook.'**
+  String get featureDataExportDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:

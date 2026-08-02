@@ -6,6 +6,7 @@ import '../../../core/cache/cached_fetch.dart';
 
 import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
+import '../../../core/trace/trace_logger.dart';
 
 class SupabaseReservationRepository implements ReservationRepository {
   SupabaseReservationRepository(this._client, this._cache);
@@ -33,13 +34,31 @@ class SupabaseReservationRepository implements ReservationRepository {
             ':${to.toUtc().toIso8601String()}',
         ttl: const Duration(minutes: 15),
         mode: CacheReadMode.networkFirst,
-        fetchRaw: () => _client
-            .from('reservations')
-            .select()
-            .eq('workspace_id', workspaceId)
-            .lt('starts_at', to.toUtc().toIso8601String())
-            .gt('ends_at', from.toUtc().toIso8601String())
-            .order('starts_at', ascending: true),
+        fetchRaw: () async {
+          // Lazy day-end sweep before reading (#396, the
+          // sweep_pending_events pattern): a no-op unless the workspace
+          // enabled autoCheckInOut — the RPC checks the flag server-side.
+          // Inside fetchRaw on purpose: when the network is down the
+          // cache path answers without a doomed extra round-trip. And
+          // NEVER fatal — a sweep that fails (function not yet applied,
+          // transient hiccup) must not take the reservation read down
+          // with it; the next fetch simply tries again.
+          try {
+            await _client.rpc<dynamic>('sweep_day_end', params: {
+              'p_workspace_id': workspaceId,
+            });
+          } catch (e, st) {
+            TraceLogger.instance
+                .warn('booking', 'day-end sweep failed', error: e, stackTrace: st);
+          }
+          return _client
+              .from('reservations')
+              .select()
+              .eq('workspace_id', workspaceId)
+              .lt('starts_at', to.toUtc().toIso8601String())
+              .gt('ends_at', from.toUtc().toIso8601String())
+              .order('starts_at', ascending: true);
+        },
         parse: (payload) => [
           for (final row in payload as List)
             _fromRow(Map<String, dynamic>.from(row as Map)),

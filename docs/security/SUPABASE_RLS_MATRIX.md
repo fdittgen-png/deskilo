@@ -130,3 +130,17 @@ every `auth_value*` stays secret. 0074 also adds
 `invoice_transmissions.environment` (`prod`/`uat`/`dev`, default `prod`) —
 same policies, one more column, so a rehearsal is never mistaken for the
 real submission.
+
+## Day-end sweep (0075 — `sweep_day_end`)
+
+| Operation | anon | user | worker | admin | owner | Mechanism |
+|---|---|---|---|---|---|---|
+| complete past open reservations | — | — | RPC¹ | RPC¹ | RPC¹ | `sweep_day_end(workspace)` SECURITY DEFINER, invoked lazily before reservation reads |
+
+¹ Any ACTIVE member may trigger it for their own workspace — the write it
+performs is the workspace's configured policy, not the caller's privilege:
+the RPC is a no-op unless `feature_flags.autoCheckInOut = true` (jsonb
+boolean check, junk counts as OFF — the 0021 idiom), and it only ever
+moves `reserved`/`checked_in` rows whose OWN `ends_at` has passed to
+`completed` (stamping `starts_at`/`ends_at`). Cancelled and released rows
+are untouchable by shape of the WHERE clause.

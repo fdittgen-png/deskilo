@@ -4,6 +4,8 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 
+import 'test_clock.dart';
+
 /// In-memory [ReservationRepository] mimicking the DB exclusion constraint
 /// and the RPC state checks (fakes over mocks).
 class FakeReservationRepository implements ReservationRepository {
@@ -30,12 +32,40 @@ class FakeReservationRepository implements ReservationRepository {
         start.isBefore(r.endsAt));
   }
 
+  /// Mirrors `sweep_day_end` (0075): with the workspace flag on, any
+  /// fetch first completes past reservations nobody checked in or out.
+  /// The server gates on `feature_flags.autoCheckInOut`; tests flip this
+  /// bool instead.
+  bool autoCheckInOut = false;
+
+  void _sweepDayEnd(String workspaceId) {
+    if (!autoCheckInOut) return;
+    for (var i = 0; i < reservations.length; i++) {
+      final r = reservations[i];
+      if (r.workspaceId != workspaceId) continue;
+      if (!r.endsAt.isBefore(kTestNow)) continue;
+      if (r.status == ReservationStatus.reserved) {
+        reservations[i] = r.copyWith(
+          status: ReservationStatus.completed,
+          checkedInAt: r.startsAt,
+          checkedOutAt: r.endsAt,
+        );
+      } else if (r.status == ReservationStatus.checkedIn) {
+        reservations[i] = r.copyWith(
+          status: ReservationStatus.completed,
+          checkedOutAt: r.endsAt,
+        );
+      }
+    }
+  }
+
   @override
   Future<List<Reservation>> fetchWindow(
     String workspaceId, {
     required DateTime from,
     required DateTime to,
   }) async {
+    _sweepDayEnd(workspaceId);
     return reservations
         .where((r) =>
             r.workspaceId == workspaceId &&

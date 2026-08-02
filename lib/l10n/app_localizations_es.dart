@@ -1039,6 +1039,21 @@ class AppLocalizationsEs extends AppLocalizations {
       'Nombrar copropietarios: permisos de propietario ya (activo) o sucesión en espera (pasivo).';
 
   @override
+  String get featureAutoCheckInOut =>
+      'Entrada/salida automática al final del día';
+
+  @override
+  String get featureDataExport => 'Exportación de datos (Excel)';
+
+  @override
+  String get featureAutoCheckInOutDesc =>
+      'Las reservas sin entrada o salida registradas se completan solas cuando pasa su horario.';
+
+  @override
+  String get featureDataExportDesc =>
+      'Descargar todos los datos del espacio en un libro de Excel.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override

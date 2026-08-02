@@ -84,6 +84,13 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.adminInvoicing =>
           l10n?.featureAdminInvoicingDesc ??
               'Admins issue invoices too. The owner always can.',
+        WorkspaceFeature.autoCheckInOut =>
+          l10n?.featureAutoCheckInOutDesc ??
+              'Reservations never checked in or out complete themselves '
+                  'once their time has passed.',
+        WorkspaceFeature.dataExport =>
+          l10n?.featureDataExportDesc ??
+              'Download all workspace data as an Excel workbook.',
         WorkspaceFeature.adminLevelAssign =>
           l10n?.featureAdminLevelAssignDesc ??
               'Admins assign level reservations to members. '

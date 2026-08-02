@@ -1034,6 +1034,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Appoint co-owners: owner permissions now (active) or succession-in-waiting (passive).';
 
   @override
+  String get featureAutoCheckInOut => 'Auto check-in/out at day end';
+
+  @override
+  String get featureDataExport => 'Data export (Excel)';
+
+  @override
+  String get featureAutoCheckInOutDesc =>
+      'Reservations never checked in or out complete themselves once their time has passed.';
+
+  @override
+  String get featureDataExportDesc =>
+      'Download all workspace data as an Excel workbook.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override

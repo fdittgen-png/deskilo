@@ -1040,6 +1040,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Mit-Inhaber ernennen: Inhaber-Rechte sofort (aktiv) oder wartende Nachfolge (passiv).';
 
   @override
+  String get featureAutoCheckInOut => 'Auto-Check-in/-out am Tagesende';
+
+  @override
+  String get featureDataExport => 'Datenexport (Excel)';
+
+  @override
+  String get featureAutoCheckInOutDesc =>
+      'Reservierungen ohne Check-in oder Check-out schließen sich selbst, sobald ihre Zeit vorbei ist.';
+
+  @override
+  String get featureDataExportDesc =>
+      'Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override

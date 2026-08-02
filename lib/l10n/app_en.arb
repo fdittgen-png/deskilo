@@ -1408,6 +1408,22 @@
   "@featureCoOwnerDesc": {
     "description": "Subtitle of the co-owner feature toggle"
   },
+  "featureAutoCheckInOut": "Auto check-in/out at day end",
+  "@featureAutoCheckInOut": {
+    "description": "Feature toggle (#396): reservations never checked in or out complete themselves once their time has passed."
+  },
+  "featureDataExport": "Data export (Excel)",
+  "@featureDataExport": {
+    "description": "Feature toggle (#395): the owner can download the workspace data as an Excel workbook."
+  },
+  "featureAutoCheckInOutDesc": "Reservations never checked in or out complete themselves once their time has passed.",
+  "@featureAutoCheckInOutDesc": {
+    "description": "Description under the auto check-in/out feature toggle (#396)."
+  },
+  "featureDataExportDesc": "Download all workspace data as an Excel workbook.",
+  "@featureDataExportDesc": {
+    "description": "Description under the data-export feature toggle (#395)."
+  },
   "helpTitle": "Help",
   "helpContents": "Contents",
   "inviteSectionTitle": "Invite someone",

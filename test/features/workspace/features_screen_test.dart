@@ -75,7 +75,10 @@ void main() {
         .widgetList<SwitchListTile>(find.byType(SwitchListTile))
         .where((t) => t.value)
         .length;
-    expect(onCount, featureManifest.length - 6);
+    // Default-off owner decisions: adminSeatBlocking, accessorySupplements,
+    // onlinePayments, levelBooking, adminLevelAssign, adminInvoicing,
+    // autoCheckInOut (#396).
+    expect(onCount, featureManifest.length - 7);
   });
 
   testWidgets('toggling a feature persists the full map and flips the switch',
@@ -96,7 +99,7 @@ void main() {
       unorderedEquals(
         ['moneyTab', 'adminSeatBlocking', 'accessorySupplements',
           'onlinePayments', 'levelBooking', 'adminLevelAssign',
-          'adminInvoicing'],
+          'adminInvoicing', 'autoCheckInOut'],
       ),
     );
     expect(switchTitled(tester, 'Money tab').value, isFalse);

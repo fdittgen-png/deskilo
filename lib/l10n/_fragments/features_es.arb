@@ -39,5 +39,9 @@
   "featureSpaceQrCodesDesc": "Tarjetas QR imprimibles por puesto, mesa, oficina y planta — escanea para reservar o fichar.",
   "featureRequires": "Requiere {feature}",
   "featureCoOwner": "Copropietarios",
-  "featureCoOwnerDesc": "Nombrar copropietarios: permisos de propietario ya (activo) o sucesión en espera (pasivo)."
+  "featureCoOwnerDesc": "Nombrar copropietarios: permisos de propietario ya (activo) o sucesión en espera (pasivo).",
+  "featureAutoCheckInOut": "Entrada/salida automática al final del día",
+  "featureDataExport": "Exportación de datos (Excel)",
+  "featureAutoCheckInOutDesc": "Las reservas sin entrada o salida registradas se completan solas cuando pasa su horario.",
+  "featureDataExportDesc": "Descargar todos los datos del espacio en un libro de Excel."
 }
