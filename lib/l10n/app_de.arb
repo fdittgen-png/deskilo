@@ -1130,6 +1130,8 @@
   "workspaceDeskTransparencyTitle": "Tisch-Transparenz",
   "workspaceDeskTransparencyHelper": "Verringere die Deckkraft der Tische, damit das Hintergrundfoto der Etage durchscheint.",
   "workspaceDeskOpacityValue": "Deckkraft: {percent} %",
+  "workspaceExcelExport": "Daten exportieren (Excel)",
+  "workspaceExcelExportSubtitle": "Alle Daten in einer Arbeitsmappe: Buchungen, Zahlungen, Rechnungen, Mitglieder und Plan — je ein Tab.",
   "workspaceXmlExport": "Workspace exportieren (XML)",
   "workspaceXmlExportSubtitle": "Einstellungen und Raumplan als teilbare Datei. Ohne Mitglieder, Buchungen oder Finanzdaten.",
   "workspaceXmlImport": "Workspace importieren (XML)",

@@ -41,6 +41,7 @@ import '../../domain/workspace_import.dart';
 import '../../domain/workspace_xml.dart';
 import '../../providers/workspace_import_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../excel_export.dart';
 import '../country_names.dart';
 import '../feature_names.dart';
 import '../../../../core/time/clock.dart';
@@ -1155,6 +1156,33 @@ class _WorkspaceSettingsScreenState
                     ),
                     enabled: !_busy,
                     onTap: () => _exportSpaceCodes(workspace),
+                  ),
+                  // #395 — the full data workbook. The tile is the ONLY
+                  // surface, so the flag gate lives here (no route to
+                  // guard); headers inside the file are stable English
+                  // like the XML schema, the UI around it is localized.
+                  if (ref
+                      .watch(enabledFeaturesSyncProvider)
+                      .contains(WorkspaceFeature.dataExport))
+                  ListTile(
+                    key: const Key('workspaceSettingsExportExcel'),
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.table_view_outlined),
+                    title: Text(
+                      l10n?.workspaceExcelExport ?? 'Export data (Excel)',
+                    ),
+                    subtitle: Text(
+                      l10n?.workspaceExcelExportSubtitle ??
+                          'Every dataset in one workbook: bookings, '
+                              'payments, invoices, members and the floor '
+                              'plan — a tab each.',
+                    ),
+                    enabled: !_busy,
+                    onTap: () async {
+                      setState(() => _busy = true);
+                      await exportWorkspaceExcel(context, ref, workspace);
+                      if (mounted) setState(() => _busy = false);
+                    },
                   ),
                   // #165 — restore from an exported file. Replaces the
                   // floor plan (guarded by preview + destructive confirm);

@@ -30,6 +30,11 @@ abstract class ReservationRepository {
     required DateTime to,
   });
 
+  /// EVERY reservation of the workspace, oldest first — the reservations
+  /// and check-ins tabs of the data export (#395). Not windowed: an
+  /// export that silently clips history reads as complete when it is not.
+  Future<List<Reservation>> fetchAllForExport(String workspaceId);
+
   /// Creates a reservation for the signed-in member. [checkIn] makes it an
   /// atomic walk-up (reservation + check-in in one transaction).
   Future<String> create({

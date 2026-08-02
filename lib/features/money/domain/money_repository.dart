@@ -5,6 +5,7 @@ import 'fee_band.dart';
 
 import 'invoice.dart';import 'ledger_entry.dart';
 import 'package.dart';
+import 'payment_intent.dart';
 import 'payment_method.dart';
 import 'payment_provider.dart';
 import 'service_item.dart';
@@ -75,6 +76,15 @@ abstract class MoneyRepository {
   Future<Statement> fetchStatement(String memberId, String period);
 
   Future<List<LedgerEntry>> fetchLedger(String memberId);
+
+  /// EVERY member's ledger of the workspace — the payments/services tabs
+  /// of the data export (#395). RLS already grants admins the full table
+  /// (0008); a worker calling this gets only their own rows back.
+  Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId);
+
+  /// All online-payment attempts of the workspace (0045) — the export's
+  /// online-payments rows. Admin-readable by the 0045 policy.
+  Future<List<PaymentIntent>> fetchPaymentIntents(String workspaceId);
 
   /// Returns the pending event id. [method] is how the money moved
   /// (#154); null = not specified (renders method-less, like pre-#154

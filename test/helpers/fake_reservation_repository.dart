@@ -60,6 +60,11 @@ class FakeReservationRepository implements ReservationRepository {
   }
 
   @override
+  Future<List<Reservation>> fetchAllForExport(String workspaceId) async =>
+      [...reservations.where((r) => r.workspaceId == workspaceId)]
+        ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
+
+  @override
   Future<List<Reservation>> fetchWindow(
     String workspaceId, {
     required DateTime from,

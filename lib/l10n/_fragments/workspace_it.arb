@@ -87,5 +87,7 @@
   "workspaceResetDone": "Spazio reimpostato.",
   "workspaceDeskTransparencyTitle": "Trasparenza dei tavoli",
   "workspaceDeskTransparencyHelper": "Riduci l'opacità dei tavoli per far trasparire la foto di sfondo del piano.",
-  "workspaceDeskOpacityValue": "Opacità: {percent}%"
+  "workspaceDeskOpacityValue": "Opacità: {percent}%",
+  "workspaceExcelExport": "Esporta i dati (Excel)",
+  "workspaceExcelExportSubtitle": "Tutti i dati in una cartella: prenotazioni, pagamenti, fatture, membri e piantina — una scheda ciascuno."
 }

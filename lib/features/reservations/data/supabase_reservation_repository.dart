@@ -66,6 +66,18 @@ class SupabaseReservationRepository implements ReservationRepository {
       );
 
   @override
+  Future<List<Reservation>> fetchAllForExport(String workspaceId) async {
+    final rows = await _client
+        .from('reservations')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('starts_at', ascending: true);
+    return [
+      for (final row in rows) _fromRow(Map<String, dynamic>.from(row)),
+    ];
+  }
+
+  @override
   Future<String> create({
     required String workspaceId,
     String? seatId,
