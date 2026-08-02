@@ -1711,6 +1711,51 @@ class AppLocalizationsEn extends AppLocalizations {
       'The platform settings could not be loaded. Check your connection and try again.';
 
   @override
+  String get einvoiceEnvTitle => 'Send to which platform?';
+
+  @override
+  String get einvoiceEnvProd => 'Production';
+
+  @override
+  String get einvoiceEnvUat => 'UAT (test platform)';
+
+  @override
+  String get einvoiceEnvDev => 'Dev (test platform)';
+
+  @override
+  String get einvoiceEnvProdHint => 'The real submission.';
+
+  @override
+  String get einvoiceEnvTestHint => 'A rehearsal — logged as a test send.';
+
+  @override
+  String invoiceSendAcceptedTest(String env) {
+    return 'Test send accepted ($env).';
+  }
+
+  @override
+  String get einvoiceTestEnvsTitle => 'Test environments (UAT / Dev)';
+
+  @override
+  String get einvoiceTestEnvsHelp =>
+      'Separate endpoints and tokens for rehearsals. The choice appears at send time only while developer mode is on.';
+
+  @override
+  String get einvoiceUatEndpoint => 'UAT upload URL';
+
+  @override
+  String get einvoiceUatToken => 'UAT token or credential';
+
+  @override
+  String get einvoiceDevEndpoint => 'Dev upload URL';
+
+  @override
+  String get einvoiceDevToken => 'Dev token or credential';
+
+  @override
+  String get invoiceSentTestChip => 'test';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

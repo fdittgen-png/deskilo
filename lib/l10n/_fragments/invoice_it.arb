@@ -356,5 +356,26 @@
   "fecAccountBank": "Banca",
   "fecMissingSiren": "Il FEC prende il nome dal numero di registrazione — inseriscilo prima in Identità legale.",
   "invoiceEInvoiceStaleIdentity": "La tua identità legale ora è completa, ma questa fattura è stata firmata prima e conserva ciò con cui è stata emessa. Segnala come errata ed emetti una sostitutiva perché porti la nuova identità.",
-  "einvoiceConfigUnavailable": "Impossibile caricare la configurazione della piattaforma. Controlla la connessione e riprova."
+  "einvoiceConfigUnavailable": "Impossibile caricare la configurazione della piattaforma. Controlla la connessione e riprova.",
+  "einvoiceEnvTitle": "Inviare a quale piattaforma?",
+  "einvoiceEnvProd": "Produzione",
+  "einvoiceEnvUat": "UAT (piattaforma di prova)",
+  "einvoiceEnvDev": "Dev (piattaforma di prova)",
+  "einvoiceEnvProdHint": "La trasmissione reale.",
+  "einvoiceEnvTestHint": "Una prova — registrata come invio di test.",
+  "invoiceSendAcceptedTest": "Invio di test accettato ({env}).",
+  "@invoiceSendAcceptedTest": {
+    "placeholders": {
+      "env": {
+        "type": "String"
+      }
+    }
+  },
+  "einvoiceTestEnvsTitle": "Ambienti di prova (UAT / Dev)",
+  "einvoiceTestEnvsHelp": "Endpoint e token separati per le prove. La scelta appare all’invio solo con la modalità sviluppatore attiva.",
+  "einvoiceUatEndpoint": "URL di caricamento UAT",
+  "einvoiceUatToken": "Token o credenziale UAT",
+  "einvoiceDevEndpoint": "URL di caricamento Dev",
+  "einvoiceDevToken": "Token o credenziale Dev",
+  "invoiceSentTestChip": "test"
 }

@@ -113,3 +113,20 @@ Every migration that touches a table, policy, or `security definer` function
 MUST update this matrix in the same PR and re-run
 `get_advisors(type: security)` (or the Supabase dashboard linter) — the
 advisor result belongs in the PR description.
+
+## E-invoice transmission (0071 · 0074)
+
+| Table | Operation | anon | user | worker | admin | owner | Mechanism |
+|---|---|---|---|---|---|---|---|
+| einvoice_credentials | any | — | — | — | — | RPC¹ | RLS enabled, deliberately ZERO policies (deny-all); only `set/clear_einvoice_credentials` + `einvoice_status` (owner-gated SECURITY DEFINER) and the Edge Function via service role touch it |
+| invoice_transmissions | select | — | — | — | ✅ | ✅ | `is_admin_of(workspace_id)` |
+| invoice_transmissions | insert | — | — | — | — | — | Edge Function (service role) only — a client cannot claim an invoice was sent |
+
+¹ Secret VALUES never return to any client: `einvoice_status` echoes
+non-secret fields and the NAMES of set secrets. 0074 widens the non-secret
+set to the environment-suffixed endpoints (`endpoint_uat`, `endpoint_dev`,
+header/field overrides) so the owner UI can read back a test endpoint;
+every `auth_value*` stays secret. 0074 also adds
+`invoice_transmissions.environment` (`prod`/`uat`/`dev`, default `prod`) —
+same policies, one more column, so a rehearsal is never mistaken for the
+real submission.

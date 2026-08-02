@@ -22,6 +22,7 @@ import 'package:deskilo/core/scan/front_camera.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/core/scan/qr_scan_widget.dart';
 import 'package:deskilo/core/storage/active_workspace_store.dart';
+import 'package:deskilo/core/trace/dev_mode.dart';
 import 'package:deskilo/core/time/clock.dart';
 
 import 'test_clock.dart';
@@ -765,8 +766,24 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 /// Baseline overrides for widget tests: a signed-in user who is the owner
 /// of one workspace. Always start from these and add feature-specific
 /// overrides on top.
+/// In-memory [DevModeStore] — the settings toggle without the platform
+/// channel. Default OFF, like a fresh install; tests exercising
+/// developer-only affordances seed `InMemoryDevModeStore(enabled: true)`.
+class InMemoryDevModeStore implements DevModeStore {
+  InMemoryDevModeStore({this.enabled = false});
+
+  bool enabled;
+
+  @override
+  Future<bool> read() async => enabled;
+
+  @override
+  Future<void> write(bool value) async => enabled = value;
+}
+
 List<Override> standardTestOverrides({
   Clock? clock,
+  DevModeStore? devMode,
   AuthRepository? auth,
   WorkspaceRepository? workspace,
   FloorPlanRepository? floorPlan,
@@ -788,6 +805,7 @@ List<Override> standardTestOverrides({
     // The clock is defaulted here rather than per-test so a screen that
     // starts reading it does not quietly re-arm the time bomb.
     clockProvider.overrideWithValue(clock ?? FixedClock(kTestNow)),
+    devModeStoreProvider.overrideWithValue(devMode ?? InMemoryDevModeStore()),
     authRepositoryProvider
         .overrideWithValue(auth ?? FakeAuthRepository.signedIn()),
     workspaceRepositoryProvider.overrideWithValue(

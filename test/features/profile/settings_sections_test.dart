@@ -5,24 +5,12 @@
 // with Sign out set apart at the bottom. A plain member must not see the
 // Administration header (nor any of its entries) at all.
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/core/trace/dev_mode.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-
-/// In-memory [DevModeStore]; settings watches it, keep it off the channels.
-class _InMemoryDevModeStore implements DevModeStore {
-  bool enabled = false;
-
-  @override
-  Future<bool> read() async => enabled;
-
-  @override
-  Future<void> write(bool enabled) async => this.enabled = enabled;
-}
 
 Future<void> pumpSettingsAs(
   WidgetTester tester, {
@@ -49,7 +37,6 @@ Future<void> pumpSettingsAs(
     ProviderScope(
       overrides: [
         ...standardTestOverrides(workspace: workspace),
-        devModeStoreProvider.overrideWithValue(_InMemoryDevModeStore()),
       ],
       child: const DeskiloApp(),
     ),

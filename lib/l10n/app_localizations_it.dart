@@ -1725,6 +1725,52 @@ class AppLocalizationsIt extends AppLocalizations {
       'Impossibile caricare la configurazione della piattaforma. Controlla la connessione e riprova.';
 
   @override
+  String get einvoiceEnvTitle => 'Inviare a quale piattaforma?';
+
+  @override
+  String get einvoiceEnvProd => 'Produzione';
+
+  @override
+  String get einvoiceEnvUat => 'UAT (piattaforma di prova)';
+
+  @override
+  String get einvoiceEnvDev => 'Dev (piattaforma di prova)';
+
+  @override
+  String get einvoiceEnvProdHint => 'La trasmissione reale.';
+
+  @override
+  String get einvoiceEnvTestHint =>
+      'Una prova — registrata come invio di test.';
+
+  @override
+  String invoiceSendAcceptedTest(String env) {
+    return 'Invio di test accettato ($env).';
+  }
+
+  @override
+  String get einvoiceTestEnvsTitle => 'Ambienti di prova (UAT / Dev)';
+
+  @override
+  String get einvoiceTestEnvsHelp =>
+      'Endpoint e token separati per le prove. La scelta appare all’invio solo con la modalità sviluppatore attiva.';
+
+  @override
+  String get einvoiceUatEndpoint => 'URL di caricamento UAT';
+
+  @override
+  String get einvoiceUatToken => 'Token o credenziale UAT';
+
+  @override
+  String get einvoiceDevEndpoint => 'URL di caricamento Dev';
+
+  @override
+  String get einvoiceDevToken => 'Token o credenziale Dev';
+
+  @override
+  String get invoiceSentTestChip => 'test';
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override

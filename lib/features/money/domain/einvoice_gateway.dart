@@ -9,6 +9,7 @@ class EInvoiceGatewayConfig {
     required this.configured,
     this.provider = 'generic',
     this.missing = const [],
+    this.environments = const {},
   });
 
   /// No platform, or no function deployed — the affordance stays hidden.
@@ -21,6 +22,19 @@ class EInvoiceGatewayConfig {
 
   /// Config fields the owner has not filled in yet.
   final List<String> missing;
+
+  /// environment name → ready to send there (#393). EMPTY when the
+  /// deployed function predates environments — and that emptiness is the
+  /// safety latch: the app only offers a UAT/dev choice when the function
+  /// demonstrably understands the parameter, because an older one would
+  /// ignore it and send the test document to production.
+  final Map<String, bool> environments;
+
+  /// Test environments (anything but prod) that are ready to send.
+  List<String> get testEnvironments => [
+        for (final entry in environments.entries)
+          if (entry.key != 'prod' && entry.value) entry.key,
+      ];
 }
 
 /// What the platform answered.
@@ -65,6 +79,7 @@ class InvoiceTransmission {
     this.documentHash = '',
     this.detail = '',
     this.byName = '',
+    this.environment = 'prod',
   });
 
   final String invoiceId;
@@ -78,7 +93,13 @@ class InvoiceTransmission {
   final String detail;
   final String byName;
 
+  /// Where it went (#393): a rehearsal must never read like the real
+  /// submission. 'prod' for every row that predates environments.
+  final String environment;
+
   bool get accepted => status == EInvoiceSubmissionStatus.accepted;
+
+  bool get isTestSend => environment != 'prod';
 
   factory InvoiceTransmission.fromRow(Map<String, dynamic> row) =>
       InvoiceTransmission(
@@ -93,6 +114,7 @@ class InvoiceTransmission {
         documentHash: row['document_hash'] as String? ?? '',
         detail: row['detail'] as String? ?? '',
         byName: row['by_name'] as String? ?? '',
+        environment: row['environment'] as String? ?? 'prod',
       );
 }
 

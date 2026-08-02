@@ -2,7 +2,6 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
 import 'package:deskilo/core/theme/theme_controller.dart';
-import 'package:deskilo/core/trace/dev_mode.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -33,17 +32,6 @@ class _InMemoryLocaleStore implements LocaleStore {
   Future<void> write(String? languageCode) async => code = languageCode;
 }
 
-/// In-memory [DevModeStore]; settings watches it, keep it off the channels.
-class _InMemoryDevModeStore implements DevModeStore {
-  bool enabled = false;
-
-  @override
-  Future<bool> read() async => enabled;
-
-  @override
-  Future<void> write(bool enabled) async => this.enabled = enabled;
-}
-
 Future<void> pumpSettings(
   WidgetTester tester, {
   required InMemoryThemeStore store,
@@ -54,7 +42,6 @@ Future<void> pumpSettings(
         ...standardTestOverrides(),
         themeStoreProvider.overrideWithValue(store),
         localeStoreProvider.overrideWithValue(_InMemoryLocaleStore()),
-        devModeStoreProvider.overrideWithValue(_InMemoryDevModeStore()),
       ],
       child: const DeskiloApp(),
     ),

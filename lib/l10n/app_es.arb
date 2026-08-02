@@ -685,6 +685,27 @@
   "fecMissingSiren": "El FEC se nombra con tu número de registro — rellénalo primero en Identidad legal.",
   "invoiceEInvoiceStaleIdentity": "Tu identidad legal ya está completa, pero esta factura se firmó antes y conserva aquello con lo que se emitió. Márcala como errónea y emite una sustitución para que lleve la nueva identidad.",
   "einvoiceConfigUnavailable": "No se pudo cargar la configuración de la plataforma. Comprueba la conexión e inténtalo de nuevo.",
+  "einvoiceEnvTitle": "¿Enviar a qué plataforma?",
+  "einvoiceEnvProd": "Producción",
+  "einvoiceEnvUat": "UAT (plataforma de prueba)",
+  "einvoiceEnvDev": "Dev (plataforma de prueba)",
+  "einvoiceEnvProdHint": "La transmisión real.",
+  "einvoiceEnvTestHint": "Un ensayo — registrado como envío de prueba.",
+  "invoiceSendAcceptedTest": "Envío de prueba aceptado ({env}).",
+  "@invoiceSendAcceptedTest": {
+    "placeholders": {
+      "env": {
+        "type": "String"
+      }
+    }
+  },
+  "einvoiceTestEnvsTitle": "Entornos de prueba (UAT / Dev)",
+  "einvoiceTestEnvsHelp": "Endpoints y tokens separados para ensayos. La opción aparece al enviar solo con el modo desarrollador activo.",
+  "einvoiceUatEndpoint": "URL de subida UAT",
+  "einvoiceUatToken": "Token o credencial UAT",
+  "einvoiceDevEndpoint": "URL de subida Dev",
+  "einvoiceDevToken": "Token o credencial Dev",
+  "invoiceSentTestChip": "prueba",
   "eventTypeMemberJoin": "Nuevo miembro",
   "memberStatusPending": "Pendiente",
   "pendingApprovalTitle": "Esperando aprobación",

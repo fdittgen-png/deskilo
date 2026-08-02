@@ -31,6 +31,7 @@ Future<FakeMoneyRepository> _pumpArchive(
   WidgetTester tester, {
   required FakeMoneyRepository money,
   FakeWorkspaceRepository? workspace,
+  InMemoryDevModeStore? devMode,
 }) async {
   tester.view.physicalSize = const Size(800, 1600);
   tester.view.devicePixelRatio = 1.0;
@@ -40,6 +41,7 @@ Future<FakeMoneyRepository> _pumpArchive(
       overrides: standardTestOverrides(
         money: money,
         workspace: workspace ?? _identified(),
+        devMode: devMode,
       ),
       child: const DeskiloApp(),
     ),
@@ -175,5 +177,133 @@ void main() {
     expect(money.einvoiceConfig['auth_value'], 'Bearer s3cret',
         reason: 'a secret nobody can read back must not vanish on save');
     expect(money.einvoiceConfig['endpoint'], 'https://pa.example.com/v2/upload');
+  });
+
+  // ── Environments (#393) ────────────────────────────────────────────
+
+  /// The gateway as the NEW function reports it: prod ready, UAT ready.
+  const gatewayWithUat = EInvoiceGatewayConfig(
+    configured: true,
+    environments: {'prod': true, 'uat': true, 'dev': false},
+  );
+
+  testWidgets(
+      'dev mode ON + a UAT platform → Send asks which environment, and '
+      'choosing UAT posts there and says so', (tester) async {
+    final money = await _seeded()..einvoiceGateway = gatewayWithUat;
+    await _pumpArchive(
+      tester,
+      money: money,
+      devMode: InMemoryDevModeStore(enabled: true),
+    );
+
+    await _openEInvoiceSheet(tester, money.invoices.single.id);
+    await tester.tap(find.byKey(const ValueKey('invoice-einvoice-send')));
+    await tester.pumpAndSettle();
+
+    // The picker offers production and the configured UAT — never the
+    // unconfigured dev endpoint.
+    expect(find.byKey(const ValueKey('einvoice-env-prod')), findsOneWidget);
+    expect(find.byKey(const ValueKey('einvoice-env-uat')), findsOneWidget);
+    expect(find.byKey(const ValueKey('einvoice-env-dev')), findsNothing);
+
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const ValueKey('einvoice-env-uat')));
+      await tester.pump();
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+    });
+    await tester.pumpAndSettle();
+
+    expect(money.sentEInvoices.single.environment, 'uat');
+    // A rehearsal must never read like the real submission.
+    expect(find.text('Test send accepted (UAT).'), findsOneWidget);
+    expect(money.transmissions.values.single.isTestSend, isTrue);
+  });
+
+  testWidgets(
+      'dev mode OFF → no environment question, the send goes to production',
+      (tester) async {
+    final money = await _seeded()..einvoiceGateway = gatewayWithUat;
+    await _pumpArchive(tester, money: money);
+
+    await _openEInvoiceSheet(tester, money.invoices.single.id);
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const ValueKey('invoice-einvoice-send')));
+      await tester.pump();
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+    });
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('einvoice-env-prod')), findsNothing,
+        reason: 'a normal admin never sees a test choice');
+    expect(money.sentEInvoices.single.environment, 'prod');
+  });
+
+  testWidgets(
+      'dev mode ON but the DEPLOYED function predates environments → no '
+      'choice, production — the latch against misrouting a test send',
+      (tester) async {
+    // An old function's probe carries no environments map at all.
+    final money = await _seeded()
+      ..einvoiceGateway = const EInvoiceGatewayConfig(configured: true);
+    await _pumpArchive(
+      tester,
+      money: money,
+      devMode: InMemoryDevModeStore(enabled: true),
+    );
+
+    await _openEInvoiceSheet(tester, money.invoices.single.id);
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const ValueKey('invoice-einvoice-send')));
+      await tester.pump();
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+    });
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('einvoice-env-uat')), findsNothing);
+    expect(money.sentEInvoices.single.environment, 'prod');
+  });
+
+  testWidgets(
+      'the platform screen saves the UAT/dev endpoints as suffixed keys — '
+      'the shape the function and 0074 read', (tester) async {
+    final money = FakeMoneyRepository();
+    tester.view.physicalSize = const Size(800, 2200);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(money: money),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.pumpAndSettle();
+    // Deep link straight to the config screen — the settings entry is
+    // covered by the feature-gating tests.
+    final context = tester.element(find.byType(Scaffold).first);
+    GoRouter.of(context).push('/einvoice-config');
+    await tester.pumpAndSettle();
+
+    await tester.enterText(
+      find.byKey(const ValueKey('einvoice-endpoint')),
+      'https://prod.example/upload',
+    );
+    await tester.enterText(
+      find.byKey(const ValueKey('einvoice-endpoint-uat')),
+      'https://uat.example/upload',
+    );
+    await tester.enterText(
+      find.byKey(const ValueKey('einvoice-token-uat')),
+      'uat-secret',
+    );
+    await tester.ensureVisible(find.byKey(const ValueKey('einvoice-save')));
+    await tester.tap(find.byKey(const ValueKey('einvoice-save')));
+    await tester.pumpAndSettle();
+
+    expect(money.einvoiceConfig['endpoint'], 'https://prod.example/upload');
+    expect(money.einvoiceConfig['endpoint_uat'], 'https://uat.example/upload');
+    expect(money.einvoiceConfig['auth_value_uat'], 'uat-secret');
   });
 }

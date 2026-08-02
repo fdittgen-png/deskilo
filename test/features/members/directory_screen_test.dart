@@ -11,7 +11,6 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/core/theme/status_colors.dart';
-import 'package:deskilo/core/trace/dev_mode.dart';
 import 'package:deskilo/core/ui/empty_state.dart';
 import 'dart:typed_data';
 
@@ -28,17 +27,6 @@ import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
-
-/// In-memory [DevModeStore]; settings watches it, keep it off the channels.
-class _InMemoryDevModeStore implements DevModeStore {
-  bool enabled = false;
-
-  @override
-  Future<bool> read() async => enabled;
-
-  @override
-  Future<void> write(bool enabled) async => this.enabled = enabled;
-}
 
 // A 1×1 transparent PNG for avatar-image tests.
 final _pngBytes = Uint8List.fromList([
@@ -214,7 +202,6 @@ Future<void> _pumpDirectory(
           floorPlan: floorPlan,
           profile: profile,
         ),
-        devModeStoreProvider.overrideWithValue(_InMemoryDevModeStore()),
         if (linkLauncher != null)
           linkLauncherProvider.overrideWithValue(linkLauncher),
       ],

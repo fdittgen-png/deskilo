@@ -2298,6 +2298,67 @@
   "@einvoiceConfigUnavailable": {
     "description": "Shown when the e-invoice platform status probe fails"
   },
+  "einvoiceEnvTitle": "Send to which platform?",
+  "@einvoiceEnvTitle": {
+    "description": "Title of the environment picker sheet (#393), shown only in developer mode."
+  },
+  "einvoiceEnvProd": "Production",
+  "@einvoiceEnvProd": {
+    "description": "Environment label: the real platform."
+  },
+  "einvoiceEnvUat": "UAT (test platform)",
+  "@einvoiceEnvUat": {
+    "description": "Environment label: the UAT endpoint."
+  },
+  "einvoiceEnvDev": "Dev (test platform)",
+  "@einvoiceEnvDev": {
+    "description": "Environment label: the dev endpoint."
+  },
+  "einvoiceEnvProdHint": "The real submission.",
+  "@einvoiceEnvProdHint": {
+    "description": "Subtitle under the production option."
+  },
+  "einvoiceEnvTestHint": "A rehearsal — logged as a test send.",
+  "@einvoiceEnvTestHint": {
+    "description": "Subtitle under a test-environment option."
+  },
+  "invoiceSendAcceptedTest": "Test send accepted ({env}).",
+  "@invoiceSendAcceptedTest": {
+    "description": "Success snack for a non-production send — a rehearsal must never read like the real submission.",
+    "placeholders": {
+      "env": {
+        "type": "String"
+      }
+    }
+  },
+  "einvoiceTestEnvsTitle": "Test environments (UAT / Dev)",
+  "@einvoiceTestEnvsTitle": {
+    "description": "Section title on the platform config screen."
+  },
+  "einvoiceTestEnvsHelp": "Separate endpoints and tokens for rehearsals. The choice appears at send time only while developer mode is on.",
+  "@einvoiceTestEnvsHelp": {
+    "description": "Help text under the test-environments section."
+  },
+  "einvoiceUatEndpoint": "UAT upload URL",
+  "@einvoiceUatEndpoint": {
+    "description": "Field label."
+  },
+  "einvoiceUatToken": "UAT token or credential",
+  "@einvoiceUatToken": {
+    "description": "Field label."
+  },
+  "einvoiceDevEndpoint": "Dev upload URL",
+  "@einvoiceDevEndpoint": {
+    "description": "Field label."
+  },
+  "einvoiceDevToken": "Dev token or credential",
+  "@einvoiceDevToken": {
+    "description": "Field label."
+  },
+  "invoiceSentTestChip": "test",
+  "@invoiceSentTestChip": {
+    "description": "Tiny chip on a transmission row whose environment is not production."
+  },
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
   "pendingApprovalTitle": "Awaiting approval",
