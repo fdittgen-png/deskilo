@@ -175,6 +175,11 @@ jobs:
           echo "## Play internal release" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "- **Build number:** ${{ steps.bn.outputs.build_number }}" >> "$GITHUB_STEP_SUMMARY"
+          AAB=build/app/outputs/bundle/release/app-release.aab
+          if [ -f "$AAB" ]; then
+            BYTES=$(stat -c%s "$AAB")
+            echo "- **AAB size:** $(( BYTES / 1024 / 1024 )) MiB ($BYTES bytes)" >> "$GITHUB_STEP_SUMMARY"
+          fi
           echo "- **Track:** ${{ github.event.inputs.track || 'internal' }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- **Play upload:** ${{ env.HAS_PLAY_SA == 'true' && 'attempted' || 'SKIPPED (no service-account secret)' }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- **Trigger:** ${{ github.event_name }}" >> "$GITHUB_STEP_SUMMARY"

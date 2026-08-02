@@ -41,11 +41,19 @@ class MemberAvatar extends ConsumerWidget {
     final fg = foregroundColor ?? theme.colorScheme.onPrimaryContainer;
 
     final bytes = hasAvatar ? ref.watch(memberAvatarProvider(userId)).value : null;
+    // Decode at DISPLAY size (#401): a camera-sized photo fed straight to
+    // MemoryImage decodes at full resolution — tens of MB of bitmap to
+    // paint a small circle, once per member row. ResizeImage makes the
+    // engine decode to the circle's physical pixels instead.
+    final targetWidth =
+        (radius * 2 * MediaQuery.devicePixelRatioOf(context)).round();
     return CircleAvatar(
       radius: radius,
       backgroundColor: bg,
       foregroundColor: fg,
-      backgroundImage: bytes == null ? null : MemoryImage(bytes),
+      backgroundImage: bytes == null
+          ? null
+          : ResizeImage(MemoryImage(bytes), width: targetWidth),
       // The initial stays as the fallback child; a loaded photo covers it.
       child: bytes == null
           ? Text(

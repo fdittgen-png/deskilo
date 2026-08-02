@@ -113,7 +113,21 @@ jobs:
           script: |
             adb install -r build/app/outputs/flutter-apk/app-release.apk
             adb logcat -c
-            adb shell am start -W -n de.deskilo.app/.MainActivity
+            # Startup as a CI number (#401): am start -W reports TotalTime
+            # (ms to the activity being drawn). Print it on every run and
+            # fail over a budget sized for a software-rendered emulator —
+            # generous on purpose: this catches "startup got slow", not
+            # frame-perfect regressions, and a flaky gate teaches people
+            # to ignore red.
+            LAUNCH=$(adb shell am start -W -n de.deskilo.app/.MainActivity)
+            echo "$LAUNCH"
+            TOTAL=$(echo "$LAUNCH" | awk -F': *' '/TotalTime/{print $2}' | tr -d '\r')
+            echo "startup TotalTime: ${TOTAL}ms"
+            echo "STARTUP_MS=${TOTAL:-0}" >> "$GITHUB_ENV"
+            if [ "${TOTAL:-0}" -gt 8000 ]; then
+              echo "::error::startup TotalTime ${TOTAL}ms exceeds the 8000ms emulator budget"
+              exit 1
+            fi
             sleep 15
             adb logcat -d > launch-logcat.txt
             adb shell pidof de.deskilo.app || { echo "::error::release build crashed at launch (#86 regression) - full logcat in the launch-logcat artifact"; grep -iE "AndroidRuntime|FATAL|deskilo" launch-logcat.txt | tail -80; exit 1; }
@@ -127,3 +141,23 @@ jobs:
           path: launch-logcat.txt
           if-no-files-found: ignore
           retention-days: 7
+
+      # Size as a CI number (#401): the wiki trap is "the app grew 30 MB
+      # and nobody can say when" — the release APK size lands in every
+      # run's summary so drift is visible in review, with the same
+      # plausibility floor the MSI packaging uses (an implausibly small
+      # artifact is a broken build, not a win).
+      - name: Report release APK size
+        if: always()
+        run: |
+          APK=build/app/outputs/flutter-apk/app-release.apk
+          if [ -f "$APK" ]; then
+            BYTES=$(stat -c%s "$APK")
+            echo "## android-boot" >> "$GITHUB_STEP_SUMMARY"
+            echo "- **Release APK (x64):** $(( BYTES / 1024 / 1024 )) MiB ($BYTES bytes)" >> "$GITHUB_STEP_SUMMARY"
+            echo "- **Startup TotalTime:** ${STARTUP_MS:-n/a} ms (budget 8000)" >> "$GITHUB_STEP_SUMMARY"
+            if [ "$BYTES" -lt 10000000 ]; then
+              echo "::error::release APK is only $BYTES bytes — implausibly small, the build likely lost its payload"
+              exit 1
+            fi
+          fi
