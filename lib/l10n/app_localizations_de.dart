@@ -2451,6 +2451,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get planHalfDayError => 'Buchungen erfolgen hier pro halbem Tag.';
 
   @override
+  String get a11ySeatFree => 'frei';
+
+  @override
+  String get a11ySeatReserved => 'reserviert';
+
+  @override
+  String get a11ySeatOccupied => 'besetzt';
+
+  @override
+  String get a11ySeatMine => 'dein Platz';
+
+  @override
+  String get a11ySeatBlocked => 'nicht verfügbar';
+
+  @override
   String get whatsappTitle => 'WhatsApp';
 
   @override

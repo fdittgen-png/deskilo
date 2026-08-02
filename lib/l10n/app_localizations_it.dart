@@ -2451,6 +2451,21 @@ class AppLocalizationsIt extends AppLocalizations {
   String get planHalfDayError => 'Qui le prenotazioni sono per mezza giornata.';
 
   @override
+  String get a11ySeatFree => 'libero';
+
+  @override
+  String get a11ySeatReserved => 'prenotato';
+
+  @override
+  String get a11ySeatOccupied => 'occupato';
+
+  @override
+  String get a11ySeatMine => 'il tuo posto';
+
+  @override
+  String get a11ySeatBlocked => 'non disponibile';
+
+  @override
   String get whatsappTitle => 'WhatsApp';
 
   @override

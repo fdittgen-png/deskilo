@@ -680,7 +680,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
             // keys make the switcher animate the swap; the fade stays
             // OUTSIDE the canvas's InteractiveViewer transform.
             child: AnimatedSwitcher(
-              duration: AppMotion.viewSwitch,
+              duration: AppMotion.viewSwitchOf(context),
               child: switch (_view) {
                 _ReserveView.plan => KeyedSubtree(
                     key: const ValueKey('reserve-plan-view'),

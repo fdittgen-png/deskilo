@@ -284,7 +284,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
             // swap; empty vs. populated list share one key (no fade when
             // only the day's content changes).
             child: AnimatedSwitcher(
-              duration: AppMotion.viewSwitch,
+              duration: AppMotion.viewSwitchOf(context),
               child: _timeline
                 ? KeyedSubtree(
                     key: const ValueKey('calendar-timeline-view'),

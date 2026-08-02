@@ -50,5 +50,10 @@
   "planAfternoonChip": "Tarde",
   "planFullDayChip": "Día",
   "planHalfDayError": "Aquí las reservas son por media jornada.",
-  "planLevelTooltip": "Planta"
+  "planLevelTooltip": "Planta",
+  "a11ySeatFree": "libre",
+  "a11ySeatReserved": "reservado",
+  "a11ySeatOccupied": "ocupado",
+  "a11ySeatMine": "tu sitio",
+  "a11ySeatBlocked": "no disponible"
 }

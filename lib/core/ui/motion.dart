@@ -13,4 +13,14 @@ abstract final class AppMotion {
   /// Fade-in of `LoadingView`'s spinner: quick loads finish inside the
   /// fade and never flash a progress indicator.
   static const Duration loadingFadeIn = Duration(milliseconds: 200);
+
+  /// The context-aware tokens (#402): when the platform asks for reduced
+  /// motion, every animation collapses to zero instead of each call site
+  /// re-deciding. Use these anywhere a BuildContext exists; the consts
+  /// above remain for the few context-free sites.
+  static Duration viewSwitchOf(BuildContext context) =>
+      MediaQuery.disableAnimationsOf(context) ? Duration.zero : viewSwitch;
+
+  static Duration loadingFadeInOf(BuildContext context) =>
+      MediaQuery.disableAnimationsOf(context) ? Duration.zero : loadingFadeIn;
 }

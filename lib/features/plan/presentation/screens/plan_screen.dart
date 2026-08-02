@@ -774,7 +774,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
           // treat the two views as different children; the fade stays
           // OUTSIDE the InteractiveViewer, so pan/zoom is untouched.
           child: AnimatedSwitcher(
-            duration: AppMotion.viewSwitch,
+            duration: AppMotion.viewSwitchOf(context),
             child: switch (planAsync) {
             AsyncData(value: final plan) => _listView
                 ? KeyedSubtree(
