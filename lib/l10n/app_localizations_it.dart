@@ -3168,6 +3168,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get workspaceResetDone => 'Spazio reimpostato.';
 
   @override
+  String get workspaceExcelExport => 'Esporta i dati (Excel)';
+
+  @override
+  String get workspaceExcelExportSubtitle =>
+      'Tutti i dati in una cartella: prenotazioni, pagamenti, fatture, membri e piantina — una scheda ciascuno.';
+
+  @override
   String get workspaceXmlExport => 'Esporta lo spazio (XML)';
 
   @override

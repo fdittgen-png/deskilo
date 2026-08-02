@@ -3175,6 +3175,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get workspaceResetDone => 'Espace réinitialisé.';
 
   @override
+  String get workspaceExcelExport => 'Exporter les données (Excel)';
+
+  @override
+  String get workspaceExcelExportSubtitle =>
+      'Toutes les données dans un classeur : réservations, paiements, factures, membres et plan — un onglet chacun.';
+
+  @override
   String get workspaceXmlExport => 'Exporter l\'espace (XML)';
 
   @override

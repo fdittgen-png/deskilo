@@ -5768,6 +5768,18 @@ abstract class AppLocalizations {
   /// **'Workspace reset.'**
   String get workspaceResetDone;
 
+  /// Settings tile (#395): download the whole workspace as an Excel workbook.
+  ///
+  /// In en, this message translates to:
+  /// **'Export data (Excel)'**
+  String get workspaceExcelExport;
+
+  /// Subtitle under the Excel export tile (#395).
+  ///
+  /// In en, this message translates to:
+  /// **'Every dataset in one workbook: bookings, payments, invoices, members and the floor plan — a tab each.'**
+  String get workspaceExcelExportSubtitle;
+
   /// Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)
   ///
   /// In en, this message translates to:

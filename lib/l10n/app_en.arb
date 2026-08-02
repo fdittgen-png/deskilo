@@ -4052,6 +4052,14 @@
   "@workspaceResetDone": {
     "description": "Success snackbar after the workspace has been reset."
   },
+  "workspaceExcelExport": "Export data (Excel)",
+  "@workspaceExcelExport": {
+    "description": "Settings tile (#395): download the whole workspace as an Excel workbook."
+  },
+  "workspaceExcelExportSubtitle": "Every dataset in one workbook: bookings, payments, invoices, members and the floor plan — a tab each.",
+  "@workspaceExcelExportSubtitle": {
+    "description": "Subtitle under the Excel export tile (#395)."
+  },
   "workspaceXmlExport": "Export workspace (XML)",
   "@workspaceXmlExport": {
     "description": "Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)"

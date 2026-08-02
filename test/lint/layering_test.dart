@@ -73,6 +73,9 @@ const Set<String> _knownPairs = {
   'workspace -> events',
   'workspace -> money',
   'workspace -> plan',
+  // #395: the data export's Users tab reads profile details (country,
+  // VAT id, address) through the pure profile domain model.
+  'workspace -> profile',
   'workspace -> reservations',
 };
 

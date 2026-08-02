@@ -87,5 +87,7 @@
   "workspaceResetDone": "Espacio restablecido.",
   "workspaceDeskTransparencyTitle": "Transparencia de mesas",
   "workspaceDeskTransparencyHelper": "Reduce la opacidad de las mesas para que se vea la foto de fondo de la planta.",
-  "workspaceDeskOpacityValue": "Opacidad: {percent} %"
+  "workspaceDeskOpacityValue": "Opacidad: {percent} %",
+  "workspaceExcelExport": "Exportar datos (Excel)",
+  "workspaceExcelExportSubtitle": "Todos los datos en un libro: reservas, pagos, facturas, miembros y plano — una pestaña cada uno."
 }

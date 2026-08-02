@@ -14,6 +14,7 @@ import '../domain/service_item.dart';
 import '../domain/statement.dart';
 import '../domain/vat_rate.dart';
 import '../domain/subscription_levels.dart';
+import '../domain/payment_intent.dart';
 
 class SupabaseMoneyRepository implements MoneyRepository {
   @override
@@ -166,23 +167,42 @@ class SupabaseMoneyRepository implements MoneyRepository {
         .select()
         .eq('member_id', memberId)
         .order('created_at', ascending: false);
+    return rows.map(_ledgerFromRow).toList();
+  }
+
+  LedgerEntry _ledgerFromRow(Map<String, dynamic> row) => LedgerEntry(
+        id: row['id'] as String,
+        memberId: row['member_id'] as String,
+        kind: LedgerKind.values.byName(row['kind'] as String),
+        category: LedgerCategory.values.byName(row['category'] as String),
+        amountCents: row['amount_cents'] as int,
+        description: row['description'] as String,
+        period: row['period'] as String,
+        createdAt: DateTime.parse(row['created_at'] as String),
+        occurredOn: row['occurred_on'] == null
+            ? null
+            : DateTime.parse(row['occurred_on'] as String),
+      );
+
+  @override
+  Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) async {
+    final rows = await _client
+        .from('ledger_entries')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('created_at', ascending: false);
+    return rows.map(_ledgerFromRow).toList();
+  }
+
+  @override
+  Future<List<PaymentIntent>> fetchPaymentIntents(String workspaceId) async {
+    final rows = await _client
+        .from('payment_intents')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('created_at', ascending: false);
     return rows
-        .map(
-          (row) => LedgerEntry(
-            id: row['id'] as String,
-            memberId: row['member_id'] as String,
-            kind: LedgerKind.values.byName(row['kind'] as String),
-            category:
-                LedgerCategory.values.byName(row['category'] as String),
-            amountCents: row['amount_cents'] as int,
-            description: row['description'] as String,
-            period: row['period'] as String,
-            createdAt: DateTime.parse(row['created_at'] as String),
-            occurredOn: row['occurred_on'] == null
-                ? null
-                : DateTime.parse(row['occurred_on'] as String),
-          ),
-        )
+        .map((row) => PaymentIntent.fromRow(Map<String, dynamic>.from(row)))
         .toList();
   }
 

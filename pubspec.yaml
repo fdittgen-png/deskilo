@@ -56,6 +56,11 @@ dependencies:
   # F-Droid clean. Already in the tree as a transitive dependency.
   xml: ^6.6.1
 
+  # Excel data export (#395): an .xlsx is a zip of XML, and this is the
+  # zip. Pure Dart, MIT, already in the tree transitively — the workbook
+  # itself is written by lib/core/files/xlsx.dart, no spreadsheet package.
+  archive: ^4.0.9
+
   # XML import file picking (#165) — Flutter-official, BSD-3; the Android
   # implementation rides the Storage Access Framework, no GMS.
   file_selector: ^1.1.0

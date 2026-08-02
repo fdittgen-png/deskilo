@@ -3170,6 +3170,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get workspaceResetDone => 'Workspace zurückgesetzt.';
 
   @override
+  String get workspaceExcelExport => 'Daten exportieren (Excel)';
+
+  @override
+  String get workspaceExcelExportSubtitle =>
+      'Alle Daten in einer Arbeitsmappe: Buchungen, Zahlungen, Rechnungen, Mitglieder und Plan — je ein Tab.';
+
+  @override
   String get workspaceXmlExport => 'Workspace exportieren (XML)';
 
   @override

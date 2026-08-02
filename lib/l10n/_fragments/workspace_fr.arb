@@ -87,5 +87,7 @@
   "workspaceResetDone": "Espace réinitialisé.",
   "workspaceDeskTransparencyTitle": "Transparence des tables",
   "workspaceDeskTransparencyHelper": "Réduisez l'opacité des tables pour laisser transparaître la photo de fond de l'étage.",
-  "workspaceDeskOpacityValue": "Opacité : {percent} %"
+  "workspaceDeskOpacityValue": "Opacité : {percent} %",
+  "workspaceExcelExport": "Exporter les données (Excel)",
+  "workspaceExcelExportSubtitle": "Toutes les données dans un classeur : réservations, paiements, factures, membres et plan — un onglet chacun."
 }

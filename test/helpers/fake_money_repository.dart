@@ -6,6 +6,7 @@ import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
 import 'package:deskilo/features/money/domain/package.dart';
+import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
@@ -360,6 +361,17 @@ class FakeMoneyRepository implements MoneyRepository {
     fetchedPeriods.add(period);
     return statements[period] ?? statement.copyWith(period: period);
   }
+
+  /// Online-payment attempts the fake reports for the export (#395).
+  final paymentIntents = <PaymentIntent>[];
+
+  @override
+  Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) async =>
+      List.of(ledger);
+
+  @override
+  Future<List<PaymentIntent>> fetchPaymentIntents(String workspaceId) async =>
+      List.of(paymentIntents);
 
   @override
   Future<List<LedgerEntry>> fetchLedger(String memberId) async =>
