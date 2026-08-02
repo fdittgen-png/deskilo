@@ -111,6 +111,13 @@ jobs:
           # `am start -W` launch, and the FULL log is saved for the
           # artifact step on failure (a filtered -t tail lost the crash).
           script: |
+            # A cached AVD image can carry an install from a PREVIOUS
+            # run (#405): disk writes persist into the cached userdata
+            # even with -no-snapshot-save, and every runner mints a fresh
+            # debug keystore — so install -r over yesterday's copy dies
+            # with INSTALL_FAILED_UPDATE_INCOMPATIBLE. Uninstall first;
+            # a missing package is fine.
+            adb uninstall de.deskilo.app || true
             adb install -r build/app/outputs/flutter-apk/app-release.apk
             adb logcat -c
             # Startup as a CI number (#401): am start -W reports TotalTime
