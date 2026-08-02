@@ -2286,6 +2286,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get planCheckInButton => 'Registrarse';
 
   @override
+  String get planCheckInNotYetError =>
+      'El registro se abre 15 minutos antes del inicio.';
+
+  @override
+  String get planCheckInOverError =>
+      'Esta reserva ha terminado — ya no es posible registrarse.';
+
+  @override
+  String planCheckInOpensAt(String time) {
+    return 'El registro se abre a las $time';
+  }
+
+  @override
+  String planCheckInFor(String name) {
+    return 'Registrar a $name';
+  }
+
+  @override
   String get planCheckOutButton => 'Salir';
 
   @override

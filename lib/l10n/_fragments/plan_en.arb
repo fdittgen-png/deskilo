@@ -24,6 +24,32 @@
   "@planCheckInButton": {
     "description": "Confirm button of the check-in sheet / my-seat sheet"
   },
+  "planCheckInNotYetError": "Check-in opens 15 minutes before the start.",
+  "@planCheckInNotYetError": {
+    "description": "Error when checking in before the 15-minute window opens (#408)"
+  },
+  "planCheckInOverError": "This reservation is over — check-in is no longer possible.",
+  "@planCheckInOverError": {
+    "description": "Error/hint when checking in after the reservation ended (#408)"
+  },
+  "planCheckInOpensAt": "Check-in opens at {time}",
+  "@planCheckInOpensAt": {
+    "description": "Disabled check-in tile hint with the window-opening time (#408)",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "planCheckInFor": "Check in {name}",
+  "@planCheckInFor": {
+    "description": "Admin action: check in another member who is present (#408)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "planCheckOutButton": "Check out",
   "@planCheckOutButton": {
     "description": "Action ending the current presence on a seat"

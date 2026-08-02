@@ -2294,6 +2294,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get planCheckInButton => 'S\'installer';
 
   @override
+  String get planCheckInNotYetError =>
+      'L\'arrivée ouvre 15 minutes avant le début.';
+
+  @override
+  String get planCheckInOverError =>
+      'Cette réservation est terminée — s\'installer n\'est plus possible.';
+
+  @override
+  String planCheckInOpensAt(String time) {
+    return 'L\'arrivée ouvre à $time';
+  }
+
+  @override
+  String planCheckInFor(String name) {
+    return 'Installer $name';
+  }
+
+  @override
   String get planCheckOutButton => 'Partir';
 
   @override

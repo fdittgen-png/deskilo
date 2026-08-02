@@ -53,9 +53,22 @@ sealed class Reservation with _$Reservation {
     DateTime? checkedOutAt,
   }) = _Reservation;
 
+  /// How early check-in opens before the start (spec §4.3, #408).
+  static const checkInLeeway = Duration(minutes: 15);
+
   bool get isActive =>
       status == ReservationStatus.reserved ||
       status == ReservationStatus.checkedIn;
+
+  /// Presence rule (#408): checking in means "I am standing here NOW".
+  /// Allowed only while [now] is inside `[startsAt − 15 min, endsAt)` —
+  /// never ahead of the window (the future), never after the
+  /// reservation ended (the past). Mirrors `check_in_reservation`
+  /// (migration 0077); the server is the authority, this gates the UI.
+  bool checkInWindowOpen(DateTime now) =>
+      status == ReservationStatus.reserved &&
+      !now.isBefore(startsAt.subtract(checkInLeeway)) &&
+      now.isBefore(endsAt);
 
   /// Active and covering the instant [at] (start inclusive, end exclusive).
   bool coversInstant(DateTime at) =>

@@ -14,7 +14,10 @@ class FakeReservationRepository implements ReservationRepository {
   final String myMemberId;
   final reservations = <Reservation>[];
   var _nextId = 1;
-  DateTime Function() now = DateTime.now;
+  /// The fake's clock — defaults to [kTestNow], matching the
+  /// FixedClock the standard overrides install (#408: the check-in
+  /// window enforcement below must agree with the seeded times).
+  DateTime Function() now = () => kTestNow;
 
   bool _overlapsActive(
     String? seatId,
@@ -185,8 +188,17 @@ class FakeReservationRepository implements ReservationRepository {
     if (r.status != ReservationStatus.reserved) {
       throw StateError('not in reserved state');
     }
+    // Presence rule (#408, migration 0077): check-in only inside
+    // [starts − 15 min, end) — pinned substrings, like the server.
+    final at = now();
+    if (at.isBefore(r.startsAt.subtract(Reservation.checkInLeeway))) {
+      throw const PostgrestException(message: 'check-in window not open yet');
+    }
+    if (!at.isBefore(r.endsAt)) {
+      throw const PostgrestException(message: 'check-in window closed');
+    }
     _replace(
-      r.copyWith(status: ReservationStatus.checkedIn, checkedInAt: now()),
+      r.copyWith(status: ReservationStatus.checkedIn, checkedInAt: at),
     );
   }
 

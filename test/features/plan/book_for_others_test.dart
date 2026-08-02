@@ -26,9 +26,11 @@ Future<({FakeReservationRepository reservations, FakeWorkspaceRepository workspa
     pumpPlanWithRoster(
   WidgetTester tester, {
   bool viewerIsOwner = true,
+  void Function(FakeReservationRepository repo)? seedReservations,
 }) async {
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   final reservations = FakeReservationRepository();
+  seedReservations?.call(reservations);
   final workspace = FakeWorkspaceRepository.withWorkspace()
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana Lima'}
     ..otherMembers.add(ana)
