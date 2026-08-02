@@ -866,32 +866,10 @@
   "planStartNow": "Commence maintenant",
   "planUntilLabel": "Jusqu'à",
   "planCheckInButton": "S'installer",
-  "planCheckInNotYetError": "L'enregistrement ouvre 15 minutes avant le début.",
-  "@planCheckInNotYetError": {
-    "description": "Error when checking in before the 15-minute window opens (#408)"
-  },
-  "planCheckInOverError": "Cette réservation est terminée — l'enregistrement n'est plus possible.",
-  "@planCheckInOverError": {
-    "description": "Error/hint when checking in after the reservation ended (#408)"
-  },
-  "planCheckInOpensAt": "L'enregistrement ouvre à {time}",
-  "@planCheckInOpensAt": {
-    "description": "Disabled check-in tile hint with the window-opening time (#408)",
-    "placeholders": {
-      "time": {
-        "type": "String"
-      }
-    }
-  },
-  "planCheckInFor": "Enregistrer {name}",
-  "@planCheckInFor": {
-    "description": "Admin action: check in another member who is present (#408)",
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
+  "planCheckInNotYetError": "L'arrivée ouvre 15 minutes avant le début.",
+  "planCheckInOverError": "Cette réservation est terminée — s'installer n'est plus possible.",
+  "planCheckInOpensAt": "L'arrivée ouvre à {time}",
+  "planCheckInFor": "Installer {name}",
   "planCheckOutButton": "Partir",
   "planCancelReservationButton": "Annuler la réservation",
   "planSeatBlocked": "Cette place est bloquée pour maintenance.",

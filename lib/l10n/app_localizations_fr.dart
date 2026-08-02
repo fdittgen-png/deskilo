@@ -2295,20 +2295,20 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get planCheckInNotYetError =>
-      'L\'enregistrement ouvre 15 minutes avant le début.';
+      'L\'arrivée ouvre 15 minutes avant le début.';
 
   @override
   String get planCheckInOverError =>
-      'Cette réservation est terminée — l\'enregistrement n\'est plus possible.';
+      'Cette réservation est terminée — s\'installer n\'est plus possible.';
 
   @override
   String planCheckInOpensAt(String time) {
-    return 'L\'enregistrement ouvre à $time';
+    return 'L\'arrivée ouvre à $time';
   }
 
   @override
   String planCheckInFor(String name) {
-    return 'Enregistrer $name';
+    return 'Installer $name';
   }
 
   @override
