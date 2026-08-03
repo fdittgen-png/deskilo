@@ -42,6 +42,7 @@ import '../widgets/reservation_detail_sheet.dart';
 import '../widgets/month_grid.dart';
 import '../widgets/week_grid.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/workspace_time.dart';
 
 /// Geometry and ranges of the Reserve hub (#208). Pinned by test — treat
 /// these as part of the visual/behavioural contract, not free-floating
@@ -334,7 +335,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     final openWeekdays = ref.read(openWeekdaysProvider).value;
     final closures = ref.read(closureDaysProvider).value;
     if (openWeekdays == null || closures == null) return true;
-    return isWorkspaceOpenOn(at.toLocal(), openWeekdays, closures);
+    return isWorkspaceOpenOn(WorkspaceTime.dateOf(at), openWeekdays, closures);
   }
 
   /// Forward to the shared mapper with this screen's slot size

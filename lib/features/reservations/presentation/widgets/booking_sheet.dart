@@ -366,8 +366,11 @@ class _BookingSheetState extends State<BookingSheet> {
         final picked = await showDatePicker(
           context: context,
           initialDate: value.toLocal(),
-          firstDate: widget.start.toLocal(),
-          lastDate: widget.start.toLocal().add(const Duration(days: 180)),
+          // display(): TZDateTime.toLocal() lands in package:timezone's
+          // default-UTC tz.local (#417) — a Paris midnight became Sunday.
+          firstDate: WorkspaceTime.display(widget.start),
+          lastDate: WorkspaceTime.display(widget.start)
+              .add(const Duration(days: 180)),
         );
         if (picked != null) onPicked(picked);
       },

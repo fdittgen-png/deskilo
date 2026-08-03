@@ -235,7 +235,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final openWeekdays = ref.read(openWeekdaysProvider).value;
     final closures = ref.read(closureDaysProvider).value;
     if (openWeekdays == null || closures == null) return true;
-    return isWorkspaceOpenOn(at.toLocal(), openWeekdays, closures);
+    return isWorkspaceOpenOn(WorkspaceTime.dateOf(at), openWeekdays, closures);
   }
 
   /// Forward to the shared mapper with this screen's slot size
@@ -725,7 +725,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final openWeekdays = ref.watch(openWeekdaysProvider).value;
     final closures = ref.watch(closureDaysProvider).value;
     final dayOpen = openWeekdays == null || closures == null ||
-        isWorkspaceOpenOn(at.toLocal(), openWeekdays, closures);
+        isWorkspaceOpenOn(WorkspaceTime.dateOf(at), openWeekdays, closures);
 
     // Half-day granularity (#201): watched so the header swaps the time
     // chips for the Morning/Afternoon/Day chips once the rule resolves;
@@ -1457,8 +1457,8 @@ class _LevelReserveSheetState extends State<_LevelReserveSheet> {
           ),
           const SizedBox(height: AppSpacing.xs),
           Text(
-            '${timeFormat.format(widget.start.toLocal())} → '
-            '${timeFormat.format(widget.end.toLocal())}',
+            '${timeFormat.format(WorkspaceTime.display(widget.start))} → '
+            '${timeFormat.format(WorkspaceTime.display(widget.end))}',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           if (widget.level.priceCents > 0) ...[
