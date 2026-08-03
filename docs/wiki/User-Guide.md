@@ -21,6 +21,8 @@ After signing in you land on the welcome screen with two paths:
 
 One account can belong to several workspaces; switch between them in **Settings → Profiles**, and **star one as your default** — that's the profile the app opens with. Everything in the app is scoped to the active workspace.
 
+**Everything stays live.** Whatever anyone changes — a booking, a new member, a setting — is pushed to every connected device within seconds, including the one that made the change. No restart, no pull-to-refresh.
+
 ## 2. Roles & invitations
 
 DesKilo has three additive roles, plus a device account:
@@ -77,6 +79,8 @@ Open the **Reserve** hub (center button). A date strip picks the day; the window
 - **Week** — a seat × day grid for the whole ISO week; find a free half-day at a glance and tap it to book.
 - **Month** — an availability calendar: free desks per day across all floors; tap a day to drop into its Day view.
 
+**One place at a time**: you can hold only one active reservation per time window — booking or checking in somewhere else while one is running is refused, and checking in closes any earlier check-in whose booking already ended. Admins and owners can **overrule**: tapping an occupied or reserved seat offers *Remove reservation (overrule)* — the reservation is removed and the member and all admins are notified through the events feed.
+
 Reservations follow the workspace **granularity rule** — half-days, full days, or free start/end times on the owner's slot grid. They respect the **open weekdays** and **closure days**, and the booking rules (advance horizon, max duration, cancellation deadline). Repeating needs? Book a **series** (daily, weekdays, weekly) — closed days and conflicts are skipped and reported.
 
 The **Calendar** tab shows your own bookings by month — your days are marked **red**, other members' **blue**, today is ringed — with a timeline view per day. In landscape both the calendar and the timeline use the split layout.
@@ -87,7 +91,7 @@ Every seat, desk, office and level can carry a printed **QR card** (§7). Tap th
 
 - **Seat card** — reserve or check in on that exact seat, on the spot (today's window: morning / afternoon / full day where the workspace uses half-days, otherwise from now for the next hours).
 - **Desk card** — the desk's seats with their live state; pick a free one.
-- **Office or level card** — if the owner made it reservable, the *Office & level reservations* feature is on **and** you hold the personal right (§7), you can reserve or check into the **whole office or floor** — with the same period picker (morning / afternoon / full day, or free times) and **series** options as a seat; its price per half-day is shown and lands on your bill. Otherwise the sheet tells you why, and an office falls back to its seats.
+- **Office or level card** — if the owner made it reservable, the *Office & level reservations* feature is on **and** you hold the personal right (§7) — owners and admins always do — you can reserve or check into the **whole office or floor** — with the same period picker (morning / afternoon / full day, or free times) and **series** options as a seat; its price per half-day is shown and lands on your bill. Otherwise the sheet tells you why, and an office falls back to its seats.
 
 **Conflicts protect both directions:** an office or level cannot be reserved while any seat inside is already booked in that window — and no seat can be booked while its office or level is reserved as a whole.
 

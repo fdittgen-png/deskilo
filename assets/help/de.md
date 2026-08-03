@@ -21,6 +21,8 @@ Nach der Anmeldung bietet der Startbildschirm zwei Wege:
 
 Ein Konto kann mehreren Workspaces angehören; wechsle unter **Einstellungen → Profile** und **markiere eines mit dem Stern als Standard** — mit diesem Profil öffnet sich die App. Alles in der App bezieht sich auf den aktiven Workspace.
 
+**Alles bleibt live.** Was irgendjemand ändert — eine Buchung, ein neues Mitglied, eine Einstellung — wird binnen Sekunden auf jedes verbundene Gerät gepusht, auch auf das, das die Änderung gemacht hat. Kein Neustart, kein Ziehen zum Aktualisieren.
+
 ## 2. Rollen & Einladungen
 
 DesKilo hat drei additive Rollen plus ein Gerätekonto:
@@ -77,6 +79,8 @@ Buchen vom Plan aus:
 - **Woche** — ein Raster Platz × Tag für die ganze ISO-Woche; freie Halbtage auf einen Blick, Antippen bucht.
 - **Monat** — ein Verfügbarkeitskalender: freie Tische pro Tag über alle Etagen; ein Tag öffnet seine Tagesansicht.
 
+**Ein Platz zur Zeit**: Du kannst je Zeitraum nur eine aktive Reservierung halten — anderswo buchen oder einchecken, während eine läuft, wird abgelehnt, und ein Check-in schließt einen früheren Check-in, dessen Buchung schon vorbei ist. Admins und Inhaberinnen können **übersteuern**: Ein Tipp auf einen belegten oder reservierten Platz bietet *Reservierung entfernen (übersteuern)* — die Reservierung wird entfernt und das Mitglied sowie alle Admins werden über den Ereignis-Feed benachrichtigt.
+
 Reservierungen folgen der **Granularitätsregel** des Workspace — Halbtage, ganze Tage oder freie Zeiten auf dem Minutenraster der Inhaberin. Sie respektieren **Öffnungstage** und **Schließtage** sowie die Buchungsregeln (Vorlauf, Maximaldauer, Stornofrist). Wiederkehrender Bedarf? Buche eine **Serie** (täglich, werktags, wöchentlich) — geschlossene Tage und Konflikte werden übersprungen und gemeldet.
 
 Der Tab **Kalender** zeigt deine Buchungen pro Monat — deine Tage **rot**, die der anderen **blau**, heute umkreist — mit Tages-Zeitstrahl. Im Querformat nutzen Kalender und Zeitstrahl das geteilte Layout.
@@ -87,7 +91,7 @@ Jeder Platz, Tisch, jedes Büro und jede Etage kann eine gedruckte **QR-Karte** 
 
 - **Platz-Karte** — reserviere oder checke direkt auf genau diesem Platz ein (heutiges Fenster: Vormittag / Nachmittag / Ganzer Tag, wo der Workspace Halbtage nutzt, sonst ab jetzt für die nächsten Stunden).
 - **Tisch-Karte** — die Plätze des Tischs mit ihrem Live-Status; wähle einen freien.
-- **Büro- oder Etagen-Karte** — hat die Inhaberin sie reservierbar gemacht, ist die Funktion *Büro- & Etagen-Reservierungen* eingeschaltet **und** hast du das persönliche Recht (§7), kannst du das **ganze Büro oder die ganze Etage** reservieren oder dort einchecken — mit derselben Zeitraum-Auswahl (Vormittag / Nachmittag / Ganzer Tag, oder freie Zeiten) und denselben **Serien**-Optionen wie ein Platz; der Preis je Halbtag wird angezeigt und landet auf deiner Rechnung. Andernfalls sagt dir das Formular, warum nicht — und ein Büro fällt auf seine Plätze zurück.
+- **Büro- oder Etagen-Karte** — hat die Inhaberin sie reservierbar gemacht, ist die Funktion *Büro- & Etagen-Reservierungen* eingeschaltet **und** hast du das persönliche Recht (§7) — Inhaberinnen und Admins haben es immer — kannst du das **ganze Büro oder die ganze Etage** reservieren oder dort einchecken — mit derselben Zeitraum-Auswahl (Vormittag / Nachmittag / Ganzer Tag, oder freie Zeiten) und denselben **Serien**-Optionen wie ein Platz; der Preis je Halbtag wird angezeigt und landet auf deiner Rechnung. Andernfalls sagt dir das Formular, warum nicht — und ein Büro fällt auf seine Plätze zurück.
 
 **Konflikte schützen in beide Richtungen:** Ein Büro oder eine Etage kann nicht reserviert werden, solange irgendein Platz darin in diesem Fenster schon gebucht ist — und kein Platz kann gebucht werden, solange sein Büro oder seine Etage als Ganzes reserviert ist.
 
