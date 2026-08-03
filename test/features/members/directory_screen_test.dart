@@ -68,7 +68,7 @@ Member _member(
   FakeFloorPlanRepository floorPlan,
   FakeProfileRepository profile,
   DateTime upcomingStart,
-}) _seed() {
+}) seedDirectory() {
   final now = kTestNow;
 
   // Dora's upcoming booking: the NEXT Tuesday at 01:15 strictly after
@@ -185,7 +185,7 @@ Member _member(
 /// Pumps the app signed in, opens settings and navigates into the
 /// directory via its settings tile (kept as an every-member discovery
 /// entry point; since #230 it switches to the Members shell tab).
-Future<void> _pumpDirectory(
+Future<void> pumpDirectory(
   WidgetTester tester, {
   required FakeWorkspaceRepository workspace,
   FakeReservationRepository? reservations,
@@ -243,8 +243,8 @@ void main() {
       'active members list alphabetically with independent reservation + '
       'presence chips (#237): checked-in and reserved-now beat upcoming; '
       'a booking 15 days out shows nothing', (tester) async {
-    final seeded = _seed();
-    await _pumpDirectory(
+    final seeded = seedDirectory();
+    await pumpDirectory(
       tester,
       workspace: seeded.workspace,
       reservations: seeded.reservations,
@@ -336,9 +336,9 @@ void main() {
   testWidgets(
       'the WhatsApp button appears only for the sharing member and opens '
       'wa.me through the link seam', (tester) async {
-    final seeded = _seed();
+    final seeded = seedDirectory();
     final launched = <Uri>[];
-    await _pumpDirectory(
+    await pumpDirectory(
       tester,
       workspace: seeded.workspace,
       reservations: seeded.reservations,
@@ -367,7 +367,7 @@ void main() {
       'MY OWN row reads Online even when the fetched snapshot is stale — '
       'the heartbeat keeps writing while the screen holds one fetch',
       (tester) async {
-    final seeded = _seed();
+    final seeded = seedDirectory();
     // What the app actually holds after the directory has been open for a
     // while: my server heartbeat is fresh, the snapshot in hand is not.
     final stale = FakeProfileRepository(profiles: [
@@ -377,7 +377,7 @@ void main() {
         lastSeenAt: kTestNow.subtract(const Duration(minutes: 20)),
       ),
     ]);
-    await _pumpDirectory(
+    await pumpDirectory(
       tester,
       workspace: seeded.workspace,
       reservations: seeded.reservations,
@@ -393,7 +393,7 @@ void main() {
     final workspace = FakeWorkspaceRepository.withWorkspace()
       ..myMember = _member(1, status: MemberStatus.paused)
       ..memberNames = {'member-1': 'Flo'};
-    await _pumpDirectory(tester, workspace: workspace);
+    await pumpDirectory(tester, workspace: workspace);
 
     expect(find.byType(EmptyState), findsOneWidget);
     expect(find.text('No members yet.'), findsOneWidget);
@@ -402,8 +402,8 @@ void main() {
   testWidgets(
       'the custom status line renders on the row; without a configured '
       'group the group tile stays absent', (tester) async {
-    final seeded = _seed();
-    await _pumpDirectory(
+    final seeded = seedDirectory();
+    await pumpDirectory(
       tester,
       workspace: seeded.workspace,
       reservations: seeded.reservations,
@@ -424,9 +424,9 @@ void main() {
       'swipe right on a sharing member launches wa.me and the row '
       'survives; non-sharing rows carry no swipe affordance at all',
       (tester) async {
-    final seeded = _seed();
+    final seeded = seedDirectory();
     final launched = <Uri>[];
-    await _pumpDirectory(
+    await pumpDirectory(
       tester,
       workspace: seeded.workspace,
       reservations: seeded.reservations,
@@ -474,9 +474,9 @@ void main() {
       'tapping a row opens the public-profile sheet: role line, automatic '
       'status, custom status, and the WhatsApp button only when shared',
       (tester) async {
-    final seeded = _seed();
+    final seeded = seedDirectory();
     final launched = <Uri>[];
-    await _pumpDirectory(
+    await pumpDirectory(
       tester,
       workspace: seeded.workspace,
       reservations: seeded.reservations,
@@ -560,11 +560,11 @@ void main() {
   testWidgets(
       'the group tile appears when the workspace has a WhatsApp group '
       'link and opens it through the link seam', (tester) async {
-    final seeded = _seed();
+    final seeded = seedDirectory();
     await seeded.workspace
         .setWhatsappGroup('ws-1', 'https://chat.whatsapp.com/AbCdEf123');
     final launched = <Uri>[];
-    await _pumpDirectory(
+    await pumpDirectory(
       tester,
       workspace: seeded.workspace,
       reservations: seeded.reservations,
@@ -589,12 +589,12 @@ void main() {
   testWidgets(
       'each row carries a role badge for the owner and admins only; plain '
       'members get none', (tester) async {
-    final seeded = _seed();
+    final seeded = seedDirectory();
     // Promote Ben to admin so all three roles are on screen at once.
     seeded.workspace.otherMembers
       ..removeWhere((m) => m.id == 'member-3')
       ..add(_member(3, isAdmin: true));
-    await _pumpDirectory(
+    await pumpDirectory(
       tester,
       workspace: seeded.workspace,
       reservations: seeded.reservations,
@@ -625,8 +625,8 @@ void main() {
   testWidgets(
       'tapping a member lists their upcoming reservations; tapping one '
       'opens its detail sheet', (tester) async {
-    final seeded = _seed();
-    await _pumpDirectory(
+    final seeded = seedDirectory();
+    await pumpDirectory(
       tester,
       workspace: seeded.workspace,
       reservations: seeded.reservations,
@@ -656,7 +656,7 @@ void main() {
   testWidgets(
       "a member's photo renders as their avatar image; others keep the "
       'initial', (tester) async {
-    final seeded = _seed();
+    final seeded = seedDirectory();
     // Ben has a photo; give the fake his bytes.
     seeded.profile.profiles.add(
       const Profile(
@@ -670,7 +670,7 @@ void main() {
         .removeWhere((p) => p.id == 'user-3' && p.avatarPath == null);
     seeded.profile.avatarBytes['user-3'] = _pngBytes;
 
-    await _pumpDirectory(
+    await pumpDirectory(
       tester,
       workspace: seeded.workspace,
       reservations: seeded.reservations,
@@ -689,8 +689,8 @@ void main() {
   testWidgets(
       'a member with no upcoming booking shows the empty reservations line',
       (tester) async {
-    final seeded = _seed();
-    await _pumpDirectory(
+    final seeded = seedDirectory();
+    await pumpDirectory(
       tester,
       workspace: seeded.workspace,
       reservations: seeded.reservations,

@@ -99,6 +99,11 @@ abstract class WorkspaceRepository {
   /// occupant labels, event actor names, …).
   Future<Map<String, String>> fetchMemberNames(String workspaceId);
 
+  /// member id → email for the members lists (#410). ADMIN surface: the
+  /// server returns the empty set for non-admin callers, so plain
+  /// members never see co-members' emails (contact info stays opt-in).
+  Future<Map<String, String>> fetchMemberEmails(String workspaceId);
+
   /// All memberships of the workspace (owner management screen).
   Future<List<Member>> fetchMembers(String workspaceId);
 

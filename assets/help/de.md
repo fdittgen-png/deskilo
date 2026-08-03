@@ -61,8 +61,8 @@ Navigation:
 Buchen vom Plan aus:
 
 - **Spontanes Einchecken**: Tippe einen freien Platz → das Formular schlägt *jetzt* bis zum Standard-Ende des Workspace vor → bestätigen. Hat jemand den Platz später reserviert, wird deine Endzeit gekappt und du erfährst es.
-- **Einchecken auf Reservierung**: Deine Reservierung öffnet ein Check-in-Fenster. Checke vom Plan oder aus der Erinnerung ein. Bei Nichterscheinen wird der Platz nach der konfigurierten Frist **automatisch freigegeben**.
-- **Auschecken**: manuell, oder automatisch zum Reservierungsende / bei Schließung.
+- **Einchecken auf Reservierung**: Einchecken heißt *du bist da* — das Fenster öffnet **15 Minuten vor** deinem Beginn und schließt mit dem Reservierungsende. Außerhalb ist der Button deaktiviert und sagt, wann es so weit ist; wer eine zukünftige Zeit durchstöbert, bekommt nie ein Live-Einchecken angeboten. Admins können ein Mitglied einchecken, das an seinem Platz steht (solange *Buchen für andere* an ist).
+- **Auschecken**: manuell — oder, wenn die Inhaberin **Auto-Check-in/out** aktiviert, schließen vergessene Reservierungen sich am Tagesende selbst ab: Nie angerührte Buchungen gelten von ihrem Beginn bis zu ihrem Ende als wahrgenommen, vergessene Check-outs enden zum Reservierungsende.
 - **Ganze Räume**: **Doppeltippe** einen Tisch, einen Raum oder eine freie Stelle der Etage, um den **ganzen Tisch, das Büro oder die Etage** zu buchen — dasselbe Formular wie beim Scan seiner QR-Karte (§4), mit derselben Zeitraum-Auswahl und denselben Wiederholungsoptionen wie ein Platz.
 - **Zeitleiste**: Wähle ein von→bis-Fenster (oder Vormittag / Nachmittag / Ganzer Tag, je nach Granularität), um die Belegung zu jedem künftigen Zeitpunkt zu sehen.
 - Plätze können **Zubehör** tragen (Monitor, Stehpult…), teils mit Aufpreis je Halbtag, der auf deiner Abrechnung erscheint.
@@ -99,6 +99,7 @@ Sieh, wer zu deiner Community gehört:
 - Antippen öffnet das **Detailblatt** — inklusive kommender Reservierungen.
 - **Wische** über ein Mitglied, um es per **WhatsApp** anzuschreiben; der **Gruppen-Button** öffnet die WhatsApp-Gruppe der Community (von der Inhaberin hinterlegt).
 - Eigenes Foto, Status und Telefon-Sichtbarkeit stellst du unter **Einstellungen** ein.
+- Admins und Inhaberinnen sehen zusätzlich die **E-Mail** jedes Mitglieds unter dem Namen — normale Mitglieder nicht: Der Kontaktkanal von Mitglied zu Mitglied bleibt die freiwillig geteilte WhatsApp-Nummer.
 
 ## 6. Ereignisse & Bestätigungen (Glocken-Symbol)
 
@@ -127,7 +128,7 @@ Die gesamte Administration liegt unter **Einstellungen → Administration**. Ein
 - **Editor** (App-Leiste): Zeichne deinen Raum auf einem Raster — Etagen, Büros, Tische, Plätze (mit Ausrichtung, Stuhltyp und Ausstattung), Platzsperren für Wartung. Füge pro Etage ein **Hintergrundfoto** und verschieb- und skalierbare **Illustrationsbilder** hinzu. Löschen mit künftigen Reservierungen erzwingt erst deren Auflösung.
 - **Workspace-ID & QR**: deine rollengebundenen Einladungen (§2). Die generierte ID lässt sich durch eine merkbare ersetzen (4–20 Buchstaben/Ziffern), kopieren, und der QR als PNG teilen.
 - **Verfügbarkeit**: Öffnungstage, Schließtage und die Granularität — freie Start-/Endzeiten, ein Minutenraster (5/15/30/60), Halbtage oder nur ganze Tage.
-- **Funktionen**: Ganze Module pro Workspace ein-/ausschalten — Kalender, Ereignisse, Geld, Services, PDF-Export, Serienbuchung, Buchen für andere, Push, Platzsperren durch Admins, Zubehör-Aufpreise, **Online-Zahlungen**, **Rechnungen**, **Büro- & Etagen-Reservierungen**, **Kiosk-Modus**, **RFID-/NFC-Badges**, **Mitgliederverzeichnis**, **WhatsApp-Integration**, **Raum-QR-Codes**, **Mit-Inhaberinnen**. Ein ausgeschaltetes Modul entfernt *alle* seine Bildschirme und Buttons für jedes Mitglied.
+- **Funktionen**: Ganze Module pro Workspace ein-/ausschalten — Kalender, Ereignisse, Geld, Services, PDF-Export, Serienbuchung, Buchen für andere, Push, Platzsperren durch Admins, Zubehör-Aufpreise, **Online-Zahlungen**, **Rechnungen**, **Büro- & Etagen-Reservierungen**, **Kiosk-Modus**, **RFID-/NFC-Badges**, **Mitgliederverzeichnis**, **WhatsApp-Integration**, **Raum-QR-Codes**, **Mit-Inhaberinnen**, **Datenexport**, **Auto-Check-in/out**. Ein ausgeschaltetes Modul entfernt *alle* seine Bildschirme und Buttons für jedes Mitglied.
 
   Die Liste ist **hierarchisch**: Eine Funktion, die eine andere benötigt, steht eingerückt darunter mit dem Hinweis *Benötigt…* und ist ausgegraut, solange ihr Elternteil aus ist — *Geld* trägt Services, Zubehör-Aufpreise, Online-Zahlungen und Rechnungen; *Büro- & Etagen-Reservierungen* tragen das Zuweisungsrecht der Admins; *Kiosk-Modus* trägt die RFID-/NFC-Badges; *Mitgliederverzeichnis* trägt die WhatsApp-Integration. Ein ausgeschaltetes Elternteil nimmt seinen ganzen Teilbaum aus der App; die gespeicherte Wahl des Kindes kommt unangetastet zurück, sobald das Elternteil wiederkehrt.
 
@@ -145,7 +146,7 @@ Die gesamte Administration liegt unter **Einstellungen → Administration**. Ein
 
 ![](assets/help/images/features-toggles-2.jpg)
 
-- **Mitglieder & Tarife**: Tippe ein Mitglied an, um sein **Verwaltungsblatt** zu öffnen — einen Service für es hinzufügen, den Abo-Prozentsatz setzen, die **Mehrverbrauchs-Politik** (§8) wählen, die **gleichzeitigen Reservierungen** deckeln, **Badges** ausstellen (§9), zum Admin befördern/degradieren, das Konto zum **Kiosk-Gerät** machen oder die Mitgliedschaft pausieren.
+- **Mitglieder & Tarife**: Tippe ein Mitglied an, um sein **Verwaltungsblatt** zu öffnen — einen Service für es hinzufügen, den Abo-Prozentsatz setzen, die **Mehrverbrauchs-Politik** (§8) wählen, die **gleichzeitigen Reservierungen** deckeln, **Badges** ausstellen (§9), zum Admin befördern/degradieren, das Konto zum **Kiosk-Gerät** machen oder die Mitgliedschaft pausieren. Jede Zeile zeigt die **E-Mail** des Mitglieds unter dem Namen.
 
 ![](assets/help/images/member-management-sheet.jpg)
 
@@ -181,7 +182,7 @@ Die gesamte Administration liegt unter **Einstellungen → Administration**. Ein
 ![](assets/help/images/member-add-service.jpg)
 
 - **Workspace-Einstellungen**: Name, Land/Währung, Zeitzone, Zahlungshinweise (IBAN, PayPal.me, Wero, Lydia, Wise), WhatsApp-Gruppenlink, **Tisch-Transparenz**, Exporte — und die **Gefahrenzone**: ein kompletter **Workspace-Reset** (löscht Buchungen, Geld und Grundriss; behält Konfiguration und Mitglieder), abgesichert durch das getippte „I agree".
-- **Import/Export**: Die gesamte Konfiguration reist als **XML-Datei** — Backup, Vorlage oder Migration einer selbst gehosteten Instanz. Auch ein **Konfigurations-PDF** (Mitglieder, Plan, Preise, Funktionen) lässt sich erzeugen. Jeder Export landet im **Downloads**-Ordner deines Geräts.
+- **Import/Export**: Die gesamte Konfiguration reist als **XML-Datei** — Backup, Vorlage oder Migration einer selbst gehosteten Instanz. Auch ein **Konfigurations-PDF** (Mitglieder, Plan, Preise, Funktionen) lässt sich erzeugen. Eine **Excel-Arbeitsmappe** exportiert die Live-Daten selbst — Workspace, Etagen, Tische, Plätze, Mitglieder, Reservierungen, Check-ins/outs, Zahlungen, Services und Rechnungen, je ein Tabellenblatt (Funktion *Datenexport*). Jeder Export landet im **Downloads**-Ordner deines Geräts.
 
 ### Raum-QR-Codes & Ganzraum-Reservierungen (Inhaberinnen)
 
@@ -337,6 +338,8 @@ Die Aktion **E-Rechnung (XML)** öffnet ein Blatt, das genau das für das Land d
 **Senden, ohne die App zu verlassen.** Die Inhaberin registriert die Plattform des Workspace unter *Workspace-Einstellungen → Rechtliche Identität → **E-Rechnungs-Plattform***: eine Upload-URL und ein Token. Jede Plattform, die einen Upload mit Zugangsdaten annimmt, funktioniert — eine zugelassene Plattform, ein Peppol Access Point, eine nationale Plattform. Das Token liegt serverseitig, kommt nie auf ein Telefon zurück, und die App kann nur melden, dass eines gesetzt ist. Danach beginnt das Blatt mit **An die Plattform senden**: das Factur-X-Dokument geht direkt hinaus, und das Detailblatt der Rechnung hält fest, wann es ging, was die Plattform antwortete und welche Id sie zurückgab. Jeder Versuch wird protokolliert — angenommen, abgelehnt oder nicht übermittelt — denn ein Dokument, das *vielleicht* draußen ist, ist schlimmer als ein gescheiterter Versand.
 
 DesKilo übermittelt weiterhin nichts auf eigene Rechnung: Es erzeugt das Dokument und übergibt es der Plattform, die du gewählt hast.
+
+**Proben ohne Risiko.** Ein Workspace kann neben dem Produktions-Endpunkt zusätzlich **Test-Endpunkte** hinterlegen (das UAT der Plattform oder ein Dev-Ziel). Mit eingeschaltetem Entwicklermodus bietet das Senden die Wahl der Umgebung an, eine Test-Einreichung ist in der Übertragungshistorie der Rechnung als solche markiert, und der Produktions-Endpunkt wird für eine Probe nie verwendet — eine nicht konfigurierte Testumgebung verweigert schlicht, statt zurückzufallen.
 
 **Vor dem ersten Export die rechtliche Identität ausfüllen.** Unter *Workspace-Einstellungen → **Rechtliche Identität & E-Rechnung*** erklärt die Inhaberin das **Steuerregime** und die Nummer, die die Norm damit verlangt: außerhalb der Umsatzsteuer eine **Registernummer** (SIREN, HRB, CIF…); bei Steuerbefreiung eine **Umsatzsteuer-ID** plus den Grund der Befreiung. Mitglieder ergänzen ihr **Land** — und ihre USt-ID, falls sie als Unternehmen abrechnen — neben ihrer Adresse unter *Einstellungen → Adresse*. DesKilo prüft das alles **vor** dem Erzeugen der Datei und verweigert sie unter Nennung des fehlenden Punktes: Eine von der Plattform abgelehnte Rechnung ist schlimmer als gar keine. Ein **umsatzsteuerpflichtiger** Workspace exportiert wie jeder andere — sobald seine **Steuersätze** eingerichtet sind (nächster Abschnitt): mit Sätzen trägt die Rechnung eine echte Aufteilung, ohne sie verweigert DesKilo die Datei, statt eine Null zu erklären, an die es nicht glaubt.
 

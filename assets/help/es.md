@@ -61,8 +61,8 @@ Moverse:
 Reservar desde el plano:
 
 - **Registro espontáneo**: toca un asiento libre → la hoja propone *ahora* hasta el fin por defecto del espacio → confirma. Si alguien reservó ese asiento más tarde, tu hora de fin se recorta y se te avisa.
-- **Registro sobre reserva**: tu reserva abre una ventana de check-in. Regístrate desde el plano o desde la notificación de recordatorio. Si no apareces, el asiento se **libera automáticamente** tras el plazo configurado.
-- **Salida**: manual, o automática al final de la reserva / al cierre.
+- **Registro sobre reserva**: registrarse significa *estás aquí* — la ventana abre **15 minutos antes** de tu inicio y se cierra al final de la reserva. Fuera de ella el botón está desactivado y dice cuándo abre; navegar un horario futuro nunca ofrece un registro en vivo. Los admins pueden registrar a un miembro presente en su asiento (mientras *reservar por otros* esté activo).
+- **Salida**: manual — o, si el propietario activa el **auto registro/salida**, las reservas olvidadas se completan solas al final del día: las nunca tocadas cuentan como asistidas de su inicio a su fin, y las salidas olvidadas se cierran al final propio de la reserva.
 - **Espacios enteros**: **doble toque** en una mesa, una sala o una zona libre del suelo para actuar sobre la **mesa, oficina o planta entera** — la misma hoja que al escanear su tarjeta QR (§4), con el mismo selector de periodo y las mismas opciones de repetición que un puesto.
 - **Línea de tiempo**: elige una ventana de→a (o Mañana / Tarde / Día completo, según la granularidad del espacio) para ver la ocupación en cualquier momento futuro.
 - Los asientos pueden llevar **accesorios** (monitor, mesa elevable…), algunos con suplemento por media jornada que aparece en tu extracto.
@@ -99,6 +99,7 @@ Mira quién forma tu comunidad:
 - Toca un miembro para su **ficha de detalle** — con sus próximas reservas.
 - **Desliza** un miembro para escribirle por **WhatsApp**; el **botón de grupo** abre el grupo de WhatsApp de la comunidad (definido por el propietario).
 - Define tu foto, estado y visibilidad del teléfono en **Ajustes**.
+- Los admins y propietarios ven además el **correo** de cada miembro bajo el nombre — los miembros normales no: el canal de contacto entre miembros sigue siendo el número de WhatsApp compartido voluntariamente.
 
 ## 6. Eventos y confirmaciones (icono de campana)
 
@@ -127,7 +128,7 @@ Toda la administración vive en **Ajustes → Administración**. Una regla que c
 - **Editor** (barra de la app): dibuja tu espacio en una cuadrícula — plantas, oficinas, mesas, asientos (con orientación, tipo de silla y equipamiento), bloqueo de asientos por mantenimiento. Añade una **foto de fondo** por planta e **imágenes de ilustración** que puedes mover y redimensionar. Borrar algo con reservas futuras obliga a resolverlas antes.
 - **ID del espacio & QR**: tus invitaciones ligadas a rol (§2). Puedes sustituir el ID generado por uno memorable (4–20 letras/dígitos), copiarlo o compartir el QR como PNG.
 - **Disponibilidad**: días de apertura, días de cierre y la granularidad — horas de inicio y fin libres, una rejilla de minutos (5/15/30/60), medias jornadas o solo días completos.
-- **Funciones**: activa o desactiva módulos enteros por espacio — calendario, eventos, dinero, servicios, exportación PDF, series, reservar por otros, push, bloqueo de asientos por admins, suplementos de accesorios, **pagos en línea**, **facturas**, **reservas de oficina y planta**, **modo quiosco**, **credenciales RFID/NFC**, **directorio de miembros**, **integración con WhatsApp**, **códigos QR de espacios**, **copropietarios**. Desactivar un módulo elimina *todas* sus pantallas y botones para todos los miembros.
+- **Funciones**: activa o desactiva módulos enteros por espacio — calendario, eventos, dinero, servicios, exportación PDF, series, reservar por otros, push, bloqueo de asientos por admins, suplementos de accesorios, **pagos en línea**, **facturas**, **reservas de oficina y planta**, **modo quiosco**, **credenciales RFID/NFC**, **directorio de miembros**, **integración con WhatsApp**, **códigos QR de espacios**, **copropietarios**, **exportación de datos**, **auto registro/salida**. Desactivar un módulo elimina *todas* sus pantallas y botones para todos los miembros.
 
   La lista es **jerárquica**: una función que necesita otra aparece indentada bajo ella con una nota *Requiere…*, y queda atenuada mientras su padre está desactivado — *Dinero* lleva los servicios, los suplementos de accesorios, los pagos en línea y las facturas; *Reservas de oficina y planta* lleva el derecho de asignación por admins; *Modo quiosco* lleva las credenciales RFID/NFC; *Directorio de miembros* lleva la integración con WhatsApp. Desactivar un padre saca todo su subárbol de la app; la elección guardada del hijo vuelve intacta cuando el padre regresa.
 
@@ -145,7 +146,7 @@ Toda la administración vive en **Ajustes → Administración**. Una regla que c
 
 ![](assets/help/images/features-toggles-2.jpg)
 
-- **Miembros y planes**: toca un miembro para abrir su **ficha de gestión** — añadirle un servicio, fijar su porcentaje de suscripción, elegir su **política de exceso** (§8), limitar sus **reservas simultáneas**, emitir **credenciales** (§9), promover/degradar admin, convertir la cuenta en **quiosco**, o pausar la membresía.
+- **Miembros y planes**: toca un miembro para abrir su **ficha de gestión** — añadirle un servicio, fijar su porcentaje de suscripción, elegir su **política de exceso** (§8), limitar sus **reservas simultáneas**, emitir **credenciales** (§9), promover/degradar admin, convertir la cuenta en **quiosco**, o pausar la membresía. Cada fila muestra el **correo** del miembro bajo su nombre.
 
 ![](assets/help/images/member-management-sheet.jpg)
 
@@ -181,7 +182,7 @@ Toda la administración vive en **Ajustes → Administración**. Una regla que c
 ![](assets/help/images/member-add-service.jpg)
 
 - **Ajustes del espacio**: nombre, país/moneda, zona horaria, instrucciones de pago (IBAN, PayPal.me, Wero, Lydia, Wise), enlace del grupo de WhatsApp, **transparencia de mesas**, exportaciones — y la **zona de peligro**: un **reinicio total del espacio** (borra reservas, dinero y plano; conserva configuración y miembros), protegido escribiendo «I agree».
-- **Importar/exportar**: toda la configuración viaja como **archivo XML** — cópiala, úsala de plantilla o migra una instancia autoalojada. También puede generarse un **PDF de configuración** (miembros, plano, precios, funciones). Cada exportación se guarda en la carpeta de **Descargas** de tu dispositivo.
+- **Importar/exportar**: toda la configuración viaja como **archivo XML** — cópiala, úsala de plantilla o migra una instancia autoalojada. También puede generarse un **PDF de configuración** (miembros, plano, precios, funciones). Un **libro de Excel** exporta los propios datos vivos — espacio, plantas, mesas, asientos, miembros, reservas, registros, pagos, servicios y facturas, una pestaña cada uno (función *exportación de datos*). Cada exportación se guarda en la carpeta de **Descargas** de tu dispositivo.
 
 ### Códigos QR de espacios y reservas de espacios enteros (propietarios)
 
@@ -337,6 +338,8 @@ La acción **Factura electrónica (XML)** abre una hoja que responde a eso para 
 **Enviarla sin salir de la app.** El propietario registra la plataforma del espacio en *Ajustes del espacio → Identidad legal → **Plataforma de facturación electrónica***: una URL de subida y un token. Sirve cualquier plataforma que acepte una subida con credencial — una plataforma autorizada, un punto de acceso Peppol, una plataforma nacional. El token se guarda en el servidor, nunca vuelve a un teléfono, y la app solo puede decirte que hay uno guardado. Una vez configurada, la hoja empieza por **Enviar a la plataforma**: el documento Factur-X sale directamente, y la hoja de detalle de la factura conserva cuándo salió, qué respondió la plataforma y el identificador que devolvió. Cada intento queda registrado — aceptado, rechazado o no transmitido — porque un documento que *quizá* salió es peor que un envío fallido.
 
 DesKilo sigue sin transmitir nada por su cuenta: genera el documento y lo entrega a la plataforma que elegiste.
+
+**Ensayar sin riesgo.** Un espacio puede registrar, junto al punto de producción, **puntos de prueba** (el UAT de la plataforma o un destino dev). Con el modo desarrollador activado, el envío ofrece elegir el entorno, un envío de prueba queda marcado como tal en el historial de transmisiones de la factura, y el punto de producción nunca se usa para un ensayo — un entorno de prueba sin configurar simplemente rechaza, sin recurrir al de producción.
 
 **Antes de la primera exportación, completa la identidad legal.** En *Ajustes del espacio → **Identidad legal y facturación electrónica*** el propietario declara el **régimen de IVA** y el número que la norma exige con él: fuera del ámbito del IVA, un **número de registro** (SIREN, HRB, CIF…); con exención de pequeña empresa, un **número de IVA** y el motivo por el que no se cobra. Los miembros añaden su **país** — y su número de IVA si facturan como empresa — junto a su dirección en *Ajustes → Dirección*. DesKilo lo comprueba **antes** de generar el archivo y se niega nombrando lo que falta: una factura que la plataforma rechaza es peor que ninguna. Un espacio **sujeto a IVA** exporta como cualquier otro, siempre que haya configurado sus **tipos de IVA** (sección siguiente): con tipos, la factura lleva un desglose real; sin ellos, DesKilo se niega antes que declarar un cero que no cree.
 

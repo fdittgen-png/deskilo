@@ -168,6 +168,18 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   @override
+  Future<Map<String, String>> fetchMemberEmails(String workspaceId) async {
+    // Admin-gated on the server (0078): non-admin callers get [].
+    final rows = await _client.rpc<dynamic>('member_emails', params: {
+      'p_workspace_id': workspaceId,
+    }) as List<dynamic>;
+    return {
+      for (final r in rows.cast<Map<String, dynamic>>())
+        r['member_id'] as String: r['email'] as String,
+    };
+  }
+
+  @override
   Future<Map<String, String>> fetchMemberNames(String workspaceId) async {
     // members ↔ profiles share auth.users ids but carry no direct FK, so
     // PostgREST cannot embed — two queries, joined client-side.

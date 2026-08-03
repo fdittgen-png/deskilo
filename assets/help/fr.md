@@ -61,8 +61,8 @@ Se repérer :
 Réserver depuis le plan :
 
 - **Pointage spontané** : touchez une place libre → la feuille propose *maintenant* jusqu'à la fin par défaut de l'espace → confirmez. Si quelqu'un a réservé cette place plus tard, votre heure de fin est plafonnée et on vous le dit.
-- **Pointage sur réservation** : votre réservation ouvre une fenêtre de pointage. Pointez depuis le plan ou depuis la notification de rappel. En cas d'absence, la place est **libérée automatiquement** après le délai configuré.
-- **Départ** : manuel, ou automatique à la fin de la réservation / à la fermeture.
+- **Pointage sur réservation** : pointer veut dire *vous êtes là* — la fenêtre ouvre **15 minutes avant** votre début et se ferme à la fin de la réservation. En dehors, le bouton est désactivé et dit quand elle ouvre ; parcourir un horaire futur ne propose jamais de pointage en direct. Les admins peuvent pointer un membre présent à sa place (tant que *réserver pour autrui* est actif).
+- **Départ** : manuel — ou, si le propriétaire active l'**auto-pointage entrée/sortie**, les réservations oubliées se clôturent d'elles-mêmes en fin de journée : les réservations jamais touchées comptent comme honorées de leur début à leur fin, les départs oubliés se ferment à la fin propre de la réservation.
 - **Espaces entiers** : **touchez deux fois** une table, une pièce ou une zone libre du sol pour agir sur **la table, le bureau ou le niveau entier** — la même feuille qu'en scannant sa carte QR (§4), avec le même choix de période et les mêmes options de répétition qu'une place.
 - **Frise temporelle** : choisissez une fenêtre de→à (ou Matin / Après-midi / Journée entière selon la granularité de l'espace) pour voir l'occupation à tout moment futur.
 - Les places peuvent porter des **accessoires** (écran, bureau debout…), certains avec un supplément par demi-journée qui apparaît sur votre relevé.
@@ -99,6 +99,7 @@ Voyez qui fait partie de votre communauté :
 - Touchez un membre pour sa **fiche détaillée** — avec ses réservations à venir.
 - **Balayez** un membre pour lui écrire sur **WhatsApp** ; le **bouton de groupe** ouvre le groupe WhatsApp de la communauté (défini par le propriétaire).
 - Définissez votre photo, votre statut et la visibilité de votre téléphone dans **Réglages**.
+- Les admins et propriétaires voient en plus l'**e-mail** de chaque membre sous le nom — pas les membres ordinaires : le canal de contact entre membres reste le numéro WhatsApp partagé volontairement.
 
 ## 6. Événements et confirmations (icône cloche)
 
@@ -127,7 +128,7 @@ Toute l'administration vit sous **Réglages → Administration**. Une règle à 
 - **Éditeur** (barre d'app) : dessinez votre espace sur une grille — niveaux, bureaux, tables, places (avec orientation, type de chaise et équipements), blocage de places pour maintenance. Ajoutez une **photo d'arrière-plan** par niveau et des **images d'illustration** déplaçables et redimensionnables. Supprimer un élément portant des réservations futures oblige à les résoudre d'abord.
 - **Identifiant & QR** : vos invitations liées aux rôles (§2). Vous pouvez remplacer l'identifiant généré par un identifiant mémorable (4–20 lettres/chiffres), le copier, ou partager le QR en PNG.
 - **Disponibilité** : jours d'ouverture, jours de fermeture, et granularité — plage horaire libre, grille de minutes (5/15/30/60), demi-journées, ou journées entières uniquement.
-- **Fonctionnalités** : activez ou désactivez des modules entiers par espace — calendrier, événements, argent, services, export PDF, séries, réserver pour autrui, notifications push, blocage de places par les admins, suppléments d'accessoires, **paiements en ligne**, **factures**, **réservations de bureau et de niveau**, **mode borne**, **badges RFID/NFC**, **annuaire des membres**, **intégration WhatsApp**, **codes QR des espaces**, **copropriétaires**. Désactiver un module retire *tous* ses écrans et boutons pour tous les membres.
+- **Fonctionnalités** : activez ou désactivez des modules entiers par espace — calendrier, événements, argent, services, export PDF, séries, réserver pour autrui, notifications push, blocage de places par les admins, suppléments d'accessoires, **paiements en ligne**, **factures**, **réservations de bureau et de niveau**, **mode borne**, **badges RFID/NFC**, **annuaire des membres**, **intégration WhatsApp**, **codes QR des espaces**, **copropriétaires**, **export de données**, **auto-pointage entrée/sortie**. Désactiver un module retire *tous* ses écrans et boutons pour tous les membres.
 
   La liste est **hiérarchique** : une fonctionnalité qui en nécessite une autre apparaît en retrait sous elle avec une note *Nécessite…*, et est grisée tant que son parent est désactivé — *Argent* porte les services, les suppléments d'accessoires, les paiements en ligne et les factures ; *Réservations de bureau et de niveau* porte le droit d'attribution par les admins ; *Mode borne* porte les badges RFID/NFC ; *Annuaire des membres* porte l'intégration WhatsApp. Désactiver un parent retire tout son sous-arbre de l'application ; le choix enregistré de l'enfant revient intact quand le parent est réactivé.
 
@@ -145,7 +146,7 @@ Toute l'administration vit sous **Réglages → Administration**. Une règle à 
 
 ![](assets/help/images/features-toggles-2.jpg)
 
-- **Membres & forfaits** : touchez un membre pour ouvrir sa **feuille de gestion** — lui ajouter un service, régler son pourcentage d'abonnement, choisir sa **politique de dépassement** (§8), plafonner ses **réservations simultanées**, émettre ses **badges** (§9), le promouvoir/rétrograder admin, transformer le compte en **borne**, ou mettre l'adhésion en pause.
+- **Membres & forfaits** : touchez un membre pour ouvrir sa **feuille de gestion** — lui ajouter un service, régler son pourcentage d'abonnement, choisir sa **politique de dépassement** (§8), plafonner ses **réservations simultanées**, émettre ses **badges** (§9), le promouvoir/rétrograder admin, transformer le compte en **borne**, ou mettre l'adhésion en pause. Chaque ligne affiche l'**e-mail** du membre sous son nom.
 
 ![](assets/help/images/member-management-sheet.jpg)
 
@@ -181,7 +182,7 @@ Toute l'administration vit sous **Réglages → Administration**. Une règle à 
 ![](assets/help/images/member-add-service.jpg)
 
 - **Réglages de l'espace** : nom, pays/devise, fuseau, instructions de paiement (IBAN, PayPal.me, Wero, Lydia, Wise), lien du groupe WhatsApp, **transparence des tables**, exports — et la **zone dangereuse** : **réinitialisation complète** (supprime réservations, argent et plan ; conserve configuration et membres), protégée par la saisie de « I agree ».
-- **Import/export** : toute la configuration voyage en **fichier XML** — sauvegarde, modèle, ou migration d'une instance auto-hébergée. Un **PDF de configuration** (membres, plan, prix, fonctionnalités) peut aussi être généré. Chaque export arrive dans le dossier **Téléchargements** de votre appareil.
+- **Import/export** : toute la configuration voyage en **fichier XML** — sauvegarde, modèle, ou migration d'une instance auto-hébergée. Un **PDF de configuration** (membres, plan, prix, fonctionnalités) peut aussi être généré. Un **classeur Excel** exporte les données vivantes elles-mêmes — espace, niveaux, bureaux, places, membres, réservations, pointages, paiements, services et factures, un onglet chacun (fonctionnalité *export de données*). Chaque export arrive dans le dossier **Téléchargements** de votre appareil.
 
 ### Codes QR des espaces et réservations d'espaces entiers (propriétaires)
 
@@ -339,6 +340,8 @@ L'action **Facture électronique (XML)** ouvre une feuille qui répond à la que
 **L'envoyer sans quitter l'application.** Le propriétaire enregistre la plateforme de l'espace dans *Réglages de l'espace → Identité légale → **Plateforme de facturation électronique*** : une URL de dépôt et un jeton. Toute plateforme acceptant un envoi avec un identifiant fonctionne — une plateforme agréée, un point d'accès Peppol, une plateforme nationale. Le jeton est stocké côté serveur, ne redescend jamais vers un téléphone, et l'application ne peut que vous dire qu'il est enregistré. Une fois configurée, la feuille commence par **Envoyer à la plateforme** : le document Factur-X part directement, et la feuille de détail de la facture retient la date d'envoi, la réponse de la plateforme et l'identifiant qu'elle a rendu. Chaque tentative est journalisée — acceptée, refusée ou non transmise — car un document qui *a peut-être* été envoyé est pire qu'un envoi échoué.
 
 DesKilo ne transmet toujours rien pour son propre compte : il produit le document et le confie à la plateforme que vous avez choisie.
+
+**Répéter sans risque.** Un espace peut enregistrer, à côté du point de production, des **points de test** (l'UAT de la plateforme ou une cible dev). Avec le mode développeur activé, l'envoi propose le choix de l'environnement, une soumission de test est marquée comme telle dans l'historique de transmission de la facture, et le point de production n'est jamais utilisé pour une répétition — un environnement de test non configuré refuse, sans jamais se rabattre.
 
 **Avant le premier export, renseignez l'identité légale.** Dans *Réglages de l'espace → **Identité légale et facturation électronique***, le propriétaire déclare le **régime de TVA** et le numéro que la norme exige avec lui : hors champ de la TVA, un **numéro d'immatriculation** (SIREN, HRB, CIF…) ; en franchise en base, un **numéro de TVA** et le motif de non-application. Les membres ajoutent leur **pays** — et leur numéro de TVA s'ils facturent en tant que professionnels — à côté de leur adresse dans *Réglages → Adresse*. DesKilo vérifie tout cela **avant** de produire le fichier et refuse en nommant ce qui manque : une facture rejetée par la plateforme est pire qu'une facture absente. Un espace **assujetti à la TVA** exporte comme les autres, à condition d'avoir configuré ses **taux de TVA** (section suivante) : avec des taux, la facture porte une vraie ventilation ; sans taux, DesKilo refuse plutôt que de déclarer un zéro auquel il ne croit pas.
 

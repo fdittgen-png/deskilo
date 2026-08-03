@@ -605,6 +605,58 @@ final class EnabledFeaturesSyncProvider
 String _$enabledFeaturesSyncHash() =>
     r'c52b3f67c83044e46408ec70a8fcdfda35485b80';
 
+/// member id → email of the active workspace's members (#410). ADMIN
+/// surface: short-circuits to {} for viewers who cannot administer (no
+/// wasted RPC) — and the server enforces the same gate regardless.
+
+@ProviderFor(memberEmails)
+final memberEmailsProvider = MemberEmailsProvider._();
+
+/// member id → email of the active workspace's members (#410). ADMIN
+/// surface: short-circuits to {} for viewers who cannot administer (no
+/// wasted RPC) — and the server enforces the same gate regardless.
+
+final class MemberEmailsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, String>>,
+          Map<String, String>,
+          FutureOr<Map<String, String>>
+        >
+    with
+        $FutureModifier<Map<String, String>>,
+        $FutureProvider<Map<String, String>> {
+  /// member id → email of the active workspace's members (#410). ADMIN
+  /// surface: short-circuits to {} for viewers who cannot administer (no
+  /// wasted RPC) — and the server enforces the same gate regardless.
+  MemberEmailsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'memberEmailsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$memberEmailsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, String>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, String>> create(Ref ref) {
+    return memberEmails(ref);
+  }
+}
+
+String _$memberEmailsHash() => r'cfccc637ccb06a0ea7e993be57e21be4324c5ac7';
+
 /// The signed-in user's membership (roles!) in the active workspace.
 
 @ProviderFor(myMember)

@@ -39,7 +39,10 @@ const Map<String, int> _baseline = {
   'lib/features/profile/presentation/screens/settings_screen.dart': 980,
   'lib/features/money/presentation/screens/money_screen.dart': 980,
   'lib/features/workspace/presentation/screens/members_screen.dart': 910,
-  'lib/features/members/presentation/screens/directory_screen.dart': 900,
+  // 900→920 (2026-08-03): #410 admin-visible email line on the member
+  // row — the row shares its chip helpers with the detail sheet, so
+  // extracting it would drag half the file; 15 feature lines instead.
+  'lib/features/members/presentation/screens/directory_screen.dart': 920,
   // 900→920 (2026-08-01): #393 environment picker threaded through the
   // send flow — feature lines, not accretion; picker itself is its own file.
   'lib/features/money/presentation/invoice_actions.dart': 920,

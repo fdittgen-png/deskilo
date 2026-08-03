@@ -61,8 +61,8 @@ Getting around:
 Booking from the plan:
 
 - **Walk-up check-in**: tap a free seat → the sheet suggests *now* until the workspace default end → confirm. If someone reserved that seat later, your end time is capped and you're told.
-- **Check-in on a reservation**: your reservation opens a check-in window. Check in from the plan or the reminder notification. No-shows are **auto-released** after the configured delay.
-- **Check-out**: manual, or automatic at the reservation end / closing time.
+- **Check-in on a reservation**: checking in means *you are there* — the window opens **15 minutes before** your start and closes when the reservation ends. Outside it the check-in button is disabled and tells you when it opens; browsing a future time never offers a live check-in. Admins can check in a member standing at their seat (while *booking for others* is on).
+- **Check-out**: manual — or, when the owner enables **auto check-in/out**, forgotten reservations complete themselves at day's end: never-touched bookings count as attended from their start to their end, and forgotten check-outs close at the reservation's own end.
 - **Whole spaces**: **double-tap** a desk, a room, or an empty stretch of floor to act on the **whole table, office or level** — the same sheet as scanning its QR card (§4), with the same period picker and repetition options as a seat.
 - **Time scroller**: pick a from→to window (or Morning / Afternoon / Full day, depending on the workspace granularity) to see occupancy at any future moment.
 - Seats can carry **accessories** (monitor, standing desk…), some with a per-half-day supplement that shows up on your statement.
@@ -99,6 +99,7 @@ See who's part of your community:
 - Tap a member for their **detail sheet** — including their upcoming reservations.
 - **Swipe** a member to message them on **WhatsApp**; the **group button** opens your community's WhatsApp group (set by the owner).
 - Set your own photo, status, and phone visibility in **Settings**.
+- Admins and owners additionally see each member's **email** under the name — plain members don't: member-to-member contact stays the opt-in WhatsApp number.
 
 ## 6. Events & confirmations (bell icon)
 
@@ -127,7 +128,7 @@ All administration lives under **Settings → Administration**. One rule to know
 - **Editor** (app bar): draw your space on a grid — add levels, outline offices, place desks, stamp seats (with orientation, chair type, and amenities), block seats for maintenance. Add a **background photo** per level and **illustration images** you can move and resize. Deleting anything with future reservations makes you resolve them first.
 - **Workspace ID & QR**: your role-bound invites (§2). You can replace the generated workspace ID with a memorable one (4–20 letters/digits), copy it, or share the QR as a PNG.
 - **Availability**: open weekdays, closure days, and the booking granularity — free start/end times, a minute grid (5/15/30/60), half-days, or full days only.
-- **Features**: switch whole modules on or off per workspace — calendar, events, money, services, PDF export, series booking, booking for others, push, seat blocking by admins, accessory supplements, **online payments**, **invoicing**, **office & level reservations**, **kiosk mode**, **RFID/NFC badges**, **members directory**, **WhatsApp integration**, **space QR codes**, **co-owners**. Switching a module off removes *all* of its screens and buttons for every member.
+- **Features**: switch whole modules on or off per workspace — calendar, events, money, services, PDF export, series booking, booking for others, push, seat blocking by admins, accessory supplements, **online payments**, **invoicing**, **office & level reservations**, **kiosk mode**, **RFID/NFC badges**, **members directory**, **WhatsApp integration**, **space QR codes**, **co-owners**, **data export**, **auto check-in/out**. Switching a module off removes *all* of its screens and buttons for every member.
 
   The list is **hierarchical**: a feature that needs another sits indented under it with a *Requires…* note, and is greyed out while its parent is off — *Money* carries services, accessory supplements, online payments and invoicing; *Office & level reservations* carries the admin assignment right; *Kiosk mode* carries RFID/NFC badges; *Members directory* carries the WhatsApp integration. Switching a parent off takes its whole subtree out of the app; the child's stored choice comes back untouched when the parent returns.
 
@@ -145,7 +146,7 @@ All administration lives under **Settings → Administration**. One rule to know
 
 ![](assets/help/images/features-toggles-2.jpg)
 
-- **Members & plans**: tap a member to open their **management sheet** — add a service for them, set their subscription percentage, choose their **over-consumption policy** (§8), cap their **simultaneous reservations**, issue **badges** (§9), promote/demote admin, turn the account into a **kiosk device**, or pause the membership.
+- **Members & plans**: tap a member to open their **management sheet** — add a service for them, set their subscription percentage, choose their **over-consumption policy** (§8), cap their **simultaneous reservations**, issue **badges** (§9), promote/demote admin, turn the account into a **kiosk device**, or pause the membership. Each row shows the member's **email** under the name.
 
 ![](assets/help/images/member-management-sheet.jpg)
 
@@ -181,7 +182,7 @@ All administration lives under **Settings → Administration**. One rule to know
 ![](assets/help/images/member-add-service.jpg)
 
 - **Workspace settings**: name, country/currency, time zone, payment instructions (IBAN, PayPal.me, Wero, Lydia, Wise), the WhatsApp group link, **desk transparency**, exports — and the **danger zone**: a full **workspace reset** (deletes bookings, money, and the floor plan; keeps configuration and members) guarded by a typed *"I agree"*.
-- **Import/export**: the whole configuration travels as an **XML file** — back it up, template it, or migrate a self-hosted instance. A **configuration PDF** (members, plan, prices, features) can be generated too. Every export lands in your device's **Downloads** folder.
+- **Import/export**: the whole configuration travels as an **XML file** — back it up, template it, or migrate a self-hosted instance. A **configuration PDF** (members, plan, prices, features) can be generated too. An **Excel workbook** exports the live data itself — workspace, levels, desks, seats, members, reservations, check-ins/outs, payments, services and invoices, one tab each (*data export* feature). Every export lands in your device's **Downloads** folder.
 
 ### Space QR codes & whole-space reservations (owners)
 
@@ -337,6 +338,8 @@ The **e-invoice (XML)** action opens a sheet that answers this for the workspace
 **Sending it, without leaving the app.** The owner can register the workspace's platform in *Réglages de l'espace → Identité légale → **Plateforme de facturation électronique***: an upload URL and a token. Any platform that accepts an upload with a credential works — a *plateforme agréée*, a Peppol access point, a national platform. The token is stored server-side, never travels back to a phone, and the app can only tell you that one is set. Once configured, the e-invoice sheet leads with **Envoyer à la plateforme**: the Factur-X document goes straight out, and the invoice's detail sheet records when it left, what the platform answered and the id it gave back. Every attempt is logged — accepted, refused or undelivered — because a document that *may* have left is worse than one that failed.
 
 DesKilo still transmits nothing on its own account: it produces the document and hands it to the platform you chose.
+
+**Rehearsing without risk.** A workspace can additionally register **test endpoints** (the platform's UAT or a dev target) next to the production one. With the app's developer mode on, sending offers the choice of environment, a test submission is marked as such on the invoice's transmission history, and the production endpoint is never used for a rehearsal — an unconfigured test environment simply refuses instead of falling back.
 
 **Before the first export, fill in the legal identity.** In *Workspace settings → **Legal identity & e-invoicing*** the owner declares the **VAT regime** and the number the norm demands with it: outside the scope of VAT, a **company registration number** (SIREN, HRB, CIF…); VAT-exempt under a small-business scheme, a **VAT number** plus the reason no VAT is charged. Members add their **country** — and their VAT number if they invoice as a business — beside their address in *Settings → Address*. DesKilo checks all of this **before** producing the file and refuses with the missing item named, because an invoice a platform rejects is worse than no invoice. A **VAT-charging workspace** exports like any other, as long as it has set up its **VAT rates** (next section): with rates in place the invoice carries a real breakdown, and until then DesKilo refuses rather than declare a zero it does not believe.
 

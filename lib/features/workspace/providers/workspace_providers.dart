@@ -141,6 +141,20 @@ Set<WorkspaceFeature> enabledFeaturesSync(Ref ref) =>
     ref.watch(enabledFeaturesProvider).value ??
     effectiveFeatures(resolveEnabledFeatures(const {}));
 
+/// member id → email of the active workspace's members (#410). ADMIN
+/// surface: short-circuits to {} for viewers who cannot administer (no
+/// wasted RPC) — and the server enforces the same gate regardless.
+@riverpod
+Future<Map<String, String>> memberEmails(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const {};
+  final me = await ref.watch(myMemberProvider.future);
+  if (!(me?.canAdminister ?? false)) return const {};
+  return ref
+      .watch(workspaceRepositoryProvider)
+      .fetchMemberEmails(workspace.id);
+}
+
 /// The signed-in user's membership (roles!) in the active workspace.
 @Riverpod(keepAlive: true)
 Future<Member?> myMember(Ref ref) async {
