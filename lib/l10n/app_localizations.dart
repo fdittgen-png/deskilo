@@ -3728,6 +3728,30 @@ abstract class AppLocalizations {
   /// **'The level has reservations in that period.'**
   String get levelConflict;
 
+  /// Refusal when the member already holds an overlapping active reservation (#412)
+  ///
+  /// In en, this message translates to:
+  /// **'You already have a booking in that period — one place at a time.'**
+  String get bookingOnePlace;
+
+  /// Refusal when checking in while checked in elsewhere on a running reservation (#412)
+  ///
+  /// In en, this message translates to:
+  /// **'You are checked in elsewhere — check out there first.'**
+  String get bookingCheckedInElsewhere;
+
+  /// Refusal when a desk/office/level lacks the bookable-as-a-whole toggle (#412)
+  ///
+  /// In en, this message translates to:
+  /// **'This space is not set up for whole booking — the owner enables \"Bookable as a whole\" on it in the editor.'**
+  String get spaceNotWholeBookable;
+
+  /// Refusal when the officeLevelReservations feature is off (#412)
+  ///
+  /// In en, this message translates to:
+  /// **'Office & level reservations are switched off in Features.'**
+  String get levelFeatureOff;
+
   /// No description provided for @levelDetail.
   ///
   /// In en, this message translates to:
@@ -4207,6 +4231,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Check in {name}'**
   String planCheckInFor(String name);
+
+  /// Admin overrule tile: remove another member's reservation (#412)
+  ///
+  /// In en, this message translates to:
+  /// **'Remove reservation (overrule)'**
+  String get planOverruleRemove;
+
+  /// Subtitle under the overrule tile (#412)
+  ///
+  /// In en, this message translates to:
+  /// **'{name} and all admins will be notified.'**
+  String planOverruleHint(String name);
+
+  /// Snack after an overrule removal (#412)
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation removed — {name} was notified.'**
+  String planOverruleDone(String name);
 
   /// Action ending the current presence on a seat
   ///

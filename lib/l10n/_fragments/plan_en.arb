@@ -50,6 +50,28 @@
       }
     }
   },
+  "planOverruleRemove": "Remove reservation (overrule)",
+  "@planOverruleRemove": {
+    "description": "Admin overrule tile: remove another member's reservation (#412)"
+  },
+  "planOverruleHint": "{name} and all admins will be notified.",
+  "@planOverruleHint": {
+    "description": "Subtitle under the overrule tile (#412)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "planOverruleDone": "Reservation removed — {name} was notified.",
+  "@planOverruleDone": {
+    "description": "Snack after an overrule removal (#412)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "planCheckOutButton": "Check out",
   "@planCheckOutButton": {
     "description": "Action ending the current presence on a seat"

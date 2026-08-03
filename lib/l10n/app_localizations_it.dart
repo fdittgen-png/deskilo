@@ -2051,6 +2051,22 @@ class AppLocalizationsIt extends AppLocalizations {
   String get levelConflict => 'Il piano ha prenotazioni in quel periodo.';
 
   @override
+  String get bookingOnePlace =>
+      'Hai già una prenotazione in quel periodo — un posto alla volta.';
+
+  @override
+  String get bookingCheckedInElsewhere =>
+      'Hai fatto check-in altrove — fai prima il check-out lì.';
+
+  @override
+  String get spaceNotWholeBookable =>
+      'Questo spazio non è configurato per la prenotazione intera — il proprietario attiva \"Prenotabile per intero\" nell\'editor.';
+
+  @override
+  String get levelFeatureOff =>
+      'Le prenotazioni di ufficio e piano sono disattivate nelle Funzionalità.';
+
+  @override
   String get levelDetail => 'Intero piano';
 
   @override
@@ -2306,6 +2322,19 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String planCheckInFor(String name) {
     return 'Fai il check-in di $name';
+  }
+
+  @override
+  String get planOverruleRemove => 'Rimuovi la prenotazione (scavalca)';
+
+  @override
+  String planOverruleHint(String name) {
+    return '$name e tutti gli admin saranno avvisati.';
+  }
+
+  @override
+  String planOverruleDone(String name) {
+    return 'Prenotazione rimossa — $name è stato avvisato.';
   }
 
   @override

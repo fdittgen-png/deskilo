@@ -2034,6 +2034,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get levelConflict => 'The level has reservations in that period.';
 
   @override
+  String get bookingOnePlace =>
+      'You already have a booking in that period — one place at a time.';
+
+  @override
+  String get bookingCheckedInElsewhere =>
+      'You are checked in elsewhere — check out there first.';
+
+  @override
+  String get spaceNotWholeBookable =>
+      'This space is not set up for whole booking — the owner enables \"Bookable as a whole\" on it in the editor.';
+
+  @override
+  String get levelFeatureOff =>
+      'Office & level reservations are switched off in Features.';
+
+  @override
   String get levelDetail => 'Whole level';
 
   @override
@@ -2288,6 +2304,19 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String planCheckInFor(String name) {
     return 'Check in $name';
+  }
+
+  @override
+  String get planOverruleRemove => 'Remove reservation (overrule)';
+
+  @override
+  String planOverruleHint(String name) {
+    return '$name and all admins will be notified.';
+  }
+
+  @override
+  String planOverruleDone(String name) {
+    return 'Reservation removed — $name was notified.';
   }
 
   @override

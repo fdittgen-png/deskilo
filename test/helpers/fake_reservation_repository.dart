@@ -19,6 +19,21 @@ class FakeReservationRepository implements ReservationRepository {
   /// window enforcement below must agree with the seeded times).
   DateTime Function() now = () => kTestNow;
 
+  /// One place at a time (#412, 0079 trigger): a member with an ACTIVE
+  /// reservation overlapping the window cannot take another — pinned
+  /// substring, like the server.
+  void _assertMemberFree(String memberId, DateTime start, DateTime end) {
+    final busy = reservations.any((r) =>
+        r.memberId == memberId &&
+        r.isActive &&
+        start.isBefore(r.endsAt) &&
+        r.startsAt.isBefore(end));
+    if (busy) {
+      throw const PostgrestException(
+          message: 'you already have a reservation in that period');
+    }
+  }
+
   bool _overlapsActive(
     String? seatId,
     String? officeId,
@@ -112,6 +127,7 @@ class FakeReservationRepository implements ReservationRepository {
     if (_overlapsActive(seatId, officeId, startsAt, endsAt)) {
       throw StateError('conflict');
     }
+    _assertMemberFree(myMemberId, startsAt, endsAt);
     final reservation = Reservation(
       id: 'res-${_nextId++}',
       workspaceId: workspaceId,
@@ -159,6 +175,7 @@ class FakeReservationRepository implements ReservationRepository {
     if (_overlapsActive(seatId, null, startsAt, endsAt)) {
       throw StateError('conflict');
     }
+    _assertMemberFree(subjectMemberId, startsAt, endsAt);
     bookedForOthers.add(
       (
         subjectMemberId: subjectMemberId,
@@ -196,6 +213,20 @@ class FakeReservationRepository implements ReservationRepository {
     }
     if (!at.isBefore(r.endsAt)) {
       throw const PostgrestException(message: 'check-in window closed');
+    }
+    // 0079 mirror: stale check-ins complete at their own end; a check-in
+    // still RUNNING elsewhere refuses.
+    for (final other in reservations
+        .where((o) =>
+            o.memberId == r.memberId &&
+            o.id != r.id &&
+            o.status == ReservationStatus.checkedIn)
+        .toList()) {
+      if (other.endsAt.isAfter(at)) {
+        throw const PostgrestException(message: 'already checked in elsewhere');
+      }
+      _replace(other.copyWith(
+          status: ReservationStatus.completed, checkedOutAt: other.endsAt));
     }
     _replace(
       r.copyWith(status: ReservationStatus.checkedIn, checkedInAt: at),
@@ -304,6 +335,14 @@ class FakeReservationRepository implements ReservationRepository {
         // Seat overlap check for seat series; whole-space fakes lean on
         // the widget-level conflict displays (the server re-checks).
         if (seatId != null && _overlapsActive(seatId, null, start, end)) {
+          skipped.add(start);
+        } else if (reservations.any((r) =>
+            r.memberId == myMemberId &&
+            r.isActive &&
+            start.isBefore(r.endsAt) &&
+            r.startsAt.isBefore(end))) {
+          // 0079 trigger mirror: member-busy dates land in the skip
+          // report, exactly like target conflicts.
           skipped.add(start);
         } else {
           reservations.add(

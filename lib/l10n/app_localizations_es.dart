@@ -2048,6 +2048,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get levelConflict => 'La planta tiene reservas en ese periodo.';
 
   @override
+  String get bookingOnePlace =>
+      'Ya tienes una reserva en ese periodo — un sitio a la vez.';
+
+  @override
+  String get bookingCheckedInElsewhere =>
+      'Estás registrado en otro sitio — haz la salida allí primero.';
+
+  @override
+  String get spaceNotWholeBookable =>
+      'Este espacio no está configurado para reserva completa — el propietario activa \"Reservable como un todo\" en el editor.';
+
+  @override
+  String get levelFeatureOff =>
+      'Las reservas de oficina y planta están desactivadas en Funciones.';
+
+  @override
   String get levelDetail => 'Planta entera';
 
   @override
@@ -2301,6 +2317,19 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String planCheckInFor(String name) {
     return 'Registrar a $name';
+  }
+
+  @override
+  String get planOverruleRemove => 'Quitar la reserva (anular)';
+
+  @override
+  String planOverruleHint(String name) {
+    return '$name y todos los admins serán notificados.';
+  }
+
+  @override
+  String planOverruleDone(String name) {
+    return 'Reserva eliminada — se notificó a $name.';
   }
 
   @override

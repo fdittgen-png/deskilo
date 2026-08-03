@@ -2052,6 +2052,22 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Etage hat Reservierungen in diesem Zeitraum.';
 
   @override
+  String get bookingOnePlace =>
+      'Du hast in diesem Zeitraum bereits eine Buchung — ein Platz zur Zeit.';
+
+  @override
+  String get bookingCheckedInElsewhere =>
+      'Du bist woanders eingecheckt — checke dort zuerst aus.';
+
+  @override
+  String get spaceNotWholeBookable =>
+      'Dieser Bereich ist nicht für Ganzbuchung eingerichtet — die Inhaberin aktiviert dafür „Als Ganzes buchbar“ im Editor.';
+
+  @override
+  String get levelFeatureOff =>
+      'Büro- & Etagen-Reservierungen sind in den Funktionen ausgeschaltet.';
+
+  @override
   String get levelDetail => 'Ganze Etage';
 
   @override
@@ -2307,6 +2323,19 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String planCheckInFor(String name) {
     return '$name einchecken';
+  }
+
+  @override
+  String get planOverruleRemove => 'Reservierung entfernen (übersteuern)';
+
+  @override
+  String planOverruleHint(String name) {
+    return '$name und alle Admins werden benachrichtigt.';
+  }
+
+  @override
+  String planOverruleDone(String name) {
+    return 'Reservierung entfernt — $name wurde benachrichtigt.';
   }
 
   @override
