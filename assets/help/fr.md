@@ -21,6 +21,8 @@ Après connexion, l'écran d'accueil propose deux chemins :
 
 Un compte peut appartenir à plusieurs espaces ; changez d'espace dans **Réglages → Profils**, et **marquez-en un d'une étoile comme profil par défaut** — c'est le profil avec lequel l'application s'ouvre. Tout dans l'application est limité à l'espace actif.
 
+**Tout reste en direct.** Ce que quiconque change — une réservation, un nouveau membre, un réglage — est poussé en quelques secondes vers chaque appareil connecté, y compris celui qui a fait le changement. Pas de redémarrage, pas de tirer-pour-actualiser.
+
 ## 2. Rôles et invitations
 
 DesKilo a trois rôles cumulatifs, plus un compte « appareil » :
@@ -77,6 +79,8 @@ Ouvrez le hub **Réserver** (bouton central). Une bande de dates choisit le jour
 - **Semaine** — une grille place × jour pour toute la semaine ISO ; repérez une demi-journée libre d'un coup d'œil et touchez-la pour réserver.
 - **Mois** — un calendrier de disponibilité : bureaux libres par jour tous étages confondus ; touchez un jour pour ouvrir sa vue Jour.
 
+**Une place à la fois** : vous ne pouvez tenir qu'une réservation active par période — réserver ou pointer ailleurs pendant qu'une autre court est refusé, et un pointage clôt tout pointage antérieur dont la réservation est déjà finie. Les admins et propriétaires peuvent **outrepasser** : toucher une place occupée ou réservée propose *Retirer la réservation (outrepasser)* — la réservation est retirée et le membre ainsi que tous les admins sont notifiés via le fil d'événements.
+
 Les réservations suivent la **règle de granularité** de l'espace — demi-journées, journées entières, ou horaires libres sur la grille de créneaux du propriétaire. Elles respectent les **jours d'ouverture** et les **jours de fermeture**, et les règles de réservation (horizon, durée maximale, délai d'annulation). Besoin récurrent ? Réservez une **série** (quotidienne, jours ouvrés, hebdomadaire) — les jours fermés et les conflits sont sautés et signalés.
 
 L'onglet **Calendrier** montre vos réservations par mois — vos jours en **rouge**, ceux des autres en **bleu**, aujourd'hui entouré — avec une chronologie par jour. En paysage, calendrier et chronologie utilisent la disposition en deux panneaux.
@@ -87,7 +91,7 @@ Chaque poste, table, bureau et niveau peut porter une **carte QR** imprimée (§
 
 - **Carte de poste** — réservez ou pointez sur ce poste précis, sur-le-champ (fenêtre du jour : matin / après-midi / journée entière quand l'espace utilise les demi-journées, sinon à partir de maintenant pour les prochaines heures).
 - **Carte de table** — les postes de la table avec leur état en direct ; choisissez-en un libre.
-- **Carte de bureau ou de niveau** — si le propriétaire l'a rendu réservable, que la fonctionnalité *Réservations de bureau et de niveau* est activée **et** que vous détenez le droit personnel (§7), vous pouvez réserver ou pointer sur le **bureau ou l'étage entier** — avec le même choix de période (matin / après-midi / journée entière, ou horaires libres) et les mêmes options de **série** qu'une place ; son prix par demi-journée est affiché et arrive sur votre facture. Sinon, la feuille vous explique pourquoi, et un bureau se rabat sur ses postes.
+- **Carte de bureau ou de niveau** — si le propriétaire l'a rendu réservable, que la fonctionnalité *Réservations de bureau et de niveau* est activée **et** que vous détenez le droit personnel (§7) — les propriétaires et admins l'ont toujours — vous pouvez réserver ou pointer sur le **bureau ou l'étage entier** — avec le même choix de période (matin / après-midi / journée entière, ou horaires libres) et les mêmes options de **série** qu'une place ; son prix par demi-journée est affiché et arrive sur votre facture. Sinon, la feuille vous explique pourquoi, et un bureau se rabat sur ses postes.
 
 **Les conflits protègent dans les deux sens :** un bureau ou un niveau ne peut pas être réservé tant qu'un poste à l'intérieur est déjà réservé sur cette fenêtre — et aucun poste ne peut être réservé tant que son bureau ou son niveau est réservé en entier.
 

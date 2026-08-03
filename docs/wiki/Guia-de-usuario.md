@@ -21,6 +21,8 @@ Tras iniciar sesión, la pantalla de bienvenida ofrece dos caminos:
 
 Una cuenta puede pertenecer a varios espacios; cambia entre ellos en **Ajustes → Perfiles** y **marca uno con la estrella como predeterminado** — es el perfil con el que se abre la app. Todo en la app se refiere al espacio activo.
 
+**Todo se mantiene en vivo.** Lo que cualquiera cambie — una reserva, un miembro nuevo, un ajuste — se envía en segundos a cada dispositivo conectado, incluido el que hizo el cambio. Sin reiniciar, sin tirar para actualizar.
+
 ## 2. Roles e invitaciones
 
 DesKilo tiene tres roles acumulativos, más una cuenta de dispositivo:
@@ -77,6 +79,8 @@ Abre el hub **Reservar** (botón central). Una banda de fechas elige el día; lo
 - **Semana** — una cuadrícula asiento × día de toda la semana ISO; encuentra una media jornada libre de un vistazo y tócala para reservar.
 - **Mes** — un calendario de disponibilidad: mesas libres por día en todas las plantas; toca un día para entrar en su vista Día.
 
+**Un sitio a la vez**: solo puedes mantener una reserva activa por periodo — reservar o registrarte en otro sitio mientras corre otra se rechaza, y un registro cierra cualquier registro anterior cuya reserva ya terminó. Los admins y propietarios pueden **anular**: tocar un puesto ocupado o reservado ofrece *Quitar la reserva (anular)* — la reserva se elimina y el miembro y todos los admins son notificados por el feed de eventos.
+
 Las reservas siguen la **regla de granularidad** del espacio — medias jornadas, días completos u horas libres sobre la rejilla de minutos del propietario. Respetan los **días de apertura** y los **días de cierre**, y las reglas de reserva (horizonte, duración máxima, plazo de cancelación). ¿Necesidad recurrente? Reserva una **serie** (diaria, laborables, semanal) — los días cerrados y conflictos se saltan y se informan.
 
 La pestaña **Calendario** muestra tus reservas por mes — tus días en **rojo**, los de otros en **azul**, hoy rodeado — con cronología por día. En horizontal, calendario y cronología usan el diseño dividido.
@@ -87,7 +91,7 @@ Cada puesto, mesa, oficina y planta puede llevar una **tarjeta QR** impresa (§7
 
 - **Tarjeta de puesto** — reserva o regístrate en ese puesto concreto, al momento (la ventana de hoy: mañana / tarde / día completo donde el espacio usa medias jornadas; si no, desde ahora para las próximas horas).
 - **Tarjeta de mesa** — los puestos de la mesa con su estado en vivo; elige uno libre.
-- **Tarjeta de oficina o planta** — si el propietario la hizo reservable, la función *Reservas de oficina y planta* está activada **y** tienes el derecho personal (§7), puedes reservar o registrarte en la **oficina o planta entera** — con el mismo selector de periodo (mañana / tarde / día completo, u horas libres) y las mismas opciones de **serie** que un puesto; se muestra su precio por media jornada y entra en tu factura. Si no, la hoja te dice por qué, y una oficina recae en sus puestos.
+- **Tarjeta de oficina o planta** — si el propietario la hizo reservable, la función *Reservas de oficina y planta* está activada **y** tienes el derecho personal (§7) — los propietarios y admins siempre lo tienen — puedes reservar o registrarte en la **oficina o planta entera** — con el mismo selector de periodo (mañana / tarde / día completo, u horas libres) y las mismas opciones de **serie** que un puesto; se muestra su precio por media jornada y entra en tu factura. Si no, la hoja te dice por qué, y una oficina recae en sus puestos.
 
 **Los conflictos protegen en ambos sentidos:** una oficina o planta no puede reservarse mientras algún puesto de su interior ya esté reservado en esa ventana — y ningún puesto puede reservarse mientras su oficina o planta esté reservada entera.
 
