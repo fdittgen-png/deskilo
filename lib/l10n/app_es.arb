@@ -183,6 +183,7 @@
   "memberCoOwnerChip": "Copropietario",
   "memberCoOwnerPassiveChip": "Copropietario (pasivo)",
   "developerMode": "Modo desarrollador",
+  "developerModeWorkspaceHint": "Se aplica a todos los miembros de este espacio.",
   "developerTitle": "Desarrollador",
   "developerExport": "Exportar registro",
   "developerClear": "Vaciar registro",

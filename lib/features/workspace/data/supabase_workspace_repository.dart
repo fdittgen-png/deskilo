@@ -213,6 +213,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         inviteCode: row['invite_code'] as String,
         featureFlags:
             row['feature_flags'] as Map<String, dynamic>? ?? const {},
+        devMode: row['dev_mode'] as bool? ?? false,
         paymentInstructions:
             row['payment_instructions'] as Map<String, dynamic>? ?? const {},
         whatsappGroup: row['whatsapp_group'] as String? ?? '',
@@ -241,6 +242,12 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         .from('workspaces')
         .update({'feature_flags': flags}).eq('id', workspaceId);
   }
+
+  @override
+  // RPC because workspaces_update RLS is owner-only; 0081 admits admins.
+  Future<void> setDevMode(String workspaceId, bool enabled) => _client.rpc(
+      'set_dev_mode',
+      params: {'p_workspace_id': workspaceId, 'p_enabled': enabled});
 
   @override
   Future<List<Member>> fetchMembers(String workspaceId) async {

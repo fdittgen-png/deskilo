@@ -178,3 +178,14 @@ validation policies). postgres_changes applies RLS per subscriber
 bare uuids, used purely as an invalidation signal. Deny-all tables
 (payment_credentials, member_badges, push_endpoints) are deliberately
 NOT published.
+
+## Workspace developer mode (0081 — `set_dev_mode`)
+
+| Operation | anon | user | worker | admin | owner | Mechanism |
+|---|---|---|---|---|---|---|
+| flip workspace dev mode | — | ✗ | ✗ | RPC | RPC | `set_dev_mode(workspace_id, enabled)` SECURITY DEFINER, `is_admin_of`-gated; `workspaces_update` RLS stays owner-only |
+
+The `dev_mode` column rides the workspace row every member already
+SELECTs, and 0080 publishes it — a flip reaches every device live. The
+mode applies to ALL members (e-invoice test environments, Developer
+screen); only admins/owners see the switch.

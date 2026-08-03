@@ -1,6 +1,7 @@
 {
   "@@locale": "fr",
   "developerMode": "Mode développeur",
+  "developerModeWorkspaceHint": "S'applique à tous les membres de cet espace.",
   "developerTitle": "Développeur",
   "developerExport": "Exporter le journal",
   "developerClear": "Vider le journal",

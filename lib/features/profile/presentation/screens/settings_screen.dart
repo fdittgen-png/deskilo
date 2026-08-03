@@ -9,7 +9,6 @@ import '../../../../core/locale/locale_controller.dart';
 import '../../../../core/scan/front_camera.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/theme_controller.dart';
-import '../../../../core/trace/dev_mode.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -515,20 +514,19 @@ class SettingsScreen extends ConsumerWidget {
             onChanged: (v) =>
                 ref.read(frontCameraScanProvider.notifier).setEnabled(v),
           ),
-          // The dev-mode switch below is visible to everyone, so this
-          // section header is never empty and needs no gating.
           const Divider(),
           _SectionHeader(l10n?.settingsSectionAdvanced ?? 'Advanced'),
-          // Local diagnostics (#144) — deliberately visible to ALL users,
-          // not just owners: the trace never leaves the device unless the
-          // user exports it.
-          SwitchListTile(
-            secondary: const Icon(Icons.developer_mode_outlined),
-            title: Text(l10n?.developerMode ?? 'Developer mode'),
-            value: devMode,
-            onChanged: (v) =>
-                ref.read(devModeProvider.notifier).setEnabled(v),
-          ),
+          // #419: admins/owners flip dev mode for EVERYONE; other
+          // members inherit the state without seeing the switch.
+          if (ref.watch(myMemberProvider).value?.canAdminister ?? false)
+            SwitchListTile(
+              secondary: const Icon(Icons.developer_mode_outlined),
+              title: Text(l10n?.developerMode ?? 'Developer mode'),
+              subtitle: Text(l10n?.developerModeWorkspaceHint ??
+                  'Applies to every member of this workspace.'),
+              value: devMode,
+              onChanged: (v) => _setWorkspaceDevMode(ref, v),
+            ),
           if (devMode)
             ListTile(
               leading: const Icon(Icons.receipt_long_outlined),
@@ -975,4 +973,12 @@ class _ThemeDialog extends ConsumerWidget {
       ],
     );
   }
+}
+
+/// #419: writes the workspace-wide dev mode and refreshes the row.
+Future<void> _setWorkspaceDevMode(WidgetRef ref, bool enabled) async {
+  final ws = ref.read(currentWorkspaceProvider).value;
+  if (ws == null) return;
+  await ref.read(workspaceRepositoryProvider).setDevMode(ws.id, enabled);
+  ref.invalidate(myWorkspacesProvider);
 }

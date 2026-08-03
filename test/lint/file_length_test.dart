@@ -36,7 +36,9 @@ const Map<String, int> _baseline = {
       1330,
   'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1160,
   'lib/features/reservations/presentation/screens/reserve_screen.dart': 1010,
-  'lib/features/profile/presentation/screens/settings_screen.dart': 980,
+  // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
+  // workspace hint subtitle and the RPC write helper.
+  'lib/features/profile/presentation/screens/settings_screen.dart': 990,
   'lib/features/money/presentation/screens/money_screen.dart': 980,
   'lib/features/workspace/presentation/screens/members_screen.dart': 910,
   // 900→920 (2026-08-03): #410 admin-visible email line on the member

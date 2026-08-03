@@ -610,6 +610,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get developerMode => 'Developer mode';
 
   @override
+  String get developerModeWorkspaceHint =>
+      'Applies to every member of this workspace.';
+
+  @override
   String get developerTitle => 'Developer';
 
   @override

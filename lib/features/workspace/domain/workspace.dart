@@ -36,6 +36,10 @@ sealed class Workspace with _$Workspace {
     /// with [resolveEnabledFeatures].
     @Default(<String, dynamic>{}) Map<String, dynamic> featureFlags,
 
+    /// Workspace-wide developer mode (#419, 0081): admin/owner-set,
+    /// applies to every member on every device (realtime-pushed).
+    @Default(false) bool devMode,
+
     /// Owner-configured payment instructions (#155) as stored — decode
     /// with [PaymentInstructions.fromDb]. Empty = none configured.
     @Default(<String, dynamic>{}) Map<String, dynamic> paymentInstructions,

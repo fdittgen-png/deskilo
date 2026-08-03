@@ -1,6 +1,7 @@
 {
   "@@locale": "de",
   "developerMode": "Entwicklermodus",
+  "developerModeWorkspaceHint": "Gilt für alle Mitglieder dieses Workspace.",
   "developerTitle": "Entwickler",
   "developerExport": "Protokoll exportieren",
   "developerClear": "Protokoll leeren",
