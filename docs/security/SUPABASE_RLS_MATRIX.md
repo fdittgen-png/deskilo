@@ -167,3 +167,14 @@ to `{}` for non-admin viewers before ever calling.
 | check in while checked in elsewhere (running) | — | ✗ | ✗ | ✗ | ✗ | `check_in_reservation` v3 guard; STALE check-ins auto-complete at their own end first |
 | reserve a whole desk/office/level | — | grant | grant | ✓ | ✓ | `create_reservation` v8 / `create_series` v3: `can_reserve_level OR is_owner OR is_admin` (kiosk keeps the strict stored grant) |
 | cancel ANOTHER member's reservation (overrule) | — | ✗ | ✗ | ✓ | ✓ | `cancel_reservation` v2: owner-or-`is_admin_of`; the 0007 `reservations_log_event` trigger broadcasts the cancellation to the displaced member's feed (admins see all) — that IS the notification |
+## Realtime publication (0080)
+
+The `supabase_realtime` publication carries the app-rendered tables
+(reservations, members, workspaces, profiles, plan geometry + images,
+events + decisions, ledger, payment intents, invoices, services,
+accessories, closure days, quota extensions, fee bands, packages,
+validation policies). postgres_changes applies RLS per subscriber
+(WALRUS) for INSERT/UPDATE; DELETE events carry the primary key only —
+bare uuids, used purely as an invalidation signal. Deny-all tables
+(payment_credentials, member_badges, push_endpoints) are deliberately
+NOT published.
