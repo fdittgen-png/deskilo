@@ -2054,6 +2054,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get levelConflict => 'Le niveau a des réservations sur cette période.';
 
   @override
+  String get bookingOnePlace =>
+      'Vous avez déjà une réservation sur cette période — une place à la fois.';
+
+  @override
+  String get bookingCheckedInElsewhere =>
+      'Vous êtes pointé ailleurs — partez d\'abord là-bas.';
+
+  @override
+  String get spaceNotWholeBookable =>
+      'Cet espace n\'est pas configuré pour la réservation entière — le propriétaire active « Réservable en entier » dessus dans l\'éditeur.';
+
+  @override
+  String get levelFeatureOff =>
+      'Les réservations de bureau et de niveau sont désactivées dans les fonctionnalités.';
+
+  @override
   String get levelDetail => 'Niveau entier';
 
   @override
@@ -2309,6 +2325,19 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String planCheckInFor(String name) {
     return 'Installer $name';
+  }
+
+  @override
+  String get planOverruleRemove => 'Retirer la réservation (outrepasser)';
+
+  @override
+  String planOverruleHint(String name) {
+    return '$name et tous les admins seront notifiés.';
+  }
+
+  @override
+  String planOverruleDone(String name) {
+    return 'Réservation retirée — $name a été notifié.';
   }
 
   @override

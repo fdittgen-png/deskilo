@@ -57,11 +57,31 @@ String bookingErrorText(
     return l10n?.planCheckInOverError ??
         'This reservation is over — check-in is no longer possible.';
   }
+  // One place at a time (#412, 0079 trigger + check-in guards).
+  if (message.contains('you already have a reservation in that period')) {
+    return l10n?.bookingOnePlace ??
+        'You already have a booking in that period — one place at a time.';
+  }
+  if (message.contains('already checked in elsewhere')) {
+    return l10n?.bookingCheckedInElsewhere ??
+        'You are checked in elsewhere — check out there first.';
+  }
   // Whole-space paths (0050/0057): grant refusals and occupancy
   // conflicts share these pinned substrings across office and level.
   if (message.contains('not allowed to reserve a level')) {
     return l10n?.levelNotAllowed ??
         'You are not allowed to reserve a whole office or level.';
+  }
+  // #412: these two rendered as "Something went wrong" — the owner had
+  // no way to learn WHICH toggle was missing.
+  if (message.contains('not bookable as a whole')) {
+    return l10n?.spaceNotWholeBookable ??
+        'This space is not set up for whole booking — the owner enables '
+            '"Bookable as a whole" on it in the editor.';
+  }
+  if (message.contains('level booking is not enabled')) {
+    return l10n?.levelFeatureOff ??
+        'Office & level reservations are switched off in Features.';
   }
   if (message.contains('reservations in that period') ||
       message.contains('already reserved') ||

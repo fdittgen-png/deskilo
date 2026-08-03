@@ -81,19 +81,22 @@ Future<String?> showMySeatSheet(
   );
 }
 
-/// Sheet on another member's reserved seat for admins (#408): the
-/// member is standing there, offer to check them in. Returns true on
-/// confirmation; the caller performs the call — authorization and
-/// window are re-checked server-side (migration 0077).
-Future<bool?> showCheckInOtherSheet(
+/// Sheet on another member's seat for admins: check them in when they
+/// are present (#408, window open) and/or OVERRULE — remove the
+/// reservation entirely (#412): "the other will be removed and the user
+/// and all admins/owners will be notified" (the 0007 event trigger is
+/// the notification channel). Returns 'checkin' / 'remove' / null; the
+/// caller performs the calls — everything is re-checked server-side.
+Future<String?> showCheckInOtherSheet(
   BuildContext context, {
   required Seat seat,
   required Reservation other,
   required String name,
+  required bool offerCheckIn,
 }) {
   final l10n = AppLocalizations.of(context);
   final reservedBy = l10n?.planReservedBy(name) ?? 'Reserved by $name';
-  return showModalBottomSheet<bool>(
+  return showModalBottomSheet<String>(
     context: context,
     builder: (context) => SafeArea(
       child: Column(
@@ -107,10 +110,22 @@ Future<bool?> showCheckInOtherSheet(
               '${DateFormat.Hm().format(other.endsAt.toLocal())}',
             ),
           ),
+          if (offerCheckIn)
+            ListTile(
+              leading: const Icon(Icons.login),
+              title: Text(l10n?.planCheckInFor(name) ?? 'Check in $name'),
+              onTap: () => Navigator.of(context).pop('checkin'),
+            ),
           ListTile(
-            leading: const Icon(Icons.login),
-            title: Text(l10n?.planCheckInFor(name) ?? 'Check in $name'),
-            onTap: () => Navigator.of(context).pop(true),
+            leading: const Icon(Icons.person_remove_outlined),
+            title: Text(
+              l10n?.planOverruleRemove ?? 'Remove reservation (overrule)',
+            ),
+            subtitle: Text(
+              l10n?.planOverruleHint(name) ??
+                  '$name and all admins will be notified.',
+            ),
+            onTap: () => Navigator.of(context).pop('remove'),
           ),
           const SizedBox(height: 8),
         ],

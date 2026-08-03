@@ -565,7 +565,8 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
         ),
       SpaceKind.seat => null,
     };
-    final granted = me?.canReserveLevel ?? false;
+    final granted = // owners/admins implicitly allowed since 0079 (#412)
+        (me?.canReserveLevel ?? false) || (me?.canAdminister ?? false);
     final wholeAllowed =
         wholeTarget != null && featureOn && wholeTarget.bookable && granted;
     // Visible conflicts disable the whole-space buttons up front; the

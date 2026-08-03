@@ -12,6 +12,22 @@
   "levelSupplementLabel": "Level reservations",
   "levelNotAllowed": "You are not allowed to reserve a whole desk, office or level.",
   "levelConflict": "The level has reservations in that period.",
+  "bookingOnePlace": "You already have a booking in that period — one place at a time.",
+  "@bookingOnePlace": {
+    "description": "Refusal when the member already holds an overlapping active reservation (#412)"
+  },
+  "bookingCheckedInElsewhere": "You are checked in elsewhere — check out there first.",
+  "@bookingCheckedInElsewhere": {
+    "description": "Refusal when checking in while checked in elsewhere on a running reservation (#412)"
+  },
+  "spaceNotWholeBookable": "This space is not set up for whole booking — the owner enables \"Bookable as a whole\" on it in the editor.",
+  "@spaceNotWholeBookable": {
+    "description": "Refusal when a desk/office/level lacks the bookable-as-a-whole toggle (#412)"
+  },
+  "levelFeatureOff": "Office & level reservations are switched off in Features.",
+  "@levelFeatureOff": {
+    "description": "Refusal when the officeLevelReservations feature is off (#412)"
+  },
   "levelDetail": "Whole level",
   "kioskLevelButton": "This level",
   "officeSupplementLabel": "Office reservations",

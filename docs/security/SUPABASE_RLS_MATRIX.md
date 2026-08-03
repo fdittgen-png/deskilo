@@ -158,3 +158,12 @@ when the caller `is_admin_of` the workspace and the empty set for
 everyone else (no error, nothing to probe). Revoked from anon/public,
 granted to authenticated. The client mirrors the gate by short-circuiting
 to `{}` for non-admin viewers before ever calling.
+
+## One place at a time + overrule (0079)
+
+| Operation | anon | user | worker | admin | owner | Mechanism |
+|---|---|---|---|---|---|---|
+| hold overlapping active reservations | — | ✗ | ✗ | ✗ | ✗ | `enforce_one_place` BEFORE INSERT trigger — pinned refusal on any path |
+| check in while checked in elsewhere (running) | — | ✗ | ✗ | ✗ | ✗ | `check_in_reservation` v3 guard; STALE check-ins auto-complete at their own end first |
+| reserve a whole desk/office/level | — | grant | grant | ✓ | ✓ | `create_reservation` v8 / `create_series` v3: `can_reserve_level OR is_owner OR is_admin` (kiosk keeps the strict stored grant) |
+| cancel ANOTHER member's reservation (overrule) | — | ✗ | ✗ | ✓ | ✓ | `cancel_reservation` v2: owner-or-`is_admin_of`; the 0007 `reservations_log_event` trigger broadcasts the cancellation to the displaced member's feed (admins see all) — that IS the notification |

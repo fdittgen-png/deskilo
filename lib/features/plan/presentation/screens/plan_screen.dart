@@ -44,6 +44,7 @@ import '../../providers/default_level_controller.dart';
 import '../../providers/floor_plan_providers.dart';
 import '../../providers/plan_focus_controller.dart';
 import '../seat_occupancy.dart';
+import '../widgets/admin_seat_actions.dart';
 import '../widgets/check_in_sheets.dart';
 import '../widgets/plan_canvas.dart';
 
@@ -324,13 +325,25 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         if (other == null) return;
         final names = ref.read(memberNamesProvider).value ?? const {};
         final name = names[other.memberId] ?? '';
-        // Presence rule (#408): an admin may check in the member standing
-        // at the seat — live mode only, inside the check-in window, gated
-        // like booking for others. The server re-checks all of it (0077).
-        if (_browse == null &&
+        // Admin powers on another member's seat: check them in while
+        // present (#408 — live mode, window open, bookForOthers gate) and
+        // overrule — remove the reservation with notification (#412 —
+        // any admin/owner, any time). The server re-checks everything.
+        final offerCheckIn = _browse == null &&
             _canCheckInForOthers &&
-            other.checkInWindowOpen(ref.read(clockProvider).now())) {
-          await _checkInOtherSheet(seat, other, name);
+            other.checkInWindowOpen(ref.read(clockProvider).now());
+        final canOverrule =
+            ref.read(myMemberProvider).value?.canAdminister ?? false;
+        if (offerCheckIn || canOverrule) {
+          await runAdminSeatActions(
+            context,
+            ref,
+            seat: seat,
+            other: other,
+            name: name,
+            offerCheckIn: offerCheckIn,
+            stepMinutes: _granularity.stepMinutes,
+          );
           return;
         }
         final template = state == SeatState.occupied
@@ -358,40 +371,6 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   /// member is standing there, check them in directly. The kiosk
   /// precedent — the subject confirmed the reservation; no pending
   /// event. Authorization and window are re-checked server-side (0077).
-  Future<void> _checkInOtherSheet(
-    Seat seat,
-    Reservation other,
-    String name,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final confirmed = await showCheckInOtherSheet(
-      context,
-      seat: seat,
-      other: other,
-      name: name,
-    );
-    if (confirmed != true || !mounted) return;
-    try {
-      await ref.read(reservationRepositoryProvider).checkIn(other.id);
-    } catch (e, st) {
-      debugPrint('check-in for other failed: $e\n$st');
-      TraceLogger.instance.error('plan', 'check-in for other failed',
-          error: e, stackTrace: st);
-      if (!mounted) return;
-      AppSnack.error(
-        context,
-        _errorText(
-          l10n,
-          e,
-          l10n?.workspaceGenericError ??
-              'Something went wrong. Please try again.',
-        ),
-        replace: true,
-      );
-      return;
-    }
-    invalidateBookingData(ref);
-  }
 
   /// Whether the signed-in member may toggle seat maintenance blocks
   /// (#161): owner always, admins with the adminSeatBlocking feature.
@@ -1093,7 +1072,9 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     if (!level.bookableAsWhole) return false;
     final me = ref.watch(myMemberProvider).value;
     if (me == null || me.status != MemberStatus.active) return false;
-    return me.canReserveLevel || _canAssignLevel(me, features);
+    // #412 (0079): owners/admins are implicitly allowed to book too.
+    return me.canReserveLevel || me.canAdminister ||
+        _canAssignLevel(me, features);
   }
 
   bool _canAssignLevel(Member me, Set<WorkspaceFeature> features) =>
