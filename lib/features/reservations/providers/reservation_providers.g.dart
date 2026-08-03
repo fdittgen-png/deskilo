@@ -202,7 +202,7 @@ final class MyUpcomingReservationsProvider
 }
 
 String _$myUpcomingReservationsHash() =>
-    r'b3d264539d5e931b6be4a1a252fec089cf699ba1';
+    r'510da65c16d475b12fe5f5f80a6845ebd939512b';
 
 /// member id → display name for the active workspace.
 

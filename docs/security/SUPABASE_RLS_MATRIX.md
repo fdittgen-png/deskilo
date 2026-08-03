@@ -144,3 +144,17 @@ boolean check, junk counts as OFF — the 0021 idiom), and it only ever
 moves `reserved`/`checked_in` rows whose OWN `ends_at` has passed to
 `completed` (stamping `starts_at`/`ends_at`). Cancelled and released rows
 are untouchable by shape of the WHERE clause.
+
+## Member emails (0078 — `member_emails`)
+
+| Operation | anon | user | worker | admin | owner | Mechanism |
+|---|---|---|---|---|---|---|
+| read members' emails | — | — | — | RPC | RPC | `member_emails(workspace_id)` SECURITY DEFINER over `members ⨝ auth.users` |
+
+Emails live ONLY in `auth.users` — `public.profiles` deliberately exposes
+no contact data to co-members (WhatsApp is opt-in, `''` = not shared).
+The RPC keeps that stance: it returns the member-id → email rows only
+when the caller `is_admin_of` the workspace and the empty set for
+everyone else (no error, nothing to probe). Revoked from anon/public,
+granted to authenticated. The client mirrors the gate by short-circuiting
+to `{}` for non-admin viewers before ever calling.

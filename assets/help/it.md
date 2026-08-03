@@ -61,8 +61,8 @@ Muoversi:
 Prenotare dalla planimetria:
 
 - **Check-in al volo**: tocca un posto libero → la scheda propone *adesso* fino alla fine predefinita dello spazio → conferma. Se qualcuno ha prenotato quel posto più tardi, la tua ora di fine viene limitata e te lo diciamo.
-- **Check-in su prenotazione**: la tua prenotazione apre una finestra di check-in. Fai check-in dalla planimetria o dalla notifica di promemoria. In caso di assenza, il posto viene **liberato automaticamente** dopo il ritardo configurato.
-- **Check-out**: manuale, o automatico alla fine della prenotazione / alla chiusura.
+- **Check-in su prenotazione**: fare check-in significa *sei qui* — la finestra apre **15 minuti prima** del tuo inizio e si chiude alla fine della prenotazione. Fuori dalla finestra il pulsante è disattivato e dice quando apre; sfogliare un orario futuro non offre mai un check-in dal vivo. Gli admin possono fare il check-in di un membro presente al suo posto (finché *prenotare per altri* è attivo).
+- **Check-out**: manuale — o, se il proprietario attiva l'**auto check-in/out**, le prenotazioni dimenticate si completano da sole a fine giornata: quelle mai toccate contano come frequentate dal loro inizio alla loro fine, e i check-out dimenticati si chiudono alla fine propria della prenotazione.
 - **Spazi interi**: **tocca due volte** un tavolo, una stanza o un tratto libero del pavimento per agire sull'**intero tavolo, ufficio o piano** — la stessa scheda della scansione del suo QR (§4), con lo stesso selettore di periodo e le stesse opzioni di ripetizione di una postazione.
 - **Linea temporale**: scegli una finestra da→a (o Mattina / Pomeriggio / Giornata intera, secondo la granularità dello spazio) per vedere l'occupazione in qualsiasi momento futuro.
 - I posti possono avere **accessori** (monitor, scrivania regolabile…), alcuni con supplemento per mezza giornata che compare sul tuo estratto.
@@ -99,6 +99,7 @@ Guarda chi fa parte della tua comunità:
 - Tocca un membro per la sua **scheda di dettaglio** — incluse le prossime prenotazioni.
 - **Scorri** su un membro per scrivergli su **WhatsApp**; il **pulsante gruppo** apre il gruppo WhatsApp della comunità (impostato dal proprietario).
 - Imposta foto, stato e visibilità del telefono in **Impostazioni**.
+- Gli admin e i proprietari vedono in più l'**email** di ogni membro sotto il nome — i membri normali no: il canale di contatto tra membri resta il numero WhatsApp condiviso volontariamente.
 
 ## 6. Eventi e conferme (icona campanella)
 
@@ -127,7 +128,7 @@ Tutta l'amministrazione vive in **Impostazioni → Amministrazione**. Una sola r
 - **Editor** (barra dell'app): disegna il tuo spazio su una griglia — livelli, uffici, tavoli, posti (con orientamento, tipo di sedia e dotazioni), blocco posti per manutenzione. Aggiungi una **foto di sfondo** per livello e **immagini illustrative** spostabili e ridimensionabili. Eliminare qualcosa con prenotazioni future obbliga prima a risolverle.
 - **ID spazio & QR**: i tuoi inviti legati ai ruoli (§2). Puoi sostituire l'ID generato con uno memorizzabile (4–20 lettere/cifre), copiarlo, o condividere il QR come PNG.
 - **Disponibilità**: giorni di apertura, giorni di chiusura e granularità — orari liberi di inizio/fine, una griglia di minuti (5/15/30/60), mezze giornate o solo giornate intere.
-- **Funzionalità**: attiva o disattiva interi moduli per spazio — calendario, eventi, denaro, servizi, esportazione PDF, serie, prenotare per altri, push, blocco posti da parte degli admin, supplementi accessori, **pagamenti online**, **fatture**, **prenotazioni di ufficio e piano**, **modalità chiosco**, **badge RFID/NFC**, **elenco dei membri**, **integrazione WhatsApp**, **codici QR degli spazi**, **comproprietari**. Disattivare un modulo rimuove *tutte* le sue schermate e i suoi pulsanti per ogni membro.
+- **Funzionalità**: attiva o disattiva interi moduli per spazio — calendario, eventi, denaro, servizi, esportazione PDF, serie, prenotare per altri, push, blocco posti da parte degli admin, supplementi accessori, **pagamenti online**, **fatture**, **prenotazioni di ufficio e piano**, **modalità chiosco**, **badge RFID/NFC**, **elenco dei membri**, **integrazione WhatsApp**, **codici QR degli spazi**, **comproprietari**, **esportazione dati**, **auto check-in/out**. Disattivare un modulo rimuove *tutte* le sue schermate e i suoi pulsanti per ogni membro.
 
   L'elenco è **gerarchico**: una funzionalità che ne richiede un'altra compare rientrata sotto di essa con una nota *Richiede…*, ed è in grigio finché la funzionalità madre è disattivata — *Denaro* porta con sé servizi, supplementi accessori, pagamenti online e fatture; *Prenotazioni di ufficio e piano* porta il diritto di assegnazione degli admin; *Modalità chiosco* porta i badge RFID/NFC; *Elenco dei membri* porta l'integrazione WhatsApp. Disattivare una funzionalità madre toglie dall'app tutto il suo sottoalbero; la scelta salvata della funzionalità figlia torna intatta quando la madre riappare.
 
@@ -145,7 +146,7 @@ Tutta l'amministrazione vive in **Impostazioni → Amministrazione**. Una sola r
 
 ![](assets/help/images/features-toggles-2.jpg)
 
-- **Membri e piani**: tocca un membro per aprire la sua **scheda di gestione** — aggiungi un servizio per lui, imposta la sua percentuale di abbonamento, scegli la sua **politica di consumo extra** (§8), limita le sue **prenotazioni simultanee**, emetti i **badge** (§9), promuovi/retrocedi admin, trasforma l'account in un dispositivo **chiosco**, o metti in pausa l'iscrizione.
+- **Membri e piani**: tocca un membro per aprire la sua **scheda di gestione** — aggiungi un servizio per lui, imposta la sua percentuale di abbonamento, scegli la sua **politica di consumo extra** (§8), limita le sue **prenotazioni simultanee**, emetti i **badge** (§9), promuovi/retrocedi admin, trasforma l'account in un dispositivo **chiosco**, o metti in pausa l'iscrizione. Ogni riga mostra l'**email** del membro sotto il nome.
 
 ![](assets/help/images/member-management-sheet.jpg)
 
@@ -181,7 +182,7 @@ Tutta l'amministrazione vive in **Impostazioni → Amministrazione**. Una sola r
 ![](assets/help/images/member-add-service.jpg)
 
 - **Impostazioni dello spazio**: nome, paese/valuta, fuso, istruzioni di pagamento (IBAN, PayPal.me, Wero, Lydia, Wise), link del gruppo WhatsApp, **trasparenza dei tavoli**, esportazioni — e la **zona pericolosa**: un **reset completo dello spazio** (elimina prenotazioni, denaro e planimetria; conserva configurazione e membri), protetto digitando «I agree».
-- **Import/export**: l'intera configurazione viaggia come **file XML** — backup, modello o migrazione di un'istanza self-hosted. Si può generare anche un **PDF di configurazione** (membri, planimetria, prezzi, funzionalità). Ogni esportazione finisce nella cartella **Download** del tuo dispositivo.
+- **Import/export**: l'intera configurazione viaggia come **file XML** — backup, modello o migrazione di un'istanza self-hosted. Si può generare anche un **PDF di configurazione** (membri, planimetria, prezzi, funzionalità). Una **cartella di lavoro Excel** esporta i dati vivi stessi — spazio, piani, scrivanie, posti, membri, prenotazioni, check-in/out, pagamenti, servizi e fatture, una scheda ciascuno (funzionalità *esportazione dati*). Ogni esportazione finisce nella cartella **Download** del tuo dispositivo.
 
 ### Codici QR degli spazi e prenotazioni di spazi interi (proprietari)
 
@@ -337,6 +338,8 @@ L'azione **Fattura elettronica (XML)** apre un foglio che risponde alla domanda 
 **Inviarla senza uscire dall'app.** Il proprietario registra la piattaforma dello spazio in *Impostazioni dello spazio → Identità legale → **Piattaforma di fatturazione elettronica***: un URL di caricamento e un token. Va bene qualsiasi piattaforma che accetti un upload con credenziale — una piattaforma accreditata, un access point Peppol, una piattaforma nazionale. Il token resta sul server, non torna mai su un telefono, e l'app può solo dirti che ne esiste uno. Una volta configurata, il foglio inizia con **Invia alla piattaforma**: il documento Factur-X parte direttamente, e il foglio di dettaglio della fattura conserva quando è partito, cosa ha risposto la piattaforma e l'identificativo restituito. Ogni tentativo viene registrato — accettato, rifiutato o non trasmesso — perché un documento che *forse* è partito è peggio di un invio fallito.
 
 DesKilo continua a non trasmettere nulla per proprio conto: produce il documento e lo consegna alla piattaforma che hai scelto.
+
+**Provare senza rischi.** Uno spazio può registrare, accanto all'endpoint di produzione, **endpoint di prova** (lo UAT della piattaforma o una destinazione dev). Con la modalità sviluppatore attiva, l'invio offre la scelta dell'ambiente, un invio di prova è marcato come tale nella cronologia delle trasmissioni della fattura, e l'endpoint di produzione non viene mai usato per una prova — un ambiente di prova non configurato semplicemente rifiuta, senza ripiegare.
 
 **Prima della prima esportazione, compila l'identità legale.** In *Impostazioni dello spazio → **Identità legale e fatturazione elettronica*** il proprietario dichiara il **regime IVA** e il numero che la norma richiede con esso: fuori campo IVA, un **numero di registrazione** (SIREN, HRB, CIF…); in regime di esenzione, una **partita IVA** e il motivo del mancato addebito. I membri aggiungono il proprio **paese** — e la partita IVA se fatturano come impresa — accanto all'indirizzo in *Impostazioni → Indirizzo*. DesKilo verifica tutto questo **prima** di produrre il file e rifiuta indicando ciò che manca: una fattura rifiutata dalla piattaforma è peggio di nessuna fattura. Uno spazio **soggetto IVA** esporta come tutti gli altri, purché abbia configurato le sue **aliquote IVA** (sezione seguente): con le aliquote la fattura porta una ripartizione reale; senza, DesKilo rifiuta anziché dichiarare uno zero in cui non crede.
 

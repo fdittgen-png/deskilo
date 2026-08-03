@@ -94,6 +94,7 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
     ref
       ..invalidate(workspaceMembersProvider)
       ..invalidate(memberNamesProvider)
+      ..invalidate(memberEmailsProvider)
       ..invalidate(memberProfilesProvider)
       ..invalidate(reservationsForMonthProvider)
       ..invalidate(directoryReservationsProvider)
@@ -140,6 +141,9 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
     final now = ref.read(clockProvider).now();
     final membersAsync = ref.watch(workspaceMembersProvider);
     final names = ref.watch(memberNamesProvider).value ?? const {};
+    // Emails are an ADMIN surface (#410): the provider (and the server)
+    // hand plain members the empty map, so their directory is unchanged.
+    final emails = ref.watch(memberEmailsProvider).value ?? const {};
     final rawProfiles =
         ref.watch(memberProfilesProvider).value ?? const {};
     final reservations =
@@ -197,6 +201,7 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
                     _MemberRow(
                       member: member,
                       name: names[member.id] ?? '',
+                      email: emails[member.id] ?? '',
                       isSelf: member.id == myMemberId,
                       profile: profiles[member.userId],
                       presence: resolveDirectoryPresence(
@@ -591,6 +596,7 @@ class _MemberRow extends StatelessWidget {
   const _MemberRow({
     required this.member,
     required this.name,
+    this.email = '',
     required this.isSelf,
     required this.profile,
     required this.presence,
@@ -604,6 +610,10 @@ class _MemberRow extends StatelessWidget {
 
   final Member member;
   final String name;
+
+  /// The member's email — non-empty only for admin/owner viewers
+  /// (#410, member_emails RPC); '' renders nothing.
+  final String email;
   final bool isSelf;
   final Profile? profile;
   final DirectoryPresence presence;
@@ -684,11 +694,20 @@ class _MemberRow extends StatelessWidget {
           ?_roleBadge(context, l10n: l10n, member: member),
         ],
       ),
-      subtitle: chips.isEmpty && statusText.isEmpty
+      subtitle: chips.isEmpty && statusText.isEmpty && email.isEmpty
           ? null
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if (email.isNotEmpty)
+                  Text(
+                    email,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
                 if (statusText.isNotEmpty)
                   Text(
                     statusText,

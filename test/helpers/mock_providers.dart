@@ -403,6 +403,17 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   Future<Map<String, String>> fetchMemberNames(String workspaceId) async =>
       Map.of(memberNames);
 
+  /// memberId → email; served only to admin/owner callers, mirroring
+  /// the member_emails RPC gate (0078, #410).
+  Map<String, String> memberEmails = {};
+
+  @override
+  Future<Map<String, String>> fetchMemberEmails(String workspaceId) async =>
+      (myMember.isAdmin || myMember.isOwner) &&
+              myMember.status == MemberStatus.active
+          ? Map.of(memberEmails)
+          : const {};
+
   /// Extra members beyond [myMember] for the management screen.
   final List<Member> otherMembers = [];
 

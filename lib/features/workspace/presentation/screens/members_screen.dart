@@ -773,6 +773,8 @@ class MembersScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final membersAsync = ref.watch(workspaceMembersProvider);
     final names = ref.watch(memberNamesProvider).value ?? const {};
+    // Admin surface (#410): non-admin callers get {} from the server.
+    final emails = ref.watch(memberEmailsProvider).value ?? const {};
     // Admins reach this screen too (0044); owner-only controls gate on
     // [isOwner], and the self row never offers the reservation limit.
     final me = ref.watch(myMemberProvider).value;
@@ -826,6 +828,8 @@ class MembersScreen extends ConsumerWidget {
                   subtitle: Wrap(
                     spacing: 6,
                     children: [
+                      if ((emails[member.id] ?? '').isNotEmpty)
+                        Text(emails[member.id]!),
                       // A kiosk is a device, not a paying member — no
                       // subscription line.
                       if (!member.isKiosk)
