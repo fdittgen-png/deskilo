@@ -1,6 +1,7 @@
 {
   "@@locale": "it",
   "developerMode": "Modalità sviluppatore",
+  "developerModeWorkspaceHint": "Vale per tutti i membri di questo spazio.",
   "developerTitle": "Sviluppatore",
   "developerExport": "Esporta registro",
   "developerClear": "Svuota registro",

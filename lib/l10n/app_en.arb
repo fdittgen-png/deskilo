@@ -837,6 +837,10 @@
   "@developerMode": {
     "description": "Settings toggle enabling the local diagnostics screen"
   },
+  "developerModeWorkspaceHint": "Applies to every member of this workspace.",
+  "@developerModeWorkspaceHint": {
+    "description": "Subtitle under the workspace-wide dev-mode switch (#419)"
+  },
   "developerTitle": "Developer",
   "@developerTitle": {
     "description": "App-bar title and settings entry of the trace viewer"

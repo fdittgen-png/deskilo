@@ -613,6 +613,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get developerMode => 'Entwicklermodus';
 
   @override
+  String get developerModeWorkspaceHint =>
+      'Gilt für alle Mitglieder dieses Workspace.';
+
+  @override
   String get developerTitle => 'Entwickler';
 
   @override

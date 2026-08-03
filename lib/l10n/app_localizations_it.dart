@@ -614,6 +614,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get developerMode => 'Modalità sviluppatore';
 
   @override
+  String get developerModeWorkspaceHint =>
+      'Vale per tutti i membri di questo spazio.';
+
+  @override
   String get developerTitle => 'Sviluppatore';
 
   @override

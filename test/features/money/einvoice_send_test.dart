@@ -31,7 +31,7 @@ Future<FakeMoneyRepository> _pumpArchive(
   WidgetTester tester, {
   required FakeMoneyRepository money,
   FakeWorkspaceRepository? workspace,
-  InMemoryDevModeStore? devMode,
+  bool devMode = false,
 }) async {
   tester.view.physicalSize = const Size(800, 1600);
   tester.view.devicePixelRatio = 1.0;
@@ -194,7 +194,7 @@ void main() {
     await _pumpArchive(
       tester,
       money: money,
-      devMode: InMemoryDevModeStore(enabled: true),
+      devMode: true,
     );
 
     await _openEInvoiceSheet(tester, money.invoices.single.id);
@@ -249,7 +249,7 @@ void main() {
     await _pumpArchive(
       tester,
       money: money,
-      devMode: InMemoryDevModeStore(enabled: true),
+      devMode: true,
     );
 
     await _openEInvoiceSheet(tester, money.invoices.single.id);

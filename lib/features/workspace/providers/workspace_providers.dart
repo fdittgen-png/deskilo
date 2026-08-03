@@ -141,6 +141,15 @@ Set<WorkspaceFeature> enabledFeaturesSync(Ref ref) =>
     ref.watch(enabledFeaturesProvider).value ??
     effectiveFeatures(resolveEnabledFeatures(const {}));
 
+/// Workspace-wide developer mode (#419, 0081): admin/owner-set, applies
+/// to EVERY member — gates the e-invoice test environments and the
+/// Developer screen. Realtime (0080) pushes a flip to all devices live.
+@Riverpod(keepAlive: true)
+Future<bool> devMode(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  return workspace?.devMode ?? false;
+}
+
 /// member id → email of the active workspace's members (#410). ADMIN
 /// surface: short-circuits to {} for viewers who cannot administer (no
 /// wasted RPC) — and the server enforces the same gate regardless.

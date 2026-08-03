@@ -222,6 +222,10 @@ abstract class WorkspaceRepository {
   /// jsonb wholesale (#146). Keys are WorkspaceFeature enum names.
   Future<void> setFeatureFlags(String workspaceId, Map<String, bool> flags);
 
+  /// Workspace-wide developer mode (#419, 0081): admin/owner only —
+  /// the server enforces via set_dev_mode.
+  Future<void> setDevMode(String workspaceId, bool enabled);
+
   /// ISO weekdays (1=Mon..7=Sun) the workspace is open on (#127); read
   /// from booking_rules, defaults to Mon–Fri when the key is absent.
   Future<List<int>> fetchOpenWeekdays(String workspaceId);

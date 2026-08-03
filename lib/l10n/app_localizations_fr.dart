@@ -613,6 +613,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get developerMode => 'Mode développeur';
 
   @override
+  String get developerModeWorkspaceHint =>
+      'S\'applique à tous les membres de cet espace.';
+
+  @override
   String get developerTitle => 'Développeur';
 
   @override

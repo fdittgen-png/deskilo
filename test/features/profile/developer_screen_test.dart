@@ -29,7 +29,7 @@ TraceLogger seededLogger() {
 Future<void> pumpSettings(
   WidgetTester tester, {
   required TraceLogger logger,
-  required InMemoryDevModeStore devMode,
+  bool devMode = false,
   FileSaver? saver,
 }) async {
   await tester.pumpWidget(
@@ -63,7 +63,7 @@ Future<void> pumpDeveloper(
   await pumpSettings(
     tester,
     logger: logger,
-    devMode: InMemoryDevModeStore(enabled: true),
+    devMode: true,
     saver: saver,
   );
   // The Developer tile sits below the dev-mode switch, which may rest at
@@ -79,13 +79,13 @@ void main() {
   testWidgets(
       'settings shows the developer-mode toggle to everyone and reveals the '
       'Developer tile only when it is on', (tester) async {
-    final store = InMemoryDevModeStore();
     await pumpSettings(
       tester,
       logger: TraceLogger(),
-      devMode: store,
     );
 
+    // #419: the switch is an ADMIN affordance now (the default test
+    // viewer is the owner) and flips the mode for the whole workspace.
     expect(find.text('Developer mode'), findsOneWidget);
     expect(find.text('Developer'), findsNothing);
 
@@ -93,7 +93,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Developer'), findsOneWidget);
-    expect(store.enabled, isTrue);
   });
 
   testWidgets('the trace list renders entries newest first', (tester) async {

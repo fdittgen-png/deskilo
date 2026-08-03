@@ -24,7 +24,6 @@ import 'package:deskilo/core/scan/front_camera.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/core/scan/qr_scan_widget.dart';
 import 'package:deskilo/core/storage/active_workspace_store.dart';
-import 'package:deskilo/core/trace/dev_mode.dart';
 import 'package:deskilo/core/time/clock.dart';
 
 import 'fake_realtime_sync.dart';
@@ -198,6 +197,24 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
         ];
 
   final List<Workspace> workspaces;
+
+  /// Workspace-wide dev mode (#419): mirrors the 0081 column + RPC.
+  /// Admin-gated like the server; [applyDevMode] seeds the initial state.
+  void applyDevMode(bool enabled) {
+    for (var i = 0; i < workspaces.length; i++) {
+      workspaces[i] = workspaces[i].copyWith(devMode: enabled);
+    }
+  }
+
+  @override
+  Future<void> setDevMode(String workspaceId, bool enabled) async {
+    if (!myMember.canAdminister) {
+      throw const PostgrestException(
+          message: 'not an admin of this workspace');
+    }
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i >= 0) workspaces[i] = workspaces[i].copyWith(devMode: enabled);
+  }
 
   /// Membership returned by [fetchMyMember]; owner of ws-1 by default.
   Member myMember = const Member(
@@ -782,22 +799,10 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 /// overrides on top.
 /// In-memory [DevModeStore] — the settings toggle without the platform
 /// channel. Default OFF, like a fresh install; tests exercising
-/// developer-only affordances seed `InMemoryDevModeStore(enabled: true)`.
-class InMemoryDevModeStore implements DevModeStore {
-  InMemoryDevModeStore({this.enabled = false});
-
-  bool enabled;
-
-  @override
-  Future<bool> read() async => enabled;
-
-  @override
-  Future<void> write(bool value) async => enabled = value;
-}
 
 List<Override> standardTestOverrides({
   Clock? clock,
-  DevModeStore? devMode,
+  bool devMode = false,
   AuthRepository? auth,
   WorkspaceRepository? workspace,
   FloorPlanRepository? floorPlan,
@@ -823,12 +828,14 @@ List<Override> standardTestOverrides({
     // The clock is defaulted here rather than per-test so a screen that
     // starts reading it does not quietly re-arm the time bomb.
     clockProvider.overrideWithValue(clock ?? FixedClock(kTestNow)),
-    devModeStoreProvider.overrideWithValue(devMode ?? InMemoryDevModeStore()),
+
     authRepositoryProvider
         .overrideWithValue(auth ?? FakeAuthRepository.signedIn()),
-    workspaceRepositoryProvider.overrideWithValue(
-      workspace ?? FakeWorkspaceRepository.withWorkspace(),
-    ),
+    workspaceRepositoryProvider.overrideWithValue(() {
+      final repo = workspace ?? FakeWorkspaceRepository.withWorkspace();
+      if (devMode && repo is FakeWorkspaceRepository) repo.applyDevMode(true);
+      return repo;
+    }()),
     floorPlanRepositoryProvider
         .overrideWithValue(floorPlan ?? FakeFloorPlanRepository()),
     accessoryRepositoryProvider

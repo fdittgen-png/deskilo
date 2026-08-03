@@ -605,6 +605,50 @@ final class EnabledFeaturesSyncProvider
 String _$enabledFeaturesSyncHash() =>
     r'c52b3f67c83044e46408ec70a8fcdfda35485b80';
 
+/// Workspace-wide developer mode (#419, 0081): admin/owner-set, applies
+/// to EVERY member — gates the e-invoice test environments and the
+/// Developer screen. Realtime (0080) pushes a flip to all devices live.
+
+@ProviderFor(devMode)
+final devModeProvider = DevModeProvider._();
+
+/// Workspace-wide developer mode (#419, 0081): admin/owner-set, applies
+/// to EVERY member — gates the e-invoice test environments and the
+/// Developer screen. Realtime (0080) pushes a flip to all devices live.
+
+final class DevModeProvider
+    extends $FunctionalProvider<AsyncValue<bool>, bool, FutureOr<bool>>
+    with $FutureModifier<bool>, $FutureProvider<bool> {
+  /// Workspace-wide developer mode (#419, 0081): admin/owner-set, applies
+  /// to EVERY member — gates the e-invoice test environments and the
+  /// Developer screen. Realtime (0080) pushes a flip to all devices live.
+  DevModeProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'devModeProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$devModeHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<bool> create(Ref ref) {
+    return devMode(ref);
+  }
+}
+
+String _$devModeHash() => r'8c3eeb91c9bba4c0dc5bd44e790811c08412aced';
+
 /// member id → email of the active workspace's members (#410). ADMIN
 /// surface: short-circuits to {} for viewers who cannot administer (no
 /// wasted RPC) — and the server enforces the same gate regardless.

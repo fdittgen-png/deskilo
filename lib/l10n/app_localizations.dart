@@ -1202,6 +1202,12 @@ abstract class AppLocalizations {
   /// **'Developer mode'**
   String get developerMode;
 
+  /// Subtitle under the workspace-wide dev-mode switch (#419)
+  ///
+  /// In en, this message translates to:
+  /// **'Applies to every member of this workspace.'**
+  String get developerModeWorkspaceHint;
+
   /// App-bar title and settings entry of the trace viewer
   ///
   /// In en, this message translates to:
