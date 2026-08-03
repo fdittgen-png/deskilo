@@ -8,6 +8,8 @@ import 'package:deskilo/features/auth/domain/social_provider.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
+import 'package:deskilo/core/realtime/realtime_providers.dart';
+import 'package:deskilo/core/realtime/realtime_sync.dart';
 import 'package:deskilo/core/cache/cache_store.dart';
 import 'package:deskilo/core/nfc/nfc_uid_reader.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -25,6 +27,7 @@ import 'package:deskilo/core/storage/active_workspace_store.dart';
 import 'package:deskilo/core/trace/dev_mode.dart';
 import 'package:deskilo/core/time/clock.dart';
 
+import 'fake_realtime_sync.dart';
 import 'test_clock.dart';
 export 'test_clock.dart' show kTestNow, kTestPeriod;
 import 'package:deskilo/features/events/domain/event_repository.dart';
@@ -811,8 +814,12 @@ List<Override> standardTestOverrides({
   NfcUidReader? nfc,
   FrontCameraStore? frontCamera,
   FileSharer? fileSharer,
+  RealtimeSync? realtime,
 }) {
   return [
+    // No-op realtime by default: the real impl touches Supabase.instance,
+    // which does not exist under flutter_test (#413).
+    realtimeSyncProvider.overrideWithValue(realtime ?? FakeRealtimeSync()),
     // The clock is defaulted here rather than per-test so a screen that
     // starts reading it does not quietly re-arm the time bomb.
     clockProvider.overrideWithValue(clock ?? FixedClock(kTestNow)),

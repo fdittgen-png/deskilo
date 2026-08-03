@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:intl/intl.dart';
 
+import '../../core/realtime/realtime_providers.dart';
 import '../../core/notifications/notification_providers.dart';
 import '../../core/push/push_providers.dart';
 import '../../core/time/workspace_time.dart';
@@ -50,6 +51,11 @@ class ShellScreen extends ConsumerWidget {
 
     // Fire-and-forget UnifiedPush start (#72); no-op without distributor.
     ref.watch(pushBootstrapProvider);
+
+    // Push-driven freshness (#413): DB changes invalidate their cached
+    // providers on every device, this one included — no restarts, no
+    // manual refresh.
+    ref.watch(realtimeInvalidatorProvider);
 
     // Day-based booking windows anchor to the WORKSPACE clock — install
     // the active workspace's zone (re-installs on profile switch). A
