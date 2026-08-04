@@ -1126,6 +1126,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Arbeitstag konfigurieren und Buchung nach exakten Uhrzeiten anbieten; aus = Standard 8–17 Uhr.';
 
   @override
+  String get featureInvoicePdfTemplate => 'Rechnungs-PDF-Vorlage';
+
+  @override
+  String get featureInvoicePdfTemplateDesc =>
+      'Vom Inhaber verfasste Einleitung und Fußtext auf dem Rechnungs-PDF. Das E-Rechnungs-XML bleibt unberührt.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override
@@ -1856,6 +1863,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceSentTestChip => 'Test';
+
+  @override
+  String get invoiceTemplateTitle => 'Rechnungs-PDF-Vorlage';
+
+  @override
+  String get invoiceTemplateHint =>
+      'Freitext auf dem gerenderten PDF — das E-Rechnungs-XML bleibt unangetastet. Platzhalter:';
+
+  @override
+  String get invoiceTemplateIntroLabel =>
+      'Einleitung (über dem Empfängerblock)';
+
+  @override
+  String get invoiceTemplateFooterLabel =>
+      'Fußtext (unter den Summen — Zahlungsbedingungen, Pflichtangaben)';
+
+  @override
+  String get invoiceTemplateSaved => 'Rechnungsvorlage gespeichert.';
 
   @override
   String get eventTypeMemberJoin => 'Neues Mitglied';

@@ -99,6 +99,10 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureWorkingHoursDesc ??
               'Configure the working day and offer exact-hours booking; '
                   'off keeps the 8:00–17:00 defaults.',
+        WorkspaceFeature.invoicePdfTemplate =>
+          l10n?.featureInvoicePdfTemplateDesc ??
+              'Owner-written intro and footer text on the invoice PDF. '
+                  'Never touches the e-invoice XML.',
       };
 
   Future<void> _toggle(

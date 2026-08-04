@@ -3,6 +3,7 @@ import 'dart:convert' show base64Encode;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/invoice.dart';
+import '../domain/invoice_pdf_template.dart';
 import '../domain/einvoice_gateway.dart';
 import '../domain/fee_band.dart';
 import '../domain/ledger_entry.dart';
@@ -25,6 +26,31 @@ class SupabaseMoneyRepository implements MoneyRepository {
         .eq('workspace_id', workspaceId)
         .order('issued_at', ascending: false);
     return rows.map(Invoice.fromRow).toList();
+  }
+
+  @override
+  Future<InvoicePdfTemplate> fetchInvoicePdfTemplate(
+    String workspaceId,
+  ) async {
+    final row = await _client
+        .from('workspaces')
+        .select('invoice_pdf_template')
+        .eq('id', workspaceId)
+        .single();
+    return InvoicePdfTemplate.fromJson(
+      row['invoice_pdf_template'] as Map<String, dynamic>? ?? const {},
+    );
+  }
+
+  @override
+  Future<void> setInvoicePdfTemplate(
+    String workspaceId,
+    InvoicePdfTemplate template,
+  ) async {
+    await _client
+        .from('workspaces')
+        .update({'invoice_pdf_template': template.toJson()})
+        .eq('id', workspaceId);
   }
 
   @override

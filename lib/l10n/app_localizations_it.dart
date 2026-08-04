@@ -1128,6 +1128,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Configura la giornata lavorativa e offri prenotazioni a orari esatti; disattivato valgono i valori 8:00–17:00.';
 
   @override
+  String get featureInvoicePdfTemplate => 'Modello PDF della fattura';
+
+  @override
+  String get featureInvoicePdfTemplateDesc =>
+      'Introduzione e piè di pagina scritti dal proprietario sul PDF della fattura. Non tocca mai l\'XML della fattura elettronica.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override
@@ -1858,6 +1865,24 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceSentTestChip => 'test';
+
+  @override
+  String get invoiceTemplateTitle => 'Modello PDF della fattura';
+
+  @override
+  String get invoiceTemplateHint =>
+      'Testo libero sul PDF generato — l\'XML della fattura elettronica non viene mai toccato. Segnaposto:';
+
+  @override
+  String get invoiceTemplateIntroLabel =>
+      'Introduzione (sopra il blocco del destinatario)';
+
+  @override
+  String get invoiceTemplateFooterLabel =>
+      'Piè di pagina (sotto i totali — condizioni di pagamento, menzioni legali)';
+
+  @override
+  String get invoiceTemplateSaved => 'Modello di fattura salvato.';
 
   @override
   String get eventTypeMemberJoin => 'Nuovo membro';

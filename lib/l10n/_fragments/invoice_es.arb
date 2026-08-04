@@ -378,5 +378,10 @@
   "einvoiceUatToken": "Token o credencial UAT",
   "einvoiceDevEndpoint": "URL de subida Dev",
   "einvoiceDevToken": "Token o credencial Dev",
-  "invoiceSentTestChip": "prueba"
+  "invoiceSentTestChip": "prueba",
+  "invoiceTemplateTitle": "Plantilla del PDF de factura",
+  "invoiceTemplateHint": "Texto libre en el PDF generado — el XML de factura electrónica nunca se toca. Marcadores:",
+  "invoiceTemplateIntroLabel": "Introducción (sobre el bloque del destinatario)",
+  "invoiceTemplateFooterLabel": "Pie (bajo los totales — condiciones de pago, menciones legales)",
+  "invoiceTemplateSaved": "Plantilla de factura guardada."
 }

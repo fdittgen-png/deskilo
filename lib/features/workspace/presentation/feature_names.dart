@@ -50,4 +50,6 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureDataExport ?? 'Data export (Excel)',
       WorkspaceFeature.workingHours =>
         l10n?.featureWorkingHours ?? 'Working hours',
+      WorkspaceFeature.invoicePdfTemplate =>
+        l10n?.featureInvoicePdfTemplate ?? 'Invoice PDF template',
     };

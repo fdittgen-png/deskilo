@@ -45,5 +45,7 @@
   "featureAutoCheckInOutDesc": "Les réservations sans arrivée ou départ enregistrés se clôturent seules une fois leur créneau passé.",
   "featureDataExportDesc": "Télécharger toutes les données de l’espace dans un classeur Excel.",
   "featureWorkingHours": "Horaires de travail",
-  "featureWorkingHoursDesc": "Configurer la journée de travail et proposer la réservation à l'heure exacte ; désactivé, les valeurs par défaut 8h–17h s'appliquent."
+  "featureWorkingHoursDesc": "Configurer la journée de travail et proposer la réservation à l'heure exacte ; désactivé, les valeurs par défaut 8h–17h s'appliquent.",
+  "featureInvoicePdfTemplate": "Modèle de PDF de facture",
+  "featureInvoicePdfTemplateDesc": "Introduction et pied de page rédigés par le propriétaire sur le PDF de facture. Ne touche jamais au XML de facture électronique."
 }

@@ -604,6 +604,59 @@ final class InvoicesProvider
 
 String _$invoicesHash() => r'1750a78bf092e310a8b152b40bc7f4facd84c06d';
 
+/// Invoice-PDF template of the active workspace (#454); empty while no
+/// workspace is selected. The renderer additionally gates on the
+/// invoicePdfTemplate feature flag at the call site.
+
+@ProviderFor(invoicePdfTemplate)
+final invoicePdfTemplateProvider = InvoicePdfTemplateProvider._();
+
+/// Invoice-PDF template of the active workspace (#454); empty while no
+/// workspace is selected. The renderer additionally gates on the
+/// invoicePdfTemplate feature flag at the call site.
+
+final class InvoicePdfTemplateProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<InvoicePdfTemplate>,
+          InvoicePdfTemplate,
+          FutureOr<InvoicePdfTemplate>
+        >
+    with
+        $FutureModifier<InvoicePdfTemplate>,
+        $FutureProvider<InvoicePdfTemplate> {
+  /// Invoice-PDF template of the active workspace (#454); empty while no
+  /// workspace is selected. The renderer additionally gates on the
+  /// invoicePdfTemplate feature flag at the call site.
+  InvoicePdfTemplateProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'invoicePdfTemplateProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$invoicePdfTemplateHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<InvoicePdfTemplate> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<InvoicePdfTemplate> create(Ref ref) {
+    return invoicePdfTemplate(ref);
+  }
+}
+
+String _$invoicePdfTemplateHash() =>
+    r'1b8881ae90b31cd2a288f773b931b553ca1ee079';
+
 /// invoiceId → its payment match (0067) — the invoice lifecycle state.
 
 @ProviderFor(invoiceMatches)

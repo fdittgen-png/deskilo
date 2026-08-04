@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
@@ -29,6 +30,23 @@ class FakeMoneyRepository implements MoneyRepository {
   @override
   Future<List<Invoice>> fetchInvoices(String workspaceId) async =>
       List.unmodifiable(invoices);
+
+  /// #454 — per-workspace invoice-PDF template.
+  InvoicePdfTemplate pdfTemplate = InvoicePdfTemplate.empty;
+
+  @override
+  Future<InvoicePdfTemplate> fetchInvoicePdfTemplate(
+    String workspaceId,
+  ) async =>
+      pdfTemplate;
+
+  @override
+  Future<void> setInvoicePdfTemplate(
+    String workspaceId,
+    InvoicePdfTemplate template,
+  ) async {
+    pdfTemplate = template;
+  }
 
   /// Mirrors invoice_lines_for (0062): positions derive EXCLUSIVELY
   /// from the period's statement + confirmed ledger charges — nothing

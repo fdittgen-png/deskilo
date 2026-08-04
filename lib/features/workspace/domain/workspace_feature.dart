@@ -29,7 +29,8 @@ enum WorkspaceFeature {
   adminInvoicing,
   autoCheckInOut,
   dataExport,
-  workingHours;
+  workingHours,
+  invoicePdfTemplate;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -161,6 +162,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // defaults then apply unchanged.
   WorkspaceFeature.workingHours:
       FeatureManifestEntry(feature: WorkspaceFeature.workingHours),
+  // Owner-written PDF intro/footer template (#454). PDF only — the
+  // e-invoice XML never sees it.
+  WorkspaceFeature.invoicePdfTemplate: FeatureManifestEntry(
+    feature: WorkspaceFeature.invoicePdfTemplate,
+    requires: WorkspaceFeature.invoicing,
+  ),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start

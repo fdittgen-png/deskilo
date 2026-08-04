@@ -378,5 +378,10 @@
   "einvoiceUatToken": "Jeton ou identifiant UAT",
   "einvoiceDevEndpoint": "URL d’envoi Dev",
   "einvoiceDevToken": "Jeton ou identifiant Dev",
-  "invoiceSentTestChip": "test"
+  "invoiceSentTestChip": "test",
+  "invoiceTemplateTitle": "Modèle de PDF de facture",
+  "invoiceTemplateHint": "Texte libre sur le PDF généré — le XML de facture électronique n'est jamais modifié. Espaces réservés :",
+  "invoiceTemplateIntroLabel": "Introduction (au-dessus du bloc destinataire)",
+  "invoiceTemplateFooterLabel": "Pied de page (sous les totaux — conditions de paiement, mentions légales)",
+  "invoiceTemplateSaved": "Modèle de facture enregistré."
 }

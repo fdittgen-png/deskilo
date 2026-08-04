@@ -1476,6 +1476,8 @@
   },
   "featureWorkingHours": "Working hours",
   "featureWorkingHoursDesc": "Configure the working day and offer exact-hours booking; off keeps the 8:00–17:00 defaults.",
+  "featureInvoicePdfTemplate": "Invoice PDF template",
+  "featureInvoicePdfTemplateDesc": "Owner-written intro and footer text on the invoice PDF. Never touches the e-invoice XML.",
   "helpTitle": "Help",
   "helpContents": "Contents",
   "inviteSectionTitle": "Invite someone",
@@ -2430,6 +2432,26 @@
   "invoiceSentTestChip": "test",
   "@invoiceSentTestChip": {
     "description": "Tiny chip on a transmission row whose environment is not production."
+  },
+  "invoiceTemplateTitle": "Invoice PDF template",
+  "@invoiceTemplateTitle": {
+    "description": "Invoice PDF template editor (#454)"
+  },
+  "invoiceTemplateHint": "Free text on the rendered PDF — the e-invoice XML is never touched. Placeholders:",
+  "@invoiceTemplateHint": {
+    "description": "Invoice PDF template editor (#454)"
+  },
+  "invoiceTemplateIntroLabel": "Intro (above the billed-to block)",
+  "@invoiceTemplateIntroLabel": {
+    "description": "Invoice PDF template editor (#454)"
+  },
+  "invoiceTemplateFooterLabel": "Footer (under the totals — payment terms, legal mentions)",
+  "@invoiceTemplateFooterLabel": {
+    "description": "Invoice PDF template editor (#454)"
+  },
+  "invoiceTemplateSaved": "Invoice template saved.",
+  "@invoiceTemplateSaved": {
+    "description": "Invoice PDF template editor (#454)"
   },
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",

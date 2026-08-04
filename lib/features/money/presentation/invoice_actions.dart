@@ -19,6 +19,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../events/providers/event_providers.dart';
 import '../../members/providers/directory_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
+import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/e_invoice_routing.dart';
 import '../domain/invoice.dart';
@@ -30,6 +31,7 @@ import '../domain/fec.dart';
 import '../domain/saf_t.dart';
 import '../domain/invoice_ubl_check.dart';
 import '../domain/ledger_entry.dart';
+import '../domain/invoice_pdf_template.dart';
 import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
 import 'widgets/einvoice_environment_picker.dart';
@@ -49,6 +51,19 @@ import '../../../core/time/clock.dart';
 
 /// Renders the signed PDF. Every context-derived value is captured BEFORE
 /// the first await (use_build_context_synchronously).
+/// The active workspace's PDF template (#454) — empty when the
+/// invoicePdfTemplate feature is off, so switching the flag off takes
+/// the text off every future render without touching the template. A
+/// SYNC read: the invoices hub watches the provider, so it is warm
+/// before any render action can be tapped.
+InvoicePdfTemplate invoicePdfTemplateFor(WidgetRef ref) =>
+    ref
+            .read(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.invoicePdfTemplate)
+        ? ref.read(invoicePdfTemplateProvider).value ??
+            InvoicePdfTemplate.empty
+        : InvoicePdfTemplate.empty;
+
 Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   BuildContext context,
   Invoice invoice, {
@@ -56,6 +71,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   bool copy = false,
   String facturXml = '',
   Uint8List? colorProfile,
+  InvoicePdfTemplate template = InvoicePdfTemplate.empty,
 }) async {
   final l10n = AppLocalizations.of(context);
   final currency = NumberFormat.simpleCurrency(name: invoice.currency);
@@ -71,6 +87,16 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
           '${dateFormat.format(voidedAt)}';
   Future<pw.Font> font(String asset) async =>
       pw.Font.ttf(await rootBundle.load(asset));
+  // #454: placeholder resolution happens here, where every value is at
+  // hand — the renderer receives finished text.
+  final placeholderValues = <String, String>{
+    'workspace': invoice.workspaceName,
+    'member': invoice.memberName,
+    'number': invoice.number,
+    'period': periodLabel,
+    'issued': dateLabel,
+    'total': currency.format(invoice.totalCents / 100),
+  };
   final bytes = await buildInvoicePdf(
     invoice: invoice,
     lineText: (line) => invoiceLineText(l10n, line),
@@ -108,6 +134,9 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     copy: copy,
     facturXml: facturXml,
     colorProfile: colorProfile,
+    introText: InvoicePdfTemplate.apply(template.intro, placeholderValues),
+    footerText:
+        InvoicePdfTemplate.apply(template.footer, placeholderValues),
     baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
     boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
   );
@@ -151,6 +180,7 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
     copy: _rendersCopy(ref),
     facturXml: xml,
     colorProfile: icc.buffer.asUint8List(),
+    template: invoicePdfTemplateFor(ref),
   );
   return (
     bytes: pdf.bytes,
@@ -368,7 +398,8 @@ Future<void> shareProforma(
     errorText: l10n?.workspaceGenericError ??
         'Something went wrong. Please try again.',
     action: () async {
-      final pdf = await buildInvoicePdfFile(context, invoice, proforma: true);
+      final pdf = await buildInvoicePdfFile(context, invoice,
+          proforma: true, template: invoicePdfTemplateFor(ref));
       await ref.read(fileSharerProvider)(
         bytes: Uint8List.fromList(pdf.bytes),
         fileName: pdf.fileName,
@@ -476,6 +507,7 @@ Future<void> downloadInvoicePdf(
         context,
         invoice,
         copy: _rendersCopy(ref),
+        template: invoicePdfTemplateFor(ref),
       );
       if (!context.mounted) return;
       await _save(
@@ -505,6 +537,7 @@ Future<void> shareInvoicePdf(
         context,
         invoice,
         copy: _rendersCopy(ref),
+        template: invoicePdfTemplateFor(ref),
       );
       await ref.read(fileSharerProvider)(
         bytes: Uint8List.fromList(pdf.bytes),
@@ -589,7 +622,8 @@ Future<void> remindInvoice(
     action: () async {
       // PDF first — it captures its context-derived values before any
       // await (use_build_context_synchronously).
-      final pdf = await buildInvoicePdfFile(context, invoice);
+      final pdf = await buildInvoicePdfFile(context, invoice,
+          template: invoicePdfTemplateFor(ref));
       await ref.read(moneyRepositoryProvider).remindInvoice(invoice.id);
       await ref.read(fileSharerProvider)(
         bytes: Uint8List.fromList(pdf.bytes),

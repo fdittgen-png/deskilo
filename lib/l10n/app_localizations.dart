@@ -2108,6 +2108,18 @@ abstract class AppLocalizations {
   /// **'Configure the working day and offer exact-hours booking; off keeps the 8:00–17:00 defaults.'**
   String get featureWorkingHoursDesc;
 
+  /// No description provided for @featureInvoicePdfTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice PDF template'**
+  String get featureInvoicePdfTemplate;
+
+  /// No description provided for @featureInvoicePdfTemplateDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner-written intro and footer text on the invoice PDF. Never touches the e-invoice XML.'**
+  String get featureInvoicePdfTemplateDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -3373,6 +3385,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'test'**
   String get invoiceSentTestChip;
+
+  /// Invoice PDF template editor (#454)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice PDF template'**
+  String get invoiceTemplateTitle;
+
+  /// Invoice PDF template editor (#454)
+  ///
+  /// In en, this message translates to:
+  /// **'Free text on the rendered PDF — the e-invoice XML is never touched. Placeholders:'**
+  String get invoiceTemplateHint;
+
+  /// Invoice PDF template editor (#454)
+  ///
+  /// In en, this message translates to:
+  /// **'Intro (above the billed-to block)'**
+  String get invoiceTemplateIntroLabel;
+
+  /// Invoice PDF template editor (#454)
+  ///
+  /// In en, this message translates to:
+  /// **'Footer (under the totals — payment terms, legal mentions)'**
+  String get invoiceTemplateFooterLabel;
+
+  /// Invoice PDF template editor (#454)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice template saved.'**
+  String get invoiceTemplateSaved;
 
   /// No description provided for @eventTypeMemberJoin.
   ///
