@@ -61,6 +61,53 @@ String occupantLabelFor({
   return firstNameOf(names[r.memberId] ?? '');
 }
 
+/// Whole-space paint overlays (#462): office/desk id → the reserved
+/// state and the occupant's first name, for every whole-office,
+/// whole-desk and whole-level reservation covering the browsed window.
+/// The seats already tint (#452); this makes the ROOM itself say
+/// "reserved — by whom" to every user. A whole-level booking covers
+/// every office and desk of the plan.
+Map<String, ({SeatState state, String label})> spaceOverlaysFor({
+  required FloorPlan plan,
+  required List<Reservation> reservations,
+  required Map<String, String> names,
+  required String? myMemberId,
+  required DateTime from,
+  DateTime? to,
+}) {
+  final overlays = <String, ({SeatState state, String label})>{};
+  bool covers(Reservation r) =>
+      to == null ? r.coversInstant(from) : r.coversRange(from, to);
+  ({SeatState state, String label}) entryOf(Reservation r) => (
+        state: r.memberId == myMemberId
+            ? SeatState.mine
+            : r.status == ReservationStatus.checkedIn
+                ? SeatState.occupied
+                : SeatState.reserved,
+        label: firstNameOf(names[r.memberId] ?? ''),
+      );
+  final officeIds = {for (final o in plan.offices) o.id};
+  final deskIds = {for (final d in plan.desks) d.id};
+  for (final r in reservations) {
+    if (!covers(r)) continue;
+    final officeId = r.officeId;
+    final deskId = r.deskId;
+    if (officeId != null && officeIds.contains(officeId)) {
+      overlays.putIfAbsent(officeId, () => entryOf(r));
+    } else if (deskId != null && deskIds.contains(deskId)) {
+      overlays.putIfAbsent(deskId, () => entryOf(r));
+    } else if (r.levelId != null && r.levelId == plan.levelId) {
+      for (final id in officeIds) {
+        overlays.putIfAbsent(id, () => entryOf(r));
+      }
+      for (final id in deskIds) {
+        overlays.putIfAbsent(id, () => entryOf(r));
+      }
+    }
+  }
+  return overlays;
+}
+
 /// Per-seat paint states over the browsed window. On a closed day (#186)
 /// every seat renders in the muted blocked state — nothing looks bookable.
 Map<String, SeatState> seatStatesFor({

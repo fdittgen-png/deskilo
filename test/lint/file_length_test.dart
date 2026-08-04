@@ -35,7 +35,8 @@ const Map<String, int> _baseline = {
   'lib/features/workspace/presentation/screens/workspace_settings_screen.dart':
       1330,
   'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1160,
-  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1010,
+  // 1010→1020 (2026-08-04): #462 whole-space overlays on the plan view.
+  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1020,
   // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
   // workspace hint subtitle and the RPC write helper.
   'lib/features/profile/presentation/screens/settings_screen.dart': 990,
@@ -69,7 +70,8 @@ const Map<String, int> _baseline = {
   'lib/features/money/domain/invoice_pdf.dart': 700,
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the
   // kiosk arms the ambient working day itself, like realtime (#430).
-  'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 680,
+  // 680→690: #462 whole-space overlays on the wall display.
+  'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 690,
   // 600→640 (2026-08-04): #446 fetchWorkHours/setWorkHours — two new
   // repository surfaces (merge-preserving booking_rules writes), not
   // accretion. 640→660: #456 sendMemberNote/fetchMyNotes. 660→690:

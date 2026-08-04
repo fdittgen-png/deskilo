@@ -422,6 +422,15 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                           from: now,
                         ),
                     },
+                    // #462: whole-space bookings mark the room/table
+                    // itself on the wall display too.
+                    spaceOverlays: spaceOverlaysFor(
+                      plan: plan,
+                      reservations: reservations,
+                      names: names,
+                      myMemberId: null,
+                      from: now,
+                    ),
                     onlineSeatIds: onlineSeatIdsFor(
                       plan: plan,
                       reservations: reservations,
