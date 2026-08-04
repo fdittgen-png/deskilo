@@ -23,7 +23,11 @@
            Scope="perMachine"
            Compressed="yes">
 
-    <MajorUpgrade DowngradeErrorMessage="A newer version of DesKilo is already installed." />
+    <!-- ProductVersion is unique per CI build (#449: patch = run
+         number), so an existing install is always OLDER and gets
+         replaced in place — no manual uninstall. Running an outdated
+         MSI is the one case left, and its message says what to do. -->
+    <MajorUpgrade DowngradeErrorMessage="A newer version of DesKilo is already installed. Uninstall it first (Settings > Apps) if you really want this older build." />
     <MediaTemplate EmbedCab="yes" />
 
     <!-- Program Files\DesKilo -->
