@@ -15,6 +15,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member_note.dart';
+import '../../../workspace/presentation/widgets/member_note_dialog.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../../money/domain/payment_method.dart';
@@ -545,8 +546,11 @@ class _DecisionRow extends StatelessWidget {
 
 /// One member note in the Messages inbox (#460): direction + sender or
 /// recipient, the FULL text (never ellipsized — this is the one place
-/// the message is readable), and when it was sent.
-class _NoteRow extends StatelessWidget {
+/// the message is readable), and when it was sent. Swipe RIGHT to
+/// reply, swipe LEFT to delete (#467) — a received broadcast cannot be
+/// deleted (it would vanish for every admin) and my own notes offer no
+/// reply-to-myself.
+class _NoteRow extends ConsumerWidget {
   const _NoteRow({
     super.key,
     required this.note,
@@ -558,8 +562,35 @@ class _NoteRow extends StatelessWidget {
   final Map<String, String> names;
   final String? myMemberId;
 
+  Future<void> _delete(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    try {
+      await ref
+          .read(workspaceRepositoryProvider)
+          .deleteMemberNote(note.id);
+    } catch (e, st) {
+      TraceLogger.instance.error('workspace', 'delete member note failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
+      ref.invalidate(myNotesProvider);
+      return;
+    }
+    ref.invalidate(myNotesProvider);
+    if (!context.mounted) return;
+    AppSnack.info(
+      context,
+      l10n?.memberNoteDeleted ?? 'Message deleted.',
+      replace: true,
+    );
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final sentByMe = note.fromMemberId == myMemberId;
@@ -573,7 +604,9 @@ class _NoteRow extends StatelessWidget {
     final when = DateFormat.MMMd()
         .add_Hm()
         .format(note.createdAt.toLocal());
-    return ListTile(
+    final canDelete = sentByMe || !note.isBroadcast;
+    final canReply = !sentByMe;
+    final tile = ListTile(
       leading: Icon(
         sentByMe
             ? (note.isBroadcast
@@ -599,6 +632,46 @@ class _NoteRow extends StatelessWidget {
           ),
         ],
       ),
+    );
+    return Dismissible(
+      key: ValueKey('note-dismiss-${note.id}'),
+      direction: canDelete || canReply
+          ? DismissDirection.horizontal
+          : DismissDirection.none,
+      // Swipe RIGHT = reply, swipe LEFT = delete. Neither ever
+      // "dismisses" the widget itself: the deletion flows through the
+      // provider (repo delete → invalidate → the row leaves on the
+      // rebuild) — Dismissible's synchronous-removal contract and an
+      // async repository do not mix.
+      confirmDismiss: (direction) async {
+        if (direction == DismissDirection.startToEnd) {
+          if (canReply) {
+            await showMemberNoteDialog(
+              context,
+              ref,
+              toMemberId: note.fromMemberId,
+              recipientName: names[note.fromMemberId] ?? '',
+            );
+          }
+        } else if (canDelete) {
+          await _delete(context, ref);
+        }
+        return false;
+      },
+      background: Container(
+        color: AppStatusColors.successOf(theme.brightness),
+        alignment: Alignment.centerLeft,
+        padding: const EdgeInsets.only(left: AppSpacing.lg),
+        child: const Icon(Icons.reply, color: Colors.white),
+      ),
+      secondaryBackground: Container(
+        color: theme.colorScheme.error,
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.only(right: AppSpacing.lg),
+        child: Icon(Icons.delete_outline,
+            color: theme.colorScheme.onError),
+      ),
+      child: tile,
     );
   }
 }

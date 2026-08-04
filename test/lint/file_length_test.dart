@@ -36,7 +36,8 @@ const Map<String, int> _baseline = {
       1330,
   'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1160,
   // 1010→1020 (2026-08-04): #462 whole-space overlays on the plan view.
-  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1020,
+  // 1020→1070: #466 the hub's whole-level reserve button + visibility.
+  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1070,
   // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
   // workspace hint subtitle and the RPC write helper.
   'lib/features/profile/presentation/screens/settings_screen.dart': 990,
@@ -67,8 +68,9 @@ const Map<String, int> _baseline = {
   'lib/features/calendar/presentation/widgets/day_timeline.dart': 750,
   'lib/features/reservations/presentation/widgets/space_scan.dart': 730,
   // 600→640 (2026-08-04): #460/#464 Messages inbox rows + mark-seen —
-  // the note row widget lives with the feed it sits in.
-  'lib/features/events/presentation/screens/events_screen.dart': 640,
+  // the note row widget lives with the feed it sits in. 640→700: #467
+  // swipe reply/delete on the rows.
+  'lib/features/events/presentation/screens/events_screen.dart': 700,
   // 680→700 (2026-08-04): #454 owner-template intro/footer blocks.
   'lib/features/money/domain/invoice_pdf.dart': 700,
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the

@@ -268,6 +268,10 @@ abstract class WorkspaceRepository {
   /// addressed to me, or admin broadcasts), newest first.
   Future<List<MemberNote>> fetchMyNotes(String workspaceId);
 
+  /// Deletes a note (#467) — RLS allows the sender and the direct
+  /// recipient; received broadcasts are refused server-side.
+  Future<void> deleteMemberNote(String noteId);
+
   /// The signed-in USER's default workspace (#458, 0090) — stored on
   /// their profile so it survives reinstalls and follows them across
   /// platforms. Null = none chosen (or signed out).

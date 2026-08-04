@@ -102,6 +102,37 @@ void main() {
   });
 
   testWidgets(
+      'the OWNER without the stored grant books the level for THEMSELF '
+      '(#466 — the 0079 rule; the raw grant crashed the sheet when they '
+      'were alone)', (tester) async {
+    final ctx = await pumpPlan(
+      tester,
+      canReserveLevel: false,
+      isOwner: true,
+    );
+
+    await tester.tap(find.byKey(const ValueKey('plan-reserve-level')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('level-reserve-confirm')));
+    await tester.pumpAndSettle();
+
+    final r = ctx.reservations.reservations.single;
+    expect(r.levelId, isNotNull);
+  });
+
+  testWidgets('the Reserve hub carries the same whole-level button (#466)',
+      (tester) async {
+    await pumpPlan(tester);
+    // Back to the hub (centre button): the selector shows even with
+    // one level because the affordance exists.
+    await tester.tap(find.byTooltip('Reserve'));
+    await tester.pumpAndSettle();
+
+    expect(
+        find.byKey(const ValueKey('reserve-reserve-level')), findsOneWidget);
+  });
+
+  testWidgets(
       'the owner assigns the level to another member — createFor carries '
       'the level and the pending-confirmation snack shows', (tester) async {
     const other = Member(

@@ -3974,6 +3974,18 @@ abstract class AppLocalizations {
   /// **'Desk reservations'**
   String get deskSupplementLabel;
 
+  /// Level row booking-state subtitle in the editor (#466)
+  ///
+  /// In en, this message translates to:
+  /// **'Bookable as a whole'**
+  String get editorLevelBookableOn;
+
+  /// Level row booking-state subtitle in the editor (#466)
+  ///
+  /// In en, this message translates to:
+  /// **'Not bookable as a whole'**
+  String get editorLevelBookableOff;
+
   /// Title of the owner-only member management screen + its settings entry
   ///
   /// In en, this message translates to:
@@ -5089,6 +5101,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'To all admins'**
   String get memberNoteToAllAdmins;
+
+  /// Snack after swipe-deleting a note (#467)
+  ///
+  /// In en, this message translates to:
+  /// **'Message deleted.'**
+  String get memberNoteDeleted;
 
   /// Reserve hub view segment: month availability calendar (#7)
   ///

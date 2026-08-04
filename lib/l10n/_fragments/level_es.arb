@@ -21,5 +21,7 @@
   "officeSupplementLabel": "Reservas de oficina",
   "eventTypeSpaceReservation": "Reservas de espacios enteros",
   "deskDetail": "Mesa entera",
-  "deskSupplementLabel": "Reservas de mesa"
+  "deskSupplementLabel": "Reservas de mesa",
+  "editorLevelBookableOn": "Reservable por completo",
+  "editorLevelBookableOff": "No reservable por completo"
 }

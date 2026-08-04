@@ -128,8 +128,32 @@ class _LevelList extends ConsumerWidget {
             child: const Icon(Icons.drag_handle),
           ),
           title: Text(level.name),
+          // #466: the whole-level booking state was invisible (buried
+          // in the ⋮ menu) — say it on the row and open the tool with
+          // one tap on the layers icon.
+          subtitle: Text(
+            level.bookableAsWhole
+                ? (l10n?.editorLevelBookableOn ??
+                    'Bookable as a whole')
+                : (l10n?.editorLevelBookableOff ??
+                    'Not bookable as a whole'),
+          ),
           onTap: () => context.push('/editor/level/${level.id}'),
-          trailing: MenuAnchor(
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                key: ValueKey('editor-level-booking-${level.id}'),
+                tooltip: l10n?.levelBookableToggle ?? 'Bookable as a whole',
+                icon: Icon(
+                  level.bookableAsWhole ? Icons.layers : Icons.layers_outlined,
+                ),
+                onPressed: () => showDialog<void>(
+                  context: context,
+                  builder: (_) => _LevelBookingDialog(level: level),
+                ),
+              ),
+              MenuAnchor(
             builder: (context, controller, child) => IconButton(
               icon: const Icon(Icons.more_vert),
               tooltip: l10n?.editorLevelActions ?? 'Level actions',
@@ -193,6 +217,8 @@ class _LevelList extends ConsumerWidget {
                   ref.invalidate(levelsProvider);
                 },
                 child: Text(l10n?.commonDelete ?? 'Delete'),
+              ),
+            ],
               ),
             ],
           ),

@@ -1136,7 +1136,10 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         end: end,
         currencyCode: workspace.currencyCode,
         myMemberId: me.id,
-        canBookSelf: me.canReserveLevel,
+        // #466: the 0079 rule — owners and admins book a level for
+        // THEMSELVES too; the raw grant locked them out of their own
+        // sheet (and an owner alone in the workspace crashed it).
+        canBookSelf: me.canReserveLevel || me.canAdminister,
         members: candidates,
       ),
     );

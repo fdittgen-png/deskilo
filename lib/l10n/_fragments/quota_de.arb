@@ -33,5 +33,6 @@
   "memberNoteReceived": "Nachricht von {name}",
   "eventsMessagesHeader": "Nachrichten",
   "memberNoteTo": "An {name}",
-  "memberNoteToAllAdmins": "An alle Admins"
+  "memberNoteToAllAdmins": "An alle Admins",
+  "memberNoteDeleted": "Nachricht gelöscht."
 }

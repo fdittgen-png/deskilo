@@ -2199,6 +2199,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deskSupplementLabel => 'Réservations de table';
 
   @override
+  String get editorLevelBookableOn => 'Réservable en entier';
+
+  @override
+  String get editorLevelBookableOff => 'Non réservable en entier';
+
+  @override
   String get membersTitle => 'Membres et forfaits';
 
   @override
@@ -2826,6 +2832,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get memberNoteToAllAdmins => 'À tous les admins';
+
+  @override
+  String get memberNoteDeleted => 'Message supprimé.';
 
   @override
   String get reserveMonthView => 'Mois';

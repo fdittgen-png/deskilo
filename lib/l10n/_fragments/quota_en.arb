@@ -181,5 +181,9 @@
   "memberNoteToAllAdmins": "To all admins",
   "@memberNoteToAllAdmins": {
     "description": "Member-notes inbox on the Events screen (#460)"
+  },
+  "memberNoteDeleted": "Message deleted.",
+  "@memberNoteDeleted": {
+    "description": "Snack after swipe-deleting a note (#467)"
   }
 }

@@ -219,6 +219,67 @@ void main() {
     expect(notifications.shown, hasLength(1));
   });
 
+  testWidgets('SWIPE (#467): left deletes a received note; right opens '
+      'the reply dialog to the sender', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
+      ..otherMembers.add(
+        const Member(
+          id: 'member-2',
+          workspaceId: 'ws-1',
+          userId: 'user-2',
+          isAdmin: false,
+          isOwner: false,
+          status: MemberStatus.active,
+        ),
+      )
+      ..memberNotes.add(
+        MemberNote(
+          id: 'note-in',
+          workspaceId: 'ws-1',
+          fromMemberId: 'member-2',
+          toMemberId: 'member-1',
+          body: 'Lamp is on.',
+          createdAt: DateTime.utc(2026, 8, 4, 9),
+        ),
+      );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(workspace: workspace),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Events'));
+    await tester.pumpAndSettle();
+
+    // Swipe RIGHT → the reply dialog opens, addressed to Ana; the row
+    // never dismisses.
+    await tester.drag(
+      find.byKey(const ValueKey('note-dismiss-note-in')),
+      const Offset(400, 0),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Notify Ana'), findsOneWidget);
+    await tester.enterText(
+      find.byKey(const ValueKey('member-note-body')),
+      'Turning it off now.',
+    );
+    await tester.tap(find.byKey(const ValueKey('member-note-send')));
+    await tester.pumpAndSettle();
+    expect(workspace.memberNotes.last.toMemberId, 'member-2');
+    expect(workspace.memberNotes.last.body, 'Turning it off now.');
+
+    // Swipe LEFT → the received note is deleted.
+    await tester.drag(
+      find.byKey(const ValueKey('note-dismiss-note-in')),
+      const Offset(-400, 0),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Message deleted.'), findsOneWidget);
+    expect(workspace.memberNotes.where((n) => n.id == 'note-in'), isEmpty);
+  });
+
   testWidgets('feature OFF hides every affordance (#456)', (tester) async {
     await pumpMembersWithAna(
       tester,
