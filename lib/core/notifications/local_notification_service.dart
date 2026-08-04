@@ -42,10 +42,21 @@ class LocalNotificationService implements NotificationService {
         macOS: DarwinInitializationSettings(),
       ),
     );
-    await plugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestNotificationsPermission();
+    // #442: the permission request is BEST-EFFORT — it must never take
+    // the whole service down. When it threw here, main() fell back to
+    // the Noop service and every notification (reminders, the badge
+    // mirror) silently no-oped for the entire session.
+    try {
+      await plugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestNotificationsPermission();
+    } catch (e, st) {
+      debugPrint('notification permission request failed: $e\n$st');
+      TraceLogger.instance.warn(
+          'notifications', 'permission request failed (non-fatal)',
+          error: e, stackTrace: st);
+    }
     return LocalNotificationService(plugin);
   }
 
