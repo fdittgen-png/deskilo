@@ -107,9 +107,24 @@ class LocalNotificationService implements NotificationService {
   static int _pendingIdOf(String eventId) =>
       0x20000000 | (eventId.hashCode & 0x0fffffff);
 
+  /// One in-context permission re-request per app run (#436): the boot
+  /// dialog fires over the splash and is easy to dismiss — when pending
+  /// confirmations exist but Android says notifications are off, ask
+  /// again at the moment the user can see why it matters.
+  bool _permissionReasked = false;
+
   @override
   Future<void> syncPendingNotifications(List<PendingNotice> notices) async {
     try {
+      if (notices.isNotEmpty &&
+          !_permissionReasked &&
+          await notificationsEnabled() == false) {
+        _permissionReasked = true;
+        await _plugin
+            .resolvePlatformSpecificImplementation<
+                AndroidFlutterLocalNotificationsPlugin>()
+            ?.requestNotificationsPermission();
+      }
       final wanted = {for (final n in notices) _pendingIdOf(n.id): n};
       for (final stale in _pendingIds.difference(wanted.keys.toSet())) {
         await _plugin.cancel(id: stale);
