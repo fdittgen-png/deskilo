@@ -378,5 +378,10 @@
   "einvoiceUatToken": "Token o credenziale UAT",
   "einvoiceDevEndpoint": "URL di caricamento Dev",
   "einvoiceDevToken": "Token o credenziale Dev",
-  "invoiceSentTestChip": "test"
+  "invoiceSentTestChip": "test",
+  "invoiceTemplateTitle": "Modello PDF della fattura",
+  "invoiceTemplateHint": "Testo libero sul PDF generato — l'XML della fattura elettronica non viene mai toccato. Segnaposto:",
+  "invoiceTemplateIntroLabel": "Introduzione (sopra il blocco del destinatario)",
+  "invoiceTemplateFooterLabel": "Piè di pagina (sotto i totali — condizioni di pagamento, menzioni legali)",
+  "invoiceTemplateSaved": "Modello di fattura salvato."
 }

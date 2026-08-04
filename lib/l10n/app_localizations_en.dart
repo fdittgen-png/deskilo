@@ -1118,6 +1118,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Configure the working day and offer exact-hours booking; off keeps the 8:00–17:00 defaults.';
 
   @override
+  String get featureInvoicePdfTemplate => 'Invoice PDF template';
+
+  @override
+  String get featureInvoicePdfTemplateDesc =>
+      'Owner-written intro and footer text on the invoice PDF. Never touches the e-invoice XML.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
@@ -1841,6 +1848,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceSentTestChip => 'test';
+
+  @override
+  String get invoiceTemplateTitle => 'Invoice PDF template';
+
+  @override
+  String get invoiceTemplateHint =>
+      'Free text on the rendered PDF — the e-invoice XML is never touched. Placeholders:';
+
+  @override
+  String get invoiceTemplateIntroLabel => 'Intro (above the billed-to block)';
+
+  @override
+  String get invoiceTemplateFooterLabel =>
+      'Footer (under the totals — payment terms, legal mentions)';
+
+  @override
+  String get invoiceTemplateSaved => 'Invoice template saved.';
 
   @override
   String get eventTypeMemberJoin => 'New member';

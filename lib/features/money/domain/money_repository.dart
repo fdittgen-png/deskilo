@@ -3,7 +3,8 @@ import 'einvoice_gateway.dart';
 import 'vat_rate.dart';
 import 'fee_band.dart';
 
-import 'invoice.dart';import 'ledger_entry.dart';
+import 'invoice.dart';
+import 'invoice_pdf_template.dart';import 'ledger_entry.dart';
 import 'package.dart';
 import 'payment_intent.dart';
 import 'payment_method.dart';
@@ -19,6 +20,17 @@ abstract class MoneyRepository {
   /// The invoice archive (0060): the member's own invoices — admins see
   /// everyone's (RLS decides).
   Future<List<Invoice>> fetchInvoices(String workspaceId);
+
+  /// The workspace's invoice-PDF template (#454, 0088); empty when the
+  /// column holds no keys.
+  Future<InvoicePdfTemplate> fetchInvoicePdfTemplate(String workspaceId);
+
+  /// Owner-only (workspaces_update RLS): replace the invoice-PDF
+  /// template wholesale.
+  Future<void> setInvoicePdfTemplate(
+    String workspaceId,
+    InvoicePdfTemplate template,
+  );
 
   /// Issues an IMMUTABLE invoice (RPC `create_invoice`) — owner always,
   /// admins per the adminInvoicing delegation. Returns its id. Since

@@ -45,5 +45,7 @@
   "featureAutoCheckInOutDesc": "Las reservas sin entrada o salida registradas se completan solas cuando pasa su horario.",
   "featureDataExportDesc": "Descargar todos los datos del espacio en un libro de Excel.",
   "featureWorkingHours": "Horario laboral",
-  "featureWorkingHoursDesc": "Configura la jornada laboral y ofrece reservas por horas exactas; desactivado se aplican los valores 8:00–17:00."
+  "featureWorkingHoursDesc": "Configura la jornada laboral y ofrece reservas por horas exactas; desactivado se aplican los valores 8:00–17:00.",
+  "featureInvoicePdfTemplate": "Plantilla del PDF de factura",
+  "featureInvoicePdfTemplateDesc": "Introducción y pie escritos por el propietario en el PDF de la factura. Nunca toca el XML de la factura electrónica."
 }

@@ -11,6 +11,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice_ubl.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
+import '../widgets/invoice_template_sheet.dart';
 import '../widgets/invoice_archive_tab.dart';
 import '../widgets/invoice_detail_sheet.dart';
 import '../widgets/invoice_form_sheet.dart';
@@ -37,6 +38,9 @@ class InvoicesScreen extends ConsumerWidget {
     final isEu = isEuCountry(countryCode);
     final me = ref.watch(myMemberProvider).value;
     final features = ref.watch(enabledFeaturesSyncProvider);
+    // #454: warm the template before any render action can be tapped —
+    // invoicePdfTemplateFor reads it synchronously.
+    ref.watch(invoicePdfTemplateProvider);
     // Owner always; admins only with the delegation flag — the server
     // re-checks both.
     final canIssue = me != null &&
@@ -63,12 +67,23 @@ class InvoicesScreen extends ConsumerWidget {
       icon: const Icon(Icons.table_rows_outlined),
       onPressed: () => context.push('/invoice-register'),
     );
+    // #454: the PDF template editor — owner only (workspaces_update RLS
+    // would refuse anyone else anyway), behind its feature flag.
+    final templateAction = (me?.actsAsOwner ?? false) &&
+            features.contains(WorkspaceFeature.invoicePdfTemplate)
+        ? IconButton(
+            key: const ValueKey('invoice-template-button'),
+            tooltip: l10n?.invoiceTemplateTitle ?? 'Invoice PDF template',
+            icon: const Icon(Icons.edit_note_outlined),
+            onPressed: () => showInvoiceTemplateSheet(context, ref),
+          )
+        : null;
 
     if (!canIssue) {
       return Scaffold(
         appBar: AppBar(
           title: Text(l10n?.invoicesTitle ?? 'Invoices'),
-          actions: [registerAction],
+          actions: [?templateAction, registerAction],
         ),
         body: archive,
       );
@@ -123,7 +138,7 @@ class InvoicesScreen extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n?.invoicesTitle ?? 'Invoices'),
-          actions: [registerAction],
+          actions: [?templateAction, registerAction],
           bottom: TabBar(tabs: [
             Tab(
               key: const ValueKey('invoice-tab-todo'),

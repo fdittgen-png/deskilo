@@ -142,6 +142,11 @@ Future<Uint8List> buildInvoicePdf({
   /// is what French and German small businesses actually exchange.
   /// Requires [colorProfile] (PDF/A demands an output intent).
   String facturXml = '',
+
+  /// Owner-template text blocks (#454), ALREADY placeholder-resolved by
+  /// the caller. Empty = absent. PDF only — the XML never carries them.
+  String introText = '',
+  String footerText = '',
   Uint8List? colorProfile,
 }) async {
   final hybrid = facturXml.isNotEmpty && colorProfile != null;
@@ -337,6 +342,13 @@ Future<Uint8List> buildInvoicePdf({
                     fontSize: 10,
                     color: _accent,
                     fontWeight: pw.FontWeight.bold)),
+          ),
+        // ── Owner-template intro (#454) ───────────────────────────
+        if (introText.trim().isNotEmpty)
+          pw.Padding(
+            padding: const pw.EdgeInsets.only(bottom: 12),
+            child: pw.Text(introText.trim(),
+                style: const pw.TextStyle(fontSize: 9, color: _ink)),
           ),
         // ── Billed to + invoiced month ────────────────────────────
         pw.Row(
@@ -650,6 +662,14 @@ Future<Uint8List> buildInvoicePdf({
             ),
           ],
         ],
+        // ── Owner-template footer (#454): payment terms, legal
+        // mentions — under the totals, above the signature.
+        if (footerText.trim().isNotEmpty)
+          pw.Padding(
+            padding: const pw.EdgeInsets.only(top: 16),
+            child: pw.Text(footerText.trim(),
+                style: const pw.TextStyle(fontSize: 8, color: _muted)),
+          ),
         pw.SizedBox(height: 24),
         // ── Digital signature ─────────────────────────────────────
         // A proforma has none: nothing was issued, so there is nothing to

@@ -1126,6 +1126,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Configura la jornada laboral y ofrece reservas por horas exactas; desactivado se aplican los valores 8:00–17:00.';
 
   @override
+  String get featureInvoicePdfTemplate => 'Plantilla del PDF de factura';
+
+  @override
+  String get featureInvoicePdfTemplateDesc =>
+      'Introducción y pie escritos por el propietario en el PDF de la factura. Nunca toca el XML de la factura electrónica.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override
@@ -1855,6 +1862,24 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceSentTestChip => 'prueba';
+
+  @override
+  String get invoiceTemplateTitle => 'Plantilla del PDF de factura';
+
+  @override
+  String get invoiceTemplateHint =>
+      'Texto libre en el PDF generado — el XML de factura electrónica nunca se toca. Marcadores:';
+
+  @override
+  String get invoiceTemplateIntroLabel =>
+      'Introducción (sobre el bloque del destinatario)';
+
+  @override
+  String get invoiceTemplateFooterLabel =>
+      'Pie (bajo los totales — condiciones de pago, menciones legales)';
+
+  @override
+  String get invoiceTemplateSaved => 'Plantilla de factura guardada.';
 
   @override
   String get eventTypeMemberJoin => 'Nuevo miembro';

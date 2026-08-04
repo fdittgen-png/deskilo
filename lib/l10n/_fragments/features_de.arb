@@ -45,5 +45,7 @@
   "featureAutoCheckInOutDesc": "Reservierungen ohne Check-in oder Check-out schließen sich selbst, sobald ihre Zeit vorbei ist.",
   "featureDataExportDesc": "Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen.",
   "featureWorkingHours": "Arbeitszeiten",
-  "featureWorkingHoursDesc": "Arbeitstag konfigurieren und Buchung nach exakten Uhrzeiten anbieten; aus = Standard 8–17 Uhr."
+  "featureWorkingHoursDesc": "Arbeitstag konfigurieren und Buchung nach exakten Uhrzeiten anbieten; aus = Standard 8–17 Uhr.",
+  "featureInvoicePdfTemplate": "Rechnungs-PDF-Vorlage",
+  "featureInvoicePdfTemplateDesc": "Vom Inhaber verfasste Einleitung und Fußtext auf dem Rechnungs-PDF. Das E-Rechnungs-XML bleibt unberührt."
 }

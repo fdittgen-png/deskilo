@@ -47,18 +47,22 @@ const Map<String, int> _baseline = {
   'lib/features/members/presentation/screens/directory_screen.dart': 920,
   // 900→920 (2026-08-01): #393 environment picker threaded through the
   // send flow — feature lines, not accretion; picker itself is its own file.
-  'lib/features/money/presentation/invoice_actions.dart': 920,
+  // 920→950 (2026-08-04): #454 template lookup + resolution threaded
+  // through every PDF render; the editor sheet is its own file.
+  'lib/features/money/presentation/invoice_actions.dart': 950,
   'lib/features/workspace/domain/workspace_xml.dart': 800,
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.
   'lib/features/reservations/presentation/widgets/week_grid.dart': 780,
   // 750→780 (2026-08-02): #395 adds fetchWorkspaceLedger and
   // fetchPaymentIntents — two new repository surfaces, not accretion.
-  'lib/features/money/data/supabase_money_repository.dart': 780,
+  // 780→800 (2026-08-04): #454 fetch/setInvoicePdfTemplate.
+  'lib/features/money/data/supabase_money_repository.dart': 800,
   'lib/features/money/presentation/widgets/bill_view.dart': 750,
   'lib/features/calendar/presentation/widgets/day_timeline.dart': 750,
   'lib/features/reservations/presentation/widgets/space_scan.dart': 730,
-  'lib/features/money/domain/invoice_pdf.dart': 680,
+  // 680→700 (2026-08-04): #454 owner-template intro/footer blocks.
+  'lib/features/money/domain/invoice_pdf.dart': 700,
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the
   // kiosk arms the ambient working day itself, like realtime (#430).
   'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 680,

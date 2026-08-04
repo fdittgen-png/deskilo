@@ -2,6 +2,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../domain/invoice.dart';
+import '../domain/invoice_pdf_template.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../reservations/providers/reservation_providers.dart';
@@ -131,6 +132,18 @@ Future<List<Invoice>> invoices(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   return ref.watch(moneyRepositoryProvider).fetchInvoices(workspace.id);
+}
+
+/// Invoice-PDF template of the active workspace (#454); empty while no
+/// workspace is selected. The renderer additionally gates on the
+/// invoicePdfTemplate feature flag at the call site.
+@Riverpod(keepAlive: true)
+Future<InvoicePdfTemplate> invoicePdfTemplate(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return InvoicePdfTemplate.empty;
+  return ref
+      .watch(moneyRepositoryProvider)
+      .fetchInvoicePdfTemplate(workspace.id);
 }
 
 /// invoiceId → its payment match (0067) — the invoice lifecycle state.
