@@ -35,5 +35,17 @@
   "developerFilterWarnings": "Warnings+",
   "@developerFilterWarnings": {
     "description": "Filter chip showing warnings and errors"
+  },
+  "pushStatusRegistered": "Push notifications are active",
+  "@pushStatusRegistered": {
+    "description": "Settings status line: push pipeline registered (#424)"
+  },
+  "pushStatusNoDistributor": "Push notifications need a distributor app",
+  "@pushStatusNoDistributor": {
+    "description": "Settings status line: no UnifiedPush distributor installed (#424)"
+  },
+  "pushStatusNoDistributorHint": "Install ntfy (F-Droid or Play Store), then reopen the app.",
+  "@pushStatusNoDistributorHint": {
+    "description": "Fix hint under the no-distributor line (#424)"
   }
 }

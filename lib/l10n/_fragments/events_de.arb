@@ -16,5 +16,7 @@
   "eventPaymentSubmitted": "{actor} hat eine Zahlung von {amount} erfasst",
   "eventExpenseSubmitted": "{actor} hat eine Ausgabe von {amount} eingereicht",
   "pushPendingTitle": "DesKilo",
-  "pushPendingBody": "Jemand wartet auf deine Bestätigung."
+  "pushPendingBody": "Jemand wartet auf deine Bestätigung.",
+  "pushCancelledTitle": "Reservierung entfernt",
+  "pushCancelledBody": "Eine Reservierung wurde von einem Admin entfernt."
 }

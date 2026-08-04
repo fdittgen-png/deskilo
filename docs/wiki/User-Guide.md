@@ -333,7 +333,7 @@ Your identity exists only for the moment of the operation: the credential is sen
 
 ## 10. Notifications
 
-Check-in reminders, no-show releases, pending confirmations, expense decisions. Delivery is local-first; on Android the F-Droid flavor uses **UnifiedPush** (e.g. ntfy) instead of Google services — no Firebase anywhere.
+Check-in reminders, pending confirmations, expense decisions — and when an admin **removes one of your reservations** (overrule), you and the admins are notified. Delivery is local-first; server pushes use **UnifiedPush** on Android (no Google services, no Firebase anywhere), which needs a **distributor app** on your device — install **ntfy** (F-Droid or Play Store) once, and *Settings → Advanced* shows whether push is active on this device. Pushed payloads never carry names or times; the app builds the notification text locally.
 
 ## 11. Privacy
 

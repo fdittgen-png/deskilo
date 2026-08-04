@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/files/file_picker.dart';
+import '../../../../core/push/push_status_tile.dart';
 import '../../../../core/locale/locale_controller.dart';
 import '../../../../core/scan/front_camera.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -516,6 +517,9 @@ class SettingsScreen extends ConsumerWidget {
           ),
           const Divider(),
           _SectionHeader(l10n?.settingsSectionAdvanced ?? 'Advanced'),
+          // Push pipeline state (#424): a device without a UnifiedPush
+          // distributor was silently push-less — say so, with the fix.
+          const PushStatusTile(),
           // #419: admins/owners flip dev mode for EVERYONE; other
           // members inherit the state without seeing the switch.
           if (ref.watch(myMemberProvider).value?.canAdminister ?? false)

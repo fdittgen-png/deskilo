@@ -377,7 +377,7 @@ Deine Identität existiert nur für den Moment der Operation: die Berechtigung g
 
 ## 10. Benachrichtigungen
 
-Check-in-Erinnerungen, Freigaben bei Nichterscheinen, offene Bestätigungen, Ausgaben-Entscheide. Zustellung ist lokal zuerst; auf Android nutzt die F-Droid-Variante **UnifiedPush** (z. B. ntfy) statt Google-Diensten — nirgendwo Firebase.
+Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheide — und wenn ein Admin **eine deiner Reservierungen entfernt** (Übersteuern), werden du und die Admins benachrichtigt. Zustellung ist lokal zuerst; Server-Pushes nutzen **UnifiedPush** auf Android (keine Google-Dienste, nirgendwo Firebase) und brauchen eine **Verteiler-App** auf dem Gerät — installiere einmal **ntfy** (F-Droid oder Play Store); *Einstellungen → Erweitert* zeigt, ob Push auf diesem Gerät aktiv ist. Push-Inhalte tragen nie Namen oder Zeiten; der Text entsteht lokal in der App.
 
 ## 11. Datenschutz
 

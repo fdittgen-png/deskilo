@@ -8,5 +8,8 @@
   "developerEmpty": "Aucune entrée de journal pour l'instant.",
   "developerFilterAll": "Tout",
   "developerFilterErrors": "Erreurs",
-  "developerFilterWarnings": "Avertissements+"
+  "developerFilterWarnings": "Avertissements+",
+  "pushStatusRegistered": "Les notifications push sont actives",
+  "pushStatusNoDistributor": "Les notifications push nécessitent une app distributrice",
+  "pushStatusNoDistributorHint": "Installez ntfy (F-Droid ou Play Store), puis rouvrez l'app."
 }

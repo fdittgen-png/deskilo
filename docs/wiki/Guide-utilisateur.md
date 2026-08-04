@@ -335,7 +335,7 @@ Votre identité n'existe que le temps de l'opération : l'identifiant est envoy�
 
 ## 10. Notifications
 
-Rappels de pointage, libérations pour absence, confirmations en attente, décisions de dépense. La livraison est locale d'abord ; sur Android, la version F-Droid utilise **UnifiedPush** (p. ex. ntfy) au lieu des services Google — aucun Firebase nulle part.
+Rappels de pointage, confirmations en attente, décisions de dépenses — et quand un admin **retire une de vos réservations** (outrepasser), vous et les admins êtes notifiés. La livraison est locale d'abord ; les pushs serveur utilisent **UnifiedPush** sur Android (pas de services Google, aucun Firebase) et nécessitent une **app distributrice** sur l'appareil — installez **ntfy** (F-Droid ou Play Store) une fois ; *Réglages → Avancé* indique si le push est actif sur cet appareil. Les contenus poussés ne portent jamais de noms ni d'horaires ; l'app compose le texte localement.
 
 ## 11. Confidentialité
 

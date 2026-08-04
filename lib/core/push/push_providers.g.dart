@@ -108,8 +108,13 @@ final pushBootstrapProvider = PushBootstrapProvider._();
 /// the shell; a missing distributor or platform just means local-only.
 
 final class PushBootstrapProvider
-    extends $FunctionalProvider<AsyncValue<void>, void, FutureOr<void>>
-    with $FutureModifier<void>, $FutureProvider<void> {
+    extends
+        $FunctionalProvider<
+          AsyncValue<PushService?>,
+          PushService?,
+          FutureOr<PushService?>
+        >
+    with $FutureModifier<PushService?>, $FutureProvider<PushService?> {
   /// Starts the UnifiedPush pipeline once per app run (#72). Watched from
   /// the shell; a missing distributor or platform just means local-only.
   PushBootstrapProvider._()
@@ -128,13 +133,14 @@ final class PushBootstrapProvider
 
   @$internal
   @override
-  $FutureProviderElement<void> $createElement($ProviderPointer pointer) =>
-      $FutureProviderElement(pointer);
+  $FutureProviderElement<PushService?> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<void> create(Ref ref) {
+  FutureOr<PushService?> create(Ref ref) {
     return pushBootstrap(ref);
   }
 }
 
-String _$pushBootstrapHash() => r'c40cda2feacda8fb6f034f47b10eaeb165d1111e';
+String _$pushBootstrapHash() => r'a680a255773b2067e10fe965b3687b597a488246';

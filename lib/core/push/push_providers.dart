@@ -24,7 +24,7 @@ PushEndpointRepository pushEndpointRepository(Ref ref) =>
 /// Starts the UnifiedPush pipeline once per app run (#72). Watched from
 /// the shell; a missing distributor or platform just means local-only.
 @Riverpod(keepAlive: true)
-Future<void> pushBootstrap(Ref ref) async {
+Future<PushService?> pushBootstrap(Ref ref) async {
   // Per-workspace feature gate (#146). selectAsync keeps the run-once
   // semantics: the provider only re-executes when the flag itself flips
   // (applying it on the next connect), not on every workspace refetch.
@@ -34,7 +34,7 @@ Future<void> pushBootstrap(Ref ref) async {
       (features) => features.contains(WorkspaceFeature.pushNotifications),
     ),
   );
-  if (!pushEnabled) return;
+  if (!pushEnabled) return null;
 
   AppLocalizations? l10n;
   try {
@@ -56,6 +56,12 @@ Future<void> pushBootstrap(Ref ref) async {
     pendingTitle: l10n?.pushPendingTitle ?? 'DesKilo',
     pendingBody:
         l10n?.pushPendingBody ?? 'Someone needs your confirmation.',
+    cancelledTitle: l10n?.pushCancelledTitle ?? 'DesKilo',
+    cancelledBody: l10n?.pushCancelledBody ??
+        'A reservation of yours was removed by an admin.',
   );
   await service.start();
+  // Exposed so Settings can show the pipeline state (#424) — a silent
+  // no-distributor setup was undiagnosable in the field.
+  return service;
 }

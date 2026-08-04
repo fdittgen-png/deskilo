@@ -8,6 +8,20 @@ import '../trace/trace_logger.dart';
 import 'push_connector.dart';
 import 'push_endpoint_repository.dart';
 
+/// Where the push pipeline stands (#424): surfaced in Settings so a
+/// silent field setup (no distributor installed) stops being invisible.
+enum PushStatus {
+  /// Platform without UnifiedPush support (iOS, desktop, web).
+  unsupported,
+
+  /// Supported, but no distributor app (ntfy, NextPush…) is installed —
+  /// the app cannot receive pushes until the user installs one.
+  noDistributor,
+
+  /// Registered with a distributor; endpoint saved server-side.
+  registered,
+}
+
 /// UnifiedPush pipeline (#72): distributor → endpoint rows on the server
 /// → generic ping when someone must confirm a pending event. Payloads
 /// carry no personal data; the client localizes the notification text.
@@ -19,12 +33,16 @@ class PushService {
     required Future<List<String>> Function() myMemberIds,
     required String pendingTitle,
     required String pendingBody,
+    required String cancelledTitle,
+    required String cancelledBody,
   })  : _connector = connector,
         _repository = repository,
         _notifications = notifications,
         _myMemberIds = myMemberIds,
         _pendingTitle = pendingTitle,
-        _pendingBody = pendingBody;
+        _pendingBody = pendingBody,
+        _cancelledTitle = cancelledTitle,
+        _cancelledBody = cancelledBody;
 
   final PushConnector _connector;
   final PushEndpointRepository _repository;
@@ -32,6 +50,12 @@ class PushService {
   final Future<List<String>> Function() _myMemberIds;
   final String _pendingTitle;
   final String _pendingBody;
+  final String _cancelledTitle;
+  final String _cancelledBody;
+
+  /// Live pipeline state for the Settings status line (#424).
+  final ValueNotifier<PushStatus> status =
+      ValueNotifier(PushStatus.unsupported);
 
   String? _endpoint;
 
@@ -44,12 +68,16 @@ class PushService {
       onMessage: onMessage,
     );
     if (!available) return;
-    if (!await _connector.hasDistributor()) return;
+    if (!await _connector.hasDistributor()) {
+      status.value = PushStatus.noDistributor;
+      return;
+    }
     await _connector.register();
   }
 
   Future<void> _onNewEndpoint(String url) async {
     _endpoint = url;
+    status.value = PushStatus.registered;
     try {
       await _repository.saveEndpoint(
         memberIds: await _myMemberIds(),
@@ -65,6 +93,7 @@ class PushService {
   Future<void> _onUnregistered() async {
     final endpoint = _endpoint;
     _endpoint = null;
+    status.value = PushStatus.noDistributor;
     if (endpoint == null) return;
     try {
       await _repository.removeEndpoint(endpoint);
@@ -93,7 +122,18 @@ class PushService {
           'push', 'push payload undecodable, generic ping kept',
           error: e, stackTrace: st);
     }
-    if (kind != 'pending_request') return;
-    await _notifications.showNow(title: _pendingTitle, body: _pendingBody);
+    switch (kind) {
+      case 'reservation_cancelled':
+        // #424: an admin removed a booking (overrule) — the displaced
+        // member and the admins get this; text localized client-side.
+        await _notifications.showNow(
+            title: _cancelledTitle, body: _cancelledBody);
+      default:
+        // pending_request, unknown future kinds, malformed payloads:
+        // the generic ping — a lost notification is worse than a vague
+        // one.
+        await _notifications.showNow(
+            title: _pendingTitle, body: _pendingBody);
+    }
   }
 }
