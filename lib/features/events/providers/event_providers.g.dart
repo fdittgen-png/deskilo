@@ -193,20 +193,72 @@ final class ValidationPoliciesProvider
 String _$validationPoliciesHash() =>
     r'c290f85f2167ee8a475373032cf63b16296be022';
 
+/// The pending events awaiting MY decision — the bell badge, the
+/// app-icon badge and the notification mirror (#432) all derive from
+/// this one list. Same decider rule as the pending cards (#107, #130).
+
+@ProviderFor(myPendingEvents)
+final myPendingEventsProvider = MyPendingEventsProvider._();
+
+/// The pending events awaiting MY decision — the bell badge, the
+/// app-icon badge and the notification mirror (#432) all derive from
+/// this one list. Same decider rule as the pending cards (#107, #130).
+
+final class MyPendingEventsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<WorkspaceEvent>>,
+          List<WorkspaceEvent>,
+          FutureOr<List<WorkspaceEvent>>
+        >
+    with
+        $FutureModifier<List<WorkspaceEvent>>,
+        $FutureProvider<List<WorkspaceEvent>> {
+  /// The pending events awaiting MY decision — the bell badge, the
+  /// app-icon badge and the notification mirror (#432) all derive from
+  /// this one list. Same decider rule as the pending cards (#107, #130).
+  MyPendingEventsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myPendingEventsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myPendingEventsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<WorkspaceEvent>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<WorkspaceEvent>> create(Ref ref) {
+    return myPendingEvents(ref);
+  }
+}
+
+String _$myPendingEventsHash() => r'10d1e0987a12a293e3ad07de5d0a02fe6049a36c';
+
 /// How many pending events await MY decision — drives the Events tab
-/// badge. Same decider rule as the pending cards (#107, #130).
+/// badge.
 
 @ProviderFor(myPendingEventCount)
 final myPendingEventCountProvider = MyPendingEventCountProvider._();
 
 /// How many pending events await MY decision — drives the Events tab
-/// badge. Same decider rule as the pending cards (#107, #130).
+/// badge.
 
 final class MyPendingEventCountProvider
     extends $FunctionalProvider<AsyncValue<int>, int, FutureOr<int>>
     with $FutureModifier<int>, $FutureProvider<int> {
   /// How many pending events await MY decision — drives the Events tab
-  /// badge. Same decider rule as the pending cards (#107, #130).
+  /// badge.
   MyPendingEventCountProvider._()
     : super(
         from: null,
@@ -233,4 +285,4 @@ final class MyPendingEventCountProvider
 }
 
 String _$myPendingEventCountHash() =>
-    r'a099bffba84bb2d08f69ccd3c3b338d649802075';
+    r'542783ac198c924bb32abe39be24a4a26468f5f3';

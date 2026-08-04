@@ -48,7 +48,7 @@ final class PushConnectorProvider
   }
 }
 
-String _$pushConnectorHash() => r'5a718ca7246811c1627445833c7be82fb4c5a6e2';
+String _$pushConnectorHash() => r'b7ba368ba7ffc1ce171ae41d57b2a0a5e6251340';
 
 @ProviderFor(pushEndpointRepository)
 final pushEndpointRepositoryProvider = PushEndpointRepositoryProvider._();
@@ -98,13 +98,13 @@ final class PushEndpointRepositoryProvider
 String _$pushEndpointRepositoryHash() =>
     r'374d9c98e39e72e19b16aafcfab4526ee97fe635';
 
-/// Starts the UnifiedPush pipeline once per app run (#72). Watched from
+/// Starts the push pipeline once per app run (#72/#428). Watched from
 /// the shell; a missing distributor or platform just means local-only.
 
 @ProviderFor(pushBootstrap)
 final pushBootstrapProvider = PushBootstrapProvider._();
 
-/// Starts the UnifiedPush pipeline once per app run (#72). Watched from
+/// Starts the push pipeline once per app run (#72/#428). Watched from
 /// the shell; a missing distributor or platform just means local-only.
 
 final class PushBootstrapProvider
@@ -115,7 +115,7 @@ final class PushBootstrapProvider
           FutureOr<PushService?>
         >
     with $FutureModifier<PushService?>, $FutureProvider<PushService?> {
-  /// Starts the UnifiedPush pipeline once per app run (#72). Watched from
+  /// Starts the push pipeline once per app run (#72/#428). Watched from
   /// the shell; a missing distributor or platform just means local-only.
   PushBootstrapProvider._()
     : super(

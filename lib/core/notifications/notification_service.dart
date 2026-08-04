@@ -17,12 +17,22 @@ class ReminderRequest {
 
 /// Local-notification boundary. The UnifiedPush transport (#72, v1.1)
 /// will implement the same surface for closed-app delivery.
+/// One pending confirmation, ready to display (#432).
+typedef PendingNotice = ({String id, String title, String body});
+
 abstract class NotificationService {
   /// Replaces all scheduled check-in reminders with [reminders].
   Future<void> rescheduleCheckInReminders(List<ReminderRequest> reminders);
 
   /// Shows an immediate notification (#72 push pings).
   Future<void> showNow({required String title, required String body});
+
+  /// One ACTIVE notification per pending confirmation (#432): launchers
+  /// that ignore app-set badge numbers (Samsung One UI) show the COUNT
+  /// OF ACTIVE NOTIFICATIONS as the icon number — the Gmail-style
+  /// badge. Reconciled by stable per-event ids: new pendings appear,
+  /// resolved ones vanish.
+  Future<void> syncPendingNotifications(List<PendingNotice> notices);
 }
 
 /// Fallback when platform notification init fails (#86): the app must boot
@@ -37,4 +47,7 @@ class NoopNotificationService implements NotificationService {
 
   @override
   Future<void> showNow({required String title, required String body}) async {}
+
+  @override
+  Future<void> syncPendingNotifications(List<PendingNotice> notices) async {}
 }

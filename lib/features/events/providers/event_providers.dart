@@ -49,12 +49,13 @@ Future<List<ValidationPolicy>> validationPolicies(Ref ref) async {
       .fetchValidationPolicies(workspace.id);
 }
 
-/// How many pending events await MY decision — drives the Events tab
-/// badge. Same decider rule as the pending cards (#107, #130).
+/// The pending events awaiting MY decision — the bell badge, the
+/// app-icon badge and the notification mirror (#432) all derive from
+/// this one list. Same decider rule as the pending cards (#107, #130).
 @riverpod
-Future<int> myPendingEventCount(Ref ref) async {
+Future<List<WorkspaceEvent>> myPendingEvents(Ref ref) async {
   final member = await ref.watch(myMemberProvider.future);
-  if (member == null) return 0;
+  if (member == null) return const [];
   final members = await ref.watch(workspaceMembersProvider.future);
   final policies = await ref.watch(validationPoliciesProvider.future);
   final decisions = await ref.watch(eventDecisionsProvider.future);
@@ -68,8 +69,14 @@ Future<int> myPendingEventCount(Ref ref) async {
       alreadyDecided: (decisions[e.id] ?? const [])
           .any((d) => d.memberId == member.id),
     );
-  }).length;
+  }).toList();
 }
+
+/// How many pending events await MY decision — drives the Events tab
+/// badge.
+@riverpod
+Future<int> myPendingEventCount(Ref ref) async =>
+    (await ref.watch(myPendingEventsProvider.future)).length;
 
 /// Invalidates every provider that renders bookings or their event trail.
 /// The tab shell keeps all screens alive, so a mutation on one tab must

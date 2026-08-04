@@ -11,7 +11,7 @@ part of 'file_picker.dart';
 /// Injectable seam over `file_selector`'s [openFile] so widget tests can
 /// hand the flow a canned file — the same pattern [shareLauncher] uses
 /// for the share sheet (#133). file_selector rides the Storage Access
-/// Framework on Android: GMS-free, F-Droid clean.
+/// Framework on Android.
 
 @ProviderFor(filePicker)
 final filePickerProvider = FilePickerProvider._();
@@ -19,7 +19,7 @@ final filePickerProvider = FilePickerProvider._();
 /// Injectable seam over `file_selector`'s [openFile] so widget tests can
 /// hand the flow a canned file — the same pattern [shareLauncher] uses
 /// for the share sheet (#133). file_selector rides the Storage Access
-/// Framework on Android: GMS-free, F-Droid clean.
+/// Framework on Android.
 
 final class FilePickerProvider
     extends $FunctionalProvider<FilePicker, FilePicker, FilePicker>
@@ -27,7 +27,7 @@ final class FilePickerProvider
   /// Injectable seam over `file_selector`'s [openFile] so widget tests can
   /// hand the flow a canned file — the same pattern [shareLauncher] uses
   /// for the share sheet (#133). file_selector rides the Storage Access
-  /// Framework on Android: GMS-free, F-Droid clean.
+  /// Framework on Android.
   FilePickerProvider._()
     : super(
         from: null,
