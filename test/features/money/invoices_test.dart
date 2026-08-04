@@ -110,6 +110,13 @@ Future<void> openInvoice(WidgetTester tester, String invoiceId) async {
   await tester.pumpAndSettle();
 }
 
+/// Reveals the cancelled (voided) rows — hidden by default since #452.
+Future<void> showCancelled(WidgetTester tester) async {
+  await tester
+      .tap(find.byKey(const ValueKey('invoice-filter-hide-voided')));
+  await tester.pumpAndSettle();
+}
+
 void main() {
   testWidgets(
       'the OWNER issues an invoice: member + month → the DERIVED preview '
@@ -339,6 +346,11 @@ void main() {
         reason: 'the voided invoice leaves the Open tab');
     await tester.tap(find.byKey(const ValueKey('invoice-tab-archive')));
     await tester.pumpAndSettle();
+    // #452: cancelled rows are hidden by default; the chip reveals the
+    // correction trail.
+    expect(find.byKey(ValueKey('invoice-${invoice.id}')), findsNothing,
+        reason: 'voided invoices are filtered out by default');
+    await showCancelled(tester);
     expect(find.text('Erroneous'), findsOneWidget);
     expect(find.byKey(ValueKey('invoice-${invoice.id}')), findsOneWidget);
   });
@@ -357,6 +369,7 @@ void main() {
     money.statement = money.statement.copyWith(feeCents: 20000);
     await pumpInvoices(tester, money: money);
 
+    await showCancelled(tester);
     await openInvoice(tester, wrong.id);
     await tester.tap(find.byKey(const ValueKey('invoice-replace-action')));
     await tester.pumpAndSettle();
@@ -411,6 +424,7 @@ void main() {
     );
     await pumpInvoices(tester, money: money);
 
+    await showCancelled(tester);
     await openInvoice(tester, 'inv-1');
     expect(find.byKey(const ValueKey('invoice-void-action')), findsNothing);
     expect(find.byKey(const ValueKey('invoice-replace-action')), findsNothing,

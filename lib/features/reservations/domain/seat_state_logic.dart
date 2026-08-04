@@ -9,9 +9,25 @@ import 'reservation.dart';
 
 export '../../../core/theme/seat_state_colors.dart' show SeatState;
 
+/// Whether [r] covers [seat] — directly (seat_id), as part of a
+/// whole-desk (desk_id), whole-office (office_id via [officeId]) or
+/// whole-level booking (level_id, #452: a level reservation occupies
+/// EVERY seat of its plan, visible to everyone). One predicate for the
+/// derivations below — the copies had already drifted apart once
+/// (level_id was silently dropped everywhere).
+bool _covers(FloorPlan plan, Seat seat, String? officeId, Reservation r) =>
+    r.seatId == seat.id ||
+    (r.deskId != null && r.deskId == seat.deskId) ||
+    (r.officeId != null && r.officeId == officeId) ||
+    (r.levelId != null && r.levelId == plan.levelId);
+
+String? _officeIdOf(FloorPlan plan, Seat seat) =>
+    plan.desks.where((d) => d.id == seat.deskId).firstOrNull?.officeId;
+
 /// State of [seat] at instant [at]. [reservations] is the workspace's
-/// active-window slice; office-as-whole bookings mark all seats of that
-/// office. [myMemberId] marks the caller's own bookings as [SeatState.mine].
+/// active-window slice; whole-space bookings (desk/office/level) mark all
+/// their seats. [myMemberId] marks the caller's own bookings as
+/// [SeatState.mine].
 SeatState seatStateAt({
   required FloorPlan plan,
   required Seat seat,
@@ -21,19 +37,12 @@ SeatState seatStateAt({
 }) {
   if (seat.isBlockedAt(at)) return SeatState.blocked;
 
-  final officeId =
-      plan.desks.where((d) => d.id == seat.deskId).firstOrNull?.officeId;
-
-  Reservation? covering;
-  for (final r in reservations) {
-    if (!r.coversInstant(at)) continue;
-    if (r.seatId == seat.id ||
-        (r.deskId != null && r.deskId == seat.deskId) ||
-        (r.officeId != null && r.officeId == officeId)) {
-      covering = r;
-      break;
-    }
-  }
+  final covering = reservationOnSeatAt(
+    plan: plan,
+    seat: seat,
+    reservations: reservations,
+    at: at,
+  );
   if (covering == null) return SeatState.free;
   if (covering.memberId == myMemberId) return SeatState.mine;
   return covering.status == ReservationStatus.checkedIn
@@ -41,22 +50,17 @@ SeatState seatStateAt({
       : SeatState.reserved;
 }
 
-/// The reservation covering [seat] at [at], if any (incl. office-as-whole).
+/// The reservation covering [seat] at [at], if any (incl. whole-space).
 Reservation? reservationOnSeatAt({
   required FloorPlan plan,
   required Seat seat,
   required List<Reservation> reservations,
   required DateTime at,
 }) {
-  final officeId =
-      plan.desks.where((d) => d.id == seat.deskId).firstOrNull?.officeId;
+  final officeId = _officeIdOf(plan, seat);
   for (final r in reservations) {
     if (!r.coversInstant(at)) continue;
-    if (r.seatId == seat.id ||
-        (r.deskId != null && r.deskId == seat.deskId) ||
-        (r.officeId != null && r.officeId == officeId)) {
-      return r;
-    }
+    if (_covers(plan, seat, officeId, r)) return r;
   }
   return null;
 }
@@ -90,7 +94,7 @@ SeatState seatStateInRange({
 }
 
 /// The first reservation overlapping [seat] within `[from, to)` (#184),
-/// if any (incl. office-as-whole) — the range twin of [reservationOnSeatAt].
+/// if any (incl. whole-space) — the range twin of [reservationOnSeatAt].
 Reservation? reservationOnSeatInRange({
   required FloorPlan plan,
   required Seat seat,
@@ -98,15 +102,10 @@ Reservation? reservationOnSeatInRange({
   required DateTime from,
   required DateTime to,
 }) {
-  final officeId =
-      plan.desks.where((d) => d.id == seat.deskId).firstOrNull?.officeId;
+  final officeId = _officeIdOf(plan, seat);
   for (final r in reservations) {
     if (!r.coversRange(from, to)) continue;
-    if (r.seatId == seat.id ||
-        (r.deskId != null && r.deskId == seat.deskId) ||
-        (r.officeId != null && r.officeId == officeId)) {
-      return r;
-    }
+    if (_covers(plan, seat, officeId, r)) return r;
   }
   return null;
 }
@@ -123,16 +122,20 @@ bool _seatBlockOverlapsRange(Seat seat, DateTime from, DateTime to) {
   return startsBeforeWindowEnd && endsAfterWindowStart;
 }
 
-/// Next active reservation on [seat] strictly after [at] — caps walk-up
-/// end times (spec §4.2 step 4).
+/// Next active reservation covering [seat] strictly after [at] — caps
+/// walk-up end times (spec §4.2 step 4). Whole-space bookings count
+/// (#452): a walk-up must not be offered a window running into an
+/// upcoming whole-desk/office/level reservation.
 Reservation? nextReservationOnSeat({
+  required FloorPlan plan,
   required Seat seat,
   required List<Reservation> reservations,
   required DateTime at,
 }) {
+  final officeId = _officeIdOf(plan, seat);
   Reservation? next;
   for (final r in reservations) {
-    if (r.seatId != seat.id || !r.isActive) continue;
+    if (!r.isActive || !_covers(plan, seat, officeId, r)) continue;
     if (r.startsAt.isAfter(at)) {
       if (next == null || r.startsAt.isBefore(next.startsAt)) next = r;
     }

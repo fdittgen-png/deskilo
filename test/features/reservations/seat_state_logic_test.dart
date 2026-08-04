@@ -37,7 +37,9 @@ const plan = FloorPlan(
 Reservation reservation({
   String id = 'res-1',
   String? seatId = 'seat-1',
+  String? deskId,
   String? officeId,
+  String? levelId,
   String memberId = 'member-2',
   ReservationStatus status = ReservationStatus.reserved,
   required DateTime start,
@@ -47,7 +49,9 @@ Reservation reservation({
       id: id,
       workspaceId: 'ws-1',
       seatId: seatId,
+      deskId: deskId,
       officeId: officeId,
+      levelId: levelId,
       memberId: memberId,
       startsAt: start,
       endsAt: end,
@@ -150,10 +154,89 @@ void main() {
       end: noon.add(const Duration(hours: 2)),
     );
     final next = nextReservationOnSeat(
+      plan: plan,
       seat: seat,
       reservations: [later, sooner],
       at: noon,
     );
     expect(next?.id, 'res-sooner');
+  });
+
+  test('a whole-level reservation covers every seat of the plan (#452) — '
+      'other members see it reserved', () {
+    final level = reservation(
+      id: 'res-level',
+      seatId: null,
+      levelId: 'level-1',
+      start: morning,
+      end: evening,
+    );
+    expect(
+      seatStateAt(
+        plan: plan,
+        seat: seat,
+        reservations: [level],
+        myMemberId: 'member-1',
+        at: noon,
+      ),
+      SeatState.reserved,
+    );
+    expect(
+      seatStateInRange(
+        plan: plan,
+        seat: seat,
+        reservations: [level],
+        myMemberId: 'member-1',
+        from: noon,
+        to: noon.add(const Duration(hours: 1)),
+      ),
+      SeatState.reserved,
+    );
+  });
+
+  test("another level's whole-level reservation leaves this plan free "
+      '(#452)', () {
+    final otherLevel = reservation(
+      id: 'res-other-level',
+      seatId: null,
+      levelId: 'level-2',
+      start: morning,
+      end: evening,
+    );
+    expect(
+      seatStateAt(
+        plan: plan,
+        seat: seat,
+        reservations: [otherLevel],
+        myMemberId: 'member-1',
+        at: noon,
+      ),
+      SeatState.free,
+    );
+  });
+
+  test('nextReservationOnSeat caps against upcoming whole-desk and '
+      'whole-level bookings too (#452)', () {
+    final wholeDesk = reservation(
+      id: 'res-desk',
+      seatId: null,
+      deskId: 'desk-1',
+      start: noon.add(const Duration(hours: 2)),
+      end: evening,
+    );
+    final wholeLevel = reservation(
+      id: 'res-level',
+      seatId: null,
+      levelId: 'level-1',
+      start: noon.add(const Duration(hours: 1)),
+      end: evening,
+    );
+    final next = nextReservationOnSeat(
+      plan: plan,
+      seat: seat,
+      reservations: [wholeDesk, wholeLevel],
+      at: noon,
+    );
+    expect(next?.id, 'res-level');
   });
 }

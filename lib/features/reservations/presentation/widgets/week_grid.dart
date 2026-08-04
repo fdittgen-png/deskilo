@@ -303,6 +303,11 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
         final gridRows = <Widget>[_headerRow(context, days, dayWidth)];
         for (final (level, plan) in plans) {
           if (plan.seats.isEmpty) continue;
+          // Whole-level reservations (#452) occupy every seat row of
+          // the level, like whole-office and whole-desk ones below.
+          final levelReservations = widget.reservations
+              .where((r) => r.levelId == plan.levelId)
+              .toList();
           if (level != null) {
             leadingCells.add(_levelHeaderCell(context, level));
             gridRows.add(const SizedBox(
@@ -329,6 +334,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
               ));
               for (final Seat seat in seats) {
                 final rowReservations = <Reservation>[
+                  ...levelReservations,
                   ...officeReservations,
                   ...deskReservations,
                   ...widget.reservations.where((r) => r.seatId == seat.id),

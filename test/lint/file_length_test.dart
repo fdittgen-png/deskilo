@@ -49,7 +49,9 @@ const Map<String, int> _baseline = {
   // send flow — feature lines, not accretion; picker itself is its own file.
   'lib/features/money/presentation/invoice_actions.dart': 920,
   'lib/features/workspace/domain/workspace_xml.dart': 800,
-  'lib/features/reservations/presentation/widgets/week_grid.dart': 770,
+  // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
+  // row — five feature lines, not accretion.
+  'lib/features/reservations/presentation/widgets/week_grid.dart': 780,
   // 750→780 (2026-08-02): #395 adds fetchWorkspaceLedger and
   // fetchPaymentIntents — two new repository surfaces, not accretion.
   'lib/features/money/data/supabase_money_repository.dart': 780,

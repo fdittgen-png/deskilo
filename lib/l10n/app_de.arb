@@ -521,6 +521,7 @@
   },
   "invoiceFilterNoMatch": "Keine Rechnung entspricht diesen Filtern.",
   "invoiceFilterClear": "Filter zurücksetzen",
+  "invoiceShowCancelled": "Stornierte anzeigen",
   "invoiceReplacedBy": "Ersetzt durch {number}",
   "@invoiceReplacedBy": {
     "placeholders": {

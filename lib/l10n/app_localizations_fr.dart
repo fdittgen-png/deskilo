@@ -1477,6 +1477,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceFilterClear => 'Réinitialiser les filtres';
 
   @override
+  String get invoiceShowCancelled => 'Afficher les annulées';
+
+  @override
   String invoiceReplacedBy(String number) {
     return 'Remplacée par $number';
   }

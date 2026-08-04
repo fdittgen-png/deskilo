@@ -169,6 +169,7 @@
   },
   "invoiceFilterNoMatch": "Aucune facture ne correspond à ces filtres.",
   "invoiceFilterClear": "Réinitialiser les filtres",
+  "invoiceShowCancelled": "Afficher les annulées",
   "invoiceReplacedBy": "Remplacée par {number}",
   "@invoiceReplacedBy": {
     "placeholders": {

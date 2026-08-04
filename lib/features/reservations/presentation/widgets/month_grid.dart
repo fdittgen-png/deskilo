@@ -60,13 +60,34 @@ class MonthGrid extends ConsumerWidget {
     final levels = ref.watch(levelsProvider).value;
     var totalSeats = 0;
     var plansReady = levels != null;
+    // Whole-space rows (#452) count against every seat they cover — the
+    // heat map otherwise over-reports free desks. One id → seat-ids map
+    // per space kind, built once per rebuild.
+    final deskSeats = <String, List<String>>{};
+    final officeSeats = <String, List<String>>{};
+    final levelSeats = <String, List<String>>{};
     for (final level in levels ?? const []) {
       final plan = ref.watch(floorPlanProvider(level.id)).value;
       if (plan == null) {
         plansReady = false;
       } else {
         totalSeats += plan.seats.length;
+        levelSeats[plan.levelId] = [for (final s in plan.seats) s.id];
+        for (final desk in plan.desks) {
+          deskSeats[desk.id] = [
+            for (final s in plan.seatsOf(desk.id)) s.id,
+          ];
+          (officeSeats[desk.officeId] ??= []).addAll(deskSeats[desk.id]!);
+        }
       }
+    }
+    Iterable<String> seatIdsOf(Reservation r) {
+      final seatId = r.seatId;
+      if (seatId != null) return [seatId];
+      if (r.deskId != null) return deskSeats[r.deskId] ?? const [];
+      if (r.officeId != null) return officeSeats[r.officeId] ?? const [];
+      if (r.levelId != null) return levelSeats[r.levelId] ?? const [];
+      return const [];
     }
 
     final first = DateTime(selectedDay.year, selectedDay.month);
@@ -91,7 +112,7 @@ class MonthGrid extends ConsumerWidget {
     // One occupancy fold for the whole grid instead of one reservation
     // scan per cell (perf audit).
     final occupied = plansReady
-        ? _occupiedByDay(cells)
+        ? _occupiedByDay(cells, seatIdsOf)
         : const <DateTime, Set<String>>{};
 
     return Column(
@@ -155,14 +176,20 @@ class MonthGrid extends ConsumerWidget {
   /// reservation only walks the few grid days it can actually touch;
   /// the exact overlap check stays [Reservation.coversRange] against the
   /// day's workspace-local full window.
-  Map<DateTime, Set<String>> _occupiedByDay(List<DateTime> cells) {
+  Map<DateTime, Set<String>> _occupiedByDay(
+    List<DateTime> cells,
+    Iterable<String> Function(Reservation) seatIdsOf,
+  ) {
     if (cells.isEmpty) return const {};
     final first = cells.first;
     final last = cells.last;
     final byDay = <DateTime, Set<String>>{};
     for (final r in reservations) {
-      final seatId = r.seatId;
-      if (seatId == null || !r.isActive) continue;
+      if (!r.isActive) continue;
+      // Whole-space rows expand to every covered seat (#452); an
+      // unknown target (plan still loading) contributes nothing.
+      final seatIds = seatIdsOf(r);
+      if (seatIds.isEmpty) continue;
       var day = DateTime(r.startsAt.year, r.startsAt.month, r.startsAt.day);
       if (day.isBefore(first)) day = first;
       // The +1 day slack keeps the loop bound conservative across time
@@ -171,7 +198,7 @@ class MonthGrid extends ConsumerWidget {
           day.isBefore(r.endsAt.add(const Duration(days: 1)))) {
         final window = HalfDayWindows.fullDay(day);
         if (r.coversRange(window.start, window.end)) {
-          (byDay[day] ??= <String>{}).add(seatId);
+          (byDay[day] ??= <String>{}).addAll(seatIds);
         }
         day = DateTime(day.year, day.month, day.day + 1);
       }

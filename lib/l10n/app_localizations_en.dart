@@ -1463,6 +1463,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceFilterClear => 'Clear filters';
 
   @override
+  String get invoiceShowCancelled => 'Show cancelled';
+
+  @override
   String invoiceReplacedBy(String number) {
     return 'Replaced by $number';
   }
