@@ -50,7 +50,7 @@ Il QR codifica un link che nomina il ruolo concesso (`deskilo://join?role=…`).
 
 ## 3. La planimetria (scheda Piano)
 
-La planimetria mostra il livello attivo del tuo spazio: uffici, tavoli e posti, con codice colore — **libero**, **prenotato**, **occupato**, **mio**, **bloccato**. Si apre **all'istante dagli ultimi dati noti** e si aggiorna in background — con un Wi-Fi instabile vedi comunque lo stato più recente invece di una schermata vuota. I posti occupati mostrano il nome di chi c'è, un **badge di check-in** quando è arrivato, e un **punto verde** quando è online nell'app.
+La planimetria mostra il livello attivo del tuo spazio: uffici, tavoli e posti, con codice colore — **libero**, **prenotato**, **occupato**, **mio**, **bloccato**. Si apre **all'istante dagli ultimi dati noti** e si aggiorna in background — con un Wi-Fi instabile vedi comunque lo stato più recente invece di una schermata vuota. I posti occupati mostrano il nome di chi c'è, un **badge di check-in** quando è arrivato, e un **punto verde** quando è online nell'app. Quando un **tavolo, una sala o un piano intero** è prenotato, lo dice lo spazio stesso — una velatura colorata, un bordo marcato e un **chip con lucchetto e il nome dell'occupante** al centro (un glifo di check-in quando è arrivato); l'etichetta della sala recita *Bureau 2 · Florian*. Lo vedono tutti gli utenti, sulla planimetria, nell'hub Prenota e sul chiosco.
 
 La planimetria può somigliare al tuo spazio reale: il proprietario può mettere una **foto della stanza come sfondo del livello** e piazzare **immagini illustrative ridimensionabili** (piante, divani…) sulla griglia. Un cursore di **trasparenza dei tavoli** nelle impostazioni lascia trasparire la foto sotto i tavoli disegnati.
 
@@ -78,6 +78,8 @@ Apri l'hub **Prenota** (pulsante centrale). Una striscia di date sceglie il gior
 - **Giorno** — ogni posto come riga temporale del giorno scelto; tocca un tratto libero per prenotare, il tuo blocco per i dettagli.
 - **Settimana** — una griglia posto × giorno dell'intera settimana ISO; trova una mezza giornata libera a colpo d'occhio e toccala per prenotare.
 - **Mese** — un calendario di disponibilità: scrivanie libere per giorno su tutti i piani; tocca un giorno per entrare nella sua vista Giorno.
+
+Il **pulsante livelli sul selettore di piano** prenota il **piano intero** — nella scheda Planimetria e qui nell'hub. Proprietari e admin possono sempre prenotarlo per sé; gli altri membri hanno bisogno del diritto personale (§7).
 
 **Un posto alla volta**: puoi tenere una sola prenotazione attiva per periodo — prenotare o fare check-in altrove mentre un'altra è in corso viene rifiutato, e un check-in chiude ogni check-in precedente la cui prenotazione è già finita. Gli admin e i proprietari possono **scavalcare**: toccare un posto occupato o prenotato offre *Rimuovi la prenotazione (scavalca)* — la prenotazione viene rimossa e il membro e tutti gli admin vengono avvisati tramite il feed degli eventi.
 
@@ -109,6 +111,8 @@ Guarda chi fa parte della tua comunità:
 ## 6. Eventi e conferme (icona campanella)
 
 Il flusso eventi è la traccia di controllo dello spazio: prenotazioni create/modificate/cancellate, pagamenti registrati, spese presentate, richieste di giorni extra, cambi di ruolo. I membri vedono i propri eventi; admin e proprietari vedono tutto.
+
+**Messaggi:** la campanella raccoglie anche le tue notifiche tra membri (§5) — ricevute e inviate, con il **testo completo**, le più recenti in alto. **Scorri a destra** su un messaggio per rispondere al mittente, **a sinistra** per eliminarlo (una diffusione ricevuta a tutti gli admin non si può eliminare — sparirebbe per tutti). I messaggi non letti contano sulla campanella e sull'icona dell'app finché non apri questa schermata.
 
 **Il protocollo di conferma:** quando un admin fa qualcosa *per qualcun altro* — ti prenota un posto, registra il tuo pagamento — resta **in sospeso finché non confermi**. Le voci in sospeso sono fissate in alto con pulsanti accetta/rifiuta e ricevi una notifica. Le azioni su te stesso non richiedono mai conferma.
 
@@ -193,7 +197,7 @@ Tutta l'amministrazione vive in **Impostazioni → Amministrazione**. Una sola r
 
 Quattro passi trasformano «scansiona il codice sul tavolo» nel flusso di prenotazione quotidiano (§4):
 
-1. Nell'**editor**, marca un ufficio o un piano come **Prenotabile per intero** e assegnagli un **prezzo per mezza giornata** (la scheda proprietà dell'ufficio / il menu del livello).
+1. Nell'**editor**, marca un ufficio o un piano come **Prenotabile per intero** e assegnagli un **prezzo per mezza giornata** — la scheda proprietà dell'ufficio, o per un piano l'**icona livelli direttamente sulla sua riga** (il sottotitolo della riga indica lo stato di prenotazione).
 2. Attiva **Prenotazioni di ufficio e piano** in **Funzionalità** (disattivata per impostazione predefinita).
 3. Concedi a ogni membro autorizzato **«Può prenotare un ufficio o un piano intero»** — proprietari e admin lo impostano nella scheda di gestione del membro, mai per se stessi.
 4. Stampa le schede: **Impostazioni dello spazio → Codici QR degli spazi (PDF)** — un QR formato carta di credito per **postazione, tavolo, ufficio e piano**, dieci per pagina A4, salvato in Download. Ritagliale e attacca ogni scheda sul suo spazio.
@@ -379,7 +383,7 @@ La tua identità esiste solo per il tempo dell'operazione: la credenziale va una
 
 ## 10. Notifiche
 
-Promemoria di check-in, conferme in sospeso, decisioni sulle spese — e quando un admin **rimuove una tua prenotazione** (scavalcare), tu e gli admin venite avvisati. La consegna è prima locale; i push dal server arrivano senza installare nulla su Android, iPhone/iPad, browser e macOS (Firebase Cloud Messaging) — *Impostazioni → Avanzate* mostra se il push è attivo su questo dispositivo. L'icona dell'app mostra le tue conferme in attesa — su Android, iPhone/iPad, nel Dock di macOS, nella barra di Windows e nelle web app installate. I push non portano mai nomi né orari; l'app compone il testo localmente.
+Promemoria di check-in, conferme in sospeso, decisioni sulle spese — e quando un admin **rimuove una tua prenotazione** (scavalcare), tu e gli admin venite avvisati. La consegna è prima locale; i push dal server arrivano senza installare nulla su Android, iPhone/iPad, browser e macOS (Firebase Cloud Messaging) — *Impostazioni → Avanzate* mostra se il push è attivo su questo dispositivo. L'icona dell'app mostra le tue conferme in attesa **più i tuoi messaggi non letti** — su Android, iPhone/iPad, nel Dock di macOS, nella barra di Windows e nelle web app installate. I messaggi tra membri vengono annunciati **una volta per dispositivo con mittente e testo completo** — compreso ciò che è arrivato ad app chiusa, annunciato alla prossima apertura. I push non portano mai nomi né orari; l'app compone il testo localmente.
 
 ## 11. Privacy
 

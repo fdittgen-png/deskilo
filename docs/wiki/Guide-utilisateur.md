@@ -50,7 +50,7 @@ Le QR encode un lien qui nomme le rôle accordé (`deskilo://join?role=…`). Fa
 
 ## 3. Le plan (onglet Plan)
 
-Le plan montre le niveau actif de votre espace : bureaux, tables et places, avec un code couleur — **libre**, **réservée**, **occupée**, **la mienne**, **bloquée**. Il s'ouvre **instantanément à partir des dernières données connues** et se rafraîchit en arrière-plan — sur un Wi-Fi capricieux, vous voyez toujours l'état le plus récent au lieu d'un écran vide. Les places occupées affichent le prénom de l'occupant, un **badge de pointage** quand il est arrivé, et un **point vert** quand il est en ligne dans l'application.
+Le plan montre le niveau actif de votre espace : bureaux, tables et places, avec un code couleur — **libre**, **réservée**, **occupée**, **la mienne**, **bloquée**. Il s'ouvre **instantanément à partir des dernières données connues** et se rafraîchit en arrière-plan — sur un Wi-Fi capricieux, vous voyez toujours l'état le plus récent au lieu d'un écran vide. Les places occupées affichent le prénom de l'occupant, un **badge de pointage** quand il est arrivé, et un **point vert** quand il est en ligne dans l'application. Quand une **table, une salle ou un étage entier** est réservé, l'espace lui-même l'affiche — un lavis coloré, une bordure marquée et une **pastille cadenas avec le nom de l'occupant** au centre (un glyphe de pointage quand il est là) ; l'étiquette de la salle indique *Bureau 2 · Florian*. Tous les utilisateurs le voient, sur le plan, dans le hub Réserver et sur le kiosque.
 
 Le plan peut ressembler à votre espace réel : le propriétaire peut mettre une **photo de la pièce en arrière-plan du niveau** et placer des **images d'illustration redimensionnables** (plantes, canapés…) sur la grille. Un curseur de **transparence des tables** dans les réglages laisse la photo transparaître sous les tables dessinées.
 
@@ -78,6 +78,8 @@ Ouvrez le hub **Réserver** (bouton central). Une bande de dates choisit le jour
 - **Jour** — chaque place en ligne de chronologie pour le jour choisi ; touchez une plage libre pour réserver, votre propre bloc pour ses détails.
 - **Semaine** — une grille place × jour pour toute la semaine ISO ; repérez une demi-journée libre d'un coup d'œil et touchez-la pour réserver.
 - **Mois** — un calendrier de disponibilité : bureaux libres par jour tous étages confondus ; touchez un jour pour ouvrir sa vue Jour.
+
+Le **bouton calques du sélecteur d'étage** réserve l'**étage entier** — sur l'onglet Plan comme ici dans le hub. Les propriétaires et admins peuvent toujours le réserver pour eux-mêmes ; les autres membres ont besoin du droit personnel (§7).
 
 **Une place à la fois** : vous ne pouvez tenir qu'une réservation active par période — réserver ou pointer ailleurs pendant qu'une autre court est refusé, et un pointage clôt tout pointage antérieur dont la réservation est déjà finie. Les admins et propriétaires peuvent **outrepasser** : toucher une place occupée ou réservée propose *Retirer la réservation (outrepasser)* — la réservation est retirée et le membre ainsi que tous les admins sont notifiés via le fil d'événements.
 
@@ -109,6 +111,8 @@ Voyez qui fait partie de votre communauté :
 ## 6. Événements et confirmations (icône cloche)
 
 Le fil d'événements est la piste d'audit de votre espace : réservations créées/modifiées/annulées, paiements enregistrés, dépenses soumises, demandes de jours supplémentaires, changements de rôle. Les membres voient leurs propres événements ; admins et propriétaires voient tout.
+
+**Messages :** la cloche rassemble aussi vos notifications entre membres (§5) — reçues et envoyées, avec leur **texte complet**, les plus récentes d'abord. **Balayez à droite** un message pour répondre à son expéditeur, **à gauche** pour le supprimer (une diffusion reçue « tous les admins » ne peut pas être supprimée — elle disparaîtrait pour tous les admins). Les messages non lus comptent sur la cloche et sur l'icône de l'app jusqu'à l'ouverture de cet écran.
 
 **Le protocole de confirmation :** dès qu'un admin agit *pour quelqu'un d'autre* — réserve une place pour vous, enregistre votre paiement — l'action reste **en attente jusqu'à votre confirmation**. Les éléments en attente sont épinglés en haut avec des boutons accepter/refuser et vous êtes notifié. Vos actions sur vous-même ne demandent jamais de confirmation.
 
@@ -157,7 +161,7 @@ Toute l'administration vit sous **Réglages → Administration**. Une règle à 
 
 Quatre étapes font de « scanner le code sur la table » le geste de réservation quotidien (§4) :
 
-1. Dans l'**éditeur**, marquez un bureau ou un niveau **Réservable en entier** et donnez-lui un **prix par demi-journée** (la feuille de propriétés du bureau / le menu du niveau).
+1. Dans l'**éditeur**, marquez un bureau ou un niveau **Réservable en entier** et donnez-lui un **prix par demi-journée** — la feuille de propriétés du bureau, ou pour un niveau l'**icône calques directement sur sa ligne** (le sous-titre de la ligne indique son statut de réservation).
 2. Activez **Réservations de bureau et de niveau** dans **Fonctionnalités** (désactivé par défaut).
 3. Accordez à chaque membre concerné le droit **« Peut réserver un bureau ou un niveau entier »** — propriétaires et admins le règlent dans la feuille de gestion du membre, jamais pour eux-mêmes.
 4. Imprimez les cartes : **Réglages de l'espace → Codes QR des espaces (PDF)** — un QR au format carte de crédit par **poste, table, bureau et niveau**, dix par page A4, enregistré dans Téléchargements. Découpez-les et collez chaque carte sur son espace.
@@ -337,7 +341,7 @@ Votre identité n'existe que le temps de l'opération : l'identifiant est envoy�
 
 ## 10. Notifications
 
-Rappels de pointage, confirmations en attente, décisions de dépenses — et quand un admin **retire une de vos réservations** (outrepasser), vous et les admins êtes notifiés. La livraison est locale d'abord ; les pushs serveur arrivent sans rien installer sur Android, iPhone/iPad, navigateur et macOS (Firebase Cloud Messaging) — *Réglages → Avancé* indique si le push est actif sur cet appareil. L'icône de l'app affiche le nombre de confirmations en attente — sur Android, iPhone/iPad, dans le Dock macOS, la barre des tâches Windows et les web apps installées. Les contenus poussés ne portent jamais de noms ni d'horaires ; l'app compose le texte localement.
+Rappels de pointage, confirmations en attente, décisions de dépenses — et quand un admin **retire une de vos réservations** (outrepasser), vous et les admins êtes notifiés. La livraison est locale d'abord ; les pushs serveur arrivent sans rien installer sur Android, iPhone/iPad, navigateur et macOS (Firebase Cloud Messaging) — *Réglages → Avancé* indique si le push est actif sur cet appareil. L'icône de l'app affiche vos confirmations en attente **plus vos messages non lus** — sur Android, iPhone/iPad, dans le Dock macOS, la barre des tâches Windows et les web apps installées. Les messages entre membres sont annoncés **une fois par appareil avec l'expéditeur et le texte complet** — y compris ce qui a été envoyé pendant que l'app était fermée, annoncé dès la prochaine ouverture. Les contenus poussés ne portent jamais de noms ni d'horaires ; l'app compose le texte localement.
 
 ## 11. Confidentialité
 

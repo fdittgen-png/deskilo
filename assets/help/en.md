@@ -50,7 +50,7 @@ The QR encodes a link that names the role it grants (`deskilo://join?role=…`).
 
 ## 3. The floor plan (Plan tab)
 
-The plan shows the active level of your space: offices, desks, and seats, color-coded — **free**, **reserved**, **occupied**, **mine**, **blocked**. It opens **instantly from the last known data** and refreshes in the background — on flaky Wi-Fi you still see the most recent state instead of a blank screen. Occupied seats show who's there by first name, a **check badge** when they are checked in, and a **green dot** when they are online in the app right now.
+The plan shows the active level of your space: offices, desks, and seats, color-coded — **free**, **reserved**, **occupied**, **mine**, **blocked**. It opens **instantly from the last known data** and refreshes in the background — on flaky Wi-Fi you still see the most recent state instead of a blank screen. Occupied seats show who's there by first name, a **check badge** when they are checked in, and a **green dot** when they are online in the app right now. When a **whole table, room or floor** is reserved, the space itself says so — a coloured wash, a strong border, and a **lock chip with the occupant's name** in the middle (a checked-in glyph once they're there); the room's label reads *Bureau 2 · Florian*. Every user sees it, on the plan, in the Reserve hub and on the kiosk.
 
 The plan can look like your real space: the owner can put a **photo of the room as the level background** and place freely **resizable illustration images** (plants, sofas…) on the grid. A **desk transparency** slider in the workspace settings lets the photo show through the drawn desks.
 
@@ -78,6 +78,8 @@ Open the **Reserve** hub (center button). A date strip picks the day; the window
 - **Day** — every seat as a timeline row for the selected day; tap a free stretch to book, tap your own block to see its details.
 - **Week** — a seat × day grid for the whole ISO week; find a free half-day at a glance and tap it to book.
 - **Month** — an availability calendar: free desks per day across all floors; tap a day to drop into its Day view.
+
+The **layers button on the floor switcher** reserves the **whole level** — on the Plan tab and here in the hub alike. Owners and admins can always book it for themselves; other members need the personal right (§7).
 
 **One place at a time**: you can hold only one active reservation per time window — booking or checking in somewhere else while one is running is refused, and checking in closes any earlier check-in whose booking already ended. Admins and owners can **overrule**: tapping an occupied or reserved seat offers *Remove reservation (overrule)* — the reservation is removed and the member and all admins are notified through the events feed.
 
@@ -109,6 +111,8 @@ See who's part of your community:
 ## 6. Events & confirmations (bell icon)
 
 The events feed is the audit trail of your workspace: reservations created/changed/cancelled, payments recorded, expenses submitted, extra-days requests, role changes. Members see their own events; admins and owners see everyone's.
+
+**Messages:** the bell also collects your member notifications (§5) — received and sent, with their **full text**, newest first. **Swipe right** on a message to reply to its sender, **swipe left** to delete it (a received all-admins broadcast can't be deleted — it would vanish for every admin). Unread messages count on the bell and on the app icon until you open this screen.
 
 **The confirmation protocol:** whenever an admin does something *for somebody else* — books a seat for you, records your payment — it stays **pending until you confirm**. Pending items are pinned on top with accept/reject buttons and you get a notification. Actions you take on yourself never need confirmation.
 
@@ -193,7 +197,7 @@ All administration lives under **Settings → Administration**. One rule to know
 
 Four steps turn "scan the code on the desk" into the daily booking flow (§4):
 
-1. In the **editor**, mark an office or a level **Bookable as a whole** and give it a **price per half-day** (the office property sheet / the level menu).
+1. In the **editor**, mark an office or a level **Bookable as a whole** and give it a **price per half-day** — the office property sheet, or for a level the **layers icon right on its row** (the row's subtitle states its current booking status).
 2. Enable **Office & level reservations** in **Features** (off by default).
 3. Grant each entitled member **"May reserve a whole office or level"** — owners and admins set it in the member's management sheet, never for themselves.
 4. Print the cards: **Workspace settings → Space QR codes (PDF)** — one credit-card QR per **seat, desk, office and level**, ten per A4 page, saved to Downloads. Cut them out and stick each card on its space.
@@ -379,7 +383,7 @@ Your identity exists only for the moment of the operation: the credential is sen
 
 ## 10. Notifications
 
-Check-in reminders, pending confirmations, expense decisions — and when an admin **removes one of your reservations** (overrule), you and the admins are notified. Delivery is local-first; server pushes arrive out of the box on Android, iPhone/iPad, the browser and macOS (Firebase Cloud Messaging) — *Settings → Advanced* shows whether push is active on this device. The app-icon badge shows your pending-confirmations count — on Android, iPhone/iPad, the macOS Dock, the Windows taskbar, and installed web apps. Pushed payloads never carry names or times; the app builds the notification text locally.
+Check-in reminders, pending confirmations, expense decisions — and when an admin **removes one of your reservations** (overrule), you and the admins are notified. Delivery is local-first; server pushes arrive out of the box on Android, iPhone/iPad, the browser and macOS (Firebase Cloud Messaging) — *Settings → Advanced* shows whether push is active on this device. The app-icon badge shows your pending-confirmations count **plus your unread messages** — on Android, iPhone/iPad, the macOS Dock, the Windows taskbar, and installed web apps. Member messages are announced **once per device with the sender and the full text** — including anything sent while the app was closed, announced the moment you next open it. Pushed payloads never carry names or times; the app builds the notification text locally.
 
 ## 11. Privacy
 
