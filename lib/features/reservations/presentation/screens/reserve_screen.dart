@@ -18,11 +18,13 @@ import '../../../members/providers/directory_providers.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/half_day_windows.dart';
+import '../../../plan/domain/level.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/presentation/seat_occupancy.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/domain/booking_granularity.dart';
+import '../../../workspace/domain/member.dart';
 import '../../domain/booking_error_text.dart';
 import '../../../workspace/domain/workspace_availability.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -875,7 +877,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
         ),
       ],
     )),
-        if (levels.length > 1)
+        if (levels.length > 1 || _levelReserveVisible(level))
           Positioned(
             top: AppSpacing.sm,
             right: AppSpacing.sm,
@@ -884,10 +886,46 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               levels: levels,
               current: level,
               onSelected: (id) => setState(() => _levelId = id),
+              // #466: the whole-level booking button, Plan-tab parity —
+              // the hub only had the hidden double-tap path.
+              trailing: _levelReserveVisible(level)
+                  ? IconButton(
+                      key: const ValueKey('reserve-reserve-level'),
+                      tooltip: AppLocalizations.of(context)
+                              ?.levelReserveButton ??
+                          'Reserve level',
+                      icon: const Icon(Icons.layers_outlined),
+                      onPressed: () {
+                        final plan =
+                            ref.read(floorPlanProvider(level.id)).value;
+                        final window = _effectiveWindow(_granularity);
+                        showSpaceSheet(
+                          context,
+                          kind: SpaceKind.level,
+                          level: level,
+                          plan: plan,
+                          initialWindow:
+                              (start: window.start, end: window.end),
+                        );
+                      },
+                    )
+                  : null,
             ),
           ),
       ],
     );
+  }
+
+  /// Whether [level] offers the whole-level booking affordance to ME —
+  /// the plan tab's #466 rule: feature on, level bookable, and I hold
+  /// the grant OR administer (the 0079 server rule).
+  bool _levelReserveVisible(Level level) {
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    if (!features.contains(WorkspaceFeature.levelBooking)) return false;
+    if (!level.bookableAsWhole) return false;
+    final me = ref.watch(myMemberProvider).value;
+    if (me == null || me.status != MemberStatus.active) return false;
+    return me.canReserveLevel || me.canAdminister;
   }
 
   /// Day view: the selected day's per-seat timeline in everyone mode —

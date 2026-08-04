@@ -21,5 +21,7 @@
   "officeSupplementLabel": "Prenotazioni di ufficio",
   "eventTypeSpaceReservation": "Prenotazioni di spazi interi",
   "deskDetail": "Tavolo intero",
-  "deskSupplementLabel": "Prenotazioni di tavolo"
+  "deskSupplementLabel": "Prenotazioni di tavolo",
+  "editorLevelBookableOn": "Prenotabile per intero",
+  "editorLevelBookableOff": "Non prenotabile per intero"
 }

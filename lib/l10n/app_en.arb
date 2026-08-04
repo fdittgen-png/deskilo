@@ -2747,6 +2747,14 @@
   "@deskSupplementLabel": {
     "description": "Bill line: sum of whole-desk reservation prices this period (0059)"
   },
+  "editorLevelBookableOn": "Bookable as a whole",
+  "@editorLevelBookableOn": {
+    "description": "Level row booking-state subtitle in the editor (#466)"
+  },
+  "editorLevelBookableOff": "Not bookable as a whole",
+  "@editorLevelBookableOff": {
+    "description": "Level row booking-state subtitle in the editor (#466)"
+  },
   "membersTitle": "Members & plans",
   "@membersTitle": {
     "description": "Title of the owner-only member management screen + its settings entry"
@@ -3621,6 +3629,10 @@
   "memberNoteToAllAdmins": "To all admins",
   "@memberNoteToAllAdmins": {
     "description": "Member-notes inbox on the Events screen (#460)"
+  },
+  "memberNoteDeleted": "Message deleted.",
+  "@memberNoteDeleted": {
+    "description": "Snack after swipe-deleting a note (#467)"
   },
   "reserveMonthView": "Month",
   "@reserveMonthView": {

@@ -21,5 +21,7 @@
   "officeSupplementLabel": "Büro-Reservierungen",
   "eventTypeSpaceReservation": "Ganzraum-Reservierungen",
   "deskDetail": "Ganzer Tisch",
-  "deskSupplementLabel": "Tisch-Reservierungen"
+  "deskSupplementLabel": "Tisch-Reservierungen",
+  "editorLevelBookableOn": "Als Ganzes buchbar",
+  "editorLevelBookableOff": "Nicht als Ganzes buchbar"
 }

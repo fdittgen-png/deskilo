@@ -587,6 +587,11 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   @override
+  Future<void> deleteMemberNote(String noteId) async {
+    await _client.from('member_notes').delete().eq('id', noteId);
+  }
+
+  @override
   Future<List<MemberNote>> fetchMyNotes(String workspaceId) async {
     final rows = await _client
         .from('member_notes')

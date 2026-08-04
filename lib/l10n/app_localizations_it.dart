@@ -2196,6 +2196,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get deskSupplementLabel => 'Prenotazioni di tavolo';
 
   @override
+  String get editorLevelBookableOn => 'Prenotabile per intero';
+
+  @override
+  String get editorLevelBookableOff => 'Non prenotabile per intero';
+
+  @override
   String get membersTitle => 'Membri e piani';
 
   @override
@@ -2822,6 +2828,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get memberNoteToAllAdmins => 'A tutti gli admin';
+
+  @override
+  String get memberNoteDeleted => 'Messaggio eliminato.';
 
   @override
   String get reserveMonthView => 'Mese';
