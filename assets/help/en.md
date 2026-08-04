@@ -102,7 +102,7 @@ See who's part of your community:
 - Each member card shows their **photo** (or initial), **role**, **custom status** ("in Berlin till Friday…"), an **online / last-seen** indicator, and a **reservation chip**: checked-in seat, reserved now, or next upcoming reservation.
 - Tap a member for their **detail sheet** — including their upcoming reservations.
 - **Swipe** a member to message them on **WhatsApp**; the **group button** opens your community's WhatsApp group (set by the owner).
-- **Send notification** (in the detail sheet, and on the member sheets of *Members & plans*): a short in-app note to another member — delivered as a push and a notification with your name and message. Admins get a **Notify all admins** megaphone in the header that reaches every admin including the owner. Toggleable via the *Member notifications* feature.
+- **Send notification** (in the detail sheet, and on the member sheets of *Members & plans*): a short in-app note to another member — delivered as a push and a notification with your name and message. The full text is always readable under **Events → Messages**, for the recipient and the sender (the push itself carries no content, by privacy design). Admins get a **Notify all admins** megaphone in the header that reaches every admin including the owner. Toggleable via the *Member notifications* feature.
 - Set your own photo, status, and phone visibility in **Settings**.
 - Admins and owners additionally see each member's **email** under the name — plain members don't: member-to-member contact stays the opt-in WhatsApp number.
 

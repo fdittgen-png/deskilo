@@ -5072,6 +5072,24 @@ abstract class AppLocalizations {
   /// **'Message from {name}'**
   String memberNoteReceived(String name);
 
+  /// Member-notes inbox on the Events screen (#460)
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get eventsMessagesHeader;
+
+  /// Member-notes inbox on the Events screen (#460)
+  ///
+  /// In en, this message translates to:
+  /// **'To {name}'**
+  String memberNoteTo(String name);
+
+  /// Member-notes inbox on the Events screen (#460)
+  ///
+  /// In en, this message translates to:
+  /// **'To all admins'**
+  String get memberNoteToAllAdmins;
+
   /// Reserve hub view segment: month availability calendar (#7)
   ///
   /// In en, this message translates to:

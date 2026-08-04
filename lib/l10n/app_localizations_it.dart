@@ -2813,6 +2813,17 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get eventsMessagesHeader => 'Messaggi';
+
+  @override
+  String memberNoteTo(String name) {
+    return 'A $name';
+  }
+
+  @override
+  String get memberNoteToAllAdmins => 'A tutti gli admin';
+
+  @override
   String get reserveMonthView => 'Mese';
 
   @override

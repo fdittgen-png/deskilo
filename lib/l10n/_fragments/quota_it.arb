@@ -30,5 +30,8 @@
   "memberNoteHint": "Il tuo messaggio",
   "memberNoteSend": "Invia",
   "memberNoteSent": "Notifica inviata.",
-  "memberNoteReceived": "Messaggio da {name}"
+  "memberNoteReceived": "Messaggio da {name}",
+  "eventsMessagesHeader": "Messaggi",
+  "memberNoteTo": "A {name}",
+  "memberNoteToAllAdmins": "A tutti gli admin"
 }

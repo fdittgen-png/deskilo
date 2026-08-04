@@ -94,10 +94,14 @@ class ShellScreen extends ConsumerWidget {
       final myId = ref.read(myMemberProvider).value?.id;
       for (final note in notes) {
         if (known.contains(note.id) || note.fromMemberId == myId) continue;
+        // The names cache can lag a fresh boot — a nameless "Message
+        // from" reads broken, so fall back to the app title (#460).
         final sender = names[note.fromMemberId] ?? '';
         unawaited(ref.read(notificationServiceProvider).showNow(
-              title: l10n?.memberNoteReceived(sender) ??
-                  'Message from $sender',
+              title: sender.isEmpty
+                  ? (l10n?.pushPendingTitle ?? 'DesKilo')
+                  : (l10n?.memberNoteReceived(sender) ??
+                      'Message from $sender'),
               body: note.body,
             ));
       }
