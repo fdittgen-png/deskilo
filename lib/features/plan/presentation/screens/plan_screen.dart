@@ -843,6 +843,16 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                           to: windowEnd,
                         ),
                     },
+                    // #462: whole-office/desk/level bookings mark the
+                    // SPACE itself, with the occupant's name, for all.
+                    spaceOverlays: spaceOverlaysFor(
+                      plan: plan,
+                      reservations: reservations,
+                      names: names,
+                      myMemberId: myMemberId,
+                      from: at,
+                      to: windowEnd,
+                    ),
                     highlightedSeatId: _highlightedSeatId,
                     onlineSeatIds: onlineSeatIdsFor(
                       plan: plan,

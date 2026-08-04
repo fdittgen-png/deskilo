@@ -49,6 +49,7 @@ class PlanCanvas extends StatefulWidget {
     this.highlightedSeatId,
     this.onlineSeatIds = const {},
     this.deskOpacity = 1,
+    this.spaceOverlays = const {},
     this.background,
     this.images = const {},
   });
@@ -60,6 +61,9 @@ class PlanCanvas extends StatefulWidget {
   final FloorPlan plan;
   final Map<String, SeatState> seatStates;
   final Map<String, String> seatLabels;
+
+  /// Whole-space overlays (#462) — see [FloorPlanPainter.spaceOverlays].
+  final Map<String, ({SeatState state, String label})> spaceOverlays;
   final ValueChanged<Seat> onSeatTap;
 
   /// Double tap = whole-space intent (field request): the resolved desk
@@ -162,6 +166,7 @@ class _PlanCanvasState extends State<PlanCanvas> {
                 brightness: Theme.of(context).brightness,
                 seatStates: widget.seatStates,
                 seatLabels: widget.seatLabels,
+                spaceOverlays: widget.spaceOverlays,
                 semanticLabels: _semanticLabels(context),
                 semanticsDirection: Directionality.of(context),
                 onSeatSemanticTap: widget.onSeatTap,

@@ -851,6 +851,16 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                       to: window.end,
                     ),
                 },
+                // #462: the room/table itself reads reserved, with the
+                // occupant's name — for every user.
+                spaceOverlays: spaceOverlaysFor(
+                  plan: plan,
+                  reservations: reservations,
+                  names: names,
+                  myMemberId: myMemberId,
+                  from: window.start,
+                  to: window.end,
+                ),
                 onSeatTap: (seat) =>
                     _onSeatTap(plan, seat, reservations, window),
               ),

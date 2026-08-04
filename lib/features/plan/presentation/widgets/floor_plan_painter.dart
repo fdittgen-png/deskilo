@@ -27,6 +27,7 @@ class FloorPlanPainter extends CustomPainter {
     this.seatLabels,
     this.highlightedSeatId,
     this.deskOpacity = 1,
+    this.spaceOverlays,
     this.onlineSeatIds = const {},
     this.semanticLabels,
     this.semanticsDirection = TextDirection.ltr,
@@ -57,6 +58,11 @@ class FloorPlanPainter extends CustomPainter {
 
   /// Live mode: seat id → occupant display name (empty = no label).
   final Map<String, String>? seatLabels;
+
+  /// Whole-space overlays (#462): office/desk id → reserved state +
+  /// occupant first name. The rect tints in the state colour, the
+  /// border takes the accent, and an office shows "name · occupant".
+  final Map<String, ({SeatState state, String label})>? spaceOverlays;
 
   /// Seat to ring with a thick tertiary outline (#182): the calendar's
   /// "Show on plan" jump points at the reserved seat. Null = no highlight.
@@ -158,8 +164,33 @@ class FloorPlanPainter extends CustomPainter {
         rect,
         Paint()..color = OfficeColors.of(office.color).withValues(alpha: 0.55),
       );
-      canvas.drawRect(rect, officeBorder);
-      _label(canvas, office.name, rect, colorScheme.onSurface);
+      // Whole-office/level reservation (#462): the ROOM itself says so
+      // — state-coloured wash, accent border, occupant in the label.
+      final overlay = spaceOverlays?[office.id];
+      if (overlay != null) {
+        final accent =
+            SeatStateColors.of(overlay.state, brightness: brightness);
+        canvas.drawRect(
+            rect, Paint()..color = accent.withValues(alpha: 0.20));
+        canvas.drawRect(
+          rect,
+          Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 2.5
+            ..color = accent.withValues(alpha: 0.9),
+        );
+        _label(
+          canvas,
+          overlay.label.isEmpty
+              ? office.name
+              : '${office.name} · ${overlay.label}',
+          rect,
+          colorScheme.onSurface,
+        );
+      } else {
+        canvas.drawRect(rect, officeBorder);
+        _label(canvas, office.name, rect, colorScheme.onSurface);
+      }
     }
 
     // Desks: soft rounded tonal surfaces — the furniture the room is
@@ -182,7 +213,24 @@ class FloorPlanPainter extends CustomPainter {
       final rrect = RRect.fromRectAndRadius(rect, const Radius.circular(6));
       _softShadow(canvas, rrect, alpha: deskShadowAlpha);
       canvas.drawRRect(rrect, deskPaint);
-      canvas.drawRRect(rrect, deskBorder);
+      // Whole-desk reservation (#462): the table itself reads taken —
+      // wash + accent border; the seats on it carry the avatars.
+      final overlay = spaceOverlays?[desk.id];
+      if (overlay != null) {
+        final accent =
+            SeatStateColors.of(overlay.state, brightness: brightness);
+        canvas.drawRRect(
+            rrect, Paint()..color = accent.withValues(alpha: 0.18));
+        canvas.drawRRect(
+          rrect,
+          Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 2
+            ..color = accent.withValues(alpha: 0.9),
+        );
+      } else {
+        canvas.drawRRect(rrect, deskBorder);
+      }
     }
 
     for (final seat in plan.seats) {
@@ -443,6 +491,7 @@ class FloorPlanPainter extends CustomPainter {
       oldDelegate.selectionValid != selectionValid ||
       !mapEquals(oldDelegate.seatStates, seatStates) ||
       !mapEquals(oldDelegate.seatLabels, seatLabels) ||
+      !mapEquals(oldDelegate.spaceOverlays, spaceOverlays) ||
       oldDelegate.highlightedSeatId != highlightedSeatId ||
       oldDelegate.deskOpacity != deskOpacity ||
       !setEquals(oldDelegate.onlineSeatIds, onlineSeatIds) ||
