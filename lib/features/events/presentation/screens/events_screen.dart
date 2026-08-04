@@ -269,6 +269,10 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ),
+                  // #440: one COMPACT row per pending decision — message,
+                  // one metadata line (time · quorum), actions inline on
+                  // the trailing edge. The old layout spent ~300px per
+                  // card on a full-width button row of dead space.
                   for (final event in pendingForMe)
                     Card(
                       margin: const EdgeInsets.symmetric(
@@ -276,75 +280,72 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                         vertical: AppSpacing.xs,
                       ),
                       child: Padding(
-                        padding: AppSpacing.mdAll,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        padding: const EdgeInsets.fromLTRB(
+                          AppSpacing.md, AppSpacing.sm, AppSpacing.xs,
+                          AppSpacing.sm,
+                        ),
+                        child: Row(
                           children: [
-                            Text(_line(l10n, event, names, targets, currency)),
-                            const SizedBox(height: 4),
-                            Text(
-                              _when(event),
-                              style: Theme.of(context).textTheme.bodySmall,
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    _line(l10n, event, names, targets,
+                                        currency),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    switch (_quorumProgress(
+                                      l10n,
+                                      event,
+                                      decisions[event.id] ?? const [],
+                                      policies,
+                                    )) {
+                                      final progress? =>
+                                        '${_when(event)} · $progress',
+                                      null => _when(event),
+                                    },
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall,
+                                  ),
+                                  for (final decision
+                                      in decisions[event.id] ??
+                                          const <EventDecision>[])
+                                    _DecisionRow(
+                                      decision: decision,
+                                      names: names,
+                                    ),
+                                ],
+                              ),
                             ),
-                            for (final decision
-                                in decisions[event.id] ??
-                                    const <EventDecision>[]) ...[
-                              const SizedBox(height: 2),
-                              _DecisionRow(
-                                decision: decision,
-                                names: names,
-                              ),
-                            ],
-                            if (_quorumProgress(
-                              l10n,
-                              event,
-                              decisions[event.id] ?? const [],
-                              policies,
-                            ) case final progress?) ...[
-                              const SizedBox(height: 4),
-                              Text(
-                                progress,
-                                style:
-                                    Theme.of(context).textTheme.labelSmall,
-                              ),
-                            ],
-                            const SizedBox(height: 8),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                // #196 — semantic outcome colors: decline
-                                // red (theme error), accept green (the
-                                // AppStatusColors success token).
-                                TextButton.icon(
-                                  style: TextButton.styleFrom(
-                                    foregroundColor: Theme.of(context)
-                                        .colorScheme
-                                        .error,
-                                  ),
-                                  onPressed: () => _respond(event, false),
-                                  icon: const Icon(Icons.close, size: 18),
-                                  label: Text(
-                                    l10n?.eventReject ?? 'Decline',
-                                  ),
+                            // #196 semantic colors kept: decline red,
+                            // accept green. Decline is an icon (48dp,
+                            // tooltip); Accept keeps its word — a money
+                            // decision deserves a labeled button.
+                            IconButton(
+                              tooltip: l10n?.eventReject ?? 'Decline',
+                              color: Theme.of(context).colorScheme.error,
+                              onPressed: () => _respond(event, false),
+                              icon: const Icon(Icons.close),
+                            ),
+                            FilledButton.icon(
+                              style: FilledButton.styleFrom(
+                                visualDensity: VisualDensity.compact,
+                                backgroundColor: AppStatusColors.successOf(
+                                  Theme.of(context).brightness,
                                 ),
-                                const SizedBox(width: 8),
-                                FilledButton.icon(
-                                  style: FilledButton.styleFrom(
-                                    backgroundColor:
-                                        AppStatusColors.successOf(
-                                      Theme.of(context).brightness,
-                                    ),
-                                    foregroundColor:
-                                        AppStatusColors.onSuccessOf(
-                                      Theme.of(context).brightness,
-                                    ),
-                                  ),
-                                  onPressed: () => _respond(event, true),
-                                  icon: const Icon(Icons.check, size: 18),
-                                  label:
-                                      Text(l10n?.eventAccept ?? 'Accept'),
+                                foregroundColor:
+                                    AppStatusColors.onSuccessOf(
+                                  Theme.of(context).brightness,
                                 ),
-                              ],
+                              ),
+                              onPressed: () => _respond(event, true),
+                              icon: const Icon(Icons.check, size: 18),
+                              label: Text(l10n?.eventAccept ?? 'Accept'),
                             ),
                           ],
                         ),
@@ -352,10 +353,12 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                     ),
                   const Divider(),
                 ],
-                Padding(
+                // #440: ONE horizontally scrollable filter line — the
+                // Wrap stacked six rows deep mid-screen.
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
                   padding: AppSpacing.mdH,
-                  child: Wrap(
-                    spacing: 8,
+                  child: Row(
                     children: [
                       FilterChip(
                         label: Text(l10n?.eventsFilterAll ?? 'All'),
@@ -363,13 +366,15 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                         onSelected: (_) =>
                             setState(() => _typeFilter = null),
                       ),
-                      for (final type in EventType.values)
+                      for (final type in EventType.values) ...[
+                        const SizedBox(width: 8),
                         FilterChip(
                           label: Text(_typeLabel(l10n, type)),
                           selected: _typeFilter == type,
                           onSelected: (_) =>
                               setState(() => _typeFilter = type),
                         ),
+                      ],
                     ],
                   ),
                 ),

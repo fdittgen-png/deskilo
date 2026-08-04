@@ -252,7 +252,7 @@ void main() {
       ],
     );
 
-    await tester.tap(find.text('Decline'));
+    await tester.tap(find.byTooltip('Decline'));
     await tester.pumpAndSettle();
 
     expect(repo.events.single.status, EventStatus.rejected);
@@ -564,21 +564,19 @@ void main() {
         findsOneWidget,
       );
 
-      final declineFinder = find.ancestor(
-        of: find.text('Decline'),
-        matching: find.bySubtype<TextButton>(),
+      // #440: Decline is a compact IconButton now — same semantics,
+      // error color and cross icon, 48dp target with tooltip.
+      final declineFinder = find.byTooltip('Decline');
+      final decline = tester.widget<IconButton>(
+        find.ancestor(
+          of: find.descendant(
+              of: declineFinder, matching: find.byIcon(Icons.close)),
+          matching: find.bySubtype<IconButton>(),
+        ),
       );
-      final decline = tester.widget<TextButton>(declineFinder);
       final error =
           Theme.of(tester.element(declineFinder)).colorScheme.error;
-      expect(
-        decline.style?.foregroundColor?.resolve(const <WidgetState>{}),
-        error,
-      );
-      expect(
-        find.descendant(of: declineFinder, matching: find.byIcon(Icons.close)),
-        findsOneWidget,
-      );
+      expect(decline.color, error);
     });
 
     testWidgets(

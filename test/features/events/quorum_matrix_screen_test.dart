@@ -138,7 +138,7 @@ void main() {
       otherMembers: [adminMember('member-2'), adminMember('member-3')],
     );
 
-    await tester.tap(find.text('Decline'));
+    await tester.tap(find.byTooltip('Decline'));
     await tester.pumpAndSettle();
 
     expect(repo.events.single.status, EventStatus.rejected);
