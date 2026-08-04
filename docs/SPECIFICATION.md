@@ -25,7 +25,7 @@ A free, privacy-first, open-source app for **small self-organized coworking comm
 
 1. **Know where you can sit** — live floor plan, check-in/out, reservations.
 2. **Know what you owe / are owed** — subscription, extra usage, community expenses, one transparent ledger per member.
-3. **Run the space without a landlord platform** — self-organized roles, no vendor lock-in, self-hostable data, works on F-Droid.
+3. **Run the space without a landlord platform** — self-organized roles, no vendor lock-in, self-hostable data.
 
 A proposal that serves none of these is pushed back on before any code is written.
 
@@ -245,7 +245,7 @@ A dedicated editor space for drawing the physical workspace on a **grid of small
 
 - **Languages (decided):** the app is fully multilanguage — **every user-facing string is translatable** (ARB-based, no hard-coded text, lint-enforced as in tankstellen). **English is the default and canonical locale**; **French, German, Spanish and Italian** ship at launch with maintained translations. The ARB fragment pipeline and key-parity CI gate support the tankstellen-style fan-out to further locales later. User-generated content (workspace names, expense notes) is not translated.
 - **Country-driven formats (decided):** the workspace **country** determines the default **currency**; dates, numbers and currency are always rendered through locale-aware formatting (`intl`/`UnitFormatter` pattern) — never raw string formatting.
-- **Notifications**: booking confirmations, check-in reminders, no-show releases, waitlist offers, pending confirmations, expense decisions, statement issued / payment overdue. Delivery: local notifications plus — for the F-Droid flavor — **UnifiedPush/ntfy** instead of Firebase (Google-services-free, per the tankstellen ADR "no Firebase/GMS").
+- **Notifications**: booking confirmations, check-in reminders, no-show releases, waitlist offers, pending confirmations, expense decisions, statement issued / payment overdue. Delivery: local notifications plus **FCM** (ADR 0011; UnifiedPush as automatic fallback where Firebase is unconfigured).
 - **Time zones & DST**: all times stored as UTC + the workspace's IANA time zone; recurring series recur in **workspace-local time** (a 09:00 series stays 09:00 across DST).
 - **Offline behavior**: read access (floor plan, own events, ledger) works offline from local cache (local-first, as tankstellen); *writes* (check-in, reservation) require connectivity since they are multi-user-transactional — a clear offline banner explains this.
 - **Privacy / GDPR**: minimal data (name, email, plan, bookings, ledger); per-member visibility control on the floor plan; data export (JSON) and account erasure — financial history is **anonymized, not deleted** (bookkeeping-retention vs. erasure conflict, per research); booking-history retention limit configurable; no tracking, no third-party analytics.
@@ -257,7 +257,7 @@ A dedicated editor space for drawing the physical workspace on a **grid of small
 
 ## 12. Platforms & distribution (inherited from tankstellen)
 
-- **Android** — Google Play *and* a dedicated **F-Droid product flavor** that is 100% Google-services-free (audited by script, as Sparkilo's `audit_no_gms.sh`); official fdroiddata recipe + self-hosted F-Droid repo; per-ABI split APKs; fastlane metadata per locale.
+- **Android** — Google Play; FCM notifications (ADR 0011); per-ABI split APKs; fastlane metadata per locale.
 - **iOS** — App Store via TestFlight; same codebase.
 - **Windows** — Flutter Windows desktop; same codebase, distributed as an installer/MSIX (store or direct download to be decided).
 - **macOS** — Flutter macOS desktop (iMac/MacBook); same codebase, distribution channel (Mac App Store or notarized direct download) to be decided.
@@ -292,7 +292,7 @@ A dedicated editor space for drawing the physical workspace on a **grid of small
 - **Hard rules** carried over: no hard-coded user-facing strings (ARB only, lint-ratcheted), clean-codegen-before-push, locale key-parity CI gate.
 - **TDD pyramid** 70/20/10, coverage gate, fakes over mocks, pre-fix failing-test protocol, twin-bug audit, producer+consumer ship together.
 - **ADRs** in `docs/decisions/` from day one.
-- **CI**: analyze + full test suite + l10n gate; `dev-apk` sideload workflow; F-Droid build/publish workflows; TestFlight workflow — mirroring tankstellen's `.github/workflows/` set, added incrementally.
+- **CI**: analyze + full test suite + l10n gate; `dev-apk` sideload workflow; TestFlight workflow — mirroring tankstellen's `.github/workflows/` set, added incrementally.
 - Issue templates: bug, feature, epic; PR template; CONTRIBUTING, CODE_OF_CONDUCT, AGENT_RULES.md.
 
 ---
@@ -300,9 +300,9 @@ A dedicated editor space for drawing the physical workspace on a **grid of small
 ## 16. Release roadmap
 
 - **MVP (v0.x)** — workspace creation + grid editor (levels/offices/desks/seats/chairs); join via invite; floor plan with live states; walk-up check-in/out; punctual reservations; time scroller; Events space with the confirmation protocol; plans + ledger + manual payment tracking; expenses with approval; EN/FR/DE/ES/IT; Android APK.
-- **v1.0** — series reservations with exception handling; booking-rules engine complete; no-show auto-release + check-in windows; statements + export; F-Droid + Play + App Store releases.
+- **v1.0** — series reservations with exception handling; booking-rules engine complete; no-show auto-release + check-in windows; statements + export; Play + App Store releases.
 - **v1.1** — QR seat codes; waitlists; ICS/CalDAV feed; occupancy analytics; UnifiedPush.
-- **v2** — guest/day passes; N-way expense splits + debt simplification; payment-provider integration (optional, non-F-Droid flavor); team/company accounts; multi-workspace federation.
+- **v2** — guest/day passes; N-way expense splits + debt simplification; payment-provider integration; team/company accounts; multi-workspace federation.
 
 ---
 

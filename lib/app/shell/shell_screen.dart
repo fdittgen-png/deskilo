@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:intl/intl.dart';
 
+import '../../core/badge/app_badge.dart';
 import '../../core/realtime/realtime_providers.dart';
 import '../../core/notifications/notification_providers.dart';
 import '../../core/push/push_providers.dart';
@@ -56,6 +57,14 @@ class ShellScreen extends ConsumerWidget {
     // providers on every device, this one included — no restarts, no
     // manual refresh.
     ref.watch(realtimeInvalidatorProvider);
+
+    // App-icon badge (#426): the pending count on the launcher icon,
+    // realtime-fresh while the app runs (events invalidations re-fire
+    // the provider, which re-fires this listener).
+    ref.listen(myPendingEventCountProvider, (_, next) {
+      final count = next.value;
+      if (count != null) ref.read(appBadgeProvider).update(count);
+    });
 
     // Day-based booking windows anchor to the WORKSPACE clock — install
     // the active workspace's zone (re-installs on profile switch). A

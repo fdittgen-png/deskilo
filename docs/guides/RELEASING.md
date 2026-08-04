@@ -75,7 +75,6 @@ Owner half (Google offers NO API for these):
 
 ## F-Droid
 
-- The GMS-free guarantee is enforced by `scripts/audit_no_gms.sh` in CI
   (ADR 0003); no flavor split is needed until a Play-only feature appears.
 - `metadata/de.deskilo.app.yml` is the fdroiddata recipe **draft**. After the
   first tagged release (`vX.Y.Z`), fill in the TODO version fields and open a

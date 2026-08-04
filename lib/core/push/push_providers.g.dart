@@ -48,7 +48,7 @@ final class PushConnectorProvider
   }
 }
 
-String _$pushConnectorHash() => r'6c30eca18416b89aaceb6a52f2d2857d256690ef';
+String _$pushConnectorHash() => r'5a718ca7246811c1627445833c7be82fb4c5a6e2';
 
 @ProviderFor(pushEndpointRepository)
 final pushEndpointRepositoryProvider = PushEndpointRepositoryProvider._();

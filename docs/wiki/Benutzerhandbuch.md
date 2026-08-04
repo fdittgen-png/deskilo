@@ -333,7 +333,7 @@ Deine Identität existiert nur für den Moment der Operation: die Berechtigung g
 
 ## 10. Benachrichtigungen
 
-Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheide — und wenn ein Admin **eine deiner Reservierungen entfernt** (Übersteuern), werden du und die Admins benachrichtigt. Zustellung ist lokal zuerst; Server-Pushes nutzen **UnifiedPush** auf Android (keine Google-Dienste, nirgendwo Firebase) und brauchen eine **Verteiler-App** auf dem Gerät — installiere einmal **ntfy** (F-Droid oder Play Store); *Einstellungen → Erweitert* zeigt, ob Push auf diesem Gerät aktiv ist. Push-Inhalte tragen nie Namen oder Zeiten; der Text entsteht lokal in der App.
+Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheide — und wenn ein Admin **eine deiner Reservierungen entfernt** (Übersteuern), werden du und die Admins benachrichtigt. Zustellung ist lokal zuerst; Server-Pushes kommen auf Android, iPhone/iPad, im Browser und auf macOS ohne Zusatz-App an (Firebase Cloud Messaging) — *Einstellungen → Erweitert* zeigt, ob Push auf diesem Gerät aktiv ist. Ohne Firebase übernimmt automatisch **UnifiedPush** (einmal **ntfy** installieren). Das App-Icon zeigt die Zahl deiner offenen Bestätigungen. Push-Inhalte tragen nie Namen oder Zeiten; der Text entsteht lokal in der App.
 
 ## 11. Datenschutz
 

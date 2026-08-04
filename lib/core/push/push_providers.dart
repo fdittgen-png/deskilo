@@ -8,6 +8,7 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../notifications/notification_providers.dart';
 import '../trace/trace_logger.dart';
+import 'firebase_push_connector.dart';
 import 'push_connector.dart';
 import 'push_endpoint_repository.dart';
 import 'push_service.dart';
@@ -15,7 +16,13 @@ import 'push_service.dart';
 part 'push_providers.g.dart';
 
 @Riverpod(keepAlive: true)
-PushConnector pushConnector(Ref ref) => UnifiedPushConnector();
+PushConnector pushConnector(Ref ref) => FallbackPushConnector([
+      // FCM first (#426, F-Droid dropped): no distributor app needed.
+      // The committed firebase_options stub disables it until the owner
+      // runs `flutterfire configure` — UnifiedPush then carries on.
+      FirebasePushConnector(),
+      UnifiedPushConnector(),
+    ]);
 
 @Riverpod(keepAlive: true)
 PushEndpointRepository pushEndpointRepository(Ref ref) =>
