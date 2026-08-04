@@ -172,7 +172,8 @@ void main() {
     expect(find.text('Accept'), findsNothing);
   });
 
-  testWidgets('a solo admin may decide their own expense (escape hatch)',
+  testWidgets('NO self-validation (#434): even a solo admin cannot '
+      'decide their own expense — it waits for another person',
       (tester) async {
     final events = FakeEventRepository()
       ..events.add(
@@ -195,7 +196,9 @@ void main() {
     await tester.tap(find.byTooltip('Events'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Accept'), findsOneWidget);
+    expect(find.text('Accept'), findsNothing,
+        reason: 'only another person validates — the event stays '
+            'pending until one exists or it expires');
   });
 
   testWidgets('the feed narrates a self-service booking', (tester) async {

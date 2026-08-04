@@ -21,7 +21,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import 'package:deskilo/core/realtime/realtime_providers.dart';
+
 import '../../helpers/fake_event_repository.dart';
+import '../../helpers/fake_realtime_sync.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 
@@ -366,7 +369,9 @@ void main() {
         'confirmed charge lands in Consumed services', (tester) async {
       final events = FakeEventRepository();
       final money = FakeMoneyRepository(events: events);
-      final overrides = standardTestOverrides(money: money, events: events);
+      final realtime = FakeRealtimeSync();
+      final overrides = standardTestOverrides(
+          money: money, events: events, realtime: realtime);
       await pumpMoney(tester, money: money, overrides: overrides);
 
       expect(find.text('Open positions'), findsNothing);
@@ -387,13 +392,22 @@ void main() {
       expect(find.text('−€3.00'), findsOneWidget);
       expect(find.text('Consumed services'), findsNothing);
 
-      // Solo owner: the #107 escape hatch lets the reporter validate.
-      // #230: the events feed is pushed by the app-bar bell, no longer a
-      // tab — validate there, then pop back to the shell.
+      // #434: the reporter NEVER validates their own charge — no Accept
+      // for them, even as the solo owner (the old #107 hatch is gone).
       await tester.tap(find.byTooltip('Events'));
       await tester.pumpAndSettle();
       expect(find.text('Coffee ×2 — €3.00 for Flo'), findsOneWidget);
-      await tester.tap(find.text('Accept'));
+      expect(find.text('Accept'), findsNothing);
+
+      // ANOTHER admin confirms (fake-side); realtime pushes the change
+      // into this session — the same path a second device takes.
+      events.respondingMemberId = 'member-2';
+      await events.respond(events.events.single.id, accept: true);
+      realtime
+        ..emit('events')
+        ..emit('ledger_entries');
+      await tester
+          .pump(kRealtimeDebounce + const Duration(milliseconds: 50));
       await tester.pumpAndSettle();
       expect(events.events.single.status, EventStatus.confirmed);
       await tester.pageBack();

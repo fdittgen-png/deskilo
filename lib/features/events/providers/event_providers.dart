@@ -56,7 +56,6 @@ Future<List<ValidationPolicy>> validationPolicies(Ref ref) async {
 Future<List<WorkspaceEvent>> myPendingEvents(Ref ref) async {
   final member = await ref.watch(myMemberProvider.future);
   if (member == null) return const [];
-  final members = await ref.watch(workspaceMembersProvider.future);
   final policies = await ref.watch(validationPoliciesProvider.future);
   final decisions = await ref.watch(eventDecisionsProvider.future);
   final all = await ref.watch(eventsProvider.future);
@@ -65,7 +64,6 @@ Future<List<WorkspaceEvent>> myPendingEvents(Ref ref) async {
     return e.isDecidedBy(
       member,
       policy: policy,
-      hasOtherEligibleValidator: e.hasOtherEligibleValidator(members, policy),
       alreadyDecided: (decisions[e.id] ?? const [])
           .any((d) => d.memberId == member.id),
     );

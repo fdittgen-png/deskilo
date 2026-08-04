@@ -111,7 +111,7 @@ Il flusso eventi è la traccia di controllo dello spazio: prenotazioni create/mo
 
 **Il protocollo di conferma:** quando un admin fa qualcosa *per qualcun altro* — ti prenota un posto, registra il tuo pagamento — resta **in sospeso finché non confermi**. Le voci in sospeso sono fissate in alto con pulsanti accetta/rifiuta e ricevi una notifica. Le azioni su te stesso non richiedono mai conferma.
 
-**Quorum di validazione:** per le questioni di denaro e i cambi di ruolo il proprietario definisce *chi* deve approvare e *quante* approvazioni servono. Le richieste senza risposta scadono dopo 7 giorni — nulla di costoso viene mai concesso in silenzio.
+**Quorum di validazione:** per le questioni di denaro e i cambi di ruolo il proprietario definisce *chi* deve approvare e *quante* approvazioni servono. **Nessuno valida il proprio evento** — solo un'altra persona può; senza un altro validatore, la richiesta semplicemente attende. Le richieste senza risposta scadono dopo 7 giorni — nulla di costoso viene mai concesso in silenzio, né auto-concesso.
 
 Il proprietario regola tutto questo per **dominio** in **Impostazioni → Regole di validazione**: pagamenti, spese, servizi, mezze giornate extra, cambi di ruolo, prenotazioni e rettifiche hanno ciascuno la propria regola (o ereditano quella predefinita). Una regola stabilisce il numero di validazioni richieste, *quali* admin possono validare (tutti, o alcuni nominati) e se il proprietario deve sempre dare l'approvazione finale.
 

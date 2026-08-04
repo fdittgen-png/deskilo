@@ -206,7 +206,6 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final targets = ref.watch(targetNamesProvider).value ?? const {};
     final myMember = ref.watch(myMemberProvider).value;
-    final members = ref.watch(workspaceMembersProvider).value ?? const [];
     final decisions = ref.watch(eventDecisionsProvider).value ??
         const <String, List<EventDecision>>{};
     final policies =
@@ -224,8 +223,6 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
               return e.isDecidedBy(
                 myMember,
                 policy: policy,
-                hasOtherEligibleValidator:
-                    e.hasOtherEligibleValidator(members, policy),
                 alreadyDecided: (decisions[e.id] ?? const [])
                     .any((d) => d.memberId == myMember.id),
               );
