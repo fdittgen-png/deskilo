@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
@@ -20,11 +19,9 @@ import '../../../events/providers/event_providers.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/seat.dart';
-import '../../../plan/domain/seat_context.dart';
 import '../../../plan/presentation/seat_occupancy.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
-import '../../../plan/providers/plan_focus_controller.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/booking_error_text.dart';
 import '../../../workspace/domain/workspace_availability.dart';
@@ -524,24 +521,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     invalidateBookingData(ref);
   }
 
-  /// Detail sheet of one reservation (#182/#206): where the seat is and a
-  /// "Show on plan" jump — popping with a [SeatContext] signals the plan
-  /// screen and leaves the hub for the Plan tab (calendar parity).
-  Future<void> _detailSheet(Reservation reservation) async {
-    final target = await showModalBottomSheet<SeatContext>(
-      context: context,
-      builder: (context) => ReservationDetailSheet(reservation: reservation),
-    );
-    if (target == null || !mounted) return;
-    ref.read(planFocusControllerProvider.notifier).setFocus(
-          PlanFocus(
-            levelId: target.levelId,
-            seatId: reservation.seatId,
-            at: reservation.startsAt,
-          ),
-        );
-    context.go('/plan');
-  }
+  /// Detail sheet + "Show on plan" jump — via the shared helper that
+  /// owns the popped-target handling (#182/#206/#422).
+  Future<void> _detailSheet(Reservation reservation) =>
+      showReservationDetail(context, ref, reservation);
 
   // ── build ──
 

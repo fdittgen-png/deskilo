@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
@@ -13,6 +14,7 @@ import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/seat_context.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
+import '../../../plan/providers/plan_focus_controller.dart';
 import '../../../plan/providers/seat_context_providers.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -477,4 +479,31 @@ class ReservationDetailSheet extends ConsumerWidget {
     if (!end.isAfter(start)) end = start.add(Duration(minutes: snap));
     return (start: start, end: end);
   }
+}
+
+/// Opens the detail sheet AND owns the "Show on plan" jump (#182): the
+/// button pops with the seat's [SeatContext]; this helper then sets the
+/// plan focus and leaves for the Plan tab. Every surface must open the
+/// sheet through here — a caller that discards the result silently
+/// breaks the button, which is exactly how the directory shipped it
+/// (field bug #422, pasted-consumer drift across calendar and hub).
+Future<void> showReservationDetail(
+  BuildContext context,
+  WidgetRef ref,
+  Reservation reservation,
+) async {
+  final target = await showModalBottomSheet<SeatContext>(
+    context: context,
+    isScrollControlled: true,
+    builder: (_) => ReservationDetailSheet(reservation: reservation),
+  );
+  if (target == null || !context.mounted) return;
+  ref.read(planFocusControllerProvider.notifier).setFocus(
+        PlanFocus(
+          levelId: target.levelId,
+          seatId: reservation.seatId,
+          at: reservation.startsAt,
+        ),
+      );
+  context.go('/plan');
 }

@@ -651,6 +651,15 @@ void main() {
       findsNothing,
     );
     expect(find.byType(ReservationDetailSheet), findsOneWidget);
+ 
+    // 'Show on plan' must actually JUMP (#422: the directory used to
+    // discard the sheet's popped target — the button closed the sheet
+    // and nothing happened). The Plan tab was never built before this,
+    // so this also drives the pending-focus path.
+    await tester.tap(find.text('Show on plan'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('live-plan-canvas')), findsOneWidget,
+        reason: 'landed on the Plan tab, canvas visible');
   });
 
   testWidgets(
