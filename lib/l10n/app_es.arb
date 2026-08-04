@@ -781,6 +781,7 @@
   "kioskRevertDesc": "Este perfil está configurado como quiosco del espacio. Reviértelo a miembro normal para que la pregunta de quiosco no aparezca al iniciar.",
   "kioskRevertDone": "Este perfil vuelve a ser un miembro normal.",
   "memberNoActions": "Solo el propietario del espacio puede modificar este miembro.",
+  "kioskNotCheckedIn": "No hay ningún registro activo — puede que el plano se acabe de actualizar.",
   "languageTitle": "Idioma",
   "languageSystemDefault": "Predeterminado del sistema",
   "levelReserveButton": "Reservar la planta",

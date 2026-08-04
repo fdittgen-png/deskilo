@@ -2024,6 +2024,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Solo il proprietario dello spazio può modificare questo membro.';
 
   @override
+  String get kioskNotCheckedIn =>
+      'Nessun check-in attivo trovato — la planimetria potrebbe essersi appena aggiornata.';
+
+  @override
   String get languageTitle => 'Lingua';
 
   @override

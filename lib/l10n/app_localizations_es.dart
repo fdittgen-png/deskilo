@@ -2020,6 +2020,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Solo el propietario del espacio puede modificar este miembro.';
 
   @override
+  String get kioskNotCheckedIn =>
+      'No hay ningún registro activo — puede que el plano se acabe de actualizar.';
+
+  @override
   String get languageTitle => 'Idioma';
 
   @override

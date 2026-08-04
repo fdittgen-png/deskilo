@@ -2026,6 +2026,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Seul le propriétaire de l\'espace peut modifier ce membre.';
 
   @override
+  String get kioskNotCheckedIn =>
+      'Aucun pointage actif trouvé — le plan vient peut-être de se mettre à jour.';
+
+  @override
   String get languageTitle => 'Langue';
 
   @override

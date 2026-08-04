@@ -781,6 +781,7 @@
   "kioskRevertDesc": "Dieses Profil ist als Kiosk des Workspace eingerichtet. Als reguläres Mitglied zurücksetzen, damit die Kiosk-Frage beim Start nicht mehr erscheint.",
   "kioskRevertDone": "Dieses Profil ist wieder ein reguläres Mitglied.",
   "memberNoActions": "Nur der Inhaber des Workspace kann dieses Mitglied ändern.",
+  "kioskNotCheckedIn": "Kein aktiver Check-in gefunden — der Plan hat sich womöglich gerade aktualisiert.",
   "languageTitle": "Sprache",
   "languageSystemDefault": "Systemstandard",
   "levelReserveButton": "Etage reservieren",

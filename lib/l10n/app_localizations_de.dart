@@ -2024,6 +2024,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Nur der Inhaber des Workspace kann dieses Mitglied ändern.';
 
   @override
+  String get kioskNotCheckedIn =>
+      'Kein aktiver Check-in gefunden — der Plan hat sich womöglich gerade aktualisiert.';
+
+  @override
   String get languageTitle => 'Sprache';
 
   @override

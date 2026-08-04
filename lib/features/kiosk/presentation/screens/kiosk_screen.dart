@@ -7,7 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
 
+import '../../../../core/realtime/realtime_providers.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../reservations/domain/booking_error_text.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -19,7 +21,6 @@ import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../members/providers/directory_providers.dart';
-import '../../../money/domain/quota_rules.dart';
 import '../../../plan/domain/level.dart';
 import '../../../reservations/domain/walk_up_window.dart';
 import '../../../reservations/presentation/widgets/booking_range_text.dart';
@@ -279,22 +280,21 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       TraceLogger.instance
           .error('kiosk', 'kiosk act failed', error: e, stackTrace: st);
       if (!mounted) return;
+      // #430: bookingErrorText is THE mapper; kiosk cases stay.
       final message = switch (e) {
         PostgrestException(:final message)
             when message.contains(KioskBadgeError.serverSubstring) =>
           l10n?.kioskBadgeRejected ?? 'Badge not recognized.',
         PostgrestException(:final message)
-            when message.contains(ReservationLimitError.serverSubstring) =>
-          l10n?.reservationLimitError ??
-              'Reservation limit reached — you already hold the maximum '
-                  'number of open reservations.',
-        PostgrestException(:final message)
-            when message.contains(QuotaExceededError.serverSubstring) =>
-          l10n?.quotaExceededError ??
-              'Monthly half-day quota reached — request extra half-days '
-                  'from the Money tab.',
-        _ => l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+            when message.contains('not checked in') =>
+          l10n?.kioskNotCheckedIn ??
+              'No active check-in found — the plan may have just updated.',
+        _ => bookingErrorText(
+            l10n,
+            e,
+            l10n?.workspaceGenericError ??
+                'Something went wrong. Please try again.',
+          ),
       };
       AppSnack.error(context, message, replace: true);
       return;
@@ -311,6 +311,8 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    // #430: no shell on kiosk devices — arm realtime here.
+    ref.watch(realtimeInvalidatorProvider);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final levels = ref.watch(levelsProvider).value;
     if (levels == null) {
