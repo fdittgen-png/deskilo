@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- #442: the release resource shrinker strips resources referenced
+     only from Dart. ic_stat_deskilo (the notification status-bar glyph,
+     #219) is exactly that — without this keep, plugin.initialize threw
+     invalid_icon on EVERY release boot and the app silently fell back
+     to the no-op notification service: no reminders, no badge mirror,
+     ever, on any release build. -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/ic_stat_deskilo" />
