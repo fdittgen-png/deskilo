@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/time/work_hours.dart';
 import 'booking_granularity.dart';
 import 'closure_day.dart';
 import 'member.dart';
@@ -244,6 +245,14 @@ abstract class WorkspaceRepository {
     String workspaceId,
     BookingGranularity granularity,
   );
+
+  /// The workspace's working day (#446); read from booking_rules,
+  /// [WorkHours.defaults] when the keys are absent or inconsistent.
+  Future<WorkHours> fetchWorkHours(String workspaceId);
+
+  /// Owner-only (RLS-enforced): persist the working day inside
+  /// booking_rules without clobbering its other keys.
+  Future<void> setWorkHours(String workspaceId, WorkHours hours);
 
   /// One-off closure days of the workspace, ordered by day (#127).
   Future<List<ClosureDay>> fetchClosureDays(String workspaceId);

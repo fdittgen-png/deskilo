@@ -147,7 +147,42 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get availabilityGranularityDescription =>
-      'Half days: bookings cover the morning (until 13:00), the afternoon (from 13:00) or the whole day.';
+      'Half days: bookings cover the morning, the afternoon or the whole working day — the windows follow the configured working hours.';
+
+  @override
+  String get availabilityGranularityHours =>
+      'Real hours (exact from–to, half/full days as shortcuts)';
+
+  @override
+  String get availabilityWorkHoursTitle => 'Working hours';
+
+  @override
+  String get availabilityWorkHoursDescription =>
+      'The half-day and full-day windows everywhere — reservations, check-in and invoicing — follow these hours.';
+
+  @override
+  String get availabilityWorkStart => 'Day starts';
+
+  @override
+  String get availabilityHalfBoundary => 'Half-day boundary';
+
+  @override
+  String get availabilityWorkEnd => 'Day ends';
+
+  @override
+  String get availabilityHalfDayHours => 'Hours billed as a half day';
+
+  @override
+  String get availabilityFullDayHours => 'Hours billed as a full day';
+
+  @override
+  String availabilityHourOption(int count) {
+    return '$count h';
+  }
+
+  @override
+  String get availabilityWorkHoursInvalid =>
+      'The day must run start < half-day boundary < end.';
 
   @override
   String get availabilityGranularityFlexible => 'Free time period';
@@ -1066,6 +1101,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureDataExport => 'Data export (Excel)';
+
+  @override
+  String get featureWorkingHours => 'Working hours';
+
+  @override
+  String get featureWorkingHoursDesc =>
+      'Configure the working day and offer exact-hours booking; off keeps the 8:00–17:00 defaults.';
 
   @override
   String get featureAutoCheckInOutDesc =>

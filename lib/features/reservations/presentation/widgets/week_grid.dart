@@ -57,8 +57,8 @@ abstract final class WeekGridMetrics {
 /// grouped under `office · desk` headers (level chips with the same
 /// local-state "All levels" semantics as DayTimeline, #221/#187), columns
 /// are Monday–Sunday of the week containing [selectedDay]. Each cell
-/// splits into a morning and an afternoon half-slot around
-/// [HalfDayWindows.pivotHour]: a half is filled when ANY active
+/// splits into a morning and an afternoon half-slot around the
+/// configured half-day boundary (#446): a half is filled when ANY active
 /// reservation overlaps it (mine = the timeline's own tone, others = its
 /// occupied tone, blocked seats muted), empty halves stay a subtle
 /// outline.
@@ -559,12 +559,16 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     Brightness brightness,
   ) {
     final scheme = Theme.of(context).colorScheme;
-    // The cell IS the workspace-local day — same clock as the half-slot
-    // windows below, whatever zone the device is in.
-    final dayWindow = HalfDayWindows.fullDay(day);
+    // The cell IS the workspace-local CALENDAR day (midnight to
+    // midnight — the display halves, #446), same clock as the
+    // half-slot windows below, whatever zone the device is in. The
+    // canonical fullDay window would hide bookings outside the
+    // configured working hours.
+    final dayStart = HalfDayWindows.displayMorning(day).start;
+    final dayEnd = HalfDayWindows.displayAfternoon(day).end;
     final items = [
       for (final r in rowReservations)
-        if (r.coversRange(dayWindow.start, dayWindow.end)) r,
+        if (r.coversRange(dayStart, dayEnd)) r,
     ];
     final selected = DateUtils.isSameDay(day, widget.selectedDay);
     return SizedBox(
@@ -618,9 +622,11 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     required bool morning,
   }) {
     final scheme = Theme.of(context).colorScheme;
+    // Display halves, not booking windows (#446): a booking outside
+    // the working hours still occupies the seat that half of the day.
     final half = morning
-        ? HalfDayWindows.morning(day)
-        : HalfDayWindows.afternoon(day);
+        ? HalfDayWindows.displayMorning(day)
+        : HalfDayWindows.displayAfternoon(day);
     var occupied = false;
     var mine = false;
     for (final r in items) {

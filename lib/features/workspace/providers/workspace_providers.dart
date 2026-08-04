@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/storage/active_workspace_store.dart';
+import '../../../core/time/work_hours.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../data/supabase_workspace_repository.dart';
 import '../domain/booking_granularity.dart';
@@ -106,6 +107,15 @@ Future<BookingGranularity> bookingGranularity(Ref ref) async {
   return ref
       .watch(workspaceRepositoryProvider)
       .fetchBookingGranularity(workspace.id);
+}
+
+/// Working day of the active workspace (#446); [WorkHours.defaults]
+/// while no workspace is selected or the keys are absent.
+@riverpod
+Future<WorkHours> workHours(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return WorkHours.defaults;
+  return ref.watch(workspaceRepositoryProvider).fetchWorkHours(workspace.id);
 }
 
 /// One-off closure days of the active workspace, ordered by day (#127).

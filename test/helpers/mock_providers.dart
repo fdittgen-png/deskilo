@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart' show Widget, ColoredBox, Color, Center, Te
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/domain/social_provider.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
+import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:deskilo/core/badge/app_badge.dart';
@@ -732,6 +733,18 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     BookingGranularity granularity,
   ) async {
     bookingGranularities[workspaceId] = granularity;
+  }
+
+  /// Working day per workspace (#446); defaults like the real repo.
+  final Map<String, WorkHours> workHours = {};
+
+  @override
+  Future<WorkHours> fetchWorkHours(String workspaceId) async =>
+      workHours[workspaceId] ?? WorkHours.defaults;
+
+  @override
+  Future<void> setWorkHours(String workspaceId, WorkHours hours) async {
+    workHours[workspaceId] = hours;
   }
 
   /// One-off closure days across workspaces (#127).

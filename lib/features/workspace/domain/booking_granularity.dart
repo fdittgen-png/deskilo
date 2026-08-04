@@ -15,7 +15,14 @@ enum BookingGranularity {
   minutes15('minutes_15'),
   minutes30('minutes_30'),
   minutes60('minutes_60'),
-  fullDay('full_day');
+  fullDay('full_day'),
+
+  /// Real hours (#446): the user books exact from→to times AND may
+  /// still pick the canonical half/full-day windows — the reserve UI
+  /// offers both. The server enforces no grid for it; the statement
+  /// bills booked time as half-day equivalents via
+  /// `WorkHours.halfDayHours`.
+  hours('hours');
   // Append only (AGENT_RULES: wire values are persisted, never reorder).
 
   const BookingGranularity(this.wireName);
@@ -28,7 +35,7 @@ enum BookingGranularity {
   /// server enforces nothing for it. Null for the day-based modes.
   int? get stepMinutes => switch (this) {
         minutes5 => 5,
-        flexible || minutes15 => 15,
+        flexible || minutes15 || hours => 15,
         minutes30 => 30,
         minutes60 => 60,
         halfDay || fullDay => null,
@@ -38,6 +45,11 @@ enum BookingGranularity {
   /// afternoon / full day for [halfDay]; the full day only for
   /// [fullDay]) instead of free from→to times.
   bool get isDayBased => this == halfDay || this == fullDay;
+
+  /// Whether the reserve UI offers the half/full-day window chips: the
+  /// day-based modes (only those) and [hours], which offers the chips
+  /// NEXT TO free from→to times (#446).
+  bool get offersDayWindows => isDayBased || this == hours;
 
   /// The granularity for [wireName]; null / unknown values fall back to
   /// [flexible] (forward compatibility: rules written by a newer app

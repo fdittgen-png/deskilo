@@ -88,7 +88,7 @@ final class RealtimeInvalidatorProvider
 }
 
 String _$realtimeInvalidatorHash() =>
-    r'6bb4517b0f7a639b2b145f7842b4f9592fb16a4f';
+    r'257697f19fa16e2f0f9bbdbf7934b6c7a106edbc';
 
 /// Subscribes to the active workspace's change feed and invalidates
 /// exactly the providers that cache each table — so every device,

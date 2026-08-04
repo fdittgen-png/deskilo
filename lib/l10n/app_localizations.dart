@@ -371,8 +371,68 @@ abstract class AppLocalizations {
   /// One-line explanation of the half-day granularity under the section header
   ///
   /// In en, this message translates to:
-  /// **'Half days: bookings cover the morning (until 13:00), the afternoon (from 13:00) or the whole day.'**
+  /// **'Half days: bookings cover the morning, the afternoon or the whole working day — the windows follow the configured working hours.'**
   String get availabilityGranularityDescription;
+
+  /// Working hours / availability (#446)
+  ///
+  /// In en, this message translates to:
+  /// **'Real hours (exact from–to, half/full days as shortcuts)'**
+  String get availabilityGranularityHours;
+
+  /// Working hours / availability (#446)
+  ///
+  /// In en, this message translates to:
+  /// **'Working hours'**
+  String get availabilityWorkHoursTitle;
+
+  /// Working hours / availability (#446)
+  ///
+  /// In en, this message translates to:
+  /// **'The half-day and full-day windows everywhere — reservations, check-in and invoicing — follow these hours.'**
+  String get availabilityWorkHoursDescription;
+
+  /// Working hours / availability (#446)
+  ///
+  /// In en, this message translates to:
+  /// **'Day starts'**
+  String get availabilityWorkStart;
+
+  /// Working hours / availability (#446)
+  ///
+  /// In en, this message translates to:
+  /// **'Half-day boundary'**
+  String get availabilityHalfBoundary;
+
+  /// Working hours / availability (#446)
+  ///
+  /// In en, this message translates to:
+  /// **'Day ends'**
+  String get availabilityWorkEnd;
+
+  /// Working hours / availability (#446)
+  ///
+  /// In en, this message translates to:
+  /// **'Hours billed as a half day'**
+  String get availabilityHalfDayHours;
+
+  /// Working hours / availability (#446)
+  ///
+  /// In en, this message translates to:
+  /// **'Hours billed as a full day'**
+  String get availabilityFullDayHours;
+
+  /// Dropdown option: a whole-hour count (#446)
+  ///
+  /// In en, this message translates to:
+  /// **'{count} h'**
+  String availabilityHourOption(int count);
+
+  /// Working hours / availability (#446)
+  ///
+  /// In en, this message translates to:
+  /// **'The day must run start < half-day boundary < end.'**
+  String get availabilityWorkHoursInvalid;
 
   /// Radio option: members book any start and end time
   ///
@@ -2023,6 +2083,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Data export (Excel)'**
   String get featureDataExport;
+
+  /// Working-hours feature flag (#446)
+  ///
+  /// In en, this message translates to:
+  /// **'Working hours'**
+  String get featureWorkingHours;
+
+  /// Working-hours feature flag (#446)
+  ///
+  /// In en, this message translates to:
+  /// **'Configure the working day and offer exact-hours booking; off keeps the 8:00–17:00 defaults.'**
+  String get featureWorkingHoursDesc;
 
   /// Description under the auto check-in/out feature toggle (#396).
   ///

@@ -32,6 +32,7 @@ import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
+import '../../../../core/time/work_hours.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../device_pin.dart';
 import '../../../../core/time/clock.dart';
@@ -313,6 +314,9 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     final l10n = AppLocalizations.of(context);
     // #430: no shell on kiosk devices — arm realtime here.
     ref.watch(realtimeInvalidatorProvider);
+    // #446: same out-of-shell rule for the ambient working day — the
+    // walk-up windows this screen books derive from it.
+    WorkHours.install(ref.watch(workHoursProvider).value);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final levels = ref.watch(levelsProvider).value;
     if (levels == null) {

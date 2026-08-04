@@ -57,7 +57,13 @@ const Map<String, int> _baseline = {
   'lib/features/calendar/presentation/widgets/day_timeline.dart': 750,
   'lib/features/reservations/presentation/widgets/space_scan.dart': 730,
   'lib/features/money/domain/invoice_pdf.dart': 680,
-  'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 670,
+  // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the
+  // kiosk arms the ambient working day itself, like realtime (#430).
+  'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 680,
+  // 600→640 (2026-08-04): #446 fetchWorkHours/setWorkHours — two new
+  // repository surfaces (merge-preserving booking_rules writes), not
+  // accretion.
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 640,
   'lib/features/calendar/presentation/screens/calendar_screen.dart': 630,
 };
 

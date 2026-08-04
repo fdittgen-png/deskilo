@@ -67,6 +67,17 @@ abstract final class WorkspaceTime {
         : tz.TZDateTime.from(instant, location).hour;
   }
 
+  /// Workspace-local minutes after midnight of [instant] — the working
+  /// day's bounds are minute-granular (#446), a whole hour is not
+  /// enough to place an instant against them.
+  static int minutesOfDay(DateTime instant) {
+    final location = _location;
+    final local = location == null
+        ? instant.toLocal()
+        : tz.TZDateTime.from(instant, location);
+    return local.hour * 60 + local.minute;
+  }
+
   /// [instant] for DISPLAY. Zone-carrying values (workspace-anchored
   /// windows are [tz.TZDateTime]s) already read in their own wall clock
   /// — a "Morning until 13:00" says 13:00 on a device hours away — and

@@ -26,14 +26,15 @@ void main() {
       expect(bookingRangeText(null, w.start, w.end), 'Full day');
     });
 
-    test('the halves carry their names and a 24:00 end', () {
+    test('the halves carry their names and the configured working hours '
+        '(#446 defaults)', () {
       WorkspaceTime.install('Europe/Paris');
       final am = HalfDayWindows.morning(day);
       final pm = HalfDayWindows.afternoon(day);
       expect(bookingRangeText(null, am.start, am.end),
-          'Morning · 00:00 – 13:00');
+          'Morning · 08:00 – 12:00');
       expect(bookingRangeText(null, pm.start, pm.end),
-          'Afternoon · 13:00 – 24:00');
+          'Afternoon · 12:00 – 17:00');
     });
 
     test('free ranges read from–to; an exact next-midnight end reads '

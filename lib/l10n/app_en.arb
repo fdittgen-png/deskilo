@@ -181,9 +181,54 @@
   "@availabilityGranularityTitle": {
     "description": "Section header above the booking-granularity radio options"
   },
-  "availabilityGranularityDescription": "Half days: bookings cover the morning (until 13:00), the afternoon (from 13:00) or the whole day.",
+  "availabilityGranularityDescription": "Half days: bookings cover the morning, the afternoon or the whole working day — the windows follow the configured working hours.",
   "@availabilityGranularityDescription": {
     "description": "One-line explanation of the half-day granularity under the section header"
+  },
+  "availabilityGranularityHours": "Real hours (exact from–to, half/full days as shortcuts)",
+  "@availabilityGranularityHours": {
+    "description": "Working hours / availability (#446)"
+  },
+  "availabilityWorkHoursTitle": "Working hours",
+  "@availabilityWorkHoursTitle": {
+    "description": "Working hours / availability (#446)"
+  },
+  "availabilityWorkHoursDescription": "The half-day and full-day windows everywhere — reservations, check-in and invoicing — follow these hours.",
+  "@availabilityWorkHoursDescription": {
+    "description": "Working hours / availability (#446)"
+  },
+  "availabilityWorkStart": "Day starts",
+  "@availabilityWorkStart": {
+    "description": "Working hours / availability (#446)"
+  },
+  "availabilityHalfBoundary": "Half-day boundary",
+  "@availabilityHalfBoundary": {
+    "description": "Working hours / availability (#446)"
+  },
+  "availabilityWorkEnd": "Day ends",
+  "@availabilityWorkEnd": {
+    "description": "Working hours / availability (#446)"
+  },
+  "availabilityHalfDayHours": "Hours billed as a half day",
+  "@availabilityHalfDayHours": {
+    "description": "Working hours / availability (#446)"
+  },
+  "availabilityFullDayHours": "Hours billed as a full day",
+  "availabilityHourOption": "{count} h",
+  "@availabilityHourOption": {
+    "description": "Dropdown option: a whole-hour count (#446)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@availabilityFullDayHours": {
+    "description": "Working hours / availability (#446)"
+  },
+  "availabilityWorkHoursInvalid": "The day must run start < half-day boundary < end.",
+  "@availabilityWorkHoursInvalid": {
+    "description": "Working hours / availability (#446)"
   },
   "availabilityGranularityFlexible": "Free time period",
   "@availabilityGranularityFlexible": {
@@ -1447,6 +1492,14 @@
   "featureDataExport": "Data export (Excel)",
   "@featureDataExport": {
     "description": "Feature toggle (#395): the owner can download the workspace data as an Excel workbook."
+  },
+  "featureWorkingHours": "Working hours",
+  "@featureWorkingHours": {
+    "description": "Working-hours feature flag (#446)"
+  },
+  "featureWorkingHoursDesc": "Configure the working day and offer exact-hours booking; off keeps the 8:00–17:00 defaults.",
+  "@featureWorkingHoursDesc": {
+    "description": "Working-hours feature flag (#446)"
   },
   "featureAutoCheckInOutDesc": "Reservations never checked in or out complete themselves once their time has passed.",
   "@featureAutoCheckInOutDesc": {

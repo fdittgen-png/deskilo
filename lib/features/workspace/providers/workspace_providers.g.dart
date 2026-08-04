@@ -444,6 +444,52 @@ final class BookingGranularityProvider
 String _$bookingGranularityHash() =>
     r'bf5e00802791de2482d6dd476a2a5ab5c4a698b2';
 
+/// Working day of the active workspace (#446); [WorkHours.defaults]
+/// while no workspace is selected or the keys are absent.
+
+@ProviderFor(workHours)
+final workHoursProvider = WorkHoursProvider._();
+
+/// Working day of the active workspace (#446); [WorkHours.defaults]
+/// while no workspace is selected or the keys are absent.
+
+final class WorkHoursProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<WorkHours>,
+          WorkHours,
+          FutureOr<WorkHours>
+        >
+    with $FutureModifier<WorkHours>, $FutureProvider<WorkHours> {
+  /// Working day of the active workspace (#446); [WorkHours.defaults]
+  /// while no workspace is selected or the keys are absent.
+  WorkHoursProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workHoursProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workHoursHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<WorkHours> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<WorkHours> create(Ref ref) {
+    return workHours(ref);
+  }
+}
+
+String _$workHoursHash() => r'0089026f25376d6ab096cad781591258c48d9c86';
+
 /// One-off closure days of the active workspace, ordered by day (#127).
 
 @ProviderFor(closureDays)

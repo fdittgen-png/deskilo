@@ -14,28 +14,29 @@ void main() {
 
   test('uninstalled: windows stay device-local (co-located behavior)', () {
     final window = HalfDayWindows.fullDay(DateTime(2026, 7, 20));
-    expect(window.start, DateTime(2026, 7, 20));
-    expect(window.end, DateTime(2026, 7, 21));
+    expect(window.start, DateTime(2026, 7, 20, 8));
+    expect(window.end, DateTime(2026, 7, 20, 17));
   });
 
-  test('installed: the full day is the WORKSPACE\'s midnights, whatever '
-      'the device zone', () {
+  test('installed: the full day is the WORKSPACE\'s working hours, '
+      'whatever the device zone', () {
     WorkspaceTime.install('Europe/Paris');
 
     final window = HalfDayWindows.fullDay(DateTime(2026, 7, 20));
-    // Paris midnight in July = 22:00 UTC of the previous day (CEST).
-    expect(window.start.toUtc(), DateTime.utc(2026, 7, 19, 22));
-    expect(window.end.toUtc(), DateTime.utc(2026, 7, 20, 22));
+    // Paris 08:00 in July = 06:00 UTC (CEST).
+    expect(window.start.toUtc(), DateTime.utc(2026, 7, 20, 6));
+    expect(window.end.toUtc(), DateTime.utc(2026, 7, 20, 15));
   });
 
-  test('morning/afternoon pivot at 13:00 workspace time', () {
+  test('morning/afternoon pivot at the boundary (12:00) workspace time',
+      () {
     WorkspaceTime.install('Europe/Paris');
 
     final morning = HalfDayWindows.morning(DateTime(2026, 7, 20));
     final afternoon = HalfDayWindows.afternoon(DateTime(2026, 7, 20));
-    expect(morning.end.toUtc(), DateTime.utc(2026, 7, 20, 11)); // 13:00 CEST
+    expect(morning.end.toUtc(), DateTime.utc(2026, 7, 20, 10)); // 12:00 CEST
     expect(afternoon.start, morning.end);
-    expect(afternoon.end.toUtc(), DateTime.utc(2026, 7, 20, 22));
+    expect(afternoon.end.toUtc(), DateTime.utc(2026, 7, 20, 15));
   });
 
   test('windowForNow uses the workspace-local date — near midnight it '
@@ -43,16 +44,16 @@ void main() {
     WorkspaceTime.install('Europe/Paris');
 
     // 22:30 UTC on Jul 19 = 00:30 Paris on Jul 20: the walk-up belongs
-    // to Paris' Jul 20 morning, ending 13:00 CEST.
+    // to Paris' Jul 20 morning, ending at the 12:00 CEST boundary.
     final window =
         HalfDayWindows.windowForNow(DateTime.utc(2026, 7, 19, 22, 30));
-    expect(window.start.toUtc(), DateTime.utc(2026, 7, 19, 22));
-    expect(window.end.toUtc(), DateTime.utc(2026, 7, 20, 11));
+    expect(window.start.toUtc(), DateTime.utc(2026, 7, 20, 6));
+    expect(window.end.toUtc(), DateTime.utc(2026, 7, 20, 10));
   });
 
   test('an unknown zone name falls back to device-local', () {
     WorkspaceTime.install('Not/AZone');
     final window = HalfDayWindows.fullDay(DateTime(2026, 7, 20));
-    expect(window.start, DateTime(2026, 7, 20));
+    expect(window.start, DateTime(2026, 7, 20, 8));
   });
 }

@@ -261,6 +261,8 @@ class _WorkspaceSettingsScreenState
           l10n?.availabilityGranularityHalfDay ?? 'Half day',
         BookingGranularity.fullDay =>
           l10n?.availabilityGranularityFullDay ?? 'Full day',
+        BookingGranularity.hours =>
+          l10n?.availabilityGranularityHours ?? 'Real hours',
         // Minute granularities carry their step in the label itself.
         BookingGranularity.minutes5 ||
         BookingGranularity.minutes15 ||

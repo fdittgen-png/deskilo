@@ -133,11 +133,16 @@ class _BookingSheetState extends State<BookingSheet> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final timeFormat = DateFormat.Hm();
-    // Half-day granularity offers the three canonical windows; full-day
-    // is a single locked window; a walk-up keeps its computed end.
+    // Half-day granularity offers the three canonical windows (hours
+    // offers them as shortcuts too, #446); full-day is a single locked
+    // window; a walk-up keeps its computed end — except under hours,
+    // where the implicit reservation lets the user set its end.
     final showHalfDayPicker = !widget.walkUp &&
-        widget.granularity == BookingGranularity.halfDay;
+        (widget.granularity == BookingGranularity.halfDay ||
+            widget.granularity == BookingGranularity.hours);
     final showTimePickers = !widget.walkUp && !widget.fixedEnd;
+    final hoursWalkUp = widget.walkUp &&
+        widget.granularity == BookingGranularity.hours;
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -210,6 +215,26 @@ class _BookingSheetState extends State<BookingSheet> {
                 },
               ),
             ],
+            // #446 hours walk-up: the check-in creates the reservation
+            // implicitly — the start is "now", the end is the user's to
+            // fill (prefilled with the end of the working day).
+            if (hoursWalkUp)
+              _timeTile(
+                key: const ValueKey('booking-until-tile'),
+                label: l10n?.planUntilLabel ?? 'Until',
+                value: _end,
+                onPicked: (t) {
+                  final local = _day;
+                  var end = _snap(DateTime(local.year, local.month,
+                      local.day, t.hour, t.minute));
+                  if (!end.isAfter(_start)) {
+                    end = end.add(const Duration(days: 1));
+                  }
+                  final cap = widget.cap;
+                  if (cap != null && end.isAfter(cap)) end = cap;
+                  setState(() => _end = end);
+                },
+              ),
 
             if (widget.members.length > 1)
               DropdownButtonFormField<String>(
