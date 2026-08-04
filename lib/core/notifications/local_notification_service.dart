@@ -49,14 +49,23 @@ class LocalNotificationService implements NotificationService {
     return LocalNotificationService(plugin);
   }
 
+  /// Reminder ids scheduled by THIS run — cancelled selectively so the
+  /// pending-confirmation mirror (#432) survives a reminder resync
+  /// (cancelAll would wipe it).
+  final _reminderIds = <int>{};
+
   @override
   Future<void> rescheduleCheckInReminders(
     List<ReminderRequest> reminders,
   ) async {
     try {
-      await _plugin.cancelAll();
+      for (final id in _reminderIds) {
+        await _plugin.cancel(id: id);
+      }
+      _reminderIds.clear();
       for (final reminder in reminders) {
         if (reminder.remindAt.isBefore(DateTime.now())) continue;
+        _reminderIds.add(reminder.reservationId.hashCode);
         await _plugin.zonedSchedule(
           id: reminder.reservationId.hashCode,
           title: reminder.title,
@@ -71,6 +80,41 @@ class LocalNotificationService implements NotificationService {
       // notification-permission or platform errors.
       debugPrint('reminder scheduling failed: $e\n$st');
       TraceLogger.instance.error('notifications', 'reminder scheduling failed',
+          error: e, stackTrace: st);
+    }
+  }
+
+  /// Currently mirrored pending-confirmation notification ids (#432).
+  final _pendingIds = <int>{};
+
+  /// Stable id per event, in a range no other notification uses.
+  static int _pendingIdOf(String eventId) =>
+      0x20000000 | (eventId.hashCode & 0x0fffffff);
+
+  @override
+  Future<void> syncPendingNotifications(List<PendingNotice> notices) async {
+    try {
+      final wanted = {for (final n in notices) _pendingIdOf(n.id): n};
+      for (final stale in _pendingIds.difference(wanted.keys.toSet())) {
+        await _plugin.cancel(id: stale);
+      }
+      for (final entry in wanted.entries) {
+        if (_pendingIds.contains(entry.key)) continue;
+        await _plugin.show(
+          id: entry.key,
+          title: entry.value.title,
+          body: entry.value.body,
+          notificationDetails:
+              const NotificationDetails(android: _pushChannel),
+        );
+      }
+      _pendingIds
+        ..clear()
+        ..addAll(wanted.keys);
+    } catch (e, st) {
+      debugPrint('pending notification sync failed: $e\n$st');
+      TraceLogger.instance.error(
+          'notifications', 'pending notification sync failed',
           error: e, stackTrace: st);
     }
   }

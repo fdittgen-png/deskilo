@@ -58,12 +58,24 @@ class ShellScreen extends ConsumerWidget {
     // manual refresh.
     ref.watch(realtimeInvalidatorProvider);
 
-    // App-icon badge (#426): the pending count on the launcher icon,
-    // realtime-fresh while the app runs (events invalidations re-fire
-    // the provider, which re-fires this listener).
-    ref.listen(myPendingEventCountProvider, (_, next) {
-      final count = next.value;
-      if (count != null) ref.read(appBadgeProvider).update(count);
+    // App-icon badge (#426) + notification mirror (#432): launchers
+    // like One UI ignore app-set badge numbers and count ACTIVE
+    // notifications instead — so each pending confirmation is mirrored
+    // as one notification (resolved ones vanish), and the explicit
+    // count still serves iOS/macOS and honoring launchers.
+    ref.listen(myPendingEventsProvider, (_, next) {
+      final pending = next.value;
+      if (pending == null) return;
+      ref.read(appBadgeProvider).update(pending.length);
+      ref.read(notificationServiceProvider).syncPendingNotifications([
+        for (final e in pending)
+          (
+            id: e.id,
+            title: l10n?.pushPendingTitle ?? 'DesKilo',
+            body: l10n?.pushPendingBody ??
+                'Someone needs your confirmation.',
+          ),
+      ]);
     });
 
     // Day-based booking windows anchor to the WORKSPACE clock — install
