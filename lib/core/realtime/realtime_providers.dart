@@ -94,7 +94,9 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
       case 'profiles':
         ref
           ..invalidate(memberProfilesProvider)
-          ..invalidate(memberNamesProvider);
+          ..invalidate(memberNamesProvider)
+          // #458: the default-workspace choice rides the profile row.
+          ..invalidate(defaultWorkspaceIdProvider);
       case 'levels' || 'offices' || 'desks' || 'seats' || 'plan_images':
         ref
           ..invalidate(levelsProvider)

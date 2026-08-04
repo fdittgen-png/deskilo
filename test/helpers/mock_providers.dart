@@ -763,6 +763,18 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   Future<List<MemberNote>> fetchMyNotes(String workspaceId) async =>
       memberNotes.reversed.toList();
 
+  /// Server-side default workspace (#458).
+  String? serverDefaultWorkspaceId;
+
+  @override
+  Future<String?> fetchDefaultWorkspaceId() async =>
+      serverDefaultWorkspaceId;
+
+  @override
+  Future<void> setDefaultWorkspaceId(String? workspaceId) async {
+    serverDefaultWorkspaceId = workspaceId;
+  }
+
   @override
   Future<WorkHours> fetchWorkHours(String workspaceId) async =>
       workHours[workspaceId] ?? WorkHours.defaults;

@@ -566,6 +566,27 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   @override
+  Future<String?> fetchDefaultWorkspaceId() async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) return null;
+    final row = await _client
+        .from('profiles')
+        .select('default_workspace_id')
+        .eq('id', userId)
+        .maybeSingle();
+    return row?['default_workspace_id'] as String?;
+  }
+
+  @override
+  Future<void> setDefaultWorkspaceId(String? workspaceId) async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) return;
+    await _client
+        .from('profiles')
+        .update({'default_workspace_id': workspaceId}).eq('id', userId);
+  }
+
+  @override
   Future<List<MemberNote>> fetchMyNotes(String workspaceId) async {
     final rows = await _client
         .from('member_notes')

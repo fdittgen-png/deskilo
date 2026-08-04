@@ -72,8 +72,9 @@ const Map<String, int> _baseline = {
   'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 680,
   // 600→640 (2026-08-04): #446 fetchWorkHours/setWorkHours — two new
   // repository surfaces (merge-preserving booking_rules writes), not
-  // accretion. 640→660: #456 sendMemberNote/fetchMyNotes.
-  'lib/features/workspace/data/supabase_workspace_repository.dart': 660,
+  // accretion. 640→660: #456 sendMemberNote/fetchMyNotes. 660→690:
+  // #458 fetch/setDefaultWorkspaceId.
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 690,
   'lib/features/calendar/presentation/screens/calendar_screen.dart': 630,
 };
 

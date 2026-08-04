@@ -19,7 +19,7 @@ Tras iniciar sesión, la pantalla de bienvenida ofrece dos caminos:
 - **Crear un espacio de trabajo** — te conviertes en su **propietario**. Elige nombre, país (determina la moneda por defecto) y zona horaria. Después dibujarás tu plano en el editor (§7).
 - **Unirse a un espacio** — escribe el **ID del espacio** que te compartieron, o toca **Escanear código QR** y apunta la cámara al QR de invitación colgado en la pared. Te unes con el rol que lleva la invitación (§2).
 
-Una cuenta puede pertenecer a varios espacios; cambia entre ellos en **Ajustes → Perfiles** y **marca uno con la estrella como predeterminado** — es el perfil con el que se abre la app. Todo en la app se refiere al espacio activo.
+Una cuenta puede pertenecer a varios espacios; cambia entre ellos en **Ajustes → Perfiles** y **marca uno con la estrella como predeterminado** — es el perfil con el que se abre la app, en cualquier dispositivo e incluso tras reinstalar (la elección se guarda con tu cuenta). Todo en la app se refiere al espacio activo.
 
 **Todo se mantiene en vivo.** Lo que cualquiera cambie — una reserva, un miembro nuevo, un ajuste — se envía en segundos a cada dispositivo conectado, incluido el que hizo el cambio. Sin reiniciar, sin tirar para actualizar.
 
