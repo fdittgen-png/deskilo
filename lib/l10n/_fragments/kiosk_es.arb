@@ -53,5 +53,6 @@
   "kioskRevertTitle": "Dispositivo quiosco",
   "kioskRevertDesc": "Este perfil está configurado como quiosco del espacio. Reviértelo a miembro normal para que la pregunta de quiosco no aparezca al iniciar.",
   "kioskRevertDone": "Este perfil vuelve a ser un miembro normal.",
-  "memberNoActions": "Solo el propietario del espacio puede modificar este miembro."
+  "memberNoActions": "Solo el propietario del espacio puede modificar este miembro.",
+  "kioskNotCheckedIn": "No hay ningún registro activo — puede que el plano se acabe de actualizar."
 }

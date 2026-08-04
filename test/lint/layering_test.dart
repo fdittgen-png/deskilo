@@ -43,7 +43,6 @@ const Set<String> _knownPairs = {
   'events -> workspace',
   'kiosk -> events',
   'kiosk -> members',
-  'kiosk -> money',
   'kiosk -> plan',
   'kiosk -> reservations',
   'kiosk -> workspace',

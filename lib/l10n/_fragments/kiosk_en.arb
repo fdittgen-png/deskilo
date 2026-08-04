@@ -214,5 +214,9 @@
   "memberNoActions": "Only the workspace owner can change this member.",
   "@memberNoActions": {
     "description": "Empty member-sheet explainer when the viewer has no actions for this row (e.g. an admin viewing a kiosk)"
+  },
+  "kioskNotCheckedIn": "No active check-in found — the plan may have just updated.",
+  "@kioskNotCheckedIn": {
+    "description": "Kiosk error when a check-out finds no active check-in (#430)"
   }
 }

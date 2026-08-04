@@ -15,6 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
+import '../../helpers/fake_realtime_sync.dart';
 import '../../helpers/mock_providers.dart';
 
 const _canvasKey = ValueKey('kiosk-plan-canvas');
@@ -29,6 +30,7 @@ Future<FakeReservationRepository> pumpKiosk(
   Map<String, dynamic> featureFlags = const {},
   bool bookableLevel = false,
   bool startKiosk = true,
+  FakeRealtimeSync? realtime,
 }) async {
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   if (bookableLevel) {
@@ -51,6 +53,7 @@ Future<FakeReservationRepository> pumpKiosk(
         workspace: workspace,
         nfc: nfc,
         qrScan: qrScan,
+        realtime: realtime,
       ),
       child: const DeskiloApp(),
     ),

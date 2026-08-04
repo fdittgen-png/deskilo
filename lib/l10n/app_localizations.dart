@@ -3674,6 +3674,12 @@ abstract class AppLocalizations {
   /// **'Only the workspace owner can change this member.'**
   String get memberNoActions;
 
+  /// Kiosk error when a check-out finds no active check-in (#430)
+  ///
+  /// In en, this message translates to:
+  /// **'No active check-in found — the plan may have just updated.'**
+  String get kioskNotCheckedIn;
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:

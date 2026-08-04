@@ -263,6 +263,12 @@ class FakeReservationRepository implements ReservationRepository {
     if (badgeToken == 'bad-badge') {
       throw const PostgrestException(message: 'badge not recognized');
     }
+    // #430: the one-place trigger refusing a kiosk walk-up while the
+    // badge member is active elsewhere — pinned substring.
+    if (badgeToken == 'busy-badge') {
+      throw const PostgrestException(
+          message: 'you already have a reservation in that period');
+    }
     kioskActs.add((
       action: action,
       badgeToken: badgeToken,
