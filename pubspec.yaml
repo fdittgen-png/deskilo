@@ -51,6 +51,9 @@ dependencies:
   # App-icon badge counter (#426): pending confirmations on the launcher
   # icon (Android launchers, iOS, macOS).
   app_badge_plus: ^1.2.4
+  # Windows taskbar overlay badge (#444) — numbered .ico overlays from
+  # assets/badges/ (generated, committed).
+  windows_taskbar: ^1.1.2
   # #155 — opens the workspace's PayPal.me link from an unpaid statement.
   # Flutter-official, BSD-3.
   url_launcher: ^6.3.1
@@ -99,6 +102,7 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
+    - assets/badges/
     # Roboto (Apache-2.0, copied from the Flutter SDK) embedded into the
     # bill PDF: base-14 PDF fonts cannot encode '€'/'−' (#133).
     - assets/fonts/

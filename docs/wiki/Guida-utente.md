@@ -333,7 +333,7 @@ La tua identità esiste solo per il tempo dell'operazione: la credenziale va una
 
 ## 10. Notifiche
 
-Promemoria di check-in, conferme in sospeso, decisioni sulle spese — e quando un admin **rimuove una tua prenotazione** (scavalcare), tu e gli admin venite avvisati. La consegna è prima locale; i push dal server arrivano senza installare nulla su Android, iPhone/iPad, browser e macOS (Firebase Cloud Messaging) — *Impostazioni → Avanzate* mostra se il push è attivo su questo dispositivo. L'icona dell'app mostra le tue conferme in attesa. I push non portano mai nomi né orari; l'app compone il testo localmente.
+Promemoria di check-in, conferme in sospeso, decisioni sulle spese — e quando un admin **rimuove una tua prenotazione** (scavalcare), tu e gli admin venite avvisati. La consegna è prima locale; i push dal server arrivano senza installare nulla su Android, iPhone/iPad, browser e macOS (Firebase Cloud Messaging) — *Impostazioni → Avanzate* mostra se il push è attivo su questo dispositivo. L'icona dell'app mostra le tue conferme in attesa — su Android, iPhone/iPad, nel Dock di macOS, nella barra di Windows e nelle web app installate. I push non portano mai nomi né orari; l'app compone il testo localmente.
 
 ## 11. Privacy
 

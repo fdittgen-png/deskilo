@@ -48,4 +48,4 @@ final class AppBadgeProvider
   }
 }
 
-String _$appBadgeHash() => r'd626f646b24fe0395b594a75b41512436cdd5520';
+String _$appBadgeHash() => r'597dc9d0cf8278a70db061b0ab0c90494415c89e';
