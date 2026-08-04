@@ -393,6 +393,10 @@
     "description": "Archive empty state while filtering — NOT an empty archive"
   },
   "invoiceFilterClear": "Clear filters",
+  "invoiceShowCancelled": "Show cancelled",
+  "@invoiceShowCancelled": {
+    "description": "Filter chip revealing cancelled (voided) invoices (#452)"
+  },
   "@invoiceFilterClear": {
     "description": "Archive: back to the unfiltered list"
   },

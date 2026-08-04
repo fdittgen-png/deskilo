@@ -521,6 +521,7 @@
   },
   "invoiceFilterNoMatch": "Nessuna fattura corrisponde a questi filtri.",
   "invoiceFilterClear": "Azzera i filtri",
+  "invoiceShowCancelled": "Mostra annullate",
   "invoiceReplacedBy": "Sostituita da {number}",
   "@invoiceReplacedBy": {
     "placeholders": {

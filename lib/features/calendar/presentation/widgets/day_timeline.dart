@@ -343,13 +343,17 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     final tracks = <Widget>[_ruler(context)];
     final visibleReservations = <Reservation>[];
     for (final (level, plan) in plans) {
-      // Only what lives on this level.
+      // Only what lives on this level — incl. whole-desk and
+      // whole-level rows (#452), which were silently dropped before.
       final seatIds = {for (final s in plan.seats) s.id};
+      final deskIds = {for (final d in plan.desks) d.id};
       final officeIds = {for (final o in plan.offices) o.id};
       final levelReservations = dayReservations
           .where((r) =>
               (r.seatId != null && seatIds.contains(r.seatId)) ||
-              (r.officeId != null && officeIds.contains(r.officeId)))
+              (r.deskId != null && deskIds.contains(r.deskId)) ||
+              (r.officeId != null && officeIds.contains(r.officeId)) ||
+              (r.levelId != null && r.levelId == plan.levelId))
           .toList();
 
       // Same per-level rule as single-level mode: nothing to show without
@@ -374,6 +378,10 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
       // Collapsed: the header stays (a tap re-opens it) but its office /
       // desk / seat rows are skipped entirely.
       if (collapsed) continue;
+      // Whole-level rows lane onto every seat of the level (#452).
+      final wholeLevelReservations = levelReservations
+          .where((r) => r.levelId == plan.levelId)
+          .toList();
       for (final office in plan.offices) {
         final officeReservations = levelReservations
             .where((r) => r.officeId == office.id)
@@ -387,9 +395,15 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
             height: TimelineAxis.headerRowHeight,
             width: TimelineAxis.trackWidth,
           ));
+          // Whole-desk rows lane onto this desk's seats (#452).
+          final deskReservations = levelReservations
+              .where((r) => r.deskId == desk.id)
+              .toList();
           for (final Seat seat in seats) {
             final blocks = <Reservation>[
+              ...wholeLevelReservations,
               ...officeReservations,
+              ...deskReservations,
               ...levelReservations.where((r) => r.seatId == seat.id),
             ];
             leadingCells.add(_seatCell(context, seat, brightness));

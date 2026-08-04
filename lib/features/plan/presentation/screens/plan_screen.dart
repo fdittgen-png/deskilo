@@ -475,6 +475,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         : const <({String id, String name})>[];
 
     final next = nextReservationOnSeat(
+      plan: plan,
       seat: seat,
       reservations: reservations,
       at: start,

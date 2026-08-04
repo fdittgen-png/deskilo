@@ -57,6 +57,10 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
   String? _filterPeriod;
   InvoiceSort _sort = InvoiceSort.newest;
 
+  /// Cancelled (voided) invoices are hidden BY DEFAULT (#452, field
+  /// request) — the chip lets issuers pull the correction trail back in.
+  bool _hideVoided = true;
+
   bool get _filtering => _filterMemberId != null || _filterPeriod != null;
 
   void _clearFilters() => setState(() {
@@ -159,9 +163,15 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
     // not tagged erroneous — a cancelled invoice owes nobody anything and
     // only confuses (field decision 0072). Issuers keep seeing everything
     // closed, erroneous included, because correcting is their job.
+    // #452: cancelled invoices are filtered out by default for
+    // EVERYONE; the chip (issuers only — a member's cancelled invoice
+    // stays hidden, field decision 0072) shows them again on demand.
     final visible = [
       for (final invoice in invoices)
-        if ((widget.canIssue ? closed(invoice) : !invoice.isVoided) &&
+        if ((widget.canIssue
+                ? closed(invoice) &&
+                    !(_hideVoided && invoice.isVoided)
+                : !invoice.isVoided) &&
             (_filterMemberId == null ||
                 invoice.memberId == _filterMemberId) &&
             (_filterPeriod == null || invoice.period == _filterPeriod))
@@ -316,8 +326,22 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
             ),
           ]),
           // How much of the archive is on screen, and one tap back to all
-          // of it.
+          // of it. Issuers can pull the cancelled correction trail back
+          // in (#452 — hidden by default).
           Row(children: [
+            if (widget.canIssue)
+              Padding(
+                padding: const EdgeInsets.only(right: AppSpacing.xs),
+                child: FilterChip(
+                  key: const ValueKey('invoice-filter-hide-voided'),
+                  label: Text(
+                    l10n?.invoiceShowCancelled ?? 'Show cancelled',
+                  ),
+                  selected: !_hideVoided,
+                  onSelected: (show) =>
+                      setState(() => _hideVoided = !show),
+                ),
+              ),
             Expanded(
               child: Text(
                 l10n?.invoiceCountShown(shown) ?? '$shown invoices',

@@ -379,7 +379,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
           replace: true,
         );
       case SeatState.free:
-        await _bookingSheet(seat, reservations, window);
+        await _bookingSheet(seat, reservations, window, plan: plan);
       case SeatState.mine:
         final mine = reservationOnSeatInRange(
           plan: plan,
@@ -419,11 +419,24 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
   /// Punctual reservation over the browsed window via the shared
   /// [BookingSheet] (#206) — never a walk-up, never a series, never a
   /// maintenance block (those stay on the Plan tab).
+  /// The plan containing [seatId] — the Day/Week hub surfaces span all
+  /// levels, so a tapped seat's plan is resolved from the loaded plans
+  /// (#452: the next-reservation cap needs it for whole-space rows).
+  FloorPlan? _planContaining(String seatId) {
+    final levels = ref.read(levelsProvider).value ?? const [];
+    for (final level in levels) {
+      final plan = ref.read(floorPlanProvider(level.id)).value;
+      if (plan != null && plan.seats.any((s) => s.id == seatId)) return plan;
+    }
+    return null;
+  }
+
   Future<void> _bookingSheet(
     Seat seat,
     List<Reservation> reservations,
-    HalfDayWindow window,
-  ) async {
+    HalfDayWindow window, {
+    FloorPlan? plan,
+  }) async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
@@ -442,11 +455,17 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     // Cap by the next reservation on the seat (plan parity): a
     // range-filtered free seat cannot be capped below the window, but a
     // stale plan could.
-    final next = nextReservationOnSeat(
-      seat: seat,
-      reservations: reservations,
-      at: window.start,
-    );
+    // Whole-space rows need the seat's plan; without one the cap is
+    // skipped — the server re-checks every booking anyway.
+    final seatPlan = plan ?? _planContaining(seat.id);
+    final next = seatPlan == null
+        ? null
+        : nextReservationOnSeat(
+            plan: seatPlan,
+            seat: seat,
+            reservations: reservations,
+            at: window.start,
+          );
     var end = window.end;
     var capped = false;
     if (next != null && next.startsAt.isBefore(end)) {

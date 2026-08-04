@@ -2720,6 +2720,12 @@ abstract class AppLocalizations {
   /// **'Clear filters'**
   String get invoiceFilterClear;
 
+  /// Filter chip revealing cancelled (voided) invoices (#452)
+  ///
+  /// In en, this message translates to:
+  /// **'Show cancelled'**
+  String get invoiceShowCancelled;
+
   /// Detail sheet: the correction chain, downstream (0061)
   ///
   /// In en, this message translates to:
