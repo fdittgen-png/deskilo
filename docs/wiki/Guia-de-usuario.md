@@ -111,7 +111,7 @@ El hilo de eventos es la pista de auditoría del espacio: reservas creadas/cambi
 
 **El protocolo de confirmación:** cuando un admin hace algo *por otra persona* — te reserva un asiento, registra tu pago — queda **pendiente hasta que confirmes**. Lo pendiente se fija arriba con botones de aceptar/rechazar y recibes una notificación. Lo que haces sobre ti mismo nunca requiere confirmación.
 
-**Quórum de validación:** para asuntos de dinero y cambios de rol, el propietario define *quién* debe aprobar y *cuántas* aprobaciones hacen falta. Las solicitudes sin respuesta caducan a los 7 días — nada costoso se concede jamás en silencio.
+**Quórum de validación:** para asuntos de dinero y cambios de rol, el propietario define *quién* debe aprobar y *cuántas* aprobaciones hacen falta. **Nadie valida su propio evento** — solo otra persona puede; sin otro validador, la solicitud simplemente espera. Las solicitudes sin respuesta caducan a los 7 días — nada costoso se concede jamás en silencio, ni uno mismo se lo concede.
 
 El propietario afina esto por **dominio** en **Ajustes → Reglas de validación**: pagos, gastos, servicios, medias jornadas extra, cambios de rol, reservas y ajustes tienen cada uno su propia regla (o heredan la regla por defecto). Una regla define el número de validaciones requeridas, *qué* admins pueden validar (todos, o algunos concretos) y si el propietario debe firmar siempre.
 

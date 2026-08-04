@@ -90,16 +90,16 @@ sealed class WorkspaceEvent with _$WorkspaceEvent {
           actorIsSubject);
 
   /// Whether the server would accept a decision from [me] right now
-  /// (#107, #130 quorum). Mirrors respond_to_event (migration 0017):
+  /// (#107, #130 quorum). Mirrors respond_to_event (migration 0086):
   ///  - the subject of an admin-initiated event decides (and must accept);
   ///  - owners always validate; admins per [policy] eligibility;
-  ///  - never the actor or subject — except the solo escape hatch (#107):
-  ///    when no other eligible validator exists, the actor self-decides;
+  ///  - NEVER the actor (#434, owner rule: only another person
+  ///    validates — the old #107 solo escape hatch is gone), and never
+  ///    the subject of someone else's action outside rule (a);
   ///  - never someone who [alreadyDecided] (one decision per validator).
   bool isDecidedBy(
     Member me, {
     required ValidationPolicy policy,
-    required bool hasOtherEligibleValidator,
     bool alreadyDecided = false,
   }) {
     if (!isPending || alreadyDecided) return false;
@@ -115,28 +115,11 @@ sealed class WorkspaceEvent with _$WorkspaceEvent {
     // The subject never validates what someone else did to them (their
     // say is rule (a) above, when they have one).
     if (me.id == subjectMemberId && me.id != actorMemberId) return false;
-    // No self-approval — unless the pool collapses to the actor (#107).
-    if (me.id == actorMemberId) return !hasOtherEligibleValidator;
+    // No self-approval, ever (#434) — one's own event is validated only
+    // by another person, or expires unvalidated.
+    if (me.id == actorMemberId) return false;
     return true;
   }
-
-  /// Whether any eligible validator besides the actor/subject exists among
-  /// [members] — the pool respond_to_event sizes for the #107 escape hatch.
-  bool hasOtherEligibleValidator(
-    List<Member> members,
-    ValidationPolicy policy,
-  ) =>
-      members.any(
-        (m) =>
-            m.status == MemberStatus.active &&
-            m.id != actorMemberId &&
-            m.id != subjectMemberId &&
-            (m.isOwner ||
-                (m.isAdmin &&
-                    policy.adminsMayValidate &&
-                    (policy.eligibleAdminIds.isEmpty ||
-                        policy.eligibleAdminIds.contains(m.id)))),
-      );
 
   DateTime? get payloadStart => payload['starts_at'] == null
       ? null

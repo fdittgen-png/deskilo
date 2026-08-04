@@ -202,3 +202,14 @@ tell an overrule from a self-cancel; it also fires on
 `actor_member_id` updates — exactly that re-attribution. Payloads stay
 the 0012 generic ping (`{"kind":"reservation_cancelled"}`): no names,
 no times ever transit the distributor; the client localizes.
+
+## No self-validation (0086 — `respond_to_event` v-next)
+
+| Operation | anon | user | worker | admin | owner | Mechanism |
+|---|---|---|---|---|---|---|
+| validate one's OWN event | — | ✗ | ✗ | ✗ | ✗ | the #107 solo escape hatch is removed — the actor is refused unconditionally |
+
+Owner rule (#434): only another person validates. The subject-as-
+fallback path stays (the subject of someone ELSE's action is another
+person). A pool that collapses to the actor leaves the event pending
+until it expires: never granted silently, never self-granted.

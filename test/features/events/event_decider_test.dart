@@ -37,8 +37,7 @@ WorkspaceEvent event({
       createdAt: DateTime.utc(2026, 7, 8),
     );
 
-/// Pre-#130 plumbing: no stored policy rows behave like the old protocol,
-/// so `hasOtherActiveAdmin` maps 1:1 to `hasOtherEligibleValidator`.
+/// Pre-#130 plumbing: no stored policy rows behave like the old protocol.
 final noPolicy = ValidationPolicy.defaults('ws-1', null);
 
 void main() {
@@ -51,8 +50,7 @@ void main() {
       expect(
         event().isDecidedBy(
           submitterAdmin,
-          policy: noPolicy,
-          hasOtherEligibleValidator: true,
+          policy: noPolicy
         ),
         isFalse,
       );
@@ -62,8 +60,7 @@ void main() {
       expect(
         event().isDecidedBy(
           admin,
-          policy: noPolicy,
-          hasOtherEligibleValidator: true,
+          policy: noPolicy
         ),
         isTrue,
       );
@@ -73,21 +70,21 @@ void main() {
       expect(
         event(actor: 'm-worker').isDecidedBy(
           worker,
-          policy: noPolicy,
-          hasOtherEligibleValidator: true,
+          policy: noPolicy
         ),
         isFalse,
       );
     });
 
-    test('solo-admin escape hatch: the only admin may self-decide', () {
+    test('NO solo escape hatch (#434): even the only admin never '
+        'self-decides — the event waits for another person or expires',
+        () {
       expect(
         event().isDecidedBy(
           submitterAdmin,
           policy: noPolicy,
-          hasOtherEligibleValidator: false,
         ),
-        isTrue,
+        isFalse,
       );
     });
   });
@@ -100,11 +97,11 @@ void main() {
         subject: 'm-worker',
       );
       expect(
-        e.isDecidedBy(worker, policy: noPolicy, hasOtherEligibleValidator: true),
+        e.isDecidedBy(worker, policy: noPolicy),
         isTrue,
       );
       expect(
-        e.isDecidedBy(admin, policy: noPolicy, hasOtherEligibleValidator: true),
+        e.isDecidedBy(admin, policy: noPolicy),
         isFalse,
       );
     });
@@ -116,11 +113,11 @@ void main() {
         subject: 'm-worker',
       );
       expect(
-        e.isDecidedBy(worker, policy: noPolicy, hasOtherEligibleValidator: true),
+        e.isDecidedBy(worker, policy: noPolicy),
         isTrue,
       );
       expect(
-        e.isDecidedBy(admin, policy: noPolicy, hasOtherEligibleValidator: true),
+        e.isDecidedBy(admin, policy: noPolicy),
         isFalse,
       );
     });
@@ -131,30 +128,28 @@ void main() {
       expect(
         e.isDecidedBy(
           submitterAdmin,
-          policy: noPolicy,
-          hasOtherEligibleValidator: true,
+          policy: noPolicy
         ),
         isFalse,
       );
       expect(
-        e.isDecidedBy(admin, policy: noPolicy, hasOtherEligibleValidator: true),
+        e.isDecidedBy(admin, policy: noPolicy),
         isTrue,
       );
       expect(
-        e.isDecidedBy(worker, policy: noPolicy, hasOtherEligibleValidator: true),
+        e.isDecidedBy(worker, policy: noPolicy),
         isFalse,
       );
     });
 
-    test('solo admin may decide their own service charge (escape hatch)', () {
+    test('a solo admin NEVER decides their own service charge (#434)', () {
       final e = event(type: EventType.serviceCharge);
       expect(
         e.isDecidedBy(
           submitterAdmin,
           policy: noPolicy,
-          hasOtherEligibleValidator: false,
         ),
-        isTrue,
+        isFalse,
       );
     });
 
@@ -165,11 +160,11 @@ void main() {
         subject: 'm-worker',
       );
       expect(
-        e.isDecidedBy(worker, policy: noPolicy, hasOtherEligibleValidator: true),
+        e.isDecidedBy(worker, policy: noPolicy),
         isTrue,
       );
       expect(
-        e.isDecidedBy(admin, policy: noPolicy, hasOtherEligibleValidator: true),
+        e.isDecidedBy(admin, policy: noPolicy),
         isFalse,
       );
     });
@@ -178,8 +173,7 @@ void main() {
       expect(
         event(status: EventStatus.confirmed).isDecidedBy(
           admin,
-          policy: noPolicy,
-          hasOtherEligibleValidator: true,
+          policy: noPolicy
         ),
         isFalse,
       );
@@ -197,11 +191,11 @@ void main() {
       final policy = noPolicy.copyWith(adminsMayValidate: false);
       expect(
         e.isDecidedBy(plainAdmin,
-            policy: policy, hasOtherEligibleValidator: true),
+            policy: policy),
         isFalse,
       );
       expect(
-        e.isDecidedBy(owner, policy: policy, hasOtherEligibleValidator: true),
+        e.isDecidedBy(owner, policy: policy),
         isTrue,
       );
     });
@@ -210,17 +204,17 @@ void main() {
       final policy = noPolicy.copyWith(eligibleAdminIds: ['m-a1']);
       expect(
         e.isDecidedBy(plainAdmin,
-            policy: policy, hasOtherEligibleValidator: true),
+            policy: policy),
         isTrue,
       );
       expect(
         e.isDecidedBy(otherAdmin,
-            policy: policy, hasOtherEligibleValidator: true),
+            policy: policy),
         isFalse,
       );
       // Owners always may, listed or not.
       expect(
-        e.isDecidedBy(owner, policy: policy, hasOtherEligibleValidator: true),
+        e.isDecidedBy(owner, policy: policy),
         isTrue,
       );
     });
@@ -230,7 +224,6 @@ void main() {
         e.isDecidedBy(
           plainAdmin,
           policy: noPolicy,
-          hasOtherEligibleValidator: true,
           alreadyDecided: true,
         ),
         isFalse,
@@ -240,14 +233,13 @@ void main() {
     test('owner_required: the pending event shows for the owner', () {
       final policy = noPolicy.copyWith(ownerRequired: true, requiredCount: 2);
       expect(
-        e.isDecidedBy(owner, policy: policy, hasOtherEligibleValidator: true),
+        e.isDecidedBy(owner, policy: policy),
         isTrue,
       );
       expect(
         e.isDecidedBy(
           owner,
           policy: policy,
-          hasOtherEligibleValidator: true,
           alreadyDecided: true,
         ),
         isFalse,
@@ -264,7 +256,7 @@ void main() {
       );
       expect(
         forOther.isDecidedBy(plainAdmin,
-            policy: noPolicy, hasOtherEligibleValidator: true),
+            policy: noPolicy),
         isTrue,
       );
     });
@@ -273,51 +265,10 @@ void main() {
       final paused = member('m-a1', admin: true, status: MemberStatus.paused);
       expect(
         e.isDecidedBy(paused,
-            policy: noPolicy, hasOtherEligibleValidator: true),
+            policy: noPolicy),
         isFalse,
       );
     });
   });
 
-  group('hasOtherEligibleValidator', () {
-    final e = event(actor: 'm-worker');
-
-    test('counts owners and eligible admins, never actor or subject', () {
-      final members = [
-        member('m-worker'), // actor+subject
-        member('m-a1', admin: true),
-      ];
-      expect(e.hasOtherEligibleValidator(members, noPolicy), isTrue);
-      expect(
-        e.hasOtherEligibleValidator(
-          members,
-          noPolicy.copyWith(adminsMayValidate: false),
-        ),
-        isFalse,
-      );
-      expect(
-        e.hasOtherEligibleValidator(
-          members,
-          noPolicy.copyWith(eligibleAdminIds: ['m-a2']),
-        ),
-        isFalse,
-      );
-    });
-
-    test('owners count even when admins may not validate', () {
-      final members = [member('m-owner', owner: true)];
-      expect(
-        e.hasOtherEligibleValidator(
-          members,
-          noPolicy.copyWith(adminsMayValidate: false),
-        ),
-        isTrue,
-      );
-    });
-
-    test('the pool is empty when only the actor could validate (#107)', () {
-      final members = [member('m-worker', admin: true)];
-      expect(e.hasOtherEligibleValidator(members, noPolicy), isFalse);
-    });
-  });
 }

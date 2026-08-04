@@ -111,7 +111,7 @@ Le fil d'événements est la piste d'audit de votre espace : réservations cré�
 
 **Le protocole de confirmation :** dès qu'un admin agit *pour quelqu'un d'autre* — réserve une place pour vous, enregistre votre paiement — l'action reste **en attente jusqu'à votre confirmation**. Les éléments en attente sont épinglés en haut avec des boutons accepter/refuser et vous êtes notifié. Vos actions sur vous-même ne demandent jamais de confirmation.
 
-**Quorum de validation :** pour les questions d'argent et les changements de rôle, le propriétaire définit *qui* doit approuver et *combien* d'approbations il faut. Les demandes sans réponse expirent après 7 jours — rien de coûteux n'est jamais accordé en silence.
+**Quorum de validation :** pour les questions d'argent et les changements de rôle, le propriétaire définit *qui* doit approuver et *combien* d'approbations il faut. **Personne ne valide son propre événement** — seule une autre personne le peut ; sans autre validateur, la demande attend, simplement. Les demandes sans réponse expirent après 7 jours — rien de coûteux n'est jamais accordé en silence, ni auto-accordé.
 
 Le propriétaire règle cela par **domaine** dans **Réglages → Règles de validation** : paiements, dépenses, services, demi-journées supplémentaires, changements de rôle, réservations et ajustements ont chacun leur règle (ou héritent de la règle par défaut). Une règle fixe le nombre de validations requises, *quels* admins peuvent valider (tous, ou nommés), et si le propriétaire doit toujours signer.
 

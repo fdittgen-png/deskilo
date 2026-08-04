@@ -111,7 +111,7 @@ The events feed is the audit trail of your workspace: reservations created/chang
 
 **The confirmation protocol:** whenever an admin does something *for somebody else* — books a seat for you, records your payment — it stays **pending until you confirm**. Pending items are pinned on top with accept/reject buttons and you get a notification. Actions you take on yourself never need confirmation.
 
-**Validation quorum:** for money matters and role changes the owner defines *who* must approve and *how many* approvals are needed. Unanswered requests expire after 7 days — nothing costly is ever granted silently.
+**Validation quorum:** for money matters and role changes the owner defines *who* must approve and *how many* approvals are needed. **Nobody validates their own event** — only another person can; where no other validator exists, the request simply waits. Unanswered requests expire after 7 days — nothing costly is ever granted silently, and nothing is self-granted.
 
 The owner tunes this per **domain** in **Settings → Validation rules**: payments, expenses, services, extra half-days, role changes, reservations, and adjustments each have their own rule (or inherit the default). A rule sets the number of required validations, *which* admins may validate (all, or named ones), and whether the owner must always sign off.
 
