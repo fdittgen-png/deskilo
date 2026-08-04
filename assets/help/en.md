@@ -377,7 +377,7 @@ Your identity exists only for the moment of the operation: the credential is sen
 
 ## 10. Notifications
 
-Check-in reminders, pending confirmations, expense decisions — and when an admin **removes one of your reservations** (overrule), you and the admins are notified. Delivery is local-first; server pushes use **UnifiedPush** on Android (no Google services, no Firebase anywhere), which needs a **distributor app** on your device — install **ntfy** (F-Droid or Play Store) once, and *Settings → Advanced* shows whether push is active on this device. Pushed payloads never carry names or times; the app builds the notification text locally.
+Check-in reminders, pending confirmations, expense decisions — and when an admin **removes one of your reservations** (overrule), you and the admins are notified. Delivery is local-first; server pushes arrive out of the box on Android, iPhone/iPad, the browser and macOS (Firebase Cloud Messaging) — *Settings → Advanced* shows whether push is active on this device. On setups without Firebase, **UnifiedPush** takes over automatically (install **ntfy** once). The app-icon badge shows your pending-confirmations count. Pushed payloads never carry names or times; the app builds the notification text locally.
 
 ## 11. Privacy
 

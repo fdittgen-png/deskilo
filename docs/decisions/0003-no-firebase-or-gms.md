@@ -1,6 +1,6 @@
 # ADR 0003 — No Firebase, no Google Play Services
 
-**Status:** accepted · **Date:** 2026-07-07
+**Status:** superseded by [0011](0011-notifications-first-fcm.md) · **Date:** 2026-07-07
 
 ## Context
 

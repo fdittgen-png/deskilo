@@ -335,7 +335,7 @@ Votre identité n'existe que le temps de l'opération : l'identifiant est envoy�
 
 ## 10. Notifications
 
-Rappels de pointage, confirmations en attente, décisions de dépenses — et quand un admin **retire une de vos réservations** (outrepasser), vous et les admins êtes notifiés. La livraison est locale d'abord ; les pushs serveur utilisent **UnifiedPush** sur Android (pas de services Google, aucun Firebase) et nécessitent une **app distributrice** sur l'appareil — installez **ntfy** (F-Droid ou Play Store) une fois ; *Réglages → Avancé* indique si le push est actif sur cet appareil. Les contenus poussés ne portent jamais de noms ni d'horaires ; l'app compose le texte localement.
+Rappels de pointage, confirmations en attente, décisions de dépenses — et quand un admin **retire une de vos réservations** (outrepasser), vous et les admins êtes notifiés. La livraison est locale d'abord ; les pushs serveur arrivent sans rien installer sur Android, iPhone/iPad, navigateur et macOS (Firebase Cloud Messaging) — *Réglages → Avancé* indique si le push est actif sur cet appareil. Sans Firebase, **UnifiedPush** prend le relais automatiquement (installez **ntfy** une fois). L'icône de l'app affiche le nombre de confirmations en attente. Les contenus poussés ne portent jamais de noms ni d'horaires ; l'app compose le texte localement.
 
 ## 11. Confidentialité
 

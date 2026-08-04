@@ -45,15 +45,15 @@ Every feature must serve at least one of three goals. A proposal serving none is
 
 1. **Know where you can sit** — live floor plan, check-in/out, reservations.
 2. **Know what you owe / are owed** — subscription, extra usage, community expenses, one transparent ledger per member.
-3. **Run the space without a landlord platform** — self-organized roles, no vendor lock-in, self-hostable data, works on F-Droid.
+3. **Run the space without a landlord platform** — self-organized roles, no vendor lock-in, self-hostable data.
 
 ### Market position
 
-Seatsurfing (GPL, web) is the strongest open-source desk-booking tool but has no billing/membership model. Nadine covers coworking billing but is an aging Django web suite. On F-Droid the niche is empty. DesKilo's differentiator is the combination: visual booking **plus** the community money layer, mobile-first, libre.
+Seatsurfing (GPL, web) is the strongest open-source desk-booking tool but has no billing/membership model. Nadine covers coworking billing but is an aging Django web suite. DesKilo's differentiator is the combination: visual booking **plus** the community money layer, mobile-first, libre.
 
 ### Founding constraints
 
-- **No Google Play Services, no Firebase, no third-party tracking, no GPL dependencies** (ADR 0003, ADR 0009). Enforced in CI by `scripts/audit_no_gms.sh`, which greps `pubspec.yaml`, `pubspec.lock` and all three Gradle files for `firebase|google_mobile_ads|google_sign_in|com.google.gms|com.google.firebase|google_mlkit|play_core|in_app_review|com.google.android.play` and exits non-zero on any hit.
+- **Notifications first** (ADR 0011, superseding ADR 0003): Firebase Cloud Messaging is the primary push transport (Android/iOS/web/macOS), UnifiedPush the automatic fallback where Firebase is unconfigured. No third-party tracking, no GPL dependencies (ADR 0009). The former no-GMS CI audits were removed with the F-Droid plans.
 - **Self-hostable backend** — Supabase is open source; `BackendConfig` accepts `--dart-define=SUPABASE_URL=…` / `SUPABASE_KEY=…` at build time.
 - **Every user-facing string translatable**, English canonical (ADR 0007).
 
@@ -62,7 +62,7 @@ Seatsurfing (GPL, web) is the strongest open-source desk-booking tool but has no
 ## 2. Repository at a glance
 
 ```
-android/                Android runner (Play + F-Droid — one flavor, GMS-free)
+android/                Android runner (Play; FCM per ADR 0011)
 ios/                    iOS runner + fastlane (Fastfile, Appfile, Matchfile)
 macos/                  macOS desktop runner (sandboxed, entitlements)
 windows/                Windows runner + WiX v5 MSI authoring (installer/deskilo.wxs)
@@ -86,7 +86,6 @@ docs/
 fastlane/metadata/
   android/<locale>/     Play listing text + images (en-US, de-DE, fr-FR, es-ES, it-IT)
   ios/<locale>/         App Store listing text + review information
-metadata/de.deskilo.app.yml   fdroiddata recipe DRAFT
 lib/                    the app — 293 Dart files
 supabase/
   migrations/           0001–0073 — schema, RLS, RPCs (numbered, immutable)
@@ -95,7 +94,7 @@ test/                   unit + widget tests, fakes in test/helpers/
 integration_test/       end-to-end flows (app_boot_test.dart etc.)
 tool/                   build_arb.dart, build_help.dart, store_assets/
 tools/                  upload_to_play.py, upload_listing.py
-scripts/                audit_no_gms.sh, gen_app_icon.py, sign_and_notarize_macos.sh
+scripts/                gen_app_icon.py, sign_and_notarize_macos.sh
 .github/                10 workflows, 3 issue templates, PR template
 ```
 
@@ -119,7 +118,7 @@ scripts/                audit_no_gms.sh, gen_app_icon.py, sign_and_notarize_maco
 
 | Tool | Pinned version |
 |---|---|
-| Flutter | **3.41.9** stable (`FLUTTER_VERSION` in every workflow; `srclibs: flutter@3.41.9` in the F-Droid recipe) |
+| Flutter | **3.41.9** stable (`FLUTTER_VERSION` in every workflow) |
 | Dart SDK constraint | `^3.11.5` |
 | Java / JDK | 17 (temurin on CI; `JavaVersion.VERSION_17` source/target) |
 | Android Gradle Plugin | 8.11.1 |
@@ -434,7 +433,7 @@ Four providers behind one architecture: **PayPal** (Orders v2), **Stripe** (Chec
 
 ### Design principles
 
-1. **The client never holds PSP secrets.** All provider calls happen in Edge Functions. The app only *starts* a payment and *opens a URL*. This keeps the F-Droid build clean — no proprietary payment SDK is linked in; the app opens the provider's hosted approval page in a browser.
+1. **The client never holds PSP secrets.** All provider calls happen in Edge Functions. The app only *starts* a payment and *opens a URL*. No proprietary payment SDK is linked in; the app opens the provider's hosted approval page in a browser.
 2. **The capture is the proof.** A provider-confirmed capture posts a **confirmed** ledger credit directly. It does not go through the two-person confirmation flow — that exists to vouch for *manual* claims; a PSP capture needs no human witness.
 3. **Idempotent by capture id.** Webhooks retry; `settle_online_payment` is keyed on `(provider, order_id)` so a credit is posted at most once and replays are harmless.
 4. **Opt-in per workspace.** The `onlinePayments` feature flag is **off by default**, and the Edge Function stays inert until its secrets exist. Both must be true for a charge to be possible.
@@ -717,7 +716,6 @@ Ten workflows in `.github/workflows/`. All pin `FLUTTER_VERSION: "3.41.9"`.
 Runs on push to `master` and on every pull request. Concurrency group `ci-${{ github.ref }}`, cancel-in-progress on PRs only. `ubuntu-latest`, 20-minute timeout.
 
 1. `flutter pub get`
-2. **No-GMS audit** — `bash scripts/audit_no_gms.sh` (ADR 0003)
 3. **l10n gate** — `dart run tool/build_arb.dart && flutter gen-l10n`, then `git diff --exit-code -- lib/l10n`. Any drift fails with an actionable error naming HARD RULE #4.
 4. **Analyze** — `flutter analyze` (lib + test)
 5. **Tests with coverage** — `flutter test --coverage`
@@ -891,7 +889,7 @@ Nine GitHub defaults plus three project-specific ones:
 | Listing sync | `play-listing.yml` — texts + icon + feature graphic + screenshots |
 | Locales | en-US, de-DE, fr-FR, es-ES, it-IT |
 
-**Assets:** `fastlane/metadata/android/en-US/images/icon.png` (512×512, derived from `assets/icon/icon_full.png`) and `featureGraphic.png` (1024×500) live once under `en-US`; F-Droid reads the same paths, and other Play locales fall back to en-US at upload time. Six phone screenshots are present (`phoneScreenshots/01.png`–`06.png`). Regenerate the feature graphic after a brand change with `flutter test tool/store_assets/feature_graphic_test.dart` (it draws the graphic with the canvas API and is not part of the CI test run).
+**Assets:** `fastlane/metadata/android/en-US/images/icon.png` (512×512, derived from `assets/icon/icon_full.png`) and `featureGraphic.png` (1024×500) live once under `en-US`; other Play locales fall back to en-US at upload time. Six phone screenshots are present (`phoneScreenshots/01.png`–`06.png`). Regenerate the feature graphic after a brand change with `flutter test tool/store_assets/feature_graphic_test.dart` (it draws the graphic with the canvas API and is not part of the CI test run).
 
 **Owner-only steps Google offers no API for:**
 1. Play Console → Create app: name *DesKilo*, App, Free.
@@ -937,23 +935,9 @@ gh workflow run ios-testers.yml -f email=someone@example.com
 
 **macOS:** `gh workflow run macos-app.yml -f ref=master` → a signed, notarised, stapled DMG (drag-into-Applications window built with `hdiutil`). See §13 for the honest-degradation behavior and the account-holder certificate constraint.
 
-### 15.3 F-Droid
+### 15.3 F-Droid — DROPPED (ADR 0011)
 
-| Item | Value |
-|---|---|
-| Recipe | `metadata/de.deskilo.app.yml` — **a DRAFT** |
-| License | 0BSD (on F-Droid's allowed-licenses list) |
-| Categories | Time, Money |
-| Summary | "Coworking community app — desk booking and shared money, libre" |
-| Build | `srclibs: flutter@3.41.9`, JDK 17 headless, `flutter build apk --release` |
-| Prebuild | `bash scripts/audit_no_gms.sh` — the GMS-free guarantee is asserted inside F-Droid's own buildserver, not just in our CI |
-| Auto-update | `AutoUpdateMode: Version`, `UpdateCheckMode: Tags ^v[0-9.]+$` |
-
-**No flavor split is needed** until a Play-only feature appears — the single Android build is already 100 % Google-services-free.
-
-**To submit:** after the first tagged release (`vX.Y.Z`), fill in the four `TODO-first-release` fields (`versionName`, `commit`, `CurrentVersion`, `CurrentVersionCode`) and open a merge request against `gitlab.com/fdroid/fdroiddata`. F-Droid builds from source on their buildserver.
-
-**Caveat carried over from Sparkilo:** sideloaded/F-Droid APKs and Play APKs are signed differently — a device must uninstall one to install the other.
+The F-Droid plans (flavor, fdroiddata recipe draft, no-GMS audits) were cancelled 2026-08-04 by owner decision: notifications are first priority, and FCM requires Google services. The recipe draft was removed.
 
 ### 15.4 Windows
 
@@ -978,7 +962,7 @@ Android publishing is separate and continuous: `play-internal.yml` runs daily an
 
 ### Current status
 
-Feature-complete for the v1 scope and in dogfooding. Owner-blocked items: iOS secrets in place but the external-group path is new; Supabase social-provider secrets; Play listing review; F-Droid recipe version fields pending the first tagged release.
+Feature-complete for the v1 scope and in dogfooding. Owner-blocked items: iOS secrets in place but the external-group path is new; Supabase social-provider secrets; Play listing review.
 
 ---
 
@@ -1065,7 +1049,7 @@ tools/upload_to_play.py
 windows/installer/deskilo.wxs
 ```
 
-(`docs/decisions/0004-mit-license.md` correctly keeps its MIT reference — it *is* the superseded ADR.) The `LICENSE` file and the F-Droid recipe are correct.
+(`docs/decisions/0004-mit-license.md` correctly keeps its MIT reference — it *is* the superseded ADR.) The `LICENSE` file is correct.
 
 ### H. `flutter_launcher_icons` adaptive background is off-brand
 
@@ -1075,9 +1059,6 @@ windows/installer/deskilo.wxs
 
 CI enforces **≥ 45 %** line coverage while the methodology describes a 70/20/10 TDD pyramid with a "coverage gate". 45 % is a floor that a 1 000-test suite clears comfortably; it is not a meaningful ratchet. Raising it incrementally would make it one.
 
-### J. F-Droid recipe still carries `TODO-first-release`
-
-Four fields (`versionName`, `commit`, `CurrentVersion`, `CurrentVersionCode`) are placeholders. The recipe cannot be submitted until the first `vX.Y.Z` tag exists.
 
 ### K. Factur-X conformance is asserted by unit test, not by a validator
 

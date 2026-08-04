@@ -8,6 +8,7 @@ import 'package:deskilo/features/auth/domain/social_provider.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
+import 'package:deskilo/core/badge/app_badge.dart';
 import 'package:deskilo/core/realtime/realtime_providers.dart';
 import 'package:deskilo/core/realtime/realtime_sync.dart';
 import 'package:deskilo/core/cache/cache_store.dart';
@@ -820,11 +821,13 @@ List<Override> standardTestOverrides({
   FrontCameraStore? frontCamera,
   FileSharer? fileSharer,
   RealtimeSync? realtime,
+  FakeAppBadge? badge,
 }) {
   return [
     // No-op realtime by default: the real impl touches Supabase.instance,
     // which does not exist under flutter_test (#413).
     realtimeSyncProvider.overrideWithValue(realtime ?? FakeRealtimeSync()),
+    appBadgeProvider.overrideWithValue(badge ?? FakeAppBadge()),
     // The clock is defaulted here rather than per-test so a screen that
     // starts reading it does not quietly re-arm the time bomb.
     clockProvider.overrideWithValue(clock ?? FixedClock(kTestNow)),
@@ -990,4 +993,12 @@ class FakeQrScanner {
 
   /// Simulates the camera decoding [code].
   void emit(String code) => _onCode?.call(code);
+}
+
+/// App-icon badge fake (#426): records every count written.
+class FakeAppBadge implements AppBadge {
+  final counts = <int>[];
+
+  @override
+  Future<void> update(int count) async => counts.add(count);
 }

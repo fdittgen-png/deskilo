@@ -1,6 +1,6 @@
 # DesKilo
 
-**Free, privacy-first coworking community app** — visual desk booking plus the community money layer, mobile-first, libre. Android (Play + F-Droid), iOS, Windows, macOS, and the browser. Sibling of [Sparkilo](https://github.com/fdittgen-png/tankstellen).
+**Free, privacy-first coworking community app** — visual desk booking plus the community money layer, mobile-first. Android, iOS, Windows, macOS, and the browser. Sibling of [Sparkilo](https://github.com/fdittgen-png/tankstellen).
 
 ## The leitmotiv
 
@@ -8,7 +8,7 @@ Every feature must serve at least one of:
 
 1. **Know where you can sit** — live floor plan, check-in/out, reservations.
 2. **Know what you owe / are owed** — subscription, extra usage, community expenses, one transparent ledger per member.
-3. **Run the space without a landlord platform** — self-organized roles, no vendor lock-in, self-hostable data, works on F-Droid.
+3. **Run the space without a landlord platform** — self-organized roles, no vendor lock-in, self-hostable data.
 
 ## What it does
 
@@ -32,7 +32,7 @@ Full product spec: [`docs/SPECIFICATION.md`](docs/SPECIFICATION.md) · architect
 
 ## Status
 
-Feature-complete for the v1 scope and in dogfooding: 73 SQL migrations, 1000+ tests, five locales, five Supabase Edge Functions. Google Play internal testing publishes daily; TestFlight uploads internally; macOS ships a notarised DMG and Windows an MSI on every version tag; the browser build deploys on demand. Still open: the F-Droid recipe (waiting on the first tagged release), the Play production listing review, and an end-to-end e-invoice transmission against a real provider account. See the [Epics](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+label%3Aepic) for the roadmap.
+Feature-complete for the v1 scope and in dogfooding: 73 SQL migrations, 1000+ tests, five locales, five Supabase Edge Functions. Google Play internal testing publishes daily; TestFlight uploads internally; macOS ships a notarised DMG and Windows an MSI on every version tag; the browser build deploys on demand. Still open: the Play production listing review, and an end-to-end e-invoice transmission against a real provider account. See the [Epics](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+label%3Aepic) for the roadmap.
 
 ## Stack (principles)
 
