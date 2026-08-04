@@ -9,6 +9,7 @@ import '../data/supabase_workspace_repository.dart';
 import '../domain/booking_granularity.dart';
 import '../domain/closure_day.dart';
 import '../domain/member.dart';
+import '../domain/member_note.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_repository.dart';
@@ -116,6 +117,15 @@ Future<WorkHours> workHours(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return WorkHours.defaults;
   return ref.watch(workspaceRepositoryProvider).fetchWorkHours(workspace.id);
+}
+
+/// Notes visible to me in the active workspace (#456), newest first —
+/// the shell listens and surfaces arrivals as local notifications.
+@Riverpod(keepAlive: true)
+Future<List<MemberNote>> myNotes(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return ref.watch(workspaceRepositoryProvider).fetchMyNotes(workspace.id);
 }
 
 /// One-off closure days of the active workspace, ordered by day (#127).

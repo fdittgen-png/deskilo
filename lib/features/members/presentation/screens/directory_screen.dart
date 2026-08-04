@@ -24,6 +24,7 @@ import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/presentation/widgets/member_note_dialog.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/directory_status.dart';
 import '../../providers/directory_providers.dart';
@@ -152,6 +153,10 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
     final whatsappOn = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.whatsappIntegration);
+    // Member notes (#456) — the send affordance on rows and sheets.
+    final notesOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.memberNotifications);
     // The owner-set group link (#231) shows the tile for ALL members.
     final groupUri = whatsappOn
         ? ref.watch(currentWorkspaceProvider).value?.whatsappGroupUri
@@ -220,6 +225,14 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
                       onWhatsapp: (uri) => _openLink(context, ref, uri),
                       onOpenReservation: (reservation) =>
                           _openReservation(context, reservation),
+                      onNotify: notesOn && member.id != myMemberId
+                          ? () => showMemberNoteDialog(
+                                context,
+                                ref,
+                                toMemberId: member.id,
+                                recipientName: names[member.id] ?? '',
+                              )
+                          : null,
                     ),
               ],
             ),
@@ -418,6 +431,8 @@ Future<void> _showMemberSheet(
   required DateTime now,
   required void Function(Uri uri) onWhatsapp,
   required void Function(Reservation reservation) onOpenReservation,
+  // Member notes (#456): null hides the affordance (feature off, self).
+  VoidCallback? onNotify,
 }) {
   return showModalBottomSheet<void>(
     context: context,
@@ -532,6 +547,19 @@ Future<void> _showMemberSheet(
                     },
                   ),
               const SizedBox(height: AppSpacing.lg),
+              if (onNotify != null) ...[
+                FilledButton.icon(
+                  key: ValueKey('directory-sheet-notify-${member.id}'),
+                  icon: const Icon(Icons.notifications_active_outlined),
+                  label: Text(
+                      l10n?.memberNotifyAction ?? 'Send notification'),
+                  onPressed: () {
+                    Navigator.of(sheetContext).pop();
+                    onNotify();
+                  },
+                ),
+                const SizedBox(height: AppSpacing.sm),
+              ],
               if (whatsappUri != null) ...[
                 FilledButton.icon(
                   key: ValueKey('directory-sheet-wa-${member.id}'),
@@ -602,6 +630,7 @@ class _MemberRow extends StatelessWidget {
     required this.now,
     required this.onWhatsapp,
     required this.onOpenReservation,
+    this.onNotify,
   });
 
   final Member member;
@@ -619,6 +648,9 @@ class _MemberRow extends StatelessWidget {
   final DateTime now;
   final void Function(Uri uri) onWhatsapp;
   final void Function(Reservation reservation) onOpenReservation;
+
+  /// Member notes (#456): null hides the affordance.
+  final VoidCallback? onNotify;
 
   @override
   Widget build(BuildContext context) {
@@ -745,6 +777,7 @@ class _MemberRow extends StatelessWidget {
         now: now,
         onWhatsapp: onWhatsapp,
         onOpenReservation: onOpenReservation,
+        onNotify: onNotify,
       ),
     );
 

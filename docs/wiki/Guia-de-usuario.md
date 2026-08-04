@@ -102,6 +102,7 @@ Mira quién forma tu comunidad:
 - Cada tarjeta muestra su **foto** (o inicial), **rol**, **estado personalizado** («en Berlín hasta el viernes…»), un indicador **en línea / visto por última vez**, y un **chip de reserva**: asiento registrado, reservado ahora, o próxima reserva.
 - Toca un miembro para su **ficha de detalle** — con sus próximas reservas.
 - **Desliza** un miembro para escribirle por **WhatsApp**; el **botón de grupo** abre el grupo de WhatsApp de la comunidad (definido por el propietario).
+- **Enviar notificación** (en la ficha de detalle y en las fichas de *Miembros y planes*): una nota corta a otro miembro — entregada como push y como notificación con tu nombre y tu mensaje. Los admins tienen un megáfono **Notificar a todos los admins** en la cabecera que llega a todos los admins, incluido el propietario. Conmutable con la función *Notificaciones entre miembros*.
 - Define tu foto, estado y visibilidad del teléfono en **Ajustes**.
 - Los admins y propietarios ven además el **correo** de cada miembro bajo el nombre — los miembros normales no: el canal de contacto entre miembros sigue siendo el número de WhatsApp compartido voluntariamente.
 

@@ -22,5 +22,13 @@
   "memberReservationLimitChip": "max {n}",
   "reservationLimitError": "Limite di prenotazioni raggiunto — hai già il numero massimo di prenotazioni aperte.",
   "memberPause": "Sospendi l'iscrizione",
-  "memberReactivate": "Riattiva l'iscrizione"
+  "memberReactivate": "Riattiva l'iscrizione",
+  "memberNotifyAction": "Invia notifica",
+  "memberNotifyAllAdmins": "Notifica tutti gli admin",
+  "memberAllAdmins": "tutti gli admin",
+  "memberNoteTitle": "Notifica {name}",
+  "memberNoteHint": "Il tuo messaggio",
+  "memberNoteSend": "Invia",
+  "memberNoteSent": "Notifica inviata.",
+  "memberNoteReceived": "Messaggio da {name}"
 }

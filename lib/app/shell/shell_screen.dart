@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -77,6 +79,28 @@ class ShellScreen extends ConsumerWidget {
                 'Someone needs your confirmation.',
           ),
       ]);
+    });
+
+    // Member notes (#456): a NEW note for me pops as a local
+    // notification with sender and text — fetched over RLS; the FCM
+    // push stays content-free (0012). The first load is catch-up, not
+    // news, so it never fires.
+    ref.listen(myNotesProvider, (previous, next) {
+      final notes = next.value;
+      final before = previous?.value;
+      if (notes == null || before == null) return;
+      final known = {for (final n in before) n.id};
+      final names = ref.read(memberNamesProvider).value ?? const {};
+      final myId = ref.read(myMemberProvider).value?.id;
+      for (final note in notes) {
+        if (known.contains(note.id) || note.fromMemberId == myId) continue;
+        final sender = names[note.fromMemberId] ?? '';
+        unawaited(ref.read(notificationServiceProvider).showNow(
+              title: l10n?.memberNoteReceived(sender) ??
+                  'Message from $sender',
+              body: note.body,
+            ));
+      }
     });
 
     // Day-based booking windows anchor to the WORKSPACE clock — install

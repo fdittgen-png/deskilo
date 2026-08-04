@@ -4,6 +4,7 @@ import 'booking_granularity.dart';
 import 'closure_day.dart';
 import 'member.dart';
 import 'member_badge.dart';
+import 'member_note.dart';
 import 'overage_policy.dart';
 import 'payment_instructions.dart';
 import 'workspace.dart';
@@ -253,6 +254,19 @@ abstract class WorkspaceRepository {
   /// Owner-only (RLS-enforced): persist the working day inside
   /// booking_rules without clobbering its other keys.
   Future<void> setWorkHours(String workspaceId, WorkHours hours);
+
+  /// Sends a member note (#456, RPC `send_member_note`): to one member,
+  /// or — [toMemberId] null — to all admins incl. the owner (the server
+  /// requires the sender to be an admin for that).
+  Future<void> sendMemberNote(
+    String workspaceId, {
+    required String? toMemberId,
+    required String body,
+  });
+
+  /// The notes visible to me in [workspaceId] (RLS scopes: mine,
+  /// addressed to me, or admin broadcasts), newest first.
+  Future<List<MemberNote>> fetchMyNotes(String workspaceId);
 
   /// One-off closure days of the workspace, ordered by day (#127).
   Future<List<ClosureDay>> fetchClosureDays(String workspaceId);

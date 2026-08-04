@@ -1133,6 +1133,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Introducción y pie escritos por el propietario en el PDF de la factura. Nunca toca el XML de la factura electrónica.';
 
   @override
+  String get featureMemberNotifications => 'Notificaciones entre miembros';
+
+  @override
+  String get featureMemberNotificationsDesc =>
+      'Envía una notificación corta a otro miembro; los admins pueden notificar a todos los admins, incluido el propietario.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override
@@ -2771,6 +2778,34 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get memberReactivate => 'Reactivar la membresía';
+
+  @override
+  String get memberNotifyAction => 'Enviar notificación';
+
+  @override
+  String get memberNotifyAllAdmins => 'Notificar a todos los admins';
+
+  @override
+  String get memberAllAdmins => 'todos los admins';
+
+  @override
+  String memberNoteTitle(String name) {
+    return 'Notificar a $name';
+  }
+
+  @override
+  String get memberNoteHint => 'Tu mensaje';
+
+  @override
+  String get memberNoteSend => 'Enviar';
+
+  @override
+  String get memberNoteSent => 'Notificación enviada.';
+
+  @override
+  String memberNoteReceived(String name) {
+    return 'Mensaje de $name';
+  }
 
   @override
   String get reserveMonthView => 'Mes';

@@ -1133,6 +1133,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Vom Inhaber verfasste Einleitung und Fußtext auf dem Rechnungs-PDF. Das E-Rechnungs-XML bleibt unberührt.';
 
   @override
+  String get featureMemberNotifications => 'Mitglieder-Benachrichtigungen';
+
+  @override
+  String get featureMemberNotificationsDesc =>
+      'Kurze Benachrichtigung an ein anderes Mitglied senden; Admins können alle Admins inkl. Inhaber benachrichtigen.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override
@@ -2777,6 +2784,34 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get memberReactivate => 'Mitgliedschaft reaktivieren';
+
+  @override
+  String get memberNotifyAction => 'Benachrichtigung senden';
+
+  @override
+  String get memberNotifyAllAdmins => 'Alle Admins benachrichtigen';
+
+  @override
+  String get memberAllAdmins => 'alle Admins';
+
+  @override
+  String memberNoteTitle(String name) {
+    return '$name benachrichtigen';
+  }
+
+  @override
+  String get memberNoteHint => 'Deine Nachricht';
+
+  @override
+  String get memberNoteSend => 'Senden';
+
+  @override
+  String get memberNoteSent => 'Benachrichtigung gesendet.';
+
+  @override
+  String memberNoteReceived(String name) {
+    return 'Nachricht von $name';
+  }
 
   @override
   String get reserveMonthView => 'Monat';

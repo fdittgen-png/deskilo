@@ -40,11 +40,15 @@ const Map<String, int> _baseline = {
   // workspace hint subtitle and the RPC write helper.
   'lib/features/profile/presentation/screens/settings_screen.dart': 990,
   'lib/features/money/presentation/screens/money_screen.dart': 980,
-  'lib/features/workspace/presentation/screens/members_screen.dart': 910,
+  // 910→950 (2026-08-04): #456 note tile + admin broadcast button —
+  // the dialog itself is its own file.
+  'lib/features/workspace/presentation/screens/members_screen.dart': 950,
   // 900→920 (2026-08-03): #410 admin-visible email line on the member
   // row — the row shares its chip helpers with the detail sheet, so
   // extracting it would drag half the file; 15 feature lines instead.
-  'lib/features/members/presentation/screens/directory_screen.dart': 920,
+  // 920→960 (2026-08-04): #456 notify affordance threaded through the
+  // row and the sheet.
+  'lib/features/members/presentation/screens/directory_screen.dart': 960,
   // 900→920 (2026-08-01): #393 environment picker threaded through the
   // send flow — feature lines, not accretion; picker itself is its own file.
   // 920→950 (2026-08-04): #454 template lookup + resolution threaded
@@ -68,8 +72,8 @@ const Map<String, int> _baseline = {
   'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 680,
   // 600→640 (2026-08-04): #446 fetchWorkHours/setWorkHours — two new
   // repository surfaces (merge-preserving booking_rules writes), not
-  // accretion.
-  'lib/features/workspace/data/supabase_workspace_repository.dart': 640,
+  // accretion. 640→660: #456 sendMemberNote/fetchMyNotes.
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 660,
   'lib/features/calendar/presentation/screens/calendar_screen.dart': 630,
 };
 

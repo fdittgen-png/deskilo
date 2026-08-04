@@ -2120,6 +2120,18 @@ abstract class AppLocalizations {
   /// **'Owner-written intro and footer text on the invoice PDF. Never touches the e-invoice XML.'**
   String get featureInvoicePdfTemplateDesc;
 
+  /// No description provided for @featureMemberNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Member notifications'**
+  String get featureMemberNotifications;
+
+  /// No description provided for @featureMemberNotificationsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a short notification to another member; admins can notify all admins including the owner.'**
+  String get featureMemberNotificationsDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -5011,6 +5023,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reactivate membership'**
   String get memberReactivate;
+
+  /// Member notes (#456)
+  ///
+  /// In en, this message translates to:
+  /// **'Send notification'**
+  String get memberNotifyAction;
+
+  /// Member notes (#456)
+  ///
+  /// In en, this message translates to:
+  /// **'Notify all admins'**
+  String get memberNotifyAllAdmins;
+
+  /// Member notes (#456)
+  ///
+  /// In en, this message translates to:
+  /// **'all admins'**
+  String get memberAllAdmins;
+
+  /// Member notes (#456)
+  ///
+  /// In en, this message translates to:
+  /// **'Notify {name}'**
+  String memberNoteTitle(String name);
+
+  /// Member notes (#456)
+  ///
+  /// In en, this message translates to:
+  /// **'Your message'**
+  String get memberNoteHint;
+
+  /// Member notes (#456)
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get memberNoteSend;
+
+  /// Member notes (#456)
+  ///
+  /// In en, this message translates to:
+  /// **'Notification sent.'**
+  String get memberNoteSent;
+
+  /// Member notes (#456)
+  ///
+  /// In en, this message translates to:
+  /// **'Message from {name}'**
+  String memberNoteReceived(String name);
 
   /// Reserve hub view segment: month availability calendar (#7)
   ///

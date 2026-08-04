@@ -1478,6 +1478,8 @@
   "featureWorkingHoursDesc": "Configure the working day and offer exact-hours booking; off keeps the 8:00–17:00 defaults.",
   "featureInvoicePdfTemplate": "Invoice PDF template",
   "featureInvoicePdfTemplateDesc": "Owner-written intro and footer text on the invoice PDF. Never touches the e-invoice XML.",
+  "featureMemberNotifications": "Member notifications",
+  "featureMemberNotificationsDesc": "Send a short notification to another member; admins can notify all admins including the owner.",
   "helpTitle": "Help",
   "helpContents": "Contents",
   "inviteSectionTitle": "Invite someone",
@@ -3560,6 +3562,48 @@
   "memberReactivate": "Reactivate membership",
   "@memberReactivate": {
     "description": "Member sheet action: reactivate a paused membership"
+  },
+  "memberNotifyAction": "Send notification",
+  "@memberNotifyAction": {
+    "description": "Member notes (#456)"
+  },
+  "memberNotifyAllAdmins": "Notify all admins",
+  "@memberNotifyAllAdmins": {
+    "description": "Member notes (#456)"
+  },
+  "memberAllAdmins": "all admins",
+  "@memberAllAdmins": {
+    "description": "Member notes (#456)"
+  },
+  "memberNoteTitle": "Notify {name}",
+  "@memberNoteTitle": {
+    "description": "Member notes (#456)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "memberNoteHint": "Your message",
+  "@memberNoteHint": {
+    "description": "Member notes (#456)"
+  },
+  "memberNoteSend": "Send",
+  "@memberNoteSend": {
+    "description": "Member notes (#456)"
+  },
+  "memberNoteSent": "Notification sent.",
+  "@memberNoteSent": {
+    "description": "Member notes (#456)"
+  },
+  "memberNoteReceived": "Message from {name}",
+  "@memberNoteReceived": {
+    "description": "Member notes (#456)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "reserveMonthView": "Month",
   "@reserveMonthView": {

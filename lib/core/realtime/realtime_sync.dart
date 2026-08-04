@@ -30,6 +30,7 @@ const realtimeTables = [
   'plan_images',
   'events',
   'event_decisions',
+  'member_notes',
   'ledger_entries',
   'payment_intents',
   'invoices',

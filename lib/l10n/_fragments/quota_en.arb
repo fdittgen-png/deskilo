@@ -122,5 +122,47 @@
   "memberReactivate": "Reactivate membership",
   "@memberReactivate": {
     "description": "Member sheet action: reactivate a paused membership"
+  },
+  "memberNotifyAction": "Send notification",
+  "@memberNotifyAction": {
+    "description": "Member notes (#456)"
+  },
+  "memberNotifyAllAdmins": "Notify all admins",
+  "@memberNotifyAllAdmins": {
+    "description": "Member notes (#456)"
+  },
+  "memberAllAdmins": "all admins",
+  "@memberAllAdmins": {
+    "description": "Member notes (#456)"
+  },
+  "memberNoteTitle": "Notify {name}",
+  "@memberNoteTitle": {
+    "description": "Member notes (#456)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "memberNoteHint": "Your message",
+  "@memberNoteHint": {
+    "description": "Member notes (#456)"
+  },
+  "memberNoteSend": "Send",
+  "@memberNoteSend": {
+    "description": "Member notes (#456)"
+  },
+  "memberNoteSent": "Notification sent.",
+  "@memberNoteSent": {
+    "description": "Member notes (#456)"
+  },
+  "memberNoteReceived": "Message from {name}",
+  "@memberNoteReceived": {
+    "description": "Member notes (#456)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

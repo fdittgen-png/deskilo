@@ -172,5 +172,7 @@
   "featureWorkingHours": "Working hours",
   "featureWorkingHoursDesc": "Configure the working day and offer exact-hours booking; off keeps the 8:00–17:00 defaults.",
   "featureInvoicePdfTemplate": "Invoice PDF template",
-  "featureInvoicePdfTemplateDesc": "Owner-written intro and footer text on the invoice PDF. Never touches the e-invoice XML."
+  "featureInvoicePdfTemplateDesc": "Owner-written intro and footer text on the invoice PDF. Never touches the e-invoice XML.",
+  "featureMemberNotifications": "Member notifications",
+  "featureMemberNotificationsDesc": "Send a short notification to another member; admins can notify all admins including the owner."
 }

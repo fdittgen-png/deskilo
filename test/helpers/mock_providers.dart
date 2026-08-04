@@ -7,6 +7,7 @@ import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/domain/social_provider.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/core/time/work_hours.dart';
+import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:deskilo/core/badge/app_badge.dart';
@@ -737,6 +738,30 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   /// Working day per workspace (#446); defaults like the real repo.
   final Map<String, WorkHours> workHours = {};
+
+  /// Sent member notes (#456), newest last; myNotes returns them
+  /// newest-first like the real query.
+  final List<MemberNote> memberNotes = [];
+
+  @override
+  Future<void> sendMemberNote(
+    String workspaceId, {
+    required String? toMemberId,
+    required String body,
+  }) async {
+    memberNotes.add(MemberNote(
+      id: 'note-${memberNotes.length + 1}',
+      workspaceId: workspaceId,
+      fromMemberId: 'member-1',
+      toMemberId: toMemberId,
+      body: body,
+      createdAt: DateTime.utc(2026, 8, 4, 12, memberNotes.length),
+    ));
+  }
+
+  @override
+  Future<List<MemberNote>> fetchMyNotes(String workspaceId) async =>
+      memberNotes.reversed.toList();
 
   @override
   Future<WorkHours> fetchWorkHours(String workspaceId) async =>

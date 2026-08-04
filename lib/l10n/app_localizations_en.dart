@@ -1125,6 +1125,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Owner-written intro and footer text on the invoice PDF. Never touches the e-invoice XML.';
 
   @override
+  String get featureMemberNotifications => 'Member notifications';
+
+  @override
+  String get featureMemberNotificationsDesc =>
+      'Send a short notification to another member; admins can notify all admins including the owner.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
@@ -2751,6 +2758,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get memberReactivate => 'Reactivate membership';
+
+  @override
+  String get memberNotifyAction => 'Send notification';
+
+  @override
+  String get memberNotifyAllAdmins => 'Notify all admins';
+
+  @override
+  String get memberAllAdmins => 'all admins';
+
+  @override
+  String memberNoteTitle(String name) {
+    return 'Notify $name';
+  }
+
+  @override
+  String get memberNoteHint => 'Your message';
+
+  @override
+  String get memberNoteSend => 'Send';
+
+  @override
+  String get memberNoteSent => 'Notification sent.';
+
+  @override
+  String memberNoteReceived(String name) {
+    return 'Message from $name';
+  }
 
   @override
   String get reserveMonthView => 'Month';
