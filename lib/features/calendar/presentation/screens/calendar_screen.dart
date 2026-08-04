@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_elevation.dart';
@@ -15,9 +14,7 @@ import '../../../../core/ui/motion.dart';
 import '../../../../core/ui/view_toggle.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
-import '../../../plan/domain/seat_context.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
-import '../../../plan/providers/plan_focus_controller.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -63,25 +60,11 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         .toList();
   }
 
-  /// Detail sheet of one reservation (#182): where the seat is, its
-  /// accessories, and a "Show on plan" jump. Popping with a [SeatContext]
-  /// means "jump": signal the plan screen and switch tabs. Cancel actions
-  /// stay in the row's trailing menu ([_cancelMenu]).
-  Future<void> _detailSheet(Reservation reservation) async {
-    final target = await showModalBottomSheet<SeatContext>(
-      context: context,
-      builder: (context) => ReservationDetailSheet(reservation: reservation),
-    );
-    if (target == null || !mounted) return;
-    ref.read(planFocusControllerProvider.notifier).setFocus(
-          PlanFocus(
-            levelId: target.levelId,
-            seatId: reservation.seatId,
-            at: reservation.startsAt,
-          ),
-        );
-    context.go('/plan');
-  }
+  /// Detail sheet + "Show on plan" jump — via the shared helper that
+  /// owns the popped-target handling (#182/#422). Cancel actions stay in
+  /// the row's trailing menu ([_cancelMenu]).
+  Future<void> _detailSheet(Reservation reservation) =>
+      showReservationDetail(context, ref, reservation);
 
   Future<void> _cancelMenu(Reservation reservation) async {
     final l10n = AppLocalizations.of(context);

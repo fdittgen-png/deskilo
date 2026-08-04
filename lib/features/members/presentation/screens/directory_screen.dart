@@ -102,15 +102,11 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
     await ref.read(workspaceMembersProvider.future);
   }
 
-  /// Opens a member's booking in the shared [ReservationDetailSheet] —
-  /// the same surface the calendar uses, so cancel/edit affordances apply
-  /// to one's own upcoming bookings and stay read-only for everyone else.
+  /// Opens a member's booking through the shared helper, which owns the
+  /// "Show on plan" jump (#422 — opening the sheet directly discarded
+  /// the popped target and the button silently did nothing here).
   void _openReservation(BuildContext context, Reservation reservation) {
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      builder: (_) => ReservationDetailSheet(reservation: reservation),
-    );
+    showReservationDetail(context, ref, reservation);
   }
 
   Future<void> _openLink(BuildContext context, WidgetRef ref, Uri uri) async {
