@@ -10,6 +10,19 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  test('keep.xml protects the notification glyph from the release '
+      'shrinker (#442)', () {
+    final keep =
+        File('android/app/src/main/res/raw/keep.xml').readAsStringSync();
+    expect(
+      keep.contains('@drawable/ic_stat_deskilo'),
+      isTrue,
+      reason: 'the shrinker strips Dart-only-referenced resources; '
+          'without this keep, plugin.initialize threw invalid_icon on '
+          'every release boot and ALL notifications silently died',
+    );
+  });
+
   test('the Android manifest declares POST_NOTIFICATIONS (#436)', () {
     final manifest =
         File('android/app/src/main/AndroidManifest.xml').readAsStringSync();

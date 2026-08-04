@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
@@ -33,19 +34,49 @@ class LocalNotificationService implements NotificationService {
   static Future<LocalNotificationService> initialize() async {
     tzdata.initializeTimeZones();
     final plugin = FlutterLocalNotificationsPlugin();
-    await plugin.initialize(
-      settings: const InitializationSettings(
-        // Status-bar small icons are alpha-masked: the full-color launcher
-        // mipmap rendered as a grey square (#219). Dedicated white glyph.
-        android: AndroidInitializationSettings('@drawable/ic_stat_deskilo'),
-        iOS: DarwinInitializationSettings(),
-        macOS: DarwinInitializationSettings(),
-      ),
-    );
-    await plugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestNotificationsPermission();
+    try {
+      await plugin.initialize(
+        settings: const InitializationSettings(
+          // Status-bar small icons are alpha-masked: the full-color
+          // launcher mipmap rendered as a grey square (#219). Dedicated
+          // white glyph — kept from the release shrinker by res/raw/
+          // keep.xml (#442: it was stripped and this threw invalid_icon
+          // on EVERY release boot, killing all notifications silently).
+          android: AndroidInitializationSettings('@drawable/ic_stat_deskilo'),
+          iOS: DarwinInitializationSettings(),
+          macOS: DarwinInitializationSettings(),
+        ),
+      );
+    } on PlatformException catch (e, st) {
+      // Belt and braces (#442): a missing glyph must degrade to the
+      // launcher icon, never to a dead notification service.
+      debugPrint('notification glyph init failed, using launcher: $e\n$st');
+      TraceLogger.instance.warn('notifications',
+          'glyph init failed — falling back to launcher icon',
+          error: e, stackTrace: st);
+      await plugin.initialize(
+        settings: const InitializationSettings(
+          android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+          iOS: DarwinInitializationSettings(),
+          macOS: DarwinInitializationSettings(),
+        ),
+      );
+    }
+    // #442: the permission request is BEST-EFFORT — it must never take
+    // the whole service down. When it threw here, main() fell back to
+    // the Noop service and every notification (reminders, the badge
+    // mirror) silently no-oped for the entire session.
+    try {
+      await plugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestNotificationsPermission();
+    } catch (e, st) {
+      debugPrint('notification permission request failed: $e\n$st');
+      TraceLogger.instance.warn(
+          'notifications', 'permission request failed (non-fatal)',
+          error: e, stackTrace: st);
+    }
     return LocalNotificationService(plugin);
   }
 

@@ -55,6 +55,8 @@ class NoopNotificationService implements NotificationService {
   @override
   Future<void> syncPendingNotifications(List<PendingNotice> notices) async {}
 
+  // #442: the Noop fallback means notifications are DEAD this session —
+  // report false so the Settings warning tile fires instead of silence.
   @override
-  Future<bool?> notificationsEnabled() async => null;
+  Future<bool?> notificationsEnabled() async => false;
 }
