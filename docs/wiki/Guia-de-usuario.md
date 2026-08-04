@@ -50,7 +50,7 @@ El QR codifica un enlace que nombra el rol otorgado (`deskilo://join?role=…`).
 
 ## 3. El plano (pestaña Plano)
 
-El plano muestra la planta activa de tu espacio: oficinas, mesas y asientos, con código de colores — **libre**, **reservado**, **ocupado**, **mío**, **bloqueado**. Se abre **al instante con los últimos datos conocidos** y se actualiza en segundo plano — con un Wi-Fi inestable sigues viendo el estado más reciente en lugar de una pantalla vacía. Los asientos ocupados muestran el nombre de pila de quien está, una **insignia de registro** cuando ha hecho check-in, y un **punto verde** cuando está en línea en la app.
+El plano muestra la planta activa de tu espacio: oficinas, mesas y asientos, con código de colores — **libre**, **reservado**, **ocupado**, **mío**, **bloqueado**. Se abre **al instante con los últimos datos conocidos** y se actualiza en segundo plano — con un Wi-Fi inestable sigues viendo el estado más reciente en lugar de una pantalla vacía. Los asientos ocupados muestran el nombre de pila de quien está, una **insignia de registro** cuando ha hecho check-in, y un **punto verde** cuando está en línea en la app. Cuando una **mesa, sala o planta entera** está reservada, el propio espacio lo dice — un lavado de color, un borde marcado y una **ficha con candado y el nombre del ocupante** en el centro (un glifo de registro cuando ya está allí); la etiqueta de la sala se lee *Bureau 2 · Florian*. Lo ven todos los usuarios, en el plano, en el hub Reservar y en el quiosco.
 
 El plano puede parecerse a tu espacio real: el propietario puede poner una **foto de la sala como fondo de la planta** y colocar **imágenes de ilustración redimensionables** (plantas, sofás…) sobre la cuadrícula. Un control de **transparencia de mesas** en los ajustes deja ver la foto a través de las mesas dibujadas.
 
@@ -78,6 +78,8 @@ Abre el hub **Reservar** (botón central). Una banda de fechas elige el día; lo
 - **Día** — cada asiento como fila de cronología del día elegido; toca un tramo libre para reservar, tu propio bloque para ver detalles.
 - **Semana** — una cuadrícula asiento × día de toda la semana ISO; encuentra una media jornada libre de un vistazo y tócala para reservar.
 - **Mes** — un calendario de disponibilidad: mesas libres por día en todas las plantas; toca un día para entrar en su vista Día.
+
+El **botón de capas del selector de planta** reserva la **planta entera** — en la pestaña Plano y aquí en el hub. Propietarios y admins siempre pueden reservarla para sí mismos; los demás miembros necesitan el derecho personal (§7).
 
 **Un sitio a la vez**: solo puedes mantener una reserva activa por periodo — reservar o registrarte en otro sitio mientras corre otra se rechaza, y un registro cierra cualquier registro anterior cuya reserva ya terminó. Los admins y propietarios pueden **anular**: tocar un puesto ocupado o reservado ofrece *Quitar la reserva (anular)* — la reserva se elimina y el miembro y todos los admins son notificados por el feed de eventos.
 
@@ -109,6 +111,8 @@ Mira quién forma tu comunidad:
 ## 6. Eventos y confirmaciones (icono de campana)
 
 El hilo de eventos es la pista de auditoría del espacio: reservas creadas/cambiadas/canceladas, pagos registrados, gastos presentados, solicitudes de días extra, cambios de rol. Los miembros ven sus propios eventos; admins y propietarios lo ven todo.
+
+**Mensajes:** la campana también reúne tus notificaciones entre miembros (§5) — recibidas y enviadas, con su **texto completo**, las más recientes primero. **Desliza a la derecha** un mensaje para responder a su remitente, **a la izquierda** para borrarlo (una difusión recibida a todos los admins no se puede borrar — desaparecería para todos). Los mensajes sin leer cuentan en la campana y en el icono de la app hasta que abres esta pantalla.
 
 **El protocolo de confirmación:** cuando un admin hace algo *por otra persona* — te reserva un asiento, registra tu pago — queda **pendiente hasta que confirmes**. Lo pendiente se fija arriba con botones de aceptar/rechazar y recibes una notificación. Lo que haces sobre ti mismo nunca requiere confirmación.
 
@@ -157,7 +161,7 @@ Toda la administración vive en **Ajustes → Administración**. Una regla que c
 
 Cuatro pasos convierten «escanear el código de la mesa» en el flujo de reserva diario (§4):
 
-1. En el **editor**, marca una oficina o una planta como **Reservable en su totalidad** y dale un **precio por media jornada** (la ficha de propiedades de la oficina / el menú de la planta).
+1. En el **editor**, marca una oficina o una planta como **Reservable en su totalidad** y dale un **precio por media jornada** — la ficha de propiedades de la oficina, o para una planta el **icono de capas directamente en su fila** (el subtítulo de la fila indica su estado de reserva).
 2. Activa **Reservas de oficina y planta** en **Funciones** (desactivada por defecto).
 3. Concede a cada miembro autorizado **«Puede reservar una oficina o planta entera»** — propietarios y admins lo fijan en la ficha de gestión del miembro, nunca para sí mismos.
 4. Imprime las tarjetas: **Ajustes del espacio → Códigos QR de espacios (PDF)** — un QR tamaño tarjeta de crédito por **puesto, mesa, oficina y planta**, diez por página A4, guardado en Descargas. Recórtalas y pega cada tarjeta en su espacio.
@@ -335,7 +339,7 @@ Tu identidad solo existe durante la operación: la credencial viaja una vez al s
 
 ## 10. Notificaciones
 
-Recordatorios de registro, confirmaciones pendientes, decisiones de gastos — y cuando un admin **elimina una de tus reservas** (anular), tú y los admins recibís aviso. La entrega es local primero; los push del servidor llegan sin instalar nada en Android, iPhone/iPad, navegador y macOS (Firebase Cloud Messaging) — *Ajustes → Avanzado* muestra si el push está activo en este dispositivo. El icono de la app muestra tus confirmaciones pendientes — en Android, iPhone/iPad, el Dock de macOS, la barra de tareas de Windows y las web apps instaladas. Los push nunca llevan nombres ni horas; la app compone el texto localmente.
+Recordatorios de registro, confirmaciones pendientes, decisiones de gastos — y cuando un admin **elimina una de tus reservas** (anular), tú y los admins recibís aviso. La entrega es local primero; los push del servidor llegan sin instalar nada en Android, iPhone/iPad, navegador y macOS (Firebase Cloud Messaging) — *Ajustes → Avanzado* muestra si el push está activo en este dispositivo. El icono de la app muestra tus confirmaciones pendientes **más tus mensajes sin leer** — en Android, iPhone/iPad, el Dock de macOS, la barra de tareas de Windows y las web apps instaladas. Los mensajes entre miembros se anuncian **una vez por dispositivo con el remitente y el texto completo** — incluido lo enviado con la app cerrada, anunciado en cuanto la vuelves a abrir. Los push nunca llevan nombres ni horas; la app compone el texto localmente.
 
 ## 11. Privacidad
 

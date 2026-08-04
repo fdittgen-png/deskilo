@@ -50,7 +50,7 @@ Der QR kodiert einen Link, der die vergebene Rolle nennt (`deskilo://join?role=�
 
 ## 3. Der Grundriss (Tab Plan)
 
-Der Plan zeigt die aktive Etage: Büros, Tische und Plätze, farbcodiert — **frei**, **reserviert**, **besetzt**, **meiner**, **gesperrt**. Er öffnet sich **sofort aus den letzten bekannten Daten** und aktualisiert sich im Hintergrund — bei wackeligem WLAN siehst du den letzten Stand statt eines leeren Bildschirms. Besetzte Plätze zeigen den Vornamen, ein **Check-Abzeichen**, wenn die Person eingecheckt ist, und einen **grünen Punkt**, wenn sie gerade in der App online ist.
+Der Plan zeigt die aktive Etage: Büros, Tische und Plätze, farbcodiert — **frei**, **reserviert**, **besetzt**, **meiner**, **gesperrt**. Er öffnet sich **sofort aus den letzten bekannten Daten** und aktualisiert sich im Hintergrund — bei wackeligem WLAN siehst du den letzten Stand statt eines leeren Bildschirms. Besetzte Plätze zeigen den Vornamen, ein **Check-Abzeichen**, wenn die Person eingecheckt ist, und einen **grünen Punkt**, wenn sie gerade in der App online ist. Ist ein **ganzer Tisch, Raum oder eine ganze Etage** reserviert, zeigt es der Raum selbst — farbige Tönung, kräftiger Rahmen und ein **Schloss-Chip mit dem Namen der Person** in der Mitte (ein Check-in-Glyph, sobald sie da ist); die Raumbeschriftung liest sich *Bureau 2 · Florian*. Alle sehen es, auf dem Plan, im Reservieren-Hub und am Kiosk.
 
 Der Plan kann wie dein echter Raum aussehen: Die Inhaberin kann ein **Foto des Raums als Etagen-Hintergrund** hinterlegen und frei **skalierbare Illustrationsbilder** (Pflanzen, Sofas…) auf dem Raster platzieren. Ein Regler für die **Tisch-Transparenz** in den Einstellungen lässt das Foto durch die gezeichneten Tische durchscheinen.
 
@@ -78,6 +78,8 @@ Buchen vom Plan aus:
 - **Tag** — jeder Platz als Zeitstrahl für den gewählten Tag; freie Strecke antippen = buchen, eigener Block = Details.
 - **Woche** — ein Raster Platz × Tag für die ganze ISO-Woche; freie Halbtage auf einen Blick, Antippen bucht.
 - **Monat** — ein Verfügbarkeitskalender: freie Tische pro Tag über alle Etagen; ein Tag öffnet seine Tagesansicht.
+
+Der **Ebenen-Button am Etagenwähler** reserviert die **ganze Etage** — auf dem Plan-Tab wie hier im Hub. Inhaberinnen und Admins können sie immer für sich selbst buchen; andere Mitglieder brauchen das persönliche Recht (§7).
 
 **Ein Platz zur Zeit**: Du kannst je Zeitraum nur eine aktive Reservierung halten — anderswo buchen oder einchecken, während eine läuft, wird abgelehnt, und ein Check-in schließt einen früheren Check-in, dessen Buchung schon vorbei ist. Admins und Inhaberinnen können **übersteuern**: Ein Tipp auf einen belegten oder reservierten Platz bietet *Reservierung entfernen (übersteuern)* — die Reservierung wird entfernt und das Mitglied sowie alle Admins werden über den Ereignis-Feed benachrichtigt.
 
@@ -109,6 +111,8 @@ Sieh, wer zu deiner Community gehört:
 ## 6. Ereignisse & Bestätigungen (Glocken-Symbol)
 
 Der Ereignis-Feed ist die Prüfspur deines Workspace: Reservierungen erstellt/geändert/storniert, Zahlungen erfasst, Ausgaben eingereicht, Extra-Tage-Anfragen, Rollenwechsel. Mitglieder sehen ihre eigenen Ereignisse; Admins und Inhaberinnen alle.
+
+**Nachrichten:** Die Glocke sammelt auch deine Mitglieder-Benachrichtigungen (§5) — empfangene und gesendete, mit **vollem Text**, neueste zuerst. **Wische nach rechts**, um dem Absender zu antworten, **nach links**, um zu löschen (eine empfangene Alle-Admins-Rundnachricht lässt sich nicht löschen — sie verschwände für alle Admins). Ungelesene Nachrichten zählen auf der Glocke und dem App-Icon, bis du diesen Bildschirm öffnest.
 
 **Das Bestätigungsprotokoll:** Wann immer ein Admin etwas *für jemand anderen* tut — einen Platz für dich bucht, deine Zahlung erfasst — bleibt es **offen, bis du bestätigst**. Offene Punkte sind oben angeheftet, mit Annehmen/Ablehnen, und du wirst benachrichtigt. Eigene Aktionen auf dich selbst brauchen nie eine Bestätigung.
 
@@ -193,7 +197,7 @@ Die gesamte Administration liegt unter **Einstellungen → Administration**. Ein
 
 Vier Schritte machen aus „scanne den Code auf dem Tisch" den täglichen Buchungsablauf (§4):
 
-1. Markiere im **Editor** ein Büro oder eine Etage als **Als Ganzes reservierbar** und gib einen **Preis je Halbtag** an (das Eigenschaftsblatt des Büros / das Etagen-Menü).
+1. Markiere im **Editor** ein Büro oder eine Etage als **Als Ganzes reservierbar** und gib einen **Preis je Halbtag** an — das Eigenschaftsblatt des Büros, oder bei einer Etage das **Ebenen-Symbol direkt auf ihrer Zeile** (der Untertitel der Zeile nennt den aktuellen Buchungsstatus).
 2. Aktiviere **Büro- & Etagen-Reservierungen** unter **Funktionen** (standardmäßig aus).
 3. Gib jedem berechtigten Mitglied **„Darf ein ganzes Büro oder eine Etage reservieren"** — Inhaberinnen und Admins setzen es im Verwaltungsblatt des Mitglieds, nie für sich selbst.
 4. Drucke die Karten: **Workspace-Einstellungen → Raum-QR-Codes (PDF)** — ein QR im Kreditkartenformat je **Platz, Tisch, Büro und Etage**, zehn pro A4-Seite, gespeichert in Downloads. Ausschneiden und jede Karte auf ihren Raum kleben.
@@ -379,7 +383,7 @@ Deine Identität existiert nur für den Moment der Operation: die Berechtigung g
 
 ## 10. Benachrichtigungen
 
-Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheide — und wenn ein Admin **eine deiner Reservierungen entfernt** (Übersteuern), werden du und die Admins benachrichtigt. Zustellung ist lokal zuerst; Server-Pushes kommen auf Android, iPhone/iPad, im Browser und auf macOS ohne Zusatz-App an (Firebase Cloud Messaging) — *Einstellungen → Erweitert* zeigt, ob Push auf diesem Gerät aktiv ist. Das App-Icon zeigt die Zahl deiner offenen Bestätigungen — auf Android, iPhone/iPad, im macOS-Dock, in der Windows-Taskleiste und in installierten Web-Apps. Push-Inhalte tragen nie Namen oder Zeiten; der Text entsteht lokal in der App.
+Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheide — und wenn ein Admin **eine deiner Reservierungen entfernt** (Übersteuern), werden du und die Admins benachrichtigt. Zustellung ist lokal zuerst; Server-Pushes kommen auf Android, iPhone/iPad, im Browser und auf macOS ohne Zusatz-App an (Firebase Cloud Messaging) — *Einstellungen → Erweitert* zeigt, ob Push auf diesem Gerät aktiv ist. Das App-Icon zeigt deine offenen Bestätigungen **plus deine ungelesenen Nachrichten** — auf Android, iPhone/iPad, im macOS-Dock, in der Windows-Taskleiste und in installierten Web-Apps. Mitglieder-Nachrichten werden **einmal pro Gerät mit Absender und vollem Text** angekündigt — auch was ankam, während die App geschlossen war, direkt beim nächsten Öffnen. Push-Inhalte tragen nie Namen oder Zeiten; der Text entsteht lokal in der App.
 
 ## 11. Datenschutz
 
