@@ -189,3 +189,16 @@ The `dev_mode` column rides the workspace row every member already
 SELECTs, and 0080 publishes it — a flip reaches every device live. The
 mode applies to ALL members (e-invoice test environments, Developer
 screen); only admins/owners see the switch.
+
+## Push for cancellations (0082 — `notify_pending_event` v2)
+
+| Operation | anon | user | worker | admin | owner | Mechanism |
+|---|---|---|---|---|---|---|
+| push on overrule cancellation | — | — | — | — | — | events trigger → `net.http_post` to the displaced member's + admins' endpoints (minus the actor) |
+
+`cancel_reservation` v3 re-attributes the cancelled event to the TRUE
+actor (the 0007 log trigger stamps the row's member), so the trigger can
+tell an overrule from a self-cancel; it also fires on
+`actor_member_id` updates — exactly that re-attribution. Payloads stay
+the 0012 generic ping (`{"kind":"reservation_cancelled"}`): no names,
+no times ever transit the distributor; the client localizes.

@@ -8,5 +8,8 @@
   "developerEmpty": "Aún no hay entradas de registro.",
   "developerFilterAll": "Todo",
   "developerFilterErrors": "Errores",
-  "developerFilterWarnings": "Avisos+"
+  "developerFilterWarnings": "Avisos+",
+  "pushStatusRegistered": "Las notificaciones push están activas",
+  "pushStatusNoDistributor": "Las notificaciones push necesitan una app distribuidora",
+  "pushStatusNoDistributorHint": "Instala ntfy (F-Droid o Play Store) y vuelve a abrir la app."
 }

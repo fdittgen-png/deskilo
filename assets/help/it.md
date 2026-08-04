@@ -377,7 +377,7 @@ La tua identità esiste solo per il tempo dell'operazione: la credenziale va una
 
 ## 10. Notifiche
 
-Promemoria di check-in, liberazioni per assenza, conferme in sospeso, decisioni sulle spese. La consegna è prima di tutto locale; su Android la variante F-Droid usa **UnifiedPush** (es. ntfy) al posto dei servizi Google — niente Firebase da nessuna parte.
+Promemoria di check-in, conferme in sospeso, decisioni sulle spese — e quando un admin **rimuove una tua prenotazione** (scavalcare), tu e gli admin venite avvisati. La consegna è prima locale; i push dal server usano **UnifiedPush** su Android (niente servizi Google, niente Firebase) e richiedono un'**app distributrice** sul dispositivo — installa **ntfy** (F-Droid o Play Store) una volta; *Impostazioni → Avanzate* mostra se il push è attivo su questo dispositivo. I push non portano mai nomi né orari; l'app compone il testo localmente.
 
 ## 11. Privacy
 

@@ -8,5 +8,8 @@
   "developerEmpty": "Noch keine Protokolleinträge.",
   "developerFilterAll": "Alle",
   "developerFilterErrors": "Fehler",
-  "developerFilterWarnings": "Warnungen+"
+  "developerFilterWarnings": "Warnungen+",
+  "pushStatusRegistered": "Push-Benachrichtigungen sind aktiv",
+  "pushStatusNoDistributor": "Push-Benachrichtigungen brauchen eine Verteiler-App",
+  "pushStatusNoDistributorHint": "Installiere ntfy (F-Droid oder Play Store) und öffne die App neu."
 }

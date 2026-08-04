@@ -72,6 +72,8 @@ class FakePushEndpointRepository implements PushEndpointRepository {
     myMemberIds: () async => ['member-1', 'member-9'],
     pendingTitle: 'DesKilo',
     pendingBody: 'Someone needs your confirmation.',
+    cancelledTitle: 'Reservation removed',
+    cancelledBody: 'A reservation was removed by an admin.',
   );
   return (service, connector, repository, notifications);
 }
@@ -138,12 +140,46 @@ void main() {
     expect(notifications.shown, hasLength(1));
   });
 
-  test('unknown kinds are dropped silently', () async {
+  test('a reservation_cancelled message raises its own text (#424)',
+      () async {
+    final (service, _, _, notifications) = harness();
+    await service.onMessage(
+      Uint8List.fromList(utf8.encode('{"kind":"reservation_cancelled"}')),
+    );
+
+    final shown = notifications.shown.single;
+    expect(shown.title, 'Reservation removed');
+    expect(shown.body, 'A reservation was removed by an admin.');
+  });
+
+  test('unknown kinds ping generically — a NEWER server must still '
+      'reach an older client (#424, was: dropped silently)', () async {
     final (service, _, _, notifications) = harness();
     await service.onMessage(
       Uint8List.fromList(utf8.encode('{"kind":"marketing"}')),
     );
 
-    expect(notifications.shown, isEmpty);
+    expect(notifications.shown.single.title, 'DesKilo');
+  });
+
+  test('status walks unsupported → noDistributor → registered (#424)',
+      () async {
+    final (none, _, _, _) = harness(available: false);
+    await none.start();
+    expect(none.status.value, PushStatus.unsupported);
+
+    final (bare, _, _, _) = harness(distributor: false);
+    await bare.start();
+    expect(bare.status.value, PushStatus.noDistributor);
+
+    final (full, connector, _, _) = harness();
+    await full.start();
+    connector.newEndpoint!('https://push.example.org/abc');
+    await Future<void>.delayed(Duration.zero);
+    expect(full.status.value, PushStatus.registered);
+
+    connector.unregistered!();
+    await Future<void>.delayed(Duration.zero);
+    expect(full.status.value, PushStatus.noDistributor);
   });
 }

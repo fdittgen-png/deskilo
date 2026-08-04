@@ -869,6 +869,18 @@
   "@developerFilterWarnings": {
     "description": "Filter chip showing warnings and errors"
   },
+  "pushStatusRegistered": "Push notifications are active",
+  "@pushStatusRegistered": {
+    "description": "Settings status line: push pipeline registered (#424)"
+  },
+  "pushStatusNoDistributor": "Push notifications need a distributor app",
+  "@pushStatusNoDistributor": {
+    "description": "Settings status line: no UnifiedPush distributor installed (#424)"
+  },
+  "pushStatusNoDistributorHint": "Install ntfy (F-Droid or Play Store), then reopen the app.",
+  "@pushStatusNoDistributorHint": {
+    "description": "Fix hint under the no-distributor line (#424)"
+  },
   "directoryTitle": "Members",
   "@directoryTitle": {
     "description": "Member directory title: bottom-tab label and app-bar title of the Members tab (#230) plus its settings entry (#224), visible to every member. Keep it short — it must fit a bottom-bar tab."
@@ -1258,6 +1270,14 @@
   },
   "@pushPendingBody": {
     "description": "Generic push body for a pending confirmation; deliberately carries no personal data"
+  },
+  "pushCancelledTitle": "Reservation removed",
+  "@pushCancelledTitle": {
+    "description": "Push title when an admin removed a reservation (#424)"
+  },
+  "pushCancelledBody": "A reservation was removed by an admin.",
+  "@pushCancelledBody": {
+    "description": "Push body for the removed-reservation ping — generic, no personal data (#424)"
   },
   "featuresTitle": "Features",
   "@featuresTitle": {

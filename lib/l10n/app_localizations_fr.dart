@@ -638,6 +638,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get developerFilterWarnings => 'Avertissements+';
 
   @override
+  String get pushStatusRegistered => 'Les notifications push sont actives';
+
+  @override
+  String get pushStatusNoDistributor =>
+      'Les notifications push nécessitent une app distributrice';
+
+  @override
+  String get pushStatusNoDistributorHint =>
+      'Installez ntfy (F-Droid ou Play Store), puis rouvrez l\'app.';
+
+  @override
   String get directoryTitle => 'Membres';
 
   @override
@@ -904,6 +915,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get pushPendingBody => 'Quelqu\'un attend votre confirmation.';
+
+  @override
+  String get pushCancelledTitle => 'Réservation retirée';
+
+  @override
+  String get pushCancelledBody => 'Une réservation a été retirée par un admin.';
 
   @override
   String get featuresTitle => 'Fonctionnalités';

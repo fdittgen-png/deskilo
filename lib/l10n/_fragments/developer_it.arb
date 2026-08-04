@@ -8,5 +8,8 @@
   "developerEmpty": "Ancora nessuna voce nel registro.",
   "developerFilterAll": "Tutto",
   "developerFilterErrors": "Errori",
-  "developerFilterWarnings": "Avvisi+"
+  "developerFilterWarnings": "Avvisi+",
+  "pushStatusRegistered": "Le notifiche push sono attive",
+  "pushStatusNoDistributor": "Le notifiche push richiedono un'app distributrice",
+  "pushStatusNoDistributorHint": "Installa ntfy (F-Droid o Play Store), poi riapri l'app."
 }

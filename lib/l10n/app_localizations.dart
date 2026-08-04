@@ -1250,6 +1250,24 @@ abstract class AppLocalizations {
   /// **'Warnings+'**
   String get developerFilterWarnings;
 
+  /// Settings status line: push pipeline registered (#424)
+  ///
+  /// In en, this message translates to:
+  /// **'Push notifications are active'**
+  String get pushStatusRegistered;
+
+  /// Settings status line: no UnifiedPush distributor installed (#424)
+  ///
+  /// In en, this message translates to:
+  /// **'Push notifications need a distributor app'**
+  String get pushStatusNoDistributor;
+
+  /// Fix hint under the no-distributor line (#424)
+  ///
+  /// In en, this message translates to:
+  /// **'Install ntfy (F-Droid or Play Store), then reopen the app.'**
+  String get pushStatusNoDistributorHint;
+
   /// Member directory title: bottom-tab label and app-bar title of the Members tab (#230) plus its settings entry (#224), visible to every member. Keep it short — it must fit a bottom-bar tab.
   ///
   /// In en, this message translates to:
@@ -1729,6 +1747,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Someone needs your confirmation.'**
   String get pushPendingBody;
+
+  /// Push title when an admin removed a reservation (#424)
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation removed'**
+  String get pushCancelledTitle;
+
+  /// Push body for the removed-reservation ping — generic, no personal data (#424)
+  ///
+  /// In en, this message translates to:
+  /// **'A reservation was removed by an admin.'**
+  String get pushCancelledBody;
 
   /// App-bar title of the owner feature-management screen and its settings tile
   ///
