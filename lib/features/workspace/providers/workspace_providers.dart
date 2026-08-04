@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/storage/active_workspace_store.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../../core/time/work_hours.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../data/supabase_workspace_repository.dart';
@@ -35,7 +36,9 @@ Future<List<Workspace>> myWorkspaces(Ref ref) async {
 class ActiveWorkspaceId extends _$ActiveWorkspaceId {
   @override
   Future<String?> build() async {
-    final defaultId = await ref.watch(defaultWorkspaceStoreProvider).read();
+    // #458: the default is the SERVER-FIRST user choice, so a fresh
+    // install lands on the default profile immediately.
+    final defaultId = await ref.watch(defaultWorkspaceIdProvider.future);
     if (defaultId != null) return defaultId;
     return ref.watch(activeWorkspaceStoreProvider).read();
   }
@@ -49,14 +52,37 @@ class ActiveWorkspaceId extends _$ActiveWorkspaceId {
 /// The user-checked default profile (#322); null = none. Radio
 /// semantics: checking one replaces the previous; re-checking the
 /// current default clears it.
+///
+/// SERVER-FIRST since #458: the choice lives on the profile row, so it
+/// survives reinstalls and follows the user across platforms. The
+/// local store is demoted to an offline cache, written through on
+/// every successful read and toggle.
 @Riverpod(keepAlive: true)
 class DefaultWorkspaceId extends _$DefaultWorkspaceId {
   @override
-  Future<String?> build() =>
-      ref.watch(defaultWorkspaceStoreProvider).read();
+  Future<String?> build() async {
+    final signedIn = ref.watch(authStateProvider).value != null;
+    if (!signedIn) return ref.watch(defaultWorkspaceStoreProvider).read();
+    try {
+      final server = await ref
+          .watch(workspaceRepositoryProvider)
+          .fetchDefaultWorkspaceId();
+      await ref.read(defaultWorkspaceStoreProvider).write(server);
+      return server;
+    } catch (e, st) {
+      // Offline: the cached choice keeps working.
+      TraceLogger.instance.warn(
+          'workspace', 'default-workspace fetch failed — using cache',
+          error: e, stackTrace: st);
+      return ref.watch(defaultWorkspaceStoreProvider).read();
+    }
+  }
 
   Future<void> toggle(String workspaceId) async {
     final next = state.value == workspaceId ? null : workspaceId;
+    await ref
+        .read(workspaceRepositoryProvider)
+        .setDefaultWorkspaceId(next);
     await ref.read(defaultWorkspaceStoreProvider).write(next);
     state = AsyncData(next);
   }

@@ -19,7 +19,7 @@ Nach der Anmeldung bietet der Startbildschirm zwei Wege:
 - **Workspace anlegen** — du wirst **Inhaberin**. Wähle Name, Land (bestimmt die Standardwährung) und Zeitzone. Danach zeichnest du deinen Grundriss im Editor (§7).
 - **Workspace beitreten** — tippe die **Workspace-ID** ein, die man dir gegeben hat, oder wähle **QR-Code scannen** und richte die Kamera auf den Einladungs-QR an der Wand. Du trittst mit der Rolle bei, die die Einladung trägt (§2).
 
-Ein Konto kann mehreren Workspaces angehören; wechsle unter **Einstellungen → Profile** und **markiere eines mit dem Stern als Standard** — mit diesem Profil öffnet sich die App. Alles in der App bezieht sich auf den aktiven Workspace.
+Ein Konto kann mehreren Workspaces angehören; wechsle unter **Einstellungen → Profile** und **markiere eines mit dem Stern als Standard** — mit diesem Profil öffnet sich die App, auf jedem Gerät und selbst nach einer Neuinstallation (die Wahl ist im Konto gespeichert). Alles in der App bezieht sich auf den aktiven Workspace.
 
 **Alles bleibt live.** Was irgendjemand ändert — eine Buchung, ein neues Mitglied, eine Einstellung — wird binnen Sekunden auf jedes verbundene Gerät gepusht, auch auf das, das die Änderung gemacht hat. Kein Neustart, kein Ziehen zum Aktualisieren.
 

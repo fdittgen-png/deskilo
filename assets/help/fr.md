@@ -19,7 +19,7 @@ Après connexion, l'écran d'accueil propose deux chemins :
 - **Créer un espace de travail** — vous en devenez le **propriétaire**. Choisissez un nom, un pays (qui détermine la devise par défaut) et un fuseau horaire. Vous dessinerez ensuite votre plan dans l'éditeur (§7).
 - **Rejoindre un espace** — saisissez l'**identifiant de l'espace** qu'on vous a communiqué, ou touchez **Scanner le QR code** et visez le QR d'invitation affiché au mur. Vous rejoignez avec le rôle que porte l'invitation (§2).
 
-Un compte peut appartenir à plusieurs espaces ; changez d'espace dans **Réglages → Profils**, et **marquez-en un d'une étoile comme profil par défaut** — c'est le profil avec lequel l'application s'ouvre. Tout dans l'application est limité à l'espace actif.
+Un compte peut appartenir à plusieurs espaces ; changez d'espace dans **Réglages → Profils**, et **marquez-en un d'une étoile comme profil par défaut** — c'est le profil avec lequel l'application s'ouvre, sur tous vos appareils et même après une réinstallation (le choix est enregistré avec votre compte). Tout dans l'application est limité à l'espace actif.
 
 **Tout reste en direct.** Ce que quiconque change — une réservation, un nouveau membre, un réglage — est poussé en quelques secondes vers chaque appareil connecté, y compris celui qui a fait le changement. Pas de redémarrage, pas de tirer-pour-actualiser.
 

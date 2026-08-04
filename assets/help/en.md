@@ -19,7 +19,7 @@ After signing in you land on the welcome screen with two paths:
 - **Create a workspace** — you become its **owner**. Pick a name, country (drives the default currency), and time zone. You'll then draw your floor plan in the editor (§7).
 - **Join a workspace** — type the **workspace ID** someone shared with you, or tap **Scan QR code** and point the camera at the invite QR pinned to your space's wall. You join with the role the invite carries (§2).
 
-One account can belong to several workspaces; switch between them in **Settings → Profiles**, and **star one as your default** — that's the profile the app opens with. Everything in the app is scoped to the active workspace.
+One account can belong to several workspaces; switch between them in **Settings → Profiles**, and **star one as your default** — that's the profile the app opens with, on every device and even after a reinstall (the choice is stored with your account). Everything in the app is scoped to the active workspace.
 
 **Everything stays live.** Whatever anyone changes — a booking, a new member, a setting — is pushed to every connected device within seconds, including the one that made the change. No restart, no pull-to-refresh.
 

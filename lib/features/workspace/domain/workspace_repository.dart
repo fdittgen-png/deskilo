@@ -268,6 +268,15 @@ abstract class WorkspaceRepository {
   /// addressed to me, or admin broadcasts), newest first.
   Future<List<MemberNote>> fetchMyNotes(String workspaceId);
 
+  /// The signed-in USER's default workspace (#458, 0090) — stored on
+  /// their profile so it survives reinstalls and follows them across
+  /// platforms. Null = none chosen (or signed out).
+  Future<String?> fetchDefaultWorkspaceId();
+
+  /// Persists the default-workspace choice on the profile row
+  /// (profiles_update RLS: self-only). Null clears it.
+  Future<void> setDefaultWorkspaceId(String? workspaceId);
+
   /// One-off closure days of the workspace, ordered by day (#127).
   Future<List<ClosureDay>> fetchClosureDays(String workspaceId);
 

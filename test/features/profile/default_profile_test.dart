@@ -73,14 +73,17 @@ void main() {
   });
 
   testWidgets(
-      'at start-up the checked default wins over the last active profile',
-      (tester) async {
+      'at start-up the checked default wins over the last active profile '
+      '— and it is the SERVER value (#458), so a fresh install (empty '
+      'local store) still lands on it', (tester) async {
     final active = InMemoryActiveWorkspaceStore()..value = 'ws-1';
-    final store = InMemoryDefaultWorkspaceStore()..value = 'ws-2';
+    // Local store deliberately EMPTY: reinstall scenario. The server
+    // knows the choice.
+    final store = InMemoryDefaultWorkspaceStore();
     await tester.pumpWidget(
       ProviderScope(
         overrides: standardTestOverrides(
-          workspace: _twoWorkspaces(),
+          workspace: _twoWorkspaces()..serverDefaultWorkspaceId = 'ws-2',
           activeWorkspace: active,
           defaultWorkspace: store,
         ),
@@ -105,6 +108,8 @@ void main() {
       ),
       findsOneWidget,
     );
+    // The read wrote through to the offline cache.
+    expect(store.value, 'ws-2');
   });
 
   testWidgets(
