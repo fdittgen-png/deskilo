@@ -37,6 +37,17 @@ class EventsScreen extends ConsumerStatefulWidget {
 }
 
 class _EventsScreenState extends ConsumerState<EventsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Opening the notification surface reads the messages (#464): the
+    // unread counters on the bell and the app icon clear here.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      ref.read(unreadNoteCountProvider.notifier).markAllSeen();
+    });
+  }
+
   EventType? _typeFilter;
 
   String _line(

@@ -27,6 +27,7 @@ import 'package:deskilo/core/scan/front_camera.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/core/scan/qr_scan_widget.dart';
 import 'package:deskilo/core/storage/active_workspace_store.dart';
+import 'package:deskilo/core/storage/note_seen_store.dart';
 import 'package:deskilo/core/time/clock.dart';
 
 import 'fake_realtime_sync.dart';
@@ -872,6 +873,7 @@ List<Override> standardTestOverrides({
   FileSharer? fileSharer,
   RealtimeSync? realtime,
   FakeAppBadge? badge,
+  NoteSeenStore? noteSeen,
 }) {
   return [
     // No-op realtime by default: the real impl touches Supabase.instance,
@@ -911,6 +913,10 @@ List<Override> standardTestOverrides({
         .overrideWithValue(defaultWorkspace ?? InMemoryDefaultWorkspaceStore()),
     defaultLevelStoreProvider
         .overrideWithValue(defaultLevel ?? InMemoryDefaultLevelStore()),
+    // #464: an in-memory read state — the prefs impl would need a
+    // SharedPreferences mock in every widget test.
+    noteSeenStoreProvider
+        .overrideWithValue(noteSeen ?? InMemoryNoteSeenStore()),
     profileRepositoryProvider
         .overrideWithValue(profile ?? FakeProfileRepository()),
     nfcUidReaderProvider.overrideWithValue(nfc ?? FakeNfcUidReader()),

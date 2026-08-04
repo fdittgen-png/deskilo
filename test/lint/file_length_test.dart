@@ -66,6 +66,9 @@ const Map<String, int> _baseline = {
   'lib/features/money/presentation/widgets/bill_view.dart': 750,
   'lib/features/calendar/presentation/widgets/day_timeline.dart': 750,
   'lib/features/reservations/presentation/widgets/space_scan.dart': 730,
+  // 600→640 (2026-08-04): #460/#464 Messages inbox rows + mark-seen —
+  // the note row widget lives with the feed it sits in.
+  'lib/features/events/presentation/screens/events_screen.dart': 640,
   // 680→700 (2026-08-04): #454 owner-template intro/footer blocks.
   'lib/features/money/domain/invoice_pdf.dart': 700,
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the

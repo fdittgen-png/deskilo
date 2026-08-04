@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/storage/active_workspace_store.dart';
+import '../../../core/storage/note_seen_store.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/time/work_hours.dart';
 import '../../auth/providers/auth_providers.dart';
@@ -152,6 +153,34 @@ Future<List<MemberNote>> myNotes(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   return ref.watch(workspaceRepositoryProvider).fetchMyNotes(workspace.id);
+}
+
+/// Unread member notes (#464): notes from someone else, newer than the
+/// device's SEEN stamp — the bell and the app-icon badge count them,
+/// the Events screen clears them on open.
+@Riverpod(keepAlive: true)
+class UnreadNoteCount extends _$UnreadNoteCount {
+  @override
+  Future<int> build() async {
+    final me = await ref.watch(myMemberProvider.future);
+    final notes = await ref.watch(myNotesProvider.future);
+    final seen = await ref.watch(noteSeenStoreProvider).readSeen();
+    return notes
+        .where((n) =>
+            n.fromMemberId != me?.id &&
+            (seen == null || n.createdAt.isAfter(seen)))
+        .length;
+  }
+
+  /// The Events screen was opened — everything currently loaded counts
+  /// as read.
+  Future<void> markAllSeen() async {
+    final notes = await ref.read(myNotesProvider.future);
+    if (notes.isEmpty) return;
+    // Newest first (repository order) — the first entry is the stamp.
+    await ref.read(noteSeenStoreProvider).writeSeen(notes.first.createdAt);
+    ref.invalidateSelf();
+  }
 }
 
 /// One-off closure days of the active workspace, ordered by day (#127).
