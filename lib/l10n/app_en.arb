@@ -3605,6 +3605,23 @@
       }
     }
   },
+  "eventsMessagesHeader": "Messages",
+  "@eventsMessagesHeader": {
+    "description": "Member-notes inbox on the Events screen (#460)"
+  },
+  "memberNoteTo": "To {name}",
+  "@memberNoteTo": {
+    "description": "Member-notes inbox on the Events screen (#460)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "memberNoteToAllAdmins": "To all admins",
+  "@memberNoteToAllAdmins": {
+    "description": "Member-notes inbox on the Events screen (#460)"
+  },
   "reserveMonthView": "Month",
   "@reserveMonthView": {
     "description": "Reserve hub view segment: month availability calendar (#7)"

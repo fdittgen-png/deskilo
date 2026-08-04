@@ -2814,6 +2814,17 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get eventsMessagesHeader => 'Nachrichten';
+
+  @override
+  String memberNoteTo(String name) {
+    return 'An $name';
+  }
+
+  @override
+  String get memberNoteToAllAdmins => 'An alle Admins';
+
+  @override
   String get reserveMonthView => 'Monat';
 
   @override

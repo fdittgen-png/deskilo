@@ -8,6 +8,10 @@ import 'dart:io';
 
 import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:flutter/material.dart';
+import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../helpers/mock_providers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'co_owner_test.dart' show pumpMembersWithAna;
@@ -74,6 +78,71 @@ void main() {
 
     expect(workspace.memberNotes.single.toMemberId, isNull);
     expect(workspace.memberNotes.single.body, 'Printer is out of toner.');
+  });
+
+  testWidgets('the Events screen shows the readable Messages inbox — '
+      'received notes with their FULL text, sent notes with their '
+      'direction (#460)', (tester) async {
+    // Seed BEFORE the pump (the providers cache their first read): a
+    // note FROM Ana to me, one from me to Ana, and my broadcast.
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
+      ..otherMembers.add(
+        const Member(
+          id: 'member-2',
+          workspaceId: 'ws-1',
+          userId: 'user-2',
+          isAdmin: false,
+          isOwner: false,
+          status: MemberStatus.active,
+        ),
+      )
+      ..memberNotes.addAll([
+        MemberNote(
+          id: 'note-in',
+          workspaceId: 'ws-1',
+          fromMemberId: 'member-2',
+          toMemberId: 'member-1',
+          body: 'Your desk lamp is still on!',
+          createdAt: DateTime.utc(2026, 8, 4, 9),
+        ),
+        MemberNote(
+          id: 'note-out',
+          workspaceId: 'ws-1',
+          fromMemberId: 'member-1',
+          toMemberId: 'member-2',
+          body: 'Thanks, turning it off.',
+          createdAt: DateTime.utc(2026, 8, 4, 10),
+        ),
+        MemberNote(
+          id: 'note-cast',
+          workspaceId: 'ws-1',
+          fromMemberId: 'member-1',
+          toMemberId: null,
+          body: 'Printer is out of toner.',
+          createdAt: DateTime.utc(2026, 8, 4, 11),
+        ),
+      ]);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(workspace: workspace),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Events'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Messages'), findsOneWidget);
+    // Received: sender named, text fully readable.
+    expect(find.text('Message from Ana'), findsOneWidget);
+    expect(find.text('Your desk lamp is still on!'), findsOneWidget);
+    // Sent: direction visible, text too — the sender can verify what
+    // went out.
+    expect(find.text('To Ana'), findsOneWidget);
+    expect(find.text('Thanks, turning it off.'), findsOneWidget);
+    expect(find.text('To all admins'), findsOneWidget);
+    expect(find.text('Printer is out of toner.'), findsOneWidget);
   });
 
   testWidgets('feature OFF hides every affordance (#456)', (tester) async {

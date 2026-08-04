@@ -14,6 +14,8 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../../workspace/domain/member_note.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../../money/domain/payment_method.dart';
 import '../../../money/presentation/payment_method_labels.dart';
@@ -213,6 +215,14 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     final currency = NumberFormat.simpleCurrency(
       name: ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR',
     );
+    // Member notes (#460): the push is content-free by design (0012),
+    // so THIS is where the actual text is read — received and sent,
+    // newest first.
+    final notes = ref
+            .watch(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.memberNotifications)
+        ? ref.watch(myNotesProvider).value ?? const <MemberNote>[]
+        : const <MemberNote>[];
 
     final body = switch (eventsAsync) {
       AsyncData(value: final all) => Builder(
@@ -233,7 +243,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                   (e) => _typeFilter == null || e.type == _typeFilter,
                 )
                 .toList();
-            if (all.isEmpty) {
+            if (all.isEmpty && notes.isEmpty) {
               return RefreshIndicator(
                 onRefresh: () async => invalidateBookingData(ref),
                 child: ListView(
@@ -350,6 +360,32 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                           ],
                         ),
                       ),
+                    ),
+                  const Divider(),
+                ],
+                // Member notes (#460): the readable inbox — received
+                // AND sent, so both sides can verify what the
+                // notification actually said. The push carries no
+                // content (0012); this list does.
+                if (notes.isNotEmpty) ...[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.lg,
+                      AppSpacing.md,
+                      AppSpacing.lg,
+                      AppSpacing.xs,
+                    ),
+                    child: Text(
+                      l10n?.eventsMessagesHeader ?? 'Messages',
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  ),
+                  for (final note in notes)
+                    _NoteRow(
+                      key: ValueKey('note-${note.id}'),
+                      note: note,
+                      names: names,
+                      myMemberId: myMember?.id,
                     ),
                   const Divider(),
                 ],
@@ -492,6 +528,66 @@ class _DecisionRow extends StatelessWidget {
           child: Text(text, style: theme.textTheme.bodySmall),
         ),
       ],
+    );
+  }
+}
+
+/// One member note in the Messages inbox (#460): direction + sender or
+/// recipient, the FULL text (never ellipsized — this is the one place
+/// the message is readable), and when it was sent.
+class _NoteRow extends StatelessWidget {
+  const _NoteRow({
+    super.key,
+    required this.note,
+    required this.names,
+    required this.myMemberId,
+  });
+
+  final MemberNote note;
+  final Map<String, String> names;
+  final String? myMemberId;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final sentByMe = note.fromMemberId == myMemberId;
+    final title = sentByMe
+        ? (note.isBroadcast
+            ? (l10n?.memberNoteToAllAdmins ?? 'To all admins')
+            : (l10n?.memberNoteTo(names[note.toMemberId] ?? '') ??
+                'To ${names[note.toMemberId] ?? ''}'))
+        : (l10n?.memberNoteReceived(names[note.fromMemberId] ?? '') ??
+            'Message from ${names[note.fromMemberId] ?? ''}');
+    final when = DateFormat.MMMd()
+        .add_Hm()
+        .format(note.createdAt.toLocal());
+    return ListTile(
+      leading: Icon(
+        sentByMe
+            ? (note.isBroadcast
+                ? Icons.campaign_outlined
+                : Icons.outbox_outlined)
+            : Icons.mark_email_unread_outlined,
+      ),
+      title: Text(
+        title,
+        style: theme.textTheme.bodyMedium?.copyWith(
+          fontWeight: sentByMe ? null : FontWeight.w600,
+        ),
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(note.body),
+          Text(
+            when,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
