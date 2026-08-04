@@ -333,7 +333,7 @@ Tu identidad solo existe durante la operación: la credencial viaja una vez al s
 
 ## 10. Notificaciones
 
-Recordatorios de registro, confirmaciones pendientes, decisiones de gastos — y cuando un admin **elimina una de tus reservas** (anular), tú y los admins recibís aviso. La entrega es local primero; los push del servidor llegan sin instalar nada en Android, iPhone/iPad, navegador y macOS (Firebase Cloud Messaging) — *Ajustes → Avanzado* muestra si el push está activo en este dispositivo. El icono de la app muestra tus confirmaciones pendientes. Los push nunca llevan nombres ni horas; la app compone el texto localmente.
+Recordatorios de registro, confirmaciones pendientes, decisiones de gastos — y cuando un admin **elimina una de tus reservas** (anular), tú y los admins recibís aviso. La entrega es local primero; los push del servidor llegan sin instalar nada en Android, iPhone/iPad, navegador y macOS (Firebase Cloud Messaging) — *Ajustes → Avanzado* muestra si el push está activo en este dispositivo. El icono de la app muestra tus confirmaciones pendientes — en Android, iPhone/iPad, el Dock de macOS, la barra de tareas de Windows y las web apps instaladas. Los push nunca llevan nombres ni horas; la app compone el texto localmente.
 
 ## 11. Privacidad
 
