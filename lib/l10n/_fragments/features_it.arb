@@ -43,5 +43,7 @@
   "featureAutoCheckInOut": "Check-in/out automatico a fine giornata",
   "featureDataExport": "Esportazione dati (Excel)",
   "featureAutoCheckInOutDesc": "Le prenotazioni senza check-in o check-out si completano da sole una volta trascorso il loro orario.",
-  "featureDataExportDesc": "Scaricare tutti i dati dello spazio in una cartella Excel."
+  "featureDataExportDesc": "Scaricare tutti i dati dello spazio in una cartella Excel.",
+  "featureWorkingHours": "Orario di lavoro",
+  "featureWorkingHoursDesc": "Configura la giornata lavorativa e offri prenotazioni a orari esatti; disattivato valgono i valori 8:00–17:00."
 }

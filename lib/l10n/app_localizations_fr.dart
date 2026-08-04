@@ -151,6 +151,37 @@ class AppLocalizationsFr extends AppLocalizations {
       'Demi-journées : les réservations couvrent le matin, l\'après-midi ou la journée entière — les créneaux suivent les horaires de travail configurés.';
 
   @override
+  String get availabilityGranularityFlexible => 'Plage horaire libre';
+
+  @override
+  String get availabilityGranularityHalfDay =>
+      'Demi-journées (matin et après-midi)';
+
+  @override
+  String get availabilityGranularity5 => 'Créneaux de 5 minutes';
+
+  @override
+  String get availabilityGranularity15 => 'Créneaux de 15 minutes';
+
+  @override
+  String get availabilityGranularity30 => 'Créneaux de 30 minutes';
+
+  @override
+  String get availabilityGranularity60 => 'Créneaux d\'une heure';
+
+  @override
+  String get availabilityGranularityFullDay => 'Journées entières uniquement';
+
+  @override
+  String planSlotError(int minutes) {
+    return 'Les réservations doivent commencer et finir sur la grille de $minutes minutes.';
+  }
+
+  @override
+  String get planFullDayError =>
+      'Ici, les réservations couvrent la journée entière.';
+
+  @override
   String get availabilityGranularityHours =>
       'Heures réelles (de–à exact, demi/journées en raccourcis)';
 
@@ -185,37 +216,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get availabilityWorkHoursInvalid =>
       'La journée doit respecter début < limite de demi-journée < fin.';
-
-  @override
-  String get availabilityGranularityFlexible => 'Plage horaire libre';
-
-  @override
-  String get availabilityGranularityHalfDay =>
-      'Demi-journées (matin et après-midi)';
-
-  @override
-  String get availabilityGranularity5 => 'Créneaux de 5 minutes';
-
-  @override
-  String get availabilityGranularity15 => 'Créneaux de 15 minutes';
-
-  @override
-  String get availabilityGranularity30 => 'Créneaux de 30 minutes';
-
-  @override
-  String get availabilityGranularity60 => 'Créneaux d\'une heure';
-
-  @override
-  String get availabilityGranularityFullDay => 'Journées entières uniquement';
-
-  @override
-  String planSlotError(int minutes) {
-    return 'Les réservations doivent commencer et finir sur la grille de $minutes minutes.';
-  }
-
-  @override
-  String get planFullDayError =>
-      'Ici, les réservations couvrent la journée entière.';
 
   @override
   String get myBadgeTitle => 'Mon badge';
@@ -1115,19 +1115,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureDataExport => 'Export des données (Excel)';
 
   @override
-  String get featureWorkingHours => 'Horaires de travail';
-
-  @override
-  String get featureWorkingHoursDesc =>
-      'Configurer la journée de travail et proposer la réservation à l\'heure exacte ; désactivé, les valeurs par défaut 8h–17h s\'appliquent.';
-
-  @override
   String get featureAutoCheckInOutDesc =>
       'Les réservations sans arrivée ou départ enregistrés se clôturent seules une fois leur créneau passé.';
 
   @override
   String get featureDataExportDesc =>
       'Télécharger toutes les données de l’espace dans un classeur Excel.';
+
+  @override
+  String get featureWorkingHours => 'Horaires de travail';
+
+  @override
+  String get featureWorkingHoursDesc =>
+      'Configurer la journée de travail et proposer la réservation à l\'heure exacte ; désactivé, les valeurs par défaut 8h–17h s\'appliquent.';
 
   @override
   String get helpTitle => 'Aide';

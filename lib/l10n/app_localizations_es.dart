@@ -151,6 +151,35 @@ class AppLocalizationsEs extends AppLocalizations {
       'Medias jornadas: las reservas cubren la mañana, la tarde o la jornada completa — las ventanas siguen el horario laboral configurado.';
 
   @override
+  String get availabilityGranularityFlexible => 'Franja horaria libre';
+
+  @override
+  String get availabilityGranularityHalfDay => 'Medios días (mañana y tarde)';
+
+  @override
+  String get availabilityGranularity5 => 'Franjas de 5 minutos';
+
+  @override
+  String get availabilityGranularity15 => 'Franjas de 15 minutos';
+
+  @override
+  String get availabilityGranularity30 => 'Franjas de 30 minutos';
+
+  @override
+  String get availabilityGranularity60 => 'Franjas de 1 hora';
+
+  @override
+  String get availabilityGranularityFullDay => 'Solo días completos';
+
+  @override
+  String planSlotError(int minutes) {
+    return 'Las reservas deben empezar y terminar en la cuadrícula de $minutes minutos.';
+  }
+
+  @override
+  String get planFullDayError => 'Aquí las reservas cubren el día completo.';
+
+  @override
   String get availabilityGranularityHours =>
       'Horas reales (de–a exacto, medias/jornadas como atajos)';
 
@@ -185,35 +214,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get availabilityWorkHoursInvalid =>
       'Debe cumplirse: inicio < límite de media jornada < fin.';
-
-  @override
-  String get availabilityGranularityFlexible => 'Franja horaria libre';
-
-  @override
-  String get availabilityGranularityHalfDay => 'Medios días (mañana y tarde)';
-
-  @override
-  String get availabilityGranularity5 => 'Franjas de 5 minutos';
-
-  @override
-  String get availabilityGranularity15 => 'Franjas de 15 minutos';
-
-  @override
-  String get availabilityGranularity30 => 'Franjas de 30 minutos';
-
-  @override
-  String get availabilityGranularity60 => 'Franjas de 1 hora';
-
-  @override
-  String get availabilityGranularityFullDay => 'Solo días completos';
-
-  @override
-  String planSlotError(int minutes) {
-    return 'Las reservas deben empezar y terminar en la cuadrícula de $minutes minutos.';
-  }
-
-  @override
-  String get planFullDayError => 'Aquí las reservas cubren el día completo.';
 
   @override
   String get myBadgeTitle => 'Mi credencial';
@@ -1111,19 +1111,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureDataExport => 'Exportación de datos (Excel)';
 
   @override
-  String get featureWorkingHours => 'Horario laboral';
-
-  @override
-  String get featureWorkingHoursDesc =>
-      'Configura la jornada laboral y ofrece reservas por horas exactas; desactivado se aplican los valores 8:00–17:00.';
-
-  @override
   String get featureAutoCheckInOutDesc =>
       'Las reservas sin entrada o salida registradas se completan solas cuando pasa su horario.';
 
   @override
   String get featureDataExportDesc =>
       'Descargar todos los datos del espacio en un libro de Excel.';
+
+  @override
+  String get featureWorkingHours => 'Horario laboral';
+
+  @override
+  String get featureWorkingHoursDesc =>
+      'Configura la jornada laboral y ofrece reservas por horas exactas; desactivado se aplican los valores 8:00–17:00.';
 
   @override
   String get helpTitle => 'Ayuda';

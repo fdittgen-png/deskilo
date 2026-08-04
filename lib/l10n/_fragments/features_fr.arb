@@ -43,5 +43,7 @@
   "featureAutoCheckInOut": "Arrivée/départ auto en fin de journée",
   "featureDataExport": "Export des données (Excel)",
   "featureAutoCheckInOutDesc": "Les réservations sans arrivée ou départ enregistrés se clôturent seules une fois leur créneau passé.",
-  "featureDataExportDesc": "Télécharger toutes les données de l’espace dans un classeur Excel."
+  "featureDataExportDesc": "Télécharger toutes les données de l’espace dans un classeur Excel.",
+  "featureWorkingHours": "Horaires de travail",
+  "featureWorkingHoursDesc": "Configurer la journée de travail et proposer la réservation à l'heure exacte ; désactivé, les valeurs par défaut 8h–17h s'appliquent."
 }

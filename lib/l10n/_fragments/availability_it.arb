@@ -8,7 +8,7 @@
   "availabilityLastOpenDay": "Almeno un giorno della settimana deve restare aperto.",
   "availabilityNoClosures": "Nessun giorno di chiusura.",
   "availabilityGranularityTitle": "Granularità delle prenotazioni",
-  "availabilityGranularityDescription": "Mezze giornate: le prenotazioni coprono la mattina (fino alle 13), il pomeriggio (dalle 13) o l'intera giornata.",
+  "availabilityGranularityDescription": "Mezze giornate: le prenotazioni coprono la mattina, il pomeriggio o l'intera giornata lavorativa — le finestre seguono l'orario di lavoro configurato.",
   "availabilityGranularityFlexible": "Fascia oraria libera",
   "availabilityGranularityHalfDay": "Mezze giornate (mattina e pomeriggio)",
   "availabilityGranularity5": "Slot di 5 minuti",
@@ -17,5 +17,15 @@
   "availabilityGranularity60": "Slot di 1 ora",
   "availabilityGranularityFullDay": "Solo giornate intere",
   "planSlotError": "Le prenotazioni devono iniziare e finire sulla griglia di {minutes} minuti.",
-  "planFullDayError": "Qui le prenotazioni coprono l'intera giornata."
+  "planFullDayError": "Qui le prenotazioni coprono l'intera giornata.",
+  "availabilityGranularityHours": "Orari reali (da–a esatto, mezze/giornate come scorciatoie)",
+  "availabilityWorkHoursTitle": "Orario di lavoro",
+  "availabilityWorkHoursDescription": "Le finestre di mezza giornata e giornata intera ovunque — prenotazioni, check-in e fatturazione — seguono questo orario.",
+  "availabilityWorkStart": "Inizio giornata",
+  "availabilityHalfBoundary": "Limite di mezza giornata",
+  "availabilityWorkEnd": "Fine giornata",
+  "availabilityHalfDayHours": "Ore fatturate come mezza giornata",
+  "availabilityFullDayHours": "Ore fatturate come giornata intera",
+  "availabilityHourOption": "{count} h",
+  "availabilityWorkHoursInvalid": "Deve valere: inizio < limite di mezza giornata < fine."
 }

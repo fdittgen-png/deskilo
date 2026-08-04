@@ -152,6 +152,36 @@ class AppLocalizationsDe extends AppLocalizations {
       'Halbe Tage: Buchungen umfassen den Vormittag, den Nachmittag oder den ganzen Arbeitstag — die Fenster folgen den konfigurierten Arbeitszeiten.';
 
   @override
+  String get availabilityGranularityFlexible => 'Freier Zeitraum';
+
+  @override
+  String get availabilityGranularityHalfDay =>
+      'Halbe Tage (Vormittag & Nachmittag)';
+
+  @override
+  String get availabilityGranularity5 => '5-Minuten-Slots';
+
+  @override
+  String get availabilityGranularity15 => '15-Minuten-Slots';
+
+  @override
+  String get availabilityGranularity30 => '30-Minuten-Slots';
+
+  @override
+  String get availabilityGranularity60 => '1-Stunden-Slots';
+
+  @override
+  String get availabilityGranularityFullDay => 'Nur ganze Tage';
+
+  @override
+  String planSlotError(int minutes) {
+    return 'Buchungen müssen im $minutes-Minuten-Raster beginnen und enden.';
+  }
+
+  @override
+  String get planFullDayError => 'Buchungen umfassen hier den ganzen Tag.';
+
+  @override
   String get availabilityGranularityHours =>
       'Echte Uhrzeiten (exakt von–bis, Halb-/Ganztage als Schnellwahl)';
 
@@ -185,36 +215,6 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get availabilityWorkHoursInvalid =>
       'Es muss gelten: Beginn < Halbtagsgrenze < Ende.';
-
-  @override
-  String get availabilityGranularityFlexible => 'Freier Zeitraum';
-
-  @override
-  String get availabilityGranularityHalfDay =>
-      'Halbe Tage (Vormittag & Nachmittag)';
-
-  @override
-  String get availabilityGranularity5 => '5-Minuten-Slots';
-
-  @override
-  String get availabilityGranularity15 => '15-Minuten-Slots';
-
-  @override
-  String get availabilityGranularity30 => '30-Minuten-Slots';
-
-  @override
-  String get availabilityGranularity60 => '1-Stunden-Slots';
-
-  @override
-  String get availabilityGranularityFullDay => 'Nur ganze Tage';
-
-  @override
-  String planSlotError(int minutes) {
-    return 'Buchungen müssen im $minutes-Minuten-Raster beginnen und enden.';
-  }
-
-  @override
-  String get planFullDayError => 'Buchungen umfassen hier den ganzen Tag.';
 
   @override
   String get myBadgeTitle => 'Mein Badge';
@@ -1111,19 +1111,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureDataExport => 'Datenexport (Excel)';
 
   @override
-  String get featureWorkingHours => 'Arbeitszeiten';
-
-  @override
-  String get featureWorkingHoursDesc =>
-      'Arbeitstag konfigurieren und Buchung nach exakten Uhrzeiten anbieten; aus = Standard 8–17 Uhr.';
-
-  @override
   String get featureAutoCheckInOutDesc =>
       'Reservierungen ohne Check-in oder Check-out schließen sich selbst, sobald ihre Zeit vorbei ist.';
 
   @override
   String get featureDataExportDesc =>
       'Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen.';
+
+  @override
+  String get featureWorkingHours => 'Arbeitszeiten';
+
+  @override
+  String get featureWorkingHoursDesc =>
+      'Arbeitstag konfigurieren und Buchung nach exakten Uhrzeiten anbieten; aus = Standard 8–17 Uhr.';
 
   @override
   String get helpTitle => 'Hilfe';

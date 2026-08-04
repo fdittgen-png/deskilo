@@ -151,6 +151,37 @@ class AppLocalizationsIt extends AppLocalizations {
       'Mezze giornate: le prenotazioni coprono la mattina, il pomeriggio o l\'intera giornata lavorativa — le finestre seguono l\'orario di lavoro configurato.';
 
   @override
+  String get availabilityGranularityFlexible => 'Fascia oraria libera';
+
+  @override
+  String get availabilityGranularityHalfDay =>
+      'Mezze giornate (mattina e pomeriggio)';
+
+  @override
+  String get availabilityGranularity5 => 'Slot di 5 minuti';
+
+  @override
+  String get availabilityGranularity15 => 'Slot di 15 minuti';
+
+  @override
+  String get availabilityGranularity30 => 'Slot di 30 minuti';
+
+  @override
+  String get availabilityGranularity60 => 'Slot di 1 ora';
+
+  @override
+  String get availabilityGranularityFullDay => 'Solo giornate intere';
+
+  @override
+  String planSlotError(int minutes) {
+    return 'Le prenotazioni devono iniziare e finire sulla griglia di $minutes minuti.';
+  }
+
+  @override
+  String get planFullDayError =>
+      'Qui le prenotazioni coprono l\'intera giornata.';
+
+  @override
   String get availabilityGranularityHours =>
       'Orari reali (da–a esatto, mezze/giornate come scorciatoie)';
 
@@ -184,37 +215,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get availabilityWorkHoursInvalid =>
       'Deve valere: inizio < limite di mezza giornata < fine.';
-
-  @override
-  String get availabilityGranularityFlexible => 'Fascia oraria libera';
-
-  @override
-  String get availabilityGranularityHalfDay =>
-      'Mezze giornate (mattina e pomeriggio)';
-
-  @override
-  String get availabilityGranularity5 => 'Slot di 5 minuti';
-
-  @override
-  String get availabilityGranularity15 => 'Slot di 15 minuti';
-
-  @override
-  String get availabilityGranularity30 => 'Slot di 30 minuti';
-
-  @override
-  String get availabilityGranularity60 => 'Slot di 1 ora';
-
-  @override
-  String get availabilityGranularityFullDay => 'Solo giornate intere';
-
-  @override
-  String planSlotError(int minutes) {
-    return 'Le prenotazioni devono iniziare e finire sulla griglia di $minutes minuti.';
-  }
-
-  @override
-  String get planFullDayError =>
-      'Qui le prenotazioni coprono l\'intera giornata.';
 
   @override
   String get myBadgeTitle => 'Il mio badge';
@@ -1113,19 +1113,19 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureDataExport => 'Esportazione dati (Excel)';
 
   @override
-  String get featureWorkingHours => 'Orario di lavoro';
-
-  @override
-  String get featureWorkingHoursDesc =>
-      'Configura la giornata lavorativa e offri prenotazioni a orari esatti; disattivato valgono i valori 8:00–17:00.';
-
-  @override
   String get featureAutoCheckInOutDesc =>
       'Le prenotazioni senza check-in o check-out si completano da sole una volta trascorso il loro orario.';
 
   @override
   String get featureDataExportDesc =>
       'Scaricare tutti i dati dello spazio in una cartella Excel.';
+
+  @override
+  String get featureWorkingHours => 'Orario di lavoro';
+
+  @override
+  String get featureWorkingHoursDesc =>
+      'Configura la giornata lavorativa e offri prenotazioni a orari esatti; disattivato valgono i valori 8:00–17:00.';
 
   @override
   String get helpTitle => 'Aiuto';

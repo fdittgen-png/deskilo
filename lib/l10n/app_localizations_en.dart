@@ -150,6 +150,36 @@ class AppLocalizationsEn extends AppLocalizations {
       'Half days: bookings cover the morning, the afternoon or the whole working day — the windows follow the configured working hours.';
 
   @override
+  String get availabilityGranularityFlexible => 'Free time period';
+
+  @override
+  String get availabilityGranularityHalfDay =>
+      'Half days (morning & afternoon)';
+
+  @override
+  String get availabilityGranularity5 => '5-minute slots';
+
+  @override
+  String get availabilityGranularity15 => '15-minute slots';
+
+  @override
+  String get availabilityGranularity30 => '30-minute slots';
+
+  @override
+  String get availabilityGranularity60 => '1-hour slots';
+
+  @override
+  String get availabilityGranularityFullDay => 'Full days only';
+
+  @override
+  String planSlotError(int minutes) {
+    return 'Bookings must start and end on the $minutes-minute grid.';
+  }
+
+  @override
+  String get planFullDayError => 'Bookings here cover the full day.';
+
+  @override
   String get availabilityGranularityHours =>
       'Real hours (exact from–to, half/full days as shortcuts)';
 
@@ -183,36 +213,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get availabilityWorkHoursInvalid =>
       'The day must run start < half-day boundary < end.';
-
-  @override
-  String get availabilityGranularityFlexible => 'Free time period';
-
-  @override
-  String get availabilityGranularityHalfDay =>
-      'Half days (morning & afternoon)';
-
-  @override
-  String get availabilityGranularity5 => '5-minute slots';
-
-  @override
-  String get availabilityGranularity15 => '15-minute slots';
-
-  @override
-  String get availabilityGranularity30 => '30-minute slots';
-
-  @override
-  String get availabilityGranularity60 => '1-hour slots';
-
-  @override
-  String get availabilityGranularityFullDay => 'Full days only';
-
-  @override
-  String planSlotError(int minutes) {
-    return 'Bookings must start and end on the $minutes-minute grid.';
-  }
-
-  @override
-  String get planFullDayError => 'Bookings here cover the full day.';
 
   @override
   String get myBadgeTitle => 'My badge';
@@ -1103,19 +1103,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureDataExport => 'Data export (Excel)';
 
   @override
-  String get featureWorkingHours => 'Working hours';
-
-  @override
-  String get featureWorkingHoursDesc =>
-      'Configure the working day and offer exact-hours booking; off keeps the 8:00–17:00 defaults.';
-
-  @override
   String get featureAutoCheckInOutDesc =>
       'Reservations never checked in or out complete themselves once their time has passed.';
 
   @override
   String get featureDataExportDesc =>
       'Download all workspace data as an Excel workbook.';
+
+  @override
+  String get featureWorkingHours => 'Working hours';
+
+  @override
+  String get featureWorkingHoursDesc =>
+      'Configure the working day and offer exact-hours booking; off keeps the 8:00–17:00 defaults.';
 
   @override
   String get helpTitle => 'Help';
