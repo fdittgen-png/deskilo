@@ -49,10 +49,39 @@ jobs:
         shell: pwsh
         run: |
           $raw = (Select-String -Path pubspec.yaml -Pattern '^version:\s*(\S+)').Matches[0].Groups[1].Value
-          # MSI ProductVersion must be numeric x.y.z — strip the build number.
-          $msi = $raw.Split('+')[0]
+          # MSI ProductVersion must be numeric x.y.z — and UNIQUE per
+          # build: MajorUpgrade only replaces OLDER versions, so a
+          # constant 0.1.0 meant reinstalling over an existing DesKilo
+          # silently did nothing (#449). major.minor from the pubspec,
+          # patch = the monotonically increasing workflow run number.
+          $parts = $raw.Split('+')[0].Split('.')
+          $msi = "$($parts[0]).$($parts[1]).${{ github.run_number }}"
           "raw=$raw" >> $env:GITHUB_OUTPUT
           "msi=$msi" >> $env:GITHUB_OUTPUT
+
+      # Authenticode (#449): SmartScreen's "unknown publisher" wall only
+      # goes away with a signed exe + MSI. Signing activates when the
+      # owner configures a certificate (secrets below); without one the
+      # build stays honest-unsigned and says so — the macOS DMG pattern
+      # (#371). docs/guides/windows-signing.md walks through the owner
+      # setup.
+      - name: Sign deskilo.exe (when a certificate is configured)
+        shell: pwsh
+        env:
+          PFX_B64: ${{ secrets.WINDOWS_CERT_PFX_BASE64 }}
+          PFX_PASS: ${{ secrets.WINDOWS_CERT_PASSWORD }}
+        run: |
+          if (-not $env:PFX_B64) {
+            Write-Host "No WINDOWS_CERT_PFX_BASE64 secret - shipping unsigned (SmartScreen will warn)."
+            exit 0
+          }
+          $pfx = "$env:RUNNER_TEMP\codesign.pfx"
+          [IO.File]::WriteAllBytes($pfx, [Convert]::FromBase64String($env:PFX_B64))
+          $signtool = Get-ChildItem "C:\Program Files (x86)\Windows Kits\10\bin\*\x64\signtool.exe" |
+            Sort-Object FullName | Select-Object -Last 1 -ExpandProperty FullName
+          & $signtool sign /f $pfx /p $env:PFX_PASS /fd SHA256 /tr http://timestamp.digicert.com /td SHA256 `
+            build\windows\x64\runner\Release\deskilo.exe
+          if ($LASTEXITCODE -ne 0) { throw "signtool failed on deskilo.exe" }
 
       - name: Install WiX toolset
         # Pinned to v5: WiX v7+ requires accepting the Open Source
@@ -85,6 +114,23 @@ jobs:
           if ($size -lt 10MB) {
             throw "MSI is only $size bytes — the payload harvest matched nothing."
           }
+
+      - name: Sign the MSI (when a certificate is configured)
+        shell: pwsh
+        env:
+          PFX_B64: ${{ secrets.WINDOWS_CERT_PFX_BASE64 }}
+          PFX_PASS: ${{ secrets.WINDOWS_CERT_PASSWORD }}
+        run: |
+          if (-not $env:PFX_B64) { exit 0 }
+          $pfx = "$env:RUNNER_TEMP\codesign.pfx"
+          if (-not (Test-Path $pfx)) {
+            [IO.File]::WriteAllBytes($pfx, [Convert]::FromBase64String($env:PFX_B64))
+          }
+          $signtool = Get-ChildItem "C:\Program Files (x86)\Windows Kits\10\bin\*\x64\signtool.exe" |
+            Sort-Object FullName | Select-Object -Last 1 -ExpandProperty FullName
+          & $signtool sign /f $pfx /p $env:PFX_PASS /fd SHA256 /tr http://timestamp.digicert.com /td SHA256 `
+            build\DesKilo-${{ steps.version.outputs.raw }}.msi
+          if ($LASTEXITCODE -ne 0) { throw "signtool failed on the MSI" }
 
       - uses: actions/upload-artifact@v4
         with:
