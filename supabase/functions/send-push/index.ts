@@ -31,6 +31,10 @@ const TEXTS: Record<string, { title: string; body: string }> = {
     title: "Reservation removed",
     body: "A reservation was removed by an admin.",
   },
+  member_note: {
+    title: "DesKilo",
+    body: "You have a new message.",
+  },
 };
 
 async function fcmAccessToken(sa: {
@@ -81,36 +85,64 @@ Deno.serve(async (req) => {
   }
   const sa = JSON.parse(saRaw);
 
-  const { event_id } = await req.json().catch(() => ({}));
-  if (!event_id) return Response.json({ error: "event_id required" }, { status: 400 });
+  const { event_id, note_id } = await req.json().catch(() => ({}));
+  if (!event_id && !note_id) {
+    return Response.json({ error: "event_id or note_id required" }, { status: 400 });
+  }
 
-  // Load the event ourselves — never trust the caller's content.
-  const { data: event } = await supabase
-    .from("events")
-    .select("id, workspace_id, type, action, status, actor_member_id, subject_member_id")
-    .eq("id", event_id)
-    .maybeSingle();
-  if (!event) return Response.json({ error: "unknown event" }, { status: 404 });
+  let kind: string;
+  let recipients: { id: string }[];
+  if (note_id) {
+    // Member note (#456): load it ourselves — recipient is the target,
+    // or every active admin/owner except the sender for broadcasts.
+    const { data: note } = await supabase
+      .from("member_notes")
+      .select("id, workspace_id, from_member_id, to_member_id")
+      .eq("id", note_id)
+      .maybeSingle();
+    if (!note) return Response.json({ error: "unknown note" }, { status: 404 });
+    kind = "member_note";
+    if (note.to_member_id) {
+      recipients = [{ id: note.to_member_id }];
+    } else {
+      const { data: admins } = await supabase
+        .from("members")
+        .select("id, is_admin, is_owner")
+        .eq("workspace_id", note.workspace_id)
+        .eq("status", "active")
+        .neq("id", note.from_member_id);
+      recipients = (admins ?? []).filter((m) => m.is_admin || m.is_owner);
+    }
+  } else {
+    // Load the event ourselves — never trust the caller's content.
+    const { data: event } = await supabase
+      .from("events")
+      .select("id, workspace_id, type, action, status, actor_member_id, subject_member_id")
+      .eq("id", event_id)
+      .maybeSingle();
+    if (!event) return Response.json({ error: "unknown event" }, { status: 404 });
 
-  const kind = event.status === "pending"
-    ? "pending_request"
-    : event.type === "reservation" && event.action === "cancelled"
-    ? "reservation_cancelled"
-    : null;
-  if (!kind) return Response.json({ skipped: "kind not pushed" });
+    const eventKind = event.status === "pending"
+      ? "pending_request"
+      : event.type === "reservation" && event.action === "cancelled"
+      ? "reservation_cancelled"
+      : null;
+    if (!eventKind) return Response.json({ skipped: "kind not pushed" });
+    kind = eventKind;
 
-  // Recipients — the 0082 rules, re-derived here for fcm rows.
-  const { data: members } = await supabase
-    .from("members")
-    .select("id, is_admin, is_owner")
-    .eq("workspace_id", event.workspace_id)
-    .eq("status", "active")
-    .neq("id", event.actor_member_id);
-  const recipients = (members ?? []).filter((m) =>
-    kind === "reservation_cancelled"
-      ? m.id === event.subject_member_id || m.is_admin || m.is_owner
-      : m.id === event.subject_member_id
-  );
+    // Recipients — the 0082 rules, re-derived here for fcm rows.
+    const { data: members } = await supabase
+      .from("members")
+      .select("id, is_admin, is_owner")
+      .eq("workspace_id", event.workspace_id)
+      .eq("status", "active")
+      .neq("id", event.actor_member_id);
+    recipients = (members ?? []).filter((m) =>
+      kind === "reservation_cancelled"
+        ? m.id === event.subject_member_id || m.is_admin || m.is_owner
+        : m.id === event.subject_member_id
+    );
+  }
   if (recipients.length === 0) return Response.json({ sent: 0 });
 
   const { data: endpoints } = await supabase

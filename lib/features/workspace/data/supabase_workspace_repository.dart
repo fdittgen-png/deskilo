@@ -6,6 +6,7 @@ import '../domain/booking_granularity.dart';
 import '../domain/closure_day.dart';
 import '../domain/member.dart';
 import '../domain/member_badge.dart';
+import '../domain/member_note.dart';
 import '../domain/overage_policy.dart';
 import '../domain/payment_instructions.dart';
 import '../domain/workspace.dart';
@@ -549,6 +550,30 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     await _client
         .from('workspaces')
         .update({'booking_rules': rules}).eq('id', workspaceId);
+  }
+
+  @override
+  Future<void> sendMemberNote(
+    String workspaceId, {
+    required String? toMemberId,
+    required String body,
+  }) async {
+    await _client.rpc<void>('send_member_note', params: {
+      'p_workspace_id': workspaceId,
+      'p_to_member_id': toMemberId,
+      'p_body': body,
+    });
+  }
+
+  @override
+  Future<List<MemberNote>> fetchMyNotes(String workspaceId) async {
+    final rows = await _client
+        .from('member_notes')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('created_at', ascending: false)
+        .limit(30);
+    return rows.map(MemberNote.fromRow).toList();
   }
 
   @override

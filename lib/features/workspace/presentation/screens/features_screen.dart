@@ -103,6 +103,10 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureInvoicePdfTemplateDesc ??
               'Owner-written intro and footer text on the invoice PDF. '
                   'Never touches the e-invoice XML.',
+        WorkspaceFeature.memberNotifications =>
+          l10n?.featureMemberNotificationsDesc ??
+              'Send a short notification to another member; admins can '
+                  'notify all admins including the owner.',
       };
 
   Future<void> _toggle(

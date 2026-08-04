@@ -22,5 +22,13 @@
   "memberReservationLimitChip": "máx. {n}",
   "reservationLimitError": "Límite de reservas alcanzado — ya tienes el máximo de reservas abiertas.",
   "memberPause": "Pausar la membresía",
-  "memberReactivate": "Reactivar la membresía"
+  "memberReactivate": "Reactivar la membresía",
+  "memberNotifyAction": "Enviar notificación",
+  "memberNotifyAllAdmins": "Notificar a todos los admins",
+  "memberAllAdmins": "todos los admins",
+  "memberNoteTitle": "Notificar a {name}",
+  "memberNoteHint": "Tu mensaje",
+  "memberNoteSend": "Enviar",
+  "memberNoteSent": "Notificación enviada.",
+  "memberNoteReceived": "Mensaje de {name}"
 }

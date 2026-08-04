@@ -17,6 +17,7 @@ import '../../domain/member.dart';
 import '../../domain/overage_policy.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/member_note_dialog.dart';
 import '../widgets/badge_manager_dialog.dart';
 import '../../../events/providers/event_providers.dart';
 
@@ -189,7 +190,23 @@ class MembersScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final active = member.status == MemberStatus.active;
     final pending = member.status == MemberStatus.pending;
+    final notesOn = ref
+        .read(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.memberNotifications);
     final actions = <Widget>[
+      // Member notes (#456): reach the person before managing them.
+      if (notesOn && !isSelf && !member.isKiosk && active)
+        _sheetAction(
+          context,
+          icon: Icons.notifications_active_outlined,
+          label: l10n?.memberNotifyAction ?? 'Send notification',
+          onTap: () => showMemberNoteDialog(
+            context,
+            ref,
+            toMemberId: member.id,
+            recipientName: name,
+          ),
+        ),
       // New-member validation (0052): a pending membership offers the
       // decision first — approve activates, reject exits. The quorum
       // path on the events feed stays available in parallel.
@@ -793,6 +810,22 @@ class MembersScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(l10n?.membersTitle ?? 'Members & plans'),
         actions: [
+          // Admin broadcast (#456): one note to ALL admins incl. the
+          // owner — the server re-checks the sender's rights.
+          if ((me?.canAdminister ?? false) &&
+              features.contains(WorkspaceFeature.memberNotifications))
+            IconButton(
+              key: const ValueKey('members-notify-admins'),
+              icon: const Icon(Icons.campaign_outlined),
+              tooltip: l10n?.memberNotifyAllAdmins ?? 'Notify all admins',
+              onPressed: () => showMemberNoteDialog(
+                context,
+                ref,
+                toMemberId: null,
+                recipientName:
+                    l10n?.memberAllAdmins ?? 'all admins',
+              ),
+            ),
           // Invite entry point (#195): the members list is where owners
           // notice someone is missing. Links to the owner-only workspace
           // ID & QR and billing surfaces — hidden from plain admins.

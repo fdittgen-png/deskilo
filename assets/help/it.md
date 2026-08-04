@@ -102,6 +102,7 @@ Guarda chi fa parte della tua comunità:
 - Ogni scheda membro mostra **foto** (o iniziale), **ruolo**, **stato personalizzato** («a Berlino fino a venerdì…»), un indicatore **online / ultimo accesso**, e un **chip di prenotazione**: posto con check-in, prenotato adesso, o prossima prenotazione.
 - Tocca un membro per la sua **scheda di dettaglio** — incluse le prossime prenotazioni.
 - **Scorri** su un membro per scrivergli su **WhatsApp**; il **pulsante gruppo** apre il gruppo WhatsApp della comunità (impostato dal proprietario).
+- **Invia notifica** (nella scheda di dettaglio e nelle schede di *Membri e piani*): una breve nota a un altro membro — consegnata come push e come notifica con il tuo nome e il tuo messaggio. Gli admin hanno un megafono **Notifica tutti gli admin** nell'intestazione che raggiunge tutti gli admin, proprietario incluso. Attivabile/disattivabile con la funzionalità *Notifiche tra membri*.
 - Imposta foto, stato e visibilità del telefono in **Impostazioni**.
 - Gli admin e i proprietari vedono in più l'**email** di ogni membro sotto il nome — i membri normali no: il canale di contatto tra membri resta il numero WhatsApp condiviso volontariamente.
 

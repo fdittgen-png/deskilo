@@ -490,6 +490,53 @@ final class WorkHoursProvider
 
 String _$workHoursHash() => r'0089026f25376d6ab096cad781591258c48d9c86';
 
+/// Notes visible to me in the active workspace (#456), newest first —
+/// the shell listens and surfaces arrivals as local notifications.
+
+@ProviderFor(myNotes)
+final myNotesProvider = MyNotesProvider._();
+
+/// Notes visible to me in the active workspace (#456), newest first —
+/// the shell listens and surfaces arrivals as local notifications.
+
+final class MyNotesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<MemberNote>>,
+          List<MemberNote>,
+          FutureOr<List<MemberNote>>
+        >
+    with $FutureModifier<List<MemberNote>>, $FutureProvider<List<MemberNote>> {
+  /// Notes visible to me in the active workspace (#456), newest first —
+  /// the shell listens and surfaces arrivals as local notifications.
+  MyNotesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myNotesProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myNotesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<MemberNote>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<MemberNote>> create(Ref ref) {
+    return myNotes(ref);
+  }
+}
+
+String _$myNotesHash() => r'd6e2756b52ed2e4dd8aaf427eb15c34a4162d278';
+
 /// One-off closure days of the active workspace, ordered by day (#127).
 
 @ProviderFor(closureDays)

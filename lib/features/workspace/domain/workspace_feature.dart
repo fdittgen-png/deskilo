@@ -30,7 +30,8 @@ enum WorkspaceFeature {
   autoCheckInOut,
   dataExport,
   workingHours,
-  invoicePdfTemplate;
+  invoicePdfTemplate,
+  memberNotifications;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -168,6 +169,9 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.invoicePdfTemplate,
     requires: WorkspaceFeature.invoicing,
   ),
+  // Member-to-member notes + admin broadcast (#456).
+  WorkspaceFeature.memberNotifications:
+      FeatureManifestEntry(feature: WorkspaceFeature.memberNotifications),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start

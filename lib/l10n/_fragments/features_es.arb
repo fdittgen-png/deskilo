@@ -47,5 +47,7 @@
   "featureWorkingHours": "Horario laboral",
   "featureWorkingHoursDesc": "Configura la jornada laboral y ofrece reservas por horas exactas; desactivado se aplican los valores 8:00–17:00.",
   "featureInvoicePdfTemplate": "Plantilla del PDF de factura",
-  "featureInvoicePdfTemplateDesc": "Introducción y pie escritos por el propietario en el PDF de la factura. Nunca toca el XML de la factura electrónica."
+  "featureInvoicePdfTemplateDesc": "Introducción y pie escritos por el propietario en el PDF de la factura. Nunca toca el XML de la factura electrónica.",
+  "featureMemberNotifications": "Notificaciones entre miembros",
+  "featureMemberNotificationsDesc": "Envía una notificación corta a otro miembro; los admins pueden notificar a todos los admins, incluido el propietario."
 }

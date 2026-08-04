@@ -99,6 +99,8 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
         ref
           ..invalidate(levelsProvider)
           ..invalidate(floorPlanProvider);
+      case 'member_notes':
+        ref.invalidate(myNotesProvider);
       case 'events' || 'event_decisions':
         ref
           ..invalidate(eventsProvider)
