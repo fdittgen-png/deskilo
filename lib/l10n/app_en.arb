@@ -881,6 +881,14 @@
   "@pushStatusNotConfiguredHint": {
     "description": "Fix hint under the not-configured line (#428)"
   },
+  "notificationsSystemOff": "Android is blocking DesKilo notifications",
+  "notificationsSystemOffHint": "Allow them under system Settings → Apps → DesKilo → Notifications — the icon badge needs them.",
+  "@notificationsSystemOff": {
+    "description": "Settings warning when Android suppresses the app's notifications (#436)"
+  },
+  "@notificationsSystemOffHint": {
+    "description": "Fix hint under the system-notifications warning (#436)"
+  },
   "directoryTitle": "Members",
   "@directoryTitle": {
     "description": "Member directory title: bottom-tab label and app-bar title of the Members tab (#230) plus its settings entry (#224), visible to every member. Keep it short — it must fit a bottom-bar tab."

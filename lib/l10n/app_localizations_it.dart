@@ -650,6 +650,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il proprietario completa la configurazione Firebase (guida push-setup).';
 
   @override
+  String get notificationsSystemOff =>
+      'Android sta bloccando le notifiche di DesKilo';
+
+  @override
+  String get notificationsSystemOffHint =>
+      'Consentile in Impostazioni di sistema → App → DesKilo → Notifiche — il badge dell\'icona ne ha bisogno.';
+
+  @override
   String get directoryTitle => 'Membri';
 
   @override

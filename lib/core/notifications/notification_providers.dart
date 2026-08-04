@@ -10,3 +10,9 @@ part 'notification_providers.g.dart';
 @Riverpod(keepAlive: true)
 NotificationService notificationService(Ref ref) =>
     throw UnimplementedError('override notificationServiceProvider');
+
+/// System-level notification permission truth (#436): false = Android
+/// suppresses every notification of this app; Settings names the fix.
+@Riverpod(keepAlive: true)
+Future<bool?> systemNotificationsEnabled(Ref ref) =>
+    ref.watch(notificationServiceProvider).notificationsEnabled();

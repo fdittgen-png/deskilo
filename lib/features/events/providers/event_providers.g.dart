@@ -243,7 +243,7 @@ final class MyPendingEventsProvider
   }
 }
 
-String _$myPendingEventsHash() => r'10d1e0987a12a293e3ad07de5d0a02fe6049a36c';
+String _$myPendingEventsHash() => r'ea29e7efba3640beb447763382c076328c947117';
 
 /// How many pending events await MY decision — drives the Events tab
 /// badge.

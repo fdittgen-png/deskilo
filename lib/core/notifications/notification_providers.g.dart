@@ -63,3 +63,46 @@ final class NotificationServiceProvider
 
 String _$notificationServiceHash() =>
     r'2c35d60b259955cbe34e08eacf3bba3cd76a6d2e';
+
+/// System-level notification permission truth (#436): false = Android
+/// suppresses every notification of this app; Settings names the fix.
+
+@ProviderFor(systemNotificationsEnabled)
+final systemNotificationsEnabledProvider =
+    SystemNotificationsEnabledProvider._();
+
+/// System-level notification permission truth (#436): false = Android
+/// suppresses every notification of this app; Settings names the fix.
+
+final class SystemNotificationsEnabledProvider
+    extends $FunctionalProvider<AsyncValue<bool?>, bool?, FutureOr<bool?>>
+    with $FutureModifier<bool?>, $FutureProvider<bool?> {
+  /// System-level notification permission truth (#436): false = Android
+  /// suppresses every notification of this app; Settings names the fix.
+  SystemNotificationsEnabledProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'systemNotificationsEnabledProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$systemNotificationsEnabledHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<bool?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<bool?> create(Ref ref) {
+    return systemNotificationsEnabled(ref);
+  }
+}
+
+String _$systemNotificationsEnabledHash() =>
+    r'0b196171f85acb1617b88cdf8d59ed52dd8a216b';

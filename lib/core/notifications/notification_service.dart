@@ -27,6 +27,10 @@ abstract class NotificationService {
   /// Shows an immediate notification (#72 push pings).
   Future<void> showNow({required String title, required String body});
 
+  /// Whether the SYSTEM currently lets this app post notifications
+  /// (#436 diagnostics) — null when the platform cannot say.
+  Future<bool?> notificationsEnabled();
+
   /// One ACTIVE notification per pending confirmation (#432): launchers
   /// that ignore app-set badge numbers (Samsung One UI) show the COUNT
   /// OF ACTIVE NOTIFICATIONS as the icon number — the Gmail-style
@@ -50,4 +54,7 @@ class NoopNotificationService implements NotificationService {
 
   @override
   Future<void> syncPendingNotifications(List<PendingNotice> notices) async {}
+
+  @override
+  Future<bool?> notificationsEnabled() async => null;
 }

@@ -84,6 +84,22 @@ class LocalNotificationService implements NotificationService {
     }
   }
 
+  @override
+  Future<bool?> notificationsEnabled() async {
+    try {
+      return await _plugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.areNotificationsEnabled();
+    } catch (e, st) {
+      debugPrint('notifications-enabled probe failed: $e\n$st');
+      TraceLogger.instance.warn(
+          'notifications', 'notifications-enabled probe failed',
+          error: e, stackTrace: st);
+      return null;
+    }
+  }
+
   /// Currently mirrored pending-confirmation notification ids (#432).
   final _pendingIds = <int>{};
 
@@ -111,6 +127,11 @@ class LocalNotificationService implements NotificationService {
       _pendingIds
         ..clear()
         ..addAll(wanted.keys);
+      // #436 diagnostics: the Developer trace names what the mirror did
+      // and whether the system even allows posting.
+      TraceLogger.instance.log(TraceLevel.info, 'notifications',
+          'pending mirror: ${wanted.length} active, '
+          'enabled=${await notificationsEnabled()}');
     } catch (e, st) {
       debugPrint('pending notification sync failed: $e\n$st');
       TraceLogger.instance.error(

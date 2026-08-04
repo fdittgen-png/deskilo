@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- #436: without this, Android 13+ silently suppresses EVERY
+         notification — reminders, the badge mirror, push banners — and
+         the permission dialog can never even appear. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.CAMERA" />
     <!-- Kiosk RFID badges (0046): read NFC tag UIDs. Optional hardware —
          phones without NFC still install; the kiosk hides the tap path. -->
