@@ -5,7 +5,7 @@ How the DesKilo repository is organized, built, tested, and shipped. The methodo
 ## Repository layout
 
 ```
-android/                  # Android runner (Play + F-Droid flavors)
+android/                  # Android runner (Play + Android builds)
 ios/                      # iOS runner
 macos/                    # macOS desktop runner
 windows/                  # Windows runner + WiX MSI authoring (installer/deskilo.wxs)
@@ -103,7 +103,7 @@ Git discipline — branch off `master`, PRs only, green CI before merge, squash-
 ## Release
 
 - Semver + annotated tag after the release PR merges; release notes generated from PR titles.
-- Android: Play (internal → closed → open → production) + a Google-services-free F-Droid build audited by script. No flavor split is needed until a Play-only feature appears.
+- Android: Play (internal → closed → open → production). F-Droid support was dropped (ADR 0011); FCM is the push transport.
 - iOS: TestFlight via fastlane (owner-held App Store Connect secrets), internal groups plus an external group with a public link.
 - Desktop: Windows ships as an MSI from the `windows-msi` workflow, macOS as a Developer-ID-signed, Apple-notarised, stapled DMG from `macos-app` — both attached to the release on a `v*` tag. (Spec §12 left the macOS channel open; it is settled as notarised direct download.)
 - Web: an opt-in GitHub Pages deploy from the `web` workflow.

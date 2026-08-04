@@ -10,6 +10,6 @@
   "developerFilterErrors": "Errori",
   "developerFilterWarnings": "Avvisi+",
   "pushStatusRegistered": "Le notifiche push sono attive",
-  "pushStatusNoDistributor": "Le notifiche push richiedono un'app distributrice",
-  "pushStatusNoDistributorHint": "Installa ntfy (F-Droid o Play Store), poi riapri l'app."
+  "pushStatusNotConfigured": "Le notifiche push non sono ancora configurate",
+  "pushStatusNotConfiguredHint": "Il proprietario completa la configurazione Firebase (guida push-setup)."
 }

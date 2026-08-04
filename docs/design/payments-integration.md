@@ -26,7 +26,7 @@ capture.
 
 1. **The client never holds PSP secrets.** All provider calls happen in
    Supabase **Edge Functions** (Deno). The Flutter app only *starts* a
-   payment and *opens a URL*. This is what keeps the F-Droid build clean —
+   payment and *opens a URL*. This keeps the app clean —
    no proprietary payment SDK is linked into the app; it opens the
    provider's hosted approval page in a browser.
 2. **The capture is the proof.** A provider-confirmed capture posts a

@@ -6,11 +6,8 @@ list(APPEND FLUTTER_PLUGIN_LIST
   app_links
   file_selector_windows
   firebase_core
-  screen_retriever_windows
   share_plus
   url_launcher_windows
-  webcrypto
-  window_manager
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

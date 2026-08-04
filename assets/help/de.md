@@ -377,7 +377,7 @@ Deine Identität existiert nur für den Moment der Operation: die Berechtigung g
 
 ## 10. Benachrichtigungen
 
-Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheide — und wenn ein Admin **eine deiner Reservierungen entfernt** (Übersteuern), werden du und die Admins benachrichtigt. Zustellung ist lokal zuerst; Server-Pushes kommen auf Android, iPhone/iPad, im Browser und auf macOS ohne Zusatz-App an (Firebase Cloud Messaging) — *Einstellungen → Erweitert* zeigt, ob Push auf diesem Gerät aktiv ist. Ohne Firebase übernimmt automatisch **UnifiedPush** (einmal **ntfy** installieren). Das App-Icon zeigt die Zahl deiner offenen Bestätigungen. Push-Inhalte tragen nie Namen oder Zeiten; der Text entsteht lokal in der App.
+Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheide — und wenn ein Admin **eine deiner Reservierungen entfernt** (Übersteuern), werden du und die Admins benachrichtigt. Zustellung ist lokal zuerst; Server-Pushes kommen auf Android, iPhone/iPad, im Browser und auf macOS ohne Zusatz-App an (Firebase Cloud Messaging) — *Einstellungen → Erweitert* zeigt, ob Push auf diesem Gerät aktiv ist. Das App-Icon zeigt die Zahl deiner offenen Bestätigungen. Push-Inhalte tragen nie Namen oder Zeiten; der Text entsteht lokal in der App.
 
 ## 11. Datenschutz
 
@@ -385,6 +385,6 @@ Minimale Daten: Name, E-Mail, Tarif, Buchungen, Konto. Du bestimmst dein Foto, d
 
 ## 12. Plattformen
 
-Android (Google Play und F-Droid), iPhone/iPad, Desktop — **macOS** (ein DMG: DesKilo in „Programme“ ziehen) und **Windows** (ein MSI-Installer) aus jedem Release — und der **Browser**: dieselbe App, nichts zu installieren, unter der Adresse, die dein Space veröffentlicht. Deine Daten folgen deinem Konto: ein am Handy gebuchter Platz erscheint eine Sekunde später im Browser-Tab.
+Android (Google Play), iPhone/iPad, Desktop — **macOS** (ein DMG: DesKilo in „Programme“ ziehen) und **Windows** (ein MSI-Installer) aus jedem Release — und der **Browser**: dieselbe App, nichts zu installieren, unter der Adresse, die dein Space veröffentlicht. Deine Daten folgen deinem Konto: ein am Handy gebuchter Platz erscheint eine Sekunde später im Browser-Tab.
 
 Was der Browser nicht kann, ist das, was eine Seite nicht darf: ein NFC-Badge lesen oder einen QR-Code mit der Kamera scannen wie der Kiosk. Alles andere — Plan, Buchungen, Mitglieder, Geld, Rechnungen, PDF-Downloads — ist dieselbe App. Beim ersten Start des macOS-DMG die App rechtsklicken und *Öffnen* wählen: der Build ist noch nicht von Apple notarisiert, ein einfacher Doppelklick führt zur Gatekeeper-Warnung.

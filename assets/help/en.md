@@ -377,7 +377,7 @@ Your identity exists only for the moment of the operation: the credential is sen
 
 ## 10. Notifications
 
-Check-in reminders, pending confirmations, expense decisions — and when an admin **removes one of your reservations** (overrule), you and the admins are notified. Delivery is local-first; server pushes arrive out of the box on Android, iPhone/iPad, the browser and macOS (Firebase Cloud Messaging) — *Settings → Advanced* shows whether push is active on this device. On setups without Firebase, **UnifiedPush** takes over automatically (install **ntfy** once). The app-icon badge shows your pending-confirmations count. Pushed payloads never carry names or times; the app builds the notification text locally.
+Check-in reminders, pending confirmations, expense decisions — and when an admin **removes one of your reservations** (overrule), you and the admins are notified. Delivery is local-first; server pushes arrive out of the box on Android, iPhone/iPad, the browser and macOS (Firebase Cloud Messaging) — *Settings → Advanced* shows whether push is active on this device. The app-icon badge shows your pending-confirmations count. Pushed payloads never carry names or times; the app builds the notification text locally.
 
 ## 11. Privacy
 
@@ -385,6 +385,6 @@ Minimal data: name, email, plan, bookings, ledger. You control your photo, your 
 
 ## 12. Platforms
 
-Android (Google Play and F-Droid), iPhone/iPad, desktop — **macOS** (a DMG: drag DesKilo into Applications) and **Windows** (an MSI installer) built from every release — and the **browser**: the same app, nothing to install, at the address your workspace publishes. Your data follows your account, so a desk booked on a phone shows up in a browser tab a second later.
+Android (Google Play), iPhone/iPad, desktop — **macOS** (a DMG: drag DesKilo into Applications) and **Windows** (an MSI installer) built from every release — and the **browser**: the same app, nothing to install, at the address your workspace publishes. Your data follows your account, so a desk booked on a phone shows up in a browser tab a second later.
 
 What the browser cannot do is what a page is not allowed to do: read an NFC badge, or scan a QR code with a camera the way the kiosk does. Everything else — plan, bookings, members, money, invoices, PDF downloads — is the same app. On first launch of the macOS DMG, right-click the app and choose *Open*: the build is not yet notarised by Apple, so a plain double-click gets a Gatekeeper warning.

@@ -59,7 +59,7 @@ Owner half (Google offers NO API for these):
 
 - Brand images live once under `fastlane/metadata/android/en-US/images/`:
   `icon.png` (512×512, derived from `assets/icon/icon_full.png`) and
-  `featureGraphic.png` (1024×500). F-Droid reads the same paths; other Play
+  `featureGraphic.png` (1024×500). Other Play
   locales fall back to en-US at upload time.
 - Regenerate the feature graphic after a brand change:
   `flutter test tool/store_assets/feature_graphic_test.dart` (draws it with
@@ -73,15 +73,6 @@ Owner half (Google offers NO API for these):
   (drop PNGs into `fastlane/metadata/android/en-US/images/phoneScreenshots/`),
   plus Console-only forms (content rating, data safety, contact details).
 
-## F-Droid
-
-  (ADR 0003); no flavor split is needed until a Play-only feature appears.
-- `metadata/de.deskilo.app.yml` is the fdroiddata recipe **draft**. After the
-  first tagged release (`vX.Y.Z`), fill in the TODO version fields and open a
-  merge request to gitlab.com/fdroid/fdroiddata. F-Droid builds from source
-  on their buildserver; `AutoUpdateMode: Version` picks up future tags.
-- Caveat carried over from Sparkilo: sideloaded/F-Droid APKs and Play APKs
-  are signed differently — devices must uninstall one to install the other.
 
 ## iOS / TestFlight
 

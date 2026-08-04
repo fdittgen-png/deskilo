@@ -11,10 +11,8 @@
 abstract final class StoreLinks {
   static const String play =
       'https://play.google.com/store/apps/details?id=de.deskilo.app';
-  static const String fdroid = 'https://f-droid.org/packages/de.deskilo.app';
-
-  /// Both stores on one line — the {downloadUrl} tag.
-  static const String downloadLine = '$play · $fdroid';
+  /// The store line — the {downloadUrl} tag (F-Droid dropped, #428).
+  static const String downloadLine = play;
 }
 
 /// The placeholder tags an invitation template may carry. Kept as data so

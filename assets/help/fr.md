@@ -379,7 +379,7 @@ Votre identité n'existe que le temps de l'opération : l'identifiant est envoy�
 
 ## 10. Notifications
 
-Rappels de pointage, confirmations en attente, décisions de dépenses — et quand un admin **retire une de vos réservations** (outrepasser), vous et les admins êtes notifiés. La livraison est locale d'abord ; les pushs serveur arrivent sans rien installer sur Android, iPhone/iPad, navigateur et macOS (Firebase Cloud Messaging) — *Réglages → Avancé* indique si le push est actif sur cet appareil. Sans Firebase, **UnifiedPush** prend le relais automatiquement (installez **ntfy** une fois). L'icône de l'app affiche le nombre de confirmations en attente. Les contenus poussés ne portent jamais de noms ni d'horaires ; l'app compose le texte localement.
+Rappels de pointage, confirmations en attente, décisions de dépenses — et quand un admin **retire une de vos réservations** (outrepasser), vous et les admins êtes notifiés. La livraison est locale d'abord ; les pushs serveur arrivent sans rien installer sur Android, iPhone/iPad, navigateur et macOS (Firebase Cloud Messaging) — *Réglages → Avancé* indique si le push est actif sur cet appareil. L'icône de l'app affiche le nombre de confirmations en attente. Les contenus poussés ne portent jamais de noms ni d'horaires ; l'app compose le texte localement.
 
 ## 11. Confidentialité
 
@@ -387,6 +387,6 @@ Données minimales : nom, e-mail, forfait, réservations, compte. Vous contrôle
 
 ## 12. Plateformes
 
-Android (Google Play et F-Droid), iPhone/iPad, bureau — **macOS** (un DMG : glissez DesKilo dans Applications) et **Windows** (un installateur MSI) produits à chaque version — et le **navigateur** : la même application, rien à installer, à l'adresse que votre espace publie. Vos données suivent votre compte : un poste réservé sur téléphone apparaît dans un onglet une seconde plus tard.
+Android (Google Play), iPhone/iPad, bureau — **macOS** (un DMG : glissez DesKilo dans Applications) et **Windows** (un installateur MSI) produits à chaque version — et le **navigateur** : la même application, rien à installer, à l'adresse que votre espace publie. Vos données suivent votre compte : un poste réservé sur téléphone apparaît dans un onglet une seconde plus tard.
 
 Ce que le navigateur ne peut pas faire est ce qu'une page n'a pas le droit de faire : lire un badge NFC, ou scanner un QR code avec la caméra comme le fait la borne. Tout le reste — plan, réservations, membres, argent, factures, téléchargement des PDF — est identique. Au premier lancement du DMG macOS, faites un clic droit sur l'application puis *Ouvrir* : la build n'est pas encore notariée par Apple, un double-clic simple déclenche donc un avertissement Gatekeeper.

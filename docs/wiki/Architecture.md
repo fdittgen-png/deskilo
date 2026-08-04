@@ -16,7 +16,7 @@ DesKilo is a Flutter app backed by Supabase. The client is feature-first and ful
 | Networking | `supabase_flutter` (PostgREST + GoTrue); `dio` where raw HTTP is needed | |
 | i18n | ARB, EN canonical + FR/DE/ES/IT | Every user-facing string translatable, lint- and CI-enforced (ADR 0007) |
 | QR | `qr_flutter` (render) + `flutter_zxing` (scan) | Libre, Google-services-free scanning (ADR 0003) |
-| Push | UnifiedPush (`unifiedpush`) + `flutter_local_notifications` | No Firebase/GMS anywhere (ADR 0003) |
+| Push | FCM (`unifiedpush`) + `flutter_local_notifications` | No Firebase/GMS anywhere (ADR 0003) |
 
 Forbidden by ADR 0003 / 0004: Google Play Services, Firebase, third-party tracking, GPL dependencies.
 
@@ -26,7 +26,7 @@ Forbidden by ADR 0003 / 0004: Google Play Services, Firebase, third-party tracki
 lib/
   app/            # DeskiloApp, router, shell (bottom bar, app bar)
   core/           # cross-cutting: theme tokens, storage, notifications,
-                  # push (UnifiedPush connector), trace logger, shared UI
+                  # push (FCM connector), trace logger, shared UI
   l10n/           # ARB sources (app_en.arb canonical) + generated localizations
   features/
     auth/         # email+password sign-in/up (Supabase Auth)
@@ -123,9 +123,9 @@ Invite QR codes encode `deskilo://join?role=<user|admin>&code=<CODE>` (`InviteUr
 
 Single codebase for all targets. Platform-specific behavior degrades gracefully:
 
-- **Push** (UnifiedPush) is Android-only — `PushConnector` returns `false` elsewhere and the app stays on local notifications.
+- **Push** (FCM) is Android-only — `PushConnector` returns `false` elsewhere and the app stays on local notifications.
 - **Desktop** (macOS/Windows) runs the full booking/ledger app; the macOS sandbox needs the network-client, camera, and user-selected-file entitlements (see the runner in `macos/`). Windows ships as a WiX-built **MSI** (`windows/installer/deskilo.wxs`, built by the `windows-msi` workflow).
-- The F-Droid Android flavor is 100% Google-services-free, audited by script.
+- Push runs on Firebase Cloud Messaging (ADR 0011); F-Droid support was dropped 2026-08-04.
 
 ## Shared building blocks
 

@@ -10,10 +10,9 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_notification_service.dart';
 
 class FakePushConnector implements PushConnector {
-  FakePushConnector({this.available = true, this.distributor = true});
+  FakePushConnector({this.available = true});
 
   final bool available;
-  final bool distributor;
   bool registered = false;
   void Function(String url)? newEndpoint;
   void Function()? unregistered;
@@ -30,9 +29,6 @@ class FakePushConnector implements PushConnector {
     message = onMessage;
     return available;
   }
-
-  @override
-  Future<bool> hasDistributor() async => distributor;
 
   @override
   Future<void> register() async => registered = true;
@@ -59,10 +55,8 @@ class FakePushEndpointRepository implements PushEndpointRepository {
 (PushService, FakePushConnector, FakePushEndpointRepository,
     FakeNotificationService) harness({
   bool available = true,
-  bool distributor = true,
 }) {
-  final connector =
-      FakePushConnector(available: available, distributor: distributor);
+  final connector = FakePushConnector(available: available);
   final repository = FakePushEndpointRepository();
   final notifications = FakeNotificationService();
   final service = PushService(
@@ -79,19 +73,14 @@ class FakePushEndpointRepository implements PushEndpointRepository {
 }
 
 void main() {
-  test('start registers when a distributor exists', () async {
+  test('start registers when the transport is available', () async {
     final (service, connector, _, _) = harness();
     await service.start();
     expect(connector.registered, isTrue);
   });
 
-  test('no distributor → no registration, no crash', () async {
-    final (service, connector, _, _) = harness(distributor: false);
-    await service.start();
-    expect(connector.registered, isFalse);
-  });
-
-  test('unsupported platform → nothing happens', () async {
+  test('unavailable transport (unconfigured Firebase) → nothing happens',
+      () async {
     final (service, connector, _, _) = harness(available: false);
     await service.start();
     expect(connector.registered, isFalse);
@@ -162,24 +151,20 @@ void main() {
     expect(notifications.shown.single.title, 'DesKilo');
   });
 
-  test('status walks unsupported → noDistributor → registered (#424)',
-      () async {
+  test('status walks notConfigured → registered → notConfigured '
+      '(#424/#428)', () async {
     final (none, _, _, _) = harness(available: false);
     await none.start();
-    expect(none.status.value, PushStatus.unsupported);
-
-    final (bare, _, _, _) = harness(distributor: false);
-    await bare.start();
-    expect(bare.status.value, PushStatus.noDistributor);
+    expect(none.status.value, PushStatus.notConfigured);
 
     final (full, connector, _, _) = harness();
     await full.start();
-    connector.newEndpoint!('https://push.example.org/abc');
+    connector.newEndpoint!('fcm:token-1');
     await Future<void>.delayed(Duration.zero);
     expect(full.status.value, PushStatus.registered);
 
     connector.unregistered!();
     await Future<void>.delayed(Duration.zero);
-    expect(full.status.value, PushStatus.noDistributor);
+    expect(full.status.value, PushStatus.notConfigured);
   });
 }

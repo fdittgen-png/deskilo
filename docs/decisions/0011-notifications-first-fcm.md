@@ -13,10 +13,9 @@ first priority; drop the F-Droid support.
 
 ## Decision
 
-Firebase Cloud Messaging becomes the primary push transport on Android,
-iOS (APNs), web and macOS. UnifiedPush remains as an automatic fallback
-where Firebase is unconfigured, but is no longer the reason to keep the
-dependency tree Google-free: the no-GMS CI audits are removed, the
+Firebase Cloud Messaging becomes the ONLY push transport on Android,
+iOS (APNs), web and macOS (#428 removed the UnifiedPush fallback with
+the rest of the F-Droid support). The no-GMS CI audits are removed, the
 F-Droid flavor/recipe plans are cancelled, and ADR 0003 is superseded.
 The 0012 privacy doctrine stands: pushed payloads carry a kind and no
 personal data; background notifications show generic per-kind text.
@@ -27,5 +26,6 @@ personal data; background notifications show generic per-kind text.
   APNs key, `FCM_SERVICE_ACCOUNT` secret) — docs/guides/push-setup.md.
 - Play-store users get push with zero user-side setup; the app-icon
   badge counter rides the same pipeline.
-- Self-hosters who reject Google can still run UnifiedPush: keep the
-  firebase_options stub and the fallback engages.
+- Self-hosters must configure their own Firebase project (the stub
+  pattern makes an unconfigured build local-notifications-only, never
+  broken).

@@ -1256,17 +1256,17 @@ abstract class AppLocalizations {
   /// **'Push notifications are active'**
   String get pushStatusRegistered;
 
-  /// Settings status line: no UnifiedPush distributor installed (#424)
+  /// Settings status line: Firebase not configured (#428)
   ///
   /// In en, this message translates to:
-  /// **'Push notifications need a distributor app'**
-  String get pushStatusNoDistributor;
+  /// **'Push notifications are not set up yet'**
+  String get pushStatusNotConfigured;
 
-  /// Fix hint under the no-distributor line (#424)
+  /// Fix hint under the not-configured line (#428)
   ///
   /// In en, this message translates to:
-  /// **'Install ntfy (F-Droid or Play Store), then reopen the app.'**
-  String get pushStatusNoDistributorHint;
+  /// **'The workspace owner completes the Firebase setup (push-setup guide).'**
+  String get pushStatusNotConfiguredHint;
 
   /// Member directory title: bottom-tab label and app-bar title of the Members tab (#230) plus its settings entry (#224), visible to every member. Keep it short — it must fit a bottom-bar tab.
   ///
@@ -1850,7 +1850,7 @@ abstract class AppLocalizations {
   /// **'Admins and owners book seats for other members.'**
   String get featureBookForOthersDesc;
 
-  /// Feature switch: UnifiedPush delivery of confirmations
+  /// Feature switch: push delivery of confirmations (FCM, ADR 0011)
   ///
   /// In en, this message translates to:
   /// **'Push notifications'**

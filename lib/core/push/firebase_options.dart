@@ -4,8 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 /// Owner-replaceable Firebase configuration seam (#426).
 ///
 /// This STUB returns null, which tells [FirebasePushConnector] that
-/// Firebase is not configured yet — the app then falls back to
-/// UnifiedPush and everything keeps working. To light FCM up:
+/// Firebase is not configured yet — the app then stays
+/// local-notifications-only and everything keeps working. To light FCM up:
 ///
 ///   1. `dart pub global activate flutterfire_cli`
 ///   2. `flutterfire configure` (creates the Firebase apps and writes

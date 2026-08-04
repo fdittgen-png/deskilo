@@ -70,7 +70,6 @@ void main() {
       expect(fr, contains('Bonjour Alice'));
       expect(fr, contains('GOODCODE22'));
       expect(fr, contains(StoreLinks.play));
-      expect(fr, contains(StoreLinks.fdroid));
       expect(fr, contains('deskilo://join?role=user&code=GOODCODE22'));
 
       final de = buildInvitationMessage(
@@ -203,7 +202,6 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(shared.single, contains(repo.mintedInvitations.single.code));
-      expect(shared.single, contains(StoreLinks.fdroid));
     });
 
     testWidgets('a WhatsApp message pasted wholesale back into extractCode '
