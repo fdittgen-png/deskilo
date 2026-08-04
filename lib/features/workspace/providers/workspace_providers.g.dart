@@ -133,7 +133,7 @@ final class ActiveWorkspaceIdProvider
   ActiveWorkspaceId create() => ActiveWorkspaceId();
 }
 
-String _$activeWorkspaceIdHash() => r'56952bcd9ab8f195349204c7f243eaf2b5036f35';
+String _$activeWorkspaceIdHash() => r'a20b1251dc4ecb22f7d4d06c42ba829907901984';
 
 /// The persisted active-profile choice (#89). At START-UP the user's
 /// DEFAULT profile wins when one is checked (#322); in-session switches
@@ -161,6 +161,11 @@ abstract class _$ActiveWorkspaceId extends $AsyncNotifier<String?> {
 /// The user-checked default profile (#322); null = none. Radio
 /// semantics: checking one replaces the previous; re-checking the
 /// current default clears it.
+///
+/// SERVER-FIRST since #458: the choice lives on the profile row, so it
+/// survives reinstalls and follows the user across platforms. The
+/// local store is demoted to an offline cache, written through on
+/// every successful read and toggle.
 
 @ProviderFor(DefaultWorkspaceId)
 final defaultWorkspaceIdProvider = DefaultWorkspaceIdProvider._();
@@ -168,11 +173,21 @@ final defaultWorkspaceIdProvider = DefaultWorkspaceIdProvider._();
 /// The user-checked default profile (#322); null = none. Radio
 /// semantics: checking one replaces the previous; re-checking the
 /// current default clears it.
+///
+/// SERVER-FIRST since #458: the choice lives on the profile row, so it
+/// survives reinstalls and follows the user across platforms. The
+/// local store is demoted to an offline cache, written through on
+/// every successful read and toggle.
 final class DefaultWorkspaceIdProvider
     extends $AsyncNotifierProvider<DefaultWorkspaceId, String?> {
   /// The user-checked default profile (#322); null = none. Radio
   /// semantics: checking one replaces the previous; re-checking the
   /// current default clears it.
+  ///
+  /// SERVER-FIRST since #458: the choice lives on the profile row, so it
+  /// survives reinstalls and follows the user across platforms. The
+  /// local store is demoted to an offline cache, written through on
+  /// every successful read and toggle.
   DefaultWorkspaceIdProvider._()
     : super(
         from: null,
@@ -193,11 +208,16 @@ final class DefaultWorkspaceIdProvider
 }
 
 String _$defaultWorkspaceIdHash() =>
-    r'69d9dda45e30ec3756d2d8c4af60f301efd19571';
+    r'ca36be9bb7271ac5f009a2c531e9ce328acb18bd';
 
 /// The user-checked default profile (#322); null = none. Radio
 /// semantics: checking one replaces the previous; re-checking the
 /// current default clears it.
+///
+/// SERVER-FIRST since #458: the choice lives on the profile row, so it
+/// survives reinstalls and follows the user across platforms. The
+/// local store is demoted to an offline cache, written through on
+/// every successful read and toggle.
 
 abstract class _$DefaultWorkspaceId extends $AsyncNotifier<String?> {
   FutureOr<String?> build();
@@ -536,6 +556,64 @@ final class MyNotesProvider
 }
 
 String _$myNotesHash() => r'd6e2756b52ed2e4dd8aaf427eb15c34a4162d278';
+
+/// Unread member notes (#464): notes from someone else, newer than the
+/// device's SEEN stamp — the bell and the app-icon badge count them,
+/// the Events screen clears them on open.
+
+@ProviderFor(UnreadNoteCount)
+final unreadNoteCountProvider = UnreadNoteCountProvider._();
+
+/// Unread member notes (#464): notes from someone else, newer than the
+/// device's SEEN stamp — the bell and the app-icon badge count them,
+/// the Events screen clears them on open.
+final class UnreadNoteCountProvider
+    extends $AsyncNotifierProvider<UnreadNoteCount, int> {
+  /// Unread member notes (#464): notes from someone else, newer than the
+  /// device's SEEN stamp — the bell and the app-icon badge count them,
+  /// the Events screen clears them on open.
+  UnreadNoteCountProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'unreadNoteCountProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$unreadNoteCountHash();
+
+  @$internal
+  @override
+  UnreadNoteCount create() => UnreadNoteCount();
+}
+
+String _$unreadNoteCountHash() => r'61e351ac783100c73aa7f576b72d69dd3d261798';
+
+/// Unread member notes (#464): notes from someone else, newer than the
+/// device's SEEN stamp — the bell and the app-icon badge count them,
+/// the Events screen clears them on open.
+
+abstract class _$UnreadNoteCount extends $AsyncNotifier<int> {
+  FutureOr<int> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<int>, int>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<int>, int>,
+              AsyncValue<int>,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}
 
 /// One-off closure days of the active workspace, ordered by day (#127).
 

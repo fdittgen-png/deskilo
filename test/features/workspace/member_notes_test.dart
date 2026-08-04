@@ -12,6 +12,8 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../helpers/mock_providers.dart';
+import 'package:deskilo/core/storage/note_seen_store.dart';
+import '../../helpers/fake_notification_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'co_owner_test.dart' show pumpMembersWithAna;
@@ -143,6 +145,78 @@ void main() {
     expect(find.text('Thanks, turning it off.'), findsOneWidget);
     expect(find.text('To all admins'), findsOneWidget);
     expect(find.text('Printer is out of toner.'), findsOneWidget);
+  });
+
+  testWidgets('CATCH-UP (#464): a note sent while the app was closed is '
+      'announced on next start — WITH the message text — and counts on '
+      'the bell until Events is opened', (tester) async {
+    final notifications = FakeNotificationService();
+    final noteSeen = InMemoryNoteSeenStore();
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
+      ..otherMembers.add(
+        const Member(
+          id: 'member-2',
+          workspaceId: 'ws-1',
+          userId: 'user-2',
+          isAdmin: false,
+          isOwner: false,
+          status: MemberStatus.active,
+        ),
+      )
+      ..memberNotes.add(
+        MemberNote(
+          id: 'note-offline',
+          workspaceId: 'ws-1',
+          fromMemberId: 'member-2',
+          toMemberId: 'member-1',
+          body: 'Your desk lamp is still on!',
+          createdAt: DateTime.utc(2026, 8, 4, 9),
+        ),
+      );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          workspace: workspace,
+          notifications: notifications,
+          noteSeen: noteSeen,
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // The device announced the note ONCE, with sender AND text.
+    expect(notifications.shown, hasLength(1));
+    expect(notifications.shown.single.title, 'Message from Ana');
+    expect(notifications.shown.single.body, 'Your desk lamp is still on!');
+    expect(noteSeen.notified, DateTime.utc(2026, 8, 4, 9));
+
+    // The bell counts it as unread…
+    expect(
+      find.descendant(
+        of: find.byTooltip('Events'),
+        matching: find.text('1'),
+      ),
+      findsOneWidget,
+    );
+
+    // …until the Events surface is opened, which reads it.
+    await tester.tap(find.byTooltip('Events'));
+    await tester.pumpAndSettle();
+    expect(find.text('Your desk lamp is still on!'), findsOneWidget);
+    expect(noteSeen.seen, DateTime.utc(2026, 8, 4, 9));
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(
+      find.descendant(
+        of: find.byTooltip('Events'),
+        matching: find.text('1'),
+      ),
+      findsNothing,
+    );
+    // And it is never announced twice.
+    expect(notifications.shown, hasLength(1));
   });
 
   testWidgets('feature OFF hides every affordance (#456)', (tester) async {

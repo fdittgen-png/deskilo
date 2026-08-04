@@ -187,6 +187,8 @@ class FloorPlanPainter extends CustomPainter {
           rect,
           colorScheme.onSurface,
         );
+        _reservedChip(canvas, rect, overlay.label, accent,
+            checkedIn: overlay.state == SeatState.occupied);
       } else {
         canvas.drawRect(rect, officeBorder);
         _label(canvas, office.name, rect, colorScheme.onSurface);
@@ -228,6 +230,13 @@ class FloorPlanPainter extends CustomPainter {
             ..strokeWidth = 2
             ..color = accent.withValues(alpha: 0.9),
         );
+        // The chip only when the office above does not already carry
+        // one for the same booking — a whole-office/level overlay
+        // covers its desks too, and stacked identical chips are noise.
+        if (spaceOverlays?[desk.officeId] == null) {
+          _reservedChip(canvas, rect, overlay.label, accent,
+              checkedIn: overlay.state == SeatState.occupied);
+        }
       } else {
         canvas.drawRRect(rrect, deskBorder);
       }
@@ -387,6 +396,70 @@ class FloorPlanPainter extends CustomPainter {
 
   /// Occupant chip drawn on a taken seat: a filled disc in the state
   /// colour with the occupant's initial — the plan's "who's here" glance.
+  /// Unmistakable "reserved" symbol on a whole-space (#464, asked
+  /// repeatedly in the field): a solid state-coloured chip with a lock
+  /// glyph and the occupant's first name, centered on the room/table.
+  /// Every user reads at a glance WHAT is reserved and BY WHOM.
+  void _reservedChip(
+    Canvas canvas,
+    Rect rect,
+    String name,
+    Color accent, {
+    required bool checkedIn,
+  }) {
+    final icon = checkedIn ? Icons.how_to_reg : Icons.lock;
+    final fontSize = (rect.shortestSide * 0.28).clamp(11.0, 15.0);
+    final iconPainter = TextPainter(
+      text: TextSpan(
+        text: String.fromCharCode(icon.codePoint),
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: fontSize + 2,
+          fontFamily: icon.fontFamily,
+          height: 1,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: name.trim(),
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: fontSize,
+          fontWeight: FontWeight.w600,
+          height: 1,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+      maxLines: 1,
+      ellipsis: '…',
+    )..layout(maxWidth: (rect.width - iconPainter.width - 26).clamp(0.0, double.infinity));
+    const gap = 5.0;
+    final w = iconPainter.width +
+        (textPainter.width > 0 ? gap + textPainter.width : 0) +
+        16;
+    final h = iconPainter.height + 10;
+    final center = rect.center;
+    final chip = RRect.fromRectAndRadius(
+      Rect.fromCenter(center: center, width: w, height: h),
+      Radius.circular(h / 2),
+    );
+    canvas.drawRRect(
+      chip.inflate(1.2),
+      Paint()..color = Colors.white.withValues(alpha: 0.9),
+    );
+    canvas.drawRRect(chip, Paint()..color = accent);
+    var x = center.dx - (w - 16) / 2;
+    iconPainter.paint(
+        canvas, Offset(x, center.dy - iconPainter.height / 2));
+    x += iconPainter.width + gap;
+    if (textPainter.width > 0) {
+      textPainter.paint(
+          canvas, Offset(x, center.dy - textPainter.height / 2));
+    }
+  }
+
   void _occupantAvatar(
     Canvas canvas,
     Rect rect,

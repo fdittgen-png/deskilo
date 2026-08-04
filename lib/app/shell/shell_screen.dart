@@ -11,6 +11,7 @@ import '../../core/badge/app_badge.dart';
 import '../../core/realtime/realtime_providers.dart';
 import '../../core/notifications/notification_providers.dart';
 import '../../core/push/push_providers.dart';
+import '../../core/storage/note_seen_store.dart';
 import '../../core/time/work_hours.dart';
 import '../../core/time/workspace_time.dart';
 import '../../features/events/providers/event_providers.dart';
@@ -32,12 +33,20 @@ class _EventsBellIcon extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final count = ref.watch(myPendingEventCountProvider).value ?? 0;
+    // Pending confirmations + unread member notes (#464): the bell is
+    // the app's one "something needs your eyes" counter.
+    final count = (ref.watch(myPendingEventCountProvider).value ?? 0) +
+        (ref.watch(unreadNoteCountProvider).value ?? 0);
     const icon = Icon(Icons.notifications_outlined);
     if (count == 0) return icon;
     return Badge.count(count: count, child: icon);
   }
 }
+
+/// Note ids already announced THIS SESSION — belt to the persisted
+/// NOTIFIED stamp's braces: two racing provider refreshes must not
+/// announce the same note twice before the stamp lands.
+final Set<String> _sessionNotifiedNoteIds = <String>{};
 
 /// Bottom-navigation shell hosting the four tab branches
 /// Plan · Calendar · Members · Money (spec §13, members since #230).
@@ -69,7 +78,8 @@ class ShellScreen extends ConsumerWidget {
     ref.listen(myPendingEventsProvider, (_, next) {
       final pending = next.value;
       if (pending == null) return;
-      ref.read(appBadgeProvider).update(pending.length);
+      ref.read(appBadgeProvider).update(
+          pending.length + (ref.read(unreadNoteCountProvider).value ?? 0));
       ref.read(notificationServiceProvider).syncPendingNotifications([
         for (final e in pending)
           (
@@ -81,30 +91,59 @@ class ShellScreen extends ConsumerWidget {
       ]);
     });
 
-    // Member notes (#456): a NEW note for me pops as a local
-    // notification with sender and text — fetched over RLS; the FCM
-    // push stays content-free (0012). The first load is catch-up, not
-    // news, so it never fires.
+    // Member notes (#456/#464): every note for me that this DEVICE has
+    // not yet announced pops as a local notification with sender and
+    // text — INCLUDING catch-up: without the owner's Firebase setup no
+    // push endpoint exists, so notes sent while the app was closed
+    // must be announced on the next start. The persisted NOTIFIED
+    // stamp makes each note announce exactly once per device.
     ref.listen(myNotesProvider, (previous, next) {
       final notes = next.value;
-      final before = previous?.value;
-      if (notes == null || before == null) return;
-      final known = {for (final n in before) n.id};
-      final names = ref.read(memberNamesProvider).value ?? const {};
-      final myId = ref.read(myMemberProvider).value?.id;
-      for (final note in notes) {
-        if (known.contains(note.id) || note.fromMemberId == myId) continue;
-        // The names cache can lag a fresh boot — a nameless "Message
-        // from" reads broken, so fall back to the app title (#460).
-        final sender = names[note.fromMemberId] ?? '';
-        unawaited(ref.read(notificationServiceProvider).showNow(
-              title: sender.isEmpty
-                  ? (l10n?.pushPendingTitle ?? 'DesKilo')
-                  : (l10n?.memberNoteReceived(sender) ??
-                      'Message from $sender'),
-              body: note.body,
-            ));
-      }
+      if (notes == null || notes.isEmpty) return;
+      unawaited(() async {
+        // AWAIT the caches (#464): at boot the notes can land before
+        // the member/name fetches — a sync read then yields a null id
+        // (announcing nothing) or a nameless title.
+        final myId = (await ref.read(myMemberProvider.future))?.id;
+        if (myId == null) return;
+        final names = await ref.read(memberNamesProvider.future);
+        final store = ref.read(noteSeenStoreProvider);
+        final notifiedUntil = await store.readNotified();
+        DateTime? newest;
+        // Oldest → newest so multiple catch-up notes read in order.
+        for (final note in notes.reversed) {
+          if (note.fromMemberId == myId) continue;
+          if (notifiedUntil != null &&
+              !note.createdAt.isAfter(notifiedUntil)) {
+            continue;
+          }
+          if (!_sessionNotifiedNoteIds.add(note.id)) continue;
+          // The names cache can lag a fresh boot — a nameless "Message
+          // from" reads broken, so fall back to the app title (#460).
+          final sender = names[note.fromMemberId] ?? '';
+          await ref.read(notificationServiceProvider).showNow(
+                title: sender.isEmpty
+                    ? (l10n?.pushPendingTitle ?? 'DesKilo')
+                    : (l10n?.memberNoteReceived(sender) ??
+                        'Message from $sender'),
+                body: note.body,
+              );
+          if (newest == null || note.createdAt.isAfter(newest)) {
+            newest = note.createdAt;
+          }
+        }
+        if (newest != null) await store.writeNotified(newest);
+      }());
+    });
+
+    // Unread notes count on the app icon too (#464) — refresh the
+    // badge when unread changes without a pending-events change.
+    ref.listen(unreadNoteCountProvider, (_, next) {
+      final unread = next.value;
+      if (unread == null) return;
+      final pending =
+          ref.read(myPendingEventsProvider).value?.length ?? 0;
+      ref.read(appBadgeProvider).update(pending + unread);
     });
 
     // Day-based booking windows anchor to the WORKSPACE clock — install
