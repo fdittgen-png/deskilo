@@ -42,27 +42,26 @@ dependencies:
   flutter_zxing: ^2.3.0
   shared_preferences: ^2.5.5
   share_plus: ^13.2.0
-  unifiedpush: ^6.2.0
-  # First-class push (#426, F-Droid dropped by owner decision): FCM on
-  # Android/iOS/web/macOS. Dart-only init from firebase_options.dart —
-  # the committed stub disables it until the owner runs
-  # `flutterfire configure` (docs/guides/push-setup.md).
+  # First-class push (#426/#428, ADR 0011): FCM on Android/iOS/web/
+  # macOS. Dart-only init from firebase_options.dart — the committed
+  # stub disables it until the owner runs `flutterfire configure`
+  # (docs/guides/push-setup.md).
   firebase_core: ^4.1.0
   firebase_messaging: ^16.0.1
   # App-icon badge counter (#426): pending confirmations on the launcher
   # icon (Android launchers, iOS, macOS).
   app_badge_plus: ^1.2.4
   # #155 — opens the workspace's PayPal.me link from an unpaid statement.
-  # Flutter-official, BSD-3, no GMS — F-Droid clean.
+  # Flutter-official, BSD-3.
   url_launcher: ^6.3.1
 
-  # Bill PDF export (#133) — pure Dart, F-Droid clean. Deliberately NOT the
+  # Bill PDF export (#133) — pure Dart. Deliberately NOT the
   # `printing` package: it pulls platform channels we don't need.
   pdf: ^3.12.0
   path_provider: ^2.1.6
 
   # Workspace configuration export/import (#164) — pure Dart, permissive,
-  # F-Droid clean. Already in the tree as a transitive dependency.
+  # Already in the tree as a transitive dependency.
   xml: ^6.6.1
 
   # Excel data export (#395): an .xlsx is a zip of XML, and this is the

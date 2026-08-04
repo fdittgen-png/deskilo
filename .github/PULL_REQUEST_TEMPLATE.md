@@ -12,4 +12,4 @@ Closes #
 - [ ] Clean codegen (`build_runner` from clean, generated files committed, zero drift)
 - [ ] Tests added/updated; full suite green; bug fixes started from a failing test
 - [ ] `flutter analyze` clean (including `test/`)
-- [ ] No GMS/Firebase/tracking introduced; F-Droid flavor unaffected or audited
+- [ ] No third-party tracking introduced

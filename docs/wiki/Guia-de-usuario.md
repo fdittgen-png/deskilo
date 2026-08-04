@@ -333,7 +333,7 @@ Tu identidad solo existe durante la operación: la credencial viaja una vez al s
 
 ## 10. Notificaciones
 
-Recordatorios de registro, confirmaciones pendientes, decisiones de gastos — y cuando un admin **elimina una de tus reservas** (anular), tú y los admins recibís aviso. La entrega es local primero; los push del servidor llegan sin instalar nada en Android, iPhone/iPad, navegador y macOS (Firebase Cloud Messaging) — *Ajustes → Avanzado* muestra si el push está activo en este dispositivo. Sin Firebase, **UnifiedPush** toma el relevo automáticamente (instala **ntfy** una vez). El icono de la app muestra tus confirmaciones pendientes. Los push nunca llevan nombres ni horas; la app compone el texto localmente.
+Recordatorios de registro, confirmaciones pendientes, decisiones de gastos — y cuando un admin **elimina una de tus reservas** (anular), tú y los admins recibís aviso. La entrega es local primero; los push del servidor llegan sin instalar nada en Android, iPhone/iPad, navegador y macOS (Firebase Cloud Messaging) — *Ajustes → Avanzado* muestra si el push está activo en este dispositivo. El icono de la app muestra tus confirmaciones pendientes. Los push nunca llevan nombres ni horas; la app compone el texto localmente.
 
 ## 11. Privacidad
 
@@ -341,6 +341,6 @@ Datos mínimos: nombre, correo, plan, reservas, cuenta. Tú controlas tu foto, t
 
 ## 12. Plataformas
 
-Android (Google Play y F-Droid), iPhone/iPad, escritorio — **macOS** (un DMG: arrastra DesKilo a Aplicaciones) y **Windows** (un instalador MSI) generados en cada versión — y el **navegador**: la misma app, sin instalar nada, en la dirección que publique tu espacio. Tus datos siguen a tu cuenta: un puesto reservado en el móvil aparece un segundo después en una pestaña.
+Android (Google Play), iPhone/iPad, escritorio — **macOS** (un DMG: arrastra DesKilo a Aplicaciones) y **Windows** (un instalador MSI) generados en cada versión — y el **navegador**: la misma app, sin instalar nada, en la dirección que publique tu espacio. Tus datos siguen a tu cuenta: un puesto reservado en el móvil aparece un segundo después en una pestaña.
 
 Lo que el navegador no puede hacer es lo que a una página no se le permite: leer una credencial NFC o escanear un QR con la cámara como hace el quiosco. Todo lo demás — plano, reservas, miembros, dinero, facturas, descarga de PDF — es la misma app. Al abrir el DMG de macOS por primera vez, haz clic derecho sobre la app y elige *Abrir*: la compilación aún no está notarizada por Apple, así que un doble clic normal muestra un aviso de Gatekeeper.

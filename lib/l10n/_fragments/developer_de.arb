@@ -10,6 +10,6 @@
   "developerFilterErrors": "Fehler",
   "developerFilterWarnings": "Warnungen+",
   "pushStatusRegistered": "Push-Benachrichtigungen sind aktiv",
-  "pushStatusNoDistributor": "Push-Benachrichtigungen brauchen eine Verteiler-App",
-  "pushStatusNoDistributorHint": "Installiere ntfy (F-Droid oder Play Store) und öffne die App neu."
+  "pushStatusNotConfigured": "Push-Benachrichtigungen sind noch nicht eingerichtet",
+  "pushStatusNotConfiguredHint": "Die Inhaberin schließt die Firebase-Einrichtung ab (push-setup-Anleitung)."
 }

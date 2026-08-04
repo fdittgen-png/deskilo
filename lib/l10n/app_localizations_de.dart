@@ -641,12 +641,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get pushStatusRegistered => 'Push-Benachrichtigungen sind aktiv';
 
   @override
-  String get pushStatusNoDistributor =>
-      'Push-Benachrichtigungen brauchen eine Verteiler-App';
+  String get pushStatusNotConfigured =>
+      'Push-Benachrichtigungen sind noch nicht eingerichtet';
 
   @override
-  String get pushStatusNoDistributorHint =>
-      'Installiere ntfy (F-Droid oder Play Store) und öffne die App neu.';
+  String get pushStatusNotConfiguredHint =>
+      'Die Inhaberin schließt die Firebase-Einrichtung ab (push-setup-Anleitung).';
 
   @override
   String get directoryTitle => 'Mitglieder';

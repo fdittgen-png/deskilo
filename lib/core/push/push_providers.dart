@@ -16,19 +16,16 @@ import 'push_service.dart';
 part 'push_providers.g.dart';
 
 @Riverpod(keepAlive: true)
-PushConnector pushConnector(Ref ref) => FallbackPushConnector([
-      // FCM first (#426, F-Droid dropped): no distributor app needed.
-      // The committed firebase_options stub disables it until the owner
-      // runs `flutterfire configure` — UnifiedPush then carries on.
-      FirebasePushConnector(),
-      UnifiedPushConnector(),
-    ]);
+// FCM only since #428 (the F-Droid-era UnifiedPush fallback is gone).
+// The committed firebase_options stub keeps it off until the owner runs
+// `flutterfire configure`.
+PushConnector pushConnector(Ref ref) => FirebasePushConnector();
 
 @Riverpod(keepAlive: true)
 PushEndpointRepository pushEndpointRepository(Ref ref) =>
     SupabasePushEndpointRepository(Supabase.instance.client);
 
-/// Starts the UnifiedPush pipeline once per app run (#72). Watched from
+/// Starts the push pipeline once per app run (#72/#428). Watched from
 /// the shell; a missing distributor or platform just means local-only.
 @Riverpod(keepAlive: true)
 Future<PushService?> pushBootstrap(Ref ref) async {

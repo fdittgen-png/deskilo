@@ -1,12 +1,12 @@
 # DesKilo Wiki
 
-**DesKilo** is a free, privacy-first, open-source app for small self-organized coworking communities: visual desk booking plus the community money layer, mobile-first, libre. It runs on Android (Play + F-Droid), iOS, and desktop (macOS, Windows).
+**DesKilo** is a free, privacy-first, open-source app for small self-organized coworking communities: visual desk booking plus the community money layer, mobile-first, libre. It runs on Android (Play), iOS, and desktop (macOS, Windows).
 
 Every feature serves at least one of three goals (the *feature filter*):
 
 1. **Know where you can sit** — live floor plan, check-in/out, reservations.
 2. **Know what you owe / are owed** — subscription, extra usage, community expenses, one transparent ledger per member.
-3. **Run the space without a landlord platform** — self-organized roles, no vendor lock-in, self-hostable data, works on F-Droid.
+3. **Run the space without a landlord platform** — self-organized roles, no vendor lock-in, self-hostable data.
 
 ## Pages
 

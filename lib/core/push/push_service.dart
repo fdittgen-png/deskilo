@@ -9,20 +9,17 @@ import 'push_connector.dart';
 import 'push_endpoint_repository.dart';
 
 /// Where the push pipeline stands (#424): surfaced in Settings so a
-/// silent field setup (no distributor installed) stops being invisible.
+/// dead setup stops being invisible.
 enum PushStatus {
-  /// Platform without UnifiedPush support (iOS, desktop, web).
-  unsupported,
+  /// Firebase is unconfigured (the committed stub) or the platform has
+  /// no push support — the owner completes docs/guides/push-setup.md.
+  notConfigured,
 
-  /// Supported, but no distributor app (ntfy, NextPush…) is installed —
-  /// the app cannot receive pushes until the user installs one.
-  noDistributor,
-
-  /// Registered with a distributor; endpoint saved server-side.
+  /// FCM registered; endpoint saved server-side.
   registered,
 }
 
-/// UnifiedPush pipeline (#72): distributor → endpoint rows on the server
+/// Push pipeline (#72, FCM-only since #428): endpoint rows on the server
 /// → generic ping when someone must confirm a pending event. Payloads
 /// carry no personal data; the client localizes the notification text.
 class PushService {
@@ -55,7 +52,7 @@ class PushService {
 
   /// Live pipeline state for the Settings status line (#424).
   final ValueNotifier<PushStatus> status =
-      ValueNotifier(PushStatus.unsupported);
+      ValueNotifier(PushStatus.notConfigured);
 
   String? _endpoint;
 
@@ -67,11 +64,7 @@ class PushService {
       onUnregistered: _onUnregistered,
       onMessage: onMessage,
     );
-    if (!available) return;
-    if (!await _connector.hasDistributor()) {
-      status.value = PushStatus.noDistributor;
-      return;
-    }
+    if (!available) return; // notConfigured stays — Settings names it
     await _connector.register();
   }
 
@@ -93,7 +86,7 @@ class PushService {
   Future<void> _onUnregistered() async {
     final endpoint = _endpoint;
     _endpoint = null;
-    status.value = PushStatus.noDistributor;
+    status.value = PushStatus.notConfigured;
     if (endpoint == null) return;
     try {
       await _repository.removeEndpoint(endpoint);

@@ -333,7 +333,7 @@ La tua identità esiste solo per il tempo dell'operazione: la credenziale va una
 
 ## 10. Notifiche
 
-Promemoria di check-in, conferme in sospeso, decisioni sulle spese — e quando un admin **rimuove una tua prenotazione** (scavalcare), tu e gli admin venite avvisati. La consegna è prima locale; i push dal server arrivano senza installare nulla su Android, iPhone/iPad, browser e macOS (Firebase Cloud Messaging) — *Impostazioni → Avanzate* mostra se il push è attivo su questo dispositivo. Senza Firebase subentra automaticamente **UnifiedPush** (installa **ntfy** una volta). L'icona dell'app mostra le tue conferme in attesa. I push non portano mai nomi né orari; l'app compone il testo localmente.
+Promemoria di check-in, conferme in sospeso, decisioni sulle spese — e quando un admin **rimuove una tua prenotazione** (scavalcare), tu e gli admin venite avvisati. La consegna è prima locale; i push dal server arrivano senza installare nulla su Android, iPhone/iPad, browser e macOS (Firebase Cloud Messaging) — *Impostazioni → Avanzate* mostra se il push è attivo su questo dispositivo. L'icona dell'app mostra le tue conferme in attesa. I push non portano mai nomi né orari; l'app compone il testo localmente.
 
 ## 11. Privacy
 
@@ -341,6 +341,6 @@ Dati minimi: nome, email, piano, prenotazioni, conto. Controlli tu la foto, lo s
 
 ## 12. Piattaforme
 
-Android (Google Play e F-Droid), iPhone/iPad, desktop — **macOS** (un DMG: trascina DesKilo in Applicazioni) e **Windows** (un installer MSI) prodotti a ogni release — e il **browser**: la stessa app, niente da installare, all'indirizzo che il tuo spazio pubblica. I tuoi dati seguono il tuo account: una postazione prenotata dal telefono compare un secondo dopo in una scheda del browser.
+Android (Google Play), iPhone/iPad, desktop — **macOS** (un DMG: trascina DesKilo in Applicazioni) e **Windows** (un installer MSI) prodotti a ogni release — e il **browser**: la stessa app, niente da installare, all'indirizzo che il tuo spazio pubblica. I tuoi dati seguono il tuo account: una postazione prenotata dal telefono compare un secondo dopo in una scheda del browser.
 
 Ciò che il browser non può fare è ciò che a una pagina non è permesso: leggere un badge NFC o scansionare un QR con la fotocamera come fa il chiosco. Tutto il resto — piantina, prenotazioni, membri, denaro, fatture, download dei PDF — è la stessa app. Al primo avvio del DMG macOS fai clic destro sull'app e scegli *Apri*: la build non è ancora notarizzata da Apple, quindi un doppio clic mostra un avviso di Gatekeeper.

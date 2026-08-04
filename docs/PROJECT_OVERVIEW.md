@@ -53,7 +53,7 @@ Seatsurfing (GPL, web) is the strongest open-source desk-booking tool but has no
 
 ### Founding constraints
 
-- **Notifications first** (ADR 0011, superseding ADR 0003): Firebase Cloud Messaging is the primary push transport (Android/iOS/web/macOS), UnifiedPush the automatic fallback where Firebase is unconfigured. No third-party tracking, no GPL dependencies (ADR 0009). The former no-GMS CI audits were removed with the F-Droid plans.
+- **Notifications first** (ADR 0011, superseding ADR 0003): Firebase Cloud Messaging is the sole push transport (Android/iOS/web/macOS). No third-party tracking, no GPL dependencies (ADR 0009). The former no-GMS CI audits were removed with the F-Droid plans.
 - **Self-hostable backend** — Supabase is open source; `BackendConfig` accepts `--dart-define=SUPABASE_URL=…` / `SUPABASE_KEY=…` at build time.
 - **Every user-facing string translatable**, English canonical (ADR 0007).
 
@@ -204,7 +204,6 @@ One user account can belong to several workspaces; the app scopes everything to 
 - **Workspace portability** — the whole floor-plan configuration exports/imports as **XML** (0023/0027/0034).
 - **Owner-guarded workspace reset** (0039).
 - **Feature flags** — 21 per-workspace toggleable modules (see §5).
-- **Notifications** — local check-in reminders plus **UnifiedPush** (Google-services-free) for pending confirmations; Android-only, degrading to local notifications elsewhere.
 - **In-app help** — compiled from the wiki user guides by `dart run tool/build_help.dart` into `assets/help/`, offline on every platform.
 - **Developer screen** — traced failures per domain (`runGuarded` wraps every mutating call site), payment-config probe, local-only trace log.
 - **Social sign-in** — Google, Microsoft, Apple, Facebook via Supabase Auth, with `deskilo://auth-callback` deep-link return on every platform.
@@ -226,7 +225,7 @@ One user account can belong to several workspaces; the app scopes everything to 
 | i18n | ARB via `intl` ^0.20.2, EN canonical + FR/DE/ES/IT | Lint- and CI-enforced (0007) |
 | QR | `qr_flutter` ^4.1.0 (render) + `flutter_zxing` ^2.3.0 (scan) | Libre, GMS-free (0003) |
 | NFC | `nfc_manager` ^4.2.1 behind an injectable `NfcUidReader` seam | Android-only, degrades gracefully |
-| Push | `unifiedpush` ^6.2.0 + `flutter_local_notifications` ^22.0.1 | No Firebase/GMS (0003) |
+| Push | `firebase_messaging` ^16 + `flutter_local_notifications` ^22.0.1 | FCM-only (ADR 0011) |
 | PDF | `pdf` ^3.12.0 (pure Dart) + `path_provider` | Deliberately **not** the `printing` package — it pulls platform channels not needed here |
 | XML | `xml` ^6.6.1 | Floor-plan export/import + UBL/CII e-invoices |
 | Files | `file_selector` ^1.1.0 (rides the Storage Access Framework on Android), `share_plus` ^13.2.0, `web` ^1.1.1 for browser downloads |
@@ -333,11 +332,9 @@ Single codebase for all targets; platform-specific behavior degrades gracefully.
 | Target | Notes |
 |---|---|
 | **Android** | Full app. `minSdk`/`targetSdk`/`compileSdk` from the Flutter toolchain. Core library desugaring on (needed by `flutter_local_notifications` scheduled notifications). R8 with keep rules for that plugin's Gson usage — without them release builds crash before the first frame (issue #86). Permissions: `INTERNET`, `CAMERA`, `NFC` (`uses-feature` `required="false"` so non-NFC phones still install). Deep-link intent filter for `deskilo://`. |
-| **iOS** | Full app minus UnifiedPush. `NSCameraUsageDescription` set; `ITSAppUsesNonExemptEncryption=false`; `CFBundleURLSchemes` = `deskilo`. Portrait + both landscapes (iPad adds upside-down). |
 | **macOS** | Full booking/ledger app, **sandboxed**. Release entitlements: `app-sandbox`, `network.client` (Supabase), `device.camera` (QR), `files.user-selected.read-write` and `files.downloads.read-write` (XML import/export, PDF save). Debug adds `allow-jit` and `network.server`. |
 | **Windows** | Full app, shipped as a WiX-built **MSI** with a per-machine install into `Program Files\DesKilo`, a Start-menu shortcut, and an HKLM registration of the `deskilo://` protocol handler (the OAuth callback needs it — Windows learns it from the installer the way Android learns it from the manifest). |
 | **Web** | Booking/ledger works. **NFC badges and camera QR scanning are guarded off** (`kIsWeb`); an export downloads through the browser instead of landing in a Downloads folder (`file_saver_web.dart`). |
-| **Push** | UnifiedPush is Android-only — `PushConnector` returns `false` elsewhere and the app stays on local notifications. |
 
 ---
 

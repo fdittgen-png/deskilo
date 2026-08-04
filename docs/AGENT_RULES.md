@@ -19,7 +19,7 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
 - No magic strings/numbers in business logic — constants class + pinning test.
 - Dates, numbers, currency: locale-aware formatting only (`intl`), never raw string formatting. Currency follows the workspace country.
 - All timestamps stored UTC; recurring series recur in workspace-local time.
-- No Google Play Services, no Firebase, no third-party tracking, no GPL dependencies. The F-Droid flavor must stay 100% GMS-free (audited by script).
+- No third-party tracking, no GPL dependencies (ADR 0009). FCM is the push transport (ADR 0011).
 
 ## Testing rules
 

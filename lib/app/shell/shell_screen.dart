@@ -50,7 +50,7 @@ class ShellScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final isOwner = ref.watch(myMemberProvider).value?.actsAsOwner ?? false;
 
-    // Fire-and-forget UnifiedPush start (#72); no-op without distributor.
+    // Fire-and-forget push start (#72); no-op while Firebase is unconfigured.
     ref.watch(pushBootstrapProvider);
 
     // Push-driven freshness (#413): DB changes invalidate their cached

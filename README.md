@@ -25,7 +25,7 @@ Every feature must serve at least one of:
 - **Kiosk mode** — a wall tablet in locked plan view; members check in by scanning a QR badge or tapping an RFID card, whose credential is stored only as a hash.
 - **Events & confirmation protocol** — an auditable event feed; anything an admin does *for somebody else* stays pending until that person confirms, under a per-workspace validation quorum.
 - **Workspace portability** — the whole floor-plan configuration exports/imports as XML; feature flags let each community switch modules on or off.
-- **Notifications** — local check-in reminders plus UnifiedPush (Google-services-free) for pending confirmations.
+- **Notifications** — local check-in reminders plus FCM push (confirmations, overrules) with the app-icon badge.
 - **In-app help** in every language, compiled from the wiki user guides and available offline.
 
 Full product spec: [`docs/SPECIFICATION.md`](docs/SPECIFICATION.md) · architecture, implementation notes and user guides (EN/FR): [project wiki](https://github.com/fdittgen-png/deskilo/wiki).

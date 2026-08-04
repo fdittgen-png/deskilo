@@ -374,7 +374,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                   ),
                   const SizedBox(height: 12),
                   // Social sign-in (0051): browser-based Supabase OAuth —
-                  // no vendor SDKs, F-Droid-clean. The session lands via
+                  // no vendor SDKs. The session lands via
                   // the deskilo:// callback; errors (provider not enabled
                   // on the server) surface as a snack.
                   Row(children: [

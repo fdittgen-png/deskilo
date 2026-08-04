@@ -1,22 +1,24 @@
 -- SPDX-License-Identifier: 0BSD
--- FCM transport (#426, F-Droid dropped by owner decision). Three pieces:
+-- FCM-only push (#426/#428, ADR 0011 — the F-Droid-era UnifiedPush leg
+-- is fully removed). Three pieces:
 --
---  * push_endpoints accepts `fcm:<token>` rows next to the UnifiedPush
---    https:// URLs.
+--  * push_endpoints holds `fcm:<token>` rows only (the table was empty
+--    in production, so the tightened check rewrites history for nobody).
 --  * push_config (single row): where the send-push edge function lives.
 --    Seeded with the committed publishable pair (ADR 0002 — the same
 --    values every client binary ships); self-hosters update the row.
---  * notify_pending_event v3: UnifiedPush endpoints keep their direct
---    pg_net POST; additionally ONE ping with {event_id} goes to the
---    send-push function, which loads the event itself and fans out to
---    the fcm: rows (FCM v1 needs OAuth signing pg_net cannot do; the
---    function trusts no caller input beyond the id).
+--  * notify_pending_event v3: computes the notifiable kind and pings
+--    the send-push function with {event_id} ONLY — the function loads
+--    the event itself, derives recipients (0082 rules), signs FCM v1
+--    with the FCM_SERVICE_ACCOUNT secret and sets the APNs badge. The
+--    direct pg_net POSTs to UnifiedPush endpoints are gone with the
+--    transport.
 
 alter table public.push_endpoints
   drop constraint if exists push_endpoints_endpoint_check;
 alter table public.push_endpoints
   add constraint push_endpoints_endpoint_check
-  check (endpoint ~ '^https://' or endpoint ~ '^fcm:');
+  check (endpoint ~ '^fcm:');
 
 create table if not exists public.push_config (
   id boolean primary key default true check (id),
@@ -24,7 +26,7 @@ create table if not exists public.push_config (
   anon_key text not null
 );
 alter table public.push_config enable row level security;
--- Deny-all: only the definer functions below read it.
+-- Deny-all: only the definer function below reads it.
 
 insert into public.push_config (id, functions_url, anon_key)
 values (
@@ -37,76 +39,19 @@ on conflict (id) do nothing;
 create or replace function public.notify_pending_event()
 returns trigger language plpgsql security definer set search_path = public as $$
 declare
-  v_endpoint record;
   v_kind text;
   v_cfg public.push_config;
 begin
   if new.status = 'pending'
      and (tg_op = 'INSERT' or old.status <> 'pending') then
     v_kind := 'pending_request';
-    for v_endpoint in
-      select pe.endpoint
-      from public.push_endpoints pe
-      join public.members m on m.id = pe.member_id
-      where m.workspace_id = new.workspace_id
-        and m.status = 'active'
-        and m.id <> new.actor_member_id
-        and pe.endpoint ~ '^https://'
-        and (
-          case
-            when new.type = 'expense'
-                 or (new.type = 'payment'
-                     and new.actor_member_id = new.subject_member_id)
-              then (m.is_admin or m.is_owner)
-            else m.id = new.subject_member_id
-          end
-        )
-    loop
-      begin
-        perform net.http_post(
-          url := v_endpoint.endpoint,
-          body := jsonb_build_object(
-            'kind', v_kind,
-            'workspace_id', new.workspace_id
-          ),
-          timeout_milliseconds := 5000
-        );
-      exception when others then
-        null;  -- best-effort: a dead endpoint never fails the event
-      end;
-    end loop;
   elsif new.type = 'reservation' and new.action = 'cancelled'
      and new.actor_member_id <> new.subject_member_id
      and (tg_op = 'INSERT'
           or old.actor_member_id = old.subject_member_id) then
     v_kind := 'reservation_cancelled';
-    for v_endpoint in
-      select pe.endpoint
-      from public.push_endpoints pe
-      join public.members m on m.id = pe.member_id
-      where m.workspace_id = new.workspace_id
-        and m.status = 'active'
-        and m.id <> new.actor_member_id
-        and pe.endpoint ~ '^https://'
-        and (m.id = new.subject_member_id or m.is_admin or m.is_owner)
-    loop
-      begin
-        perform net.http_post(
-          url := v_endpoint.endpoint,
-          body := jsonb_build_object(
-            'kind', v_kind,
-            'workspace_id', new.workspace_id
-          ),
-          timeout_milliseconds := 5000
-        );
-      exception when others then
-        null;
-      end;
-    end loop;
   end if;
 
-  -- FCM leg (#426): one ping per notifiable event; the function computes
-  -- recipients and content itself. No-ops when unconfigured.
   if v_kind is not null then
     select * into v_cfg from public.push_config where id;
     if v_cfg.functions_url is not null then
@@ -121,7 +66,7 @@ begin
           timeout_milliseconds := 5000
         );
       exception when others then
-        null;
+        null;  -- best-effort: push must never fail the event
       end;
     end if;
   end if;

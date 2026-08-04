@@ -873,13 +873,13 @@
   "@pushStatusRegistered": {
     "description": "Settings status line: push pipeline registered (#424)"
   },
-  "pushStatusNoDistributor": "Push notifications need a distributor app",
-  "@pushStatusNoDistributor": {
-    "description": "Settings status line: no UnifiedPush distributor installed (#424)"
+  "pushStatusNotConfigured": "Push notifications are not set up yet",
+  "@pushStatusNotConfigured": {
+    "description": "Settings status line: Firebase not configured (#428)"
   },
-  "pushStatusNoDistributorHint": "Install ntfy (F-Droid or Play Store), then reopen the app.",
-  "@pushStatusNoDistributorHint": {
-    "description": "Fix hint under the no-distributor line (#424)"
+  "pushStatusNotConfiguredHint": "The workspace owner completes the Firebase setup (push-setup guide).",
+  "@pushStatusNotConfiguredHint": {
+    "description": "Fix hint under the not-configured line (#428)"
   },
   "directoryTitle": "Members",
   "@directoryTitle": {
@@ -1341,7 +1341,7 @@
   },
   "featurePushNotifications": "Push notifications",
   "@featurePushNotifications": {
-    "description": "Feature switch: UnifiedPush delivery of confirmations"
+    "description": "Feature switch: push delivery of confirmations (FCM, ADR 0011)"
   },
   "featurePushNotificationsDesc": "Deliver pending confirmations to members' devices.",
   "@featurePushNotificationsDesc": {

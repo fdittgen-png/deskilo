@@ -1,8 +1,8 @@
 # Push setup — the owner's one-time Firebase checklist (#426, ADR 0011)
 
 The FCM stack ships DISABLED: `lib/core/push/firebase_options.dart` is a
-stub returning null, so the app falls back to UnifiedPush and everything
-builds and runs. These steps light FCM up on Android, iOS, web and
+stub returning null, so the app stays local-notifications-only and
+everything builds and runs. These steps light FCM up on Android, iOS, web and
 macOS. Nothing here can be automated — every step needs the owner's
 Google/Apple accounts.
 
@@ -35,7 +35,7 @@ Google/Apple accounts.
 ## 4. Verify
 
 - Run the app on a phone: Settings → Advanced shows *Push notifications
-  are active* without any distributor app.
+  are active*.
 - `select count(*) from push_endpoints where endpoint like 'fcm:%';`
   goes above zero.
 - Have an admin overrule a reservation from another account: the
@@ -45,4 +45,4 @@ Google/Apple accounts.
 Behavior notes: foregrounded apps replace the push with their own
 LOCALIZED notification; background/killed shows the generic English
 per-kind text (payloads never carry names or times — the 0012 privacy
-doctrine). UnifiedPush users keep working unchanged.
+doctrine).

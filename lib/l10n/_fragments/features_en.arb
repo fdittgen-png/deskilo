@@ -62,7 +62,7 @@
   },
   "featurePushNotifications": "Push notifications",
   "@featurePushNotifications": {
-    "description": "Feature switch: UnifiedPush delivery of confirmations"
+    "description": "Feature switch: push delivery of confirmations (FCM, ADR 0011)"
   },
   "featurePushNotificationsDesc": "Deliver pending confirmations to members' devices.",
   "@featurePushNotificationsDesc": {

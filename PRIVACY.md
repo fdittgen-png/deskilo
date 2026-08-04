@@ -39,8 +39,8 @@ describes what the app processes and why. DesKilo is open source
 ## Push notifications
 
 On Google Play builds, notifications are generated locally on the
-device. The F-Droid flavor can use UnifiedPush with a distributor you
-choose; the push payload is a content-free "check pending items" ping.
+device. Push notifications use Firebase Cloud Messaging; pushed
+payloads carry no personal data (a generic kind only).
 
 ## Data controller & processors
 
