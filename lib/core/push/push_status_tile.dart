@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../l10n/app_localizations.dart';
+import '../notifications/notification_providers.dart';
 import 'push_providers.dart';
 import 'push_service.dart';
 
@@ -15,6 +16,20 @@ class PushStatusTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    // #436: the system-level truth outranks everything — when Android
+    // suppresses this app's notifications, say so and name the fix
+    // (this is what made the icon badge look 'broken' in the field).
+    final systemEnabled = ref.watch(systemNotificationsEnabledProvider).value;
+    if (systemEnabled == false) {
+      return ListTile(
+        leading: const Icon(Icons.notifications_off_outlined),
+        title: Text(l10n?.notificationsSystemOff ??
+            'Android is blocking DesKilo notifications'),
+        subtitle: Text(l10n?.notificationsSystemOffHint ??
+            'Allow them under system Settings → Apps → DesKilo → '
+                'Notifications — the icon badge needs them.'),
+      );
+    }
     final service = ref.watch(pushBootstrapProvider).value;
     if (service == null) return const SizedBox.shrink();
     return ValueListenableBuilder<PushStatus>(

@@ -1268,6 +1268,18 @@ abstract class AppLocalizations {
   /// **'The workspace owner completes the Firebase setup (push-setup guide).'**
   String get pushStatusNotConfiguredHint;
 
+  /// Settings warning when Android suppresses the app's notifications (#436)
+  ///
+  /// In en, this message translates to:
+  /// **'Android is blocking DesKilo notifications'**
+  String get notificationsSystemOff;
+
+  /// Fix hint under the system-notifications warning (#436)
+  ///
+  /// In en, this message translates to:
+  /// **'Allow them under system Settings → Apps → DesKilo → Notifications — the icon badge needs them.'**
+  String get notificationsSystemOffHint;
+
   /// Member directory title: bottom-tab label and app-bar title of the Members tab (#230) plus its settings entry (#224), visible to every member. Keep it short — it must fit a bottom-bar tab.
   ///
   /// In en, this message translates to:

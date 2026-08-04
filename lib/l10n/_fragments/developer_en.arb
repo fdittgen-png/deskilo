@@ -47,5 +47,13 @@
   "pushStatusNotConfiguredHint": "The workspace owner completes the Firebase setup (push-setup guide).",
   "@pushStatusNotConfiguredHint": {
     "description": "Fix hint under the not-configured line (#428)"
+  },
+  "notificationsSystemOff": "Android is blocking DesKilo notifications",
+  "notificationsSystemOffHint": "Allow them under system Settings → Apps → DesKilo → Notifications — the icon badge needs them.",
+  "@notificationsSystemOff": {
+    "description": "Settings warning when Android suppresses the app's notifications (#436)"
+  },
+  "@notificationsSystemOffHint": {
+    "description": "Fix hint under the system-notifications warning (#436)"
   }
 }

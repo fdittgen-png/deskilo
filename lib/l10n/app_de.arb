@@ -194,6 +194,8 @@
   "pushStatusRegistered": "Push-Benachrichtigungen sind aktiv",
   "pushStatusNotConfigured": "Push-Benachrichtigungen sind noch nicht eingerichtet",
   "pushStatusNotConfiguredHint": "Die Inhaberin schließt die Firebase-Einrichtung ab (push-setup-Anleitung).",
+  "notificationsSystemOff": "Android blockiert DesKilo-Benachrichtigungen",
+  "notificationsSystemOffHint": "Erlaube sie unter System-Einstellungen → Apps → DesKilo → Benachrichtigungen — das Icon-Badge braucht sie.",
   "directoryTitle": "Mitglieder",
   "directoryEmpty": "Noch keine Mitglieder.",
   "directoryCheckedIn": "Eingecheckt",

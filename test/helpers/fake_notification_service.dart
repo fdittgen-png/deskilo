@@ -22,6 +22,9 @@ class FakeNotificationService implements NotificationService {
     shown.add((title: title, body: body));
   }
 
+  @override
+  Future<bool?> notificationsEnabled() async => true;
+
   /// Every syncPendingNotifications call (#432); last = current mirror.
   final pendingSyncs = <List<PendingNotice>>[];
 

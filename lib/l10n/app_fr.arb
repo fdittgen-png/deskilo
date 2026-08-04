@@ -194,6 +194,8 @@
   "pushStatusRegistered": "Les notifications push sont actives",
   "pushStatusNotConfigured": "Les notifications push ne sont pas encore configurées",
   "pushStatusNotConfiguredHint": "Le propriétaire termine la configuration Firebase (guide push-setup).",
+  "notificationsSystemOff": "Android bloque les notifications de DesKilo",
+  "notificationsSystemOffHint": "Autorisez-les dans Paramètres système → Applications → DesKilo → Notifications — le badge de l'icône en a besoin.",
   "directoryTitle": "Membres",
   "directoryEmpty": "Aucun membre pour l'instant.",
   "directoryCheckedIn": "Sur place",
