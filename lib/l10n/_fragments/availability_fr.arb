@@ -8,7 +8,7 @@
   "availabilityLastOpenDay": "Au moins un jour de la semaine doit rester ouvert.",
   "availabilityNoClosures": "Aucun jour de fermeture.",
   "availabilityGranularityTitle": "Granularité des réservations",
-  "availabilityGranularityDescription": "Demi-journées : les réservations couvrent le matin (jusqu'à 13 h), l'après-midi (à partir de 13 h) ou la journée entière.",
+  "availabilityGranularityDescription": "Demi-journées : les réservations couvrent le matin, l'après-midi ou la journée entière — les créneaux suivent les horaires de travail configurés.",
   "availabilityGranularityFlexible": "Plage horaire libre",
   "availabilityGranularityHalfDay": "Demi-journées (matin et après-midi)",
   "availabilityGranularity5": "Créneaux de 5 minutes",
@@ -17,5 +17,15 @@
   "availabilityGranularity60": "Créneaux d'une heure",
   "availabilityGranularityFullDay": "Journées entières uniquement",
   "planSlotError": "Les réservations doivent commencer et finir sur la grille de {minutes} minutes.",
-  "planFullDayError": "Ici, les réservations couvrent la journée entière."
+  "planFullDayError": "Ici, les réservations couvrent la journée entière.",
+  "availabilityGranularityHours": "Heures réelles (de–à exact, demi/journées en raccourcis)",
+  "availabilityWorkHoursTitle": "Horaires de travail",
+  "availabilityWorkHoursDescription": "Les créneaux demi-journée et journée complète partout — réservations, check-in et facturation — suivent ces horaires.",
+  "availabilityWorkStart": "Début de journée",
+  "availabilityHalfBoundary": "Limite de demi-journée",
+  "availabilityWorkEnd": "Fin de journée",
+  "availabilityHalfDayHours": "Heures facturées comme demi-journée",
+  "availabilityFullDayHours": "Heures facturées comme journée complète",
+  "availabilityHourOption": "{count} h",
+  "availabilityWorkHoursInvalid": "La journée doit respecter début < limite de demi-journée < fin."
 }

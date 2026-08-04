@@ -8,7 +8,7 @@
   "availabilityLastOpenDay": "Mindestens ein Wochentag muss geöffnet bleiben.",
   "availabilityNoClosures": "Keine Schließtage.",
   "availabilityGranularityTitle": "Buchungsraster",
-  "availabilityGranularityDescription": "Halbe Tage: Buchungen umfassen den Vormittag (bis 13 Uhr), den Nachmittag (ab 13 Uhr) oder den ganzen Tag.",
+  "availabilityGranularityDescription": "Halbe Tage: Buchungen umfassen den Vormittag, den Nachmittag oder den ganzen Arbeitstag — die Fenster folgen den konfigurierten Arbeitszeiten.",
   "availabilityGranularityFlexible": "Freier Zeitraum",
   "availabilityGranularityHalfDay": "Halbe Tage (Vormittag & Nachmittag)",
   "availabilityGranularity5": "5-Minuten-Slots",
@@ -17,5 +17,15 @@
   "availabilityGranularity60": "1-Stunden-Slots",
   "availabilityGranularityFullDay": "Nur ganze Tage",
   "planSlotError": "Buchungen müssen im {minutes}-Minuten-Raster beginnen und enden.",
-  "planFullDayError": "Buchungen umfassen hier den ganzen Tag."
+  "planFullDayError": "Buchungen umfassen hier den ganzen Tag.",
+  "availabilityGranularityHours": "Echte Uhrzeiten (exakt von–bis, Halb-/Ganztage als Schnellwahl)",
+  "availabilityWorkHoursTitle": "Arbeitszeiten",
+  "availabilityWorkHoursDescription": "Die Halbtags- und Ganztagsfenster überall — Reservierungen, Check-in und Abrechnung — folgen diesen Zeiten.",
+  "availabilityWorkStart": "Tagesbeginn",
+  "availabilityHalfBoundary": "Halbtagsgrenze",
+  "availabilityWorkEnd": "Tagesende",
+  "availabilityHalfDayHours": "Stunden, die als halber Tag gelten",
+  "availabilityFullDayHours": "Stunden, die als ganzer Tag gelten",
+  "availabilityHourOption": "{count} h",
+  "availabilityWorkHoursInvalid": "Es muss gelten: Beginn < Halbtagsgrenze < Ende."
 }

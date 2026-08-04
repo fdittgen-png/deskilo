@@ -181,7 +181,7 @@
   "@availabilityGranularityTitle": {
     "description": "Section header above the booking-granularity radio options"
   },
-  "availabilityGranularityDescription": "Half days: bookings cover the morning (until 13:00), the afternoon (from 13:00) or the whole day.",
+  "availabilityGranularityDescription": "Half days: bookings cover the morning, the afternoon or the whole working day — the windows follow the configured working hours.",
   "@availabilityGranularityDescription": {
     "description": "One-line explanation of the half-day granularity under the section header"
   },
@@ -226,6 +226,24 @@
   "@planFullDayError": {
     "description": "Booking error when the server rejects a non-full-day window under full-day granularity (0032)"
   },
+  "availabilityGranularityHours": "Real hours (exact from–to, half/full days as shortcuts)",
+  "availabilityWorkHoursTitle": "Working hours",
+  "availabilityWorkHoursDescription": "The half-day and full-day windows everywhere — reservations, check-in and invoicing — follow these hours.",
+  "availabilityWorkStart": "Day starts",
+  "availabilityHalfBoundary": "Half-day boundary",
+  "availabilityWorkEnd": "Day ends",
+  "availabilityHalfDayHours": "Hours billed as a half day",
+  "availabilityFullDayHours": "Hours billed as a full day",
+  "availabilityHourOption": "{count} h",
+  "@availabilityHourOption": {
+    "description": "Dropdown option: a whole-hour count (#446)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "availabilityWorkHoursInvalid": "The day must run start < half-day boundary < end.",
   "myBadgeTitle": "My badge",
   "billSubscription": "Subscription {pct}%",
   "@billSubscription": {
@@ -1456,6 +1474,8 @@
   "@featureDataExportDesc": {
     "description": "Description under the data-export feature toggle (#395)."
   },
+  "featureWorkingHours": "Working hours",
+  "featureWorkingHoursDesc": "Configure the working day and offer exact-hours booking; off keeps the 8:00–17:00 defaults.",
   "helpTitle": "Help",
   "helpContents": "Contents",
   "inviteSectionTitle": "Invite someone",

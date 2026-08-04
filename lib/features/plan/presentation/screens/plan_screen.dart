@@ -19,6 +19,7 @@ import '../../../../core/ui/motion.dart';
 import '../../../../core/ui/view_toggle.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
+import '../../../reservations/domain/walk_up_window.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/domain/reservation_repository.dart';
 import '../../../members/providers/directory_providers.dart';
@@ -490,10 +491,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     var end = walkUp
         ? (granularity == BookingGranularity.halfDay
             ? HalfDayWindows.windowForNow(start).end
-            // Full-day granularity (0032): the walk-up runs to the next
-            // local midnight; minute grids keep the default stay.
-            : granularity == BookingGranularity.fullDay
-                ? HalfDayWindows.fullDay(start).end
+            // Full-day (0032) and hours (#446) walk-ups end at the end
+            // of the working day (overtime-safe via walkUpWindow);
+            // minute grids keep the default stay.
+            : granularity == BookingGranularity.fullDay ||
+                    granularity == BookingGranularity.hours
+                ? walkUpWindow(granularity, start).end
                 : start.add(_kDefaultStay))
         : (_browseEnd ?? start.add(_kDefaultStay));
     var capped = false;

@@ -149,7 +149,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get availabilityGranularityDescription =>
-      'Halbe Tage: Buchungen umfassen den Vormittag (bis 13 Uhr), den Nachmittag (ab 13 Uhr) oder den ganzen Tag.';
+      'Halbe Tage: Buchungen umfassen den Vormittag, den Nachmittag oder den ganzen Arbeitstag — die Fenster folgen den konfigurierten Arbeitszeiten.';
 
   @override
   String get availabilityGranularityFlexible => 'Freier Zeitraum';
@@ -180,6 +180,41 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get planFullDayError => 'Buchungen umfassen hier den ganzen Tag.';
+
+  @override
+  String get availabilityGranularityHours =>
+      'Echte Uhrzeiten (exakt von–bis, Halb-/Ganztage als Schnellwahl)';
+
+  @override
+  String get availabilityWorkHoursTitle => 'Arbeitszeiten';
+
+  @override
+  String get availabilityWorkHoursDescription =>
+      'Die Halbtags- und Ganztagsfenster überall — Reservierungen, Check-in und Abrechnung — folgen diesen Zeiten.';
+
+  @override
+  String get availabilityWorkStart => 'Tagesbeginn';
+
+  @override
+  String get availabilityHalfBoundary => 'Halbtagsgrenze';
+
+  @override
+  String get availabilityWorkEnd => 'Tagesende';
+
+  @override
+  String get availabilityHalfDayHours => 'Stunden, die als halber Tag gelten';
+
+  @override
+  String get availabilityFullDayHours => 'Stunden, die als ganzer Tag gelten';
+
+  @override
+  String availabilityHourOption(int count) {
+    return '$count h';
+  }
+
+  @override
+  String get availabilityWorkHoursInvalid =>
+      'Es muss gelten: Beginn < Halbtagsgrenze < Ende.';
 
   @override
   String get myBadgeTitle => 'Mein Badge';
@@ -1082,6 +1117,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureDataExportDesc =>
       'Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen.';
+
+  @override
+  String get featureWorkingHours => 'Arbeitszeiten';
+
+  @override
+  String get featureWorkingHoursDesc =>
+      'Arbeitstag konfigurieren und Buchung nach exakten Uhrzeiten anbieten; aus = Standard 8–17 Uhr.';
 
   @override
   String get helpTitle => 'Hilfe';

@@ -56,41 +56,49 @@ class WindowControls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    if (granularity.isDayBased) {
-      // Icons, not words (UX pass): sunrise = morning, sunset =
-      // afternoon, calendar-day = full day; the localized name lives in
-      // the tooltip (and the semantics label for assistive tech).
-      Widget chip(
-        String keySuffix,
-        IconData icon,
-        String name,
-        HalfDayWindow Function(DateTime day) windowOf,
-      ) {
-        final window = windowOf(day);
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2),
-          child: Tooltip(
-            message: name,
-            child: ChoiceChip(
-              key: ValueKey('$keyPrefix-$keySuffix'),
-              label: Icon(icon, size: 18, semanticLabel: name),
-              selected: isSelected(window),
-              materialTapTargetSize: MaterialTapTargetSize.padded,
-              onSelected: (_) => onPickWindow(window),
-            ),
+    // Icons, not words (UX pass): sunrise = morning, sunset =
+    // afternoon, calendar-day = full day; the localized name lives in
+    // the tooltip (and the semantics label for assistive tech).
+    Widget chip(
+      String keySuffix,
+      IconData icon,
+      String name,
+      HalfDayWindow Function(DateTime day) windowOf,
+    ) {
+      final window = windowOf(day);
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 2),
+        child: Tooltip(
+          message: name,
+          child: ChoiceChip(
+            key: ValueKey('$keyPrefix-$keySuffix'),
+            label: Icon(icon, size: 18, semanticLabel: name),
+            selected: isSelected(window),
+            materialTapTargetSize: MaterialTapTargetSize.padded,
+            onSelected: (_) => onPickWindow(window),
           ),
-        );
-      }
+        ),
+      );
+    }
 
-      // A Wrap, not a Row: inside the portrait scroll-row it lays out
-      // on one line (unbounded width); inside the landscape sidebar's
-      // Wrap the chips flow instead of overflowing.
-      return Wrap(
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
+    final timeFormat = DateFormat.Hm();
+    final style = muted
+        ? TextButton.styleFrom(
+            foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
+          )
+        : null;
+    // A Wrap, not a Row: inside the portrait scroll-row it lays out
+    // on one line (unbounded width); inside the landscape sidebar's
+    // Wrap the chips flow instead of overflowing. Under `hours` (#446)
+    // BOTH families render: the window chips as shortcuts next to the
+    // free from→to clock buttons.
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        if (granularity.offersDayWindows) ...[
           // Full-day granularity (0032) books whole days only — the
-          // half chips exist under half-day granularity alone.
-          if (granularity == BookingGranularity.halfDay) ...[
+          // half chips exist under half-day and hours granularity.
+          if (granularity != BookingGranularity.fullDay) ...[
             chip(
               'am-chip',
               Icons.wb_sunny_outlined,
@@ -111,41 +119,31 @@ class WindowControls extends StatelessWidget {
             HalfDayWindows.fullDay,
           ),
         ],
-      );
-    }
-
-    final timeFormat = DateFormat.Hm();
-    final style = muted
-        ? TextButton.styleFrom(
-            foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
-          )
-        : null;
-    return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: [
-        Tooltip(
-          message: l10n?.planFromLabel ?? 'From',
-          child: TextButton(
-            key: ValueKey('$keyPrefix-from-chip'),
-            style: style,
-            onPressed: onPickFrom,
-            child: Text(timeFormat.format(from)),
+        if (!granularity.isDayBased) ...[
+          Tooltip(
+            message: l10n?.planFromLabel ?? 'From',
+            child: TextButton(
+              key: ValueKey('$keyPrefix-from-chip'),
+              style: style,
+              onPressed: onPickFrom,
+              child: Text(timeFormat.format(from)),
+            ),
           ),
-        ),
-        Icon(
-          Icons.arrow_right_alt,
-          size: 16,
-          color: Theme.of(context).colorScheme.onSurfaceVariant,
-        ),
-        Tooltip(
-          message: l10n?.planToLabel ?? 'To',
-          child: TextButton(
-            key: ValueKey('$keyPrefix-to-chip'),
-            style: style,
-            onPressed: onPickTo,
-            child: Text(timeFormat.format(to)),
+          Icon(
+            Icons.arrow_right_alt,
+            size: 16,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
-        ),
+          Tooltip(
+            message: l10n?.planToLabel ?? 'To',
+            child: TextButton(
+              key: ValueKey('$keyPrefix-to-chip'),
+              style: style,
+              onPressed: onPickTo,
+              child: Text(timeFormat.format(to)),
+            ),
+          ),
+        ],
       ],
     );
   }

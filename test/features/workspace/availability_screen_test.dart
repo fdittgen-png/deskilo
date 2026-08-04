@@ -17,7 +17,7 @@ Future<FakeWorkspaceRepository> pumpAvailability(
   workspace ??= FakeWorkspaceRepository.withWorkspace();
   // The 0032 granularity radios outgrew the 800×600 default surface;
   // a taller one keeps the closure-day section hit-testable.
-  await tester.binding.setSurfaceSize(const Size(800, 1800));
+  await tester.binding.setSurfaceSize(const Size(800, 2400));
   addTearDown(() => tester.binding.setSurfaceSize(null));
   await tester.pumpWidget(
     ProviderScope(
@@ -158,6 +158,45 @@ void main() {
       workspace.bookingGranularities['ws-1'],
       BookingGranularity.flexible,
     );
+  });
+
+  testWidgets('the hours option and the working-hours section render '
+      'with the 8:00-17:00 defaults (#446)', (tester) async {
+    await pumpAvailability(tester);
+
+    await tester.ensureVisible(
+        find.text('Real hours (exact from–to, half/full days as shortcuts)'));
+    expect(find.text('Working hours'), findsOneWidget);
+    expect(find.byKey(const ValueKey('work-hours-start')), findsOneWidget);
+    expect(find.byKey(const ValueKey('work-hours-boundary')), findsOneWidget);
+    expect(find.byKey(const ValueKey('work-hours-end')), findsOneWidget);
+    // The billing hour counts only appear under the hours granularity.
+    expect(find.byKey(const ValueKey('work-hours-half-day-hours')),
+        findsNothing);
+  });
+
+  testWidgets('under hours granularity the billing hour counts appear and '
+      'the dropdown persists half_day_hours (#446)', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..bookingGranularities['ws-1'] = BookingGranularity.hours;
+    await pumpAvailability(tester, workspace: workspace);
+
+    final halfTile = find.byKey(const ValueKey('work-hours-half-day-hours'));
+    await tester.ensureVisible(halfTile);
+    expect(find.byKey(const ValueKey('work-hours-full-day-hours')),
+        findsOneWidget);
+
+    await tester.tap(
+      find.descendant(of: halfTile, matching: find.byType(DropdownButton<int>)),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('6 h').last);
+    await tester.pumpAndSettle();
+
+    expect(workspace.workHours['ws-1']?.halfDayHours, 6);
+    // The write must preserve the rest of the working day.
+    expect(workspace.workHours['ws-1']?.startMinutes, 8 * 60);
+    expect(workspace.workHours['ws-1']?.endMinutes, 17 * 60);
   });
 
   testWidgets('closure days render with localized date and reason',

@@ -148,7 +148,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get availabilityGranularityDescription =>
-      'Demi-journées : les réservations couvrent le matin (jusqu\'à 13 h), l\'après-midi (à partir de 13 h) ou la journée entière.';
+      'Demi-journées : les réservations couvrent le matin, l\'après-midi ou la journée entière — les créneaux suivent les horaires de travail configurés.';
 
   @override
   String get availabilityGranularityFlexible => 'Plage horaire libre';
@@ -180,6 +180,42 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get planFullDayError =>
       'Ici, les réservations couvrent la journée entière.';
+
+  @override
+  String get availabilityGranularityHours =>
+      'Heures réelles (de–à exact, demi/journées en raccourcis)';
+
+  @override
+  String get availabilityWorkHoursTitle => 'Horaires de travail';
+
+  @override
+  String get availabilityWorkHoursDescription =>
+      'Les créneaux demi-journée et journée complète partout — réservations, check-in et facturation — suivent ces horaires.';
+
+  @override
+  String get availabilityWorkStart => 'Début de journée';
+
+  @override
+  String get availabilityHalfBoundary => 'Limite de demi-journée';
+
+  @override
+  String get availabilityWorkEnd => 'Fin de journée';
+
+  @override
+  String get availabilityHalfDayHours => 'Heures facturées comme demi-journée';
+
+  @override
+  String get availabilityFullDayHours =>
+      'Heures facturées comme journée complète';
+
+  @override
+  String availabilityHourOption(int count) {
+    return '$count h';
+  }
+
+  @override
+  String get availabilityWorkHoursInvalid =>
+      'La journée doit respecter début < limite de demi-journée < fin.';
 
   @override
   String get myBadgeTitle => 'Mon badge';
@@ -1085,6 +1121,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureDataExportDesc =>
       'Télécharger toutes les données de l’espace dans un classeur Excel.';
+
+  @override
+  String get featureWorkingHours => 'Horaires de travail';
+
+  @override
+  String get featureWorkingHoursDesc =>
+      'Configurer la journée de travail et proposer la réservation à l\'heure exacte ; désactivé, les valeurs par défaut 8h–17h s\'appliquent.';
 
   @override
   String get helpTitle => 'Aide';

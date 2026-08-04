@@ -95,6 +95,10 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureAdminLevelAssignDesc ??
               'Admins assign level reservations to members. '
                   'The owner always can.',
+        WorkspaceFeature.workingHours =>
+          l10n?.featureWorkingHoursDesc ??
+              'Configure the working day and offer exact-hours booking; '
+                  'off keeps the 8:00–17:00 defaults.',
       };
 
   Future<void> _toggle(

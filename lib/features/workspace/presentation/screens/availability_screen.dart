@@ -8,8 +8,10 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/time/work_hours.dart';
 import '../../domain/booking_granularity.dart';
 import '../../domain/closure_day.dart';
+import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 import '../../../../core/time/clock.dart';
 
@@ -77,6 +79,55 @@ class AvailabilityScreen extends ConsumerWidget {
       return;
     }
     ref.invalidate(bookingGranularityProvider);
+  }
+
+  Future<void> _setWorkHours(
+    BuildContext context,
+    WidgetRef ref,
+    WorkHours hours,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    if (!hours.isValid) {
+      AppSnack.error(
+        context,
+        l10n?.availabilityWorkHoursInvalid ??
+            'The day must run start < half-day boundary < end.',
+      );
+      return;
+    }
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    try {
+      await ref
+          .read(workspaceRepositoryProvider)
+          .setWorkHours(workspace.id, hours);
+    } catch (e, st) {
+      debugPrint('set work hours failed: $e\n$st');
+      TraceLogger.instance.error('workspace', 'set work hours failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      _showGenericError(context, l10n);
+      return;
+    }
+    ref.invalidate(workHoursProvider);
+  }
+
+  Future<void> _pickWorkTime(
+    BuildContext context,
+    WidgetRef ref,
+    WorkHours hours,
+    int currentMinutes,
+    WorkHours Function(int minutes) apply,
+  ) async {
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay(
+        hour: currentMinutes ~/ 60,
+        minute: currentMinutes % 60,
+      ),
+    );
+    if (picked == null || !context.mounted) return;
+    await _setWorkHours(context, ref, apply(picked.hour * 60 + picked.minute));
   }
 
   Future<void> _addClosure(BuildContext context, WidgetRef ref) async {
@@ -147,6 +198,12 @@ class AvailabilityScreen extends ConsumerWidget {
     final weekdaysAsync = ref.watch(openWeekdaysProvider);
     final granularityAsync = ref.watch(bookingGranularityProvider);
     final closuresAsync = ref.watch(closureDaysProvider);
+    // #446: the working-day editor and the hours granularity are one
+    // feature-flagged unit; off = the 8:00–17:00 defaults, silently.
+    final workingHoursOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.workingHours);
+    final workHours = ref.watch(workHoursProvider).value ?? WorkHours.defaults;
 
     return Scaffold(
       appBar: AppBar(
@@ -258,9 +315,96 @@ class AvailabilityScreen extends ConsumerWidget {
                             'Full days only',
                       ),
                     ),
+                    if (workingHoursOn)
+                      RadioListTile<BookingGranularity>(
+                        value: BookingGranularity.hours,
+                        title: Text(
+                          l10n?.availabilityGranularityHours ??
+                              'Real hours (exact from-to, half/full days '
+                                  'as shortcuts)',
+                        ),
+                      ),
                   ],
                 ),
               ),
+              if (workingHoursOn) ...[
+                _SectionHeader(
+                  l10n?.availabilityWorkHoursTitle ?? 'Working hours',
+                ),
+                Padding(
+                  padding: AppSpacing.lgH,
+                  child: Text(
+                    l10n?.availabilityWorkHoursDescription ??
+                        'The half-day and full-day windows everywhere - '
+                            'reservations, check-in and invoicing - follow '
+                            'these hours.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
+                _WorkTimeTile(
+                  keySuffix: 'start',
+                  title: l10n?.availabilityWorkStart ?? 'Day starts',
+                  minutes: workHours.startMinutes,
+                  onTap: () => _pickWorkTime(
+                    context,
+                    ref,
+                    workHours,
+                    workHours.startMinutes,
+                    (m) => workHours.copyWith(startMinutes: m),
+                  ),
+                ),
+                _WorkTimeTile(
+                  keySuffix: 'boundary',
+                  title:
+                      l10n?.availabilityHalfBoundary ?? 'Half-day boundary',
+                  minutes: workHours.halfBoundaryMinutes,
+                  onTap: () => _pickWorkTime(
+                    context,
+                    ref,
+                    workHours,
+                    workHours.halfBoundaryMinutes,
+                    (m) => workHours.copyWith(halfBoundaryMinutes: m),
+                  ),
+                ),
+                _WorkTimeTile(
+                  keySuffix: 'end',
+                  title: l10n?.availabilityWorkEnd ?? 'Day ends',
+                  minutes: workHours.endMinutes,
+                  onTap: () => _pickWorkTime(
+                    context,
+                    ref,
+                    workHours,
+                    workHours.endMinutes,
+                    (m) => workHours.copyWith(endMinutes: m),
+                  ),
+                ),
+                // The hour counts only price bookings under the hours
+                // granularity - half-day equivalents on the statement.
+                if (granularity == BookingGranularity.hours) ...[
+                  _HourCountTile(
+                    keySuffix: 'half-day-hours',
+                    title: l10n?.availabilityHalfDayHours ??
+                        'Hours billed as a half day',
+                    value: workHours.halfDayHours,
+                    onChanged: (v) => _setWorkHours(
+                      context,
+                      ref,
+                      workHours.copyWith(halfDayHours: v),
+                    ),
+                  ),
+                  _HourCountTile(
+                    keySuffix: 'full-day-hours',
+                    title: l10n?.availabilityFullDayHours ??
+                        'Hours billed as a full day',
+                    value: workHours.fullDayHours,
+                    onChanged: (v) => _setWorkHours(
+                      context,
+                      ref,
+                      workHours.copyWith(fullDayHours: v),
+                    ),
+                  ),
+                ],
+              ],
               _SectionHeader(
                 l10n?.availabilityClosureDays ?? 'Closure days',
               ),
@@ -300,6 +444,75 @@ class AvailabilityScreen extends ConsumerWidget {
         _ => const LoadingView(),
       },
     );
+  }
+}
+
+/// One working-day bound: localized clock text, tap opens a time picker.
+class _WorkTimeTile extends StatelessWidget {
+  const _WorkTimeTile({
+    required this.keySuffix,
+    required this.title,
+    required this.minutes,
+    required this.onTap,
+  });
+
+  final String keySuffix;
+  final String title;
+  final int minutes;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => ListTile(
+        key: ValueKey('work-hours-$keySuffix'),
+        leading: const Icon(Icons.schedule_outlined),
+        title: Text(title),
+        trailing: Text(
+          MaterialLocalizations.of(context).formatTimeOfDay(
+            TimeOfDay(hour: minutes ~/ 60, minute: minutes % 60),
+          ),
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        onTap: onTap,
+      );
+}
+
+/// Whole-hour count picker (1-16) for the half/full-day billing
+/// equivalents under the hours granularity.
+class _HourCountTile extends StatelessWidget {
+  const _HourCountTile({
+    required this.keySuffix,
+    required this.title,
+    required this.value,
+    required this.onChanged,
+  });
+
+  final String keySuffix;
+  final String title;
+  final int value;
+  final ValueChanged<int> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return ListTile(
+        key: ValueKey('work-hours-$keySuffix'),
+        leading: const Icon(Icons.timelapse_outlined),
+        title: Text(title),
+        trailing: DropdownButton<int>(
+          value: value.clamp(1, 16),
+          underline: const SizedBox.shrink(),
+          items: [
+            for (var h = 1; h <= 16; h++)
+              DropdownMenuItem(
+                value: h,
+                child: Text(l10n?.availabilityHourOption(h) ?? '$h h'),
+              ),
+          ],
+          onChanged: (v) {
+            if (v != null) onChanged(v);
+          },
+        ),
+      );
   }
 }
 

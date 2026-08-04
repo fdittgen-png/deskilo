@@ -17,7 +17,8 @@ void main() {
       expect(BookingGranularity.minutes30.wireName, 'minutes_30');
       expect(BookingGranularity.minutes60.wireName, 'minutes_60');
       expect(BookingGranularity.fullDay.wireName, 'full_day');
-      expect(BookingGranularity.values, hasLength(7));
+      expect(BookingGranularity.hours.wireName, 'hours');
+      expect(BookingGranularity.values, hasLength(8));
     });
 
     test('stepMinutes: minute granularities carry their step; legacy '
@@ -27,6 +28,7 @@ void main() {
       expect(BookingGranularity.minutes30.stepMinutes, 30);
       expect(BookingGranularity.minutes60.stepMinutes, 60);
       expect(BookingGranularity.flexible.stepMinutes, 15);
+      expect(BookingGranularity.hours.stepMinutes, 15);
       expect(BookingGranularity.halfDay.stepMinutes, isNull);
       expect(BookingGranularity.fullDay.stepMinutes, isNull);
     });
@@ -37,6 +39,26 @@ void main() {
       expect(BookingGranularity.flexible.isDayBased, isFalse);
       expect(BookingGranularity.minutes5.isDayBased, isFalse);
       expect(BookingGranularity.minutes60.isDayBased, isFalse);
+      expect(BookingGranularity.hours.isDayBased, isFalse);
+    });
+
+    test('offersDayWindows (#446): day-based modes and hours — hours '
+        'shows the window chips NEXT TO free times', () {
+      expect(BookingGranularity.halfDay.offersDayWindows, isTrue);
+      expect(BookingGranularity.fullDay.offersDayWindows, isTrue);
+      expect(BookingGranularity.hours.offersDayWindows, isTrue);
+      expect(BookingGranularity.flexible.offersDayWindows, isFalse);
+      expect(BookingGranularity.minutes30.offersDayWindows, isFalse);
+    });
+
+    test("migration 0087 lets 'hours' fall through every grid branch "
+        'but converts it on the statement', () {
+      final sql = File('supabase/migrations/0087_working_hours.sql')
+          .readAsStringSync();
+      expect(sql, contains("if v_gran = 'hours' then"));
+      // enforce_booking_rules v4 must NOT add a constraint branch for
+      // hours — free from-to times are the whole point.
+      expect(sql, isNot(contains("gran = 'hours' then\n    if")));
     });
 
     test('fromWire falls back to flexible for null / unknown values', () {

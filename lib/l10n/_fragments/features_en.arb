@@ -168,5 +168,7 @@
   "featureDataExportDesc": "Download all workspace data as an Excel workbook.",
   "@featureDataExportDesc": {
     "description": "Description under the data-export feature toggle (#395)."
-  }
+  },
+  "featureWorkingHours": "Working hours",
+  "featureWorkingHoursDesc": "Configure the working day and offer exact-hours booking; off keeps the 8:00–17:00 defaults."
 }

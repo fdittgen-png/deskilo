@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/time/work_hours.dart';
 import '../domain/booking_granularity.dart';
 import '../domain/closure_day.dart';
 import '../domain/member.dart';
@@ -515,6 +516,35 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     final rules = <String, dynamic>{
       ...?row['booking_rules'] as Map<String, dynamic>?,
       BookingRulesKeys.granularity: granularity.wireName,
+    };
+    await _client
+        .from('workspaces')
+        .update({'booking_rules': rules}).eq('id', workspaceId);
+  }
+
+  @override
+  Future<WorkHours> fetchWorkHours(String workspaceId) async {
+    final row = await _client
+        .from('workspaces')
+        .select('booking_rules')
+        .eq('id', workspaceId)
+        .single();
+    return WorkHours.fromRules(
+      row['booking_rules'] as Map<String, dynamic>? ?? const {},
+    );
+  }
+
+  @override
+  Future<void> setWorkHours(String workspaceId, WorkHours hours) async {
+    // Same merge-preserving jsonb write as setBookingGranularity.
+    final row = await _client
+        .from('workspaces')
+        .select('booking_rules')
+        .eq('id', workspaceId)
+        .single();
+    final rules = <String, dynamic>{
+      ...?row['booking_rules'] as Map<String, dynamic>?,
+      ...hours.toRules(),
     };
     await _client
         .from('workspaces')

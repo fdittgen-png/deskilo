@@ -28,7 +28,8 @@ enum WorkspaceFeature {
   invoicing,
   adminInvoicing,
   autoCheckInOut,
-  dataExport;
+  dataExport,
+  workingHours;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -155,6 +156,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // convenience, so it follows the default-on rule.
   WorkspaceFeature.dataExport:
       FeatureManifestEntry(feature: WorkspaceFeature.dataExport),
+  // Configurable working day + real-hours booking (#446). OFF hides the
+  // settings section and the hours granularity option; the 8:00–17:00
+  // defaults then apply unchanged.
+  WorkspaceFeature.workingHours:
+      FeatureManifestEntry(feature: WorkspaceFeature.workingHours),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start

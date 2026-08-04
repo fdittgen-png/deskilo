@@ -296,6 +296,18 @@ void main() {
     expect(find.byKey(_dayChip), findsNothing);
   });
 
+  testWidgets('hours workspace shows BOTH families: half/full-day chips '
+      'as shortcuts next to the from→to clock chips (#446)',
+      (tester) async {
+    await pumpHub(tester, granularity: BookingGranularity.hours);
+
+    expect(find.byKey(_amChip), findsOneWidget);
+    expect(find.byKey(_pmChip), findsOneWidget);
+    expect(find.byKey(_dayChip), findsOneWidget);
+    expect(find.byKey(_fromChip), findsOneWidget);
+    expect(find.byKey(_toChip), findsOneWidget);
+  });
+
   testWidgets(
       'the bottom bar and its centre button stay visible and active on '
       'the hub', (tester) async {

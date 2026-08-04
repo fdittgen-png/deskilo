@@ -9,6 +9,7 @@ import '../../core/badge/app_badge.dart';
 import '../../core/realtime/realtime_providers.dart';
 import '../../core/notifications/notification_providers.dart';
 import '../../core/push/push_providers.dart';
+import '../../core/time/work_hours.dart';
 import '../../core/time/workspace_time.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
@@ -84,6 +85,10 @@ class ShellScreen extends ConsumerWidget {
     WorkspaceTime.install(
       ref.watch(currentWorkspaceProvider).value?.timezone,
     );
+
+    // The working day (#446) is ambient for the same reason as the
+    // clock: the HalfDayWindows builders travel as function references.
+    WorkHours.install(ref.watch(workHoursProvider).value);
 
     // Keep the local check-in reminders in sync with my upcoming bookings
     // (spec §4.3). Best-effort; failures never disturb the UI.

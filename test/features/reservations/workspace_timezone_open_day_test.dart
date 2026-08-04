@@ -11,14 +11,30 @@
 // assert_workspace_open walks days in the workspace zone): convert via
 // WorkspaceTime.dateOf, never via .toLocal().
 
+import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/workspace/domain/workspace_availability.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  setUp(() => WorkspaceTime.install('Europe/Paris'));
-  tearDown(WorkspaceTime.reset);
+  // #446 made the default working day 8:00–17:00, whose instants never
+  // cross the UTC date line from Paris — the #417 trap needs a
+  // midnight-anchored window, so this file installs one explicitly.
+  setUp(() {
+    WorkspaceTime.install('Europe/Paris');
+    WorkHours.install(const WorkHours(
+      startMinutes: 0,
+      halfBoundaryMinutes: 13 * 60,
+      endMinutes: 24 * 60,
+      halfDayHours: 6,
+      fullDayHours: 12,
+    ));
+  });
+  tearDown(() {
+    WorkspaceTime.reset();
+    WorkHours.reset();
+  });
 
   // 2026-08-03 is a Monday.
   final monday = DateTime(2026, 8, 3);
