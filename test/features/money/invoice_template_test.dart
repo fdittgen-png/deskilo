@@ -167,6 +167,80 @@ void main() {
     expect(find.text('Invoice template saved.'), findsOneWidget);
   });
 
+  testWidgets('QUICK preview simulates execution with sample data — no '
+      'invoice, no PDF (#474)', (tester) async {
+    // A fresh workspace: zero invoices — the old preview refused; the
+    // quick preview runs on simulated data instead.
+    await pumpInvoices(tester, money: FakeMoneyRepository());
+
+    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
+    await tester.pump();
+    await tester.ensureVisible(
+        find.byKey(const ValueKey('invoice-template-quick-preview')));
+    await tester.tap(
+        find.byKey(const ValueKey('invoice-template-quick-preview')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('report-quick-preview')),
+        findsOneWidget);
+    expect(find.text('Quick preview — sample data'), findsOneWidget);
+    expect(find.textContaining('INV-2026-0042'), findsWidgets);
+    expect(find.textContaining('Alex Sample'), findsWidgets);
+  });
+
+  testWidgets('the preset gallery fills the bands with a ready-made '
+      'report (#474)', (tester) async {
+    await pumpInvoices(tester, money: await seededMoney());
+
+    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-template-presets')));
+    await tester.pumpAndSettle();
+    await tester
+        .tap(find.byKey(const ValueKey('invoice-template-preset-compact')));
+    await tester.pumpAndSettle();
+
+    final header = tester
+        .widget<TextField>(
+            find.byKey(const ValueKey('invoice-template-header')))
+        .controller!
+        .text;
+    expect(header, contains('{{ workspace }} — {{ number }}'));
+  });
+
+  testWidgets('the PDF menu DOWNLOADS to the device — not only share '
+      '(#474)', (tester) async {
+    final saved = <({String name, Uint8List bytes})>[];
+    await pumpInvoices(
+      tester,
+      money: await seededMoney(),
+      saver: ({required bytes, required fileName}) async {
+        saved.add((name: fileName, bytes: bytes));
+        return 'Download/$fileName';
+      },
+    );
+
+    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
+    await tester.pump();
+    await tester.ensureVisible(
+        find.byKey(const ValueKey('invoice-template-pdf')));
+    await tester.tap(find.byKey(const ValueKey('invoice-template-pdf')));
+    await tester.pumpAndSettle();
+    await tester.runAsync(() async {
+      await tester
+          .tap(find.byKey(const ValueKey('invoice-template-download')));
+      await tester.pump();
+    });
+    await tester.pumpAndSettle();
+
+    expect(String.fromCharCodes(saved.single.bytes.sublist(0, 5)), '%PDF-');
+    expect(find.textContaining('Saved to'), findsOneWidget);
+  });
+
   testWidgets('END TO END: a custom banded template renders a real PDF '
       'through the download pipeline (#470)', (tester) async {
     final saved = <({String name, Uint8List bytes})>[];

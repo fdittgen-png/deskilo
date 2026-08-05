@@ -3554,6 +3554,90 @@ abstract class AppLocalizations {
   /// **'Reminder {level}'**
   String invoiceTemplateDocReminder(int level);
 
+  /// Report UX: presets, quick preview, download (#474)
+  ///
+  /// In en, this message translates to:
+  /// **'Quick preview — your newest invoice'**
+  String get reportPreviewTitle;
+
+  /// Report UX: presets, quick preview, download (#474)
+  ///
+  /// In en, this message translates to:
+  /// **'Quick preview — sample data'**
+  String get reportPreviewSimulated;
+
+  /// Report UX: presets, quick preview, download (#474)
+  ///
+  /// In en, this message translates to:
+  /// **'Classic'**
+  String get reportPresetClassic;
+
+  /// Report UX: presets, quick preview, download (#474)
+  ///
+  /// In en, this message translates to:
+  /// **'Compact'**
+  String get reportPresetCompact;
+
+  /// Report UX: presets, quick preview, download (#474)
+  ///
+  /// In en, this message translates to:
+  /// **'Formal letter'**
+  String get reportPresetFormalLetter;
+
+  /// Report UX: presets, quick preview, download (#474)
+  ///
+  /// In en, this message translates to:
+  /// **'Minimal'**
+  String get reportPresetMinimal;
+
+  /// Report UX: presets, quick preview, download (#474)
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get reportPresetStandard;
+
+  /// Report UX: presets, quick preview, download (#474)
+  ///
+  /// In en, this message translates to:
+  /// **'Short notice'**
+  String get reportPresetShort;
+
+  /// Report UX: presets, quick preview, download (#474)
+  ///
+  /// In en, this message translates to:
+  /// **'Subject'**
+  String get reportSubject;
+
+  /// Report UX: presets, quick preview, download (#474)
+  ///
+  /// In en, this message translates to:
+  /// **'Kind regards'**
+  String get reportRegards;
+
+  /// Report UX: presets, quick preview, download (#474)
+  ///
+  /// In en, this message translates to:
+  /// **'Templates'**
+  String get invoiceTemplatePresets;
+
+  /// Report UX: presets, quick preview, download (#474)
+  ///
+  /// In en, this message translates to:
+  /// **'Quick preview'**
+  String get invoiceTemplateQuickPreview;
+
+  /// Report UX: presets, quick preview, download (#474)
+  ///
+  /// In en, this message translates to:
+  /// **'Download PDF'**
+  String get invoiceTemplateDownload;
+
+  /// Report UX: presets, quick preview, download (#474)
+  ///
+  /// In en, this message translates to:
+  /// **'Share PDF'**
+  String get invoiceTemplateShare;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

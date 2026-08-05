@@ -1963,6 +1963,49 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get reportPreviewTitle =>
+      'Anteprima rapida — la tua fattura più recente';
+
+  @override
+  String get reportPreviewSimulated => 'Anteprima rapida — dati di esempio';
+
+  @override
+  String get reportPresetClassic => 'Classico';
+
+  @override
+  String get reportPresetCompact => 'Compatto';
+
+  @override
+  String get reportPresetFormalLetter => 'Lettera formale';
+
+  @override
+  String get reportPresetMinimal => 'Minimale';
+
+  @override
+  String get reportPresetStandard => 'Standard';
+
+  @override
+  String get reportPresetShort => 'Avviso breve';
+
+  @override
+  String get reportSubject => 'Oggetto';
+
+  @override
+  String get reportRegards => 'Cordiali saluti';
+
+  @override
+  String get invoiceTemplatePresets => 'Modelli';
+
+  @override
+  String get invoiceTemplateQuickPreview => 'Anteprima rapida';
+
+  @override
+  String get invoiceTemplateDownload => 'Scarica PDF';
+
+  @override
+  String get invoiceTemplateShare => 'Condividi PDF';
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override

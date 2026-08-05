@@ -404,5 +404,19 @@
   "dunningSaved": "Regole di sollecito salvate.",
   "dunningDueChip": "Sollecito {level} da inviare",
   "invoiceTemplateDocInvoice": "Fattura",
-  "invoiceTemplateDocReminder": "Sollecito {level}"
+  "invoiceTemplateDocReminder": "Sollecito {level}",
+  "reportPreviewTitle": "Anteprima rapida — la tua fattura più recente",
+  "reportPreviewSimulated": "Anteprima rapida — dati di esempio",
+  "reportPresetClassic": "Classico",
+  "reportPresetCompact": "Compatto",
+  "reportPresetFormalLetter": "Lettera formale",
+  "reportPresetMinimal": "Minimale",
+  "reportPresetStandard": "Standard",
+  "reportPresetShort": "Avviso breve",
+  "reportSubject": "Oggetto",
+  "reportRegards": "Cordiali saluti",
+  "invoiceTemplatePresets": "Modelli",
+  "invoiceTemplateQuickPreview": "Anteprima rapida",
+  "invoiceTemplateDownload": "Scarica PDF",
+  "invoiceTemplateShare": "Condividi PDF"
 }
