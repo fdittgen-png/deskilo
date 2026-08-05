@@ -1041,6 +1041,18 @@
   "paymentMethodWise": "Wise",
   "moneyPaymentDateLabel": "Data del pagamento",
   "moneyPaymentPeriodLabel": "Si applica a",
+  "moneySectionPay": "Pagare",
+  "@moneySectionPay": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "moneySectionRequests": "Richieste",
+  "@moneySectionRequests": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "moneySectionDocuments": "Documenti",
+  "@moneySectionDocuments": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
   "planNoLevels": "Lo spazio non ha ancora una piantina.",
   "planLevelLabel": "Piano",
   "planCheckInTitle": "Check-in",
@@ -1338,6 +1350,26 @@
   "workspaceDeskOpacityValue": "Opacità: {percent}%",
   "workspaceExcelExport": "Esporta i dati (Excel)",
   "workspaceExcelExportSubtitle": "Tutti i dati in una cartella: prenotazioni, pagamenti, fatture, membri e piantina — una scheda ciascuno.",
+  "workspaceLanguageLabel": "Lingua dello spazio",
+  "@workspaceLanguageLabel": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspaceLanguageHelper": "Gli inviti sono scritti per impostazione predefinita in questa lingua.",
+  "@workspaceLanguageHelper": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspaceLanguageUnset": "Lingua dell'app del mittente",
+  "@workspaceLanguageUnset": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspacePaymentsBillingTitle": "Pagamenti e fatturazione",
+  "@workspacePaymentsBillingTitle": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "paymentMethodsSubtitle": "IBAN, PayPal, Wero, Lydia, Wise e la causale di pagamento",
+  "@paymentMethodsSubtitle": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
   "workspaceXmlExport": "Esporta lo spazio (XML)",
   "workspaceXmlExportSubtitle": "Impostazioni e planimetria in un file condivisibile. Senza membri, prenotazioni o dati finanziari.",
   "workspaceXmlImport": "Importa lo spazio (XML)",

@@ -39,6 +39,7 @@ DesKilo has three additive roles, plus a device account:
 
 - **Member invite** — the workspace ID itself. Print it, pin it to the wall, share it freely: whoever scans or types it joins as a plain member.
 - **Admin invite** — a **personal, single-use code**, minted by an owner for one specific person. It admits that one person as an admin, then expires (unused codes lapse after 14 days). Mint a new one per admin with *New admin code*.
+- **Invitations speak the invitee's language** — the invite sheet writes the message in the language you pick (five available), defaulting to the **workspace language** set in *Workspace settings*. The owner can also customize the invitation text **per language** there; a language left empty uses the built-in translated message.
 
 **There is no owner invite — by design.** Ownership can only be granted by an existing owner, in *Members & plans*. A workspace always keeps at least one owner. Promoting or demoting an **admin** goes through the validation flow (§6) — it applies once the workspace's validators confirm.
 

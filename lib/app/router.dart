@@ -17,6 +17,7 @@ import '../features/money/presentation/screens/invoices_screen.dart';
 import '../features/money/presentation/screens/einvoice_config_screen.dart';
 import '../features/money/presentation/screens/invoice_register_screen.dart';
 import '../features/money/presentation/screens/legal_identity_screen.dart';
+import '../features/workspace/presentation/screens/payment_methods_screen.dart';
 import '../features/money/presentation/screens/vat_screen.dart';
 import '../features/money/presentation/screens/services_screen.dart';
 import '../features/plan/presentation/screens/accessories_screen.dart';
@@ -335,6 +336,16 @@ GoRouter router(Ref ref) {
               : '/money';
         },
         builder: (context, state) => const EInvoiceConfigScreen(),
+      ),
+      // The workspace's manual payment methods (#486) — owner-only.
+      GoRoute(
+        path: '/payment-methods',
+        redirect: (context, state) {
+          final isOwner =
+              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          return isOwner ? null : '/money';
+        },
+        builder: (context, state) => const PaymentMethodsScreen(),
       ),
       // The workspace's legal identity (0069) — owner-only, and only
       // where invoices exist at all.

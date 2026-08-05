@@ -89,5 +89,25 @@
   "workspaceDeskTransparencyHelper": "Riduci l'opacità dei tavoli per far trasparire la foto di sfondo del piano.",
   "workspaceDeskOpacityValue": "Opacità: {percent}%",
   "workspaceExcelExport": "Esporta i dati (Excel)",
-  "workspaceExcelExportSubtitle": "Tutti i dati in una cartella: prenotazioni, pagamenti, fatture, membri e piantina — una scheda ciascuno."
+  "workspaceExcelExportSubtitle": "Tutti i dati in una cartella: prenotazioni, pagamenti, fatture, membri e piantina — una scheda ciascuno.",
+  "workspaceLanguageLabel": "Lingua dello spazio",
+  "@workspaceLanguageLabel": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspaceLanguageHelper": "Gli inviti sono scritti per impostazione predefinita in questa lingua.",
+  "@workspaceLanguageHelper": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspaceLanguageUnset": "Lingua dell'app del mittente",
+  "@workspaceLanguageUnset": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspacePaymentsBillingTitle": "Pagamenti e fatturazione",
+  "@workspacePaymentsBillingTitle": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "paymentMethodsSubtitle": "IBAN, PayPal, Wero, Lydia, Wise e la causale di pagamento",
+  "@paymentMethodsSubtitle": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  }
 }

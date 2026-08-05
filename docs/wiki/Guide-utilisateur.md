@@ -39,6 +39,7 @@ DesKilo a trois rôles cumulatifs, plus un compte « appareil » :
 
 - **Invitation membre** — l'identifiant de l'espace lui-même. Imprimez-le, affichez-le au mur, partagez-le librement : quiconque le scanne ou le saisit rejoint comme simple membre.
 - **Invitation admin** — un **code personnel à usage unique**, émis par un propriétaire pour une personne précise. Il admet cette seule personne comme admin, puis expire (un code inutilisé périme après 14 jours). Émettez-en un nouveau par admin avec *Nouveau code admin*.
+- **Les invitations parlent la langue de l'invité** — la feuille d'invitation rédige le message dans la langue choisie (cinq disponibles), par défaut la **langue de l'espace** définie dans les *Réglages de l'espace*. Le propriétaire peut aussi personnaliser le texte d'invitation **par langue** ; une langue laissée vide utilise le message intégré traduit.
 
 **Il n'existe pas d'invitation propriétaire — c'est voulu.** La propriété ne peut être accordée que par un propriétaire existant, dans *Membres & forfaits*. Un espace garde toujours au moins un propriétaire. Promouvoir ou rétrograder un **admin** passe par le flux de validation (§6) — le changement s'applique une fois confirmé par les validateurs de l'espace.
 

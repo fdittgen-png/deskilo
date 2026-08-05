@@ -239,5 +239,17 @@
   "moneyPaymentPeriodLabel": "Applies to",
   "@moneyPaymentPeriodLabel": {
     "description": "Payment sheet: the month the payment settles — decides which bill and invoice it lands on"
+  },
+  "moneySectionPay": "Pay",
+  "@moneySectionPay": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "moneySectionRequests": "Requests",
+  "@moneySectionRequests": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "moneySectionDocuments": "Documents",
+  "@moneySectionDocuments": {
+    "description": "Finance/settings UX + workspace language (#486)"
   }
 }

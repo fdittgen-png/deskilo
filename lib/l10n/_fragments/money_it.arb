@@ -52,5 +52,17 @@
   "paymentMethodLydia": "Lydia",
   "paymentMethodWise": "Wise",
   "moneyPaymentDateLabel": "Data del pagamento",
-  "moneyPaymentPeriodLabel": "Si applica a"
+  "moneyPaymentPeriodLabel": "Si applica a",
+  "moneySectionPay": "Pagare",
+  "@moneySectionPay": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "moneySectionRequests": "Richieste",
+  "@moneySectionRequests": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "moneySectionDocuments": "Documenti",
+  "@moneySectionDocuments": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  }
 }

@@ -45,7 +45,15 @@ String buildInvitationMessage({
   final link = InviteUriCodec.encode(code: code, role: role);
   final shownCode = monospaceCode ? '```$code```' : code;
   final l10n = lookupAppLocalizations(Locale(languageCode));
-  if (workspace.invitationTemplate.trim().isEmpty) {
+  // #486 — the chosen language's own template wins; the legacy single
+  // template is the fallback for every language; else the built-in.
+  final perLocale =
+      ((workspace.invitationTemplates[languageCode] as String?) ?? '')
+          .trim();
+  final template = perLocale.isNotEmpty
+      ? perLocale
+      : workspace.invitationTemplate.trim();
+  if (template.isEmpty) {
     return l10n.invitationDefaultTemplate(
       firstName.isEmpty ? '' : ' $firstName',
       workspace.name,
@@ -54,7 +62,7 @@ String buildInvitationMessage({
       link,
     );
   }
-  return fillInvitationTemplate(workspace.invitationTemplate, {
+  return fillInvitationTemplate(template, {
     'firstName': firstName,
     'lastName': lastName,
     'phone': phone,
@@ -99,7 +107,19 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
   final _firstName = TextEditingController();
   final _lastName = TextEditingController();
   final _phone = TextEditingController();
+
+  /// #486 — the WORKSPACE's configured language is the default; the
+  /// sender still overrides per send. Null = not yet touched → resolved
+  /// at build (workspace language, else the app's).
   String? _language;
+
+  /// #486 — the workspace's configured language when set (and known),
+  /// else the sender's app language.
+  String _defaultLanguage(BuildContext context) {
+    final configured = widget.workspace.defaultLocale;
+    if (_inviteLanguages.containsKey(configured)) return configured;
+    return Localizations.localeOf(context).languageCode;
+  }
 
   @override
   void dispose() {
@@ -140,7 +160,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
       code: code!,
       role: widget.role,
       languageCode:
-          _language ?? Localizations.localeOf(context).languageCode,
+          _language ?? _defaultLanguage(context),
       firstName: _firstName.text.trim(),
       lastName: _lastName.text.trim(),
       phone: _phone.text.trim(),
@@ -206,7 +226,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final selected =
-        _language ?? Localizations.localeOf(context).languageCode;
+        _language ?? _defaultLanguage(context);
     return SheetShell(
       title: l10n?.inviteSectionTitle ?? 'Invite someone',
       children: [

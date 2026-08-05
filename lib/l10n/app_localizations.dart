@@ -4730,6 +4730,24 @@ abstract class AppLocalizations {
   /// **'Applies to'**
   String get moneyPaymentPeriodLabel;
 
+  /// Finance/settings UX + workspace language (#486)
+  ///
+  /// In en, this message translates to:
+  /// **'Pay'**
+  String get moneySectionPay;
+
+  /// Finance/settings UX + workspace language (#486)
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get moneySectionRequests;
+
+  /// Finance/settings UX + workspace language (#486)
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get moneySectionDocuments;
+
   /// Empty state of the Plan tab before the owner drew levels
   ///
   /// In en, this message translates to:
@@ -6511,6 +6529,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Every dataset in one workbook: bookings, payments, invoices, members and the floor plan — a tab each.'**
   String get workspaceExcelExportSubtitle;
+
+  /// Finance/settings UX + workspace language (#486)
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace language'**
+  String get workspaceLanguageLabel;
+
+  /// Finance/settings UX + workspace language (#486)
+  ///
+  /// In en, this message translates to:
+  /// **'Invitations are written in this language by default.'**
+  String get workspaceLanguageHelper;
+
+  /// Finance/settings UX + workspace language (#486)
+  ///
+  /// In en, this message translates to:
+  /// **'Sender\'s app language'**
+  String get workspaceLanguageUnset;
+
+  /// Finance/settings UX + workspace language (#486)
+  ///
+  /// In en, this message translates to:
+  /// **'Payments & billing'**
+  String get workspacePaymentsBillingTitle;
+
+  /// Finance/settings UX + workspace language (#486)
+  ///
+  /// In en, this message translates to:
+  /// **'IBAN, PayPal, Wero, Lydia, Wise and the payment reference'**
+  String get paymentMethodsSubtitle;
 
   /// Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)
   ///

@@ -95,6 +95,14 @@ sealed class Workspace with _$Workspace {
     /// payment terms, penalty/indemnity/escompte clauses, insurance and
     /// special mentions. Raw jsonb; typed access via InvoiceLegal.
     @Default(<String, dynamic>{}) Map<String, dynamic> invoiceLegal,
+
+    /// The workspace's own language (0096, e.g. 'fr'); '' = unset →
+    /// the sender's app language. Invitations default to it.
+    @Default('') String defaultLocale,
+
+    /// Per-locale CUSTOM invitation templates (0096): language code →
+    /// template. Absent key → legacy [invitationTemplate] → built-in.
+    @Default(<String, dynamic>{}) Map<String, dynamic> invitationTemplates,
   }) = _Workspace;
 
   /// Desk fill opacity as a 0..1 fraction for the painter.

@@ -24,7 +24,8 @@ import 'package:flutter_test/flutter_test.dart';
 ///  2. A widget test for the hidden entry and the bounced deep link
 ///     (see test/features/profile/settings_sections_test.dart).
 ///  3. The Features screen itself stays ungated — always reachable.
-const int _expectedRouteCount = 35;
+// 35→36 (2026-08-05): #486 /payment-methods (owner-gated redirect).
+const int _expectedRouteCount = 36;
 
 void main() {
   test('router carries exactly $_expectedRouteCount GoRoutes', () {

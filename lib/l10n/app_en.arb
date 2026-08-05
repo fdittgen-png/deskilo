@@ -3289,6 +3289,18 @@
   "@moneyPaymentPeriodLabel": {
     "description": "Payment sheet: the month the payment settles — decides which bill and invoice it lands on"
   },
+  "moneySectionPay": "Pay",
+  "@moneySectionPay": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "moneySectionRequests": "Requests",
+  "@moneySectionRequests": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "moneySectionDocuments": "Documents",
+  "@moneySectionDocuments": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
   "planNoLevels": "The workspace has no floor plan yet.",
   "@planNoLevels": {
     "description": "Empty state of the Plan tab before the owner drew levels"
@@ -4552,6 +4564,26 @@
   "workspaceExcelExportSubtitle": "Every dataset in one workbook: bookings, payments, invoices, members and the floor plan — a tab each.",
   "@workspaceExcelExportSubtitle": {
     "description": "Subtitle under the Excel export tile (#395)."
+  },
+  "workspaceLanguageLabel": "Workspace language",
+  "@workspaceLanguageLabel": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspaceLanguageHelper": "Invitations are written in this language by default.",
+  "@workspaceLanguageHelper": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspaceLanguageUnset": "Sender's app language",
+  "@workspaceLanguageUnset": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspacePaymentsBillingTitle": "Payments & billing",
+  "@workspacePaymentsBillingTitle": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "paymentMethodsSubtitle": "IBAN, PayPal, Wero, Lydia, Wise and the payment reference",
+  "@paymentMethodsSubtitle": {
+    "description": "Finance/settings UX + workspace language (#486)"
   },
   "workspaceXmlExport": "Export workspace (XML)",
   "@workspaceXmlExport": {

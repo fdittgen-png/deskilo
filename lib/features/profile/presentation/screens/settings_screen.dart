@@ -424,6 +424,16 @@ class SettingsScreen extends ConsumerWidget {
                   l10n?.settingsBillingReports ?? 'Billing & reports'),
               onTap: () => context.push('/invoices'),
             ),
+          // #486 — the manual payment methods members see on an unpaid
+          // statement, beside the online-payment providers.
+          if (isOwner)
+            ListTile(
+              key: const ValueKey('settings-payment-methods'),
+              leading: const Icon(Icons.account_balance_wallet_outlined),
+              title: Text(l10n?.paymentInstructionsTitle ??
+                  'Payment instructions'),
+              onTap: () => context.push('/payment-methods'),
+            ),
           if (isOwner && features.contains(WorkspaceFeature.onlinePayments))
             ListTile(
               leading: const Icon(Icons.credit_card_outlined),

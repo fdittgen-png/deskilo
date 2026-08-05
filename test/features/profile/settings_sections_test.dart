@@ -21,7 +21,8 @@ Future<void> pumpSettingsAs(
   // The sectioned list no longer fits the default 800×600 lazy-list
   // viewport; a taller view keeps every tile and header built.
   // 1600→1700 (#478): the Billing & reports admin entry added a row.
-  tester.view.physicalSize = const Size(800, 1700);
+  // 1700→1800 (#486): the Payment instructions admin entry added one.
+  tester.view.physicalSize = const Size(800, 1800);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final workspace = FakeWorkspaceRepository.withWorkspace(
