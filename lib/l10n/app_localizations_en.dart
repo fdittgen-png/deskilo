@@ -2192,6 +2192,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Everything about the space — through the report editor\'s workspace template';
 
   @override
+  String get reportTemplateLangDefault => 'Default (all languages)';
+
+  @override
+  String get reportLanguageAmbiguous =>
+      'This country has several languages — set the workspace language in Workspace settings first.';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

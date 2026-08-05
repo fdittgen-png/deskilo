@@ -4022,6 +4022,18 @@ abstract class AppLocalizations {
   /// **'Everything about the space — through the report editor\'s workspace template'**
   String get reportDocWorkspaceSubtitle;
 
+  /// Report language resolution + per-language templates (#496)
+  ///
+  /// In en, this message translates to:
+  /// **'Default (all languages)'**
+  String get reportTemplateLangDefault;
+
+  /// Report language resolution + per-language templates (#496)
+  ///
+  /// In en, this message translates to:
+  /// **'This country has several languages — set the workspace language in Workspace settings first.'**
+  String get reportLanguageAmbiguous;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

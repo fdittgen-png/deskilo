@@ -149,7 +149,10 @@ void main() {
     // reminder was recorded.
     expect(String.fromCharCodes(shared.single.bytes.sublist(0, 5)),
         '%PDF-');
-    expect(shared.single.name, contains('payment-reminder'));
+    // #496 — the fixture workspace is German (country DE, no locale
+    // configured): the letter resolves to German and says so in its
+    // very filename.
+    expect(shared.single.name, contains('zahlungserinnerung'));
     expect(money.invoiceReminders[invoice.id], hasLength(1));
     expect(find.text('Reminder recorded.'), findsOneWidget);
   });

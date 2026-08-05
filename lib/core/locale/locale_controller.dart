@@ -3,6 +3,8 @@ import 'dart:ui';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../storage/prefs_stores.dart';
+import '../../features/profile/providers/profile_providers.dart';
+import '../trace/trace_logger.dart';
 
 part 'locale_controller.g.dart';
 
@@ -37,5 +39,18 @@ class LocaleController extends _$LocaleController {
   Future<void> set(Locale? locale) async {
     state = AsyncData(locale);
     await ref.read(localeStoreProvider).write(locale?.languageCode);
+    // #496 — the pick also becomes the member's DOCUMENT language,
+    // server-side, so reports for them print in it. Best effort:
+    // offline or signed out must not break the local switch.
+    try {
+      await ref
+          .read(profileRepositoryProvider)
+          .setPreferredLocale(locale?.languageCode ?? '');
+      ref.invalidate(myProfileProvider);
+    } catch (e, st) {
+      TraceLogger.instance.warn(
+          'profile', 'preferred locale save failed',
+          error: e, stackTrace: st);
+    }
   }
 }

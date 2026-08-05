@@ -1051,6 +1051,14 @@
   "@reportDocWorkspaceSubtitle": {
     "description": "Report suite: agreement/payments/workspace docs (#494)"
   },
+  "reportTemplateLangDefault": "Standard (alle Sprachen)",
+  "@reportTemplateLangDefault": {
+    "description": "Report language resolution + per-language templates (#496)"
+  },
+  "reportLanguageAmbiguous": "Dieses Land hat mehrere Sprachen — legen Sie zuerst die Arbeitsbereichssprache in den Einstellungen fest.",
+  "@reportLanguageAmbiguous": {
+    "description": "Report language resolution + per-language templates (#496)"
+  },
   "eventTypeMemberJoin": "Neues Mitglied",
   "memberStatusPending": "Ausstehend",
   "pendingApprovalTitle": "Warten auf Freigabe",

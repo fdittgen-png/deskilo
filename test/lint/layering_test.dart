@@ -52,6 +52,10 @@ const Set<String> _knownPairs = {
   'members -> workspace',
   'money -> events',
   'money -> members',
+  // #496 — the agreement/reminder letters resolve the reader's language
+  // from their profile.
+  'money -> profile',
+  'workspace -> members',
   // #494 — the financial agreement prices whole-space bookings and
   // accessory supplements straight from the plan catalog.
   'money -> plan',

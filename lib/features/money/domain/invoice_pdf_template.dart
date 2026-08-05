@@ -50,6 +50,7 @@ class InvoicePdfTemplate {
     this.proforma = ReportBands.empty,
     this.statement = ReportBands.empty,
     this.extraDocs = const {},
+    this.translations = const {},
   });
 
   factory InvoicePdfTemplate.fromJson(Map<String, dynamic> json) =>
@@ -77,6 +78,13 @@ class InvoicePdfTemplate {
               in (json[keyDocs] as Map? ?? const {}).entries)
             if (entry.value is Map)
               entry.key as String: ReportBands.fromJson(
+                  (entry.value as Map).cast<String, dynamic>()),
+        },
+        translations: {
+          for (final entry
+              in (json[keyI18n] as Map? ?? const {}).entries)
+            if (entry.value is Map)
+              entry.key as String: InvoicePdfTemplate.fromJson(
                   (entry.value as Map).cast<String, dynamic>()),
         },
       );
@@ -108,6 +116,11 @@ class InvoicePdfTemplate {
   /// (the workspace report) — extensible without another schema step.
   final Map<String, ReportBands> extraDocs;
 
+  /// Per-LANGUAGE template overlays (#496): language code → a template
+  /// whose non-empty documents replace the base's when a document is
+  /// rendered in that language. One level deep by design.
+  final Map<String, InvoicePdfTemplate> translations;
+
   static const String keyHeader = 'header';
   static const String keyBody = 'body';
   static const String keyFooter = 'footer';
@@ -115,6 +128,7 @@ class InvoicePdfTemplate {
   static const String keyProforma = 'proforma';
   static const String keyStatement = 'statement';
   static const String keyDocs = 'docs';
+  static const String keyI18n = 'i18n';
 
   /// Pre-#470 key: a single intro paragraph — now the header band.
   static const String legacyKeyIntro = 'intro';
@@ -197,7 +211,54 @@ class InvoicePdfTemplate {
         proforma: proforma,
         statement: statement,
         extraDocs: {...extraDocs, docId: bands},
+        translations: translations,
       );
+
+  /// Copy with language [lang]'s overlay replaced (#496).
+  InvoicePdfTemplate withTranslation(
+          String lang, InvoicePdfTemplate overlay) =>
+      InvoicePdfTemplate(
+        header: header,
+        body: body,
+        footer: footer,
+        reminders: reminders,
+        proforma: proforma,
+        statement: statement,
+        extraDocs: extraDocs,
+        translations: {...translations, lang: overlay},
+      );
+
+  /// The template as seen from language [lang] (#496): a MERGED view —
+  /// every document the overlay defines wins, everything else falls
+  /// back to the base template. '' or an unknown language returns the
+  /// base unchanged.
+  InvoicePdfTemplate forLocale(String lang) {
+    final overlay = translations[lang];
+    if (overlay == null) return this;
+    final levels = overlay.reminders.length > reminders.length
+        ? overlay.reminders.length
+        : reminders.length;
+    return InvoicePdfTemplate(
+      header: overlay.hasBands ? overlay.header : header,
+      body: overlay.hasBands ? overlay.body : body,
+      footer: overlay.hasBands ? overlay.footer : footer,
+      reminders: [
+        for (var level = 1; level <= levels; level++)
+          overlay.reminderBands(level) ??
+              (level <= reminders.length
+                  ? reminders[level - 1]
+                  : ReportBands.empty),
+      ],
+      proforma: overlay.proforma.hasBands ? overlay.proforma : proforma,
+      statement:
+          overlay.statement.hasBands ? overlay.statement : statement,
+      extraDocs: {
+        ...extraDocs,
+        for (final entry in overlay.extraDocs.entries)
+          if (entry.value.hasBands) entry.key: entry.value,
+      },
+    );
+  }
 
   /// The stored bands of reminder [level] (1-based), or null when the
   /// owner never customized that level.
@@ -223,6 +284,7 @@ class InvoicePdfTemplate {
       proforma: proforma,
       statement: statement,
       extraDocs: extraDocs,
+      translations: translations,
     );
   }
 
@@ -239,6 +301,7 @@ class InvoicePdfTemplate {
         proforma: proforma ?? this.proforma,
         statement: statement ?? this.statement,
         extraDocs: extraDocs,
+        translations: translations,
       );
 
   Map<String, Object> toJson() => {
@@ -252,5 +315,10 @@ class InvoicePdfTemplate {
           for (final entry in extraDocs.entries)
             entry.key: entry.value.toJson(),
         },
+        if (translations.isNotEmpty)
+          keyI18n: {
+            for (final entry in translations.entries)
+              entry.key: entry.value.toJson(),
+          },
       };
 }

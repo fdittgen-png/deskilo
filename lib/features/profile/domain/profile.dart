@@ -23,6 +23,7 @@ class Profile {
     this.vatId = '',
     this.lastSeenAt,
     this.avatarPath,
+    this.preferredLocale = '',
   });
 
   /// auth.users id (uuid).
@@ -58,6 +59,10 @@ class Profile {
   /// (`<user_id>/avatar`, 0038); null = no photo, the initial avatar shows.
   final String? avatarPath;
 
+  /// The member's preferred DOCUMENT language (0098, #496): reports and
+  /// letters print in it; '' = unset → the workspace language chain.
+  final String preferredLocale;
+
   bool get hasAvatar => avatarPath != null && avatarPath!.isNotEmpty;
 
   bool get sharesWhatsapp => whatsapp.isNotEmpty;
@@ -82,6 +87,7 @@ class Profile {
             ? null
             : DateTime.parse(db['last_seen_at'] as String).toUtc(),
         avatarPath: db['avatar_path'] as String?,
+        preferredLocale: db['preferred_locale'] as String? ?? '',
       );
 
   Map<String, dynamic> toDb() => {

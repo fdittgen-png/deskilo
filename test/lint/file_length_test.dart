@@ -47,11 +47,13 @@ const Map<String, int> _baseline = {
   // 1030→1070 (2026-08-05): #486 grouped Pay/Requests/Documents actions
   // + the landscape balance card.
   // 1070→1180 (2026-08-05): #494 the self-service document sheet.
-  'lib/features/money/presentation/screens/money_screen.dart': 1180,
+  // 1180→1210 (2026-08-05): #496 the member-language chain on self-service docs.
+  'lib/features/money/presentation/screens/money_screen.dart': 1210,
   // 910→950 (2026-08-04): #456 note tile + admin broadcast button —
   // the dialog itself is its own file.
   // 950→990 (2026-08-05): #494 send-the-agreement action.
-  'lib/features/workspace/presentation/screens/members_screen.dart': 990,
+  // 990→1020 (2026-08-05): #496 the member-language agreement send.
+  'lib/features/workspace/presentation/screens/members_screen.dart': 1020,
   // 900→920 (2026-08-03): #410 admin-visible email line on the member
   // row — the row shares its chip helpers with the detail sheet, so
   // extracting it would drag half the file; 15 feature lines instead.
@@ -74,16 +76,20 @@ const Map<String, int> _baseline = {
   // every PDF path.
   // 1320→1680 (2026-08-05): #494 the agreement/payments/workspace data
   // models + the letter-doc warm/render/pdf helpers.
-  'lib/features/money/presentation/invoice_actions.dart': 1680,
+  // 1680→1740 (2026-08-05): #496 the language-resolution helpers threaded through the builders.
+  'lib/features/money/presentation/invoice_actions.dart': 1740,
   // 1370→1410 (2026-08-05): #494 the engine-based workspace report tile.
-  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1410,
+  // 1410→1440 (2026-08-05): #496 the language chain on the workspace report.
+  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1440,
   // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
   'lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart': 640,
   // 600→660 (2026-08-05): #488 the editor's mode toggle + image insert
   // flow; the visual editor itself is its own file.
   // 660→700 (2026-08-05): #494 the three further document chips + their
   // live data and letter-PDF branches.
-  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 700,
+  // 700→800 (2026-08-05): #496 the template-language chips + per-language
+  // overlay assembly.
+  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 800,
   'lib/features/workspace/domain/workspace_xml.dart': 800,
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.

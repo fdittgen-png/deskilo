@@ -93,6 +93,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('report-quick-preview')),
         findsOneWidget);
-    expect(find.textContaining('Financial agreement'), findsWidgets);
+    // #496 — the DE fixture workspace resolves the document language to
+    // German: the member's self-service agreement is a Finanzvereinbarung.
+    expect(find.textContaining('Finanzvereinbarung'), findsWidgets);
   });
 }

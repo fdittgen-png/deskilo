@@ -63,6 +63,8 @@ import '../domain/fee_band.dart';
 import '../../plan/domain/office.dart';
 import '../../plan/domain/level.dart';
 import '../../plan/domain/floor_plan.dart';
+import '../../workspace/domain/member.dart';
+import '../../../core/locale/report_language.dart';
 
 /// Everything an issued invoice can be PUT THROUGH, extracted out of the
 /// screen (0069): the archive rows, the open cards and the detail sheet all
@@ -345,8 +347,10 @@ Map<String, Object?> agreementReportData(
   WidgetRef ref, {
   required String memberName,
   required int subscriptionPct,
+  AppLocalizations? l10nOverride,
+  String? localeName,
 }) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = l10nOverride ?? AppLocalizations.of(context);
   final workspace = ref.read(currentWorkspaceProvider).value;
   final currency =
       NumberFormat.simpleCurrency(name: workspace?.currencyCode ?? 'EUR');
@@ -415,7 +419,7 @@ Map<String, Object?> agreementReportData(
     'number': '',
     'period': '',
     'issued': DateFormat.yMMMd(
-      Localizations.maybeLocaleOf(context)?.toString(),
+      localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
     ).format(ref.read(clockProvider).now()),
     'issued_by': workspace?.name ?? '',
     'replaces': '',
@@ -442,15 +446,17 @@ Map<String, Object?> paymentsReportData(
   WidgetRef ref, {
   required String period,
   required String memberName,
+  AppLocalizations? l10nOverride,
+  String? localeName,
 }) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = l10nOverride ?? AppLocalizations.of(context);
   final workspace = ref.read(currentWorkspaceProvider).value;
   final me = ref.read(myMemberProvider).value;
   final currency =
       NumberFormat.simpleCurrency(name: workspace?.currencyCode ?? 'EUR');
   String money(int cents) => currency.format(cents / 100);
   final dateFormat = DateFormat.yMMMd(
-    Localizations.maybeLocaleOf(context)?.toString(),
+    localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
   );
   final ledger = (ref.read(myLedgerProvider).value ?? const <LedgerEntry>[])
       .where((entry) =>
@@ -513,8 +519,13 @@ Map<String, Object?> paymentsReportData(
 
 /// The WORKSPACE REPORT data model (#494): everything about the space —
 /// identity, floor-plan counts, availability, features, prices.
-Map<String, Object?> workspaceReportData(BuildContext context, WidgetRef ref) {
-  final l10n = AppLocalizations.of(context);
+Map<String, Object?> workspaceReportData(
+  BuildContext context,
+  WidgetRef ref, {
+  AppLocalizations? l10nOverride,
+  String? localeName,
+}) {
+  final l10n = l10nOverride ?? AppLocalizations.of(context);
   final workspace = ref.read(currentWorkspaceProvider).value;
   final currency =
       NumberFormat.simpleCurrency(name: workspace?.currencyCode ?? 'EUR');
@@ -533,7 +544,7 @@ Map<String, Object?> workspaceReportData(BuildContext context, WidgetRef ref) {
   String clock(int minutes) =>
       '${(minutes ~/ 60).toString().padLeft(2, '0')}:${(minutes % 60).toString().padLeft(2, '0')}';
   final dayNames = DateFormat.E(
-    Localizations.maybeLocaleOf(context)?.toString(),
+    localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
   );
   final monday = DateTime(2024, 1, 1); // a Monday — weekday names only.
   return <String, Object?>{
@@ -543,7 +554,7 @@ Map<String, Object?> workspaceReportData(BuildContext context, WidgetRef ref) {
     'number': '',
     'period': '',
     'issued': DateFormat.yMMMd(
-      Localizations.maybeLocaleOf(context)?.toString(),
+      localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
     ).format(ref.read(clockProvider).now()),
     'issued_by': workspace?.name ?? '',
     'replaces': '',
@@ -589,6 +600,27 @@ Map<String, Object?> workspaceReportData(BuildContext context, WidgetRef ref) {
     'vat': const <Map<String, Object?>>[],
     ...legalMentionData(l10n, workspace),
   };
+}
+
+/// The l10n bundle of a target DOCUMENT language (#496) — what a
+/// letter renders with when its reader's language differs from the UI.
+AppLocalizations l10nForLanguage(String language) =>
+    lookupAppLocalizations(Locale(language));
+
+/// Resolves a document's language for a reader (#496): member's
+/// preferred → workspace language → country language; throws
+/// [AmbiguousReportLanguage] for a multi-language country with nothing
+/// configured.
+String resolveMemberReportLanguage(
+  WidgetRef ref, {
+  String memberLocale = '',
+}) {
+  final workspace = ref.read(currentWorkspaceProvider).value;
+  return resolveReportLanguage(
+    memberLocale: memberLocale,
+    workspaceLocale: workspace?.defaultLocale ?? '',
+    countryCode: workspace?.countryCode ?? '',
+  );
 }
 
 /// Warms every provider the #494 letter-document builders read, so the
@@ -641,9 +673,15 @@ InvoiceReport renderLetterDoc(
   WidgetRef ref, {
   required String docId,
   required Map<String, Object?> data,
+  // #496 — the TARGET language; '' renders in the UI language.
+  String language = '',
 }) {
-  final l10n = AppLocalizations.of(context);
-  final bands = invoicePdfTemplateFor(ref).docBands(docId) ??
+  final l10n = language.isEmpty
+      ? AppLocalizations.of(context)
+      : l10nForLanguage(language);
+  final bands = invoicePdfTemplateFor(ref)
+          .forLocale(language)
+          .docBands(docId) ??
       defaultBandsForDoc(docId, l10n);
   return renderReportBands(bands: bands, data: data) ??
       renderReportBands(
@@ -684,13 +722,15 @@ Map<String, Object?> reminderReportData(
   WidgetRef ref,
   Invoice invoice, {
   required int level,
+  AppLocalizations? l10nOverride,
+  String? localeName,
 }) {
   final currency = NumberFormat.simpleCurrency(name: invoice.currency);
   final dateFormat = DateFormat.yMMMd(
-    Localizations.maybeLocaleOf(context)?.toString(),
+    localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
   );
   final now = ref.read(clockProvider).now();
-  final l10n = AppLocalizations.of(context);
+  final l10n = l10nOverride ?? AppLocalizations.of(context);
   final workspace = ref.read(currentWorkspaceProvider).value;
   return <String, Object?>{
     'workspace': invoice.workspaceName,
@@ -1285,13 +1325,36 @@ Future<({List<int> bytes, String fileName, String title})>
   required int level,
   ReportBands? draftBands,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  // #496 — the reminder letter prints in the MEMBER's language (their
+  // preference → workspace language → country language).
+  var language = '';
+  try {
+    final members =
+        ref.read(workspaceMembersProvider).value ?? const <Member>[];
+    final userId = members
+        .where((m) => m.id == invoice.memberId)
+        .firstOrNull
+        ?.userId;
+    final profile = userId == null
+        ? null
+        : ref.read(memberProfilesProvider).value?[userId];
+    language = resolveMemberReportLanguage(ref,
+        memberLocale: profile?.preferredLocale ?? '');
+  } on AmbiguousReportLanguage {
+    language = '';
+  }
+  final l10n = language.isEmpty
+      ? AppLocalizations.of(context)
+      : l10nForLanguage(language);
   final title = level <= 1
       ? (l10n?.reminderPdfTitleFriendly ?? 'Payment reminder')
       : '${l10n?.reminderPdfTitleFirm ?? 'Reminder'} $level';
-  final data = reminderReportData(context, ref, invoice, level: level);
+  final data = reminderReportData(context, ref, invoice,
+      level: level,
+      l10nOverride: l10n,
+      localeName: language.isEmpty ? null : language);
   final bands = draftBands ??
-      invoicePdfTemplateFor(ref).reminderBands(level);
+      invoicePdfTemplateFor(ref).forLocale(language).reminderBands(level);
   final fallback = defaultReminderBands(level, l10n);
   final report = (bands == null
           ? null

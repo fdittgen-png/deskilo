@@ -22,6 +22,8 @@ import '../widgets/badge_manager_dialog.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../../core/share/file_sharer.dart';
 import '../../../money/presentation/invoice_actions.dart';
+import '../../../members/providers/directory_providers.dart';
+import '../../../../core/locale/report_language.dart';
 
 /// Owner-only member management: role overview, subscription percentage
 /// assignment (#128, ADR 0008), pause/reactivate (spec §7.2).
@@ -195,14 +197,33 @@ class MembersScreen extends ConsumerWidget {
       action: () async {
         await warmLetterDocProviders(ref, 'agreement');
         if (!context.mounted) return;
+        // #496 — the agreement prints in the MEMBER's language.
+        final profile =
+            ref.read(memberProfilesProvider).value?[member.userId];
+        final String language;
+        try {
+          language = resolveMemberReportLanguage(ref,
+              memberLocale: profile?.preferredLocale ?? '');
+        } on AmbiguousReportLanguage {
+          AppSnack.error(
+            context,
+            l10n?.reportLanguageAmbiguous ??
+                'This country has several languages — set the '
+                    'workspace language in Workspace settings first.',
+          );
+          return;
+        }
+        final docL10n = l10nForLanguage(language);
         final data = agreementReportData(context, ref,
-            memberName: name, subscriptionPct: member.subscriptionPct);
+            memberName: name,
+            subscriptionPct: member.subscriptionPct,
+            l10nOverride: docL10n,
+            localeName: language);
         final report = renderLetterDoc(context, ref,
-            docId: 'agreement', data: data);
+            docId: 'agreement', data: data, language: language);
         final pdf = await letterDocPdf(context, ref,
             report: report,
-            title:
-                '${l10n?.reportDocAgreement ?? 'Financial agreement'} $name');
+            title: '${docL10n.reportDocAgreement} $name');
         await ref.read(fileSharerProvider)(
           bytes: pdf.bytes,
           fileName: pdf.fileName,
