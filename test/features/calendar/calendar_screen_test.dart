@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ Reservation todayReservation({
   int startHour = 9,
 }) {
   final start =
-      DateTime(kTestNow.year, kTestNow.month, kTestNow.day, startHour);
+      WorkspaceTime.at(kTestNow.year, kTestNow.month, kTestNow.day, startHour);
   return Reservation(
     id: id,
     workspaceId: 'ws-1',
@@ -58,6 +59,10 @@ Future<FakeReservationRepository> pumpCalendar(
 }
 
 void main() {
+  // #490 — the fixture workspace is Europe/Berlin; anchor the SEEDS to
+  // it too, so the suite passes on any device timezone.
+  setUpAll(() => WorkspaceTime.install('Europe/Berlin'));
+  tearDownAll(WorkspaceTime.reset);
   testWidgets(
       'landscape splits the month + controls into a side panel (no overflow)',
       (tester) async {
@@ -150,9 +155,9 @@ void main() {
       todayReservation(id: 'res-a', seriesId: 'series-1'),
       todayReservation(id: 'res-b', seriesId: 'series-1')
           .copyWith(
-        startsAt: DateTime(now.year, now.month, now.day, 9)
+        startsAt: WorkspaceTime.at(now.year, now.month, now.day, 9)
             .add(const Duration(days: 7)),
-        endsAt: DateTime(now.year, now.month, now.day, 11)
+        endsAt: WorkspaceTime.at(now.year, now.month, now.day, 11)
             .add(const Duration(days: 7)),
       ),
     ];

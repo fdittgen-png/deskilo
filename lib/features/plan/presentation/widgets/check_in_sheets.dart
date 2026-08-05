@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../domain/seat.dart';
+import '../../../../core/time/workspace_time.dart';
 
 /// The check-in bottom sheets of the live plan, extracted from
 /// PlanScreen (#408 grew it past its length budget). Pure UI — the
@@ -22,8 +23,9 @@ Future<String?> showMySeatSheet(
   required DateTime now,
 }) {
   final l10n = AppLocalizations.of(context);
-  final opensAt = DateFormat.Hm()
-      .format(mine.startsAt.subtract(Reservation.checkInLeeway).toLocal());
+  // #490 — the window opens on the WORKSPACE clock.
+  final opensAt = DateFormat.Hm().format(WorkspaceTime.wall(
+      mine.startsAt.subtract(Reservation.checkInLeeway)));
   return showModalBottomSheet<String>(
     context: context,
     builder: (context) => SafeArea(

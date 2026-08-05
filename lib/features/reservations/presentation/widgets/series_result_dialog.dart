@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/reservation_repository.dart';
+import '../../../../core/time/workspace_time.dart';
 
 /// Outcome of a series booking (spec §5.2): how many instances landed and
 /// which dates were skipped (already taken / closed / blocked / over
@@ -31,7 +32,7 @@ Future<void> showSeriesResultDialog(
                 Text(l10n?.seriesSkippedTitle ?? 'Skipped (already taken):'),
                 const SizedBox(height: 8),
                 for (final d in result.skipped)
-                  Text(dateFormat.format(d.toLocal())),
+                  Text(dateFormat.format(WorkspaceTime.dateOf(d))),
               ],
             ),
       actions: [

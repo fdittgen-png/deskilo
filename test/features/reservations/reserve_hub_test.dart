@@ -358,13 +358,14 @@ void main() {
     expect(created.status, ReservationStatus.reserved);
     expect(created.checkedInAt, isNull);
     final today = _today;
+    // #490 — the window is booked on the WORKSPACE clock (Berlin).
     expect(
-      created.startsAt.toLocal(),
-      DateTime(today.year, today.month, today.day, 9),
+      created.startsAt,
+      WorkspaceTime.at(today.year, today.month, today.day, 9),
     );
     expect(
-      created.endsAt.toLocal(),
-      DateTime(today.year, today.month, today.day, 12),
+      created.endsAt,
+      WorkspaceTime.at(today.year, today.month, today.day, 12),
     );
 
     // invalidateBookingData refetched the day: the seat now renders mine.

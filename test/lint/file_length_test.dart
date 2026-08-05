@@ -29,7 +29,8 @@ const Map<String, int> _baseline = {
   // 1510→1530 (2026-08-02): #408 presence rule — the sheets moved to
   // check_in_sheets.dart; what remains is the admin-for-others gate and
   // its action/error handling, which need the screen's ref and context.
-  'lib/features/plan/presentation/screens/plan_screen.dart': 1530,
+  // 1530→1550 (2026-08-05): #490 workspace-clock browse machinery.
+  'lib/features/plan/presentation/screens/plan_screen.dart': 1550,
   // 1290→1330 (2026-08-02): #395 Excel-export tile — feature lines, the
   // orchestration itself lives in excel_export.dart.
   'lib/features/workspace/presentation/screens/workspace_settings_screen.dart':
@@ -90,7 +91,9 @@ const Map<String, int> _baseline = {
   // 600→660 (2026-08-04): #472 the due-reminder flag + emphasized
   // remind action on the open cards.
   'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 660,
-  'lib/features/calendar/presentation/widgets/day_timeline.dart': 750,
+  // 750→770 (2026-08-05): #490 workspace-clock day instants beside the
+  // naive axis anchor.
+  'lib/features/calendar/presentation/widgets/day_timeline.dart': 770,
   'lib/features/reservations/presentation/widgets/space_scan.dart': 730,
   // 600→640 (2026-08-04): #460/#464 Messages inbox rows + mark-seen —
   // the note row widget lives with the feed it sits in. 640→700: #467
