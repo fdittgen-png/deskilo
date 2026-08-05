@@ -2003,6 +2003,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceTemplateShare => 'PDF teilen';
 
   @override
+  String get invoiceTemplateDocStatement => 'Abrechnung';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

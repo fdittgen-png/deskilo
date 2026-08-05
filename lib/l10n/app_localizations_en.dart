@@ -1987,6 +1987,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceTemplateShare => 'Share PDF';
 
   @override
+  String get invoiceTemplateDocStatement => 'Statement';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

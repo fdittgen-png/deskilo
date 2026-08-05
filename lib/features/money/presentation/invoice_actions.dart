@@ -34,6 +34,7 @@ import '../domain/ledger_entry.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/dunning.dart';
 import '../domain/invoice_report.dart';
+import '../domain/statement.dart';
 import '../providers/money_providers.dart';
 import 'report_defaults.dart';
 import 'e_invoice_identity.dart';
@@ -121,6 +122,88 @@ Map<String, Object?> invoiceReportData(
   };
 }
 
+/// The statement data model (#476): the member's monthly summary as
+/// report lines — subscription, overage, supplements, services,
+/// packages and credits, with the balance as the total. Zero rows are
+/// skipped so the document reads like the bill.
+Map<String, Object?> statementReportData(
+  BuildContext context, {
+  required Statement statement,
+  required String workspaceName,
+  required String memberName,
+  required String periodLabel,
+  required String currencyCode,
+}) {
+  final l10n = AppLocalizations.of(context);
+  final currency = NumberFormat.simpleCurrency(name: currencyCode);
+  String money(int cents) => currency.format(cents / 100);
+  final lines = <Map<String, Object?>>[
+    if (statement.feeCents > 0)
+      {
+        'label': l10n?.billSubscription(statement.subscriptionPct) ??
+            'Subscription ${statement.subscriptionPct}%',
+        'amount': money(statement.feeCents),
+        'negative': false,
+      },
+    if (statement.overageCents > 0)
+      {
+        'label': l10n?.billOverage(statement.extraHalfDays) ??
+            '${statement.extraHalfDays} extra half-days',
+        'amount': money(statement.overageCents),
+        'negative': false,
+      },
+    if (statement.accessorySupplementCents > 0)
+      {
+        'label': l10n?.billAccessorySupplements ?? 'Accessory supplements',
+        'amount': money(statement.accessorySupplementCents),
+        'negative': false,
+      },
+    if (statement.levelSupplementCents > 0)
+      {
+        'label': l10n?.levelSupplementLabel ?? 'Level reservations',
+        'amount': money(statement.levelSupplementCents),
+        'negative': false,
+      },
+    if (statement.officeSupplementCents > 0)
+      {
+        'label': l10n?.officeSupplementLabel ?? 'Office reservations',
+        'amount': money(statement.officeSupplementCents),
+        'negative': false,
+      },
+    if (statement.deskSupplementCents > 0)
+      {
+        'label': l10n?.deskSupplementLabel ?? 'Desk reservations',
+        'amount': money(statement.deskSupplementCents),
+        'negative': false,
+      },
+    if (statement.creditsCents != 0)
+      {
+        'label': l10n?.billPaymentsCredits ?? 'Payments & credits',
+        'amount': money(statement.creditsCents),
+        'negative': statement.creditsCents > 0,
+      },
+  ];
+  return <String, Object?>{
+    'workspace': workspaceName,
+    'workspace_address': '',
+    'member': memberName,
+    'number': '',
+    'period': periodLabel,
+    'issued': periodLabel,
+    'issued_by': workspaceName,
+    'replaces': '',
+    'total': money(statement.balanceCents.abs()),
+    'charges': money(statement.feeCents + statement.overageCents),
+    'payments': money(statement.creditsCents),
+    'voided': false,
+    'proforma': false,
+    'copy': false,
+    'has_vat': false,
+    'lines': lines,
+    'vat': const <Map<String, Object?>>[],
+  };
+}
+
 /// The reminder-letter data model (#472/#474) — the invoice basics plus
 /// the level, the letter date and the days the invoice sits open.
 Map<String, Object?> reminderReportData(
@@ -176,8 +259,12 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     proforma: proforma,
     copy: copy,
   );
-  final report =
-      renderInvoiceReport(template: template, data: reportData);
+  // #476: a proforma renders its OWN bands when the owner set them —
+  // else the invoice's, as it always did.
+  final bands = proforma
+      ? (template.proformaBands ?? template.invoiceBands)
+      : template.invoiceBands;
+  final report = renderReportBands(bands: bands, data: reportData);
   final bytes = await buildInvoicePdf(
     invoice: invoice,
     lineText: (line) => invoiceLineText(l10n, line),

@@ -3638,6 +3638,12 @@ abstract class AppLocalizations {
   /// **'Share PDF'**
   String get invoiceTemplateShare;
 
+  /// Report-editor document chip (#476)
+  ///
+  /// In en, this message translates to:
+  /// **'Statement'**
+  String get invoiceTemplateDocStatement;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

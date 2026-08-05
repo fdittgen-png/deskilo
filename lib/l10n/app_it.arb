@@ -775,6 +775,7 @@
   "invoiceTemplateQuickPreview": "Anteprima rapida",
   "invoiceTemplateDownload": "Scarica PDF",
   "invoiceTemplateShare": "Condividi PDF",
+  "invoiceTemplateDocStatement": "Estratto",
   "eventTypeMemberJoin": "Nuovo membro",
   "memberStatusPending": "In attesa",
   "pendingApprovalTitle": "In attesa di approvazione",
