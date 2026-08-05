@@ -86,6 +86,8 @@ El **botón de capas del selector de planta** reserva la **planta entera** — e
 
 Las reservas siguen la **regla de granularidad** del espacio — medias jornadas, días completos, horas reales (de–a exacto, con las ventanas de media/jornada como atajos) u horas libres sobre la rejilla de minutos del propietario. Las medias jornadas y jornadas cubren el **horario laboral** configurado (por defecto 8:00–17:00, límite de media jornada a las 12:00). Respetan los **días de apertura** y los **días de cierre**, y las reglas de reserva (horizonte, duración máxima, plazo de cancelación). ¿Necesidad recurrente? Reserva una **serie** (diaria, laborables, semanal) — los días cerrados y conflictos se saltan y se informan.
 
+**Eliminar una reserva pasada o registrada es una solicitud, no una acción.** Una reserva cuyo inicio ya pasó — o donde ya te registraste — no se cancela directamente: la ficha ofrece **Solicitar eliminación**. Un propietario o admin decide la única pregunta que importa para la facturación: ¿se olvidó simplemente el registro (la reserva se mantiene) o nunca se usó (se elimina)? La solicitud aparece en Eventos con tu motivo opcional; las reservas futuras conservan la cancelación directa.
+
 La pestaña **Calendario** muestra tus reservas por mes — tus días en **rojo**, los de otros en **azul**, hoy rodeado — con cronología por día. En horizontal, calendario y cronología usan el diseño dividido.
 
 ### Escanear un código de espacio

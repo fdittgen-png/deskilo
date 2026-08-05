@@ -288,6 +288,53 @@
   "pushPendingBody": "Qualcuno attende la tua conferma.",
   "pushCancelledTitle": "Prenotazione rimossa",
   "pushCancelledBody": "Una prenotazione è stata rimossa da un admin.",
+  "eventTypeReservationDelete": "Eliminazione prenotazione",
+  "@eventTypeReservationDelete": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "eventReservationDeleteLine": "{actor} chiede di eliminare la prenotazione del {date} ({state})",
+  "@eventReservationDeleteLine": {
+    "description": "Reservation deletion requests (#492)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "state": {
+        "type": "String"
+      }
+    }
+  },
+  "eventReservationDeleteCheckedIn": "con check-in",
+  "@eventReservationDeleteCheckedIn": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "eventReservationDeleteUnused": "mai usata",
+  "@eventReservationDeleteUnused": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteRequestButton": "Richiedi eliminazione",
+  "@reservationDeleteRequestButton": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteRequestExplain": "Le prenotazioni passate o con check-in non vengono eliminate direttamente. Un proprietario o admin deciderà: il check-in è stato semplicemente dimenticato (la prenotazione resta) o non è mai stata usata (viene rimossa)?",
+  "@reservationDeleteRequestExplain": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteReasonLabel": "Motivo (facoltativo)",
+  "@reservationDeleteReasonLabel": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteSubmit": "Invia richiesta",
+  "@reservationDeleteSubmit": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteSubmitted": "Eliminazione richiesta — un proprietario o admin deciderà.",
+  "@reservationDeleteSubmitted": {
+    "description": "Reservation deletion requests (#492)"
+  },
   "featuresTitle": "Funzionalità",
   "featureCalendarTab": "Scheda Calendario",
   "featureCalendarTabDesc": "Panoramica mensile di prenotazioni e giorni di chiusura.",

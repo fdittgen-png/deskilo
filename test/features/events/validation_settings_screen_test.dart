@@ -27,9 +27,9 @@ Future<FakeEventRepository> pumpValidationSettings(
   List<Member>? otherMembers,
 }) async {
   final events = FakeEventRepository()..policies.addAll(policies);
-  // Eight policy cards (0035 added Role change) outgrow the default
+  // Policy cards (0097 added Booking deletion) outgrow the default
   // 600px fold; a taller surface keeps every card built and hit-testable.
-  tester.view.physicalSize = const Size(1200, 2600);
+  tester.view.physicalSize = const Size(1200, 2900);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
   final workspace = FakeWorkspaceRepository.withWorkspace()
@@ -67,9 +67,9 @@ void main() {
     // No stored rows: every card shows the built-in defaults and inherits.
     expect(
       find.text('Required validations: 1 · All admins'),
-      findsNWidgets(11),
+      findsNWidgets(12),
     );
-    expect(find.text('Inherits default'), findsNWidgets(11));
+    expect(find.text('Inherits default'), findsNWidgets(12));
     expect(find.text('Customized'), findsNothing);
   });
 
@@ -178,7 +178,7 @@ void main() {
     );
 
     expect(find.text('Customized'), findsOneWidget);
-    expect(find.text('Inherits default'), findsNWidgets(10));
+    expect(find.text('Inherits default'), findsNWidgets(11));
     expect(
       find.text(
         'Required validations: 2 · All admins · Owner must always validate',

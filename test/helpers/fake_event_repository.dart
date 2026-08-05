@@ -90,6 +90,33 @@ class FakeEventRepository implements EventRepository {
   var _nextEventId = 1;
 
   @override
+  Future<String> requestReservationDeletion(
+    String reservationId, {
+    String reason = '',
+  }) async {
+    // Mirrors request_reservation_deletion (0097): a pending
+    // self-initiated 'reservation_delete' event that validators decide.
+    final event = WorkspaceEvent(
+      id: 'resdel-${_nextEventId++}',
+      workspaceId: 'ws-1',
+      type: EventType.reservationDelete,
+      action: EventAction.submitted,
+      actorMemberId: respondingMemberId,
+      subjectMemberId: respondingMemberId,
+      payload: {
+        'reservation_id': reservationId,
+        'starts_at': kTestNow.toIso8601String(),
+        'was_checked_in': true,
+        'reason': reason,
+      },
+      status: EventStatus.pending,
+      createdAt: kTestNow,
+    );
+    events.add(event);
+    return event.id;
+  }
+
+  @override
   Future<String> requestQuotaExtension(
     String workspaceId, {
     required String period,

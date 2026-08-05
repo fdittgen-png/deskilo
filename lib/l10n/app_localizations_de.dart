@@ -967,6 +967,37 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine Reservierung wurde von einem Admin entfernt.';
 
   @override
+  String get eventTypeReservationDelete => 'Buchungslöschung';
+
+  @override
+  String eventReservationDeleteLine(String actor, String date, String state) {
+    return '$actor bittet um Löschung der Buchung vom $date ($state)';
+  }
+
+  @override
+  String get eventReservationDeleteCheckedIn => 'eingecheckt';
+
+  @override
+  String get eventReservationDeleteUnused => 'nie genutzt';
+
+  @override
+  String get reservationDeleteRequestButton => 'Löschung beantragen';
+
+  @override
+  String get reservationDeleteRequestExplain =>
+      'Vergangene oder eingecheckte Buchungen werden nicht direkt gelöscht. Inhaber oder Admin entscheiden: wurde der Check-in nur vergessen (die Buchung bleibt), oder wurde sie nie genutzt (sie wird entfernt)?';
+
+  @override
+  String get reservationDeleteReasonLabel => 'Grund (optional)';
+
+  @override
+  String get reservationDeleteSubmit => 'Anfrage senden';
+
+  @override
+  String get reservationDeleteSubmitted =>
+      'Löschung beantragt — Inhaber oder Admin entscheiden.';
+
+  @override
   String get featuresTitle => 'Funktionen';
 
   @override

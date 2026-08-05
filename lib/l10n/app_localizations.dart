@@ -1832,6 +1832,60 @@ abstract class AppLocalizations {
   /// **'A reservation was removed by an admin.'**
   String get pushCancelledBody;
 
+  /// Reservation deletion requests (#492)
+  ///
+  /// In en, this message translates to:
+  /// **'Booking deletion'**
+  String get eventTypeReservationDelete;
+
+  /// Reservation deletion requests (#492)
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} asks to delete the booking of {date} ({state})'**
+  String eventReservationDeleteLine(String actor, String date, String state);
+
+  /// Reservation deletion requests (#492)
+  ///
+  /// In en, this message translates to:
+  /// **'checked in'**
+  String get eventReservationDeleteCheckedIn;
+
+  /// Reservation deletion requests (#492)
+  ///
+  /// In en, this message translates to:
+  /// **'never used'**
+  String get eventReservationDeleteUnused;
+
+  /// Reservation deletion requests (#492)
+  ///
+  /// In en, this message translates to:
+  /// **'Request deletion'**
+  String get reservationDeleteRequestButton;
+
+  /// Reservation deletion requests (#492)
+  ///
+  /// In en, this message translates to:
+  /// **'Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)?'**
+  String get reservationDeleteRequestExplain;
+
+  /// Reservation deletion requests (#492)
+  ///
+  /// In en, this message translates to:
+  /// **'Reason (optional)'**
+  String get reservationDeleteReasonLabel;
+
+  /// Reservation deletion requests (#492)
+  ///
+  /// In en, this message translates to:
+  /// **'Send request'**
+  String get reservationDeleteSubmit;
+
+  /// Reservation deletion requests (#492)
+  ///
+  /// In en, this message translates to:
+  /// **'Deletion requested — an owner or admin will decide.'**
+  String get reservationDeleteSubmitted;
+
   /// App-bar title of the owner feature-management screen and its settings tile
   ///
   /// In en, this message translates to:

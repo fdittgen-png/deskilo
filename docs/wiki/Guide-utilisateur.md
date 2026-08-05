@@ -86,6 +86,9 @@ Le **bouton calques du sélecteur d'étage** réserve l'**étage entier** — su
 
 Les réservations suivent la **règle de granularité** de l'espace — demi-journées, journées entières, heures réelles (de→à exact, avec les fenêtres demi/journée en raccourcis), ou horaires libres sur la grille de créneaux du propriétaire. Les demi-journées et journées couvrent les **horaires de travail** configurés (par défaut 8h–17h, limite de demi-journée à 12h). Elles respectent les **jours d'ouverture** et les **jours de fermeture**, et les règles de réservation (horizon, durée maximale, délai d'annulation). Besoin récurrent ? Réservez une **série** (quotidienne, jours ouvrés, hebdomadaire) — les jours fermés et les conflits sont sautés et signalés.
 
+**Supprimer une réservation passée ou pointée est une demande, pas une action.** Une réservation dont le début est passé — ou où vous avez déjà pointé — ne s'annule pas directement : la fiche propose **Demander la suppression**. Un propriétaire ou un admin tranche la seule question qui compte pour la facturation : le pointage a-t-il simplement été oublié (la réservation reste), ou n'a-t-elle jamais été utilisée (elle est supprimée) ? La demande apparaît dans le fil Événements avec votre motif facultatif ; les réservations futures gardent l'annulation directe.
+
+
 L'onglet **Calendrier** montre vos réservations par mois — vos jours en **rouge**, ceux des autres en **bleu**, aujourd'hui entouré — avec une chronologie par jour. En paysage, calendrier et chronologie utilisent la disposition en deux panneaux.
 
 ### Scanner un code d'espace

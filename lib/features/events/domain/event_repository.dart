@@ -22,6 +22,13 @@ abstract class EventRepository {
 
   Future<List<ValidationPolicy>> fetchValidationPolicies(String workspaceId);
 
+  /// Request the validated DELETION of a past or checked-in booking
+  /// (0097, #492); returns the pending event id.
+  Future<String> requestReservationDeletion(
+    String reservationId, {
+    String reason = '',
+  });
+
   /// Request [halfDays] extra half-days for [period] ('YYYY-MM') beyond
   /// the subscription entitlement (0031). Lands as a pending 'quota'
   /// event that owners/admins validate per policy; returns the event id.

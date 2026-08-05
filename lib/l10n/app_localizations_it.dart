@@ -968,6 +968,37 @@ class AppLocalizationsIt extends AppLocalizations {
       'Una prenotazione è stata rimossa da un admin.';
 
   @override
+  String get eventTypeReservationDelete => 'Eliminazione prenotazione';
+
+  @override
+  String eventReservationDeleteLine(String actor, String date, String state) {
+    return '$actor chiede di eliminare la prenotazione del $date ($state)';
+  }
+
+  @override
+  String get eventReservationDeleteCheckedIn => 'con check-in';
+
+  @override
+  String get eventReservationDeleteUnused => 'mai usata';
+
+  @override
+  String get reservationDeleteRequestButton => 'Richiedi eliminazione';
+
+  @override
+  String get reservationDeleteRequestExplain =>
+      'Le prenotazioni passate o con check-in non vengono eliminate direttamente. Un proprietario o admin deciderà: il check-in è stato semplicemente dimenticato (la prenotazione resta) o non è mai stata usata (viene rimossa)?';
+
+  @override
+  String get reservationDeleteReasonLabel => 'Motivo (facoltativo)';
+
+  @override
+  String get reservationDeleteSubmit => 'Invia richiesta';
+
+  @override
+  String get reservationDeleteSubmitted =>
+      'Eliminazione richiesta — un proprietario o admin deciderà.';
+
+  @override
   String get featuresTitle => 'Funzionalità';
 
   @override

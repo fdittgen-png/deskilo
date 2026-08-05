@@ -965,6 +965,37 @@ class AppLocalizationsEs extends AppLocalizations {
   String get pushCancelledBody => 'Un admin eliminó una reserva.';
 
   @override
+  String get eventTypeReservationDelete => 'Eliminación de reserva';
+
+  @override
+  String eventReservationDeleteLine(String actor, String date, String state) {
+    return '$actor pide eliminar la reserva del $date ($state)';
+  }
+
+  @override
+  String get eventReservationDeleteCheckedIn => 'registrada';
+
+  @override
+  String get eventReservationDeleteUnused => 'nunca usada';
+
+  @override
+  String get reservationDeleteRequestButton => 'Solicitar eliminación';
+
+  @override
+  String get reservationDeleteRequestExplain =>
+      'Las reservas pasadas o con registro no se eliminan directamente. Un propietario o admin decidirá: ¿se olvidó simplemente el registro (la reserva se mantiene) o nunca se usó (se elimina)?';
+
+  @override
+  String get reservationDeleteReasonLabel => 'Motivo (opcional)';
+
+  @override
+  String get reservationDeleteSubmit => 'Enviar solicitud';
+
+  @override
+  String get reservationDeleteSubmitted =>
+      'Eliminación solicitada — un propietario o admin decidirá.';
+
+  @override
   String get featuresTitle => 'Funciones';
 
   @override
