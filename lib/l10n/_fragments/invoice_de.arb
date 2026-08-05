@@ -404,5 +404,19 @@
   "dunningSaved": "Mahnregeln gespeichert.",
   "dunningDueChip": "Mahnstufe {level} fällig",
   "invoiceTemplateDocInvoice": "Rechnung",
-  "invoiceTemplateDocReminder": "Mahnung {level}"
+  "invoiceTemplateDocReminder": "Mahnung {level}",
+  "reportPreviewTitle": "Schnellvorschau — deine neueste Rechnung",
+  "reportPreviewSimulated": "Schnellvorschau — Beispieldaten",
+  "reportPresetClassic": "Klassisch",
+  "reportPresetCompact": "Kompakt",
+  "reportPresetFormalLetter": "Formeller Brief",
+  "reportPresetMinimal": "Minimal",
+  "reportPresetStandard": "Standard",
+  "reportPresetShort": "Kurznotiz",
+  "reportSubject": "Betreff",
+  "reportRegards": "Mit freundlichen Grüßen",
+  "invoiceTemplatePresets": "Vorlagen",
+  "invoiceTemplateQuickPreview": "Schnellvorschau",
+  "invoiceTemplateDownload": "PDF herunterladen",
+  "invoiceTemplateShare": "PDF teilen"
 }

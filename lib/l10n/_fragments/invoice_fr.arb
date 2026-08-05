@@ -404,5 +404,19 @@
   "dunningSaved": "Règles de relance enregistrées.",
   "dunningDueChip": "Relance {level} à envoyer",
   "invoiceTemplateDocInvoice": "Facture",
-  "invoiceTemplateDocReminder": "Relance {level}"
+  "invoiceTemplateDocReminder": "Relance {level}",
+  "reportPreviewTitle": "Aperçu rapide — votre facture la plus récente",
+  "reportPreviewSimulated": "Aperçu rapide — données d'exemple",
+  "reportPresetClassic": "Classique",
+  "reportPresetCompact": "Compact",
+  "reportPresetFormalLetter": "Lettre formelle",
+  "reportPresetMinimal": "Minimal",
+  "reportPresetStandard": "Standard",
+  "reportPresetShort": "Avis bref",
+  "reportSubject": "Objet",
+  "reportRegards": "Cordialement",
+  "invoiceTemplatePresets": "Modèles",
+  "invoiceTemplateQuickPreview": "Aperçu rapide",
+  "invoiceTemplateDownload": "Télécharger le PDF",
+  "invoiceTemplateShare": "Partager le PDF"
 }

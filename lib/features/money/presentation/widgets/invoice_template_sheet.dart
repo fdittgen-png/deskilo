@@ -13,8 +13,10 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../providers/money_providers.dart';
 import '../../domain/dunning.dart';
+import '../../domain/invoice_report.dart';
 import '../invoice_actions.dart';
 import '../report_defaults.dart';
+import 'report_preview.dart';
 
 /// The invoice REPORT editor (#454, rebuilt as a banded reporting tool
 /// in #470): three Liquid bands — header, body with the lines, footer —
@@ -148,10 +150,41 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
     );
   }
 
-  /// Renders the NEWEST invoice as a watermarked COPY through the
-  /// UNSAVED bands and hands it to the share sheet — the reporting
-  /// tool's preview loop.
-  Future<void> _preview() async {
+  /// INSTANT preview (#474): the report engine's output rendered as
+  /// widgets — real newest-invoice data when one exists, simulated
+  /// sample data otherwise. No PDF round-trip.
+  Future<void> _quickPreview() async {
+    final l10n = AppLocalizations.of(context);
+    final invoices = ref.read(invoicesProvider).value ?? const [];
+    final simulated = invoices.isEmpty;
+    final data = simulated
+        ? sampleReportData(l10n)
+        : _doc == 0
+            ? invoiceReportData(context, invoices.first,
+                proforma: false, copy: false)
+            : reminderReportData(context, ref, invoices.first, level: _doc);
+    final bands = _currentBands.hasBands
+        ? _currentBands
+        : _doc == 0
+            ? defaultInvoiceTemplate(l10n).invoiceBands
+            : defaultReminderBands(_doc, l10n);
+    final report = renderReportBands(bands: bands, data: data);
+    if (report == null) {
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
+      return;
+    }
+    await showReportQuickPreview(context,
+        report: report, simulated: simulated);
+  }
+
+  /// Renders the selected DOCUMENT through the UNSAVED bands as a PDF —
+  /// the invoice as a watermarked copy, a reminder as its letter — and
+  /// either DOWNLOADS it or hands it to the share sheet (#474).
+  Future<void> _pdf({required bool download}) async {
     final l10n = AppLocalizations.of(context);
     final invoices = ref.read(invoicesProvider).value ?? const [];
     if (invoices.isEmpty) {
@@ -165,8 +198,6 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
     }
     setState(() => _busy = true);
     try {
-      // #472: the selected DOCUMENT previews — the invoice as a
-      // watermarked copy, a reminder as its letter at that level.
       final ({List<int> bytes, String fileName}) pdf;
       if (_doc == 0) {
         final invoicePdf = await buildInvoicePdfFile(
@@ -190,13 +221,23 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
         );
         pdf = (bytes: letter.bytes, fileName: letter.fileName);
       }
-      await ref.read(fileSharerProvider)(
-        bytes: Uint8List.fromList(pdf.bytes),
-        fileName: pdf.fileName,
-        mimeType: 'application/pdf',
-      );
+      if (!mounted) return;
+      if (download) {
+        await savePdfToDownloads(
+          context,
+          ref,
+          bytes: Uint8List.fromList(pdf.bytes),
+          fileName: pdf.fileName,
+        );
+      } else {
+        await ref.read(fileSharerProvider)(
+          bytes: Uint8List.fromList(pdf.bytes),
+          fileName: pdf.fileName,
+          mimeType: 'application/pdf',
+        );
+      }
     } catch (e, st) {
-      TraceLogger.instance.error('money', 'template preview failed',
+      TraceLogger.instance.error('money', 'template pdf failed',
           error: e, stackTrace: st);
       if (mounted) {
         AppSnack.error(
@@ -321,8 +362,70 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
               key: 'invoice-template-footer',
             ),
             const SizedBox(height: AppSpacing.md),
-            Row(
+            // #474: pick a ready-made report, see it INSTANTLY, then
+            // download or share the PDF — or save the bands.
+            Wrap(
+              spacing: AppSpacing.sm,
+              runSpacing: AppSpacing.xs,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
+                PopupMenuButton<ReportPreset>(
+                  key: const ValueKey('invoice-template-presets'),
+                  enabled: !_busy,
+                  onSelected: (preset) => setState(() {
+                    _header.text = preset.bands.header;
+                    _body.text = preset.bands.body;
+                    _footer.text = preset.bands.footer;
+                  }),
+                  itemBuilder: (context) => [
+                    for (final preset in reportPresets(_doc, l10n))
+                      PopupMenuItem(
+                        key: ValueKey(
+                            'invoice-template-preset-${preset.id}'),
+                        value: preset,
+                        child: Text(preset.name),
+                      ),
+                  ],
+                  child: TextButton.icon(
+                    icon: const Icon(Icons.auto_awesome_outlined),
+                    label: Text(
+                        l10n?.invoiceTemplatePresets ?? 'Templates'),
+                    // The menu opens from the surrounding button.
+                    onPressed: null,
+                  ),
+                ),
+                OutlinedButton.icon(
+                  key: const ValueKey('invoice-template-quick-preview'),
+                  icon: const Icon(Icons.bolt_outlined),
+                  label: Text(l10n?.invoiceTemplateQuickPreview ??
+                      'Quick preview'),
+                  onPressed: _busy ? null : _quickPreview,
+                ),
+                PopupMenuButton<bool>(
+                  key: const ValueKey('invoice-template-pdf'),
+                  enabled: !_busy,
+                  onSelected: (download) => _pdf(download: download),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      key: const ValueKey('invoice-template-download'),
+                      value: true,
+                      child: Text(l10n?.invoiceTemplateDownload ??
+                          'Download PDF'),
+                    ),
+                    PopupMenuItem(
+                      key: const ValueKey('invoice-template-share'),
+                      value: false,
+                      child: Text(
+                          l10n?.invoiceTemplateShare ?? 'Share PDF'),
+                    ),
+                  ],
+                  child: OutlinedButton.icon(
+                    icon: const Icon(Icons.picture_as_pdf_outlined),
+                    label: Text(
+                        l10n?.invoiceTemplatePreview ?? 'Preview'),
+                    onPressed: null,
+                  ),
+                ),
                 TextButton.icon(
                   key: const ValueKey('invoice-template-reset'),
                   icon: const Icon(Icons.restart_alt),
@@ -341,15 +444,6 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
                           });
                         },
                 ),
-                const Spacer(),
-                OutlinedButton.icon(
-                  key: const ValueKey('invoice-template-preview'),
-                  icon: const Icon(Icons.visibility_outlined),
-                  label:
-                      Text(l10n?.invoiceTemplatePreview ?? 'Preview'),
-                  onPressed: _busy ? null : _preview,
-                ),
-                const SizedBox(width: AppSpacing.sm),
                 FilledButton(
                   key: const ValueKey('invoice-template-save'),
                   onPressed: _busy ? null : _save,

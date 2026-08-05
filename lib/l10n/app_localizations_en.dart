@@ -1945,6 +1945,48 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get reportPreviewTitle => 'Quick preview — your newest invoice';
+
+  @override
+  String get reportPreviewSimulated => 'Quick preview — sample data';
+
+  @override
+  String get reportPresetClassic => 'Classic';
+
+  @override
+  String get reportPresetCompact => 'Compact';
+
+  @override
+  String get reportPresetFormalLetter => 'Formal letter';
+
+  @override
+  String get reportPresetMinimal => 'Minimal';
+
+  @override
+  String get reportPresetStandard => 'Standard';
+
+  @override
+  String get reportPresetShort => 'Short notice';
+
+  @override
+  String get reportSubject => 'Subject';
+
+  @override
+  String get reportRegards => 'Kind regards';
+
+  @override
+  String get invoiceTemplatePresets => 'Templates';
+
+  @override
+  String get invoiceTemplateQuickPreview => 'Quick preview';
+
+  @override
+  String get invoiceTemplateDownload => 'Download PDF';
+
+  @override
+  String get invoiceTemplateShare => 'Share PDF';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

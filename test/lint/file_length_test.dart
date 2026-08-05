@@ -33,7 +33,7 @@ const Map<String, int> _baseline = {
   // 1290→1330 (2026-08-02): #395 Excel-export tile — feature lines, the
   // orchestration itself lives in excel_export.dart.
   'lib/features/workspace/presentation/screens/workspace_settings_screen.dart':
-      1330,
+      1370, // 1330→1370 (2026-08-05): #474 report-editor + dunning tiles.
   'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1160,
   // 1010→1020 (2026-08-04): #462 whole-space overlays on the plan view.
   // 1020→1070: #466 the hub's whole-level reserve button + visibility.
@@ -57,7 +57,9 @@ const Map<String, int> _baseline = {
   // through every PDF render; the editor sheet is its own file.
   // 950→990: #470 the report data model (fields, lines, VAT rows).
   // 990→1050: #472 buildReminderPdfFile + the remind-level flow.
-  'lib/features/money/presentation/invoice_actions.dart': 1050,
+  // 1050→1090 (2026-08-05): #474 the extracted public data builders
+  // (invoiceReportData/reminderReportData) shared with the preview.
+  'lib/features/money/presentation/invoice_actions.dart': 1090,
   'lib/features/workspace/domain/workspace_xml.dart': 800,
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.

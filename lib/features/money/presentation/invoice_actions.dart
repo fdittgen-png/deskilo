@@ -67,41 +67,30 @@ InvoicePdfTemplate invoicePdfTemplateFor(WidgetRef ref) =>
             InvoicePdfTemplate.empty
         : InvoicePdfTemplate.empty;
 
-Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
+/// The report data model (#470/#474) — every value the Liquid bands
+/// can reference, resolved where formatting is at hand. Amounts arrive
+/// pre-formatted in the workspace currency; the flags feed
+/// `{% if %}` conditions. Shared by the PDF render AND the in-app
+/// quick preview.
+Map<String, Object?> invoiceReportData(
   BuildContext context,
   Invoice invoice, {
-  bool proforma = false,
-  bool copy = false,
-  String facturXml = '',
-  Uint8List? colorProfile,
-  InvoicePdfTemplate template = InvoicePdfTemplate.empty,
-}) async {
+  required bool proforma,
+  required bool copy,
+}) {
   final l10n = AppLocalizations.of(context);
   final currency = NumberFormat.simpleCurrency(name: invoice.currency);
   final dateFormat = DateFormat.yMMMd(
     Localizations.maybeLocaleOf(context)?.toString(),
   );
-  final dateLabel = dateFormat.format(invoice.issuedAt);
-  final periodLabel = invoicePeriodLabel(context, invoice);
-  final voidedAt = invoice.voidedAt;
-  final voidedLabel = voidedAt == null
-      ? ''
-      : '${l10n?.invoicePdfVoided ?? 'ERRONEOUS — voided on'} '
-          '${dateFormat.format(voidedAt)}';
-  Future<pw.Font> font(String asset) async =>
-      pw.Font.ttf(await rootBundle.load(asset));
-  // #454/#470: the report data model — every value the Liquid bands
-  // can reference, resolved here where formatting is at hand. Amounts
-  // arrive pre-formatted in the workspace currency; the numeric flags
-  // feed {% if %} conditions.
   String money(int cents) => currency.format(cents / 100);
-  final reportData = <String, Object?>{
+  return <String, Object?>{
     'workspace': invoice.workspaceName,
     'workspace_address': invoice.workspaceAddress,
     'member': invoice.memberName,
     'number': invoice.number,
-    'period': periodLabel,
-    'issued': dateLabel,
+    'period': invoicePeriodLabel(context, invoice),
+    'issued': dateFormat.format(invoice.issuedAt),
     'issued_by': invoice.issuerName,
     'replaces': invoice.replacesNumber,
     'total': money(invoice.totalCents),
@@ -130,6 +119,63 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
         },
     ],
   };
+}
+
+/// The reminder-letter data model (#472/#474) — the invoice basics plus
+/// the level, the letter date and the days the invoice sits open.
+Map<String, Object?> reminderReportData(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice, {
+  required int level,
+}) {
+  final currency = NumberFormat.simpleCurrency(name: invoice.currency);
+  final dateFormat = DateFormat.yMMMd(
+    Localizations.maybeLocaleOf(context)?.toString(),
+  );
+  final now = ref.read(clockProvider).now();
+  return <String, Object?>{
+    'workspace': invoice.workspaceName,
+    'workspace_address': invoice.workspaceAddress,
+    'member': invoice.memberName,
+    'number': invoice.number,
+    'issued': dateFormat.format(invoice.issuedAt),
+    'total': currency.format(invoice.totalCents / 100),
+    'reminder_level': level,
+    'reminder_date': dateFormat.format(now),
+    'days_open': now.difference(invoice.issuedAt).inDays,
+  };
+}
+
+Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
+  BuildContext context,
+  Invoice invoice, {
+  bool proforma = false,
+  bool copy = false,
+  String facturXml = '',
+  Uint8List? colorProfile,
+  InvoicePdfTemplate template = InvoicePdfTemplate.empty,
+}) async {
+  final l10n = AppLocalizations.of(context);
+  final currency = NumberFormat.simpleCurrency(name: invoice.currency);
+  final dateFormat = DateFormat.yMMMd(
+    Localizations.maybeLocaleOf(context)?.toString(),
+  );
+  final dateLabel = dateFormat.format(invoice.issuedAt);
+  final periodLabel = invoicePeriodLabel(context, invoice);
+  final voidedAt = invoice.voidedAt;
+  final voidedLabel = voidedAt == null
+      ? ''
+      : '${l10n?.invoicePdfVoided ?? 'ERRONEOUS — voided on'} '
+          '${dateFormat.format(voidedAt)}';
+  Future<pw.Font> font(String asset) async =>
+      pw.Font.ttf(await rootBundle.load(asset));
+  final reportData = invoiceReportData(
+    context,
+    invoice,
+    proforma: proforma,
+    copy: copy,
+  );
   final report =
       renderInvoiceReport(template: template, data: reportData);
   final bytes = await buildInvoicePdf(
@@ -297,7 +343,7 @@ Future<void> exportAccountingFile(
             .reduce((a, b) => a > b ? a : b);
         final bytes = Uint8List.fromList(utf8.encode(fec));
         if (!context.mounted) return;
-        await _save(
+        await savePdfToDownloads(
           context,
           ref,
           bytes: bytes,
@@ -327,7 +373,7 @@ Future<void> exportAccountingFile(
       );
       final bytes = Uint8List.fromList(utf8.encode(xml));
       if (!context.mounted) return;
-      await _save(
+      await savePdfToDownloads(
         context,
         ref,
         bytes: bytes,
@@ -504,7 +550,9 @@ bool _rendersCopy(WidgetRef ref) {
 }
 
 /// Saves [bytes] to Downloads and reports where they landed.
-Future<void> _save(
+/// Saves [bytes] into the device Downloads and reports the path — the
+/// shared "download, don't just share" path (#474).
+Future<void> savePdfToDownloads(
   BuildContext context,
   WidgetRef ref, {
   required Uint8List bytes,
@@ -543,7 +591,7 @@ Future<void> downloadInvoicePdf(
         template: invoicePdfTemplateFor(ref),
       );
       if (!context.mounted) return;
-      await _save(
+      await savePdfToDownloads(
         context,
         ref,
         bytes: Uint8List.fromList(pdf.bytes),
@@ -646,25 +694,10 @@ Future<({List<int> bytes, String fileName, String title})>
   ReportBands? draftBands,
 }) async {
   final l10n = AppLocalizations.of(context);
-  final currency = NumberFormat.simpleCurrency(name: invoice.currency);
-  final dateFormat = DateFormat.yMMMd(
-    Localizations.maybeLocaleOf(context)?.toString(),
-  );
-  final now = ref.read(clockProvider).now();
   final title = level <= 1
       ? (l10n?.reminderPdfTitleFriendly ?? 'Payment reminder')
       : '${l10n?.reminderPdfTitleFirm ?? 'Reminder'} $level';
-  final data = <String, Object?>{
-    'workspace': invoice.workspaceName,
-    'workspace_address': invoice.workspaceAddress,
-    'member': invoice.memberName,
-    'number': invoice.number,
-    'issued': dateFormat.format(invoice.issuedAt),
-    'total': currency.format(invoice.totalCents / 100),
-    'reminder_level': level,
-    'reminder_date': dateFormat.format(now),
-    'days_open': now.difference(invoice.issuedAt).inDays,
-  };
+  final data = reminderReportData(context, ref, invoice, level: level);
   final bands = draftBands ??
       invoicePdfTemplateFor(ref).reminderBands(level);
   final fallback = defaultReminderBands(level, l10n);
@@ -842,7 +875,7 @@ Future<void> exportEInvoice(
           return;
         }
         if (!context.mounted) return;
-        await _save(context, ref, bytes: bytes, fileName: file.fileName);
+        await savePdfToDownloads(context, ref, bytes: bytes, fileName: file.fileName);
       },
     );
     return;
@@ -873,7 +906,7 @@ Future<void> exportEInvoice(
         return;
       }
       if (!context.mounted) return;
-      await _save(context, ref, bytes: bytes, fileName: fileName);
+      await savePdfToDownloads(context, ref, bytes: bytes, fileName: fileName);
     },
   );
 }

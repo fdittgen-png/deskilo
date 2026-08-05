@@ -40,6 +40,8 @@ import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_import.dart';
 import '../../domain/workspace_xml.dart';
 import '../../providers/workspace_import_providers.dart';
+import '../../../money/presentation/widgets/dunning_rules_dialog.dart';
+import '../../../money/presentation/widgets/invoice_template_sheet.dart';
 import '../../providers/workspace_providers.dart';
 import '../excel_export.dart';
 import '../country_names.dart';
@@ -1102,6 +1104,45 @@ class _WorkspaceSettingsScreenState
                   ),
                   const SizedBox(height: 24),
                   const Divider(),
+                  // #474 — the banded report editor (invoice + every
+                  // reminder level) and the dunning policy live in the
+                  // app parameters too, not only behind the Invoices
+                  // header. The whole screen is owner-only already.
+                  if (ref
+                      .watch(enabledFeaturesSyncProvider)
+                      .contains(WorkspaceFeature.invoicePdfTemplate))
+                  ListTile(
+                    key: const Key('workspaceSettingsReportEditor'),
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.edit_note_outlined),
+                    title: Text(
+                      l10n?.invoiceTemplateTitle ?? 'Invoice PDF template',
+                    ),
+                    subtitle: Text(
+                      l10n?.invoiceTemplateHint ??
+                          'Three report bands rendered on the PDF.',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    onTap: () => showInvoiceTemplateSheet(context, ref),
+                  ),
+                  if (ref
+                      .watch(enabledFeaturesSyncProvider)
+                      .contains(WorkspaceFeature.invoicing))
+                  ListTile(
+                    key: const Key('workspaceSettingsDunning'),
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.rule_outlined),
+                    title: Text(
+                      l10n?.dunningSettingsTitle ?? 'Reminder rules',
+                    ),
+                    subtitle: Text(
+                      l10n?.dunningLevels ?? 'Number of reminder levels',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    onTap: () => showDunningRulesDialog(context, ref),
+                  ),
                   // #164 — versioned XML snapshot of settings + floor
                   // plan; the whole screen is owner-only already.
                   ListTile(

@@ -2549,6 +2549,62 @@
       }
     }
   },
+  "reportPreviewTitle": "Quick preview — your newest invoice",
+  "@reportPreviewTitle": {
+    "description": "Report UX: presets, quick preview, download (#474)"
+  },
+  "reportPreviewSimulated": "Quick preview — sample data",
+  "@reportPreviewSimulated": {
+    "description": "Report UX: presets, quick preview, download (#474)"
+  },
+  "reportPresetClassic": "Classic",
+  "@reportPresetClassic": {
+    "description": "Report UX: presets, quick preview, download (#474)"
+  },
+  "reportPresetCompact": "Compact",
+  "@reportPresetCompact": {
+    "description": "Report UX: presets, quick preview, download (#474)"
+  },
+  "reportPresetFormalLetter": "Formal letter",
+  "@reportPresetFormalLetter": {
+    "description": "Report UX: presets, quick preview, download (#474)"
+  },
+  "reportPresetMinimal": "Minimal",
+  "@reportPresetMinimal": {
+    "description": "Report UX: presets, quick preview, download (#474)"
+  },
+  "reportPresetStandard": "Standard",
+  "@reportPresetStandard": {
+    "description": "Report UX: presets, quick preview, download (#474)"
+  },
+  "reportPresetShort": "Short notice",
+  "@reportPresetShort": {
+    "description": "Report UX: presets, quick preview, download (#474)"
+  },
+  "reportSubject": "Subject",
+  "@reportSubject": {
+    "description": "Report UX: presets, quick preview, download (#474)"
+  },
+  "reportRegards": "Kind regards",
+  "@reportRegards": {
+    "description": "Report UX: presets, quick preview, download (#474)"
+  },
+  "invoiceTemplatePresets": "Templates",
+  "@invoiceTemplatePresets": {
+    "description": "Report UX: presets, quick preview, download (#474)"
+  },
+  "invoiceTemplateQuickPreview": "Quick preview",
+  "@invoiceTemplateQuickPreview": {
+    "description": "Report UX: presets, quick preview, download (#474)"
+  },
+  "invoiceTemplateDownload": "Download PDF",
+  "@invoiceTemplateDownload": {
+    "description": "Report UX: presets, quick preview, download (#474)"
+  },
+  "invoiceTemplateShare": "Share PDF",
+  "@invoiceTemplateShare": {
+    "description": "Report UX: presets, quick preview, download (#474)"
+  },
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
   "pendingApprovalTitle": "Awaiting approval",
