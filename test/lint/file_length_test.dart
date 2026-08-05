@@ -85,6 +85,9 @@ const Map<String, int> _baseline = {
   'lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart': 640,
   // 600→660 (2026-08-05): #488 the editor's mode toggle + image insert
   // flow; the visual editor itself is its own file.
+  // new→840 (2026-08-05): #498 the WYSIWYG design surface — styled
+  // band rendering, column groups, token palette, in-place editor.
+  'lib/features/money/presentation/widgets/report_visual_editor.dart': 840,
   // 660→700 (2026-08-05): #494 the three further document chips + their
   // live data and letter-PDF branches.
   // 700→800 (2026-08-05): #496 the template-language chips + per-language

@@ -655,5 +655,9 @@
   "reportLanguageAmbiguous": "Dieses Land hat mehrere Sprachen — legen Sie zuerst die Arbeitsbereichssprache in den Einstellungen fest.",
   "@reportLanguageAmbiguous": {
     "description": "Report language resolution + per-language templates (#496)"
+  },
+  "reportDesignEmpty": "Leeres Band — fügen Sie unten ein Element hinzu.",
+  "@reportDesignEmpty": {
+    "description": "True WYSIWYG design surface (#498)"
   }
 }

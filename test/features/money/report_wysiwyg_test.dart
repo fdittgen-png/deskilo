@@ -90,16 +90,19 @@ void main() {
     await tester.tap(find.text('Visual'));
     await tester.pumpAndSettle();
 
-    // The header band renders as visual rows. Row 0 is the layout's
-    // columns fence (no text); row 1 is the title — edit it.
-    expect(find.byKey(const ValueKey('visual-header-list')),
-        findsOneWidget);
+    // #498 — the band renders STYLED; line 0 is the layout's columns
+    // fence (a boundary), line 1 the title. Tap it → in-place editor.
     await tester.ensureVisible(
-        find.byKey(const ValueKey('visual-header-field-1')));
+        find.byKey(const ValueKey('visual-header-line-1')));
+    await tester.tap(find.byKey(const ValueKey('visual-header-line-1')));
+    await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('visual-header-field-1')),
       'MY COMPANY',
     );
+    await tester
+        .tap(find.byKey(const ValueKey('visual-header-done-1')));
+    await tester.pumpAndSettle();
     // Back to markup: the visual edit is IN the controller.
     await tester.ensureVisible(
         find.byKey(const ValueKey('invoice-template-mode')));
@@ -111,6 +114,41 @@ void main() {
         .controller!
         .text;
     expect(headerText, contains('# MY COMPANY'));
+  });
+
+  testWidgets('the design surface is WYSIWYG (#498): the facture layout '
+      'renders side-by-side columns and a token palette inserts a field '
+      'at the cursor', (tester) async {
+    await pumpInvoices(tester, money: await seededMoney());
+
+    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
+    await tester.pump();
+    await tester.ensureVisible(
+        find.byKey(const ValueKey('invoice-template-mode')));
+    await tester.tap(find.text('Visual'));
+    await tester.pumpAndSettle();
+
+    // No raw-markup row list: the band paints STYLED elements —
+    // tapping the title line opens the in-place editor with a palette.
+    await tester.ensureVisible(
+        find.byKey(const ValueKey('visual-header-line-1')));
+    await tester.tap(find.byKey(const ValueKey('visual-header-line-1')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('visual-header-palette')),
+        findsOneWidget);
+
+    // Tap a data-field chip → the token lands in the line at the cursor.
+    await tester
+        .tap(find.byKey(const ValueKey('visual-header-token-member')));
+    await tester.pumpAndSettle();
+    final text = tester
+        .widget<TextField>(
+            find.byKey(const ValueKey('visual-header-field-1')))
+        .controller!
+        .text;
+    expect(text, contains('{{ member }}'));
   });
 
   testWidgets('Insert image uploads to the library and drops ![name] '

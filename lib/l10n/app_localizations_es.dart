@@ -2214,6 +2214,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este país tiene varios idiomas — define primero el idioma del espacio en los Ajustes del espacio.';
 
   @override
+  String get reportDesignEmpty => 'Banda vacía — añade un elemento abajo.';
+
+  @override
   String get eventTypeMemberJoin => 'Nuevo miembro';
 
   @override

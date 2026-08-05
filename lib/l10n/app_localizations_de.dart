@@ -2217,6 +2217,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieses Land hat mehrere Sprachen — legen Sie zuerst die Arbeitsbereichssprache in den Einstellungen fest.';
 
   @override
+  String get reportDesignEmpty =>
+      'Leeres Band — fügen Sie unten ein Element hinzu.';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override
