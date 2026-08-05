@@ -69,7 +69,12 @@ const Map<String, int> _baseline = {
   // document's line model. 1180→1280 (2026-08-05): #480 legalMentionData
   // (the statutory mention variables + localized legal defaults) shared
   // by all three document data models.
-  'lib/features/money/presentation/invoice_actions.dart': 1280,
+  // 1280→1320 (2026-08-05): #488 resolveReportImages threaded through
+  // every PDF path.
+  'lib/features/money/presentation/invoice_actions.dart': 1320,
+  // 600→660 (2026-08-05): #488 the editor's mode toggle + image insert
+  // flow; the visual editor itself is its own file.
+  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 660,
   'lib/features/workspace/domain/workspace_xml.dart': 800,
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.
@@ -78,7 +83,9 @@ const Map<String, int> _baseline = {
   // fetchPaymentIntents — two new repository surfaces, not accretion.
   // 780→800 (2026-08-04): #454 fetch/setInvoicePdfTemplate.
   // 800→830 (2026-08-04): #472 fetch/setDunningRules.
-  'lib/features/money/data/supabase_money_repository.dart': 830,
+  // 830→870 (2026-08-05): #488 the report-image library (list/upload/
+  // fetch on the floor-plans bucket).
+  'lib/features/money/data/supabase_money_repository.dart': 870,
   'lib/features/money/presentation/widgets/bill_view.dart': 750,
   // 600→660 (2026-08-04): #472 the due-reminder flag + emphasized
   // remind action on the open cards.
@@ -94,7 +101,8 @@ const Map<String, int> _baseline = {
   // header/body/footer band branches.
   // 790→820 (2026-08-04): #472 the banded LETTER builder.
   // 820→840 (2026-08-05): #482 the side-by-side ReportColumns renderer.
-  'lib/features/money/domain/invoice_pdf.dart': 840,
+  // 840→860 (2026-08-05): #488 the ReportImage renderer branch.
+  'lib/features/money/domain/invoice_pdf.dart': 860,
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the
   // kiosk arms the ambient working day itself, like realtime (#430).
   // 680→690: #462 whole-space overlays on the wall display.

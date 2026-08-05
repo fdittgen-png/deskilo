@@ -322,6 +322,7 @@ String blockText(ReportBlock block) => switch (block) {
       ReportText(:final text) => text,
       ReportMuted(:final text) => text,
       ReportTableRow(:final cells) => cells.join(' | '),
+      ReportImage(:final name) => '[image:$name]',
       ReportColumns(:final columns) => [
           for (final column in columns) column.map(blockText).join('\n'),
         ].join('\n'),

@@ -13,6 +13,9 @@
 //   `a | b`    → table row, cells after the first right-aligned
 //   `= a | b`  → bold table row (headers, totals)
 //   blank line → vertical spacing      anything else → body text
+//   `![name]` → an image from the workspace's report-image library
+//   (#488) — the logo, a stamp, a signature scan; unresolved names
+//   render as nothing.
 //   `:::` … `|||` … `:::` → side-by-side columns (#482): the fenced
 //   region is split at `|||` into equal-width columns, each parsed with
 //   the same markup. An empty first column pushes the second to the
@@ -63,6 +66,15 @@ class ReportTableRow extends ReportBlock {
   const ReportTableRow(this.cells, {this.bold = false});
   final List<String> cells;
   final bool bold;
+}
+
+/// An image reference (#488): `![name]` names a file in the workspace's
+/// report-image library. The renderers resolve it to bytes; an unknown
+/// name renders as nothing — a template must never break on a deleted
+/// image.
+class ReportImage extends ReportBlock {
+  const ReportImage(this.name);
+  final String name;
 }
 
 /// Side-by-side columns (#482) — each an independently parsed block
@@ -120,6 +132,23 @@ InvoiceReport? renderReportBands({
   }
 }
 
+/// Every image name a rendered report references (#488) — what the
+/// PDF builders must resolve to bytes before rendering.
+Set<String> reportImageRefs(InvoiceReport report) {
+  final refs = <String>{};
+  void walk(List<ReportBlock> blocks) {
+    for (final block in blocks) {
+      if (block is ReportImage) refs.add(block.name);
+      if (block is ReportColumns) block.columns.forEach(walk);
+    }
+  }
+
+  walk(report.header);
+  walk(report.body);
+  walk(report.footer);
+  return refs;
+}
+
 /// Line-by-line markup → blocks; see the header comment for the rules.
 List<ReportBlock> parseReportMarkup(String rendered) =>
     _parseLines(rendered.split('\n'));
@@ -156,6 +185,11 @@ List<ReportBlock> _parseLines(List<String> lines) {
       blocks.add(ReportColumns(
         [for (final column in columns) _parseLines(column)],
       ));
+      continue;
+    }
+    if (trimmed.startsWith('![') && trimmed.endsWith(']')) {
+      blocks.add(ReportImage(
+          trimmed.substring(2, trimmed.length - 1).trim()));
       continue;
     }
     if (trimmed == '---') {

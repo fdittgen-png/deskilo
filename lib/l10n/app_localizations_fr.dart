@@ -2092,6 +2092,64 @@ class AppLocalizationsFr extends AppLocalizations {
       'ex. « TVA non applicable, art. 293 B du CGI » — ou « Exonération de TVA, art. 261, 7-1° du CGI » pour les services rendus aux membres';
 
   @override
+  String get reportEditorMarkup => 'Balisage';
+
+  @override
+  String get reportEditorVisual => 'Visuel';
+
+  @override
+  String get reportInsertImage => 'Insérer une image';
+
+  @override
+  String get reportImagesTitle => 'Images des rapports';
+
+  @override
+  String get reportImagesEmpty =>
+      'Aucune image — téléversez votre logo, un tampon ou une signature et référencez-la avec ![nom].';
+
+  @override
+  String get reportImageUpload => 'Téléverser une image';
+
+  @override
+  String get reportVisualAddLine => 'Ajouter une ligne';
+
+  @override
+  String get reportLineTitle => 'Titre';
+
+  @override
+  String get reportLineSection => 'Section';
+
+  @override
+  String get reportLineText => 'Texte';
+
+  @override
+  String get reportLineSmall => 'Petit texte';
+
+  @override
+  String get reportLineRow => 'Ligne de tableau';
+
+  @override
+  String get reportLineBoldRow => 'Ligne en gras';
+
+  @override
+  String get reportLineDivider => 'Séparateur';
+
+  @override
+  String get reportLineSpacer => 'Espacement';
+
+  @override
+  String get reportLineImage => 'Image';
+
+  @override
+  String get reportLineColumns => 'Début/fin de colonnes';
+
+  @override
+  String get reportLineColumnsSplit => 'Saut de colonne';
+
+  @override
+  String get reportLineLogic => 'Logique';
+
+  @override
   String get eventTypeMemberJoin => 'Nouveau membre';
 
   @override

@@ -884,6 +884,82 @@
   "@invoiceLegalAssociationReasonHint": {
     "description": "Association invoicing + VAT regime gate (#484)"
   },
+  "reportEditorMarkup": "Markup",
+  "@reportEditorMarkup": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportEditorVisual": "Visuale",
+  "@reportEditorVisual": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportInsertImage": "Inserisci immagine",
+  "@reportInsertImage": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportImagesTitle": "Immagini dei report",
+  "@reportImagesTitle": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportImagesEmpty": "Nessuna immagine — carica il tuo logo, un timbro o una firma e riferiscila con ![nome].",
+  "@reportImagesEmpty": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportImageUpload": "Carica immagine",
+  "@reportImageUpload": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportVisualAddLine": "Aggiungi riga",
+  "@reportVisualAddLine": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineTitle": "Titolo",
+  "@reportLineTitle": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineSection": "Sezione",
+  "@reportLineSection": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineText": "Testo",
+  "@reportLineText": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineSmall": "Testo piccolo",
+  "@reportLineSmall": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineRow": "Riga di tabella",
+  "@reportLineRow": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineBoldRow": "Riga in grassetto",
+  "@reportLineBoldRow": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineDivider": "Divisore",
+  "@reportLineDivider": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineSpacer": "Spaziatura",
+  "@reportLineSpacer": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineImage": "Immagine",
+  "@reportLineImage": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineColumns": "Inizio/fine colonne",
+  "@reportLineColumns": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineColumnsSplit": "Interruzione di colonna",
+  "@reportLineColumnsSplit": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineLogic": "Logica",
+  "@reportLineLogic": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
   "eventTypeMemberJoin": "Nuovo membro",
   "memberStatusPending": "In attesa",
   "pendingApprovalTitle": "In attesa di approvazione",

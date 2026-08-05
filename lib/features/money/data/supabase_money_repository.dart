@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:convert' show base64Encode;
+import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/invoice.dart';
@@ -52,6 +53,48 @@ class SupabaseMoneyRepository implements MoneyRepository {
         .from('workspaces')
         .update({'invoice_pdf_template': template.toJson()})
         .eq('id', workspaceId);
+  }
+
+  @override
+  Future<List<String>> listReportImages(String workspaceId) async {
+    // #488 — the report-image library lives beside the level backgrounds
+    // in the private floor-plans bucket; the 0036 RLS (first path
+    // segment = workspace) covers it member-read / owner-write.
+    final entries = await _client.storage
+        .from('floor-plans')
+        .list(path: '$workspaceId/report');
+    return [
+      for (final entry in entries)
+        if (entry.name.isNotEmpty) entry.name,
+    ]..sort();
+  }
+
+  @override
+  Future<void> uploadReportImage(
+    String workspaceId, {
+    required String name,
+    required List<int> bytes,
+    required String contentType,
+  }) async {
+    await _client.storage.from('floor-plans').uploadBinary(
+          '$workspaceId/report/$name',
+          Uint8List.fromList(bytes),
+          fileOptions: FileOptions(contentType: contentType, upsert: true),
+        );
+  }
+
+  @override
+  Future<Uint8List?> fetchReportImage(
+      String workspaceId, String name) async {
+    try {
+      return await _client.storage
+          .from('floor-plans')
+          .download('$workspaceId/report/$name');
+    } on StorageException {
+      // trace-exempt: an image deleted from the library is a normal
+      // miss — the template renders without it by contract.
+      return null;
+    }
   }
 
   @override

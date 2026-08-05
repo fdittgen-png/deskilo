@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:typed_data';
+
 import 'einvoice_gateway.dart';
 import 'vat_rate.dart';
 import 'fee_band.dart';
@@ -32,6 +34,22 @@ abstract class MoneyRepository {
     String workspaceId,
     InvoicePdfTemplate template,
   );
+
+  /// The workspace's report-image library (#488): file names stored
+  /// under `<workspace>/report/` in the floor-plans bucket — the logo,
+  /// stamps, signature scans the templates reference with `![name]`.
+  Future<List<String>> listReportImages(String workspaceId);
+
+  /// Owner-only (bucket RLS): add or replace a library image.
+  Future<void> uploadReportImage(
+    String workspaceId, {
+    required String name,
+    required List<int> bytes,
+    required String contentType,
+  });
+
+  /// A library image's bytes; null when it does not exist.
+  Future<Uint8List?> fetchReportImage(String workspaceId, String name);
 
   /// The workspace's dunning policy (#472, 0093); defaults when unset.
   Future<DunningRules> fetchDunningRules(String workspaceId);

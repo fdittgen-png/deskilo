@@ -657,6 +657,136 @@ final class InvoicePdfTemplateProvider
 String _$invoicePdfTemplateHash() =>
     r'1b8881ae90b31cd2a288f773b931b553ca1ee079';
 
+/// The workspace's report-image library (#488) — the names templates
+/// can reference with `![name]`.
+
+@ProviderFor(reportImages)
+final reportImagesProvider = ReportImagesProvider._();
+
+/// The workspace's report-image library (#488) — the names templates
+/// can reference with `![name]`.
+
+final class ReportImagesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<String>>,
+          List<String>,
+          FutureOr<List<String>>
+        >
+    with $FutureModifier<List<String>>, $FutureProvider<List<String>> {
+  /// The workspace's report-image library (#488) — the names templates
+  /// can reference with `![name]`.
+  ReportImagesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'reportImagesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$reportImagesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<String>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<String>> create(Ref ref) {
+    return reportImages(ref);
+  }
+}
+
+String _$reportImagesHash() => r'7f9d17251af945706263911cb12e3439baac22ab';
+
+/// One library image's bytes, cached per name (#488).
+
+@ProviderFor(reportImageBytes)
+final reportImageBytesProvider = ReportImageBytesFamily._();
+
+/// One library image's bytes, cached per name (#488).
+
+final class ReportImageBytesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Uint8List?>,
+          Uint8List?,
+          FutureOr<Uint8List?>
+        >
+    with $FutureModifier<Uint8List?>, $FutureProvider<Uint8List?> {
+  /// One library image's bytes, cached per name (#488).
+  ReportImageBytesProvider._({
+    required ReportImageBytesFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'reportImageBytesProvider',
+         isAutoDispose: false,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$reportImageBytesHash();
+
+  @override
+  String toString() {
+    return r'reportImageBytesProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<Uint8List?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Uint8List?> create(Ref ref) {
+    final argument = this.argument as String;
+    return reportImageBytes(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ReportImageBytesProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$reportImageBytesHash() => r'd9499401aaa13666048ea19c92458ddd78ec9b58';
+
+/// One library image's bytes, cached per name (#488).
+
+final class ReportImageBytesFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<Uint8List?>, String> {
+  ReportImageBytesFamily._()
+    : super(
+        retry: null,
+        name: r'reportImageBytesProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: false,
+      );
+
+  /// One library image's bytes, cached per name (#488).
+
+  ReportImageBytesProvider call(String name) =>
+      ReportImageBytesProvider._(argument: name, from: this);
+
+  @override
+  String toString() => r'reportImageBytesProvider';
+}
+
 /// Dunning policy of the active workspace (#472); defaults while none
 /// is stored. The Open tab derives reminder suggestions from it.
 

@@ -24,6 +24,7 @@ import '../../domain/invoice_report.dart';
 import '../invoice_actions.dart';
 import '../report_defaults.dart';
 import 'report_preview.dart';
+import 'report_visual_editor.dart';
 
 /// The invoice REPORT editor (#454, rebuilt as a banded reporting tool
 /// in #470): three Liquid bands — header, body with the lines, footer —
@@ -64,6 +65,15 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
   /// 'statement', or 'rN' for reminder level N — every one its own
   /// report.
   String _doc = 'invoice';
+
+  /// #488 — WYSIWYG mode: the bands as typed, reorderable rows instead
+  /// of raw markup. Both modes edit the SAME controllers.
+  bool _visual = false;
+
+  /// Bumped whenever the controllers change from OUTSIDE the visual
+  /// editors (doc switch, preset, reset, image insert) — recreates them
+  /// so they re-seed from the new text.
+  int _visualEpoch = 0;
 
   /// Unsaved edits per document, so switching documents loses nothing.
   final Map<String, ReportBands> _drafts = {};
@@ -109,6 +119,7 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
       _header.text = bands.header;
       _body.text = bands.body;
       _footer.text = bands.footer;
+      _visualEpoch++;
     });
   }
 
@@ -217,6 +228,8 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
         ? _currentBands
         : defaultBandsForDoc(_doc, l10n);
     final report = renderReportBands(bands: bands, data: data);
+    final images = await resolveReportImages(ref, report);
+    if (!mounted) return;
     if (report == null) {
       AppSnack.error(
         context,
@@ -226,7 +239,7 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
       return;
     }
     await showReportQuickPreview(context,
-        report: report, simulated: simulated);
+        report: report, simulated: simulated, images: images);
   }
 
   /// Renders the selected DOCUMENT through the UNSAVED bands as a PDF —
@@ -262,6 +275,8 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
                   footer: _currentBands.footer,
                 ),
           workspace: ref.read(currentWorkspaceProvider).value,
+          reportImage: (name) =>
+              ref.read(reportImageBytesProvider(name).future),
         );
         pdf = (bytes: invoicePdf.bytes, fileName: invoicePdf.fileName);
       } else if (_doc == 'statement') {
@@ -277,6 +292,7 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
             pw.Font.ttf(await rootBundle.load(asset));
         final bytes = await buildBandedLetterPdf(
           report: report,
+          reportImages: await resolveReportImages(ref, report),
           pageLabel: l10nSync?.invoicePdfPage ?? 'Page',
           documentTitle: l10nSync?.billPdfTitle ?? 'Monthly bill',
           baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
@@ -362,7 +378,7 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
         '{% if voided %} … {% else %} … {% endif %}   '
         '{% for line in lines %} {{ line.label }} | {{ line.amount }} {% endfor %}\n'
         '# title   ## section   > small   ---   a | b   = bold | row\n'
-        ':::  left column  |||  right column  :::';
+        ':::  left column  |||  right column  :::   ![image]';
     return SafeArea(
       child: SingleChildScrollView(
         padding: EdgeInsets.only(
@@ -433,24 +449,72 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
                   ),
               ]),
             ),
-            _bandField(
-              _header,
-              l10n?.invoiceTemplateHeaderLabel ?? 'Header band',
-              key: 'invoice-template-header',
+            const SizedBox(height: AppSpacing.sm),
+            // #488 — markup or WYSIWYG, same underlying bands.
+            SegmentedButton<bool>(
+              key: const ValueKey('invoice-template-mode'),
+              segments: [
+                ButtonSegment(
+                  value: false,
+                  icon: const Icon(Icons.code),
+                  label:
+                      Text(l10n?.reportEditorMarkup ?? 'Markup'),
+                ),
+                ButtonSegment(
+                  value: true,
+                  icon: const Icon(Icons.design_services_outlined),
+                  label:
+                      Text(l10n?.reportEditorVisual ?? 'Visual'),
+                ),
+              ],
+              selected: {_visual},
+              onSelectionChanged: (selection) => setState(() {
+                _visual = selection.first;
+                _visualEpoch++;
+              }),
             ),
-            _bandField(
-              _body,
-              l10n?.invoiceTemplateBodyLabel ??
-                  'Body band (the invoice lines)',
-              key: 'invoice-template-body',
-              minLines: 5,
-            ),
-            _bandField(
-              _footer,
-              l10n?.invoiceTemplateFooterLabel ??
-                  'Footer band (payment terms, legal mentions)',
-              key: 'invoice-template-footer',
-            ),
+            if (_visual) ...[
+              ReportVisualEditor(
+                key: ValueKey('visual-header-$_doc-$_visualEpoch'),
+                controller: _header,
+                label:
+                    l10n?.invoiceTemplateHeaderLabel ?? 'Header band',
+                bandKey: 'visual-header',
+              ),
+              ReportVisualEditor(
+                key: ValueKey('visual-body-$_doc-$_visualEpoch'),
+                controller: _body,
+                label: l10n?.invoiceTemplateBodyLabel ??
+                    'Body band (the invoice lines)',
+                bandKey: 'visual-body',
+              ),
+              ReportVisualEditor(
+                key: ValueKey('visual-footer-$_doc-$_visualEpoch'),
+                controller: _footer,
+                label: l10n?.invoiceTemplateFooterLabel ??
+                    'Footer band (payment terms, legal mentions)',
+                bandKey: 'visual-footer',
+              ),
+            ] else ...[
+              _bandField(
+                _header,
+                l10n?.invoiceTemplateHeaderLabel ?? 'Header band',
+                key: 'invoice-template-header',
+              ),
+              _bandField(
+                _body,
+                l10n?.invoiceTemplateBodyLabel ??
+                    'Body band (the invoice lines)',
+                key: 'invoice-template-body',
+                minLines: 5,
+              ),
+              _bandField(
+                _footer,
+                l10n?.invoiceTemplateFooterLabel ??
+                    'Footer band (payment terms, legal mentions)',
+                key: 'invoice-template-footer',
+              ),
+            ],
             const SizedBox(height: AppSpacing.md),
             // #474: pick a ready-made report, see it INSTANTLY, then
             // download or share the PDF — or save the bands.
@@ -466,6 +530,7 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
                     _header.text = preset.bands.header;
                     _body.text = preset.bands.body;
                     _footer.text = preset.bands.footer;
+                    _visualEpoch++;
                   }),
                   itemBuilder: (context) => [
                     for (final preset in presetsForDoc(_doc, l10n))
@@ -483,6 +548,27 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
                     // The menu opens from the surrounding button.
                     onPressed: null,
                   ),
+                ),
+                OutlinedButton.icon(
+                  key: const ValueKey('invoice-template-image'),
+                  icon: const Icon(Icons.image_outlined),
+                  label:
+                      Text(l10n?.reportInsertImage ?? 'Insert image'),
+                  onPressed: _busy
+                      ? null
+                      : () async {
+                          final name =
+                              await showReportImagePicker(context, ref);
+                          if (name == null || !mounted) return;
+                          // Appended to the band a logo most likely
+                          // belongs to; move it anywhere afterwards.
+                          setState(() {
+                            _header.text = _header.text.isEmpty
+                                ? '![$name]'
+                                : '${_header.text}\n![$name]';
+                            _visualEpoch++;
+                          });
+                        },
                 ),
                 OutlinedButton.icon(
                   key: const ValueKey('invoice-template-quick-preview'),
@@ -526,6 +612,7 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
                       : () {
                           final d = defaultBandsForDoc(_doc, l10n);
                           setState(() {
+                            _visualEpoch++;
                             _header.text = d.header;
                             _body.text = d.body;
                             _footer.text = d.footer;
