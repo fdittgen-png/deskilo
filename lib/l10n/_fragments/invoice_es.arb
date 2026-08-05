@@ -380,8 +380,13 @@
   "einvoiceDevToken": "Token o credencial Dev",
   "invoiceSentTestChip": "prueba",
   "invoiceTemplateTitle": "Plantilla del PDF de factura",
-  "invoiceTemplateHint": "Texto libre en el PDF generado — el XML de factura electrónica nunca se toca. Marcadores:",
+  "invoiceTemplateHint": "Tres bandas de informe renderizadas en el PDF — el XML de la factura electrónica nunca se toca. Condiciones y bucles Liquid, luego marcado de líneas:",
   "invoiceTemplateIntroLabel": "Introducción (sobre el bloque del destinatario)",
   "invoiceTemplateFooterLabel": "Pie (bajo los totales — condiciones de pago, menciones legales)",
-  "invoiceTemplateSaved": "Plantilla de factura guardada."
+  "invoiceTemplateSaved": "Plantilla de factura guardada.",
+  "invoiceTemplateHeaderLabel": "Banda de cabecera",
+  "invoiceTemplateBodyLabel": "Banda de cuerpo (las líneas de la factura)",
+  "invoiceTemplateReset": "Restablecer al modelo por defecto",
+  "invoiceTemplatePreview": "Vista previa",
+  "invoiceTemplateNoPreview": "Emite primero una factura — la vista previa usa la más reciente."
 }

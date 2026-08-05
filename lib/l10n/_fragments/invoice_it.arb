@@ -380,8 +380,13 @@
   "einvoiceDevToken": "Token o credenziale Dev",
   "invoiceSentTestChip": "test",
   "invoiceTemplateTitle": "Modello PDF della fattura",
-  "invoiceTemplateHint": "Testo libero sul PDF generato — l'XML della fattura elettronica non viene mai toccato. Segnaposto:",
+  "invoiceTemplateHint": "Tre bande di report rese sul PDF — l'XML della fattura elettronica non viene mai toccato. Condizioni e cicli Liquid, poi markup di riga:",
   "invoiceTemplateIntroLabel": "Introduzione (sopra il blocco del destinatario)",
   "invoiceTemplateFooterLabel": "Piè di pagina (sotto i totali — condizioni di pagamento, menzioni legali)",
-  "invoiceTemplateSaved": "Modello di fattura salvato."
+  "invoiceTemplateSaved": "Modello di fattura salvato.",
+  "invoiceTemplateHeaderLabel": "Banda di intestazione",
+  "invoiceTemplateBodyLabel": "Banda del corpo (le righe della fattura)",
+  "invoiceTemplateReset": "Ripristina il modello predefinito",
+  "invoiceTemplatePreview": "Anteprima",
+  "invoiceTemplateNoPreview": "Emetti prima una fattura — l'anteprima usa la più recente."
 }

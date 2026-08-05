@@ -32,6 +32,7 @@ import '../domain/saf_t.dart';
 import '../domain/invoice_ubl_check.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/invoice_pdf_template.dart';
+import '../domain/invoice_report.dart';
 import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
 import 'widgets/einvoice_environment_picker.dart';
@@ -87,16 +88,48 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
           '${dateFormat.format(voidedAt)}';
   Future<pw.Font> font(String asset) async =>
       pw.Font.ttf(await rootBundle.load(asset));
-  // #454: placeholder resolution happens here, where every value is at
-  // hand — the renderer receives finished text.
-  final placeholderValues = <String, String>{
+  // #454/#470: the report data model — every value the Liquid bands
+  // can reference, resolved here where formatting is at hand. Amounts
+  // arrive pre-formatted in the workspace currency; the numeric flags
+  // feed {% if %} conditions.
+  String money(int cents) => currency.format(cents / 100);
+  final reportData = <String, Object?>{
     'workspace': invoice.workspaceName,
+    'workspace_address': invoice.workspaceAddress,
     'member': invoice.memberName,
     'number': invoice.number,
     'period': periodLabel,
     'issued': dateLabel,
-    'total': currency.format(invoice.totalCents / 100),
+    'issued_by': invoice.issuerName,
+    'replaces': invoice.replacesNumber,
+    'total': money(invoice.totalCents),
+    'charges': money(invoice.chargesCents),
+    'payments': money(invoice.lines
+        .where((l) => l.amountCents < 0)
+        .fold(0, (sum, l) => sum + l.amountCents)),
+    'voided': invoice.isVoided,
+    'proforma': proforma,
+    'copy': copy,
+    'has_vat': invoice.vatTotals.any((t) => t.vatCents > 0),
+    'lines': [
+      for (final line in invoice.lines)
+        {
+          'label': invoiceLineText(l10n, line),
+          'amount': money(line.amountCents),
+          'negative': line.amountCents < 0,
+        },
+    ],
+    'vat': [
+      for (final t in invoice.vatTotals.where((t) => t.vatCents > 0))
+        {
+          'rate': '${t.percent == t.percent.roundToDouble() ? t.percent.toStringAsFixed(0) : t.percent} %',
+          'net': money(t.netCents),
+          'amount': money(t.vatCents),
+        },
+    ],
   };
+  final report =
+      renderInvoiceReport(template: template, data: reportData);
   final bytes = await buildInvoicePdf(
     invoice: invoice,
     lineText: (line) => invoiceLineText(l10n, line),
@@ -134,9 +167,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     copy: copy,
     facturXml: facturXml,
     colorProfile: colorProfile,
-    introText: InvoicePdfTemplate.apply(template.intro, placeholderValues),
-    footerText:
-        InvoicePdfTemplate.apply(template.footer, placeholderValues),
+    report: report,
     baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
     boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
   );

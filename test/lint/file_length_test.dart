@@ -55,7 +55,8 @@ const Map<String, int> _baseline = {
   // send flow — feature lines, not accretion; picker itself is its own file.
   // 920→950 (2026-08-04): #454 template lookup + resolution threaded
   // through every PDF render; the editor sheet is its own file.
-  'lib/features/money/presentation/invoice_actions.dart': 950,
+  // 950→990: #470 the report data model (fields, lines, VAT rows).
+  'lib/features/money/presentation/invoice_actions.dart': 990,
   'lib/features/workspace/domain/workspace_xml.dart': 800,
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.
@@ -72,7 +73,9 @@ const Map<String, int> _baseline = {
   // swipe reply/delete on the rows.
   'lib/features/events/presentation/screens/events_screen.dart': 700,
   // 680→700 (2026-08-04): #454 owner-template intro/footer blocks.
-  'lib/features/money/domain/invoice_pdf.dart': 700,
+  // 700→790: #470 the banded report renderer (_reportWidgets) and the
+  // header/body/footer band branches.
+  'lib/features/money/domain/invoice_pdf.dart': 790,
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the
   // kiosk arms the ambient working day itself, like realtime (#430).
   // 680→690: #462 whole-space overlays on the wall display.

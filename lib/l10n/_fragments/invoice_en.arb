@@ -915,7 +915,7 @@
   "@invoiceTemplateTitle": {
     "description": "Invoice PDF template editor (#454)"
   },
-  "invoiceTemplateHint": "Free text on the rendered PDF — the e-invoice XML is never touched. Placeholders:",
+  "invoiceTemplateHint": "Three report bands rendered on the PDF — the e-invoice XML is never touched. Liquid conditions and loops, then line markup:",
   "@invoiceTemplateHint": {
     "description": "Invoice PDF template editor (#454)"
   },
@@ -930,5 +930,25 @@
   "invoiceTemplateSaved": "Invoice template saved.",
   "@invoiceTemplateSaved": {
     "description": "Invoice PDF template editor (#454)"
+  },
+  "invoiceTemplateHeaderLabel": "Header band",
+  "@invoiceTemplateHeaderLabel": {
+    "description": "Invoice report editor (#470)"
+  },
+  "invoiceTemplateBodyLabel": "Body band (the invoice lines)",
+  "@invoiceTemplateBodyLabel": {
+    "description": "Invoice report editor (#470)"
+  },
+  "invoiceTemplateReset": "Reset to default",
+  "@invoiceTemplateReset": {
+    "description": "Invoice report editor (#470)"
+  },
+  "invoiceTemplatePreview": "Preview",
+  "@invoiceTemplatePreview": {
+    "description": "Invoice report editor (#470)"
+  },
+  "invoiceTemplateNoPreview": "Issue an invoice first — the preview renders your newest one.",
+  "@invoiceTemplateNoPreview": {
+    "description": "Invoice report editor (#470)"
   }
 }

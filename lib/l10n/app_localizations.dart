@@ -3407,7 +3407,7 @@ abstract class AppLocalizations {
   /// Invoice PDF template editor (#454)
   ///
   /// In en, this message translates to:
-  /// **'Free text on the rendered PDF — the e-invoice XML is never touched. Placeholders:'**
+  /// **'Three report bands rendered on the PDF — the e-invoice XML is never touched. Liquid conditions and loops, then line markup:'**
   String get invoiceTemplateHint;
 
   /// Invoice PDF template editor (#454)
@@ -3427,6 +3427,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invoice template saved.'**
   String get invoiceTemplateSaved;
+
+  /// Invoice report editor (#470)
+  ///
+  /// In en, this message translates to:
+  /// **'Header band'**
+  String get invoiceTemplateHeaderLabel;
+
+  /// Invoice report editor (#470)
+  ///
+  /// In en, this message translates to:
+  /// **'Body band (the invoice lines)'**
+  String get invoiceTemplateBodyLabel;
+
+  /// Invoice report editor (#470)
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to default'**
+  String get invoiceTemplateReset;
+
+  /// Invoice report editor (#470)
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get invoiceTemplatePreview;
+
+  /// Invoice report editor (#470)
+  ///
+  /// In en, this message translates to:
+  /// **'Issue an invoice first — the preview renders your newest one.'**
+  String get invoiceTemplateNoPreview;
 
   /// No description provided for @eventTypeMemberJoin.
   ///

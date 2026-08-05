@@ -321,6 +321,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.7"
+  csslib:
+    dependency: transitive
+    description:
+      name: csslib
+      sha256: "09bad715f418841f976c77db72d5398dc1253c21fb9c0c7f0b0b985860b2d58e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
+  d4_array:
+    dependency: transitive
+    description:
+      name: d4_array
+      sha256: dac8e1edc9e26dab0433c0e005d8dc42e5bcc43d22e9add528a95eaf770176e9
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  d4_time:
+    dependency: transitive
+    description:
+      name: d4_time
+      sha256: "30fb4deda3c5418cf4258a6881d22ed447a5baaef4f8bd6f5238d0c7d0e33a03"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  d4_time_format:
+    dependency: transitive
+    description:
+      name: d4_time_format
+      sha256: "680ab4e327d68d177f052f18bb0787317ab5dffd761a15ae270481537377631a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   dart_jsonwebtoken:
     dependency: transitive
     description:
@@ -679,6 +711,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.4"
+  gato:
+    dependency: transitive
+    description:
+      name: gato
+      sha256: "03fa3a33d50f71a912e30827ddf47c89e06e9acfd2b6b178aff0e1aa2f1e8b90"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5+1"
   glob:
     dependency: transitive
     description:
@@ -751,6 +791,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
+  html:
+    dependency: transitive
+    description:
+      name: html
+      sha256: "6d1264f2dffa1b1101c25a91dff0dc2daee4c18e87cd8538729773c073dbf602"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.15.6"
+  html_unescape:
+    dependency: transitive
+    description:
+      name: html_unescape
+      sha256: "15362d7a18f19d7b742ef8dcb811f5fd2a2df98db9f80ea393c075189e0b61e3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   http:
     dependency: transitive
     description:
@@ -940,6 +996,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  liquify:
+    dependency: "direct main"
+    description:
+      name: liquify
+      sha256: "89228cfb5a269158d67253451b113ce4d110ce4e094955e95684bd89a99af0a7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.6.1"
   logging:
     dependency: transitive
     description:
