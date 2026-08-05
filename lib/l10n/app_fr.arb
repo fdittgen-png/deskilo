@@ -1019,6 +1019,7 @@
   "profilePhotoRemoved": "Photo supprimée",
   "profilePhotoSaveFailed": "Impossible de mettre à jour la photo",
   "profilePhotoFileType": "Image",
+  "settingsBillingReports": "Facturation & rapports",
   "profilesDefault": "Profil par défaut au démarrage",
   "profilesMakeDefault": "Utiliser par défaut au démarrage",
   "eventTypeRoleChange": "Changement de rôle",

@@ -2812,6 +2812,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get profilePhotoFileType => 'Imagen';
 
   @override
+  String get settingsBillingReports => 'Facturación e informes';
+
+  @override
   String get profilesDefault => 'Predeterminado al iniciar';
 
   @override

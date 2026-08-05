@@ -413,6 +413,17 @@ class SettingsScreen extends ConsumerWidget {
           // Features to reveal its settings, disable it and the entry (and its
           // route) go with it. The master Features toggle below is always
           // reachable so a disabled feature can be switched back on.
+          // #478: billing & reports as ONE admin entry — invoicing hub
+          // with the report editor and the reminder rules in its header.
+          if (showAdminSection &&
+              features.contains(WorkspaceFeature.invoicing))
+            ListTile(
+              key: const ValueKey('settings-billing-reports'),
+              leading: const Icon(Icons.receipt_long_outlined),
+              title: Text(
+                  l10n?.settingsBillingReports ?? 'Billing & reports'),
+              onTap: () => context.push('/invoices'),
+            ),
           if (isOwner && features.contains(WorkspaceFeature.onlinePayments))
             ListTile(
               leading: const Icon(Icons.credit_card_outlined),

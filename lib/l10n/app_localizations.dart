@@ -5102,6 +5102,12 @@ abstract class AppLocalizations {
   /// **'Image'**
   String get profilePhotoFileType;
 
+  /// Admin settings entry to the invoicing hub (#478)
+  ///
+  /// In en, this message translates to:
+  /// **'Billing & reports'**
+  String get settingsBillingReports;
+
   /// No description provided for @profilesDefault.
   ///
   /// In en, this message translates to:

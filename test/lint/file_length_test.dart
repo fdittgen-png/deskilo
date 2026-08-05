@@ -40,9 +40,10 @@ const Map<String, int> _baseline = {
   'lib/features/reservations/presentation/screens/reserve_screen.dart': 1070,
   // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
   // workspace hint subtitle and the RPC write helper.
-  'lib/features/profile/presentation/screens/settings_screen.dart': 990,
+  // 990→1000 (2026-08-05): #478 Billing & reports admin entry.
+  'lib/features/profile/presentation/screens/settings_screen.dart': 1000,
   // 980→1030 (2026-08-05): #476 the statement export honors the
-  // owner's report template.
+  // owner's report template (#478 Invoices button joins the grid).
   'lib/features/money/presentation/screens/money_screen.dart': 1030,
   // 910→950 (2026-08-04): #456 note tile + admin broadcast button —
   // the dialog itself is its own file.

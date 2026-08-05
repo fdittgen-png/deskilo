@@ -91,5 +91,9 @@
   "profilePhotoFileType": "Image",
   "@profilePhotoFileType": {
     "description": "File-picker type label when choosing a profile photo; the word is identical across locales but the key exists for parity."
+  },
+  "settingsBillingReports": "Billing & reports",
+  "@settingsBillingReports": {
+    "description": "Admin settings entry to the invoicing hub (#478)"
   }
 }
