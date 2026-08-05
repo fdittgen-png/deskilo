@@ -2064,6 +2064,30 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reportColTotal => 'Totale';
 
   @override
+  String get invoiceLegalKindField => 'Tipo di organizzazione';
+
+  @override
+  String get invoiceLegalKindCompany => 'Impresa';
+
+  @override
+  String get invoiceLegalKindAssociation => 'Associazione (non profit)';
+
+  @override
+  String get invoiceLegalAssociationHint =>
+      'Le clausole di mora, recupero crediti e sconto vengono stampate solo se compilate — sono obbligatorie solo tra professionisti.';
+
+  @override
+  String get invoiceLegalFormHintAssociation => 'es. Association loi 1901';
+
+  @override
+  String get invoiceLegalRegistrationHintAssociation =>
+      'es. RNA W123456789 · SIRET se assegnato';
+
+  @override
+  String get invoiceLegalAssociationReasonHint =>
+      'es. «TVA non applicable, art. 293 B du CGI» — o «Exonération de TVA, art. 261, 7-1° du CGI» per i servizi ai membri';
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override

@@ -27,8 +27,9 @@ String _sellerBlock(AppLocalizations? l10n) => '''
 /// carry: payment terms + escompte, penalty + recovery indemnity, then
 /// the optional insurance and special-regime mentions.
 String _legalFooter(AppLocalizations? l10n) => '''
-> {{ payment_terms }} — {{ escompte }}
-> {{ late_penalty }} {{ recovery_indemnity }}
+> {{ payment_terms }}{% if escompte != "" %} — {{ escompte }}{% endif %}
+{% if late_penalty != "" %}> {{ late_penalty }}{% endif %}
+{% if recovery_indemnity != "" %}> {{ recovery_indemnity }}{% endif %}
 {% if insurance != "" %}> {{ insurance }}{% endif %}
 {% if special_mentions != "" %}> {{ special_mentions }}{% endif %}''';
 
@@ -88,7 +89,7 @@ ${l10n?.vatPdfNet ?? 'Net'} | {{ net_total }}
 :::''';
   const mentions = '''
 {% if exemption_reason != "" %}> {{ exemption_reason }}
-{% endif %}> {{ payment_terms }} — {{ escompte }}''';
+{% endif %}> {{ payment_terms }}{% if escompte != "" %} — {{ escompte }}{% endif %}''';
   switch (id) {
     case 'simple':
       return ReportBands(
@@ -202,7 +203,10 @@ ReportBands _reminderPresetBands(
       '> ${l10n?.reminderPdfClosing ?? 'If you have already paid, please disregard this letter.'}';
   // A reminder cites the statutory late-payment clauses (#480) — on the
   // firm levels they are the point of the letter.
-  const clauses = '> {{ late_penalty }} {{ recovery_indemnity }}';
+  // Guarded (#484): an association prints none of these by default.
+  const clauses =
+      '{% if late_penalty != "" %}> {{ late_penalty }}\n{% endif %}'
+      '{% if recovery_indemnity != "" %}> {{ recovery_indemnity }}\n{% endif %}';
   switch (id) {
     case 'simple':
       return ReportBands(

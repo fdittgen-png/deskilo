@@ -167,6 +167,10 @@ void main() {
 
   testWidgets('the legal identity screen links to the rates and lists them',
       (tester) async {
+    // #484 — the rates tile shows only under a VAT-charging regime.
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.workspaces[0] =
+        workspace.workspaces[0].copyWith(vatRegime: 'vat_registered');
     await pumpVat(
       tester,
       money: FakeMoneyRepository()
@@ -174,6 +178,7 @@ void main() {
           const VatRate(
               id: 'vat-1', label: 'Standard', percent: 19, isDefault: true),
         ],
+      workspace: workspace,
       route: '/legal-identity',
     );
 
@@ -188,6 +193,10 @@ void main() {
   });
 
   testWidgets('a service is taxed at a rate the owner picks', (tester) async {
+    // #484 — the picker exists only under a VAT-charging regime.
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.workspaces[0] =
+        workspace.workspaces[0].copyWith(vatRegime: 'vat_registered');
     final money = await pumpVat(
       tester,
       money: FakeMoneyRepository()
@@ -196,6 +205,7 @@ void main() {
               id: 'vat-1', label: 'Standard', percent: 19, isDefault: true),
           const VatRate(id: 'vat-2', label: 'Reduced', percent: 7),
         ],
+      workspace: workspace,
       route: '/services',
     );
 
@@ -220,6 +230,25 @@ void main() {
   testWidgets('with no rate configured the service sheet shows no VAT field '
       'at all', (tester) async {
     await pumpVat(tester, route: '/services');
+
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('vat-rate-field')), findsNothing);
+  });
+
+  testWidgets('a workspace that declared NO VAT regime never sees the '
+      'service VAT picker — even with leftover rates (#484)',
+      (tester) async {
+    await pumpVat(
+      tester,
+      money: FakeMoneyRepository()
+        ..vatRates = [
+          const VatRate(
+              id: 'vat-1', label: 'Standard', percent: 19, isDefault: true),
+        ],
+      route: '/services',
+    );
 
     await tester.tap(find.byType(FloatingActionButton));
     await tester.pumpAndSettle();

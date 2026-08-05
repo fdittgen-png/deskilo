@@ -2045,6 +2045,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportColTotal => 'Total';
 
   @override
+  String get invoiceLegalKindField => 'Organization type';
+
+  @override
+  String get invoiceLegalKindCompany => 'Company / business';
+
+  @override
+  String get invoiceLegalKindAssociation => 'Association (non-profit)';
+
+  @override
+  String get invoiceLegalAssociationHint =>
+      'The late-penalty, recovery-indemnity and discount clauses are printed only when filled — they are mandatory only between professionals.';
+
+  @override
+  String get invoiceLegalFormHintAssociation => 'e.g. Association loi 1901';
+
+  @override
+  String get invoiceLegalRegistrationHintAssociation =>
+      'e.g. RNA W123456789 · SIRET if assigned';
+
+  @override
+  String get invoiceLegalAssociationReasonHint =>
+      'e.g. \"TVA non applicable, art. 293 B du CGI\" — or \"Exonération de TVA, art. 261, 7-1° du CGI\" for services to members';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

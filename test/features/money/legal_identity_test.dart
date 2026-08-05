@@ -165,6 +165,31 @@ void main() {
     expect(legal.latePenalty, '');
   });
 
+  testWidgets(
+      'declaring the workspace an ASSOCIATION saves seller_kind and '
+      'adapts the hints (RNA, no B2B clauses) (#484)', (tester) async {
+    final workspace = await pumpIdentity(tester);
+
+    await reveal(tester, const ValueKey('legal-identity-kind'));
+    await tester.tap(find.text('Association (non-profit)'));
+    await tester.pumpAndSettle();
+
+    // The hints now speak association: RNA instead of a trade register,
+    // and the B2B-clause note is shown.
+    expect(find.textContaining('RNA W123456789'), findsOneWidget);
+    expect(find.textContaining('mandatory only between professionals'),
+        findsOneWidget);
+
+    await reveal(tester, const ValueKey('legal-identity-save'));
+    await tester.tap(find.byKey(const ValueKey('legal-identity-save')));
+    await tester.pumpAndSettle();
+
+    final legal = InvoiceLegal.fromJson(
+        workspace.workspaces.single.invoiceLegal);
+    expect(legal.sellerKind, 'association');
+    expect(legal.isAssociation, isTrue);
+  });
+
   testWidgets('a plain member cannot reach the screen at all', (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace();
     workspace.myMember =

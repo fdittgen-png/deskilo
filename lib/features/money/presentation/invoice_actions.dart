@@ -89,6 +89,10 @@ Map<String, Object?> legalMentionData(
   final legal = InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {});
   String orDefault(String value, String fallback) =>
       value.trim().isNotEmpty ? value.trim() : fallback;
+  // #484 — the B2B-only clauses (mandatory between professionals) have
+  // NO default on an association's documents; explicit text still wins.
+  String orB2bDefault(String value, String fallback) =>
+      legal.isAssociation ? value.trim() : orDefault(value, fallback);
   return <String, Object?>{
     'seller_legal_form': legal.legalForm,
     'seller_registration': legal.registration,
@@ -105,17 +109,17 @@ Map<String, Object?> legalMentionData(
       legal.paymentTerms,
       l10n?.invoiceLegalPaymentTermsDefault ?? 'Payment on receipt.',
     ),
-    'late_penalty': orDefault(
+    'late_penalty': orB2bDefault(
       legal.latePenalty,
       l10n?.invoiceLegalLatePenaltyDefault ??
           'Late-payment penalty: three times the statutory interest rate.',
     ),
-    'recovery_indemnity': orDefault(
+    'recovery_indemnity': orB2bDefault(
       legal.recoveryIndemnity,
       l10n?.invoiceLegalRecoveryDefault ??
           'Fixed recovery indemnity for collection costs: €40.',
     ),
-    'escompte': orDefault(
+    'escompte': orB2bDefault(
       legal.escompte,
       l10n?.invoiceLegalEscompteDefault ??
           'No discount for early payment.',

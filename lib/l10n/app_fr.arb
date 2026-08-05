@@ -856,6 +856,34 @@
   "@reportColTotal": {
     "description": "French facture layout: line-table column headers (#482)"
   },
+  "invoiceLegalKindField": "Type d'organisation",
+  "@invoiceLegalKindField": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalKindCompany": "Entreprise",
+  "@invoiceLegalKindCompany": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalKindAssociation": "Association (loi 1901)",
+  "@invoiceLegalKindAssociation": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalAssociationHint": "Les clauses de pénalités, d'indemnité de recouvrement et d'escompte ne sont imprimées que si renseignées — elles ne sont obligatoires qu'entre professionnels.",
+  "@invoiceLegalAssociationHint": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalFormHintAssociation": "ex. Association loi 1901",
+  "@invoiceLegalFormHintAssociation": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalRegistrationHintAssociation": "ex. RNA W123456789 · SIRET si attribué",
+  "@invoiceLegalRegistrationHintAssociation": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalAssociationReasonHint": "ex. « TVA non applicable, art. 293 B du CGI » — ou « Exonération de TVA, art. 261, 7-1° du CGI » pour les services rendus aux membres",
+  "@invoiceLegalAssociationReasonHint": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
   "eventTypeMemberJoin": "Nouveau membre",
   "memberStatusPending": "En attente",
   "pendingApprovalTitle": "En attente d'approbation",

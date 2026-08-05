@@ -856,6 +856,34 @@
   "@reportColTotal": {
     "description": "French facture layout: line-table column headers (#482)"
   },
+  "invoiceLegalKindField": "Tipo di organizzazione",
+  "@invoiceLegalKindField": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalKindCompany": "Impresa",
+  "@invoiceLegalKindCompany": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalKindAssociation": "Associazione (non profit)",
+  "@invoiceLegalKindAssociation": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalAssociationHint": "Le clausole di mora, recupero crediti e sconto vengono stampate solo se compilate — sono obbligatorie solo tra professionisti.",
+  "@invoiceLegalAssociationHint": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalFormHintAssociation": "es. Association loi 1901",
+  "@invoiceLegalFormHintAssociation": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalRegistrationHintAssociation": "es. RNA W123456789 · SIRET se assegnato",
+  "@invoiceLegalRegistrationHintAssociation": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalAssociationReasonHint": "es. «TVA non applicable, art. 293 B du CGI» — o «Exonération de TVA, art. 261, 7-1° du CGI» per i servizi ai membri",
+  "@invoiceLegalAssociationReasonHint": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
   "eventTypeMemberJoin": "Nuovo membro",
   "memberStatusPending": "In attesa",
   "pendingApprovalTitle": "In attesa di approvazione",

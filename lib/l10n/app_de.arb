@@ -856,6 +856,34 @@
   "@reportColTotal": {
     "description": "French facture layout: line-table column headers (#482)"
   },
+  "invoiceLegalKindField": "Organisationsform",
+  "@invoiceLegalKindField": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalKindCompany": "Unternehmen",
+  "@invoiceLegalKindCompany": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalKindAssociation": "Verein (gemeinnützig)",
+  "@invoiceLegalKindAssociation": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalAssociationHint": "Verzugszins-, Beitreibungs- und Skonto-Klauseln werden nur gedruckt, wenn ausgefüllt — sie sind nur zwischen Unternehmen Pflicht.",
+  "@invoiceLegalAssociationHint": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalFormHintAssociation": "z. B. Association loi 1901 / e. V.",
+  "@invoiceLegalFormHintAssociation": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalRegistrationHintAssociation": "z. B. RNA W123456789 · SIRET falls vergeben",
+  "@invoiceLegalRegistrationHintAssociation": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalAssociationReasonHint": "z. B. „TVA non applicable, art. 293 B du CGI“ — oder „Exonération de TVA, art. 261, 7-1° du CGI“ für Leistungen an Mitglieder",
+  "@invoiceLegalAssociationReasonHint": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
   "eventTypeMemberJoin": "Neues Mitglied",
   "memberStatusPending": "Ausstehend",
   "pendingApprovalTitle": "Warten auf Freigabe",
