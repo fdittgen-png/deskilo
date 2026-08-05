@@ -129,7 +129,11 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     ref.read(selectedLevelIdProvider.notifier).showTransient(focus.levelId);
     final at = focus.at;
     final from =
-        (at != null && at.isAfter(ref.read(clockProvider).now())) ? at.toLocal() : null;
+        // #490 — keep the INSTANT; .toLocal() on a TZDateTime lands in
+        // package:timezone's default-UTC tz.local (#417).
+        (at != null && at.isAfter(ref.read(clockProvider).now()))
+            ? at
+            : null;
     setState(() {
       _listView = false;
       _highlightedSeatId = focus.seatId;
@@ -170,17 +174,19 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         .where((r) => r.seatId == seatId && r.coversInstant(from))
         .firstOrNull;
     if (covering == null) return;
-    var end = covering.endsAt.toLocal();
+    var end = covering.endsAt;
     final last = _lastSlotOf(from);
     if (end.isAfter(last)) end = last;
     if (!end.isAfter(from)) return;
     setState(() => _browseEnd = end);
   }
 
-  /// The day's last selectable slot (#184): 23:45 local of [day].
+  /// The day's last selectable slot (#184): 23:45 of [day] — in the
+  /// WORKSPACE's clock (#490), so a device in another timezone browses
+  /// the same day everyone else sees.
   DateTime _lastSlotOf(DateTime day) {
-    final local = day.toLocal();
-    return DateTime(
+    final local = WorkspaceTime.wall(day);
+    return WorkspaceTime.at(
       local.year,
       local.month,
       local.day,
@@ -194,11 +200,10 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   /// on the last slot spills 15 minutes into the next day as the only
   /// remaining valid window).
   DateTime _defaultEndFor(DateTime from) {
-    final local = from.toLocal();
-    var end = local.add(_kDefaultStay);
-    final last = _lastSlotOf(local);
+    var end = from.add(_kDefaultStay);
+    final last = _lastSlotOf(from);
     if (end.isAfter(last)) end = last;
-    if (!end.isAfter(local)) end = local.add(_timeSnap);
+    if (!end.isAfter(from)) end = from.add(_timeSnap);
     return end;
   }
 
@@ -208,11 +213,13 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
 
   Duration get _timeSnap => Duration(minutes: _snapMinutes);
 
-  /// Snaps [t] down to the previous slot of the configured step (#184).
+  /// Snaps [t] down to the previous slot of the configured step (#184),
+  /// on the WORKSPACE clock (#490).
   DateTime _snapToSlot(DateTime t) {
-    final local = t.toLocal();
+    final local = WorkspaceTime.wall(t);
     final m = (local.hour * 60 + local.minute) ~/ _snapMinutes * _snapMinutes;
-    return DateTime(local.year, local.month, local.day, m ~/ 60, m % 60);
+    return WorkspaceTime.at(
+        local.year, local.month, local.day, m ~/ 60, m % 60);
   }
 
   @override
@@ -350,7 +357,8 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         final template = state == SeatState.occupied
             ? (l10n?.planOccupiedBy(name) ?? 'Occupied by $name')
             : (l10n?.planReservedBy(name) ?? 'Reserved by $name');
-        final until = DateFormat.Hm().format(other.endsAt.toLocal());
+        final until =
+            DateFormat.Hm().format(WorkspaceTime.wall(other.endsAt));
         AppSnack.info(
           context,
           '$template · ${l10n?.planUntil(until) ?? 'until $until'}',
@@ -616,7 +624,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                   ),
                   const SizedBox(height: 8),
                   for (final d in result.skipped)
-                    Text(dateFormat.format(d.toLocal())),
+                    Text(dateFormat.format(WorkspaceTime.dateOf(d))),
                 ],
               ),
         actions: [
@@ -945,9 +953,11 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     // Day-based chips describe a WORKSPACE-local day: deriving it via
     // device toLocal() shifts a day whenever the workspace midnight
     // lands on the previous device date (Pacific device, Paris space).
-    final local = dayBased ? WorkspaceTime.dateOf(at) : at.toLocal();
+    final local =
+        dayBased ? WorkspaceTime.dateOf(at) : WorkspaceTime.wall(at);
     final live = _browse == null;
-    final endLocal = (_browseEnd ?? _defaultEndFor(local)).toLocal();
+    final endLocal =
+        WorkspaceTime.wall(_browseEnd ?? _defaultEndFor(at));
     // ONE compact header row (space refactor): toggle · date · window ·
     // level · now — horizontally scrollable so every control keeps its
     // 48dp target on narrow phones (#284 idiom) while the plan canvas
@@ -1231,7 +1241,8 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   /// browse mode moves the start, keeping the duration where the day
   /// allows it.
   Future<void> _pickFrom() async {
-    final current = (_browse ?? ref.read(clockProvider).now()).toLocal();
+    final current =
+        WorkspaceTime.wall(_browse ?? ref.read(clockProvider).now());
     final picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(current),
@@ -1241,7 +1252,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final wasLive = _browse == null;
     final duration =
         wasLive ? _kDefaultStay : _browseEnd!.difference(_browse!);
-    final from = _snapToSlot(DateTime(
+    final from = _snapToSlot(WorkspaceTime.at(
       current.year,
       current.month,
       current.day,
@@ -1265,9 +1276,10 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   /// the next day (the booking sheet's own "Until" keeps its roll-over).
   Future<void> _pickTo() async {
     final now = ref.read(clockProvider).now();
-    final from = _browse?.toLocal() ?? _snapToSlot(now);
+    final from = _browse ?? _snapToSlot(now);
+    final fromWall = WorkspaceTime.wall(from);
     final currentEnd =
-        (_browseEnd ?? _defaultEndFor(_browse ?? now)).toLocal();
+        WorkspaceTime.wall(_browseEnd ?? _defaultEndFor(_browse ?? now));
     final picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(currentEnd),
@@ -1275,10 +1287,10 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     if (picked == null) return;
     if (!mounted) return;
     final l10n = AppLocalizations.of(context);
-    final end = _snapToSlot(DateTime(
-      from.year,
-      from.month,
-      from.day,
+    final end = _snapToSlot(WorkspaceTime.at(
+      fromWall.year,
+      fromWall.month,
+      fromWall.day,
       picked.hour,
       picked.minute,
     ));

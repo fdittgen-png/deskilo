@@ -18,6 +18,7 @@ import '../../../plan/presentation/widgets/level_chip_row.dart';
 import '../../domain/reservation.dart';
 import 'booking_range_text.dart';
 import '../../providers/reservation_providers.dart';
+import '../../../../core/time/workspace_time.dart';
 
 /// Geometry of the Reserve hub's Week grid (#236). Pinned by test — treat
 /// these as part of the visual contract, not free-floating magic numbers.
@@ -111,9 +112,10 @@ class WeekGrid extends ConsumerStatefulWidget {
   final void Function(Seat seat, DateTime day, {required bool morning})?
       onFreeSlotTap;
 
-  /// Local midnight of the Monday of [day]'s ISO week.
+  /// WORKSPACE midnight of the Monday of [day]'s ISO week (#490 — the
+  /// week is the workspace's, not the device's).
   static DateTime weekStartOf(DateTime day) {
-    final local = day.toLocal();
+    final local = WorkspaceTime.dateOf(day);
     return DateTime(local.year, local.month, local.day - (local.weekday - 1));
   }
 

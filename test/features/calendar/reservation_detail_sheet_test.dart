@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/plan/presentation/widgets/floor_plan_painter.dart';
 import 'package:deskilo/features/plan/presentation/widgets/seat_accessory_row.dart';
@@ -78,6 +79,10 @@ FloorPlanPainter planPainter(WidgetTester tester) {
 }
 
 void main() {
+  // #490 — the fixture workspace is Europe/Berlin; anchor the SEEDS to
+  // it too, so the suite passes on any device timezone.
+  setUpAll(() => WorkspaceTime.install('Europe/Berlin'));
+  tearDownAll(WorkspaceTime.reset);
   testWidgets(
       'tapping a seat reservation opens the detail sheet with the full '
       'location chain and the seat accessories', (tester) async {
@@ -88,7 +93,7 @@ void main() {
       tester,
       seed: [
         reservationAt(
-          DateTime(now.year, now.month, now.day, 9),
+          WorkspaceTime.at(now.year, now.month, now.day, 9),
           seatId: 'seat-4',
         ),
       ],
@@ -115,7 +120,7 @@ void main() {
       tester,
       seed: [
         reservationAt(
-          DateTime(now.year, now.month, now.day, 9),
+          WorkspaceTime.at(now.year, now.month, now.day, 9),
           officeId: 'office-2',
         ),
       ],
@@ -137,7 +142,7 @@ void main() {
       tester,
       seed: [
         reservationAt(
-          DateTime(now.year, now.month, now.day, 9),
+          WorkspaceTime.at(now.year, now.month, now.day, 9),
           seatId: 'seat-4',
         ),
       ],
@@ -163,7 +168,7 @@ void main() {
       'a future reservation browses the plan at the reservation start',
       (tester) async {
     final now = kTestNow;
-    final start = DateTime(now.year, now.month, now.day + 1, 9);
+    final start = WorkspaceTime.at(now.year, now.month, now.day + 1, 9);
     await pumpCalendarApp(
       tester,
       seed: [reservationAt(start, seatId: 'seat-4')],

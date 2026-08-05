@@ -20,6 +20,7 @@ import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../widgets/day_timeline.dart';
+import '../../../../core/time/workspace_time.dart';
 
 /// Reservations calendar (spec §6): month grid with markers + day list.
 /// Workers see their own bookings; admins can switch to everyone's.
@@ -138,7 +139,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     final targets = ref.watch(targetNamesProvider).value ?? const {};
 
     final dayReservations = visible
-        .where((r) => _sameDay(r.startsAt.toLocal(), _selectedDay))
+        .where((r) => _sameDay(WorkspaceTime.dateOf(r.startsAt), _selectedDay))
         .toList()
       ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
 
@@ -246,12 +247,12 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
             // only other members' bookings a blue one.
             markedDays: {
               for (final r in visible)
-                DateUtils.dateOnly(r.startsAt.toLocal()),
+                WorkspaceTime.dateOf(r.startsAt),
             },
             myDays: {
               for (final r in visible)
                 if (r.memberId == myMember?.id)
-                  DateUtils.dateOnly(r.startsAt.toLocal()),
+                  WorkspaceTime.dateOf(r.startsAt),
             },
             onSelect: (day) => setState(() => _selectedDay = day),
           ),
@@ -393,8 +394,9 @@ class _ReservationCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final timeFormat = DateFormat.Hm();
     final badge = _badgeColor;
-    final start = timeFormat.format(reservation.startsAt.toLocal());
-    final end = timeFormat.format(reservation.endsAt.toLocal());
+    final start =
+        timeFormat.format(WorkspaceTime.wall(reservation.startsAt));
+    final end = timeFormat.format(WorkspaceTime.wall(reservation.endsAt));
     final timeRange = '$start – $end';
     final location =
         occupant.isEmpty ? seatLabel : '$seatLabel · $occupant';

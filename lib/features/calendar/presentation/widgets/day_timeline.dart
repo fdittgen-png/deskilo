@@ -18,6 +18,7 @@ import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/presentation/widgets/level_chip_row.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../../../core/time/workspace_time.dart';
 
 /// Geometry of the 24h timeline axis (#187). Pinned by test — treat these
 /// as part of the visual contract, not free-floating magic numbers.
@@ -154,12 +155,22 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
   DateTime get _dayStart =>
       DateTime(widget.day.year, widget.day.month, widget.day.day);
 
-  DateTime get _dayEnd =>
-      DateTime(widget.day.year, widget.day.month, widget.day.day + 1);
+  /// The day as INSTANTS in the workspace's timezone (#490) — what
+  /// reservation cover checks must compare against.
+  DateTime get _dayStartInstant => WorkspaceTime.at(
+      widget.day.year, widget.day.month, widget.day.day);
+
+  DateTime get _dayEndInstant => WorkspaceTime.at(
+      widget.day.year, widget.day.month, widget.day.day + 1);
 
   /// Horizontal offset of [at] on the track, clamped to the day.
+  ///
+  /// #490 — anchored to the WORKSPACE wall clock, not the device's: a
+  /// browser in another timezone otherwise paints every block shifted
+  /// by the tz delta.
   double _offsetOf(DateTime at) {
-    final minutes = at.toLocal().difference(_dayStart).inMinutes;
+    final minutes =
+        WorkspaceTime.wall(at).difference(_dayStart).inMinutes;
     final raw = minutes / 60.0 * TimelineAxis.hourWidth;
     return raw.clamp(0.0, TimelineAxis.trackWidth).toDouble();
   }
@@ -168,9 +179,11 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
   /// half-open ranges): blocked when the day starts, or the block begins
   /// later within this day.
   bool _blockedDuring(Seat seat) {
-    if (seat.isBlockedAt(_dayStart)) return true;
+    if (seat.isBlockedAt(_dayStartInstant)) return true;
     final from = seat.blockedFrom;
-    return from != null && !from.isBefore(_dayStart) && from.isBefore(_dayEnd);
+    return from != null &&
+        !from.isBefore(_dayStartInstant) &&
+        from.isBefore(_dayEndInstant);
   }
 
   void _onBlockTap(Reservation reservation) {
@@ -181,7 +194,8 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     final l10n = AppLocalizations.of(context);
     final names = ref.read(memberNamesProvider).value ?? const {};
     final name = names[reservation.memberId] ?? '';
-    final until = DateFormat.Hm().format(reservation.endsAt.toLocal());
+    final until =
+        DateFormat.Hm().format(WorkspaceTime.wall(reservation.endsAt));
     final message = '${l10n?.planOccupiedBy(name) ?? 'Occupied by $name'} · '
         '${l10n?.planUntil(until) ?? 'until $until'}';
     AppSnack.info(context, message, replace: true);
@@ -333,7 +347,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     final allLevels = plans.any((e) => e.$1 != null);
 
     final dayReservations = widget.reservations
-        .where((r) => r.coversRange(_dayStart, _dayEnd))
+        .where((r) => r.coversRange(_dayStartInstant, _dayEndInstant))
         .toList()
       ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
 

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:deskilo/core/theme/seat_state_colors.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/presentation/widgets/floor_plan_painter.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +56,10 @@ String chipText(WidgetTester tester, String chipKey) {
 }
 
 void main() {
+  // #490 — the fixture workspace is Europe/Berlin; anchor the SEEDS to
+  // it too, so the suite passes on any device timezone.
+  setUpAll(() => WorkspaceTime.install('Europe/Berlin'));
+  tearDownAll(WorkspaceTime.reset);
   testWidgets('picking a future from time books a reservation, not a walk-up',
       (tester) async {
     final env = await pumpPlan(tester);
@@ -162,7 +167,7 @@ void main() {
       'a reservation 10:00–11:00 renders occupied for the 09:00–12:00 '
       'window but free for 11:00–12:00', (tester) async {
     final now = kTestNow;
-    final start = DateTime(now.year, now.month, now.day, 10);
+    final start = WorkspaceTime.at(now.year, now.month, now.day, 10);
     await pumpPlan(
       tester,
       seedReservations: (repo) => repo.reservations.add(

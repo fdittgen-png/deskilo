@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/calendar/presentation/widgets/day_timeline.dart';
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
@@ -25,7 +26,7 @@ Reservation todayReservation({
   int startHour = 9,
 }) {
   final now = kTestNow;
-  final start = DateTime(now.year, now.month, now.day, startHour);
+  final start = WorkspaceTime.at(now.year, now.month, now.day, startHour);
   return Reservation(
     id: id,
     workspaceId: 'ws-1',
@@ -123,6 +124,10 @@ Future<FakeReservationRepository> pumpTimeline(
 }
 
 void main() {
+  // #490 — the fixture workspace is Europe/Berlin; anchor the SEEDS to
+  // it too, so the suite passes on any device timezone.
+  setUpAll(() => WorkspaceTime.install('Europe/Berlin'));
+  tearDownAll(WorkspaceTime.reset);
   test('axis constants are pinned (visual contract of #187)', () {
     expect(TimelineAxis.hourWidth, 48.0);
     expect(TimelineAxis.hoursPerDay, 24);

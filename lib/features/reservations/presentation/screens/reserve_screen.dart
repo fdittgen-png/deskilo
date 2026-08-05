@@ -118,7 +118,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
   void initState() {
     super.initState();
     final now = ref.read(clockProvider).now();
-    _today = DateTime(now.year, now.month, now.day);
+    // #490 — "today" is the WORKSPACE's date, not the device's.
+    _today = WorkspaceTime.dateOf(now);
     _selectedDay = _today;
   }
 
@@ -130,8 +131,9 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
       ref.read(bookingGranularityProvider).value ??
       BookingGranularity.flexible;
 
-  /// The day's last selectable slot: 23:45 local of [day].
-  DateTime _lastSlotOf(DateTime day) => DateTime(
+  /// The day's last selectable slot: 23:45 of [day], on the WORKSPACE
+  /// clock (#490).
+  DateTime _lastSlotOf(DateTime day) => WorkspaceTime.at(
         day.year,
         day.month,
         day.day,
@@ -142,10 +144,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
   /// Snaps [t] down to the previous slot of the workspace's configured
   /// step (#184 pattern; 0032 makes the step owner-configurable).
   DateTime _snapToSlot(DateTime t) {
-    final local = t.toLocal();
+    final local = WorkspaceTime.wall(t);
     final snap = _granularity.stepMinutes ?? ReserveHubMetrics.snapMinutes;
     final m = (local.hour * 60 + local.minute) ~/ snap * snap;
-    return DateTime(local.year, local.month, local.day, m ~/ 60, m % 60);
+    return WorkspaceTime.at(
+        local.year, local.month, local.day, m ~/ 60, m % 60);
   }
 
   /// One configured slot — the minimal booking extension.
@@ -174,7 +177,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
       return HalfDayWindows.fullDay(_selectedDay);
     }
     final now = _snapToSlot(ref.read(clockProvider).now());
-    final from = DateTime(
+    final from = WorkspaceTime.at(
       _selectedDay.year,
       _selectedDay.month,
       _selectedDay.day,
@@ -227,14 +230,14 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
         from = moved.start;
         to = moved.end;
       } else {
-        from = DateTime(
+        from = WorkspaceTime.at(
           dayOnly.year,
           dayOnly.month,
           dayOnly.day,
           window.start.hour,
           window.start.minute,
         );
-        var kept = DateTime(
+        var kept = WorkspaceTime.at(
           dayOnly.year,
           dayOnly.month,
           dayOnly.day,
@@ -272,12 +275,13 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     final window = _effectiveWindow(_granularity);
     final picked = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.fromDateTime(window.start),
+      initialTime:
+          TimeOfDay.fromDateTime(WorkspaceTime.wall(window.start)),
     );
     if (picked == null) return;
     if (!mounted) return;
     final duration = window.end.difference(window.start);
-    final from = _snapToSlot(DateTime(
+    final from = _snapToSlot(WorkspaceTime.at(
       _selectedDay.year,
       _selectedDay.month,
       _selectedDay.day,
@@ -298,16 +302,17 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     final window = _effectiveWindow(_granularity);
     final picked = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.fromDateTime(window.end),
+      initialTime: TimeOfDay.fromDateTime(WorkspaceTime.wall(window.end)),
     );
     if (picked == null) return;
     if (!mounted) return;
     final l10n = AppLocalizations.of(context);
     final from = window.start;
-    final end = _snapToSlot(DateTime(
-      from.year,
-      from.month,
-      from.day,
+    final fromWall = WorkspaceTime.wall(from);
+    final end = _snapToSlot(WorkspaceTime.at(
+      fromWall.year,
+      fromWall.month,
+      fromWall.day,
       picked.hour,
       picked.minute,
     ));
@@ -409,7 +414,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
         final template = state == SeatState.occupied
             ? (l10n?.planOccupiedBy(name) ?? 'Occupied by $name')
             : (l10n?.planReservedBy(name) ?? 'Reserved by $name');
-        final until = DateFormat.Hm().format(other.endsAt.toLocal());
+        final until =
+            DateFormat.Hm().format(WorkspaceTime.wall(other.endsAt));
         AppSnack.info(
           context,
           '$template · ${l10n?.planUntil(until) ?? 'until $until'}',
@@ -1014,19 +1020,21 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
       return HalfDayWindows.fullDay(day);
     }
     final window = _effectiveWindow(granularity);
-    final from = DateTime(
+    final startWall = WorkspaceTime.wall(window.start);
+    final endWall = WorkspaceTime.wall(window.end);
+    final from = WorkspaceTime.at(
       day.year,
       day.month,
       day.day,
-      window.start.hour,
-      window.start.minute,
+      startWall.hour,
+      startWall.minute,
     );
-    var to = DateTime(
+    var to = WorkspaceTime.at(
       day.year,
       day.month,
       day.day,
-      window.end.hour,
-      window.end.minute,
+      endWall.hour,
+      endWall.minute,
     );
     if (!to.isAfter(from)) to = _defaultEndFor(from);
     return (start: from, end: to);

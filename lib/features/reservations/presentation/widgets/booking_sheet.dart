@@ -386,11 +386,11 @@ class _BookingSheetState extends State<BookingSheet> {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       title: Text(label),
-      trailing: Text(DateFormat.yMMMd().format(value.toLocal())),
+      trailing: Text(DateFormat.yMMMd().format(WorkspaceTime.wall(value))),
       onTap: () async {
         final picked = await showDatePicker(
           context: context,
-          initialDate: value.toLocal(),
+          initialDate: WorkspaceTime.wall(value),
           // display(): TZDateTime.toLocal() lands in package:timezone's
           // default-UTC tz.local (#417) — a Paris midnight became Sunday.
           firstDate: WorkspaceTime.display(widget.start),

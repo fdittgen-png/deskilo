@@ -86,6 +86,22 @@ abstract final class WorkspaceTime {
   static DateTime display(DateTime instant) =>
       instant is tz.TZDateTime ? instant : instant.toLocal();
 
+  /// The instant as the WORKSPACE's naive wall-clock time (#490) — the
+  /// anchor every day-grid position and time label must use: a device
+  /// (or browser) in another timezone otherwise shifts every block by
+  /// the tz delta while the stored data is perfectly correct.
+  static DateTime wall(DateTime instant) {
+    final location = _location;
+    // Always convert THROUGH the location — a TZDateTime may sit in
+    // package:timezone's default-UTC tz.local (#417) and must not be
+    // trusted to already read in the workspace's clock.
+    final local = location == null
+        ? display(instant)
+        : tz.TZDateTime.from(instant, location);
+    return DateTime(local.year, local.month, local.day, local.hour,
+        local.minute, local.second);
+  }
+
   /// The workspace-local calendar date of [instant], as a plain
   /// date-only [DateTime] carrier.
   static DateTime dateOf(DateTime instant) {

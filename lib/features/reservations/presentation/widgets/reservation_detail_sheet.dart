@@ -455,8 +455,8 @@ class ReservationDetailSheet extends ConsumerWidget {
   ) async {
     final r = reservation;
     final snap = granularity.stepMinutes ?? 15;
-    final local = r.startsAt.toLocal();
-    final endLocal = r.endsAt.toLocal();
+    final local = WorkspaceTime.wall(r.startsAt);
+    final endLocal = WorkspaceTime.wall(r.endsAt);
     final from = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(local),

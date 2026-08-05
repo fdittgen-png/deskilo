@@ -7,6 +7,7 @@
 // window only.
 
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -16,6 +17,10 @@ import 'plan_screen_test.dart' show foreignReservation, pumpPlan, seatCenter;
 import 'time_scroller_test.dart' show pickChipTime;
 
 void main() {
+  // #490 — the fixture workspace is Europe/Berlin; anchor the SEEDS to
+  // it too, so the suite passes on any device timezone.
+  setUpAll(() => WorkspaceTime.install('Europe/Berlin'));
+  tearDownAll(WorkspaceTime.reset);
   testWidgets(
       'browsing my future reservation: the check-in tile is disabled '
       'and says when the window opens', (tester) async {
@@ -29,8 +34,8 @@ void main() {
             workspaceId: 'ws-1',
             seatId: 'seat-4',
             memberId: 'member-1',
-            startsAt: DateTime(now.year, now.month, now.day, 23),
-            endsAt: DateTime(now.year, now.month, now.day, 23, 45),
+            startsAt: WorkspaceTime.at(now.year, now.month, now.day, 23),
+            endsAt: WorkspaceTime.at(now.year, now.month, now.day, 23, 45),
             status: ReservationStatus.reserved,
           ),
         );
@@ -137,8 +142,8 @@ void main() {
           workspaceId: 'ws-1',
           seatId: 'seat-4',
           memberId: 'member-2',
-          startsAt: DateTime(now.year, now.month, now.day, 23),
-          endsAt: DateTime(now.year, now.month, now.day, 23, 45),
+          startsAt: WorkspaceTime.at(now.year, now.month, now.day, 23),
+          endsAt: WorkspaceTime.at(now.year, now.month, now.day, 23, 45),
           status: ReservationStatus.reserved,
         ),
       ),
