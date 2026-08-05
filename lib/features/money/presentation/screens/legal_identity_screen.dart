@@ -47,6 +47,8 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   final _escompte = TextEditingController();
   final _insurance = TextEditingController();
   final _special = TextEditingController();
+  // #484 — '' = company/business, 'association' = non-profit.
+  String _sellerKind = '';
   VatRegime _regime = VatRegime.notSubject;
   bool _loaded = false;
   bool _saving = false;
@@ -98,6 +100,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
         await repository.setInvoiceLegal(
           workspace.id,
           InvoiceLegal(
+            sellerKind: _sellerKind,
             legalForm: _legalForm.text,
             registration: _registration.text,
             paymentTerms: _paymentTerms.text,
@@ -174,6 +177,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       _postalCode.text = workspace.postalCode;
       _vatAccount.text = workspace.vatAccount;
       final legal = InvoiceLegal.fromJson(workspace.invoiceLegal);
+      _sellerKind = legal.sellerKind;
       _legalForm.text = legal.legalForm;
       _registration.text = legal.registration;
       _paymentTerms.text = legal.paymentTerms;
@@ -248,6 +252,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                       'invoices show no tax and the XML export stays '
                       'disabled until you add one.',
             ),
+          if (_regime == VatRegime.vatRegistered)
           ListTile(
             key: const ValueKey('legal-identity-vat-rates'),
             contentPadding: EdgeInsets.zero,
@@ -303,6 +308,13 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             decoration: InputDecoration(
               labelText: l10n?.legalIdentityExemptionReason ??
                   'Why no VAT is charged',
+              helperMaxLines: 4,
+              helperText: _sellerKind == 'association'
+                  ? (l10n?.invoiceLegalAssociationReasonHint ??
+                      'e.g. "TVA non applicable, art. 293 B du CGI" — or '
+                          '"Exonération de TVA, art. 261, 7-1° du CGI" '
+                          'for services to members')
+                  : null,
             ),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -365,17 +377,57 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 ),
           ),
           const SizedBox(height: AppSpacing.md),
+          // #484 — associations invoice differently: no B2B clause
+          // defaults, RNA instead of a trade register, an exemption
+          // mention instead of VAT.
+          SegmentedButton<String>(
+            key: const ValueKey('legal-identity-kind'),
+            segments: [
+              ButtonSegment(
+                value: '',
+                label: Text(
+                    l10n?.invoiceLegalKindCompany ?? 'Company / business'),
+              ),
+              ButtonSegment(
+                value: 'association',
+                label: Text(l10n?.invoiceLegalKindAssociation ??
+                    'Association (non-profit)'),
+              ),
+            ],
+            selected: {_sellerKind},
+            onSelectionChanged: (selection) =>
+                setState(() => _sellerKind = selection.first),
+          ),
+          if (_sellerKind == 'association') ...[
+            const SizedBox(height: AppSpacing.xs),
+            Text(
+              l10n?.invoiceLegalAssociationHint ??
+                  'The late-penalty, recovery-indemnity and discount '
+                      'clauses are printed only when filled — they are '
+                      'mandatory only between professionals.',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+            ),
+          ],
+          const SizedBox(height: AppSpacing.md),
           _mentionField(
             'legal-identity-legal-form',
             _legalForm,
             l10n?.invoiceLegalFormField ?? 'Legal form & capital',
-            hint: l10n?.invoiceLegalFormHint,
+            hint: _sellerKind == 'association'
+                ? (l10n?.invoiceLegalFormHintAssociation ??
+                    'e.g. Association loi 1901')
+                : l10n?.invoiceLegalFormHint,
           ),
           _mentionField(
             'legal-identity-registration',
             _registration,
             l10n?.invoiceLegalRegistrationField ?? 'Trade register',
-            hint: l10n?.invoiceLegalRegistrationHint,
+            hint: _sellerKind == 'association'
+                ? (l10n?.invoiceLegalRegistrationHintAssociation ??
+                    'e.g. RNA W123456789 · SIRET if assigned')
+                : l10n?.invoiceLegalRegistrationHint,
           ),
           _mentionField(
             'legal-identity-payment-terms',

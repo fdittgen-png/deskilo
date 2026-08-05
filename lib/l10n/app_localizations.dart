@@ -3746,6 +3746,48 @@ abstract class AppLocalizations {
   /// **'Total'**
   String get reportColTotal;
 
+  /// Association invoicing + VAT regime gate (#484)
+  ///
+  /// In en, this message translates to:
+  /// **'Organization type'**
+  String get invoiceLegalKindField;
+
+  /// Association invoicing + VAT regime gate (#484)
+  ///
+  /// In en, this message translates to:
+  /// **'Company / business'**
+  String get invoiceLegalKindCompany;
+
+  /// Association invoicing + VAT regime gate (#484)
+  ///
+  /// In en, this message translates to:
+  /// **'Association (non-profit)'**
+  String get invoiceLegalKindAssociation;
+
+  /// Association invoicing + VAT regime gate (#484)
+  ///
+  /// In en, this message translates to:
+  /// **'The late-penalty, recovery-indemnity and discount clauses are printed only when filled — they are mandatory only between professionals.'**
+  String get invoiceLegalAssociationHint;
+
+  /// Association invoicing + VAT regime gate (#484)
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Association loi 1901'**
+  String get invoiceLegalFormHintAssociation;
+
+  /// Association invoicing + VAT regime gate (#484)
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. RNA W123456789 · SIRET if assigned'**
+  String get invoiceLegalRegistrationHintAssociation;
+
+  /// Association invoicing + VAT regime gate (#484)
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. \"TVA non applicable, art. 293 B du CGI\" — or \"Exonération de TVA, art. 261, 7-1° du CGI\" for services to members'**
+  String get invoiceLegalAssociationReasonHint;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

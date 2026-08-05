@@ -2062,6 +2062,31 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reportColTotal => 'Gesamt';
 
   @override
+  String get invoiceLegalKindField => 'Organisationsform';
+
+  @override
+  String get invoiceLegalKindCompany => 'Unternehmen';
+
+  @override
+  String get invoiceLegalKindAssociation => 'Verein (gemeinnützig)';
+
+  @override
+  String get invoiceLegalAssociationHint =>
+      'Verzugszins-, Beitreibungs- und Skonto-Klauseln werden nur gedruckt, wenn ausgefüllt — sie sind nur zwischen Unternehmen Pflicht.';
+
+  @override
+  String get invoiceLegalFormHintAssociation =>
+      'z. B. Association loi 1901 / e. V.';
+
+  @override
+  String get invoiceLegalRegistrationHintAssociation =>
+      'z. B. RNA W123456789 · SIRET falls vergeben';
+
+  @override
+  String get invoiceLegalAssociationReasonHint =>
+      'z. B. „TVA non applicable, art. 293 B du CGI“ — oder „Exonération de TVA, art. 261, 7-1° du CGI“ für Leistungen an Mitglieder';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

@@ -9,6 +9,7 @@
 /// who configures nothing still issues a valid document.
 class InvoiceLegal {
   const InvoiceLegal({
+    this.sellerKind = '',
     this.legalForm = '',
     this.registration = '',
     this.paymentTerms = '',
@@ -19,7 +20,18 @@ class InvoiceLegal {
     this.specialMentions = '',
   });
 
+  /// '' (company/business, the default) or 'association' (#484) — a
+  /// non-profit under the French loi 1901 model. An association's
+  /// documents suppress the B2B-only statutory clause DEFAULTS (late
+  /// penalty, €40 recovery indemnity, escompte — mandatory only between
+  /// professionals); whatever the owner types still prints.
+  final String sellerKind;
+
+  /// Whether this seller is a non-profit association.
+  bool get isAssociation => sellerKind == 'association';
+
   /// 'SARL au capital de 7 500 €' — legal form and share capital.
+  /// For an association: 'Association loi 1901'.
   final String legalForm;
 
   /// 'RCS Saint-Brieuc 680 357 910' — the trade-register line.
@@ -47,6 +59,7 @@ class InvoiceLegal {
   static const int maxFieldLength = 300;
 
   factory InvoiceLegal.fromJson(Map<dynamic, dynamic> json) => InvoiceLegal(
+        sellerKind: json['seller_kind'] as String? ?? '',
         legalForm: json['legal_form'] as String? ?? '',
         registration: json['registration'] as String? ?? '',
         paymentTerms: json['payment_terms'] as String? ?? '',
@@ -58,6 +71,7 @@ class InvoiceLegal {
       );
 
   Map<String, Object?> toJson() => {
+        'seller_kind': sellerKind,
         'legal_form': legalForm.trim(),
         'registration': registration.trim(),
         'payment_terms': paymentTerms.trim(),
@@ -71,6 +85,7 @@ class InvoiceLegal {
   @override
   bool operator ==(Object other) =>
       other is InvoiceLegal &&
+      other.sellerKind == sellerKind &&
       other.legalForm == legalForm &&
       other.registration == registration &&
       other.paymentTerms == paymentTerms &&
@@ -81,6 +96,7 @@ class InvoiceLegal {
       other.specialMentions == specialMentions;
 
   @override
-  int get hashCode => Object.hash(legalForm, registration, paymentTerms,
-      latePenalty, recoveryIndemnity, escompte, insurance, specialMentions);
+  int get hashCode => Object.hash(sellerKind, legalForm, registration,
+      paymentTerms, latePenalty, recoveryIndemnity, escompte, insurance,
+      specialMentions);
 }

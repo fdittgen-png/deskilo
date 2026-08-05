@@ -2677,6 +2677,34 @@
   "@reportColTotal": {
     "description": "French facture layout: line-table column headers (#482)"
   },
+  "invoiceLegalKindField": "Organization type",
+  "@invoiceLegalKindField": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalKindCompany": "Company / business",
+  "@invoiceLegalKindCompany": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalKindAssociation": "Association (non-profit)",
+  "@invoiceLegalKindAssociation": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalAssociationHint": "The late-penalty, recovery-indemnity and discount clauses are printed only when filled — they are mandatory only between professionals.",
+  "@invoiceLegalAssociationHint": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalFormHintAssociation": "e.g. Association loi 1901",
+  "@invoiceLegalFormHintAssociation": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalRegistrationHintAssociation": "e.g. RNA W123456789 · SIRET if assigned",
+  "@invoiceLegalRegistrationHintAssociation": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalAssociationReasonHint": "e.g. \"TVA non applicable, art. 293 B du CGI\" — or \"Exonération de TVA, art. 261, 7-1° du CGI\" for services to members",
+  "@invoiceLegalAssociationReasonHint": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
   "pendingApprovalTitle": "Awaiting approval",

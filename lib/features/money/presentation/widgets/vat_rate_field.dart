@@ -1,16 +1,22 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/vat_rate.dart';
+import '../../domain/vat_regime.dart';
 
 /// Which VAT rate a catalogue entry is taxed at (0072).
 ///
-/// Renders NOTHING when the workspace has no rates: a workspace that
-/// charges no VAT should not have to look at a field that can only say
-/// "none". '' is the value meaning "the workspace default", so an owner who
-/// later changes that default does not have to revisit every service.
-class VatRateField extends StatelessWidget {
+/// Renders NOTHING when the workspace has no rates OR its declared
+/// regime charges no VAT (#484 — an exempt association must not be asked
+/// to tax a service): a workspace that charges no VAT should not have to
+/// look at a field that can only say "none". '' is the value meaning
+/// "the workspace default", so an owner who later changes that default
+/// does not have to revisit every service. The 0095 server gate is the
+/// enforcement; this is the honest UI for it.
+class VatRateField extends ConsumerWidget {
   const VatRateField({
     super.key,
     required this.rates,
@@ -25,8 +31,12 @@ class VatRateField extends StatelessWidget {
   final ValueChanged<String> onChanged;
 
   @override
-  Widget build(BuildContext context) {
-    if (rates.isEmpty) return const SizedBox.shrink();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final regime = vatRegimeFromWire(
+        ref.watch(currentWorkspaceProvider).value?.vatRegime);
+    if (rates.isEmpty || regime != VatRegime.vatRegistered) {
+      return const SizedBox.shrink();
+    }
     final l10n = AppLocalizations.of(context);
     // A rate that was deactivated after this item pointed at it is still
     // its rate: keep showing the default entry rather than silently

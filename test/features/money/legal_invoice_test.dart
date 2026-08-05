@@ -10,8 +10,20 @@ import 'dart:io';
 
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
+import 'package:deskilo/features/money/presentation/invoice_actions.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
+import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+Workspace _workspace(Map<String, dynamic> invoiceLegal) => Workspace(
+      id: 'ws-1',
+      name: 'Espace Pézenas',
+      countryCode: 'FR',
+      currencyCode: 'EUR',
+      timezone: 'Europe/Paris',
+      inviteCode: 'CODE123456',
+      invoiceLegal: invoiceLegal,
+    );
 
 void main() {
   group('InvoiceLegal (#480)', () {
@@ -200,6 +212,87 @@ Client SARL
       expect(totals.columns.first, isEmpty);
       expect(totals.columns.last.map(blockText).join('\n'),
           contains('145,00 €'));
+    });
+  });
+
+  group('association invoicing (#484)', () {
+    test('a company workspace gets the four statutory clause defaults',
+        () {
+      final data = legalMentionData(null, _workspace(const {}));
+      expect(data['payment_terms'], 'Payment on receipt.');
+      expect(data['late_penalty'], isNot(''));
+      expect(data['recovery_indemnity'], isNot(''));
+      expect(data['escompte'], isNot(''));
+    });
+
+    test('an association suppresses the B2B-only clause defaults — '
+        'payment terms stay, explicit text still prints', () {
+      final data = legalMentionData(
+          null, _workspace(const {'seller_kind': 'association'}));
+      expect(data['payment_terms'], 'Payment on receipt.');
+      expect(data['late_penalty'], '');
+      expect(data['recovery_indemnity'], '');
+      expect(data['escompte'], '');
+
+      final explicit = legalMentionData(
+          null,
+          _workspace(const {
+            'seller_kind': 'association',
+            'late_penalty': 'Pénalités selon nos CGV',
+          }));
+      expect(explicit['late_penalty'], 'Pénalités selon nos CGV');
+    });
+
+    test('suppressed clauses VANISH from the rendered document — no '
+        'empty bullet lines', () {
+      final association = legalMentionData(
+          null, _workspace(const {'seller_kind': 'association'}));
+      final report = renderReportBands(
+        bands: defaultBandsForDoc('invoice', null),
+        data: {...sampleReportData(null), ...association},
+      )!;
+      final footer = report.footer.map(blockText).join('\n');
+      expect(footer, contains('Payment on receipt.'));
+      expect(footer, isNot(contains('recovery')));
+      expect(footer, isNot(contains('statutory interest')));
+      // The reminder letter drops them too.
+      final letter = renderReportBands(
+        bands: defaultBandsForDoc('r1', null),
+        data: {...sampleReportData(null), ...association},
+      )!;
+      final letterText = [
+        ...letter.header,
+        ...letter.body,
+        ...letter.footer,
+      ].map(blockText).join('\n');
+      expect(letterText, isNot(contains('statutory interest')));
+    });
+
+    test('the association exemption mention prints on the document '
+        '(art. 261, 7-1° CGI)', () {
+      final report = renderReportBands(
+        bands: defaultBandsForDoc('invoice', null),
+        data: {
+          ...sampleReportData(null),
+          'has_vat': false,
+          'vat': const [],
+          'exemption_reason':
+              'Exonération de TVA, art. 261, 7-1° du CGI',
+        },
+      )!;
+      expect(report.body.map(blockText).join('\n'),
+          contains('art. 261, 7-1°'));
+    });
+
+    test('migration 0095 gates every VAT chokepoint on the declared '
+        'regime', () {
+      final sql = File('supabase/migrations/0095_vat_regime_gate.sql')
+          .readAsStringSync();
+      expect(sql, contains('workspace_charges_vat'));
+      expect(sql, contains("vat_regime = 'vat_registered'"));
+      expect(sql, contains('workspace_default_vat_percent'));
+      expect(sql, contains('record_service_charge'));
+      expect(sql, contains('buy_package'));
     });
   });
 

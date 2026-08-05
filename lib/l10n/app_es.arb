@@ -856,6 +856,34 @@
   "@reportColTotal": {
     "description": "French facture layout: line-table column headers (#482)"
   },
+  "invoiceLegalKindField": "Tipo de organización",
+  "@invoiceLegalKindField": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalKindCompany": "Empresa",
+  "@invoiceLegalKindCompany": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalKindAssociation": "Asociación (sin ánimo de lucro)",
+  "@invoiceLegalKindAssociation": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalAssociationHint": "Las cláusulas de penalización, indemnización de cobro y descuento solo se imprimen si se rellenan — solo son obligatorias entre profesionales.",
+  "@invoiceLegalAssociationHint": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalFormHintAssociation": "p. ej. Association loi 1901",
+  "@invoiceLegalFormHintAssociation": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalRegistrationHintAssociation": "p. ej. RNA W123456789 · SIRET si está asignado",
+  "@invoiceLegalRegistrationHintAssociation": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "invoiceLegalAssociationReasonHint": "p. ej. «TVA non applicable, art. 293 B du CGI» — o «Exonération de TVA, art. 261, 7-1° du CGI» para servicios a los miembros",
+  "@invoiceLegalAssociationReasonHint": {
+    "description": "Association invoicing + VAT regime gate (#484)"
+  },
   "eventTypeMemberJoin": "Nuevo miembro",
   "memberStatusPending": "Pendiente",
   "pendingApprovalTitle": "Esperando aprobación",
