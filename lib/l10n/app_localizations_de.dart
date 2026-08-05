@@ -1876,7 +1876,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceTemplateHint =>
-      'Freitext auf dem gerenderten PDF — das E-Rechnungs-XML bleibt unangetastet. Platzhalter:';
+      'Drei Berichtsbänder auf dem PDF — das E-Rechnungs-XML bleibt unangetastet. Liquid-Bedingungen und -Schleifen, dann Zeilen-Markup:';
 
   @override
   String get invoiceTemplateIntroLabel =>
@@ -1888,6 +1888,22 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceTemplateSaved => 'Rechnungsvorlage gespeichert.';
+
+  @override
+  String get invoiceTemplateHeaderLabel => 'Kopfband';
+
+  @override
+  String get invoiceTemplateBodyLabel => 'Rumpfband (die Rechnungszeilen)';
+
+  @override
+  String get invoiceTemplateReset => 'Auf Standard zurücksetzen';
+
+  @override
+  String get invoiceTemplatePreview => 'Vorschau';
+
+  @override
+  String get invoiceTemplateNoPreview =>
+      'Stelle zuerst eine Rechnung aus — die Vorschau rendert die neueste.';
 
   @override
   String get eventTypeMemberJoin => 'Neues Mitglied';

@@ -1861,7 +1861,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceTemplateHint =>
-      'Free text on the rendered PDF — the e-invoice XML is never touched. Placeholders:';
+      'Three report bands rendered on the PDF — the e-invoice XML is never touched. Liquid conditions and loops, then line markup:';
 
   @override
   String get invoiceTemplateIntroLabel => 'Intro (above the billed-to block)';
@@ -1872,6 +1872,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceTemplateSaved => 'Invoice template saved.';
+
+  @override
+  String get invoiceTemplateHeaderLabel => 'Header band';
+
+  @override
+  String get invoiceTemplateBodyLabel => 'Body band (the invoice lines)';
+
+  @override
+  String get invoiceTemplateReset => 'Reset to default';
+
+  @override
+  String get invoiceTemplatePreview => 'Preview';
+
+  @override
+  String get invoiceTemplateNoPreview =>
+      'Issue an invoice first — the preview renders your newest one.';
 
   @override
   String get eventTypeMemberJoin => 'New member';

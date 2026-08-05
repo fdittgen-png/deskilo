@@ -1881,7 +1881,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceTemplateHint =>
-      'Texte libre sur le PDF généré — le XML de facture électronique n\'est jamais modifié. Espaces réservés :';
+      'Trois bandes de rapport rendues sur le PDF — le XML de facture électronique n\'est jamais modifié. Conditions et boucles Liquid, puis balisage de ligne :';
 
   @override
   String get invoiceTemplateIntroLabel =>
@@ -1893,6 +1893,23 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceTemplateSaved => 'Modèle de facture enregistré.';
+
+  @override
+  String get invoiceTemplateHeaderLabel => 'Bande d\'en-tête';
+
+  @override
+  String get invoiceTemplateBodyLabel =>
+      'Bande de corps (les lignes de la facture)';
+
+  @override
+  String get invoiceTemplateReset => 'Réinitialiser au modèle par défaut';
+
+  @override
+  String get invoiceTemplatePreview => 'Aperçu';
+
+  @override
+  String get invoiceTemplateNoPreview =>
+      'Émettez d\'abord une facture — l\'aperçu rend la plus récente.';
 
   @override
   String get eventTypeMemberJoin => 'Nouveau membre';

@@ -1,54 +1,88 @@
 // SPDX-License-Identifier: 0BSD
 
-/// Owner-written invoice-PDF template (#454): two free-text blocks with
-/// `{{placeholder}}` substitution — [intro] renders above the billed-to
-/// block, [footer] under the totals. Applied ONLY to the rendered PDF;
-/// the EN 16931 XML (and the Factur-X embed) never sees it, by design —
-/// the machine document must stay exactly what the schema validated.
+/// Owner-written invoice report template (#454, rebuilt as a banded
+/// reporting tool in #470): three LIQUID bands — [header] above
+/// everything, [body] carrying the invoice lines (typically a
+/// `{% for line in lines %}` loop), [footer] under it (payment terms,
+/// legal mentions). Rendered by `invoice_report.dart`; applied ONLY to
+/// the PDF — the EN 16931 XML (and the Factur-X embed) never sees it,
+/// by design. The void watermark/banner, the digital signature, the
+/// annex and the page numbers stay non-templated: the legal integrity
+/// floor of the document.
 ///
-/// Stored in `workspaces.invoice_pdf_template` (migration 0088) under
-/// the [keyIntro]/[keyFooter] jsonb keys.
+/// Stored in `workspaces.invoice_pdf_template` (migration 0088). The
+/// pre-#470 keys `intro`/`footer` map onto [header]/[footer], and their
+/// `{{placeholder}}` syntax is valid Liquid — old templates keep
+/// working unchanged.
 class InvoicePdfTemplate {
-  const InvoicePdfTemplate({this.intro = '', this.footer = ''});
+  const InvoicePdfTemplate({
+    this.header = '',
+    this.body = '',
+    this.footer = '',
+  });
 
   factory InvoicePdfTemplate.fromJson(Map<String, dynamic> json) =>
       InvoicePdfTemplate(
-        intro: json[keyIntro] as String? ?? '',
+        header: json[keyHeader] as String? ??
+            json[legacyKeyIntro] as String? ??
+            '',
+        body: json[keyBody] as String? ?? '',
         footer: json[keyFooter] as String? ?? '',
       );
 
-  /// Text rendered between the letterhead and the billed-to block.
-  final String intro;
+  /// Band above the whole document (letterhead territory).
+  final String header;
 
-  /// Text rendered under the totals (payment terms, legal mentions…).
+  /// The detail band: the invoice lines and totals.
+  final String body;
+
+  /// Band under the totals (payment terms, legal mentions…).
   final String footer;
 
-  static const String keyIntro = 'intro';
+  static const String keyHeader = 'header';
+  static const String keyBody = 'body';
   static const String keyFooter = 'footer';
+
+  /// Pre-#470 key: a single intro paragraph — now the header band.
+  static const String legacyKeyIntro = 'intro';
 
   static const InvoicePdfTemplate empty = InvoicePdfTemplate();
 
-  /// The placeholder names the editor offers and [apply] resolves.
-  /// Pinned by test — they are part of saved templates.
+  /// The data fields the bands can reference; pinned by test — they are
+  /// part of saved templates. `lines` iterates `{label, amount,
+  /// negative}`, `vat` iterates `{rate, net, amount}`.
   static const List<String> placeholders = [
-    'workspace',
-    'member',
     'number',
+    'member',
+    'workspace',
+    'workspace_address',
     'period',
     'issued',
+    'issued_by',
+    'replaces',
     'total',
+    'charges',
+    'payments',
+    'voided',
+    'proforma',
+    'copy',
+    'has_vat',
+    'lines',
+    'vat',
   ];
 
-  bool get isEmpty => intro.trim().isEmpty && footer.trim().isEmpty;
+  bool get isEmpty => !hasBands;
 
-  Map<String, String> toJson() => {keyIntro: intro, keyFooter: footer};
+  /// Whether ANY band carries content — the switch between the built-in
+  /// layout and the report renderer.
+  bool get hasBands =>
+      header.trim().isNotEmpty ||
+      body.trim().isNotEmpty ||
+      footer.trim().isNotEmpty;
 
-  /// Replaces `{{name}}` (whitespace-tolerant: `{{ name }}`) with its
-  /// value; unknown names stay verbatim so a typo is visible on the
-  /// document instead of silently vanishing.
-  static String apply(String template, Map<String, String> values) =>
-      template.replaceAllMapped(
-        RegExp(r'\{\{\s*([a-zA-Z_]+)\s*\}\}'),
-        (m) => values[m.group(1)] ?? m.group(0)!,
-      );
+  Map<String, String> toJson() => {
+        keyHeader: header,
+        keyBody: body,
+        keyFooter: footer,
+      };
 }

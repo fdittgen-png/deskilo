@@ -1,75 +1,200 @@
 // SPDX-License-Identifier: 0BSD
 //
-// #454: the owner-written invoice-PDF template — placeholder engine,
-// the editor sheet, and the promise that it never touches the XML
-// (enforced structurally: buildInvoiceCii/buildInvoiceUbl take no
-// template at all).
+// #454/#470: the banded invoice reporting tool — Liquid bands (header /
+// body with the lines / footer), the line markup, the fallback contract
+// (a broken template never blocks an invoice), the editor, and the
+// promise that the XML stays untouched (structural: the CII/UBL
+// builders take no template at all).
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
+import 'package:deskilo/features/money/domain/invoice_report.dart';
+import 'package:deskilo/features/money/presentation/widgets/invoice_template_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import 'invoices_test.dart' show pumpInvoices, seededMoney;
 
+const _data = <String, Object?>{
+  'number': 'INV-1',
+  'member': 'Ada',
+  'total': '42,00 €',
+  'voided': false,
+  'proforma': false,
+  'has_vat': true,
+  'lines': [
+    {'label': 'Subscription', 'amount': '40,00 €', 'negative': false},
+    {'label': 'Locker', 'amount': '2,00 €', 'negative': false},
+  ],
+  'vat': [
+    {'rate': '20 %', 'net': '35,00 €', 'amount': '7,00 €'},
+  ],
+};
+
 void main() {
-  group('InvoicePdfTemplate (#454)', () {
-    test('apply resolves placeholders, tolerates spaces, leaves unknown '
-        'names visible', () {
-      const values = {'member': 'Ada', 'total': '42,00 €'};
-      expect(
-        InvoicePdfTemplate.apply(
-            'Dear {{member}}, please pay {{ total }}.', values),
-        'Dear Ada, please pay 42,00 €.',
-      );
-      // A typo must show on the document, not silently vanish.
-      expect(
-        InvoicePdfTemplate.apply('{{membre}}', values),
-        '{{membre}}',
-      );
-    });
-
-    test('pins the placeholder names — they are part of saved templates',
+  group('invoice report engine (#470)', () {
+    test('Liquid loops render the detail band — one table row per line',
         () {
-      expect(InvoicePdfTemplate.placeholders,
-          ['workspace', 'member', 'number', 'period', 'issued', 'total']);
+      final report = renderInvoiceReport(
+        template: const InvoicePdfTemplate(
+          body: '{% for line in lines %}{{ line.label }} | '
+              '{{ line.amount }}\n{% endfor %}= Total | {{ total }}',
+        ),
+        data: Map.of(_data),
+      );
+      final rows = report!.body.whereType<ReportTableRow>().toList();
+      expect(rows, hasLength(3));
+      expect(rows[0].cells, ['Subscription', '40,00 €']);
+      expect(rows[1].cells, ['Locker', '2,00 €']);
+      expect(rows[2].cells, ['Total', '42,00 €']);
+      expect(rows[2].bold, isTrue, reason: '= prefix bolds a row');
     });
 
-    test('round-trips through json; absent keys read empty', () {
-      const t = InvoicePdfTemplate(intro: 'Hello', footer: 'Terms');
-      expect(InvoicePdfTemplate.fromJson(t.toJson()).intro, 'Hello');
-      expect(InvoicePdfTemplate.fromJson(const {}).isEmpty, isTrue);
+    test('Liquid conditions branch on the invoice flags', () {
+      final report = renderInvoiceReport(
+        template: const InvoicePdfTemplate(
+          header: '# {% if proforma %}Proforma{% else %}Invoice '
+              '{{ number }}{% endif %}',
+        ),
+        data: Map.of(_data),
+      );
+      expect((report!.header.single as ReportHeading).text, 'Invoice INV-1');
+
+      final proforma = renderInvoiceReport(
+        template: const InvoicePdfTemplate(
+          header: '# {% if proforma %}Proforma{% else %}Invoice '
+              '{{ number }}{% endif %}',
+        ),
+        data: {..._data, 'proforma': true},
+      );
+      expect((proforma!.header.single as ReportHeading).text, 'Proforma');
     });
 
-    test('migration 0088 stores the column the repository reads', () {
-      final sql = File('supabase/migrations/0088_invoice_pdf_template.sql')
-          .readAsStringSync();
-      expect(sql, contains('invoice_pdf_template'));
+    test('the line markup maps to every block kind', () {
+      final blocks = parseReportMarkup(
+          '# Title\n## Section\nBody\n> muted\n---\n\na | b | c');
+      expect(blocks[0], isA<ReportHeading>());
+      expect(blocks[1], isA<ReportSubheading>());
+      expect(blocks[2], isA<ReportText>());
+      expect(blocks[3], isA<ReportMuted>());
+      expect(blocks[4], isA<ReportDivider>());
+      expect(blocks[5], isA<ReportSpacer>());
+      expect((blocks[6] as ReportTableRow).cells, ['a', 'b', 'c']);
+    });
+
+    test('a BROKEN template falls back (null) — an invoice must never '
+        'fail on a template', () {
+      expect(
+        renderInvoiceReport(
+          template: const InvoicePdfTemplate(body: '{% if %}broken'),
+          data: Map.of(_data),
+        ),
+        isNull,
+      );
+      expect(
+        renderInvoiceReport(
+            template: InvoicePdfTemplate.empty, data: Map.of(_data)),
+        isNull,
+        reason: 'no bands = built-in layout',
+      );
+    });
+
+    test('pre-#470 templates keep working: the legacy intro key maps to '
+        'the header band and {{placeholder}} is valid Liquid', () {
+      final legacy = InvoicePdfTemplate.fromJson(
+          const {'intro': 'Dear {{member}},', 'footer': 'Pay in 30 days.'});
+      expect(legacy.header, 'Dear {{member}},');
+      expect(legacy.footer, 'Pay in 30 days.');
+      final report =
+          renderInvoiceReport(template: legacy, data: Map.of(_data));
+      expect((report!.header.single as ReportText).text, 'Dear Ada,');
+    });
+
+    test('pins the data fields — they are part of saved templates', () {
+      expect(InvoicePdfTemplate.placeholders, [
+        'number', 'member', 'workspace', 'workspace_address', 'period',
+        'issued', 'issued_by', 'replaces', 'total', 'charges', 'payments',
+        'voided', 'proforma', 'copy', 'has_vat', 'lines', 'vat', //
+      ]);
+    });
+
+    test('the default template renders the full built-in shape', () {
+      final report = renderInvoiceReport(
+        template: defaultInvoiceTemplate(null),
+        data: {
+          ..._data,
+          'workspace': 'Pezenas1',
+          'workspace_address': '1 rue du Port',
+          'period': 'July 2026',
+          'issued': 'Aug 4, 2026',
+          'issued_by': 'Flo',
+          'replaces': '',
+        },
+      );
+      expect(report, isNotNull);
+      expect(report!.header.first, isA<ReportHeading>());
+      expect(report.body.whereType<ReportTableRow>().length,
+          greaterThanOrEqualTo(3));
     });
   });
 
-  testWidgets('the owner edits and saves the template from the invoices '
-      'hub (#454)', (tester) async {
+  testWidgets('the owner edits the three bands and saves (#470)',
+      (tester) async {
     final money = await pumpInvoices(tester, money: await seededMoney());
 
     await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
     await tester.pumpAndSettle();
 
-    await tester.enterText(
-      find.byKey(const ValueKey('invoice-template-intro')),
-      'Dear {{member}},',
-    );
+    // Reset hands a WORKING example…
+    await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
+    await tester.pump();
+    // …which the owner then customizes.
     await tester.enterText(
       find.byKey(const ValueKey('invoice-template-footer')),
-      'Payable within 30 days.',
+      'Payable within 30 days. {% if voided %}VOID{% endif %}',
     );
+    await tester.ensureVisible(
+        find.byKey(const ValueKey('invoice-template-save')));
     await tester.tap(find.byKey(const ValueKey('invoice-template-save')));
     await tester.pumpAndSettle();
 
-    expect(money.pdfTemplate.intro, 'Dear {{member}},');
-    expect(money.pdfTemplate.footer, 'Payable within 30 days.');
+    expect(money.pdfTemplate.header, contains('{{ number }}'));
+    expect(money.pdfTemplate.body, contains('{% for line in lines %}'));
+    expect(money.pdfTemplate.footer,
+        'Payable within 30 days. {% if voided %}VOID{% endif %}');
     expect(find.text('Invoice template saved.'), findsOneWidget);
+  });
+
+  testWidgets('END TO END: a custom banded template renders a real PDF '
+      'through the download pipeline (#470)', (tester) async {
+    final saved = <({String name, Uint8List bytes})>[];
+    final money = await seededMoney();
+    money.pdfTemplate = const InvoicePdfTemplate(
+      header: '# Invoice {{ number }}\n> {{ workspace }}',
+      body: '{% for line in lines %}{{ line.label }} | {{ line.amount }}\n'
+          '{% endfor %}= Total | {{ total }}',
+      footer: '> Payable within 30 days.',
+    );
+    await pumpInvoices(
+      tester,
+      money: money,
+      saver: ({required bytes, required fileName}) async {
+        saved.add((name: fileName, bytes: bytes));
+        return 'Download/$fileName';
+      },
+    );
+
+    final invoice = money.invoices.single;
+    await tester.runAsync(() async {
+      await tester
+          .tap(find.byKey(ValueKey('invoice-download-row-${invoice.id}')));
+      await tester.pump();
+    });
+    await tester.pumpAndSettle();
+
+    expect(String.fromCharCodes(saved.single.bytes.sublist(0, 5)), '%PDF-');
   });
 
   testWidgets('the e-invoice XML builders take no template — structural '

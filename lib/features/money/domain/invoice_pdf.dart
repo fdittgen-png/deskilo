@@ -6,6 +6,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import 'invoice.dart';
+import 'invoice_report.dart';
 
 /// Localized strings the invoice PDF prints.
 class InvoicePdfStrings {
@@ -143,10 +144,11 @@ Future<Uint8List> buildInvoicePdf({
   /// Requires [colorProfile] (PDF/A demands an output intent).
   String facturXml = '',
 
-  /// Owner-template text blocks (#454), ALREADY placeholder-resolved by
-  /// the caller. Empty = absent. PDF only — the XML never carries them.
-  String introText = '',
-  String footerText = '',
+  /// Owner report bands (#454/#470), already rendered by
+  /// `renderInvoiceReport`. Null = the built-in layout. PDF only — the
+  /// XML never carries them; the void banner/watermark, signature,
+  /// annex and page numbers stay non-templated regardless.
+  InvoiceReport? report,
   Uint8List? colorProfile,
 }) async {
   final hybrid = facturXml.isNotEmpty && colorProfile != null;
@@ -279,6 +281,9 @@ Future<Uint8List> buildInvoicePdf({
         ),
       ),
       build: (context) => [
+        // #470: the header band replaces the letterhead wholesale.
+        ...(report == null
+            ? <pw.Widget>[
         // ── Letterhead ────────────────────────────────────────────
         pw.Row(
           crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -327,6 +332,8 @@ Future<Uint8List> buildInvoicePdf({
             margin: const pw.EdgeInsets.symmetric(vertical: 14),
             height: 2,
             color: _accent),
+              ]
+            : _reportWidgets(report.header)),
         // ── Erroneous banner (0061) ───────────────────────────────
         if (invoice.isVoided && !proforma)
           pw.Container(
@@ -343,13 +350,10 @@ Future<Uint8List> buildInvoicePdf({
                     color: _accent,
                     fontWeight: pw.FontWeight.bold)),
           ),
-        // ── Owner-template intro (#454) ───────────────────────────
-        if (introText.trim().isNotEmpty)
-          pw.Padding(
-            padding: const pw.EdgeInsets.only(bottom: 12),
-            child: pw.Text(introText.trim(),
-                style: const pw.TextStyle(fontSize: 9, color: _ink)),
-          ),
+        // #470: the body band replaces billed-to, positions and
+        // totals — the detail band of the report.
+        ...(report == null
+            ? <pw.Widget>[
         // ── Billed to + invoiced month ────────────────────────────
         pw.Row(
           crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -562,6 +566,8 @@ Future<Uint8List> buildInvoicePdf({
             ),
           ],
         ),
+              ]
+            : _reportWidgets(report.body)),
         // ── Annex (0064) ──────────────────────────────────────────
         if (invoice.detailed) ...[
           pw.SizedBox(height: 22),
@@ -662,14 +668,12 @@ Future<Uint8List> buildInvoicePdf({
             ),
           ],
         ],
-        // ── Owner-template footer (#454): payment terms, legal
-        // mentions — under the totals, above the signature.
-        if (footerText.trim().isNotEmpty)
-          pw.Padding(
-            padding: const pw.EdgeInsets.only(top: 16),
-            child: pw.Text(footerText.trim(),
-                style: const pw.TextStyle(fontSize: 8, color: _muted)),
-          ),
+        // ── Owner-template footer band (#454/#470): payment terms,
+        // legal mentions — under the totals, above the signature.
+        if (report != null && report.footer.isNotEmpty) ...[
+          pw.SizedBox(height: 16),
+          ..._reportWidgets(report.footer),
+        ],
         pw.SizedBox(height: 24),
         // ── Digital signature ─────────────────────────────────────
         // A proforma has none: nothing was issued, so there is nothing to
@@ -695,3 +699,68 @@ Future<Uint8List> buildInvoicePdf({
   );
   return doc.save();
 }
+
+/// Report blocks → pdf widgets (#470). Table rows: the first cell takes
+/// the width, every further cell is right-aligned — the amounts column
+/// convention of the built-in layout.
+List<pw.Widget> _reportWidgets(List<ReportBlock> blocks) => [
+      for (final block in blocks)
+        switch (block) {
+          ReportHeading(:final text) => pw.Padding(
+              padding: const pw.EdgeInsets.only(bottom: 4),
+              child: pw.Text(text,
+                  style: pw.TextStyle(
+                      fontSize: 20,
+                      fontWeight: pw.FontWeight.bold,
+                      color: _ink)),
+            ),
+          ReportSubheading(:final text) => pw.Padding(
+              padding: const pw.EdgeInsets.only(top: 6, bottom: 3),
+              child: pw.Text(text.toUpperCase(),
+                  style: pw.TextStyle(
+                      fontSize: 8,
+                      color: _muted,
+                      fontWeight: pw.FontWeight.bold,
+                      letterSpacing: 1.2)),
+            ),
+          ReportText(:final text) => pw.Text(text,
+              style: const pw.TextStyle(fontSize: 10, color: _ink)),
+          ReportMuted(:final text) => pw.Text(text,
+              style: const pw.TextStyle(fontSize: 8, color: _muted)),
+          ReportDivider() => pw.Container(
+              margin: const pw.EdgeInsets.symmetric(vertical: 8),
+              height: 2,
+              color: _accent),
+          ReportSpacer() => pw.SizedBox(height: 8),
+          ReportTableRow(:final cells, :final bold) => pw.Padding(
+              padding: const pw.EdgeInsets.symmetric(vertical: 3),
+              child: pw.Row(
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  for (var i = 0; i < cells.length; i++)
+                    i == 0
+                        ? pw.Expanded(
+                            child: pw.Text(cells[i],
+                                style: pw.TextStyle(
+                                    fontSize: 10,
+                                    color: _ink,
+                                    fontWeight: bold
+                                        ? pw.FontWeight.bold
+                                        : pw.FontWeight.normal)),
+                          )
+                        : pw.Padding(
+                            padding: const pw.EdgeInsets.only(left: 12),
+                            child: pw.Text(cells[i],
+                                textAlign: pw.TextAlign.right,
+                                style: pw.TextStyle(
+                                    fontSize: 10,
+                                    color: _ink,
+                                    fontWeight: bold
+                                        ? pw.FontWeight.bold
+                                        : pw.FontWeight.normal)),
+                          ),
+                ],
+              ),
+            ),
+        },
+    ];

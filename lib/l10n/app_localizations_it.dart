@@ -1878,7 +1878,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceTemplateHint =>
-      'Testo libero sul PDF generato — l\'XML della fattura elettronica non viene mai toccato. Segnaposto:';
+      'Tre bande di report rese sul PDF — l\'XML della fattura elettronica non viene mai toccato. Condizioni e cicli Liquid, poi markup di riga:';
 
   @override
   String get invoiceTemplateIntroLabel =>
@@ -1890,6 +1890,23 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceTemplateSaved => 'Modello di fattura salvato.';
+
+  @override
+  String get invoiceTemplateHeaderLabel => 'Banda di intestazione';
+
+  @override
+  String get invoiceTemplateBodyLabel =>
+      'Banda del corpo (le righe della fattura)';
+
+  @override
+  String get invoiceTemplateReset => 'Ripristina il modello predefinito';
+
+  @override
+  String get invoiceTemplatePreview => 'Anteprima';
+
+  @override
+  String get invoiceTemplateNoPreview =>
+      'Emetti prima una fattura — l\'anteprima usa la più recente.';
 
   @override
   String get eventTypeMemberJoin => 'Nuovo membro';
