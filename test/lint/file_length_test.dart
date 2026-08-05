@@ -133,7 +133,8 @@ const Map<String, int> _baseline = {
   // #458 fetch/setDefaultWorkspaceId. 690→700 (2026-08-05): #480
   // setInvoiceLegal. 700→730 (2026-08-05): #486 setWorkspaceLanguage +
   // setInvitationTemplates.
-  'lib/features/workspace/data/supabase_workspace_repository.dart': 730,
+  // 730→770 (2026-08-05): #500 the document-library reads/writes.
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 770,
   'lib/features/calendar/presentation/screens/calendar_screen.dart': 630,
 };
 

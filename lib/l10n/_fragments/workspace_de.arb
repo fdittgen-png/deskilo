@@ -109,5 +109,89 @@
   "paymentMethodsSubtitle": "IBAN, PayPal, Wero, Lydia, Wise und der Verwendungszweck",
   "@paymentMethodsSubtitle": {
     "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "featureDocuments": "Dokumentbibliothek",
+  "@featureDocuments": {
+    "description": "Workspace document library (#500)"
+  },
+  "featureDocumentsDesc": "Die Dokumentbibliothek des Arbeitsbereichs: Satzung, Anleitungen, Finanzberichte, Protokolle — aus jedem Drive verlinkt, sichtbar je nach Rolle.",
+  "@featureDocumentsDesc": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsTitle": "Dokumente",
+  "@documentsTitle": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsAdd": "Dokument hinzufügen",
+  "@documentsAdd": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsTitleLabel": "Titel",
+  "@documentsTitleLabel": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsUrlLabel": "Link (https://…)",
+  "@documentsUrlLabel": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsUrlHelper": "Fügen Sie den Freigabelink Ihres Drives ein — die Zugriffsrechte bleiben dort verwaltet.",
+  "@documentsUrlHelper": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsProviderLabel": "Gespeichert auf",
+  "@documentsProviderLabel": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryLabel": "Kategorie",
+  "@documentsCategoryLabel": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsRoleLabel": "Sichtbar für",
+  "@documentsRoleLabel": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsRoleMember": "Alle Mitglieder",
+  "@documentsRoleMember": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsRoleAdmin": "Admins und Inhaber",
+  "@documentsRoleAdmin": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsRoleOwner": "Nur Inhaber",
+  "@documentsRoleOwner": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryStatutes": "Satzung & Rechtliches",
+  "@documentsCategoryStatutes": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryGuides": "Anleitungen & Handbücher",
+  "@documentsCategoryGuides": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryFinance": "Finanzberichte",
+  "@documentsCategoryFinance": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryMinutes": "Protokolle",
+  "@documentsCategoryMinutes": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryOther": "Weitere Dokumente",
+  "@documentsCategoryOther": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsEmpty": "Noch kein Dokument. Verlinken Sie Satzung, Anleitungen und Berichte aus jedem Drive.",
+  "@documentsEmpty": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsDelete": "Dokument entfernen?",
+  "@documentsDelete": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsInvalid": "Ein Dokument braucht einen Titel und einen https://-Link.",
+  "@documentsInvalid": {
+    "description": "Workspace document library (#500)"
   }
 }

@@ -1549,6 +1549,90 @@
   "@paymentMethodsSubtitle": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
+  "featureDocuments": "Biblioteca documenti",
+  "@featureDocuments": {
+    "description": "Workspace document library (#500)"
+  },
+  "featureDocumentsDesc": "La biblioteca documenti dello spazio: statuto, guide, bilanci, verbali — collegati da qualsiasi drive, visibili per ruolo.",
+  "@featureDocumentsDesc": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsTitle": "Documenti",
+  "@documentsTitle": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsAdd": "Aggiungi un documento",
+  "@documentsAdd": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsTitleLabel": "Titolo",
+  "@documentsTitleLabel": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsUrlLabel": "Link (https://…)",
+  "@documentsUrlLabel": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsUrlHelper": "Incolla il link di condivisione del tuo drive — i permessi restano gestiti lì.",
+  "@documentsUrlHelper": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsProviderLabel": "Archiviato su",
+  "@documentsProviderLabel": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryLabel": "Categoria",
+  "@documentsCategoryLabel": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsRoleLabel": "Visibile a",
+  "@documentsRoleLabel": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsRoleMember": "Tutti i membri",
+  "@documentsRoleMember": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsRoleAdmin": "Admin e proprietari",
+  "@documentsRoleAdmin": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsRoleOwner": "Solo proprietari",
+  "@documentsRoleOwner": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryStatutes": "Statuto e legale",
+  "@documentsCategoryStatutes": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryGuides": "Guide e manuali",
+  "@documentsCategoryGuides": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryFinance": "Bilanci",
+  "@documentsCategoryFinance": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryMinutes": "Verbali",
+  "@documentsCategoryMinutes": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryOther": "Altri documenti",
+  "@documentsCategoryOther": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsEmpty": "Nessun documento. Collega statuto, guide e bilanci da qualsiasi drive.",
+  "@documentsEmpty": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsDelete": "Rimuovere il documento?",
+  "@documentsDelete": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsInvalid": "Un documento richiede un titolo e un link https://.",
+  "@documentsInvalid": {
+    "description": "Workspace document library (#500)"
+  },
   "workspaceXmlExport": "Esporta lo spazio (XML)",
   "workspaceXmlExportSubtitle": "Impostazioni e planimetria in un file condivisibile. Senza membri, prenotazioni o dati finanziari.",
   "workspaceXmlImport": "Importa lo spazio (XML)",

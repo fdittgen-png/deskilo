@@ -54,4 +54,6 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureInvoicePdfTemplate ?? 'Invoice PDF template',
       WorkspaceFeature.memberNotifications =>
         l10n?.featureMemberNotifications ?? 'Member notifications',
+      WorkspaceFeature.documents =>
+        l10n?.featureDocuments ?? 'Document library',
     };

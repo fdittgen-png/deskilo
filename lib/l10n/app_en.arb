@@ -4764,6 +4764,90 @@
   "@paymentMethodsSubtitle": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
+  "featureDocuments": "Document library",
+  "@featureDocuments": {
+    "description": "Workspace document library (#500)"
+  },
+  "featureDocumentsDesc": "The workspace document library: statutes, guides, financial statements, minutes — linked from any drive, visible per role.",
+  "@featureDocumentsDesc": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsTitle": "Documents",
+  "@documentsTitle": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsAdd": "Add a document",
+  "@documentsAdd": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsTitleLabel": "Title",
+  "@documentsTitleLabel": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsUrlLabel": "Link (https://…)",
+  "@documentsUrlLabel": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsUrlHelper": "Paste the share link from your drive — access rights stay managed there.",
+  "@documentsUrlHelper": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsProviderLabel": "Stored on",
+  "@documentsProviderLabel": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryLabel": "Category",
+  "@documentsCategoryLabel": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsRoleLabel": "Visible to",
+  "@documentsRoleLabel": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsRoleMember": "Every member",
+  "@documentsRoleMember": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsRoleAdmin": "Admins and owners",
+  "@documentsRoleAdmin": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsRoleOwner": "Owners only",
+  "@documentsRoleOwner": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryStatutes": "Statutes & legal",
+  "@documentsCategoryStatutes": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryGuides": "Guides & manuals",
+  "@documentsCategoryGuides": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryFinance": "Financial statements",
+  "@documentsCategoryFinance": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryMinutes": "Meeting minutes",
+  "@documentsCategoryMinutes": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsCategoryOther": "Other documents",
+  "@documentsCategoryOther": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsEmpty": "No document yet. Link your statutes, guides and statements from any drive.",
+  "@documentsEmpty": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsDelete": "Remove document?",
+  "@documentsDelete": {
+    "description": "Workspace document library (#500)"
+  },
+  "documentsInvalid": "A document needs a title and an https:// link.",
+  "@documentsInvalid": {
+    "description": "Workspace document library (#500)"
+  },
   "workspaceXmlExport": "Export workspace (XML)",
   "@workspaceXmlExport": {
     "description": "Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)"

@@ -3751,6 +3751,73 @@ class AppLocalizationsEs extends AppLocalizations {
       'IBAN, PayPal, Wero, Lydia, Wise y la referencia de pago';
 
   @override
+  String get featureDocuments => 'Biblioteca de documentos';
+
+  @override
+  String get featureDocumentsDesc =>
+      'La biblioteca de documentos del espacio: estatutos, guías, estados financieros, actas — enlazados desde cualquier drive, visibles según el rol.';
+
+  @override
+  String get documentsTitle => 'Documentos';
+
+  @override
+  String get documentsAdd => 'Añadir un documento';
+
+  @override
+  String get documentsTitleLabel => 'Título';
+
+  @override
+  String get documentsUrlLabel => 'Enlace (https://…)';
+
+  @override
+  String get documentsUrlHelper =>
+      'Pega el enlace de compartir de tu drive — los permisos se gestionan allí.';
+
+  @override
+  String get documentsProviderLabel => 'Almacenado en';
+
+  @override
+  String get documentsCategoryLabel => 'Categoría';
+
+  @override
+  String get documentsRoleLabel => 'Visible para';
+
+  @override
+  String get documentsRoleMember => 'Todos los miembros';
+
+  @override
+  String get documentsRoleAdmin => 'Admins y propietarios';
+
+  @override
+  String get documentsRoleOwner => 'Solo propietarios';
+
+  @override
+  String get documentsCategoryStatutes => 'Estatutos y legal';
+
+  @override
+  String get documentsCategoryGuides => 'Guías y manuales';
+
+  @override
+  String get documentsCategoryFinance => 'Estados financieros';
+
+  @override
+  String get documentsCategoryMinutes => 'Actas de reuniones';
+
+  @override
+  String get documentsCategoryOther => 'Otros documentos';
+
+  @override
+  String get documentsEmpty =>
+      'Aún no hay documentos. Enlaza tus estatutos, guías y estados desde cualquier drive.';
+
+  @override
+  String get documentsDelete => '¿Quitar el documento?';
+
+  @override
+  String get documentsInvalid =>
+      'Un documento necesita un título y un enlace https://.';
+
+  @override
   String get workspaceXmlExport => 'Exportar el espacio (XML)';
 
   @override

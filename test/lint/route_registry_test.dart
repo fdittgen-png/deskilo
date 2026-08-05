@@ -25,7 +25,8 @@ import 'package:flutter_test/flutter_test.dart';
 ///     (see test/features/profile/settings_sections_test.dart).
 ///  3. The Features screen itself stays ungated — always reachable.
 // 35→36 (2026-08-05): #486 /payment-methods (owner-gated redirect).
-const int _expectedRouteCount = 36;
+// 36→37 (2026-08-05): #500 /documents (feature-gated redirect).
+const int _expectedRouteCount = 37;
 
 void main() {
   test('router carries exactly $_expectedRouteCount GoRoutes', () {

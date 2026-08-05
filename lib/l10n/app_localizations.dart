@@ -6812,6 +6812,132 @@ abstract class AppLocalizations {
   /// **'IBAN, PayPal, Wero, Lydia, Wise and the payment reference'**
   String get paymentMethodsSubtitle;
 
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Document library'**
+  String get featureDocuments;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace document library: statutes, guides, financial statements, minutes — linked from any drive, visible per role.'**
+  String get featureDocumentsDesc;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get documentsTitle;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Add a document'**
+  String get documentsAdd;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get documentsTitleLabel;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Link (https://…)'**
+  String get documentsUrlLabel;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Paste the share link from your drive — access rights stay managed there.'**
+  String get documentsUrlHelper;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Stored on'**
+  String get documentsProviderLabel;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get documentsCategoryLabel;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Visible to'**
+  String get documentsRoleLabel;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Every member'**
+  String get documentsRoleMember;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Admins and owners'**
+  String get documentsRoleAdmin;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Owners only'**
+  String get documentsRoleOwner;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Statutes & legal'**
+  String get documentsCategoryStatutes;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Guides & manuals'**
+  String get documentsCategoryGuides;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Financial statements'**
+  String get documentsCategoryFinance;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting minutes'**
+  String get documentsCategoryMinutes;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Other documents'**
+  String get documentsCategoryOther;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'No document yet. Link your statutes, guides and statements from any drive.'**
+  String get documentsEmpty;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'Remove document?'**
+  String get documentsDelete;
+
+  /// Workspace document library (#500)
+  ///
+  /// In en, this message translates to:
+  /// **'A document needs a title and an https:// link.'**
+  String get documentsInvalid;
+
   /// Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)
   ///
   /// In en, this message translates to:

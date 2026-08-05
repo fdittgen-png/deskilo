@@ -8,6 +8,7 @@ import 'member_note.dart';
 import 'overage_policy.dart';
 import 'payment_instructions.dart';
 import 'workspace.dart';
+import 'workspace_document.dart';
 
 /// Pure-Dart workspace boundary. Supabase impl in data/, fake in tests.
 abstract class WorkspaceRepository {
@@ -88,6 +89,16 @@ abstract class WorkspaceRepository {
     required String postalCode,
     required String vatAccount,
   });
+
+  /// The document library (#500, 0099) — RLS already trims rows to
+  /// what the caller's role may see.
+  Future<List<WorkspaceDocument>> fetchDocuments(String workspaceId);
+
+  /// Admin/owner: add a library document.
+  Future<void> addDocument(WorkspaceDocument document);
+
+  /// Admin/owner: delete a library document.
+  Future<void> deleteDocument(String documentId);
 
   /// Owner-only (workspaces_update RLS): set the workspace's language
   /// (0096, e.g. 'fr'); '' clears it.
