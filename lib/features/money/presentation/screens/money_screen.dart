@@ -40,6 +40,8 @@ import '../widgets/bill_view.dart';
 import '../widgets/consumption_sheet.dart';
 import '../widgets/report_preview.dart';
 import '../../../../core/share/file_sharer.dart';
+import '../../../profile/providers/profile_providers.dart';
+import '../../../../core/locale/report_language.dart';
 
 /// Money tab (spec §7.3, #132): a structured monthly bill per period —
 /// subscription, consumed services, open positions awaiting validation,
@@ -86,17 +88,38 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final me = ref.read(myMemberProvider).value;
     final names = ref.read(memberNamesProvider).value ?? const {};
     if (me == null) return;
+    // #496 — MY documents print in MY language chain.
+    final String language;
+    try {
+      language = resolveMemberReportLanguage(ref,
+          memberLocale:
+              ref.read(myProfileProvider).value?.preferredLocale ?? '');
+    } on AmbiguousReportLanguage {
+      AppSnack.error(
+        context,
+        l10n?.reportLanguageAmbiguous ??
+            'This country has several languages — set the workspace '
+                'language in Workspace settings first.',
+      );
+      return;
+    }
+    final docL10n = l10nForLanguage(language);
     final data = docId == 'agreement'
         ? agreementReportData(context, ref,
             memberName: names[me.id] ?? '',
-            subscriptionPct: me.subscriptionPct)
+            subscriptionPct: me.subscriptionPct,
+            l10nOverride: docL10n,
+            localeName: language)
         : paymentsReportData(context, ref,
-            period: _period, memberName: names[me.id] ?? '');
-    final report =
-        renderLetterDoc(context, ref, docId: docId, data: data);
+            period: _period,
+            memberName: names[me.id] ?? '',
+            l10nOverride: docL10n,
+            localeName: language);
+    final report = renderLetterDoc(context, ref,
+        docId: docId, data: data, language: language);
     final title = docId == 'agreement'
-        ? (l10n?.reportDocAgreement ?? 'Financial agreement')
-        : (l10n?.reportDocPayments ?? 'Payments report');
+        ? docL10n.reportDocAgreement
+        : docL10n.reportDocPayments;
     final choice = await showModalBottomSheet<String>(
       context: context,
       builder: (sheetContext) => SafeArea(

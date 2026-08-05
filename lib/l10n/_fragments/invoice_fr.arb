@@ -647,5 +647,13 @@
   "reportDocWorkspaceSubtitle": "Tout sur l'espace — via le modèle « espace » de l'éditeur de rapports",
   "@reportDocWorkspaceSubtitle": {
     "description": "Report suite: agreement/payments/workspace docs (#494)"
+  },
+  "reportTemplateLangDefault": "Par défaut (toutes langues)",
+  "@reportTemplateLangDefault": {
+    "description": "Report language resolution + per-language templates (#496)"
+  },
+  "reportLanguageAmbiguous": "Ce pays a plusieurs langues — définissez d'abord la langue de l'espace dans les Réglages de l'espace.",
+  "@reportLanguageAmbiguous": {
+    "description": "Report language resolution + per-language templates (#496)"
   }
 }

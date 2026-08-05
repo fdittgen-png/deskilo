@@ -48,6 +48,7 @@ import '../country_names.dart';
 import '../feature_names.dart';
 import '../../../../core/time/clock.dart';
 import '../../../money/presentation/invoice_actions.dart';
+import '../../../../core/locale/report_language.dart';
 
 /// Owner-only workspace settings: identity (country/currency/time zone,
 /// #153 — a country pick re-defaults both from [CountryCatalog], a
@@ -299,12 +300,27 @@ class _WorkspaceSettingsScreenState
       action: () async {
         await warmLetterDocProviders(ref, 'workspace');
         if (!mounted) return;
-        final data = workspaceReportData(context, ref);
+        // #496 — the workspace report prints in the workspace's own
+        // language chain (no member involved).
+        final String language;
+        try {
+          language = resolveMemberReportLanguage(ref);
+        } on AmbiguousReportLanguage {
+          AppSnack.error(
+            context,
+            l10n?.reportLanguageAmbiguous ??
+                'This country has several languages — set the '
+                    'workspace language in Workspace settings first.',
+          );
+          return;
+        }
+        final docL10n = l10nForLanguage(language);
+        final data = workspaceReportData(context, ref,
+            l10nOverride: docL10n, localeName: language);
         final report = renderLetterDoc(context, ref,
-            docId: 'workspace', data: data);
+            docId: 'workspace', data: data, language: language);
         final pdf = await letterDocPdf(context, ref,
-            report: report,
-            title: l10n?.reportDocWorkspace ?? 'Workspace report');
+            report: report, title: docL10n.reportDocWorkspace);
         if (!mounted) return;
         final path = await ref.read(fileSaverProvider)(
           bytes: pdf.bytes,

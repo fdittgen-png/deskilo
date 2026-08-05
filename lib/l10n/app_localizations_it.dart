@@ -2211,6 +2211,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Tutto sullo spazio — tramite il modello spazio dell\'editor di report';
 
   @override
+  String get reportTemplateLangDefault => 'Predefinito (tutte le lingue)';
+
+  @override
+  String get reportLanguageAmbiguous =>
+      'Questo paese ha più lingue — imposta prima la lingua dello spazio nelle Impostazioni dello spazio.';
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override

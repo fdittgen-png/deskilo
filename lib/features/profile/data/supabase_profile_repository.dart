@@ -94,6 +94,15 @@ class SupabaseProfileRepository implements ProfileRepository {
   }
 
   @override
+  Future<void> setPreferredLocale(String locale) async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) throw StateError('not signed in');
+    await _client
+        .from('profiles')
+        .update({'preferred_locale': locale}).eq('id', userId);
+  }
+
+  @override
   Future<void> touchLastSeen() async {
     await _client.rpc<dynamic>('touch_last_seen');
   }

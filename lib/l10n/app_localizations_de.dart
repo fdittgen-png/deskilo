@@ -2210,6 +2210,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Alles über den Arbeitsbereich — über die Arbeitsbereichsvorlage des Berichtseditors';
 
   @override
+  String get reportTemplateLangDefault => 'Standard (alle Sprachen)';
+
+  @override
+  String get reportLanguageAmbiguous =>
+      'Dieses Land hat mehrere Sprachen — legen Sie zuerst die Arbeitsbereichssprache in den Einstellungen fest.';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

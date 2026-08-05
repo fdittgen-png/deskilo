@@ -17,6 +17,9 @@ abstract class ProfileRepository {
   /// [normalizeWhatsapp]; '' clears it. Throws [StateError] signed out.
   Future<void> updateWhatsapp(String whatsapp);
 
+  /// Writes my preferred DOCUMENT language (0098, #496); '' clears it.
+  Future<void> setPreferredLocale(String locale);
+
   /// Writes my status line (#231), already trimmed + hard-capped by
   /// [normalizeStatusText]; '' clears it. Throws [StateError] signed
   /// out.

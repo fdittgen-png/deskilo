@@ -75,8 +75,24 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
   /// so they re-seed from the new text.
   int _visualEpoch = 0;
 
-  /// Unsaved edits per document, so switching documents loses nothing.
+  /// The TEMPLATE language being edited (#496): '' = the default
+  /// template every language falls back to; a language code edits that
+  /// language's overlay (empty bands = inherit the default).
+  String _lang = '';
+
+  static const List<String> _templateLanguages = [
+    'en',
+    'fr',
+    'de',
+    'es',
+    'it',
+  ];
+
+  /// Unsaved edits per language|document, so switching loses nothing.
   final Map<String, ReportBands> _drafts = {};
+
+  String _draftKey(String lang, String doc) =>
+      lang.isEmpty ? doc : '$lang|$doc';
 
   @override
   void initState() {
@@ -107,16 +123,24 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
     'workspace',
   ];
 
-  /// The stored bands of document [doc], before any unsaved edit.
-  ReportBands _storedBands(String doc) => switch (doc) {
-        'invoice' => widget.initial.invoiceBands,
-        'proforma' => widget.initial.proforma,
-        'statement' => widget.initial.statement,
+  /// The stored bands of document [doc] in the edited LANGUAGE, before
+  /// any unsaved edit. In a language overlay, empty = inherits default.
+  ReportBands _storedBands(String doc) => _storedBandsOf(
+      _lang.isEmpty
+          ? widget.initial
+          : (widget.initial.translations[_lang] ?? InvoicePdfTemplate.empty),
+      doc);
+
+  ReportBands _storedBandsOf(InvoicePdfTemplate template, String doc) =>
+      switch (doc) {
+        'invoice' => template.invoiceBands,
+        'proforma' => template.proforma,
+        'statement' => template.statement,
         'agreement' ||
         'payments' ||
         'workspace' =>
-          widget.initial.extraDocs[doc] ?? ReportBands.empty,
-        _ => widget.initial
+          template.extraDocs[doc] ?? ReportBands.empty,
+        _ => template
                 .reminderBands(int.tryParse(doc.substring(1)) ?? 1) ??
             ReportBands.empty,
       };
@@ -124,9 +148,9 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
   void _switchDoc(String doc) {
     if (doc == _doc) return;
     setState(() {
-      _drafts[_doc] = _currentBands;
+      _drafts[_draftKey(_lang, _doc)] = _currentBands;
       _doc = doc;
-      final bands = _drafts[doc] ?? _storedBands(doc);
+      final bands = _drafts[_draftKey(_lang, doc)] ?? _storedBands(doc);
       _header.text = bands.header;
       _body.text = bands.body;
       _footer.text = bands.footer;
@@ -134,9 +158,24 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
     });
   }
 
-  /// The full template with every unsaved edit folded in.
+  /// #496 — switch the edited template LANGUAGE, keeping the document.
+  void _switchLang(String lang) {
+    if (lang == _lang) return;
+    setState(() {
+      _drafts[_draftKey(_lang, _doc)] = _currentBands;
+      _lang = lang;
+      final bands = _drafts[_draftKey(lang, _doc)] ?? _storedBands(_doc);
+      _header.text = bands.header;
+      _body.text = bands.body;
+      _footer.text = bands.footer;
+      _visualEpoch++;
+    });
+  }
+
+  /// The full template with every unsaved edit folded in — the default
+  /// bands plus one overlay per edited language (#496).
   InvoicePdfTemplate _assemble(int maxLevels) {
-    _drafts[_doc] = _currentBands;
+    _drafts[_draftKey(_lang, _doc)] = _currentBands;
     final invoice = _drafts['invoice'] ?? widget.initial.invoiceBands;
     var template = InvoicePdfTemplate(
       header: invoice.header,
@@ -154,6 +193,35 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
     for (final doc in _extraDocs) {
       final bands = _drafts[doc];
       if (bands != null) template = template.withDoc(doc, bands);
+    }
+    // #496 — fold every edited language overlay in.
+    for (final lang in _templateLanguages) {
+      var overlay =
+          widget.initial.translations[lang] ?? InvoicePdfTemplate.empty;
+      var touched = widget.initial.translations.containsKey(lang);
+      void apply(String doc, ReportBands bands) {
+        touched = true;
+        overlay = switch (doc) {
+          'invoice' => overlay.copyWith(invoice: bands),
+          'proforma' => overlay.copyWith(proforma: bands),
+          'statement' => overlay.copyWith(statement: bands),
+          'agreement' ||
+          'payments' ||
+          'workspace' =>
+            overlay.withDoc(doc, bands),
+          _ => overlay.withReminder(
+              int.tryParse(doc.substring(1)) ?? 1, bands),
+        };
+      }
+
+      for (final entry in _drafts.entries) {
+        if (entry.key.startsWith('$lang|')) {
+          apply(entry.key.substring(lang.length + 1), entry.value);
+        }
+      }
+      if (touched) {
+        template = template.withTranslation(lang, overlay);
+      }
     }
     return template;
   }
@@ -446,6 +514,34 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
+            // #496 — one template per LANGUAGE: the default, plus an
+            // overlay per language for readers in that language.
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 6),
+                  child: ChoiceChip(
+                    key: const ValueKey('invoice-template-lang-default'),
+                    label: Text(l10n?.reportTemplateLangDefault ??
+                        'Default (all languages)'),
+                    selected: _lang.isEmpty,
+                    onSelected: (_) => _switchLang(''),
+                  ),
+                ),
+                for (final lang in _templateLanguages)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 6),
+                    child: ChoiceChip(
+                      key: ValueKey('invoice-template-lang-$lang'),
+                      label: Text(lang.toUpperCase()),
+                      selected: _lang == lang,
+                      onSelected: (_) => _switchLang(lang),
+                    ),
+                  ),
+              ]),
+            ),
+            const SizedBox(height: AppSpacing.xs),
             // #472: one report per DOCUMENT — the invoice, and every
             // reminder level of the dunning rules.
             SingleChildScrollView(
@@ -658,7 +754,11 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
                   onPressed: _busy
                       ? null
                       : () {
-                          final d = defaultBandsForDoc(_doc, l10n);
+                          final d = defaultBandsForDoc(
+                              _doc,
+                              _lang.isEmpty
+                                  ? l10n
+                                  : l10nForLanguage(_lang));
                           setState(() {
                             _visualEpoch++;
                             _header.text = d.header;

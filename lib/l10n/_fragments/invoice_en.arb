@@ -1300,5 +1300,13 @@
   "reportDocWorkspaceSubtitle": "Everything about the space — through the report editor's workspace template",
   "@reportDocWorkspaceSubtitle": {
     "description": "Report suite: agreement/payments/workspace docs (#494)"
+  },
+  "reportTemplateLangDefault": "Default (all languages)",
+  "@reportTemplateLangDefault": {
+    "description": "Report language resolution + per-language templates (#496)"
+  },
+  "reportLanguageAmbiguous": "This country has several languages — set the workspace language in Workspace settings first.",
+  "@reportLanguageAmbiguous": {
+    "description": "Report language resolution + per-language templates (#496)"
   }
 }

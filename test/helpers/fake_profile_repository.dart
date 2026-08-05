@@ -78,6 +78,14 @@ class FakeProfileRepository implements ProfileRepository {
     _replaceMine(mine.copyWith(statusText: statusText));
   }
 
+  /// #496 — the last preferred-locale write.
+  String preferredLocale = '';
+
+  @override
+  Future<void> setPreferredLocale(String locale) async {
+    preferredLocale = locale;
+  }
+
   @override
   Future<void> touchLastSeen() async {
     if (failing) throw StateError('touchLastSeen failing (test)');
