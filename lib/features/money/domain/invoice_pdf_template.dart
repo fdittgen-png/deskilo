@@ -49,6 +49,7 @@ class InvoicePdfTemplate {
     this.reminders = const [],
     this.proforma = ReportBands.empty,
     this.statement = ReportBands.empty,
+    this.extraDocs = const {},
   });
 
   factory InvoicePdfTemplate.fromJson(Map<String, dynamic> json) =>
@@ -71,6 +72,13 @@ class InvoicePdfTemplate {
             ? ReportBands.fromJson(
                 (json[keyStatement] as Map).cast<String, dynamic>())
             : ReportBands.empty,
+        extraDocs: {
+          for (final entry
+              in (json[keyDocs] as Map? ?? const {}).entries)
+            if (entry.value is Map)
+              entry.key as String: ReportBands.fromJson(
+                  (entry.value as Map).cast<String, dynamic>()),
+        },
       );
 
   /// Band above the whole document (letterhead territory).
@@ -95,12 +103,18 @@ class InvoicePdfTemplate {
   /// PDF renders unchanged.
   final ReportBands statement;
 
+  /// Further documents by id (#494): 'agreement' (the financial
+  /// agreement), 'payments' (the monthly payments report), 'workspace'
+  /// (the workspace report) — extensible without another schema step.
+  final Map<String, ReportBands> extraDocs;
+
   static const String keyHeader = 'header';
   static const String keyBody = 'body';
   static const String keyFooter = 'footer';
   static const String keyReminders = 'reminders';
   static const String keyProforma = 'proforma';
   static const String keyStatement = 'statement';
+  static const String keyDocs = 'docs';
 
   /// Pre-#470 key: a single intro paragraph — now the header band.
   static const String legacyKeyIntro = 'intro';
@@ -166,6 +180,25 @@ class InvoicePdfTemplate {
   /// The statement's own bands, or null for the built-in bill PDF.
   ReportBands? get statementBands => statement.hasBands ? statement : null;
 
+  /// An extra document's own bands (#494), or null to use the shipped
+  /// default for that document.
+  ReportBands? docBands(String docId) {
+    final bands = extraDocs[docId];
+    return bands != null && bands.hasBands ? bands : null;
+  }
+
+  /// Copy with extra document [docId]'s bands replaced (#494).
+  InvoicePdfTemplate withDoc(String docId, ReportBands bands) =>
+      InvoicePdfTemplate(
+        header: header,
+        body: body,
+        footer: footer,
+        reminders: reminders,
+        proforma: proforma,
+        statement: statement,
+        extraDocs: {...extraDocs, docId: bands},
+      );
+
   /// The stored bands of reminder [level] (1-based), or null when the
   /// owner never customized that level.
   ReportBands? reminderBands(int level) {
@@ -189,6 +222,7 @@ class InvoicePdfTemplate {
       reminders: next,
       proforma: proforma,
       statement: statement,
+      extraDocs: extraDocs,
     );
   }
 
@@ -204,6 +238,7 @@ class InvoicePdfTemplate {
         reminders: reminders,
         proforma: proforma ?? this.proforma,
         statement: statement ?? this.statement,
+        extraDocs: extraDocs,
       );
 
   Map<String, Object> toJson() => {
@@ -213,5 +248,9 @@ class InvoicePdfTemplate {
         keyReminders: [for (final r in reminders) r.toJson()],
         keyProforma: proforma.toJson(),
         keyStatement: statement.toJson(),
+        keyDocs: {
+          for (final entry in extraDocs.entries)
+            entry.key: entry.value.toJson(),
+        },
       };
 }

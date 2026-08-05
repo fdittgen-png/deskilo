@@ -20,6 +20,8 @@ import '../../providers/workspace_providers.dart';
 import '../widgets/member_note_dialog.dart';
 import '../widgets/badge_manager_dialog.dart';
 import '../../../events/providers/event_providers.dart';
+import '../../../../core/share/file_sharer.dart';
+import '../../../money/presentation/invoice_actions.dart';
 
 /// Owner-only member management: role overview, subscription percentage
 /// assignment (#128, ADR 0008), pause/reactivate (spec §7.2).
@@ -175,6 +177,41 @@ class MembersScreen extends ConsumerWidget {
   /// The one management surface of a member (UX pass): every action as a
   /// labeled tile, gated by the same rules the old icon buttons carried —
   /// owner-only knobs, no self reservation-limit, no billing for kiosks.
+  /// #494 — builds THIS member's financial agreement through the report
+  /// engine and hands the PDF to the share sheet.
+  Future<void> _sendAgreement(
+    BuildContext context,
+    WidgetRef ref,
+    Member member,
+    String name,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'agreement share failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        await warmLetterDocProviders(ref, 'agreement');
+        if (!context.mounted) return;
+        final data = agreementReportData(context, ref,
+            memberName: name, subscriptionPct: member.subscriptionPct);
+        final report = renderLetterDoc(context, ref,
+            docId: 'agreement', data: data);
+        final pdf = await letterDocPdf(context, ref,
+            report: report,
+            title:
+                '${l10n?.reportDocAgreement ?? 'Financial agreement'} $name');
+        await ref.read(fileSharerProvider)(
+          bytes: pdf.bytes,
+          fileName: pdf.fileName,
+          mimeType: 'application/pdf',
+        );
+      },
+    );
+  }
+
   Future<void> _memberSheet(
     BuildContext context,
     WidgetRef ref,
@@ -194,6 +231,15 @@ class MembersScreen extends ConsumerWidget {
         .read(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.memberNotifications);
     final actions = <Widget>[
+      // #494 — the standing financial agreement, sent by owner/admin.
+      if (!member.isKiosk && active)
+        _sheetAction(
+          context,
+          icon: Icons.handshake_outlined,
+          label: l10n?.memberSendAgreement ??
+              'Send the financial agreement',
+          onTap: () => _sendAgreement(context, ref, member, name),
+        ),
       // Member notes (#456): reach the person before managing them.
       if (notesOn && !isSelf && !member.isKiosk && active)
         _sheetAction(

@@ -47,6 +47,7 @@ import '../excel_export.dart';
 import '../country_names.dart';
 import '../feature_names.dart';
 import '../../../../core/time/clock.dart';
+import '../../../money/presentation/invoice_actions.dart';
 
 /// Owner-only workspace settings: identity (country/currency/time zone,
 /// #153 — a country pick re-defaults both from [CountryCatalog], a
@@ -285,6 +286,37 @@ class _WorkspaceSettingsScreenState
   /// availability and the whole floor plan — and hands it to the system
   /// share sheet. Unlike the XML export (a machine backup, no members),
   /// this is the owner's shareable configuration record.
+  /// #494 — the engine-based workspace report, saved to the device.
+  Future<void> _exportWorkspaceReport() async {
+    final l10n = AppLocalizations.of(context);
+    setState(() => _busy = true);
+    await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'workspace report export failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        await warmLetterDocProviders(ref, 'workspace');
+        if (!mounted) return;
+        final data = workspaceReportData(context, ref);
+        final report = renderLetterDoc(context, ref,
+            docId: 'workspace', data: data);
+        final pdf = await letterDocPdf(context, ref,
+            report: report,
+            title: l10n?.reportDocWorkspace ?? 'Workspace report');
+        if (!mounted) return;
+        final path = await ref.read(fileSaverProvider)(
+          bytes: pdf.bytes,
+          fileName: pdf.fileName,
+        );
+        if (!mounted) return;
+        _announceSaved(l10n, path);
+      },
+    );
+    if (mounted) setState(() => _busy = false);
+  }
+
   Future<void> _exportConfigPdf(Workspace workspace) async {
     final l10n = AppLocalizations.of(context);
     final locale = Localizations.maybeLocaleOf(context)?.toString();
@@ -1180,6 +1212,20 @@ class _WorkspaceSettingsScreenState
                     ),
                     enabled: !_busy,
                     onTap: () => _exportConfigPdf(workspace),
+                  ),
+                  // #494 — the workspace report through the REPORT
+                  // engine: templated, translated, image-capable.
+                  ListTile(
+                    key: const Key('workspaceSettingsWorkspaceReport'),
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.summarize_outlined),
+                    title: Text(l10n?.reportDocWorkspace ??
+                        'Workspace report'),
+                    subtitle: Text(l10n?.reportDocWorkspaceSubtitle ??
+                        'Everything about the space — through the '
+                            'report editor\'s workspace template'),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: _exportWorkspaceReport,
                   ),
                   // Space QR codes (field request): one printable card
                   // per desk, office and level — members scan them to

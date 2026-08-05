@@ -344,6 +344,105 @@ ${l10n?.reportRegards ?? 'Kind regards'},
   }
 }
 
+/// The FINANCIAL AGREEMENT document (#494) as editable bands.
+ReportBands defaultAgreementBands(AppLocalizations? l10n) =>
+    _simpleDocPresetBands(
+        l10n, 'classic', l10n?.reportDocAgreement ?? 'Financial agreement',
+        subtitle: '{{ member }}');
+
+/// The MONTHLY PAYMENTS document (#494) as editable bands.
+ReportBands defaultPaymentsBands(AppLocalizations? l10n) =>
+    _simpleDocPresetBands(
+        l10n, 'classic', l10n?.reportDocPayments ?? 'Payments report',
+        subtitle: '{{ member }} — {{ period }}',
+        totalsLine:
+            '= {{ payments }} | {% if pending_total != "" %}{{ pending_total }}{% endif %}');
+
+/// The WORKSPACE REPORT document (#494) as editable bands.
+ReportBands defaultWorkspaceBands(AppLocalizations? l10n) => ReportBands(
+      header: '''
+# {{ workspace }}
+{% if seller_legal_form != "" %}> {{ seller_legal_form }}{% endif %}
+> {{ workspace_address }}
+> {{ issued }}
+---''',
+      body: '''
+{{ country }} · {{ currency }} · {{ timezone }}
+> {{ members_count }} · {{ levels_count }} / {{ offices_count }} / {{ desks_count }} / {{ seats_count }}
+> {{ open_days }} · {{ work_hours }}
+
+## ${l10n?.reportSectionFeatures ?? 'Features'}
+{% for f in features %}{{ f.label }}
+{% endfor %}
+## ${l10n?.reportSectionPrices ?? 'Prices'}
+{% for line in lines %}{{ line.label }} | {{ line.amount }}
+{% endfor %}''',
+      footer: _legalFooter(l10n),
+    );
+
+/// The shared letter shape of the simple per-member documents (#494):
+/// title + recipient, the lines, an optional totals row, the legal
+/// footer. [totalsLine] defaults to the plain balance row.
+ReportBands _simpleDocPresetBands(
+  AppLocalizations? l10n,
+  String id,
+  String title, {
+  required String subtitle,
+  String? totalsLine,
+}) {
+  final totals =
+      totalsLine ?? '= ${l10n?.billBalance ?? 'Balance'} | {{ total }}';
+  const lines = '{% for line in lines %}'
+      '{{ line.label }} | {{ line.amount }}\n{% endfor %}';
+  switch (id) {
+    case 'simple':
+      return ReportBands(
+        header: '# $title\n$subtitle',
+        body: '$lines$totals',
+      );
+    case 'verbose':
+      return ReportBands(
+        header: '''
+# $title
+${_sellerBlock(l10n)}
+> $subtitle · {{ issued }}
+---''',
+        body: '$lines---\n$totals',
+        footer: _legalFooter(l10n),
+      );
+    case 'formal':
+      return ReportBands(
+        header: '''
+${_sellerBlock(l10n)}
+
+{{ member }}
+
+> {{ issued }}''',
+        body: '''
+## ${l10n?.reportSubject ?? 'Subject'}: $title
+
+{{ member }},
+
+$lines---
+$totals''',
+        footer: '''
+${l10n?.reportRegards ?? 'Kind regards'},
+{{ workspace }}''',
+      );
+    default: // classic
+      return ReportBands(
+        header: '''
+# $title
+{{ workspace }}
+> $subtitle
+> {{ issued }}
+---''',
+        body: '$lines---\n$totals',
+        footer: _legalFooter(l10n),
+      );
+  }
+}
+
 /// Simulated-execution data (#474): a plausible invoice with lines and
 /// VAT, plus the reminder and legal-mention fields (#480) — the quick
 /// preview runs on it when no real invoice exists yet. Everything is
@@ -457,6 +556,24 @@ List<ReportPreset> presetsForDoc(String docId, AppLocalizations? l10n) {
       return _invoicePresetBands(l10n, id);
     }
     if (docId == 'statement') return _statementPresetBands(l10n, id);
+    // #494 — the further documents share the letter shape.
+    if (docId == 'agreement') {
+      return _simpleDocPresetBands(
+          l10n, id, l10n?.reportDocAgreement ?? 'Financial agreement',
+          subtitle: '{{ member }}');
+    }
+    if (docId == 'payments') {
+      return _simpleDocPresetBands(
+          l10n, id, l10n?.reportDocPayments ?? 'Payments report',
+          subtitle: '{{ member }} — {{ period }}');
+    }
+    if (docId == 'workspace') {
+      return id == 'classic'
+          ? defaultWorkspaceBands(l10n)
+          : _simpleDocPresetBands(
+              l10n, id, l10n?.reportDocWorkspace ?? 'Workspace report',
+              subtitle: '{{ workspace_address }}');
+    }
     final level = int.tryParse(docId.substring(1)) ?? 1;
     return _reminderPresetBands(level, l10n, id);
   }
@@ -474,5 +591,8 @@ ReportBands defaultBandsForDoc(String docId, AppLocalizations? l10n) {
     return defaultInvoiceTemplate(l10n).invoiceBands;
   }
   if (docId == 'statement') return defaultStatementBands(l10n);
+  if (docId == 'agreement') return defaultAgreementBands(l10n);
+  if (docId == 'payments') return defaultPaymentsBands(l10n);
+  if (docId == 'workspace') return defaultWorkspaceBands(l10n);
   return defaultReminderBands(int.tryParse(docId.substring(1)) ?? 1, l10n);
 }

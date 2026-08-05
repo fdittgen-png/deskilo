@@ -38,6 +38,8 @@ import '../../providers/money_providers.dart';
 import '../payment_method_labels.dart';
 import '../widgets/bill_view.dart';
 import '../widgets/consumption_sheet.dart';
+import '../widgets/report_preview.dart';
+import '../../../../core/share/file_sharer.dart';
 
 /// Money tab (spec §7.3, #132): a structured monthly bill per period —
 /// subscription, consumed services, open positions awaiting validation,
@@ -75,6 +77,88 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
   /// Renders the visible period's bill as a PDF — the exact sections
   /// [BillView] shows via [buildBillSections] — and hands it to the system
   /// share sheet (#133, ADR 0008).
+  /// #494 — one of the member's self-service letter documents: quick
+  /// in-app view, download, or share.
+  Future<void> _memberDoc(String docId) async {
+    final l10n = AppLocalizations.of(context);
+    await warmLetterDocProviders(ref, docId);
+    if (!mounted) return;
+    final me = ref.read(myMemberProvider).value;
+    final names = ref.read(memberNamesProvider).value ?? const {};
+    if (me == null) return;
+    final data = docId == 'agreement'
+        ? agreementReportData(context, ref,
+            memberName: names[me.id] ?? '',
+            subscriptionPct: me.subscriptionPct)
+        : paymentsReportData(context, ref,
+            period: _period, memberName: names[me.id] ?? '');
+    final report =
+        renderLetterDoc(context, ref, docId: docId, data: data);
+    final title = docId == 'agreement'
+        ? (l10n?.reportDocAgreement ?? 'Financial agreement')
+        : (l10n?.reportDocPayments ?? 'Payments report');
+    final choice = await showModalBottomSheet<String>(
+      context: context,
+      builder: (sheetContext) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              key: const ValueKey('member-doc-quick'),
+              leading: const Icon(Icons.bolt_outlined),
+              title: Text(l10n?.reportQuickView ?? 'Quick view'),
+              onTap: () => Navigator.of(sheetContext).pop('quick'),
+            ),
+            ListTile(
+              key: const ValueKey('member-doc-download'),
+              leading: const Icon(Icons.download_outlined),
+              title: Text(
+                  l10n?.invoiceTemplateDownload ?? 'Download PDF'),
+              onTap: () => Navigator.of(sheetContext).pop('download'),
+            ),
+            ListTile(
+              key: const ValueKey('member-doc-share'),
+              leading: const Icon(Icons.share_outlined),
+              title: Text(l10n?.invoiceTemplateShare ?? 'Share PDF'),
+              onTap: () => Navigator.of(sheetContext).pop('share'),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+          ],
+        ),
+      ),
+    );
+    if (choice == null || !mounted) return;
+    if (choice == 'quick') {
+      final images = await resolveReportImages(ref, report);
+      if (!mounted) return;
+      await showReportQuickPreview(context,
+          report: report, simulated: false, images: images);
+      return;
+    }
+    await runGuarded(
+      context,
+      domain: 'money',
+      message: 'member report pdf failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () async {
+        final pdf = await letterDocPdf(context, ref,
+            report: report, title: title);
+        if (!mounted) return;
+        if (choice == 'download') {
+          await savePdfToDownloads(context, ref,
+              bytes: pdf.bytes, fileName: pdf.fileName);
+        } else {
+          await ref.read(fileSharerProvider)(
+            bytes: pdf.bytes,
+            fileName: pdf.fileName,
+            mimeType: 'application/pdf',
+          );
+        }
+      },
+    );
+  }
+
   Future<void> _exportPdf(Statement statement) async {
     final context = this.context;
     final l10n = AppLocalizations.of(context);
@@ -959,15 +1043,46 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           );
         },
       ),
+      sectionLabel(l10n?.moneySectionDocuments ?? 'Documents'),
       if (features.contains(WorkspaceFeature.invoicing)) ...[
-        sectionLabel(l10n?.moneySectionDocuments ?? 'Documents'),
         OutlinedButton.icon(
           key: const ValueKey('invoices-button'),
           onPressed: () => context.push('/invoices'),
           icon: const Icon(Icons.receipt_long_outlined),
           label: Text(l10n?.invoicesTitle ?? 'Invoices'),
         ),
+        const SizedBox(height: 8),
       ],
+      // #494 — member self-service reports: the standing financial
+      // agreement and the month's payments, viewable/downloadable/
+      // shareable without asking anyone.
+      Row(children: [
+        Expanded(
+          child: OutlinedButton.icon(
+            key: const ValueKey('agreement-report-button'),
+            onPressed: () => _memberDoc('agreement'),
+            icon: const Icon(Icons.handshake_outlined),
+            label: FittedBox(
+              fit: BoxFit.scaleDown,
+              child:
+                  Text(l10n?.moneyMyAgreement ?? 'My conditions'),
+            ),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: OutlinedButton.icon(
+            key: const ValueKey('payments-report-button'),
+            onPressed: () => _memberDoc('payments'),
+            icon: const Icon(Icons.summarize_outlined),
+            label: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                  l10n?.reportDocPayments ?? 'Payments report'),
+            ),
+          ),
+        ),
+      ]),
     ];
     // #486 — the landscape side panel leads with the month's BOTTOM
     // LINE so the split reads: my balance and what I can do, left; the

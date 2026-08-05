@@ -50,6 +50,19 @@ import 'widgets/invoice_detail_sheet.dart';
 import 'widgets/invoice_form_sheet.dart';
 import 'widgets/invoicing_dashboard.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/time/workspace_time.dart';
+import '../../../core/time/work_hours.dart';
+import '../../workspace/presentation/feature_names.dart';
+import '../../events/domain/workspace_event.dart';
+import '../../plan/domain/accessory.dart';
+import '../../plan/providers/accessory_providers.dart';
+import '../../plan/providers/floor_plan_providers.dart';
+import '../domain/package.dart';
+import '../domain/service_item.dart';
+import '../domain/fee_band.dart';
+import '../../plan/domain/office.dart';
+import '../../plan/domain/level.dart';
+import '../../plan/domain/floor_plan.dart';
 
 /// Everything an issued invoice can be PUT THROUGH, extracted out of the
 /// screen (0069): the archive rows, the open cards and the detail sheet all
@@ -321,6 +334,348 @@ Map<String, Object?> statementReportData(
     ...legalMentionData(l10n, workspace),
   };
 }
+
+/// The FINANCIAL AGREEMENT data model (#494): every standing price that
+/// applies to a member — the subscription fee for their percentage, the
+/// extra half-day, the service and package catalogue, whole-space and
+/// accessory supplements. The owner/admin SENDS it; the member reads,
+/// shares or downloads it self-service.
+Map<String, Object?> agreementReportData(
+  BuildContext context,
+  WidgetRef ref, {
+  required String memberName,
+  required int subscriptionPct,
+}) {
+  final l10n = AppLocalizations.of(context);
+  final workspace = ref.read(currentWorkspaceProvider).value;
+  final currency =
+      NumberFormat.simpleCurrency(name: workspace?.currencyCode ?? 'EUR');
+  String money(int cents) => currency.format(cents / 100);
+  final bands = ref.read(feeBandsProvider).value ?? const <FeeBand>[];
+  final band = bands
+      .where((b) => b.fromPct < subscriptionPct && subscriptionPct <= b.toPct)
+      .firstOrNull;
+  final services = ref.read(servicesProvider).value ?? const <ServiceItem>[];
+  final packages =
+      ref.read(packagesProvider).value?.where((p) => p.active) ??
+          const <Package>[];
+  final levels = ref.read(levelsProvider).value ?? const <Level>[];
+  final offices = [
+    for (final level in levels)
+      ...(ref.read(floorPlanProvider(level.id)).value?.offices ??
+          const <Office>[]),
+  ];
+  final accessories =
+      ref.read(accessoriesProvider()).value ?? const <Accessory>[];
+  final lines = <Map<String, Object?>>[
+    if (band != null) ...[
+      {
+        'label': l10n?.billSubscription(subscriptionPct) ??
+            'Subscription $subscriptionPct%',
+        'amount': money(band.feeCents),
+      },
+      {
+        'label': l10n?.agreementExtraHalfDay ?? 'Extra half-day',
+        'amount': money(band.overageFeeCents),
+      },
+    ],
+    for (final service in services)
+      {'label': service.name, 'amount': money(service.priceCents)},
+    for (final package in packages)
+      {
+        'label': '${package.name} (${package.days}d)',
+        'amount': money(package.priceCents),
+      },
+    for (final level in levels)
+      if (level.bookableAsWhole && level.priceCents > 0)
+        {
+          'label':
+              '${level.name} — ${l10n?.levelSupplementLabel ?? 'Level reservations'}',
+          'amount': money(level.priceCents),
+        },
+    for (final office in offices)
+      if (office.bookableAsWhole && office.priceCents > 0)
+        {
+          'label':
+              '${office.name} — ${l10n?.officeSupplementLabel ?? 'Office reservations'}',
+          'amount': money(office.priceCents),
+        },
+    for (final accessory in accessories)
+      if (accessory.supplementCents > 0)
+        {
+          'label': accessory.name,
+          'amount': money(accessory.supplementCents),
+        },
+  ];
+  return <String, Object?>{
+    'workspace': workspace?.name ?? '',
+    'workspace_address': workspace?.address ?? '',
+    'member': memberName,
+    'subscription_pct': subscriptionPct,
+    'number': '',
+    'period': '',
+    'issued': DateFormat.yMMMd(
+      Localizations.maybeLocaleOf(context)?.toString(),
+    ).format(ref.read(clockProvider).now()),
+    'issued_by': workspace?.name ?? '',
+    'replaces': '',
+    'total': band == null ? '' : money(band.feeCents),
+    'charges': '',
+    'payments': '',
+    'net_total': '',
+    'vat_total': '',
+    'voided': false,
+    'proforma': false,
+    'copy': false,
+    'has_vat': false,
+    'lines': lines,
+    'vat': const <Map<String, Object?>>[],
+    ...legalMentionData(l10n, workspace),
+  };
+}
+
+/// The MONTHLY PAYMENTS data model (#494): everything the member paid,
+/// declared or had validated in [period] — the little balance sheet a
+/// member can pull self-service.
+Map<String, Object?> paymentsReportData(
+  BuildContext context,
+  WidgetRef ref, {
+  required String period,
+  required String memberName,
+}) {
+  final l10n = AppLocalizations.of(context);
+  final workspace = ref.read(currentWorkspaceProvider).value;
+  final me = ref.read(myMemberProvider).value;
+  final currency =
+      NumberFormat.simpleCurrency(name: workspace?.currencyCode ?? 'EUR');
+  String money(int cents) => currency.format(cents / 100);
+  final dateFormat = DateFormat.yMMMd(
+    Localizations.maybeLocaleOf(context)?.toString(),
+  );
+  final ledger = (ref.read(myLedgerProvider).value ?? const <LedgerEntry>[])
+      .where((entry) =>
+          entry.period == period && entry.kind == LedgerKind.credit)
+      .toList();
+  final pending = (ref.read(eventsProvider).value ?? const [])
+      .where((event) =>
+          event.isPending &&
+          event.subjectMemberId == me?.id &&
+          (event.type == EventType.payment ||
+              event.type == EventType.expense) &&
+          (event.payload['period'] as String? ?? period) == period)
+      .toList();
+  final validatedCents =
+      ledger.fold<int>(0, (sum, entry) => sum + entry.amountCents);
+  final pendingCents = pending.fold<int>(
+      0,
+      (sum, event) =>
+          sum + ((event.payload['amount_cents'] as num?)?.toInt() ?? 0));
+  final statement = ref.read(myStatementProvider(period)).value;
+  return <String, Object?>{
+    'workspace': workspace?.name ?? '',
+    'workspace_address': workspace?.address ?? '',
+    'member': memberName,
+    'number': '',
+    'period': period,
+    'issued': dateFormat.format(ref.read(clockProvider).now()),
+    'issued_by': workspace?.name ?? '',
+    'replaces': '',
+    'total': money(statement?.balanceCents ?? 0),
+    'charges': '',
+    'payments': money(validatedCents),
+    'net_total': '',
+    'vat_total': '',
+    'validated_total': money(validatedCents),
+    'pending_total': money(pendingCents),
+    'voided': false,
+    'proforma': false,
+    'copy': false,
+    'has_vat': false,
+    'lines': [
+      for (final entry in ledger)
+        {
+          'label':
+              '${dateFormat.format(WorkspaceTime.dateOf(entry.occurredOn ?? entry.createdAt))} · ${entry.description.isEmpty ? (l10n?.billPaymentsCredits ?? 'Payments & credits') : entry.description}',
+          'amount': money(entry.amountCents),
+        },
+      for (final event in pending)
+        {
+          'label':
+              '${event.payload['note'] as String? ?? (l10n?.eventTypePayment ?? 'Payment')} — ${l10n?.paymentsPendingTag ?? 'pending validation'}',
+          'amount': money(
+              (event.payload['amount_cents'] as num?)?.toInt() ?? 0),
+        },
+    ],
+    'vat': const <Map<String, Object?>>[],
+    ...legalMentionData(l10n, workspace),
+  };
+}
+
+/// The WORKSPACE REPORT data model (#494): everything about the space —
+/// identity, floor-plan counts, availability, features, prices.
+Map<String, Object?> workspaceReportData(BuildContext context, WidgetRef ref) {
+  final l10n = AppLocalizations.of(context);
+  final workspace = ref.read(currentWorkspaceProvider).value;
+  final currency =
+      NumberFormat.simpleCurrency(name: workspace?.currencyCode ?? 'EUR');
+  String money(int cents) => currency.format(cents / 100);
+  final levels = ref.read(levelsProvider).value ?? const <Level>[];
+  final plans = [
+    for (final level in levels)
+      ref.read(floorPlanProvider(level.id)).value,
+  ].whereType<FloorPlan>().toList();
+  final features = ref.read(enabledFeaturesSyncProvider);
+  final members = ref.read(workspaceMembersProvider).value ?? const [];
+  final bands = ref.read(feeBandsProvider).value ?? const <FeeBand>[];
+  final services = ref.read(servicesProvider).value ?? const <ServiceItem>[];
+  final openDays = ref.read(openWeekdaysProvider).value ?? const <int>[];
+  final hours = WorkHours.current;
+  String clock(int minutes) =>
+      '${(minutes ~/ 60).toString().padLeft(2, '0')}:${(minutes % 60).toString().padLeft(2, '0')}';
+  final dayNames = DateFormat.E(
+    Localizations.maybeLocaleOf(context)?.toString(),
+  );
+  final monday = DateTime(2024, 1, 1); // a Monday — weekday names only.
+  return <String, Object?>{
+    'workspace': workspace?.name ?? '',
+    'workspace_address': workspace?.address ?? '',
+    'member': '',
+    'number': '',
+    'period': '',
+    'issued': DateFormat.yMMMd(
+      Localizations.maybeLocaleOf(context)?.toString(),
+    ).format(ref.read(clockProvider).now()),
+    'issued_by': workspace?.name ?? '',
+    'replaces': '',
+    'total': '',
+    'charges': '',
+    'payments': '',
+    'net_total': '',
+    'vat_total': '',
+    'voided': false,
+    'proforma': false,
+    'copy': false,
+    'has_vat': false,
+    'country': workspace?.countryCode ?? '',
+    'currency': workspace?.currencyCode ?? '',
+    'timezone': workspace?.timezone ?? '',
+    'members_count': members.length,
+    'levels_count': levels.length,
+    'offices_count':
+        plans.fold<int>(0, (sum, plan) => sum + plan.offices.length),
+    'desks_count':
+        plans.fold<int>(0, (sum, plan) => sum + plan.desks.length),
+    'seats_count':
+        plans.fold<int>(0, (sum, plan) => sum + plan.seats.length),
+    'open_days': openDays
+        .map((d) => dayNames.format(monday.add(Duration(days: d - 1))))
+        .join(', '),
+    'work_hours':
+        '${clock(hours.startMinutes)}–${clock(hours.halfBoundaryMinutes)}–${clock(hours.endMinutes)}',
+    'features': [
+      for (final feature in features)
+        {'label': featureName(l10n, feature)},
+    ],
+    'lines': [
+      for (final band in bands)
+        {
+          'label':
+              '${l10n?.billSubscription(band.toPct) ?? 'Subscription ${band.toPct}%'} (${band.fromPct + 1}–${band.toPct}%)',
+          'amount': money(band.feeCents),
+        },
+      for (final service in services)
+        {'label': service.name, 'amount': money(service.priceCents)},
+    ],
+    'vat': const <Map<String, Object?>>[],
+    ...legalMentionData(l10n, workspace),
+  };
+}
+
+/// Warms every provider the #494 letter-document builders read, so the
+/// SYNC data builders see loaded values (the invoice-hub warming idiom).
+Future<void> warmLetterDocProviders(WidgetRef ref, String docId) async {
+  Future<void> quiet(Future<void> Function() load) async {
+    try {
+      await load();
+    } catch (e, st) {
+      TraceLogger.instance.warn('money', 'letter-doc provider warm failed',
+          error: e, stackTrace: st);
+    }
+  }
+
+  await quiet(() => ref.read(invoicePdfTemplateProvider.future));
+  if (docId == 'agreement') {
+    await quiet(() => ref.read(feeBandsProvider.future));
+    await quiet(() => ref.read(servicesProvider.future));
+    await quiet(() => ref.read(packagesProvider.future));
+    await quiet(() => ref.read(accessoriesProvider().future));
+    await quiet(() async {
+      final levels = await ref.read(levelsProvider.future);
+      for (final level in levels) {
+        await ref.read(floorPlanProvider(level.id).future);
+      }
+    });
+  } else if (docId == 'payments') {
+    await quiet(() => ref.read(myLedgerProvider.future));
+    await quiet(() => ref.read(eventsProvider.future));
+  } else if (docId == 'workspace') {
+    await quiet(() => ref.read(workspaceMembersProvider.future));
+    await quiet(() => ref.read(feeBandsProvider.future));
+    await quiet(() => ref.read(servicesProvider.future));
+    await quiet(() => ref.read(openWeekdaysProvider.future));
+    await quiet(() async {
+      final levels = await ref.read(levelsProvider.future);
+      for (final level in levels) {
+        await ref.read(floorPlanProvider(level.id).future);
+      }
+    });
+  }
+  await quiet(() => ref.read(memberNamesProvider.future));
+}
+
+/// Renders letter document [docId] through the workspace's template
+/// bands (or the shipped default — a broken template never blocks, the
+/// #470 contract).
+InvoiceReport renderLetterDoc(
+  BuildContext context,
+  WidgetRef ref, {
+  required String docId,
+  required Map<String, Object?> data,
+}) {
+  final l10n = AppLocalizations.of(context);
+  final bands = invoicePdfTemplateFor(ref).docBands(docId) ??
+      defaultBandsForDoc(docId, l10n);
+  return renderReportBands(bands: bands, data: data) ??
+      renderReportBands(
+          bands: defaultBandsForDoc(docId, l10n), data: data)!;
+}
+
+/// The PDF of a rendered letter document (#494).
+Future<({Uint8List bytes, String fileName})> letterDocPdf(
+  BuildContext context,
+  WidgetRef ref, {
+  required InvoiceReport report,
+  required String title,
+}) async {
+  final l10n = AppLocalizations.of(context);
+  final images = await resolveReportImages(ref, report);
+  Future<pw.Font> font(String asset) async =>
+      pw.Font.ttf(await rootBundle.load(asset));
+  final bytes = await buildBandedLetterPdf(
+    report: report,
+    reportImages: images,
+    pageLabel: l10n?.invoicePdfPage ?? 'Page',
+    documentTitle: title,
+    baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
+    boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
+  );
+  return (
+    bytes: Uint8List.fromList(bytes),
+    fileName: '${safeFileSlug(title)}.pdf',
+  );
+}
+
+/// The reminder-letter data model (#472/#474) — the invoice basics plus
 
 /// The reminder-letter data model (#472/#474) — the invoice basics plus
 /// the level, the letter date and the days the invoice sits open.

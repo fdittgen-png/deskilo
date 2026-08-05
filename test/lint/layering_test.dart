@@ -52,6 +52,9 @@ const Set<String> _knownPairs = {
   'members -> workspace',
   'money -> events',
   'money -> members',
+  // #494 — the financial agreement prices whole-space bookings and
+  // accessory supplements straight from the plan catalog.
+  'money -> plan',
   'money -> reservations',
   'money -> workspace',
   'plan -> events',

@@ -161,6 +161,15 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
     await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('invoice-template-doc-r1')),
+      120,
+      scrollable: find
+          .descendant(
+              of: find.byType(BottomSheet),
+              matching: find.byType(Scrollable))
+          .first,
+    );
     await tester.tap(find.byKey(const ValueKey('invoice-template-doc-r1')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
