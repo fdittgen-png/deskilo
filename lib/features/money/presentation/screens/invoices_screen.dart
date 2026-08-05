@@ -11,6 +11,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice_ubl.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
+import '../widgets/dunning_rules_dialog.dart';
 import '../widgets/invoice_template_sheet.dart';
 import '../widgets/invoice_archive_tab.dart';
 import '../widgets/invoice_detail_sheet.dart';
@@ -78,12 +79,21 @@ class InvoicesScreen extends ConsumerWidget {
             onPressed: () => showInvoiceTemplateSheet(context, ref),
           )
         : null;
+    // Mahnwesen (#472): the dunning policy — owner only.
+    final dunningAction = (me?.actsAsOwner ?? false)
+        ? IconButton(
+            key: const ValueKey('invoice-dunning-settings'),
+            tooltip: l10n?.dunningSettingsTitle ?? 'Reminder rules',
+            icon: const Icon(Icons.rule_outlined),
+            onPressed: () => showDunningRulesDialog(context, ref),
+          )
+        : null;
 
     if (!canIssue) {
       return Scaffold(
         appBar: AppBar(
           title: Text(l10n?.invoicesTitle ?? 'Invoices'),
-          actions: [?templateAction, registerAction],
+          actions: [?templateAction, ?dunningAction, registerAction],
         ),
         body: archive,
       );
@@ -138,7 +148,7 @@ class InvoicesScreen extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n?.invoicesTitle ?? 'Invoices'),
-          actions: [?templateAction, registerAction],
+          actions: [?templateAction, ?dunningAction, registerAction],
           bottom: TabBar(tabs: [
             Tab(
               key: const ValueKey('invoice-tab-todo'),

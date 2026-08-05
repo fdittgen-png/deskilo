@@ -3,6 +3,7 @@ import 'dart:convert' show base64Encode;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/invoice.dart';
+import '../domain/dunning.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/einvoice_gateway.dart';
 import '../domain/fee_band.dart';
@@ -51,6 +52,28 @@ class SupabaseMoneyRepository implements MoneyRepository {
         .from('workspaces')
         .update({'invoice_pdf_template': template.toJson()})
         .eq('id', workspaceId);
+  }
+
+  @override
+  Future<DunningRules> fetchDunningRules(String workspaceId) async {
+    final row = await _client
+        .from('workspaces')
+        .select('dunning_rules')
+        .eq('id', workspaceId)
+        .single();
+    return DunningRules.fromJson(
+      row['dunning_rules'] as Map<String, dynamic>? ?? const {},
+    );
+  }
+
+  @override
+  Future<void> setDunningRules(
+    String workspaceId,
+    DunningRules rules,
+  ) async {
+    await _client
+        .from('workspaces')
+        .update({'dunning_rules': rules.toJson()}).eq('id', workspaceId);
   }
 
   @override

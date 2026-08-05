@@ -12,7 +12,9 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../providers/money_providers.dart';
+import '../../domain/dunning.dart';
 import '../invoice_actions.dart';
+import '../report_defaults.dart';
 
 /// The invoice REPORT editor (#454, rebuilt as a banded reporting tool
 /// in #470): three Liquid bands — header, body with the lines, footer —
@@ -34,30 +36,6 @@ Future<void> showInvoiceTemplateSheet(
   );
 }
 
-/// The default bands — the built-in layout expressed in the template
-/// language, so "Reset" hands the owner a WORKING example to customize
-/// instead of an empty page.
-InvoicePdfTemplate defaultInvoiceTemplate(AppLocalizations? l10n) {
-  final header = '''
-# {% if proforma %}${l10n?.invoicePdfProforma ?? 'Proforma'}{% else %}${l10n?.invoicePdfTitle ?? 'Invoice'} {{ number }}{% endif %}
-{{ workspace }}
-> {{ workspace_address }}
-> ${l10n?.invoicePdfIssuedOn ?? 'Issued on'} {{ issued }} · ${l10n?.invoicePdfIssuedBy ?? 'Issued by'} {{ issued_by }}
-{% if replaces != "" %}> ${l10n?.invoicePdfReplaces ?? 'Replaces'} {{ replaces }}{% endif %}
----''';
-  final body = '''
-## ${l10n?.invoicePdfBilledTo ?? 'Billed to'}
-{{ member }}
-> {{ period }}
-
-## ${l10n?.invoicePdfDescription ?? 'Description'}
-{% for line in lines %}{{ line.label }} | {{ line.amount }}
-{% endfor %}---
-{% if has_vat %}{% for v in vat %}> ${l10n?.vatPdfNet ?? 'Net'} {{ v.net }} · ${l10n?.vatPdfVat ?? 'VAT'} {{ v.rate }} : {{ v.amount }}
-{% endfor %}{% endif %}= ${l10n?.invoiceBalance ?? 'Balance due'} | {{ total }}''';
-  return InvoicePdfTemplate(header: header, body: body, footer: '');
-}
-
 class _TemplateSheet extends ConsumerStatefulWidget {
   const _TemplateSheet({required this.initial});
 
@@ -72,6 +50,13 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
   late final TextEditingController _body;
   late final TextEditingController _footer;
   bool _busy = false;
+
+  /// The document being edited: 0 = the invoice, n = reminder level n
+  /// (#472 — every level is its own report).
+  int _doc = 0;
+
+  /// Unsaved edits per document, so switching documents loses nothing.
+  final Map<int, ReportBands> _drafts = {};
 
   @override
   void initState() {
@@ -89,21 +74,58 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
     super.dispose();
   }
 
-  InvoicePdfTemplate get _draft => InvoicePdfTemplate(
+  ReportBands get _currentBands => ReportBands(
         header: _header.text.trim(),
         body: _body.text.trim(),
         footer: _footer.text.trim(),
       );
 
+  /// The stored bands of document [doc], before any unsaved edit.
+  ReportBands _storedBands(int doc) => doc == 0
+      ? widget.initial.invoiceBands
+      : widget.initial.reminderBands(doc) ?? ReportBands.empty;
+
+  void _switchDoc(int doc) {
+    if (doc == _doc) return;
+    setState(() {
+      _drafts[_doc] = _currentBands;
+      _doc = doc;
+      final bands = _drafts[doc] ?? _storedBands(doc);
+      _header.text = bands.header;
+      _body.text = bands.body;
+      _footer.text = bands.footer;
+    });
+  }
+
+  /// The full template with every unsaved edit folded in.
+  InvoicePdfTemplate _assemble(int maxLevels) {
+    _drafts[_doc] = _currentBands;
+    final invoice = _drafts[0] ?? widget.initial.invoiceBands;
+    var template = InvoicePdfTemplate(
+      header: invoice.header,
+      body: invoice.body,
+      footer: invoice.footer,
+      reminders: widget.initial.reminders,
+    );
+    for (var level = 1; level <= maxLevels; level++) {
+      final bands = _drafts[level];
+      if (bands != null) template = template.withReminder(level, bands);
+    }
+    return template;
+  }
+
   Future<void> _save() async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
+    final levels =
+        (ref.read(dunningRulesProvider).value ?? DunningRules.defaults)
+            .levels;
     setState(() => _busy = true);
     try {
       await ref
           .read(moneyRepositoryProvider)
-          .setInvoicePdfTemplate(workspace.id, _draft);
+          .setInvoicePdfTemplate(workspace.id, _assemble(levels));
     } catch (e, st) {
       TraceLogger.instance.error('money', 'set invoice template failed',
           error: e, stackTrace: st);
@@ -143,12 +165,31 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
     }
     setState(() => _busy = true);
     try {
-      final pdf = await buildInvoicePdfFile(
-        context,
-        invoices.first,
-        copy: true,
-        template: _draft,
-      );
+      // #472: the selected DOCUMENT previews — the invoice as a
+      // watermarked copy, a reminder as its letter at that level.
+      final ({List<int> bytes, String fileName}) pdf;
+      if (_doc == 0) {
+        final invoicePdf = await buildInvoicePdfFile(
+          context,
+          invoices.first,
+          copy: true,
+          template: InvoicePdfTemplate(
+            header: _currentBands.header,
+            body: _currentBands.body,
+            footer: _currentBands.footer,
+          ),
+        );
+        pdf = (bytes: invoicePdf.bytes, fileName: invoicePdf.fileName);
+      } else {
+        final letter = await buildReminderPdfFile(
+          context,
+          ref,
+          invoices.first,
+          level: _doc,
+          draftBands: _currentBands,
+        );
+        pdf = (bytes: letter.bytes, fileName: letter.fileName);
+      }
       await ref.read(fileSharerProvider)(
         bytes: Uint8List.fromList(pdf.bytes),
         fileName: pdf.fileName,
@@ -235,6 +276,32 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
                 color: theme.colorScheme.primary,
               ),
             ),
+            const SizedBox(height: AppSpacing.sm),
+            // #472: one report per DOCUMENT — the invoice, and every
+            // reminder level of the dunning rules.
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(children: [
+                for (var doc = 0;
+                    doc <=
+                        (ref.watch(dunningRulesProvider).value ??
+                                DunningRules.defaults)
+                            .levels;
+                    doc++)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 6),
+                    child: ChoiceChip(
+                      key: ValueKey('invoice-template-doc-$doc'),
+                      label: Text(doc == 0
+                          ? (l10n?.invoiceTemplateDocInvoice ?? 'Invoice')
+                          : (l10n?.invoiceTemplateDocReminder(doc) ??
+                              'Reminder $doc')),
+                      selected: _doc == doc,
+                      onSelected: (_) => _switchDoc(doc),
+                    ),
+                  ),
+              ]),
+            ),
             _bandField(
               _header,
               l10n?.invoiceTemplateHeaderLabel ?? 'Header band',
@@ -264,7 +331,9 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
                   onPressed: _busy
                       ? null
                       : () {
-                          final d = defaultInvoiceTemplate(l10n);
+                          final d = _doc == 0
+                              ? defaultInvoiceTemplate(l10n).invoiceBands
+                              : defaultReminderBands(_doc, l10n);
                           setState(() {
                             _header.text = d.header;
                             _body.text = d.body;

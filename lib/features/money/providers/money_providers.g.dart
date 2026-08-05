@@ -657,6 +657,53 @@ final class InvoicePdfTemplateProvider
 String _$invoicePdfTemplateHash() =>
     r'1b8881ae90b31cd2a288f773b931b553ca1ee079';
 
+/// Dunning policy of the active workspace (#472); defaults while none
+/// is stored. The Open tab derives reminder suggestions from it.
+
+@ProviderFor(dunningRules)
+final dunningRulesProvider = DunningRulesProvider._();
+
+/// Dunning policy of the active workspace (#472); defaults while none
+/// is stored. The Open tab derives reminder suggestions from it.
+
+final class DunningRulesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<DunningRules>,
+          DunningRules,
+          FutureOr<DunningRules>
+        >
+    with $FutureModifier<DunningRules>, $FutureProvider<DunningRules> {
+  /// Dunning policy of the active workspace (#472); defaults while none
+  /// is stored. The Open tab derives reminder suggestions from it.
+  DunningRulesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'dunningRulesProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$dunningRulesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<DunningRules> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<DunningRules> create(Ref ref) {
+    return dunningRules(ref);
+  }
+}
+
+String _$dunningRulesHash() => r'90ffaa72da35fcedb5dfd53caec09abec7bd18e5';
+
 /// invoiceId → its payment match (0067) — the invoice lifecycle state.
 
 @ProviderFor(invoiceMatches)

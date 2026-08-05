@@ -1906,6 +1906,60 @@ class AppLocalizationsEs extends AppLocalizations {
       'Emite primero una factura — la vista previa usa la más reciente.';
 
   @override
+  String get reminderPdfTitleFriendly => 'Recordatorio de pago';
+
+  @override
+  String get reminderPdfTitleFirm => 'Recordatorio';
+
+  @override
+  String get reminderPdfOpeningFriendly =>
+      'este es un recordatorio amistoso: la factura de abajo sigue abierta. Seguramente un simple despiste — sin problema.';
+
+  @override
+  String get reminderPdfOpeningFirm =>
+      'a pesar de nuestro recordatorio anterior, la factura de abajo sigue sin pagar. Por favor, liquida el importe sin demora.';
+
+  @override
+  String get reminderPdfDaysOpen => 'Abierta desde hace';
+
+  @override
+  String get reminderPdfDays => 'días';
+
+  @override
+  String get reminderPdfLevelLabel => 'Nivel de recordatorio';
+
+  @override
+  String get reminderPdfClosing => 'Si ya has pagado, ignora esta carta.';
+
+  @override
+  String get dunningSettingsTitle => 'Reglas de recordatorio';
+
+  @override
+  String get dunningLevels => 'Número de niveles de recordatorio';
+
+  @override
+  String get dunningFirstAfterDays => 'Días hasta el primer recordatorio';
+
+  @override
+  String get dunningBetweenDays => 'Días entre recordatorios';
+
+  @override
+  String get dunningSaved => 'Reglas de recordatorio guardadas.';
+
+  @override
+  String dunningDueChip(int level) {
+    return 'Recordatorio $level pendiente';
+  }
+
+  @override
+  String get invoiceTemplateDocInvoice => 'Factura';
+
+  @override
+  String invoiceTemplateDocReminder(int level) {
+    return 'Recordatorio $level';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'Nuevo miembro';
 
   @override

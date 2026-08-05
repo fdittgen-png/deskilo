@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
@@ -46,6 +47,21 @@ class FakeMoneyRepository implements MoneyRepository {
     InvoicePdfTemplate template,
   ) async {
     pdfTemplate = template;
+  }
+
+  /// #472 — per-workspace dunning policy.
+  DunningRules dunningRules = DunningRules.defaults;
+
+  @override
+  Future<DunningRules> fetchDunningRules(String workspaceId) async =>
+      dunningRules;
+
+  @override
+  Future<void> setDunningRules(
+    String workspaceId,
+    DunningRules rules,
+  ) async {
+    dunningRules = rules;
   }
 
   /// Mirrors invoice_lines_for (0062): positions derive EXCLUSIVELY

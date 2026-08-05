@@ -700,6 +700,46 @@ Future<Uint8List> buildInvoicePdf({
   return doc.save();
 }
 
+/// A standalone banded LETTER (#472: the payment reminders) — the
+/// report bands on an A4 page with the page footer, but NONE of the
+/// invoice's legal chrome: no signature (nothing was issued), no void
+/// watermark, no annex.
+Future<Uint8List> buildBandedLetterPdf({
+  required InvoiceReport report,
+  required String pageLabel,
+  required String documentTitle,
+  required pw.Font baseFont,
+  required pw.Font boldFont,
+}) {
+  final doc = pw.Document(title: documentTitle, producer: _producer);
+  doc.addPage(
+    pw.MultiPage(
+      pageTheme: pw.PageTheme(
+        pageFormat: PdfPageFormat.a4,
+        theme: pw.ThemeData.withFont(base: baseFont, bold: boldFont),
+        margin: const pw.EdgeInsets.fromLTRB(48, 44, 48, 44),
+      ),
+      footer: (context) => pw.Container(
+        alignment: pw.Alignment.centerRight,
+        padding: const pw.EdgeInsets.only(top: 8),
+        child: pw.Text(
+          '$pageLabel ${context.pageNumber}/${context.pagesCount}',
+          style: const pw.TextStyle(fontSize: 8, color: _muted),
+        ),
+      ),
+      build: (context) => [
+        ..._reportWidgets(report.header),
+        ..._reportWidgets(report.body),
+        if (report.footer.isNotEmpty) ...[
+          pw.SizedBox(height: 16),
+          ..._reportWidgets(report.footer),
+        ],
+      ],
+    ),
+  );
+  return doc.save();
+}
+
 /// Report blocks → pdf widgets (#470). Table rows: the first cell takes
 /// the width, every further cell is right-aligned — the amounts column
 /// convention of the built-in layout.

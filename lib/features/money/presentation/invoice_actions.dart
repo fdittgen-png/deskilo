@@ -32,8 +32,10 @@ import '../domain/saf_t.dart';
 import '../domain/invoice_ubl_check.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/invoice_pdf_template.dart';
+import '../domain/dunning.dart';
 import '../domain/invoice_report.dart';
 import '../providers/money_providers.dart';
+import 'report_defaults.dart';
 import 'e_invoice_identity.dart';
 import 'widgets/einvoice_environment_picker.dart';
 import 'invoice_line_text.dart';
@@ -631,6 +633,62 @@ Future<void> voidInvoiceWithConfirm(
 /// Records a payment reminder (0066) and hands the invoice PDF to the share
 /// sheet with a localized reminder message — mail, WhatsApp, whatever the
 /// device offers.
+/// Renders the reminder LETTER for [invoice] at [level] (#472): the
+/// owner's band set for that level, else the shipped localized default.
+/// A broken custom band set falls back to the default — a reminder must
+/// never fail on a template.
+Future<({List<int> bytes, String fileName, String title})>
+    buildReminderPdfFile(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice, {
+  required int level,
+  ReportBands? draftBands,
+}) async {
+  final l10n = AppLocalizations.of(context);
+  final currency = NumberFormat.simpleCurrency(name: invoice.currency);
+  final dateFormat = DateFormat.yMMMd(
+    Localizations.maybeLocaleOf(context)?.toString(),
+  );
+  final now = ref.read(clockProvider).now();
+  final title = level <= 1
+      ? (l10n?.reminderPdfTitleFriendly ?? 'Payment reminder')
+      : '${l10n?.reminderPdfTitleFirm ?? 'Reminder'} $level';
+  final data = <String, Object?>{
+    'workspace': invoice.workspaceName,
+    'workspace_address': invoice.workspaceAddress,
+    'member': invoice.memberName,
+    'number': invoice.number,
+    'issued': dateFormat.format(invoice.issuedAt),
+    'total': currency.format(invoice.totalCents / 100),
+    'reminder_level': level,
+    'reminder_date': dateFormat.format(now),
+    'days_open': now.difference(invoice.issuedAt).inDays,
+  };
+  final bands = draftBands ??
+      invoicePdfTemplateFor(ref).reminderBands(level);
+  final fallback = defaultReminderBands(level, l10n);
+  final report = (bands == null
+          ? null
+          : renderReportBands(bands: bands, data: data)) ??
+      renderReportBands(bands: fallback, data: data)!;
+  final pageLabel = l10n?.invoicePdfPage ?? 'Page';
+  Future<pw.Font> font(String asset) async =>
+      pw.Font.ttf(await rootBundle.load(asset));
+  final bytes = await buildBandedLetterPdf(
+    report: report,
+    pageLabel: pageLabel,
+    documentTitle: '$title ${invoice.number}',
+    baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
+    boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
+  );
+  return (
+    bytes: bytes,
+    fileName: '${safeFileSlug('$title ${invoice.number}')}.pdf',
+    title: title,
+  );
+}
+
 Future<void> remindInvoice(
   BuildContext context,
   WidgetRef ref,
@@ -644,6 +702,14 @@ Future<void> remindInvoice(
       ) ??
       'Friendly reminder: invoice ${invoice.number} — balance due '
           '${currency.format(invoice.totalCents / 100)}.';
+  // #472: the level of THIS send — one past what was already sent,
+  // capped at the configured maximum (extra sends reuse the last
+  // letter).
+  final rules =
+      ref.read(dunningRulesProvider).value ?? DunningRules.defaults;
+  final sent =
+      ref.read(invoiceRemindersProvider).value?[invoice.id]?.count ?? 0;
+  final level = (sent + 1).clamp(1, rules.levels);
   if (!await runGuarded(
     context,
     domain: 'money',
@@ -653,8 +719,8 @@ Future<void> remindInvoice(
     action: () async {
       // PDF first — it captures its context-derived values before any
       // await (use_build_context_synchronously).
-      final pdf = await buildInvoicePdfFile(context, invoice,
-          template: invoicePdfTemplateFor(ref));
+      final pdf = await buildReminderPdfFile(context, ref, invoice,
+          level: level);
       await ref.read(moneyRepositoryProvider).remindInvoice(invoice.id);
       await ref.read(fileSharerProvider)(
         bytes: Uint8List.fromList(pdf.bytes),

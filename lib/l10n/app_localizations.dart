@@ -3458,6 +3458,102 @@ abstract class AppLocalizations {
   /// **'Issue an invoice first — the preview renders your newest one.'**
   String get invoiceTemplateNoPreview;
 
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment reminder'**
+  String get reminderPdfTitleFriendly;
+
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder'**
+  String get reminderPdfTitleFirm;
+
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'this is a friendly reminder that the invoice below is still open. Perhaps it simply slipped through — no worries.'**
+  String get reminderPdfOpeningFriendly;
+
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'despite our previous reminder, the invoice below remains unpaid. Please settle the amount without delay.'**
+  String get reminderPdfOpeningFirm;
+
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'Open for'**
+  String get reminderPdfDaysOpen;
+
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get reminderPdfDays;
+
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder level'**
+  String get reminderPdfLevelLabel;
+
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'If you have already paid, please disregard this letter.'**
+  String get reminderPdfClosing;
+
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder rules'**
+  String get dunningSettingsTitle;
+
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'Number of reminder levels'**
+  String get dunningLevels;
+
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'Days until the first reminder'**
+  String get dunningFirstAfterDays;
+
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'Days between reminders'**
+  String get dunningBetweenDays;
+
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder rules saved.'**
+  String get dunningSaved;
+
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder {level} due'**
+  String dunningDueChip(int level);
+
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice'**
+  String get invoiceTemplateDocInvoice;
+
+  /// Mahnwesen / reminder letters (#472)
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder {level}'**
+  String invoiceTemplateDocReminder(int level);
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

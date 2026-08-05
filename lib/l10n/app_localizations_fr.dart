@@ -1912,6 +1912,61 @@ class AppLocalizationsFr extends AppLocalizations {
       'Émettez d\'abord une facture — l\'aperçu rend la plus récente.';
 
   @override
+  String get reminderPdfTitleFriendly => 'Rappel de paiement';
+
+  @override
+  String get reminderPdfTitleFirm => 'Relance';
+
+  @override
+  String get reminderPdfOpeningFriendly =>
+      'petit rappel amical : la facture ci-dessous est encore ouverte. Un simple oubli, sans doute — pas d\'inquiétude.';
+
+  @override
+  String get reminderPdfOpeningFirm =>
+      'malgré notre relance précédente, la facture ci-dessous reste impayée. Merci de régler le montant sans délai.';
+
+  @override
+  String get reminderPdfDaysOpen => 'Ouverte depuis';
+
+  @override
+  String get reminderPdfDays => 'jours';
+
+  @override
+  String get reminderPdfLevelLabel => 'Niveau de relance';
+
+  @override
+  String get reminderPdfClosing =>
+      'Si vous avez déjà payé, veuillez ne pas tenir compte de ce courrier.';
+
+  @override
+  String get dunningSettingsTitle => 'Règles de relance';
+
+  @override
+  String get dunningLevels => 'Nombre de niveaux de relance';
+
+  @override
+  String get dunningFirstAfterDays => 'Jours avant la première relance';
+
+  @override
+  String get dunningBetweenDays => 'Jours entre les relances';
+
+  @override
+  String get dunningSaved => 'Règles de relance enregistrées.';
+
+  @override
+  String dunningDueChip(int level) {
+    return 'Relance $level à envoyer';
+  }
+
+  @override
+  String get invoiceTemplateDocInvoice => 'Facture';
+
+  @override
+  String invoiceTemplateDocReminder(int level) {
+    return 'Relance $level';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'Nouveau membre';
 
   @override

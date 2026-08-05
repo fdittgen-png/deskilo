@@ -88,7 +88,8 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
           ..invalidate(openWeekdaysProvider)
           ..invalidate(bookingGranularityProvider)
           ..invalidate(workHoursProvider)
-          ..invalidate(invoicePdfTemplateProvider);
+          ..invalidate(invoicePdfTemplateProvider)
+          ..invalidate(dunningRulesProvider);
       case 'closure_days':
         ref.invalidate(closureDaysProvider);
       case 'profiles':

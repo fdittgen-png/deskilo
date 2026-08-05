@@ -80,20 +80,28 @@ class InvoiceReport {
 InvoiceReport? renderInvoiceReport({
   required InvoicePdfTemplate template,
   required Map<String, Object?> data,
+}) =>
+    renderReportBands(bands: template.invoiceBands, data: data);
+
+/// Renders ONE band set (#472: the invoice's own, or a reminder
+/// level's). Same contract: null on empty or broken bands.
+InvoiceReport? renderReportBands({
+  required ReportBands bands,
+  required Map<String, Object?> data,
 }) {
-  if (!template.hasBands) return null;
+  if (!bands.hasBands) return null;
   try {
     List<ReportBlock> band(String source) => parseReportMarkup(
           Template.parse(source, data: Map.of(data)).render(),
         );
     return InvoiceReport(
-      header: band(template.header),
-      body: band(template.body),
-      footer: band(template.footer),
+      header: band(bands.header),
+      body: band(bands.body),
+      footer: band(bands.footer),
     );
   } catch (e, st) {
     TraceLogger.instance.warn(
-        'money', 'invoice template failed — using the built-in layout',
+        'money', 'report bands failed — using the built-in layout',
         error: e, stackTrace: st);
     return null;
   }
