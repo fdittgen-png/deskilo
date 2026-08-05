@@ -24,6 +24,10 @@ import '../../../workspace/domain/payment_instructions.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/bill_pdf.dart';
+import '../../domain/invoice_pdf.dart';
+import '../../domain/invoice_report.dart';
+import '../invoice_actions.dart';
+import '../report_defaults.dart';
 import '../../domain/bill_sections.dart';
 import '../../domain/ledger_entry.dart';
 import '../../domain/package.dart';
@@ -140,18 +144,49 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         final regular =
             await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
         final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
-        final bytes = await buildBillPdf(
-          statement: statement,
-          sections: sections,
-          currencyCode: workspace.currencyCode,
-          workspaceName: workspace.name,
-          memberName: memberName,
-          periodLabel: monthLabel,
-          strings: strings,
-          baseFont: pw.Font.ttf(regular),
-          boldFont: pw.Font.ttf(bold),
-          locale: locale,
-        );
+        // #476: an owner-customized statement TEMPLATE replaces the
+        // built-in bill layout; empty bands keep it exactly as before.
+        final statementBands = (ref
+                    .read(enabledFeaturesSyncProvider)
+                    .contains(WorkspaceFeature.invoicePdfTemplate)
+                ? ref.read(invoicePdfTemplateProvider).value
+                : null)
+            ?.statementBands;
+        final Uint8List bytes;
+        if (statementBands != null && context.mounted) {
+          final data = statementReportData(
+            context,
+            statement: statement,
+            workspaceName: workspace.name,
+            memberName: memberName,
+            periodLabel: monthLabel,
+            currencyCode: workspace.currencyCode,
+          );
+          final report =
+              renderReportBands(bands: statementBands, data: data) ??
+                  renderReportBands(
+                      bands: defaultStatementBands(l10n), data: data)!;
+          bytes = await buildBandedLetterPdf(
+            report: report,
+            pageLabel: l10n?.invoicePdfPage ?? 'Page',
+            documentTitle: strings.title,
+            baseFont: pw.Font.ttf(regular),
+            boldFont: pw.Font.ttf(bold),
+          );
+        } else {
+          bytes = await buildBillPdf(
+            statement: statement,
+            sections: sections,
+            currencyCode: workspace.currencyCode,
+            workspaceName: workspace.name,
+            memberName: memberName,
+            periodLabel: monthLabel,
+            strings: strings,
+            baseFont: pw.Font.ttf(regular),
+            boldFont: pw.Font.ttf(bold),
+            locale: locale,
+          );
+        }
         final path = await save(
           bytes: bytes,
           fileName: 'deskilo-bill-${statement.period}.pdf',

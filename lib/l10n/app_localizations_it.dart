@@ -2006,6 +2006,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceTemplateShare => 'Condividi PDF';
 
   @override
+  String get invoiceTemplateDocStatement => 'Estratto';
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override

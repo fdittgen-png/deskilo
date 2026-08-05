@@ -2605,6 +2605,10 @@
   "@invoiceTemplateShare": {
     "description": "Report UX: presets, quick preview, download (#474)"
   },
+  "invoiceTemplateDocStatement": "Statement",
+  "@invoiceTemplateDocStatement": {
+    "description": "Report-editor document chip (#476)"
+  },
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
   "pendingApprovalTitle": "Awaiting approval",

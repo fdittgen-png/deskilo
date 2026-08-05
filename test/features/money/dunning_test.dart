@@ -161,7 +161,7 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('invoice-template-doc-1')));
+    await tester.tap(find.byKey(const ValueKey('invoice-template-doc-r1')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
     await tester.pump();

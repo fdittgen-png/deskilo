@@ -217,3 +217,55 @@ List<ReportPreset> reportPresets(int doc, AppLocalizations? l10n) {
     ),
   ];
 }
+
+/// The built-in member-statement document (#476) as editable bands.
+ReportBands defaultStatementBands(AppLocalizations? l10n) => ReportBands(
+      header: '# ${l10n?.billPdfTitle ?? 'Statement'} — {{ period }}\n'
+          '{{ workspace }}\n'
+          '> {{ member }}\n'
+          '---',
+      body: '{% for line in lines %}'
+          '{{ line.label }} | {{ line.amount }}\n{% endfor %}'
+          '---\n'
+          '= ${l10n?.billBalance ?? 'Balance'} | {{ total }}',
+    );
+
+/// Presets for a STRING document id (#476): 'invoice', 'proforma',
+/// 'statement', or 'rN' for reminder level N. Proforma shares the
+/// invoice presets (its `{% if proforma %}` branches flip the title).
+List<ReportPreset> presetsForDoc(String docId, AppLocalizations? l10n) {
+  if (docId == 'invoice' || docId == 'proforma') {
+    return reportPresets(0, l10n);
+  }
+  if (docId == 'statement') {
+    return [
+      ReportPreset(
+        id: 'standard',
+        name: l10n?.reportPresetStandard ?? 'Standard',
+        bands: defaultStatementBands(l10n),
+      ),
+      ReportPreset(
+        id: 'compact',
+        name: l10n?.reportPresetCompact ?? 'Compact',
+        bands: ReportBands(
+          header: '# {{ member }} — {{ period }}',
+          body: '{% for line in lines %}'
+              '{{ line.label }} | {{ line.amount }}\n{% endfor %}'
+              '= ${l10n?.billBalance ?? 'Balance'} | {{ total }}',
+        ),
+      ),
+    ];
+  }
+  final level = int.tryParse(docId.substring(1)) ?? 1;
+  return reportPresets(level, l10n);
+}
+
+/// The default bands for a STRING document id (#476) — what Reset
+/// inserts and what an uncustomized document renders with.
+ReportBands defaultBandsForDoc(String docId, AppLocalizations? l10n) {
+  if (docId == 'invoice' || docId == 'proforma') {
+    return defaultInvoiceTemplate(l10n).invoiceBands;
+  }
+  if (docId == 'statement') return defaultStatementBands(l10n);
+  return defaultReminderBands(int.tryParse(docId.substring(1)) ?? 1, l10n);
+}

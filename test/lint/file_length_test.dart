@@ -41,7 +41,9 @@ const Map<String, int> _baseline = {
   // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
   // workspace hint subtitle and the RPC write helper.
   'lib/features/profile/presentation/screens/settings_screen.dart': 990,
-  'lib/features/money/presentation/screens/money_screen.dart': 980,
+  // 980→1030 (2026-08-05): #476 the statement export honors the
+  // owner's report template.
+  'lib/features/money/presentation/screens/money_screen.dart': 1030,
   // 910→950 (2026-08-04): #456 note tile + admin broadcast button —
   // the dialog itself is its own file.
   'lib/features/workspace/presentation/screens/members_screen.dart': 950,
@@ -59,7 +61,9 @@ const Map<String, int> _baseline = {
   // 990→1050: #472 buildReminderPdfFile + the remind-level flow.
   // 1050→1090 (2026-08-05): #474 the extracted public data builders
   // (invoiceReportData/reminderReportData) shared with the preview.
-  'lib/features/money/presentation/invoice_actions.dart': 1090,
+  // 1090→1180 (2026-08-05): #476 statementReportData — the statement
+  // document's line model.
+  'lib/features/money/presentation/invoice_actions.dart': 1180,
   'lib/features/workspace/domain/workspace_xml.dart': 800,
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.

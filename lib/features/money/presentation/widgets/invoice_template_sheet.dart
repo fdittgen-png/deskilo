@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:typed_data';
 
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:pdf/widgets.dart' as pw;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,6 +16,10 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../providers/money_providers.dart';
 import '../../domain/dunning.dart';
+import '../../../../core/files/file_names.dart';
+import '../../../../core/time/clock.dart';
+import '../../../reservations/providers/reservation_providers.dart';
+import '../../domain/invoice_pdf.dart';
 import '../../domain/invoice_report.dart';
 import '../invoice_actions.dart';
 import '../report_defaults.dart';
@@ -53,12 +60,13 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
   late final TextEditingController _footer;
   bool _busy = false;
 
-  /// The document being edited: 0 = the invoice, n = reminder level n
-  /// (#472 — every level is its own report).
-  int _doc = 0;
+  /// The document being edited (#472/#476): 'invoice', 'proforma',
+  /// 'statement', or 'rN' for reminder level N — every one its own
+  /// report.
+  String _doc = 'invoice';
 
   /// Unsaved edits per document, so switching documents loses nothing.
-  final Map<int, ReportBands> _drafts = {};
+  final Map<String, ReportBands> _drafts = {};
 
   @override
   void initState() {
@@ -83,11 +91,16 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
       );
 
   /// The stored bands of document [doc], before any unsaved edit.
-  ReportBands _storedBands(int doc) => doc == 0
-      ? widget.initial.invoiceBands
-      : widget.initial.reminderBands(doc) ?? ReportBands.empty;
+  ReportBands _storedBands(String doc) => switch (doc) {
+        'invoice' => widget.initial.invoiceBands,
+        'proforma' => widget.initial.proforma,
+        'statement' => widget.initial.statement,
+        _ => widget.initial
+                .reminderBands(int.tryParse(doc.substring(1)) ?? 1) ??
+            ReportBands.empty,
+      };
 
-  void _switchDoc(int doc) {
+  void _switchDoc(String doc) {
     if (doc == _doc) return;
     setState(() {
       _drafts[_doc] = _currentBands;
@@ -102,15 +115,17 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
   /// The full template with every unsaved edit folded in.
   InvoicePdfTemplate _assemble(int maxLevels) {
     _drafts[_doc] = _currentBands;
-    final invoice = _drafts[0] ?? widget.initial.invoiceBands;
+    final invoice = _drafts['invoice'] ?? widget.initial.invoiceBands;
     var template = InvoicePdfTemplate(
       header: invoice.header,
       body: invoice.body,
       footer: invoice.footer,
       reminders: widget.initial.reminders,
+      proforma: _drafts['proforma'] ?? widget.initial.proforma,
+      statement: _drafts['statement'] ?? widget.initial.statement,
     );
     for (var level = 1; level <= maxLevels; level++) {
-      final bands = _drafts[level];
+      final bands = _drafts['r$level'];
       if (bands != null) template = template.withReminder(level, bands);
     }
     return template;
@@ -153,21 +168,52 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
   /// INSTANT preview (#474): the report engine's output rendered as
   /// widgets — real newest-invoice data when one exists, simulated
   /// sample data otherwise. No PDF round-trip.
+  /// The live data for the SELECTED document, or null when the app has
+  /// none yet (→ simulated sample data).
+  Map<String, Object?>? _liveData() {
+    final invoices = ref.read(invoicesProvider).value ?? const [];
+    switch (_doc) {
+      case 'invoice':
+        if (invoices.isEmpty) return null;
+        return invoiceReportData(context, invoices.first,
+            proforma: false, copy: false);
+      case 'proforma':
+        if (invoices.isEmpty) return null;
+        return invoiceReportData(context, invoices.first,
+            proforma: true, copy: false);
+      case 'statement':
+        final now = ref.read(clockProvider).now();
+        final period =
+            '${now.year}-${now.month.toString().padLeft(2, '0')}';
+        final statement =
+            ref.read(myStatementProvider(period)).value;
+        final workspace = ref.read(currentWorkspaceProvider).value;
+        final me = ref.read(myMemberProvider).value;
+        final names = ref.read(memberNamesProvider).value ?? const {};
+        if (statement == null || workspace == null) return null;
+        return statementReportData(
+          context,
+          statement: statement,
+          workspaceName: workspace.name,
+          memberName: names[me?.id] ?? '',
+          periodLabel: statement.period,
+          currencyCode: workspace.currencyCode,
+        );
+      default:
+        if (invoices.isEmpty) return null;
+        return reminderReportData(context, ref, invoices.first,
+            level: int.tryParse(_doc.substring(1)) ?? 1);
+    }
+  }
+
   Future<void> _quickPreview() async {
     final l10n = AppLocalizations.of(context);
-    final invoices = ref.read(invoicesProvider).value ?? const [];
-    final simulated = invoices.isEmpty;
-    final data = simulated
-        ? sampleReportData(l10n)
-        : _doc == 0
-            ? invoiceReportData(context, invoices.first,
-                proforma: false, copy: false)
-            : reminderReportData(context, ref, invoices.first, level: _doc);
+    final live = _liveData();
+    final simulated = live == null;
+    final data = live ?? sampleReportData(l10n);
     final bands = _currentBands.hasBands
         ? _currentBands
-        : _doc == 0
-            ? defaultInvoiceTemplate(l10n).invoiceBands
-            : defaultReminderBands(_doc, l10n);
+        : defaultBandsForDoc(_doc, l10n);
     final report = renderReportBands(bands: bands, data: data);
     if (report == null) {
       AppSnack.error(
@@ -198,25 +244,52 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
     }
     setState(() => _busy = true);
     try {
+      final l10nSync = AppLocalizations.of(context);
       final ({List<int> bytes, String fileName}) pdf;
-      if (_doc == 0) {
+      if (_doc == 'invoice' || _doc == 'proforma') {
         final invoicePdf = await buildInvoicePdfFile(
           context,
           invoices.first,
+          proforma: _doc == 'proforma',
           copy: true,
-          template: InvoicePdfTemplate(
-            header: _currentBands.header,
-            body: _currentBands.body,
-            footer: _currentBands.footer,
-          ),
+          template: _doc == 'proforma'
+              ? InvoicePdfTemplate(proforma: _currentBands)
+              : InvoicePdfTemplate(
+                  header: _currentBands.header,
+                  body: _currentBands.body,
+                  footer: _currentBands.footer,
+                ),
         );
         pdf = (bytes: invoicePdf.bytes, fileName: invoicePdf.fileName);
+      } else if (_doc == 'statement') {
+        // The statement letter: my own statement, or the sample.
+        final data = _liveData() ?? sampleReportData(l10nSync);
+        final bands = _currentBands.hasBands
+            ? _currentBands
+            : defaultStatementBands(l10nSync);
+        final report = renderReportBands(bands: bands, data: data) ??
+            renderReportBands(
+                bands: defaultStatementBands(l10nSync), data: data)!;
+        Future<pw.Font> font(String asset) async =>
+            pw.Font.ttf(await rootBundle.load(asset));
+        final bytes = await buildBandedLetterPdf(
+          report: report,
+          pageLabel: l10nSync?.invoicePdfPage ?? 'Page',
+          documentTitle: l10nSync?.billPdfTitle ?? 'Monthly bill',
+          baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
+          boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
+        );
+        pdf = (
+          bytes: bytes,
+          fileName:
+              '${safeFileSlug(l10nSync?.billPdfTitle ?? 'statement')}.pdf',
+        );
       } else {
         final letter = await buildReminderPdfFile(
           context,
           ref,
           invoices.first,
-          level: _doc,
+          level: int.tryParse(_doc.substring(1)) ?? 1,
           draftBands: _currentBands,
         );
         pdf = (bytes: letter.bytes, fileName: letter.fileName);
@@ -323,20 +396,33 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(children: [
-                for (var doc = 0;
-                    doc <=
-                        (ref.watch(dunningRulesProvider).value ??
-                                DunningRules.defaults)
-                            .levels;
-                    doc++)
+                for (final (doc, label) in [
+                  (
+                    'invoice',
+                    l10n?.invoiceTemplateDocInvoice ?? 'Invoice'
+                  ),
+                  ('proforma', l10n?.invoicePdfProforma ?? 'Proforma'),
+                  (
+                    'statement',
+                    l10n?.invoiceTemplateDocStatement ?? 'Statement'
+                  ),
+                  for (var level = 1;
+                      level <=
+                          (ref.watch(dunningRulesProvider).value ??
+                                  DunningRules.defaults)
+                              .levels;
+                      level++)
+                    (
+                      'r$level',
+                      l10n?.invoiceTemplateDocReminder(level) ??
+                          'Reminder $level'
+                    ),
+                ])
                   Padding(
                     padding: const EdgeInsets.only(right: 6),
                     child: ChoiceChip(
                       key: ValueKey('invoice-template-doc-$doc'),
-                      label: Text(doc == 0
-                          ? (l10n?.invoiceTemplateDocInvoice ?? 'Invoice')
-                          : (l10n?.invoiceTemplateDocReminder(doc) ??
-                              'Reminder $doc')),
+                      label: Text(label),
                       selected: _doc == doc,
                       onSelected: (_) => _switchDoc(doc),
                     ),
@@ -378,7 +464,7 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
                     _footer.text = preset.bands.footer;
                   }),
                   itemBuilder: (context) => [
-                    for (final preset in reportPresets(_doc, l10n))
+                    for (final preset in presetsForDoc(_doc, l10n))
                       PopupMenuItem(
                         key: ValueKey(
                             'invoice-template-preset-${preset.id}'),
@@ -434,9 +520,7 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
                   onPressed: _busy
                       ? null
                       : () {
-                          final d = _doc == 0
-                              ? defaultInvoiceTemplate(l10n).invoiceBands
-                              : defaultReminderBands(_doc, l10n);
+                          final d = defaultBandsForDoc(_doc, l10n);
                           setState(() {
                             _header.text = d.header;
                             _body.text = d.body;

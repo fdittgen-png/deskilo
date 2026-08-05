@@ -418,5 +418,6 @@
   "invoiceTemplatePresets": "Modèles",
   "invoiceTemplateQuickPreview": "Aperçu rapide",
   "invoiceTemplateDownload": "Télécharger le PDF",
-  "invoiceTemplateShare": "Partager le PDF"
+  "invoiceTemplateShare": "Partager le PDF",
+  "invoiceTemplateDocStatement": "Relevé"
 }

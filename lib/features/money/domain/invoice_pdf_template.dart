@@ -47,6 +47,8 @@ class InvoicePdfTemplate {
     this.body = '',
     this.footer = '',
     this.reminders = const [],
+    this.proforma = ReportBands.empty,
+    this.statement = ReportBands.empty,
   });
 
   factory InvoicePdfTemplate.fromJson(Map<String, dynamic> json) =>
@@ -61,6 +63,14 @@ class InvoicePdfTemplate {
             ReportBands.fromJson(
                 (r as Map).cast<String, dynamic>()),
         ],
+        proforma: json[keyProforma] is Map
+            ? ReportBands.fromJson(
+                (json[keyProforma] as Map).cast<String, dynamic>())
+            : ReportBands.empty,
+        statement: json[keyStatement] is Map
+            ? ReportBands.fromJson(
+                (json[keyStatement] as Map).cast<String, dynamic>())
+            : ReportBands.empty,
       );
 
   /// Band above the whole document (letterhead territory).
@@ -77,10 +87,20 @@ class InvoicePdfTemplate {
   /// localized default letter for that level (#472).
   final List<ReportBands> reminders;
 
+  /// Proforma document bands (#476); empty = the proforma renders with
+  /// the invoice's bands, as it always did.
+  final ReportBands proforma;
+
+  /// Member-statement document bands (#476); empty = the built-in bill
+  /// PDF renders unchanged.
+  final ReportBands statement;
+
   static const String keyHeader = 'header';
   static const String keyBody = 'body';
   static const String keyFooter = 'footer';
   static const String keyReminders = 'reminders';
+  static const String keyProforma = 'proforma';
+  static const String keyStatement = 'statement';
 
   /// Pre-#470 key: a single intro paragraph — now the header band.
   static const String legacyKeyIntro = 'intro';
@@ -123,6 +143,12 @@ class InvoicePdfTemplate {
   ReportBands get invoiceBands =>
       ReportBands(header: header, body: body, footer: footer);
 
+  /// The proforma's own bands, or null to fall back to the invoice's.
+  ReportBands? get proformaBands => proforma.hasBands ? proforma : null;
+
+  /// The statement's own bands, or null for the built-in bill PDF.
+  ReportBands? get statementBands => statement.hasBands ? statement : null;
+
   /// The stored bands of reminder [level] (1-based), or null when the
   /// owner never customized that level.
   ReportBands? reminderBands(int level) {
@@ -144,13 +170,31 @@ class InvoicePdfTemplate {
       body: body,
       footer: footer,
       reminders: next,
+      proforma: proforma,
+      statement: statement,
     );
   }
+
+  InvoicePdfTemplate copyWith({
+    ReportBands? invoice,
+    ReportBands? proforma,
+    ReportBands? statement,
+  }) =>
+      InvoicePdfTemplate(
+        header: invoice?.header ?? header,
+        body: invoice?.body ?? body,
+        footer: invoice?.footer ?? footer,
+        reminders: reminders,
+        proforma: proforma ?? this.proforma,
+        statement: statement ?? this.statement,
+      );
 
   Map<String, Object> toJson() => {
         keyHeader: header,
         keyBody: body,
         keyFooter: footer,
         keyReminders: [for (final r in reminders) r.toJson()],
+        keyProforma: proforma.toJson(),
+        keyStatement: statement.toJson(),
       };
 }

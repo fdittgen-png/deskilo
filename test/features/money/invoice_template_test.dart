@@ -271,6 +271,51 @@ void main() {
     expect(String.fromCharCodes(saved.single.bytes.sublist(0, 5)), '%PDF-');
   });
 
+  test('proforma bands override the invoice bands only when set (#476)',
+      () {
+    const t = InvoicePdfTemplate(
+      header: 'H',
+      proforma: ReportBands(header: 'P'),
+    );
+    expect(t.proformaBands!.header, 'P');
+    const untouched = InvoicePdfTemplate(header: 'H');
+    expect(untouched.proformaBands, isNull,
+        reason: 'empty proforma bands = the invoice template, as before');
+    // Round-trip keeps both documents.
+    final back = InvoicePdfTemplate.fromJson(
+        t.toJson().map((k, v) => MapEntry(k, v)));
+    expect(back.proforma.header, 'P');
+  });
+
+  testWidgets('the editor lists Proforma and Statement as own documents '
+      'and saves them independently (#476)', (tester) async {
+    final money = await pumpInvoices(tester, money: await seededMoney());
+
+    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('invoice-template-doc-proforma')),
+        findsOneWidget);
+    expect(find.byKey(const ValueKey('invoice-template-doc-statement')),
+        findsOneWidget);
+
+    await tester
+        .tap(find.byKey(const ValueKey('invoice-template-doc-statement')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
+    await tester.pump();
+    await tester.ensureVisible(
+        find.byKey(const ValueKey('invoice-template-save')));
+    await tester.tap(find.byKey(const ValueKey('invoice-template-save')));
+    await tester.pumpAndSettle();
+
+    final stored = money.pdfTemplate;
+    expect(stored.statementBands, isNotNull);
+    expect(stored.statement.body, contains('{% for line in lines %}'));
+    expect(stored.invoiceBands.hasBands, isFalse,
+        reason: 'the invoice document stayed untouched');
+    expect(stored.proformaBands, isNull);
+  });
+
   testWidgets('the e-invoice XML builders take no template — structural '
       'guarantee the XML stays untouched (#454)', (tester) async {
     final cii = File('lib/features/money/domain/invoice_cii.dart')
