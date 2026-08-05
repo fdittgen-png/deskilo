@@ -1059,6 +1059,10 @@
   "@reportLanguageAmbiguous": {
     "description": "Report language resolution + per-language templates (#496)"
   },
+  "reportDesignEmpty": "Banda vacía — añade un elemento abajo.",
+  "@reportDesignEmpty": {
+    "description": "True WYSIWYG design surface (#498)"
+  },
   "eventTypeMemberJoin": "Nuevo miembro",
   "memberStatusPending": "Pendiente",
   "pendingApprovalTitle": "Esperando aprobación",

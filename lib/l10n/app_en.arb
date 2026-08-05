@@ -2880,6 +2880,10 @@
   "@reportLanguageAmbiguous": {
     "description": "Report language resolution + per-language templates (#496)"
   },
+  "reportDesignEmpty": "Empty band — add an element below.",
+  "@reportDesignEmpty": {
+    "description": "True WYSIWYG design surface (#498)"
+  },
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
   "pendingApprovalTitle": "Awaiting approval",

@@ -9,6 +9,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/invoice_pdf_template.dart';
 import '../../providers/money_providers.dart';
 
 /// The kinds a visual line can be (#488) — one per markup prefix. The
@@ -139,12 +140,17 @@ String reportLineName(ReportLineKind kind, AppLocalizations? l10n) =>
       ReportLineKind.logic => l10n?.reportLineLogic ?? 'Logic',
     };
 
-/// The VISUAL band editor (#488): the band's markup as a reorderable
-/// list of typed rows — change a row's type from its icon, edit its
-/// text inline, drag to reorder, delete, add. Every change serializes
-/// straight back into [controller], so save/preview/PDF and the markup
-/// mode all see the same text.
-class ReportVisualEditor extends StatefulWidget {
+/// The DESIGN band editor (#498) — a real WYSIWYG surface in the
+/// FastReport tradition: the band renders STYLED, exactly as the
+/// document lays it out (title typography, small print, real
+/// side-by-side columns, table rows, images), with `{{ field }}` and
+/// `{% logic %}` shown as highlighted tokens the way report designers
+/// show data fields. Tap any element to edit it in place; the toolbar
+/// under the active element changes its type, moves it, inserts a
+/// data field at the cursor, adds a line below, or deletes it. Every
+/// change serializes straight back into [controller], so the markup
+/// mode, save, preview and PDF always see the same bands.
+class ReportVisualEditor extends ConsumerStatefulWidget {
   const ReportVisualEditor({
     super.key,
     required this.controller,
@@ -157,12 +163,36 @@ class ReportVisualEditor extends StatefulWidget {
   final String bandKey;
 
   @override
-  State<ReportVisualEditor> createState() => _ReportVisualEditorState();
+  ConsumerState<ReportVisualEditor> createState() =>
+      _ReportVisualEditorState();
 }
 
-class _ReportVisualEditorState extends State<ReportVisualEditor> {
+/// One render segment: a plain line, or a `:::` column group.
+sealed class _Segment {
+  const _Segment();
+}
+
+class _LineSegment extends _Segment {
+  const _LineSegment(this.index);
+  final int index;
+}
+
+class _GroupSegment extends _Segment {
+  const _GroupSegment(this.openIndex, this.columns, this.closeIndex);
+
+  final int openIndex;
+
+  /// Per column: the indexes of its lines.
+  final List<List<int>> columns;
+
+  /// The closing fence index, or null when the fence never closed.
+  final int? closeIndex;
+}
+
+class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
   late List<ReportVisualLine> _lines;
-  final List<TextEditingController> _rowControllers = [];
+  int? _editing;
+  final _editController = TextEditingController();
 
   @override
   void initState() {
@@ -173,150 +203,515 @@ class _ReportVisualEditorState extends State<ReportVisualEditor> {
             .split('\n')
             .map(ReportVisualLine.parse)
             .toList();
-    _rebuildControllers();
-  }
-
-  void _rebuildControllers() {
-    for (final c in _rowControllers) {
-      c.dispose();
-    }
-    _rowControllers
-      ..clear()
-      ..addAll(
-          [for (final line in _lines) TextEditingController(text: line.content)]);
   }
 
   @override
   void dispose() {
-    for (final c in _rowControllers) {
-      c.dispose();
-    }
+    _editController.dispose();
     super.dispose();
   }
 
   void _sync() {
-    for (var i = 0; i < _lines.length; i++) {
-      _lines[i].content = _rowControllers[i].text;
-    }
     widget.controller.text =
         _lines.map((line) => line.serialize()).join('\n');
   }
 
-  void _mutate(void Function() change) {
-    // Capture the typed text FIRST — a reorder/delete must not lose it.
-    for (var i = 0; i < _lines.length; i++) {
-      _lines[i].content = _rowControllers[i].text;
-    }
+  void _commitEditing() {
+    final editing = _editing;
+    if (editing == null) return;
+    _lines[editing].content = _editController.text;
+    _sync();
+  }
+
+  void _select(int index) {
     setState(() {
+      _commitEditing();
+      _editing = index;
+      _editController.text = _lines[index].content;
+    });
+  }
+
+  void _deselect() {
+    setState(() {
+      _commitEditing();
+      _editing = null;
+    });
+  }
+
+  void _mutate(void Function() change) {
+    setState(() {
+      _commitEditing();
       change();
-      _rebuildControllers();
     });
     _sync();
+  }
+
+  void _move(int index, int delta) {
+    final to = index + delta;
+    if (to < 0 || to >= _lines.length) return;
+    _mutate(() {
+      final line = _lines.removeAt(index);
+      _lines.insert(to, line);
+      _editing = to;
+      _editController.text = line.content;
+    });
+  }
+
+  void _insertBelow(int index) {
+    _mutate(() {
+      _lines.insert(
+          index + 1, ReportVisualLine(ReportLineKind.text, ''));
+      _editing = index + 1;
+      _editController.text = '';
+    });
+  }
+
+  void _delete(int index) {
+    _mutate(() {
+      _lines.removeAt(index);
+      _editing = null;
+    });
+  }
+
+  /// Inserts [token] at the cursor of the active editor.
+  void _insertToken(String token) {
+    final selection = _editController.selection;
+    final text = _editController.text;
+    final at = selection.isValid ? selection.start : text.length;
+    _editController.text =
+        text.substring(0, at) + token + text.substring(at);
+    _editController.selection =
+        TextSelection.collapsed(offset: at + token.length);
+    _commitEditing();
+    setState(() {});
+  }
+
+  /// Groups the flat line list into render segments; a `:::` fence
+  /// opens a column group, `|||` starts the next column.
+  List<_Segment> _segments() {
+    final segments = <_Segment>[];
+    var i = 0;
+    while (i < _lines.length) {
+      if (_lines[i].kind == ReportLineKind.columnsFence) {
+        final open = i;
+        final columns = <List<int>>[[]];
+        var j = i + 1;
+        int? close;
+        for (; j < _lines.length; j++) {
+          if (_lines[j].kind == ReportLineKind.columnsFence) {
+            close = j;
+            break;
+          }
+          if (_lines[j].kind == ReportLineKind.columnsSplit) {
+            columns.add([]);
+          } else {
+            columns.last.add(j);
+          }
+        }
+        segments.add(_GroupSegment(open, columns, close));
+        i = close == null ? _lines.length : close + 1;
+      } else {
+        segments.add(_LineSegment(i));
+        i++;
+      }
+    }
+    return segments;
+  }
+
+  /// Text with `{{ field }}` / `{% logic %}` rendered as TOKENS — the
+  /// designer idiom for data fields.
+  InlineSpan _tokenized(String text, TextStyle? style) {
+    final theme = Theme.of(context);
+    final spans = <InlineSpan>[];
+    final pattern = RegExp(r'\{\{.*?\}\}|\{%.*?%\}');
+    var last = 0;
+    for (final match in pattern.allMatches(text)) {
+      if (match.start > last) {
+        spans.add(TextSpan(text: text.substring(last, match.start)));
+      }
+      spans.add(TextSpan(
+        text: match.group(0),
+        style: (style ?? const TextStyle()).copyWith(
+          color: theme.colorScheme.primary,
+          backgroundColor:
+              theme.colorScheme.primaryContainer.withValues(alpha: .35),
+          fontFamily: 'monospace',
+          fontSize: (style?.fontSize ?? 14) * .85,
+        ),
+      ));
+      last = match.end;
+    }
+    if (last < text.length) spans.add(TextSpan(text: text.substring(last)));
+    return TextSpan(style: style, children: spans);
+  }
+
+  Widget _styledContent(ReportVisualLine line) {
+    final theme = Theme.of(context);
+    final muted = theme.colorScheme.onSurfaceVariant;
+    switch (line.kind) {
+      case ReportLineKind.title:
+        return Text.rich(_tokenized(
+            line.content,
+            theme.textTheme.titleLarge
+                ?.copyWith(fontWeight: FontWeight.bold)));
+      case ReportLineKind.section:
+        return Padding(
+          padding: const EdgeInsets.only(top: 4),
+          child: Text.rich(_tokenized(
+              line.content.toUpperCase(),
+              theme.textTheme.labelSmall?.copyWith(
+                  color: muted,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2))),
+        );
+      case ReportLineKind.text:
+        return Text.rich(
+            _tokenized(line.content, theme.textTheme.bodyMedium));
+      case ReportLineKind.small:
+        return Text.rich(_tokenized(line.content,
+            theme.textTheme.bodySmall?.copyWith(color: muted)));
+      case ReportLineKind.row:
+      case ReportLineKind.boldRow:
+        final style = theme.textTheme.bodyMedium?.copyWith(
+            fontWeight: line.kind == ReportLineKind.boldRow
+                ? FontWeight.bold
+                : null);
+        final cells = line.content.split('|');
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            for (var c = 0; c < cells.length; c++)
+              c == 0
+                  ? Expanded(
+                      child:
+                          Text.rich(_tokenized(cells[c].trim(), style)))
+                  : Padding(
+                      padding: const EdgeInsets.only(left: 12),
+                      child:
+                          Text.rich(_tokenized(cells[c].trim(), style)),
+                    ),
+          ],
+        );
+      case ReportLineKind.divider:
+        return Container(
+            margin: const EdgeInsets.symmetric(vertical: 6),
+            height: 2,
+            color: theme.colorScheme.primary);
+      case ReportLineKind.spacer:
+        return Container(
+          height: 14,
+          alignment: Alignment.center,
+          child: Container(
+              height: 1,
+              margin: const EdgeInsets.symmetric(horizontal: 48),
+              color: theme.colorScheme.outlineVariant
+                  .withValues(alpha: .4)),
+        );
+      case ReportLineKind.image:
+        final bytes =
+            ref.watch(reportImageBytesProvider(line.content)).value;
+        return bytes == null
+            ? Row(mainAxisSize: MainAxisSize.min, children: [
+                Icon(Icons.image_outlined,
+                    size: 18, color: theme.colorScheme.primary),
+                const SizedBox(width: 4),
+                Text(line.content, style: theme.textTheme.bodySmall),
+              ])
+            : Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child:
+                      Image.memory(bytes, height: 48, fit: BoxFit.contain),
+                ),
+              );
+      case ReportLineKind.logic:
+        return Row(children: [
+          Icon(Icons.code, size: 14, color: muted),
+          const SizedBox(width: 4),
+          Expanded(
+            child: Text(
+              line.content,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.bodySmall?.copyWith(
+                  color: muted, fontFamily: 'monospace', fontSize: 10),
+            ),
+          ),
+        ]);
+      case ReportLineKind.columnsFence:
+      case ReportLineKind.columnsSplit:
+        // Boundaries render as part of the group chrome; standalone
+        // (orphaned) markers show as their name.
+        return Text(reportLineName(line.kind, AppLocalizations.of(context)),
+            style: theme.textTheme.bodySmall
+                ?.copyWith(color: theme.colorScheme.tertiary));
+    }
+  }
+
+  /// The active element: the in-place editor + its toolbar.
+  Widget _editor(int index) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final line = _lines[index];
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.colorScheme.primaryContainer.withValues(alpha: .15),
+        borderRadius: const BorderRadius.all(Radius.circular(6)),
+        border: Border.all(color: theme.colorScheme.primary, width: 1),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (line.hasContent)
+            TextField(
+              key: ValueKey('${widget.bandKey}-field-$index'),
+              controller: _editController,
+              autofocus: true,
+              maxLines: null,
+              onChanged: (_) => _commitEditing(),
+              style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+              decoration: const InputDecoration(
+                  isDense: true, border: InputBorder.none),
+            )
+          else
+            Text(reportLineName(line.kind, l10n),
+                style: theme.textTheme.bodySmall),
+          Row(children: [
+            PopupMenuButton<ReportLineKind>(
+              key: ValueKey('${widget.bandKey}-type-$index'),
+              tooltip: reportLineName(line.kind, l10n),
+              onSelected: (kind) => _mutate(() => line.kind = kind),
+              itemBuilder: (context) => [
+                for (final kind in ReportLineKind.values)
+                  PopupMenuItem(
+                    value: kind,
+                    child: Row(children: [
+                      Icon(reportLineIcon(kind), size: 18),
+                      const SizedBox(width: 8),
+                      Text(reportLineName(kind, l10n)),
+                    ]),
+                  ),
+              ],
+              child: Icon(reportLineIcon(line.kind),
+                  size: 20, color: theme.colorScheme.primary),
+            ),
+            IconButton(
+              key: ValueKey('${widget.bandKey}-up-$index'),
+              icon: const Icon(Icons.arrow_upward, size: 16),
+              visualDensity: VisualDensity.compact,
+              onPressed: () => _move(index, -1),
+            ),
+            IconButton(
+              key: ValueKey('${widget.bandKey}-down-$index'),
+              icon: const Icon(Icons.arrow_downward, size: 16),
+              visualDensity: VisualDensity.compact,
+              onPressed: () => _move(index, 1),
+            ),
+            IconButton(
+              key: ValueKey('${widget.bandKey}-insert-$index'),
+              icon: const Icon(Icons.add, size: 16),
+              tooltip: l10n?.reportVisualAddLine ?? 'Add line',
+              visualDensity: VisualDensity.compact,
+              onPressed: () => _insertBelow(index),
+            ),
+            IconButton(
+              key: ValueKey('${widget.bandKey}-delete-$index'),
+              icon: const Icon(Icons.delete_outline, size: 16),
+              visualDensity: VisualDensity.compact,
+              onPressed: () => _delete(index),
+            ),
+            const Spacer(),
+            IconButton(
+              key: ValueKey('${widget.bandKey}-done-$index'),
+              icon: const Icon(Icons.check, size: 16),
+              visualDensity: VisualDensity.compact,
+              onPressed: _deselect,
+            ),
+          ]),
+        ],
+      ),
+    );
+  }
+
+  Widget _lineWidget(int index) {
+    if (index == _editing) return _editor(index);
+    final line = _lines[index];
+    return InkWell(
+      key: ValueKey('${widget.bandKey}-line-$index'),
+      onTap: () => _select(index),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 1),
+        child: _styledContent(line),
+      ),
+    );
+  }
+
+  /// A tappable dashed group boundary (the `:::` / `|||` markers).
+  Widget _boundary(int index, {required bool split}) {
+    final theme = Theme.of(context);
+    if (index == _editing) return _editor(index);
+    return InkWell(
+      key: ValueKey('${widget.bandKey}-line-$index'),
+      onTap: () => _select(index),
+      child: Container(
+        height: 10,
+        alignment: Alignment.center,
+        child: Row(children: [
+          Expanded(
+            child: Container(
+              height: 1,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.tertiary.withValues(alpha: .5),
+              ),
+            ),
+          ),
+          Icon(
+              split
+                  ? Icons.vertical_split_outlined
+                  : Icons.view_column_outlined,
+              size: 10,
+              color: theme.colorScheme.tertiary),
+        ]),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    final segments = _segments();
     return Padding(
       padding: const EdgeInsets.only(top: AppSpacing.sm),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: theme.colorScheme.outlineVariant),
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
-        ),
-        padding: AppSpacing.smAll,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(widget.label, style: theme.textTheme.labelMedium),
-            ReorderableListView.builder(
-              key: ValueKey('${widget.bandKey}-list'),
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              buildDefaultDragHandles: false,
-              itemCount: _lines.length,
-              onReorder: (from, to) => _mutate(() {
-                final line = _lines.removeAt(from);
-                _lines.insert(to > from ? to - 1 : to, line);
-              }),
-              itemBuilder: (context, index) {
-                final line = _lines[index];
-                return Padding(
-                  key: ValueKey('${widget.bandKey}-row-$index'),
-                  padding: const EdgeInsets.symmetric(vertical: 2),
-                  child: Row(
-                    children: [
-                      // The row's TYPE — tap to change it.
-                      PopupMenuButton<ReportLineKind>(
-                        key: ValueKey('${widget.bandKey}-type-$index'),
-                        tooltip: reportLineName(line.kind, l10n),
-                        onSelected: (kind) =>
-                            _mutate(() => line.kind = kind),
-                        itemBuilder: (context) => [
-                          for (final kind in ReportLineKind.values)
-                            PopupMenuItem(
-                              value: kind,
-                              child: Row(children: [
-                                Icon(reportLineIcon(kind), size: 18),
-                                const SizedBox(width: 8),
-                                Text(reportLineName(kind, l10n)),
-                              ]),
-                            ),
-                        ],
-                        child: Icon(reportLineIcon(line.kind),
-                            size: 20,
-                            color: theme.colorScheme.primary),
-                      ),
-                      const SizedBox(width: AppSpacing.xs),
-                      Expanded(
-                        child: line.hasContent
-                            ? TextField(
-                                key: ValueKey(
-                                    '${widget.bandKey}-field-$index'),
-                                controller: _rowControllers[index],
-                                onChanged: (_) => _sync(),
-                                style: theme.textTheme.bodySmall,
-                                decoration: const InputDecoration(
-                                  isDense: true,
-                                  border: InputBorder.none,
-                                ),
-                              )
-                            : Text(
-                                reportLineName(line.kind, l10n),
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color:
-                                      theme.colorScheme.onSurfaceVariant,
-                                ),
-                              ),
-                      ),
-                      IconButton(
-                        key: ValueKey('${widget.bandKey}-delete-$index'),
-                        icon: const Icon(Icons.close, size: 18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(widget.label, style: theme.textTheme.labelMedium),
+          const SizedBox(height: 4),
+          // #498 — the data-field palette: tap to insert at the cursor
+          // of the active element (the designer idiom).
+          if (_editing != null)
+            SizedBox(
+              height: 34,
+              child: ListView(
+                key: ValueKey('${widget.bandKey}-palette'),
+                scrollDirection: Axis.horizontal,
+                children: [
+                  for (final field in InvoicePdfTemplate.placeholders)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: ActionChip(
+                        key: ValueKey('${widget.bandKey}-token-$field'),
                         visualDensity: VisualDensity.compact,
-                        onPressed: () =>
-                            _mutate(() => _lines.removeAt(index)),
+                        label: Text(field,
+                            style: const TextStyle(
+                                fontFamily: 'monospace', fontSize: 10)),
+                        onPressed: () => _insertToken('{{ $field }}'),
                       ),
-                      ReorderableDragStartListener(
-                        index: index,
-                        child: const Icon(Icons.drag_handle, size: 20),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: TextButton.icon(
-                key: ValueKey('${widget.bandKey}-add'),
-                icon: const Icon(Icons.add, size: 18),
-                label: Text(l10n?.reportVisualAddLine ?? 'Add line'),
-                onPressed: () => _mutate(() =>
-                    _lines.add(ReportVisualLine(ReportLineKind.text, ''))),
+                    ),
+                ],
               ),
             ),
-          ],
+          // The PAPER: the band as the document lays it out.
+          Container(
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface,
+              border: Border.all(color: theme.colorScheme.outlineVariant),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+            ),
+            padding: AppSpacing.mdAll,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (_lines.isEmpty)
+                  Text(
+                    l10n?.reportDesignEmpty ??
+                        'Empty band — add an element below.',
+                    style: theme.textTheme.bodySmall
+                        ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                  ),
+                for (final segment in segments)
+                  switch (segment) {
+                    _LineSegment(:final index) => _lineWidget(index),
+                    _GroupSegment(
+                      :final openIndex,
+                      :final columns,
+                      :final closeIndex,
+                    ) =>
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _boundary(openIndex, split: false),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              for (var c = 0; c < columns.length; c++) ...[
+                                if (c > 0)
+                                  _splitHandle(columns, c),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      for (final index in columns[c])
+                                        _lineWidget(index),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                          if (closeIndex != null)
+                            _boundary(closeIndex, split: false),
+                        ],
+                      ),
+                  },
+              ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton.icon(
+              key: ValueKey('${widget.bandKey}-add'),
+              icon: const Icon(Icons.add, size: 18),
+              label: Text(l10n?.reportVisualAddLine ?? 'Add line'),
+              onPressed: () => _mutate(() {
+                _lines.add(ReportVisualLine(ReportLineKind.text, ''));
+                _editing = _lines.length - 1;
+                _editController.text = '';
+              }),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// The vertical `|||` handle between two columns.
+  Widget _splitHandle(List<List<int>> columns, int column) {
+    // The split marker sits right before this column's first line (or
+    // right after the previous column's last line).
+    final before = columns[column].isNotEmpty
+        ? columns[column].first - 1
+        : (columns[column - 1].isNotEmpty
+            ? columns[column - 1].last + 1
+            : null);
+    final theme = Theme.of(context);
+    return InkWell(
+      key: before == null
+          ? null
+          : ValueKey('${widget.bandKey}-line-$before'),
+      onTap: before == null ? null : () => _select(before),
+      child: Container(
+        width: 10,
+        constraints: const BoxConstraints(minHeight: 24),
+        alignment: Alignment.center,
+        child: Container(
+          width: 1,
+          height: 24,
+          color: theme.colorScheme.tertiary.withValues(alpha: .5),
         ),
       ),
     );

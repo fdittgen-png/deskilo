@@ -2218,6 +2218,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo paese ha più lingue — imposta prima la lingua dello spazio nelle Impostazioni dello spazio.';
 
   @override
+  String get reportDesignEmpty => 'Banda vuota — aggiungi un elemento sotto.';
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override

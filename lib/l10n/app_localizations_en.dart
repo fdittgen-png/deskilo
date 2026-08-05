@@ -2199,6 +2199,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'This country has several languages — set the workspace language in Workspace settings first.';
 
   @override
+  String get reportDesignEmpty => 'Empty band — add an element below.';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

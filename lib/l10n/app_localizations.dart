@@ -4034,6 +4034,12 @@ abstract class AppLocalizations {
   /// **'This country has several languages — set the workspace language in Workspace settings first.'**
   String get reportLanguageAmbiguous;
 
+  /// True WYSIWYG design surface (#498)
+  ///
+  /// In en, this message translates to:
+  /// **'Empty band — add an element below.'**
+  String get reportDesignEmpty;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

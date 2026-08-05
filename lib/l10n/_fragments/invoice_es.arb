@@ -655,5 +655,9 @@
   "reportLanguageAmbiguous": "Este país tiene varios idiomas — define primero el idioma del espacio en los Ajustes del espacio.",
   "@reportLanguageAmbiguous": {
     "description": "Report language resolution + per-language templates (#496)"
+  },
+  "reportDesignEmpty": "Banda vacía — añade un elemento abajo.",
+  "@reportDesignEmpty": {
+    "description": "True WYSIWYG design surface (#498)"
   }
 }
