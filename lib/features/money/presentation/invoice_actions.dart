@@ -65,6 +65,7 @@ import '../../plan/domain/level.dart';
 import '../../plan/domain/floor_plan.dart';
 import '../../workspace/domain/member.dart';
 import '../../../core/locale/report_language.dart';
+import '../../../core/theme/app_spacing.dart';
 
 /// Everything an issued invoice can be PUT THROUGH, extracted out of the
 /// screen (0069): the archive rows, the open cards and the detail sheet all
@@ -600,6 +601,82 @@ Map<String, Object?> workspaceReportData(
     'vat': const <Map<String, Object?>>[],
     ...legalMentionData(l10n, workspace),
   };
+}
+
+/// #504 — asks the validators to CANCEL the outstanding remainder of a
+/// partially paid invoice. Explains that this is a request, takes an
+/// optional reason, files the pending 'invoice_writeoff' event.
+Future<void> requestInvoiceWriteoffDialog(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice,
+) async {
+  final l10n = AppLocalizations.of(context);
+  final reasonController = TextEditingController();
+  final confirmed = await showDialog<bool>(
+    context: context,
+    builder: (dialogContext) => AlertDialog(
+      title: Text(
+          l10n?.invoiceWriteoffButton ?? 'Cancel outstanding amount'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l10n?.invoiceWriteoffExplain ??
+              'The unpaid remainder of this invoice will be cancelled '
+                  'and the invoice archived as partially paid — once '
+                  'the validators confirm. Until then it stays open '
+                  'and owed.'),
+          const SizedBox(height: AppSpacing.md),
+          TextField(
+            key: const ValueKey('invoice-writeoff-reason'),
+            controller: reasonController,
+            maxLength: 300,
+            maxLines: 2,
+            decoration: InputDecoration(
+              labelText: l10n?.reservationDeleteReasonLabel ??
+                  'Reason (optional)',
+              counterText: '',
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(dialogContext).pop(false),
+          child: Text(l10n?.commonCancel ?? 'Cancel'),
+        ),
+        FilledButton(
+          key: const ValueKey('invoice-writeoff-submit'),
+          onPressed: () => Navigator.of(dialogContext).pop(true),
+          child: Text(
+              l10n?.reservationDeleteSubmit ?? 'Send request'),
+        ),
+      ],
+    ),
+  );
+  final reason = reasonController.text;
+  if (confirmed != true || !context.mounted) return;
+  if (!await runGuarded(
+    context,
+    domain: 'money',
+    message: 'invoice writeoff request failed',
+    errorText: l10n?.workspaceGenericError ??
+        'Something went wrong. Please try again.',
+    action: () => ref
+        .read(eventRepositoryProvider)
+        .requestInvoiceWriteoff(invoice.id, reason: reason),
+  )) {
+    return;
+  }
+  ref.invalidate(eventsProvider);
+  invalidateBookingData(ref);
+  if (!context.mounted) return;
+  AppSnack.success(
+    context,
+    l10n?.invoiceWriteoffRequested ??
+        'Write-off requested — awaiting validation.',
+  );
 }
 
 /// The l10n bundle of a target DOCUMENT language (#496) — what a

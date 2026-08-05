@@ -2223,6 +2223,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportDesignEmpty => 'Empty band — add an element below.';
 
   @override
+  String get invoiceStatusRemainderCancelled =>
+      'Partially paid · remainder cancelled';
+
+  @override
+  String get invoiceRemainingLabel => 'Remaining';
+
+  @override
+  String get invoiceWriteoffButton => 'Cancel outstanding amount';
+
+  @override
+  String get invoiceWriteoffExplain =>
+      'The unpaid remainder of this invoice will be cancelled and the invoice archived as partially paid — once the validators confirm. Until then it stays open and owed.';
+
+  @override
+  String get invoiceWriteoffRequested =>
+      'Write-off requested — awaiting validation.';
+
+  @override
+  String get eventTypeInvoiceWriteoff => 'Outstanding write-off';
+
+  @override
+  String eventInvoiceWriteoffLine(String actor, String number, String amount) {
+    return '$actor asks to cancel the remainder of $number — $amount';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

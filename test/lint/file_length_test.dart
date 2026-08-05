@@ -77,7 +77,8 @@ const Map<String, int> _baseline = {
   // 1320→1680 (2026-08-05): #494 the agreement/payments/workspace data
   // models + the letter-doc warm/render/pdf helpers.
   // 1680→1740 (2026-08-05): #496 the language-resolution helpers threaded through the builders.
-  'lib/features/money/presentation/invoice_actions.dart': 1740,
+  // 1740→1820 (2026-08-05): #504 the write-off request dialog.
+  'lib/features/money/presentation/invoice_actions.dart': 1820,
   // 1370→1410 (2026-08-05): #494 the engine-based workspace report tile.
   // 1410→1440 (2026-08-05): #496 the language chain on the workspace report.
   'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1440,
@@ -107,7 +108,8 @@ const Map<String, int> _baseline = {
   'lib/features/money/presentation/widgets/bill_view.dart': 750,
   // 600→660 (2026-08-04): #472 the due-reminder flag + emphasized
   // remind action on the open cards.
-  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 660,
+  // 660→740 (2026-08-05): #504 the partial-open card branch (remaining + write-off).
+  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 740,
   // 750→770 (2026-08-05): #490 workspace-clock day instants beside the
   // naive axis anchor.
   'lib/features/calendar/presentation/widgets/day_timeline.dart': 770,
@@ -115,7 +117,8 @@ const Map<String, int> _baseline = {
   // 600→640 (2026-08-04): #460/#464 Messages inbox rows + mark-seen —
   // the note row widget lives with the feed it sits in. 640→700: #467
   // swipe reply/delete on the rows.
-  'lib/features/events/presentation/screens/events_screen.dart': 700,
+  // 700→720 (2026-08-05): #504 the invoice-writeoff event rendering.
+  'lib/features/events/presentation/screens/events_screen.dart': 720,
   // 680→700 (2026-08-04): #454 owner-template intro/footer blocks.
   // 700→790: #470 the banded report renderer (_reportWidgets) and the
   // header/body/footer band branches.

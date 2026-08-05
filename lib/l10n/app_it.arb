@@ -1087,6 +1087,45 @@
   "@reportDesignEmpty": {
     "description": "True WYSIWYG design surface (#498)"
   },
+  "invoiceStatusRemainderCancelled": "Parzialmente pagata · saldo annullato",
+  "@invoiceStatusRemainderCancelled": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceRemainingLabel": "Residuo",
+  "@invoiceRemainingLabel": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceWriteoffButton": "Annulla il saldo residuo",
+  "@invoiceWriteoffButton": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceWriteoffExplain": "Il saldo non pagato di questa fattura verrà annullato e la fattura archiviata come parzialmente pagata — una volta confermata la convalida. Fino ad allora resta aperta e dovuta.",
+  "@invoiceWriteoffExplain": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceWriteoffRequested": "Annullamento richiesto — in attesa di convalida.",
+  "@invoiceWriteoffRequested": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "eventTypeInvoiceWriteoff": "Annullamento del saldo",
+  "@eventTypeInvoiceWriteoff": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "eventInvoiceWriteoffLine": "{actor} chiede di annullare il saldo di {number} — {amount}",
+  "@eventInvoiceWriteoffLine": {
+    "description": "Partial payments stay open until a validated write-off (#504)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "eventTypeMemberJoin": "Nuovo membro",
   "memberStatusPending": "In attesa",
   "pendingApprovalTitle": "In attesa di approvazione",

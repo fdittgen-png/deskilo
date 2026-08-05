@@ -199,6 +199,8 @@ class InvoicesScreen extends ConsumerWidget {
                     remindInvoice(context, ref, entry.invoice),
                 onMatch: (entry) =>
                     matchInvoiceToPayment(context, ref, entry.invoice),
+                onWriteoff: (entry) =>
+                    requestInvoiceWriteoffDialog(context, ref, entry.invoice),
                 onVoid: (entry) =>
                     voidInvoiceWithConfirm(context, ref, entry.invoice),
                 onProforma: (entry) =>

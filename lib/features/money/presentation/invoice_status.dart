@@ -21,10 +21,15 @@ enum InvoiceLifecycle {
   /// Matched and standing — DEFINITIVE (0068): no void, no replacement.
   paid,
 
-  /// Matched to a payment that did NOT cover the whole invoice, accepted
-  /// with a note (resolution `under_accepted`). Closed like any match,
-  /// but the member's list must not read "paid".
+  /// Matched to a payment that did NOT cover the whole invoice
+  /// (resolution `under_accepted`) and the remainder NOT yet written
+  /// off (#504): the invoice is STILL OPEN — the rest is owed until an
+  /// explicit, validated cancellation.
   partiallyPaid,
+
+  /// Partially paid AND the outstanding remainder was cancelled through
+  /// the validation framework (#504) — only now is it archived.
+  remainderCancelled,
 
   /// Tagged erroneous (0061); a replacement may carry the corrected data.
   erroneous,
@@ -34,9 +39,12 @@ InvoiceLifecycle invoiceLifecycleOf(Invoice invoice, InvoiceMatch? match) {
   if (invoice.isVoided) return InvoiceLifecycle.erroneous;
   if (match == null) return InvoiceLifecycle.open;
   if (match.pending) return InvoiceLifecycle.awaitingValidation;
-  return match.resolution == 'under_accepted'
-      ? InvoiceLifecycle.partiallyPaid
-      : InvoiceLifecycle.paid;
+  if (match.resolution == 'under_accepted') {
+    return match.writeoffAt == null
+        ? InvoiceLifecycle.partiallyPaid
+        : InvoiceLifecycle.remainderCancelled;
+  }
+  return InvoiceLifecycle.paid;
 }
 
 /// The lifecycle as a compact chip. Replaces the dot-joined status words
@@ -70,6 +78,12 @@ class InvoiceStatusChip extends StatelessWidget {
           colors.tertiaryContainer,
           colors.onTertiaryContainer,
           l10n?.invoiceStatusPartiallyPaid ?? 'Partially paid',
+        ),
+      InvoiceLifecycle.remainderCancelled => (
+          colors.tertiaryContainer,
+          colors.onTertiaryContainer,
+          l10n?.invoiceStatusRemainderCancelled ??
+              'Partially paid · remainder cancelled',
         ),
       InvoiceLifecycle.erroneous => (
           colors.errorContainer,

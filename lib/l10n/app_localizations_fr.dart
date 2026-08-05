@@ -2247,6 +2247,32 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reportDesignEmpty => 'Bande vide — ajoutez un élément ci-dessous.';
 
   @override
+  String get invoiceStatusRemainderCancelled =>
+      'Partiellement payée · solde annulé';
+
+  @override
+  String get invoiceRemainingLabel => 'Restant dû';
+
+  @override
+  String get invoiceWriteoffButton => 'Annuler le solde restant';
+
+  @override
+  String get invoiceWriteoffExplain =>
+      'Le solde impayé de cette facture sera annulé et la facture archivée comme partiellement payée — une fois la validation confirmée. D\'ici là elle reste ouverte et due.';
+
+  @override
+  String get invoiceWriteoffRequested =>
+      'Annulation demandée — en attente de validation.';
+
+  @override
+  String get eventTypeInvoiceWriteoff => 'Annulation de solde';
+
+  @override
+  String eventInvoiceWriteoffLine(String actor, String number, String amount) {
+    return '$actor demande l\'annulation du solde de $number — $amount';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'Nouveau membre';
 
   @override

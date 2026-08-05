@@ -108,6 +108,13 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
           '$actor asks to delete the booking of '
               '${(event.payload['starts_at'] as String? ?? '').split('T').first} '
               '(${event.payload['was_checked_in'] == true ? 'checked in' : 'never used'})',
+      (EventType.invoiceWriteoff, _) => l10n?.eventInvoiceWriteoffLine(
+            actor,
+            event.payload['number'] as String? ?? '',
+            amount,
+          ) ??
+          '$actor asks to cancel the remainder of '
+              '${event.payload['number']} — $amount',
       (EventType.invoicePayment, _) => l10n?.eventInvoicePaid(
             event.payload['number'] as String? ?? '',
             amount,
@@ -141,6 +148,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         l10n?.eventTypeInvoicePayment ?? 'Invoice payment',
       EventType.reservationDelete =>
         l10n?.eventTypeReservationDelete ?? 'Booking deletion',
+      EventType.invoiceWriteoff =>
+        l10n?.eventTypeInvoiceWriteoff ?? 'Outstanding write-off',
     };
   }
 
@@ -159,6 +168,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.roleChange => Icons.admin_panel_settings_outlined,
       EventType.invoicePayment => Icons.price_check_outlined,
       EventType.reservationDelete => Icons.delete_outline,
+      EventType.invoiceWriteoff => Icons.money_off_csred_outlined,
     };
   }
 

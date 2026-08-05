@@ -199,7 +199,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     final rows = await _client
         .from('invoice_matches')
         .select('invoice_id, paid_cents, resolution, note, status, '
-            'payment_ledger_id, matched_at, by_name')
+            'payment_ledger_id, matched_at, by_name, writeoff_at')
         .eq('workspace_id', workspaceId);
     return {
       for (final row in rows)
@@ -212,6 +212,9 @@ class SupabaseMoneyRepository implements MoneyRepository {
           paymentLedgerId: row['payment_ledger_id'] as String?,
           matchedAt: DateTime.parse(row['matched_at'] as String).toLocal(),
           byName: row['by_name'] as String? ?? '',
+          writeoffAt: row['writeoff_at'] == null
+              ? null
+              : DateTime.parse(row['writeoff_at'] as String).toLocal(),
         ),
     };
   }

@@ -90,6 +90,26 @@ class FakeEventRepository implements EventRepository {
   var _nextEventId = 1;
 
   @override
+  Future<String> requestInvoiceWriteoff(
+    String invoiceId, {
+    String reason = '',
+  }) async {
+    final event = WorkspaceEvent(
+      id: 'writeoff-${_nextEventId++}',
+      workspaceId: 'ws-1',
+      type: EventType.invoiceWriteoff,
+      action: EventAction.submitted,
+      actorMemberId: respondingMemberId,
+      subjectMemberId: respondingMemberId,
+      payload: {'invoice_id': invoiceId, 'reason': reason},
+      status: EventStatus.pending,
+      createdAt: kTestNow,
+    );
+    events.add(event);
+    return event.id;
+  }
+
+  @override
   Future<String> requestReservationDeletion(
     String reservationId, {
     String reason = '',

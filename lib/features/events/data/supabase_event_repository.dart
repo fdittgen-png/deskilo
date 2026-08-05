@@ -38,6 +38,19 @@ class SupabaseEventRepository implements EventRepository {
   }
 
   @override
+  Future<String> requestInvoiceWriteoff(
+    String invoiceId, {
+    String reason = '',
+  }) async {
+    final result =
+        await _client.rpc<dynamic>('request_invoice_writeoff', params: {
+      'p_invoice_id': invoiceId,
+      'p_reason': reason,
+    });
+    return result as String;
+  }
+
+  @override
   Future<String> requestReservationDeletion(
     String reservationId, {
     String reason = '',

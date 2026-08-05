@@ -4076,6 +4076,48 @@ abstract class AppLocalizations {
   /// **'Empty band — add an element below.'**
   String get reportDesignEmpty;
 
+  /// Partial payments stay open until a validated write-off (#504)
+  ///
+  /// In en, this message translates to:
+  /// **'Partially paid · remainder cancelled'**
+  String get invoiceStatusRemainderCancelled;
+
+  /// Partial payments stay open until a validated write-off (#504)
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining'**
+  String get invoiceRemainingLabel;
+
+  /// Partial payments stay open until a validated write-off (#504)
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel outstanding amount'**
+  String get invoiceWriteoffButton;
+
+  /// Partial payments stay open until a validated write-off (#504)
+  ///
+  /// In en, this message translates to:
+  /// **'The unpaid remainder of this invoice will be cancelled and the invoice archived as partially paid — once the validators confirm. Until then it stays open and owed.'**
+  String get invoiceWriteoffExplain;
+
+  /// Partial payments stay open until a validated write-off (#504)
+  ///
+  /// In en, this message translates to:
+  /// **'Write-off requested — awaiting validation.'**
+  String get invoiceWriteoffRequested;
+
+  /// Partial payments stay open until a validated write-off (#504)
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding write-off'**
+  String get eventTypeInvoiceWriteoff;
+
+  /// Partial payments stay open until a validated write-off (#504)
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} asks to cancel the remainder of {number} — {amount}'**
+  String eventInvoiceWriteoffLine(String actor, String number, String amount);
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

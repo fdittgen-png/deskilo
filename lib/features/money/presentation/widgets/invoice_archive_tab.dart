@@ -153,8 +153,10 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
     // (no tabs) see all of their invoices here.
     bool closed(Invoice invoice) => switch (
         invoiceLifecycleOf(invoice, matches[invoice.id])) {
+      // #504 — a PARTIAL payment is not closed: the remainder is owed
+      // until its validated write-off (remainderCancelled).
       InvoiceLifecycle.paid ||
-      InvoiceLifecycle.partiallyPaid ||
+      InvoiceLifecycle.remainderCancelled ||
       InvoiceLifecycle.erroneous =>
         true,
       _ => false,

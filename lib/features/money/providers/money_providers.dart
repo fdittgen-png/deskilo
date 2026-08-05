@@ -322,15 +322,20 @@ Future<InvoicingOverview> invoicingOverview(Ref ref) async {
       .toList()
     ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
-  // 0067 — the lifecycle is EXPLICIT: an invoice stays open until it
-  // is matched (a pending match still shows here, awaiting its
-  // quorum); only voiding or a standing match removes it.
+  // 0067/#504 — the lifecycle is EXPLICIT: an invoice stays open until
+  // FULLY settled. A pending match awaits its quorum here; a standing
+  // PARTIAL match (under_accepted, remainder not written off) stays
+  // open too — the rest is owed until the validated write-off.
   final matches = await ref.watch(invoiceMatchesProvider.future);
+  bool stillOpen(InvoiceMatch? match) =>
+      match == null ||
+      match.pending ||
+      (match.resolution == 'under_accepted' && match.writeoffAt == null);
   final open = [
     for (final invoice in invoices)
       if (!invoice.isVoided &&
           !replacedIds.contains(invoice.id) &&
-          (matches[invoice.id] == null || matches[invoice.id]!.pending))
+          stillOpen(matches[invoice.id]))
         (invoice: invoice, pendingMatch: matches[invoice.id]),
   ]..sort((a, b) => a.invoice.issuedAt.compareTo(b.invoice.issuedAt));
 

@@ -1087,6 +1087,45 @@
   "@reportDesignEmpty": {
     "description": "True WYSIWYG design surface (#498)"
   },
+  "invoiceStatusRemainderCancelled": "Parcialmente pagada · saldo anulado",
+  "@invoiceStatusRemainderCancelled": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceRemainingLabel": "Pendiente",
+  "@invoiceRemainingLabel": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceWriteoffButton": "Anular el saldo pendiente",
+  "@invoiceWriteoffButton": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceWriteoffExplain": "El saldo impagado de esta factura se anulará y la factura se archivará como parcialmente pagada — cuando la validación lo confirme. Hasta entonces sigue abierta y adeudada.",
+  "@invoiceWriteoffExplain": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceWriteoffRequested": "Anulación solicitada — pendiente de validación.",
+  "@invoiceWriteoffRequested": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "eventTypeInvoiceWriteoff": "Anulación de saldo",
+  "@eventTypeInvoiceWriteoff": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "eventInvoiceWriteoffLine": "{actor} pide anular el saldo de {number} — {amount}",
+  "@eventInvoiceWriteoffLine": {
+    "description": "Partial payments stay open until a validated write-off (#504)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "eventTypeMemberJoin": "Nuevo miembro",
   "memberStatusPending": "Pendiente",
   "pendingApprovalTitle": "Esperando aprobación",

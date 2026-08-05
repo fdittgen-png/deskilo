@@ -22,6 +22,13 @@ abstract class EventRepository {
 
   Future<List<ValidationPolicy>> fetchValidationPolicies(String workspaceId);
 
+  /// Request cancelling the outstanding remainder of a partially paid
+  /// invoice (0100, #504); returns the pending event id.
+  Future<String> requestInvoiceWriteoff(
+    String invoiceId, {
+    String reason = '',
+  });
+
   /// Request the validated DELETION of a past or checked-in booking
   /// (0097, #492); returns the pending event id.
   Future<String> requestReservationDeletion(

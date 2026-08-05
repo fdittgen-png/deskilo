@@ -806,7 +806,10 @@ as String,
 mixin _$InvoiceMatch {
 
  String get invoiceId; int get paidCents; String get resolution; String get note; String get status;// 0068 — the REGISTERED payment this match consumed.
- String? get paymentLedgerId; DateTime get matchedAt; String get byName;
+ String? get paymentLedgerId; DateTime get matchedAt; String get byName;/// #504 — when the outstanding remainder of an under-paid match was
+/// written off through the validation framework. Null = the
+/// invoice is STILL OPEN and owed.
+ DateTime? get writeoffAt;
 /// Create a copy of InvoiceMatch
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -817,16 +820,16 @@ $InvoiceMatchCopyWith<InvoiceMatch> get copyWith => _$InvoiceMatchCopyWithImpl<I
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is InvoiceMatch&&(identical(other.invoiceId, invoiceId) || other.invoiceId == invoiceId)&&(identical(other.paidCents, paidCents) || other.paidCents == paidCents)&&(identical(other.resolution, resolution) || other.resolution == resolution)&&(identical(other.note, note) || other.note == note)&&(identical(other.status, status) || other.status == status)&&(identical(other.paymentLedgerId, paymentLedgerId) || other.paymentLedgerId == paymentLedgerId)&&(identical(other.matchedAt, matchedAt) || other.matchedAt == matchedAt)&&(identical(other.byName, byName) || other.byName == byName));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InvoiceMatch&&(identical(other.invoiceId, invoiceId) || other.invoiceId == invoiceId)&&(identical(other.paidCents, paidCents) || other.paidCents == paidCents)&&(identical(other.resolution, resolution) || other.resolution == resolution)&&(identical(other.note, note) || other.note == note)&&(identical(other.status, status) || other.status == status)&&(identical(other.paymentLedgerId, paymentLedgerId) || other.paymentLedgerId == paymentLedgerId)&&(identical(other.matchedAt, matchedAt) || other.matchedAt == matchedAt)&&(identical(other.byName, byName) || other.byName == byName)&&(identical(other.writeoffAt, writeoffAt) || other.writeoffAt == writeoffAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,invoiceId,paidCents,resolution,note,status,paymentLedgerId,matchedAt,byName);
+int get hashCode => Object.hash(runtimeType,invoiceId,paidCents,resolution,note,status,paymentLedgerId,matchedAt,byName,writeoffAt);
 
 @override
 String toString() {
-  return 'InvoiceMatch(invoiceId: $invoiceId, paidCents: $paidCents, resolution: $resolution, note: $note, status: $status, paymentLedgerId: $paymentLedgerId, matchedAt: $matchedAt, byName: $byName)';
+  return 'InvoiceMatch(invoiceId: $invoiceId, paidCents: $paidCents, resolution: $resolution, note: $note, status: $status, paymentLedgerId: $paymentLedgerId, matchedAt: $matchedAt, byName: $byName, writeoffAt: $writeoffAt)';
 }
 
 
@@ -837,7 +840,7 @@ abstract mixin class $InvoiceMatchCopyWith<$Res>  {
   factory $InvoiceMatchCopyWith(InvoiceMatch value, $Res Function(InvoiceMatch) _then) = _$InvoiceMatchCopyWithImpl;
 @useResult
 $Res call({
- String invoiceId, int paidCents, String resolution, String note, String status, String? paymentLedgerId, DateTime matchedAt, String byName
+ String invoiceId, int paidCents, String resolution, String note, String status, String? paymentLedgerId, DateTime matchedAt, String byName, DateTime? writeoffAt
 });
 
 
@@ -854,7 +857,7 @@ class _$InvoiceMatchCopyWithImpl<$Res>
 
 /// Create a copy of InvoiceMatch
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? invoiceId = null,Object? paidCents = null,Object? resolution = null,Object? note = null,Object? status = null,Object? paymentLedgerId = freezed,Object? matchedAt = null,Object? byName = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? invoiceId = null,Object? paidCents = null,Object? resolution = null,Object? note = null,Object? status = null,Object? paymentLedgerId = freezed,Object? matchedAt = null,Object? byName = null,Object? writeoffAt = freezed,}) {
   return _then(_self.copyWith(
 invoiceId: null == invoiceId ? _self.invoiceId : invoiceId // ignore: cast_nullable_to_non_nullable
 as String,paidCents: null == paidCents ? _self.paidCents : paidCents // ignore: cast_nullable_to_non_nullable
@@ -864,7 +867,8 @@ as String,status: null == status ? _self.status : status // ignore: cast_nullabl
 as String,paymentLedgerId: freezed == paymentLedgerId ? _self.paymentLedgerId : paymentLedgerId // ignore: cast_nullable_to_non_nullable
 as String?,matchedAt: null == matchedAt ? _self.matchedAt : matchedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,byName: null == byName ? _self.byName : byName // ignore: cast_nullable_to_non_nullable
-as String,
+as String,writeoffAt: freezed == writeoffAt ? _self.writeoffAt : writeoffAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
@@ -946,10 +950,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String invoiceId,  int paidCents,  String resolution,  String note,  String status,  String? paymentLedgerId,  DateTime matchedAt,  String byName)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String invoiceId,  int paidCents,  String resolution,  String note,  String status,  String? paymentLedgerId,  DateTime matchedAt,  String byName,  DateTime? writeoffAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _InvoiceMatch() when $default != null:
-return $default(_that.invoiceId,_that.paidCents,_that.resolution,_that.note,_that.status,_that.paymentLedgerId,_that.matchedAt,_that.byName);case _:
+return $default(_that.invoiceId,_that.paidCents,_that.resolution,_that.note,_that.status,_that.paymentLedgerId,_that.matchedAt,_that.byName,_that.writeoffAt);case _:
   return orElse();
 
 }
@@ -967,10 +971,10 @@ return $default(_that.invoiceId,_that.paidCents,_that.resolution,_that.note,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String invoiceId,  int paidCents,  String resolution,  String note,  String status,  String? paymentLedgerId,  DateTime matchedAt,  String byName)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String invoiceId,  int paidCents,  String resolution,  String note,  String status,  String? paymentLedgerId,  DateTime matchedAt,  String byName,  DateTime? writeoffAt)  $default,) {final _that = this;
 switch (_that) {
 case _InvoiceMatch():
-return $default(_that.invoiceId,_that.paidCents,_that.resolution,_that.note,_that.status,_that.paymentLedgerId,_that.matchedAt,_that.byName);}
+return $default(_that.invoiceId,_that.paidCents,_that.resolution,_that.note,_that.status,_that.paymentLedgerId,_that.matchedAt,_that.byName,_that.writeoffAt);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -984,10 +988,10 @@ return $default(_that.invoiceId,_that.paidCents,_that.resolution,_that.note,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String invoiceId,  int paidCents,  String resolution,  String note,  String status,  String? paymentLedgerId,  DateTime matchedAt,  String byName)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String invoiceId,  int paidCents,  String resolution,  String note,  String status,  String? paymentLedgerId,  DateTime matchedAt,  String byName,  DateTime? writeoffAt)?  $default,) {final _that = this;
 switch (_that) {
 case _InvoiceMatch() when $default != null:
-return $default(_that.invoiceId,_that.paidCents,_that.resolution,_that.note,_that.status,_that.paymentLedgerId,_that.matchedAt,_that.byName);case _:
+return $default(_that.invoiceId,_that.paidCents,_that.resolution,_that.note,_that.status,_that.paymentLedgerId,_that.matchedAt,_that.byName,_that.writeoffAt);case _:
   return null;
 
 }
@@ -999,7 +1003,7 @@ return $default(_that.invoiceId,_that.paidCents,_that.resolution,_that.note,_tha
 
 
 class _InvoiceMatch extends InvoiceMatch {
-  const _InvoiceMatch({required this.invoiceId, required this.paidCents, required this.resolution, this.note = '', this.status = 'confirmed', this.paymentLedgerId, required this.matchedAt, this.byName = ''}): super._();
+  const _InvoiceMatch({required this.invoiceId, required this.paidCents, required this.resolution, this.note = '', this.status = 'confirmed', this.paymentLedgerId, required this.matchedAt, this.byName = '', this.writeoffAt}): super._();
   
 
 @override final  String invoiceId;
@@ -1011,6 +1015,10 @@ class _InvoiceMatch extends InvoiceMatch {
 @override final  String? paymentLedgerId;
 @override final  DateTime matchedAt;
 @override@JsonKey() final  String byName;
+/// #504 — when the outstanding remainder of an under-paid match was
+/// written off through the validation framework. Null = the
+/// invoice is STILL OPEN and owed.
+@override final  DateTime? writeoffAt;
 
 /// Create a copy of InvoiceMatch
 /// with the given fields replaced by the non-null parameter values.
@@ -1022,16 +1030,16 @@ _$InvoiceMatchCopyWith<_InvoiceMatch> get copyWith => __$InvoiceMatchCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InvoiceMatch&&(identical(other.invoiceId, invoiceId) || other.invoiceId == invoiceId)&&(identical(other.paidCents, paidCents) || other.paidCents == paidCents)&&(identical(other.resolution, resolution) || other.resolution == resolution)&&(identical(other.note, note) || other.note == note)&&(identical(other.status, status) || other.status == status)&&(identical(other.paymentLedgerId, paymentLedgerId) || other.paymentLedgerId == paymentLedgerId)&&(identical(other.matchedAt, matchedAt) || other.matchedAt == matchedAt)&&(identical(other.byName, byName) || other.byName == byName));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InvoiceMatch&&(identical(other.invoiceId, invoiceId) || other.invoiceId == invoiceId)&&(identical(other.paidCents, paidCents) || other.paidCents == paidCents)&&(identical(other.resolution, resolution) || other.resolution == resolution)&&(identical(other.note, note) || other.note == note)&&(identical(other.status, status) || other.status == status)&&(identical(other.paymentLedgerId, paymentLedgerId) || other.paymentLedgerId == paymentLedgerId)&&(identical(other.matchedAt, matchedAt) || other.matchedAt == matchedAt)&&(identical(other.byName, byName) || other.byName == byName)&&(identical(other.writeoffAt, writeoffAt) || other.writeoffAt == writeoffAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,invoiceId,paidCents,resolution,note,status,paymentLedgerId,matchedAt,byName);
+int get hashCode => Object.hash(runtimeType,invoiceId,paidCents,resolution,note,status,paymentLedgerId,matchedAt,byName,writeoffAt);
 
 @override
 String toString() {
-  return 'InvoiceMatch(invoiceId: $invoiceId, paidCents: $paidCents, resolution: $resolution, note: $note, status: $status, paymentLedgerId: $paymentLedgerId, matchedAt: $matchedAt, byName: $byName)';
+  return 'InvoiceMatch(invoiceId: $invoiceId, paidCents: $paidCents, resolution: $resolution, note: $note, status: $status, paymentLedgerId: $paymentLedgerId, matchedAt: $matchedAt, byName: $byName, writeoffAt: $writeoffAt)';
 }
 
 
@@ -1042,7 +1050,7 @@ abstract mixin class _$InvoiceMatchCopyWith<$Res> implements $InvoiceMatchCopyWi
   factory _$InvoiceMatchCopyWith(_InvoiceMatch value, $Res Function(_InvoiceMatch) _then) = __$InvoiceMatchCopyWithImpl;
 @override @useResult
 $Res call({
- String invoiceId, int paidCents, String resolution, String note, String status, String? paymentLedgerId, DateTime matchedAt, String byName
+ String invoiceId, int paidCents, String resolution, String note, String status, String? paymentLedgerId, DateTime matchedAt, String byName, DateTime? writeoffAt
 });
 
 
@@ -1059,7 +1067,7 @@ class __$InvoiceMatchCopyWithImpl<$Res>
 
 /// Create a copy of InvoiceMatch
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? invoiceId = null,Object? paidCents = null,Object? resolution = null,Object? note = null,Object? status = null,Object? paymentLedgerId = freezed,Object? matchedAt = null,Object? byName = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? invoiceId = null,Object? paidCents = null,Object? resolution = null,Object? note = null,Object? status = null,Object? paymentLedgerId = freezed,Object? matchedAt = null,Object? byName = null,Object? writeoffAt = freezed,}) {
   return _then(_InvoiceMatch(
 invoiceId: null == invoiceId ? _self.invoiceId : invoiceId // ignore: cast_nullable_to_non_nullable
 as String,paidCents: null == paidCents ? _self.paidCents : paidCents // ignore: cast_nullable_to_non_nullable
@@ -1069,7 +1077,8 @@ as String,status: null == status ? _self.status : status // ignore: cast_nullabl
 as String,paymentLedgerId: freezed == paymentLedgerId ? _self.paymentLedgerId : paymentLedgerId // ignore: cast_nullable_to_non_nullable
 as String?,matchedAt: null == matchedAt ? _self.matchedAt : matchedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,byName: null == byName ? _self.byName : byName // ignore: cast_nullable_to_non_nullable
-as String,
+as String,writeoffAt: freezed == writeoffAt ? _self.writeoffAt : writeoffAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 

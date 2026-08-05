@@ -2239,6 +2239,32 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reportDesignEmpty => 'Banda vacía — añade un elemento abajo.';
 
   @override
+  String get invoiceStatusRemainderCancelled =>
+      'Parcialmente pagada · saldo anulado';
+
+  @override
+  String get invoiceRemainingLabel => 'Pendiente';
+
+  @override
+  String get invoiceWriteoffButton => 'Anular el saldo pendiente';
+
+  @override
+  String get invoiceWriteoffExplain =>
+      'El saldo impagado de esta factura se anulará y la factura se archivará como parcialmente pagada — cuando la validación lo confirme. Hasta entonces sigue abierta y adeudada.';
+
+  @override
+  String get invoiceWriteoffRequested =>
+      'Anulación solicitada — pendiente de validación.';
+
+  @override
+  String get eventTypeInvoiceWriteoff => 'Anulación de saldo';
+
+  @override
+  String eventInvoiceWriteoffLine(String actor, String number, String amount) {
+    return '$actor pide anular el saldo de $number — $amount';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'Nuevo miembro';
 
   @override

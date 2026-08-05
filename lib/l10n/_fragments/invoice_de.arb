@@ -659,5 +659,44 @@
   "reportDesignEmpty": "Leeres Band — fügen Sie unten ein Element hinzu.",
   "@reportDesignEmpty": {
     "description": "True WYSIWYG design surface (#498)"
+  },
+  "invoiceStatusRemainderCancelled": "Teilweise bezahlt · Restbetrag storniert",
+  "@invoiceStatusRemainderCancelled": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceRemainingLabel": "Restbetrag",
+  "@invoiceRemainingLabel": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceWriteoffButton": "Restbetrag stornieren",
+  "@invoiceWriteoffButton": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceWriteoffExplain": "Der offene Restbetrag dieser Rechnung wird storniert und die Rechnung als teilweise bezahlt archiviert — sobald die Validierung bestätigt. Bis dahin bleibt sie offen und geschuldet.",
+  "@invoiceWriteoffExplain": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceWriteoffRequested": "Stornierung beantragt — wartet auf Validierung.",
+  "@invoiceWriteoffRequested": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "eventTypeInvoiceWriteoff": "Restbetrag-Stornierung",
+  "@eventTypeInvoiceWriteoff": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "eventInvoiceWriteoffLine": "{actor} bittet um Stornierung des Restbetrags von {number} — {amount}",
+  "@eventInvoiceWriteoffLine": {
+    "description": "Partial payments stay open until a validated write-off (#504)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }
