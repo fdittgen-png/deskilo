@@ -90,7 +90,8 @@ const Map<String, int> _baseline = {
   // 700→790: #470 the banded report renderer (_reportWidgets) and the
   // header/body/footer band branches.
   // 790→820 (2026-08-04): #472 the banded LETTER builder.
-  'lib/features/money/domain/invoice_pdf.dart': 820,
+  // 820→840 (2026-08-05): #482 the side-by-side ReportColumns renderer.
+  'lib/features/money/domain/invoice_pdf.dart': 840,
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the
   // kiosk arms the ambient working day itself, like realtime (#430).
   // 680→690: #462 whole-space overlays on the wall display.

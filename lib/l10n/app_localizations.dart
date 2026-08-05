@@ -3728,6 +3728,24 @@ abstract class AppLocalizations {
   /// **'No discount for early payment.'**
   String get invoiceLegalEscompteDefault;
 
+  /// French facture layout: line-table column headers (#482)
+  ///
+  /// In en, this message translates to:
+  /// **'Unit price'**
+  String get reportColUnitPrice;
+
+  /// French facture layout: line-table column headers (#482)
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get reportColQty;
+
+  /// French facture layout: line-table column headers (#482)
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get reportColTotal;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

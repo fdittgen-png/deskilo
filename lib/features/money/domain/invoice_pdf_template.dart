@@ -137,6 +137,8 @@ class InvoicePdfTemplate {
     'seller_legal_id',
     'exemption_reason',
     'client_address',
+    'client_vat_id',
+    'client_legal_id',
     'payment_terms',
     'late_penalty',
     'recovery_indemnity',

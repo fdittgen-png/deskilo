@@ -487,5 +487,17 @@
   "invoiceLegalEscompteDefault": "Nessuno sconto per pagamento anticipato.",
   "@invoiceLegalEscompteDefault": {
     "description": "Legal invoice mentions (#480)"
+  },
+  "reportColUnitPrice": "Prezzo unit.",
+  "@reportColUnitPrice": {
+    "description": "French facture layout: line-table column headers (#482)"
+  },
+  "reportColQty": "Qtà",
+  "@reportColQty": {
+    "description": "French facture layout: line-table column headers (#482)"
+  },
+  "reportColTotal": "Totale",
+  "@reportColTotal": {
+    "description": "French facture layout: line-table column headers (#482)"
   }
 }

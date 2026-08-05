@@ -83,6 +83,7 @@ Map<String, Object?> legalMentionData(
   AppLocalizations? l10n,
   Workspace? workspace, {
   InvoiceParty? seller,
+  InvoiceParty? buyer,
   String clientAddress = '',
 }) {
   final legal = InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {});
@@ -97,6 +98,9 @@ Map<String, Object?> legalMentionData(
         workspace?.taxExemptionReason ??
         '',
     'client_address': clientAddress,
+    // #482 — the client's own identifiers on B2B documents.
+    'client_vat_id': buyer?.vatId ?? '',
+    'client_legal_id': buyer?.legalId ?? '',
     'payment_terms': orDefault(
       legal.paymentTerms,
       l10n?.invoiceLegalPaymentTermsDefault ?? 'Payment on receipt.',
@@ -202,6 +206,7 @@ Map<String, Object?> invoiceReportData(
       l10n,
       workspace,
       seller: invoice.sellerParty,
+      buyer: invoice.buyerParty,
       clientAddress: _clientAddressOf(invoice),
     ),
   };
@@ -323,6 +328,7 @@ Map<String, Object?> reminderReportData(
       l10n,
       workspace,
       seller: invoice.sellerParty,
+      buyer: invoice.buyerParty,
       clientAddress: _clientAddressOf(invoice),
     ),
   };

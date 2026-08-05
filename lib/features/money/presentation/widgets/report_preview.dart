@@ -44,6 +44,23 @@ class ReportBlocksView extends StatelessWidget {
               height: 2,
               color: accent),
           ReportSpacer() => const SizedBox(height: 8),
+          // #482 — side-by-side columns; an empty first column pushes
+          // the second (totals, the client box) to the right.
+          ReportColumns(:final columns) => Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (var i = 0; i < columns.length; i++)
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: i == 0 ? 0 : 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [for (final c in columns[i]) block(c)],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ReportTableRow(:final cells, :final bold) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 3),
               child: Row(

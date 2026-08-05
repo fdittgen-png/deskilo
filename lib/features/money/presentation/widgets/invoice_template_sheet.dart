@@ -361,7 +361,8 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
     const syntaxLines =
         '{% if voided %} … {% else %} … {% endif %}   '
         '{% for line in lines %} {{ line.label }} | {{ line.amount }} {% endfor %}\n'
-        '# title   ## section   > small   ---   a | b   = bold | row';
+        '# title   ## section   > small   ---   a | b   = bold | row\n'
+        ':::  left column  |||  right column  :::';
     return SafeArea(
       child: SingleChildScrollView(
         padding: EdgeInsets.only(

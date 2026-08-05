@@ -2036,6 +2036,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceLegalEscompteDefault => 'No discount for early payment.';
 
   @override
+  String get reportColUnitPrice => 'Unit price';
+
+  @override
+  String get reportColQty => 'Qty';
+
+  @override
+  String get reportColTotal => 'Total';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

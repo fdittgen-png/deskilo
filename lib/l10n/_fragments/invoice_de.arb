@@ -487,5 +487,17 @@
   "invoiceLegalEscompteDefault": "Kein Skonto bei vorzeitiger Zahlung.",
   "@invoiceLegalEscompteDefault": {
     "description": "Legal invoice mentions (#480)"
+  },
+  "reportColUnitPrice": "Einzelpreis",
+  "@reportColUnitPrice": {
+    "description": "French facture layout: line-table column headers (#482)"
+  },
+  "reportColQty": "Menge",
+  "@reportColQty": {
+    "description": "French facture layout: line-table column headers (#482)"
+  },
+  "reportColTotal": "Gesamt",
+  "@reportColTotal": {
+    "description": "French facture layout: line-table column headers (#482)"
   }
 }
