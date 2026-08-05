@@ -743,9 +743,10 @@ Future<Uint8List> buildBandedLetterPdf({
 /// Report blocks → pdf widgets (#470). Table rows: the first cell takes
 /// the width, every further cell is right-aligned — the amounts column
 /// convention of the built-in layout.
-List<pw.Widget> _reportWidgets(List<ReportBlock> blocks) => [
-      for (final block in blocks)
-        switch (block) {
+List<pw.Widget> _reportWidgets(List<ReportBlock> blocks) =>
+    [for (final block in blocks) _reportWidget(block)];
+
+pw.Widget _reportWidget(ReportBlock block) => switch (block) {
           ReportHeading(:final text) => pw.Padding(
               padding: const pw.EdgeInsets.only(bottom: 4),
               child: pw.Text(text,
@@ -802,5 +803,21 @@ List<pw.Widget> _reportWidgets(List<ReportBlock> blocks) => [
                 ],
               ),
             ),
-        },
-    ];
+          // #482 — side-by-side columns: equal widths, top-aligned; an
+          // empty first column pushes the second to the right.
+          ReportColumns(:final columns) => pw.Row(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                for (var i = 0; i < columns.length; i++)
+                  pw.Expanded(
+                    child: pw.Padding(
+                      padding: pw.EdgeInsets.only(left: i == 0 ? 0 : 16),
+                      child: pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        children: _reportWidgets(columns[i]),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+        };

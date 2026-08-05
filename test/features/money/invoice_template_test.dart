@@ -120,7 +120,8 @@ void main() {
         // #480 — the legal mention variables.
         'net_total', 'vat_total', 'seller_legal_form',
         'seller_registration', 'seller_vat_id', 'seller_legal_id',
-        'exemption_reason', 'client_address', 'payment_terms',
+        'exemption_reason', 'client_address', 'client_vat_id',
+        'client_legal_id', 'payment_terms',
         'late_penalty', 'recovery_indemnity', 'escompte', 'insurance',
         'special_mentions', //
       ]);
@@ -140,7 +141,8 @@ void main() {
         },
       );
       expect(report, isNotNull);
-      expect(report!.header.first, isA<ReportHeading>());
+      // #482 — the facture layout opens with the brand/title column row.
+      expect(report!.header.first, isA<ReportColumns>());
       expect(report.body.whereType<ReportTableRow>().length,
           greaterThanOrEqualTo(3));
     });

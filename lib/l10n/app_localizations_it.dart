@@ -2055,6 +2055,15 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessuno sconto per pagamento anticipato.';
 
   @override
+  String get reportColUnitPrice => 'Prezzo unit.';
+
+  @override
+  String get reportColQty => 'Qtà';
+
+  @override
+  String get reportColTotal => 'Totale';
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override

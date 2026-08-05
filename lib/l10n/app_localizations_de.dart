@@ -2053,6 +2053,15 @@ class AppLocalizationsDe extends AppLocalizations {
       'Kein Skonto bei vorzeitiger Zahlung.';
 
   @override
+  String get reportColUnitPrice => 'Einzelpreis';
+
+  @override
+  String get reportColQty => 'Menge';
+
+  @override
+  String get reportColTotal => 'Gesamt';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

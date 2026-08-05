@@ -89,16 +89,16 @@ void main() {
       });
     }
 
-    test('the verbose preset details qty × unit price and per-line net',
-        () {
+    test('the verbose preset details unit price, qty and per-line net '
+        'as table columns (#482)', () {
       final bands = presetsForDoc('invoice', null)
           .firstWhere((p) => p.id == 'verbose')
           .bands;
       final report = renderReportBands(bands: bands, data: data)!;
       final text =
           [...report.header, ...report.body].map(blockText).join('\n');
-      expect(text, contains('1 × 120,00 €'));
-      expect(text, contains('100,00 €'));
+      expect(text, contains('Unit price | Qty'));
+      expect(text, contains('120,00 € | 1 | 100,00 €'));
     });
 
     test('optional mentions stay OFF the document until declared', () {
@@ -138,6 +138,71 @@ void main() {
     });
   });
 
+  group('the facture layout (#482)', () {
+    test('the ::: / ||| markup parses into side-by-side columns', () {
+      final blocks = parseReportMarkup('''
+:::
+Seller SA
+> 1 rue du Port
+|||
+Client SARL
+> 2 avenue de la Gare
+:::''');
+      final columns = (blocks.single as ReportColumns).columns;
+      expect(columns, hasLength(2));
+      expect((columns[0][0] as ReportText).text, 'Seller SA');
+      expect((columns[1][0] as ReportText).text, 'Client SARL');
+    });
+
+    test('an empty first column pushes the totals block right', () {
+      final blocks = parseReportMarkup('''
+:::
+|||
+= Total | 100 €
+:::''');
+      final columns = (blocks.single as ReportColumns).columns;
+      expect(columns[0], isEmpty);
+      expect((columns[1].single as ReportTableRow).bold, isTrue);
+    });
+
+    test('an unclosed fence still parses — the rest becomes one column',
+        () {
+      final blocks = parseReportMarkup(':::\nleft\n|||\nright');
+      final columns = (blocks.single as ReportColumns).columns;
+      expect(columns, hasLength(2));
+    });
+
+    test('the default invoice follows the reference structure: '
+        'brand|title row, seller|client row, 4-column line table, '
+        'right-aligned totals', () {
+      final report = renderReportBands(
+        bands: defaultBandsForDoc('invoice', null),
+        data: sampleReportData(null),
+      )!;
+      // Header: two column rows (brand/title, seller/client) around a
+      // divider.
+      final headerColumns =
+          report.header.whereType<ReportColumns>().toList();
+      expect(headerColumns, hasLength(2));
+      // The client box carries the client's own identifiers (B2B).
+      final clientBox =
+          headerColumns[1].columns[1].map(blockText).join('\n');
+      expect(clientBox, contains('Alex Sample'));
+      expect(clientBox, contains('FR 79 849 149 108'));
+      // Body: the line table header names the statutory columns…
+      final tableHeader = report.body
+          .whereType<ReportTableRow>()
+          .firstWhere((r) => r.bold);
+      expect(tableHeader.cells,
+          ['Description', 'Unit price', 'Qty', 'Total']);
+      // …and the totals sit in a right-pushed column group.
+      final totals = report.body.whereType<ReportColumns>().single;
+      expect(totals.columns.first, isEmpty);
+      expect(totals.columns.last.map(blockText).join('\n'),
+          contains('145,00 €'));
+    });
+  });
+
   test('reminder letters cite the statutory late-payment clauses (#480)',
       () {
     for (final id in reportPresetIds) {
@@ -164,6 +229,9 @@ String blockText(ReportBlock block) => switch (block) {
       ReportText(:final text) => text,
       ReportMuted(:final text) => text,
       ReportTableRow(:final cells) => cells.join(' | '),
+      ReportColumns(:final columns) => [
+          for (final column in columns) column.map(blockText).join('\n'),
+        ].join('\n'),
       ReportDivider() => '',
       ReportSpacer() => '',
     };

@@ -2059,6 +2059,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucun escompte pour paiement anticipé.';
 
   @override
+  String get reportColUnitPrice => 'Prix unit.';
+
+  @override
+  String get reportColQty => 'Qté';
+
+  @override
+  String get reportColTotal => 'Total';
+
+  @override
   String get eventTypeMemberJoin => 'Nouveau membre';
 
   @override

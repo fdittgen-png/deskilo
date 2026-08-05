@@ -32,13 +32,6 @@ String _legalFooter(AppLocalizations? l10n) => '''
 {% if insurance != "" %}> {{ insurance }}{% endif %}
 {% if special_mentions != "" %}> {{ special_mentions }}{% endif %}''';
 
-/// The per-rate VAT recap + totals, or the exemption reason when no VAT
-/// is charged — one of the two must appear on a compliant document.
-String _vatRecap(AppLocalizations? l10n) =>
-    '{% if has_vat %}{% for v in vat %}> ${l10n?.vatPdfNet ?? 'Net'} {{ v.net }} · ${l10n?.vatPdfVat ?? 'VAT'} {{ v.rate }} : {{ v.amount }}\n'
-    '{% endfor %}> ${l10n?.vatPdfNet ?? 'Net'} {{ net_total }} · ${l10n?.vatPdfVat ?? 'VAT'} {{ vat_total }}\n'
-    '{% endif %}{% if exemption_reason != "" %}> {{ exemption_reason }}\n{% endif %}';
-
 /// The built-in invoice layout as editable bands — the CLASSIC preset,
 /// legally complete (#480).
 InvoicePdfTemplate defaultInvoiceTemplate(AppLocalizations? l10n) {
@@ -52,89 +45,126 @@ InvoicePdfTemplate defaultInvoiceTemplate(AppLocalizations? l10n) {
 
 ReportBands _invoicePresetBands(AppLocalizations? l10n, String id) {
   final title =
-      '{% if proforma %}${l10n?.invoicePdfProforma ?? 'Proforma'}{% else %}${l10n?.invoicePdfTitle ?? 'Invoice'} {{ number }}{% endif %}';
-  final billedTo = '''
-## ${l10n?.invoicePdfBilledTo ?? 'Billed to'}
+      '{% if proforma %}${l10n?.invoicePdfProforma ?? 'Proforma'}{% else %}${l10n?.invoicePdfTitle ?? 'Invoice'}{% endif %}';
+  // Row 1 of the facture layout (#482): brand left, document title +
+  // reference/date block right.
+  final brandRow = '''
+:::
+# {{ workspace }}
+{% if seller_legal_form != "" %}> {{ seller_legal_form }}{% endif %}
+|||
+## $title
+{{ number }}
+> ${l10n?.invoicePdfIssuedOn ?? 'Issued on'} {{ issued }} · {{ issued_by }}
+{% if replaces != "" %}> ${l10n?.invoicePdfReplaces ?? 'Replaces'} {{ replaces }}{% endif %}
+:::''';
+  // Row 2: seller coordinates left, client box right.
+  final addressRow = '''
+:::
+{{ workspace }}
+> {{ workspace_address }}
+{% if seller_registration != "" %}> {{ seller_registration }}{% endif %}
+{% if seller_vat_id != "" %}> ${l10n?.legalIdentityVatId ?? 'VAT number'}: {{ seller_vat_id }}{% endif %}
+|||
+${l10n?.invoicePdfBilledTo ?? 'Billed to'}
 {{ member }}
 {% if client_address != "" %}> {{ client_address }}{% endif %}
-> {{ period }}''';
+{% if client_legal_id != "" %}> {{ client_legal_id }}{% endif %}
+{% if client_vat_id != "" %}> ${l10n?.legalIdentityVatId ?? 'VAT number'}: {{ client_vat_id }}{% endif %}
+> {{ period }}
+:::''';
+  // The line table with its column headers, then the right-aligned
+  // totals block (empty first column pushes it right, like the model).
+  final lineTable =
+      '= ${l10n?.invoicePdfDescription ?? 'Description'} | ${l10n?.reportColUnitPrice ?? 'Unit price'} | ${l10n?.reportColQty ?? 'Qty'} | ${l10n?.reportColTotal ?? 'Total'}\n'
+      '{% for line in lines %}{{ line.label }} | {{ line.unit_price }} | {{ line.qty }} | {{ line.amount }}\n'
+      '{% endfor %}';
+  final totalsBlock = '''
+:::
+|||
+${l10n?.vatPdfNet ?? 'Net'} | {{ net_total }}
+{% if has_vat %}{% for v in vat %}${l10n?.vatPdfVat ?? 'VAT'} {{ v.rate }} | {{ v.amount }}
+{% endfor %}{% endif %}= ${l10n?.invoiceBalance ?? 'Balance due'} | {{ total }}
+:::''';
+  const mentions = '''
+{% if exemption_reason != "" %}> {{ exemption_reason }}
+{% endif %}> {{ payment_terms }} — {{ escompte }}''';
   switch (id) {
     case 'simple':
       return ReportBands(
         header: '''
-# $title
-${_sellerBlock(l10n)}
-> ${l10n?.invoicePdfIssuedOn ?? 'Issued on'} {{ issued }}
----''',
+$brandRow
+---
+$addressRow''',
         body: '''
-$billedTo
-
 {% for line in lines %}{{ line.label }}{% if line.vat_rate != "" %} · ${l10n?.vatPdfVat ?? 'VAT'} {{ line.vat_rate }}{% endif %} | {{ line.amount }}
 {% endfor %}---
-${_vatRecap(l10n)}= ${l10n?.invoiceBalance ?? 'Balance due'} | {{ total }}''',
+$totalsBlock
+$mentions''',
         footer: _legalFooter(l10n),
       );
     case 'verbose':
       return ReportBands(
         header: '''
-# $title
-${_sellerBlock(l10n)}
-> ${l10n?.invoicePdfIssuedOn ?? 'Issued on'} {{ issued }} · ${l10n?.invoicePdfIssuedBy ?? 'Issued by'} {{ issued_by }}
-{% if replaces != "" %}> ${l10n?.invoicePdfReplaces ?? 'Replaces'} {{ replaces }}{% endif %}
----''',
+$brandRow
+---
+$addressRow''',
         body: '''
-$billedTo
-
-## ${l10n?.invoicePdfDescription ?? 'Description'}
-{% for line in lines %}{{ line.label }}
-> {{ line.qty }} × {{ line.unit_price }}{% if line.vat_rate != "" %} · ${l10n?.vatPdfNet ?? 'Net'} {{ line.net }} · ${l10n?.vatPdfVat ?? 'VAT'} {{ line.vat_rate }}{% endif %} | {{ line.amount }}
+= ${l10n?.invoicePdfDescription ?? 'Description'} | ${l10n?.reportColUnitPrice ?? 'Unit price'} | ${l10n?.reportColQty ?? 'Qty'} | ${l10n?.vatPdfNet ?? 'Net'} | ${l10n?.vatPdfVat ?? 'VAT'} | ${l10n?.reportColTotal ?? 'Total'}
+{% for line in lines %}{{ line.label }} | {{ line.unit_price }} | {{ line.qty }} | {{ line.net }} | {{ line.vat_rate }} | {{ line.amount }}
 {% endfor %}---
-## ${l10n?.vatPdfVat ?? 'VAT'}
-${_vatRecap(l10n)}
-## ${l10n?.invoiceBalance ?? 'Balance due'}
+:::
+|||
 ${l10n?.invoicePdfCharges ?? 'Charges'} | {{ charges }}
-{% if payments != "" %}${l10n?.invoicePdfPayments ?? 'Payments'} | {{ payments }}
-{% endif %}= ${l10n?.invoiceBalance ?? 'Balance due'} | {{ total }}''',
+${l10n?.invoicePdfPayments ?? 'Payments'} | {{ payments }}
+${l10n?.vatPdfNet ?? 'Net'} | {{ net_total }}
+{% if has_vat %}{% for v in vat %}${l10n?.vatPdfVat ?? 'VAT'} {{ v.rate }} | {{ v.amount }}
+{% endfor %}${l10n?.vatPdfVat ?? 'VAT'} | {{ vat_total }}
+{% endif %}= ${l10n?.invoiceBalance ?? 'Balance due'} | {{ total }}
+:::
+$mentions''',
         footer: _legalFooter(l10n),
       );
     case 'formal':
       return ReportBands(
         header: '''
-${_sellerBlock(l10n)}
-
+:::
+{{ workspace }}
+{% if seller_legal_form != "" %}> {{ seller_legal_form }}{% endif %}
+> {{ workspace_address }}
+{% if seller_registration != "" %}> {{ seller_registration }}{% endif %}
+{% if seller_vat_id != "" %}> ${l10n?.legalIdentityVatId ?? 'VAT number'}: {{ seller_vat_id }}{% endif %}
+|||
 {{ member }}
 {% if client_address != "" %}> {{ client_address }}{% endif %}
+{% if client_vat_id != "" %}> ${l10n?.legalIdentityVatId ?? 'VAT number'}: {{ client_vat_id }}{% endif %}
 
-> {{ issued }}''',
+> {{ issued }}
+:::''',
         body: '''
-## ${l10n?.reportSubject ?? 'Subject'}: $title — {{ period }}
+## ${l10n?.reportSubject ?? 'Subject'}: $title {{ number }} — {{ period }}
 
 {{ member }},
 
-{% for line in lines %}{{ line.label }}{% if line.vat_rate != "" %} · ${l10n?.vatPdfVat ?? 'VAT'} {{ line.vat_rate }}{% endif %} | {{ line.amount }}
-{% endfor %}---
-${_vatRecap(l10n)}= ${l10n?.invoiceBalance ?? 'Balance due'} | {{ total }}''',
+$lineTable---
+$totalsBlock
+$mentions''',
         footer: '''
 ${_legalFooter(l10n)}
 
 ${l10n?.reportRegards ?? 'Kind regards'},
 {{ issued_by }}''',
       );
-    default: // classic — the built-in default.
+    default: // classic — the built-in default, the facture layout.
       return ReportBands(
         header: '''
-# $title
-${_sellerBlock(l10n)}
-> ${l10n?.invoicePdfIssuedOn ?? 'Issued on'} {{ issued }} · ${l10n?.invoicePdfIssuedBy ?? 'Issued by'} {{ issued_by }}
-{% if replaces != "" %}> ${l10n?.invoicePdfReplaces ?? 'Replaces'} {{ replaces }}{% endif %}
----''',
+$brandRow
+---
+$addressRow''',
         body: '''
-$billedTo
-
-## ${l10n?.invoicePdfDescription ?? 'Description'}
-{% for line in lines %}{{ line.label }}{% if line.qty != "1" %} — {{ line.qty }} × {{ line.unit_price }}{% endif %}{% if line.vat_rate != "" %} · ${l10n?.vatPdfVat ?? 'VAT'} {{ line.vat_rate }}{% endif %} | {{ line.amount }}
-{% endfor %}---
-${_vatRecap(l10n)}= ${l10n?.invoiceBalance ?? 'Balance due'} | {{ total }}''',
+$lineTable---
+$totalsBlock
+$mentions''',
         footer: _legalFooter(l10n),
       );
   }
@@ -374,6 +404,8 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       'seller_legal_id': '680 357 910',
       'exemption_reason': '',
       'client_address': '3 Avenue de la Liberté, 35000 Rennes',
+      'client_vat_id': 'FR 79 849 149 108',
+      'client_legal_id': '849 149 108',
       'payment_terms':
           l10n?.invoiceLegalPaymentTermsDefault ?? 'Payment on receipt.',
       'late_penalty': l10n?.invoiceLegalLatePenaltyDefault ??
