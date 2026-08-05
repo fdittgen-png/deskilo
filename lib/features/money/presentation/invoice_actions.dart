@@ -63,6 +63,26 @@ import '../../../core/time/clock.dart';
 /// the text off every future render without touching the template. A
 /// SYNC read: the invoices hub watches the provider, so it is warm
 /// before any render action can be tapped.
+/// Resolves every `![name]` a rendered report references to bytes
+/// (#488) — misses are skipped; the document renders without them.
+Future<Map<String, Uint8List>> resolveReportImages(
+  WidgetRef ref,
+  InvoiceReport? report,
+) async {
+  if (report == null) return const {};
+  final images = <String, Uint8List>{};
+  for (final name in reportImageRefs(report)) {
+    try {
+      final bytes = await ref.read(reportImageBytesProvider(name).future);
+      if (bytes != null) images[name] = bytes;
+    } catch (e, st) {
+      TraceLogger.instance.warn('money', 'report image fetch failed',
+          error: e, stackTrace: st);
+    }
+  }
+  return images;
+}
+
 InvoicePdfTemplate invoicePdfTemplateFor(WidgetRef ref) =>
     ref
             .read(enabledFeaturesSyncProvider)
@@ -347,6 +367,8 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   Uint8List? colorProfile,
   InvoicePdfTemplate template = InvoicePdfTemplate.empty,
   Workspace? workspace,
+  // #488 — resolves ![name] references; null renders without images.
+  Future<Uint8List?> Function(String name)? reportImage,
 }) async {
   final l10n = AppLocalizations.of(context);
   final currency = NumberFormat.simpleCurrency(name: invoice.currency);
@@ -375,8 +397,16 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       ? (template.proformaBands ?? template.invoiceBands)
       : template.invoiceBands;
   final report = renderReportBands(bands: bands, data: reportData);
+  final reportImages = <String, Uint8List>{};
+  if (report != null && reportImage != null) {
+    for (final name in reportImageRefs(report)) {
+      final imageBytes = await reportImage(name);
+      if (imageBytes != null) reportImages[name] = imageBytes;
+    }
+  }
   final bytes = await buildInvoicePdf(
     invoice: invoice,
+    reportImages: reportImages,
     lineText: (line) => invoiceLineText(l10n, line),
     activityText: (entry) => annexEntryText(l10n, entry),
     strings: InvoicePdfStrings(
@@ -458,6 +488,7 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
     colorProfile: icc.buffer.asUint8List(),
     template: invoicePdfTemplateFor(ref),
     workspace: ref.read(currentWorkspaceProvider).value,
+    reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
   );
   return (
     bytes: pdf.bytes,
@@ -678,7 +709,9 @@ Future<void> shareProforma(
       final pdf = await buildInvoicePdfFile(context, invoice,
           proforma: true,
           template: invoicePdfTemplateFor(ref),
-          workspace: ref.read(currentWorkspaceProvider).value);
+          workspace: ref.read(currentWorkspaceProvider).value,
+          reportImage: (name) =>
+              ref.read(reportImageBytesProvider(name).future));
       await ref.read(fileSharerProvider)(
         bytes: Uint8List.fromList(pdf.bytes),
         fileName: pdf.fileName,
@@ -790,6 +823,7 @@ Future<void> downloadInvoicePdf(
         copy: _rendersCopy(ref),
         template: invoicePdfTemplateFor(ref),
         workspace: ref.read(currentWorkspaceProvider).value,
+    reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
       );
       if (!context.mounted) return;
       await savePdfToDownloads(
@@ -821,6 +855,7 @@ Future<void> shareInvoicePdf(
         copy: _rendersCopy(ref),
         template: invoicePdfTemplateFor(ref),
         workspace: ref.read(currentWorkspaceProvider).value,
+    reportImage: (name) => ref.read(reportImageBytesProvider(name).future),
       );
       await ref.read(fileSharerProvider)(
         bytes: Uint8List.fromList(pdf.bytes),
@@ -912,6 +947,7 @@ Future<({List<int> bytes, String fileName, String title})>
       pw.Font.ttf(await rootBundle.load(asset));
   final bytes = await buildBandedLetterPdf(
     report: report,
+    reportImages: await resolveReportImages(ref, report),
     pageLabel: pageLabel,
     documentTitle: '$title ${invoice.number}',
     baseFont: await font('assets/fonts/Roboto-Regular.ttf'),

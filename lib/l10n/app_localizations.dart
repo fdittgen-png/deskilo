@@ -3788,6 +3788,120 @@ abstract class AppLocalizations {
   /// **'e.g. \"TVA non applicable, art. 293 B du CGI\" — or \"Exonération de TVA, art. 261, 7-1° du CGI\" for services to members'**
   String get invoiceLegalAssociationReasonHint;
 
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Markup'**
+  String get reportEditorMarkup;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Visual'**
+  String get reportEditorVisual;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Insert image'**
+  String get reportInsertImage;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Report images'**
+  String get reportImagesTitle;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'No image yet — upload your logo, a stamp or a signature and reference it with ![name].'**
+  String get reportImagesEmpty;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Upload image'**
+  String get reportImageUpload;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Add line'**
+  String get reportVisualAddLine;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get reportLineTitle;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Section'**
+  String get reportLineSection;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get reportLineText;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Small print'**
+  String get reportLineSmall;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Table row'**
+  String get reportLineRow;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Bold row'**
+  String get reportLineBoldRow;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Divider'**
+  String get reportLineDivider;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Spacing'**
+  String get reportLineSpacer;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get reportLineImage;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Columns start/end'**
+  String get reportLineColumns;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Column break'**
+  String get reportLineColumnsSplit;
+
+  /// Report WYSIWYG editor + image library (#488)
+  ///
+  /// In en, this message translates to:
+  /// **'Logic'**
+  String get reportLineLogic;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

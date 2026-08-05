@@ -116,6 +116,7 @@ const PdfColor _zebra = PdfColor.fromInt(0xFFF6F7F9);
 Future<Uint8List> buildInvoicePdf({
   required Invoice invoice,
   required InvoicePdfStrings strings,
+  Map<String, Uint8List> reportImages = const {},
   required String Function(int cents) money,
   required String Function(InvoiceLine line) lineText,
   required String Function(InvoiceDetailEntry entry) activityText,
@@ -333,7 +334,7 @@ Future<Uint8List> buildInvoicePdf({
             height: 2,
             color: _accent),
               ]
-            : _reportWidgets(report.header)),
+            : _reportWidgets(report.header, images: reportImages)),
         // ── Erroneous banner (0061) ───────────────────────────────
         if (invoice.isVoided && !proforma)
           pw.Container(
@@ -567,7 +568,7 @@ Future<Uint8List> buildInvoicePdf({
           ],
         ),
               ]
-            : _reportWidgets(report.body)),
+            : _reportWidgets(report.body, images: reportImages)),
         // ── Annex (0064) ──────────────────────────────────────────
         if (invoice.detailed) ...[
           pw.SizedBox(height: 22),
@@ -672,7 +673,7 @@ Future<Uint8List> buildInvoicePdf({
         // legal mentions — under the totals, above the signature.
         if (report != null && report.footer.isNotEmpty) ...[
           pw.SizedBox(height: 16),
-          ..._reportWidgets(report.footer),
+          ..._reportWidgets(report.footer, images: reportImages),
         ],
         pw.SizedBox(height: 24),
         // ── Digital signature ─────────────────────────────────────
@@ -707,6 +708,7 @@ Future<Uint8List> buildInvoicePdf({
 Future<Uint8List> buildBandedLetterPdf({
   required InvoiceReport report,
   required String pageLabel,
+  Map<String, Uint8List> reportImages = const {},
   required String documentTitle,
   required pw.Font baseFont,
   required pw.Font boldFont,
@@ -728,11 +730,11 @@ Future<Uint8List> buildBandedLetterPdf({
         ),
       ),
       build: (context) => [
-        ..._reportWidgets(report.header),
-        ..._reportWidgets(report.body),
+        ..._reportWidgets(report.header, images: reportImages),
+        ..._reportWidgets(report.body, images: reportImages),
         if (report.footer.isNotEmpty) ...[
           pw.SizedBox(height: 16),
-          ..._reportWidgets(report.footer),
+          ..._reportWidgets(report.footer, images: reportImages),
         ],
       ],
     ),
@@ -743,10 +745,17 @@ Future<Uint8List> buildBandedLetterPdf({
 /// Report blocks → pdf widgets (#470). Table rows: the first cell takes
 /// the width, every further cell is right-aligned — the amounts column
 /// convention of the built-in layout.
-List<pw.Widget> _reportWidgets(List<ReportBlock> blocks) =>
-    [for (final block in blocks) _reportWidget(block)];
+List<pw.Widget> _reportWidgets(
+  List<ReportBlock> blocks, {
+  Map<String, Uint8List> images = const {},
+}) =>
+    [for (final block in blocks) _reportWidget(block, images)];
 
-pw.Widget _reportWidget(ReportBlock block) => switch (block) {
+pw.Widget _reportWidget(
+  ReportBlock block,
+  Map<String, Uint8List> images,
+) =>
+    switch (block) {
           ReportHeading(:final text) => pw.Padding(
               padding: const pw.EdgeInsets.only(bottom: 4),
               child: pw.Text(text,
@@ -814,10 +823,23 @@ pw.Widget _reportWidget(ReportBlock block) => switch (block) {
                       padding: pw.EdgeInsets.only(left: i == 0 ? 0 : 16),
                       child: pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
-                        children: _reportWidgets(columns[i]),
+                        children:
+                            _reportWidgets(columns[i], images: images),
                       ),
                     ),
                   ),
               ],
             ),
+          // #488 — a library image (the logo…); unresolved → nothing.
+          ReportImage(:final name) => images[name] == null
+              ? pw.SizedBox()
+              : pw.Padding(
+                  padding: const pw.EdgeInsets.symmetric(vertical: 4),
+                  child: pw.Image(
+                    pw.MemoryImage(images[name]!),
+                    height: 64,
+                    fit: pw.BoxFit.contain,
+                    alignment: pw.Alignment.centerLeft,
+                  ),
+                ),
         };

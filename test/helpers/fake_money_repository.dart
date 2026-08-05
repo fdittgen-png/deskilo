@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:typed_data';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
@@ -23,6 +24,30 @@ import 'fake_event_repository.dart';
 /// In-memory [MoneyRepository]; recorded payments are captured for
 /// assertions (they only become ledger credits after confirmation).
 class FakeMoneyRepository implements MoneyRepository {
+  /// #488 — the in-memory report-image library.
+  final Map<String, List<int>> reportImages = {};
+
+  @override
+  Future<List<String>> listReportImages(String workspaceId) async =>
+      reportImages.keys.toList()..sort();
+
+  @override
+  Future<void> uploadReportImage(
+    String workspaceId, {
+    required String name,
+    required List<int> bytes,
+    required String contentType,
+  }) async {
+    reportImages[name] = bytes;
+  }
+
+  @override
+  Future<Uint8List?> fetchReportImage(
+          String workspaceId, String name) async =>
+      reportImages[name] == null
+          ? null
+          : Uint8List.fromList(reportImages[name]!);
+
   /// The immutable archive (0060); [createInvoice] mirrors the server's
   /// numbering + fingerprint contract.
   final invoices = <Invoice>[];

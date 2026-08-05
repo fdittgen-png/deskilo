@@ -1180,5 +1180,81 @@
   "invoiceLegalAssociationReasonHint": "e.g. \"TVA non applicable, art. 293 B du CGI\" — or \"Exonération de TVA, art. 261, 7-1° du CGI\" for services to members",
   "@invoiceLegalAssociationReasonHint": {
     "description": "Association invoicing + VAT regime gate (#484)"
+  },
+  "reportEditorMarkup": "Markup",
+  "@reportEditorMarkup": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportEditorVisual": "Visual",
+  "@reportEditorVisual": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportInsertImage": "Insert image",
+  "@reportInsertImage": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportImagesTitle": "Report images",
+  "@reportImagesTitle": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportImagesEmpty": "No image yet — upload your logo, a stamp or a signature and reference it with ![name].",
+  "@reportImagesEmpty": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportImageUpload": "Upload image",
+  "@reportImageUpload": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportVisualAddLine": "Add line",
+  "@reportVisualAddLine": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineTitle": "Title",
+  "@reportLineTitle": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineSection": "Section",
+  "@reportLineSection": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineText": "Text",
+  "@reportLineText": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineSmall": "Small print",
+  "@reportLineSmall": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineRow": "Table row",
+  "@reportLineRow": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineBoldRow": "Bold row",
+  "@reportLineBoldRow": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineDivider": "Divider",
+  "@reportLineDivider": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineSpacer": "Spacing",
+  "@reportLineSpacer": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineImage": "Image",
+  "@reportLineImage": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineColumns": "Columns start/end",
+  "@reportLineColumns": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineColumnsSplit": "Column break",
+  "@reportLineColumnsSplit": {
+    "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportLineLogic": "Logic",
+  "@reportLineLogic": {
+    "description": "Report WYSIWYG editor + image library (#488)"
   }
 }

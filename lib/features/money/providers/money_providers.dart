@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:typed_data';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../domain/invoice.dart';
@@ -145,6 +146,26 @@ Future<InvoicePdfTemplate> invoicePdfTemplate(Ref ref) async {
   return ref
       .watch(moneyRepositoryProvider)
       .fetchInvoicePdfTemplate(workspace.id);
+}
+
+/// The workspace's report-image library (#488) — the names templates
+/// can reference with `![name]`.
+@riverpod
+Future<List<String>> reportImages(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return ref.read(moneyRepositoryProvider).listReportImages(workspace.id);
+}
+
+/// One library image's bytes, cached per name (#488).
+@Riverpod(keepAlive: true)
+Future<Uint8List?> reportImageBytes(Ref ref, String name) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return null;
+  return ref.read(moneyRepositoryProvider).fetchReportImage(
+        workspace.id,
+        name,
+      );
 }
 
 /// Dunning policy of the active workspace (#472); defaults while none

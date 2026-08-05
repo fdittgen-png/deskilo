@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_spacing.dart';
@@ -10,9 +12,16 @@ import '../../domain/invoice_report.dart';
 /// mirrors the PDF renderer's styles, so what you see here is what the
 /// document will say (typography aside).
 class ReportBlocksView extends StatelessWidget {
-  const ReportBlocksView({super.key, required this.report});
+  const ReportBlocksView({
+    super.key,
+    required this.report,
+    this.images = const {},
+  });
 
   final InvoiceReport report;
+
+  /// #488 — resolved report-library images (name → bytes).
+  final Map<String, Uint8List> images;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +53,20 @@ class ReportBlocksView extends StatelessWidget {
               height: 2,
               color: accent),
           ReportSpacer() => const SizedBox(height: 8),
+          // #488 — a library image; unresolved names render nothing.
+          ReportImage(:final name) => images[name] == null
+              ? const SizedBox.shrink()
+              : Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Image.memory(
+                      images[name]!,
+                      height: 64,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
           // #482 — side-by-side columns; an empty first column pushes
           // the second (totals, the client box) to the right.
           ReportColumns(:final columns) => Row(
@@ -109,6 +132,7 @@ Future<void> showReportQuickPreview(
   BuildContext context, {
   required InvoiceReport report,
   required bool simulated,
+  Map<String, Uint8List> images = const {},
 }) =>
     showDialog<void>(
       context: context,
@@ -137,7 +161,8 @@ Future<void> showReportQuickPreview(
                   child: SingleChildScrollView(
                     key: const ValueKey('report-quick-preview'),
                     padding: AppSpacing.lgAll,
-                    child: ReportBlocksView(report: report),
+                    child:
+                        ReportBlocksView(report: report, images: images),
                   ),
                 ),
                 Align(

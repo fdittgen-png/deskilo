@@ -169,6 +169,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                       bands: defaultStatementBands(l10n), data: data)!;
           bytes = await buildBandedLetterPdf(
             report: report,
+            reportImages: await resolveReportImages(ref, report),
             pageLabel: l10n?.invoicePdfPage ?? 'Page',
             documentTitle: strings.title,
             baseFont: pw.Font.ttf(regular),
