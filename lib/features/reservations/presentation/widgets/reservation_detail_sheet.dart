@@ -24,6 +24,8 @@ import '../../domain/reservation_repository.dart';
 import 'booking_range_text.dart';
 import 'series_result_dialog.dart';
 import '../../providers/reservation_providers.dart';
+import '../../../../core/trace/guarded.dart';
+import '../../../../core/time/clock.dart';
 
 /// Where is my reserved seat — and what can I do about it? (#182, edit
 /// pass) Time range and status icon, the resolved location chain, the
@@ -57,11 +59,20 @@ class ReservationDetailSheet extends ConsumerWidget {
     final target = targetAsync.value;
 
     final myMemberId = ref.watch(myMemberProvider).value?.id;
-    // The actions belong to the owner of a still-upcoming booking; past,
-    // running or foreign ones stay read-only here (check-out and admin
-    // flows live elsewhere).
-    final editable = r.memberId == myMemberId &&
-        r.status == ReservationStatus.reserved;
+    // The actions belong to the owner of a still-upcoming booking; a
+    // PAST or already CHECKED-IN one is never deleted directly (#492) —
+    // deleting it becomes a REQUEST an owner/admin validates (was the
+    // check-in forgotten, or was the booking unused?).
+    final now = ref.read(clockProvider).now();
+    final mine = r.memberId == myMemberId;
+    final started = !r.startsAt.isAfter(now);
+    final editable =
+        mine && r.status == ReservationStatus.reserved && !started;
+    final deletionRequestable = mine &&
+        !editable &&
+        (r.status == ReservationStatus.checkedIn ||
+            r.status == ReservationStatus.completed ||
+            (r.status == ReservationStatus.reserved && started));
 
     return SafeArea(
       // Scrollable: with the action row the sheet can outgrow small
@@ -184,9 +195,95 @@ class ReservationDetailSheet extends ConsumerWidget {
                 ],
               ),
             ],
+            if (deletionRequestable) ...[
+              const SizedBox(height: 8),
+              OutlinedButton.icon(
+                key: const ValueKey('reservation-delete-request'),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Theme.of(context).colorScheme.error,
+                ),
+                icon: const Icon(Icons.delete_outline),
+                onPressed: () => _requestDeletion(context, ref),
+                // The label says REQUEST — nothing is deleted here.
+                label: Text(l10n?.reservationDeleteRequestButton ??
+                    'Request deletion'),
+              ),
+            ],
           ],
         ),
       ),
+    );
+  }
+
+  /// #492 — the request dialog: explains that an owner/admin validates
+  /// (forgotten check-in vs unused booking), takes an optional reason,
+  /// and files the pending event.
+  Future<void> _requestDeletion(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final reasonController = TextEditingController();
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n?.reservationDeleteRequestButton ??
+            'Request deletion'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l10n?.reservationDeleteRequestExplain ??
+                'Past or checked-in bookings are not deleted directly. '
+                    'An owner or admin will decide: was the check-in '
+                    'simply forgotten (the booking stays), or was it '
+                    'never used (it is removed)?'),
+            const SizedBox(height: AppSpacing.md),
+            TextField(
+              key: const ValueKey('reservation-delete-reason'),
+              controller: reasonController,
+              maxLength: 300,
+              maxLines: 2,
+              decoration: InputDecoration(
+                labelText: l10n?.reservationDeleteReasonLabel ??
+                    'Reason (optional)',
+                counterText: '',
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(l10n?.commonCancel ?? 'Cancel'),
+          ),
+          FilledButton(
+            key: const ValueKey('reservation-delete-submit'),
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(l10n?.reservationDeleteSubmit ??
+                'Send request'),
+          ),
+        ],
+      ),
+    );
+    final reason = reasonController.text;
+    if (confirmed != true || !context.mounted) return;
+    if (!await runGuarded(
+      context,
+      domain: 'reservations',
+      message: 'reservation deletion request failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => ref
+          .read(eventRepositoryProvider)
+          .requestReservationDeletion(reservation.id, reason: reason),
+    )) {
+      return;
+    }
+    invalidateBookingData(ref);
+    if (!context.mounted) return;
+    Navigator.of(context).pop();
+    AppSnack.success(
+      context,
+      l10n?.reservationDeleteSubmitted ??
+          'Deletion requested — an owner or admin will decide.',
     );
   }
 

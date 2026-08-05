@@ -86,6 +86,9 @@ Der **Ebenen-Button am Etagenwähler** reserviert die **ganze Etage** — auf de
 
 Reservierungen folgen der **Granularitätsregel** des Workspace — Halbtage, ganze Tage, echte Uhrzeiten (exakt von–bis, mit den Halb-/Ganztagsfenstern als Schnellwahl) oder freie Zeiten auf dem Minutenraster der Inhaberin. Halb- und Ganztage decken die konfigurierten **Arbeitszeiten** ab (Standard 8–17 Uhr, Halbtagsgrenze 12 Uhr). Sie respektieren **Öffnungstage** und **Schließtage** sowie die Buchungsregeln (Vorlauf, Maximaldauer, Stornofrist). Wiederkehrender Bedarf? Buche eine **Serie** (täglich, werktags, wöchentlich) — geschlossene Tage und Konflikte werden übersprungen und gemeldet.
 
+**Das Löschen einer vergangenen oder eingecheckten Buchung ist ein Antrag, keine Aktion.** Eine Buchung, deren Beginn vorbei ist — oder bei der Sie bereits eingecheckt haben — lässt sich nicht direkt stornieren: Das Blatt bietet stattdessen **Löschung beantragen**. Inhaber oder Admin entscheiden die eine Frage, die für die Abrechnung zählt: wurde der Check-in nur vergessen (die Buchung bleibt), oder wurde sie nie genutzt (sie wird entfernt)? Der Antrag erscheint im Ereignis-Feed mit Ihrem optionalen Grund; zukünftige unberührte Buchungen behalten das direkte Stornieren.
+
+
 Der Tab **Kalender** zeigt deine Buchungen pro Monat — deine Tage **rot**, die der anderen **blau**, heute umkreist — mit Tages-Zeitstrahl. Im Querformat nutzen Kalender und Zeitstrahl das geteilte Layout.
 
 ### Raumcode scannen

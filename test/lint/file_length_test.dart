@@ -73,6 +73,8 @@ const Map<String, int> _baseline = {
   // 1280→1320 (2026-08-05): #488 resolveReportImages threaded through
   // every PDF path.
   'lib/features/money/presentation/invoice_actions.dart': 1320,
+  // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
+  'lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart': 640,
   // 600→660 (2026-08-05): #488 the editor's mode toggle + image insert
   // flow; the visual editor itself is its own file.
   'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 660,

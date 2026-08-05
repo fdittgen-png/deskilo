@@ -288,6 +288,53 @@
   "pushPendingBody": "Alguien necesita tu confirmación.",
   "pushCancelledTitle": "Reserva eliminada",
   "pushCancelledBody": "Un admin eliminó una reserva.",
+  "eventTypeReservationDelete": "Eliminación de reserva",
+  "@eventTypeReservationDelete": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "eventReservationDeleteLine": "{actor} pide eliminar la reserva del {date} ({state})",
+  "@eventReservationDeleteLine": {
+    "description": "Reservation deletion requests (#492)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "state": {
+        "type": "String"
+      }
+    }
+  },
+  "eventReservationDeleteCheckedIn": "registrada",
+  "@eventReservationDeleteCheckedIn": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "eventReservationDeleteUnused": "nunca usada",
+  "@eventReservationDeleteUnused": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteRequestButton": "Solicitar eliminación",
+  "@reservationDeleteRequestButton": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteRequestExplain": "Las reservas pasadas o con registro no se eliminan directamente. Un propietario o admin decidirá: ¿se olvidó simplemente el registro (la reserva se mantiene) o nunca se usó (se elimina)?",
+  "@reservationDeleteRequestExplain": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteReasonLabel": "Motivo (opcional)",
+  "@reservationDeleteReasonLabel": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteSubmit": "Enviar solicitud",
+  "@reservationDeleteSubmit": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteSubmitted": "Eliminación solicitada — un propietario o admin decidirá.",
+  "@reservationDeleteSubmitted": {
+    "description": "Reservation deletion requests (#492)"
+  },
   "featuresTitle": "Funciones",
   "featureCalendarTab": "Pestaña Calendario",
   "featureCalendarTabDesc": "Vista mensual de reservas y días de cierre.",

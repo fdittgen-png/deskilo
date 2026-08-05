@@ -96,6 +96,18 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
               ? l10n?.eventRolePromote(actor)
               : l10n?.eventRoleDemote(actor)) ??
           '$actor changes a role',
+      (EventType.reservationDelete, _) => l10n?.eventReservationDeleteLine(
+            actor,
+            (event.payload['starts_at'] as String? ?? '')
+                .split('T')
+                .first,
+            event.payload['was_checked_in'] == true
+                ? l10n.eventReservationDeleteCheckedIn
+                : l10n.eventReservationDeleteUnused,
+          ) ??
+          '$actor asks to delete the booking of '
+              '${(event.payload['starts_at'] as String? ?? '').split('T').first} '
+              '(${event.payload['was_checked_in'] == true ? 'checked in' : 'never used'})',
       (EventType.invoicePayment, _) => l10n?.eventInvoicePaid(
             event.payload['number'] as String? ?? '',
             amount,
@@ -127,6 +139,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         l10n?.eventTypeSpaceReservation ?? 'Whole-space reservations',
       EventType.invoicePayment =>
         l10n?.eventTypeInvoicePayment ?? 'Invoice payment',
+      EventType.reservationDelete =>
+        l10n?.eventTypeReservationDelete ?? 'Booking deletion',
     };
   }
 
@@ -144,6 +158,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.spaceReservation => Icons.meeting_room_outlined,
       EventType.roleChange => Icons.admin_panel_settings_outlined,
       EventType.invoicePayment => Icons.price_check_outlined,
+      EventType.reservationDelete => Icons.delete_outline,
     };
   }
 

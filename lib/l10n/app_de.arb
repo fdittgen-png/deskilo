@@ -288,6 +288,53 @@
   "pushPendingBody": "Jemand wartet auf deine Bestätigung.",
   "pushCancelledTitle": "Reservierung entfernt",
   "pushCancelledBody": "Eine Reservierung wurde von einem Admin entfernt.",
+  "eventTypeReservationDelete": "Buchungslöschung",
+  "@eventTypeReservationDelete": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "eventReservationDeleteLine": "{actor} bittet um Löschung der Buchung vom {date} ({state})",
+  "@eventReservationDeleteLine": {
+    "description": "Reservation deletion requests (#492)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "state": {
+        "type": "String"
+      }
+    }
+  },
+  "eventReservationDeleteCheckedIn": "eingecheckt",
+  "@eventReservationDeleteCheckedIn": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "eventReservationDeleteUnused": "nie genutzt",
+  "@eventReservationDeleteUnused": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteRequestButton": "Löschung beantragen",
+  "@reservationDeleteRequestButton": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteRequestExplain": "Vergangene oder eingecheckte Buchungen werden nicht direkt gelöscht. Inhaber oder Admin entscheiden: wurde der Check-in nur vergessen (die Buchung bleibt), oder wurde sie nie genutzt (sie wird entfernt)?",
+  "@reservationDeleteRequestExplain": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteReasonLabel": "Grund (optional)",
+  "@reservationDeleteReasonLabel": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteSubmit": "Anfrage senden",
+  "@reservationDeleteSubmit": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteSubmitted": "Löschung beantragt — Inhaber oder Admin entscheiden.",
+  "@reservationDeleteSubmitted": {
+    "description": "Reservation deletion requests (#492)"
+  },
   "featuresTitle": "Funktionen",
   "featureCalendarTab": "Kalender-Tab",
   "featureCalendarTabDesc": "Monatsübersicht über Buchungen und Schließtage.",

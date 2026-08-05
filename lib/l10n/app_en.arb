@@ -1305,6 +1305,53 @@
   "@pushCancelledBody": {
     "description": "Push body for the removed-reservation ping — generic, no personal data (#424)"
   },
+  "eventTypeReservationDelete": "Booking deletion",
+  "@eventTypeReservationDelete": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "eventReservationDeleteLine": "{actor} asks to delete the booking of {date} ({state})",
+  "@eventReservationDeleteLine": {
+    "description": "Reservation deletion requests (#492)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "state": {
+        "type": "String"
+      }
+    }
+  },
+  "eventReservationDeleteCheckedIn": "checked in",
+  "@eventReservationDeleteCheckedIn": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "eventReservationDeleteUnused": "never used",
+  "@eventReservationDeleteUnused": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteRequestButton": "Request deletion",
+  "@reservationDeleteRequestButton": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteRequestExplain": "Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)?",
+  "@reservationDeleteRequestExplain": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteReasonLabel": "Reason (optional)",
+  "@reservationDeleteReasonLabel": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteSubmit": "Send request",
+  "@reservationDeleteSubmit": {
+    "description": "Reservation deletion requests (#492)"
+  },
+  "reservationDeleteSubmitted": "Deletion requested — an owner or admin will decide.",
+  "@reservationDeleteSubmitted": {
+    "description": "Reservation deletion requests (#492)"
+  },
   "featuresTitle": "Features",
   "@featuresTitle": {
     "description": "App-bar title of the owner feature-management screen and its settings tile"

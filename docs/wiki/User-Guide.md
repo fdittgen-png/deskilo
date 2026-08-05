@@ -86,6 +86,9 @@ The **layers button on the floor switcher** reserves the **whole level** — on 
 
 Reservations follow the workspace **granularity rule** — half-days, full days, real hours (exact from–to times with the half/full-day windows as shortcuts), or free start/end times on the owner's slot grid. Half and full days cover the workspace's configured **working hours** (default 8:00–17:00 with the half-day boundary at 12:00). They respect the **open weekdays** and **closure days**, and the booking rules (advance horizon, max duration, cancellation deadline). Repeating needs? Book a **series** (daily, weekdays, weekly) — closed days and conflicts are skipped and reported.
 
+**Deleting a past or checked-in booking is a request, not an action.** A booking whose start has passed — or where you already checked in — cannot be cancelled directly: the sheet offers **Request deletion** instead. An owner or admin decides the one question that matters for billing: was the check-in simply forgotten (the booking stays on the record), or was it never used (it is removed)? The request appears on the Events feed with your optional reason; future untouched bookings keep the normal one-tap cancel.
+
+
 The **Calendar** tab shows your own bookings by month — your days are marked **red**, other members' **blue**, today is ringed — with a timeline view per day. In landscape both the calendar and the timeline use the split layout.
 
 ### Scan a space code

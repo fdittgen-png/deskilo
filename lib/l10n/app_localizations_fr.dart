@@ -967,6 +967,37 @@ class AppLocalizationsFr extends AppLocalizations {
   String get pushCancelledBody => 'Une réservation a été retirée par un admin.';
 
   @override
+  String get eventTypeReservationDelete => 'Suppression de réservation';
+
+  @override
+  String eventReservationDeleteLine(String actor, String date, String state) {
+    return '$actor demande la suppression de la réservation du $date ($state)';
+  }
+
+  @override
+  String get eventReservationDeleteCheckedIn => 'pointée';
+
+  @override
+  String get eventReservationDeleteUnused => 'jamais utilisée';
+
+  @override
+  String get reservationDeleteRequestButton => 'Demander la suppression';
+
+  @override
+  String get reservationDeleteRequestExplain =>
+      'Les réservations passées ou pointées ne sont pas supprimées directement. Un propriétaire ou un admin décidera : le pointage a-t-il simplement été oublié (la réservation reste), ou n\'a-t-elle jamais été utilisée (elle est supprimée) ?';
+
+  @override
+  String get reservationDeleteReasonLabel => 'Motif (facultatif)';
+
+  @override
+  String get reservationDeleteSubmit => 'Envoyer la demande';
+
+  @override
+  String get reservationDeleteSubmitted =>
+      'Suppression demandée — un propriétaire ou un admin décidera.';
+
+  @override
   String get featuresTitle => 'Fonctionnalités';
 
   @override

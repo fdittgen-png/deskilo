@@ -86,6 +86,9 @@ Il **pulsante livelli sul selettore di piano** prenota il **piano intero** — n
 
 Le prenotazioni seguono la **regola di granularità** dello spazio — mezze giornate, giornate intere, orari reali (da–a esatto, con le finestre di mezza/giornata come scorciatoie), oppure orari liberi sulla griglia di minuti del proprietario. Mezze giornate e giornate coprono l'**orario di lavoro** configurato (predefinito 8:00–17:00, limite di mezza giornata alle 12:00). Rispettano i **giorni di apertura** e i **giorni di chiusura**, e le regole di prenotazione (orizzonte, durata massima, termine di cancellazione). Esigenze ricorrenti? Prenota una **serie** (giornaliera, feriale, settimanale) — giorni chiusi e conflitti vengono saltati e segnalati.
 
+**Eliminare una prenotazione passata o con check-in è una richiesta, non un'azione.** Una prenotazione il cui inizio è passato — o dove hai già fatto check-in — non si annulla direttamente: la scheda offre **Richiedi eliminazione**. Un proprietario o admin decide l'unica domanda che conta per la fatturazione: il check-in è stato semplicemente dimenticato (la prenotazione resta) o non è mai stata usata (viene rimossa)? La richiesta appare negli Eventi con il tuo motivo facoltativo; le prenotazioni future mantengono l'annullamento diretto.
+
+
 La scheda **Calendario** mostra le tue prenotazioni per mese — i tuoi giorni in **rosso**, quelli degli altri in **blu**, oggi cerchiato — con una timeline per giorno. In orizzontale, calendario e timeline usano il layout diviso.
 
 ### Scansionare un codice spazio

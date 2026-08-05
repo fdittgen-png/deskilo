@@ -36,7 +36,12 @@ enum EventType {
   /// An invoice matched to its payment (0067): everyone with invoicing
   /// access sees it; with a configured rule the match awaits the
   /// quorum — a reject REOPENS the invoice.
-  invoicePayment('invoice_payment');
+  invoicePayment('invoice_payment'),
+
+  /// A member's request to delete a PAST or CHECKED-IN booking (0097,
+  /// #492): confirm cancels it (unused), reject keeps it on the record
+  /// (the check-in was merely forgotten). Always another person decides.
+  reservationDelete('reservation_delete');
 
   const EventType([String? dbName]) : _dbName = dbName;
 
@@ -84,6 +89,7 @@ sealed class WorkspaceEvent with _$WorkspaceEvent {
   bool get needsAdminDecider =>
       type == EventType.expense ||
       type == EventType.quota ||
+      type == EventType.reservationDelete ||
       type == EventType.roleChange ||
       type == EventType.memberJoin ||
       ((type == EventType.payment || type == EventType.serviceCharge) &&
