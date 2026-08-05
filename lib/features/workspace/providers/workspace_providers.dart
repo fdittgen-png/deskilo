@@ -15,6 +15,7 @@ import '../domain/member_note.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_repository.dart';
+import '../domain/workspace_document.dart';
 
 part 'workspace_providers.g.dart';
 
@@ -117,6 +118,14 @@ Future<List<Member>> myMemberships(Ref ref) async {
 }
 
 /// ISO weekdays (1=Mon..7=Sun) the active workspace is open on (#127).
+/// The document library (#500) — RLS trims rows to the caller's role.
+@riverpod
+Future<List<WorkspaceDocument>> workspaceDocuments(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return ref.read(workspaceRepositoryProvider).fetchDocuments(workspace.id);
+}
+
 @riverpod
 Future<List<int>> openWeekdays(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);

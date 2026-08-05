@@ -47,6 +47,7 @@ import 'package:deskilo/features/profile/providers/profile_providers.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo/features/workspace/domain/workspace_document.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show AuthException, PostgrestException;
@@ -634,6 +635,40 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       postalCode: postalCode.trim(),
       vatAccount: vatAccount.trim(),
     );
+  }
+
+  /// #500 — the in-memory document library.
+  final List<WorkspaceDocument> documents = [];
+
+  @override
+  Future<List<WorkspaceDocument>> fetchDocuments(String workspaceId) async {
+    // Mirror the RLS role gate so tests see honest visibility.
+    bool visible(WorkspaceDocument d) => switch (d.minRole) {
+          'owner' => myMember.isOwner,
+          'admin' => myMember.isAdmin || myMember.isOwner,
+          _ => true,
+        };
+    return documents
+        .where((d) => d.workspaceId == workspaceId && visible(d))
+        .toList();
+  }
+
+  @override
+  Future<void> addDocument(WorkspaceDocument document) async {
+    documents.add(WorkspaceDocument(
+      id: 'doc-${documents.length + 1}',
+      workspaceId: document.workspaceId,
+      title: document.title.trim(),
+      category: document.category,
+      provider: document.provider,
+      url: document.url.trim(),
+      minRole: document.minRole,
+    ));
+  }
+
+  @override
+  Future<void> deleteDocument(String documentId) async {
+    documents.removeWhere((d) => d.id == documentId);
   }
 
   @override

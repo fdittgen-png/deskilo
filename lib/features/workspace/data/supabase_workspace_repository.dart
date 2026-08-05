@@ -11,6 +11,7 @@ import '../domain/overage_policy.dart';
 import '../domain/payment_instructions.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_repository.dart';
+import '../domain/workspace_document.dart';
 
 class SupabaseWorkspaceRepository implements WorkspaceRepository {
   SupabaseWorkspaceRepository(this._client);
@@ -115,6 +116,40 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
       'postal_code': postalCode.trim(),
       'vat_account': vatAccount.trim(),
     }).eq('id', workspaceId);
+  }
+
+  @override
+  Future<List<WorkspaceDocument>> fetchDocuments(String workspaceId) async {
+    final rows = await _client
+        .from('workspace_documents')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('category')
+        .order('title');
+    return [
+      for (final row in rows)
+        WorkspaceDocument.fromRow(row),
+    ];
+  }
+
+  @override
+  Future<void> addDocument(WorkspaceDocument document) async {
+    await _client.from('workspace_documents').insert({
+      'workspace_id': document.workspaceId,
+      'title': document.title.trim(),
+      'category': document.category,
+      'provider': document.provider,
+      'url': document.url.trim(),
+      'min_role': document.minRole,
+    });
+  }
+
+  @override
+  Future<void> deleteDocument(String documentId) async {
+    await _client
+        .from('workspace_documents')
+        .delete()
+        .eq('id', documentId);
   }
 
   @override

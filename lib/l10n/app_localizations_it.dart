@@ -3754,6 +3754,73 @@ class AppLocalizationsIt extends AppLocalizations {
       'IBAN, PayPal, Wero, Lydia, Wise e la causale di pagamento';
 
   @override
+  String get featureDocuments => 'Biblioteca documenti';
+
+  @override
+  String get featureDocumentsDesc =>
+      'La biblioteca documenti dello spazio: statuto, guide, bilanci, verbali — collegati da qualsiasi drive, visibili per ruolo.';
+
+  @override
+  String get documentsTitle => 'Documenti';
+
+  @override
+  String get documentsAdd => 'Aggiungi un documento';
+
+  @override
+  String get documentsTitleLabel => 'Titolo';
+
+  @override
+  String get documentsUrlLabel => 'Link (https://…)';
+
+  @override
+  String get documentsUrlHelper =>
+      'Incolla il link di condivisione del tuo drive — i permessi restano gestiti lì.';
+
+  @override
+  String get documentsProviderLabel => 'Archiviato su';
+
+  @override
+  String get documentsCategoryLabel => 'Categoria';
+
+  @override
+  String get documentsRoleLabel => 'Visibile a';
+
+  @override
+  String get documentsRoleMember => 'Tutti i membri';
+
+  @override
+  String get documentsRoleAdmin => 'Admin e proprietari';
+
+  @override
+  String get documentsRoleOwner => 'Solo proprietari';
+
+  @override
+  String get documentsCategoryStatutes => 'Statuto e legale';
+
+  @override
+  String get documentsCategoryGuides => 'Guide e manuali';
+
+  @override
+  String get documentsCategoryFinance => 'Bilanci';
+
+  @override
+  String get documentsCategoryMinutes => 'Verbali';
+
+  @override
+  String get documentsCategoryOther => 'Altri documenti';
+
+  @override
+  String get documentsEmpty =>
+      'Nessun documento. Collega statuto, guide e bilanci da qualsiasi drive.';
+
+  @override
+  String get documentsDelete => 'Rimuovere il documento?';
+
+  @override
+  String get documentsInvalid =>
+      'Un documento richiede un titolo e un link https://.';
+
+  @override
   String get workspaceXmlExport => 'Esporta lo spazio (XML)';
 
   @override

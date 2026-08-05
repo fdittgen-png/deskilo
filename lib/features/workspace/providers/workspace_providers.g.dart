@@ -372,11 +372,57 @@ final class MyMembershipsProvider
 String _$myMembershipsHash() => r'addc53f1469bfa1a4b4c485af129c830dd2b49c2';
 
 /// ISO weekdays (1=Mon..7=Sun) the active workspace is open on (#127).
+/// The document library (#500) — RLS trims rows to the caller's role.
+
+@ProviderFor(workspaceDocuments)
+final workspaceDocumentsProvider = WorkspaceDocumentsProvider._();
+
+/// ISO weekdays (1=Mon..7=Sun) the active workspace is open on (#127).
+/// The document library (#500) — RLS trims rows to the caller's role.
+
+final class WorkspaceDocumentsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<WorkspaceDocument>>,
+          List<WorkspaceDocument>,
+          FutureOr<List<WorkspaceDocument>>
+        >
+    with
+        $FutureModifier<List<WorkspaceDocument>>,
+        $FutureProvider<List<WorkspaceDocument>> {
+  /// ISO weekdays (1=Mon..7=Sun) the active workspace is open on (#127).
+  /// The document library (#500) — RLS trims rows to the caller's role.
+  WorkspaceDocumentsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workspaceDocumentsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceDocumentsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<WorkspaceDocument>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<WorkspaceDocument>> create(Ref ref) {
+    return workspaceDocuments(ref);
+  }
+}
+
+String _$workspaceDocumentsHash() =>
+    r'bdab372d7600470af319834cb90cb4d237bf51bb';
 
 @ProviderFor(openWeekdays)
 final openWeekdaysProvider = OpenWeekdaysProvider._();
-
-/// ISO weekdays (1=Mon..7=Sun) the active workspace is open on (#127).
 
 final class OpenWeekdaysProvider
     extends
@@ -386,7 +432,6 @@ final class OpenWeekdaysProvider
           FutureOr<List<int>>
         >
     with $FutureModifier<List<int>>, $FutureProvider<List<int>> {
-  /// ISO weekdays (1=Mon..7=Sun) the active workspace is open on (#127).
   OpenWeekdaysProvider._()
     : super(
         from: null,

@@ -107,6 +107,10 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureMemberNotificationsDesc ??
               'Send a short notification to another member; admins can '
                   'notify all admins including the owner.',
+        WorkspaceFeature.documents => l10n?.featureDocumentsDesc ??
+            'The workspace document library: statutes, guides, '
+                'financial statements, minutes — linked from any drive, '
+                'visible per role.',
       };
 
   Future<void> _toggle(

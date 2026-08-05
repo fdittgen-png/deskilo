@@ -3726,6 +3726,73 @@ class AppLocalizationsEn extends AppLocalizations {
       'IBAN, PayPal, Wero, Lydia, Wise and the payment reference';
 
   @override
+  String get featureDocuments => 'Document library';
+
+  @override
+  String get featureDocumentsDesc =>
+      'The workspace document library: statutes, guides, financial statements, minutes — linked from any drive, visible per role.';
+
+  @override
+  String get documentsTitle => 'Documents';
+
+  @override
+  String get documentsAdd => 'Add a document';
+
+  @override
+  String get documentsTitleLabel => 'Title';
+
+  @override
+  String get documentsUrlLabel => 'Link (https://…)';
+
+  @override
+  String get documentsUrlHelper =>
+      'Paste the share link from your drive — access rights stay managed there.';
+
+  @override
+  String get documentsProviderLabel => 'Stored on';
+
+  @override
+  String get documentsCategoryLabel => 'Category';
+
+  @override
+  String get documentsRoleLabel => 'Visible to';
+
+  @override
+  String get documentsRoleMember => 'Every member';
+
+  @override
+  String get documentsRoleAdmin => 'Admins and owners';
+
+  @override
+  String get documentsRoleOwner => 'Owners only';
+
+  @override
+  String get documentsCategoryStatutes => 'Statutes & legal';
+
+  @override
+  String get documentsCategoryGuides => 'Guides & manuals';
+
+  @override
+  String get documentsCategoryFinance => 'Financial statements';
+
+  @override
+  String get documentsCategoryMinutes => 'Meeting minutes';
+
+  @override
+  String get documentsCategoryOther => 'Other documents';
+
+  @override
+  String get documentsEmpty =>
+      'No document yet. Link your statutes, guides and statements from any drive.';
+
+  @override
+  String get documentsDelete => 'Remove document?';
+
+  @override
+  String get documentsInvalid =>
+      'A document needs a title and an https:// link.';
+
+  @override
   String get workspaceXmlExport => 'Export workspace (XML)';
 
   @override

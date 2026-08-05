@@ -31,7 +31,8 @@ enum WorkspaceFeature {
   dataExport,
   workingHours,
   invoicePdfTemplate,
-  memberNotifications;
+  memberNotifications,
+  documents;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -172,6 +173,10 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // Member-to-member notes + admin broadcast (#456).
   WorkspaceFeature.memberNotifications:
       FeatureManifestEntry(feature: WorkspaceFeature.memberNotifications),
+  // The workspace document library (#500): statutes, guides, financial
+  // statements, minutes — federated links to any DMS, role-gated.
+  WorkspaceFeature.documents:
+      FeatureManifestEntry(feature: WorkspaceFeature.documents),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start

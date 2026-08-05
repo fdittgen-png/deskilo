@@ -384,6 +384,15 @@ class SettingsScreen extends ConsumerWidget {
             title: Text(l10n?.linkedAccountsTitle ?? 'Linked accounts'),
             onTap: () => context.push('/linked-accounts'),
           ),
+          // #500 — the document library: everyone sees it (their role
+          // filters the content server-side).
+          if (features.contains(WorkspaceFeature.documents))
+            ListTile(
+              key: const ValueKey('settings-documents'),
+              leading: const Icon(Icons.folder_open_outlined),
+              title: Text(l10n?.documentsTitle ?? 'Documents'),
+              onTap: () => context.push('/documents'),
+            ),
           if (showAdminSection) ...[
             const Divider(),
             _SectionHeader(

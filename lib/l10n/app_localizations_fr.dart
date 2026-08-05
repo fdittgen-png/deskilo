@@ -3762,6 +3762,73 @@ class AppLocalizationsFr extends AppLocalizations {
       'IBAN, PayPal, Wero, Lydia, Wise et la référence de paiement';
 
   @override
+  String get featureDocuments => 'Bibliothèque de documents';
+
+  @override
+  String get featureDocumentsDesc =>
+      'La bibliothèque de documents de l\'espace : statuts, guides, états financiers, comptes rendus — liés depuis n\'importe quel drive, visibles selon le rôle.';
+
+  @override
+  String get documentsTitle => 'Documents';
+
+  @override
+  String get documentsAdd => 'Ajouter un document';
+
+  @override
+  String get documentsTitleLabel => 'Titre';
+
+  @override
+  String get documentsUrlLabel => 'Lien (https://…)';
+
+  @override
+  String get documentsUrlHelper =>
+      'Collez le lien de partage de votre drive — les droits d\'accès restent gérés là-bas.';
+
+  @override
+  String get documentsProviderLabel => 'Stocké sur';
+
+  @override
+  String get documentsCategoryLabel => 'Catégorie';
+
+  @override
+  String get documentsRoleLabel => 'Visible par';
+
+  @override
+  String get documentsRoleMember => 'Tous les membres';
+
+  @override
+  String get documentsRoleAdmin => 'Admins et propriétaires';
+
+  @override
+  String get documentsRoleOwner => 'Propriétaires uniquement';
+
+  @override
+  String get documentsCategoryStatutes => 'Statuts et juridique';
+
+  @override
+  String get documentsCategoryGuides => 'Guides et manuels';
+
+  @override
+  String get documentsCategoryFinance => 'États financiers';
+
+  @override
+  String get documentsCategoryMinutes => 'Comptes rendus';
+
+  @override
+  String get documentsCategoryOther => 'Autres documents';
+
+  @override
+  String get documentsEmpty =>
+      'Aucun document. Liez vos statuts, guides et états depuis n\'importe quel drive.';
+
+  @override
+  String get documentsDelete => 'Retirer le document ?';
+
+  @override
+  String get documentsInvalid =>
+      'Un document requiert un titre et un lien https://.';
+
+  @override
   String get workspaceXmlExport => 'Exporter l\'espace (XML)';
 
   @override

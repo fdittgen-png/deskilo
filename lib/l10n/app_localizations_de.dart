@@ -3758,6 +3758,73 @@ class AppLocalizationsDe extends AppLocalizations {
       'IBAN, PayPal, Wero, Lydia, Wise und der Verwendungszweck';
 
   @override
+  String get featureDocuments => 'Dokumentbibliothek';
+
+  @override
+  String get featureDocumentsDesc =>
+      'Die Dokumentbibliothek des Arbeitsbereichs: Satzung, Anleitungen, Finanzberichte, Protokolle — aus jedem Drive verlinkt, sichtbar je nach Rolle.';
+
+  @override
+  String get documentsTitle => 'Dokumente';
+
+  @override
+  String get documentsAdd => 'Dokument hinzufügen';
+
+  @override
+  String get documentsTitleLabel => 'Titel';
+
+  @override
+  String get documentsUrlLabel => 'Link (https://…)';
+
+  @override
+  String get documentsUrlHelper =>
+      'Fügen Sie den Freigabelink Ihres Drives ein — die Zugriffsrechte bleiben dort verwaltet.';
+
+  @override
+  String get documentsProviderLabel => 'Gespeichert auf';
+
+  @override
+  String get documentsCategoryLabel => 'Kategorie';
+
+  @override
+  String get documentsRoleLabel => 'Sichtbar für';
+
+  @override
+  String get documentsRoleMember => 'Alle Mitglieder';
+
+  @override
+  String get documentsRoleAdmin => 'Admins und Inhaber';
+
+  @override
+  String get documentsRoleOwner => 'Nur Inhaber';
+
+  @override
+  String get documentsCategoryStatutes => 'Satzung & Rechtliches';
+
+  @override
+  String get documentsCategoryGuides => 'Anleitungen & Handbücher';
+
+  @override
+  String get documentsCategoryFinance => 'Finanzberichte';
+
+  @override
+  String get documentsCategoryMinutes => 'Protokolle';
+
+  @override
+  String get documentsCategoryOther => 'Weitere Dokumente';
+
+  @override
+  String get documentsEmpty =>
+      'Noch kein Dokument. Verlinken Sie Satzung, Anleitungen und Berichte aus jedem Drive.';
+
+  @override
+  String get documentsDelete => 'Dokument entfernen?';
+
+  @override
+  String get documentsInvalid =>
+      'Ein Dokument braucht einen Titel und einen https://-Link.';
+
+  @override
   String get workspaceXmlExport => 'Workspace exportieren (XML)';
 
   @override

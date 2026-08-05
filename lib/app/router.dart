@@ -18,6 +18,7 @@ import '../features/money/presentation/screens/einvoice_config_screen.dart';
 import '../features/money/presentation/screens/invoice_register_screen.dart';
 import '../features/money/presentation/screens/legal_identity_screen.dart';
 import '../features/workspace/presentation/screens/payment_methods_screen.dart';
+import '../features/workspace/presentation/screens/documents_screen.dart';
 import '../features/money/presentation/screens/vat_screen.dart';
 import '../features/money/presentation/screens/services_screen.dart';
 import '../features/plan/presentation/screens/accessories_screen.dart';
@@ -336,6 +337,14 @@ GoRouter router(Ref ref) {
               : '/money';
         },
         builder: (context, state) => const EInvoiceConfigScreen(),
+      ),
+      // The workspace document library (#500) — every member, gated by
+      // the documents feature; RLS decides which rows each role sees.
+      GoRoute(
+        path: '/documents',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.documents) ? null : '/plan',
+        builder: (context, state) => const DocumentsScreen(),
       ),
       // The workspace's manual payment methods (#486) — owner-only.
       GoRoute(
