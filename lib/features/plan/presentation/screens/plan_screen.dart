@@ -915,7 +915,9 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
-                width: (constraints.maxWidth * 0.4).clamp(280.0, 460.0),
+                // #478: narrower sidebar — the plan is the content.
+                  width:
+                      (constraints.maxWidth * 0.3).clamp(260.0, 380.0),
                 child: SingleChildScrollView(child: header),
               ),
               const VerticalDivider(width: 1),

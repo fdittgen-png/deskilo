@@ -2794,6 +2794,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profilePhotoFileType => 'Image';
 
   @override
+  String get settingsBillingReports => 'Billing & reports';
+
+  @override
   String get profilesDefault => 'Default at startup';
 
   @override

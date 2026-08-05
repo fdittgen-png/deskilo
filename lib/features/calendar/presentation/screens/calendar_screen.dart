@@ -231,7 +231,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
             AppSpacing.screenGutter,
             AppSpacing.sm,
           ),
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surfaceContainerLow,
             borderRadius: AppRadius.xlAll,
@@ -476,6 +476,11 @@ class _MonthGrid extends StatelessWidget {
     required this.onSelect,
   });
 
+  /// Compact cell height (#478 phone audit: the month grid ate ~40% of
+  /// the screen before any content — the calendar is a picker, not the
+  /// content itself).
+  static const double cellHeight = 36;
+
   /// Reservation-marker dot colours: red for a day carrying MY bookings,
   /// blue for a day with only other members'. Fixed hues (not scheme
   /// colours) so "mine vs. theirs" reads the same in light and dark.
@@ -532,7 +537,8 @@ class _MonthGrid extends StatelessWidget {
                       builder: (context) {
                         final index = row * 7 + col - leading;
                         if (index < 0 || index >= daysInMonth) {
-                          return const SizedBox(height: 40);
+                          return const SizedBox(
+                              height: _MonthGrid.cellHeight);
                         }
                         final day =
                             DateTime(month.year, month.month, index + 1);
@@ -560,13 +566,13 @@ class _MonthGrid extends StatelessWidget {
                           onTap: () => onSelect(day),
                           borderRadius: AppRadius.mdAll,
                           child: SizedBox(
-                            height: 40,
+                            height: _MonthGrid.cellHeight,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  width: 26,
-                                  height: 26,
+                                  width: 24,
+                                  height: 24,
                                   alignment: Alignment.center,
                                   decoration: decoration,
                                   child: Text(
@@ -582,7 +588,7 @@ class _MonthGrid extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 6,
+                                  height: 5,
                                   child: marked
                                       ? Icon(
                                           Icons.circle,

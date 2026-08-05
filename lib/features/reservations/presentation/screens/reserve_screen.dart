@@ -715,7 +715,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SizedBox(
-                  width: (constraints.maxWidth * 0.4).clamp(280.0, 460.0),
+                  // #478 phone-landscape audit: 40% sidebar left the
+                  // canvas cramped while the panel sat mostly empty.
+                  width:
+                      (constraints.maxWidth * 0.3).clamp(260.0, 380.0),
                   child: SingleChildScrollView(child: header()),
                 ),
                 const VerticalDivider(width: 1),

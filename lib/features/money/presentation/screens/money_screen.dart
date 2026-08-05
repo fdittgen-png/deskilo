@@ -883,15 +883,6 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               label: Text(l10n?.moneyRecordPayment ?? 'Record a payment'),
             ),
             const SizedBox(height: 8),
-            // The invoice archive (0060) — every member has one.
-            if (features.contains(WorkspaceFeature.invoicing))
-              OutlinedButton.icon(
-                key: const ValueKey('invoices-button'),
-                onPressed: () => context.push('/invoices'),
-                icon: const Icon(Icons.receipt_long_outlined),
-                label: Text(l10n?.invoicesTitle ?? 'Invoices'),
-              ),
-            const SizedBox(height: 8),
             LayoutBuilder(
               builder: (context, constraints) {
                 final buttonWidth =
@@ -902,6 +893,19 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                   spacing: AppSpacing.sm,
                   runSpacing: AppSpacing.sm,
                   children: [
+                    // #478: Invoices joins the grid — the standalone
+                    // full-width button cost a whole extra row.
+                    if (features.contains(WorkspaceFeature.invoicing))
+                      cell(OutlinedButton.icon(
+                        key: const ValueKey('invoices-button'),
+                        onPressed: () => context.push('/invoices'),
+                        icon: const Icon(Icons.receipt_long_outlined),
+                        label: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child:
+                              Text(l10n?.invoicesTitle ?? 'Invoices'),
+                        ),
+                      )),
                     cell(OutlinedButton.icon(
                       onPressed: () => _submitExpenseSheet(currency),
                       icon: const Icon(Icons.receipt_long_outlined),

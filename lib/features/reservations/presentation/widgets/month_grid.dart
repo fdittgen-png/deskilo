@@ -14,7 +14,9 @@ import '../../../../core/time/clock.dart';
 /// Fixed geometry of the month availability calendar. Pinned by test.
 abstract final class MonthGridMetrics {
   static const double weekdayHeaderHeight = 24;
-  static const double minCellHeight = 52;
+  // 52→46 (#478): the availability calendar reads the same with a
+  // denser grid — more of the month fits without scrolling.
+  static const double minCellHeight = 46;
   static const double cellInset = 3;
 }
 

@@ -3600,6 +3600,10 @@
   "@profilePhotoFileType": {
     "description": "File-picker type label when choosing a profile photo; the word is identical across locales but the key exists for parity."
   },
+  "settingsBillingReports": "Billing & reports",
+  "@settingsBillingReports": {
+    "description": "Admin settings entry to the invoicing hub (#478)"
+  },
   "profilesDefault": "Default at startup",
   "profilesMakeDefault": "Use as default at startup",
   "eventTypeRoleChange": "Role change",

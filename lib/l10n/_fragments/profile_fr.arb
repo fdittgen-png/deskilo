@@ -22,5 +22,6 @@
   "profilePhotoSaved": "Photo mise à jour",
   "profilePhotoRemoved": "Photo supprimée",
   "profilePhotoSaveFailed": "Impossible de mettre à jour la photo",
-  "profilePhotoFileType": "Image"
+  "profilePhotoFileType": "Image",
+  "settingsBillingReports": "Facturation & rapports"
 }
