@@ -118,6 +118,18 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setInvoiceLegal(
+    String workspaceId,
+    Map<String, Object?> legal,
+  ) async {
+    // Owner-only via workspaces_update RLS; the whole jsonb is replaced
+    // (0094) — the mentions are one coherent statement, not a delta.
+    await _client
+        .from('workspaces')
+        .update({'invoice_legal': legal}).eq('id', workspaceId);
+  }
+
+  @override
   Future<void> setWorkspaceAddress(String workspaceId, String address) async {
     // Owner-only via workspaces_update RLS; 0060 caps at 400 chars.
     await _client
@@ -230,6 +242,8 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         city: row['city'] as String? ?? '',
         postalCode: row['postal_code'] as String? ?? '',
         vatAccount: row['vat_account'] as String? ?? '',
+        invoiceLegal:
+            row['invoice_legal'] as Map<String, dynamic>? ?? const {},
       );
 
   @override

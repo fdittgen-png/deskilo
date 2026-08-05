@@ -19,8 +19,11 @@ import '../../../l10n/app_localizations.dart';
 import '../../events/providers/event_providers.dart';
 import '../../members/providers/directory_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
+import '../../workspace/domain/workspace.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../domain/invoice_legal.dart';
+import '../domain/vat_rate.dart';
 import '../domain/e_invoice_routing.dart';
 import '../domain/invoice.dart';
 import '../domain/invoice_pdf.dart';
@@ -68,16 +71,79 @@ InvoicePdfTemplate invoicePdfTemplateFor(WidgetRef ref) =>
             InvoicePdfTemplate.empty
         : InvoicePdfTemplate.empty;
 
+/// The LEGAL mention variables (#480) shared by every document's data
+/// model: the seller's statutory lines and the payment-condition
+/// mentions French law requires on a professional invoice. The four
+/// mandatory clauses fall back to localized statutory defaults when the
+/// owner configured nothing, so an untouched workspace still issues a
+/// compliant document. [seller] (the invoice's frozen party) wins over
+/// the live [workspace] for the identity numbers — the snapshot is what
+/// the signature covers.
+Map<String, Object?> legalMentionData(
+  AppLocalizations? l10n,
+  Workspace? workspace, {
+  InvoiceParty? seller,
+  String clientAddress = '',
+}) {
+  final legal = InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {});
+  String orDefault(String value, String fallback) =>
+      value.trim().isNotEmpty ? value.trim() : fallback;
+  return <String, Object?>{
+    'seller_legal_form': legal.legalForm,
+    'seller_registration': legal.registration,
+    'seller_vat_id': seller?.vatId ?? workspace?.vatId ?? '',
+    'seller_legal_id': seller?.legalId ?? workspace?.legalId ?? '',
+    'exemption_reason': seller?.taxExemptionReason ??
+        workspace?.taxExemptionReason ??
+        '',
+    'client_address': clientAddress,
+    'payment_terms': orDefault(
+      legal.paymentTerms,
+      l10n?.invoiceLegalPaymentTermsDefault ?? 'Payment on receipt.',
+    ),
+    'late_penalty': orDefault(
+      legal.latePenalty,
+      l10n?.invoiceLegalLatePenaltyDefault ??
+          'Late-payment penalty: three times the statutory interest rate.',
+    ),
+    'recovery_indemnity': orDefault(
+      legal.recoveryIndemnity,
+      l10n?.invoiceLegalRecoveryDefault ??
+          'Fixed recovery indemnity for collection costs: €40.',
+    ),
+    'escompte': orDefault(
+      legal.escompte,
+      l10n?.invoiceLegalEscompteDefault ??
+          'No discount for early payment.',
+    ),
+    'insurance': legal.insurance,
+    'special_mentions': legal.specialMentions,
+  };
+}
+
+/// One line's postal address as the document prints it, from the frozen
+/// buyer party (0069) or the flat snapshot on legacy invoices.
+String _clientAddressOf(Invoice invoice) {
+  final buyer = invoice.buyerParty;
+  if (buyer == null) return invoice.memberAddress;
+  final cityLine =
+      [buyer.postalCode, buyer.city].where((p) => p.isNotEmpty).join(' ');
+  return [buyer.street, cityLine].where((p) => p.isNotEmpty).join(', ');
+}
+
 /// The report data model (#470/#474) — every value the Liquid bands
 /// can reference, resolved where formatting is at hand. Amounts arrive
 /// pre-formatted in the workspace currency; the flags feed
 /// `{% if %}` conditions. Shared by the PDF render AND the in-app
-/// quick preview.
+/// quick preview. [workspace] feeds the legal mention variables (#480);
+/// null leaves the seller lines empty and the clauses on their
+/// localized statutory defaults.
 Map<String, Object?> invoiceReportData(
   BuildContext context,
   Invoice invoice, {
   required bool proforma,
   required bool copy,
+  Workspace? workspace,
 }) {
   final l10n = AppLocalizations.of(context);
   final currency = NumberFormat.simpleCurrency(name: invoice.currency);
@@ -85,6 +151,8 @@ Map<String, Object?> invoiceReportData(
     Localizations.maybeLocaleOf(context)?.toString(),
   );
   String money(int cents) => currency.format(cents / 100);
+  String rate(double percent) =>
+      '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
   return <String, Object?>{
     'workspace': invoice.workspaceName,
     'workspace_address': invoice.workspaceAddress,
@@ -99,6 +167,9 @@ Map<String, Object?> invoiceReportData(
     'payments': money(invoice.lines
         .where((l) => l.amountCents < 0)
         .fold(0, (sum, l) => sum + l.amountCents)),
+    // #480 — total HT / total TVA beside the TTC the bands always had.
+    'net_total': money(invoice.netCents),
+    'vat_total': money(invoice.vatCents),
     'voided': invoice.isVoided,
     'proforma': proforma,
     'copy': copy,
@@ -109,16 +180,30 @@ Map<String, Object?> invoiceReportData(
           'label': invoiceLineText(l10n, line),
           'amount': money(line.amountCents),
           'negative': line.amountCents < 0,
+          // #480 — quantity, unit price and per-line VAT so a template
+          // can print the statutory line detail.
+          'qty': '${line.quantity}',
+          'unit_price': money(line.quantity > 1
+              ? line.amountCents ~/ line.quantity
+              : line.amountCents),
+          'vat_rate': line.vatPercent > 0 ? rate(line.vatPercent) : '',
+          'net': money(vatSplit(line.amountCents, line.vatPercent).netCents),
         },
     ],
     'vat': [
       for (final t in invoice.vatTotals.where((t) => t.vatCents > 0))
         {
-          'rate': '${t.percent == t.percent.roundToDouble() ? t.percent.toStringAsFixed(0) : t.percent} %',
+          'rate': rate(t.percent),
           'net': money(t.netCents),
           'amount': money(t.vatCents),
         },
     ],
+    ...legalMentionData(
+      l10n,
+      workspace,
+      seller: invoice.sellerParty,
+      clientAddress: _clientAddressOf(invoice),
+    ),
   };
 }
 
@@ -133,6 +218,7 @@ Map<String, Object?> statementReportData(
   required String memberName,
   required String periodLabel,
   required String currencyCode,
+  Workspace? workspace,
 }) {
   final l10n = AppLocalizations.of(context);
   final currency = NumberFormat.simpleCurrency(name: currencyCode);
@@ -185,7 +271,7 @@ Map<String, Object?> statementReportData(
   ];
   return <String, Object?>{
     'workspace': workspaceName,
-    'workspace_address': '',
+    'workspace_address': workspace?.address ?? '',
     'member': memberName,
     'number': '',
     'period': periodLabel,
@@ -193,6 +279,8 @@ Map<String, Object?> statementReportData(
     'issued_by': workspaceName,
     'replaces': '',
     'total': money(statement.balanceCents.abs()),
+    'net_total': money(statement.feeCents + statement.overageCents),
+    'vat_total': money(0),
     'charges': money(statement.feeCents + statement.overageCents),
     'payments': money(statement.creditsCents),
     'voided': false,
@@ -201,6 +289,7 @@ Map<String, Object?> statementReportData(
     'has_vat': false,
     'lines': lines,
     'vat': const <Map<String, Object?>>[],
+    ...legalMentionData(l10n, workspace),
   };
 }
 
@@ -217,6 +306,8 @@ Map<String, Object?> reminderReportData(
     Localizations.maybeLocaleOf(context)?.toString(),
   );
   final now = ref.read(clockProvider).now();
+  final l10n = AppLocalizations.of(context);
+  final workspace = ref.read(currentWorkspaceProvider).value;
   return <String, Object?>{
     'workspace': invoice.workspaceName,
     'workspace_address': invoice.workspaceAddress,
@@ -227,6 +318,13 @@ Map<String, Object?> reminderReportData(
     'reminder_level': level,
     'reminder_date': dateFormat.format(now),
     'days_open': now.difference(invoice.issuedAt).inDays,
+    // #480 — a reminder cites the same statutory payment clauses.
+    ...legalMentionData(
+      l10n,
+      workspace,
+      seller: invoice.sellerParty,
+      clientAddress: _clientAddressOf(invoice),
+    ),
   };
 }
 
@@ -238,6 +336,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   String facturXml = '',
   Uint8List? colorProfile,
   InvoicePdfTemplate template = InvoicePdfTemplate.empty,
+  Workspace? workspace,
 }) async {
   final l10n = AppLocalizations.of(context);
   final currency = NumberFormat.simpleCurrency(name: invoice.currency);
@@ -258,6 +357,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     invoice,
     proforma: proforma,
     copy: copy,
+    workspace: workspace,
   );
   // #476: a proforma renders its OWN bands when the owner set them —
   // else the invoice's, as it always did.
@@ -347,6 +447,7 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
     facturXml: xml,
     colorProfile: icc.buffer.asUint8List(),
     template: invoicePdfTemplateFor(ref),
+    workspace: ref.read(currentWorkspaceProvider).value,
   );
   return (
     bytes: pdf.bytes,
@@ -565,7 +666,9 @@ Future<void> shareProforma(
         'Something went wrong. Please try again.',
     action: () async {
       final pdf = await buildInvoicePdfFile(context, invoice,
-          proforma: true, template: invoicePdfTemplateFor(ref));
+          proforma: true,
+          template: invoicePdfTemplateFor(ref),
+          workspace: ref.read(currentWorkspaceProvider).value);
       await ref.read(fileSharerProvider)(
         bytes: Uint8List.fromList(pdf.bytes),
         fileName: pdf.fileName,
@@ -676,6 +779,7 @@ Future<void> downloadInvoicePdf(
         invoice,
         copy: _rendersCopy(ref),
         template: invoicePdfTemplateFor(ref),
+        workspace: ref.read(currentWorkspaceProvider).value,
       );
       if (!context.mounted) return;
       await savePdfToDownloads(
@@ -706,6 +810,7 @@ Future<void> shareInvoicePdf(
         invoice,
         copy: _rendersCopy(ref),
         template: invoicePdfTemplateFor(ref),
+        workspace: ref.read(currentWorkspaceProvider).value,
       );
       await ref.read(fileSharerProvider)(
         bytes: Uint8List.fromList(pdf.bytes),

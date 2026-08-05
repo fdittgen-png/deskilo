@@ -46,7 +46,10 @@ mixin _$Workspace {
  int get deskOpacity;/// Owner-configured invitation message template (0049) with {tag}
 /// placeholders (see [InvitationTags]); '' = use the app's localized
 /// default message. Max length enforced by the column check.
- String get invitationTemplate;
+ String get invitationTemplate;/// Legal invoice mentions (0094) — legal form, trade register,
+/// payment terms, penalty/indemnity/escompte clauses, insurance and
+/// special mentions. Raw jsonb; typed access via InvoiceLegal.
+ Map<String, dynamic> get invoiceLegal;
 /// Create a copy of Workspace
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -57,16 +60,16 @@ $WorkspaceCopyWith<Workspace> get copyWith => _$WorkspaceCopyWithImpl<Workspace>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Workspace&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.currencyCode, currencyCode) || other.currencyCode == currencyCode)&&(identical(other.timezone, timezone) || other.timezone == timezone)&&(identical(other.inviteCode, inviteCode) || other.inviteCode == inviteCode)&&const DeepCollectionEquality().equals(other.featureFlags, featureFlags)&&(identical(other.devMode, devMode) || other.devMode == devMode)&&const DeepCollectionEquality().equals(other.paymentInstructions, paymentInstructions)&&(identical(other.whatsappGroup, whatsappGroup) || other.whatsappGroup == whatsappGroup)&&(identical(other.address, address) || other.address == address)&&(identical(other.vatRegime, vatRegime) || other.vatRegime == vatRegime)&&(identical(other.vatId, vatId) || other.vatId == vatId)&&(identical(other.legalId, legalId) || other.legalId == legalId)&&(identical(other.taxExemptionReason, taxExemptionReason) || other.taxExemptionReason == taxExemptionReason)&&(identical(other.street, street) || other.street == street)&&(identical(other.city, city) || other.city == city)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.vatAccount, vatAccount) || other.vatAccount == vatAccount)&&(identical(other.deskOpacity, deskOpacity) || other.deskOpacity == deskOpacity)&&(identical(other.invitationTemplate, invitationTemplate) || other.invitationTemplate == invitationTemplate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Workspace&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.currencyCode, currencyCode) || other.currencyCode == currencyCode)&&(identical(other.timezone, timezone) || other.timezone == timezone)&&(identical(other.inviteCode, inviteCode) || other.inviteCode == inviteCode)&&const DeepCollectionEquality().equals(other.featureFlags, featureFlags)&&(identical(other.devMode, devMode) || other.devMode == devMode)&&const DeepCollectionEquality().equals(other.paymentInstructions, paymentInstructions)&&(identical(other.whatsappGroup, whatsappGroup) || other.whatsappGroup == whatsappGroup)&&(identical(other.address, address) || other.address == address)&&(identical(other.vatRegime, vatRegime) || other.vatRegime == vatRegime)&&(identical(other.vatId, vatId) || other.vatId == vatId)&&(identical(other.legalId, legalId) || other.legalId == legalId)&&(identical(other.taxExemptionReason, taxExemptionReason) || other.taxExemptionReason == taxExemptionReason)&&(identical(other.street, street) || other.street == street)&&(identical(other.city, city) || other.city == city)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.vatAccount, vatAccount) || other.vatAccount == vatAccount)&&(identical(other.deskOpacity, deskOpacity) || other.deskOpacity == deskOpacity)&&(identical(other.invitationTemplate, invitationTemplate) || other.invitationTemplate == invitationTemplate)&&const DeepCollectionEquality().equals(other.invoiceLegal, invoiceLegal));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,id,name,countryCode,currencyCode,timezone,inviteCode,const DeepCollectionEquality().hash(featureFlags),devMode,const DeepCollectionEquality().hash(paymentInstructions),whatsappGroup,address,vatRegime,vatId,legalId,taxExemptionReason,street,city,postalCode,vatAccount,deskOpacity,invitationTemplate]);
+int get hashCode => Object.hashAll([runtimeType,id,name,countryCode,currencyCode,timezone,inviteCode,const DeepCollectionEquality().hash(featureFlags),devMode,const DeepCollectionEquality().hash(paymentInstructions),whatsappGroup,address,vatRegime,vatId,legalId,taxExemptionReason,street,city,postalCode,vatAccount,deskOpacity,invitationTemplate,const DeepCollectionEquality().hash(invoiceLegal)]);
 
 @override
 String toString() {
-  return 'Workspace(id: $id, name: $name, countryCode: $countryCode, currencyCode: $currencyCode, timezone: $timezone, inviteCode: $inviteCode, featureFlags: $featureFlags, devMode: $devMode, paymentInstructions: $paymentInstructions, whatsappGroup: $whatsappGroup, address: $address, vatRegime: $vatRegime, vatId: $vatId, legalId: $legalId, taxExemptionReason: $taxExemptionReason, street: $street, city: $city, postalCode: $postalCode, vatAccount: $vatAccount, deskOpacity: $deskOpacity, invitationTemplate: $invitationTemplate)';
+  return 'Workspace(id: $id, name: $name, countryCode: $countryCode, currencyCode: $currencyCode, timezone: $timezone, inviteCode: $inviteCode, featureFlags: $featureFlags, devMode: $devMode, paymentInstructions: $paymentInstructions, whatsappGroup: $whatsappGroup, address: $address, vatRegime: $vatRegime, vatId: $vatId, legalId: $legalId, taxExemptionReason: $taxExemptionReason, street: $street, city: $city, postalCode: $postalCode, vatAccount: $vatAccount, deskOpacity: $deskOpacity, invitationTemplate: $invitationTemplate, invoiceLegal: $invoiceLegal)';
 }
 
 
@@ -77,7 +80,7 @@ abstract mixin class $WorkspaceCopyWith<$Res>  {
   factory $WorkspaceCopyWith(Workspace value, $Res Function(Workspace) _then) = _$WorkspaceCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String countryCode, String currencyCode, String timezone, String inviteCode, Map<String, dynamic> featureFlags, bool devMode, Map<String, dynamic> paymentInstructions, String whatsappGroup, String address, String vatRegime, String vatId, String legalId, String taxExemptionReason, String street, String city, String postalCode, String vatAccount, int deskOpacity, String invitationTemplate
+ String id, String name, String countryCode, String currencyCode, String timezone, String inviteCode, Map<String, dynamic> featureFlags, bool devMode, Map<String, dynamic> paymentInstructions, String whatsappGroup, String address, String vatRegime, String vatId, String legalId, String taxExemptionReason, String street, String city, String postalCode, String vatAccount, int deskOpacity, String invitationTemplate, Map<String, dynamic> invoiceLegal
 });
 
 
@@ -94,7 +97,7 @@ class _$WorkspaceCopyWithImpl<$Res>
 
 /// Create a copy of Workspace
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? countryCode = null,Object? currencyCode = null,Object? timezone = null,Object? inviteCode = null,Object? featureFlags = null,Object? devMode = null,Object? paymentInstructions = null,Object? whatsappGroup = null,Object? address = null,Object? vatRegime = null,Object? vatId = null,Object? legalId = null,Object? taxExemptionReason = null,Object? street = null,Object? city = null,Object? postalCode = null,Object? vatAccount = null,Object? deskOpacity = null,Object? invitationTemplate = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? countryCode = null,Object? currencyCode = null,Object? timezone = null,Object? inviteCode = null,Object? featureFlags = null,Object? devMode = null,Object? paymentInstructions = null,Object? whatsappGroup = null,Object? address = null,Object? vatRegime = null,Object? vatId = null,Object? legalId = null,Object? taxExemptionReason = null,Object? street = null,Object? city = null,Object? postalCode = null,Object? vatAccount = null,Object? deskOpacity = null,Object? invitationTemplate = null,Object? invoiceLegal = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -117,7 +120,8 @@ as String,postalCode: null == postalCode ? _self.postalCode : postalCode // igno
 as String,vatAccount: null == vatAccount ? _self.vatAccount : vatAccount // ignore: cast_nullable_to_non_nullable
 as String,deskOpacity: null == deskOpacity ? _self.deskOpacity : deskOpacity // ignore: cast_nullable_to_non_nullable
 as int,invitationTemplate: null == invitationTemplate ? _self.invitationTemplate : invitationTemplate // ignore: cast_nullable_to_non_nullable
-as String,
+as String,invoiceLegal: null == invoiceLegal ? _self.invoiceLegal : invoiceLegal // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>,
   ));
 }
 
@@ -199,10 +203,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags,  bool devMode,  Map<String, dynamic> paymentInstructions,  String whatsappGroup,  String address,  String vatRegime,  String vatId,  String legalId,  String taxExemptionReason,  String street,  String city,  String postalCode,  String vatAccount,  int deskOpacity,  String invitationTemplate)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags,  bool devMode,  Map<String, dynamic> paymentInstructions,  String whatsappGroup,  String address,  String vatRegime,  String vatId,  String legalId,  String taxExemptionReason,  String street,  String city,  String postalCode,  String vatAccount,  int deskOpacity,  String invitationTemplate,  Map<String, dynamic> invoiceLegal)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Workspace() when $default != null:
-return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags,_that.devMode,_that.paymentInstructions,_that.whatsappGroup,_that.address,_that.vatRegime,_that.vatId,_that.legalId,_that.taxExemptionReason,_that.street,_that.city,_that.postalCode,_that.vatAccount,_that.deskOpacity,_that.invitationTemplate);case _:
+return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags,_that.devMode,_that.paymentInstructions,_that.whatsappGroup,_that.address,_that.vatRegime,_that.vatId,_that.legalId,_that.taxExemptionReason,_that.street,_that.city,_that.postalCode,_that.vatAccount,_that.deskOpacity,_that.invitationTemplate,_that.invoiceLegal);case _:
   return orElse();
 
 }
@@ -220,10 +224,10 @@ return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags,  bool devMode,  Map<String, dynamic> paymentInstructions,  String whatsappGroup,  String address,  String vatRegime,  String vatId,  String legalId,  String taxExemptionReason,  String street,  String city,  String postalCode,  String vatAccount,  int deskOpacity,  String invitationTemplate)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags,  bool devMode,  Map<String, dynamic> paymentInstructions,  String whatsappGroup,  String address,  String vatRegime,  String vatId,  String legalId,  String taxExemptionReason,  String street,  String city,  String postalCode,  String vatAccount,  int deskOpacity,  String invitationTemplate,  Map<String, dynamic> invoiceLegal)  $default,) {final _that = this;
 switch (_that) {
 case _Workspace():
-return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags,_that.devMode,_that.paymentInstructions,_that.whatsappGroup,_that.address,_that.vatRegime,_that.vatId,_that.legalId,_that.taxExemptionReason,_that.street,_that.city,_that.postalCode,_that.vatAccount,_that.deskOpacity,_that.invitationTemplate);}
+return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags,_that.devMode,_that.paymentInstructions,_that.whatsappGroup,_that.address,_that.vatRegime,_that.vatId,_that.legalId,_that.taxExemptionReason,_that.street,_that.city,_that.postalCode,_that.vatAccount,_that.deskOpacity,_that.invitationTemplate,_that.invoiceLegal);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -237,10 +241,10 @@ return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags,  bool devMode,  Map<String, dynamic> paymentInstructions,  String whatsappGroup,  String address,  String vatRegime,  String vatId,  String legalId,  String taxExemptionReason,  String street,  String city,  String postalCode,  String vatAccount,  int deskOpacity,  String invitationTemplate)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String countryCode,  String currencyCode,  String timezone,  String inviteCode,  Map<String, dynamic> featureFlags,  bool devMode,  Map<String, dynamic> paymentInstructions,  String whatsappGroup,  String address,  String vatRegime,  String vatId,  String legalId,  String taxExemptionReason,  String street,  String city,  String postalCode,  String vatAccount,  int deskOpacity,  String invitationTemplate,  Map<String, dynamic> invoiceLegal)?  $default,) {final _that = this;
 switch (_that) {
 case _Workspace() when $default != null:
-return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags,_that.devMode,_that.paymentInstructions,_that.whatsappGroup,_that.address,_that.vatRegime,_that.vatId,_that.legalId,_that.taxExemptionReason,_that.street,_that.city,_that.postalCode,_that.vatAccount,_that.deskOpacity,_that.invitationTemplate);case _:
+return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.timezone,_that.inviteCode,_that.featureFlags,_that.devMode,_that.paymentInstructions,_that.whatsappGroup,_that.address,_that.vatRegime,_that.vatId,_that.legalId,_that.taxExemptionReason,_that.street,_that.city,_that.postalCode,_that.vatAccount,_that.deskOpacity,_that.invitationTemplate,_that.invoiceLegal);case _:
   return null;
 
 }
@@ -252,7 +256,7 @@ return $default(_that.id,_that.name,_that.countryCode,_that.currencyCode,_that.t
 
 
 class _Workspace extends Workspace {
-  const _Workspace({required this.id, required this.name, required this.countryCode, required this.currencyCode, required this.timezone, required this.inviteCode, final  Map<String, dynamic> featureFlags = const <String, dynamic>{}, this.devMode = false, final  Map<String, dynamic> paymentInstructions = const <String, dynamic>{}, this.whatsappGroup = '', this.address = '', this.vatRegime = 'not_subject', this.vatId = '', this.legalId = '', this.taxExemptionReason = '', this.street = '', this.city = '', this.postalCode = '', this.vatAccount = '', this.deskOpacity = 100, this.invitationTemplate = ''}): _featureFlags = featureFlags,_paymentInstructions = paymentInstructions,super._();
+  const _Workspace({required this.id, required this.name, required this.countryCode, required this.currencyCode, required this.timezone, required this.inviteCode, final  Map<String, dynamic> featureFlags = const <String, dynamic>{}, this.devMode = false, final  Map<String, dynamic> paymentInstructions = const <String, dynamic>{}, this.whatsappGroup = '', this.address = '', this.vatRegime = 'not_subject', this.vatId = '', this.legalId = '', this.taxExemptionReason = '', this.street = '', this.city = '', this.postalCode = '', this.vatAccount = '', this.deskOpacity = 100, this.invitationTemplate = '', final  Map<String, dynamic> invoiceLegal = const <String, dynamic>{}}): _featureFlags = featureFlags,_paymentInstructions = paymentInstructions,_invoiceLegal = invoiceLegal,super._();
   
 
 @override final  String id;
@@ -325,6 +329,19 @@ class _Workspace extends Workspace {
 /// placeholders (see [InvitationTags]); '' = use the app's localized
 /// default message. Max length enforced by the column check.
 @override@JsonKey() final  String invitationTemplate;
+/// Legal invoice mentions (0094) — legal form, trade register,
+/// payment terms, penalty/indemnity/escompte clauses, insurance and
+/// special mentions. Raw jsonb; typed access via InvoiceLegal.
+ final  Map<String, dynamic> _invoiceLegal;
+/// Legal invoice mentions (0094) — legal form, trade register,
+/// payment terms, penalty/indemnity/escompte clauses, insurance and
+/// special mentions. Raw jsonb; typed access via InvoiceLegal.
+@override@JsonKey() Map<String, dynamic> get invoiceLegal {
+  if (_invoiceLegal is EqualUnmodifiableMapView) return _invoiceLegal;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_invoiceLegal);
+}
+
 
 /// Create a copy of Workspace
 /// with the given fields replaced by the non-null parameter values.
@@ -336,16 +353,16 @@ _$WorkspaceCopyWith<_Workspace> get copyWith => __$WorkspaceCopyWithImpl<_Worksp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Workspace&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.currencyCode, currencyCode) || other.currencyCode == currencyCode)&&(identical(other.timezone, timezone) || other.timezone == timezone)&&(identical(other.inviteCode, inviteCode) || other.inviteCode == inviteCode)&&const DeepCollectionEquality().equals(other._featureFlags, _featureFlags)&&(identical(other.devMode, devMode) || other.devMode == devMode)&&const DeepCollectionEquality().equals(other._paymentInstructions, _paymentInstructions)&&(identical(other.whatsappGroup, whatsappGroup) || other.whatsappGroup == whatsappGroup)&&(identical(other.address, address) || other.address == address)&&(identical(other.vatRegime, vatRegime) || other.vatRegime == vatRegime)&&(identical(other.vatId, vatId) || other.vatId == vatId)&&(identical(other.legalId, legalId) || other.legalId == legalId)&&(identical(other.taxExemptionReason, taxExemptionReason) || other.taxExemptionReason == taxExemptionReason)&&(identical(other.street, street) || other.street == street)&&(identical(other.city, city) || other.city == city)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.vatAccount, vatAccount) || other.vatAccount == vatAccount)&&(identical(other.deskOpacity, deskOpacity) || other.deskOpacity == deskOpacity)&&(identical(other.invitationTemplate, invitationTemplate) || other.invitationTemplate == invitationTemplate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Workspace&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.currencyCode, currencyCode) || other.currencyCode == currencyCode)&&(identical(other.timezone, timezone) || other.timezone == timezone)&&(identical(other.inviteCode, inviteCode) || other.inviteCode == inviteCode)&&const DeepCollectionEquality().equals(other._featureFlags, _featureFlags)&&(identical(other.devMode, devMode) || other.devMode == devMode)&&const DeepCollectionEquality().equals(other._paymentInstructions, _paymentInstructions)&&(identical(other.whatsappGroup, whatsappGroup) || other.whatsappGroup == whatsappGroup)&&(identical(other.address, address) || other.address == address)&&(identical(other.vatRegime, vatRegime) || other.vatRegime == vatRegime)&&(identical(other.vatId, vatId) || other.vatId == vatId)&&(identical(other.legalId, legalId) || other.legalId == legalId)&&(identical(other.taxExemptionReason, taxExemptionReason) || other.taxExemptionReason == taxExemptionReason)&&(identical(other.street, street) || other.street == street)&&(identical(other.city, city) || other.city == city)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.vatAccount, vatAccount) || other.vatAccount == vatAccount)&&(identical(other.deskOpacity, deskOpacity) || other.deskOpacity == deskOpacity)&&(identical(other.invitationTemplate, invitationTemplate) || other.invitationTemplate == invitationTemplate)&&const DeepCollectionEquality().equals(other._invoiceLegal, _invoiceLegal));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,id,name,countryCode,currencyCode,timezone,inviteCode,const DeepCollectionEquality().hash(_featureFlags),devMode,const DeepCollectionEquality().hash(_paymentInstructions),whatsappGroup,address,vatRegime,vatId,legalId,taxExemptionReason,street,city,postalCode,vatAccount,deskOpacity,invitationTemplate]);
+int get hashCode => Object.hashAll([runtimeType,id,name,countryCode,currencyCode,timezone,inviteCode,const DeepCollectionEquality().hash(_featureFlags),devMode,const DeepCollectionEquality().hash(_paymentInstructions),whatsappGroup,address,vatRegime,vatId,legalId,taxExemptionReason,street,city,postalCode,vatAccount,deskOpacity,invitationTemplate,const DeepCollectionEquality().hash(_invoiceLegal)]);
 
 @override
 String toString() {
-  return 'Workspace(id: $id, name: $name, countryCode: $countryCode, currencyCode: $currencyCode, timezone: $timezone, inviteCode: $inviteCode, featureFlags: $featureFlags, devMode: $devMode, paymentInstructions: $paymentInstructions, whatsappGroup: $whatsappGroup, address: $address, vatRegime: $vatRegime, vatId: $vatId, legalId: $legalId, taxExemptionReason: $taxExemptionReason, street: $street, city: $city, postalCode: $postalCode, vatAccount: $vatAccount, deskOpacity: $deskOpacity, invitationTemplate: $invitationTemplate)';
+  return 'Workspace(id: $id, name: $name, countryCode: $countryCode, currencyCode: $currencyCode, timezone: $timezone, inviteCode: $inviteCode, featureFlags: $featureFlags, devMode: $devMode, paymentInstructions: $paymentInstructions, whatsappGroup: $whatsappGroup, address: $address, vatRegime: $vatRegime, vatId: $vatId, legalId: $legalId, taxExemptionReason: $taxExemptionReason, street: $street, city: $city, postalCode: $postalCode, vatAccount: $vatAccount, deskOpacity: $deskOpacity, invitationTemplate: $invitationTemplate, invoiceLegal: $invoiceLegal)';
 }
 
 
@@ -356,7 +373,7 @@ abstract mixin class _$WorkspaceCopyWith<$Res> implements $WorkspaceCopyWith<$Re
   factory _$WorkspaceCopyWith(_Workspace value, $Res Function(_Workspace) _then) = __$WorkspaceCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String countryCode, String currencyCode, String timezone, String inviteCode, Map<String, dynamic> featureFlags, bool devMode, Map<String, dynamic> paymentInstructions, String whatsappGroup, String address, String vatRegime, String vatId, String legalId, String taxExemptionReason, String street, String city, String postalCode, String vatAccount, int deskOpacity, String invitationTemplate
+ String id, String name, String countryCode, String currencyCode, String timezone, String inviteCode, Map<String, dynamic> featureFlags, bool devMode, Map<String, dynamic> paymentInstructions, String whatsappGroup, String address, String vatRegime, String vatId, String legalId, String taxExemptionReason, String street, String city, String postalCode, String vatAccount, int deskOpacity, String invitationTemplate, Map<String, dynamic> invoiceLegal
 });
 
 
@@ -373,7 +390,7 @@ class __$WorkspaceCopyWithImpl<$Res>
 
 /// Create a copy of Workspace
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? countryCode = null,Object? currencyCode = null,Object? timezone = null,Object? inviteCode = null,Object? featureFlags = null,Object? devMode = null,Object? paymentInstructions = null,Object? whatsappGroup = null,Object? address = null,Object? vatRegime = null,Object? vatId = null,Object? legalId = null,Object? taxExemptionReason = null,Object? street = null,Object? city = null,Object? postalCode = null,Object? vatAccount = null,Object? deskOpacity = null,Object? invitationTemplate = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? countryCode = null,Object? currencyCode = null,Object? timezone = null,Object? inviteCode = null,Object? featureFlags = null,Object? devMode = null,Object? paymentInstructions = null,Object? whatsappGroup = null,Object? address = null,Object? vatRegime = null,Object? vatId = null,Object? legalId = null,Object? taxExemptionReason = null,Object? street = null,Object? city = null,Object? postalCode = null,Object? vatAccount = null,Object? deskOpacity = null,Object? invitationTemplate = null,Object? invoiceLegal = null,}) {
   return _then(_Workspace(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -396,7 +413,8 @@ as String,postalCode: null == postalCode ? _self.postalCode : postalCode // igno
 as String,vatAccount: null == vatAccount ? _self.vatAccount : vatAccount // ignore: cast_nullable_to_non_nullable
 as String,deskOpacity: null == deskOpacity ? _self.deskOpacity : deskOpacity // ignore: cast_nullable_to_non_nullable
 as int,invitationTemplate: null == invitationTemplate ? _self.invitationTemplate : invitationTemplate // ignore: cast_nullable_to_non_nullable
-as String,
+as String,invoiceLegal: null == invoiceLegal ? _self._invoiceLegal : invoiceLegal // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>,
   ));
 }
 

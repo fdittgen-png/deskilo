@@ -1037,24 +1037,8 @@
   "@reportPresetClassic": {
     "description": "Report UX: presets, quick preview, download (#474)"
   },
-  "reportPresetCompact": "Compact",
-  "@reportPresetCompact": {
-    "description": "Report UX: presets, quick preview, download (#474)"
-  },
   "reportPresetFormalLetter": "Formal letter",
   "@reportPresetFormalLetter": {
-    "description": "Report UX: presets, quick preview, download (#474)"
-  },
-  "reportPresetMinimal": "Minimal",
-  "@reportPresetMinimal": {
-    "description": "Report UX: presets, quick preview, download (#474)"
-  },
-  "reportPresetStandard": "Standard",
-  "@reportPresetStandard": {
-    "description": "Report UX: presets, quick preview, download (#474)"
-  },
-  "reportPresetShort": "Short notice",
-  "@reportPresetShort": {
     "description": "Report UX: presets, quick preview, download (#474)"
   },
   "reportSubject": "Subject",
@@ -1084,5 +1068,77 @@
   "invoiceTemplateDocStatement": "Statement",
   "@invoiceTemplateDocStatement": {
     "description": "Report-editor document chip (#476)"
+  },
+  "reportPresetSimple": "Simple",
+  "@reportPresetSimple": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "reportPresetVerbose": "Detailed",
+  "@reportPresetVerbose": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalSection": "Invoice mentions",
+  "@invoiceLegalSection": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalIntro": "The statutory lines printed on invoices and reminders. The payment clauses fall back to legal defaults when left empty.",
+  "@invoiceLegalIntro": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalFormField": "Legal form & capital",
+  "@invoiceLegalFormField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalFormHint": "e.g. SARL au capital de 7 500 €",
+  "@invoiceLegalFormHint": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRegistrationField": "Trade register",
+  "@invoiceLegalRegistrationField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRegistrationHint": "e.g. RCS Saint-Brieuc 680 357 910",
+  "@invoiceLegalRegistrationHint": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalPaymentTermsField": "Payment terms",
+  "@invoiceLegalPaymentTermsField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalLatePenaltyField": "Late-payment penalty",
+  "@invoiceLegalLatePenaltyField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRecoveryField": "Recovery indemnity",
+  "@invoiceLegalRecoveryField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalEscompteField": "Early-payment discount",
+  "@invoiceLegalEscompteField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalInsuranceField": "Professional insurance",
+  "@invoiceLegalInsuranceField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalSpecialField": "Special mentions",
+  "@invoiceLegalSpecialField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalPaymentTermsDefault": "Payment on receipt.",
+  "@invoiceLegalPaymentTermsDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalLatePenaltyDefault": "Late-payment penalty: three times the statutory interest rate.",
+  "@invoiceLegalLatePenaltyDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRecoveryDefault": "Fixed recovery indemnity for collection costs: €40.",
+  "@invoiceLegalRecoveryDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalEscompteDefault": "No discount for early payment.",
+  "@invoiceLegalEscompteDefault": {
+    "description": "Legal invoice mentions (#480)"
   }
 }

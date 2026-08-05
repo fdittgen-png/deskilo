@@ -408,16 +408,84 @@
   "reportPreviewTitle": "Anteprima rapida — la tua fattura più recente",
   "reportPreviewSimulated": "Anteprima rapida — dati di esempio",
   "reportPresetClassic": "Classico",
-  "reportPresetCompact": "Compatto",
   "reportPresetFormalLetter": "Lettera formale",
-  "reportPresetMinimal": "Minimale",
-  "reportPresetStandard": "Standard",
-  "reportPresetShort": "Avviso breve",
   "reportSubject": "Oggetto",
   "reportRegards": "Cordiali saluti",
   "invoiceTemplatePresets": "Modelli",
   "invoiceTemplateQuickPreview": "Anteprima rapida",
   "invoiceTemplateDownload": "Scarica PDF",
   "invoiceTemplateShare": "Condividi PDF",
-  "invoiceTemplateDocStatement": "Estratto"
+  "invoiceTemplateDocStatement": "Estratto",
+  "reportPresetSimple": "Semplice",
+  "@reportPresetSimple": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "reportPresetVerbose": "Dettagliato",
+  "@reportPresetVerbose": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalSection": "Menzioni di fatturazione",
+  "@invoiceLegalSection": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalIntro": "Le menzioni legali stampate su fatture e solleciti. Le clausole di pagamento vuote usano i testi legali predefiniti.",
+  "@invoiceLegalIntro": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalFormField": "Forma giuridica e capitale",
+  "@invoiceLegalFormField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalFormHint": "es. SARL au capital de 7 500 €",
+  "@invoiceLegalFormHint": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRegistrationField": "Registro delle imprese",
+  "@invoiceLegalRegistrationField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRegistrationHint": "es. RCS Saint-Brieuc 680 357 910",
+  "@invoiceLegalRegistrationHint": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalPaymentTermsField": "Termini di pagamento",
+  "@invoiceLegalPaymentTermsField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalLatePenaltyField": "Penale di mora",
+  "@invoiceLegalLatePenaltyField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRecoveryField": "Indennità di recupero crediti",
+  "@invoiceLegalRecoveryField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalEscompteField": "Sconto per pagamento anticipato",
+  "@invoiceLegalEscompteField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalInsuranceField": "Assicurazione professionale",
+  "@invoiceLegalInsuranceField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalSpecialField": "Menzioni particolari",
+  "@invoiceLegalSpecialField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalPaymentTermsDefault": "Pagamento al ricevimento.",
+  "@invoiceLegalPaymentTermsDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalLatePenaltyDefault": "Penale di mora: tre volte il tasso di interesse legale.",
+  "@invoiceLegalLatePenaltyDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRecoveryDefault": "Indennità forfettaria per costi di recupero: 40 €.",
+  "@invoiceLegalRecoveryDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalEscompteDefault": "Nessuno sconto per pagamento anticipato.",
+  "@invoiceLegalEscompteDefault": {
+    "description": "Legal invoice mentions (#480)"
+  }
 }

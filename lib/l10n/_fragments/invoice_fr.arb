@@ -408,16 +408,84 @@
   "reportPreviewTitle": "Aperçu rapide — votre facture la plus récente",
   "reportPreviewSimulated": "Aperçu rapide — données d'exemple",
   "reportPresetClassic": "Classique",
-  "reportPresetCompact": "Compact",
   "reportPresetFormalLetter": "Lettre formelle",
-  "reportPresetMinimal": "Minimal",
-  "reportPresetStandard": "Standard",
-  "reportPresetShort": "Avis bref",
   "reportSubject": "Objet",
   "reportRegards": "Cordialement",
   "invoiceTemplatePresets": "Modèles",
   "invoiceTemplateQuickPreview": "Aperçu rapide",
   "invoiceTemplateDownload": "Télécharger le PDF",
   "invoiceTemplateShare": "Partager le PDF",
-  "invoiceTemplateDocStatement": "Relevé"
+  "invoiceTemplateDocStatement": "Relevé",
+  "reportPresetSimple": "Simple",
+  "@reportPresetSimple": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "reportPresetVerbose": "Détaillé",
+  "@reportPresetVerbose": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalSection": "Mentions de facturation",
+  "@invoiceLegalSection": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalIntro": "Les mentions légales imprimées sur les factures et les relances. Les clauses de paiement laissées vides utilisent les mentions légales par défaut.",
+  "@invoiceLegalIntro": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalFormField": "Forme juridique et capital",
+  "@invoiceLegalFormField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalFormHint": "ex. SARL au capital de 7 500 €",
+  "@invoiceLegalFormHint": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRegistrationField": "Registre du commerce (RCS)",
+  "@invoiceLegalRegistrationField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRegistrationHint": "ex. RCS Saint-Brieuc 680 357 910",
+  "@invoiceLegalRegistrationHint": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalPaymentTermsField": "Modalités de règlement",
+  "@invoiceLegalPaymentTermsField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalLatePenaltyField": "Pénalités de retard",
+  "@invoiceLegalLatePenaltyField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRecoveryField": "Indemnité de recouvrement",
+  "@invoiceLegalRecoveryField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalEscompteField": "Escompte",
+  "@invoiceLegalEscompteField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalInsuranceField": "Assurance professionnelle",
+  "@invoiceLegalInsuranceField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalSpecialField": "Mentions particulières",
+  "@invoiceLegalSpecialField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalPaymentTermsDefault": "Règlement à réception.",
+  "@invoiceLegalPaymentTermsDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalLatePenaltyDefault": "Pénalités de retard : trois fois le taux d'intérêt légal.",
+  "@invoiceLegalLatePenaltyDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRecoveryDefault": "Indemnité forfaitaire pour frais de recouvrement : 40 €.",
+  "@invoiceLegalRecoveryDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalEscompteDefault": "Aucun escompte pour paiement anticipé.",
+  "@invoiceLegalEscompteDefault": {
+    "description": "Legal invoice mentions (#480)"
+  }
 }

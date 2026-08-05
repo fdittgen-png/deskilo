@@ -764,11 +764,7 @@
   "reportPreviewTitle": "Vista rápida — tu factura más reciente",
   "reportPreviewSimulated": "Vista rápida — datos de ejemplo",
   "reportPresetClassic": "Clásico",
-  "reportPresetCompact": "Compacto",
   "reportPresetFormalLetter": "Carta formal",
-  "reportPresetMinimal": "Mínimo",
-  "reportPresetStandard": "Estándar",
-  "reportPresetShort": "Aviso breve",
   "reportSubject": "Asunto",
   "reportRegards": "Atentamente",
   "invoiceTemplatePresets": "Plantillas",
@@ -776,6 +772,78 @@
   "invoiceTemplateDownload": "Descargar PDF",
   "invoiceTemplateShare": "Compartir PDF",
   "invoiceTemplateDocStatement": "Extracto",
+  "reportPresetSimple": "Sencillo",
+  "@reportPresetSimple": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "reportPresetVerbose": "Detallado",
+  "@reportPresetVerbose": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalSection": "Menciones de facturación",
+  "@invoiceLegalSection": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalIntro": "Las menciones legales impresas en facturas y recordatorios. Las cláusulas de pago vacías usan los textos legales por defecto.",
+  "@invoiceLegalIntro": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalFormField": "Forma jurídica y capital",
+  "@invoiceLegalFormField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalFormHint": "p. ej. SARL au capital de 7 500 €",
+  "@invoiceLegalFormHint": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRegistrationField": "Registro mercantil",
+  "@invoiceLegalRegistrationField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRegistrationHint": "p. ej. RCS Saint-Brieuc 680 357 910",
+  "@invoiceLegalRegistrationHint": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalPaymentTermsField": "Condiciones de pago",
+  "@invoiceLegalPaymentTermsField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalLatePenaltyField": "Penalización por demora",
+  "@invoiceLegalLatePenaltyField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRecoveryField": "Indemnización por costes de cobro",
+  "@invoiceLegalRecoveryField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalEscompteField": "Descuento por pronto pago",
+  "@invoiceLegalEscompteField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalInsuranceField": "Seguro profesional",
+  "@invoiceLegalInsuranceField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalSpecialField": "Menciones particulares",
+  "@invoiceLegalSpecialField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalPaymentTermsDefault": "Pago a la recepción.",
+  "@invoiceLegalPaymentTermsDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalLatePenaltyDefault": "Penalización por demora: tres veces el tipo de interés legal.",
+  "@invoiceLegalLatePenaltyDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRecoveryDefault": "Indemnización fija por costes de cobro: 40 €.",
+  "@invoiceLegalRecoveryDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalEscompteDefault": "Sin descuento por pronto pago.",
+  "@invoiceLegalEscompteDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
   "eventTypeMemberJoin": "Nuevo miembro",
   "memberStatusPending": "Pendiente",
   "pendingApprovalTitle": "Esperando aprobación",

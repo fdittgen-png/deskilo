@@ -161,6 +161,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             memberName: memberName,
             periodLabel: monthLabel,
             currencyCode: workspace.currencyCode,
+            workspace: workspace,
           );
           final report =
               renderReportBands(bands: statementBands, data: data) ??

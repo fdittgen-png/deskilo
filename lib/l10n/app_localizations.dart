@@ -3575,32 +3575,8 @@ abstract class AppLocalizations {
   /// Report UX: presets, quick preview, download (#474)
   ///
   /// In en, this message translates to:
-  /// **'Compact'**
-  String get reportPresetCompact;
-
-  /// Report UX: presets, quick preview, download (#474)
-  ///
-  /// In en, this message translates to:
   /// **'Formal letter'**
   String get reportPresetFormalLetter;
-
-  /// Report UX: presets, quick preview, download (#474)
-  ///
-  /// In en, this message translates to:
-  /// **'Minimal'**
-  String get reportPresetMinimal;
-
-  /// Report UX: presets, quick preview, download (#474)
-  ///
-  /// In en, this message translates to:
-  /// **'Standard'**
-  String get reportPresetStandard;
-
-  /// Report UX: presets, quick preview, download (#474)
-  ///
-  /// In en, this message translates to:
-  /// **'Short notice'**
-  String get reportPresetShort;
 
   /// Report UX: presets, quick preview, download (#474)
   ///
@@ -3643,6 +3619,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Statement'**
   String get invoiceTemplateDocStatement;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'Simple'**
+  String get reportPresetSimple;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'Detailed'**
+  String get reportPresetVerbose;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice mentions'**
+  String get invoiceLegalSection;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'The statutory lines printed on invoices and reminders. The payment clauses fall back to legal defaults when left empty.'**
+  String get invoiceLegalIntro;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'Legal form & capital'**
+  String get invoiceLegalFormField;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. SARL au capital de 7 500 €'**
+  String get invoiceLegalFormHint;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'Trade register'**
+  String get invoiceLegalRegistrationField;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. RCS Saint-Brieuc 680 357 910'**
+  String get invoiceLegalRegistrationHint;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment terms'**
+  String get invoiceLegalPaymentTermsField;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'Late-payment penalty'**
+  String get invoiceLegalLatePenaltyField;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery indemnity'**
+  String get invoiceLegalRecoveryField;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'Early-payment discount'**
+  String get invoiceLegalEscompteField;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'Professional insurance'**
+  String get invoiceLegalInsuranceField;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'Special mentions'**
+  String get invoiceLegalSpecialField;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment on receipt.'**
+  String get invoiceLegalPaymentTermsDefault;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'Late-payment penalty: three times the statutory interest rate.'**
+  String get invoiceLegalLatePenaltyDefault;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed recovery indemnity for collection costs: €40.'**
+  String get invoiceLegalRecoveryDefault;
+
+  /// Legal invoice mentions (#480)
+  ///
+  /// In en, this message translates to:
+  /// **'No discount for early payment.'**
+  String get invoiceLegalEscompteDefault;
 
   /// No description provided for @eventTypeMemberJoin.
   ///

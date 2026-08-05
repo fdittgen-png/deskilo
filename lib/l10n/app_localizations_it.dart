@@ -1973,19 +1973,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reportPresetClassic => 'Classico';
 
   @override
-  String get reportPresetCompact => 'Compatto';
-
-  @override
   String get reportPresetFormalLetter => 'Lettera formale';
-
-  @override
-  String get reportPresetMinimal => 'Minimale';
-
-  @override
-  String get reportPresetStandard => 'Standard';
-
-  @override
-  String get reportPresetShort => 'Avviso breve';
 
   @override
   String get reportSubject => 'Oggetto';
@@ -2007,6 +1995,64 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceTemplateDocStatement => 'Estratto';
+
+  @override
+  String get reportPresetSimple => 'Semplice';
+
+  @override
+  String get reportPresetVerbose => 'Dettagliato';
+
+  @override
+  String get invoiceLegalSection => 'Menzioni di fatturazione';
+
+  @override
+  String get invoiceLegalIntro =>
+      'Le menzioni legali stampate su fatture e solleciti. Le clausole di pagamento vuote usano i testi legali predefiniti.';
+
+  @override
+  String get invoiceLegalFormField => 'Forma giuridica e capitale';
+
+  @override
+  String get invoiceLegalFormHint => 'es. SARL au capital de 7 500 €';
+
+  @override
+  String get invoiceLegalRegistrationField => 'Registro delle imprese';
+
+  @override
+  String get invoiceLegalRegistrationHint => 'es. RCS Saint-Brieuc 680 357 910';
+
+  @override
+  String get invoiceLegalPaymentTermsField => 'Termini di pagamento';
+
+  @override
+  String get invoiceLegalLatePenaltyField => 'Penale di mora';
+
+  @override
+  String get invoiceLegalRecoveryField => 'Indennità di recupero crediti';
+
+  @override
+  String get invoiceLegalEscompteField => 'Sconto per pagamento anticipato';
+
+  @override
+  String get invoiceLegalInsuranceField => 'Assicurazione professionale';
+
+  @override
+  String get invoiceLegalSpecialField => 'Menzioni particolari';
+
+  @override
+  String get invoiceLegalPaymentTermsDefault => 'Pagamento al ricevimento.';
+
+  @override
+  String get invoiceLegalLatePenaltyDefault =>
+      'Penale di mora: tre volte il tasso di interesse legale.';
+
+  @override
+  String get invoiceLegalRecoveryDefault =>
+      'Indennità forfettaria per costi di recupero: 40 €.';
+
+  @override
+  String get invoiceLegalEscompteDefault =>
+      'Nessuno sconto per pagamento anticipato.';
 
   @override
   String get eventTypeMemberJoin => 'Nuovo membro';

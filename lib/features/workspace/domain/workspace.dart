@@ -90,6 +90,11 @@ sealed class Workspace with _$Workspace {
     /// placeholders (see [InvitationTags]); '' = use the app's localized
     /// default message. Max length enforced by the column check.
     @Default('') String invitationTemplate,
+
+    /// Legal invoice mentions (0094) — legal form, trade register,
+    /// payment terms, penalty/indemnity/escompte clauses, insurance and
+    /// special mentions. Raw jsonb; typed access via InvoiceLegal.
+    @Default(<String, dynamic>{}) Map<String, dynamic> invoiceLegal,
   }) = _Workspace;
 
   /// Desk fill opacity as a 0..1 fraction for the painter.

@@ -89,6 +89,13 @@ abstract class WorkspaceRepository {
     required String vatAccount,
   });
 
+  /// Owner-only (workspaces_update RLS): replace the legal invoice
+  /// mentions jsonb (0094) — the InvoiceLegal.toJson() map, trimmed.
+  Future<void> setInvoiceLegal(
+    String workspaceId,
+    Map<String, Object?> legal,
+  );
+
   /// Owner-only (workspaces_update RLS): set the invitation message
   /// template (0049) — trimmed, '' means "use the localized default".
   /// Length capped at [invitationTemplateMaxLength] by the column check.

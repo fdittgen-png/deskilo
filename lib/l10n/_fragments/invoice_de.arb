@@ -408,16 +408,84 @@
   "reportPreviewTitle": "Schnellvorschau — deine neueste Rechnung",
   "reportPreviewSimulated": "Schnellvorschau — Beispieldaten",
   "reportPresetClassic": "Klassisch",
-  "reportPresetCompact": "Kompakt",
   "reportPresetFormalLetter": "Formeller Brief",
-  "reportPresetMinimal": "Minimal",
-  "reportPresetStandard": "Standard",
-  "reportPresetShort": "Kurznotiz",
   "reportSubject": "Betreff",
   "reportRegards": "Mit freundlichen Grüßen",
   "invoiceTemplatePresets": "Vorlagen",
   "invoiceTemplateQuickPreview": "Schnellvorschau",
   "invoiceTemplateDownload": "PDF herunterladen",
   "invoiceTemplateShare": "PDF teilen",
-  "invoiceTemplateDocStatement": "Abrechnung"
+  "invoiceTemplateDocStatement": "Abrechnung",
+  "reportPresetSimple": "Einfach",
+  "@reportPresetSimple": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "reportPresetVerbose": "Ausführlich",
+  "@reportPresetVerbose": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalSection": "Rechnungsangaben",
+  "@invoiceLegalSection": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalIntro": "Die Pflichtangaben auf Rechnungen und Mahnungen. Leere Zahlungsklauseln verwenden die gesetzlichen Standardtexte.",
+  "@invoiceLegalIntro": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalFormField": "Rechtsform & Kapital",
+  "@invoiceLegalFormField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalFormHint": "z. B. SARL au capital de 7 500 €",
+  "@invoiceLegalFormHint": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRegistrationField": "Handelsregister",
+  "@invoiceLegalRegistrationField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRegistrationHint": "z. B. RCS Saint-Brieuc 680 357 910",
+  "@invoiceLegalRegistrationHint": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalPaymentTermsField": "Zahlungsbedingungen",
+  "@invoiceLegalPaymentTermsField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalLatePenaltyField": "Verzugszinsen",
+  "@invoiceLegalLatePenaltyField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRecoveryField": "Pauschale für Beitreibungskosten",
+  "@invoiceLegalRecoveryField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalEscompteField": "Skonto",
+  "@invoiceLegalEscompteField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalInsuranceField": "Berufshaftpflicht",
+  "@invoiceLegalInsuranceField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalSpecialField": "Besondere Angaben",
+  "@invoiceLegalSpecialField": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalPaymentTermsDefault": "Zahlbar sofort nach Erhalt.",
+  "@invoiceLegalPaymentTermsDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalLatePenaltyDefault": "Verzugszinsen: dreifacher gesetzlicher Zinssatz.",
+  "@invoiceLegalLatePenaltyDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalRecoveryDefault": "Pauschale für Beitreibungskosten: 40 €.",
+  "@invoiceLegalRecoveryDefault": {
+    "description": "Legal invoice mentions (#480)"
+  },
+  "invoiceLegalEscompteDefault": "Kein Skonto bei vorzeitiger Zahlung.",
+  "@invoiceLegalEscompteDefault": {
+    "description": "Legal invoice mentions (#480)"
+  }
 }

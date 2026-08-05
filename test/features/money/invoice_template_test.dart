@@ -116,7 +116,13 @@ void main() {
       expect(InvoicePdfTemplate.placeholders, [
         'number', 'member', 'workspace', 'workspace_address', 'period',
         'issued', 'issued_by', 'replaces', 'total', 'charges', 'payments',
-        'voided', 'proforma', 'copy', 'has_vat', 'lines', 'vat', //
+        'voided', 'proforma', 'copy', 'has_vat', 'lines', 'vat',
+        // #480 — the legal mention variables.
+        'net_total', 'vat_total', 'seller_legal_form',
+        'seller_registration', 'seller_vat_id', 'seller_legal_id',
+        'exemption_reason', 'client_address', 'payment_terms',
+        'late_penalty', 'recovery_indemnity', 'escompte', 'insurance',
+        'special_mentions', //
       ]);
     });
 
@@ -199,7 +205,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('invoice-template-presets')));
     await tester.pumpAndSettle();
     await tester
-        .tap(find.byKey(const ValueKey('invoice-template-preset-compact')));
+        .tap(find.byKey(const ValueKey('invoice-template-preset-simple')));
     await tester.pumpAndSettle();
 
     final header = tester
@@ -207,7 +213,14 @@ void main() {
             find.byKey(const ValueKey('invoice-template-header')))
         .controller!
         .text;
-    expect(header, contains('{{ workspace }} — {{ number }}'));
+    expect(header, contains('{{ workspace }}'));
+    // #480 — even the Simple preset keeps the statutory clauses.
+    final footer = tester
+        .widget<TextField>(
+            find.byKey(const ValueKey('invoice-template-footer')))
+        .controller!
+        .text;
+    expect(footer, contains('{{ late_penalty }}'));
   });
 
   testWidgets('the PDF menu DOWNLOADS to the device — not only share '
