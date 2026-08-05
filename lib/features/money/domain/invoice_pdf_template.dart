@@ -128,6 +128,21 @@ class InvoicePdfTemplate {
     'has_vat',
     'lines',
     'vat',
+    // #480 — the legal mention variables.
+    'net_total',
+    'vat_total',
+    'seller_legal_form',
+    'seller_registration',
+    'seller_vat_id',
+    'seller_legal_id',
+    'exemption_reason',
+    'client_address',
+    'payment_terms',
+    'late_penalty',
+    'recovery_indemnity',
+    'escompte',
+    'insurance',
+    'special_mentions',
   ];
 
   bool get isEmpty => !hasBands;

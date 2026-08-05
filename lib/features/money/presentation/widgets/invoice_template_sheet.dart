@@ -172,15 +172,16 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
   /// none yet (→ simulated sample data).
   Map<String, Object?>? _liveData() {
     final invoices = ref.read(invoicesProvider).value ?? const [];
+    final liveWorkspace = ref.read(currentWorkspaceProvider).value;
     switch (_doc) {
       case 'invoice':
         if (invoices.isEmpty) return null;
         return invoiceReportData(context, invoices.first,
-            proforma: false, copy: false);
+            proforma: false, copy: false, workspace: liveWorkspace);
       case 'proforma':
         if (invoices.isEmpty) return null;
         return invoiceReportData(context, invoices.first,
-            proforma: true, copy: false);
+            proforma: true, copy: false, workspace: liveWorkspace);
       case 'statement':
         final now = ref.read(clockProvider).now();
         final period =
@@ -198,6 +199,7 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
           memberName: names[me?.id] ?? '',
           periodLabel: statement.period,
           currencyCode: workspace.currencyCode,
+          workspace: workspace,
         );
       default:
         if (invoices.isEmpty) return null;
@@ -259,6 +261,7 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
                   body: _currentBands.body,
                   footer: _currentBands.footer,
                 ),
+          workspace: ref.read(currentWorkspaceProvider).value,
         );
         pdf = (bytes: invoicePdf.bytes, fileName: invoicePdf.fileName);
       } else if (_doc == 'statement') {

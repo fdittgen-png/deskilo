@@ -1970,19 +1970,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reportPresetClassic => 'Klassisch';
 
   @override
-  String get reportPresetCompact => 'Kompakt';
-
-  @override
   String get reportPresetFormalLetter => 'Formeller Brief';
-
-  @override
-  String get reportPresetMinimal => 'Minimal';
-
-  @override
-  String get reportPresetStandard => 'Standard';
-
-  @override
-  String get reportPresetShort => 'Kurznotiz';
 
   @override
   String get reportSubject => 'Betreff';
@@ -2004,6 +1992,65 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceTemplateDocStatement => 'Abrechnung';
+
+  @override
+  String get reportPresetSimple => 'Einfach';
+
+  @override
+  String get reportPresetVerbose => 'Ausführlich';
+
+  @override
+  String get invoiceLegalSection => 'Rechnungsangaben';
+
+  @override
+  String get invoiceLegalIntro =>
+      'Die Pflichtangaben auf Rechnungen und Mahnungen. Leere Zahlungsklauseln verwenden die gesetzlichen Standardtexte.';
+
+  @override
+  String get invoiceLegalFormField => 'Rechtsform & Kapital';
+
+  @override
+  String get invoiceLegalFormHint => 'z. B. SARL au capital de 7 500 €';
+
+  @override
+  String get invoiceLegalRegistrationField => 'Handelsregister';
+
+  @override
+  String get invoiceLegalRegistrationHint =>
+      'z. B. RCS Saint-Brieuc 680 357 910';
+
+  @override
+  String get invoiceLegalPaymentTermsField => 'Zahlungsbedingungen';
+
+  @override
+  String get invoiceLegalLatePenaltyField => 'Verzugszinsen';
+
+  @override
+  String get invoiceLegalRecoveryField => 'Pauschale für Beitreibungskosten';
+
+  @override
+  String get invoiceLegalEscompteField => 'Skonto';
+
+  @override
+  String get invoiceLegalInsuranceField => 'Berufshaftpflicht';
+
+  @override
+  String get invoiceLegalSpecialField => 'Besondere Angaben';
+
+  @override
+  String get invoiceLegalPaymentTermsDefault => 'Zahlbar sofort nach Erhalt.';
+
+  @override
+  String get invoiceLegalLatePenaltyDefault =>
+      'Verzugszinsen: dreifacher gesetzlicher Zinssatz.';
+
+  @override
+  String get invoiceLegalRecoveryDefault =>
+      'Pauschale für Beitreibungskosten: 40 €.';
+
+  @override
+  String get invoiceLegalEscompteDefault =>
+      'Kein Skonto bei vorzeitiger Zahlung.';
 
   @override
   String get eventTypeMemberJoin => 'Neues Mitglied';

@@ -1954,19 +1954,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportPresetClassic => 'Classic';
 
   @override
-  String get reportPresetCompact => 'Compact';
-
-  @override
   String get reportPresetFormalLetter => 'Formal letter';
-
-  @override
-  String get reportPresetMinimal => 'Minimal';
-
-  @override
-  String get reportPresetStandard => 'Standard';
-
-  @override
-  String get reportPresetShort => 'Short notice';
 
   @override
   String get reportSubject => 'Subject';
@@ -1988,6 +1976,64 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceTemplateDocStatement => 'Statement';
+
+  @override
+  String get reportPresetSimple => 'Simple';
+
+  @override
+  String get reportPresetVerbose => 'Detailed';
+
+  @override
+  String get invoiceLegalSection => 'Invoice mentions';
+
+  @override
+  String get invoiceLegalIntro =>
+      'The statutory lines printed on invoices and reminders. The payment clauses fall back to legal defaults when left empty.';
+
+  @override
+  String get invoiceLegalFormField => 'Legal form & capital';
+
+  @override
+  String get invoiceLegalFormHint => 'e.g. SARL au capital de 7 500 €';
+
+  @override
+  String get invoiceLegalRegistrationField => 'Trade register';
+
+  @override
+  String get invoiceLegalRegistrationHint =>
+      'e.g. RCS Saint-Brieuc 680 357 910';
+
+  @override
+  String get invoiceLegalPaymentTermsField => 'Payment terms';
+
+  @override
+  String get invoiceLegalLatePenaltyField => 'Late-payment penalty';
+
+  @override
+  String get invoiceLegalRecoveryField => 'Recovery indemnity';
+
+  @override
+  String get invoiceLegalEscompteField => 'Early-payment discount';
+
+  @override
+  String get invoiceLegalInsuranceField => 'Professional insurance';
+
+  @override
+  String get invoiceLegalSpecialField => 'Special mentions';
+
+  @override
+  String get invoiceLegalPaymentTermsDefault => 'Payment on receipt.';
+
+  @override
+  String get invoiceLegalLatePenaltyDefault =>
+      'Late-payment penalty: three times the statutory interest rate.';
+
+  @override
+  String get invoiceLegalRecoveryDefault =>
+      'Fixed recovery indemnity for collection costs: €40.';
+
+  @override
+  String get invoiceLegalEscompteDefault => 'No discount for early payment.';
 
   @override
   String get eventTypeMemberJoin => 'New member';

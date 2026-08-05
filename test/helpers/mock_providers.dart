@@ -637,6 +637,17 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setInvoiceLegal(
+    String workspaceId,
+    Map<String, Object?> legal,
+  ) async {
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i < 0) return;
+    workspaces[i] =
+        workspaces[i].copyWith(invoiceLegal: Map<String, dynamic>.from(legal));
+  }
+
+  @override
   Future<void> setCoOwner(String memberId, CoOwnerStatus status) async {
     // Server contract (0058): active co-owners also become admins.
     Member patch(Member m) => m.copyWith(

@@ -10,6 +10,7 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/invoice_legal.dart';
 import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
 
@@ -37,6 +38,15 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   final _city = TextEditingController();
   final _postalCode = TextEditingController();
   final _vatAccount = TextEditingController();
+  // #480 — the legal invoice mentions, one controller per printed line.
+  final _legalForm = TextEditingController();
+  final _registration = TextEditingController();
+  final _paymentTerms = TextEditingController();
+  final _latePenalty = TextEditingController();
+  final _recovery = TextEditingController();
+  final _escompte = TextEditingController();
+  final _insurance = TextEditingController();
+  final _special = TextEditingController();
   VatRegime _regime = VatRegime.notSubject;
   bool _loaded = false;
   bool _saving = false;
@@ -50,6 +60,14 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     _city.dispose();
     _postalCode.dispose();
     _vatAccount.dispose();
+    _legalForm.dispose();
+    _registration.dispose();
+    _paymentTerms.dispose();
+    _latePenalty.dispose();
+    _recovery.dispose();
+    _escompte.dispose();
+    _insurance.dispose();
+    _special.dispose();
     super.dispose();
   }
 
@@ -64,17 +82,33 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       message: 'legal identity save failed',
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
-      action: () => ref.read(workspaceRepositoryProvider).setLegalIdentity(
-            workspace.id,
-            vatRegime: vatRegimeWire(_regime),
-            vatId: _vatId.text,
-            legalId: _legalId.text,
-            taxExemptionReason: _reason.text,
-            street: _street.text,
-            city: _city.text,
-            postalCode: _postalCode.text,
-            vatAccount: _vatAccount.text,
-          ),
+      action: () async {
+        final repository = ref.read(workspaceRepositoryProvider);
+        await repository.setLegalIdentity(
+          workspace.id,
+          vatRegime: vatRegimeWire(_regime),
+          vatId: _vatId.text,
+          legalId: _legalId.text,
+          taxExemptionReason: _reason.text,
+          street: _street.text,
+          city: _city.text,
+          postalCode: _postalCode.text,
+          vatAccount: _vatAccount.text,
+        );
+        await repository.setInvoiceLegal(
+          workspace.id,
+          InvoiceLegal(
+            legalForm: _legalForm.text,
+            registration: _registration.text,
+            paymentTerms: _paymentTerms.text,
+            latePenalty: _latePenalty.text,
+            recoveryIndemnity: _recovery.text,
+            escompte: _escompte.text,
+            insurance: _insurance.text,
+            specialMentions: _special.text,
+          ).toJson(),
+        );
+      },
     );
     if (!mounted) return;
     setState(() => _saving = false);
@@ -86,6 +120,32 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       l10n?.legalIdentitySaved ?? 'Legal identity saved.',
     );
   }
+
+  /// One mention line: capped, with the statutory default (or an
+  /// example) as the helper so the owner sees what an empty field
+  /// prints.
+  Widget _mentionField(
+    String key,
+    TextEditingController controller,
+    String label, {
+    String? hint,
+  }) =>
+      Padding(
+        padding: const EdgeInsets.only(bottom: AppSpacing.md),
+        child: TextField(
+          key: ValueKey(key),
+          controller: controller,
+          maxLength: InvoiceLegal.maxFieldLength,
+          maxLines: 2,
+          minLines: 1,
+          decoration: InputDecoration(
+            labelText: label,
+            helperText: hint,
+            helperMaxLines: 3,
+            counterText: '',
+          ),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +173,15 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       _city.text = workspace.city;
       _postalCode.text = workspace.postalCode;
       _vatAccount.text = workspace.vatAccount;
+      final legal = InvoiceLegal.fromJson(workspace.invoiceLegal);
+      _legalForm.text = legal.legalForm;
+      _registration.text = legal.registration;
+      _paymentTerms.text = legal.paymentTerms;
+      _latePenalty.text = legal.latePenalty;
+      _recovery.text = legal.recoveryIndemnity;
+      _escompte.text = legal.escompte;
+      _insurance.text = legal.insurance;
+      _special.text = legal.specialMentions;
     }
 
     return Scaffold(
@@ -278,6 +347,69 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             ),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push('/einvoice-config'),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          // #480 — the statutory mention lines the documents print.
+          Text(
+            l10n?.invoiceLegalSection ?? 'Invoice mentions',
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            l10n?.invoiceLegalIntro ??
+                'The statutory lines printed on invoices and reminders. '
+                    'The payment clauses fall back to legal defaults when '
+                    'left empty.',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          _mentionField(
+            'legal-identity-legal-form',
+            _legalForm,
+            l10n?.invoiceLegalFormField ?? 'Legal form & capital',
+            hint: l10n?.invoiceLegalFormHint,
+          ),
+          _mentionField(
+            'legal-identity-registration',
+            _registration,
+            l10n?.invoiceLegalRegistrationField ?? 'Trade register',
+            hint: l10n?.invoiceLegalRegistrationHint,
+          ),
+          _mentionField(
+            'legal-identity-payment-terms',
+            _paymentTerms,
+            l10n?.invoiceLegalPaymentTermsField ?? 'Payment terms',
+            hint: l10n?.invoiceLegalPaymentTermsDefault,
+          ),
+          _mentionField(
+            'legal-identity-late-penalty',
+            _latePenalty,
+            l10n?.invoiceLegalLatePenaltyField ?? 'Late-payment penalty',
+            hint: l10n?.invoiceLegalLatePenaltyDefault,
+          ),
+          _mentionField(
+            'legal-identity-recovery',
+            _recovery,
+            l10n?.invoiceLegalRecoveryField ?? 'Recovery indemnity',
+            hint: l10n?.invoiceLegalRecoveryDefault,
+          ),
+          _mentionField(
+            'legal-identity-escompte',
+            _escompte,
+            l10n?.invoiceLegalEscompteField ?? 'Early-payment discount',
+            hint: l10n?.invoiceLegalEscompteDefault,
+          ),
+          _mentionField(
+            'legal-identity-insurance',
+            _insurance,
+            l10n?.invoiceLegalInsuranceField ?? 'Professional insurance',
+          ),
+          _mentionField(
+            'legal-identity-special',
+            _special,
+            l10n?.invoiceLegalSpecialField ?? 'Special mentions',
           ),
           const SizedBox(height: AppSpacing.md),
           FilledButton(

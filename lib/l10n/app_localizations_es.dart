@@ -1969,19 +1969,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reportPresetClassic => 'Clásico';
 
   @override
-  String get reportPresetCompact => 'Compacto';
-
-  @override
   String get reportPresetFormalLetter => 'Carta formal';
-
-  @override
-  String get reportPresetMinimal => 'Mínimo';
-
-  @override
-  String get reportPresetStandard => 'Estándar';
-
-  @override
-  String get reportPresetShort => 'Aviso breve';
 
   @override
   String get reportSubject => 'Asunto';
@@ -2003,6 +1991,64 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceTemplateDocStatement => 'Extracto';
+
+  @override
+  String get reportPresetSimple => 'Sencillo';
+
+  @override
+  String get reportPresetVerbose => 'Detallado';
+
+  @override
+  String get invoiceLegalSection => 'Menciones de facturación';
+
+  @override
+  String get invoiceLegalIntro =>
+      'Las menciones legales impresas en facturas y recordatorios. Las cláusulas de pago vacías usan los textos legales por defecto.';
+
+  @override
+  String get invoiceLegalFormField => 'Forma jurídica y capital';
+
+  @override
+  String get invoiceLegalFormHint => 'p. ej. SARL au capital de 7 500 €';
+
+  @override
+  String get invoiceLegalRegistrationField => 'Registro mercantil';
+
+  @override
+  String get invoiceLegalRegistrationHint =>
+      'p. ej. RCS Saint-Brieuc 680 357 910';
+
+  @override
+  String get invoiceLegalPaymentTermsField => 'Condiciones de pago';
+
+  @override
+  String get invoiceLegalLatePenaltyField => 'Penalización por demora';
+
+  @override
+  String get invoiceLegalRecoveryField => 'Indemnización por costes de cobro';
+
+  @override
+  String get invoiceLegalEscompteField => 'Descuento por pronto pago';
+
+  @override
+  String get invoiceLegalInsuranceField => 'Seguro profesional';
+
+  @override
+  String get invoiceLegalSpecialField => 'Menciones particulares';
+
+  @override
+  String get invoiceLegalPaymentTermsDefault => 'Pago a la recepción.';
+
+  @override
+  String get invoiceLegalLatePenaltyDefault =>
+      'Penalización por demora: tres veces el tipo de interés legal.';
+
+  @override
+  String get invoiceLegalRecoveryDefault =>
+      'Indemnización fija por costes de cobro: 40 €.';
+
+  @override
+  String get invoiceLegalEscompteDefault => 'Sin descuento por pronto pago.';
 
   @override
   String get eventTypeMemberJoin => 'Nuevo miembro';

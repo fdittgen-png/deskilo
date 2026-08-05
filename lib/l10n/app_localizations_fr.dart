@@ -1977,19 +1977,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reportPresetClassic => 'Classique';
 
   @override
-  String get reportPresetCompact => 'Compact';
-
-  @override
   String get reportPresetFormalLetter => 'Lettre formelle';
-
-  @override
-  String get reportPresetMinimal => 'Minimal';
-
-  @override
-  String get reportPresetStandard => 'Standard';
-
-  @override
-  String get reportPresetShort => 'Avis bref';
 
   @override
   String get reportSubject => 'Objet';
@@ -2011,6 +1999,64 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceTemplateDocStatement => 'Relevé';
+
+  @override
+  String get reportPresetSimple => 'Simple';
+
+  @override
+  String get reportPresetVerbose => 'Détaillé';
+
+  @override
+  String get invoiceLegalSection => 'Mentions de facturation';
+
+  @override
+  String get invoiceLegalIntro =>
+      'Les mentions légales imprimées sur les factures et les relances. Les clauses de paiement laissées vides utilisent les mentions légales par défaut.';
+
+  @override
+  String get invoiceLegalFormField => 'Forme juridique et capital';
+
+  @override
+  String get invoiceLegalFormHint => 'ex. SARL au capital de 7 500 €';
+
+  @override
+  String get invoiceLegalRegistrationField => 'Registre du commerce (RCS)';
+
+  @override
+  String get invoiceLegalRegistrationHint => 'ex. RCS Saint-Brieuc 680 357 910';
+
+  @override
+  String get invoiceLegalPaymentTermsField => 'Modalités de règlement';
+
+  @override
+  String get invoiceLegalLatePenaltyField => 'Pénalités de retard';
+
+  @override
+  String get invoiceLegalRecoveryField => 'Indemnité de recouvrement';
+
+  @override
+  String get invoiceLegalEscompteField => 'Escompte';
+
+  @override
+  String get invoiceLegalInsuranceField => 'Assurance professionnelle';
+
+  @override
+  String get invoiceLegalSpecialField => 'Mentions particulières';
+
+  @override
+  String get invoiceLegalPaymentTermsDefault => 'Règlement à réception.';
+
+  @override
+  String get invoiceLegalLatePenaltyDefault =>
+      'Pénalités de retard : trois fois le taux d\'intérêt légal.';
+
+  @override
+  String get invoiceLegalRecoveryDefault =>
+      'Indemnité forfaitaire pour frais de recouvrement : 40 €.';
+
+  @override
+  String get invoiceLegalEscompteDefault =>
+      'Aucun escompte pour paiement anticipé.';
 
   @override
   String get eventTypeMemberJoin => 'Nouveau membre';

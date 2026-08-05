@@ -6,6 +6,7 @@
 // outside the scope of VAT (BR-O-02 forbids a tax id there), a VAT number
 // when exempt (BR-E-02 requires one).
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -33,6 +34,18 @@ Future<FakeWorkspaceRepository> pumpIdentity(
   return workspace;
 }
 
+/// The #480 mention fields sit below the identity — the ListView is
+/// lazy, so scroll a field into existence before touching it.
+Future<void> reveal(WidgetTester tester, Key key) async {
+  await tester.scrollUntilVisible(
+    find.byKey(key),
+    120,
+    scrollable: find.byType(Scrollable).first,
+  );
+  await tester.ensureVisible(find.byKey(key));
+  await tester.pumpAndSettle();
+}
+
 void main() {
   testWidgets(
       'outside the scope of VAT the screen asks for the REGISTRATION '
@@ -57,6 +70,7 @@ void main() {
       find.byKey(const ValueKey('legal-identity-postal-code')),
       '34120',
     );
+    await reveal(tester, const ValueKey('legal-identity-save'));
     await tester.tap(find.byKey(const ValueKey('legal-identity-save')));
     await tester.pumpAndSettle();
 
@@ -91,6 +105,7 @@ void main() {
       find.byKey(const ValueKey('legal-identity-reason')),
       'Franchise en base de TVA',
     );
+    await reveal(tester, const ValueKey('legal-identity-save'));
     await tester.tap(find.byKey(const ValueKey('legal-identity-save')));
     await tester.pumpAndSettle();
 
@@ -112,6 +127,42 @@ void main() {
 
     expect(find.byKey(const ValueKey('legal-identity-vat-warning')),
         findsOneWidget);
+  });
+
+  testWidgets(
+      'the invoice-mention fields save into invoice_legal, and empty '
+      'clauses fall back to statutory defaults on the document (#480)',
+      (tester) async {
+    final workspace = await pumpIdentity(tester);
+
+    await reveal(tester, const ValueKey('legal-identity-legal-form'));
+    await tester.enterText(
+      find.byKey(const ValueKey('legal-identity-legal-form')),
+      'SARL au capital de 7 500 €',
+    );
+    await reveal(tester, const ValueKey('legal-identity-registration'));
+    await tester.enterText(
+      find.byKey(const ValueKey('legal-identity-registration')),
+      'RCS Saint-Brieuc 680 357 910',
+    );
+    await reveal(tester, const ValueKey('legal-identity-insurance'));
+    await tester.enterText(
+      find.byKey(const ValueKey('legal-identity-insurance')),
+      'Assurance Pro — France métropolitaine',
+    );
+    await reveal(tester, const ValueKey('legal-identity-save'));
+    await tester.tap(find.byKey(const ValueKey('legal-identity-save')));
+    await tester.pumpAndSettle();
+
+    final legal = InvoiceLegal.fromJson(
+        workspace.workspaces.single.invoiceLegal);
+    expect(legal.legalForm, 'SARL au capital de 7 500 €');
+    expect(legal.registration, 'RCS Saint-Brieuc 680 357 910');
+    expect(legal.insurance, 'Assurance Pro — France métropolitaine');
+    // The clauses the owner left empty stay empty in STORAGE — the
+    // statutory defaults are applied at render time, per locale.
+    expect(legal.paymentTerms, '');
+    expect(legal.latePenalty, '');
   });
 
   testWidgets('a plain member cannot reach the screen at all', (tester) async {

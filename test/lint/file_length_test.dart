@@ -63,8 +63,10 @@ const Map<String, int> _baseline = {
   // 1050→1090 (2026-08-05): #474 the extracted public data builders
   // (invoiceReportData/reminderReportData) shared with the preview.
   // 1090→1180 (2026-08-05): #476 statementReportData — the statement
-  // document's line model.
-  'lib/features/money/presentation/invoice_actions.dart': 1180,
+  // document's line model. 1180→1280 (2026-08-05): #480 legalMentionData
+  // (the statutory mention variables + localized legal defaults) shared
+  // by all three document data models.
+  'lib/features/money/presentation/invoice_actions.dart': 1280,
   'lib/features/workspace/domain/workspace_xml.dart': 800,
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.
@@ -96,8 +98,9 @@ const Map<String, int> _baseline = {
   // 600→640 (2026-08-04): #446 fetchWorkHours/setWorkHours — two new
   // repository surfaces (merge-preserving booking_rules writes), not
   // accretion. 640→660: #456 sendMemberNote/fetchMyNotes. 660→690:
-  // #458 fetch/setDefaultWorkspaceId.
-  'lib/features/workspace/data/supabase_workspace_repository.dart': 690,
+  // #458 fetch/setDefaultWorkspaceId. 690→700 (2026-08-05): #480
+  // setInvoiceLegal.
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 700,
   'lib/features/calendar/presentation/screens/calendar_screen.dart': 630,
 };
 
