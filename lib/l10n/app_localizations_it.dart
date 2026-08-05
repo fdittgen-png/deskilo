@@ -1909,6 +1909,60 @@ class AppLocalizationsIt extends AppLocalizations {
       'Emetti prima una fattura — l\'anteprima usa la più recente.';
 
   @override
+  String get reminderPdfTitleFriendly => 'Promemoria di pagamento';
+
+  @override
+  String get reminderPdfTitleFirm => 'Sollecito';
+
+  @override
+  String get reminderPdfOpeningFriendly =>
+      'questo è un promemoria amichevole: la fattura qui sotto è ancora aperta. Probabilmente una semplice svista — nessun problema.';
+
+  @override
+  String get reminderPdfOpeningFirm =>
+      'nonostante il nostro sollecito precedente, la fattura qui sotto risulta ancora non pagata. Ti preghiamo di saldare l\'importo senza indugio.';
+
+  @override
+  String get reminderPdfDaysOpen => 'Aperta da';
+
+  @override
+  String get reminderPdfDays => 'giorni';
+
+  @override
+  String get reminderPdfLevelLabel => 'Livello di sollecito';
+
+  @override
+  String get reminderPdfClosing => 'Se hai già pagato, ignora questa lettera.';
+
+  @override
+  String get dunningSettingsTitle => 'Regole di sollecito';
+
+  @override
+  String get dunningLevels => 'Numero di livelli di sollecito';
+
+  @override
+  String get dunningFirstAfterDays => 'Giorni fino al primo promemoria';
+
+  @override
+  String get dunningBetweenDays => 'Giorni tra i solleciti';
+
+  @override
+  String get dunningSaved => 'Regole di sollecito salvate.';
+
+  @override
+  String dunningDueChip(int level) {
+    return 'Sollecito $level da inviare';
+  }
+
+  @override
+  String get invoiceTemplateDocInvoice => 'Fattura';
+
+  @override
+  String invoiceTemplateDocReminder(int level) {
+    return 'Sollecito $level';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override

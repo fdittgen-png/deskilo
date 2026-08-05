@@ -388,5 +388,21 @@
   "invoiceTemplateBodyLabel": "Rumpfband (die Rechnungszeilen)",
   "invoiceTemplateReset": "Auf Standard zurücksetzen",
   "invoiceTemplatePreview": "Vorschau",
-  "invoiceTemplateNoPreview": "Stelle zuerst eine Rechnung aus — die Vorschau rendert die neueste."
+  "invoiceTemplateNoPreview": "Stelle zuerst eine Rechnung aus — die Vorschau rendert die neueste.",
+  "reminderPdfTitleFriendly": "Zahlungserinnerung",
+  "reminderPdfTitleFirm": "Mahnung",
+  "reminderPdfOpeningFriendly": "dies ist eine freundliche Erinnerung: die untenstehende Rechnung ist noch offen. Sicher nur übersehen — kein Problem.",
+  "reminderPdfOpeningFirm": "trotz unserer vorherigen Mahnung ist die untenstehende Rechnung weiterhin unbezahlt. Bitte begleichen Sie den Betrag umgehend.",
+  "reminderPdfDaysOpen": "Offen seit",
+  "reminderPdfDays": "Tagen",
+  "reminderPdfLevelLabel": "Mahnstufe",
+  "reminderPdfClosing": "Sollten Sie bereits gezahlt haben, betrachten Sie dieses Schreiben bitte als gegenstandslos.",
+  "dunningSettingsTitle": "Mahnregeln",
+  "dunningLevels": "Anzahl der Mahnstufen",
+  "dunningFirstAfterDays": "Tage bis zur ersten Erinnerung",
+  "dunningBetweenDays": "Tage zwischen den Mahnungen",
+  "dunningSaved": "Mahnregeln gespeichert.",
+  "dunningDueChip": "Mahnstufe {level} fällig",
+  "invoiceTemplateDocInvoice": "Rechnung",
+  "invoiceTemplateDocReminder": "Mahnung {level}"
 }

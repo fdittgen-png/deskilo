@@ -8,6 +8,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/dunning.dart';
 import '../../domain/ledger_entry.dart';
 import '../../providers/money_providers.dart';
 import '../period_label.dart';
@@ -244,6 +245,10 @@ class OpenInvoicesTab extends ConsumerWidget {
     final overview = ref.watch(invoicingOverviewProvider).value;
     final reminders =
         ref.watch(invoiceRemindersProvider).value ?? const {};
+    // Mahnwesen (#472): the rules say when a reminder is DUE — the card
+    // flags it and the bell icon fills. A human still sends.
+    final dunning =
+        ref.watch(dunningRulesProvider).value ?? DunningRules.defaults;
     if (overview == null) return const LoadingView();
     if (overview.open.isEmpty) {
       return EmptyState(
@@ -256,6 +261,16 @@ class OpenInvoicesTab extends ConsumerWidget {
     );
     // One instant for the whole list, not one clock read per row.
     final now = ref.read(clockProvider).now();
+    final dueLevels = {
+      for (final e in overview.open)
+        e.invoice.id: dueReminderLevel(
+          issuedAt: e.invoice.issuedAt,
+          reminderCount: reminders[e.invoice.id]?.count ?? 0,
+          lastReminderAt: reminders[e.invoice.id]?.last,
+          rules: dunning,
+          now: now,
+        ),
+    };
     return ListView(
       padding: AppSpacing.mdAll,
       children: [
@@ -290,6 +305,28 @@ class OpenInvoicesTab extends ConsumerWidget {
                   const SizedBox(height: 2),
                   _openSubtitle(
                       context, l10n, entry, reminders, dateFormat, now),
+                  if (dueLevels[entry.invoice.id]
+                      case final int dueLevel)
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.symmetric(vertical: 4),
+                        child: Chip(
+                          key: ValueKey(
+                              'invoice-dunning-due-${entry.invoice.id}'),
+                          visualDensity: VisualDensity.compact,
+                          avatar: Icon(Icons.notification_important,
+                              size: 18,
+                              color:
+                                  Theme.of(context).colorScheme.error),
+                          label: Text(
+                            l10n?.dunningDueChip(dueLevel) ??
+                                'Reminder $dueLevel due',
+                          ),
+                        ),
+                      ),
+                    ),
                   if (entry.pendingMatch != null)
                     Align(
                       alignment: Alignment.centerRight,
@@ -334,7 +371,16 @@ class OpenInvoicesTab extends ConsumerWidget {
                               'invoice-remind-${entry.invoice.id}'),
                           tooltip: l10n?.invoiceRemindAction ??
                               'Send a reminder',
-                          icon: const Icon(Icons.notifications_outlined),
+                          // Filled + error tone while a level is due
+                          // (#472) — the suggested action stands out.
+                          icon: Icon(
+                            dueLevels[entry.invoice.id] != null
+                                ? Icons.notification_important
+                                : Icons.notifications_outlined,
+                            color: dueLevels[entry.invoice.id] != null
+                                ? Theme.of(context).colorScheme.error
+                                : null,
+                          ),
                           onPressed: () => onRemind(entry),
                         ),
                         IconButton.filledTonal(

@@ -4,6 +4,7 @@ import 'vat_rate.dart';
 import 'fee_band.dart';
 
 import 'invoice.dart';
+import 'dunning.dart';
 import 'invoice_pdf_template.dart';import 'ledger_entry.dart';
 import 'package.dart';
 import 'payment_intent.dart';
@@ -31,6 +32,12 @@ abstract class MoneyRepository {
     String workspaceId,
     InvoicePdfTemplate template,
   );
+
+  /// The workspace's dunning policy (#472, 0093); defaults when unset.
+  Future<DunningRules> fetchDunningRules(String workspaceId);
+
+  /// Owner-only: persist the dunning policy.
+  Future<void> setDunningRules(String workspaceId, DunningRules rules);
 
   /// Issues an IMMUTABLE invoice (RPC `create_invoice`) — owner always,
   /// admins per the adminInvoicing delegation. Returns its id. Since

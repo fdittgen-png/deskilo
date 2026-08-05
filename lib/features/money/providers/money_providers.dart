@@ -2,6 +2,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../domain/invoice.dart';
+import '../domain/dunning.dart';
 import '../domain/invoice_pdf_template.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -144,6 +145,17 @@ Future<InvoicePdfTemplate> invoicePdfTemplate(Ref ref) async {
   return ref
       .watch(moneyRepositoryProvider)
       .fetchInvoicePdfTemplate(workspace.id);
+}
+
+/// Dunning policy of the active workspace (#472); defaults while none
+/// is stored. The Open tab derives reminder suggestions from it.
+@Riverpod(keepAlive: true)
+Future<DunningRules> dunningRules(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return DunningRules.defaults;
+  return ref
+      .watch(moneyRepositoryProvider)
+      .fetchDunningRules(workspace.id);
 }
 
 /// invoiceId → its payment match (0067) — the invoice lifecycle state.

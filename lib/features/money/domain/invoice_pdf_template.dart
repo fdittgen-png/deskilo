@@ -14,11 +14,39 @@
 /// pre-#470 keys `intro`/`footer` map onto [header]/[footer], and their
 /// `{{placeholder}}` syntax is valid Liquid — old templates keep
 /// working unchanged.
+/// One set of report bands — the invoice document uses one, and each
+/// reminder LEVEL (#472) carries its own, so a friendly
+/// Zahlungserinnerung and a firm final notice are different documents.
+class ReportBands {
+  const ReportBands({this.header = '', this.body = '', this.footer = ''});
+
+  factory ReportBands.fromJson(Map<String, dynamic> json) => ReportBands(
+        header: json['header'] as String? ?? '',
+        body: json['body'] as String? ?? '',
+        footer: json['footer'] as String? ?? '',
+      );
+
+  final String header;
+  final String body;
+  final String footer;
+
+  static const ReportBands empty = ReportBands();
+
+  bool get hasBands =>
+      header.trim().isNotEmpty ||
+      body.trim().isNotEmpty ||
+      footer.trim().isNotEmpty;
+
+  Map<String, String> toJson() =>
+      {'header': header, 'body': body, 'footer': footer};
+}
+
 class InvoicePdfTemplate {
   const InvoicePdfTemplate({
     this.header = '',
     this.body = '',
     this.footer = '',
+    this.reminders = const [],
   });
 
   factory InvoicePdfTemplate.fromJson(Map<String, dynamic> json) =>
@@ -28,6 +56,11 @@ class InvoicePdfTemplate {
             '',
         body: json[keyBody] as String? ?? '',
         footer: json[keyFooter] as String? ?? '',
+        reminders: [
+          for (final r in json[keyReminders] as List<dynamic>? ?? const [])
+            ReportBands.fromJson(
+                (r as Map).cast<String, dynamic>()),
+        ],
       );
 
   /// Band above the whole document (letterhead territory).
@@ -39,9 +72,15 @@ class InvoicePdfTemplate {
   /// Band under the totals (payment terms, legal mentions…).
   final String footer;
 
+  /// Reminder band sets by LEVEL (index 0 = level 1, the friendly
+  /// Zahlungserinnerung). An absent or empty entry falls back to the
+  /// localized default letter for that level (#472).
+  final List<ReportBands> reminders;
+
   static const String keyHeader = 'header';
   static const String keyBody = 'body';
   static const String keyFooter = 'footer';
+  static const String keyReminders = 'reminders';
 
   /// Pre-#470 key: a single intro paragraph — now the header band.
   static const String legacyKeyIntro = 'intro';
@@ -80,9 +119,38 @@ class InvoicePdfTemplate {
       body.trim().isNotEmpty ||
       footer.trim().isNotEmpty;
 
-  Map<String, String> toJson() => {
+  /// The invoice document's own bands as a [ReportBands].
+  ReportBands get invoiceBands =>
+      ReportBands(header: header, body: body, footer: footer);
+
+  /// The stored bands of reminder [level] (1-based), or null when the
+  /// owner never customized that level.
+  ReportBands? reminderBands(int level) {
+    if (level < 1 || level > reminders.length) return null;
+    final bands = reminders[level - 1];
+    return bands.hasBands ? bands : null;
+  }
+
+  /// Copy with reminder [level] (1-based) replaced; the list grows with
+  /// empty sets as needed so levels can be edited in any order.
+  InvoicePdfTemplate withReminder(int level, ReportBands bands) {
+    final next = List<ReportBands>.of(reminders);
+    while (next.length < level) {
+      next.add(ReportBands.empty);
+    }
+    next[level - 1] = bands;
+    return InvoicePdfTemplate(
+      header: header,
+      body: body,
+      footer: footer,
+      reminders: next,
+    );
+  }
+
+  Map<String, Object> toJson() => {
         keyHeader: header,
         keyBody: body,
         keyFooter: footer,
+        keyReminders: [for (final r in reminders) r.toJson()],
       };
 }

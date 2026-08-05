@@ -1890,6 +1890,61 @@ class AppLocalizationsEn extends AppLocalizations {
       'Issue an invoice first — the preview renders your newest one.';
 
   @override
+  String get reminderPdfTitleFriendly => 'Payment reminder';
+
+  @override
+  String get reminderPdfTitleFirm => 'Reminder';
+
+  @override
+  String get reminderPdfOpeningFriendly =>
+      'this is a friendly reminder that the invoice below is still open. Perhaps it simply slipped through — no worries.';
+
+  @override
+  String get reminderPdfOpeningFirm =>
+      'despite our previous reminder, the invoice below remains unpaid. Please settle the amount without delay.';
+
+  @override
+  String get reminderPdfDaysOpen => 'Open for';
+
+  @override
+  String get reminderPdfDays => 'days';
+
+  @override
+  String get reminderPdfLevelLabel => 'Reminder level';
+
+  @override
+  String get reminderPdfClosing =>
+      'If you have already paid, please disregard this letter.';
+
+  @override
+  String get dunningSettingsTitle => 'Reminder rules';
+
+  @override
+  String get dunningLevels => 'Number of reminder levels';
+
+  @override
+  String get dunningFirstAfterDays => 'Days until the first reminder';
+
+  @override
+  String get dunningBetweenDays => 'Days between reminders';
+
+  @override
+  String get dunningSaved => 'Reminder rules saved.';
+
+  @override
+  String dunningDueChip(int level) {
+    return 'Reminder $level due';
+  }
+
+  @override
+  String get invoiceTemplateDocInvoice => 'Invoice';
+
+  @override
+  String invoiceTemplateDocReminder(int level) {
+    return 'Reminder $level';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

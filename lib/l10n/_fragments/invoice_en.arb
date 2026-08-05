@@ -950,5 +950,79 @@
   "invoiceTemplateNoPreview": "Issue an invoice first — the preview renders your newest one.",
   "@invoiceTemplateNoPreview": {
     "description": "Invoice report editor (#470)"
+  },
+  "reminderPdfTitleFriendly": "Payment reminder",
+  "@reminderPdfTitleFriendly": {
+    "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "reminderPdfTitleFirm": "Reminder",
+  "@reminderPdfTitleFirm": {
+    "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "reminderPdfOpeningFriendly": "this is a friendly reminder that the invoice below is still open. Perhaps it simply slipped through — no worries.",
+  "@reminderPdfOpeningFriendly": {
+    "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "reminderPdfOpeningFirm": "despite our previous reminder, the invoice below remains unpaid. Please settle the amount without delay.",
+  "@reminderPdfOpeningFirm": {
+    "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "reminderPdfDaysOpen": "Open for",
+  "@reminderPdfDaysOpen": {
+    "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "reminderPdfDays": "days",
+  "@reminderPdfDays": {
+    "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "reminderPdfLevelLabel": "Reminder level",
+  "@reminderPdfLevelLabel": {
+    "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "reminderPdfClosing": "If you have already paid, please disregard this letter.",
+  "@reminderPdfClosing": {
+    "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "dunningSettingsTitle": "Reminder rules",
+  "@dunningSettingsTitle": {
+    "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "dunningLevels": "Number of reminder levels",
+  "@dunningLevels": {
+    "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "dunningFirstAfterDays": "Days until the first reminder",
+  "@dunningFirstAfterDays": {
+    "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "dunningBetweenDays": "Days between reminders",
+  "@dunningBetweenDays": {
+    "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "dunningSaved": "Reminder rules saved.",
+  "@dunningSaved": {
+    "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "dunningDueChip": "Reminder {level} due",
+  "@dunningDueChip": {
+    "description": "Mahnwesen / reminder letters (#472)",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceTemplateDocInvoice": "Invoice",
+  "@invoiceTemplateDocInvoice": {
+    "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "invoiceTemplateDocReminder": "Reminder {level}",
+  "@invoiceTemplateDocReminder": {
+    "description": "Mahnwesen / reminder letters (#472)",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
   }
 }

@@ -1906,6 +1906,61 @@ class AppLocalizationsDe extends AppLocalizations {
       'Stelle zuerst eine Rechnung aus — die Vorschau rendert die neueste.';
 
   @override
+  String get reminderPdfTitleFriendly => 'Zahlungserinnerung';
+
+  @override
+  String get reminderPdfTitleFirm => 'Mahnung';
+
+  @override
+  String get reminderPdfOpeningFriendly =>
+      'dies ist eine freundliche Erinnerung: die untenstehende Rechnung ist noch offen. Sicher nur übersehen — kein Problem.';
+
+  @override
+  String get reminderPdfOpeningFirm =>
+      'trotz unserer vorherigen Mahnung ist die untenstehende Rechnung weiterhin unbezahlt. Bitte begleichen Sie den Betrag umgehend.';
+
+  @override
+  String get reminderPdfDaysOpen => 'Offen seit';
+
+  @override
+  String get reminderPdfDays => 'Tagen';
+
+  @override
+  String get reminderPdfLevelLabel => 'Mahnstufe';
+
+  @override
+  String get reminderPdfClosing =>
+      'Sollten Sie bereits gezahlt haben, betrachten Sie dieses Schreiben bitte als gegenstandslos.';
+
+  @override
+  String get dunningSettingsTitle => 'Mahnregeln';
+
+  @override
+  String get dunningLevels => 'Anzahl der Mahnstufen';
+
+  @override
+  String get dunningFirstAfterDays => 'Tage bis zur ersten Erinnerung';
+
+  @override
+  String get dunningBetweenDays => 'Tage zwischen den Mahnungen';
+
+  @override
+  String get dunningSaved => 'Mahnregeln gespeichert.';
+
+  @override
+  String dunningDueChip(int level) {
+    return 'Mahnstufe $level fällig';
+  }
+
+  @override
+  String get invoiceTemplateDocInvoice => 'Rechnung';
+
+  @override
+  String invoiceTemplateDocReminder(int level) {
+    return 'Mahnung $level';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

@@ -10,7 +10,7 @@ import 'dart:typed_data';
 
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
-import 'package:deskilo/features/money/presentation/widgets/invoice_template_sheet.dart';
+import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

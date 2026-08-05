@@ -56,7 +56,8 @@ const Map<String, int> _baseline = {
   // 920→950 (2026-08-04): #454 template lookup + resolution threaded
   // through every PDF render; the editor sheet is its own file.
   // 950→990: #470 the report data model (fields, lines, VAT rows).
-  'lib/features/money/presentation/invoice_actions.dart': 990,
+  // 990→1050: #472 buildReminderPdfFile + the remind-level flow.
+  'lib/features/money/presentation/invoice_actions.dart': 1050,
   'lib/features/workspace/domain/workspace_xml.dart': 800,
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.
@@ -64,8 +65,12 @@ const Map<String, int> _baseline = {
   // 750→780 (2026-08-02): #395 adds fetchWorkspaceLedger and
   // fetchPaymentIntents — two new repository surfaces, not accretion.
   // 780→800 (2026-08-04): #454 fetch/setInvoicePdfTemplate.
-  'lib/features/money/data/supabase_money_repository.dart': 800,
+  // 800→830 (2026-08-04): #472 fetch/setDunningRules.
+  'lib/features/money/data/supabase_money_repository.dart': 830,
   'lib/features/money/presentation/widgets/bill_view.dart': 750,
+  // 600→660 (2026-08-04): #472 the due-reminder flag + emphasized
+  // remind action on the open cards.
+  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 660,
   'lib/features/calendar/presentation/widgets/day_timeline.dart': 750,
   'lib/features/reservations/presentation/widgets/space_scan.dart': 730,
   // 600→640 (2026-08-04): #460/#464 Messages inbox rows + mark-seen —
@@ -75,7 +80,8 @@ const Map<String, int> _baseline = {
   // 680→700 (2026-08-04): #454 owner-template intro/footer blocks.
   // 700→790: #470 the banded report renderer (_reportWidgets) and the
   // header/body/footer band branches.
-  'lib/features/money/domain/invoice_pdf.dart': 790,
+  // 790→820 (2026-08-04): #472 the banded LETTER builder.
+  'lib/features/money/domain/invoice_pdf.dart': 820,
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the
   // kiosk arms the ambient working day itself, like realtime (#430).
   // 680→690: #462 whole-space overlays on the wall display.
