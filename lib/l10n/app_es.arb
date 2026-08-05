@@ -1041,6 +1041,18 @@
   "paymentMethodWise": "Wise",
   "moneyPaymentDateLabel": "Fecha del pago",
   "moneyPaymentPeriodLabel": "Se aplica a",
+  "moneySectionPay": "Pagar",
+  "@moneySectionPay": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "moneySectionRequests": "Solicitudes",
+  "@moneySectionRequests": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "moneySectionDocuments": "Documentos",
+  "@moneySectionDocuments": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
   "planNoLevels": "El espacio aún no tiene plano.",
   "planLevelLabel": "Planta",
   "planCheckInTitle": "Registrarse",
@@ -1338,6 +1350,26 @@
   "workspaceDeskOpacityValue": "Opacidad: {percent} %",
   "workspaceExcelExport": "Exportar datos (Excel)",
   "workspaceExcelExportSubtitle": "Todos los datos en un libro: reservas, pagos, facturas, miembros y plano — una pestaña cada uno.",
+  "workspaceLanguageLabel": "Idioma del espacio",
+  "@workspaceLanguageLabel": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspaceLanguageHelper": "Las invitaciones se redactan por defecto en este idioma.",
+  "@workspaceLanguageHelper": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspaceLanguageUnset": "Idioma de la app del remitente",
+  "@workspaceLanguageUnset": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspacePaymentsBillingTitle": "Pagos y facturación",
+  "@workspacePaymentsBillingTitle": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "paymentMethodsSubtitle": "IBAN, PayPal, Wero, Lydia, Wise y la referencia de pago",
+  "@paymentMethodsSubtitle": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
   "workspaceXmlExport": "Exportar el espacio (XML)",
   "workspaceXmlExportSubtitle": "Ajustes y plano del espacio en un archivo para compartir. Sin miembros, reservas ni datos financieros.",
   "workspaceXmlImport": "Importar el espacio (XML)",

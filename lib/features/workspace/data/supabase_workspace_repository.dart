@@ -118,6 +118,33 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setWorkspaceLanguage(
+    String workspaceId,
+    String locale,
+  ) async {
+    // Owner-only via workspaces_update RLS; 0096 caps at 5 chars.
+    await _client
+        .from('workspaces')
+        .update({'default_locale': locale.trim()}).eq('id', workspaceId);
+  }
+
+  @override
+  Future<void> setInvitationTemplates(
+    String workspaceId,
+    Map<String, String> templates,
+  ) async {
+    // Owner-only via workspaces_update RLS; empty entries are dropped so
+    // the jsonb only carries real overrides (0096).
+    await _client.from('workspaces').update({
+      'invitation_templates': {
+        for (final entry in templates.entries)
+          if (entry.value.trim().isNotEmpty)
+            entry.key: entry.value.trim(),
+      },
+    }).eq('id', workspaceId);
+  }
+
+  @override
   Future<void> setInvoiceLegal(
     String workspaceId,
     Map<String, Object?> legal,
@@ -244,6 +271,10 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         vatAccount: row['vat_account'] as String? ?? '',
         invoiceLegal:
             row['invoice_legal'] as Map<String, dynamic>? ?? const {},
+        defaultLocale: row['default_locale'] as String? ?? '',
+        invitationTemplates:
+            row['invitation_templates'] as Map<String, dynamic>? ??
+                const {},
       );
 
   @override

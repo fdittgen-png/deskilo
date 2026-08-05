@@ -1041,6 +1041,18 @@
   "paymentMethodWise": "Wise",
   "moneyPaymentDateLabel": "Zahlungsdatum",
   "moneyPaymentPeriodLabel": "Gilt für",
+  "moneySectionPay": "Zahlen",
+  "@moneySectionPay": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "moneySectionRequests": "Anträge",
+  "@moneySectionRequests": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "moneySectionDocuments": "Dokumente",
+  "@moneySectionDocuments": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
   "planNoLevels": "Der Workspace hat noch keinen Plan.",
   "planLevelLabel": "Etage",
   "planCheckInTitle": "Einchecken",
@@ -1338,6 +1350,26 @@
   "workspaceDeskOpacityValue": "Deckkraft: {percent} %",
   "workspaceExcelExport": "Daten exportieren (Excel)",
   "workspaceExcelExportSubtitle": "Alle Daten in einer Arbeitsmappe: Buchungen, Zahlungen, Rechnungen, Mitglieder und Plan — je ein Tab.",
+  "workspaceLanguageLabel": "Sprache des Arbeitsbereichs",
+  "@workspaceLanguageLabel": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspaceLanguageHelper": "Einladungen werden standardmäßig in dieser Sprache verfasst.",
+  "@workspaceLanguageHelper": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspaceLanguageUnset": "App-Sprache des Absenders",
+  "@workspaceLanguageUnset": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspacePaymentsBillingTitle": "Zahlungen & Abrechnung",
+  "@workspacePaymentsBillingTitle": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "paymentMethodsSubtitle": "IBAN, PayPal, Wero, Lydia, Wise und der Verwendungszweck",
+  "@paymentMethodsSubtitle": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
   "workspaceXmlExport": "Workspace exportieren (XML)",
   "workspaceXmlExportSubtitle": "Einstellungen und Raumplan als teilbare Datei. Ohne Mitglieder, Buchungen oder Finanzdaten.",
   "workspaceXmlImport": "Workspace importieren (XML)",

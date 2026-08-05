@@ -89,6 +89,17 @@ abstract class WorkspaceRepository {
     required String vatAccount,
   });
 
+  /// Owner-only (workspaces_update RLS): set the workspace's language
+  /// (0096, e.g. 'fr'); '' clears it.
+  Future<void> setWorkspaceLanguage(String workspaceId, String locale);
+
+  /// Owner-only (workspaces_update RLS): replace the per-locale custom
+  /// invitation templates (0096). Empty entries are dropped.
+  Future<void> setInvitationTemplates(
+    String workspaceId,
+    Map<String, String> templates,
+  );
+
   /// Owner-only (workspaces_update RLS): replace the legal invoice
   /// mentions jsonb (0094) — the InvoiceLegal.toJson() map, trimmed.
   Future<void> setInvoiceLegal(

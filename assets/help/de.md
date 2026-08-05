@@ -39,6 +39,7 @@ DesKilo hat drei additive Rollen plus ein Gerätekonto:
 
 - **Mitglieder-Einladung** — die Workspace-ID selbst. Drucken, an die Wand hängen, frei teilen: Wer sie scannt oder eintippt, tritt als einfaches Mitglied bei.
 - **Admin-Einladung** — ein **persönlicher, einmalig nutzbarer Code**, von einer Inhaberin für genau eine Person ausgestellt. Er lässt nur diese eine Person als Admin beitreten und verfällt dann (ungenutzte Codes verfallen nach 14 Tagen). Für jeden weiteren Admin mit *Neuer Admin-Code* einen neuen ausstellen.
+- **Einladungen sprechen die Sprache des Eingeladenen** — das Einladungsblatt verfasst die Nachricht in der gewählten Sprache (fünf verfügbar), standardmäßig in der in den *Arbeitsbereich-Einstellungen* festgelegten **Arbeitsbereichssprache**. Der Inhaber kann den Einladungstext dort auch **pro Sprache** anpassen; eine leere Sprache nutzt die eingebaute übersetzte Nachricht.
 
 **Eine Inhaber-Einladung gibt es absichtlich nicht.** Inhaberschaft kann nur eine bestehende Inhaberin vergeben, unter *Mitglieder & Tarife*. Ein Workspace behält immer mindestens eine Inhaberin. **Admin**-Beförderungen und -Degradierungen laufen über den Validierungsfluss (§6) — sie greifen erst nach Bestätigung durch die Validierenden.
 

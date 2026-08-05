@@ -637,6 +637,26 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setWorkspaceLanguage(String workspaceId, String locale) async {
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i < 0) return;
+    workspaces[i] = workspaces[i].copyWith(defaultLocale: locale.trim());
+  }
+
+  @override
+  Future<void> setInvitationTemplates(
+    String workspaceId,
+    Map<String, String> templates,
+  ) async {
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i < 0) return;
+    workspaces[i] = workspaces[i].copyWith(invitationTemplates: {
+      for (final entry in templates.entries)
+        if (entry.value.trim().isNotEmpty) entry.key: entry.value.trim(),
+    });
+  }
+
+  @override
   Future<void> setInvoiceLegal(
     String workspaceId,
     Map<String, Object?> legal,

@@ -2580,6 +2580,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moneyPaymentPeriodLabel => 'Applies to';
 
   @override
+  String get moneySectionPay => 'Pay';
+
+  @override
+  String get moneySectionRequests => 'Requests';
+
+  @override
+  String get moneySectionDocuments => 'Documents';
+
+  @override
   String get planNoLevels => 'The workspace has no floor plan yet.';
 
   @override
@@ -3565,6 +3574,23 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get workspaceExcelExportSubtitle =>
       'Every dataset in one workbook: bookings, payments, invoices, members and the floor plan — a tab each.';
+
+  @override
+  String get workspaceLanguageLabel => 'Workspace language';
+
+  @override
+  String get workspaceLanguageHelper =>
+      'Invitations are written in this language by default.';
+
+  @override
+  String get workspaceLanguageUnset => 'Sender\'s app language';
+
+  @override
+  String get workspacePaymentsBillingTitle => 'Payments & billing';
+
+  @override
+  String get paymentMethodsSubtitle =>
+      'IBAN, PayPal, Wero, Lydia, Wise and the payment reference';
 
   @override
   String get workspaceXmlExport => 'Export workspace (XML)';

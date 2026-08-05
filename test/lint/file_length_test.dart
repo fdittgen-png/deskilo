@@ -41,10 +41,13 @@ const Map<String, int> _baseline = {
   // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
   // workspace hint subtitle and the RPC write helper.
   // 990→1000 (2026-08-05): #478 Billing & reports admin entry.
-  'lib/features/profile/presentation/screens/settings_screen.dart': 1000,
+  // 1000→1020 (2026-08-05): #486 Payment methods admin entry.
+  'lib/features/profile/presentation/screens/settings_screen.dart': 1020,
   // 980→1030 (2026-08-05): #476 the statement export honors the
   // owner's report template (#478 Invoices button joins the grid).
-  'lib/features/money/presentation/screens/money_screen.dart': 1030,
+  // 1030→1070 (2026-08-05): #486 grouped Pay/Requests/Documents actions
+  // + the landscape balance card.
+  'lib/features/money/presentation/screens/money_screen.dart': 1070,
   // 910→950 (2026-08-04): #456 note tile + admin broadcast button —
   // the dialog itself is its own file.
   'lib/features/workspace/presentation/screens/members_screen.dart': 950,
@@ -100,8 +103,9 @@ const Map<String, int> _baseline = {
   // repository surfaces (merge-preserving booking_rules writes), not
   // accretion. 640→660: #456 sendMemberNote/fetchMyNotes. 660→690:
   // #458 fetch/setDefaultWorkspaceId. 690→700 (2026-08-05): #480
-  // setInvoiceLegal.
-  'lib/features/workspace/data/supabase_workspace_repository.dart': 700,
+  // setInvoiceLegal. 700→730 (2026-08-05): #486 setWorkspaceLanguage +
+  // setInvitationTemplates.
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 730,
   'lib/features/calendar/presentation/screens/calendar_screen.dart': 630,
 };
 

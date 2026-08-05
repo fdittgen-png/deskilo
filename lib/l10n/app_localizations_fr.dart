@@ -2606,6 +2606,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get moneyPaymentPeriodLabel => 'S’applique à';
 
   @override
+  String get moneySectionPay => 'Payer';
+
+  @override
+  String get moneySectionRequests => 'Demandes';
+
+  @override
+  String get moneySectionDocuments => 'Documents';
+
+  @override
   String get planNoLevels => 'L\'espace n\'a pas encore de plan.';
 
   @override
@@ -3601,6 +3610,23 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get workspaceExcelExportSubtitle =>
       'Toutes les données dans un classeur : réservations, paiements, factures, membres et plan — un onglet chacun.';
+
+  @override
+  String get workspaceLanguageLabel => 'Langue de l\'espace';
+
+  @override
+  String get workspaceLanguageHelper =>
+      'Les invitations sont rédigées par défaut dans cette langue.';
+
+  @override
+  String get workspaceLanguageUnset => 'Langue de l\'app de l\'expéditeur';
+
+  @override
+  String get workspacePaymentsBillingTitle => 'Paiements et facturation';
+
+  @override
+  String get paymentMethodsSubtitle =>
+      'IBAN, PayPal, Wero, Lydia, Wise et la référence de paiement';
 
   @override
   String get workspaceXmlExport => 'Exporter l\'espace (XML)';

@@ -67,13 +67,6 @@ class _WorkspaceSettingsScreenState
   final _formKey = GlobalKey<FormState>();
   final _currency = TextEditingController();
   final _timezone = TextEditingController();
-  // #155/#192 — payment instructions members see on an unpaid statement.
-  final _iban = TextEditingController();
-  final _paypalMe = TextEditingController();
-  final _reference = TextEditingController();
-  final _wero = TextEditingController();
-  final _lydia = TextEditingController();
-  final _wise = TextEditingController();
   // #231 — the community's WhatsApp group invite link (directory, #232).
   final _whatsappGroup = TextEditingController();
   final _workspaceAddress = TextEditingController();
@@ -81,7 +74,30 @@ class _WorkspaceSettingsScreenState
   // 0040 — desk fill opacity percentage (20..100); rides the Save button.
   int _deskOpacity = 100;
   String? _countryCode;
+  // #486 — the workspace's own language ('' = sender's app language)
+  // and the per-language invitation drafts the chips page through.
+  String _defaultLocale = '';
+  String _templateLang = 'en';
+  final Map<String, String> _templateDrafts = {};
   bool _busy = false;
+
+  static const Map<String, String> _languages = {
+    'en': 'English',
+    'fr': 'Français',
+    'de': 'Deutsch',
+    'es': 'Español',
+    'it': 'Italiano',
+  };
+
+  /// Stash the visible template into its language's draft, then show
+  /// [lang]'s draft.
+  void _switchTemplateLang(String lang) {
+    setState(() {
+      _templateDrafts[_templateLang] = _invitationTemplate.text;
+      _templateLang = lang;
+      _invitationTemplate.text = _templateDrafts[lang] ?? '';
+    });
+  }
 
   /// Seed the form ONCE from the loaded workspace; later rebuilds must
   /// not clobber the owner's in-progress edits.
@@ -91,12 +107,6 @@ class _WorkspaceSettingsScreenState
   void dispose() {
     _currency.dispose();
     _timezone.dispose();
-    _iban.dispose();
-    _paypalMe.dispose();
-    _reference.dispose();
-    _wero.dispose();
-    _lydia.dispose();
-    _wise.dispose();
     _whatsappGroup.dispose();
     _workspaceAddress.dispose();
     _invitationTemplate.dispose();
@@ -135,18 +145,6 @@ class _WorkspaceSettingsScreenState
             currencyCode: _currency.text.trim().toUpperCase(),
             timezone: _timezone.text.trim(),
           );
-          // #155 — the how-to-pay blob rides the same Save.
-          await repository.setPaymentInstructions(
-            workspaceId,
-            PaymentInstructions(
-              iban: _iban.text,
-              paypalMe: _paypalMe.text,
-              reference: _reference.text,
-              wero: _wero.text,
-              lydia: _lydia.text,
-              wise: _wise.text,
-            ),
-          );
           // #231 — the WhatsApp group link rides the same Save through its
           // own setter (setPaymentInstructions shape); '' clears it.
           await repository.setWhatsappGroup(
@@ -158,11 +156,20 @@ class _WorkspaceSettingsScreenState
             workspaceId,
             _workspaceAddress.text.trim(),
           );
-          // 0049 — the invitation message template rides the same Save;
-          // '' falls back to the localized built-in message.
-          await repository.setInvitationTemplate(
+          // #486 — per-language invitation templates: the visible text
+          // is stashed first, empty drafts mean "built-in message for
+          // that language". The legacy single template (0049) is cleared
+          // — its content was seeded into every language's draft.
+          _templateDrafts[_templateLang] = _invitationTemplate.text;
+          await repository.setInvitationTemplates(
             workspaceId,
-            _invitationTemplate.text.trim(),
+            Map.of(_templateDrafts),
+          );
+          await repository.setInvitationTemplate(workspaceId, '');
+          // #486 — the workspace's own language.
+          await repository.setWorkspaceLanguage(
+            workspaceId,
+            _defaultLocale,
           );
           // 0040 — desk transparency rides the same Save.
           await repository.setDeskOpacity(workspaceId, _deskOpacity);
@@ -787,17 +794,23 @@ class _WorkspaceSettingsScreenState
       _countryCode = workspace.countryCode;
       _currency.text = workspace.currencyCode;
       _timezone.text = workspace.timezone;
-      final instructions =
-          PaymentInstructions.fromDb(workspace.paymentInstructions);
-      _iban.text = instructions.iban;
-      _paypalMe.text = instructions.paypalMe;
-      _reference.text = instructions.reference;
-      _wero.text = instructions.wero;
-      _lydia.text = instructions.lydia;
-      _wise.text = instructions.wise;
+      // #486 — one draft per language; a workspace still on the legacy
+      // single template (0049) sees it in every language until it saves.
+      final legacy = workspace.invitationTemplate.trim();
+      final hasPerLocale = workspace.invitationTemplates.values
+          .any((t) => (t as String? ?? '').trim().isNotEmpty);
+      for (final lang in _languages.keys) {
+        _templateDrafts[lang] = hasPerLocale
+            ? ((workspace.invitationTemplates[lang] as String?) ?? '')
+            : legacy;
+      }
+      _defaultLocale = workspace.defaultLocale;
+      _templateLang = _languages.containsKey(_defaultLocale)
+          ? _defaultLocale
+          : 'en';
       _whatsappGroup.text = workspace.whatsappGroup;
       _workspaceAddress.text = workspace.address;
-      _invitationTemplate.text = workspace.invitationTemplate;
+      _invitationTemplate.text = _templateDrafts[_templateLang] ?? '';
       _deskOpacity = workspace.deskOpacity;
     }
     return Scaffold(
@@ -865,106 +878,40 @@ class _WorkspaceSettingsScreenState
                             ? null
                             : (l10n?.authFieldRequired ?? 'Required'),
                   ),
-                  const SizedBox(height: 24),
-                  // #155 — payment instructions members see on an unpaid
-                  // statement. All optional; empty = no card renders.
-                  Text(
-                    l10n?.paymentInstructionsTitle ?? 'Payment instructions',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    l10n?.paymentInstructionsHelper ??
-                        'Shown to members on an unpaid statement. Leave '
-                            'empty to show nothing.',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
                   const SizedBox(height: 12),
-                  TextFormField(
-                    key: const Key('workspaceSettingsIban'),
-                    controller: _iban,
-                    enabled: !_busy,
+                  // #486 — the workspace's own language: invitations
+                  // default to it.
+                  DropdownButtonFormField<String>(
+                    key: const Key('workspaceSettingsLanguage'),
+                    initialValue: _defaultLocale,
                     decoration: InputDecoration(
-                      // The acronym is identical in every locale; the key
-                      // exists so the parity gate covers the whole set.
-                      labelText:
-                          l10n?.paymentInstructionsIbanTitle ?? 'IBAN',
+                      labelText: l10n?.workspaceLanguageLabel ??
+                          'Workspace language',
+                      helperMaxLines: 3,
+                      helperText: l10n?.workspaceLanguageHelper ??
+                          'Invitations are written in this language by '
+                              'default.',
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    key: const Key('workspaceSettingsPaypalMe'),
-                    controller: _paypalMe,
-                    enabled: !_busy,
-                    decoration: InputDecoration(
-                      labelText: l10n?.paymentInstructionsPaypalLabel ??
-                          'PayPal.me link or handle',
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  // #192 — Wero / Lydia / Wise ride the same blob; the
-                  // labels carry the expected value shape (phone number,
-                  // username, Wisetag/link).
-                  TextFormField(
-                    key: const Key('workspaceSettingsWero'),
-                    controller: _wero,
-                    enabled: !_busy,
-                    decoration: InputDecoration(
-                      labelText: l10n?.paymentInstructionsWeroLabel ??
-                          'Wero phone number',
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    key: const Key('workspaceSettingsLydia'),
-                    controller: _lydia,
-                    enabled: !_busy,
-                    decoration: InputDecoration(
-                      labelText: l10n?.paymentInstructionsLydiaLabel ??
-                          'Lydia phone number or username',
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    key: const Key('workspaceSettingsWise'),
-                    controller: _wise,
-                    enabled: !_busy,
-                    decoration: InputDecoration(
-                      labelText: l10n?.paymentInstructionsWiseLabel ??
-                          'Wisetag or Wise payment link',
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    key: const Key('workspaceSettingsReference'),
-                    controller: _reference,
-                    enabled: !_busy,
-                    decoration: InputDecoration(
-                      labelText: l10n?.paymentInstructionsReferenceLabel ??
-                          'Payment reference hint',
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  // #231 — the community's WhatsApp group. Own small
-                  // section (mirrors the payment-instructions block);
-                  // the link is shown to members in the directory (#232).
-                  Text(
-                    l10n?.workspaceWhatsappGroupTitle ?? 'WhatsApp group',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    l10n?.workspaceWhatsappGroupHelper ??
-                        'Shown to members so they can join the '
-                            'community\'s WhatsApp group. Paste the '
-                            'group\'s invite link '
-                            '(https://chat.whatsapp.com/…). Leave empty '
-                            'to show nothing.',
-                    style: Theme.of(context).textTheme.bodySmall,
+                    items: [
+                      DropdownMenuItem(
+                        value: '',
+                        child: Text(l10n?.workspaceLanguageUnset ??
+                            "Sender's app language"),
+                      ),
+                      for (final entry in _languages.entries)
+                        DropdownMenuItem(
+                          value: entry.key,
+                          child: Text(entry.value),
+                        ),
+                    ],
+                    onChanged: _busy
+                        ? null
+                        : (value) => setState(
+                            () => _defaultLocale = value ?? ''),
                   ),
                   const SizedBox(height: 12),
                   // 0060 — the postal address printed as the invoice
-                  // letterhead.
+                  // letterhead. Lives with the other identity basics.
                   TextFormField(
                     key: const Key('workspaceSettingsAddress'),
                     controller: _workspaceAddress,
@@ -974,6 +921,27 @@ class _WorkspaceSettingsScreenState
                       labelText: l10n?.workspaceAddressLabel ??
                           'Workspace address',
                     ),
+                  ),
+                  const SizedBox(height: 24),
+                  // #486 — payments & billing are SCREENS, not form
+                  // fields: the two tiles say where money settings live.
+                  Text(
+                    l10n?.workspacePaymentsBillingTitle ??
+                        'Payments & billing',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  ListTile(
+                    key: const Key('workspaceSettingsPaymentMethods'),
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(
+                        Icons.account_balance_wallet_outlined),
+                    title: Text(l10n?.paymentInstructionsTitle ??
+                        'Payment instructions'),
+                    subtitle: Text(l10n?.paymentMethodsSubtitle ??
+                        'IBAN, PayPal, Wero, Lydia, Wise and the '
+                            'payment reference'),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => context.push('/payment-methods'),
                   ),
                   // 0069 — the legal identity the e-invoice needs lives
                   // on its own screen: the regime decides which fields
@@ -988,6 +956,23 @@ class _WorkspaceSettingsScreenState
                         'VAT regime and registration numbers'),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => context.push('/legal-identity'),
+                  ),
+                  const SizedBox(height: 24),
+                  // #231 — the community's WhatsApp group; the link is
+                  // shown to members in the directory (#232).
+                  Text(
+                    l10n?.workspaceWhatsappGroupTitle ?? 'WhatsApp group',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    l10n?.workspaceWhatsappGroupHelper ??
+                        'Shown to members so they can join the '
+                            'community\'s WhatsApp group. Paste the '
+                            'group\'s invite link '
+                            '(https://chat.whatsapp.com/…). Leave empty '
+                            'to show nothing.',
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
@@ -1024,6 +1009,24 @@ class _WorkspaceSettingsScreenState
                             'message in the chosen language. '
                             'Available tags:',
                     style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 8),
+                  // #486 — one template per language: the chips page
+                  // through the drafts, empty = built-in message.
+                  Wrap(
+                    spacing: 6,
+                    children: [
+                      for (final entry in _languages.entries)
+                        ChoiceChip(
+                          key: ValueKey(
+                              'workspace-invitation-lang-${entry.key}'),
+                          label: Text(entry.value),
+                          selected: _templateLang == entry.key,
+                          onSelected: _busy
+                              ? null
+                              : (_) => _switchTemplateLang(entry.key),
+                        ),
+                    ],
                   ),
                   const SizedBox(height: 8),
                   Wrap(

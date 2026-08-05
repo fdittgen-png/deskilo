@@ -5,6 +5,7 @@
 // language; the owner can replace the built-in text with a {tag}
 // template configured in workspace settings.
 import 'dart:async';
+import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
@@ -110,6 +111,43 @@ void main() {
         'Yo Bob, code GOODCODE22!',
       );
     });
+
+    test('the chosen language\'s OWN template wins over the legacy '
+        'single one; a language without one falls back (#486)', () {
+      final custom = _workspace.copyWith(
+        invitationTemplate: 'Legacy {firstName}',
+        invitationTemplates: const {'fr': 'Salut {firstName} !'},
+      );
+      expect(
+        buildInvitationMessage(
+          workspace: custom,
+          code: 'GOODCODE22',
+          role: InviteRole.user,
+          languageCode: 'fr',
+          firstName: 'Léa',
+        ),
+        'Salut Léa !',
+      );
+      // German has no per-language template → legacy fallback.
+      expect(
+        buildInvitationMessage(
+          workspace: custom,
+          code: 'GOODCODE22',
+          role: InviteRole.user,
+          languageCode: 'de',
+          firstName: 'Max',
+        ),
+        'Legacy Max',
+      );
+    });
+
+    test('migration 0096 stores the columns the repository reads', () {
+      final sql = File(
+              'supabase/migrations/0096_workspace_language_and_invitations.sql')
+          .readAsStringSync();
+      expect(sql, contains('default_locale'));
+      expect(sql, contains('invitation_templates'));
+    });
   });
 
   group('invite sheet', () {
@@ -147,6 +185,17 @@ void main() {
       await tester.pumpAndSettle();
       return (launched, shared, repo);
     }
+
+    testWidgets('the WORKSPACE language is the preselected message '
+        'language (#486)', (tester) async {
+      await pumpSheet(
+        tester,
+        workspace: _workspace.copyWith(defaultLocale: 'it'),
+      );
+      final chip = tester.widget<ChoiceChip>(
+          find.byKey(const ValueKey('invite-lang-it')));
+      expect(chip.selected, isTrue);
+    });
 
     testWidgets('WhatsApp mints a personal code (#319) and formats it '
         'monospace (#318) — never the workspace ID', (tester) async {

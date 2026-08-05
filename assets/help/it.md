@@ -39,6 +39,7 @@ DesKilo ha tre ruoli cumulativi, più un account dispositivo:
 
 - **Invito membro** — l'ID dello spazio stesso. Stampalo, appendilo, condividilo liberamente: chi lo scansiona o lo digita entra come semplice membro.
 - **Invito admin** — un **codice personale monouso**, emesso da un proprietario per una persona precisa. Ammette solo quella persona come admin, poi scade (un codice inutilizzato decade dopo 14 giorni). Emettine uno nuovo per ogni admin con *Nuovo codice admin*.
+- **Gli inviti parlano la lingua dell'invitato** — il foglio d'invito scrive il messaggio nella lingua scelta (cinque disponibili), per impostazione predefinita la **lingua dello spazio** definita nelle *Impostazioni dello spazio*. Il proprietario può anche personalizzare il testo dell'invito **per lingua**; una lingua vuota usa il messaggio integrato tradotto.
 
 **Non esiste un invito proprietario — di proposito.** La proprietà può essere concessa solo da un proprietario esistente, in *Membri e piani*. Uno spazio mantiene sempre almeno un proprietario. Promuovere o retrocedere un **admin** passa dal flusso di validazione (§6) — si applica quando i validatori dello spazio confermano.
 

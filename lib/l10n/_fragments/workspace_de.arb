@@ -89,5 +89,25 @@
   "workspaceDeskTransparencyHelper": "Verringere die Deckkraft der Tische, damit das Hintergrundfoto der Etage durchscheint.",
   "workspaceDeskOpacityValue": "Deckkraft: {percent} %",
   "workspaceExcelExport": "Daten exportieren (Excel)",
-  "workspaceExcelExportSubtitle": "Alle Daten in einer Arbeitsmappe: Buchungen, Zahlungen, Rechnungen, Mitglieder und Plan — je ein Tab."
+  "workspaceExcelExportSubtitle": "Alle Daten in einer Arbeitsmappe: Buchungen, Zahlungen, Rechnungen, Mitglieder und Plan — je ein Tab.",
+  "workspaceLanguageLabel": "Sprache des Arbeitsbereichs",
+  "@workspaceLanguageLabel": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspaceLanguageHelper": "Einladungen werden standardmäßig in dieser Sprache verfasst.",
+  "@workspaceLanguageHelper": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspaceLanguageUnset": "App-Sprache des Absenders",
+  "@workspaceLanguageUnset": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "workspacePaymentsBillingTitle": "Zahlungen & Abrechnung",
+  "@workspacePaymentsBillingTitle": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "paymentMethodsSubtitle": "IBAN, PayPal, Wero, Lydia, Wise und der Verwendungszweck",
+  "@paymentMethodsSubtitle": {
+    "description": "Finance/settings UX + workspace language (#486)"
+  }
 }

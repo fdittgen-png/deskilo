@@ -80,14 +80,53 @@ void main() {
     await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
     await tester.pumpAndSettle();
 
+    // #486 — templates are PER LANGUAGE now: the visible draft saves
+    // under its language key and the legacy single template is cleared.
     expect(
-      workspace.lastInvitationTemplate,
-      'Join {workspaceName}: {workspaceId}',
+      workspace.workspaces[0].invitationTemplates,
+      {'en': 'Join {workspaceName}: {workspaceId}'},
     );
-    expect(
-      workspace.workspaces[0].invitationTemplate,
-      'Join {workspaceName}: {workspaceId}',
+    expect(workspace.workspaces[0].invitationTemplate, '');
+  });
+
+  testWidgets(
+      'the language chips page through per-language drafts and every '
+      'draft saves under its own key (#486)', (tester) async {
+    final workspace = await pumpWorkspaceSettings(tester);
+    await tester.enterText(
+      find.byKey(const Key('workspaceSettingsInvitationTemplate')),
+      'Hello {firstName}',
     );
+    await tester.ensureVisible(
+        find.byKey(const ValueKey('workspace-invitation-lang-fr')));
+    await tester
+        .tap(find.byKey(const ValueKey('workspace-invitation-lang-fr')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const Key('workspaceSettingsInvitationTemplate')),
+      'Bonjour {firstName}',
+    );
+    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+    await tester.pumpAndSettle();
+
+    expect(workspace.workspaces[0].invitationTemplates, {
+      'en': 'Hello {firstName}',
+      'fr': 'Bonjour {firstName}',
+    });
+  });
+
+  testWidgets(
+      'the workspace language dropdown saves default_locale (#486)',
+      (tester) async {
+    final workspace = await pumpWorkspaceSettings(tester);
+    await tester.tap(find.byKey(const Key('workspaceSettingsLanguage')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Français').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+    await tester.pumpAndSettle();
+
+    expect(workspace.workspaces[0].defaultLocale, 'fr');
   });
 
   testWidgets(
@@ -123,9 +162,15 @@ void main() {
   });
 
   testWidgets(
-      'the payment-instructions fields save through the repository and '
-      'ride the same Save button (#155)', (tester) async {
+      'the payment-instructions fields moved to their OWN screen (#486) '
+      'and save through the repository (#155)', (tester) async {
     final workspace = await pumpWorkspaceSettings(tester);
+    // The form links there — payments are a screen, not form fields.
+    await tester.ensureVisible(
+        find.byKey(const Key('workspaceSettingsPaymentMethods')));
+    await tester
+        .tap(find.byKey(const Key('workspaceSettingsPaymentMethods')));
+    await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const Key('workspaceSettingsIban')),
       'DE89 3704 0044 0532 0130 00',
@@ -151,7 +196,9 @@ void main() {
       find.byKey(const Key('workspaceSettingsWise')),
       '@deskilo',
     );
-    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+    await tester.ensureVisible(
+        find.byKey(const ValueKey('payment-methods-save')));
+    await tester.tap(find.byKey(const ValueKey('payment-methods-save')));
     await tester.pumpAndSettle();
 
     final saved = workspace.lastPaymentInstructions;
@@ -169,11 +216,18 @@ void main() {
       'saved #192 instructions re-seed the form fields on reload',
       (tester) async {
     final workspace = await pumpWorkspaceSettings(tester);
+    await tester.ensureVisible(
+        find.byKey(const Key('workspaceSettingsPaymentMethods')));
+    await tester
+        .tap(find.byKey(const Key('workspaceSettingsPaymentMethods')));
+    await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const Key('workspaceSettingsWero')),
       '+49 170 0000000',
     );
-    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+    await tester.ensureVisible(
+        find.byKey(const ValueKey('payment-methods-save')));
+    await tester.tap(find.byKey(const ValueKey('payment-methods-save')));
     await tester.pumpAndSettle();
 
     // The fake writes the blob back onto the workspace — the saved value
