@@ -70,6 +70,11 @@ sealed class InvoiceMatch with _$InvoiceMatch {
     String? paymentLedgerId,
     required DateTime matchedAt,
     @Default('') String byName,
+
+    /// #504 — when the outstanding remainder of an under-paid match was
+    /// written off through the validation framework. Null = the
+    /// invoice is STILL OPEN and owed.
+    DateTime? writeoffAt,
   }) = _InvoiceMatch;
 
   const InvoiceMatch._();

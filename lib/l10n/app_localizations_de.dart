@@ -2242,6 +2242,32 @@ class AppLocalizationsDe extends AppLocalizations {
       'Leeres Band — fügen Sie unten ein Element hinzu.';
 
   @override
+  String get invoiceStatusRemainderCancelled =>
+      'Teilweise bezahlt · Restbetrag storniert';
+
+  @override
+  String get invoiceRemainingLabel => 'Restbetrag';
+
+  @override
+  String get invoiceWriteoffButton => 'Restbetrag stornieren';
+
+  @override
+  String get invoiceWriteoffExplain =>
+      'Der offene Restbetrag dieser Rechnung wird storniert und die Rechnung als teilweise bezahlt archiviert — sobald die Validierung bestätigt. Bis dahin bleibt sie offen und geschuldet.';
+
+  @override
+  String get invoiceWriteoffRequested =>
+      'Stornierung beantragt — wartet auf Validierung.';
+
+  @override
+  String get eventTypeInvoiceWriteoff => 'Restbetrag-Stornierung';
+
+  @override
+  String eventInvoiceWriteoffLine(String actor, String number, String amount) {
+    return '$actor bittet um Stornierung des Restbetrags von $number — $amount';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

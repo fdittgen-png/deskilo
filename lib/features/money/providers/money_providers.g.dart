@@ -1153,4 +1153,4 @@ final class InvoicingOverviewProvider
   }
 }
 
-String _$invoicingOverviewHash() => r'99cf1fa7e6bc09c6fda5662a59779a748b8c5666';
+String _$invoicingOverviewHash() => r'6f1c3ed961793b215969415162a30e0b2f7951f9';

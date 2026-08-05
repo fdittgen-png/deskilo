@@ -15,6 +15,8 @@ import '../period_label.dart';
 import '../../../../core/time/clock.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../../events/providers/event_providers.dart';
+import '../../../events/domain/workspace_event.dart';
 
 /// How old an open invoice has to be before the hub starts pointing at it.
 const _overdueDays = 30;
@@ -218,6 +220,7 @@ class OpenInvoicesTab extends ConsumerWidget {
     required this.onOpen,
     required this.onRemind,
     required this.onMatch,
+    required this.onWriteoff,
     required this.onVoid,
     required this.onProforma,
   });
@@ -231,6 +234,9 @@ class OpenInvoicesTab extends ConsumerWidget {
 
   /// Opens the match dialog (0067): the ONLY way an invoice closes.
   final void Function(OpenInvoiceEntry entry) onMatch;
+
+  /// #504 — request the validated write-off of the remainder.
+  final void Function(OpenInvoiceEntry entry) onWriteoff;
 
   /// Tags the OPEN invoice erronée so it can be corrected (0068 field
   /// decision: en-cours invoices are cancellable; PAID ones are not).
@@ -252,6 +258,12 @@ class OpenInvoicesTab extends ConsumerWidget {
     final dunningOn = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.dunning);
+    // #504 — write-offs already filed and awaiting their quorum.
+    final pendingWriteoffs = {
+      for (final event in ref.watch(eventsProvider).value ?? const [])
+        if (event.isPending && event.type == EventType.invoiceWriteoff)
+          event.payload['invoice_id'] as String? ?? '',
+    };
     final dunning =
         ref.watch(dunningRulesProvider).value ?? DunningRules.defaults;
     if (overview == null) return const LoadingView();
@@ -334,7 +346,67 @@ class OpenInvoicesTab extends ConsumerWidget {
                         ),
                       ),
                     ),
-                  if (entry.pendingMatch != null)
+                  if (entry.pendingMatch != null &&
+                      !entry.pendingMatch!.pending)
+                    // #504 — STANDING partial match: the remainder is
+                    // still owed. Remind, or request the validated
+                    // write-off; nothing else applies to a matched
+                    // invoice.
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: Text(
+                            '${l10n?.invoiceRemainingLabel ?? 'Remaining'}: '
+                            '${currency.format((entry.invoice.totalCents - entry.pendingMatch!.paidCents) / 100)}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium
+                                ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .error),
+                          ),
+                        ),
+                        IconButton(
+                          key: ValueKey(
+                              'invoice-remind-${entry.invoice.id}'),
+                          tooltip: l10n?.invoiceRemindAction ??
+                              'Send a reminder',
+                          icon: Icon(
+                            dueLevels[entry.invoice.id] != null
+                                ? Icons.notification_important
+                                : Icons.notifications_outlined,
+                            color: dueLevels[entry.invoice.id] != null
+                                ? Theme.of(context).colorScheme.error
+                                : null,
+                          ),
+                          onPressed: () => onRemind(entry),
+                        ),
+                        if (pendingWriteoffs
+                            .contains(entry.invoice.id))
+                          Chip(
+                            key: ValueKey(
+                                'invoice-writeoff-pending-${entry.invoice.id}'),
+                            avatar: const Icon(Icons.how_to_vote_outlined,
+                                size: 18),
+                            label: Text(l10n?.invoiceMatchPendingBadge ??
+                                'Awaiting validation'),
+                          )
+                        else
+                          IconButton.filledTonal(
+                            key: ValueKey(
+                                'invoice-writeoff-${entry.invoice.id}'),
+                            tooltip: l10n?.invoiceWriteoffButton ??
+                                'Cancel outstanding amount',
+                            icon: const Icon(
+                                Icons.money_off_csred_outlined),
+                            onPressed: () => onWriteoff(entry),
+                          ),
+                      ],
+                    )
+                  else if (entry.pendingMatch != null)
                     Align(
                       alignment: Alignment.centerRight,
                       child: Padding(

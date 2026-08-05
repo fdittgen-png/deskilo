@@ -659,5 +659,44 @@
   "reportDesignEmpty": "Bande vide — ajoutez un élément ci-dessous.",
   "@reportDesignEmpty": {
     "description": "True WYSIWYG design surface (#498)"
+  },
+  "invoiceStatusRemainderCancelled": "Partiellement payée · solde annulé",
+  "@invoiceStatusRemainderCancelled": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceRemainingLabel": "Restant dû",
+  "@invoiceRemainingLabel": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceWriteoffButton": "Annuler le solde restant",
+  "@invoiceWriteoffButton": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceWriteoffExplain": "Le solde impayé de cette facture sera annulé et la facture archivée comme partiellement payée — une fois la validation confirmée. D'ici là elle reste ouverte et due.",
+  "@invoiceWriteoffExplain": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceWriteoffRequested": "Annulation demandée — en attente de validation.",
+  "@invoiceWriteoffRequested": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "eventTypeInvoiceWriteoff": "Annulation de solde",
+  "@eventTypeInvoiceWriteoff": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "eventInvoiceWriteoffLine": "{actor} demande l'annulation du solde de {number} — {amount}",
+  "@eventInvoiceWriteoffLine": {
+    "description": "Partial payments stay open until a validated write-off (#504)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

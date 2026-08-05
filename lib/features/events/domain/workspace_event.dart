@@ -41,7 +41,12 @@ enum EventType {
   /// A member's request to delete a PAST or CHECKED-IN booking (0097,
   /// #492): confirm cancels it (unused), reject keeps it on the record
   /// (the check-in was merely forgotten). Always another person decides.
-  reservationDelete('reservation_delete');
+  reservationDelete('reservation_delete'),
+
+  /// Cancelling the outstanding remainder of a PARTIALLY PAID invoice
+  /// (0100, #504): confirm writes the remainder off and archives the
+  /// invoice; reject keeps it open and owed. Another person decides.
+  invoiceWriteoff('invoice_writeoff');
 
   const EventType([String? dbName]) : _dbName = dbName;
 
@@ -90,6 +95,7 @@ sealed class WorkspaceEvent with _$WorkspaceEvent {
       type == EventType.expense ||
       type == EventType.quota ||
       type == EventType.reservationDelete ||
+      type == EventType.invoiceWriteoff ||
       type == EventType.roleChange ||
       type == EventType.memberJoin ||
       ((type == EventType.payment || type == EventType.serviceCharge) &&

@@ -1312,5 +1312,44 @@
   "reportDesignEmpty": "Empty band — add an element below.",
   "@reportDesignEmpty": {
     "description": "True WYSIWYG design surface (#498)"
+  },
+  "invoiceStatusRemainderCancelled": "Partially paid · remainder cancelled",
+  "@invoiceStatusRemainderCancelled": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceRemainingLabel": "Remaining",
+  "@invoiceRemainingLabel": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceWriteoffButton": "Cancel outstanding amount",
+  "@invoiceWriteoffButton": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceWriteoffExplain": "The unpaid remainder of this invoice will be cancelled and the invoice archived as partially paid — once the validators confirm. Until then it stays open and owed.",
+  "@invoiceWriteoffExplain": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "invoiceWriteoffRequested": "Write-off requested — awaiting validation.",
+  "@invoiceWriteoffRequested": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "eventTypeInvoiceWriteoff": "Outstanding write-off",
+  "@eventTypeInvoiceWriteoff": {
+    "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "eventInvoiceWriteoffLine": "{actor} asks to cancel the remainder of {number} — {amount}",
+  "@eventInvoiceWriteoffLine": {
+    "description": "Partial payments stay open until a validated write-off (#504)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }
