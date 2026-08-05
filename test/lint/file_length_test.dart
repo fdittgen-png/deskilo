@@ -33,8 +33,6 @@ const Map<String, int> _baseline = {
   'lib/features/plan/presentation/screens/plan_screen.dart': 1550,
   // 1290→1330 (2026-08-02): #395 Excel-export tile — feature lines, the
   // orchestration itself lives in excel_export.dart.
-  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart':
-      1370, // 1330→1370 (2026-08-05): #474 report-editor + dunning tiles.
   'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1160,
   // 1010→1020 (2026-08-04): #462 whole-space overlays on the plan view.
   // 1020→1070: #466 the hub's whole-level reserve button + visibility.
@@ -48,10 +46,12 @@ const Map<String, int> _baseline = {
   // owner's report template (#478 Invoices button joins the grid).
   // 1030→1070 (2026-08-05): #486 grouped Pay/Requests/Documents actions
   // + the landscape balance card.
-  'lib/features/money/presentation/screens/money_screen.dart': 1070,
+  // 1070→1180 (2026-08-05): #494 the self-service document sheet.
+  'lib/features/money/presentation/screens/money_screen.dart': 1180,
   // 910→950 (2026-08-04): #456 note tile + admin broadcast button —
   // the dialog itself is its own file.
-  'lib/features/workspace/presentation/screens/members_screen.dart': 950,
+  // 950→990 (2026-08-05): #494 send-the-agreement action.
+  'lib/features/workspace/presentation/screens/members_screen.dart': 990,
   // 900→920 (2026-08-03): #410 admin-visible email line on the member
   // row — the row shares its chip helpers with the detail sheet, so
   // extracting it would drag half the file; 15 feature lines instead.
@@ -72,12 +72,18 @@ const Map<String, int> _baseline = {
   // by all three document data models.
   // 1280→1320 (2026-08-05): #488 resolveReportImages threaded through
   // every PDF path.
-  'lib/features/money/presentation/invoice_actions.dart': 1320,
+  // 1320→1680 (2026-08-05): #494 the agreement/payments/workspace data
+  // models + the letter-doc warm/render/pdf helpers.
+  'lib/features/money/presentation/invoice_actions.dart': 1680,
+  // 1370→1410 (2026-08-05): #494 the engine-based workspace report tile.
+  'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1410,
   // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
   'lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart': 640,
   // 600→660 (2026-08-05): #488 the editor's mode toggle + image insert
   // flow; the visual editor itself is its own file.
-  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 660,
+  // 660→700 (2026-08-05): #494 the three further document chips + their
+  // live data and letter-PDF branches.
+  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 700,
   'lib/features/workspace/domain/workspace_xml.dart': 800,
   // 770→780 (2026-08-04): #452 whole-level rows merge into every seat
   // row — five feature lines, not accretion.

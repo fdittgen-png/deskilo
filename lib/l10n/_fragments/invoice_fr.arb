@@ -603,5 +603,49 @@
   "reportLineLogic": "Logique",
   "@reportLineLogic": {
     "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportDocAgreement": "Accord financier",
+  "@reportDocAgreement": {
+    "description": "Report suite: agreement/payments/workspace docs (#494)"
+  },
+  "reportDocPayments": "Rapport des paiements",
+  "@reportDocPayments": {
+    "description": "Report suite: agreement/payments/workspace docs (#494)"
+  },
+  "reportDocWorkspace": "Rapport de l'espace",
+  "@reportDocWorkspace": {
+    "description": "Report suite: agreement/payments/workspace docs (#494)"
+  },
+  "agreementExtraHalfDay": "Demi-journée supplémentaire",
+  "@agreementExtraHalfDay": {
+    "description": "Report suite: agreement/payments/workspace docs (#494)"
+  },
+  "paymentsPendingTag": "en attente de validation",
+  "@paymentsPendingTag": {
+    "description": "Report suite: agreement/payments/workspace docs (#494)"
+  },
+  "reportSectionFeatures": "Fonctionnalités",
+  "@reportSectionFeatures": {
+    "description": "Report suite: agreement/payments/workspace docs (#494)"
+  },
+  "reportSectionPrices": "Tarifs",
+  "@reportSectionPrices": {
+    "description": "Report suite: agreement/payments/workspace docs (#494)"
+  },
+  "moneyMyAgreement": "Mes conditions",
+  "@moneyMyAgreement": {
+    "description": "Report suite: agreement/payments/workspace docs (#494)"
+  },
+  "memberSendAgreement": "Envoyer l'accord financier",
+  "@memberSendAgreement": {
+    "description": "Report suite: agreement/payments/workspace docs (#494)"
+  },
+  "reportQuickView": "Aperçu rapide",
+  "@reportQuickView": {
+    "description": "Report suite: agreement/payments/workspace docs (#494)"
+  },
+  "reportDocWorkspaceSubtitle": "Tout sur l'espace — via le modèle « espace » de l'éditeur de rapports",
+  "@reportDocWorkspaceSubtitle": {
+    "description": "Report suite: agreement/payments/workspace docs (#494)"
   }
 }

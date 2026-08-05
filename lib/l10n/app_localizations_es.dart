@@ -2173,6 +2173,40 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reportLineLogic => 'Lógica';
 
   @override
+  String get reportDocAgreement => 'Acuerdo financiero';
+
+  @override
+  String get reportDocPayments => 'Informe de pagos';
+
+  @override
+  String get reportDocWorkspace => 'Informe del espacio';
+
+  @override
+  String get agreementExtraHalfDay => 'Media jornada extra';
+
+  @override
+  String get paymentsPendingTag => 'pendiente de validación';
+
+  @override
+  String get reportSectionFeatures => 'Funciones';
+
+  @override
+  String get reportSectionPrices => 'Precios';
+
+  @override
+  String get moneyMyAgreement => 'Mis condiciones';
+
+  @override
+  String get memberSendAgreement => 'Enviar el acuerdo financiero';
+
+  @override
+  String get reportQuickView => 'Vista rápida';
+
+  @override
+  String get reportDocWorkspaceSubtitle =>
+      'Todo sobre el espacio — mediante la plantilla de espacio del editor de informes';
+
+  @override
   String get eventTypeMemberJoin => 'Nuevo miembro';
 
   @override

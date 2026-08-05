@@ -100,11 +100,22 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
         footer: _footer.text.trim(),
       );
 
+  /// The extra documents the editor offers beside the classics (#494).
+  static const List<String> _extraDocs = [
+    'agreement',
+    'payments',
+    'workspace',
+  ];
+
   /// The stored bands of document [doc], before any unsaved edit.
   ReportBands _storedBands(String doc) => switch (doc) {
         'invoice' => widget.initial.invoiceBands,
         'proforma' => widget.initial.proforma,
         'statement' => widget.initial.statement,
+        'agreement' ||
+        'payments' ||
+        'workspace' =>
+          widget.initial.extraDocs[doc] ?? ReportBands.empty,
         _ => widget.initial
                 .reminderBands(int.tryParse(doc.substring(1)) ?? 1) ??
             ReportBands.empty,
@@ -134,10 +145,15 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
       reminders: widget.initial.reminders,
       proforma: _drafts['proforma'] ?? widget.initial.proforma,
       statement: _drafts['statement'] ?? widget.initial.statement,
+      extraDocs: widget.initial.extraDocs,
     );
     for (var level = 1; level <= maxLevels; level++) {
       final bands = _drafts['r$level'];
       if (bands != null) template = template.withReminder(level, bands);
+    }
+    for (final doc in _extraDocs) {
+      final bands = _drafts[doc];
+      if (bands != null) template = template.withDoc(doc, bands);
     }
     return template;
   }
@@ -212,6 +228,24 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
           currencyCode: workspace.currencyCode,
           workspace: workspace,
         );
+      case 'agreement':
+        final me = ref.read(myMemberProvider).value;
+        final names = ref.read(memberNamesProvider).value ?? const {};
+        if (me == null) return null;
+        return agreementReportData(context, ref,
+            memberName: names[me.id] ?? '',
+            subscriptionPct: me.subscriptionPct);
+      case 'payments':
+        final me = ref.read(myMemberProvider).value;
+        final names = ref.read(memberNamesProvider).value ?? const {};
+        final now = ref.read(clockProvider).now();
+        final period =
+            '${now.year}-${now.month.toString().padLeft(2, '0')}';
+        if (me == null) return null;
+        return paymentsReportData(context, ref,
+            period: period, memberName: names[me.id] ?? '');
+      case 'workspace':
+        return workspaceReportData(context, ref);
       default:
         if (invoices.isEmpty) return null;
         return reminderReportData(context, ref, invoices.first,
@@ -279,15 +313,16 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
               ref.read(reportImageBytesProvider(name).future),
         );
         pdf = (bytes: invoicePdf.bytes, fileName: invoicePdf.fileName);
-      } else if (_doc == 'statement') {
-        // The statement letter: my own statement, or the sample.
+      } else if (_doc == 'statement' ||
+          _extraDocs.contains(_doc)) {
+        // The letter documents: my own live data, or the sample.
         final data = _liveData() ?? sampleReportData(l10nSync);
         final bands = _currentBands.hasBands
             ? _currentBands
-            : defaultStatementBands(l10nSync);
+            : defaultBandsForDoc(_doc, l10nSync);
         final report = renderReportBands(bands: bands, data: data) ??
             renderReportBands(
-                bands: defaultStatementBands(l10nSync), data: data)!;
+                bands: defaultBandsForDoc(_doc, l10nSync), data: data)!;
         Future<pw.Font> font(String asset) async =>
             pw.Font.ttf(await rootBundle.load(asset));
         final bytes = await buildBandedLetterPdf(
@@ -425,6 +460,19 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
                   (
                     'statement',
                     l10n?.invoiceTemplateDocStatement ?? 'Statement'
+                  ),
+                  // #494 — the further documents.
+                  (
+                    'agreement',
+                    l10n?.reportDocAgreement ?? 'Financial agreement'
+                  ),
+                  (
+                    'payments',
+                    l10n?.reportDocPayments ?? 'Payments report'
+                  ),
+                  (
+                    'workspace',
+                    l10n?.reportDocWorkspace ?? 'Workspace report'
                   ),
                   for (var level = 1;
                       level <=

@@ -3956,6 +3956,72 @@ abstract class AppLocalizations {
   /// **'Logic'**
   String get reportLineLogic;
 
+  /// Report suite: agreement/payments/workspace docs (#494)
+  ///
+  /// In en, this message translates to:
+  /// **'Financial agreement'**
+  String get reportDocAgreement;
+
+  /// Report suite: agreement/payments/workspace docs (#494)
+  ///
+  /// In en, this message translates to:
+  /// **'Payments report'**
+  String get reportDocPayments;
+
+  /// Report suite: agreement/payments/workspace docs (#494)
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace report'**
+  String get reportDocWorkspace;
+
+  /// Report suite: agreement/payments/workspace docs (#494)
+  ///
+  /// In en, this message translates to:
+  /// **'Extra half-day'**
+  String get agreementExtraHalfDay;
+
+  /// Report suite: agreement/payments/workspace docs (#494)
+  ///
+  /// In en, this message translates to:
+  /// **'pending validation'**
+  String get paymentsPendingTag;
+
+  /// Report suite: agreement/payments/workspace docs (#494)
+  ///
+  /// In en, this message translates to:
+  /// **'Features'**
+  String get reportSectionFeatures;
+
+  /// Report suite: agreement/payments/workspace docs (#494)
+  ///
+  /// In en, this message translates to:
+  /// **'Prices'**
+  String get reportSectionPrices;
+
+  /// Report suite: agreement/payments/workspace docs (#494)
+  ///
+  /// In en, this message translates to:
+  /// **'My conditions'**
+  String get moneyMyAgreement;
+
+  /// Report suite: agreement/payments/workspace docs (#494)
+  ///
+  /// In en, this message translates to:
+  /// **'Send the financial agreement'**
+  String get memberSendAgreement;
+
+  /// Report suite: agreement/payments/workspace docs (#494)
+  ///
+  /// In en, this message translates to:
+  /// **'Quick view'**
+  String get reportQuickView;
+
+  /// Report suite: agreement/payments/workspace docs (#494)
+  ///
+  /// In en, this message translates to:
+  /// **'Everything about the space — through the report editor\'s workspace template'**
+  String get reportDocWorkspaceSubtitle;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:
