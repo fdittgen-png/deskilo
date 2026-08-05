@@ -70,6 +70,9 @@ class ReservationDetailSheet extends ConsumerWidget {
         mine && r.status == ReservationStatus.reserved && !started;
     final deletionRequestable = mine &&
         !editable &&
+        ref
+            .read(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.deletionRequests) &&
         (r.status == ReservationStatus.checkedIn ||
             r.status == ReservationStatus.completed ||
             (r.status == ReservationStatus.reserved && started));

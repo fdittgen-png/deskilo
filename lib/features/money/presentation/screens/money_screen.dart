@@ -1078,7 +1078,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       ],
       // #494 — member self-service reports: the standing financial
       // agreement and the month's payments, viewable/downloadable/
-      // shareable without asking anyone.
+      // shareable without asking anyone. Gated by memberReports (#502).
+      if (features.contains(WorkspaceFeature.memberReports))
       Row(children: [
         Expanded(
           child: OutlinedButton.icon(

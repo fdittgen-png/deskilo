@@ -251,9 +251,12 @@ class MembersScreen extends ConsumerWidget {
     final notesOn = ref
         .read(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.memberNotifications);
+    final reportsOn = ref
+        .read(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.memberReports);
     final actions = <Widget>[
       // #494 — the standing financial agreement, sent by owner/admin.
-      if (!member.isKiosk && active)
+      if (reportsOn && !member.isKiosk && active)
         _sheetAction(
           context,
           icon: Icons.handshake_outlined,

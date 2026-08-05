@@ -13,6 +13,8 @@ import '../../domain/ledger_entry.dart';
 import '../../providers/money_providers.dart';
 import '../period_label.dart';
 import '../../../../core/time/clock.dart';
+import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 
 /// How old an open invoice has to be before the hub starts pointing at it.
 const _overdueDays = 30;
@@ -247,6 +249,9 @@ class OpenInvoicesTab extends ConsumerWidget {
         ref.watch(invoiceRemindersProvider).value ?? const {};
     // Mahnwesen (#472): the rules say when a reminder is DUE — the card
     // flags it and the bell icon fills. A human still sends.
+    final dunningOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.dunning);
     final dunning =
         ref.watch(dunningRulesProvider).value ?? DunningRules.defaults;
     if (overview == null) return const LoadingView();
@@ -261,7 +266,9 @@ class OpenInvoicesTab extends ConsumerWidget {
     );
     // One instant for the whole list, not one clock read per row.
     final now = ref.read(clockProvider).now();
-    final dueLevels = {
+    final dueLevels = !dunningOn
+        ? const <String, int>{}
+        : {
       for (final e in overview.open)
         e.invoice.id: dueReminderLevel(
           issuedAt: e.invoice.issuedAt,

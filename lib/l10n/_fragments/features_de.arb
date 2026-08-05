@@ -49,5 +49,29 @@
   "featureInvoicePdfTemplate": "Rechnungs-PDF-Vorlage",
   "featureInvoicePdfTemplateDesc": "Vom Inhaber verfasste Einleitung und Fußtext auf dem Rechnungs-PDF. Das E-Rechnungs-XML bleibt unberührt.",
   "featureMemberNotifications": "Mitglieder-Benachrichtigungen",
-  "featureMemberNotificationsDesc": "Kurze Benachrichtigung an ein anderes Mitglied senden; Admins können alle Admins inkl. Inhaber benachrichtigen."
+  "featureMemberNotificationsDesc": "Kurze Benachrichtigung an ein anderes Mitglied senden; Admins können alle Admins inkl. Inhaber benachrichtigen.",
+  "featureDunning": "Mahnwesen",
+  "@featureDunning": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureDunningDesc": "Parametrierbare Mahnregeln und „Mahnung fällig“-Hinweise auf überfälligen Rechnungen. Nichts wird je automatisch versendet.",
+  "@featureDunningDesc": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureMemberReports": "Mitgliederberichte",
+  "@featureMemberReports": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureMemberReportsDesc": "Die Finanzvereinbarung und der monatliche Zahlungsbericht — Self-Service für Mitglieder, pro Mitglied versendbar.",
+  "@featureMemberReportsDesc": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureDeletionRequests": "Lösch-Anträge für Buchungen",
+  "@featureDeletionRequests": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureDeletionRequestsDesc": "Mitglieder können die Löschung einer vergangenen oder eingecheckten Buchung BEANTRAGEN; Inhaber/Admin validieren. Aus: solche Buchungen sind gar nicht löschbar.",
+  "@featureDeletionRequestsDesc": {
+    "description": "Feature-registry completeness (#502)"
+  }
 }

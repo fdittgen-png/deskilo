@@ -1175,6 +1175,28 @@ class AppLocalizationsFr extends AppLocalizations {
       'Envoyer une courte notification à un autre membre ; les admins peuvent notifier tous les admins, propriétaire inclus.';
 
   @override
+  String get featureDunning => 'Relances de paiement (Mahnwesen)';
+
+  @override
+  String get featureDunningDesc =>
+      'Règles de relance paramétrables et suggestions « Relance due » sur les factures en retard. Rien n\'est jamais envoyé automatiquement.';
+
+  @override
+  String get featureMemberReports => 'Rapports des membres';
+
+  @override
+  String get featureMemberReportsDesc =>
+      'L\'accord financier et le rapport mensuel des paiements — en libre-service pour les membres, envoyables par membre.';
+
+  @override
+  String get featureDeletionRequests =>
+      'Demandes de suppression de réservation';
+
+  @override
+  String get featureDeletionRequestsDesc =>
+      'Les membres peuvent DEMANDER la suppression d\'une réservation passée ou pointée ; un propriétaire/admin valide. Désactivé, ces réservations ne peuvent pas être supprimées.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override

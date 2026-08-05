@@ -23,6 +23,7 @@ import '../../domain/invoice_pdf.dart';
 import '../../domain/invoice_report.dart';
 import '../invoice_actions.dart';
 import '../report_defaults.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import 'report_preview.dart';
 import 'report_visual_editor.dart';
 
@@ -570,12 +571,15 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
                     'workspace',
                     l10n?.reportDocWorkspace ?? 'Workspace report'
                   ),
-                  for (var level = 1;
-                      level <=
-                          (ref.watch(dunningRulesProvider).value ??
-                                  DunningRules.defaults)
-                              .levels;
-                      level++)
+                  if (ref
+                      .watch(enabledFeaturesSyncProvider)
+                      .contains(WorkspaceFeature.dunning))
+                    for (var level = 1;
+                        level <=
+                            (ref.watch(dunningRulesProvider).value ??
+                                    DunningRules.defaults)
+                                .levels;
+                        level++)
                     (
                       'r$level',
                       l10n?.invoiceTemplateDocReminder(level) ??

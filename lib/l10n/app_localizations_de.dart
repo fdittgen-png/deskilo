@@ -1171,6 +1171,27 @@ class AppLocalizationsDe extends AppLocalizations {
       'Kurze Benachrichtigung an ein anderes Mitglied senden; Admins können alle Admins inkl. Inhaber benachrichtigen.';
 
   @override
+  String get featureDunning => 'Mahnwesen';
+
+  @override
+  String get featureDunningDesc =>
+      'Parametrierbare Mahnregeln und „Mahnung fällig“-Hinweise auf überfälligen Rechnungen. Nichts wird je automatisch versendet.';
+
+  @override
+  String get featureMemberReports => 'Mitgliederberichte';
+
+  @override
+  String get featureMemberReportsDesc =>
+      'Die Finanzvereinbarung und der monatliche Zahlungsbericht — Self-Service für Mitglieder, pro Mitglied versendbar.';
+
+  @override
+  String get featureDeletionRequests => 'Lösch-Anträge für Buchungen';
+
+  @override
+  String get featureDeletionRequestsDesc =>
+      'Mitglieder können die Löschung einer vergangenen oder eingecheckten Buchung BEANTRAGEN; Inhaber/Admin validieren. Aus: solche Buchungen sind gar nicht löschbar.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override

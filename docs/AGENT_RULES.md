@@ -21,6 +21,12 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
 - All timestamps stored UTC; recurring series recur in workspace-local time.
 - No third-party tracking, no GPL dependencies (ADR 0009). FCM is the push transport (ADR 0011).
 
+## Feature management (lifetime rule, #502)
+
+- EVERY user-facing functionality ships behind a `WorkspaceFeature` flag — for the lifetime of this project. A new functionality lands with: the enum value, a `featureManifest` entry (defaultOn/requires), `featureXxx`/`featureXxxDesc` l10n keys ×5, `features.contains(...)` gates on its UI surfaces, and the bumped pin in `test/lint/feature_registry_test.dart`.
+- Default ON unless the feature is risky or needs owner setup; dependent features declare `requires` so the Features screen explains the chain.
+- OFF must degrade honestly: the entry points disappear (and their routes redirect); already-stored data stays untouched.
+
 ## Testing rules
 
 - TDD pyramid 70/20/10. Bug fixes: write the failing test FIRST, calling the exact method the failing UI calls.
