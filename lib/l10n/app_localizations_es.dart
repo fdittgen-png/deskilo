@@ -1171,6 +1171,28 @@ class AppLocalizationsEs extends AppLocalizations {
       'Envía una notificación corta a otro miembro; los admins pueden notificar a todos los admins, incluido el propietario.';
 
   @override
+  String get featureDunning => 'Recordatorios de pago (Mahnwesen)';
+
+  @override
+  String get featureDunningDesc =>
+      'Reglas de recordatorio configurables y avisos «Recordatorio pendiente» en facturas vencidas. Nunca se envía nada automáticamente.';
+
+  @override
+  String get featureMemberReports => 'Informes de miembros';
+
+  @override
+  String get featureMemberReportsDesc =>
+      'El acuerdo financiero y el informe mensual de pagos — autoservicio para miembros, enviables por miembro.';
+
+  @override
+  String get featureDeletionRequests =>
+      'Solicitudes de eliminación de reservas';
+
+  @override
+  String get featureDeletionRequestsDesc =>
+      'Los miembros pueden SOLICITAR la eliminación de una reserva pasada o registrada; un propietario/admin valida. Desactivado, esas reservas no se pueden eliminar.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override

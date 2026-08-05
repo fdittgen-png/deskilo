@@ -56,4 +56,10 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureMemberNotifications ?? 'Member notifications',
       WorkspaceFeature.documents =>
         l10n?.featureDocuments ?? 'Document library',
+      WorkspaceFeature.dunning =>
+        l10n?.featureDunning ?? 'Payment reminders (Mahnwesen)',
+      WorkspaceFeature.memberReports =>
+        l10n?.featureMemberReports ?? 'Member reports',
+      WorkspaceFeature.deletionRequests =>
+        l10n?.featureDeletionRequests ?? 'Booking deletion requests',
     };

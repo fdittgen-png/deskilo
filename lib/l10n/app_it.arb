@@ -385,6 +385,30 @@
   "featureInvoicePdfTemplateDesc": "Introduzione e piè di pagina scritti dal proprietario sul PDF della fattura. Non tocca mai l'XML della fattura elettronica.",
   "featureMemberNotifications": "Notifiche tra membri",
   "featureMemberNotificationsDesc": "Invia una breve notifica a un altro membro; gli admin possono notificare tutti gli admin, proprietario incluso.",
+  "featureDunning": "Solleciti di pagamento (Mahnwesen)",
+  "@featureDunning": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureDunningDesc": "Regole di sollecito configurabili e avvisi «Sollecito dovuto» sulle fatture scadute. Nulla viene mai inviato automaticamente.",
+  "@featureDunningDesc": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureMemberReports": "Report dei membri",
+  "@featureMemberReports": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureMemberReportsDesc": "L'accordo finanziario e il report mensile dei pagamenti — self-service per i membri, inviabili per membro.",
+  "@featureMemberReportsDesc": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureDeletionRequests": "Richieste di eliminazione prenotazioni",
+  "@featureDeletionRequests": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureDeletionRequestsDesc": "I membri possono RICHIEDERE l'eliminazione di una prenotazione passata o con check-in; un proprietario/admin convalida. Disattivato, tali prenotazioni non sono eliminabili.",
+  "@featureDeletionRequestsDesc": {
+    "description": "Feature-registry completeness (#502)"
+  },
   "helpTitle": "Aiuto",
   "helpContents": "Indice",
   "inviteSectionTitle": "Invita qualcuno",

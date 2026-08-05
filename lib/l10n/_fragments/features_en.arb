@@ -174,5 +174,29 @@
   "featureInvoicePdfTemplate": "Invoice PDF template",
   "featureInvoicePdfTemplateDesc": "Owner-written intro and footer text on the invoice PDF. Never touches the e-invoice XML.",
   "featureMemberNotifications": "Member notifications",
-  "featureMemberNotificationsDesc": "Send a short notification to another member; admins can notify all admins including the owner."
+  "featureMemberNotificationsDesc": "Send a short notification to another member; admins can notify all admins including the owner.",
+  "featureDunning": "Payment reminders (Mahnwesen)",
+  "@featureDunning": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureDunningDesc": "Configurable reminder rules and \"Reminder due\" suggestions on overdue invoices. Nothing is ever sent automatically.",
+  "@featureDunningDesc": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureMemberReports": "Member reports",
+  "@featureMemberReports": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureMemberReportsDesc": "The financial agreement and the monthly payments report — self-service for members, sendable per member.",
+  "@featureMemberReportsDesc": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureDeletionRequests": "Booking deletion requests",
+  "@featureDeletionRequests": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureDeletionRequestsDesc": "Members may REQUEST deletion of a past or checked-in booking; an owner/admin validates. Off, such bookings cannot be deleted at all.",
+  "@featureDeletionRequestsDesc": {
+    "description": "Feature-registry completeness (#502)"
+  }
 }

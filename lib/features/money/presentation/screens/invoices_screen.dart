@@ -80,7 +80,8 @@ class InvoicesScreen extends ConsumerWidget {
           )
         : null;
     // Mahnwesen (#472): the dunning policy — owner only.
-    final dunningAction = (me?.actsAsOwner ?? false)
+    final dunningAction = ((me?.actsAsOwner ?? false) &&
+            features.contains(WorkspaceFeature.dunning))
         ? IconButton(
             key: const ValueKey('invoice-dunning-settings'),
             tooltip: l10n?.dunningSettingsTitle ?? 'Reminder rules',

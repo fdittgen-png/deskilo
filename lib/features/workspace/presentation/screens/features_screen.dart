@@ -111,6 +111,19 @@ class FeaturesScreen extends ConsumerWidget {
             'The workspace document library: statutes, guides, '
                 'financial statements, minutes — linked from any drive, '
                 'visible per role.',
+        WorkspaceFeature.dunning => l10n?.featureDunningDesc ??
+            'Configurable reminder rules and "Reminder due" '
+                'suggestions on overdue invoices. Nothing is ever sent '
+                'automatically.',
+        WorkspaceFeature.memberReports =>
+          l10n?.featureMemberReportsDesc ??
+              'The financial agreement and the monthly payments report '
+                  '— self-service for members, sendable per member.',
+        WorkspaceFeature.deletionRequests =>
+          l10n?.featureDeletionRequestsDesc ??
+              'Members may REQUEST deletion of a past or checked-in '
+                  'booking; an owner/admin validates. Off, such '
+                  'bookings cannot be deleted at all.',
       };
 
   Future<void> _toggle(

@@ -1163,6 +1163,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'Send a short notification to another member; admins can notify all admins including the owner.';
 
   @override
+  String get featureDunning => 'Payment reminders (Mahnwesen)';
+
+  @override
+  String get featureDunningDesc =>
+      'Configurable reminder rules and \"Reminder due\" suggestions on overdue invoices. Nothing is ever sent automatically.';
+
+  @override
+  String get featureMemberReports => 'Member reports';
+
+  @override
+  String get featureMemberReportsDesc =>
+      'The financial agreement and the monthly payments report — self-service for members, sendable per member.';
+
+  @override
+  String get featureDeletionRequests => 'Booking deletion requests';
+
+  @override
+  String get featureDeletionRequestsDesc =>
+      'Members may REQUEST deletion of a past or checked-in booking; an owner/admin validates. Off, such bookings cannot be deleted at all.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override

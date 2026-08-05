@@ -385,6 +385,30 @@
   "featureInvoicePdfTemplateDesc": "Introduction et pied de page rédigés par le propriétaire sur le PDF de facture. Ne touche jamais au XML de facture électronique.",
   "featureMemberNotifications": "Notifications entre membres",
   "featureMemberNotificationsDesc": "Envoyer une courte notification à un autre membre ; les admins peuvent notifier tous les admins, propriétaire inclus.",
+  "featureDunning": "Relances de paiement (Mahnwesen)",
+  "@featureDunning": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureDunningDesc": "Règles de relance paramétrables et suggestions « Relance due » sur les factures en retard. Rien n'est jamais envoyé automatiquement.",
+  "@featureDunningDesc": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureMemberReports": "Rapports des membres",
+  "@featureMemberReports": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureMemberReportsDesc": "L'accord financier et le rapport mensuel des paiements — en libre-service pour les membres, envoyables par membre.",
+  "@featureMemberReportsDesc": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureDeletionRequests": "Demandes de suppression de réservation",
+  "@featureDeletionRequests": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureDeletionRequestsDesc": "Les membres peuvent DEMANDER la suppression d'une réservation passée ou pointée ; un propriétaire/admin valide. Désactivé, ces réservations ne peuvent pas être supprimées.",
+  "@featureDeletionRequestsDesc": {
+    "description": "Feature-registry completeness (#502)"
+  },
   "helpTitle": "Aide",
   "helpContents": "Sommaire",
   "inviteSectionTitle": "Inviter quelqu'un",

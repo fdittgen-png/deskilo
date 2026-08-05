@@ -2186,6 +2186,42 @@ abstract class AppLocalizations {
   /// **'Send a short notification to another member; admins can notify all admins including the owner.'**
   String get featureMemberNotificationsDesc;
 
+  /// Feature-registry completeness (#502)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment reminders (Mahnwesen)'**
+  String get featureDunning;
+
+  /// Feature-registry completeness (#502)
+  ///
+  /// In en, this message translates to:
+  /// **'Configurable reminder rules and \"Reminder due\" suggestions on overdue invoices. Nothing is ever sent automatically.'**
+  String get featureDunningDesc;
+
+  /// Feature-registry completeness (#502)
+  ///
+  /// In en, this message translates to:
+  /// **'Member reports'**
+  String get featureMemberReports;
+
+  /// Feature-registry completeness (#502)
+  ///
+  /// In en, this message translates to:
+  /// **'The financial agreement and the monthly payments report — self-service for members, sendable per member.'**
+  String get featureMemberReportsDesc;
+
+  /// Feature-registry completeness (#502)
+  ///
+  /// In en, this message translates to:
+  /// **'Booking deletion requests'**
+  String get featureDeletionRequests;
+
+  /// Feature-registry completeness (#502)
+  ///
+  /// In en, this message translates to:
+  /// **'Members may REQUEST deletion of a past or checked-in booking; an owner/admin validates. Off, such bookings cannot be deleted at all.'**
+  String get featureDeletionRequestsDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:

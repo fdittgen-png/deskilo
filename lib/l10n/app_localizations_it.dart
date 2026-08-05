@@ -1173,6 +1173,28 @@ class AppLocalizationsIt extends AppLocalizations {
       'Invia una breve notifica a un altro membro; gli admin possono notificare tutti gli admin, proprietario incluso.';
 
   @override
+  String get featureDunning => 'Solleciti di pagamento (Mahnwesen)';
+
+  @override
+  String get featureDunningDesc =>
+      'Regole di sollecito configurabili e avvisi «Sollecito dovuto» sulle fatture scadute. Nulla viene mai inviato automaticamente.';
+
+  @override
+  String get featureMemberReports => 'Report dei membri';
+
+  @override
+  String get featureMemberReportsDesc =>
+      'L\'accordo finanziario e il report mensile dei pagamenti — self-service per i membri, inviabili per membro.';
+
+  @override
+  String get featureDeletionRequests =>
+      'Richieste di eliminazione prenotazioni';
+
+  @override
+  String get featureDeletionRequestsDesc =>
+      'I membri possono RICHIEDERE l\'eliminazione di una prenotazione passata o con check-in; un proprietario/admin convalida. Disattivato, tali prenotazioni non sono eliminabili.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override

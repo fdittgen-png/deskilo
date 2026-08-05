@@ -49,5 +49,29 @@
   "featureInvoicePdfTemplate": "Plantilla del PDF de factura",
   "featureInvoicePdfTemplateDesc": "Introducción y pie escritos por el propietario en el PDF de la factura. Nunca toca el XML de la factura electrónica.",
   "featureMemberNotifications": "Notificaciones entre miembros",
-  "featureMemberNotificationsDesc": "Envía una notificación corta a otro miembro; los admins pueden notificar a todos los admins, incluido el propietario."
+  "featureMemberNotificationsDesc": "Envía una notificación corta a otro miembro; los admins pueden notificar a todos los admins, incluido el propietario.",
+  "featureDunning": "Recordatorios de pago (Mahnwesen)",
+  "@featureDunning": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureDunningDesc": "Reglas de recordatorio configurables y avisos «Recordatorio pendiente» en facturas vencidas. Nunca se envía nada automáticamente.",
+  "@featureDunningDesc": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureMemberReports": "Informes de miembros",
+  "@featureMemberReports": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureMemberReportsDesc": "El acuerdo financiero y el informe mensual de pagos — autoservicio para miembros, enviables por miembro.",
+  "@featureMemberReportsDesc": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureDeletionRequests": "Solicitudes de eliminación de reservas",
+  "@featureDeletionRequests": {
+    "description": "Feature-registry completeness (#502)"
+  },
+  "featureDeletionRequestsDesc": "Los miembros pueden SOLICITAR la eliminación de una reserva pasada o registrada; un propietario/admin valida. Desactivado, esas reservas no se pueden eliminar.",
+  "@featureDeletionRequestsDesc": {
+    "description": "Feature-registry completeness (#502)"
+  }
 }

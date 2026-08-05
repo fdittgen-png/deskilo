@@ -32,7 +32,10 @@ enum WorkspaceFeature {
   workingHours,
   invoicePdfTemplate,
   memberNotifications,
-  documents;
+  documents,
+  dunning,
+  memberReports,
+  deletionRequests;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -177,6 +180,20 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // statements, minutes — federated links to any DMS, role-gated.
   WorkspaceFeature.documents:
       FeatureManifestEntry(feature: WorkspaceFeature.documents),
+  // Mahnwesen (#472/#502): reminder rules + due suggestions. OFF keeps
+  // the manual per-invoice reminder untouched.
+  WorkspaceFeature.dunning: FeatureManifestEntry(
+    feature: WorkspaceFeature.dunning,
+    requires: WorkspaceFeature.invoicing,
+  ),
+  // The member report suite (#494/#502): the financial agreement and
+  // the monthly payments report, self-service and admin-sent.
+  WorkspaceFeature.memberReports:
+      FeatureManifestEntry(feature: WorkspaceFeature.memberReports),
+  // Validated deletion requests for past/checked-in bookings
+  // (#492/#502). OFF = such bookings simply cannot be deleted.
+  WorkspaceFeature.deletionRequests:
+      FeatureManifestEntry(feature: WorkspaceFeature.deletionRequests),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start
