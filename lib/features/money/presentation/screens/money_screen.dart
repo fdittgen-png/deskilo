@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import '../../../../core/files/file_saver.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/links/link_launcher.dart';
@@ -27,6 +26,7 @@ import '../../domain/bill_pdf.dart';
 import '../../domain/invoice_pdf.dart';
 import '../../domain/invoice_report.dart';
 import '../invoice_actions.dart';
+import '../report_actions.dart';
 import '../invoice_status.dart';
 import '../report_defaults.dart';
 import '../../domain/bill_sections.dart';
@@ -40,8 +40,6 @@ import '../payment_method_labels.dart';
 import '../widgets/account_card.dart';
 import '../widgets/bill_view.dart';
 import '../widgets/consumption_sheet.dart';
-import '../widgets/report_preview.dart';
-import '../../../../core/share/file_sharer.dart';
 import '../../../profile/providers/profile_providers.dart';
 import '../../../../core/locale/report_language.dart';
 
@@ -122,64 +120,17 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final title = docId == 'agreement'
         ? docL10n.reportDocAgreement
         : docL10n.reportDocPayments;
-    final choice = await showModalBottomSheet<String>(
-      context: context,
-      builder: (sheetContext) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              key: const ValueKey('member-doc-quick'),
-              leading: const Icon(Icons.bolt_outlined),
-              title: Text(l10n?.reportQuickView ?? 'Quick view'),
-              onTap: () => Navigator.of(sheetContext).pop('quick'),
-            ),
-            ListTile(
-              key: const ValueKey('member-doc-download'),
-              leading: const Icon(Icons.download_outlined),
-              title: Text(
-                  l10n?.invoiceTemplateDownload ?? 'Download PDF'),
-              onTap: () => Navigator.of(sheetContext).pop('download'),
-            ),
-            ListTile(
-              key: const ValueKey('member-doc-share'),
-              leading: const Icon(Icons.share_outlined),
-              title: Text(l10n?.invoiceTemplateShare ?? 'Share PDF'),
-              onTap: () => Navigator.of(sheetContext).pop('share'),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-          ],
-        ),
-      ),
-    );
-    if (choice == null || !mounted) return;
-    if (choice == 'quick') {
-      final images = await resolveReportImages(ref, report);
-      if (!mounted) return;
-      await showReportQuickPreview(context,
-          report: report, simulated: false, images: images);
-      return;
-    }
-    await runGuarded(
+    // #514 — the shared triad: quick view / save / share.
+    await runReportActions(
       context,
-      domain: 'money',
-      message: 'member report pdf failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () async {
+      ref,
+      keyPrefix: 'member-doc',
+      logMessage: 'member report pdf failed',
+      render: () => report,
+      buildPdf: () async {
         final pdf = await letterDocPdf(context, ref,
             report: report, title: title);
-        if (!mounted) return;
-        if (choice == 'download') {
-          await savePdfToDownloads(context, ref,
-              bytes: pdf.bytes, fileName: pdf.fileName);
-        } else {
-          await ref.read(fileSharerProvider)(
-            bytes: pdf.bytes,
-            fileName: pdf.fileName,
-            mimeType: 'application/pdf',
-          );
-        }
+        return (bytes: pdf.bytes, fileName: pdf.fileName);
       },
     );
   }
@@ -196,7 +147,6 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final memberName =
         ref.read(memberNamesProvider).value?[member.id] ?? '';
     final monthLabel = DateFormat.yMMMM(locale).format(_month);
-    final save = ref.read(fileSaverProvider);
 
     final strings = BillPdfStrings(
       title: l10n?.billPdfTitle ?? 'Monthly bill',
@@ -233,13 +183,38 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       outstanding: l10n?.billOutstanding ?? 'Outstanding',
     );
 
-    await runGuarded(
+    // #514 — the shared triad, for the bill too: the statement report
+    // (owner template or default bands) is the quick view; download and
+    // share build the same PDF the save-only path used to.
+    InvoiceReport? renderStatement() {
+      final data = statementReportData(
+        context,
+        statement: statement,
+        workspaceName: workspace.name,
+        memberName: memberName,
+        periodLabel: monthLabel,
+        currencyCode: workspace.currencyCode,
+        workspace: workspace,
+      );
+      final statementBands = (ref
+                  .read(enabledFeaturesSyncProvider)
+                  .contains(WorkspaceFeature.invoicePdfTemplate)
+              ? ref.read(invoicePdfTemplateProvider).value
+              : null)
+          ?.statementBands;
+      return (statementBands != null
+              ? renderReportBands(bands: statementBands, data: data)
+              : null) ??
+          renderReportBands(bands: defaultStatementBands(l10n), data: data);
+    }
+
+    await runReportActions(
       context,
-      domain: 'money',
-      message: 'bill PDF export failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () async {
+      ref,
+      keyPrefix: 'bill-export',
+      logMessage: 'bill PDF export failed',
+      render: renderStatement,
+      buildPdf: () async {
         final sections = buildBillSections(
           period: statement.period,
           memberId: member.id,
@@ -298,22 +273,10 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             locale: locale,
           );
         }
-        final path = await save(
+        return (
           bytes: bytes,
           fileName: 'deskilo-bill-${statement.period}.pdf',
         );
-        if (!context.mounted) return;
-        if (path == null) {
-          AppSnack.error(
-            context,
-            l10n?.commonSaveFailed ?? 'Could not save.',
-          );
-        } else {
-          AppSnack.success(
-            context,
-            l10n?.commonSavedTo(path) ?? 'Saved to $path',
-          );
-        }
       },
     );
   }

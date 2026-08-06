@@ -829,9 +829,12 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('invoice-tab-todo')));
     await tester.pumpAndSettle();
+    await tester
+        .tap(find.byKey(const ValueKey('invoice-proforma-member-1')));
+    await tester.pumpAndSettle();
     await tester.runAsync(() async {
-      await tester
-          .tap(find.byKey(const ValueKey('invoice-proforma-member-1')));
+      // #514 — the triad sheet; Share hands the proforma out.
+      await tester.tap(find.byKey(const ValueKey('proforma-share')));
       await tester.pump();
       // The chain reads providers BEFORE it renders: give the whole of it
       // real time, or the font load lands back on the fake clock.
@@ -876,9 +879,11 @@ void main() {
       );
     }
 
+    await tester
+        .tap(find.byKey(ValueKey('invoice-proforma-${invoice.id}')));
+    await tester.pumpAndSettle();
     await tester.runAsync(() async {
-      await tester
-          .tap(find.byKey(ValueKey('invoice-proforma-${invoice.id}')));
+      await tester.tap(find.byKey(const ValueKey('proforma-share')));
       await tester.pump();
       await Future<void>.delayed(const Duration(milliseconds: 200));
     });

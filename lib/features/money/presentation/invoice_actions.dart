@@ -39,7 +39,9 @@ import '../domain/dunning.dart';
 import '../domain/invoice_report.dart';
 import '../domain/statement.dart';
 import '../providers/money_providers.dart';
+import 'report_actions.dart';
 import 'report_defaults.dart';
+import 'widgets/report_preview.dart';
 import 'e_invoice_identity.dart';
 import 'widgets/einvoice_environment_picker.dart';
 import 'invoice_line_text.dart';
@@ -1256,32 +1258,33 @@ Future<void> shareProforma(
     );
     return;
   }
-  if (!await runGuarded(
+  // #514 — quick view / save / share, like every report exit.
+  await runReportActions(
     context,
-    domain: 'money',
-    message: 'proforma share failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
-    action: () async {
+    ref,
+    keyPrefix: 'proforma',
+    logMessage: 'proforma share failed',
+    render: () {
+      final template = invoicePdfTemplateFor(ref);
+      var bands = template.proformaBands ?? template.invoiceBands;
+      if (!bands.hasBands) bands = defaultBandsForDoc('proforma', l10n);
+      return renderReportBands(
+        bands: bands,
+        data: invoiceReportData(context, invoice,
+            proforma: true,
+            copy: false,
+            workspace: ref.read(currentWorkspaceProvider).value),
+      );
+    },
+    buildPdf: () async {
       final pdf = await buildInvoicePdfFile(context, invoice,
           proforma: true,
           template: invoicePdfTemplateFor(ref),
           workspace: ref.read(currentWorkspaceProvider).value,
           reportImage: (name) =>
               ref.read(reportImageBytesProvider(name).future));
-      await ref.read(fileSharerProvider)(
-        bytes: Uint8List.fromList(pdf.bytes),
-        fileName: pdf.fileName,
-        mimeType: 'application/pdf',
-      );
+      return (bytes: Uint8List.fromList(pdf.bytes), fileName: pdf.fileName);
     },
-  )) {
-    return;
-  }
-  if (!context.mounted) return;
-  AppSnack.success(
-    context,
-    l10n?.invoiceProformaShared ?? 'Proforma shared.',
   );
 }
 
@@ -1391,6 +1394,43 @@ Future<void> downloadInvoicePdf(
       );
     },
   );
+}
+
+/// #514 — see the rendered invoice ON SCREEN before any PDF exists.
+/// Renders through the workspace template; an uncustomized template
+/// falls back to the default bands so the quick view always works.
+Future<void> quickViewInvoice(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice, {
+  bool proforma = false,
+}) async {
+  final l10n = AppLocalizations.of(context);
+  final template = invoicePdfTemplateFor(ref);
+  final data = invoiceReportData(
+    context,
+    invoice,
+    proforma: proforma,
+    copy: _rendersCopy(ref),
+    workspace: ref.read(currentWorkspaceProvider).value,
+  );
+  var bands = proforma
+      ? (template.proformaBands ?? template.invoiceBands)
+      : template.invoiceBands;
+  if (!bands.hasBands) bands = defaultBandsForDoc('invoice', l10n);
+  final report = renderReportBands(bands: bands, data: data);
+  if (report == null) {
+    AppSnack.error(
+      context,
+      l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+    );
+    return;
+  }
+  final images = await resolveReportImages(ref, report);
+  if (!context.mounted) return;
+  await showReportQuickPreview(context,
+      report: report, simulated: false, images: images);
 }
 
 Future<void> shareInvoicePdf(
@@ -1902,6 +1942,7 @@ Future<void> runInvoiceAction(
   required String countryCode,
 }) =>
     switch (action) {
+      InvoiceAction.quickView => quickViewInvoice(context, ref, invoice),
       InvoiceAction.downloadPdf => downloadInvoicePdf(context, ref, invoice),
       InvoiceAction.sharePdf => shareInvoicePdf(context, ref, invoice),
       InvoiceAction.eInvoice =>
