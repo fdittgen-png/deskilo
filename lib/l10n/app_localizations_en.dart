@@ -339,6 +339,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'The workspace refunded you this amount.';
 
   @override
+  String get accountCardTitle => 'Your account';
+
+  @override
+  String get accountCredit => 'Credit on account';
+
+  @override
+  String get accountRefundDue => 'Refund due from the workspace';
+
+  @override
+  String get accountNet => 'Net position';
+
+  @override
+  String accountOpenPartial(String period, String paid) {
+    return '$period · $paid paid';
+  }
+
+  @override
+  String get accountImputationHint =>
+      'Your credit can settle open invoices — the workspace applies it when matching payments.';
+
+  @override
   String get billPdfTitle => 'Monthly bill';
 
   @override

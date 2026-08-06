@@ -16,6 +16,7 @@ export '../domain/bill_sections.dart' show currentPeriod;
 import '../domain/einvoice_gateway.dart';
 import '../domain/fee_band.dart';
 import '../domain/ledger_entry.dart';
+import '../domain/member_account.dart';
 import '../domain/money_repository.dart';
 import '../domain/package.dart';
 import '../domain/service_item.dart';
@@ -177,6 +178,21 @@ Future<DunningRules> dunningRules(Ref ref) async {
   return ref
       .watch(moneyRepositoryProvider)
       .fetchDunningRules(workspace.id);
+}
+
+/// The member's REAL cross-month position (#512): credit on account,
+/// open remainders from any month, refunds due, net. Watches the
+/// archive, the matches and the ledger so every settlement action
+/// refreshes it.
+@Riverpod(keepAlive: true)
+Future<MemberAccount> myAccount(Ref ref) async {
+  final member = await ref.watch(myMemberProvider.future);
+  if (member == null) return MemberAccount.empty;
+  // No internal provider watches: double subscriptions (widget +
+  // provider) trip Riverpod's pause bookkeeping when a screen hides.
+  // Mutation sites invalidate this provider explicitly instead
+  // (invalidateBookingData + the invoice actions).
+  return ref.read(moneyRepositoryProvider).fetchMemberAccount(member.id);
 }
 
 /// invoiceId → its payment match (0067) — the invoice lifecycle state.

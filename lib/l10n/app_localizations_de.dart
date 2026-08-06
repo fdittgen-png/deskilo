@@ -341,6 +341,27 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Space hat dir diesen Betrag erstattet.';
 
   @override
+  String get accountCardTitle => 'Dein Konto';
+
+  @override
+  String get accountCredit => 'Guthaben auf dem Konto';
+
+  @override
+  String get accountRefundDue => 'Erstattung vom Space ausstehend';
+
+  @override
+  String get accountNet => 'Nettoposition';
+
+  @override
+  String accountOpenPartial(String period, String paid) {
+    return '$period · $paid bezahlt';
+  }
+
+  @override
+  String get accountImputationHint =>
+      'Dein Guthaben kann offene Rechnungen begleichen — der Space rechnet es beim Zuordnen der Zahlungen an.';
+
+  @override
   String get billPdfTitle => 'Monatsrechnung';
 
   @override

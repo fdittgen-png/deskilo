@@ -253,7 +253,10 @@ void main() {
     final partial = money.invoices.last.id;
     await money.matchInvoice(
       invoiceId: partial,
-      paymentLedgerId: money.seedPayment('member-1', 5000),
+      // #512 — a payment declared for the month it was RECORDED in
+      // (the seed invoice's period was baked long before): cross-month
+      // settlement, exactly what matching is for.
+      paymentLedgerId: money.seedPayment('member-1', 5000, period: '2026-07'),
       resolution: 'under_accepted',
       note: 'Rest next month',
     );

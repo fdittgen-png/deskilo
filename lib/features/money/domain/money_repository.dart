@@ -6,6 +6,7 @@ import 'vat_rate.dart';
 import 'fee_band.dart';
 
 import 'invoice.dart';
+import 'member_account.dart';
 import 'dunning.dart';
 import 'invoice_pdf_template.dart';import 'ledger_entry.dart';
 import 'package.dart';
@@ -59,6 +60,10 @@ abstract class MoneyRepository {
   /// Every payment already consumed by a match (#506, 0101) — the
   /// candidates list must not offer them again.
   Future<Set<String>> fetchConsumedPaymentIds(String workspaceId);
+
+  /// The member's real cross-month position (#512): credit on account,
+  /// open remainders, refunds due, net.
+  Future<MemberAccount> fetchMemberAccount(String memberId);
 
   /// The workspace's dunning policy (#472, 0093); defaults when unset.
   Future<DunningRules> fetchDunningRules(String workspaceId);

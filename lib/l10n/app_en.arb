@@ -426,6 +426,38 @@
   "@billCreditNoteRefunded": {
     "description": "Bill credit-note card: the refund was validated and paid out"
   },
+  "accountCardTitle": "Your account",
+  "@accountCardTitle": {
+    "description": "Money tab: title of the cross-month account position card (#512)"
+  },
+  "accountCredit": "Credit on account",
+  "@accountCredit": {
+    "description": "Account card: unconsumed credit spendable on open invoices"
+  },
+  "accountRefundDue": "Refund due from the workspace",
+  "@accountRefundDue": {
+    "description": "Account card: open credit notes the workspace still owes"
+  },
+  "accountNet": "Net position",
+  "@accountNet": {
+    "description": "Account card: credit + refunds − open remainders"
+  },
+  "accountOpenPartial": "{period} · {paid} paid",
+  "@accountOpenPartial": {
+    "description": "Account card: open invoice detail line when partially paid",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      },
+      "paid": {
+        "type": "String"
+      }
+    }
+  },
+  "accountImputationHint": "Your credit can settle open invoices — the workspace applies it when matching payments.",
+  "@accountImputationHint": {
+    "description": "Account card hint shown when credit and open invoices coexist (#512)"
+  },
   "billPdfTitle": "Monthly bill",
   "@billPdfTitle": {
     "description": "Document title on the exported bill PDF (#133)"

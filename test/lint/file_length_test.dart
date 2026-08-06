@@ -48,7 +48,8 @@ const Map<String, int> _baseline = {
   // + the landscape balance card.
   // 1070→1180 (2026-08-05): #494 the self-service document sheet.
   // 1180→1210 (2026-08-05): #496 the member-language chain on self-service docs.
-  'lib/features/money/presentation/screens/money_screen.dart': 1210,
+  'lib/features/money/presentation/screens/money_screen.dart': 1220,
+  // 1210→1220 (2026-08-06): #512 the account card above the bill.
   // 910→950 (2026-08-04): #456 note tile + admin broadcast button —
   // the dialog itself is its own file.
   // 950→990 (2026-08-05): #494 send-the-agreement action.
@@ -79,7 +80,9 @@ const Map<String, int> _baseline = {
   // 1680→1740 (2026-08-05): #496 the language-resolution helpers threaded through the builders.
   // 1740→1820 (2026-08-05): #504 the write-off request dialog.
   // 1820→1910 (2026-08-05): #508 the credit-note refund dialog.
-  'lib/features/money/presentation/invoice_actions.dart': 1910,
+  'lib/features/money/presentation/invoice_actions.dart': 1920,
+  // 1910→1920 (2026-08-06): #512 imputation candidates (adjustment
+  // credits, baked-credit filter).
   // 1370→1410 (2026-08-05): #494 the engine-based workspace report tile.
   // 1410→1440 (2026-08-05): #496 the language chain on the workspace report.
   'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1440,
@@ -106,7 +109,8 @@ const Map<String, int> _baseline = {
   // 830→870 (2026-08-05): #488 the report-image library (list/upload/
   // fetch on the floor-plans bucket).
   // 870→890 (2026-08-05): #506 the consumed-payments junction read.
-  'lib/features/money/data/supabase_money_repository.dart': 890,
+  // 890→900 (2026-08-06): #512 the member_account fetch.
+  'lib/features/money/data/supabase_money_repository.dart': 900,
   // 750→880 (2026-08-05): #510 the month-invoice card + settlement-
   // driven balance footer (the invoice decides settled/outstanding).
   'lib/features/money/presentation/widgets/bill_view.dart': 880,

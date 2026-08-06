@@ -341,6 +341,27 @@ class AppLocalizationsIt extends AppLocalizations {
       'Lo spazio ti ha rimborsato questo importo.';
 
   @override
+  String get accountCardTitle => 'Il tuo conto';
+
+  @override
+  String get accountCredit => 'Credito disponibile';
+
+  @override
+  String get accountRefundDue => 'Rimborso dovuto dallo spazio';
+
+  @override
+  String get accountNet => 'Posizione netta';
+
+  @override
+  String accountOpenPartial(String period, String paid) {
+    return '$period · $paid pagati';
+  }
+
+  @override
+  String get accountImputationHint =>
+      'Il tuo credito può saldare le fatture aperte: lo spazio lo imputa durante la riconciliazione dei pagamenti.';
+
+  @override
   String get billPdfTitle => 'Fattura mensile';
 
   @override

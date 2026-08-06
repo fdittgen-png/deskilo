@@ -834,6 +834,59 @@ final class DunningRulesProvider
 
 String _$dunningRulesHash() => r'90ffaa72da35fcedb5dfd53caec09abec7bd18e5';
 
+/// The member's REAL cross-month position (#512): credit on account,
+/// open remainders from any month, refunds due, net. Watches the
+/// archive, the matches and the ledger so every settlement action
+/// refreshes it.
+
+@ProviderFor(myAccount)
+final myAccountProvider = MyAccountProvider._();
+
+/// The member's REAL cross-month position (#512): credit on account,
+/// open remainders from any month, refunds due, net. Watches the
+/// archive, the matches and the ledger so every settlement action
+/// refreshes it.
+
+final class MyAccountProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<MemberAccount>,
+          MemberAccount,
+          FutureOr<MemberAccount>
+        >
+    with $FutureModifier<MemberAccount>, $FutureProvider<MemberAccount> {
+  /// The member's REAL cross-month position (#512): credit on account,
+  /// open remainders from any month, refunds due, net. Watches the
+  /// archive, the matches and the ledger so every settlement action
+  /// refreshes it.
+  MyAccountProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myAccountProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myAccountHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<MemberAccount> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<MemberAccount> create(Ref ref) {
+    return myAccount(ref);
+  }
+}
+
+String _$myAccountHash() => r'14e6ac5829ea1d0abad710ff63158f0b57008150';
+
 /// invoiceId → its payment match (0067) — the invoice lifecycle state.
 
 @ProviderFor(invoiceMatches)
