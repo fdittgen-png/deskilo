@@ -14,6 +14,7 @@ import '../domain/member.dart';
 import '../domain/member_note.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_feature.dart';
+import '../domain/workspace_permission.dart';
 import '../domain/workspace_repository.dart';
 import '../domain/workspace_document.dart';
 
@@ -224,6 +225,15 @@ Future<Set<WorkspaceFeature>> enabledFeatures(Ref ref) async {
 Set<WorkspaceFeature> enabledFeaturesSync(Ref ref) =>
     ref.watch(enabledFeaturesProvider).value ??
     effectiveFeatures(resolveEnabledFeatures(const {}));
+
+/// #513 — MY effective permissions under the workspace's role matrix.
+/// The one client-side gate: screens ask for a permission, never for a
+/// role flag. Falls back to {} while member/workspace load.
+@Riverpod(keepAlive: true)
+Set<WorkspacePermission> myPermissions(Ref ref) => effectivePermissions(
+      ref.watch(myMemberProvider).value,
+      ref.watch(currentWorkspaceProvider).value,
+    );
 
 /// Workspace-wide developer mode (#419, 0081): admin/owner-set, applies
 /// to EVERY member — gates the e-invoice test environments and the

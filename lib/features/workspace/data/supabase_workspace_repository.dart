@@ -280,6 +280,19 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     };
   }
 
+  @override
+  Future<void> setRolePermissions(
+    String workspaceId,
+    String role,
+    List<String> permissions,
+  ) async {
+    await _client.rpc<void>('set_role_permissions', params: {
+      'p_workspace_id': workspaceId,
+      'p_role': role,
+      'p_permissions': permissions,
+    });
+  }
+
   Workspace _workspaceFromRow(Map<String, dynamic> row) => Workspace(
         id: row['id'] as String,
         name: row['name'] as String,
@@ -289,6 +302,8 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         inviteCode: row['invite_code'] as String,
         featureFlags:
             row['feature_flags'] as Map<String, dynamic>? ?? const {},
+        rolePermissions:
+            row['role_permissions'] as Map<String, dynamic>? ?? const {},
         devMode: row['dev_mode'] as bool? ?? false,
         paymentInstructions:
             row['payment_instructions'] as Map<String, dynamic>? ?? const {},

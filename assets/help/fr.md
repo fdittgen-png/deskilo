@@ -215,6 +215,15 @@ Faites en sorte que la communauté ne dépende jamais d'un seul compte :
 2. Passez la main à tout moment avec ***Promouvoir propriétaire maintenant*** — le copropriétaire devient propriétaire à part entière à vos côtés.
 3. Si le dernier propriétaire quitte un jour l'espace, le meilleur copropriétaire est **promu automatiquement** sur le serveur — actif avant passif. Ce filet de sécurité fonctionne même quand l'interrupteur de la fonctionnalité *Copropriétaires* est désactivé (il ne masque que les boutons de nomination).
 
+### Gestion des rôles (#513)
+
+Une matrice centrale décide **quelle permission revient à quel rôle** — gérer les rôles, les membres, les règles de validation, les réglages de l'espace, émettre les factures et rapprocher les paiements, consulter les finances, documents, services, approuver les dépenses. Ouvrez-la dans *Réglages → Administration → Gestion des rôles* (sa fonctionnalité doit être activée) :
+
+- Le **propriétaire détient toujours toutes les permissions** — sa ligne est verrouillée.
+- Qui détient *Gérer les rôles et permissions* modifie les autres lignes. Un **copropriétaire** démarre avec tout (« il peut en avoir moins » — le propriétaire retire ce qu'il veut) ; un **admin** avec les capacités d'admin actuelles ; un **membre** sans rien.
+- Toute autre personne disposant d'une permission voit la matrice **en lecture seule**, son rôle mis en évidence.
+- Une matrice jamais touchée = les valeurs par défaut — rien ne change tant que le propriétaire ne l'édite pas. Le serveur applique la même matrice dans les RPC de facturation (`has_permission`) : l'interface et la base ne peuvent pas diverger.
+
 ### Configurer les paiements en ligne (propriétaires)
 
 Chaque communauté encaisse sur son **propre** compte prestataire ; l'application ne conserve jamais les clés secrètes sur un appareil — elles restent sur le serveur.

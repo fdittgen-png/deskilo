@@ -821,6 +821,64 @@ final class EnabledFeaturesSyncProvider
 String _$enabledFeaturesSyncHash() =>
     r'c52b3f67c83044e46408ec70a8fcdfda35485b80';
 
+/// #513 — MY effective permissions under the workspace's role matrix.
+/// The one client-side gate: screens ask for a permission, never for a
+/// role flag. Falls back to {} while member/workspace load.
+
+@ProviderFor(myPermissions)
+final myPermissionsProvider = MyPermissionsProvider._();
+
+/// #513 — MY effective permissions under the workspace's role matrix.
+/// The one client-side gate: screens ask for a permission, never for a
+/// role flag. Falls back to {} while member/workspace load.
+
+final class MyPermissionsProvider
+    extends
+        $FunctionalProvider<
+          Set<WorkspacePermission>,
+          Set<WorkspacePermission>,
+          Set<WorkspacePermission>
+        >
+    with $Provider<Set<WorkspacePermission>> {
+  /// #513 — MY effective permissions under the workspace's role matrix.
+  /// The one client-side gate: screens ask for a permission, never for a
+  /// role flag. Falls back to {} while member/workspace load.
+  MyPermissionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myPermissionsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myPermissionsHash();
+
+  @$internal
+  @override
+  $ProviderElement<Set<WorkspacePermission>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  Set<WorkspacePermission> create(Ref ref) {
+    return myPermissions(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Set<WorkspacePermission> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Set<WorkspacePermission>>(value),
+    );
+  }
+}
+
+String _$myPermissionsHash() => r'54909a43d3e7193da3d9f3f1f5b811ce3eb27d74';
+
 /// Workspace-wide developer mode (#419, 0081): admin/owner-set, applies
 /// to EVERY member — gates the e-invoice test environments and the
 /// Developer screen. Realtime (0080) pushes a flip to all devices live.

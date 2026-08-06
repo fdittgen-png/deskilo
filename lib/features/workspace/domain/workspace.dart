@@ -36,6 +36,11 @@ sealed class Workspace with _$Workspace {
     /// with [resolveEnabledFeatures].
     @Default(<String, dynamic>{}) Map<String, dynamic> featureFlags,
 
+    /// #513 — the role→permission matrix as stored: role wire name →
+    /// list of permission wire names. Absent role key = the defaults
+    /// (see workspace_permission.dart). Owners are never stored.
+    @Default(<String, dynamic>{}) Map<String, dynamic> rolePermissions,
+
     /// Workspace-wide developer mode (#419, 0081): admin/owner-set,
     /// applies to every member on every device (realtime-pushed).
     @Default(false) bool devMode,

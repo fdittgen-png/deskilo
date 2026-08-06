@@ -20,6 +20,7 @@ import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
 import 'package:deskilo/core/notifications/notification_providers.dart';
 import 'package:deskilo/core/notifications/notification_service.dart';
@@ -676,6 +677,25 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
     if (i < 0) return;
     workspaces[i] = workspaces[i].copyWith(defaultLocale: locale.trim());
+  }
+
+  @override
+  Future<void> setRolePermissions(
+    String workspaceId,
+    String role,
+    List<String> permissions,
+  ) async {
+    // #513 — mirrors set_role_permissions: caller must hold manageRoles.
+    if (!effectivePermissions(myMember, workspaces.firstOrNull)
+        .contains(WorkspacePermission.manageRoles)) {
+      throw StateError('only role managers may edit permissions');
+    }
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i < 0) return;
+    workspaces[i] = workspaces[i].copyWith(rolePermissions: {
+      ...workspaces[i].rolePermissions,
+      role: permissions,
+    });
   }
 
   @override

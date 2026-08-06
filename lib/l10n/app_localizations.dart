@@ -7136,6 +7136,114 @@ abstract class AppLocalizations {
   /// **'A document needs a title and an https:// link.'**
   String get documentsInvalid;
 
+  /// Feature name (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'Role management'**
+  String get featureRoleManagement;
+
+  /// Feature description (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'The central role→permission matrix: the owner decides which role holds which permission; everyone else reads their own. Off, the defaults simply apply.'**
+  String get featureRoleManagementDesc;
+
+  /// Roles screen title (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'Role management'**
+  String get rolesTitle;
+
+  /// Roles screen intro for editors (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'The owner always holds every permission. Decide here what the other roles may do — a co-owner can hold less than an owner.'**
+  String get rolesIntroEditor;
+
+  /// Roles screen intro for non-editors (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'Read-only: these are the permissions each role holds. Your role is highlighted.'**
+  String get rolesIntroReadOnly;
+
+  /// Chip on the reader's own role card (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'Your role'**
+  String get rolesYourRole;
+
+  /// Role label (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get roleOwner;
+
+  /// Role label (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'Admin'**
+  String get roleAdmin;
+
+  /// Role label (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get roleMember;
+
+  /// Permission label (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'Manage roles & permissions'**
+  String get permManageRoles;
+
+  /// Permission label (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'Manage members'**
+  String get permManageMembers;
+
+  /// Permission label (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'Configure validation policies'**
+  String get permManageValidation;
+
+  /// Permission label (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'Edit workspace settings'**
+  String get permWorkspaceSettings;
+
+  /// Permission label (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'Issue invoices & match payments'**
+  String get permIssueInvoices;
+
+  /// Permission label (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'View workspace finances'**
+  String get permViewFinances;
+
+  /// Permission label (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'Manage the document library'**
+  String get permManageDocuments;
+
+  /// Permission label (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'Manage services & packages'**
+  String get permManageServices;
+
+  /// Permission label (#513)
+  ///
+  /// In en, this message translates to:
+  /// **'Approve expenses'**
+  String get permApproveExpenses;
+
   /// Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)
   ///
   /// In en, this message translates to:

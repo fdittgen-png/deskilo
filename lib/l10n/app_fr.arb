@@ -1807,6 +1807,78 @@
   "@documentsInvalid": {
     "description": "Workspace document library (#500)"
   },
+  "featureRoleManagement": "Gestion des rôles",
+  "@featureRoleManagement": {
+    "description": "Feature name (#513)"
+  },
+  "featureRoleManagementDesc": "La matrice centrale rôle→permission : le propriétaire décide quelle permission revient à quel rôle ; les autres consultent les leurs. Désactivée, les valeurs par défaut s'appliquent simplement.",
+  "@featureRoleManagementDesc": {
+    "description": "Feature description (#513)"
+  },
+  "rolesTitle": "Gestion des rôles",
+  "@rolesTitle": {
+    "description": "Roles screen title (#513)"
+  },
+  "rolesIntroEditor": "Le propriétaire détient toujours toutes les permissions. Décidez ici ce que les autres rôles peuvent faire — un copropriétaire peut en détenir moins qu'un propriétaire.",
+  "@rolesIntroEditor": {
+    "description": "Roles screen intro for editors (#513)"
+  },
+  "rolesIntroReadOnly": "Lecture seule : voici les permissions de chaque rôle. Votre rôle est mis en évidence.",
+  "@rolesIntroReadOnly": {
+    "description": "Roles screen intro for non-editors (#513)"
+  },
+  "rolesYourRole": "Votre rôle",
+  "@rolesYourRole": {
+    "description": "Chip on the reader's own role card (#513)"
+  },
+  "roleOwner": "Propriétaire",
+  "@roleOwner": {
+    "description": "Role label (#513)"
+  },
+  "roleAdmin": "Admin",
+  "@roleAdmin": {
+    "description": "Role label (#513)"
+  },
+  "roleMember": "Membre",
+  "@roleMember": {
+    "description": "Role label (#513)"
+  },
+  "permManageRoles": "Gérer les rôles et permissions",
+  "@permManageRoles": {
+    "description": "Permission label (#513)"
+  },
+  "permManageMembers": "Gérer les membres",
+  "@permManageMembers": {
+    "description": "Permission label (#513)"
+  },
+  "permManageValidation": "Configurer les règles de validation",
+  "@permManageValidation": {
+    "description": "Permission label (#513)"
+  },
+  "permWorkspaceSettings": "Modifier les réglages de l'espace",
+  "@permWorkspaceSettings": {
+    "description": "Permission label (#513)"
+  },
+  "permIssueInvoices": "Émettre les factures et rapprocher les paiements",
+  "@permIssueInvoices": {
+    "description": "Permission label (#513)"
+  },
+  "permViewFinances": "Consulter les finances de l'espace",
+  "@permViewFinances": {
+    "description": "Permission label (#513)"
+  },
+  "permManageDocuments": "Gérer la bibliothèque de documents",
+  "@permManageDocuments": {
+    "description": "Permission label (#513)"
+  },
+  "permManageServices": "Gérer les services et forfaits",
+  "@permManageServices": {
+    "description": "Permission label (#513)"
+  },
+  "permApproveExpenses": "Approuver les dépenses",
+  "@permApproveExpenses": {
+    "description": "Permission label (#513)"
+  },
   "workspaceXmlExport": "Exporter l'espace (XML)",
   "workspaceXmlExportSubtitle": "Paramètres et plan des locaux dans un fichier partageable. Sans membres, réservations ni données financières.",
   "workspaceXmlImport": "Importer l'espace (XML)",

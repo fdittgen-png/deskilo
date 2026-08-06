@@ -3945,6 +3945,63 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein Dokument braucht einen Titel und einen https://-Link.';
 
   @override
+  String get featureRoleManagement => 'Rollenverwaltung';
+
+  @override
+  String get featureRoleManagementDesc =>
+      'Die zentrale Rolle→Berechtigung-Matrix: Die Inhaberin entscheidet, welche Rolle welche Berechtigung hält; alle anderen lesen ihre eigenen. Aus: Es gelten einfach die Standardwerte.';
+
+  @override
+  String get rolesTitle => 'Rollenverwaltung';
+
+  @override
+  String get rolesIntroEditor =>
+      'Die Inhaberin hält immer alle Berechtigungen. Lege hier fest, was die anderen Rollen dürfen — ein Co-Inhaber kann weniger halten als ein Inhaber.';
+
+  @override
+  String get rolesIntroReadOnly =>
+      'Nur lesen: Das sind die Berechtigungen jeder Rolle. Deine Rolle ist hervorgehoben.';
+
+  @override
+  String get rolesYourRole => 'Deine Rolle';
+
+  @override
+  String get roleOwner => 'Inhaber';
+
+  @override
+  String get roleAdmin => 'Admin';
+
+  @override
+  String get roleMember => 'Mitglied';
+
+  @override
+  String get permManageRoles => 'Rollen & Berechtigungen verwalten';
+
+  @override
+  String get permManageMembers => 'Mitglieder verwalten';
+
+  @override
+  String get permManageValidation => 'Validierungsregeln konfigurieren';
+
+  @override
+  String get permWorkspaceSettings => 'Workspace-Einstellungen bearbeiten';
+
+  @override
+  String get permIssueInvoices => 'Rechnungen ausstellen & Zahlungen zuordnen';
+
+  @override
+  String get permViewFinances => 'Workspace-Finanzen einsehen';
+
+  @override
+  String get permManageDocuments => 'Dokumentbibliothek verwalten';
+
+  @override
+  String get permManageServices => 'Services & Pakete verwalten';
+
+  @override
+  String get permApproveExpenses => 'Ausgaben genehmigen';
+
+  @override
   String get workspaceXmlExport => 'Workspace exportieren (XML)';
 
   @override

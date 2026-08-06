@@ -104,6 +104,14 @@ abstract class WorkspaceRepository {
   /// (0096, e.g. 'fr'); '' clears it.
   Future<void> setWorkspaceLanguage(String workspaceId, String locale);
 
+  /// #513 — replaces one role's granted permission list in the matrix
+  /// (server RPC set_role_permissions; caller needs manageRoles).
+  Future<void> setRolePermissions(
+    String workspaceId,
+    String role,
+    List<String> permissions,
+  );
+
   /// Owner-only (workspaces_update RLS): replace the per-locale custom
   /// invitation templates (0096). Empty entries are dropped.
   Future<void> setInvitationTemplates(

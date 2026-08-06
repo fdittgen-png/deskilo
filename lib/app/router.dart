@@ -19,6 +19,7 @@ import '../features/money/presentation/screens/invoice_register_screen.dart';
 import '../features/money/presentation/screens/legal_identity_screen.dart';
 import '../features/workspace/presentation/screens/payment_methods_screen.dart';
 import '../features/workspace/presentation/screens/documents_screen.dart';
+import '../features/workspace/presentation/screens/roles_screen.dart';
 import '../features/money/presentation/screens/vat_screen.dart';
 import '../features/money/presentation/screens/services_screen.dart';
 import '../features/plan/presentation/screens/accessories_screen.dart';
@@ -345,6 +346,15 @@ GoRouter router(Ref ref) {
         redirect: (context, state) =>
             featureEnabled(WorkspaceFeature.documents) ? null : '/plan',
         builder: (context, state) => const DocumentsScreen(),
+      ),
+      // #513 — the central role→permission matrix. Anyone with a role
+      // can READ it; editing needs manageRoles (enforced in-screen and
+      // by the RPC).
+      GoRoute(
+        path: '/roles',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.roleManagement) ? null : '/plan',
+        builder: (context, state) => const RolesScreen(),
       ),
       // The workspace's manual payment methods (#486) — owner-only.
       GoRoute(

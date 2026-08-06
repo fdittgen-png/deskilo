@@ -22,7 +22,8 @@ Future<void> pumpSettingsAs(
   // viewport; a taller view keeps every tile and header built.
   // 1600→1700 (#478): the Billing & reports admin entry added a row.
   // 1700→1800 (#486): the Payment instructions admin entry added one.
-  tester.view.physicalSize = const Size(800, 1800);
+  // 1800→1900 (#513): the Role management admin entry added one.
+  tester.view.physicalSize = const Size(800, 1900);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final workspace = FakeWorkspaceRepository.withWorkspace(

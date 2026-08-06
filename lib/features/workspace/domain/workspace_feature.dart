@@ -35,7 +35,8 @@ enum WorkspaceFeature {
   documents,
   dunning,
   memberReports,
-  deletionRequests;
+  deletionRequests,
+  roleManagement;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -194,6 +195,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // (#492/#502). OFF = such bookings simply cannot be deleted.
   WorkspaceFeature.deletionRequests:
       FeatureManifestEntry(feature: WorkspaceFeature.deletionRequests),
+  // #513 — the centralized role→permission matrix. OFF hides the
+  // Role management screen; the DEFAULT permissions still apply (the
+  // matrix is then simply not editable in the app).
+  WorkspaceFeature.roleManagement:
+      FeatureManifestEntry(feature: WorkspaceFeature.roleManagement),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start

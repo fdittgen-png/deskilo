@@ -1807,6 +1807,78 @@
   "@documentsInvalid": {
     "description": "Workspace document library (#500)"
   },
+  "featureRoleManagement": "Rollenverwaltung",
+  "@featureRoleManagement": {
+    "description": "Feature name (#513)"
+  },
+  "featureRoleManagementDesc": "Die zentrale Rolle→Berechtigung-Matrix: Die Inhaberin entscheidet, welche Rolle welche Berechtigung hält; alle anderen lesen ihre eigenen. Aus: Es gelten einfach die Standardwerte.",
+  "@featureRoleManagementDesc": {
+    "description": "Feature description (#513)"
+  },
+  "rolesTitle": "Rollenverwaltung",
+  "@rolesTitle": {
+    "description": "Roles screen title (#513)"
+  },
+  "rolesIntroEditor": "Die Inhaberin hält immer alle Berechtigungen. Lege hier fest, was die anderen Rollen dürfen — ein Co-Inhaber kann weniger halten als ein Inhaber.",
+  "@rolesIntroEditor": {
+    "description": "Roles screen intro for editors (#513)"
+  },
+  "rolesIntroReadOnly": "Nur lesen: Das sind die Berechtigungen jeder Rolle. Deine Rolle ist hervorgehoben.",
+  "@rolesIntroReadOnly": {
+    "description": "Roles screen intro for non-editors (#513)"
+  },
+  "rolesYourRole": "Deine Rolle",
+  "@rolesYourRole": {
+    "description": "Chip on the reader's own role card (#513)"
+  },
+  "roleOwner": "Inhaber",
+  "@roleOwner": {
+    "description": "Role label (#513)"
+  },
+  "roleAdmin": "Admin",
+  "@roleAdmin": {
+    "description": "Role label (#513)"
+  },
+  "roleMember": "Mitglied",
+  "@roleMember": {
+    "description": "Role label (#513)"
+  },
+  "permManageRoles": "Rollen & Berechtigungen verwalten",
+  "@permManageRoles": {
+    "description": "Permission label (#513)"
+  },
+  "permManageMembers": "Mitglieder verwalten",
+  "@permManageMembers": {
+    "description": "Permission label (#513)"
+  },
+  "permManageValidation": "Validierungsregeln konfigurieren",
+  "@permManageValidation": {
+    "description": "Permission label (#513)"
+  },
+  "permWorkspaceSettings": "Workspace-Einstellungen bearbeiten",
+  "@permWorkspaceSettings": {
+    "description": "Permission label (#513)"
+  },
+  "permIssueInvoices": "Rechnungen ausstellen & Zahlungen zuordnen",
+  "@permIssueInvoices": {
+    "description": "Permission label (#513)"
+  },
+  "permViewFinances": "Workspace-Finanzen einsehen",
+  "@permViewFinances": {
+    "description": "Permission label (#513)"
+  },
+  "permManageDocuments": "Dokumentbibliothek verwalten",
+  "@permManageDocuments": {
+    "description": "Permission label (#513)"
+  },
+  "permManageServices": "Services & Pakete verwalten",
+  "@permManageServices": {
+    "description": "Permission label (#513)"
+  },
+  "permApproveExpenses": "Ausgaben genehmigen",
+  "@permApproveExpenses": {
+    "description": "Permission label (#513)"
+  },
   "workspaceXmlExport": "Workspace exportieren (XML)",
   "workspaceXmlExportSubtitle": "Einstellungen und Raumplan als teilbare Datei. Ohne Mitglieder, Buchungen oder Finanzdaten.",
   "workspaceXmlImport": "Workspace importieren (XML)",

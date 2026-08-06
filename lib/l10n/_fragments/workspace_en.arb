@@ -421,5 +421,77 @@
   "documentsInvalid": "A document needs a title and an https:// link.",
   "@documentsInvalid": {
     "description": "Workspace document library (#500)"
+  },
+  "featureRoleManagement": "Role management",
+  "@featureRoleManagement": {
+    "description": "Feature name (#513)"
+  },
+  "featureRoleManagementDesc": "The central role→permission matrix: the owner decides which role holds which permission; everyone else reads their own. Off, the defaults simply apply.",
+  "@featureRoleManagementDesc": {
+    "description": "Feature description (#513)"
+  },
+  "rolesTitle": "Role management",
+  "@rolesTitle": {
+    "description": "Roles screen title (#513)"
+  },
+  "rolesIntroEditor": "The owner always holds every permission. Decide here what the other roles may do — a co-owner can hold less than an owner.",
+  "@rolesIntroEditor": {
+    "description": "Roles screen intro for editors (#513)"
+  },
+  "rolesIntroReadOnly": "Read-only: these are the permissions each role holds. Your role is highlighted.",
+  "@rolesIntroReadOnly": {
+    "description": "Roles screen intro for non-editors (#513)"
+  },
+  "rolesYourRole": "Your role",
+  "@rolesYourRole": {
+    "description": "Chip on the reader's own role card (#513)"
+  },
+  "roleOwner": "Owner",
+  "@roleOwner": {
+    "description": "Role label (#513)"
+  },
+  "roleAdmin": "Admin",
+  "@roleAdmin": {
+    "description": "Role label (#513)"
+  },
+  "roleMember": "Member",
+  "@roleMember": {
+    "description": "Role label (#513)"
+  },
+  "permManageRoles": "Manage roles & permissions",
+  "@permManageRoles": {
+    "description": "Permission label (#513)"
+  },
+  "permManageMembers": "Manage members",
+  "@permManageMembers": {
+    "description": "Permission label (#513)"
+  },
+  "permManageValidation": "Configure validation policies",
+  "@permManageValidation": {
+    "description": "Permission label (#513)"
+  },
+  "permWorkspaceSettings": "Edit workspace settings",
+  "@permWorkspaceSettings": {
+    "description": "Permission label (#513)"
+  },
+  "permIssueInvoices": "Issue invoices & match payments",
+  "@permIssueInvoices": {
+    "description": "Permission label (#513)"
+  },
+  "permViewFinances": "View workspace finances",
+  "@permViewFinances": {
+    "description": "Permission label (#513)"
+  },
+  "permManageDocuments": "Manage the document library",
+  "@permManageDocuments": {
+    "description": "Permission label (#513)"
+  },
+  "permManageServices": "Manage services & packages",
+  "@permManageServices": {
+    "description": "Permission label (#513)"
+  },
+  "permApproveExpenses": "Approve expenses",
+  "@permApproveExpenses": {
+    "description": "Permission label (#513)"
   }
 }

@@ -18,7 +18,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// 27 pre-#502 + documents (#500) + dunning + memberReports +
 /// deletionRequests (#502).
-const int _expectedFeatureCount = 30;
+// 30→31 (2026-08-06): #513 roleManagement.
+const int _expectedFeatureCount = 31;
 
 void main() {
   test('every functionality is registered — the pin', () {
