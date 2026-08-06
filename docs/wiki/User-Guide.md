@@ -180,6 +180,15 @@ Make sure the community never depends on one account:
 2. Hand over at any time with ***Promote to owner now*** — the co-owner becomes a full owner alongside you.
 3. If the last owner ever leaves the workspace, the best co-owner is **promoted automatically** on the server — active before passive. This safety net works even while the *Co-owners* feature toggle is off (the toggle only hides the appointment buttons).
 
+### Role management (#513)
+
+One central matrix decides **which role holds which permission** — manage roles, manage members, validation policies, workspace settings, issue invoices & match payments, view finances, documents, services, approve expenses. Open it under *Settings → Administration → Role management* (its feature flag must be on):
+
+- The **owner always holds every permission** — the row is locked.
+- Whoever holds *Manage roles & permissions* edits the other rows. A **co-owner** starts with everything ("co-owner can have less" — the owner removes what they want); an **admin** starts with today's admin abilities; a **member** with none.
+- Everyone else with any permission sees the matrix **read-only**, their own role highlighted.
+- An untouched matrix means the defaults — nothing changes until the owner edits it. The legacy *admin invoicing* feature flag keeps granting invoicing to admins for compatibility. The server enforces the same matrix in the invoicing RPCs (`has_permission`), so the UI and the database can never disagree.
+
 ### Setting up online payments (owners)
 
 Each community collects to its **own** provider account; the app never keeps the secret keys on any device — they live on the server.

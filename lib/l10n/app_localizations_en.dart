@@ -3913,6 +3913,63 @@ class AppLocalizationsEn extends AppLocalizations {
       'A document needs a title and an https:// link.';
 
   @override
+  String get featureRoleManagement => 'Role management';
+
+  @override
+  String get featureRoleManagementDesc =>
+      'The central role→permission matrix: the owner decides which role holds which permission; everyone else reads their own. Off, the defaults simply apply.';
+
+  @override
+  String get rolesTitle => 'Role management';
+
+  @override
+  String get rolesIntroEditor =>
+      'The owner always holds every permission. Decide here what the other roles may do — a co-owner can hold less than an owner.';
+
+  @override
+  String get rolesIntroReadOnly =>
+      'Read-only: these are the permissions each role holds. Your role is highlighted.';
+
+  @override
+  String get rolesYourRole => 'Your role';
+
+  @override
+  String get roleOwner => 'Owner';
+
+  @override
+  String get roleAdmin => 'Admin';
+
+  @override
+  String get roleMember => 'Member';
+
+  @override
+  String get permManageRoles => 'Manage roles & permissions';
+
+  @override
+  String get permManageMembers => 'Manage members';
+
+  @override
+  String get permManageValidation => 'Configure validation policies';
+
+  @override
+  String get permWorkspaceSettings => 'Edit workspace settings';
+
+  @override
+  String get permIssueInvoices => 'Issue invoices & match payments';
+
+  @override
+  String get permViewFinances => 'View workspace finances';
+
+  @override
+  String get permManageDocuments => 'Manage the document library';
+
+  @override
+  String get permManageServices => 'Manage services & packages';
+
+  @override
+  String get permApproveExpenses => 'Approve expenses';
+
+  @override
   String get workspaceXmlExport => 'Export workspace (XML)';
 
   @override

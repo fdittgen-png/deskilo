@@ -193,5 +193,77 @@
   "documentsInvalid": "Un documento richiede un titolo e un link https://.",
   "@documentsInvalid": {
     "description": "Workspace document library (#500)"
+  },
+  "featureRoleManagement": "Gestione dei ruoli",
+  "@featureRoleManagement": {
+    "description": "Feature name (#513)"
+  },
+  "featureRoleManagementDesc": "La matrice centrale ruolo→permesso: il proprietario decide quale permesso spetta a quale ruolo; gli altri leggono i propri. Disattivata, valgono semplicemente i valori predefiniti.",
+  "@featureRoleManagementDesc": {
+    "description": "Feature description (#513)"
+  },
+  "rolesTitle": "Gestione dei ruoli",
+  "@rolesTitle": {
+    "description": "Roles screen title (#513)"
+  },
+  "rolesIntroEditor": "Il proprietario detiene sempre tutti i permessi. Decidi qui cosa possono fare gli altri ruoli: un comproprietario può averne meno di un proprietario.",
+  "@rolesIntroEditor": {
+    "description": "Roles screen intro for editors (#513)"
+  },
+  "rolesIntroReadOnly": "Sola lettura: questi sono i permessi di ogni ruolo. Il tuo ruolo è evidenziato.",
+  "@rolesIntroReadOnly": {
+    "description": "Roles screen intro for non-editors (#513)"
+  },
+  "rolesYourRole": "Il tuo ruolo",
+  "@rolesYourRole": {
+    "description": "Chip on the reader's own role card (#513)"
+  },
+  "roleOwner": "Proprietario",
+  "@roleOwner": {
+    "description": "Role label (#513)"
+  },
+  "roleAdmin": "Admin",
+  "@roleAdmin": {
+    "description": "Role label (#513)"
+  },
+  "roleMember": "Membro",
+  "@roleMember": {
+    "description": "Role label (#513)"
+  },
+  "permManageRoles": "Gestire ruoli e permessi",
+  "@permManageRoles": {
+    "description": "Permission label (#513)"
+  },
+  "permManageMembers": "Gestire i membri",
+  "@permManageMembers": {
+    "description": "Permission label (#513)"
+  },
+  "permManageValidation": "Configurare le regole di convalida",
+  "@permManageValidation": {
+    "description": "Permission label (#513)"
+  },
+  "permWorkspaceSettings": "Modificare le impostazioni dello spazio",
+  "@permWorkspaceSettings": {
+    "description": "Permission label (#513)"
+  },
+  "permIssueInvoices": "Emettere fatture e riconciliare pagamenti",
+  "@permIssueInvoices": {
+    "description": "Permission label (#513)"
+  },
+  "permViewFinances": "Consultare le finanze dello spazio",
+  "@permViewFinances": {
+    "description": "Permission label (#513)"
+  },
+  "permManageDocuments": "Gestire la libreria dei documenti",
+  "@permManageDocuments": {
+    "description": "Permission label (#513)"
+  },
+  "permManageServices": "Gestire servizi e pacchetti",
+  "@permManageServices": {
+    "description": "Permission label (#513)"
+  },
+  "permApproveExpenses": "Approvare le spese",
+  "@permApproveExpenses": {
+    "description": "Permission label (#513)"
   }
 }

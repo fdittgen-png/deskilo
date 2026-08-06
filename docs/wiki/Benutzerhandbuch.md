@@ -180,6 +180,15 @@ Sorge dafür, dass die Community nie von einem einzigen Konto abhängt:
 2. Übergib jederzeit mit ***Jetzt zur Inhaberin machen*** — die Mit-Inhaberin wird volle Inhaberin neben dir.
 3. Verlässt die letzte Inhaberin je den Workspace, wird die beste Mit-Inhaberin **automatisch auf dem Server befördert** — aktiv vor passiv. Dieses Sicherheitsnetz greift selbst dann, wenn der Funktions-Schalter *Mit-Inhaberinnen* aus ist (der Schalter blendet nur die Ernennungs-Buttons aus).
 
+### Rollenverwaltung (#513)
+
+Eine zentrale Matrix entscheidet, **welche Rolle welche Berechtigung hält** — Rollen verwalten, Mitglieder, Validierungsregeln, Workspace-Einstellungen, Rechnungen ausstellen & Zahlungen zuordnen, Finanzen einsehen, Dokumente, Services, Ausgaben genehmigen. Zu finden unter *Einstellungen → Administration → Rollenverwaltung* (Feature muss aktiv sein):
+
+- Die **Inhaberin hält immer alle Berechtigungen** — ihre Zeile ist gesperrt.
+- Wer *Rollen & Berechtigungen verwalten* hält, bearbeitet die anderen Zeilen. Ein **Co-Inhaber** startet mit allem („kann weniger haben" — die Inhaberin entfernt, was sie will); ein **Admin** mit den heutigen Admin-Fähigkeiten; ein **Mitglied** ohne alles.
+- Alle anderen mit irgendeiner Berechtigung sehen die Matrix **schreibgeschützt**, die eigene Rolle hervorgehoben.
+- Eine unberührte Matrix = die Standardwerte — nichts ändert sich, bis die Inhaberin sie bearbeitet. Der Server erzwingt dieselbe Matrix in den Rechnungs-RPCs (`has_permission`): UI und Datenbank können nie auseinanderlaufen.
+
 ### Online-Zahlungen einrichten (Inhaberinnen)
 
 Jede Community kassiert auf ihr **eigenes** Anbieterkonto; die App speichert die geheimen Schlüssel nie auf einem Gerät — sie liegen auf dem Server.

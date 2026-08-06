@@ -124,6 +124,11 @@ class FeaturesScreen extends ConsumerWidget {
               'Members may REQUEST deletion of a past or checked-in '
                   'booking; an owner/admin validates. Off, such '
                   'bookings cannot be deleted at all.',
+        WorkspaceFeature.roleManagement =>
+          l10n?.featureRoleManagementDesc ??
+              'The central role→permission matrix: the owner decides '
+                  'which role holds which permission; everyone else '
+                  'reads their own. Off, the defaults simply apply.',
       };
 
   Future<void> _toggle(

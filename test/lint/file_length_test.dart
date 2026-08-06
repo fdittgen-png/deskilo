@@ -41,7 +41,8 @@ const Map<String, int> _baseline = {
   // workspace hint subtitle and the RPC write helper.
   // 990→1000 (2026-08-05): #478 Billing & reports admin entry.
   // 1000→1020 (2026-08-05): #486 Payment methods admin entry.
-  'lib/features/profile/presentation/screens/settings_screen.dart': 1020,
+  'lib/features/profile/presentation/screens/settings_screen.dart': 1040,
+  // 1020→1040 (2026-08-06): #513 the Role management tile.
   // 980→1030 (2026-08-05): #476 the statement export honors the
   // owner's report template (#478 Invoices button joins the grid).
   // 1030→1070 (2026-08-05): #486 grouped Pay/Requests/Documents actions
@@ -149,7 +150,8 @@ const Map<String, int> _baseline = {
   // setInvoiceLegal. 700→730 (2026-08-05): #486 setWorkspaceLanguage +
   // setInvitationTemplates.
   // 730→770 (2026-08-05): #500 the document-library reads/writes.
-  'lib/features/workspace/data/supabase_workspace_repository.dart': 770,
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 790,
+  // 770→790 (2026-08-06): #513 setRolePermissions + role_permissions row.
   'lib/features/calendar/presentation/screens/calendar_screen.dart': 630,
 };
 

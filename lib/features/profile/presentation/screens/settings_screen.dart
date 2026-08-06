@@ -424,6 +424,16 @@ class SettingsScreen extends ConsumerWidget {
           // reachable so a disabled feature can be switched back on.
           // #478: billing & reports as ONE admin entry — invoicing hub
           // with the report editor and the reminder rules in its header.
+          // #513 — the role→permission matrix: whoever holds any
+          // permission may READ it; manageRoles edits it.
+          if (showAdminSection &&
+              features.contains(WorkspaceFeature.roleManagement))
+            ListTile(
+              key: const ValueKey('settings-roles'),
+              leading: const Icon(Icons.admin_panel_settings_outlined),
+              title: Text(l10n?.rolesTitle ?? 'Role management'),
+              onTap: () => context.push('/roles'),
+            ),
           if (showAdminSection &&
               features.contains(WorkspaceFeature.invoicing))
             ListTile(

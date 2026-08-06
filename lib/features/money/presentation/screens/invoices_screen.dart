@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice_ubl.dart';
 import '../../providers/money_providers.dart';
@@ -42,12 +43,13 @@ class InvoicesScreen extends ConsumerWidget {
     // #454: warm the template before any render action can be tapped —
     // invoicePdfTemplateFor reads it synchronously.
     ref.watch(invoicePdfTemplateProvider);
-    // Owner always; admins only with the delegation flag — the server
-    // re-checks both.
+    // #513 — the CENTRAL permission decides (owner always passes; the
+    // legacy adminInvoicing flag keeps granting inside the matrix
+    // defaults). The server re-checks via has_permission.
     final canIssue = me != null &&
-        (me.actsAsOwner ||
-            (me.canAdminister &&
-                features.contains(WorkspaceFeature.adminInvoicing)));
+        ref
+            .watch(myPermissionsProvider)
+            .contains(WorkspacePermission.issueInvoices);
     final showMemberNames = me?.canAdminister ?? false;
     final currency = NumberFormat.simpleCurrency(
       name: workspace?.currencyCode ?? 'EUR',
