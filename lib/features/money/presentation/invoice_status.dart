@@ -31,6 +31,10 @@ enum InvoiceLifecycle {
   /// the validation framework (#504) — only now is it archived.
   remainderCancelled,
 
+  /// A NEGATIVE document (credit note, #508) the workspace refunded:
+  /// the payout is booked and the avoir is closed.
+  refunded,
+
   /// Tagged erroneous (0061); a replacement may carry the corrected data.
   erroneous,
 }
@@ -39,6 +43,7 @@ InvoiceLifecycle invoiceLifecycleOf(Invoice invoice, InvoiceMatch? match) {
   if (invoice.isVoided) return InvoiceLifecycle.erroneous;
   if (match == null) return InvoiceLifecycle.open;
   if (match.pending) return InvoiceLifecycle.awaitingValidation;
+  if (match.resolution == 'refunded') return InvoiceLifecycle.refunded;
   if (match.resolution == 'under_accepted') {
     return match.writeoffAt == null
         ? InvoiceLifecycle.partiallyPaid
@@ -84,6 +89,11 @@ class InvoiceStatusChip extends StatelessWidget {
           colors.onTertiaryContainer,
           l10n?.invoiceStatusRemainderCancelled ??
               'Partially paid · remainder cancelled',
+        ),
+      InvoiceLifecycle.refunded => (
+          colors.secondaryContainer,
+          colors.onSecondaryContainer,
+          l10n?.invoiceStatusRefunded ?? 'Refunded',
         ),
       InvoiceLifecycle.erroneous => (
           colors.errorContainer,

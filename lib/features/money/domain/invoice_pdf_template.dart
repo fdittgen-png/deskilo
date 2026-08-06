@@ -159,6 +159,8 @@ class InvoicePdfTemplate {
     // #480 — the legal mention variables.
     'net_total',
     'vat_total',
+    'credit_note',
+    'refund_total',
     'seller_legal_form',
     'seller_registration',
     'seller_vat_id',

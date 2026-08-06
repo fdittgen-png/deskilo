@@ -2268,6 +2268,26 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get invoicePdfCreditNote => 'Gutschrift';
+
+  @override
+  String get invoiceStatusRefunded => 'Erstattet';
+
+  @override
+  String get invoiceRefundLabel => 'Zu erstatten';
+
+  @override
+  String get invoiceRefundButton => 'Erstattung erfassen';
+
+  @override
+  String invoiceRefundExplain(String amount) {
+    return 'Diese Gutschrift bedeutet: der ARBEITSBEREICH schuldet dem Mitglied $amount. Erfassen Sie die ausgezahlte Erstattung — der Betrag wird gegen das Mitgliedskonto gebucht und das Dokument schließt als Erstattet.';
+  }
+
+  @override
+  String get invoiceRefunded => 'Erstattung erfasst.';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override

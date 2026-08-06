@@ -78,7 +78,8 @@ const Map<String, int> _baseline = {
   // models + the letter-doc warm/render/pdf helpers.
   // 1680→1740 (2026-08-05): #496 the language-resolution helpers threaded through the builders.
   // 1740→1820 (2026-08-05): #504 the write-off request dialog.
-  'lib/features/money/presentation/invoice_actions.dart': 1820,
+  // 1820→1910 (2026-08-05): #508 the credit-note refund dialog.
+  'lib/features/money/presentation/invoice_actions.dart': 1910,
   // 1370→1410 (2026-08-05): #494 the engine-based workspace report tile.
   // 1410→1440 (2026-08-05): #496 the language chain on the workspace report.
   'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1440,
@@ -110,7 +111,8 @@ const Map<String, int> _baseline = {
   // 600→660 (2026-08-04): #472 the due-reminder flag + emphasized
   // remind action on the open cards.
   // 660→740 (2026-08-05): #504 the partial-open card branch (remaining + write-off).
-  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 740,
+  // 740→790 (2026-08-05): #508 the credit-note card branch (to-refund + record button).
+  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 790,
   // 750→770 (2026-08-05): #490 workspace-clock day instants beside the
   // naive axis anchor.
   'lib/features/calendar/presentation/widgets/day_timeline.dart': 770,

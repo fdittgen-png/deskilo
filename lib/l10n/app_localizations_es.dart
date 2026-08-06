@@ -2265,6 +2265,26 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get invoicePdfCreditNote => 'Nota de crédito';
+
+  @override
+  String get invoiceStatusRefunded => 'Reembolsada';
+
+  @override
+  String get invoiceRefundLabel => 'A reembolsar';
+
+  @override
+  String get invoiceRefundButton => 'Registrar el reembolso';
+
+  @override
+  String invoiceRefundExplain(String amount) {
+    return 'Esta nota de crédito significa que el ESPACIO debe $amount al miembro. Registra el reembolso pagado — el importe se imputa al saldo del miembro y el documento se cierra como Reembolsada.';
+  }
+
+  @override
+  String get invoiceRefunded => 'Reembolso registrado.';
+
+  @override
   String get eventTypeMemberJoin => 'Nuevo miembro';
 
   @override

@@ -698,5 +698,34 @@
         "type": "String"
       }
     }
+  },
+  "invoicePdfCreditNote": "Gutschrift",
+  "@invoicePdfCreditNote": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
+  "invoiceStatusRefunded": "Erstattet",
+  "@invoiceStatusRefunded": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
+  "invoiceRefundLabel": "Zu erstatten",
+  "@invoiceRefundLabel": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
+  "invoiceRefundButton": "Erstattung erfassen",
+  "@invoiceRefundButton": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
+  "invoiceRefundExplain": "Diese Gutschrift bedeutet: der ARBEITSBEREICH schuldet dem Mitglied {amount}. Erfassen Sie die ausgezahlte Erstattung — der Betrag wird gegen das Mitgliedskonto gebucht und das Dokument schließt als Erstattet.",
+  "@invoiceRefundExplain": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceRefunded": "Erstattung erfasst.",
+  "@invoiceRefunded": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)"
   }
 }

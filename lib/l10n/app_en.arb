@@ -2947,6 +2947,35 @@
       }
     }
   },
+  "invoicePdfCreditNote": "Credit note",
+  "@invoicePdfCreditNote": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
+  "invoiceStatusRefunded": "Refunded",
+  "@invoiceStatusRefunded": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
+  "invoiceRefundLabel": "To refund",
+  "@invoiceRefundLabel": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
+  "invoiceRefundButton": "Record the refund",
+  "@invoiceRefundButton": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
+  "invoiceRefundExplain": "This credit note means the WORKSPACE owes the member {amount}. Record that the refund was paid out — the amount is booked against the member's balance and the document closes as Refunded.",
+  "@invoiceRefundExplain": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceRefunded": "Refund recorded.",
+  "@invoiceRefunded": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
   "pendingApprovalTitle": "Awaiting approval",
