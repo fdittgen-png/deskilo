@@ -14,6 +14,7 @@ import '../period_label.dart';
 /// DECIDES — the screen runs the action with its own live context, so no
 /// action ever depends on a sheet that is being dismissed.
 enum InvoiceAction {
+  quickView,
   downloadPdf,
   sharePdf,
   eInvoice,
@@ -264,6 +265,14 @@ class _InvoiceDetailBody extends StatelessWidget {
               const SizedBox(height: AppSpacing.lg),
 
               // Every permitted action, spelled out.
+              // #514 — see it on screen before any PDF exists.
+              _action(
+                context,
+                key: 'invoice-quick-${invoice.id}',
+                icon: Icons.bolt_outlined,
+                label: l10n?.reportQuickView ?? 'Quick view',
+                action: InvoiceAction.quickView,
+              ),
               _action(
                 context,
                 key: 'invoice-download-${invoice.id}',

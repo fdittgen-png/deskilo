@@ -43,9 +43,12 @@ void main() {
     final button = find.byIcon(Icons.picture_as_pdf_outlined);
     expect(button, findsOneWidget);
 
+    // #514 — the export opens the triad sheet; Download builds the PDF.
+    await tester.tap(button);
+    await tester.pumpAndSettle();
     // Font assets and PDF assembly need real async to complete.
     await tester.runAsync(() async {
-      await tester.tap(button);
+      await tester.tap(find.byKey(const ValueKey('bill-export-download')));
       await tester.pump();
     });
     await tester.pumpAndSettle();
@@ -65,8 +68,10 @@ void main() {
           throw Exception('disk full'),
     );
 
+    await tester.tap(find.byIcon(Icons.picture_as_pdf_outlined));
+    await tester.pumpAndSettle();
     await tester.runAsync(() async {
-      await tester.tap(find.byIcon(Icons.picture_as_pdf_outlined));
+      await tester.tap(find.byKey(const ValueKey('bill-export-download')));
       await tester.pump();
     });
     await tester.pumpAndSettle();
