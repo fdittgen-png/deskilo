@@ -1660,9 +1660,23 @@ Future<void> matchInvoiceToPayment(
   final repo = ref.read(moneyRepositoryProvider);
   final ledger = await repo.fetchLedger(invoice.memberId);
   final matches = ref.read(invoiceMatchesProvider).value ?? const {};
+  // #506 — the junction knows EVERY consumed payment (an aggregate
+  // match only remembers its last one).
+  final workspace = ref.read(currentWorkspaceProvider).value;
   final consumed = {
     for (final match in matches.values) ?match.paymentLedgerId,
+    if (workspace != null)
+      ...await repo.fetchConsumedPaymentIds(workspace.id),
   };
+  // A standing PARTIAL match shifts the target: further payments are
+  // measured against what is STILL DUE.
+  final existing = matches[invoice.id];
+  final dueCents = existing != null &&
+          !existing.pending &&
+          existing.resolution == 'under_accepted' &&
+          existing.writeoffAt == null
+      ? invoice.totalCents - existing.paidCents
+      : invoice.totalCents;
   final payments = [
     for (final entry in ledger)
       if (entry.kind == LedgerKind.credit &&
@@ -1676,7 +1690,7 @@ Future<void> matchInvoiceToPayment(
   final choice = await showDialog<MatchChoice>(
     context: context,
     builder: (context) => MatchInvoiceDialog(
-      dueCents: invoice.totalCents,
+      dueCents: dueCents,
       currency: currency,
       payments: payments,
     ),
