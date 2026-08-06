@@ -91,6 +91,44 @@
   "paymentProviderMollie": "Mollie — iDEAL, Bancontact…",
   "payOnlineDiagTitle": "Pagamenti online — non configurati",
   "payOnlineDiagHint": "Sul server manca questa configurazione (docs/design/payments-integration.md):",
+  "billInvoiceCard": "Fattura {number}",
+  "@billInvoiceCard": {
+    "description": "Bill card title for the invoice covering the browsed month (#510)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "billCreditNoteCard": "Nota di credito {number}",
+  "@billCreditNoteCard": {
+    "description": "Bill card title when the covering document is a credit note (#508)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "billInvoiceTotal": "Totale fattura",
+  "@billInvoiceTotal": {
+    "description": "Bill invoice card: face value line; issue date renders as detail"
+  },
+  "billInvoicePaid": "Già pagato",
+  "@billInvoicePaid": {
+    "description": "Bill invoice card: validated instalments on a partially paid invoice"
+  },
+  "billInvoiceRemaining": "Residuo da pagare",
+  "@billInvoiceRemaining": {
+    "description": "Bill invoice card: what is still owed on a partially paid invoice"
+  },
+  "billCreditNoteDue": "Lo spazio ti deve questo importo: non hai nulla da pagare.",
+  "@billCreditNoteDue": {
+    "description": "Bill credit-note card: refund still due from the workspace"
+  },
+  "billCreditNoteRefunded": "Lo spazio ti ha rimborsato questo importo.",
+  "@billCreditNoteRefunded": {
+    "description": "Bill credit-note card: the refund was validated and paid out"
+  },
   "billPdfTitle": "Fattura mensile",
   "billPdfExport": "Esporta la fattura come PDF",
   "billingTitle": "Fatturazione",
@@ -1154,6 +1192,18 @@
   "invoiceRefunded": "Rimborso registrato.",
   "@invoiceRefunded": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
+  "invoiceSummaryToRefund": "{count} da rimborsare · {amount}",
+  "@invoiceSummaryToRefund": {
+    "description": "Summary strip: open credit notes the workspace still owes (#508/#510)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "eventTypeMemberJoin": "Nuovo membro",
   "memberStatusPending": "In attesa",

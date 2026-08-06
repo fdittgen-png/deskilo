@@ -314,6 +314,33 @@ class AppLocalizationsIt extends AppLocalizations {
       'Sul server manca questa configurazione (docs/design/payments-integration.md):';
 
   @override
+  String billInvoiceCard(String number) {
+    return 'Fattura $number';
+  }
+
+  @override
+  String billCreditNoteCard(String number) {
+    return 'Nota di credito $number';
+  }
+
+  @override
+  String get billInvoiceTotal => 'Totale fattura';
+
+  @override
+  String get billInvoicePaid => 'Già pagato';
+
+  @override
+  String get billInvoiceRemaining => 'Residuo da pagare';
+
+  @override
+  String get billCreditNoteDue =>
+      'Lo spazio ti deve questo importo: non hai nulla da pagare.';
+
+  @override
+  String get billCreditNoteRefunded =>
+      'Lo spazio ti ha rimborsato questo importo.';
+
+  @override
   String get billPdfTitle => 'Fattura mensile';
 
   @override
@@ -2287,6 +2314,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceRefunded => 'Rimborso registrato.';
+
+  @override
+  String invoiceSummaryToRefund(int count, String amount) {
+    return '$count da rimborsare · $amount';
+  }
 
   @override
   String get eventTypeMemberJoin => 'Nuovo membro';

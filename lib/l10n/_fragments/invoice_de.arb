@@ -727,5 +727,17 @@
   "invoiceRefunded": "Erstattung erfasst.",
   "@invoiceRefunded": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
+  "invoiceSummaryToRefund": "{count} zu erstatten · {amount}",
+  "@invoiceSummaryToRefund": {
+    "description": "Summary strip: open credit notes the workspace still owes (#508/#510)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

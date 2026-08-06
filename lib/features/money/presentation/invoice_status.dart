@@ -52,6 +52,69 @@ InvoiceLifecycle invoiceLifecycleOf(Invoice invoice, InvoiceMatch? match) {
   return InvoiceLifecycle.paid;
 }
 
+/// How one billing PERIOD stands once an invoice covers it (#510): the
+/// covering document, its lifecycle, and what remains owed. Positive
+/// [remainingCents] = the member still owes; negative = the workspace
+/// owes a refund (an open credit note, #508); zero = settled.
+typedef PeriodSettlement = ({
+  Invoice invoice,
+  InvoiceMatch? match,
+  InvoiceLifecycle lifecycle,
+  int remainingCents,
+});
+
+/// The settlement of [period], or null while no invoice covers it (the
+/// raw ledger balance stays authoritative then). Voided and replaced
+/// documents don't count; if several cover the month, the latest wins.
+///
+/// This is the member-side twin of the hub's open list: once the month
+/// is INVOICED the debt lives on the document — the payment that
+/// settles it is usually recorded in a LATER month, so the month's own
+/// ledger arithmetic can never read settled (#510).
+PeriodSettlement? settlementOfPeriod(
+  String period,
+  String memberId,
+  List<Invoice> invoices,
+  Map<String, InvoiceMatch> matches,
+) {
+  final replaced = {for (final i in invoices) ?i.replacesInvoiceId};
+  Invoice? covering;
+  for (final invoice in invoices) {
+    // The member filter matters for ADMINS: their RLS scope holds the
+    // whole workspace's archive, but their own bill must only ever
+    // reflect their own documents.
+    if (invoice.isVoided ||
+        replaced.contains(invoice.id) ||
+        invoice.memberId != memberId ||
+        invoice.period != period) {
+      continue;
+    }
+    if (covering == null || invoice.issuedAt.isAfter(covering.issuedAt)) {
+      covering = invoice;
+    }
+  }
+  if (covering == null) return null;
+  final match = matches[covering.id];
+  final lifecycle = invoiceLifecycleOf(covering, match);
+  final remaining = switch (lifecycle) {
+    // Nothing validated yet: the full face value is owed (a pending
+    // match awaits its quorum — it settles nothing until confirmed).
+    InvoiceLifecycle.open ||
+    InvoiceLifecycle.awaitingValidation =>
+      covering.totalCents,
+    InvoiceLifecycle.partiallyPaid =>
+      covering.totalCents - (match?.paidCents ?? 0),
+    // Paid, remainder cancelled, refunded, erroneous: closed.
+    _ => 0,
+  };
+  return (
+    invoice: covering,
+    match: match,
+    lifecycle: lifecycle,
+    remainingCents: remaining,
+  );
+}
+
 /// The lifecycle as a compact chip. Replaces the dot-joined status words
 /// that used to hide inside a row's grey subtitle line.
 class InvoiceStatusChip extends StatelessWidget {

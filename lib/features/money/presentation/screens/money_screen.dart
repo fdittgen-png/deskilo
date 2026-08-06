@@ -27,6 +27,7 @@ import '../../domain/bill_pdf.dart';
 import '../../domain/invoice_pdf.dart';
 import '../../domain/invoice_report.dart';
 import '../invoice_actions.dart';
+import '../invoice_status.dart';
 import '../report_defaults.dart';
 import '../../domain/bill_sections.dart';
 import '../../domain/ledger_entry.dart';
@@ -921,6 +922,15 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final member = ref.watch(myMemberProvider).value;
     final statementAsync = ref.watch(myStatementProvider(_period));
+    // #510 — once an invoice covers the browsed month, the DOCUMENT
+    // decides settled/outstanding (its payment usually lands in a later
+    // month). RLS scopes both providers to the member's own rows.
+    final settlement = settlementOfPeriod(
+      _period,
+      member?.id ?? '',
+      ref.watch(invoicesProvider).value ?? const [],
+      ref.watch(invoiceMatchesProvider).value ?? const {},
+    );
     final ledger = ref.watch(myLedgerProvider).value ?? const <LedgerEntry>[];
     final pendingEvents = ref.watch(eventsProvider).value ?? const [];
     final currencyCode = workspace?.currencyCode ?? 'EUR';
@@ -979,6 +989,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 onlinePaymentsEnabled:
                     features.contains(WorkspaceFeature.onlinePayments),
                 onPayOnline: _payOnline,
+                settlement: settlement,
               ),
     ];
     // #486 UX — actions grouped by MEANING: what pays, what asks, what
