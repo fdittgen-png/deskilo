@@ -63,5 +63,37 @@
   "billCreditNoteRefunded": "El espacio te ha reembolsado este importe.",
   "@billCreditNoteRefunded": {
     "description": "Bill credit-note card: the refund was validated and paid out"
+  },
+  "accountCardTitle": "Tu cuenta",
+  "@accountCardTitle": {
+    "description": "Money tab: title of the cross-month account position card (#512)"
+  },
+  "accountCredit": "Crédito a favor",
+  "@accountCredit": {
+    "description": "Account card: unconsumed credit spendable on open invoices"
+  },
+  "accountRefundDue": "Reembolso pendiente del espacio",
+  "@accountRefundDue": {
+    "description": "Account card: open credit notes the workspace still owes"
+  },
+  "accountNet": "Posición neta",
+  "@accountNet": {
+    "description": "Account card: credit + refunds − open remainders"
+  },
+  "accountOpenPartial": "{period} · {paid} pagados",
+  "@accountOpenPartial": {
+    "description": "Account card: open invoice detail line when partially paid",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      },
+      "paid": {
+        "type": "String"
+      }
+    }
+  },
+  "accountImputationHint": "Tu crédito puede saldar facturas abiertas: el espacio lo imputa al conciliar los pagos.",
+  "@accountImputationHint": {
+    "description": "Account card hint shown when credit and open invoices coexist (#512)"
   }
 }

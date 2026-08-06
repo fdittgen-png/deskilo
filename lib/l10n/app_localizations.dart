@@ -692,6 +692,42 @@ abstract class AppLocalizations {
   /// **'The workspace refunded you this amount.'**
   String get billCreditNoteRefunded;
 
+  /// Money tab: title of the cross-month account position card (#512)
+  ///
+  /// In en, this message translates to:
+  /// **'Your account'**
+  String get accountCardTitle;
+
+  /// Account card: unconsumed credit spendable on open invoices
+  ///
+  /// In en, this message translates to:
+  /// **'Credit on account'**
+  String get accountCredit;
+
+  /// Account card: open credit notes the workspace still owes
+  ///
+  /// In en, this message translates to:
+  /// **'Refund due from the workspace'**
+  String get accountRefundDue;
+
+  /// Account card: credit + refunds − open remainders
+  ///
+  /// In en, this message translates to:
+  /// **'Net position'**
+  String get accountNet;
+
+  /// Account card: open invoice detail line when partially paid
+  ///
+  /// In en, this message translates to:
+  /// **'{period} · {paid} paid'**
+  String accountOpenPartial(String period, String paid);
+
+  /// Account card hint shown when credit and open invoices coexist (#512)
+  ///
+  /// In en, this message translates to:
+  /// **'Your credit can settle open invoices — the workspace applies it when matching payments.'**
+  String get accountImputationHint;
+
   /// Document title on the exported bill PDF (#133)
   ///
   /// In en, this message translates to:

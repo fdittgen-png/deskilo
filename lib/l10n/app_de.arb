@@ -129,6 +129,38 @@
   "@billCreditNoteRefunded": {
     "description": "Bill credit-note card: the refund was validated and paid out"
   },
+  "accountCardTitle": "Dein Konto",
+  "@accountCardTitle": {
+    "description": "Money tab: title of the cross-month account position card (#512)"
+  },
+  "accountCredit": "Guthaben auf dem Konto",
+  "@accountCredit": {
+    "description": "Account card: unconsumed credit spendable on open invoices"
+  },
+  "accountRefundDue": "Erstattung vom Space ausstehend",
+  "@accountRefundDue": {
+    "description": "Account card: open credit notes the workspace still owes"
+  },
+  "accountNet": "Nettoposition",
+  "@accountNet": {
+    "description": "Account card: credit + refunds − open remainders"
+  },
+  "accountOpenPartial": "{period} · {paid} bezahlt",
+  "@accountOpenPartial": {
+    "description": "Account card: open invoice detail line when partially paid",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      },
+      "paid": {
+        "type": "String"
+      }
+    }
+  },
+  "accountImputationHint": "Dein Guthaben kann offene Rechnungen begleichen — der Space rechnet es beim Zuordnen der Zahlungen an.",
+  "@accountImputationHint": {
+    "description": "Account card hint shown when credit and open invoices coexist (#512)"
+  },
   "billPdfTitle": "Monatsrechnung",
   "billPdfExport": "Rechnung als PDF exportieren",
   "billingTitle": "Abrechnung",

@@ -675,6 +675,7 @@ Future<void> settleCreditInvoiceDialog(
     return;
   }
   ref.invalidate(invoiceMatchesProvider);
+  ref.invalidate(myAccountProvider);
   ref.invalidate(invoicesProvider);
   invalidateBookingData(ref);
   if (!context.mounted) return;
@@ -1761,11 +1762,23 @@ Future<void> matchInvoiceToPayment(
           existing.writeoffAt == null
       ? invoice.totalCents - existing.paidCents
       : invoice.totalCents;
+  // #512 — a credit BAKED into an issued invoice (negative line at
+  // derivation) was spent there; the server refuses it too.
+  final memberInvoices = ref.read(invoicesProvider).value ?? const <Invoice>[];
+  bool baked(LedgerEntry entry) => memberInvoices.any((i) =>
+      i.memberId == invoice.memberId &&
+      !i.isVoided &&
+      i.period == entry.period &&
+      i.issuedAt.isAfter(entry.createdAt));
   final payments = [
     for (final entry in ledger)
       if (entry.kind == LedgerKind.credit &&
-          entry.category == LedgerCategory.payment &&
-          !consumed.contains(entry.id))
+          // #512 — account credits (avoir excess) settle too: the
+          // imputation of a credit note on any outstanding invoice.
+          (entry.category == LedgerCategory.payment ||
+              entry.category == LedgerCategory.adjustment) &&
+          !consumed.contains(entry.id) &&
+          !baked(entry))
         entry,
     // Newest PAYMENT first — by the day the money moved (0070), not by
     // the day it happened to be typed in.
@@ -1796,6 +1809,7 @@ Future<void> matchInvoiceToPayment(
     return;
   }
   ref.invalidate(invoiceMatchesProvider);
+  ref.invalidate(myAccountProvider);
   ref.invalidate(invoicesProvider);
   invalidateBookingData(ref);
   if (!context.mounted) return;

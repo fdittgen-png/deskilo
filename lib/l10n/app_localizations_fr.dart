@@ -341,6 +341,27 @@ class AppLocalizationsFr extends AppLocalizations {
   String get billCreditNoteRefunded => 'L\'espace vous a remboursé ce montant.';
 
   @override
+  String get accountCardTitle => 'Votre compte';
+
+  @override
+  String get accountCredit => 'Avoir disponible';
+
+  @override
+  String get accountRefundDue => 'Remboursement dû par l\'espace';
+
+  @override
+  String get accountNet => 'Position nette';
+
+  @override
+  String accountOpenPartial(String period, String paid) {
+    return '$period · $paid réglés';
+  }
+
+  @override
+  String get accountImputationHint =>
+      'Votre avoir peut solder les factures ouvertes — l\'espace l\'impute lors du rapprochement des paiements.';
+
+  @override
   String get billPdfTitle => 'Facture mensuelle';
 
   @override

@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/invoice.dart';
+import '../domain/member_account.dart';
 import '../domain/dunning.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/einvoice_gateway.dart';
@@ -115,6 +116,16 @@ class SupabaseMoneyRepository implements MoneyRepository {
     return {
       for (final row in rows) row['payment_ledger_id'] as String,
     };
+  }
+
+  @override
+  Future<MemberAccount> fetchMemberAccount(String memberId) async {
+    final result = await _client.rpc<dynamic>('member_account', params: {
+      'p_member_id': memberId,
+    });
+    return MemberAccount.fromJson(
+      Map<String, dynamic>.from(result as Map),
+    );
   }
 
   @override

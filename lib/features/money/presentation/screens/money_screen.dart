@@ -37,6 +37,7 @@ import '../../domain/payment_provider.dart';
 import '../../domain/statement.dart';
 import '../../providers/money_providers.dart';
 import '../payment_method_labels.dart';
+import '../widgets/account_card.dart';
 import '../widgets/bill_view.dart';
 import '../widgets/consumption_sheet.dart';
 import '../widgets/report_preview.dart';
@@ -972,7 +973,13 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     // Landscape split (#282 idiom, field request): the period header and
     // the money actions move into a side panel so the bill fills the
     // rest of the screen — same layout family as Plan/Reserve/Calendar.
+    // #512 — the REAL cross-month position, above the per-month bill.
+    final account = ref.watch(myAccountProvider).value;
     final billChildren = <Widget>[
+      if (account != null && account.isNotable) ...[
+        AccountCard(account: account, currencyCode: currencyCode),
+        const SizedBox(height: 8),
+      ],
             if (visibleStatement != null)
               BillView(
                 statement: visibleStatement,

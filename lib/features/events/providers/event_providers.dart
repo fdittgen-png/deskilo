@@ -91,5 +91,7 @@ void invalidateBookingData(WidgetRef ref) {
     ..invalidate(eventsProvider)
     ..invalidate(eventDecisionsProvider)
     ..invalidate(myStatementProvider)
-    ..invalidate(myLedgerProvider);
+    ..invalidate(myLedgerProvider)
+    // #512 — every money mutation can move the cross-month position.
+    ..invalidate(myAccountProvider);
 }
