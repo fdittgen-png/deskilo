@@ -98,6 +98,15 @@ class SupabaseMoneyRepository implements MoneyRepository {
   }
 
   @override
+  Future<void> settleCreditInvoice(String invoiceId,
+      {String note = ''}) async {
+    await _client.rpc<void>('settle_credit_invoice', params: {
+      'p_invoice_id': invoiceId,
+      'p_note': note,
+    });
+  }
+
+  @override
   Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) async {
     final rows = await _client
         .from('invoice_match_payments')

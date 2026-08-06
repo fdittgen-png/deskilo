@@ -157,6 +157,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
       // until its validated write-off (remainderCancelled).
       InvoiceLifecycle.paid ||
       InvoiceLifecycle.remainderCancelled ||
+      InvoiceLifecycle.refunded ||
       InvoiceLifecycle.erroneous =>
         true,
       _ => false,

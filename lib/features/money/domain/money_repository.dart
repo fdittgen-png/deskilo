@@ -51,6 +51,11 @@ abstract class MoneyRepository {
   /// A library image's bytes; null when it does not exist.
   Future<Uint8List?> fetchReportImage(String workspaceId, String name);
 
+  /// Settles a NEGATIVE invoice — a credit note the WORKSPACE pays
+  /// (#508, 0102): books the payout charge and closes the avoir with
+  /// resolution 'refunded' (through the invoice_payment policy).
+  Future<void> settleCreditInvoice(String invoiceId, {String note = ''});
+
   /// Every payment already consumed by a match (#506, 0101) — the
   /// candidates list must not offer them again.
   Future<Set<String>> fetchConsumedPaymentIds(String workspaceId);

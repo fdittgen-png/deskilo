@@ -221,6 +221,7 @@ class OpenInvoicesTab extends ConsumerWidget {
     required this.onRemind,
     required this.onMatch,
     required this.onWriteoff,
+    required this.onRefund,
     required this.onVoid,
     required this.onProforma,
   });
@@ -237,6 +238,9 @@ class OpenInvoicesTab extends ConsumerWidget {
 
   /// #504 — request the validated write-off of the remainder.
   final void Function(OpenInvoiceEntry entry) onWriteoff;
+
+  /// #508 — record the refund the workspace paid on a credit note.
+  final void Function(OpenInvoiceEntry entry) onRefund;
 
   /// Tags the OPEN invoice erronée so it can be corrected (0068 field
   /// decision: en-cours invoices are cancellable; PAID ones are not).
@@ -282,7 +286,9 @@ class OpenInvoicesTab extends ConsumerWidget {
         ? const <String, int>{}
         : {
       for (final e in overview.open)
-        e.invoice.id: dueReminderLevel(
+        // #508 — a credit note owes the MEMBER nothing; never remind.
+        if (e.invoice.totalCents > 0)
+          e.invoice.id: dueReminderLevel(
           issuedAt: e.invoice.issuedAt,
           reminderCount: reminders[e.invoice.id]?.count ?? 0,
           lastReminderAt: reminders[e.invoice.id]?.last,
@@ -346,7 +352,47 @@ class OpenInvoicesTab extends ConsumerWidget {
                         ),
                       ),
                     ),
-                  if (entry.pendingMatch != null &&
+                  if (entry.invoice.totalCents < 0 &&
+                      entry.pendingMatch == null)
+                    // #508 — a NEGATIVE document is a credit note the
+                    // WORKSPACE pays: no reminders, no member-payment
+                    // matching — record the refund.
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: Text(
+                            '${l10n?.invoiceRefundLabel ?? 'To refund'}: '
+                            '${currency.format(-entry.invoice.totalCents / 100)}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium
+                                ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .tertiary),
+                          ),
+                        ),
+                        IconButton(
+                          key: ValueKey(
+                              'invoice-void-open-${entry.invoice.id}'),
+                          tooltip: l10n?.invoiceVoidAction ??
+                              'Mark erroneous',
+                          icon: const Icon(Icons.block_outlined),
+                          onPressed: () => onVoid(entry),
+                        ),
+                        IconButton.filledTonal(
+                          key: ValueKey(
+                              'invoice-refund-${entry.invoice.id}'),
+                          tooltip: l10n?.invoiceRefundButton ??
+                              'Record the refund',
+                          icon: const Icon(Icons.currency_exchange),
+                          onPressed: () => onRefund(entry),
+                        ),
+                      ],
+                    )
+                  else if (entry.pendingMatch != null &&
                       !entry.pendingMatch!.pending)
                     // #504 — STANDING partial match: the remainder is
                     // still owed. Remind, or request the validated

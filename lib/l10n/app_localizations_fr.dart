@@ -2273,6 +2273,26 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get invoicePdfCreditNote => 'Avoir';
+
+  @override
+  String get invoiceStatusRefunded => 'Remboursée';
+
+  @override
+  String get invoiceRefundLabel => 'À rembourser';
+
+  @override
+  String get invoiceRefundButton => 'Enregistrer le remboursement';
+
+  @override
+  String invoiceRefundExplain(String amount) {
+    return 'Cet avoir signifie que L\'ESPACE doit $amount au membre. Enregistrez le remboursement versé — le montant est imputé au solde du membre et le document se clôt comme Remboursée.';
+  }
+
+  @override
+  String get invoiceRefunded => 'Remboursement enregistré.';
+
+  @override
   String get eventTypeMemberJoin => 'Nouveau membre';
 
   @override

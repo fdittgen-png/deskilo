@@ -281,6 +281,39 @@ class FakeMoneyRepository implements MoneyRepository {
   final consumedPaymentIds = <String>{};
 
   @override
+  Future<void> settleCreditInvoice(String invoiceId,
+      {String note = ''}) async {
+    final invoice = invoices.where((i) => i.id == invoiceId).firstOrNull;
+    if (invoice == null) throw StateError('unknown invoice');
+    if (invoice.totalCents >= 0) throw StateError('not a credit note');
+    if (invoiceMatchesStore.containsKey(invoiceId)) {
+      throw StateError('invoice already matched');
+    }
+    final trimmed = note.trim();
+    ledger.add(LedgerEntry(
+      id: 'ledger-refund-${ledger.length + 1}',
+      memberId: invoice.memberId,
+      kind: LedgerKind.charge,
+      category: LedgerCategory.adjustment,
+      amountCents: -invoice.totalCents,
+      description: 'Refund ${invoice.number}'
+          '${trimmed.isEmpty ? '' : ' — $trimmed'}',
+      period:
+          '${kTestNow.year}-${kTestNow.month.toString().padLeft(2, '0')}',
+      createdAt: kTestNow,
+    ));
+    invoiceMatchesStore[invoiceId] = InvoiceMatch(
+      invoiceId: invoiceId,
+      paidCents: -invoice.totalCents,
+      resolution: 'refunded',
+      note: trimmed,
+      status: matchPolicyConfigured ? 'pending' : 'confirmed',
+      matchedAt: kTestNow,
+      byName: 'Flo',
+    );
+  }
+
+  @override
   Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) async =>
       {
         ...consumedPaymentIds,

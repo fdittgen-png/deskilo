@@ -46,7 +46,7 @@ InvoicePdfTemplate defaultInvoiceTemplate(AppLocalizations? l10n) {
 
 ReportBands _invoicePresetBands(AppLocalizations? l10n, String id) {
   final title =
-      '{% if proforma %}${l10n?.invoicePdfProforma ?? 'Proforma'}{% else %}${l10n?.invoicePdfTitle ?? 'Invoice'}{% endif %}';
+      '{% if credit_note %}${l10n?.invoicePdfCreditNote ?? 'Credit note'}{% elsif proforma %}${l10n?.invoicePdfProforma ?? 'Proforma'}{% else %}${l10n?.invoicePdfTitle ?? 'Invoice'}{% endif %}';
   // Row 1 of the facture layout (#482): brand left, document title +
   // reference/date block right.
   final brandRow = '''
@@ -464,6 +464,8 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       'voided': false,
       'proforma': false,
       'copy': false,
+      'credit_note': false,
+      'refund_total': '',
       'has_vat': true,
       'lines': [
         {

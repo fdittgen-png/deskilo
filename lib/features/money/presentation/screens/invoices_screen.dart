@@ -201,6 +201,8 @@ class InvoicesScreen extends ConsumerWidget {
                     matchInvoiceToPayment(context, ref, entry.invoice),
                 onWriteoff: (entry) =>
                     requestInvoiceWriteoffDialog(context, ref, entry.invoice),
+                onRefund: (entry) =>
+                    settleCreditInvoiceDialog(context, ref, entry.invoice),
                 onVoid: (entry) =>
                     voidInvoiceWithConfirm(context, ref, entry.invoice),
                 onProforma: (entry) =>

@@ -4118,6 +4118,42 @@ abstract class AppLocalizations {
   /// **'{actor} asks to cancel the remainder of {number} — {amount}'**
   String eventInvoiceWriteoffLine(String actor, String number, String amount);
 
+  /// Negative invoices are credit notes the workspace refunds (#508)
+  ///
+  /// In en, this message translates to:
+  /// **'Credit note'**
+  String get invoicePdfCreditNote;
+
+  /// Negative invoices are credit notes the workspace refunds (#508)
+  ///
+  /// In en, this message translates to:
+  /// **'Refunded'**
+  String get invoiceStatusRefunded;
+
+  /// Negative invoices are credit notes the workspace refunds (#508)
+  ///
+  /// In en, this message translates to:
+  /// **'To refund'**
+  String get invoiceRefundLabel;
+
+  /// Negative invoices are credit notes the workspace refunds (#508)
+  ///
+  /// In en, this message translates to:
+  /// **'Record the refund'**
+  String get invoiceRefundButton;
+
+  /// Negative invoices are credit notes the workspace refunds (#508)
+  ///
+  /// In en, this message translates to:
+  /// **'This credit note means the WORKSPACE owes the member {amount}. Record that the refund was paid out — the amount is booked against the member\'s balance and the document closes as Refunded.'**
+  String invoiceRefundExplain(String amount);
+
+  /// Negative invoices are credit notes the workspace refunds (#508)
+  ///
+  /// In en, this message translates to:
+  /// **'Refund recorded.'**
+  String get invoiceRefunded;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:

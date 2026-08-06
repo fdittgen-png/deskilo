@@ -2249,6 +2249,26 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get invoicePdfCreditNote => 'Credit note';
+
+  @override
+  String get invoiceStatusRefunded => 'Refunded';
+
+  @override
+  String get invoiceRefundLabel => 'To refund';
+
+  @override
+  String get invoiceRefundButton => 'Record the refund';
+
+  @override
+  String invoiceRefundExplain(String amount) {
+    return 'This credit note means the WORKSPACE owes the member $amount. Record that the refund was paid out — the amount is booked against the member\'s balance and the document closes as Refunded.';
+  }
+
+  @override
+  String get invoiceRefunded => 'Refund recorded.';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override

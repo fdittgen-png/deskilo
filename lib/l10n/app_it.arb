@@ -1126,6 +1126,35 @@
       }
     }
   },
+  "invoicePdfCreditNote": "Nota di credito",
+  "@invoicePdfCreditNote": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
+  "invoiceStatusRefunded": "Rimborsata",
+  "@invoiceStatusRefunded": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
+  "invoiceRefundLabel": "Da rimborsare",
+  "@invoiceRefundLabel": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
+  "invoiceRefundButton": "Registra il rimborso",
+  "@invoiceRefundButton": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
+  "invoiceRefundExplain": "Questa nota di credito significa che lo SPAZIO deve {amount} al membro. Registra il rimborso versato — l'importo viene imputato al saldo del membro e il documento si chiude come Rimborsata.",
+  "@invoiceRefundExplain": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceRefunded": "Rimborso registrato.",
+  "@invoiceRefunded": {
+    "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
   "eventTypeMemberJoin": "Nuovo membro",
   "memberStatusPending": "In attesa",
   "pendingApprovalTitle": "In attesa di approvazione",

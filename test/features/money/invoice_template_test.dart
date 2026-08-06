@@ -118,7 +118,10 @@ void main() {
         'issued', 'issued_by', 'replaces', 'total', 'charges', 'payments',
         'voided', 'proforma', 'copy', 'has_vat', 'lines', 'vat',
         // #480 — the legal mention variables.
-        'net_total', 'vat_total', 'seller_legal_form',
+        'net_total', 'vat_total',
+        // #508 — the credit-note fields.
+        'credit_note', 'refund_total',
+        'seller_legal_form',
         'seller_registration', 'seller_vat_id', 'seller_legal_id',
         'exemption_reason', 'client_address', 'client_vat_id',
         'client_legal_id', 'payment_terms',

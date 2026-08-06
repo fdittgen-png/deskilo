@@ -217,6 +217,9 @@ Map<String, Object?> invoiceReportData(
     'voided': invoice.isVoided,
     'proforma': proforma,
     'copy': copy,
+    // #508 — a negative document is a credit note the workspace pays.
+    'credit_note': invoice.totalCents < 0,
+    'refund_total': money(-invoice.totalCents),
     'has_vat': invoice.vatTotals.any((t) => t.vatCents > 0),
     'lines': [
       for (final line in invoice.lines)
@@ -603,6 +606,84 @@ Map<String, Object?> workspaceReportData(
   };
 }
 
+/// #508 — records the REFUND the workspace paid on a NEGATIVE invoice
+/// (a credit note / avoir): books the payout charge and closes the
+/// document — through the invoice_payment validation policy when one
+/// is configured.
+Future<void> settleCreditInvoiceDialog(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice,
+) async {
+  final l10n = AppLocalizations.of(context);
+  final currency = NumberFormat.simpleCurrency(name: invoice.currency);
+  final noteController = TextEditingController();
+  final confirmed = await showDialog<bool>(
+    context: context,
+    builder: (dialogContext) => AlertDialog(
+      title: Text(l10n?.invoiceRefundButton ?? 'Record the refund'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l10n?.invoiceRefundExplain(
+                  currency.format(-invoice.totalCents / 100)) ??
+              'This credit note means the WORKSPACE owes the member '
+                  '${currency.format(-invoice.totalCents / 100)}. '
+                  'Record that the refund was paid out — the amount is '
+                  'booked against the member\'s balance and the '
+                  'document closes as Refunded.'),
+          const SizedBox(height: AppSpacing.md),
+          TextField(
+            key: const ValueKey('invoice-refund-note'),
+            controller: noteController,
+            maxLength: 300,
+            maxLines: 2,
+            decoration: InputDecoration(
+              labelText: l10n?.reservationDeleteReasonLabel ??
+                  'Reason (optional)',
+              counterText: '',
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(dialogContext).pop(false),
+          child: Text(l10n?.commonCancel ?? 'Cancel'),
+        ),
+        FilledButton(
+          key: const ValueKey('invoice-refund-submit'),
+          onPressed: () => Navigator.of(dialogContext).pop(true),
+          child: Text(l10n?.invoiceRefundButton ?? 'Record the refund'),
+        ),
+      ],
+    ),
+  );
+  final note = noteController.text;
+  if (confirmed != true || !context.mounted) return;
+  if (!await runGuarded(
+    context,
+    domain: 'money',
+    message: 'credit note refund failed',
+    errorText: l10n?.workspaceGenericError ??
+        'Something went wrong. Please try again.',
+    action: () => ref
+        .read(moneyRepositoryProvider)
+        .settleCreditInvoice(invoice.id, note: note),
+  )) {
+    return;
+  }
+  ref.invalidate(invoiceMatchesProvider);
+  ref.invalidate(invoicesProvider);
+  invalidateBookingData(ref);
+  if (!context.mounted) return;
+  AppSnack.success(
+    context,
+    l10n?.invoiceRefunded ?? 'Refund recorded.',
+  );
+}
+
 /// #504 — asks the validators to CANCEL the outstanding remainder of a
 /// partially paid invoice. Explains that this is a request, takes an
 /// optional reason, files the pending 'invoice_writeoff' event.
@@ -882,7 +963,10 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     lineText: (line) => invoiceLineText(l10n, line),
     activityText: (entry) => annexEntryText(l10n, entry),
     strings: InvoicePdfStrings(
-      invoiceTitle: l10n?.invoicePdfTitle ?? 'Invoice',
+      // #508 — a NEGATIVE document is titled as the credit note it is.
+      invoiceTitle: invoice.totalCents < 0
+          ? (l10n?.invoicePdfCreditNote ?? 'Credit note')
+          : (l10n?.invoicePdfTitle ?? 'Invoice'),
       issuedOn: l10n?.invoicePdfIssuedOn ?? 'Issued on',
       issuedBy: l10n?.invoicePdfIssuedBy ?? 'Issued by',
       billedTo: l10n?.invoicePdfBilledTo ?? 'Billed to',
