@@ -40,10 +40,29 @@ class InvoicingSummaryBar extends ConsumerWidget {
     if (overview.toInvoice.isEmpty && overview.open.isEmpty) {
       return const SizedBox.shrink();
     }
-    final outstanding =
-        overview.open.fold(0, (sum, e) => sum + e.invoice.totalCents);
+    // #510 — the two DIRECTIONS of the payment process, separately: what
+    // members still owe (positive invoices at their REMAINING value —
+    // a €500 invoice with €280 paid counts €220, not €500) and what the
+    // workspace owes back (open credit notes, #508).
+    int remainingOf(OpenInvoiceEntry e) {
+      final match = e.pendingMatch;
+      if (match != null &&
+          !match.pending &&
+          match.resolution == 'under_accepted') {
+        return e.invoice.totalCents - match.paidCents;
+      }
+      return e.invoice.totalCents;
+    }
+
+    final collectable =
+        overview.open.where((e) => e.invoice.totalCents > 0).toList();
+    final refundable =
+        overview.open.where((e) => e.invoice.totalCents < 0).toList();
+    final toCollect = collectable.fold(0, (sum, e) => sum + remainingOf(e));
+    final toRefund =
+        refundable.fold(0, (sum, e) => sum - e.invoice.totalCents);
     final now = ref.read(clockProvider).now();
-    final overdue = overview.open.any(
+    final overdue = collectable.any(
       (e) => now.difference(e.invoice.issuedAt).inDays >= _overdueDays,
     );
     return Padding(
@@ -64,16 +83,26 @@ class InvoicingSummaryBar extends ConsumerWidget {
               text: l10n?.invoiceSummaryToInvoice(overview.toInvoice.length) ??
                   '${overview.toInvoice.length} to invoice',
             ),
-          if (overview.open.isNotEmpty)
+          if (collectable.isNotEmpty)
             _Pill(
               icon: Icons.hourglass_bottom_outlined,
               alert: overdue,
               text: l10n?.invoiceSummaryOpen(
-                    overview.open.length,
-                    currency.format(outstanding / 100),
+                    collectable.length,
+                    currency.format(toCollect / 100),
                   ) ??
-                  '${overview.open.length} open · '
-                      '${currency.format(outstanding / 100)} outstanding',
+                  '${collectable.length} open · '
+                      '${currency.format(toCollect / 100)} outstanding',
+            ),
+          if (refundable.isNotEmpty)
+            _Pill(
+              icon: Icons.replay_outlined,
+              text: l10n?.invoiceSummaryToRefund(
+                    refundable.length,
+                    currency.format(toRefund / 100),
+                  ) ??
+                  '${refundable.length} to refund · '
+                      '${currency.format(toRefund / 100)}',
             ),
         ],
       ),

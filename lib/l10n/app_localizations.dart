@@ -650,6 +650,48 @@ abstract class AppLocalizations {
   /// **'The server is missing this configuration (docs/design/payments-integration.md):'**
   String get payOnlineDiagHint;
 
+  /// Bill card title for the invoice covering the browsed month (#510)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {number}'**
+  String billInvoiceCard(String number);
+
+  /// Bill card title when the covering document is a credit note (#508)
+  ///
+  /// In en, this message translates to:
+  /// **'Credit note {number}'**
+  String billCreditNoteCard(String number);
+
+  /// Bill invoice card: face value line; issue date renders as detail
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice total'**
+  String get billInvoiceTotal;
+
+  /// Bill invoice card: validated instalments on a partially paid invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Paid so far'**
+  String get billInvoicePaid;
+
+  /// Bill invoice card: what is still owed on a partially paid invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining to pay'**
+  String get billInvoiceRemaining;
+
+  /// Bill credit-note card: refund still due from the workspace
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace owes you this amount — nothing to pay on your side.'**
+  String get billCreditNoteDue;
+
+  /// Bill credit-note card: the refund was validated and paid out
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace refunded you this amount.'**
+  String get billCreditNoteRefunded;
+
   /// Document title on the exported bill PDF (#133)
   ///
   /// In en, this message translates to:
@@ -4153,6 +4195,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Refund recorded.'**
   String get invoiceRefunded;
+
+  /// Summary strip: open credit notes the workspace still owes (#508/#510)
+  ///
+  /// In en, this message translates to:
+  /// **'{count} to refund · {amount}'**
+  String invoiceSummaryToRefund(int count, String amount);
 
   /// No description provided for @eventTypeMemberJoin.
   ///

@@ -14,6 +14,7 @@ import '../../../workspace/domain/payment_instructions.dart';
 import '../../domain/bill_sections.dart';
 import '../../domain/ledger_entry.dart';
 import '../../domain/statement.dart';
+import '../invoice_status.dart';
 
 /// The structured monthly bill (#132, ADR 0008): subscription, consumed
 /// services, open positions awaiting validation, payments & credits, and
@@ -31,6 +32,7 @@ class BillView extends StatelessWidget {
     this.paymentInstructions = const PaymentInstructions(),
     this.onlinePaymentsEnabled = false,
     this.onPayOnline,
+    this.settlement,
   });
 
   final Statement statement;
@@ -58,6 +60,13 @@ class BillView extends StatelessWidget {
   /// online-payment button. Owned by the Money screen (it has the ref to
   /// start the provider order and open the approval URL).
   final void Function(int amountCents)? onPayOnline;
+
+  /// #510 — the invoice covering this month, when one exists. From then
+  /// on the DOCUMENT decides whether the month is settled: the payment
+  /// that clears it is usually recorded in a later month, so the raw
+  /// ledger balance of an invoiced-and-paid month would read
+  /// outstanding forever.
+  final PeriodSettlement? settlement;
 
   @override
   Widget build(BuildContext context) {
@@ -96,23 +105,123 @@ class BillView extends StatelessWidget {
           const SizedBox(height: 8),
           _CreditsCard(entries: sections.creditEntries, money: money),
         ],
+        if (settlement != null) ...[
+          const SizedBox(height: 8),
+          _InvoiceCard(settlement: settlement!, money: money),
+        ],
         const SizedBox(height: 8),
-        _BalanceFooter(statement: statement, money: money),
+        _BalanceFooter(
+          statement: statement,
+          settlement: settlement,
+          money: money,
+        ),
         // #155 — how to pay, only while something is owed (spec §7:
         // "shown on unpaid statements") and only when the owner configured
-        // manual instructions or enabled online payments.
-        if (!statement.isSettled &&
+        // manual instructions or enabled online payments. An invoiced
+        // month owes its invoice REMAINDER, not its ledger balance (#510).
+        if (_owedCents > 0 &&
             (!paymentInstructions.isEmpty ||
                 (onlinePaymentsEnabled && onPayOnline != null))) ...[
           const SizedBox(height: 8),
           _HowToPayCard(
             instructions: paymentInstructions,
             onPayOnline: onlinePaymentsEnabled && onPayOnline != null
-                ? () => onPayOnline!(-statement.balanceCents)
+                ? () => onPayOnline!(_owedCents)
                 : null,
           ),
         ],
       ],
+    );
+  }
+
+  /// What the member still has to pay for this month: the invoice
+  /// remainder once a document covers it, the ledger deficit before.
+  int get _owedCents => settlement != null
+      ? (settlement!.remainingCents > 0 ? settlement!.remainingCents : 0)
+      : (statement.isSettled ? 0 : -statement.balanceCents);
+}
+
+/// #510 — the month's invoice as the member reads it: number, state
+/// chip, total, what was paid and what remains. A NEGATIVE document is
+/// a credit note (#508): the workspace owes the refund, the member owes
+/// nothing.
+class _InvoiceCard extends StatelessWidget {
+  const _InvoiceCard({required this.settlement, required this.money});
+
+  final PeriodSettlement settlement;
+  final String Function(int cents) money;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final invoice = settlement.invoice;
+    final isCreditNote = invoice.totalCents < 0;
+    final title = isCreditNote
+        ? (l10n?.billCreditNoteCard(invoice.number) ??
+            'Credit note ${invoice.number}')
+        : (l10n?.billInvoiceCard(invoice.number) ??
+            'Invoice ${invoice.number}');
+    final paid = settlement.match != null && !settlement.match!.pending
+        ? settlement.match!.paidCents
+        : 0;
+    return Card(
+      key: const ValueKey('bill-invoice-card'),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                InvoiceStatusChip(status: settlement.lifecycle),
+              ],
+            ),
+            const SizedBox(height: 4),
+            _BillLine(
+              label: l10n?.billInvoiceTotal ?? 'Invoice total',
+              detail: DateFormat.yMMMd(
+                Localizations.maybeLocaleOf(context)?.toString(),
+              ).format(invoice.issuedAt.toLocal()),
+              value: money(invoice.totalCents),
+            ),
+            if (paid != 0 &&
+                settlement.lifecycle == InvoiceLifecycle.partiallyPaid) ...[
+              _BillLine(
+                label: l10n?.billInvoicePaid ?? 'Paid so far',
+                value: money(paid),
+              ),
+              _BillLine(
+                label: l10n?.billInvoiceRemaining ?? 'Remaining to pay',
+                value: money(settlement.remainingCents),
+                emphasized: true,
+              ),
+            ],
+            if (isCreditNote) ...[
+              const SizedBox(height: 4),
+              Text(
+                settlement.lifecycle == InvoiceLifecycle.refunded
+                    ? (l10n?.billCreditNoteRefunded ??
+                        'The workspace refunded you this amount.')
+                    : (l10n?.billCreditNoteDue ??
+                        'The workspace owes you this amount — '
+                            'nothing to pay on your side.'),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+              ),
+            ],
+          ],
+        ),
+      ),
     );
   }
 }
@@ -657,16 +766,32 @@ class _CreditsCard extends StatelessWidget {
 }
 
 class _BalanceFooter extends StatelessWidget {
-  const _BalanceFooter({required this.statement, required this.money});
+  const _BalanceFooter({
+    required this.statement,
+    required this.settlement,
+    required this.money,
+  });
 
   final Statement statement;
+
+  /// When set, the invoice decides settled/outstanding and the amount
+  /// shown is its remainder — not the month's ledger arithmetic (#510).
+  final PeriodSettlement? settlement;
+
   final String Function(int cents) money;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
-    final color = statement.isSettled ? scheme.primary : scheme.error;
+    // Sign convention stays the statement's: negative = the member
+    // owes. An open credit note reads as a positive balance — money the
+    // workspace owes back — and never as outstanding.
+    final balanceCents = settlement != null
+        ? -settlement!.remainingCents
+        : statement.balanceCents;
+    final isSettled = balanceCents >= 0;
+    final color = isSettled ? scheme.primary : scheme.error;
     final style = Theme.of(context)
         .textTheme
         .titleMedium
@@ -681,7 +806,7 @@ class _BalanceFooter extends StatelessWidget {
             ),
             Chip(
               label: Text(
-                statement.isSettled
+                isSettled
                     ? (l10n?.billSettled ?? 'Settled')
                     : (l10n?.billOutstanding ?? 'Outstanding'),
                 style: Theme.of(context)
@@ -693,7 +818,7 @@ class _BalanceFooter extends StatelessWidget {
               side: BorderSide(color: color),
             ),
             const SizedBox(width: 12),
-            Text(money(statement.balanceCents), style: style),
+            Text(money(balanceCents), style: style),
           ],
         ),
       ),

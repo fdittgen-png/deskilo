@@ -107,12 +107,16 @@ const Map<String, int> _baseline = {
   // fetch on the floor-plans bucket).
   // 870→890 (2026-08-05): #506 the consumed-payments junction read.
   'lib/features/money/data/supabase_money_repository.dart': 890,
-  'lib/features/money/presentation/widgets/bill_view.dart': 750,
+  // 750→880 (2026-08-05): #510 the month-invoice card + settlement-
+  // driven balance footer (the invoice decides settled/outstanding).
+  'lib/features/money/presentation/widgets/bill_view.dart': 880,
   // 600→660 (2026-08-04): #472 the due-reminder flag + emphasized
   // remind action on the open cards.
   // 660→740 (2026-08-05): #504 the partial-open card branch (remaining + write-off).
   // 740→790 (2026-08-05): #508 the credit-note card branch (to-refund + record button).
-  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 790,
+  // 790→820 (2026-08-05): #510 the summary strip splits to-collect
+  // (remaining value) from to-refund.
+  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 820,
   // 750→770 (2026-08-05): #490 workspace-clock day instants beside the
   // naive axis anchor.
   'lib/features/calendar/presentation/widgets/day_timeline.dart': 770,

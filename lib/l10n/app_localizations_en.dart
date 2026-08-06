@@ -312,6 +312,33 @@ class AppLocalizationsEn extends AppLocalizations {
       'The server is missing this configuration (docs/design/payments-integration.md):';
 
   @override
+  String billInvoiceCard(String number) {
+    return 'Invoice $number';
+  }
+
+  @override
+  String billCreditNoteCard(String number) {
+    return 'Credit note $number';
+  }
+
+  @override
+  String get billInvoiceTotal => 'Invoice total';
+
+  @override
+  String get billInvoicePaid => 'Paid so far';
+
+  @override
+  String get billInvoiceRemaining => 'Remaining to pay';
+
+  @override
+  String get billCreditNoteDue =>
+      'The workspace owes you this amount — nothing to pay on your side.';
+
+  @override
+  String get billCreditNoteRefunded =>
+      'The workspace refunded you this amount.';
+
+  @override
   String get billPdfTitle => 'Monthly bill';
 
   @override
@@ -2267,6 +2294,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceRefunded => 'Refund recorded.';
+
+  @override
+  String invoiceSummaryToRefund(int count, String amount) {
+    return '$count to refund · $amount';
+  }
 
   @override
   String get eventTypeMemberJoin => 'New member';

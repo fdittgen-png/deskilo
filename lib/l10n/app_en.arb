@@ -388,6 +388,44 @@
   "@payOnlineDiagHint": {
     "description": "Hint above the per-provider missing-config lines in the diagnostics dialog"
   },
+  "billInvoiceCard": "Invoice {number}",
+  "@billInvoiceCard": {
+    "description": "Bill card title for the invoice covering the browsed month (#510)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "billCreditNoteCard": "Credit note {number}",
+  "@billCreditNoteCard": {
+    "description": "Bill card title when the covering document is a credit note (#508)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "billInvoiceTotal": "Invoice total",
+  "@billInvoiceTotal": {
+    "description": "Bill invoice card: face value line; issue date renders as detail"
+  },
+  "billInvoicePaid": "Paid so far",
+  "@billInvoicePaid": {
+    "description": "Bill invoice card: validated instalments on a partially paid invoice"
+  },
+  "billInvoiceRemaining": "Remaining to pay",
+  "@billInvoiceRemaining": {
+    "description": "Bill invoice card: what is still owed on a partially paid invoice"
+  },
+  "billCreditNoteDue": "The workspace owes you this amount — nothing to pay on your side.",
+  "@billCreditNoteDue": {
+    "description": "Bill credit-note card: refund still due from the workspace"
+  },
+  "billCreditNoteRefunded": "The workspace refunded you this amount.",
+  "@billCreditNoteRefunded": {
+    "description": "Bill credit-note card: the refund was validated and paid out"
+  },
   "billPdfTitle": "Monthly bill",
   "@billPdfTitle": {
     "description": "Document title on the exported bill PDF (#133)"
@@ -2975,6 +3013,18 @@
   "invoiceRefunded": "Refund recorded.",
   "@invoiceRefunded": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"
+  },
+  "invoiceSummaryToRefund": "{count} to refund · {amount}",
+  "@invoiceSummaryToRefund": {
+    "description": "Summary strip: open credit notes the workspace still owes (#508/#510)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
