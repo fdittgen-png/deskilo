@@ -51,6 +51,10 @@ abstract class MoneyRepository {
   /// A library image's bytes; null when it does not exist.
   Future<Uint8List?> fetchReportImage(String workspaceId, String name);
 
+  /// Every payment already consumed by a match (#506, 0101) — the
+  /// candidates list must not offer them again.
+  Future<Set<String>> fetchConsumedPaymentIds(String workspaceId);
+
   /// The workspace's dunning policy (#472, 0093); defaults when unset.
   Future<DunningRules> fetchDunningRules(String workspaceId);
 

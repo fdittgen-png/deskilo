@@ -384,6 +384,17 @@ class OpenInvoicesTab extends ConsumerWidget {
                           ),
                           onPressed: () => onRemind(entry),
                         ),
+                        // #506 — new payments keep coming in: match
+                        // them against the REMAINING amount, maybe
+                        // until fully paid.
+                        IconButton.filledTonal(
+                          key: ValueKey(
+                              'invoice-match-${entry.invoice.id}'),
+                          tooltip:
+                              l10n?.invoiceMatchAction ?? 'Mark as paid',
+                          icon: const Icon(Icons.price_check_outlined),
+                          onPressed: () => onMatch(entry),
+                        ),
                         if (pendingWriteoffs
                             .contains(entry.invoice.id))
                           Chip(

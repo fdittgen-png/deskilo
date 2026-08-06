@@ -98,6 +98,17 @@ class SupabaseMoneyRepository implements MoneyRepository {
   }
 
   @override
+  Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) async {
+    final rows = await _client
+        .from('invoice_match_payments')
+        .select('payment_ledger_id')
+        .eq('workspace_id', workspaceId);
+    return {
+      for (final row in rows) row['payment_ledger_id'] as String,
+    };
+  }
+
+  @override
   Future<DunningRules> fetchDunningRules(String workspaceId) async {
     final row = await _client
         .from('workspaces')

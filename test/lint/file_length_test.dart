@@ -104,7 +104,8 @@ const Map<String, int> _baseline = {
   // 800→830 (2026-08-04): #472 fetch/setDunningRules.
   // 830→870 (2026-08-05): #488 the report-image library (list/upload/
   // fetch on the floor-plans bucket).
-  'lib/features/money/data/supabase_money_repository.dart': 870,
+  // 870→890 (2026-08-05): #506 the consumed-payments junction read.
+  'lib/features/money/data/supabase_money_repository.dart': 890,
   'lib/features/money/presentation/widgets/bill_view.dart': 750,
   // 600→660 (2026-08-04): #472 the due-reminder flag + emphasized
   // remind action on the open cards.

@@ -72,9 +72,10 @@ void main() {
     final writeoffButton =
         find.byKey(ValueKey('invoice-writeoff-${invoice.id}'));
     expect(writeoffButton, findsOneWidget);
-    // A matched invoice offers no second match and no voiding.
+    // #506 — further payments stay matchable against the remainder;
+    // voiding stays off (the invoice is matched and definitive).
     expect(find.byKey(ValueKey('invoice-match-${invoice.id}')),
-        findsNothing);
+        findsOneWidget);
     expect(find.byKey(ValueKey('invoice-void-open-${invoice.id}')),
         findsNothing);
 

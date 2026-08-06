@@ -277,6 +277,17 @@ class FakeMoneyRepository implements MoneyRepository {
   /// policy is simulated, credit note as a ledger credit adjustment.
   final invoiceMatchesStore = <String, InvoiceMatch>{};
 
+  /// #506 — every payment a match (or additional payment) consumed.
+  final consumedPaymentIds = <String>{};
+
+  @override
+  Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) async =>
+      {
+        ...consumedPaymentIds,
+        for (final match in invoiceMatchesStore.values)
+          ?match.paymentLedgerId,
+      };
+
   /// When true, matches land PENDING (a validation policy exists).
   bool matchPolicyConfigured = false;
 
@@ -309,7 +320,14 @@ class FakeMoneyRepository implements MoneyRepository {
     final invoice = invoices.where((i) => i.id == invoiceId).firstOrNull;
     if (invoice == null) throw StateError('unknown invoice');
     if (invoice.isVoided) throw StateError('invoice is voided');
-    if (invoiceMatchesStore.containsKey(invoiceId)) {
+    // #506 — a STANDING partial accepts ADDITIONAL payments against the
+    // remaining amount; anything else refuses like before.
+    final existing = invoiceMatchesStore[invoiceId];
+    final additional = existing != null &&
+        !existing.pending &&
+        existing.resolution == 'under_accepted' &&
+        existing.writeoffAt == null;
+    if (existing != null && !additional) {
       throw StateError('invoice already matched');
     }
     // 0068 — the amount comes FROM the selected registered payment.
@@ -326,16 +344,18 @@ class FakeMoneyRepository implements MoneyRepository {
       throw StateError('payment already matched');
     }
     final paidCents = payment.amountCents;
+    // #506 — every amount rule compares against what is STILL DUE.
+    final dueCents =
+        invoice.totalCents - (additional ? existing.paidCents : 0);
     final trimmed = note.trim();
-    if (resolution == 'exact' && paidCents != invoice.totalCents) {
+    if (resolution == 'exact' && paidCents != dueCents) {
       throw StateError('amount does not match the invoice');
     }
     if ((resolution == 'over_forced' || resolution == 'over_credit_note') &&
-        paidCents <= invoice.totalCents) {
+        paidCents <= dueCents) {
       throw StateError('amount does not exceed the invoice');
     }
-    if (resolution == 'under_accepted' &&
-        paidCents >= invoice.totalCents) {
+    if (resolution == 'under_accepted' && paidCents >= dueCents) {
       throw StateError('amount is not below the invoice');
     }
     if ((resolution == 'over_forced' || resolution == 'under_accepted') &&
@@ -348,13 +368,27 @@ class FakeMoneyRepository implements MoneyRepository {
         memberId: invoice.memberId,
         kind: LedgerKind.credit,
         category: LedgerCategory.adjustment,
-        amountCents: paidCents - invoice.totalCents,
+        amountCents: paidCents - dueCents,
         description: 'Credit note ${invoice.number}'
             '${trimmed.isEmpty ? '' : ' — $trimmed'}',
         period:
             '${kTestNow.year}-${kTestNow.month.toString().padLeft(2, '0')}',
         createdAt: kTestNow,
       ));
+    }
+    consumedPaymentIds.add(paymentLedgerId);
+    if (additional) {
+      // #506 — the aggregate grows; full settlement flips the state.
+      invoiceMatchesStore[invoiceId] = InvoiceMatch(
+        invoiceId: invoiceId,
+        paidCents: existing.paidCents + paidCents,
+        resolution: resolution,
+        note: trimmed.isEmpty ? existing.note : trimmed,
+        paymentLedgerId: paymentLedgerId,
+        matchedAt: kTestNow,
+        byName: 'Flo',
+      );
+      return;
     }
     invoiceMatchesStore[invoiceId] = InvoiceMatch(
       invoiceId: invoiceId,
