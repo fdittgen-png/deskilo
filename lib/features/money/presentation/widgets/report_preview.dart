@@ -161,8 +161,18 @@ Future<void> showReportQuickPreview(
                   child: SingleChildScrollView(
                     key: const ValueKey('report-quick-preview'),
                     padding: AppSpacing.lgAll,
-                    child:
-                        ReportBlocksView(report: report, images: images),
+                    // Paper metaphor (UX audit): the document keeps a
+                    // fixed readable width; a narrow phone pans
+                    // sideways instead of crushing the table's first
+                    // column to one letter per line.
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: SizedBox(
+                        width: 432,
+                        child: ReportBlocksView(
+                            report: report, images: images),
+                      ),
+                    ),
                   ),
                 ),
                 Align(
