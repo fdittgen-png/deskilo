@@ -13,12 +13,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:deskilo/core/time/clock.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/fake_realtime_sync.dart';
 import '../../helpers/mock_providers.dart';
 
 const _canvasKey = ValueKey('kiosk-plan-canvas');
+
+/// The suite clock. Suites that install the fixture workspace's tz
+/// (setUpAll below) re-anchor it to 10:00 IN THAT FRAME; importers that
+/// don't install a zone keep the naive default — both self-consistent.
+FixedClock kioskClock = FixedClock(kTestNow);
 
 /// Pumps the app signed in as the wall tablet's KIOSK account. Kiosk
 /// mode never auto-loads (field request): the gate asks first — by
@@ -28,6 +36,7 @@ Future<FakeReservationRepository> pumpKiosk(
   FakeNfcUidReader? nfc,
   FakeQrScanner? qrScan,
   Map<String, dynamic> featureFlags = const {},
+  BookingGranularity? granularity,
   bool bookableLevel = false,
   bool startKiosk = true,
   FakeRealtimeSync? realtime,
@@ -40,6 +49,9 @@ Future<FakeReservationRepository> pumpKiosk(
   final reservations = FakeReservationRepository();
   final workspace =
       FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags);
+  if (granularity != null) {
+    workspace.bookingGranularities['ws-1'] = granularity;
+  }
   workspace.myMember = workspace.myMember.copyWith(
     isAdmin: false,
     isOwner: false,
@@ -54,6 +66,7 @@ Future<FakeReservationRepository> pumpKiosk(
         nfc: nfc,
         qrScan: qrScan,
         realtime: realtime,
+        clock: kioskClock,
       ),
       child: const DeskiloApp(),
     ),
@@ -88,6 +101,15 @@ Future<void> confirmSummary(WidgetTester tester) async {
 }
 
 void main() {
+  // #490 idiom — the fixture workspace is Europe/Berlin; anchor the
+  // suite AND the clock to it, so half-day windows and "now" live in
+  // the same frame on any device timezone.
+  setUpAll(() {
+    WorkspaceTime.install('Europe/Berlin');
+    kioskClock = FixedClock(
+        WorkspaceTime.at(kTestNow.year, kTestNow.month, kTestNow.day, 10));
+  });
+  tearDownAll(WorkspaceTime.reset);
   testWidgets(
       'the gate asks before kiosk mode loads; confirming locks the pad '
       'to the kiosk view: no shell, no bottom bar, back disabled',
@@ -196,6 +218,9 @@ void main() {
     expect(find.byKey(const ValueKey('kiosk-check-out')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
     await tester.pumpAndSettle();
+    // #519 — the period step sits between action and badge.
+    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
+    await tester.pumpAndSettle();
 
     // Badge prompt: a wedge scanner types the code and submits with Enter.
     await tester.enterText(
@@ -221,6 +246,9 @@ void main() {
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
+    await tester.pumpAndSettle();
+    // #519 — the period step sits between action and badge.
+    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
     await tester.pumpAndSettle();
 
     // NFC available → the prompt shows the tap hint; a card tap acts as
@@ -268,6 +296,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
     await tester.pumpAndSettle();
+    // #519 — the period step sits between action and badge.
+    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
+    await tester.pumpAndSettle();
 
     await tester.enterText(
       find.byKey(const ValueKey('kiosk-badge-field')),
@@ -302,6 +333,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
     await tester.pumpAndSettle();
+    // #519 — the period step sits between action and badge.
+    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
+    await tester.pumpAndSettle();
 
     // The camera area is embedded in the badge sheet.
     expect(
@@ -323,6 +357,9 @@ void main() {
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
+    await tester.pumpAndSettle();
+    // #519 — the period step sits between action and badge.
+    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
     await tester.pumpAndSettle();
   }
 
@@ -431,6 +468,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
     await tester.pumpAndSettle();
+    // #519 — the period step sits between action and badge.
+    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
+    await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('kiosk-badge-field')),
       'badge-token-1',
@@ -506,10 +546,141 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
     await tester.pumpAndSettle();
+    // #519 — the period step sits between action and badge.
+    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
+    await tester.pumpAndSettle();
 
     expect(frontCamera.value, isTrue); // front by default
     await tester.tap(find.byKey(const ValueKey('scan-flip-camera')));
     await tester.pumpAndSettle();
     expect(frontCamera.value, isFalse);
+  });
+
+  // ---------------------------------------------------------------- #519
+  // The period step: WHEN is chosen before the badge, granularity-true
+  // and today-only; a reservation whose window already began can start
+  // checked in through the same single badge presentation.
+
+  Future<void> submitBadge(WidgetTester tester) async {
+    await tester.enterText(
+      find.byKey(const ValueKey('kiosk-badge-field')),
+      'badge-token-1',
+    );
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle();
+  }
+
+  testWidgets(
+      'RESERVE, standing right there: the period step defaults to '
+      '"check in right away" — one badge, the reservation starts '
+      'CHECKED IN (#519)', (tester) async {
+    final reservations = await pumpKiosk(tester);
+
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-reserve')));
+    await tester.pumpAndSettle();
+
+    // Time-based (flexible) granularity: From/To pickers, and the
+    // check-in question because the window starts now.
+    expect(find.byKey(const ValueKey('kiosk-period-start')), findsOneWidget);
+    expect(find.byKey(const ValueKey('kiosk-period-end')), findsOneWidget);
+    final swtch = find.byKey(const ValueKey('kiosk-period-checkin-now'));
+    expect(swtch, findsOneWidget);
+    expect(tester.widget<SwitchListTile>(swtch).value, isTrue);
+
+    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
+    await tester.pumpAndSettle();
+    await submitBadge(tester);
+
+    // The summary is honest about the combined action.
+    expect(find.text('Reserve & check in'), findsOneWidget);
+    await confirmSummary(tester);
+
+    final act = reservations.kioskActs.single;
+    expect(act.action, 'check_in');
+    // Today-only, never a past start: the window begins exactly now.
+    expect(act.startsAt, kioskClock.now());
+    expect(act.endsAt!.day, kTestNow.day);
+  });
+
+  testWidgets(
+      'RESERVE with the check-in switch OFF stays a plain reservation '
+      '(#519)', (tester) async {
+    final reservations = await pumpKiosk(tester);
+
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-reserve')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-period-checkin-now')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
+    await tester.pumpAndSettle();
+    await submitBadge(tester);
+    await confirmSummary(tester);
+
+    expect(reservations.kioskActs.single.action, 'reserve');
+  });
+
+  testWidgets(
+      'HALF-DAY granularity: chips instead of clocks; a running morning '
+      'starts NOW, a future afternoon reserves plain (no check-in '
+      'question) (#519)', (tester) async {
+    final reservations =
+        await pumpKiosk(tester, granularity: BookingGranularity.halfDay);
+
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-reserve')));
+    await tester.pumpAndSettle();
+
+    // Day-part chips, morning (the running part at 10:00) preselected.
+    expect(find.byKey(const ValueKey('kiosk-period-morning')), findsOneWidget);
+    expect(
+        find.byKey(const ValueKey('kiosk-period-afternoon')), findsOneWidget);
+    expect(find.byKey(const ValueKey('kiosk-period-day')), findsOneWidget);
+    expect(find.byKey(const ValueKey('kiosk-period-start')), findsNothing);
+
+    // Pick the AFTERNOON: it starts later, so no check-in question.
+    await tester
+        .tap(find.byKey(const ValueKey('kiosk-period-afternoon')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('kiosk-period-checkin-now')),
+        findsNothing);
+    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
+    await tester.pumpAndSettle();
+    await submitBadge(tester);
+    await confirmSummary(tester);
+
+    final act = reservations.kioskActs.single;
+    expect(act.action, 'reserve');
+    // The canonical afternoon window: boundary (12:00) → day end, today.
+    expect(act.startsAt!.hour, 12);
+    expect(act.startsAt!.isAfter(kioskClock.now()), isTrue);
+    expect(act.endsAt!.hour, 17);
+  });
+
+  testWidgets(
+      'CHECK-IN means being there: the start is pinned to now (time '
+      'pickers) and a not-yet-started afternoon chip is disabled '
+      '(half-days) (#519)', (tester) async {
+    await pumpKiosk(tester);
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
+    await tester.pumpAndSettle();
+
+    // Flexible granularity: the From button exists but is disabled.
+    final startButton = find.byKey(const ValueKey('kiosk-period-start'));
+    expect(
+      tester.widget<OutlinedButton>(
+        find.ancestor(
+            of: find.byIcon(Icons.schedule_outlined),
+            matching: find.byType(OutlinedButton)),
+      ).onPressed,
+      isNull,
+    );
+    expect(startButton, findsOneWidget);
   });
 }

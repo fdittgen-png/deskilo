@@ -2566,6 +2566,30 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucun pointage actif trouvé — le plan vient peut-être de se mettre à jour.';
 
   @override
+  String get kioskRestOfDay => 'Reste de la journée';
+
+  @override
+  String get kioskPeriodCheckInHint =>
+      'Jusqu\'à quand restez-vous ? Le pointage commence maintenant.';
+
+  @override
+  String get kioskPeriodReserveHint =>
+      'Choisissez la période — aujourd\'hui uniquement.';
+
+  @override
+  String get kioskCheckInRightAway => 'Pointer tout de suite';
+
+  @override
+  String get kioskCheckInRightAwayHint =>
+      'Vous êtes sur place — la réservation démarre pointée.';
+
+  @override
+  String get kioskPresentBadgeNext => 'Présenter le badge';
+
+  @override
+  String get kioskReserveAndCheckIn => 'Réserver et pointer';
+
+  @override
   String get languageTitle => 'Langue';
 
   @override

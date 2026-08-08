@@ -34,6 +34,7 @@ import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../../core/time/work_hours.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../widgets/kiosk_period_sheet.dart';
 import '../../device_pin.dart';
 import '../../../../core/time/clock.dart';
 
@@ -148,11 +149,26 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       ),
     );
     if (action == null || !mounted) return;
+    // Field request: the member says WHEN before any badge comes out —
+    // granularity-true, today-only. Check-out books no window.
+    KioskPeriod? period;
+    if (action != KioskAction.checkOut) {
+      period = await showKioskPeriodSheet(
+        context,
+        action: action,
+        granularity: ref.read(bookingGranularityProvider).value ??
+            BookingGranularity.flexible,
+        now: ref.read(clockProvider).now(),
+        targetName: title,
+      );
+      if (period == null || !mounted) return;
+    }
     await _badgeSheet(
       action,
       targetName: title,
       seatId: seatId,
       levelId: levelId,
+      period: period,
     );
   }
 
@@ -164,6 +180,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     required String targetName,
     String? seatId,
     String? levelId,
+    KioskPeriod? period,
   }) async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
@@ -188,7 +205,15 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     // The sheet's dispose stopped BOTH readers (NFC session + camera) —
     // the confirm step below runs with everything off (field request).
 
-    final window = _actionWindow();
+    final window = period == null
+        ? _actionWindow()
+        : (start: period.start, end: period.end);
+    // A reservation made standing at the kiosk can start checked in —
+    // the period step asked; one badge presentation covers both.
+    final effective = action == KioskAction.reserve &&
+            (period?.checkInNow ?? false)
+        ? KioskAction.checkIn
+        : action;
 
     // Identify first: resolve the badge to its member so the summary
     // names WHO is about to act — the wrong-badge guard on a shared
@@ -220,11 +245,14 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
 
     // The résumé: who, what, where, when — Confirm executes, Reject
     // discards. Nothing has happened yet.
-    final actionLabel = switch (action) {
-      KioskAction.checkIn => l10n?.kioskCheckIn ?? 'Check in',
-      KioskAction.reserve => l10n?.kioskReserve ?? 'Reserve',
-      KioskAction.checkOut => l10n?.kioskCheckOut ?? 'Check out',
-    };
+    final actionLabel = action == KioskAction.reserve &&
+            effective == KioskAction.checkIn
+        ? (l10n?.kioskReserveAndCheckIn ?? 'Reserve & check in')
+        : switch (action) {
+            KioskAction.checkIn => l10n?.kioskCheckIn ?? 'Check in',
+            KioskAction.reserve => l10n?.kioskReserve ?? 'Reserve',
+            KioskAction.checkOut => l10n?.kioskCheckOut ?? 'Check out',
+          };
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -269,7 +297,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       await ref.read(reservationRepositoryProvider).kioskAct(
             workspaceId: workspace.id,
             badgeToken: token,
-            action: action.wireName,
+            action: effective.wireName,
             seatId: seatId,
             levelId: levelId,
             startsAt:
@@ -317,6 +345,9 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     // #446: same out-of-shell rule for the ambient working day — the
     // walk-up windows this screen books derive from it.
     WorkHours.install(ref.watch(workHoursProvider).value);
+    // #519 — keep the granularity warm: the period step reads it
+    // synchronously when a seat is tapped.
+    ref.watch(bookingGranularityProvider);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final levels = ref.watch(levelsProvider).value;
     if (levels == null) {

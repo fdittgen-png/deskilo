@@ -234,8 +234,14 @@ class FakeReservationRepository implements ReservationRepository {
   }
 
   /// (action, badgeToken, seatId, levelId) of kiosk_act calls (0043/0050).
-  final kioskActs =
-      <({String action, String badgeToken, String? seatId, String? levelId})>[];
+  final kioskActs = <({
+    String action,
+    String badgeToken,
+    String? seatId,
+    String? levelId,
+    DateTime? startsAt,
+    DateTime? endsAt,
+  })>[];
 
   @override
   Future<String> kioskIdentify({
@@ -274,6 +280,8 @@ class FakeReservationRepository implements ReservationRepository {
       badgeToken: badgeToken,
       seatId: seatId,
       levelId: levelId,
+      startsAt: startsAt,
+      endsAt: endsAt,
     ));
     return 'res-kiosk-${kioskActs.length}';
   }

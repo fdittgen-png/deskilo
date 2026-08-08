@@ -54,5 +54,33 @@
   "kioskRevertDesc": "Este perfil está configurado como quiosco del espacio. Reviértelo a miembro normal para que la pregunta de quiosco no aparezca al iniciar.",
   "kioskRevertDone": "Este perfil vuelve a ser un miembro normal.",
   "memberNoActions": "Solo el propietario del espacio puede modificar este miembro.",
-  "kioskNotCheckedIn": "No hay ningún registro activo — puede que el plano se acabe de actualizar."
+  "kioskNotCheckedIn": "No hay ningún registro activo — puede que el plano se acabe de actualizar.",
+  "kioskRestOfDay": "Resto del día",
+  "@kioskRestOfDay": {
+    "description": "Kiosk period chip after the working day: now until midnight"
+  },
+  "kioskPeriodCheckInHint": "¿Hasta cuándo te quedas? El registro empieza ahora.",
+  "@kioskPeriodCheckInHint": {
+    "description": "Kiosk period step hint for a check-in (start pinned to now)"
+  },
+  "kioskPeriodReserveHint": "Elige el periodo: solo hoy.",
+  "@kioskPeriodReserveHint": {
+    "description": "Kiosk period step hint for a reservation (kiosk never books the future)"
+  },
+  "kioskCheckInRightAway": "Registrarse ahora mismo",
+  "@kioskCheckInRightAway": {
+    "description": "Kiosk period step switch: the reservation starts checked in"
+  },
+  "kioskCheckInRightAwayHint": "Estás aquí: la reserva empieza registrada.",
+  "@kioskCheckInRightAwayHint": {
+    "description": "Subtitle of the check-in-right-away switch"
+  },
+  "kioskPresentBadgeNext": "Presentar la tarjeta",
+  "@kioskPresentBadgeNext": {
+    "description": "Kiosk period step continue button — leads to the badge prompt"
+  },
+  "kioskReserveAndCheckIn": "Reservar y registrarse",
+  "@kioskReserveAndCheckIn": {
+    "description": "Kiosk summary title when a reservation starts checked in"
+  }
 }

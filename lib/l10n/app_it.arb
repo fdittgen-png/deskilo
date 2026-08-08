@@ -1303,6 +1303,34 @@
   "kioskRevertDone": "Questo profilo è di nuovo un membro normale.",
   "memberNoActions": "Solo il proprietario dello spazio può modificare questo membro.",
   "kioskNotCheckedIn": "Nessun check-in attivo trovato — la planimetria potrebbe essersi appena aggiornata.",
+  "kioskRestOfDay": "Resto della giornata",
+  "@kioskRestOfDay": {
+    "description": "Kiosk period chip after the working day: now until midnight"
+  },
+  "kioskPeriodCheckInHint": "Fino a quando resti? Il check-in inizia adesso.",
+  "@kioskPeriodCheckInHint": {
+    "description": "Kiosk period step hint for a check-in (start pinned to now)"
+  },
+  "kioskPeriodReserveHint": "Scegli il periodo: solo oggi.",
+  "@kioskPeriodReserveHint": {
+    "description": "Kiosk period step hint for a reservation (kiosk never books the future)"
+  },
+  "kioskCheckInRightAway": "Check-in immediato",
+  "@kioskCheckInRightAway": {
+    "description": "Kiosk period step switch: the reservation starts checked in"
+  },
+  "kioskCheckInRightAwayHint": "Sei qui: la prenotazione parte già registrata.",
+  "@kioskCheckInRightAwayHint": {
+    "description": "Subtitle of the check-in-right-away switch"
+  },
+  "kioskPresentBadgeNext": "Presenta il badge",
+  "@kioskPresentBadgeNext": {
+    "description": "Kiosk period step continue button — leads to the badge prompt"
+  },
+  "kioskReserveAndCheckIn": "Prenota e fai check-in",
+  "@kioskReserveAndCheckIn": {
+    "description": "Kiosk summary title when a reservation starts checked in"
+  },
   "languageTitle": "Lingua",
   "languageSystemDefault": "Predefinita di sistema",
   "levelReserveButton": "Prenota il piano",

@@ -30,6 +30,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
+    await tester.pumpAndSettle();
 
     // The busy-badge sentinel mirrors the 0079 trigger refusing a
     // walk-up while the badge member is active elsewhere.

@@ -2541,6 +2541,29 @@ class AppLocalizationsEn extends AppLocalizations {
       'No active check-in found — the plan may have just updated.';
 
   @override
+  String get kioskRestOfDay => 'Rest of the day';
+
+  @override
+  String get kioskPeriodCheckInHint =>
+      'Until when will you stay? Checking in starts now.';
+
+  @override
+  String get kioskPeriodReserveHint => 'Pick the period — today only.';
+
+  @override
+  String get kioskCheckInRightAway => 'Check in right away';
+
+  @override
+  String get kioskCheckInRightAwayHint =>
+      'You\'re here — the reservation starts checked in.';
+
+  @override
+  String get kioskPresentBadgeNext => 'Present the badge';
+
+  @override
+  String get kioskReserveAndCheckIn => 'Reserve & check in';
+
+  @override
   String get languageTitle => 'Language';
 
   @override

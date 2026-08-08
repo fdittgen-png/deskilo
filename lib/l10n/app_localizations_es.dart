@@ -2559,6 +2559,29 @@ class AppLocalizationsEs extends AppLocalizations {
       'No hay ningún registro activo — puede que el plano se acabe de actualizar.';
 
   @override
+  String get kioskRestOfDay => 'Resto del día';
+
+  @override
+  String get kioskPeriodCheckInHint =>
+      '¿Hasta cuándo te quedas? El registro empieza ahora.';
+
+  @override
+  String get kioskPeriodReserveHint => 'Elige el periodo: solo hoy.';
+
+  @override
+  String get kioskCheckInRightAway => 'Registrarse ahora mismo';
+
+  @override
+  String get kioskCheckInRightAwayHint =>
+      'Estás aquí: la reserva empieza registrada.';
+
+  @override
+  String get kioskPresentBadgeNext => 'Presentar la tarjeta';
+
+  @override
+  String get kioskReserveAndCheckIn => 'Reservar y registrarse';
+
+  @override
   String get languageTitle => 'Idioma';
 
   @override
