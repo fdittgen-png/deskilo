@@ -1,6 +1,6 @@
 # Benutzerhandbuch
 
-Alles, was Mitglieder, Admins und Inhaberinnen brauchen, um DesKilo zu nutzen.
+Alles, was Mitglieder, Admins und Inhaber brauchen, um DesKilo zu nutzen.
 
 > Die Screenshots in diesem Handbuch zeigen die App auf Französisch — jeder Bildschirm existiert identisch in allen fünf Sprachen (English, Français, Deutsch, Español, Italiano); umschalten unter **Einstellungen → Sprache**.
 
@@ -10,18 +10,24 @@ Alles, was Mitglieder, Admins und Inhaberinnen brauchen, um DesKilo zu nutzen.
 
 ### Konto anlegen
 
-Öffne die App und registriere dich mit E-Mail, Passwort (mindestens 8 Zeichen) und Anzeigenamen. Mit dem Augen-Button kannst du das Passwort beim Tippen ein- und ausblenden.
+App öffnen und mit E-Mail, Passwort (8+ Zeichen) und Anzeigenamen registrieren — oder **mit Google fortfahren**. Das Auge zeigt oder verbirgt das Passwort beim Tippen, *Passwort vergessen?* schickt einen Zurücksetz-Link. Eine Google-Anmeldung lässt sich später unter **Einstellungen → Verknüpfte Konten** an ein bestehendes E-Mail-Konto anhängen.
 
 ### Workspace anlegen — oder beitreten
 
 Nach der Anmeldung bietet der Startbildschirm zwei Wege:
 
-- **Workspace anlegen** — du wirst **Inhaberin**. Wähle Name, Land (bestimmt die Standardwährung) und Zeitzone. Danach zeichnest du deinen Grundriss im Editor (§7).
-- **Workspace beitreten** — tippe die **Workspace-ID** ein, die man dir gegeben hat, oder wähle **QR-Code scannen** und richte die Kamera auf den Einladungs-QR an der Wand. Du trittst mit der Rolle bei, die die Einladung trägt (§2).
+- **Workspace anlegen** — du wirst **Inhaber**. Name, Land (bestimmt die Standardwährung) und Zeitzone wählen; danach zeichnest du deinen Grundriss im Editor (§8).
+- **Workspace beitreten** — die geteilte **Workspace-ID** eintippen, oder **QR-Code scannen** und die Kamera auf den Einladungs-QR an der Wand richten. Du trittst mit der Rolle bei, die die Einladung trägt (§2).
 
-Ein Konto kann mehreren Workspaces angehören; wechsle unter **Einstellungen → Profile** und **markiere eines mit dem Stern als Standard** — mit diesem Profil öffnet sich die App, auf jedem Gerät und selbst nach einer Neuinstallation (die Wahl ist im Konto gespeichert). Alles in der App bezieht sich auf den aktiven Workspace.
+### Profile — ein Konto, mehrere Spaces
 
-**Alles bleibt live.** Was irgendjemand ändert — eine Buchung, ein neues Mitglied, eine Einstellung — wird binnen Sekunden auf jedes verbundene Gerät gepusht, auch auf das, das die Änderung gemacht hat. Kein Neustart, kein Ziehen zum Aktualisieren.
+Ein Konto kann mehreren Workspaces angehören. **Einstellungen → Profile** listet alle: jede Zeile zeigt den Namen des Space, **deine Rolle dort** (Mitglied, Admin, Inhaber) und die Workspace-ID. Das **Häkchen** markiert das aktive Profil; der **Stern** dein **Standardprofil** — das, mit dem die App öffnet, auf jedem Gerät und selbst nach Neuinstallation (die Wahl ist beim Konto gespeichert). Zeile antippen zum Wechseln, **+ Profil hinzufügen** für einen weiteren Space. Alles in der App ist auf den aktiven Workspace beschränkt.
+
+### Orientierung
+
+Die App hat fünf Ziele am unteren Rand: **Plan** (§3), **Kalender** (§5), den großen zentralen **Reservieren**-Knopf (§4), **Mitglieder** (§6) und **Finanzen** (§9). Zwei Icons wohnen in jeder Kopfzeile: die **Glocke** öffnet den Ereignis- und Bestätigungs-Feed (§7, mit Zähler) und das **Zahnrad** die **Einstellungen** (§12). Quer gehalten und auf Tablets wechseln die meisten Bildschirme in eine **geteilte Ansicht** — Bedienelemente im Seitenpanel, Inhalt füllt den Rest.
+
+**Alles bleibt live.** Was irgendjemand ändert — eine Buchung, ein neues Mitglied, eine Einstellung — wird binnen Sekunden auf jedes verbundene Gerät geschoben, auch auf das, das die Änderung machte. Kein Neustart, kein Ziehen zum Aktualisieren.
 
 ## 2. Rollen & Einladungen
 
@@ -29,99 +35,106 @@ DesKilo hat drei additive Rollen plus ein Gerätekonto:
 
 | Rolle | Kann |
 |---|---|
-| **Mitglied** | Ein-/auschecken, reservieren, Ausgaben einreichen, eigene Ereignisse und das eigene Konto sehen und verwalten |
-| **Admin** | Alles, was ein Mitglied kann, plus: *für andere* handeln (Reservierungen, Zahlungen, Ausgaben — bestätigungspflichtig, §6), Ausgaben freigeben, Kiosk-Badges ausstellen |
-| **Inhaberin** | Alles, was ein Admin kann, plus: den physischen Workspace bearbeiten, Tarife und Preise festlegen, Rollen, Kiosk-Geräte und Einstellungen verwalten |
-| **Mit-Inhaberin** | *Aktiv*: sofort die Rechte der Inhaberin plus automatische Nachfolge. *Passiv*: Nachfolge in Wartestellung, heute ohne zusätzliche Rechte |
-| **Kiosk** | Ein Wandtablet-Konto (§9) — zeigt nur den Plan; echte Mitglieder handeln darüber mit einem Badge |
+| **Mitglied** | Ein-/auschecken, reservieren, Ausgaben einreichen, eigene Ereignisse und eigenes Konto sehen und verwalten |
+| **Admin** | Alles wie ein Mitglied, plus: *für jeden* handeln (Buchungen, Zahlungen, Ausgaben — unter Bestätigung, §7), Ausgaben genehmigen, Badges ausstellen |
+| **Inhaber** | Alles wie ein Admin, plus: den physischen Space bearbeiten, Pläne und Preise definieren, Rollen, Kiosk-Geräte und Einstellungen verwalten |
+| **Co-Inhaber** | *Aktiv*: die Inhaber-Berechtigungen sofort, plus automatische Nachfolge. *Passiv*: ein wartender Nachfolger ohne Extra-Berechtigungen heute |
+| **Kiosk** | Ein Wandtablet-Konto (§10) — zeigt nur den Plan; echte Mitglieder handeln per Badge |
 
-**Jede Einladung ist an eine Rolle gebunden.** Auf dem Bildschirm *Workspace-ID & QR* gibt es zwei Einladungen, jede mit eigenem QR-Code und Code:
+Wer was darf, ist nicht in Stein gemeißelt: die Inhaberin justiert es in der **Rollenverwaltung** (§8).
 
-- **Mitglieder-Einladung** — die Workspace-ID selbst. Drucken, an die Wand hängen, frei teilen: Wer sie scannt oder eintippt, tritt als einfaches Mitglied bei.
-- **Admin-Einladung** — ein **persönlicher, einmalig nutzbarer Code**, von einer Inhaberin für genau eine Person ausgestellt. Er lässt nur diese eine Person als Admin beitreten und verfällt dann (ungenutzte Codes verfallen nach 14 Tagen). Für jeden weiteren Admin mit *Neuer Admin-Code* einen neuen ausstellen.
-- **Einladungen sprechen die Sprache des Eingeladenen** — das Einladungsblatt verfasst die Nachricht in der gewählten Sprache (fünf verfügbar), standardmäßig in der in den *Arbeitsbereich-Einstellungen* festgelegten **Arbeitsbereichssprache**. Der Inhaber kann den Einladungstext dort auch **pro Sprache** anpassen; eine leere Sprache nutzt die eingebaute übersetzte Nachricht.
+**Jede Einladung ist an eine Rolle gebunden.** Auf dem Inhaber-Bildschirm *Workspace-ID & QR* tragen zwei Tabs zwei Einladungen, jede mit eigenem QR und Code:
 
-**Eine Inhaber-Einladung gibt es absichtlich nicht.** Inhaberschaft kann nur eine bestehende Inhaberin vergeben, unter *Mitglieder & Tarife*. Ein Workspace behält immer mindestens eine Inhaberin. **Admin**-Beförderungen und -Degradierungen laufen über den Validierungsfluss (§6) — sie greifen erst nach Bestätigung durch die Validierenden.
+- **Mitglieder-Einladung** — die Workspace-ID selbst, unter dem Namen des Space. Drucken, an die Wand, frei teilen: Wer sie scannt oder eintippt, tritt als einfaches Mitglied bei. Schaltflächen: **ID kopieren**, **Als PNG teilen**, **Workspace-ID ändern** (die generierte ID durch eine merkbare ersetzen, 4–20 Buchstaben/Ziffern) und **Jemanden einladen**.
+- **Admin-Einladung** — ein **persönlicher Einmal-Code**, von einem Inhaber für genau eine Person geprägt. Der Bildschirm sagt es klar: *dieser Code lässt EINE Person als Admin ein, dann verfällt er* (ungenutzte Codes nach 14 Tagen). Nur an die gemeinte Person geben; pro Admin einen neuen mit **Neuer Admin-Code**.
+- **Einladungen sprechen die Sprache des Eingeladenen** — das Einladungsblatt schreibt die Nachricht in der gewählten Sprache (fünf verfügbar), standardmäßig in der **Workspace-Sprache** aus den *Workspace-Einstellungen*. Die Inhaberin kann den Einladungstext dort auch **pro Sprache** anpassen, mit Platzhaltern wie `{firstName}`, `{workspaceName}`, `{inviteLink}`, `{downloadUrl}`, `{role}`; eine leere Sprache nutzt die eingebaute Übersetzung.
 
-**Mit-Inhaberinnen halten den Workspace am Leben.** Die Inhaberin ernennt ein beliebiges Mitglied oder einen Admin zur Mit-Inhaberin (*Mitglieder & Tarife → das Mitglied → Mit-Inhaberschaft*), in einer von zwei Spielarten: Eine **aktive** Mit-Inhaberin arbeitet sofort mit den Rechten der Inhaberin; eine **passive** hat heute keine zusätzlichen Rechte — bis zu dem Tag, an dem sie gebraucht werden. In beiden Fällen ist die Nachfolge automatisch: Geht die letzte Inhaberin — sie tritt aus, wird entfernt oder ihr Konto verschwindet — wird die beste Mit-Inhaberin (aktiv vor passiv) **sofort zur Inhaberin**, auf dem Server, ohne dass jemand etwas tun muss. Die Inhaberin kann auch jederzeit bewusst übergeben, mit *Jetzt zur Inhaberin machen*. Eine Feinheit: Validierungsregeln, die die Mitzeichnung der *Inhaberin* verlangen (§6), meinen immer eine echte Inhaberin, nicht eine aktive Mit-Inhaberin.
+**Eine Inhaber-Einladung gibt es nicht — mit Absicht** (die Fußzeile erinnert daran). Inhaberschaft vergibt nur ein bestehender Inhaber, in *Mitglieder & Pläne*. Ein Workspace behält immer mindestens einen Inhaber. Einen **Admin** ernennen oder zurückstufen läuft über die Validierung (§7) — wirksam, sobald die Validierer bestätigen.
 
-Der QR kodiert einen Link, der die vergebene Rolle nennt (`deskilo://join?role=…`). Manipulation am Link ändert nichts — der Server leitet die Rolle aus dem Code selbst ab: Die Workspace-ID lässt immer als Mitglied beitreten, eine persönliche Einladung genau in der Rolle, für die sie ausgestellt wurde — ein einziges Mal. Ein weitergeleiteter, bereits genutzter — oder abgelaufener — Admin-Code lässt niemanden mehr beitreten.
+**Co-Inhaber halten den Workspace am Leben.** Die Inhaberin ernennt jedes Mitglied oder jeden Admin zum Co-Inhaber (*Mitglieder & Pläne → das Mitglied → Co-Inhaberschaft*), in zwei Varianten: ein **aktiver** Co-Inhaber arbeitet sofort mit Inhaber-Berechtigungen; ein **passiver** hat heute keine zusätzlichen. In beiden Fällen ist die Nachfolge automatisch: Verlässt der letzte Inhaber den Space — Austritt, Entfernung, Konto weg — wird der beste Co-Inhaber (aktiv vor passiv) **sofort Inhaber**, serverseitig, ohne Zutun. Übergabe geht auch jederzeit bewusst mit *Jetzt zum Inhaber machen*. Eine Nuance: Validierungsregeln, die die Unterschrift des *Inhabers* verlangen (§7), meinen immer einen buchstäblichen Inhaber, keinen aktiven Co-Inhaber.
 
-**Per Nachricht einladen** (*Jemanden einladen*): Jeder WhatsApp-/SMS-/Teilen-Versand stellt seinen eigenen persönlichen Einmal-Code aus und baut eine fertige Nachricht in der Sprache der eingeladenen Person. Die Empfängerin kann einfach die ganze Nachricht kopieren und in das Beitrittsfeld der App einfügen — der Code wird automatisch erkannt.
+Der QR codiert einen Link, der die vergebene Rolle nennt (`deskilo://join?role=…`). Manipulation ändert nichts — der Server leitet die Rolle aus dem Code selbst ab: die Workspace-ID tritt immer als Mitglied bei, eine persönliche Einladung genau in ihrer geprägten Rolle, einmal. Ein weitergeleiteter, schon benutzter — oder verfallener — Admin-Code lässt niemanden ein.
 
-## 3. Der Grundriss (Tab Plan)
+**Per Nachricht einladen** (*Jemanden einladen*): jeder WhatsApp/SMS/Teilen-Versand prägt seinen eigenen persönlichen Einmal-Code und baut eine fertige Nachricht in der Sprache des Eingeladenen. Der Empfänger kann die ganze Nachricht kopieren und ins Beitrittsfeld der App einfügen — der Code wird automatisch erkannt.
 
-Der Plan zeigt die aktive Etage: Büros, Tische und Plätze, farbcodiert — **frei**, **reserviert**, **besetzt**, **meiner**, **gesperrt**. Er öffnet sich **sofort aus den letzten bekannten Daten** und aktualisiert sich im Hintergrund — bei wackeligem WLAN siehst du den letzten Stand statt eines leeren Bildschirms. Besetzte Plätze zeigen den Vornamen, ein **Check-Abzeichen**, wenn die Person eingecheckt ist, und einen **grünen Punkt**, wenn sie gerade in der App online ist. Ist ein **ganzer Tisch, Raum oder eine ganze Etage** reserviert, zeigt es der Raum selbst — farbige Tönung, kräftiger Rahmen und ein **Schloss-Chip mit dem Namen der Person** in der Mitte (ein Check-in-Glyph, sobald sie da ist); die Raumbeschriftung liest sich *Bureau 2 · Florian*. Alle sehen es, auf dem Plan, im Reservieren-Hub und am Kiosk.
+## 3. Der Grundriss (Plan-Tab)
 
-Der Plan kann wie dein echter Raum aussehen: Die Inhaberin kann ein **Foto des Raums als Etagen-Hintergrund** hinterlegen und frei **skalierbare Illustrationsbilder** (Pflanzen, Sofas…) auf dem Raster platzieren. Ein Regler für die **Tisch-Transparenz** in den Einstellungen lässt das Foto durch die gezeichneten Tische durchscheinen.
+Der Plan zeigt die aktive Ebene deines Space: Büros, Tische und Plätze, farbcodiert — **frei**, **reserviert**, **besetzt**, **meiner**, **gesperrt**. Er öffnet **sofort mit den letzten bekannten Daten** und aktualisiert im Hintergrund — bei wackligem WLAN siehst du den letzten Stand statt eines leeren Bildschirms. Besetzte Plätze zeigen den Vornamen, ein **Häkchen-Badge** nach dem Einchecken und einen **grünen Punkt**, wenn die Person gerade online ist. Ist ein **ganzer Tisch, Raum oder eine Etage** reserviert, sagt es der Raum selbst — farbige Fläche, kräftiger Rand und ein **Schloss-Chip mit dem Namen** in der Mitte; das Raumlabel liest *Bureau 2 · Florian*. Jeder sieht es: auf dem Plan, im Reservieren-Hub, am Kiosk.
+
+Der Plan kann wie dein echter Raum aussehen: die Inhaberin kann ein **Foto des Raums als Ebenen-Hintergrund** setzen und frei **skalierbare Illustrationsbilder** (Pflanzen, Sofas…) platzieren. Der Regler **Tisch-Transparenz** in den Einstellungen lässt das Foto durch die gezeichneten Tische scheinen.
 
 Navigation:
 
-- Die Fläche **passt sich automatisch** an deine Etage an, beim Öffnen und beim Drehen des Geräts; **zoome mit zwei Fingern** oder den **+ / −**-Buttons, ziehe die **Scrollbalken** an den Rändern, und tippe den **Einpassen**-Button zum Zentrieren.
-- Wähle die Etage im **Etagen-Menü** (kompakte Auswahl); das Uhr-Symbol setzt die Zeitleiste auf **jetzt** zurück.
-- Im **Querformat** wandern die Bedienelemente in eine Seitenleiste und der Plan füllt den Bildschirm — praktisch auf Tablets.
+- Oben: der **Karte/Liste**-Umschalter (die Liste zeigt dieselben Plätze als Zeilen), der **Datums-Chip** (antippen für einen anderen Tag) und drei **Tageszeit-Chips** — Vormittag, Nachmittag, ganzer Tag — als Filter.
+- Die Leinwand **passt sich automatisch ein**; **Pinch-Zoom** oder **+ / −**, **Scrollleisten** an den Rändern, **Einpassen**-Knopf zum Zentrieren.
+- Die Etage wählst du am **Ebenen-Rail** rechts (1, 2, …); sein **Ebenen-Icon** wirkt auf die ganze Etage (unten). Im **Querformat** wandern die Bedienelemente in ein Seitenpanel.
 
-Buchen vom Plan aus:
+Vom Plan aus buchen:
 
-- **Spontanes Einchecken**: Tippe einen freien Platz → das Formular schlägt *jetzt* bis zum Standard-Ende des Workspace vor → bestätigen. Hat jemand den Platz später reserviert, wird deine Endzeit gekappt und du erfährst es.
-- **Einchecken auf Reservierung**: Einchecken heißt *du bist da* — das Fenster öffnet **15 Minuten vor** deinem Beginn und schließt mit dem Reservierungsende. Außerhalb ist der Button deaktiviert und sagt, wann es so weit ist; wer eine zukünftige Zeit durchstöbert, bekommt nie ein Live-Einchecken angeboten. Admins können ein Mitglied einchecken, das an seinem Platz steht (solange *Buchen für andere* an ist).
-- **Auschecken**: manuell — oder, wenn die Inhaberin **Auto-Check-in/out** aktiviert, schließen vergessene Reservierungen sich am Tagesende selbst ab: Nie angerührte Buchungen gelten von ihrem Beginn bis zu ihrem Ende als wahrgenommen, vergessene Check-outs enden zum Reservierungsende.
-- **Ganze Räume**: **Doppeltippe** einen Tisch, einen Raum oder eine freie Stelle der Etage, um den **ganzen Tisch, das Büro oder die Etage** zu buchen — dasselbe Formular wie beim Scan seiner QR-Karte (§4), mit derselben Zeitraum-Auswahl und denselben Wiederholungsoptionen wie ein Platz.
-- **Zeitleiste**: Wähle ein von→bis-Fenster (oder Vormittag / Nachmittag / Ganzer Tag, je nach Granularität), um die Belegung zu jedem künftigen Zeitpunkt zu sehen.
-- Plätze können **Zubehör** tragen (Monitor, Stehpult…), teils mit Aufpreis je Halbtag, der auf deiner Abrechnung erscheint.
-- Buchungen zählen gegen deine **Monatstage** (§8) — jenseits deines Tarifs blockt oder berechnet die App, je nachdem, was die Inhaberin für dich eingestellt hat.
+- **Spontan einchecken**: freien Platz antippen → das Blatt schlägt *jetzt* bis zum Standard-Tagesende vor → bestätigen. Hat jemand den Platz später reserviert, wird dein Ende gekappt und du erfährst es.
+- **Auf eine Reservierung einchecken**: Einchecken heißt *du bist da* — das Fenster öffnet **15 Minuten vor** deinem Start und schließt am Ende der Reservierung. Außerhalb ist der Knopf deaktiviert und nennt die Öffnungszeit; ein Zukunftszeitpunkt bietet nie ein Live-Einchecken. Admins können ein Mitglied an seinem Platz einchecken (solange *für andere buchen* aktiv ist).
+- **Auschecken**: manuell — oder, mit **Auto-Ein-/Auschecken**, schließen vergessene Buchungen sich am Tagesende selbst: nie berührte zählen von Start bis Ende, vergessene Auscheckvorgänge enden mit der Reservierung.
+- **Ganze Räume**: **Doppeltipp** auf Tisch, Raum oder freien Boden — oder das **Ebenen-Icon** am Rail — für **den ganzen Tisch, das Büro oder die Etage**: das Blatt nennt die Ebene, zeigt den Zeitraum, lässt Admins **Für das Mitglied** wählen und bestätigt mit **Ebene reservieren**. Gleicher Zeitraum-Picker, gleiche Wiederholungen wie ein Platz.
+- **Zeit-Scroller**: ein von→bis-Fenster (oder Vormittag / Nachmittag / Ganztag, je nach Granularität) zeigt die Belegung zu jedem künftigen Zeitpunkt.
+- Plätze können **Zubehör** tragen (Monitor, Stehpult…), manches mit Aufpreis je halbem Tag auf deiner Abrechnung.
+- Buchungen zählen auf deine **Monatstage** (§9) — darüber hinaus blockt oder berechnet die App, je nach Konfiguration.
 
 ## 4. Reservierungen (Reservieren-Hub)
 
-Öffne den **Reservieren**-Hub (Mittelbutton). Eine Datumsleiste wählt den Tag, die Fenster-Chips die Zeit; dann vier Ansichten:
+Öffne den **Reservieren**-Hub (Mittelknopf). Oben: die vier **Ansichts-Knöpfe**, der **Datums-Chip**, der **QR-Scan** (darunter, §4a), die **Tageszeit-Chips** und die **Etagen-Chips** (*Alle Etagen* oder eine je Ebene). Dann vier Ansichten:
 
-- **Plan** — der Grundriss, gefiltert auf dein Fenster; freier Platz antippen = buchen.
-- **Tag** — jeder Platz als Zeitstrahl für den gewählten Tag; freie Strecke antippen = buchen, eigener Block = Details.
-- **Woche** — ein Raster Platz × Tag für die ganze ISO-Woche; freie Halbtage auf einen Blick, Antippen bucht.
-- **Monat** — ein Verfügbarkeitskalender: freie Tische pro Tag über alle Etagen; ein Tag öffnet seine Tagesansicht.
+- **Plan** — der Grundriss, gefiltert auf dein Fenster; freien Platz antippen und buchen.
+- **Tag** — jeder Platz als Zeitleisten-Zeile für den gewählten Tag (08:00 → 17:00 oder deine Zeiten, die rote Linie ist *jetzt*); freie Strecke antippen zum Buchen, den eigenen Block für Details.
+- **Woche** — ein Raster Plätze × Tage für die ISO-Woche, ein Tagesband (*Mo 3 … So 9*) darüber; jede Zelle trägt die Halbtage mit der Initiale des Belegers.
+- **Monat** — ein Verfügbarkeitskalender: jeder Tag zeigt seinen **Frei-Zähler** (z. B. *10/12*); Tag antippen führt in dessen Tagesansicht.
 
-Der **Ebenen-Button am Etagenwähler** reserviert die **ganze Etage** — auf dem Plan-Tab wie hier im Hub. Inhaberinnen und Admins können sie immer für sich selbst buchen; andere Mitglieder brauchen das persönliche Recht (§7).
+**Ein Platz zur Zeit**: du hältst nur eine aktive Reservierung je Zeitfenster — woanders buchen oder einchecken, während eine läuft, wird abgelehnt; Einchecken schließt frühere Check-ins, deren Buchung endete. Admins und Inhaber können **übersteuern**: ein besetzter/reservierter Platz bietet *Reservierung entfernen (übersteuern)* — Mitglied und alle Admins werden über den Feed benachrichtigt.
 
-**Ein Platz zur Zeit**: Du kannst je Zeitraum nur eine aktive Reservierung halten — anderswo buchen oder einchecken, während eine läuft, wird abgelehnt, und ein Check-in schließt einen früheren Check-in, dessen Buchung schon vorbei ist. Admins und Inhaberinnen können **übersteuern**: Ein Tipp auf einen belegten oder reservierten Platz bietet *Reservierung entfernen (übersteuern)* — die Reservierung wird entfernt und das Mitglied sowie alle Admins werden über den Ereignis-Feed benachrichtigt.
+Reservierungen folgen der **Granularität** des Space (§8 Verfügbarkeit) — Halbtage, nur ganze Tage, echte Uhrzeiten (exakt von–bis, Halb-/Ganztag als Kurzwahl) oder freie Zeiten auf dem Raster. Halb- und Ganztage decken die **Arbeitszeiten** ab (Standard 8:00–17:00, Halbtagsgrenze 12:00). Sie respektieren **Öffnungstage**, **Schließtage** und die Buchungsregeln (Horizont, Maximaldauer, Stornofrist). Wiederkehrender Bedarf? Eine **Serie** buchen (täglich, werktags, wöchentlich) — geschlossene Tage und Konflikte werden übersprungen und gemeldet.
 
-Reservierungen folgen der **Granularitätsregel** des Workspace — Halbtage, ganze Tage, echte Uhrzeiten (exakt von–bis, mit den Halb-/Ganztagsfenstern als Schnellwahl) oder freie Zeiten auf dem Minutenraster der Inhaberin. Halb- und Ganztage decken die konfigurierten **Arbeitszeiten** ab (Standard 8–17 Uhr, Halbtagsgrenze 12 Uhr). Sie respektieren **Öffnungstage** und **Schließtage** sowie die Buchungsregeln (Vorlauf, Maximaldauer, Stornofrist). Wiederkehrender Bedarf? Buche eine **Serie** (täglich, werktags, wöchentlich) — geschlossene Tage und Konflikte werden übersprungen und gemeldet.
+**Eine vergangene oder eingecheckte Buchung zu löschen ist ein Antrag, keine Aktion.** Eine Buchung mit vergangenem Start — oder mit Check-in — lässt sich nicht direkt stornieren: das Blatt bietet **Löschung beantragen**. Inhaber oder Admin entscheiden die eine Abrechnungsfrage: Check-in vergessen (die Buchung bleibt) oder nie genutzt (sie wird entfernt)? Der Antrag erscheint im Ereignis-Feed mit deinem optionalen Grund; künftige unberührte Buchungen behalten das Ein-Tipp-Storno.
 
-**Das Löschen einer vergangenen oder eingecheckten Buchung ist ein Antrag, keine Aktion.** Eine Buchung, deren Beginn vorbei ist — oder bei der Sie bereits eingecheckt haben — lässt sich nicht direkt stornieren: Das Blatt bietet stattdessen **Löschung beantragen**. Inhaber oder Admin entscheiden die eine Frage, die für die Abrechnung zählt: wurde der Check-in nur vergessen (die Buchung bleibt), oder wurde sie nie genutzt (sie wird entfernt)? Der Antrag erscheint im Ereignis-Feed mit Ihrem optionalen Grund; zukünftige unberührte Buchungen behalten das direkte Stornieren.
+### 4a. Einen Raumcode scannen
 
-Der Tab **Kalender** zeigt deine Buchungen pro Monat — deine Tage **rot**, die der anderen **blau**, heute umkreist — mit Tages-Zeitstrahl. Im Querformat nutzen Kalender und Zeitstrahl das geteilte Layout.
+Jeder Platz, Tisch, jedes Büro und jede Etage kann eine gedruckte **QR-Karte** tragen (§8). **Scan-Knopf** im Hub, Karte anvisieren — oder Code eintippen — und die App identifiziert den Raum und zeigt genau, was *du* dort darfst:
 
-### Raumcode scannen
+- **Platz-Karte** — genau diesen Platz reservieren oder einchecken, sofort.
+- **Tisch-Karte** — die Plätze des Tischs mit Live-Zustand; einen freien wählen.
+- **Büro- oder Etagen-Karte** — wenn die Inhaberin ihn buchbar machte, *Büro- & Etagenreservierungen* aktiv ist **und** du das persönliche Recht hältst (§8) — Inhaber und Admins immer — reservierst du das **ganze Büro oder die Etage** — gleicher Zeitraum-Picker, gleiche **Serien**; der Preis je Halbtag wird gezeigt und landet auf deiner Abrechnung. Sonst erklärt das Blatt warum, und ein Büro fällt auf seine Plätze zurück.
 
-Jeder Platz, Tisch, jedes Büro und jede Etage kann eine gedruckte **QR-Karte** tragen (§7). Tippe den **Scan-Button** im Reservieren-Hub, richte die Kamera auf die Karte — oder tippe ihren Code ein — und die App erkennt den Raum und zeigt genau, was *du* dort tun darfst:
+**Konflikte schützen in beide Richtungen:** ein Büro/eine Etage ist nicht reservierbar, solange ein Platz darin im Fenster belegt ist — und kein Platz, solange sein Büro/seine Etage als Ganzes reserviert ist.
 
-- **Platz-Karte** — reserviere oder checke direkt auf genau diesem Platz ein (heutiges Fenster: Vormittag / Nachmittag / Ganzer Tag, wo der Workspace Halbtage nutzt, sonst ab jetzt für die nächsten Stunden).
-- **Tisch-Karte** — die Plätze des Tischs mit ihrem Live-Status; wähle einen freien.
-- **Büro- oder Etagen-Karte** — hat die Inhaberin sie reservierbar gemacht, ist die Funktion *Büro- & Etagen-Reservierungen* eingeschaltet **und** hast du das persönliche Recht (§7) — Inhaberinnen und Admins haben es immer — kannst du das **ganze Büro oder die ganze Etage** reservieren oder dort einchecken — mit derselben Zeitraum-Auswahl (Vormittag / Nachmittag / Ganzer Tag, oder freie Zeiten) und denselben **Serien**-Optionen wie ein Platz; der Preis je Halbtag wird angezeigt und landet auf deiner Rechnung. Andernfalls sagt dir das Formular, warum nicht — und ein Büro fällt auf seine Plätze zurück.
+## 5. Kalender (Kalender-Tab)
 
-**Konflikte schützen in beide Richtungen:** Ein Büro oder eine Etage kann nicht reserviert werden, solange irgendein Platz darin in diesem Fenster schon gebucht ist — und kein Platz kann gebucht werden, solange sein Büro oder seine Etage als Ganzes reserviert ist.
+Der Monat auf einen Blick, mit zwei Reichweiten und zwei Formen:
 
-## 5. Mitgliederverzeichnis (Tab Mitglieder)
+- **Meine / Alle** — deine eigenen Buchungen oder die der ganzen Community. Deine Tage sind **rot**, die der anderen **blau**, heute ist umringt; ein Punkt unter einem Tag meldet eine Buchung.
+- Der **Form-Umschalter** daneben wechselt die untere Hälfte zwischen **Wochenraster** (Plätze × Tage) und **Agenda-Liste** (jede Reservierung als Karte: Zeitfenster, Mitglied, Raum).
+- Die **Etagen-Chips** filtern beide Formen.
+- Einen Tag antippen lädt ihn unten. Im Querformat geteilte Ansicht.
 
-Sieh, wer zu deiner Community gehört:
+## 6. Mitgliederverzeichnis (Mitglieder-Tab)
 
-- Jede Karte zeigt **Foto** (oder Initiale), **Rolle**, **eigenen Status** („bis Freitag in Berlin…"), einen **Online/zuletzt-gesehen**-Indikator und einen **Reservierungs-Chip**: eingecheckter Platz, jetzt reserviert, oder die nächste Buchung.
-- Antippen öffnet das **Detailblatt** — inklusive kommender Reservierungen.
-- **Wische** über ein Mitglied, um es per **WhatsApp** anzuschreiben; der **Gruppen-Button** öffnet die WhatsApp-Gruppe der Community (von der Inhaberin hinterlegt).
-- **Benachrichtigung senden** (in der Detailkarte und auf den Mitgliederkarten von *Mitglieder & Pläne*): eine kurze Notiz an ein anderes Mitglied — zugestellt als Push und als Benachrichtigung mit deinem Namen und deiner Nachricht. Der volle Text bleibt unter **Ereignisse → Nachrichten** lesbar, für Empfänger wie Absender (der Push selbst trägt aus Datenschutzgründen keinen Inhalt). Admins haben ein Megafon **Alle Admins benachrichtigen** in der Kopfzeile, das alle Admins inkl. Inhaber erreicht. Schaltbar über die Funktion *Mitglieder-Benachrichtigungen*.
-- Eigenes Foto, Status und Telefon-Sichtbarkeit stellst du unter **Einstellungen** ein.
-- Admins und Inhaberinnen sehen zusätzlich die **E-Mail** jedes Mitglieds unter dem Namen — normale Mitglieder nicht: Der Kontaktkanal von Mitglied zu Mitglied bleibt die freiwillig geteilte WhatsApp-Nummer.
+Sieh, wer zur Community gehört:
 
-## 6. Ereignisse & Bestätigungen (Glocken-Symbol)
+- Jede Karte zeigt **Foto** (oder Initiale), **Rollen-Chip**, **Status** („bis Freitag in Berlin…"), einen **online / zuletzt gesehen**-Indikator (*Online*, *10 min*, *2 T*) und einen **Reservierungs-Chip**: eingecheckter Platz, *Jetzt reserviert* oder nächste Buchung.
+- Ein Mitglied antippen öffnet das **Detailblatt** — Rolle, Präsenz, **kommende Reservierungen**, **Benachrichtigung senden**.
+- **Benachrichtigung senden**: eine kurze In-App-Notiz (bis 500 Zeichen) — zugestellt als Push und Benachrichtigung mit deinem Namen und Text. Der volle Text bleibt unter **Ereignisse → Nachrichten** lesbar, für Empfänger und Absender (der Push selbst trägt keinen Inhalt, aus Datenschutz). Admins haben ein **Alle Admins benachrichtigen**-Megafon in der Kopfzeile, das jeden Admin samt Inhaber erreicht. Abschaltbar über *Mitglieder-Benachrichtigungen*.
+- Das **Nachrichten-Icon** einer Karte schreibt dem Mitglied auf **WhatsApp** (wenn es seine Nummer teilt); der **Gruppen-Knopf** öffnet die WhatsApp-Gruppe der Community.
+- Eigenes Foto, Status und Nummern-Sichtbarkeit in den **Einstellungen** (§12).
+- Admins und Inhaber sehen zusätzlich die **E-Mail** jedes Mitglieds — einfache Mitglieder nicht: Kontakt bleibt die Opt-in-WhatsApp-Nummer.
 
-Der Ereignis-Feed ist die Prüfspur deines Workspace: Reservierungen erstellt/geändert/storniert, Zahlungen erfasst, Ausgaben eingereicht, Extra-Tage-Anfragen, Rollenwechsel. Mitglieder sehen ihre eigenen Ereignisse; Admins und Inhaberinnen alle.
+## 7. Ereignisse & Bestätigungen (Glocke)
 
-**Nachrichten:** Die Glocke sammelt auch deine Mitglieder-Benachrichtigungen (§5) — empfangene und gesendete, mit **vollem Text**, neueste zuerst. **Wische nach rechts**, um dem Absender zu antworten, **nach links**, um zu löschen (eine empfangene Alle-Admins-Rundnachricht lässt sich nicht löschen — sie verschwände für alle Admins). Ungelesene Nachrichten zählen auf der Glocke und dem App-Icon, bis du diesen Bildschirm öffnest.
+Der Ereignis-Feed ist die Prüfspur deines Space: Buchungen erstellt/geändert/storniert, Zahlungen erfasst, Rechnungen bezahlt, Ausgaben eingereicht, Extratage-Anträge, Rollenwechsel, Löschanträge. Mitglieder sehen ihre eigenen Ereignisse; Admins und Inhaber alles. **Filter-Chips** (Alle · Reservierung · Zahlung · Ausgabe · …) engen die Liste ein; jede Zeile trägt ihr Status-Icon — **Sanduhr** wartend, **grünes Häkchen** bestätigt — und Geld-Ereignisse zeigen *wer wann validierte* direkt auf der Zeile.
 
-**Das Bestätigungsprotokoll:** Wann immer ein Admin etwas *für jemand anderen* tut — einen Platz für dich bucht, deine Zahlung erfasst — bleibt es **offen, bis du bestätigst**. Offene Punkte sind oben angeheftet, mit Annehmen/Ablehnen, und du wirst benachrichtigt. Eigene Aktionen auf dich selbst brauchen nie eine Bestätigung.
+**Wartet auf deine Bestätigung:** Handelt ein Admin *für jemand anderen* — bucht dir einen Platz, erfasst deine Zahlung, stuft einen Admin zurück — bleibt es **bis zur Bestätigung offen**. Offenes ist oben angepinnt mit rotem ✕ und grünem **Annehmen**, plus Benachrichtigung. Eigene Aktionen auf dich selbst brauchen nie eine Bestätigung.
 
-**Validierungsquorum:** Für Geldfragen und Rollenwechsel legt die Inhaberin fest, *wer* zustimmen muss und *wie viele* Zustimmungen nötig sind. **Niemand validiert das eigene Ereignis** — nur eine andere Person kann das; gibt es keine, wartet die Anfrage schlicht. Unbeantwortete Anfragen verfallen nach 7 Tagen — nichts Kostspieliges wird je stillschweigend gewährt, und nichts wird sich selbst gewährt.
+**Nachrichten:** die Glocke sammelt auch deine Mitglieder-Nachrichten (§6) — empfangen und gesendet, mit **vollem Text**, neueste zuerst. **Nach rechts wischen** = antworten, **nach links** = löschen (ein empfangener Alle-Admins-Broadcast lässt sich nicht löschen — er verschwände für alle). Ungelesene zählen auf Glocke und App-Icon.
 
-Die Inhaberin stellt das pro **Bereich** ein, unter **Einstellungen → Validierungsregeln**: Zahlungen, Ausgaben, Services, zusätzliche Halbtage, Rollenwechsel, Reservierungen und Anpassungen haben je eine eigene Regel (oder erben die Standardregel). Eine Regel legt die Zahl der nötigen Bestätigungen fest, *welche* Admins bestätigen dürfen (alle oder namentlich benannte) und ob die Inhaberin immer mitzeichnen muss.
+**Validierungsquorum:** für Geld und Rollen definiert die Inhaberin, *wer* zustimmen muss und *wie viele*. **Niemand validiert das eigene Ereignis** — nur eine andere Person; ohne anderen Validierer wartet der Antrag. Unbeantwortetes verfällt nach 7 Tagen — nichts Teures wird still gewährt, nichts selbst gewährt.
+
+Die Inhaberin justiert das je **Domäne** unter **Einstellungen → Validierungsregeln** — eine Karte pro Ereignistyp, erbend von der **Standardregel** bis zur Bearbeitung: *Standardregel, Zahlung, Ausgabe, Service, Extra-Halbtage, Buchungslöschung, Rollenwechsel, Neues Mitglied, Reservierung, Ganzraum-Reservierungen, Rechnungszahlung, Anpassung* — und **Restbetrag-Stornierungen** fahren im selben Rahmen. Eine Regel setzt die nötigen Validierungen, *welche* Admins validieren dürfen (alle oder benannte) und ob der Inhaber immer unterschreiben muss.
 
 ![](assets/help/images/validation-rules.jpg)
 
@@ -129,20 +142,38 @@ Die Inhaberin stellt das pro **Bereich** ein, unter **Einstellungen → Validier
 
 ![](assets/help/images/validation-rule-edit.jpg)
 
-*Links: eine Regel pro Bereich, mit Vererbung von der Standardregel. Rechts: Bearbeiten einer Regel — nötige Bestätigungen, zugelassene Validierende, Mitzeichnung der Inhaberin.*
+## 8. Für Inhaber: Editor & Einstellungen
 
-## 7. Für Inhaberinnen: Editor & Einstellungen
-
-Die gesamte Administration liegt unter **Einstellungen → Administration**. Eine Regel muss man kennen: **Der Einstellungs-Eintrag einer Funktion erscheint nur, solange die Funktion aktiviert ist** — schalte *Online-Zahlungen* unter **Funktionen** aus und ihr Konfigurationsbildschirm verschwindet mit (und kommt beim Wiedereinschalten zurück). Der Eintrag **Funktionen** selbst ist immer da, sodass sich ein Modul jederzeit wieder einschalten lässt.
+Alle Administration wohnt unter **Einstellungen → Administration** — *Coworking-Space* (die Workspace-Einstellungen), *Mitglieder & Pläne*, *Rollenverwaltung*, *Abrechnung & Berichte* (der Rechnungs-Hub mit Report-Editor und Mahnregeln in der Kopfzeile), *Zubehör*, *Verfügbarkeit*, *Funktionen* und die feature-abhängigen Einträge (Online-Zahlungen, RFID/NFC-Badges…). Eine Regel: **der Einstellungs-Eintrag einer Funktion erscheint nur, solange sie aktiviert ist** — *Online-Zahlungen* in **Funktionen** aus, und ihr Konfigurationsbildschirm verschwindet (und kommt beim Reaktivieren zurück). **Funktionen** selbst ist immer da.
 
 ![](assets/help/images/settings-administration.jpg)
 
-- **Editor** (App-Leiste): Zeichne deinen Raum auf einem Raster — Etagen, Büros, Tische, Plätze (mit Ausrichtung, Stuhltyp und Ausstattung), Platzsperren für Wartung. Füge pro Etage ein **Hintergrundfoto** und verschieb- und skalierbare **Illustrationsbilder** hinzu. Löschen mit künftigen Reservierungen erzwingt erst deren Auflösung.
-- **Workspace-ID & QR**: deine rollengebundenen Einladungen (§2). Die generierte ID lässt sich durch eine merkbare ersetzen (4–20 Buchstaben/Ziffern), kopieren, und der QR als PNG teilen.
-- **Verfügbarkeit**: Öffnungstage, Schließtage, die Granularität — freie Start-/Endzeiten, ein Minutenraster (5/15/30/60), Halbtage, nur ganze Tage oder echte Uhrzeiten — und die **Arbeitszeiten** (Tagesbeginn, Halbtagsgrenze, Tagesende; bei echten Uhrzeiten auch, wie viele Stunden als halber und ganzer Tag gelten).
-- **Funktionen**: Ganze Module pro Workspace ein-/ausschalten — Kalender, Ereignisse, Geld, Services, PDF-Export, Serienbuchung, Buchen für andere, Push, Platzsperren durch Admins, Zubehör-Aufpreise, **Online-Zahlungen**, **Rechnungen**, **Büro- & Etagen-Reservierungen**, **Kiosk-Modus**, **RFID-/NFC-Badges**, **Mitgliederverzeichnis**, **WhatsApp-Integration**, **Raum-QR-Codes**, **Mit-Inhaberinnen**, **Datenexport**, **Auto-Check-in/out**. Ein ausgeschaltetes Modul entfernt *alle* seine Bildschirme und Buttons für jedes Mitglied.
+### Der Space-Editor
 
-  Die Liste ist **hierarchisch**: Eine Funktion, die eine andere benötigt, steht eingerückt darunter mit dem Hinweis *Benötigt…* und ist ausgegraut, solange ihr Elternteil aus ist — *Geld* trägt Services, Zubehör-Aufpreise, Online-Zahlungen und Rechnungen; *Büro- & Etagen-Reservierungen* tragen das Zuweisungsrecht der Admins; *Kiosk-Modus* trägt die RFID-/NFC-Badges; *Mitgliederverzeichnis* trägt die WhatsApp-Integration. Ein ausgeschaltetes Elternteil nimmt seinen ganzen Teilbaum aus der App; die gespeicherte Wahl des Kindes kommt unangetastet zurück, sobald das Elternteil wiederkehrt.
+Den **Editor** öffnest du aus der Kopfzeile des Plan-Tabs. Der **Space-Editor** listet die Etagen — ziehen zum Umordnen, das **Ebenen-Icon** markiert eine Etage *als Ganzes buchbar*, das **⋮**-Menü benennt um oder löscht, **+ Etage hinzufügen** erweitert. Eine Etage öffnen und mit der Werkzeugleiste zeichnen — **Auswahl · Büro · Tisch · Platz · Bild · Löschen**:
+
+- Ein **Büro** bekommt Namen, *als Ganzes buchbar* und einen **Preis je Halbtag**.
+- Ein **Tisch** bekommt Namen und dieselbe Ganztisch-Option.
+- Ein **Platz** bekommt Namen, **Sitzrichtung** (↑ → ↓ ←), optionalen **Stuhltyp**, sein **Zubehör** (je mit optionalem Halbtags-Aufpreis) und **Gesperrt (Wartung)**.
+- **Bild** platziert eine skalierbare Illustration; das Foto-Icon setzt das **Hintergrundfoto** der Ebene.
+- Löschen mit künftigen Buchungen verlangt erst deren Auflösung.
+
+### Workspace-ID & QR
+
+Die rollengebundenen Einladungen (§2): Mitglieder-Einladung = die Workspace-ID (ersetzbar, kopierbar, QR als PNG), Admin-Einladung = persönliche Einmal-Codes.
+
+### Verfügbarkeit
+
+- **Öffnungstage** — Chips Mo…So.
+- **Buchungsgranularität** — *freier Zeitraum*, *5/15/30/60-Minuten-Raster*, *Halbtage (Vormittag & Nachmittag)*, *nur ganze Tage* oder *echte Uhrzeiten* (exakt von–bis, Halb-/Ganztag als Kurzwahl).
+- **Arbeitszeiten** — Tagesbeginn, Halbtagsgrenze, Tagesende (Standard 08:00 / 12:00 / 17:00). Halb- und Ganztags-Slots überall — Buchen, Einchecken, Abrechnen — folgen diesen Zeiten; unter *echten Uhrzeiten* legst du auch fest, wie viele Stunden als halber und ganzer Tag abrechnen.
+- **Schließtage** — datierte Ausnahmen, per **+**.
+
+### Funktionen
+
+Ganze Module je Workspace ein- oder ausschalten — jeder Schalter trägt seine Beschreibung: Kalender-Tab, Ereignisse-Tab, Finanzen-Tab, Services, Zubehör-Aufpreise, Online-Zahlungen, Rechnungen, Admins stellen Rechnungen aus, PDF-Export, Serienbuchung, für andere buchen, Push-Benachrichtigungen, Admins dürfen Plätze sperren, Tisch-/Büro-/Etagen-Reservierungen, Admins dürfen Etagen zuweisen, Kiosk-Modus, RFID/NFC-Badges, Mitgliederverzeichnis, WhatsApp-Integration, Raum-QR-Codes, Co-Inhaber, Auto-Ein-/Auschecken, Datenexport (Excel), Arbeitszeiten, Rechnungs-PDF-Vorlage, Mitglieder-Benachrichtigungen, Dokumentbibliothek, Zahlungserinnerungen (Mahnwesen), Mitglieder-Berichte, Buchungslöschanträge, Rollenverwaltung. Ein Modul aus = *alle* seine Bildschirme und Knöpfe verschwinden für jedes Mitglied.
+
+Die Liste ist **hierarchisch**: eine Funktion, die eine andere braucht, sitzt eingerückt darunter mit *Benötigt…*, ausgegraut solange der Elternteil aus ist — *Finanzen* trägt Services, Aufpreise, Online-Zahlungen und Rechnungen; *Rechnungen* die Admin-Delegation, die PDF-Vorlage und die Mahnungen; *Kiosk-Modus* die Badges; *Verzeichnis* die WhatsApp-Integration. Elternteil aus = ganzer Teilbaum weg; die gespeicherte Wahl des Kindes kehrt unversehrt zurück.
 
 ![](assets/help/images/workspace-id-qr.jpg)
 
@@ -158,7 +189,9 @@ Die gesamte Administration liegt unter **Einstellungen → Administration**. Ein
 
 ![](assets/help/images/features-toggles-2.jpg)
 
-- **Mitglieder & Tarife**: Tippe ein Mitglied an, um sein **Verwaltungsblatt** zu öffnen — einen Service für es hinzufügen, den Abo-Prozentsatz setzen, die **Mehrverbrauchs-Politik** (§8) wählen, die **gleichzeitigen Reservierungen** deckeln, **Badges** ausstellen (§9), zum Admin befördern/degradieren, das Konto zum **Kiosk-Gerät** machen oder die Mitgliedschaft pausieren. Jede Zeile zeigt die **E-Mail** des Mitglieds unter dem Namen.
+### Mitglieder & Pläne
+
+Ein Mitglied antippen öffnet sein **Verwaltungsblatt** — jede Mitglieds-Aktion an einem Ort: **Finanzvereinbarung senden** (§11d), **Benachrichtigung senden**, **Service hinzufügen** (Service, Menge, Abrechnungsmonat → *zur Bestätigung einreichen*), **Abonnement** (der Prozentsatz), **Wenn die Tage aufgebraucht sind** (die Überziehungs-Politik, §9), **Reservierungslimit**, **Darf Tisch, Büro oder Etage als Ganzes reservieren**, **Badges** (§10), **Zum Admin ernennen** (validiert, §7), **Co-Inhaberschaft**, **In Kiosk verwandeln**, **Mitgliedschaft pausieren**. Jede Zeile zeigt die **E-Mail** unter dem Namen.
 
 ![](assets/help/images/member-management-sheet.jpg)
 
@@ -170,10 +203,15 @@ Die gesamte Administration liegt unter **Einstellungen → Administration**. Ein
 
 ![](assets/help/images/member-reservation-limit.jpg)
 
-*Das Verwaltungsblatt, der Dialog für den Abo-Prozentsatz und die Reservierungsobergrenze pro Mitglied.*
+### Abrechnung
 
-- **Abrechnung**: Gebührenbänder für die Prozent-Abos, Mehrverbrauchssätze, wählbare Abo-Stufen (mit optionalem frei verhandeltem Wert) — und **Tagespakete** (Tage zum Festpreis) für Mitglieder mit Paket-Politik.
-- **Services** und **Zubehör**: die Kataloge hinter §8 — von der Inhaberin definierte Extras (Schließfächer, Druck…) und Platz-Ausstattung mit optionalem Aufpreis je Halbtag. Beides sind schlichte Listen mit einem **+**-Button.
+- **Tarifstufen** — die Preisleiter der Prozent-Abos: jede Stufe nennt *ab X %*, *bis Y %*, die monatliche **Gebühr** und den **Überziehungssatz** je Extra-Halbtag. **+ Stufe hinzufügen** verlängert die Leiter.
+- **Abo-Stufen** — welche Prozentsätze Mitglieder wählen dürfen (Chips: 25 % · 50 % · 75 % · 100 % plus eigene), und ein Schalter **frei verhandelter Wert**.
+- **Tagespakete** — Tage für einen Preis (Name · Tage · Preis), je mit Aktivierungs-Schalter; Mitglieder mit *Paket*-Politik kaufen sie, wenn ihre Tage ausgehen.
+
+### Services und Zubehör
+
+Die Kataloge hinter §9 — Extras der Inhaberin (Schließfächer, Druck…, je mit Preis und optionalem MwSt-Satz) und Platz-Ausstattung mit optionalen Halbtags-Aufpreisen. Zwei einfache Listen mit **+**.
 
 ![](assets/help/images/billing-bands-levels-packages.jpg)
 
@@ -189,52 +227,56 @@ Die gesamte Administration liegt unter **Einstellungen → Administration**. Ein
 
 ![](assets/help/images/accessories-catalog.jpg)
 
-*Abrechnung (Bänder, Stufen, Tagespakete) · der Services-Katalog und sein Anlegeformular · der Zubehör-Katalog. Ein Admin erfasst einen Service-Konsum für ein Mitglied über dessen Verwaltungsblatt:*
+### Workspace-Einstellungen (Coworking-Space)
 
-![](assets/help/images/member-add-service.jpg)
+Der Bildschirm des Space, von oben nach unten:
 
-- **Workspace-Einstellungen**: Name, Land/Währung, Zeitzone, Zahlungshinweise (IBAN, PayPal.me, Wero, Lydia, Wise), WhatsApp-Gruppenlink, **Tisch-Transparenz**, Exporte — und die **Gefahrenzone**: ein kompletter **Workspace-Reset** (löscht Buchungen, Geld und Grundriss; behält Konfiguration und Mitglieder), abgesichert durch das getippte „I agree".
-- **Import/Export**: Die gesamte Konfiguration reist als **XML-Datei** — Backup, Vorlage oder Migration einer selbst gehosteten Instanz. Auch ein **Konfigurations-PDF** (Mitglieder, Plan, Preise, Funktionen) lässt sich erzeugen. Eine **Excel-Arbeitsmappe** exportiert die Live-Daten selbst — Workspace, Etagen, Tische, Plätze, Mitglieder, Reservierungen, Check-ins/outs, Zahlungen, Services und Rechnungen, je ein Tabellenblatt (Funktion *Datenexport*). Jeder Export landet im **Downloads**-Ordner deines Geräts.
+- **Identität** — Name, Land, Währung (aus dem Land vorgeschlagen, änderbar), Zeitzone, **Workspace-Sprache** (Einladungen standardmäßig darin; *App-Sprache des Absenders* ist eine Option) und die **Postadresse** auf den Rechnungen.
+- **Zahlungen & Abrechnung** — die **Zahlungshinweise** auf einer offenen Abrechnung (IBAN, PayPal.me, Wero-Nummer, Lydia, Wisetag, Verwendungszweck-Hinweis — leeres Feld = nichts angezeigt), und **Rechtliche Identität & E-Rechnung** (§11a).
+- **WhatsApp-Gruppe** — der Gruppenlink im Verzeichnis.
+- **Einladungsnachricht** — die Vorlagen je Sprache (§2).
+- **Tisch-Transparenz** — der Regler fürs Hintergrundfoto.
+- **Rechnungs-PDF-Vorlage** und **Mahnregeln** — Abkürzungen zum Report-Editor und zur Mahnkonfiguration (§11).
+- **Exporte** — *Space exportieren (XML)* (Einstellungen + Plan, ohne persönliche Daten), *Konfiguration exportieren (PDF)* (Vollschnappschuss: Einstellungen, Mitglieder, Plan), *Space-Bericht* (alles über den Space via Report-Vorlage „Space"), *Raum-QR-Codes (PDF)* (eine Karte je Platz, Tisch, Büro, Etage, zehn je A4), *Daten exportieren (Excel)* (eine Mappe: Buchungen, Zahlungen, Rechnungen, Mitglieder, Plan — je ein Blatt), *Space importieren (XML)* (stellt Einstellungen und Plan wieder her; ersetzt den aktuellen Plan). Jeder Export landet in den **Downloads**.
+- **Gefahrenzone** — **Space zurücksetzen**: löscht alle Buchungen, die Buchhaltung und den Plan; behält Einstellungen und Mitglieder. Durch getippte Bestätigung geschützt.
 
-### Raum-QR-Codes & Ganzraum-Reservierungen (Inhaberinnen)
+### Raum-QR-Codes & Ganzraum-Reservierungen
 
-Vier Schritte machen aus „scanne den Code auf dem Tisch" den täglichen Buchungsablauf (§4):
+Vier Schritte machen „scann die Karte am Tisch" zum Alltag (§4a):
 
-1. Markiere im **Editor** ein Büro oder eine Etage als **Als Ganzes reservierbar** und gib einen **Preis je Halbtag** an — das Eigenschaftsblatt des Büros, oder bei einer Etage das **Ebenen-Symbol direkt auf ihrer Zeile** (der Untertitel der Zeile nennt den aktuellen Buchungsstatus).
-2. Aktiviere **Büro- & Etagen-Reservierungen** unter **Funktionen** (standardmäßig aus).
-3. Gib jedem berechtigten Mitglied **„Darf ein ganzes Büro oder eine Etage reservieren"** — Inhaberinnen und Admins setzen es im Verwaltungsblatt des Mitglieds, nie für sich selbst.
-4. Drucke die Karten: **Workspace-Einstellungen → Raum-QR-Codes (PDF)** — ein QR im Kreditkartenformat je **Platz, Tisch, Büro und Etage**, zehn pro A4-Seite, gespeichert in Downloads. Ausschneiden und jede Karte auf ihren Raum kleben.
+1. Im **Editor** Büro oder Etage **als Ganzes buchbar** markieren, **Preis je Halbtag** setzen.
+2. **Büro- & Etagenreservierungen** in **Funktionen** aktivieren (standardmäßig aus).
+3. Jedem berechtigten Mitglied **„Darf Tisch, Büro oder Etage als Ganzes reservieren"** gewähren — im Verwaltungsblatt, nie für sich selbst.
+4. Karten drucken: **Workspace-Einstellungen → Raum-QR-Codes (PDF)** — ausschneiden, aufkleben.
 
-Eine Büro-Reservierung umfasst **alle Tische darin**; eine Etagen-Reservierung die ganze Etage. Beide sind nur möglich, solange nichts darin gebucht ist — und sie erscheinen als eigene Zeilen auf der Rechnung des Mitglieds.
+Eine Büro-Reservierung deckt **alle Tische darin**; eine Etagen-Reservierung die ganze Etage. Beide nur, solange nichts darin gebucht ist — als eigene Zeilen auf der Abrechnung.
 
-### Mit-Inhaberinnen (Inhaberinnen)
+### Co-Inhaber
 
-Sorge dafür, dass die Community nie von einem einzigen Konto abhängt:
+1. *Mitglieder & Pläne → das Mitglied → **Co-Inhaberschaft*** — **aktiv** (Inhaber-Berechtigungen jetzt) oder **passiv** (Nachfolger in Wartestellung).
+2. Übergabe jederzeit mit ***Jetzt zum Inhaber machen***.
+3. Verlässt der letzte Inhaber den Space, wird der beste Co-Inhaber **automatisch befördert** — aktiv vor passiv. Das Netz wirkt auch bei ausgeschalteter *Co-Inhaber*-Funktion (sie verbirgt nur die Ernennungs-Knöpfe).
 
-1. Öffne *Mitglieder & Tarife → das Mitglied → **Mit-Inhaberschaft*** und wähle **aktiv** (Inhaber-Rechte sofort) oder **passiv** (Nachfolge in Wartestellung).
-2. Übergib jederzeit mit ***Jetzt zur Inhaberin machen*** — die Mit-Inhaberin wird volle Inhaberin neben dir.
-3. Verlässt die letzte Inhaberin je den Workspace, wird die beste Mit-Inhaberin **automatisch auf dem Server befördert** — aktiv vor passiv. Dieses Sicherheitsnetz greift selbst dann, wenn der Funktions-Schalter *Mit-Inhaberinnen* aus ist (der Schalter blendet nur die Ernennungs-Buttons aus).
+### Rollenverwaltung
 
-### Rollenverwaltung (#513)
+Eine zentrale Matrix entscheidet, **welche Rolle welche Berechtigung hält** — Rollen & Berechtigungen verwalten, Mitglieder verwalten, Validierungsregeln konfigurieren, Workspace-Einstellungen bearbeiten, Rechnungen ausstellen & Zahlungen zuordnen, Finanzen einsehen, Dokumentbibliothek verwalten, Services & Pakete verwalten, Ausgaben genehmigen. Zu finden unter *Einstellungen → Administration → Rollenverwaltung* (Funktion muss aktiv sein):
 
-Eine zentrale Matrix entscheidet, **welche Rolle welche Berechtigung hält** — Rollen verwalten, Mitglieder, Validierungsregeln, Workspace-Einstellungen, Rechnungen ausstellen & Zahlungen zuordnen, Finanzen einsehen, Dokumente, Services, Ausgaben genehmigen. Zu finden unter *Einstellungen → Administration → Rollenverwaltung* (Feature muss aktiv sein):
+- Die **Inhaberin hält immer alle Berechtigungen** — ihre Zeile ist gesperrt (Schloss-Icon).
+- Wer *Rollen & Berechtigungen verwalten* hält, bearbeitet die anderen Zeilen. Ein **Co-Inhaber** startet mit allem („kann weniger haben"); ein **Admin** mit den heutigen Admin-Fähigkeiten; ein **Mitglied** ohne alles.
+- Alle anderen mit irgendeiner Berechtigung sehen die Matrix **schreibgeschützt** — der Bildschirm sagt es: *„Nur lesen: das sind die Berechtigungen jeder Rolle. Deine Rolle ist hervorgehoben"* — mit dem Chip **Deine Rolle**.
+- Unberührte Matrix = Standardwerte. Der Server erzwingt dieselbe Matrix in den Rechnungs-RPCs (`has_permission`): UI und Datenbank können nie auseinanderlaufen.
 
-- Die **Inhaberin hält immer alle Berechtigungen** — ihre Zeile ist gesperrt.
-- Wer *Rollen & Berechtigungen verwalten* hält, bearbeitet die anderen Zeilen. Ein **Co-Inhaber** startet mit allem („kann weniger haben" — die Inhaberin entfernt, was sie will); ein **Admin** mit den heutigen Admin-Fähigkeiten; ein **Mitglied** ohne alles.
-- Alle anderen mit irgendeiner Berechtigung sehen die Matrix **schreibgeschützt**, die eigene Rolle hervorgehoben.
-- Eine unberührte Matrix = die Standardwerte — nichts ändert sich, bis die Inhaberin sie bearbeitet. Der Server erzwingt dieselbe Matrix in den Rechnungs-RPCs (`has_permission`): UI und Datenbank können nie auseinanderlaufen.
+### Online-Zahlungen einrichten
 
-### Online-Zahlungen einrichten (Inhaberinnen)
+Jede Community kassiert auf ihr **eigenes** Anbieterkonto; die App behält Geheimschlüssel nie auf einem Gerät — sie leben auf dem Server.
 
-Jede Community kassiert auf ihr **eigenes** Anbieterkonto; die App speichert die geheimen Schlüssel nie auf einem Gerät — sie liegen auf dem Server.
-
-1. Öffne **Einstellungen → Online-Zahlungen** (nur Inhaberin).
-2. Wähle einen Anbieter und füge seine Schlüssel aus dessen Dashboard ein:
-   - **PayPal** — Client-ID, Secret, Umgebung (beginne mit *sandbox*), Webhook-ID, Rückkehr-URL (PayPal Developer → deine REST-App).
-   - **Kreditkarte (Stripe)** — Secret Key, Webhook-Signaturgeheimnis, Rückkehr-URL (Stripe → API-Keys / Webhooks).
-   - **Mollie** — API-Schlüssel, Rückkehr-URL (bietet iDEAL, Bancontact, Karten…).
-   - **Wero (über Mollie)** — derselbe Mollie-API-Schlüssel, mit Wero im Mollie-Konto aktiviert.
-3. **Speichern** — ein grünes *Eingerichtet* erscheint. Aktiviere die Funktion **Online-Zahlungen** (Einstellungen → Funktionen), dann sehen Mitglieder **Online bezahlen** auf einer offenen Rechnung. (Der Einstellungs-Eintrag *Online-Zahlungen* selbst erscheint nur, solange die Funktion eingeschaltet ist.)
+1. **Einstellungen → Online-Zahlungen** (nur Inhaber).
+2. Anbieter wählen und Schlüssel aus dessen Dashboard einfügen:
+   - **PayPal** — Client ID, Secret, Umgebung (mit *sandbox* beginnen), Webhook ID, Rückkehr-URL.
+   - **Kreditkarte (Stripe)** — Secret key, Webhook-Signiergeheimnis, Rückkehr-URL.
+   - **Mollie** — API-Schlüssel, Rückkehr-URL (iDEAL, Bancontact, Karten…).
+   - **Wero (via Mollie)** — derselbe Mollie-Schlüssel, mit Wero im Mollie-Konto aktiviert.
+3. **Speichern** — ein grüner *Konfiguriert*-Chip erscheint. **Online-Zahlungen** in den Funktionen aktivieren, und Mitglieder sehen **Online zahlen** auf offenen Abrechnungen.
 
 ![](assets/help/images/payment-config-paypal-stripe.jpg)
 
@@ -242,57 +284,40 @@ Jede Community kassiert auf ihr **eigenes** Anbieterkonto; die App speichert die
 
 ![](assets/help/images/payment-config-mollie-wero.jpg)
 
-Ein gespeichertes Geheimnis wird nie wieder gezeigt — Feld leer lassen zum Behalten, tippen zum Ersetzen, **Entfernen** löscht den Anbieter. Die Gebühren sind die des Anbieters (typisch ~1,5–3 % pro Zahlung, keine Monatsgebühr); DesKilo kommt nichts hinzu, und der manuelle Überweisungs-/IBAN-Weg bleibt kostenlos.
+Ein gespeichertes Geheimnis wird nie wieder angezeigt — Feld leer lassen zum Behalten, tippen zum Ersetzen, **Entfernen** löscht den Anbieter. Gebühren sind Anbietergebühren (~1,5–3 % je Zahlung, keine Grundgebühr); DesKilo schlägt nichts auf, Überweisung/IBAN bleibt gratis.
 
-Startet eine Zahlung nicht, aktiviere **Einstellungen → Erweitert → Entwicklermodus** und öffne den **Entwickler**-Bildschirm: die *payments*-Spur zeigt genau, welche Anbieter eingerichtet sind und welche Felder noch fehlen.
+Startet eine Zahlung nicht: **Einstellungen → Erweitert → Entwicklermodus** an und den **Entwickler**-Bildschirm öffnen — die *payments*-Spur zeigt, welche Anbieter konfiguriert sind und welche Felder fehlen.
 
 ![](assets/help/images/developer-payment-traces.jpg)
 
 #### Die Anbieter-Dashboards, Schritt für Schritt
 
-Trenne **Test- und Live-Umgebung strikt**: jeder Anbieter hat je Modus eigene Schlüssel, und alle in DesKilo eingetragenen Schlüssel müssen zum selben Modus gehören. In den URLs unten ist `<project-ref>` die Referenz deines Supabase-Projekts (Selbst-Hoster verwenden die URL ihrer Instanz).
+**Test- und Live-Umgebung strikt trennen**: jeder Anbieter hat Schlüssel je Modus, und alle in DesKilo eingefügten müssen zum selben Modus gehören. `<project-ref>` ist deine Supabase-Projektreferenz.
 
-**PayPal**
+**PayPal** — [developer.paypal.com](https://developer.paypal.com) → **Apps & Credentials**; **Sandbox/Live** umschalten (Environment-Feld muss passen); **REST-API-App anlegen** (Client ID + Secret); **Webhook** `https://<project-ref>.supabase.co/functions/v1/paypal-webhook` mit *Payment capture completed* (+ *denied* / *order voided*), **Webhook ID** kopieren — der Webhook ist Pflicht, so landet die Zahlung auf der Abrechnung; alles in DesKilo einfügen.
 
-1. Melde dich auf [developer.paypal.com](https://developer.paypal.com) an und öffne **Apps & Credentials**.
-2. Schalte den **Sandbox/Live**-Schalter um — beginne in der *Sandbox*; wechsle erst für die Produktion auf *Live*. Das Feld *Umgebung* in DesKilo muss zu den Schlüsseln passen.
-3. **Erstelle eine REST-API-App** — dadurch generiert das System **Client ID** und **Secret**.
-4. Richte in der App einen **Webhook** ein: URL `https://<project-ref>.supabase.co/functions/v1/paypal-webhook`, abonniert mindestens auf *Payment capture completed* (plus *denied* / *order voided*). Kopiere die **Webhook-ID**. In DesKilo ist der Webhook nicht optional — er verbucht die Zahlung auf der Rechnung.
-5. Trage Client ID, Secret, Umgebung, Webhook-ID und deine Rückkehr-URL unter **Einstellungen → Online-Zahlungen → PayPal** ein. Nichts davon landet in der App oder auf einem Gerät — alles wird serverseitig gespeichert.
+**Stripe** — [dashboard.stripe.com](https://dashboard.stripe.com) → **Developers**; Test/Live entscheidet die Schlüssel; nur der **Secret key** wird gebraucht; unter **Payment methods** die Netze aktivieren (**Frankreich? Cartes Bancaires explizit aktivieren**); Webhook `https://<project-ref>.supabase.co/functions/v1/stripe-webhook` mit `checkout.session.completed`, Signiergeheimnis kopieren.
 
-**Stripe (Kreditkarten & Cartes Bancaires)**
+**Mollie** — [my.mollie.com](https://my.mollie.com) → **API keys** (Test/Live steckt im Schlüssel); Methoden aktivieren: **iDEAL**, **Bancontact**, Karten — und **Wero**, die EPI-Wallet für Konto-zu-Konto-Zahlungen in DE/FR/BE. **Mollie** und **Wero** sind in DesKilo zwei Anbieterkarten mit demselben Schlüssel. Redirect/Webhook setzt DesKilo automatisch.
 
-1. Melde dich auf [dashboard.stripe.com](https://dashboard.stripe.com) an und öffne **Developers**.
-2. Der Schalter **Testmodus / Livemodus** bestimmt, welche Schlüssel du siehst. DesKilo braucht nur den **Secret Key** — der Checkout wird serverseitig erstellt, der *Publishable Key* wird nicht verwendet.
-3. Aktiviere unter **Settings → Payment methods** die gewünschten Kartennetze. **Zielt dein Space auf Frankreich? Aktiviere explizit Cartes Bancaires** — französische Mitglieder bevorzugen das CB-Netz häufig gegenüber dem internationalen Visa-/Mastercard-Routing.
-4. Lege unter **Developers → Webhooks** den Endpunkt `https://<project-ref>.supabase.co/functions/v1/stripe-webhook` mit dem Ereignis `checkout.session.completed` an und kopiere das **Webhook-Signing-Secret**.
-5. Trage Secret Key, Signing-Secret und deine Rückkehr-URL unter **Einstellungen → Online-Zahlungen → Kreditkarte (Stripe)** ein.
+#### Weitere Zahlarten (Ausblick)
 
-**Mollie (iDEAL, Bancontact, Wero…)**
-
-1. Melde dich auf [my.mollie.com](https://my.mollie.com) an → **Developers → API keys** und kopiere den **Test-** oder **Live-API-Key** (der Modus steckt im Schlüssel selbst).
-2. Aktiviere unter **Settings → Payment methods**, was deine Mitglieder sehen sollen: **iDEAL** (Niederlande), **Bancontact** (Belgien), Karten — und **Wero**, das Wallet der European Payments Initiative für Instant-Account-to-Account-Zahlungen in Deutschland, Frankreich und Belgien (der Nachfolger von Paylib und giropay).
-3. In DesKilo sind **Mollie** und **Wero** zwei Anbieter-Karten mit demselben API-Key — eine Wero-Zahlung wird als Mollie-Zahlung mit der Wero-Methode erstellt. Konfiguriere, was deine Mitglieder sehen sollen.
-4. Redirect- und Webhook-URLs setzt **DesKilo bei jeder Zahlung automatisch** (Redirect = deine Rückkehr-URL, Webhook = die Funktion `mollie-webhook`) — im Mollie-Dashboard ist nichts zu konfigurieren.
-
-#### Weitere Zahlungsmethoden (Ausblick)
-
-| Anbieter / Methode | Fokus | So passt es zu DesKilo |
+| Anbieter | Fokus | Einordnung |
 |---|---|---|
-| **Apple Pay / Google Pay** | Mobile Wallets, One-Tap-Checkout | Im Stripe- (oder Mollie-)Dashboard aktivieren — sie erscheinen automatisch auf der gehosteten Zahlungsseite, ohne Änderung in DesKilo und ohne zusätzliche Grundgebühr. |
-| **Klarna** | Buy Now, Pay Later (BNPL) | Genauso: in Stripe/Mollie zuschalten und es erscheint beim Bezahlen — relevant bei höheren Beträgen. |
-| **Adyen** | Enterprise & Omnichannel, eine API für fast alle Methoden | Nicht integriert — wäre ein neuer Anbieter in DesKilo (Beiträge willkommen). |
-| **Braintree** | Mobile & Web Drop-in-UI (gehört zu PayPal) | Nicht integriert — DesKilos direkte PayPal-Integration deckt das Terrain bereits ab. |
+| **Apple Pay / Google Pay** | Mobile Wallets | Im Stripe-/Mollie-Dashboard aktivieren — erscheinen automatisch auf der Zahlseite. |
+| **Klarna** | Später zahlen | Ebenso: in Stripe/Mollie einschalten. |
+| **Adyen** | Enterprise | Nicht integriert — wäre ein neuer Anbieter (Beiträge willkommen). |
+| **Braintree** | Drop-in (PayPal) | Nicht integriert — die direkte PayPal-Integration deckt das ab. |
 
-### RFID-/NFC-Badges einrichten (Inhaberinnen)
+### RFID/NFC-Badges einrichten
 
-Physische Karten ermöglichen Check-in per Antippen — ohne Handy.
+Physische Karten zum Einchecken per Tap — ohne Telefon.
 
-1. Öffne **Einstellungen → RFID-/NFC-Badges** (nur Inhaberin). Schalte **NFC-Badge-Check-in aktivieren** ein und lies die **Gerätestatus**-Zeile — sie unterscheidet *bereit*, *NFC in den Android-Einstellungen ausgeschaltet* und *keine NFC-Hardware* (iPads haben keine).
-2. Gib jedem Mitglied eine Karte: **Mitglieder & Tarife → das Mitglied → Badges → Karte registrieren**, dann die Karte ans Gerät halten. Jede Karte mit lesbarem Chip passt (MIFARE, NTAG…). Mitglieder können es auch **selbst** erledigen: **Einstellungen → Mein Badge** stellt ihren druckbaren QR-Badge aus und registriert ihre eigene Karte — ganz ohne Admin.
-3. Nutze sie an einem **Kiosk** (§9): das Mitglied tippt die Karte an, um zu reservieren oder einzuchecken. Eine verlorene Karte im selben Badges-Dialog widerrufen; **wische einen widerrufenen Badge nach rechts, um ihn endgültig zu löschen**.
+1. **Einstellungen → RFID/NFC-Badges** (nur Inhaber). **NFC-Badge-Check-in** aktivieren, die **Gerätestatus-Zeile** lesen — *bereit*, *NFC in Android aus* oder *keine NFC-Hardware* (iPads haben keine).
+2. Jedem Mitglied eine Karte: **Mitglieder & Pläne → das Mitglied → Badges → Karte registrieren**, Karte ans Gerät halten. Jede lesbare Chipkarte geht (MIFARE, NTAG…). Mitglieder können es auch **selbst**: **Einstellungen → Mein Badge** prägt ihr druckbares QR-Badge und registriert die eigene Karte.
+3. Am **Kiosk** (§10) einsetzen. Verlorene Karte im Badges-Dialog widerrufen; **ein widerrufenes Badge nach rechts wischen** löscht es endgültig.
 
-Badges gehören zu **einem Workspace** — der Dialog nennt, in welchem du registrierst; registriere die Karte also in dem Workspace, dessen Kiosk sie lesen soll. Dieselbe physische Karte kann dich in mehreren Workspaces bedienen. Ein **als PDF** gespeicherter QR-Badge druckt zehn Kopien im Kreditkartenformat auf eine A4-Seite — Ersatz inklusive.
+Badges gehören **einem Workspace** — der Dialog nennt welchem. Dieselbe physische Karte kann in mehreren Workspaces dienen. Ein QR-Badge **als PDF** druckt zehn Kartenformat-Kopien auf eine A4-Seite.
 
 ![](assets/help/images/nfc-config.jpg)
 
@@ -300,116 +325,162 @@ Badges gehören zu **einem Workspace** — der Dialog nennt, in welchem du regis
 
 ![](assets/help/images/member-badges-dialog.jpg)
 
-*Der NFC-Konfigurationsbildschirm (Workspace-Schalter + NFC-Status dieses Geräts) und der Badges-Dialog eines Mitglieds: widerrufen, Karte registrieren oder einen neuen QR-Badge ausstellen.*
+## 9. Geld (Finanzen-Tab)
 
-## 8. Geld (Tab Geld)
+Dein Konto beantwortet *was schulde ich, was schuldet man mir* — und *wie viel kann ich noch buchen*. Hochkant scrollt die Monatsabrechnung über den Aktionsknöpfen; quer wandern die Aktionen ins Seitenpanel. Die Kopfzeile **‹ Monat ›** blättert jeden Monat an; der **PDF-Knopf** exportiert die sichtbare Abrechnung.
 
-Dein Konto beantwortet *was schulde ich, was schuldet man mir* — und *wie viel kann ich noch buchen*:
+**Die Abrechnung, Karte für Karte:**
 
-- **Diesen Monat** — die Karte oben auf der Rechnung: wie viele **Tage** dein Abo diesen Monat enthält, wie viele **genutzt** sind, wie viele **übrig**, mit Fortschrittsbalken. Ein gebuchter Vormittag zählt 0,5 Tage. Das Monatskontingent folgt den Öffnungstagen des Workspace und deinem Prozentsatz.
-- **Wenn deine Tage aufgebraucht sind**, entscheidet die Inhaberin pro Mitglied, was gilt:
-  - **Gesperrt** (Standard) — keine weiteren Buchungen; frag einen Admin oder beantrage **zusätzliche Halbtage** direkt im Geld-Tab (Validierende genehmigen; gewährte Tage kosten weiter den Mehrverbrauchssatz).
-  - **Nach Verbrauch** — du buchst weiter; jeder Extra-Tag kostet den Mehrverbrauchssatz deines Gebührenbands (auf der Karte angezeigt).
-  - **Pakete** — tippe **Paket kaufen** und wähle eines der Tagespakete; deine Tage steigen sofort und der Preis landet auf der Monatsrechnung.
-- **Belastungen**: Monatsabo (Prozent-Tarif), Mehrverbrauch, Service-Konsum, Zubehör-Aufpreise, Tagespakete.
-- **Gutschriften**: genehmigte Ausgaben, erfasste Zahlungen, Anpassungen.
-- **Abrechnungen**: monatlich, mit Status **beglichen / offen**. Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine Selbstservice-Dokumente — bietet dieselben drei Aktionen: **Schnellansicht** (das gerenderte Dokument auf dem Bildschirm sehen, bevor ein PDF entsteht), **PDF herunterladen** (lokal speichern) und **PDF teilen** (an jede App weitergeben — WhatsApp, Mail, …).
-- **Sobald dein Monat fakturiert ist, entscheidet die Rechnung**: deine Abrechnung zeigt eine **Rechnungskarte** — Nummer, Status, Betrag, bereits bezahlt, Restbetrag — und der Monat gilt als **beglichen**, sobald die Rechnung bezahlt, ihr Rest erlassen oder ihre Gutschrift erstattet ist — auch wenn die Zahlung erst in einem späteren Monat erfasst wurde. Eine **teilweise bezahlte** Rechnung hält den Monat offen, und zwar genau um den **Restbetrag** (den zieht auch *Online zahlen* ein). Ein **Gutschrift**-Monat zeigt, was der Space dir schuldet — du musst nichts zahlen.
-- **Dein Konto** — sobald du freies Guthaben hältst (eine Gutschrift oder überzählige Zahlungen aus einem vergangenen Monat), zeigt der Geld-Tab deine ECHTE monatsübergreifende Position über der Abrechnung: **Guthaben auf dem Konto**, jede **offene Rechnung** mit Restbetrag, ausstehende Erstattungen des Space und die **Nettoposition**. Dein Guthaben kann offene Rechnungen begleichen — der Space rechnet es beim Zuordnen der Zahlungen an. Monate vor Beginn deiner Mitgliedschaft schulden nichts und stehen nie auf « offen ».
-- **Rechnungen**: Stellt der Workspace Rechnungen aus (unten), findest du deine jederzeit unter **Geld → Rechnungen** — tippe eine an, um sie in der App zu lesen (Positionen, Saldo, Stand), lade das PDF herunter und exportiere in EU-Workspaces die maschinenlesbare E-Rechnung (XML).
-- **Zahlen**: DesKilo erfasst Zahlungen; offene Rechnungen zeigen die **Zahlungshinweise** des Workspace (IBAN mit einem Tipp kopiert, PayPal.me öffnet direkt). Erfasse eine Zahlung („ich habe gezahlt") mit Methode, dem **Datum, an dem das Geld geflossen ist** (heute als Vorgabe) und dem **Monat, den sie begleicht** (der laufende als Vorgabe, ein Schritt zurück für Rückstände, einer vor für eine Vorauszahlung) — die Gegenseite bestätigt. Dieser Monat entscheidet, auf welcher Abrechnung und welcher Rechnung die Gutschrift landet. Hat der Workspace **Online-Zahlungen** aktiviert und ist sein Server dafür eingerichtet, lässt **Online bezahlen** den offenen Betrag sofort begleichen — per **PayPal, Kreditkarte (Stripe), Mollie oder Wero**, je nachdem was der Workspace aktiviert hat (mehrere zeigen eine Auswahl).
-- **Ausgaben**: Kaffee für den Raum gekauft? Reiche die Ausgabe ein — ein anderer Admin genehmigt (keine Selbstgenehmigung) und der Betrag wird deiner nächsten Abrechnung gutgeschrieben.
-- **Services**: von der Inhaberin definierte Extras (Schließfächer, Druck…), deren Konsum nach deiner Bestätigung auf der Abrechnung landet.
+- **Dieser Monat** — wie viele **Tage** dein Abo diesen Monat enthält, wie viele **genutzt**, wie viele **übrig**, mit Fortschrittsbalken. Ein gebuchter Vormittag zählt 0,5 Tage. Die Abo-Karte darunter rechnet es vor (*3 von 42 Halbtagen genutzt, 21 Öffnungstage*).
+- **Konsumierte Services** — jede Konsumation und die Servicesumme.
+- **Tagespakete** — diesen Monat gekaufte Pakete.
+- **Offene Posten** — alles, was noch auf Validierung wartet, in einer orange umrandeten Karte: diese Beträge stehen noch nicht auf der Abrechnung.
+- **Zahlungen & Gutschriften** — erfasste Zahlungen, genehmigte Erstattungen, Gutschriften, Anpassungen.
+- **Rechnungskarte** — sobald der Monat fakturiert ist: Nummer, Status, Betrag, bezahlt, Rest (§9a).
+- **Dein Konto** — die echte monatsübergreifende Position, wenn es eine gibt (§9a).
+- **Saldo** — beglichen / offen, darunter die **Zahlungshinweise** und **Online zahlen**, wenn etwas fällig ist.
 
-### Rechnungsstellung (Inhaberinnen & Abrechnungs-Admins)
+**Wenn die Tage aufgebraucht sind** — die Wahl der Inhaberin, je Mitglied:
 
-*Inhaberinnen stellen Rechnungen aus; Admins auch, sobald die Inhaberin die Delegation **Admins stellen Rechnungen aus** erteilt. Die Funktion **Rechnungen** steht in der Funktionsliste (§7) unter Geld.*
+- **Blockiert** (Standard) — keine Buchungen mehr; frag einen Admin oder beantrage **Extra-Halbtage** direkt aus dem Finanzen-Tab (Validierer genehmigen; genehmigte Tage kosten den Überziehungssatz).
+- **Nach Verbrauch** — weiterbuchen; jeder Extra-Tag kostet den Überziehungssatz deiner Stufe.
+- **Pakete** — **Paket kaufen**, ein Tagespaket wählen; Tage steigen sofort, der Preis landet auf der Monatsabrechnung.
 
-Eine Rechnung in DesKilo wird generiert, nie verfasst: Ihre Positionen werden **ausschließlich aus den erfassten Daten des Monats abgeleitet** — Abo, Mehrverbrauch, Aufpreise, Services, Pakete — abzüglich der Zahlungen und Gutschriften des Monats, sodass die Schlusszeile **der geschuldete Saldo ist**. Jedes Dokument hält die Postadressen des Workspace und des Mitglieds fest (deine setzt du unter **Einstellungen → Adresse**; die Workspace-Adresse steht in den Workspace-Einstellungen) und wird beim Ausstellen **digital signiert** — danach ändert es sich nie mehr. Ein **detaillierter Anhang** (Kontobewegungen und Anwesenheit des Monats) lässt sich beim Ausstellen mit einem Schalter beilegen.
+**Die Aktionen, nach Sinn gruppiert:**
 
-Aussteller öffnen **Geld → Rechnungen** und landen auf einem Hub mit drei Tabs unter einer Live-Übersichtsleiste:
+- **Zahlen** — **Zahlung erfassen** („ich habe gezahlt") mit Methode, dem **Datum der Geldbewegung** (Standard: heute) und dem **Monat, den sie begleicht** (Standard: der laufende; ein Schritt zurück für Rückstand, vor für Vorauszahlung) — die andere Seite bestätigt. Dieser Monat entscheidet, auf welcher Abrechnung und Rechnung die Gutschrift landet. **Online zahlen** (falls aktiv) begleicht den fälligen Betrag sofort — **PayPal, Kreditkarte (Stripe), Mollie oder Wero**.
+- **Anträge** — **Ausgabe einreichen** (Kaffee für den Space? ein anderer Admin genehmigt — keine Selbst-Genehmigung), **Extra-Halbtage beantragen**, **Konsumation hinzufügen**.
+- **Dokumente** — **Rechnungen** (deine sind hier immer lesbar; für Aussteller der Rechnungs-Hub, §11), die **Finanzvereinbarung** und der **monatliche Zahlungsbericht**, Selbstbedienung (§11).
 
-- **Zu berechnen** — jedes Mitglied, dessen Vormonat abrechenbare Daten und noch keine Rechnung hat, samt Monatssumme: pro Mitglied ausstellen (mit Vorschau der abgeleiteten Positionen) oder **Alle berechnen** in einem Durchgang — eine Bestätigung nennt vorher Anzahl, Monat und Gesamtbetrag. **Eine aktive Rechnung pro Mitglied und Monat** — ein Monat wird erst wieder berechenbar, nachdem seine Rechnung storniert wurde. Das Ausstellungsblatt öffnet auf dem **abgeschlossenen Monat** (dem, dessen Zahlen sich nicht mehr ändern); wählt man den laufenden, warnt es, denn ein Monat lässt sich nur einmal abrechnen.
-- **Offen** — ausgestellte Rechnungen, die auf Begleichung warten, älteste zuerst; was länger als 30 Tage wartet, wird rot — auf der Karte wie im Übersichtsstreifen. **Tippe eine Karte an, um die Rechnung zu lesen**; die Schaltflächen handeln: **Zahlungserinnerung senden** (erfasst die Erinnerung und teilt das PDF mit einer Nachricht — die Karte zeigt *Erinnert ×N*), **Als fehlerhaft markieren** (storniert die Rechnung zur Korrektur: Sie wandert durchgestrichen ins Archiv, und eine **Ersatzrechnung** leitet denselben Monat aus den korrigierten Daten neu ab und verweist auf das Original) und **Als bezahlt markieren**. **Eine Teilzahlung schließt keine Rechnung**: sie bleibt unter Offen, mit Badge *Teilweise bezahlt* und Restbetrag, bis der offene Rest ausdrücklich **über das Validierungs-Framework storniert** wird — Admin/Inhaber beantragen die Stornierung (mit Grund), die Validierer bestätigen, erst dann wandert die Rechnung als *Teilweise bezahlt · Restbetrag storniert* ins Archiv. **Eine NEGATIVE Rechnung ist eine Gutschrift** — die Gutschriften des Monats übersteigen seine Kosten, der ARBEITSBEREICH schuldet dem Mitglied Geld: ihr PDF heißt *Gutschrift*, sie erhält weder Mahnungen noch Mitglieds-Zahlungszuordnung; die Karte zeigt *Zu erstatten* mit **Erstattung erfassen** — die Auszahlung wird gegen das Mitgliedskonto gebucht (validiert wie jede Abwicklung, wenn eine Regel greift; eine Ablehnung öffnet sie wieder) und das Dokument schließt als *Erstattet*. Die Übersichtsleiste trennt jetzt die beiden Richtungen des Zahlungsprozesses: *N offen · X ausstehend* zählt positive Rechnungen zu ihrem **Restwert** (eine 500-€-Rechnung mit 280 € bezahlt zählt 220 €), während *N zu erstatten · Y* die offenen Gutschriften summiert, die der Space noch schuldet.
-- **Rechnungsbericht-Editor** (Inhaber, Stift-Symbol in der Rechnungs-Kopfzeile) — ein Band-Reporting-Werkzeug für das Rechnungs-PDF: **Kopfband**, **Rumpfband mit den Zeilen** und **Fußband**, jedes in [Liquid](https://shopify.github.io/liquid/) — `{{ number }}`, `{{ member }}`, Bedingungen `{% if voided %}…{% endif %}`, Schleifen `{% for line in lines %}{{ line.label }} | {{ line.amount }}{% endfor %}` — plus ein einfaches Zeilen-Markup (`#` Titel, `##` Abschnitt, `>` Kleingedrucktes, `---` Trenner, `a | b` Tabellenzeile, `=` fette Zeile, `:::` … `|||` … `:::` nebeneinanderliegende Spalten — die Adressblöcke Verkäufer links / Kunde rechts und der rechtsbündige Summenblock einer französischen Rechnung; die mitgelieferten Vorlagen folgen genau dieser Struktur). **Zurücksetzen** liefert das eingebaute Layout als funktionierendes Beispiel; **Vorschau** rendert die neueste Rechnung als Wasserzeichen-Kopie durch die ungespeicherten Bänder. Ein **Dokumentwähler** wechselt zwischen der Rechnung, der **Proforma**, der **Mitglieder-Abrechnung** und jeder Mahnstufe — jedes sein eigener Bericht. Die Proforma nutzt die Rechnungsbänder, bis du sie anpasst; eine angepasste Abrechnung ersetzt das eingebaute Monats-PDF. Eine **Vorlagen-Galerie** bietet für jedes Dokument vier fertige Berichte — *Klassisch*, *Einfach*, *Ausführlich*, *Formeller Brief* — auswählen und erweitern; jede Rechnungsvorlage trägt bereits die unten genannten Pflichtangaben. Die **Schnellvorschau** rendert das Ergebnis sofort in der App (deine neueste Rechnung, oder simulierte Beispieldaten, wenn keine existiert — ohne PDF-Umweg), und das **Vorschau**-Menü erzeugt das PDF zum **Herunterladen aufs Gerät** oder Teilen. Editor und Mahnregeln sind auch über die **Workspace-Einstellungen** erreichbar.
-- **Mahnwesen** — die Inhaberin setzt die **Mahnregeln** (Checklisten-Symbol in der Rechnungs-Kopfzeile): Anzahl der Stufen, Tage bis zur ersten Erinnerung, Tage zwischen den Mahnungen. Überfällige offene Rechnungen werden mit **„Mahnstufe N fällig“** markiert und die Glocke der Karte wird rot — nichts wird je automatisch versendet. Der Versand erzeugt einen **Zahlungserinnerungs-Brief** (Stufe 1 freundlich, höhere Stufen bestimmter) aus der Vorlage dieser Stufe — fertig mitgeliefert in deiner Sprache und je Stufe im Bericht-Editor anpassbar, mit den Zusatzfeldern `{{ reminder_level }}`, `{{ reminder_date }}` und `{{ days_open }}`. Eine kaputte Vorlage blockiert nie eine Rechnung (das eingebaute Layout übernimmt); Storno-Wasserzeichen, digitale Signatur, Anhang und Seitenzahlen bleiben fix — und das E-Rechnungs-XML bleibt unangetastet.
-- **Rechtsgültige Rechnungen** — die mitgelieferten Vorlagen drucken alles, was eine französische *facture* tragen muss: die vollständige Verkäufer-Identität (Name, **Rechtsform & Kapital**, Adresse, **Handelsregister**, **USt-IdNr.** — deklariert unter *Arbeitsbereich-Einstellungen → Rechtsidentität*, neuer Abschnitt **Rechnungsangaben**), Name und Adresse des Kunden, die eindeutige fortlaufende Nummer mit Datum, je Zeile **Menge, Einzelpreis und MwSt-Satz**, die MwSt-Aufstellung je Satz mit **Netto- / MwSt- / Gesamtsumme** sowie die Zahlungsklauseln: **Zahlungsbedingungen**, **Skonto**, **Verzugszinsen** und die **40-€-Beitreibungspauschale** — leere Klauseln drucken den gesetzlichen Standardtext. Optionale Zeilen (Berufshaftpflicht, besondere Angaben wie *TVA non applicable, art. 293 B du CGI* über den Befreiungsgrund) erscheinen erst nach Deklaration. Variablen: `{{ seller_legal_form }}`, `{{ seller_registration }}`, `{{ seller_vat_id }}`, `{{ client_address }}`, `{{ payment_terms }}`, `{{ late_penalty }}`, `{{ recovery_indemnity }}`, `{{ escompte }}`, `{{ insurance }}`, `{{ special_mentions }}`, `{{ net_total }}`, `{{ vat_total }}`, und je Zeile `{{ line.qty }}`, `{{ line.unit_price }}`, `{{ line.vat_rate }}`, `{{ line.net }}`.
-- **Fakturierung mit oder ohne MwSt — auch als Verein** — das **MwSt-Regime** des *Rechtsidentität*-Bildschirms gilt jetzt durchgängig: Nur ein als *umsatzsteuerpflichtig* deklarierter Arbeitsbereich stempelt einen Satz auf Abonnements, Zuschläge, Services und Pakete (serverseitig, Migration 0095); die MwSt-Auswahl in den Service-/Paket-Editoren und die Steuersatz-Kachel verschwinden unter jedem anderen Regime — Rest-Sätze können niemanden mehr besteuern. Die neue Wahl **Organisationsform** (*Unternehmen* / *Verein*) deckt die französischen Vereinsregeln (loi 1901) ab: Vereinsdokumente lassen die B2B-Standardklauseln weg (Verzugszinsen, 40-€-Pauschale, Skonto — nur zwischen Unternehmen Pflicht; eigener Text wird weiterhin gedruckt), die Hinweise wechseln auf **RNA (W…)** statt Handelsregister und *Association loi 1901* als Rechtsform, und das Befreiungsfeld schlägt die passenden Vermerke vor — *TVA non applicable, art. 293 B du CGI* oder *Exonération de TVA, art. 261, 7-1° du CGI* (Leistungen an Mitglieder).
-- **Die Berichts-Suite** — drei weitere Engine-Dokumente neben der Rechnungsfamilie, jedes mit den vier Vorlagen und eigenem Template im Berichtseditor: die **Finanzvereinbarung** (alle geltenden Preise eines Mitglieds — Abo, zusätzlicher halber Tag, Services, Pakete, Raum- und Zubehörzuschläge; Inhaber/Admins senden sie aus dem Aktionsblatt eines Mitglieds, jedes Mitglied kann seine eigene unter *Finanzen → Dokumente* ansehen/herunterladen/teilen), der **Zahlungsbericht** (alles im Monat Gezahlte, Gemeldete oder Validierte — die kleine Bilanz, Self-Service in derselben Zeile) und der **Arbeitsbereichsbericht** (Identität, Grundriss-Zahlen, Verfügbarkeit, Funktionen und Preise — *Arbeitsbereich-Einstellungen → Arbeitsbereichsbericht*).
-- **Die Dokumentbibliothek** — *Einstellungen → Dokumente*: Satzung, Anleitungen, Finanzberichte und Protokolle des Arbeitsbereichs, VERLINKT aus dem System, das Sie schon nutzen — Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud oder ein beliebiger https-Link (das Drive verwaltet seine Zugriffe selbst; die App speichert nie fremde Zugangsdaten). Jeder Eintrag hat eine **Sichtbarkeitsrolle**: alle Mitglieder, Admins und Inhaber, oder nur Inhaber — serverseitig erzwungen. Admins/Inhaber pflegen per +-Knopf; der Funktionsschalter *Dokumentbibliothek* aktiviert alles.
-- **Archiv** — geschlossene Rechnungen, filterbar nach Mitglied und Monat und sortierbar; stornierte Rechnungen sind **standardmäßig ausgeblendet** — der Chip *Stornierte anzeigen* holt die Korrekturkette zurück; unter den Filtern steht, wie viele Rechnungen passen, und **Filter zurücksetzen** holt das ganze Archiv zurück. Jede Zeile trägt Status, Monat und Betrag, mit **PDF herunterladen** direkt dort. **Tippe eine Zeile an, um die Rechnung zu öffnen** — Positionen, Saldo, Empfänger, Stand, welche Rechnung sie ersetzt oder durch welche sie ersetzt wurde, die Zahlung, die sie geschlossen hat, die gesendeten Erinnerungen, ihre Signatur — und jede noch erlaubte Aktion im Klartext: PDF teilen, **E-Rechnung (XML)** exportieren, erinnern, als bezahlt markieren, als fehlerhaft markieren, Ersatzrechnung ausstellen.
+### 9a. Sobald der Monat fakturiert ist, entscheidet die Rechnung
 
-**Als bezahlt markieren heißt: eine echte Zahlung zuordnen — oder ein Guthaben anrechnen.** Der Dialog listet auch die **Guthaben des Mitglieds** (Gutschrift-Überschuss): eines zuzuordnen rechnet die Gutschrift auf die Rechnung an, vergangene Monate eingeschlossen — die übliche Alternative zur Auszahlung, für Vereine wie Unternehmen. Jedes Guthaben wird genau einmal ausgegeben: ein bereits in einer ausgestellten Rechnung abgezogenes kann nie ein zweites Dokument begleichen. Der Dialog listet die registrierten Zahlungen des Mitglieds — erfasste Überweisungen und bestätigte Online-Zahlungen — und du ordnest die Rechnung einer davon zu; es gibt keinen Betrag einzutippen. **Mehr** gezahlt? Erstelle eine **Gutschrift über den Überschuss** (eine Gutschrift auf dem Konto des Mitglieds) oder akzeptiere erzwungen mit einer Pflichtnotiz. **Weniger** gezahlt? Akzeptiere mit einer Pflichtnotiz. Alle mit Rechnungszugriff werden über bezahlte Rechnungen benachrichtigt, und die Inhaberin kann eine Validierungsregel **Rechnungszahlung** (§6) darauf legen: Die Zuordnung wartet dann auf das Quorum — eine Ablehnung öffnet die Rechnung wieder.
+- Deine Abrechnung zeigt eine **Rechnungskarte** — Nummer, Status, Betrag, bereits bezahlt, Restbetrag — und der Monat gilt als **beglichen**, sobald die Rechnung bezahlt, ihr Rest erlassen oder ihre Gutschrift erstattet ist — auch wenn die Zahlung erst in einem späteren Monat erfasst wurde. Eine **teilweise bezahlte** Rechnung hält den Monat offen, genau um den **Restbetrag** (den zieht auch *Online zahlen* ein). Ein **Gutschrift**-Monat zeigt, was der Space dir schuldet — du musst nichts zahlen.
+- **Dein Konto** — sobald du freies Guthaben hältst (eine Gutschrift oder überzählige Zahlungen eines vergangenen Monats), zeigt der Finanzen-Tab deine echte monatsübergreifende Position über der Abrechnung: **Guthaben auf dem Konto**, jede **offene Rechnung** mit Restbetrag, ausstehende Erstattungen und die **Nettoposition**. Dein Guthaben kann offene Rechnungen begleichen — der Space rechnet es beim Zuordnen an. Monate vor Beginn deiner Mitgliedschaft schulden nichts.
 
-**Eine bezahlte Rechnung ist endgültig.** Einmal zugeordnet kann sie nie mehr storniert, ersetzt oder geändert werden — Korrekturen passieren vor der Zahlung, indem die offene Rechnung storniert und ihre Ersatzrechnung ausgestellt wird. Eine Zahlung, die den Betrag **nicht** deckt und mit Notiz akzeptiert wurde, erscheint als **teilweise bezahlt**, nicht als bezahlt.
+### 9b. Schnellansicht, Speichern, Teilen — jeder Bericht
 
-**Proforma.** Beide Hub-Tabs bieten eine Proforma: Auf **Zu berechnen** rendert sie die abgeleiteten Positionen des Monats als Angebot — ohne Nummer, ohne Signatur, mit PROFORMA gestempelt, und **es wird nichts ausgestellt**; auf **Offen** gibt sie die ausgestellte Rechnung als Zahlungsaufforderung aus, die nicht als Original durchgehen kann. Auf den Offen-Karten ist jede Aktion ein Icon mit Tooltip (stornieren · Proforma · Mahnung · als bezahlt markieren) — drei Beschriftungen nebeneinander liefen aus der Karte.
+Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine Selbstservice-Dokumente — bietet dieselben drei Aktionen: **Schnellansicht** (das gerenderte Dokument auf dem Bildschirm, bevor ein PDF entsteht), **PDF herunterladen** und **PDF teilen** (an jede App — WhatsApp, Mail, …).
 
-**Stempel.** Eine stornierte Rechnung trägt ein großes diagonales **ERRONÉE/FEHLERHAFT** auf jeder Seite ihres PDFs, hellgrau über dem Inhalt: Auf einem Schreibtisch oder als Fotokopie ist sie nicht mit einem gültigen Dokument zu verwechseln. Derselbe Stempel sagt **PROFORMA** auf einem Angebot und **KOPIE** auf jeder Rechnung, die jemand anderes als der Aussteller rendert — das Original liegt beim Workspace.
+**Berichte sprechen die Sprache des Lesers:** deine Dokumente drucken in *deiner* App-Sprache, wenn der Space sie liefert, sonst in der Workspace-Sprache (§11, Vorlagen je Sprache).
 
-**Das Register.** Das Listen-Icon in der Rechnungen-Leiste öffnet ein Journal mit einer Zeile pro Rechnung: **Datum · Name · Betrag · Status**, nach Datum sortiert (Tippen auf die Spalte Datum dreht die Richtung), mit der Summe am Fuß und einer **Jahres**-Auswahl, sobald es mehr als eines gibt.
+## 10. Kiosk-Modus (Wandtablet)
 
-**Den Zeitraum an die Buchhaltung geben.** Aus dem Register exportieren Ausstellende eine **SAF-T**-Datei — das *Standard Audit File for Tax* der OECD, das XML, das Buchhaltungssoftware und Finanzverwaltungen lesen. Sie umfasst genau das, was das Register zeigt: 2026 gewählt heißt die Datei für 2026 — das Unternehmen so, wie die eigenen Rechnungen es angeben, jeder Kunde, jede Rechnung mit Positionen und Summen und die Zahlungen, die sie beglichen haben. Stornierte Rechnungen bleiben als *annulliert* darin: Eine Audit-Datei löscht nie, was passiert ist. Bewusst nicht enthalten ist der **Kontenrahmen**: DesKilo erfindet keine Kontonummern, denn ein falscher Code muss von Hand ausgebucht werden. Die Buchhaltung ordnet die Rechnungen ihren eigenen Konten zu — das ist ihre Arbeit und dauert eine Minute.
+Ein Android-Tablet oder iPad an die Tür:
 
-**Frankreich: der FEC.** Ein französischer Workspace hat eine zweite Wahl, den **FEC** (*Fichier des Écritures Comptables*) — die Datei, die eine Prüfung dort gesetzlich verlangt. Sie ist kein XML: eine tabulatorgetrennte Flachdatei aus **Buchungen**, benannt `<SIREN>FEC<JJJJMMTT>.txt`, mit den 18 vorgeschriebenen Spalten in vorgeschriebener Reihenfolge. Weil sie aus Buchungen besteht, kommt sie nicht ohne Kontonummern aus: Der Export fragt sie zuerst ab — vorbelegt mit dem französischen Kontenrahmen (411 Kunden, 706 Dienstleistungen, 512 Bank) und korrigierbar. Jede Rechnung bucht ihre Forderung gegen den Erlös zum **Bruttobetrag**; die verrechneten Gutschriften und die Zahlung, die sie beglichen hat, laufen mit eigenem Datum über die Bank, verbunden mit der Rechnungsnummer. Stornierte Rechnungen fehlen: Eine vor der Zahlung stornierte wurde nie gebucht, es gibt nichts zu stornieren. Die Spalte *Name* folgt dem Lesenden — Ausstellende überfliegen Mitglieder, Mitglieder ihre eigenen Rechnungsnummern. Mitglieder sehen nur, was sie betrifft: ausgestellte Rechnungen, nie eine stornierte.
+1. Die Inhaberin legt ein normales Konto fürs Gerät an, tritt dem Space bei und markiert es als **Kiosk** in *Mitglieder & Pläne* (*In Kiosk verwandeln*).
+2. **Der Kiosk-Modus startet nie von selbst.** Bei jedem Start fragt das Tablet *Kiosk-Modus starten?* — Bestätigen sperrt: nur Vollbild-Plan, Zurück deaktiviert, App gepinnt; verlassen = Tablet neu starten. *Nicht jetzt* öffnet die App normal. Die Kiosk-Markierung ist jederzeit widerrufbar: am Gerät unter **Einstellungen → Kiosk-Gerät** oder durch die Inhaberin.
+3. Jedes Mitglied trägt ein **Badge** — vom Admin geprägt oder selbst (**Einstellungen → Mein Badge**, §8): druckbares **QR-Badge** und/oder **RFID/NFC-Karte**.
+4. Am Kiosk: Platz (oder **Diese Etage**) antippen → **Einchecken**, **Reservieren** oder **Auschecken** → Badge zeigen:
+   - **RFID/NFC-Karte antippen.** Solange der Leser scharf ist, bleibt die Kamera aus; ist NFC aus oder fehlt, sagt es das Blatt.
+   - Oder **QR-Badge scannen** — mit der eigenen Kamera (Frontkamera als Standard; umschalten unter *Einstellungen → Mit der Frontkamera scannen*). Auch USB/Bluetooth-Scanner oder Tippen des Codes geht.
+5. **Nichts passiert ohne dein Ja:** der Kiosk identifiziert das Badge, schließt die Leser und zeigt eine Zusammenfassung — *wen* er erkannt hat, *was* passieren wird, *wo* und *wann*. Nur **Bestätigen** führt aus; **Ablehnen** verwirft.
 
-### Wohin die E-Rechnung muss (EU)
+Deine Identität existiert nur für den Moment der Operation: die Kennung geht einmal zum Server, die Buchung läuft **auf deinen Namen**, nichts bleibt auf dem Tablet. (**iPads haben kein NFC** — dort ist der Kamera-QR-Weg der richtige.)
 
-Die Aktion **E-Rechnung (XML)** öffnet ein Blatt, das genau das für das Land des Workspace beantwortet, bevor es die Datei herausgibt: über welchen Kanal Geschäftskunden sie erwarten, ob eine Plattform dazwischen liegt und über welchen Kanal öffentliche Auftraggeber erreicht werden. In der Union existieren vier Modelle:
+## 11. Fakturierung (Inhaber & Abrechnungs-Admins)
 
-- **Peppol** — ein Access Point liefert die Datei an den Kunden; keine staatliche Plattform dazwischen. Genau so funktioniert die belgische B2B-Pflicht, und über Peppol werden EU-weit die öffentlichen Auftraggeber erreicht (die Richtlinie 2014/55/EU macht jede Verwaltung empfangsfähig für eine EN-16931-Rechnung).
-- **Zugelassene Plattformen** — Frankreich: Man wählt eine *plateforme agréée* (die umbenannte PDP), sie transportiert die Rechnung und meldet die Daten an die Finanzverwaltung. Das öffentliche Portal ist ein Verzeichnis, kein Postfach. Öffentliche Auftraggeber bleiben auf **Chorus Pro**.
-- **Clearance-Plattformen** — Italien (**SdI**, FatturaPA), Polen (**KSeF**, FA(3)), Rumänien (**RO e-Factura** über das SPV, CIUS-RO): Die Plattform erhält die Rechnung *zuerst* und leitet sie weiter; ein direkter Versand an den Kunden existiert nicht. Jede schreibt ihre eigene Syntax vor — das Blatt warnt deshalb, dass die von DesKilo exportierte EN-16931-Datei nicht die akzeptierte ist. Nutze sie für Peppol, öffentliche Auftraggeber und ausländische Kunden und lass die Plattform oder die Steuerberatung konvertieren.
-- **Kein vorgeschriebener Kanal** — Deutschland heute: Der Empfang ist seit 2025 Pflicht, das Ausstellen kommt gestaffelt, aber ein E-Mail-Anhang ist eine gültige E-Rechnung; erwartet werden XRechnung und ZUGFeRD. Öffentliche Verwaltung: **OZG-RE / ZRE** oder Peppol.
+*Inhaber stellen Rechnungen aus; Admins auch, sobald sie die Berechtigung **Rechnungen ausstellen & Zahlungen zuordnen** halten (Rollenverwaltung, §8 — oder die alte Delegation **Admins stellen Rechnungen aus**). Die Funktion **Rechnungen** wohnt unter Finanzen.*
 
-**Factur-X — eine Datei, zwei Lesende.** Das E-Rechnungs-Blatt bietet zuerst **Factur-X (PDF)**: ein ganz normal aussehendes Rechnungs-PDF mit der maschinenlesbaren Rechnung *darin* (die EN-16931-Daten als CII, wie das Format es verlangt). Ein Mensch öffnet es und sieht die Rechnung; eine Plattform öffnet es und findet `factur-x.xml`. Genau das tauschen kleine Unternehmen in Frankreich und Deutschland tatsächlich aus, und es braucht keine zweite Datei. Das reine **XML** bleibt darunter verfügbar, für Plattformen, die es nackt wollen.
+Eine DesKilo-Rechnung wird generiert, nie komponiert: ihre Positionen sind **ausschließlich aus den erfassten Monatsdaten abgeleitet** — Abo, Überziehung, Aufpreise, Services, Pakete — minus Zahlungen und Gutschriften des Monats, sodass die letzte Zeile **der fällige Saldo ist**. Jedes Dokument friert die Postadressen ein (deine unter **Einstellungen → Adresse**) und wird bei Ausstellung **digital signiert** — es ändert sich nie mehr. Ein **detaillierter Anhang** (Bewegungen und Anwesenheiten) hängt per Schalter an.
 
-**Senden, ohne die App zu verlassen.** Die Inhaberin registriert die Plattform des Workspace unter *Workspace-Einstellungen → Rechtliche Identität → **E-Rechnungs-Plattform***: eine Upload-URL und ein Token. Jede Plattform, die einen Upload mit Zugangsdaten annimmt, funktioniert — eine zugelassene Plattform, ein Peppol Access Point, eine nationale Plattform. Das Token liegt serverseitig, kommt nie auf ein Telefon zurück, und die App kann nur melden, dass eines gesetzt ist. Danach beginnt das Blatt mit **An die Plattform senden**: das Factur-X-Dokument geht direkt hinaus, und das Detailblatt der Rechnung hält fest, wann es ging, was die Plattform antwortete und welche Id sie zurückgab. Jeder Versuch wird protokolliert — angenommen, abgelehnt oder nicht übermittelt — denn ein Dokument, das *vielleicht* draußen ist, ist schlimmer als ein gescheiterter Versand.
+Aussteller öffnen **Finanzen → Rechnungen**: ein Drei-Tab-Hub unter einem Live-Übersichtsstreifen (*N zu fakturieren · N offen · X ausstehend · N zu erstatten · Y*):
 
-DesKilo übermittelt weiterhin nichts auf eigene Rechnung: Es erzeugt das Dokument und übergibt es der Plattform, die du gewählt hast.
+- **Zu fakturieren** — jedes Mitglied, dessen Vormonat abrechenbare Daten und noch keine Rechnung hat: je Mitglied ausstellen (mit Vorschau der abgeleiteten Positionen) oder **Alle fakturieren** — mit Bestätigungsdialog (Anzahl, Monat, Summe). **Neue Rechnung** öffnet dasselbe Blatt für jedes Mitglied und jeden Monat — Mitglieder-Picker, ‹ Monat ›, die Positionen, der Saldo, der **Anhang**-Schalter und **Rechnung ausstellen** (grüner *Rechnung ausgestellt.*-Balken). **Eine aktive Rechnung je Mitglied und Monat**. Das Blatt öffnet auf dem **abgeschlossenen Monat**; der laufende warnt, denn er ist nur einmal fakturierbar.
+- **Offen** — ausgestellte Rechnungen, älteste zuerst; über 30 Tage wird rot. Jede Aktion ist ein Icon mit Tooltip (stornieren · Proforma · Mahnung · als bezahlt markieren). **Karte antippen = Rechnung lesen.** **Zahlungserinnerung senden** erfasst die Mahnung und teilt das PDF — die Karte zeigt *Erinnert ×N*. **Als fehlerhaft markieren** storniert zur Korrektur (ein Dialog warnt: unumkehrbar): sie wandert durchgestrichen ins Archiv, eine **Ersatzrechnung** leitet den Monat neu ab. **Als bezahlt markieren** ordnet eine echte Zahlung zu (unten). **Eine Teilzahlung schließt keine Rechnung**: sie bleibt offen, Badge *Teilweise bezahlt* mit Restbetrag, bis der Rest ausdrücklich **über das Validierungs-Framework storniert** wird — erst dann Archiv als *Teilweise bezahlt · Restbetrag storniert*. **Eine NEGATIVE Rechnung ist eine Gutschrift** — der SPACE schuldet dem Mitglied: PDF-Titel *Gutschrift*, keine Mahnungen, kein Zuordnen von Mitgliedszahlungen; die Karte zeigt *Zu erstatten* mit **Erstattung erfassen** — die Auszahlung bucht gegen das Mitgliedskonto (validiert, wenn eine Regel greift; Ablehnung öffnet wieder), das Dokument schließt als *Erstattet*. Der Übersichtsstreifen trennt beide Richtungen: *N offen · X ausstehend* zählt positive Rechnungen zum **Restwert** (500 € mit 280 € bezahlt zählt 220 €), *N zu erstatten · Y* summiert die offenen Gutschriften.
+- **Archiv** — geschlossene Rechnungen, filterbar nach Mitglied und Monat, sortierbar; stornierte **standardmäßig ausgeblendet** — *Stornierte anzeigen* holt die Korrekturkette zurück; **Filter zurücksetzen** holt alles. Jede Zeile: Status-Chip (*Bezahlt*, *Teilweise bezahlt*, *Fehlerhaft* durchgestrichen, Gutschriften mit Negativbetrag), Monat, Betrag, **PDF herunterladen**. **Zeile antippen = Rechnung öffnen** — Positionen, Saldo, Empfänger, Stand (*Bezahlt €300.00 am 6. Aug.*, *Erinnert ×1…*, *Anhang: 5 Bewegungen, 10 Check-ins*), Ersetzungskette, Signatur — und jede noch erlaubte Aktion: **Schnellansicht**, **PDF herunterladen**, **PDF teilen**, **E-Rechnung (XML)**, mahnen, als bezahlt markieren, als fehlerhaft markieren, Ersatz ausstellen.
 
-**Proben ohne Risiko.** Ein Workspace kann neben dem Produktions-Endpunkt zusätzlich **Test-Endpunkte** hinterlegen (das UAT der Plattform oder ein Dev-Ziel). Mit eingeschaltetem **Entwicklermodus** des Workspace (eine workspace-weite Einstellung, die nur Inhaberinnen und Admins umlegen, unter Einstellungen → Erweitert) bietet das Senden die Wahl der Umgebung an, eine Test-Einreichung ist in der Übertragungshistorie der Rechnung als solche markiert, und der Produktions-Endpunkt wird für eine Probe nie verwendet — eine nicht konfigurierte Testumgebung verweigert schlicht, statt zurückzufallen.
+**Als bezahlt markieren heißt: eine echte Zahlung zuordnen — oder ein Guthaben anrechnen.** Der Dialog listet die registrierten Zahlungen — erfasste Überweisungen und bestätigte Online-Zahlungen — und du ordnest die Rechnung einer zu; kein Betrag zu tippen (noch keine? der Dialog sagt es: *erst erfassen oder bestätigen*). Er listet auch die **Guthaben des Mitglieds** (Gutschrift-Überschuss): eines zuzuordnen rechnet die Gutschrift auf die Rechnung an, vergangene Monate eingeschlossen — die übliche Alternative zur Auszahlung, für Vereine wie Unternehmen. Jedes Guthaben wird genau einmal ausgegeben. **Mehr** gezahlt? **Gutschrift über den Überschuss** oder erzwungen akzeptieren mit Pflichtnotiz. **Weniger**? Mit Pflichtnotiz akzeptieren. Alle mit Rechnungszugriff werden benachrichtigt; die Inhaberin kann eine **Rechnungszahlung**-Validierungsregel (§7) setzen — die Zuordnung wartet aufs Quorum, eine Ablehnung öffnet wieder.
 
-**Vor dem ersten Export die rechtliche Identität ausfüllen.** Unter *Workspace-Einstellungen → **Rechtliche Identität & E-Rechnung*** erklärt die Inhaberin das **Steuerregime** und die Nummer, die die Norm damit verlangt: außerhalb der Umsatzsteuer eine **Registernummer** (SIREN, HRB, CIF…); bei Steuerbefreiung eine **Umsatzsteuer-ID** plus den Grund der Befreiung. Mitglieder ergänzen ihr **Land** — und ihre USt-ID, falls sie als Unternehmen abrechnen — neben ihrer Adresse unter *Einstellungen → Adresse*. DesKilo prüft das alles **vor** dem Erzeugen der Datei und verweigert sie unter Nennung des fehlenden Punktes: Eine von der Plattform abgelehnte Rechnung ist schlimmer als gar keine. Ein **umsatzsteuerpflichtiger** Workspace exportiert wie jeder andere — sobald seine **Steuersätze** eingerichtet sind (nächster Abschnitt): mit Sätzen trägt die Rechnung eine echte Aufteilung, ohne sie verweigert DesKilo die Datei, statt eine Null zu erklären, an die es nicht glaubt.
+**Eine bezahlte Rechnung ist endgültig.** Einmal zugeordnet: nie mehr stornieren, ersetzen, ändern — Korrekturen vor der Zahlung, per Storno + Ersatz. Eine Zahlung unter dem Betrag, mit Notiz akzeptiert, zeigt **teilweise bezahlt**.
 
-Auch die Fristenkalender verschieben sich: Prüfe vor dem Termin, der dich betrifft, bei der eigenen Finanzverwaltung.
+**Proforma.** Beide Hub-Tabs tragen eine Proforma-Aktion: auf **Zu fakturieren** als Angebot — keine Nummer, keine Signatur, Stempel PROFORMA, **nichts wird ausgestellt**; auf **Offen** als Zahlungsaufforderung, die nicht als Original durchgeht. Beide mit Schnellansicht / Download / Teilen.
 
-### Mehrwertsteuer (Inhaberinnen)
+**Stempel.** Eine stornierte Rechnung trägt ein diagonales **FEHLERHAFT** über jeder Seite. Derselbe Stempel sagt **PROFORMA** auf einem Angebot und **KOPIE** auf jeder Rechnung, die nicht ihr Aussteller rendert.
 
-**Preise in DesKilo sind Bruttopreise.** Was Sie als Abo-, Leistungs- oder Tagespaketpreis eintragen, ist das, was das Mitglied zahlt. Die Steuer einzuschalten ändert keinen einzigen geschuldeten Betrag — es sagt, wie viel davon Steuer ist. Deshalb bewegen sich Rechnung, Abrechnung und Kontingent nicht, wenn Sie Sätze anlegen, und deshalb muss nie ein Betrag abgestimmt werden.
+**Mahnungen (Mahnwesen).** Die Inhaberin setzt die **Mahnregeln** (Häkchenlisten-Icon in der Kopfzeile, oder *Workspace-Einstellungen → Mahnregeln*): Anzahl Stufen, Tage bis zur ersten, Tage dazwischen. Überfällige Rechnungen tragen **„Mahnung N fällig"**, die Glocke wird rot — nichts geht je automatisch raus. Der Versand erzeugt einen **Mahnbrief** (Stufe 1 freundlich, höhere fester) aus der Vorlage der Stufe — fertig in deiner Sprache, gedruckt in der Sprache des *Mitglieds*, je Stufe editierbar mit `{{ reminder_level }}`, `{{ reminder_date }}`, `{{ days_open }}`.
 
-**Sätze einrichten.** *Workspace-Einstellungen → Rechtliche Identität & E-Rechnung → **Steuersätze***. Eine leere Liste heißt: keine Steuer — so startet jeder Workspace. **Übliche Sätze übernehmen** füllt die Liste mit Regelsatz und ermäßigten Sätzen Ihres Landes als erster Entwurf — ein Ausgangspunkt, keine Steuerberatung: Sätze ändern sich, und welche Leistung unter welchen Satz fällt, ist eine Frage für Ihre Steuerberatung. Ein Satz ist der **Standard** (der Stern): Abos, Überschreitungen, Zuschläge und Korrekturen nutzen ihn, ebenso jede Leistung ohne eigenen Satz. Einen Satz zu entfernen löscht ihn nie — einer, auf den eine Rechnung oder eine Leistung noch verweist, bleibt erhalten und wird deaktiviert, damit nichts stillschweigend neu besteuert wird.
+**Das Register.** Das Listen-Icon öffnet ein Ein-Zeilen-Register: **Datum · Name · Betrag · Status**, nach Datum sortiert (Kopfzeile antippen dreht die Richtung), Summe am Fuß, **Jahres**-Picker ab zwei Jahren. Sein Export-Knopf öffnet **Buchhaltungs-Export**: **SAF-T (XML, international)** und — für einen französischen Space — **FEC (Frankreich, bei Prüfung verlangt)**.
 
-**Sätze pro Position.** Eine Leistung (*Leistungen*) und ein Tagespaket (*Abrechnung → Pakete*) tragen jeweils ihren eigenen Satz, im jeweiligen Formular gewählt; belassen Sie es beim **Standard des Spaces**, folgt sie dem Standardsatz. Das Steuerfeld erscheint erst, wenn der Workspace Sätze hat.
+**Die Periode an die Buchhaltung übergeben.** Aus dem Register exportieren Aussteller **SAF-T** — das OECD-*Standard Audit File for Tax*. Es deckt genau das Register: das Unternehmen, jeden Kunden, jede Rechnung mit Zeilen und Summen, die begleichenden Zahlungen. Stornierte bleiben als *annulliert* — eine Prüfdatei löscht nichts. Bewusst fehlt der **Kontenplan**: DesKilo erfindet keine Kontonummern; das Mapping macht die Buchhaltung.
 
-**Was sich auf einem Dokument ändert.** Eine Rechnung, die nach dem Anlegen der Sätze ausgestellt wird, trägt die Aufteilung wie ausgestellt: die Positionstabelle bekommt eine Satz-Spalte, und über dem Gesamtbetrag zeigt das PDF den **Netto**-Betrag und je Satz eine Zeile. Die Rechnungsansicht in der App sagt dasselbe. Die **E-Rechnung (XML)** trägt, was EN 16931 verlangt — je Satz ein Steuer-Subtotal, die Nettobeträge, die USt-ID der Verkäuferin (BR-S-02) — in UBL wie in CII: ein Factur-X-Dokument ist damit auch für eine steuerpflichtige Verkäuferin gültig. **SAF-T** deklariert jeden Satz in seiner Steuertabelle und bucht jede Zeile netto mit der Steuer daneben; der **FEC** bucht die Forderung brutto gegen den Nettoerlös plus ein Konto **vereinnahmte Steuer** (standardmäßig 445710, änderbar — im Export-Dialog oder ein für alle Mal im Bildschirm der rechtlichen Identität).
+**Frankreich: das FEC.** Ein französischer Space bekommt das **FEC** (*Fichier des Écritures Comptables*, art. L47 A-I du LPF): eine tabulierte Flachdatei von **Buchungen**, benannt `<SIREN>FEC<JJJJMMTT>.txt`, mit den 18 vorgeschriebenen Spalten. Kontonummern fragt der Export vorher ab — vorbelegt mit dem *plan comptable général* (411, 706, 512). Jede Rechnung bucht brutto Forderung an Ertrag; Gutschriften und die begleichende Zahlung buchen zu ihren Daten, gelettert mit der Rechnungsnummer. Stornierte fehlen. Mitglieder sehen nur, was sie betrifft.
 
-**Eine ausgestellte Rechnung ändert sich nie.** Sie trägt die Sätze, die Identität und die Beträge, mit denen sie signiert wurde — das macht sie zur Rechnung. Sätze heute anzulegen setzt keine Steuer auf das Dokument vom letzten Monat, und die rechtliche Identität heute zu vervollständigen setzt keine Registernummer darauf. Muss ein Dokument die neuen Zahlen tragen, markieren Sie es als **fehlerhaft** und stellen eine **Ersatzrechnung** aus: die Korrekturkette ist auf beiden Dokumenten sichtbar — genau das, was eine Prüfung sehen will.
+### 11a. Rechtliche Identität, MwSt & Pflichtangaben
 
-## 9. Kiosk-Modus (Wandtablet)
+**Vor dem ersten Export die rechtliche Identität ausfüllen.** Unter *Workspace-Einstellungen → **Rechtliche Identität & E-Rechnung*** erklärt die Inhaberin:
 
-Häng ein Android-Tablet oder iPad neben die Tür und lass alle beim Reinkommen einchecken:
+- Das **MwSt-Regime** — es bestimmt die von EN 16931 verlangte Nummer: außerhalb der MwSt eine **Registernummer** (SIREN, HRB, CIF…); als Kleinunternehmer eine **USt-IdNr.** plus **Befreiungsgrund** (das Feld schlägt die passenden Formeln vor). Das Regime gilt durchgängig: nur ein steuerpflichtiger Space stempelt je einen Satz, unter jedem anderen Regime verschwinden die MwSt-Picker.
+- Die strukturierte **Adresse** (Straße, PLZ, Ort).
+- Die **E-Rechnungs-Plattform** (§11b).
+- Die **Rechnungs-Pflichtangaben**, mit **Organisationstyp** — *Unternehmen* vs. *Verein (loi 1901)*: Rechtsform & Kapital, Register (Unternehmen: Handelsregister; Vereine: **RNA W… · SIRET falls vergeben**), Zahlungsbedingungen, Verzugszinsen, die **40-€-Beitreibungspauschale**, Skonto, Berufshaftpflicht, besondere Vermerke. Leere Klauseln drucken die gesetzliche Standardformel — Vereinsdokumente lassen die reinen B2B-Klausel-Defaults weg (was du eintippst, druckt trotzdem).
 
-1. Die Inhaberin legt ein normales Konto für das Gerät an, lässt es dem Workspace beitreten und markiert es unter *Mitglieder & Tarife* als **Kiosk**.
-2. **Der Kiosk-Modus startet nie von selbst.** Bei jedem App-Start fragt das Tablet *Kiosk-Modus starten?* — bestätige, und das Gerät riegelt sich ab: nur noch der Vollbild-Grundriss, Zurück-Button deaktiviert, die App pinnt sich fest, sodass sich nichts anderes öffnen lässt; den Kiosk-Modus verlässt man nur durch Neustart des Tablets. Wähle stattdessen *Jetzt nicht* und die App öffnet normal — praktisch für die Einrichtung. Die Kiosk-Zuweisung selbst lässt sich jederzeit zurücknehmen: am Gerät unter **Einstellungen → Kiosk-Gerät** oder durch die Inhaberin unter *Mitglieder & Tarife*.
-3. Jedes Mitglied trägt einen **Badge** — ausgestellt von einem Admin (*Mitglieder & Tarife → Badges*) oder vom Mitglied selbst (**Einstellungen → Mein Badge**, §7): ein druckbarer **QR-Badge** und/oder seine **RFID/NFC-Karte**.
-4. Am Kiosk: Platz antippen (oder **Diese Etage**) → **Einchecken**, **Reservieren** oder **Auschecken** → Badge vorzeigen:
-   - **RFID/NFC-Karte antippen.** Solange der Kartenleser scharf ist, bleibt die Kamera aus; ist NFC ausgeschaltet oder nicht vorhanden, sagt es das Formular ausdrücklich.
-   - Oder tippe **QR-Badge scannen** — das Tablet liest den gedruckten Badge **mit seiner eigenen Kamera** (standardmäßig die Frontkamera, denn die Rücklinse eines Wandtablets zeigt zur Wand; umschalten unter *Einstellungen → Mit der Frontkamera scannen*). Ein USB/Bluetooth-Scanner oder das Eintippen des Codes funktioniert ebenfalls.
-5. **Nichts passiert ohne dein Zutun:** Der Kiosk identifiziert den Badge, schließt die Leser und zeigt eine Zusammenfassung — *wen* er erkannt hat, *was* passieren wird, *wo* und *wann*. Erst **Bestätigen** führt aus und aktualisiert den Plan; **Ablehnen** verwirft.
+Mitglieder ergänzen ihr **Land** — und ihre USt-IdNr., wenn sie als Unternehmen fakturieren — neben ihrer Adresse unter *Einstellungen → Adresse*. DesKilo prüft alles **vor** der E-Rechnung und verweigert mit benanntem fehlendem Element.
 
-Deine Identität existiert nur für den Moment der Operation: die Berechtigung geht einmal zum Server, die Buchung läuft **auf deinen Namen**, und auf dem Tablet wird nichts gespeichert — du bist „abgemeldet", sobald es fertig ist. (Anmeldung pro Vorgang mit Google steht noch auf der Roadmap; **iPads haben kein NFC**, dort ist der Kamera-QR-Weg der richtige.)
+**DesKilo-Preise sind brutto.** Was du als Preis eintippst, zahlt das Mitglied. MwSt einschalten ändert keinen geschuldeten Betrag — es sagt, wie viel davon Steuer ist.
 
-## 10. Benachrichtigungen
+**Sätze setzen.** *Rechtliche Identität → **MwSt-Sätze***. Leere Liste = MwSt aus. **Übliche Sätze verwenden** füllt Standard-, Zwischen- und ermäßigten Satz deines Landes — ein Entwurf, keine Steuerberatung. Ein Satz ist der **Standard** (Stern). Service und Paket tragen je ihren eigenen Satz. Entfernen löscht nie — referenzierte Sätze bleiben deaktiviert erhalten.
 
-Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheide — und wenn ein Admin **eine deiner Reservierungen entfernt** (Übersteuern), werden du und die Admins benachrichtigt. Zustellung ist lokal zuerst; Server-Pushes kommen auf Android, iPhone/iPad, im Browser und auf macOS ohne Zusatz-App an (Firebase Cloud Messaging) — *Einstellungen → Erweitert* zeigt, ob Push auf diesem Gerät aktiv ist. Das App-Icon zeigt deine offenen Bestätigungen **plus deine ungelesenen Nachrichten** — auf Android, iPhone/iPad, im macOS-Dock, in der Windows-Taskleiste und in installierten Web-Apps. Mitglieder-Nachrichten werden **einmal pro Gerät mit Absender und vollem Text** angekündigt — auch was ankam, während die App geschlossen war, direkt beim nächsten Öffnen. Push-Inhalte tragen nie Namen oder Zeiten; der Text entsteht lokal in der App.
+**Was es am Dokument ändert.** Eine danach ausgestellte Rechnung trägt die Aufschlüsselung wie ausgestellt: Satzspalte, Netto und eine Zeile je Satz. Die **E-Rechnung (XML)** trägt, was EN 16931 verlangt (UBL und CII); **SAF-T** deklariert jeden Satz; das **FEC** bucht brutto gegen netto plus ein **Umsatzsteuer**-Konto (445710, änderbar).
 
-## 11. Datenschutz
+**Eine ausgestellte Rechnung ändert sich nie.** Braucht ein Dokument neue Zahlen: **fehlerhaft** markieren und **Ersatz** ausstellen — die Korrekturkette ist auf beiden sichtbar.
 
-Minimale Daten: Name, E-Mail, Tarif, Buchungen, Konto. Du bestimmst dein Foto, deinen Status, ob dein Name auf dem Plan erscheint und ob deine Telefonnummer im Verzeichnis sichtbar ist. Kiosk-Badges werden nur als Hash gespeichert — ein verlorener Badge wird widerrufen, nicht erraten. Kein Tracking, keine Dritt-Analytik. Finanzhistorie wird bei Kontolöschung anonymisiert, nicht gelöscht (Aufbewahrungspflichten).
+### 11b. Wohin die E-Rechnung muss (EU)
 
-## 12. Plattformen
+Die Aktion **E-Rechnung (XML)** öffnet ein Blatt, das es fürs Land des Space beantwortet: welcher Kanal für Geschäftskunden, ob eine Plattform dazwischen sitzt, welcher Kanal für öffentliche Käufer. Vier Modelle:
 
-Android (Google Play), iPhone/iPad, Desktop — **macOS** (ein DMG: DesKilo in „Programme“ ziehen) und **Windows** (ein MSI-Installer) aus jedem Release — und der **Browser**: dieselbe App, nichts zu installieren, unter der Adresse, die dein Space veröffentlicht. Deine Daten folgen deinem Konto: ein am Handy gebuchter Platz erscheint eine Sekunde später im Browser-Tab.
+- **Peppol** — ein Access Point liefert an den Kunden; keine Staatsplattform dazwischen. Belgiens B2B-Mandat funktioniert so; Peppol erreicht öffentliche Käufer EU-weit (Richtlinie 2014/55/EU).
+- **Zugelassene Plattformen** — Frankreich: eine *plateforme agréée* routet und meldet dem Fiskus. Öffentlicher Sektor bleibt **Chorus Pro**.
+- **Clearance** — Italien (**SdI**), Polen (**KSeF**), Rumänien (**RO e-Factura**): die Plattform empfängt *zuerst*; jede verlangt eigene Syntax — das Blatt warnt, dass die EN-16931-Datei nicht die ihre ist; für Peppol, öffentliche Käufer und Auslandskunden nutzen, konvertieren lässt die Plattform oder die Buchhaltung.
+- **Kein Kanalzwang** — Deutschland heute: Empfang seit 2025 Pflicht, Ausstellung phasenweise; E-Mail-Anhang ist legal; XRechnung und ZUGFeRD erwartet. Öffentlich: **OZG-RE / ZRE** oder Peppol.
 
-Was der Browser nicht kann, ist das, was eine Seite nicht darf: ein NFC-Badge lesen oder einen QR-Code mit der Kamera scannen wie der Kiosk. Alles andere — Plan, Buchungen, Mitglieder, Geld, Rechnungen, PDF-Downloads — ist dieselbe App. Beim ersten Start des macOS-DMG die App rechtsklicken und *Öffnen* wählen: der Build ist noch nicht von Apple notarisiert, ein einfacher Doppelklick führt zur Gatekeeper-Warnung.
+**Factur-X — eine Datei, beide Leser.** Das Blatt bietet zuerst **Factur-X (PDF)**: ein normal aussehendes Rechnungs-PDF mit der Maschinenrechnung *darin* (EN-16931-Daten als CII). Der Mensch sieht die Rechnung, die Plattform findet `factur-x.xml`. Das nackte **XML** bleibt darunter verfügbar.
+
+**Senden, ohne die App zu verlassen.** Die Inhaberin registriert die Plattform unter *Rechtliche Identität → **E-Rechnungs-Plattform***: **Upload-URL**, **Token/Kennung**, bei Bedarf **Authorization-Header** und **Dateifeldname**. Jede Plattform mit Credential-Upload geht. Der Token bleibt serverseitig. Danach führt das Blatt mit **An die Plattform senden**: das Factur-X-Dokument geht direkt raus; das Detailblatt protokolliert Abgang, Antwort und zurückgegebene ID. Jeder Versuch wird geloggt.
+
+**Proben ohne Risiko.** Derselbe Bildschirm nimmt **Testumgebungen** (UAT/Dev: je URL + Token). Mit aktivem **Entwicklermodus** bietet der Versand die Umgebungswahl; ein Test wird als solcher markiert; die Produktions-URL dient nie einer Probe.
+
+DesKilo überträgt nichts auf eigene Rechnung: es produziert das Dokument und übergibt es deiner Plattform. Mandatskalender bewegen sich: prüfe deine Steuerverwaltung.
+
+### 11c. Der Report-Editor — jedes Dokument, vier Vorlagen, fünf Sprachen
+
+Die **Rechnungs-PDF-Vorlage** (Stift in der Kopfzeile, oder *Workspace-Einstellungen*) ist ein Banden-Reporting für jedes gedruckte Dokument. Drei **Banden** rendern aufs PDF — Kopf, Körper (die Rechnungszeilen), Fuß — das E-Rechnungs-XML bleibt unberührt.
+
+- **Ein Report je Dokument**: Chips wechseln zwischen **Rechnung · Proforma · Abrechnung · Vereinbarung · Zahlungen · Space · Mahnstufen**. Die Proforma fällt auf die Rechnungsbanden zurück; eine angepasste Abrechnung ersetzt das eingebaute Monats-PDF.
+- **Je Sprache**: eine zweite Chip-Reihe — *Standard (alle Sprachen)* · EN · FR · DE · ES · IT — speichert eine Übersetzungs-Schicht je Dokument; der Report eines Mitglieds druckt in *seiner* Sprache, wenn eine Vorlage existiert.
+- **Markup oder Visuell**: **Markup** editiert die Banden als Text — [Liquid](https://shopify.github.io/liquid/)-Bedingungen und -Schleifen (`{{ number }}`, `{% if proforma %}…{% endif %}`, `{% for line in lines %}…{% endfor %}`) plus einfaches Zeilen-Markup: `#` Titel, `##` Abschnitt, `>` Kleindruck, `---` Trenner, `a | b` Tabellenzeile, `=` Fettzeile, `::: … ||| … :::` Spalten nebeneinander (der Verkäufer-links/Kunde-rechts-Block und die rechtsbündigen Summen einer französischen Facture), `![name]` ein Bild aus der **Bildbibliothek** (*Bild einfügen*). **Visuell** zeigt dieselben Banden als Design-Fläche — gestylte Zeilen, `{{ Tokens }}` markiert, Zeile antippen zum Editieren, hinzufügen, verschieben, Datenfelder aus einer Palette einfügen.
+- **Vorlagen-Galerie** (*Vorlagen*): vier fertige Presets je Dokument — **Klassisch · Einfach · Detailliert · Formeller Brief**. Jedes Rechnungs-Preset trägt schon die Pflichtangaben (§11a).
+- **Schnellansicht** rendert sofort in der App — deine neueste Rechnung, oder simulierte Beispieldaten (*Beispieldaten*-Wasserzeichen) — ohne PDF-Umweg; **Vorschau** erzeugt das PDF; **Auf Standard zurücksetzen** liefert das eingebaute Layout als Arbeitsbeispiel. Eine kaputte Vorlage blockiert nie ein Dokument; Storno-Wasserzeichen, Signatur, Anhang und Seitenzahlen bleiben fix.
+
+Variablen (Rechnungsfamilie): `{{ number }}`, `{{ member }}`, `{{ workspace }}`, `{{ workspace_address }}`, `{{ period }}`, `{{ issued }}`, `{{ issued_by }}`, `{{ replaces }}`, `{{ total }}`, `{{ charges }}`, `{{ payments }}`, `{{ voided }}`, `{{ proforma }}`, `{{ copy }}`, `{{ lines }}` (je mit `label`, `unit_price`, `qty`, `net`, `vat_rate`, `amount`), `{{ has_vat }}`, `{{ vat }}`, `{{ net_total }}`, `{{ vat_total }}`, `{{ credit_note }}`, `{{ refund_total }}` — und der Rechts-Satz: `{{ seller_legal_form }}`, `{{ seller_registration }}`, `{{ seller_vat_id }}`, `{{ seller_legal_id }}`, `{{ exemption_reason }}`, `{{ client_address }}`, `{{ client_vat_id }}`, `{{ client_legal_id }}`, `{{ payment_terms }}`, `{{ late_penalty }}`, `{{ recovery_indemnity }}`, `{{ escompte }}`, `{{ insurance }}`, `{{ special_mentions }}`.
+
+### 11d. Die Report-Suite & die Dokumentbibliothek
+
+- **Finanzvereinbarung** — jeder für ein Mitglied geltende Preis: Abo, Extra-Halbtag, Services, Pakete, Ganzraum- und Zubehör-Aufpreise. Inhaber/Admins senden sie vom Verwaltungsblatt; jedes Mitglied holt seine unter *Finanzen → Dokumente*.
+- **Zahlungsbericht** — alles, was du in einem Monat gezahlt, erklärt oder validiert bekommen hast: deine kleine Bilanz, Selbstbedienung.
+- **Space-Bericht** — Identität, Plan-Zählungen, Verfügbarkeit, Funktionen und Preise: *Workspace-Einstellungen → Space-Bericht*.
+- **Dokumentbibliothek** — *Einstellungen → Dokumente*: Satzung, Leitfäden, Abschlüsse, Protokolle — VERLINKT aus dem System, das du schon nutzt: Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud oder jeder https-Link (der Drive verwaltet seine Zugriffe; die App speichert nie fremde Zugangsdaten). Jeder Eintrag hat eine **Sichtbarkeitsrolle**: jedes Mitglied, Admins & Inhaber, nur Inhaber — serverseitig erzwungen. Kuratiert per + ; die Funktion *Dokumentbibliothek* schaltet alles.
+
+## 12. Einstellungen & Profil
+
+Dein persönlicher Bildschirm, von oben nach unten:
+
+- **Profile** (§1) und dein **Foto** (antippen — wählen oder entfernen).
+- **Mitglieder** — Abkürzung ins Verzeichnis; **WhatsApp** — deine Nummer, nur sichtbar, wenn du sie einträgst; **Status** — eine freie Zeile (40 Zeichen) im Verzeichnis; **Adresse** — deine Postadresse (auf deinen Rechnungen), Land und optionale USt-IdNr.
+- **Hilfe** — das eingebaute Handbuch, in deiner Sprache; **Mein Badge** (§8); **Verknüpfte Konten** — Google-Anmeldung ans E-Mail-Konto hängen; **Dokumente** — die Dokumentbibliothek (§11d).
+- **Präferenzen** — **Sprache** (Systemstandard oder eine von fünf), **Thema** (System / Hell / Dunkel), **Mit der Frontkamera scannen** (für Wandtablets).
+- **Erweitert** — der Push-Status dieses Geräts, der workspace-weite **Entwicklermodus** und der **Entwickler**-Trace-Bildschirm (§8 Zahlungen).
+- **Abmelden**.
+
+## 13. Benachrichtigungen
+
+Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheidungen — und wenn ein Admin **eine deiner Buchungen entfernt** (übersteuern), werden du und die Admins benachrichtigt. Zustellung lokal zuerst; Server-Push kommt fertig auf Android, iPhone/iPad, Browser und macOS (Firebase Cloud Messaging) — *Einstellungen → Erweitert* zeigt den Gerätestatus. Das Icon-Badge zählt offene Bestätigungen **plus ungelesene Nachrichten** — Android, iPhone/iPad, macOS-Dock, Windows-Leiste, installierte Web-Apps. Mitglieder-Nachrichten werden **einmal je Gerät mit Absender und vollem Text** angesagt — auch was bei geschlossener App kam. Push-Payloads tragen nie Namen oder Zeiten; die App baut den Text lokal.
+
+## 14. Datenschutz
+
+Minimale Daten: Name, E-Mail, Plan, Buchungen, Konto. Du kontrollierst Foto, Status, Namensanzeige auf dem Plan, Nummern-Sichtbarkeit. Badges liegen nur als Hashes — ein verlorenes wird widerrufen, nicht erraten. Kein Tracking, keine Fremd-Analytik. Finanzhistorie wird bei Kontolöschung anonymisiert, nicht gelöscht (Aufbewahrungspflicht).
+
+## 15. Plattformen
+
+Android (Google Play), iPhone/iPad, Desktop — **macOS** (DMG: DesKilo in Programme ziehen) und **Windows** (MSI-Installer) aus jedem Release — und der **Browser**: dieselbe App, nichts zu installieren. Deine Daten folgen deinem Konto.
+
+Was der Browser nicht kann, darf eine Webseite nicht: NFC lesen oder wie der Kiosk per Kamera scannen. Alles andere — Plan, Buchungen, Mitglieder, Geld, Rechnungen, PDFs — ist dieselbe App. Beim ersten Start des macOS-DMG: Rechtsklick → *Öffnen* (die Build ist noch nicht von Apple notariell beglaubigt).
