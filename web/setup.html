@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DesKilo — Document de configuration</title>
+<style>
+:root{--accent:#c1440e;--bg:#faf6f2;--card:#fff;--ink:#241a14;--muted:#7a6f66;--line:#e6ddd4}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+header{background:var(--accent);color:#fff;padding:20px 16px}
+header h1{margin:0;font-size:1.4rem}
+header p{margin:6px 0 0;opacity:.92;font-size:.9rem;max-width:60rem}
+main{max-width:60rem;margin:0 auto;padding:12px 12px 96px}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:14px 0;overflow:hidden}
+section>h2{margin:0;padding:14px 16px;font-size:1.05rem;cursor:pointer;user-select:none;display:flex;justify-content:space-between;align-items:center}
+section>h2::after{content:'▾';color:var(--muted);transition:transform .15s}
+section.closed>h2::after{transform:rotate(-90deg)}
+section.closed>.body{display:none}
+.body{padding:0 16px 16px;border-top:1px solid var(--line)}
+label{display:block;margin:12px 0 4px;font-weight:600;font-size:.92rem}
+.hint{font-size:.8rem;color:var(--muted);margin:2px 0 0}
+input[type=text],input[type=email],input[type=number],input[type=time],input[type=date],select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:.95rem;background:#fff;color:var(--ink)}
+textarea{min-height:70px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1;min-width:140px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;font-size:.9rem;background:#fff}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.check{display:flex;gap:10px;align-items:flex-start;margin:10px 0;cursor:pointer}
+.check input{margin-top:3px;accent-color:var(--accent);width:18px;height:18px}
+.check .d{font-size:.8rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;margin-top:8px}
+th{text-align:left;font-size:.8rem;color:var(--muted);padding:4px 6px}
+td{padding:3px 3px;vertical-align:top}
+td input,td select{padding:8px}
+.add{background:none;border:1px dashed var(--accent);color:var(--accent);border-radius:8px;padding:8px 14px;cursor:pointer;margin-top:8px;font-size:.9rem}
+.del{background:none;border:none;color:#a33;cursor:pointer;font-size:1.05rem;padding:6px}
+.card{border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0;background:#fdfbf9}
+footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:10px 16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn{border:none;border-radius:999px;padding:12px 22px;font-size:.95rem;cursor:pointer}
+.primary{background:var(--accent);color:#fff}
+.ghost{background:#fff;border:1px solid var(--accent);color:var(--accent)}
+.saved{font-size:.78rem;color:var(--muted);align-self:center}
+@media(prefers-color-scheme:dark){:root{--bg:#191310;--card:#231b16;--ink:#f2e9e1;--muted:#a89a8e;--line:#3a2f27}.chip,input,select,textarea,td input{background:#2a211b;color:var(--ink)}.card{background:#1f1813}footer{background:#231b16}}
+</style>
+</head>
+<body>
+<header>
+  <h1>DesKilo — Document de configuration</h1>
+  <p>Répondez aux questions (choix prédéfinis, noms, adresses — rien à interpréter), sur Mac, PC ou téléphone. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. À la fin, <b>Exporter le XML</b> produit le fichier : l'app l'importe (Réglages de l'espace → Importer l'espace) pour créer réglages, accessoires et plan ; la section &lt;setup&gt; du même fichier porte tout le reste (facturation, disponibilité, services, identité légale, rôles, membres) pour finir la configuration.</p>
+</header>
+<main id="form"></main>
+<footer>
+  <button class="btn primary" onclick="exportXml()">⬇ Exporter le XML</button>
+  <button class="btn ghost" onclick="document.getElementById('load').click()">Charger un fichier…</button>
+  <input type="file" id="load" accept=".xml" style="display:none" onchange="loadFile(this.files[0])">
+  <button class="btn ghost" onclick="if(confirm('Effacer toutes les réponses ?')){localStorage.removeItem(LS);location.reload()}">Réinitialiser</button>
+  <span class="saved" id="saved"></span>
+</footer>
+<script>
+'use strict';
+const LS='deskilo-setup-v1';
+const FEATURES=[
+ ['calendarTab','Onglet Calendrier','Vue mensuelle des réservations.',1],
+ ['eventsTab','Onglet Événements',"Fil d'activité et confirmations.",1],
+ ['moneyTab','Onglet Finances','Relevés, paiements, dépenses.',1],
+ ['services','Services','Catalogue de services et consommations.',1],
+ ['accessorySupplements',"Suppléments d'accessoires",'Accessoires de place tarifés par demi-journée.',1],
+ ['onlinePayments','Paiements en ligne','PayPal, Stripe, Mollie, Wero (config serveur requise).',1],
+ ['invoicing','Factures','Factures immuables et signées.',1],
+ ['adminInvoicing','Les admins émettent des factures','Délégation de facturation aux admins.',1],
+ ['pdfExport','Export PDF','Relevé mensuel en PDF.',1],
+ ['seriesBooking','Réservation en série','Quotidienne, hebdo ou jours ouvrés.',1],
+ ['bookForOthers',"Réserver pour d'autres",'Admins/propriétaires réservent pour les membres.',1],
+ ['pushNotifications','Notifications push','Confirmations poussées sur les appareils.',1],
+ ['adminSeatBlocking','Les admins peuvent bloquer des places','Maintenance.',1],
+ ['levelBooking','Réservations de table, bureau et niveau','Espaces entiers, tarifés par demi-journée.',0],
+ ['adminLevelAssign','Les admins peuvent attribuer des niveaux','Nécessite les réservations d’espaces entiers.',1],
+ ['kioskMode','Mode borne','Tablette murale verrouillée, badges.',1],
+ ['nfcBadges','Badges RFID / NFC','Pointage par carte à une borne Android NFC.',1],
+ ['membersDirectory','Annuaire des membres','Qui est là, statuts, présence.',1],
+ ['whatsappIntegration','Intégration WhatsApp','Écrire aux membres, lien du groupe.',1],
+ ['spaceQrCodes','Codes QR des espaces','Cartes QR imprimables par espace.',1],
+ ['coOwner','Copropriétaires','Succession et permissions de propriétaire.',1],
+ ['autoCheckInOut','Arrivée/départ auto','Clôture des réservations oubliées.',1],
+ ['dataExport','Export des données (Excel)','Classeur complet.',1],
+ ['workingHours','Horaires de travail','Journée configurable, réservation à l’heure.',1],
+ ['invoicePdfTemplate','Modèle de PDF de facture','Éditeur de rapports.',1],
+ ['memberNotifications','Notifications entre membres','Courtes notes in-app.',1],
+ ['documents','Bibliothèque de documents','Liens Drive/OneDrive/SharePoint… par rôle.',1],
+ ['dunning','Relances de paiement (Mahnwesen)','Règles de relance, rien d’automatique.',1],
+ ['memberReports','Rapports des membres','Accord financier, rapport des paiements.',1],
+ ['deletionRequests','Demandes de suppression de réservation','Suppression validée des réservations passées.',1],
+ ['roleManagement','Gestion des rôles','La matrice rôle → permission.',1],
+];
+const PERMS=[['manageRoles','Gérer les rôles et permissions'],['manageMembers','Gérer les membres'],['manageValidation','Configurer les règles de validation'],['workspaceSettings',"Modifier les réglages de l'espace"],['issueInvoices','Émettre les factures et rapprocher les paiements'],['viewFinances',"Consulter les finances de l'espace"],['manageDocuments','Gérer la bibliothèque de documents'],['manageServices','Gérer les services et forfaits'],['approveExpenses','Approuver les dépenses']];
+const PERM_DEFAULTS={co_owner:PERMS.map(p=>p[0]),admin:['manageMembers','manageDocuments','manageServices','approveExpenses','viewFinances'],member:[]};
+const COUNTRIES=[['FR','France','EUR','Europe/Paris'],['DE','Allemagne','EUR','Europe/Berlin'],['BE','Belgique','EUR','Europe/Brussels'],['ES','Espagne','EUR','Europe/Madrid'],['IT','Italie','EUR','Europe/Rome'],['LU','Luxembourg','EUR','Europe/Luxembourg'],['CH','Suisse','CHF','Europe/Zurich'],['AT','Autriche','EUR','Europe/Vienna'],['NL','Pays-Bas','EUR','Europe/Amsterdam'],['PT','Portugal','EUR','Europe/Lisbon'],['GB','Royaume-Uni','GBP','Europe/London'],['US','États-Unis','USD','America/New_York'],['CA','Canada','CAD','America/Toronto']];
+const GRAN=[['half_day','Demi-journées (matin / après-midi)'],['full_day','Journées entières uniquement'],['hours','Heures réelles (de–à exact, demi/journées en raccourcis)'],['minutes_60',"Créneaux d'une heure"],['minutes_30','Créneaux de 30 minutes'],['minutes_15','Créneaux de 15 minutes'],['minutes_5','Créneaux de 5 minutes'],['flexible','Plage horaire libre']];
+const LANGS=[['','Langue de l’app de l’expéditeur'],['fr','Français'],['en','English'],['de','Deutsch'],['es','Español'],['it','Italiano']];
+const WD=[['1','lun.'],['2','mar.'],['3','mer.'],['4','jeu.'],['5','ven.'],['6','sam.'],['7','dim.']];
+
+// ------------------------------------------------------------------ state
+let S=JSON.parse(localStorage.getItem(LS)||'null')||{
+ name:'',country:'FR',currency:'EUR',timezone:'Europe/Paris',language:'',address:'',whatsapp:'',
+ weekdays:['1','2','3','4','5'],granularity:'half_day',dayStart:'08:00',boundary:'12:00',dayEnd:'17:00',closures:[],
+ features:Object.fromEntries(FEATURES.map(f=>[f[0],!!f[3]])),
+ levels:[{name:'1er étage',offices:[{name:'Bureau 1',bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]}]}],
+ accessories:[],services:[],tiers:[{from:0,to:100,fee:'',over:''}],subLevels:['25','50','75','100'],freeLevel:false,packages:[],
+ pay:{iban:'',paypal_me:'',wero:'',lydia:'',wise:'',reference:''},
+ org:'association',vatRegime:'not_subject',regNumber:'',vatId:'',exemption:'',street:'',postal:'',city:'',
+ mentions:{legalForm:'',register:'',terms:'',penalty:'',recovery:'',escompte:'',insurance:'',special:''},
+ reminders:{levels:2,firstDays:14,betweenDays:14},
+ perms:JSON.parse(JSON.stringify(PERM_DEFAULTS)),
+ validation:{required:1,ownerSignOff:false},
+ members:[]};
+function save(){localStorage.setItem(LS,JSON.stringify(S));document.getElementById('saved').textContent='Enregistré '+new Date().toLocaleTimeString()}
+function set(path,val){const p=path.split('.');let o=S;while(p.length>1)o=o[p.shift()];o[p[0]]=val;save()}
+
+// ------------------------------------------------------------------ UI helpers
+const h=(tag,attrs={},...kids)=>{const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='onclick'||k==='oninput'||k==='onchange')e[k]=v;else if(k==='html')e.innerHTML=v;else e.setAttribute(k,v)}for(const k of kids){if(k!=null)e.append(k)}return e};
+function get(path){const p=path.split('.');let o=S;for(const k of p)o=o[k];return o}
+function input(label,path,hint,type='text',ph=''){const i=h('input',{type,placeholder:ph});i.value=get(path)??'';i.oninput=()=>set(path,i.value);const d=h('div',{},h('label',{},label),i);if(hint)d.append(h('p',{class:'hint'},hint));return d}
+function selectEl(label,path,opts,hint,onch){const s=h('select');for(const[v,t]of opts)s.append(h('option',{value:v},t));s.value=get(path);s.onchange=()=>{set(path,s.value);if(onch)onch(s.value)};const d=h('div',{},h('label',{},label),s);if(hint)d.append(h('p',{class:'hint'},hint));return d}
+function chip(text,on,cb){const c=h('button',{class:'chip'+(on?' on':''),type:'button'},text);c.onclick=()=>{cb(!on);render()};return c}
+function section(title,...kids){const s=h('section',{},h('h2',{},title),h('div',{class:'body'},...kids));s.querySelector('h2').onclick=()=>s.classList.toggle('closed');return s}
+function tableRows(cols,rows,make,add,addLabel){const t=h('table',{},h('tr',{},...cols.map(c=>h('th',{},c)),h('th')));rows.forEach((r,i)=>{const tr=h('tr',{},...make(r,i).map(c=>h('td',{},c)),h('td',{},h('button',{class:'del',type:'button',onclick:()=>{rows.splice(i,1);save();render()}},'✕')));t.append(tr)});const w=h('div',{},t,h('button',{class:'add',type:'button',onclick:()=>{rows.push(add());save();render()}},addLabel));return w}
+function cell(path,type='text',ph=''){const i=h('input',{type,placeholder:ph});i.value=get(path)??'';i.oninput=()=>set(path,i.value);return i}
+function bind(obj,key,type='text',ph=''){const i=h('input',{type,placeholder:ph});i.value=obj[key]??'';i.oninput=()=>{obj[key]=type==='number'?i.value:i.value;save()};return i}
+
+// ------------------------------------------------------------------ render
+function render(){
+ const F=document.getElementById('form');F.textContent='';
+ // 1 identity
+ F.append(section("1 · Identité de l'espace",
+  h('div',{class:'row'},input("Nom de l'espace *",'name','Le nom affiché partout.'),
+   selectEl('Pays','country',COUNTRIES.map(c=>[c[0],c[1]]),'Détermine la devise proposée.',v=>{const c=COUNTRIES.find(x=>x[0]===v);if(c){S.currency=c[2];S.timezone=c[3];save();render()}})),
+  h('div',{class:'row'},input('Devise','currency','Code ISO, ex. EUR.'),input('Fuseau horaire','timezone','Ex. Europe/Paris.')),
+  selectEl("Langue de l'espace",'language',LANGS,'Les invitations et rapports y sont rédigés par défaut.'),
+  input('Adresse postale','address','Imprimée sur les factures.','text','12 rue Exemple, 34120 Pézenas'),
+  input('Lien du groupe WhatsApp','whatsapp','Facultatif — https://chat.whatsapp.com/…')));
+ // 2 availability
+ const wdChips=h('div',{class:'chips'},...WD.map(([v,t])=>chip(t,S.weekdays.includes(v),on=>{S.weekdays=on?[...S.weekdays,v]:S.weekdays.filter(x=>x!==v);save()})));
+ F.append(section('2 · Disponibilité',
+  h('label',{},"Jours d'ouverture"),wdChips,
+  selectEl('Granularité des réservations','granularity',GRAN,''),
+  h('div',{class:'row'},input('Début de journée','dayStart','','time'),input('Limite de demi-journée','boundary','','time'),input('Fin de journée','dayEnd','','time')),
+  h('label',{},'Jours de fermeture'),
+  tableRows(['Date'],S.closures,(r,i)=>[cell(`closures.${i}`,'date')],()=> '', '+ Ajouter un jour de fermeture')));
+ // 3 floor plan
+ const planBody=[h('p',{class:'hint'},"Décrivez la structure — l'app génère un plan de départ que vous affinerez dans l'éditeur (photos de fond, positions exactes).")];
+ S.levels.forEach((lv,li)=>{
+  const offices=[];
+  lv.offices.forEach((of,oi)=>{
+   const desks=tableRows(['Nom de la table','Places','Préfixe des places'],of.desks,(d)=>[bind(d,'name'),bind(d,'seats','number'),bind(d,'prefix')],()=>({name:'Table '+(of.desks.length+1),seats:4,prefix:'Place'}),'+ Ajouter une table');
+   offices.push(h('div',{class:'card'},
+    h('div',{class:'row'},h('div',{},h('label',{},'Nom du bureau'),bind(of,'name')),
+     h('div',{},h('label',{},'Réservable en entier'),(()=>{const s=h('select');s.append(h('option',{value:'no'},'Non'),h('option',{value:'yes'},'Oui'));s.value=of.bookable?'yes':'no';s.onchange=()=>{of.bookable=s.value==='yes';save();render()};return s})()),
+     of.bookable?h('div',{},h('label',{},'Prix / demi-journée (€)'),bind(of,'price','number')):h('div')),
+    desks,
+    h('button',{class:'del',type:'button',onclick:()=>{lv.offices.splice(oi,1);save();render()}},'✕ Supprimer ce bureau')));
+  });
+  planBody.push(h('div',{class:'card'},
+   h('div',{class:'row'},h('div',{},h('label',{},"Nom de l'étage"),bind(lv,'name')),
+    h('div',{},h('label',{},'Étage réservable en entier ?'),(()=>{const s=h('select');s.append(h('option',{value:'no'},'Non'),h('option',{value:'yes'},'Oui'));s.value=lv.bookable?'yes':'no';s.onchange=()=>{lv.bookable=s.value==='yes';save()};return s})())),
+   ...offices,
+   h('button',{class:'add',type:'button',onclick:()=>{lv.offices.push({name:'Bureau '+(lv.offices.length+1),bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]});save();render()}},'+ Ajouter un bureau'),
+   h('button',{class:'del',type:'button',onclick:()=>{S.levels.splice(li,1);save();render()}},'✕ Supprimer cet étage')));
+ });
+ planBody.push(h('button',{class:'add',type:'button',onclick:()=>{S.levels.push({name:(S.levels.length+1)+'e étage',offices:[{name:'Bureau 1',bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]}]});save();render()}},'+ Ajouter un étage'));
+ F.append(section('3 · Plan des locaux',...planBody));
+ // 4 features
+ F.append(section('4 · Fonctionnalités',
+  h('p',{class:'hint'},'Cochez ce que votre espace utilise — tout reste modifiable ensuite dans l’app.'),
+  ...FEATURES.map(([k,t,d])=>{const c=h('input',{type:'checkbox'});c.checked=!!S.features[k];c.onchange=()=>{S.features[k]=c.checked;save()};return h('label',{class:'check'},c,h('span',{},t,h('div',{class:'d'},d)))})));
+ // 5 billing
+ F.append(section('5 · Facturation (abonnements)',
+  h('label',{},'Paliers tarifaires'),
+  h('p',{class:'hint'},'Le prix mensuel selon le pourcentage d’abonnement, et le tarif d’une demi-journée de dépassement.'),
+  tableRows(['dès %','jusqu’à %','Tarif €/mois','Dépassement €/demi-j.'],S.tiers,(t)=>[bind(t,'from','number'),bind(t,'to','number'),bind(t,'fee','number'),bind(t,'over','number')],()=>({from:'',to:'',fee:'',over:''}),'+ Ajouter un palier'),
+  h('label',{},"Niveaux d'abonnement proposés (%)"),
+  h('div',{class:'chips'},...['25','50','75','80','100'].map(v=>chip(v+' %',S.subLevels.includes(v),on=>{S.subLevels=on?[...S.subLevels,v]:S.subLevels.filter(x=>x!==v);save()}))),
+  (()=>{const c=h('input',{type:'checkbox'});c.checked=S.freeLevel;c.onchange=()=>{S.freeLevel=c.checked;save()};return h('label',{class:'check'},c,h('span',{},'Autoriser une valeur libre négociée'))})(),
+  h('label',{},'Forfaits de jours'),
+  tableRows(['Nom','Jours','Prix €'],S.packages,(p)=>[bind(p,'name'),bind(p,'days','number'),bind(p,'price','number')],()=>({name:'',days:'',price:''}),'+ Ajouter un forfait')));
+ // 6 services + accessories
+ F.append(section('6 · Services et accessoires',
+  h('label',{},'Services (casiers, impression…)'),
+  tableRows(['Nom','Prix €','TVA % (vide = défaut)'],S.services,(s)=>[bind(s,'name'),bind(s,'price','number'),bind(s,'vat','number')],()=>({name:'',price:'',vat:''}),'+ Ajouter un service'),
+  h('label',{},'Accessoires de place (écran, bureau debout…)'),
+  h('p',{class:'hint'},'Le supplément se facture par demi-journée réservée. 0 = gratuit.'),
+  tableRows(['Nom','Supplément €/demi-j.'],S.accessories,(a)=>[bind(a,'name'),bind(a,'supp','number')],()=>({name:'',supp:'0'}),'+ Ajouter un accessoire')));
+ // 7 payments
+ F.append(section('7 · Instructions de paiement',
+  h('p',{class:'hint'},'Affichées aux membres sur un relevé impayé. Laissez vide pour ne rien afficher.'),
+  input('IBAN','pay.iban',''),input('Lien ou identifiant PayPal.me','pay.paypal_me',''),
+  h('div',{class:'row'},input('Numéro Wero','pay.wero',''),input('Numéro ou identifiant Lydia','pay.lydia','')),
+  h('div',{class:'row'},input('Wisetag / lien Wise','pay.wise',''),input('Indication de référence','pay.reference',''))));
+ // 8 legal
+ F.append(section('8 · Identité légale et facturation',
+  selectEl("Type d'organisation",'org',[['association','Association (loi 1901)'],['company','Entreprise / société']],''),
+  selectEl('Régime de TVA','vatRegime',[['not_subject','Hors du champ de la TVA'],['exempt','Franchise / exonéré (avec n° de TVA)'],['registered','Assujetti à la TVA (taux sur les prix)']],''),
+  h('div',{class:'row'},input("Numéro d'immatriculation",'regNumber',S.org==='association'?'RNA W… · SIRET si attribué':'RCS / SIREN'),input('Numéro de TVA (si applicable)','vatId','')),
+  input('Motif de non-application de la TVA','exemption','Ex. « TVA non applicable, art. 293 B du CGI » ou « Exonération de TVA, art. 261, 7-1° du CGI ».'),
+  h('div',{class:'row'},input('Rue','street',''),input('Code postal','postal',''),input('Ville','city','')),
+  h('label',{},'Mentions de facturation (vide = formule légale par défaut)'),
+  input('Forme juridique et capital','mentions.legalForm','Ex. Association loi 1901'),
+  input('Modalités de règlement','mentions.terms','Défaut : Règlement à réception.'),
+  h('div',{class:'row'},input('Pénalités de retard','mentions.penalty',''),input('Indemnité de recouvrement','mentions.recovery','')),
+  h('div',{class:'row'},input('Escompte','mentions.escompte',''),input('Assurance professionnelle','mentions.insurance','')),
+  input('Mentions particulières','mentions.special',''),
+  h('label',{},'Règles de relance'),
+  h('div',{class:'row'},input('Niveaux de relance','reminders.levels','','number'),input('Jours avant la 1re relance','reminders.firstDays','','number'),input('Jours entre les relances','reminders.betweenDays','','number'))));
+ // 9 roles + validation
+ const permRows=[];
+ for(const[role,label]of[['co_owner','Copropriétaire'],['admin','Admin'],['member','Membre']]){
+  permRows.push(h('div',{class:'card'},h('label',{},label),
+   ...PERMS.map(([k,t])=>{const c=h('input',{type:'checkbox'});c.checked=S.perms[role].includes(k);c.onchange=()=>{S.perms[role]=c.checked?[...S.perms[role],k]:S.perms[role].filter(x=>x!==k);save()};return h('label',{class:'check'},c,h('span',{},t))})));
+ }
+ F.append(section('9 · Rôles et validations',
+  h('p',{class:'hint'},'Le propriétaire détient toujours toutes les permissions. Décidez pour les autres rôles.'),
+  ...permRows,
+  h('label',{},'Règle de validation par défaut'),
+  h('div',{class:'row'},input('Validations requises','validation.required','','number'),
+   (()=>{const c=h('input',{type:'checkbox'});c.checked=S.validation.ownerSignOff;c.onchange=()=>{S.validation.ownerSignOff=c.checked;save()};return h('label',{class:'check'},c,h('span',{},'Signature du propriétaire toujours requise'))})())));
+ // 10 members
+ F.append(section('10 · Membres à inviter',
+  tableRows(['Nom','E-mail','Rôle','Abonnement %'],S.members,(m)=>[bind(m,'name'),bind(m,'email','email'),(()=>{const s=h('select');s.append(h('option',{value:'member'},'Membre'),h('option',{value:'admin'},'Admin'));s.value=m.role||'member';s.onchange=()=>{m.role=s.value;save()};return s})(),bind(m,'pct','number')],()=>({name:'',email:'',role:'member',pct:'100'}),'+ Ajouter un membre')));
+ save();
+}
+
+// ------------------------------------------------------------------ XML export
+const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function exportXml(){
+ if(!S.name.trim()){alert("Renseignez le nom de l'espace (section 1).");return}
+ const x=[];const push=s=>x.push(s);
+ push('<?xml version="1.0" encoding="UTF-8"?>');
+ push('<deskilo-workspace version="2">');
+ // settings — app-importable
+ push(`  <settings name="${esc(S.name)}" country="${esc(S.country)}" currency="${esc(S.currency)}" timezone="${esc(S.timezone)}">`);
+ for(const[k]of FEATURES)push(`    <feature key="${k}" enabled="${!!S.features[k]}"/>`);
+ for(const[k,v]of Object.entries(S.pay))if(String(v).trim())push(`    <payment-instruction key="${k}" value="${esc(v.trim())}"/>`);
+ push('  </settings>');
+ // accessories — app-importable
+ push('  <accessories>');
+ S.accessories.filter(a=>a.name.trim()).forEach((a,i)=>push(`    <accessory name="${esc(a.name.trim())}" supplement-cents="${Math.round((parseFloat(a.supp)||0)*100)}" active="true" sort-order="${i}"/>`));
+ push('  </accessories>');
+ // floor plan — app-importable, auto-layout (seat footprint 6x4, ADR 0005)
+ push('  <floor-plan>');
+ S.levels.forEach((lv,li)=>{
+  push(`    <level name="${esc(lv.name||('Étage '+(li+1)))}" sort-order="${li}">`);
+  let ox=1;
+  lv.offices.forEach(of=>{
+   const desks=of.desks.filter(d=>(parseInt(d.seats)||0)>0);
+   let dw=0,dh=0;const geo=desks.map(d=>{const n=parseInt(d.seats)||1;const cols=Math.ceil(n/2);const w=cols*6;const hgt=n>cols?8:4;dw=Math.max(dw,w);dh+=hgt+1;return{d,n,cols,w,hgt}});
+   const ow=dw+2,oh=Math.max(dh+1,5);
+   push(`      <office name="${esc(of.name)}" color="4288585374" bookable-as-whole="${!!of.bookable}" x="${ox}" y="1" w="${ow}" h="${oh}">`);
+   let dy=2;
+   geo.forEach(({d,n,cols,w,hgt})=>{
+    push(`        <desk name="${esc(d.name)}" x="${ox+1}" y="${dy}" w="${w}" h="${hgt}">`);
+    for(let i=0;i<n;i++){const col=i%cols,row=Math.floor(i/cols);
+     push(`          <seat name="${esc((d.prefix||'Place')+' '+(i+1))}" x="${ox+1+col*6}" y="${dy+row*4}" orientation="${row===0?'s':'n'}" chair=""/>`)}
+    push('        </desk>');dy+=hgt+1});
+   push('      </office>');ox+=ow+2;
+  });
+  push('    </level>');
+ });
+ push('  </floor-plan>');
+ // setup extension — ignored by the app importer, read by the configurator
+ push('  <setup>');
+ push(`    <availability granularity="${S.granularity}" day-start="${S.dayStart}" half-boundary="${S.boundary}" day-end="${S.dayEnd}" open-weekdays="${S.weekdays.join(',')}">`);
+ S.closures.filter(Boolean).forEach(c=>push(`      <closure day="${esc(c)}"/>`));
+ push('    </availability>');
+ push(`    <identity language="${esc(S.language)}" address="${esc(S.address)}" whatsapp-group="${esc(S.whatsapp)}"/>`);
+ push('    <billing>');
+ S.tiers.filter(t=>t.fee!=='').forEach(t=>push(`      <tier from-pct="${t.from||0}" to-pct="${t.to||100}" fee-cents="${Math.round((parseFloat(t.fee)||0)*100)}" overage-cents="${Math.round((parseFloat(t.over)||0)*100)}"/>`));
+ push(`      <subscription-levels values="${S.subLevels.join(',')}" free-value="${S.freeLevel}"/>`);
+ S.packages.filter(p=>p.name.trim()).forEach(p=>push(`      <package name="${esc(p.name)}" days="${p.days||0}" price-cents="${Math.round((parseFloat(p.price)||0)*100)}"/>`));
+ push('    </billing>');
+ push('    <services>');
+ S.services.filter(s=>s.name.trim()).forEach(s=>push(`      <service name="${esc(s.name)}" price-cents="${Math.round((parseFloat(s.price)||0)*100)}"${s.vat!==''&&s.vat!=null?` vat-percent="${s.vat}"`:''}/>`));
+ push('    </services>');
+ push(`    <legal organization="${S.org}" vat-regime="${S.vatRegime}" registration="${esc(S.regNumber)}" vat-id="${esc(S.vatId)}" exemption-reason="${esc(S.exemption)}" street="${esc(S.street)}" postal-code="${esc(S.postal)}" city="${esc(S.city)}">`);
+ for(const[k,v]of Object.entries(S.mentions))if(String(v).trim())push(`      <mention key="${k}" value="${esc(v.trim())}"/>`);
+ push(`      <reminders levels="${S.reminders.levels}" first-days="${S.reminders.firstDays}" between-days="${S.reminders.betweenDays}"/>`);
+ push('    </legal>');
+ push('    <roles>');
+ for(const[role,list]of Object.entries(S.perms))push(`      <role name="${role}" permissions="${list.join(',')}"/>`);
+ push(`      <validation required="${S.validation.required}" owner-sign-off="${S.validation.ownerSignOff}"/>`);
+ push('    </roles>');
+ push('    <members>');
+ S.members.filter(m=>m.email.trim()).forEach(m=>push(`      <member name="${esc(m.name)}" email="${esc(m.email)}" role="${m.role||'member'}" subscription-pct="${m.pct||100}"/>`));
+ push('    </members>');
+ push('  </setup>');
+ push('</deskilo-workspace>');
+ const blob=new Blob([x.join('\n')],{type:'application/xml'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+ a.download='deskilo-setup-'+S.name.trim().toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.xml';a.click();
+}
+// ------------------------------------------------------------------ load back
+function loadFile(f){if(!f)return;const r=new FileReader();r.onload=()=>{try{parseBack(r.result);save();render();alert('Fichier chargé.')}catch(e){alert('Fichier illisible : '+e.message)}};r.readAsText(f)}
+function parseBack(text){
+ const doc=new DOMParser().parseFromString(text,'application/xml');
+ if(doc.querySelector('parsererror'))throw new Error('XML mal formé');
+ const root=doc.documentElement;if(root.tagName!=='deskilo-workspace')throw new Error('racine inattendue');
+ const st=root.querySelector('settings');if(st){S.name=st.getAttribute('name')||'';S.country=st.getAttribute('country')||'FR';S.currency=st.getAttribute('currency')||'EUR';S.timezone=st.getAttribute('timezone')||'Europe/Paris';
+  st.querySelectorAll('feature').forEach(f=>S.features[f.getAttribute('key')]=f.getAttribute('enabled')==='true');
+  Object.keys(S.pay).forEach(k=>S.pay[k]='');st.querySelectorAll('payment-instruction').forEach(p=>{S.pay[p.getAttribute('key')]=p.getAttribute('value')||''});}
+ S.accessories=[...root.querySelectorAll('accessories > accessory')].map(a=>({name:a.getAttribute('name'),supp:String((parseInt(a.getAttribute('supplement-cents'))||0)/100)}));
+ const lvls=[...root.querySelectorAll('floor-plan > level')];
+ if(lvls.length)S.levels=lvls.map(l=>({name:l.getAttribute('name'),offices:[...l.querySelectorAll('office')].map(o=>({name:o.getAttribute('name'),bookable:o.getAttribute('bookable-as-whole')==='true',price:'',desks:[...o.querySelectorAll('desk')].map(d=>{const seats=[...d.querySelectorAll('seat')];const first=seats[0]?.getAttribute('name')||'Place 1';return{name:d.getAttribute('name'),seats:seats.length,prefix:first.replace(/\s*\d+$/,'')||'Place'}})}))}));
+ const su=root.querySelector('setup');if(!su)return;
+ const av=su.querySelector('availability');if(av){S.granularity=av.getAttribute('granularity')||S.granularity;S.dayStart=av.getAttribute('day-start')||S.dayStart;S.boundary=av.getAttribute('half-boundary')||S.boundary;S.dayEnd=av.getAttribute('day-end')||S.dayEnd;S.weekdays=(av.getAttribute('open-weekdays')||'1,2,3,4,5').split(',');S.closures=[...av.querySelectorAll('closure')].map(c=>c.getAttribute('day'))}
+ const id=su.querySelector('identity');if(id){S.language=id.getAttribute('language')||'';S.address=id.getAttribute('address')||'';S.whatsapp=id.getAttribute('whatsapp-group')||''}
+ const bi=su.querySelector('billing');if(bi){S.tiers=[...bi.querySelectorAll('tier')].map(t=>({from:t.getAttribute('from-pct'),to:t.getAttribute('to-pct'),fee:String((parseInt(t.getAttribute('fee-cents'))||0)/100),over:String((parseInt(t.getAttribute('overage-cents'))||0)/100)}));const sl=bi.querySelector('subscription-levels');if(sl){S.subLevels=(sl.getAttribute('values')||'').split(',').filter(Boolean);S.freeLevel=sl.getAttribute('free-value')==='true'}S.packages=[...bi.querySelectorAll('package')].map(p=>({name:p.getAttribute('name'),days:p.getAttribute('days'),price:String((parseInt(p.getAttribute('price-cents'))||0)/100)}))}
+ S.services=[...su.querySelectorAll('services > service')].map(s=>({name:s.getAttribute('name'),price:String((parseInt(s.getAttribute('price-cents'))||0)/100),vat:s.getAttribute('vat-percent')??''}));
+ const le=su.querySelector('legal');if(le){S.org=le.getAttribute('organization')||S.org;S.vatRegime=le.getAttribute('vat-regime')||S.vatRegime;S.regNumber=le.getAttribute('registration')||'';S.vatId=le.getAttribute('vat-id')||'';S.exemption=le.getAttribute('exemption-reason')||'';S.street=le.getAttribute('street')||'';S.postal=le.getAttribute('postal-code')||'';S.city=le.getAttribute('city')||'';le.querySelectorAll('mention').forEach(m=>S.mentions[m.getAttribute('key')]=m.getAttribute('value')||'');const rm=le.querySelector('reminders');if(rm){S.reminders={levels:rm.getAttribute('levels'),firstDays:rm.getAttribute('first-days'),betweenDays:rm.getAttribute('between-days')}}}
+ su.querySelectorAll('roles > role').forEach(r=>S.perms[r.getAttribute('name')]=(r.getAttribute('permissions')||'').split(',').filter(Boolean));
+ const va=su.querySelector('roles > validation');if(va)S.validation={required:va.getAttribute('required'),ownerSignOff:va.getAttribute('owner-sign-off')==='true'};
+ S.members=[...su.querySelectorAll('members > member')].map(m=>({name:m.getAttribute('name'),email:m.getAttribute('email'),role:m.getAttribute('role'),pct:m.getAttribute('subscription-pct')}));
+}
+render();
+</script>
+</body>
+</html>
