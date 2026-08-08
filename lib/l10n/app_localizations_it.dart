@@ -2563,6 +2563,29 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessun check-in attivo trovato — la planimetria potrebbe essersi appena aggiornata.';
 
   @override
+  String get kioskRestOfDay => 'Resto della giornata';
+
+  @override
+  String get kioskPeriodCheckInHint =>
+      'Fino a quando resti? Il check-in inizia adesso.';
+
+  @override
+  String get kioskPeriodReserveHint => 'Scegli il periodo: solo oggi.';
+
+  @override
+  String get kioskCheckInRightAway => 'Check-in immediato';
+
+  @override
+  String get kioskCheckInRightAwayHint =>
+      'Sei qui: la prenotazione parte già registrata.';
+
+  @override
+  String get kioskPresentBadgeNext => 'Presenta il badge';
+
+  @override
+  String get kioskReserveAndCheckIn => 'Prenota e fai check-in';
+
+  @override
   String get languageTitle => 'Lingua';
 
   @override

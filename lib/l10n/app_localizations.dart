@@ -4634,6 +4634,48 @@ abstract class AppLocalizations {
   /// **'No active check-in found — the plan may have just updated.'**
   String get kioskNotCheckedIn;
 
+  /// Kiosk period chip after the working day: now until midnight
+  ///
+  /// In en, this message translates to:
+  /// **'Rest of the day'**
+  String get kioskRestOfDay;
+
+  /// Kiosk period step hint for a check-in (start pinned to now)
+  ///
+  /// In en, this message translates to:
+  /// **'Until when will you stay? Checking in starts now.'**
+  String get kioskPeriodCheckInHint;
+
+  /// Kiosk period step hint for a reservation (kiosk never books the future)
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the period — today only.'**
+  String get kioskPeriodReserveHint;
+
+  /// Kiosk period step switch: the reservation starts checked in
+  ///
+  /// In en, this message translates to:
+  /// **'Check in right away'**
+  String get kioskCheckInRightAway;
+
+  /// Subtitle of the check-in-right-away switch
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re here — the reservation starts checked in.'**
+  String get kioskCheckInRightAwayHint;
+
+  /// Kiosk period step continue button — leads to the badge prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Present the badge'**
+  String get kioskPresentBadgeNext;
+
+  /// Kiosk summary title when a reservation starts checked in
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve & check in'**
+  String get kioskReserveAndCheckIn;
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:

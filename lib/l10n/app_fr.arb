@@ -1303,6 +1303,34 @@
   "kioskRevertDone": "Ce profil est de nouveau un membre normal.",
   "memberNoActions": "Seul le propriétaire de l'espace peut modifier ce membre.",
   "kioskNotCheckedIn": "Aucun pointage actif trouvé — le plan vient peut-être de se mettre à jour.",
+  "kioskRestOfDay": "Reste de la journée",
+  "@kioskRestOfDay": {
+    "description": "Kiosk period chip after the working day: now until midnight"
+  },
+  "kioskPeriodCheckInHint": "Jusqu'à quand restez-vous ? Le pointage commence maintenant.",
+  "@kioskPeriodCheckInHint": {
+    "description": "Kiosk period step hint for a check-in (start pinned to now)"
+  },
+  "kioskPeriodReserveHint": "Choisissez la période — aujourd'hui uniquement.",
+  "@kioskPeriodReserveHint": {
+    "description": "Kiosk period step hint for a reservation (kiosk never books the future)"
+  },
+  "kioskCheckInRightAway": "Pointer tout de suite",
+  "@kioskCheckInRightAway": {
+    "description": "Kiosk period step switch: the reservation starts checked in"
+  },
+  "kioskCheckInRightAwayHint": "Vous êtes sur place — la réservation démarre pointée.",
+  "@kioskCheckInRightAwayHint": {
+    "description": "Subtitle of the check-in-right-away switch"
+  },
+  "kioskPresentBadgeNext": "Présenter le badge",
+  "@kioskPresentBadgeNext": {
+    "description": "Kiosk period step continue button — leads to the badge prompt"
+  },
+  "kioskReserveAndCheckIn": "Réserver et pointer",
+  "@kioskReserveAndCheckIn": {
+    "description": "Kiosk summary title when a reservation starts checked in"
+  },
   "languageTitle": "Langue",
   "languageSystemDefault": "Par défaut du système",
   "levelReserveButton": "Réserver le niveau",

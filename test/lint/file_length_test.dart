@@ -142,7 +142,9 @@ const Map<String, int> _baseline = {
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the
   // kiosk arms the ambient working day itself, like realtime (#430).
   // 680→690: #462 whole-space overlays on the wall display.
-  'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 690,
+  // 690→720 (2026-08-08): #519 the period step wiring (sheet call,
+  // combined reserve+check-in action, warm granularity).
+  'lib/features/kiosk/presentation/screens/kiosk_screen.dart': 720,
   // 600→640 (2026-08-04): #446 fetchWorkHours/setWorkHours — two new
   // repository surfaces (merge-preserving booking_rules writes), not
   // accretion. 640→660: #456 sendMemberNote/fetchMyNotes. 660→690:

@@ -54,5 +54,33 @@
   "kioskRevertDesc": "Dieses Profil ist als Kiosk des Workspace eingerichtet. Als reguläres Mitglied zurücksetzen, damit die Kiosk-Frage beim Start nicht mehr erscheint.",
   "kioskRevertDone": "Dieses Profil ist wieder ein reguläres Mitglied.",
   "memberNoActions": "Nur der Inhaber des Workspace kann dieses Mitglied ändern.",
-  "kioskNotCheckedIn": "Kein aktiver Check-in gefunden — der Plan hat sich womöglich gerade aktualisiert."
+  "kioskNotCheckedIn": "Kein aktiver Check-in gefunden — der Plan hat sich womöglich gerade aktualisiert.",
+  "kioskRestOfDay": "Rest des Tages",
+  "@kioskRestOfDay": {
+    "description": "Kiosk period chip after the working day: now until midnight"
+  },
+  "kioskPeriodCheckInHint": "Bis wann bleibst du? Das Einchecken beginnt jetzt.",
+  "@kioskPeriodCheckInHint": {
+    "description": "Kiosk period step hint for a check-in (start pinned to now)"
+  },
+  "kioskPeriodReserveHint": "Wähle den Zeitraum — nur heute.",
+  "@kioskPeriodReserveHint": {
+    "description": "Kiosk period step hint for a reservation (kiosk never books the future)"
+  },
+  "kioskCheckInRightAway": "Sofort einchecken",
+  "@kioskCheckInRightAway": {
+    "description": "Kiosk period step switch: the reservation starts checked in"
+  },
+  "kioskCheckInRightAwayHint": "Du bist da — die Reservierung startet eingecheckt.",
+  "@kioskCheckInRightAwayHint": {
+    "description": "Subtitle of the check-in-right-away switch"
+  },
+  "kioskPresentBadgeNext": "Badge vorzeigen",
+  "@kioskPresentBadgeNext": {
+    "description": "Kiosk period step continue button — leads to the badge prompt"
+  },
+  "kioskReserveAndCheckIn": "Reservieren & einchecken",
+  "@kioskReserveAndCheckIn": {
+    "description": "Kiosk summary title when a reservation starts checked in"
+  }
 }
