@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 //
 // The setup questionnaire (web/setup.html) generates a schema-v2
-// deskilo-workspace document with an extra <setup> extension block.
+// deskilo-workspace document with an extra `<setup>` extension block.
 // This test pins the CONTRACT: the app's parser accepts exactly what
 // the page emits — settings, accessory catalog and auto-laid-out floor
 // plan parse; the <setup> block is ignored, never fatal.
@@ -13,7 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// A document shaped exactly like web/setup.html's exportXml() output:
 /// 1 level, 1 office, 1 desk with 4 seats (2 columns × 2 rows, seat
 /// footprint 6×4), one accessory, features, payment instructions, and
-/// the full <setup> extension.
+/// the full `<setup>` extension.
 const _pageOutput = '''
 <?xml version="1.0" encoding="UTF-8"?>
 <deskilo-workspace version="2">
