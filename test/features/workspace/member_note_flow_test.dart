@@ -10,7 +10,6 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -57,7 +56,19 @@ Future<FakeWorkspaceRepository> _pump(
     ..memberNotes.addAll(notes);
   final plan = FakeFloorPlanRepository()..seedSmallPlan();
   final reservations = FakeReservationRepository()
-    ..reservations.add(_myReservation());
+    ..reservations.add(_myReservation())
+    // Ana is checked in RIGHT NOW — her check-in must be linkable too.
+    ..reservations.add(Reservation(
+      id: 'res-ana',
+      workspaceId: 'ws-1',
+      seatId: 'seat-4',
+      memberId: 'member-2',
+      startsAt:
+          DateTime(kTestNow.year, kTestNow.month, kTestNow.day, 9),
+      endsAt:
+          DateTime(kTestNow.year, kTestNow.month, kTestNow.day, 18),
+      status: ReservationStatus.checkedIn,
+    ));
   await tester.pumpWidget(
     ProviderScope(
       overrides: standardTestOverrides(
@@ -84,28 +95,6 @@ MemberNote _noteFromAna(String body, {String id = 'note-in'}) => MemberNote(
 Future<void> _openEvents(WidgetTester tester) async {
   await tester.tap(find.byTooltip('Events'));
   await tester.pumpAndSettle();
-}
-
-/// Fires the tap recognizer of the link span labelled [label] inside
-/// the full-message sheet.
-void _tapLink(WidgetTester tester, String label) {
-  for (final richText in tester.widgetList<RichText>(find.byType(RichText))) {
-    TapGestureRecognizer? recognizer;
-    richText.text.visitChildren((span) {
-      if (span is TextSpan &&
-          span.text == label &&
-          span.recognizer is TapGestureRecognizer) {
-        recognizer = span.recognizer as TapGestureRecognizer;
-        return false;
-      }
-      return true;
-    });
-    if (recognizer != null) {
-      recognizer!.onTap!();
-      return;
-    }
-  }
-  fail('link "$label" not found');
 }
 
 void main() {
@@ -151,14 +140,15 @@ void main() {
     await tester.tap(find.textContaining('Still need A1 · tomorrow?'));
     await tester.pumpAndSettle();
 
-    _tapLink(tester, 'A1 · tomorrow');
+    // Links are REAL widgets (field-report fix): plain taps hit them.
+    await tester.tap(find.text('A1 · tomorrow'));
     await tester.pumpAndSettle();
     // My own upcoming reservation → its detail sheet with Cancel.
     expect(find.byKey(const ValueKey('reservation-cancel')), findsOneWidget);
     await tester.tapAt(const Offset(400, 50)); // dismiss the detail sheet
     await tester.pumpAndSettle();
 
-    _tapLink(tester, 'A1');
+    await tester.tap(find.text('A1'));
     await tester.pumpAndSettle();
     // The seat's booking sheet, ready to reserve the future slot.
     expect(find.byKey(const ValueKey('space-seat-seat-4')), findsOneWidget);
@@ -214,7 +204,15 @@ void main() {
     await tester
         .tap(find.byKey(const ValueKey('member-note-ref-reservation')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('note-ref-res-res-link-1')));
+    // BOTH participants' bookings list — my reservation FIRST, then
+    // Ana's live check-in (even though hers started earlier).
+    final mineTile = find.byKey(const ValueKey('note-ref-res-res-link-1'));
+    final anaTile = find.byKey(const ValueKey('note-ref-res-res-ana'));
+    expect(mineTile, findsOneWidget);
+    expect(anaTile, findsOneWidget);
+    expect(tester.getTopLeft(mineTile).dy,
+        lessThan(tester.getTopLeft(anaTile).dy));
+    await tester.tap(anaTile);
     await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const ValueKey('member-note-send')));
@@ -223,6 +221,7 @@ void main() {
     final body = workspace.memberNotes.single.body;
     expect(body, startsWith('About tomorrow:'));
     expect(body, contains('[space:seat:seat-4|A1]'));
-    expect(body, contains('[res:res-link-1|A1 ·'));
+    // The label names the participant: who · space · when.
+    expect(body, contains('[res:res-ana|Ana · A1 ·'));
   });
 }
