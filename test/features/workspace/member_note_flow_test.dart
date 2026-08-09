@@ -112,7 +112,7 @@ void main() {
   testWidgets(
       'the list shows only the FIRST 64 CHARS; tapping opens the full '
       'message (#523)', (tester) async {
-    final long = 'The projector in the main room keeps dropping the '
+    const long = 'The projector in the main room keeps dropping the '
         'signal every ten minutes, can someone have a look at the cable?';
     await _pump(tester, notes: [_noteFromAna(long)]);
     await _openEvents(tester);
