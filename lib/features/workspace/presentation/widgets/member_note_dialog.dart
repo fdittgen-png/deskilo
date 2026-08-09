@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -97,30 +98,58 @@ class _NoteDialogState extends ConsumerState<_NoteDialog> {
     setState(() {});
   }
 
-  /// The label a reservation reference carries: space · when.
+  /// The label a reservation reference carries: who · space · when —
+  /// the name matters because ANY participant's booking or check-in can
+  /// be the subject of the conversation, not just my own.
   String _reservationLabel(
     Reservation reservation,
-    Map<String, String> names,
+    Map<String, String> spaceNames,
+    Map<String, String> memberNames,
     String? localeName,
   ) {
     final target = reservation.seatId ??
         reservation.deskId ??
         reservation.officeId ??
         reservation.levelId;
-    final space = names[target] ?? '';
+    final who = memberNames[reservation.memberId] ?? '';
+    final space = spaceNames[target] ?? '';
     final when = DateFormat.MMMd(localeName)
         .add_Hm()
         .format(reservation.startsAt.toLocal());
-    return space.isEmpty ? when : '$space · $when';
+    return [who, space, when].where((p) => p.isNotEmpty).join(' · ');
   }
 
   Future<void> _pickReservation() async {
     final l10n = AppLocalizations.of(context);
     final localeName = Localizations.maybeLocaleOf(context)?.toString();
-    final reservations =
-        await ref.read(myUpcomingReservationsProvider.future);
-    final names = await ref.read(targetNamesProvider.future);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    final me = ref.read(myMemberProvider).value;
+    if (workspace == null) return;
+    // EVERY participant's linkable booking: still-running or upcoming
+    // reservations AND live check-ins of the whole workspace (the
+    // conversation is often about someone else's seat) — mine first.
+    final now = ref.read(clockProvider).now();
+    final window =
+        await ref.read(reservationRepositoryProvider).fetchWindow(
+              workspace.id,
+              from: now,
+              to: now.add(const Duration(days: 7)),
+            );
+    final spaceNames = await ref.read(targetNamesProvider.future);
+    final memberNames = await ref.read(memberNamesProvider.future);
     if (!mounted) return;
+    final reservations = window
+        .where((r) =>
+            (r.status == ReservationStatus.reserved ||
+                r.status == ReservationStatus.checkedIn) &&
+            r.endsAt.isAfter(now))
+        .toList()
+      ..sort((a, b) {
+        final aMine = a.memberId == me?.id ? 0 : 1;
+        final bMine = b.memberId == me?.id ? 0 : 1;
+        if (aMine != bMine) return aMine - bMine;
+        return a.startsAt.compareTo(b.startsAt);
+      });
     if (reservations.isEmpty) {
       AppSnack.info(
         context,
@@ -137,9 +166,13 @@ class _NoteDialogState extends ConsumerState<_NoteDialog> {
             for (final reservation in reservations)
               ListTile(
                 key: ValueKey('note-ref-res-${reservation.id}'),
-                leading: const Icon(Icons.event_available_outlined),
-                title: Text(
-                    _reservationLabel(reservation, names, localeName)),
+                leading: Icon(
+                  reservation.status == ReservationStatus.checkedIn
+                      ? Icons.login_outlined
+                      : Icons.event_available_outlined,
+                ),
+                title: Text(_reservationLabel(
+                    reservation, spaceNames, memberNames, localeName)),
                 onTap: () => Navigator.of(sheetContext).pop(reservation),
               ),
           ],
@@ -148,7 +181,8 @@ class _NoteDialogState extends ConsumerState<_NoteDialog> {
     );
     if (picked == null || !mounted) return;
     _insert(reservationToken(
-        picked.id, _reservationLabel(picked, names, localeName)));
+        picked.id,
+        _reservationLabel(picked, spaceNames, memberNames, localeName)));
   }
 
   Future<void> _pickSpace() async {
