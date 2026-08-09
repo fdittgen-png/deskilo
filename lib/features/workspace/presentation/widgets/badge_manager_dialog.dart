@@ -249,6 +249,27 @@ class _BadgeManagerDialogState
   /// a failed delete snaps the row back instead of lying about it.
   Future<bool> _delete(MemberBadge badge) async {
     final l10n = widget.l10n;
+    // #523 — every swipe-delete in the app confirms before destroying.
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n?.memberNoteDelete ?? 'Delete'),
+        content: Text(l10n?.badgeDeleteConfirm ??
+            'Delete this revoked badge for good?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(l10n?.commonCancel ?? 'Cancel'),
+          ),
+          FilledButton(
+            key: const ValueKey('badge-delete-confirm'),
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(l10n?.memberNoteDelete ?? 'Delete'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return false;
     return runGuarded(
       context,
       domain: 'workspace',

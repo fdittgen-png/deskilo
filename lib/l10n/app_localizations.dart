@@ -4676,6 +4676,12 @@ abstract class AppLocalizations {
   /// **'Reserve & check in'**
   String get kioskReserveAndCheckIn;
 
+  /// Confirmation before deleting a revoked badge by swipe (#523)
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this revoked badge for good?'**
+  String get badgeDeleteConfirm;
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:
@@ -4903,6 +4909,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Member'**
   String get memberRoleMember;
+
+  /// Tapping a message reservation reference whose target was deleted (#523)
+  ///
+  /// In en, this message translates to:
+  /// **'This reservation no longer exists.'**
+  String get noteRefGone;
+
+  /// Delete button on a message (sheet + confirm dialog, #523)
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get memberNoteDelete;
+
+  /// Confirmation asked before any message delete — swipe or button (#523)
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this message? This cannot be undone.'**
+  String get memberNoteDeleteConfirm;
+
+  /// Reply button on the full-message sheet (#523)
+  ///
+  /// In en, this message translates to:
+  /// **'Reply'**
+  String get memberNoteReply;
+
+  /// Composer chip inserting a reservation reference (#523)
+  ///
+  /// In en, this message translates to:
+  /// **'Link a reservation'**
+  String get noteRefReservation;
+
+  /// Composer chip inserting a seat/table/room/level reference (#523)
+  ///
+  /// In en, this message translates to:
+  /// **'Link a space'**
+  String get noteRefSpace;
+
+  /// Reservation picker when the sender has nothing upcoming (#523)
+  ///
+  /// In en, this message translates to:
+  /// **'No upcoming reservations to link.'**
+  String get noteRefNoReservations;
+
+  /// Space picker: the level-as-a-whole entry suffix (#523)
+  ///
+  /// In en, this message translates to:
+  /// **'whole level'**
+  String get noteRefWholeLevel;
 
   /// Statement line for the plan's monthly fee
   ///

@@ -35,6 +35,10 @@ abstract class ReservationRepository {
   /// export that silently clips history reads as complete when it is not.
   Future<List<Reservation>> fetchAllForExport(String workspaceId);
 
+  /// One reservation by id, or null when it no longer exists — message
+  /// references (#523) resolve live and must survive deletions.
+  Future<Reservation?> fetchById(String reservationId);
+
   /// Creates a reservation for the signed-in member. [checkIn] makes it an
   /// atomic walk-up (reservation + check-in in one transaction).
   Future<String> create({

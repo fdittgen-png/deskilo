@@ -1331,6 +1331,10 @@
   "@kioskReserveAndCheckIn": {
     "description": "Kiosk summary title when a reservation starts checked in"
   },
+  "badgeDeleteConfirm": "¿Eliminar definitivamente esta credencial revocada?",
+  "@badgeDeleteConfirm": {
+    "description": "Confirmation before deleting a revoked badge by swipe (#523)"
+  },
   "languageTitle": "Idioma",
   "languageSystemDefault": "Predeterminado del sistema",
   "levelReserveButton": "Reservar la planta",
@@ -1369,6 +1373,38 @@
   "profilesAdd": "Añadir un perfil",
   "profilesActive": "Perfil activo",
   "memberRoleMember": "Miembro",
+  "noteRefGone": "Esta reserva ya no existe.",
+  "@noteRefGone": {
+    "description": "Tapping a message reservation reference whose target was deleted (#523)"
+  },
+  "memberNoteDelete": "Eliminar",
+  "@memberNoteDelete": {
+    "description": "Delete button on a message (sheet + confirm dialog, #523)"
+  },
+  "memberNoteDeleteConfirm": "¿Eliminar este mensaje? No se puede deshacer.",
+  "@memberNoteDeleteConfirm": {
+    "description": "Confirmation asked before any message delete — swipe or button (#523)"
+  },
+  "memberNoteReply": "Responder",
+  "@memberNoteReply": {
+    "description": "Reply button on the full-message sheet (#523)"
+  },
+  "noteRefReservation": "Vincular una reserva",
+  "@noteRefReservation": {
+    "description": "Composer chip inserting a reservation reference (#523)"
+  },
+  "noteRefSpace": "Vincular un espacio",
+  "@noteRefSpace": {
+    "description": "Composer chip inserting a seat/table/room/level reference (#523)"
+  },
+  "noteRefNoReservations": "No hay reservas próximas que vincular.",
+  "@noteRefNoReservations": {
+    "description": "Reservation picker when the sender has nothing upcoming (#523)"
+  },
+  "noteRefWholeLevel": "planta entera",
+  "@noteRefWholeLevel": {
+    "description": "Space picker: the level-as-a-whole entry suffix (#523)"
+  },
   "moneyBaseFee": "Suscripción base",
   "moneyUsage": "{used} de {included} medias jornadas usadas",
   "moneyUsageUnlimited": "{used} medias jornadas usadas",

@@ -15,7 +15,6 @@ import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
 import '../../../plan/domain/office.dart';
 import '../../../plan/domain/seat.dart';
-import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -25,6 +24,7 @@ import '../../domain/booking_error_text.dart';
 import 'booking_sheet.dart';
 import 'series_result_dialog.dart';
 import '../../domain/space_code.dart';
+import 'reference_open.dart';
 import '../../domain/walk_up_window.dart';
 import '../../providers/reservation_providers.dart';
 import 'booking_range_text.dart';
@@ -53,63 +53,12 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
   );
   if (code == null || !context.mounted) return;
 
-  // Resolve the code against the floor plan — a stale card (deleted
-  // space) reports instead of crashing.
-  final levels = await ref.read(levelsProvider.future);
-  Level? level;
-  Office? office;
-  Desk? desk;
-  Seat? seat;
-  FloorPlan? plan;
-  if (code.kind == SpaceKind.level) {
-    level = levels.where((l) => l.id == code.id).firstOrNull;
-  } else {
-    // All plans in parallel (perf audit: the sequential per-level await
-    // made multi-floor scans wait one round-trip per floor). A level
-    // whose plan fails to load is skipped — the code then reports as
-    // unknown rather than crashing the scanner.
-    final plans = await Future.wait([
-      for (final candidate in levels)
-        ref
-            .read(floorPlanProvider(candidate.id).future)
-            .then<({Level level, FloorPlan plan})?>(
-              (p) => (level: candidate, plan: p),
-              onError: (_, _) => null,
-            ),
-    ]);
-    for (final entry in plans.whereType<({Level level, FloorPlan plan})>()) {
-      final candidate = entry.level;
-      final p = entry.plan;
-      switch (code.kind) {
-        case SpaceKind.office:
-          office = p.offices.where((o) => o.id == code.id).firstOrNull;
-        case SpaceKind.desk:
-          desk = p.desks.where((d) => d.id == code.id).firstOrNull;
-        case SpaceKind.seat:
-          seat = p.seats.where((s) => s.id == code.id).firstOrNull;
-          desk = seat == null
-              ? null
-              : p.desks.where((d) => d.id == seat!.deskId).firstOrNull;
-        case SpaceKind.level:
-          break;
-      }
-      if (office != null || desk != null || seat != null) {
-        level = candidate;
-        plan = p;
-        office ??=
-            p.offices.where((o) => o.id == desk?.officeId).firstOrNull;
-        break;
-      }
-    }
-  }
+  // Resolve the code against the floor plan — the shared walk message
+  // references use too (#523); a stale card reports instead of
+  // crashing.
+  final resolved = await resolveSpaceById(ref, code.kind, code.id);
   if (!context.mounted) return;
-  final resolved = switch (code.kind) {
-    SpaceKind.level => level != null,
-    SpaceKind.office => office != null,
-    SpaceKind.desk => desk != null,
-    SpaceKind.seat => seat != null,
-  };
-  if (!resolved) {
+  if (resolved == null) {
     AppSnack.error(
       context,
       l10n?.spaceScanUnknown ??
@@ -117,6 +66,11 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
     );
     return;
   }
+  final level = resolved.level;
+  final office = resolved.office;
+  final desk = resolved.desk;
+  final seat = resolved.seat;
+  final plan = resolved.plan;
 
   await showSpaceSheet(
     context,

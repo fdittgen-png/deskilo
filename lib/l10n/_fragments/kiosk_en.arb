@@ -246,5 +246,9 @@
   "kioskReserveAndCheckIn": "Reserve & check in",
   "@kioskReserveAndCheckIn": {
     "description": "Kiosk summary title when a reservation starts checked in"
+  },
+  "badgeDeleteConfirm": "Delete this revoked badge for good?",
+  "@badgeDeleteConfirm": {
+    "description": "Confirmation before deleting a revoked badge by swipe (#523)"
   }
 }

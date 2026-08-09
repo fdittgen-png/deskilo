@@ -19,6 +19,7 @@ import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/domain/check_in_reminders.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
+import '../../features/workspace/domain/member_note_refs.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../router.dart';
@@ -126,7 +127,8 @@ class ShellScreen extends ConsumerWidget {
                     ? (l10n?.pushPendingTitle ?? 'DesKilo')
                     : (l10n?.memberNoteReceived(sender) ??
                         'Message from $sender'),
-                body: note.body,
+                // #523 — reference tokens read as their labels.
+                body: notePlainText(note.body),
               );
           if (newest == null || note.createdAt.isAfter(newest)) {
             newest = note.createdAt;

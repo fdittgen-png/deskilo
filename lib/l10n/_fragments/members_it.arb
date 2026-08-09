@@ -10,5 +10,37 @@
   "profilesTitle": "Profili",
   "profilesAdd": "Aggiungi un profilo",
   "profilesActive": "Profilo attivo",
-  "memberRoleMember": "Membro"
+  "memberRoleMember": "Membro",
+  "noteRefGone": "Questa prenotazione non esiste più.",
+  "@noteRefGone": {
+    "description": "Tapping a message reservation reference whose target was deleted (#523)"
+  },
+  "memberNoteDelete": "Elimina",
+  "@memberNoteDelete": {
+    "description": "Delete button on a message (sheet + confirm dialog, #523)"
+  },
+  "memberNoteDeleteConfirm": "Eliminare questo messaggio? Non si può annullare.",
+  "@memberNoteDeleteConfirm": {
+    "description": "Confirmation asked before any message delete — swipe or button (#523)"
+  },
+  "memberNoteReply": "Rispondi",
+  "@memberNoteReply": {
+    "description": "Reply button on the full-message sheet (#523)"
+  },
+  "noteRefReservation": "Collega una prenotazione",
+  "@noteRefReservation": {
+    "description": "Composer chip inserting a reservation reference (#523)"
+  },
+  "noteRefSpace": "Collega uno spazio",
+  "@noteRefSpace": {
+    "description": "Composer chip inserting a seat/table/room/level reference (#523)"
+  },
+  "noteRefNoReservations": "Nessuna prenotazione futura da collegare.",
+  "@noteRefNoReservations": {
+    "description": "Reservation picker when the sender has nothing upcoming (#523)"
+  },
+  "noteRefWholeLevel": "piano intero",
+  "@noteRefWholeLevel": {
+    "description": "Space picker: the level-as-a-whole entry suffix (#523)"
+  }
 }

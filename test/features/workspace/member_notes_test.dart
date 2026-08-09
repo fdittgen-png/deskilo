@@ -270,11 +270,13 @@ void main() {
     expect(workspace.memberNotes.last.toMemberId, 'member-2');
     expect(workspace.memberNotes.last.body, 'Turning it off now.');
 
-    // Swipe LEFT → the received note is deleted.
+    // Swipe LEFT → confirmation first (#523), then the note is deleted.
     await tester.drag(
       find.byKey(const ValueKey('note-dismiss-note-in')),
       const Offset(-400, 0),
     );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('note-delete-confirm')));
     await tester.pumpAndSettle();
     expect(find.text('Message deleted.'), findsOneWidget);
     expect(workspace.memberNotes.where((n) => n.id == 'note-in'), isEmpty);

@@ -1331,6 +1331,10 @@
   "@kioskReserveAndCheckIn": {
     "description": "Kiosk summary title when a reservation starts checked in"
   },
+  "badgeDeleteConfirm": "Supprimer définitivement ce badge révoqué ?",
+  "@badgeDeleteConfirm": {
+    "description": "Confirmation before deleting a revoked badge by swipe (#523)"
+  },
   "languageTitle": "Langue",
   "languageSystemDefault": "Par défaut du système",
   "levelReserveButton": "Réserver le niveau",
@@ -1369,6 +1373,38 @@
   "profilesAdd": "Ajouter un profil",
   "profilesActive": "Profil actif",
   "memberRoleMember": "Membre",
+  "noteRefGone": "Cette réservation n'existe plus.",
+  "@noteRefGone": {
+    "description": "Tapping a message reservation reference whose target was deleted (#523)"
+  },
+  "memberNoteDelete": "Supprimer",
+  "@memberNoteDelete": {
+    "description": "Delete button on a message (sheet + confirm dialog, #523)"
+  },
+  "memberNoteDeleteConfirm": "Supprimer ce message ? Cette action est irréversible.",
+  "@memberNoteDeleteConfirm": {
+    "description": "Confirmation asked before any message delete — swipe or button (#523)"
+  },
+  "memberNoteReply": "Répondre",
+  "@memberNoteReply": {
+    "description": "Reply button on the full-message sheet (#523)"
+  },
+  "noteRefReservation": "Lier une réservation",
+  "@noteRefReservation": {
+    "description": "Composer chip inserting a reservation reference (#523)"
+  },
+  "noteRefSpace": "Lier un espace",
+  "@noteRefSpace": {
+    "description": "Composer chip inserting a seat/table/room/level reference (#523)"
+  },
+  "noteRefNoReservations": "Aucune réservation à venir à lier.",
+  "@noteRefNoReservations": {
+    "description": "Reservation picker when the sender has nothing upcoming (#523)"
+  },
+  "noteRefWholeLevel": "niveau entier",
+  "@noteRefWholeLevel": {
+    "description": "Space picker: the level-as-a-whole entry suffix (#523)"
+  },
   "moneyBaseFee": "Abonnement de base",
   "moneyUsage": "{used} demi-journées utilisées sur {included}",
   "moneyUsageUnlimited": "{used} demi-journées utilisées",

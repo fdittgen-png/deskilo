@@ -15,7 +15,6 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member_note.dart';
-import '../../../workspace/presentation/widgets/member_note_dialog.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../../money/domain/payment_method.dart';
@@ -24,6 +23,7 @@ import '../../domain/event_decision.dart';
 import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
 import '../../providers/event_providers.dart';
+import '../widgets/note_row.dart';
 
 /// The Events space (spec §8.1): pending confirmations pinned on top,
 /// audited feed below. Server RLS scopes workers to their own events and
@@ -418,7 +418,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                     ),
                   ),
                   for (final note in notes)
-                    _NoteRow(
+                    NoteRow(
                       key: ValueKey('note-${note.id}'),
                       note: note,
                       names: names,
@@ -565,138 +565,6 @@ class _DecisionRow extends StatelessWidget {
           child: Text(text, style: theme.textTheme.bodySmall),
         ),
       ],
-    );
-  }
-}
-
-/// One member note in the Messages inbox (#460): direction + sender or
-/// recipient, the FULL text (never ellipsized — this is the one place
-/// the message is readable), and when it was sent. Swipe RIGHT to
-/// reply, swipe LEFT to delete (#467) — a received broadcast cannot be
-/// deleted (it would vanish for every admin) and my own notes offer no
-/// reply-to-myself.
-class _NoteRow extends ConsumerWidget {
-  const _NoteRow({
-    super.key,
-    required this.note,
-    required this.names,
-    required this.myMemberId,
-  });
-
-  final MemberNote note;
-  final Map<String, String> names;
-  final String? myMemberId;
-
-  Future<void> _delete(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
-    try {
-      await ref
-          .read(workspaceRepositoryProvider)
-          .deleteMemberNote(note.id);
-    } catch (e, st) {
-      TraceLogger.instance.error('workspace', 'delete member note failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
-      ref.invalidate(myNotesProvider);
-      return;
-    }
-    ref.invalidate(myNotesProvider);
-    if (!context.mounted) return;
-    AppSnack.info(
-      context,
-      l10n?.memberNoteDeleted ?? 'Message deleted.',
-      replace: true,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
-    final sentByMe = note.fromMemberId == myMemberId;
-    final title = sentByMe
-        ? (note.isBroadcast
-            ? (l10n?.memberNoteToAllAdmins ?? 'To all admins')
-            : (l10n?.memberNoteTo(names[note.toMemberId] ?? '') ??
-                'To ${names[note.toMemberId] ?? ''}'))
-        : (l10n?.memberNoteReceived(names[note.fromMemberId] ?? '') ??
-            'Message from ${names[note.fromMemberId] ?? ''}');
-    final when = DateFormat.MMMd()
-        .add_Hm()
-        .format(note.createdAt.toLocal());
-    final canDelete = sentByMe || !note.isBroadcast;
-    final canReply = !sentByMe;
-    final tile = ListTile(
-      leading: Icon(
-        sentByMe
-            ? (note.isBroadcast
-                ? Icons.campaign_outlined
-                : Icons.outbox_outlined)
-            : Icons.mark_email_unread_outlined,
-      ),
-      title: Text(
-        title,
-        style: theme.textTheme.bodyMedium?.copyWith(
-          fontWeight: sentByMe ? null : FontWeight.w600,
-        ),
-      ),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(note.body),
-          Text(
-            when,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ],
-      ),
-    );
-    return Dismissible(
-      key: ValueKey('note-dismiss-${note.id}'),
-      direction: canDelete || canReply
-          ? DismissDirection.horizontal
-          : DismissDirection.none,
-      // Swipe RIGHT = reply, swipe LEFT = delete. Neither ever
-      // "dismisses" the widget itself: the deletion flows through the
-      // provider (repo delete → invalidate → the row leaves on the
-      // rebuild) — Dismissible's synchronous-removal contract and an
-      // async repository do not mix.
-      confirmDismiss: (direction) async {
-        if (direction == DismissDirection.startToEnd) {
-          if (canReply) {
-            await showMemberNoteDialog(
-              context,
-              ref,
-              toMemberId: note.fromMemberId,
-              recipientName: names[note.fromMemberId] ?? '',
-            );
-          }
-        } else if (canDelete) {
-          await _delete(context, ref);
-        }
-        return false;
-      },
-      background: Container(
-        color: AppStatusColors.successOf(theme.brightness),
-        alignment: Alignment.centerLeft,
-        padding: const EdgeInsets.only(left: AppSpacing.lg),
-        child: const Icon(Icons.reply, color: Colors.white),
-      ),
-      secondaryBackground: Container(
-        color: theme.colorScheme.error,
-        alignment: Alignment.centerRight,
-        padding: const EdgeInsets.only(right: AppSpacing.lg),
-        child: Icon(Icons.delete_outline,
-            color: theme.colorScheme.onError),
-      ),
-      child: tile,
     );
   }
 }

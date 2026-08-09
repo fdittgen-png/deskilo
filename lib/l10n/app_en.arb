@@ -3323,6 +3323,10 @@
   "@kioskReserveAndCheckIn": {
     "description": "Kiosk summary title when a reservation starts checked in"
   },
+  "badgeDeleteConfirm": "Delete this revoked badge for good?",
+  "@badgeDeleteConfirm": {
+    "description": "Confirmation before deleting a revoked badge by swipe (#523)"
+  },
   "languageTitle": "Language",
   "@languageTitle": {
     "description": "Settings entry and dialog title for the in-app language selection"
@@ -3429,6 +3433,38 @@
   },
   "@memberRoleMember": {
     "description": "Role chip for plain workers"
+  },
+  "noteRefGone": "This reservation no longer exists.",
+  "@noteRefGone": {
+    "description": "Tapping a message reservation reference whose target was deleted (#523)"
+  },
+  "memberNoteDelete": "Delete",
+  "@memberNoteDelete": {
+    "description": "Delete button on a message (sheet + confirm dialog, #523)"
+  },
+  "memberNoteDeleteConfirm": "Delete this message? This cannot be undone.",
+  "@memberNoteDeleteConfirm": {
+    "description": "Confirmation asked before any message delete — swipe or button (#523)"
+  },
+  "memberNoteReply": "Reply",
+  "@memberNoteReply": {
+    "description": "Reply button on the full-message sheet (#523)"
+  },
+  "noteRefReservation": "Link a reservation",
+  "@noteRefReservation": {
+    "description": "Composer chip inserting a reservation reference (#523)"
+  },
+  "noteRefSpace": "Link a space",
+  "@noteRefSpace": {
+    "description": "Composer chip inserting a seat/table/room/level reference (#523)"
+  },
+  "noteRefNoReservations": "No upcoming reservations to link.",
+  "@noteRefNoReservations": {
+    "description": "Reservation picker when the sender has nothing upcoming (#523)"
+  },
+  "noteRefWholeLevel": "whole level",
+  "@noteRefWholeLevel": {
+    "description": "Space picker: the level-as-a-whole entry suffix (#523)"
   },
   "moneyBaseFee": "Base subscription",
   "@moneyBaseFee": {
