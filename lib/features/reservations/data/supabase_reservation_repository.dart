@@ -241,6 +241,16 @@ class SupabaseReservationRepository implements ReservationRepository {
     return result as int;
   }
 
+  @override
+  Future<Reservation?> fetchById(String reservationId) async {
+    final row = await _client
+        .from('reservations')
+        .select()
+        .eq('id', reservationId)
+        .maybeSingle();
+    return row == null ? null : _fromRow(Map<String, dynamic>.from(row));
+  }
+
   Reservation _fromRow(Map<String, dynamic> row) => Reservation(
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,

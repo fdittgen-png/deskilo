@@ -2587,6 +2587,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get kioskReserveAndCheckIn => 'Reservieren & einchecken';
 
   @override
+  String get badgeDeleteConfirm =>
+      'Dieses widerrufene Badge endgültig löschen?';
+
+  @override
   String get languageTitle => 'Sprache';
 
   @override
@@ -2708,6 +2712,32 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get memberRoleMember => 'Mitglied';
+
+  @override
+  String get noteRefGone => 'Diese Reservierung existiert nicht mehr.';
+
+  @override
+  String get memberNoteDelete => 'Löschen';
+
+  @override
+  String get memberNoteDeleteConfirm =>
+      'Diese Nachricht löschen? Das lässt sich nicht rückgängig machen.';
+
+  @override
+  String get memberNoteReply => 'Antworten';
+
+  @override
+  String get noteRefReservation => 'Reservierung verknüpfen';
+
+  @override
+  String get noteRefSpace => 'Raum verknüpfen';
+
+  @override
+  String get noteRefNoReservations =>
+      'Keine kommenden Reservierungen zum Verknüpfen.';
+
+  @override
+  String get noteRefWholeLevel => 'ganze Etage';
 
   @override
   String get moneyBaseFee => 'Basis-Abo';

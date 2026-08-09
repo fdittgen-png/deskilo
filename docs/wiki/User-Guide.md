@@ -119,7 +119,7 @@ See who's part of your community:
 
 - Each member card shows their **photo** (or initial), **role chip** (Admin, Owner), **custom status** ("in Berlin till Friday…"), an **online / last-seen** indicator (*Online*, *10 min*, *2 d*) and a **reservation chip**: checked-in seat, *Reserved now*, or next upcoming reservation.
 - Tap a member for their **detail sheet** — role, presence, their **upcoming reservations**, and **Send a notification**.
-- **Send a notification**: a short in-app note (up to 500 characters) to another member — delivered as a push and a notification with your name and message. The full text is always readable under **Events → Messages**, for the recipient and the sender (the push itself carries no content, by privacy design). Admins get a **Notify all admins** megaphone in the header that reaches every admin including the owner. Toggleable via the *Member notifications* feature.
+- **Send a notification**: a short in-app note (up to 500 characters) to another member — delivered as a push and a notification with your name and message. The full text is always readable under **Events → Messages**, for the recipient and the sender (the push itself carries no content, by privacy design). Admins get a **Notify all admins** megaphone in the header that reaches every admin including the owner. Toggleable via the *Member notifications* feature. While composing, two chips let you **link one of your reservations** or **a space** (seat, table, room or level) — the reference shows as a tappable link on both sides: a reservation link opens that reservation, a space link opens the space’s booking sheet, perfect for discussing a future booking.
 - The **message icon** on a card messages that member on **WhatsApp** (if they shared their number); the **group button** opens your community's WhatsApp group (set by the owner).
 - Set your own photo, status, and phone visibility in **Settings** (§12).
 - Admins and owners additionally see each member's **email** under the name — plain members don't: member-to-member contact stays the opt-in WhatsApp number.
@@ -130,7 +130,7 @@ The events feed is the audit trail of your workspace: reservations created/chang
 
 **Waiting for your confirmation:** whenever an admin does something *for somebody else* — books a seat for you, records your payment, demotes an admin — it stays **pending until confirmed**. Pending items are pinned on top with a red ✕ and a green **Accept** button, and you get a notification. Actions you take on yourself never need confirmation.
 
-**Messages:** the bell also collects your member notifications (§6) — received and sent, with their **full text**, newest first. **Swipe right** on a message to reply to its sender, **swipe left** to delete it (a received all-admins broadcast can't be deleted — it would vanish for every admin). Unread messages count on the bell and on the app icon until you open this screen.
+**Messages:** the bell also collects your member notifications (§6) — received and sent, newest first. The list shows only the **first 64 characters**; **tap a message** to read it in full — emojis and all — with its reference links live (a reservation link opens that reservation, a space link opens the booking sheet) and **Reply**/**Delete** buttons. **Swipe right** on a message to reply to its sender, **swipe left** to delete it — deleting always **asks for confirmation** first (a received all-admins broadcast can't be deleted — it would vanish for every admin). Unread messages count on the bell and on the app icon until you open this screen.
 
 **Validation quorum:** for money matters and role changes the owner defines *who* must approve and *how many* approvals are needed. **Nobody validates their own event** — only another person can; where no other validator exists, the request simply waits. Unanswered requests expire after 7 days — nothing costly is ever granted silently, and nothing is self-granted.
 
@@ -296,7 +296,7 @@ Physical cards let people check in with a tap — no phone needed.
 
 1. Open **Settings → RFID / NFC badges** (owner only). Switch **Enable NFC badge check-in** on, and read the **device status** line — it distinguishes *ready*, *NFC turned off in Android settings*, and *no NFC hardware* (iPads have none).
 2. Give each member a card: **Members & plans → the member → Badges → Register a card**, then hold their card to the device. Any card with a readable chip works (MIFARE, NTAG…). Members can also do it **themselves**: **Settings → My badge** mints their printable QR badge and registers their own card — no admin needed.
-3. Use them at a **kiosk** (§10): the member taps the card to reserve or check in. Revoke a lost card from the same Badges dialog; **swipe a revoked badge to the right to delete it** for good.
+3. Use them at a **kiosk** (§10): the member taps the card to reserve or check in. Revoke a lost card from the same Badges dialog; **swipe a revoked badge to the right to delete it** for good (after a confirmation).
 
 Badges belong to **one workspace** — the dialog names which one you're registering into, so register the card under the workspace whose kiosk will read it. The same physical card can serve you in several workspaces. A badge QR saved **as PDF** prints ten credit-card copies on one A4 page — spares included.
 

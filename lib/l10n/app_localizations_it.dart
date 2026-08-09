@@ -2586,6 +2586,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get kioskReserveAndCheckIn => 'Prenota e fai check-in';
 
   @override
+  String get badgeDeleteConfirm =>
+      'Eliminare definitivamente questo badge revocato?';
+
+  @override
   String get languageTitle => 'Lingua';
 
   @override
@@ -2706,6 +2710,32 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get memberRoleMember => 'Membro';
+
+  @override
+  String get noteRefGone => 'Questa prenotazione non esiste più.';
+
+  @override
+  String get memberNoteDelete => 'Elimina';
+
+  @override
+  String get memberNoteDeleteConfirm =>
+      'Eliminare questo messaggio? Non si può annullare.';
+
+  @override
+  String get memberNoteReply => 'Rispondi';
+
+  @override
+  String get noteRefReservation => 'Collega una prenotazione';
+
+  @override
+  String get noteRefSpace => 'Collega uno spazio';
+
+  @override
+  String get noteRefNoReservations =>
+      'Nessuna prenotazione futura da collegare.';
+
+  @override
+  String get noteRefWholeLevel => 'piano intero';
 
   @override
   String get moneyBaseFee => 'Abbonamento base';

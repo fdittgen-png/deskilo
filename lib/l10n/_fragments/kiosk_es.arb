@@ -82,5 +82,9 @@
   "kioskReserveAndCheckIn": "Reservar y registrarse",
   "@kioskReserveAndCheckIn": {
     "description": "Kiosk summary title when a reservation starts checked in"
+  },
+  "badgeDeleteConfirm": "¿Eliminar definitivamente esta credencial revocada?",
+  "@badgeDeleteConfirm": {
+    "description": "Confirmation before deleting a revoked badge by swipe (#523)"
   }
 }

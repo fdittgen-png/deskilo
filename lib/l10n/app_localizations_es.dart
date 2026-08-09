@@ -2582,6 +2582,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get kioskReserveAndCheckIn => 'Reservar y registrarse';
 
   @override
+  String get badgeDeleteConfirm =>
+      '¿Eliminar definitivamente esta credencial revocada?';
+
+  @override
   String get languageTitle => 'Idioma';
 
   @override
@@ -2702,6 +2706,31 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get memberRoleMember => 'Miembro';
+
+  @override
+  String get noteRefGone => 'Esta reserva ya no existe.';
+
+  @override
+  String get memberNoteDelete => 'Eliminar';
+
+  @override
+  String get memberNoteDeleteConfirm =>
+      '¿Eliminar este mensaje? No se puede deshacer.';
+
+  @override
+  String get memberNoteReply => 'Responder';
+
+  @override
+  String get noteRefReservation => 'Vincular una reserva';
+
+  @override
+  String get noteRefSpace => 'Vincular un espacio';
+
+  @override
+  String get noteRefNoReservations => 'No hay reservas próximas que vincular.';
+
+  @override
+  String get noteRefWholeLevel => 'planta entera';
 
   @override
   String get moneyBaseFee => 'Suscripción base';

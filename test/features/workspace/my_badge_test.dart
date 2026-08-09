@@ -110,10 +110,21 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('settings-my-badge')));
     await tester.pumpAndSettle();
 
-    // The revoked row swipes right and disappears — deleted server-side.
+    // The revoked row swipes — but deletion asks for CONFIRMATION
+    // first (#523): cancelling keeps the badge.
     final dismissible = find.byKey(ValueKey('badge-dismiss-${first.badgeId}'));
     expect(dismissible, findsOneWidget);
     await tester.drag(dismissible, const Offset(320, 0));
+    await tester.pumpAndSettle();
+    expect(find.text('Delete this revoked badge for good?'), findsOneWidget);
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+    expect(find.text('Revoked'), findsOneWidget);
+
+    // Swipe again and confirm → deleted server-side.
+    await tester.drag(dismissible, const Offset(320, 0));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('badge-delete-confirm')));
     await tester.pumpAndSettle();
 
     expect(find.text('Revoked'), findsNothing);

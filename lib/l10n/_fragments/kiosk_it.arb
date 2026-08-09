@@ -82,5 +82,9 @@
   "kioskReserveAndCheckIn": "Prenota e fai check-in",
   "@kioskReserveAndCheckIn": {
     "description": "Kiosk summary title when a reservation starts checked in"
+  },
+  "badgeDeleteConfirm": "Eliminare definitivamente questo badge revocato?",
+  "@badgeDeleteConfirm": {
+    "description": "Confirmation before deleting a revoked badge by swipe (#523)"
   }
 }

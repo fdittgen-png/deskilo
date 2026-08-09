@@ -13,6 +13,10 @@ class FakeReservationRepository implements ReservationRepository {
 
   final String myMemberId;
   final reservations = <Reservation>[];
+
+  @override
+  Future<Reservation?> fetchById(String reservationId) async =>
+      reservations.where((r) => r.id == reservationId).firstOrNull;
   var _nextId = 1;
   /// The fake's clock — defaults to [kTestNow], matching the
   /// FixedClock the standard overrides install (#408: the check-in

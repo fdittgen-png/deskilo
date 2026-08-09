@@ -119,7 +119,7 @@ Sieh, wer zur Community gehört:
 
 - Jede Karte zeigt **Foto** (oder Initiale), **Rollen-Chip**, **Status** („bis Freitag in Berlin…"), einen **online / zuletzt gesehen**-Indikator (*Online*, *10 min*, *2 T*) und einen **Reservierungs-Chip**: eingecheckter Platz, *Jetzt reserviert* oder nächste Buchung.
 - Ein Mitglied antippen öffnet das **Detailblatt** — Rolle, Präsenz, **kommende Reservierungen**, **Benachrichtigung senden**.
-- **Benachrichtigung senden**: eine kurze In-App-Notiz (bis 500 Zeichen) — zugestellt als Push und Benachrichtigung mit deinem Namen und Text. Der volle Text bleibt unter **Ereignisse → Nachrichten** lesbar, für Empfänger und Absender (der Push selbst trägt keinen Inhalt, aus Datenschutz). Admins haben ein **Alle Admins benachrichtigen**-Megafon in der Kopfzeile, das jeden Admin samt Inhaber erreicht. Abschaltbar über *Mitglieder-Benachrichtigungen*.
+- **Benachrichtigung senden**: eine kurze In-App-Notiz (bis 500 Zeichen) — zugestellt als Push und Benachrichtigung mit deinem Namen und Text. Der volle Text bleibt unter **Ereignisse → Nachrichten** lesbar, für Empfänger und Absender (der Push selbst trägt keinen Inhalt, aus Datenschutz). Admins haben ein **Alle Admins benachrichtigen**-Megafon in der Kopfzeile, das jeden Admin samt Inhaber erreicht. Abschaltbar über *Mitglieder-Benachrichtigungen*. Beim Schreiben lassen sich per Chip **eine eigene Reservierung** oder **ein Raum** (Sitz, Tisch, Büro oder Etage) **verlinken** — die Referenz erscheint beidseitig als antippbarer Link: ein Reservierungs-Link öffnet diese Reservierung, ein Raum-Link das Buchungsblatt des Raums, ideal um eine künftige Buchung zu besprechen.
 - Das **Nachrichten-Icon** einer Karte schreibt dem Mitglied auf **WhatsApp** (wenn es seine Nummer teilt); der **Gruppen-Knopf** öffnet die WhatsApp-Gruppe der Community.
 - Eigenes Foto, Status und Nummern-Sichtbarkeit in den **Einstellungen** (§12).
 - Admins und Inhaber sehen zusätzlich die **E-Mail** jedes Mitglieds — einfache Mitglieder nicht: Kontakt bleibt die Opt-in-WhatsApp-Nummer.
@@ -130,7 +130,7 @@ Der Ereignis-Feed ist die Prüfspur deines Space: Buchungen erstellt/geändert/s
 
 **Wartet auf deine Bestätigung:** Handelt ein Admin *für jemand anderen* — bucht dir einen Platz, erfasst deine Zahlung, stuft einen Admin zurück — bleibt es **bis zur Bestätigung offen**. Offenes ist oben angepinnt mit rotem ✕ und grünem **Annehmen**, plus Benachrichtigung. Eigene Aktionen auf dich selbst brauchen nie eine Bestätigung.
 
-**Nachrichten:** die Glocke sammelt auch deine Mitglieder-Nachrichten (§6) — empfangen und gesendet, mit **vollem Text**, neueste zuerst. **Nach rechts wischen** = antworten, **nach links** = löschen (ein empfangener Alle-Admins-Broadcast lässt sich nicht löschen — er verschwände für alle). Ungelesene zählen auf Glocke und App-Icon.
+**Nachrichten:** die Glocke sammelt auch deine Mitglieder-Nachrichten (§6) — empfangen und gesendet, neueste zuerst. Die Liste zeigt nur die **ersten 64 Zeichen**; **antippen** öffnet die Nachricht vollständig — Emojis inklusive — mit aktiven Referenz-Links (ein Reservierungs-Link öffnet diese Reservierung, ein Raum-Link das Buchungsblatt) und den Knöpfen **Antworten**/**Löschen**. **Nach rechts wischen** = antworten, **nach links** = löschen — Löschen fragt immer erst **zur Bestätigung** (ein empfangener Alle-Admins-Broadcast lässt sich nicht löschen — er verschwände für alle). Ungelesene zählen auf Glocke und App-Icon.
 
 **Validierungsquorum:** für Geld und Rollen definiert die Inhaberin, *wer* zustimmen muss und *wie viele*. **Niemand validiert das eigene Ereignis** — nur eine andere Person; ohne anderen Validierer wartet der Antrag. Unbeantwortetes verfällt nach 7 Tagen — nichts Teures wird still gewährt, nichts selbst gewährt.
 
@@ -275,7 +275,7 @@ Physische Karten zum Einchecken per Tap — ohne Telefon.
 
 1. **Einstellungen → RFID/NFC-Badges** (nur Inhaber). **NFC-Badge-Check-in** aktivieren, die **Gerätestatus-Zeile** lesen — *bereit*, *NFC in Android aus* oder *keine NFC-Hardware* (iPads haben keine).
 2. Jedem Mitglied eine Karte: **Mitglieder & Pläne → das Mitglied → Badges → Karte registrieren**, Karte ans Gerät halten. Jede lesbare Chipkarte geht (MIFARE, NTAG…). Mitglieder können es auch **selbst**: **Einstellungen → Mein Badge** prägt ihr druckbares QR-Badge und registriert die eigene Karte.
-3. Am **Kiosk** (§10) einsetzen. Verlorene Karte im Badges-Dialog widerrufen; **ein widerrufenes Badge nach rechts wischen** löscht es endgültig.
+3. Am **Kiosk** (§10) einsetzen. Verlorene Karte im Badges-Dialog widerrufen; **ein widerrufenes Badge nach rechts wischen** löscht es endgültig (nach Bestätigung).
 
 Badges gehören **einem Workspace** — der Dialog nennt welchem. Dieselbe physische Karte kann in mehreren Workspaces dienen. Ein QR-Badge **als PDF** druckt zehn Kartenformat-Kopien auf eine A4-Seite.
 

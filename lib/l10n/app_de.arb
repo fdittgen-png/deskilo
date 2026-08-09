@@ -1331,6 +1331,10 @@
   "@kioskReserveAndCheckIn": {
     "description": "Kiosk summary title when a reservation starts checked in"
   },
+  "badgeDeleteConfirm": "Dieses widerrufene Badge endgültig löschen?",
+  "@badgeDeleteConfirm": {
+    "description": "Confirmation before deleting a revoked badge by swipe (#523)"
+  },
   "languageTitle": "Sprache",
   "languageSystemDefault": "Systemstandard",
   "levelReserveButton": "Etage reservieren",
@@ -1369,6 +1373,38 @@
   "profilesAdd": "Profil hinzufügen",
   "profilesActive": "Aktives Profil",
   "memberRoleMember": "Mitglied",
+  "noteRefGone": "Diese Reservierung existiert nicht mehr.",
+  "@noteRefGone": {
+    "description": "Tapping a message reservation reference whose target was deleted (#523)"
+  },
+  "memberNoteDelete": "Löschen",
+  "@memberNoteDelete": {
+    "description": "Delete button on a message (sheet + confirm dialog, #523)"
+  },
+  "memberNoteDeleteConfirm": "Diese Nachricht löschen? Das lässt sich nicht rückgängig machen.",
+  "@memberNoteDeleteConfirm": {
+    "description": "Confirmation asked before any message delete — swipe or button (#523)"
+  },
+  "memberNoteReply": "Antworten",
+  "@memberNoteReply": {
+    "description": "Reply button on the full-message sheet (#523)"
+  },
+  "noteRefReservation": "Reservierung verknüpfen",
+  "@noteRefReservation": {
+    "description": "Composer chip inserting a reservation reference (#523)"
+  },
+  "noteRefSpace": "Raum verknüpfen",
+  "@noteRefSpace": {
+    "description": "Composer chip inserting a seat/table/room/level reference (#523)"
+  },
+  "noteRefNoReservations": "Keine kommenden Reservierungen zum Verknüpfen.",
+  "@noteRefNoReservations": {
+    "description": "Reservation picker when the sender has nothing upcoming (#523)"
+  },
+  "noteRefWholeLevel": "ganze Etage",
+  "@noteRefWholeLevel": {
+    "description": "Space picker: the level-as-a-whole entry suffix (#523)"
+  },
   "moneyBaseFee": "Basis-Abo",
   "moneyUsage": "{used} von {included} halben Tagen genutzt",
   "moneyUsageUnlimited": "{used} halbe Tage genutzt",
