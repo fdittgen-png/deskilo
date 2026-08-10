@@ -4682,6 +4682,18 @@ abstract class AppLocalizations {
   /// **'Delete this revoked badge for good?'**
   String get badgeDeleteConfirm;
 
+  /// Kiosk banner/snack when today is not an open day (open weekdays or a closure day)
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace is closed today — check-in and reservations are not possible.'**
+  String get kioskClosedToday;
+
+  /// Kiosk sheet line naming the settings the derived window follows
+  ///
+  /// In en, this message translates to:
+  /// **'Rule: {granularity} · today {hours}'**
+  String kioskBasis(String granularity, String hours);
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:

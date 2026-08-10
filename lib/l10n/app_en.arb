@@ -3327,6 +3327,22 @@
   "@badgeDeleteConfirm": {
     "description": "Confirmation before deleting a revoked badge by swipe (#523)"
   },
+  "kioskClosedToday": "The workspace is closed today — check-in and reservations are not possible.",
+  "@kioskClosedToday": {
+    "description": "Kiosk banner/snack when today is not an open day (open weekdays or a closure day)"
+  },
+  "kioskBasis": "Rule: {granularity} · today {hours}",
+  "@kioskBasis": {
+    "description": "Kiosk sheet line naming the settings the derived window follows",
+    "placeholders": {
+      "granularity": {
+        "type": "String"
+      },
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
   "languageTitle": "Language",
   "@languageTitle": {
     "description": "Settings entry and dialog title for the in-app language selection"

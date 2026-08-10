@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_realtime_sync.dart';
-import 'kiosk_screen_test.dart' show pumpKiosk, seatCenter, confirmSummary;
+import 'kiosk_screen_test.dart' show pumpKiosk, seatCenter;
 
 void main() {
   testWidgets('the kiosk arms the realtime subscription itself (#430)',
@@ -30,8 +30,6 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
-    await tester.pumpAndSettle();
 
     // The busy-badge sentinel mirrors the 0079 trigger refusing a
     // walk-up while the badge member is active elsewhere.
@@ -41,7 +39,6 @@ void main() {
     );
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pumpAndSettle();
-    await confirmSummary(tester);
 
     expect(
       find.textContaining('one place at a time'),

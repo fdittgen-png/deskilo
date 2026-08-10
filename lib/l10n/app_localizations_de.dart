@@ -2591,6 +2591,15 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieses widerrufene Badge endgültig löschen?';
 
   @override
+  String get kioskClosedToday =>
+      'Der Workspace ist heute geschlossen — Check-in und Reservierungen sind nicht möglich.';
+
+  @override
+  String kioskBasis(String granularity, String hours) {
+    return 'Regel: $granularity · heute $hours';
+  }
+
+  @override
   String get languageTitle => 'Sprache';
 
   @override
