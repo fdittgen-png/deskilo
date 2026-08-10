@@ -17,6 +17,9 @@ import '../features/money/presentation/screens/invoices_screen.dart';
 import '../features/money/presentation/screens/einvoice_config_screen.dart';
 import '../features/money/presentation/screens/invoice_register_screen.dart';
 import '../features/money/presentation/screens/legal_identity_screen.dart';
+import '../features/reservations/domain/space_code.dart';
+import '../features/reservations/presentation/screens/reference_link_screen.dart';
+import '../features/workspace/presentation/screens/message_link_screen.dart';
 import '../features/workspace/presentation/screens/payment_methods_screen.dart';
 import '../features/workspace/presentation/screens/documents_screen.dart';
 import '../features/workspace/presentation/screens/roles_screen.dart';
@@ -273,6 +276,32 @@ GoRouter router(Ref ref) {
         redirect: (context, state) =>
             featureEnabled(WorkspaceFeature.eventsTab) ? null : '/plan',
         builder: (context, state) => const EventsScreen(),
+      ),
+      // Deep links from WhatsApp-mirrored messages (0106): the message
+      // itself, a referenced reservation, a referenced space. All ride
+      // the memberNotifications gate the messenger rides.
+      GoRoute(
+        path: '/msg/:id',
+        redirect: (context, state) =>
+            featureEnabled(WorkspaceFeature.memberNotifications)
+                ? null
+                : '/plan',
+        builder: (context, state) =>
+            MessageLinkScreen(noteId: state.pathParameters['id'] ?? ''),
+      ),
+      GoRoute(
+        path: '/res/:id',
+        builder: (context, state) => ReferenceLinkScreen.reservation(
+            id: state.pathParameters['id'] ?? ''),
+      ),
+      GoRoute(
+        path: '/space/:kind/:id',
+        builder: (context, state) => ReferenceLinkScreen.space(
+          kind: SpaceKind.values.asNameMap()[
+                  state.pathParameters['kind'] ?? ''] ??
+              SpaceKind.seat,
+          id: state.pathParameters['id'] ?? '',
+        ),
       ),
       GoRoute(
         path: '/workspace-code',

@@ -17,6 +17,9 @@ abstract class ProfileRepository {
   /// [normalizeWhatsapp]; '' clears it. Throws [StateError] signed out.
   Future<void> updateWhatsapp(String whatsapp);
 
+  /// Opt in/out of receiving member messages on WhatsApp (0106).
+  Future<void> updateWhatsappNotes(bool enabled);
+
   /// Writes my preferred DOCUMENT language (0098, #496); '' clears it.
   Future<void> setPreferredLocale(String locale);
 

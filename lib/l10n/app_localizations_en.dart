@@ -2729,6 +2729,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get conversationEmpty => 'No messages yet — say hello!';
 
   @override
+  String get whatsappNotesTitle => 'Receive messages on WhatsApp';
+
+  @override
+  String get whatsappNotesSubtitle =>
+      'Member messages arrive on WhatsApp too, with their links — tapping the DesKilo link opens the conversation in the app.';
+
+  @override
+  String get messageLinkGone => 'This message lives in your inbox.';
+
+  @override
   String get moneyBaseFee => 'Base subscription';
 
   @override
