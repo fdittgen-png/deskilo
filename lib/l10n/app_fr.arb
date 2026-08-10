@@ -1429,6 +1429,18 @@
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"
   },
+  "whatsappNotesTitle": "Recevoir les messages sur WhatsApp",
+  "@whatsappNotesTitle": {
+    "description": "Settings switch: mirror member messages to WhatsApp (0106)"
+  },
+  "whatsappNotesSubtitle": "Les messages des membres arrivent aussi sur WhatsApp, avec leurs liens — le lien DesKilo ouvre la conversation dans l’app.",
+  "@whatsappNotesSubtitle": {
+    "description": "Settings switch subtitle for the WhatsApp message mirror (0106)"
+  },
+  "messageLinkGone": "Ce message se trouve dans votre boîte de réception.",
+  "@messageLinkGone": {
+    "description": "Deep-link landing when a /msg link points at a broadcast or a gone note"
+  },
   "moneyBaseFee": "Abonnement de base",
   "moneyUsage": "{used} demi-journées utilisées sur {included}",
   "moneyUsageUnlimited": "{used} demi-journées utilisées",

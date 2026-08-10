@@ -2755,6 +2755,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get conversationEmpty => 'Noch keine Nachrichten — sag hallo!';
 
   @override
+  String get whatsappNotesTitle => 'Nachrichten auf WhatsApp erhalten';
+
+  @override
+  String get whatsappNotesSubtitle =>
+      'Mitglieder-Nachrichten kommen auch auf WhatsApp an, samt Links — der DesKilo-Link öffnet die Unterhaltung in der App.';
+
+  @override
+  String get messageLinkGone => 'Diese Nachricht liegt in deinem Posteingang.';
+
+  @override
   String get moneyBaseFee => 'Basis-Abo';
 
   @override

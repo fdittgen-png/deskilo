@@ -49,6 +49,17 @@ class SupabaseProfileRepository implements ProfileRepository {
   }
 
   @override
+  Future<void> updateWhatsappNotes(bool enabled) async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) {
+      throw StateError('cannot update the profile while signed out');
+    }
+    await _client
+        .from('profiles')
+        .update({'whatsapp_notes': enabled}).eq('id', userId);
+  }
+
+  @override
   Future<void> updateStatusText(String statusText) async {
     final userId = _client.auth.currentUser?.id;
     if (userId == null) {

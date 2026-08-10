@@ -4982,6 +4982,24 @@ abstract class AppLocalizations {
   /// **'No messages yet — say hello!'**
   String get conversationEmpty;
 
+  /// Settings switch: mirror member messages to WhatsApp (0106)
+  ///
+  /// In en, this message translates to:
+  /// **'Receive messages on WhatsApp'**
+  String get whatsappNotesTitle;
+
+  /// Settings switch subtitle for the WhatsApp message mirror (0106)
+  ///
+  /// In en, this message translates to:
+  /// **'Member messages arrive on WhatsApp too, with their links — tapping the DesKilo link opens the conversation in the app.'**
+  String get whatsappNotesSubtitle;
+
+  /// Deep-link landing when a /msg link points at a broadcast or a gone note
+  ///
+  /// In en, this message translates to:
+  /// **'This message lives in your inbox.'**
+  String get messageLinkGone;
+
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:

@@ -25,6 +25,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/profile.dart';
 import '../../providers/profile_providers.dart';
 import '../widgets/member_avatar.dart';
+import '../widgets/whatsapp_dialog.dart';
 
 /// Endonyms are proper nouns, identical in every UI language — deliberately
 /// const strings, not l10n keys (#147). Order matches the issue spec.
@@ -277,9 +278,44 @@ class SettingsScreen extends ConsumerWidget {
             ),
             onTap: () => showDialog<void>(
               context: context,
-              builder: (_) => const _WhatsappDialog(),
+              builder: (_) => const WhatsappDialog(),
             ),
           ),
+          // Messages on WhatsApp (0106): opt-in mirror of the in-app
+          // messenger — needs a shared number AND member notifications.
+          if (features.contains(WorkspaceFeature.whatsappIntegration) &&
+              features.contains(WorkspaceFeature.memberNotifications) &&
+              (myProfile?.sharesWhatsapp ?? false))
+            SwitchListTile(
+              key: const ValueKey('whatsapp-notes-switch'),
+              secondary: const Icon(Icons.forward_to_inbox_outlined),
+              title: Text(l10n?.whatsappNotesTitle ??
+                  'Receive messages on WhatsApp'),
+              subtitle: Text(l10n?.whatsappNotesSubtitle ??
+                  'Member messages arrive on WhatsApp too, with their '
+                      'links — tapping the DesKilo link opens the '
+                      'conversation in the app.'),
+              value: myProfile?.whatsappNotes ?? false,
+              onChanged: (enabled) async {
+                try {
+                  await ref
+                      .read(profileRepositoryProvider)
+                      .updateWhatsappNotes(enabled);
+                } catch (e, st) {
+                  TraceLogger.instance.error(
+                      'profile', 'whatsapp notes toggle failed',
+                      error: e, stackTrace: st);
+                  if (!context.mounted) return;
+                  AppSnack.error(
+                    context,
+                    l10n?.workspaceGenericError ??
+                        'Something went wrong. Please try again.',
+                  );
+                  return;
+                }
+                ref.invalidate(myProfileProvider);
+              },
+            ),
           // Self-set status line on my profile (#231): shown next to me
           // in the member directory (#232). Sits with WhatsApp in the
           // ungrouped personal area on top.
@@ -671,94 +707,6 @@ class _LanguageDialog extends ConsumerWidget {
   }
 }
 
-/// Editor for the opt-in WhatsApp number on my profile (#223). The raw
-/// input is normalized to `+` + digits by [normalizeWhatsapp] on save;
-/// an emptied field clears the number (opt-out). Follows the settings
-/// dialog pattern (_LanguageDialog/_ThemeDialog) with an explicit Save.
-class _WhatsappDialog extends ConsumerStatefulWidget {
-  const _WhatsappDialog();
-
-  @override
-  ConsumerState<_WhatsappDialog> createState() => _WhatsappDialogState();
-}
-
-class _WhatsappDialogState extends ConsumerState<_WhatsappDialog> {
-  late final TextEditingController _controller;
-  bool _saving = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController(
-      text: ref.read(myProfileProvider).value?.whatsapp ?? '',
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  Future<void> _save() async {
-    final l10n = AppLocalizations.of(context);
-    setState(() => _saving = true);
-    try {
-      await ref
-          .read(profileRepositoryProvider)
-          .updateWhatsapp(normalizeWhatsapp(_controller.text));
-      ref.invalidate(myProfileProvider);
-      if (!mounted) return;
-      Navigator.of(context).pop();
-      AppSnack.success(
-        context,
-        l10n?.whatsappSaved ?? 'WhatsApp number saved',
-      );
-    } catch (e, st) {
-      debugPrint('WhatsApp save failed: $e\n$st');
-      TraceLogger.instance.error('profile', 'WhatsApp save failed',
-          error: e, stackTrace: st);
-      if (!mounted) return;
-      setState(() => _saving = false);
-      AppSnack.error(
-        context,
-        l10n?.whatsappSaveFailed ?? 'Could not save the WhatsApp number',
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return AlertDialog(
-      title: Text(l10n?.whatsappTitle ?? 'WhatsApp'),
-      content: TextField(
-        controller: _controller,
-        autofocus: true,
-        keyboardType: TextInputType.phone,
-        decoration: InputDecoration(
-          labelText: l10n?.whatsappFieldLabel ?? 'WhatsApp number',
-          hintText: l10n?.whatsappHint ?? '+33612345678',
-          helperText: l10n?.whatsappHelper ??
-              'Optional. Visible to members of your workspaces. '
-                  'Leave empty to stop sharing it.',
-          helperMaxLines: 3,
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed:
-              _saving ? null : () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
-        ),
-        FilledButton(
-          onPressed: _saving ? null : _save,
-          child: Text(l10n?.commonSave ?? 'Save'),
-        ),
-      ],
-    );
-  }
-}
 
 /// Editor for the self-set status line on my profile (#231). The raw
 /// input is trimmed + hard-capped by [normalizeStatusText] on save (the

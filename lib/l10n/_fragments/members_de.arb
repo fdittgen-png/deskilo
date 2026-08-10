@@ -50,5 +50,17 @@
   "conversationEmpty": "Noch keine Nachrichten — sag hallo!",
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"
+  },
+  "whatsappNotesTitle": "Nachrichten auf WhatsApp erhalten",
+  "@whatsappNotesTitle": {
+    "description": "Settings switch: mirror member messages to WhatsApp (0106)"
+  },
+  "whatsappNotesSubtitle": "Mitglieder-Nachrichten kommen auch auf WhatsApp an, samt Links — der DesKilo-Link öffnet die Unterhaltung in der App.",
+  "@whatsappNotesSubtitle": {
+    "description": "Settings switch subtitle for the WhatsApp message mirror (0106)"
+  },
+  "messageLinkGone": "Diese Nachricht liegt in deinem Posteingang.",
+  "@messageLinkGone": {
+    "description": "Deep-link landing when a /msg link points at a broadcast or a gone note"
   }
 }

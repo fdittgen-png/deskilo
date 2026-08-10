@@ -50,5 +50,17 @@
   "conversationEmpty": "Aún no hay mensajes — ¡saluda!",
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"
+  },
+  "whatsappNotesTitle": "Recibir mensajes en WhatsApp",
+  "@whatsappNotesTitle": {
+    "description": "Settings switch: mirror member messages to WhatsApp (0106)"
+  },
+  "whatsappNotesSubtitle": "Los mensajes de los miembros llegan también a WhatsApp, con sus enlaces — el enlace de DesKilo abre la conversación en la app.",
+  "@whatsappNotesSubtitle": {
+    "description": "Settings switch subtitle for the WhatsApp message mirror (0106)"
+  },
+  "messageLinkGone": "Este mensaje está en tu bandeja de entrada.",
+  "@messageLinkGone": {
+    "description": "Deep-link landing when a /msg link points at a broadcast or a gone note"
   }
 }
