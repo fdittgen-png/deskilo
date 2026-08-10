@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
@@ -15,6 +16,7 @@ import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
 import '../../../plan/domain/office.dart';
 import '../../../plan/domain/seat.dart';
+import '../../../plan/providers/plan_focus_controller.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -677,6 +679,29 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
                   : null,
               onTap: seatTaken(seat) ? null : () => _seatActions(seat),
             ),
+        ],
+        // WHERE is it? (field request) — every space sheet can jump to
+        // the plan with the space in focus, closing every sheet on the
+        // way so the plan is actually visible.
+        if (level != null) ...[
+          const SizedBox(height: 8),
+          OutlinedButton.icon(
+            key: const ValueKey('space-show-plan'),
+            icon: const Icon(Icons.map_outlined),
+            label: Text(l10n?.calendarShowOnPlan ?? 'Show on plan'),
+            onPressed: () {
+              ref.read(planFocusControllerProvider.notifier).setFocus(
+                    PlanFocus(
+                      levelId: level.id,
+                      seatId: scannedSeat?.id,
+                    ),
+                  );
+              Navigator.of(context).popUntil((route) =>
+                  route is! ModalBottomSheetRoute &&
+                  route is! RawDialogRoute);
+              context.go('/plan');
+            },
+          ),
         ],
       ],
     );

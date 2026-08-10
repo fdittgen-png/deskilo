@@ -88,8 +88,9 @@ void main() {
     expect(find.textContaining('A1'), findsOneWidget);
   });
 
-  testWidgets('month markers are red for my days and blue for others',
-      (tester) async {
+  testWidgets(
+      'month markers: red = mine, blue = others, BOTH dots when a day '
+      'carries both (field request)', (tester) async {
     // Admin so the Everyone switch is available.
     await pumpCalendar(
       tester,
@@ -108,11 +109,11 @@ void main() {
     expect(dotColors(), contains(const Color(0xFFEF5350)));
     expect(dotColors(), isNot(contains(const Color(0xFF42A5F5))));
 
-    // Everyone: my day still red (I have a booking that day), never blue —
-    // the red-for-me rule wins when I have any booking on the day.
+    // Everyone: today carries my booking AND Ana's — BOTH dots show.
     await tester.tap(find.text('Everyone'));
     await tester.pumpAndSettle();
     expect(dotColors(), contains(const Color(0xFFEF5350)));
+    expect(dotColors(), contains(const Color(0xFF42A5F5)));
   });
 
   testWidgets("admins can switch to everyone's reservations", (tester) async {

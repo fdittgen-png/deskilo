@@ -242,16 +242,17 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
             month: _month,
             selectedDay: _selectedDay,
             today: DateUtils.dateOnly(ref.watch(clockProvider).now()),
-            // Mine vs others' markers ('when did I reserve what' first): a
-            // day with any of MY bookings carries a red dot, a day with
-            // only other members' bookings a blue one.
-            markedDays: {
-              for (final r in visible)
-                WorkspaceTime.dateOf(r.startsAt),
-            },
+            // Mine vs others' markers (field request): a day with any of
+            // MY bookings carries a red dot, a day with other members'
+            // a blue one — a day with BOTH shows both dots side by side.
             myDays: {
               for (final r in visible)
                 if (r.memberId == myMember?.id)
+                  WorkspaceTime.dateOf(r.startsAt),
+            },
+            otherDays: {
+              for (final r in visible)
+                if (r.memberId != myMember?.id)
                   WorkspaceTime.dateOf(r.startsAt),
             },
             onSelect: (day) => setState(() => _selectedDay = day),
@@ -473,8 +474,8 @@ class _MonthGrid extends StatelessWidget {
     required this.month,
     required this.selectedDay,
     required this.today,
-    required this.markedDays,
     required this.myDays,
+    required this.otherDays,
     required this.onSelect,
   });
 
@@ -495,11 +496,13 @@ class _MonthGrid extends StatelessWidget {
   /// Local today — gets a ring so it stays findable when another day is
   /// selected.
   final DateTime today;
-  final Set<DateTime> markedDays;
 
-  /// Days with at least one of MY bookings — the red dot; other marked
-  /// days get the blue one.
+  /// Days with at least one of MY bookings — the red dot.
   final Set<DateTime> myDays;
+
+  /// Days with at least one OTHER member's booking — the blue dot. A
+  /// day in both sets shows both dots.
+  final Set<DateTime> otherDays;
   final ValueChanged<DateTime> onSelect;
 
   @override
@@ -547,7 +550,8 @@ class _MonthGrid extends StatelessWidget {
                         final selected =
                             DateUtils.isSameDay(day, selectedDay);
                         final isToday = DateUtils.isSameDay(day, today);
-                        final marked = markedDays.contains(day);
+                        final mine = myDays.contains(day);
+                        final others = otherDays.contains(day);
                         // Selected wins the filled disc; an unselected today
                         // keeps a ring so it stays findable.
                         final decoration = selected
@@ -589,15 +593,28 @@ class _MonthGrid extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+                                // One dot per truth (field request): red
+                                // = I have a booking, blue = others do,
+                                // BOTH when both apply.
                                 SizedBox(
                                   height: 5,
-                                  child: marked
-                                      ? Icon(
-                                          Icons.circle,
-                                          size: 5,
-                                          color: myDays.contains(day)
-                                              ? _mineDot
-                                              : _otherDot,
+                                  child: mine || others
+                                      ? Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            if (mine)
+                                              const Icon(Icons.circle,
+                                                  size: 5,
+                                                  color: _mineDot),
+                                            if (mine && others)
+                                              const SizedBox(width: 2),
+                                            if (others)
+                                              const Icon(Icons.circle,
+                                                  size: 5,
+                                                  color: _otherDot),
+                                          ],
                                         )
                                       : null,
                                 ),

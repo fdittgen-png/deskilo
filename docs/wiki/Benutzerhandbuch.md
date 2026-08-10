@@ -108,7 +108,7 @@ Jeder Platz, Tisch, jedes Büro und jede Etage kann eine gedruckte **QR-Karte** 
 
 Der Monat auf einen Blick, mit zwei Reichweiten und zwei Formen:
 
-- **Meine / Alle** — deine eigenen Buchungen oder die der ganzen Community. Deine Tage sind **rot**, die der anderen **blau**, heute ist umringt; ein Punkt unter einem Tag meldet eine Buchung.
+- **Meine / Alle** — deine eigenen Buchungen oder die der ganzen Community. Die Punkte unter einem Tag sagen alles auf einen Blick: **rot** = du hast eine Buchung, **blau** = andere Mitglieder haben eine, **beide Punkte** = beides. Heute ist umringt.
 - Der **Form-Umschalter** daneben wechselt die untere Hälfte zwischen **Wochenraster** (Plätze × Tage) und **Agenda-Liste** (jede Reservierung als Karte: Zeitfenster, Mitglied, Raum).
 - Die **Etagen-Chips** filtern beide Formen.
 - Einen Tag antippen lädt ihn unten. Im Querformat geteilte Ansicht.
@@ -130,7 +130,7 @@ Der Ereignis-Feed ist die Prüfspur deines Space: Buchungen erstellt/geändert/s
 
 **Wartet auf deine Bestätigung:** Handelt ein Admin *für jemand anderen* — bucht dir einen Platz, erfasst deine Zahlung, stuft einen Admin zurück — bleibt es **bis zur Bestätigung offen**. Offenes ist oben angepinnt mit rotem ✕ und grünem **Annehmen**, plus Benachrichtigung. Eigene Aktionen auf dich selbst brauchen nie eine Bestätigung.
 
-**Nachrichten:** die Glocke sammelt auch deine Mitglieder-Nachrichten (§6) — empfangen und gesendet, neueste zuerst. Die Liste zeigt nur die **ersten 64 Zeichen**; **antippen** (oder **nach rechts wischen**) öffnet die **Unterhaltung** mit diesem Mitglied — der ganze Austausch als Sprechblasen, Emojis und Referenz-Links aktiv (ein Reservierungs-Link öffnet diese Reservierung, ein Raum-Link das Buchungsblatt), der Verfasser direkt darunter; ein Broadcast öffnet als einzelne Nachricht. **Nach links wischen** = löschen (langes Drücken einer Sprechblase löscht auch im Thread) — Löschen fragt immer erst **zur Bestätigung** (ein empfangener Alle-Admins-Broadcast lässt sich nicht löschen — er verschwände für alle).  Eigene Nachrichten tragen neben der Zeit ein kleines Häkchen: **grau = zugestellt**, **blau = gelesen** (ein Broadcast an alle Admins bleibt grau — er hat viele Leser). Ungelesene zählen auf Glocke und App-Icon.
+**Nachrichten:** die Glocke sammelt auch deine Mitglieder-Nachrichten (§6) — empfangen und gesendet, neueste zuerst. Die Liste zeigt nur die **ersten 64 Zeichen**; **antippen** (oder **nach rechts wischen**) öffnet die **Unterhaltung** mit diesem Mitglied — der ganze Austausch als Sprechblasen, Emojis und Referenz-Links aktiv (ein Reservierungs-Link öffnet diese Reservierung, ein Raum-Link das Buchungsblatt — beide mit einem *Auf dem Plan zeigen*-Sprung), der Verfasser direkt darunter; ein Broadcast öffnet als einzelne Nachricht. **Nach links wischen** = löschen (langes Drücken einer Sprechblase löscht auch im Thread) — Löschen fragt immer erst **zur Bestätigung** (ein empfangener Alle-Admins-Broadcast lässt sich nicht löschen — er verschwände für alle).  Eigene Nachrichten tragen neben der Zeit ein kleines Häkchen: **grau = zugestellt**, **blau = gelesen** (ein Broadcast an alle Admins bleibt grau — er hat viele Leser). Ungelesene zählen auf Glocke und App-Icon.
 
 **Validierungsquorum:** für Geld und Rollen definiert die Inhaberin, *wer* zustimmen muss und *wie viele*. **Niemand validiert das eigene Ereignis** — nur eine andere Person; ohne anderen Validierer wartet der Antrag. Unbeantwortetes verfällt nach 7 Tagen — nichts Teures wird still gewährt, nichts selbst gewährt.
 

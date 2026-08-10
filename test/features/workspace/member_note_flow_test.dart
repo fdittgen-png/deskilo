@@ -150,6 +150,14 @@ void main() {
     await tester.pumpAndSettle();
     // The seat's booking sheet, ready to reserve the future slot.
     expect(find.byKey(const ValueKey('space-seat-seat-4')), findsOneWidget);
+
+    // SHOW ON PLAN (field request): the jump closes EVERY sheet —
+    // including the conversation underneath — and lands on the plan.
+    await tester.tap(find.byKey(const ValueKey('space-show-plan')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('conversation-sheet')), findsNothing);
+    expect(
+        find.byKey(const ValueKey('plan-canvas-view')), findsOneWidget);
   });
 
   testWidgets(
