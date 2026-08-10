@@ -1335,6 +1335,22 @@
   "@badgeDeleteConfirm": {
     "description": "Confirmation before deleting a revoked badge by swipe (#523)"
   },
+  "kioskClosedToday": "Lo spazio è chiuso oggi — check-in e prenotazioni non sono possibili.",
+  "@kioskClosedToday": {
+    "description": "Kiosk banner/snack when today is not an open day (open weekdays or a closure day)"
+  },
+  "kioskBasis": "Regola: {granularity} · oggi {hours}",
+  "@kioskBasis": {
+    "description": "Kiosk sheet line naming the settings the derived window follows",
+    "placeholders": {
+      "granularity": {
+        "type": "String"
+      },
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
   "languageTitle": "Lingua",
   "languageSystemDefault": "Predefinita di sistema",
   "levelReserveButton": "Prenota il piano",

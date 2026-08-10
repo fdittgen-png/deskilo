@@ -2594,6 +2594,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Supprimer définitivement ce badge révoqué ?';
 
   @override
+  String get kioskClosedToday =>
+      'L\'espace est fermé aujourd\'hui — pointage et réservations impossibles.';
+
+  @override
+  String kioskBasis(String granularity, String hours) {
+    return 'Règle : $granularity · aujourd’hui $hours';
+  }
+
+  @override
   String get languageTitle => 'Langue';
 
   @override

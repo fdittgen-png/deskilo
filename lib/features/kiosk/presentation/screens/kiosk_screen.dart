@@ -13,16 +13,14 @@ import '../../../reservations/domain/booking_error_text.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
-import '../../../../core/ui/form_sheet.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
-import '../../../../core/scan/scan_camera_box.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../plan/domain/level.dart';
-import '../../../reservations/domain/walk_up_window.dart';
 import '../../../reservations/presentation/widgets/booking_range_text.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/presentation/seat_occupancy.dart';
@@ -34,7 +32,7 @@ import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../../core/time/work_hours.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../widgets/kiosk_period_sheet.dart';
+import '../widgets/kiosk_act_sheet.dart';
 import '../../device_pin.dart';
 import '../../../../core/time/clock.dart';
 
@@ -95,214 +93,97 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     super.dispose();
   }
 
-  /// The window an action books — the shared walk-up window (also the
-  /// space-QR scan flow's).
-  ({DateTime start, DateTime end}) _actionWindow() => walkUpWindow(
-        ref.read(bookingGranularityProvider).value ??
-            BookingGranularity.flexible,
-        ref.read(clockProvider).now(),
-      );
+  /// Whether the workspace is closed TODAY (open weekdays + closure
+  /// days) — surfaced up front on the kiosk instead of letting a full
+  /// flow run into a server rejection at the very end (field report).
+  bool _closedToday() {
+    final now = ref.read(clockProvider).now();
+    final open = ref.read(openWeekdaysProvider).value;
+    if (open != null && !open.contains(now.weekday)) return true;
+    final closures = ref.read(closureDaysProvider).value ?? const [];
+    return closures.any((c) =>
+        c.day.year == now.year &&
+        c.day.month == now.month &&
+        c.day.day == now.day);
+  }
 
   Future<void> _onSeatTap(Seat seat) =>
-      _actionThenBadge(title: seat.name, seatId: seat.id);
+      _act(title: seat.name, seatId: seat.id);
 
-  /// Whole-level path (0050): the same action → authenticate flow, with
-  /// the level as the booking target.
-  Future<void> _onLevelTap(Level level) => _actionThenBadge(
+  /// Whole-level path (0050): the same one-sheet flow, with the level
+  /// as the booking target.
+  Future<void> _onLevelTap(Level level) => _act(
         title: level.name,
         levelId: level.id,
       );
 
-  Future<void> _actionThenBadge({
+  /// The WHOLE flow (field report: "as few operations as possible"):
+  /// one sheet — action preselected to Check in, the window derived
+  /// from the settings, badge reader live — and the badge executes
+  /// immediately. Happy path: tap the seat, present the badge. Done.
+  Future<void> _act({
     required String title,
     String? seatId,
     String? levelId,
   }) async {
     final l10n = AppLocalizations.of(context);
-    final action = await showModalBottomSheet<KioskAction>(
-      context: context,
-      builder: (context) => SheetShell(
-        title: title,
-        children: [
-          const SizedBox(height: 12),
-          FilledButton.icon(
-            key: const ValueKey('kiosk-check-in'),
-            onPressed: () => Navigator.of(context).pop(KioskAction.checkIn),
-            icon: const Icon(Icons.login_outlined),
-            label: Text(l10n?.kioskCheckIn ?? 'Check in'),
-          ),
-          const SizedBox(height: 8),
-          OutlinedButton.icon(
-            key: const ValueKey('kiosk-reserve'),
-            onPressed: () => Navigator.of(context).pop(KioskAction.reserve),
-            icon: const Icon(Icons.event_available_outlined),
-            label: Text(l10n?.kioskReserve ?? 'Reserve'),
-          ),
-          const SizedBox(height: 8),
-          OutlinedButton.icon(
-            key: const ValueKey('kiosk-check-out'),
-            onPressed: () => Navigator.of(context).pop(KioskAction.checkOut),
-            icon: const Icon(Icons.logout_outlined),
-            label: Text(l10n?.kioskCheckOut ?? 'Check out'),
-          ),
-        ],
-      ),
-    );
-    if (action == null || !mounted) return;
-    // Field request: the member says WHEN before any badge comes out —
-    // granularity-true, today-only. Check-out books no window.
-    KioskPeriod? period;
-    if (action != KioskAction.checkOut) {
-      period = await showKioskPeriodSheet(
-        context,
-        action: action,
-        granularity: ref.read(bookingGranularityProvider).value ??
-            BookingGranularity.flexible,
-        now: ref.read(clockProvider).now(),
-        targetName: title,
-      );
-      if (period == null || !mounted) return;
-    }
-    await _badgeSheet(
-      action,
-      targetName: title,
-      seatId: seatId,
-      levelId: levelId,
-      period: period,
-    );
-  }
-
-  /// The badge prompt: an autofocused field a wedge scanner (or a human)
-  /// types the badge code into. Submitting calls the stateless kiosk_act
-  /// RPC — the code lives only in this sheet's controller and dies with it.
-  Future<void> _badgeSheet(
-    KioskAction action, {
-    required String targetName,
-    String? seatId,
-    String? levelId,
-    KioskPeriod? period,
-  }) async {
-    final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
-    final token = await showModalBottomSheet<String>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => _KioskBadgePrompt(
-        reader: ref.read(nfcUidReaderProvider),
-        nfcEnabled: ref
-            .read(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.nfcBadges),
-        // Camera QR scanning (K3): the wall tablet reads the printed
-        // badge with its camera — the injectable zxing seam keeps
-        // tests camera-free.
-        scanBuilder:
-            qrScanSupported ? ref.read(qrScanWidgetBuilderProvider) : null,
-        l10n: l10n,
-      ),
+    if (_closedToday()) {
+      AppSnack.error(
+        context,
+        l10n?.kioskClosedToday ??
+            'The workspace is closed today — check-in and reservations '
+                'are not possible.',
+        replace: true,
+      );
+      return;
+    }
+    final request = await showKioskActSheet(
+      context,
+      targetName: title,
+      granularity: ref.read(bookingGranularityProvider).value ??
+          BookingGranularity.flexible,
+      now: ref.read(clockProvider).now(),
+      reader: ref.read(nfcUidReaderProvider),
+      nfcEnabled: ref
+          .read(enabledFeaturesSyncProvider)
+          .contains(WorkspaceFeature.nfcBadges),
+      // Camera QR scanning (K3): the wall tablet reads the printed
+      // badge with its camera — the injectable zxing seam keeps tests
+      // camera-free.
+      scanBuilder:
+          qrScanSupported ? ref.read(qrScanWidgetBuilderProvider) : null,
     );
-    if (token == null || token.isEmpty || !mounted) return;
-    // The sheet's dispose stopped BOTH readers (NFC session + camera) —
-    // the confirm step below runs with everything off (field request).
+    if (request == null || !mounted) return;
+    // The sheet's dispose stopped BOTH readers (NFC session + camera).
 
-    final window = period == null
-        ? _actionWindow()
-        : (start: period.start, end: period.end);
     // A reservation made standing at the kiosk can start checked in —
-    // the period step asked; one badge presentation covers both.
-    final effective = action == KioskAction.reserve &&
-            (period?.checkInNow ?? false)
-        ? KioskAction.checkIn
-        : action;
+    // one badge presentation covers both.
+    final effective =
+        request.action == KioskAction.reserve && request.checkInNow
+            ? KioskAction.checkIn
+            : request.action;
+    final booksWindow = request.action != KioskAction.checkOut;
 
-    // Identify first: resolve the badge to its member so the summary
-    // names WHO is about to act — the wrong-badge guard on a shared
-    // wall tablet.
+    // Identify + act in one go: the badge IS the confirmation. The
+    // success card below names WHO acted — the wrong-badge guard
+    // without an extra mandatory tap.
     final String memberName;
     try {
       memberName =
           await ref.read(reservationRepositoryProvider).kioskIdentify(
                 workspaceId: workspace.id,
-                badgeToken: token,
+                badgeToken: request.badgeToken,
               );
-    } catch (e, st) {
-      debugPrint('kiosk identify failed: $e\n$st');
-      TraceLogger.instance
-          .error('kiosk', 'kiosk identify failed', error: e, stackTrace: st);
-      if (!mounted) return;
-      AppSnack.error(
-        context,
-        e is PostgrestException &&
-                e.message.contains(KioskBadgeError.serverSubstring)
-            ? (l10n?.kioskBadgeRejected ?? 'Badge not recognized.')
-            : (l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.'),
-        replace: true,
-      );
-      return;
-    }
-    if (!mounted) return;
-
-    // The résumé: who, what, where, when — Confirm executes, Reject
-    // discards. Nothing has happened yet.
-    final actionLabel = action == KioskAction.reserve &&
-            effective == KioskAction.checkIn
-        ? (l10n?.kioskReserveAndCheckIn ?? 'Reserve & check in')
-        : switch (action) {
-            KioskAction.checkIn => l10n?.kioskCheckIn ?? 'Check in',
-            KioskAction.reserve => l10n?.kioskReserve ?? 'Reserve',
-            KioskAction.checkOut => l10n?.kioskCheckOut ?? 'Check out',
-          };
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(actionLabel),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              memberName,
-              key: const ValueKey('kiosk-summary-name'),
-              style: Theme.of(dialogContext).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 4),
-            Text(targetName),
-            if (action != KioskAction.checkOut) ...[
-              const SizedBox(height: 4),
-              Text(
-                bookingRangeText(l10n, window.start, window.end),
-                style: Theme.of(dialogContext).textTheme.bodySmall,
-              ),
-            ],
-          ],
-        ),
-        actions: [
-          TextButton(
-            key: const ValueKey('kiosk-summary-reject'),
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n?.kioskRejectAction ?? 'Reject'),
-          ),
-          FilledButton(
-            key: const ValueKey('kiosk-summary-confirm'),
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n?.kioskConfirmAction ?? 'Confirm'),
-          ),
-        ],
-      ),
-    );
-    if (confirmed != true || !mounted) return;
-
-    try {
       await ref.read(reservationRepositoryProvider).kioskAct(
             workspaceId: workspace.id,
-            badgeToken: token,
+            badgeToken: request.badgeToken,
             action: effective.wireName,
             seatId: seatId,
             levelId: levelId,
-            startsAt:
-                action == KioskAction.checkOut ? null : window.start,
-            endsAt: action == KioskAction.checkOut ? null : window.end,
+            startsAt: booksWindow ? request.start : null,
+            endsAt: booksWindow ? request.end : null,
           );
     } catch (e, st) {
       debugPrint('kiosk act failed: $e\n$st');
@@ -329,12 +210,29 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       return;
     }
     if (!mounted) return;
-    AppSnack.success(
-      context,
-      l10n?.kioskDone ?? "Done — you're all set.",
-      replace: true,
-    );
     invalidateBookingData(ref);
+
+    // The receipt: who, what, where, until when — self-dismissing, so
+    // the next member finds a clean wall.
+    final actionLabel = request.action == KioskAction.reserve &&
+            effective == KioskAction.checkIn
+        ? (l10n?.kioskReserveAndCheckIn ?? 'Reserve & check in')
+        : switch (request.action) {
+            KioskAction.checkIn => l10n?.kioskCheckIn ?? 'Check in',
+            KioskAction.reserve => l10n?.kioskReserve ?? 'Reserve',
+            KioskAction.checkOut => l10n?.kioskCheckOut ?? 'Check out',
+          };
+    unawaited(showDialog<void>(
+      context: context,
+      builder: (_) => _KioskSuccessCard(
+        actionLabel: actionLabel,
+        memberName: memberName,
+        targetName: title,
+        rangeText: booksWindow
+            ? bookingRangeText(l10n, request.start, request.end)
+            : null,
+      ),
+    ));
   }
 
   @override
@@ -348,6 +246,10 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     // #519 — keep the granularity warm: the period step reads it
     // synchronously when a seat is tapped.
     ref.watch(bookingGranularityProvider);
+    // Closed-day inputs: WATCH so the banner appears once they load
+    // (and flips at midnight with the minute tick).
+    ref.watch(openWeekdaysProvider);
+    ref.watch(closureDaysProvider);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final levels = ref.watch(levelsProvider).value;
     if (levels == null) {
@@ -402,6 +304,22 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                 ],
               ),
             ),
+            // Closed today (open weekdays / closure days): say it UP
+            // FRONT — the settings gate the whole kiosk, not the last
+            // step of a finished flow.
+            if (_closedToday())
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.lg,
+                ),
+                child: InlineBanner(
+                  key: const ValueKey('kiosk-closed-banner'),
+                  icon: Icons.event_busy_outlined,
+                  text: l10n?.kioskClosedToday ??
+                      'The workspace is closed today — check-in and '
+                          'reservations are not possible.',
+                ),
+              ),
             LevelChipRow(
               levels: levels,
               selectedLevelId: level.id,
@@ -501,214 +419,74 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
   }
 }
 
-/// The badge prompt (0043 + 0046): type/scan the QR code, OR tap an
-/// RFID/NFC card. When NFC is available a read session runs while the
-/// sheet is open; the first tap pops with the tag's normalized UID —
-/// which kiosk_act resolves by hash exactly like a scanned code. The code
-/// never leaves this sheet.
-class _KioskBadgePrompt extends StatefulWidget {
-  const _KioskBadgePrompt({
-    required this.reader,
-    required this.nfcEnabled,
-    required this.scanBuilder,
-    required this.l10n,
+/// The self-dismissing receipt: who, what, where, until when — big
+/// enough to verify the badge resolved to the right person, gone in a
+/// few seconds so the next member finds a clean wall. Tap anywhere to
+/// dismiss sooner.
+class _KioskSuccessCard extends StatefulWidget {
+  const _KioskSuccessCard({
+    required this.actionLabel,
+    required this.memberName,
+    required this.targetName,
+    required this.rangeText,
   });
 
-  final NfcUidReader reader;
-  final bool nfcEnabled;
-
-  /// Camera scanner embed, or null off-mobile (wedge scanners remain).
-  final QrScanWidgetBuilder? scanBuilder;
-  final AppLocalizations? l10n;
+  final String actionLabel;
+  final String memberName;
+  final String targetName;
+  final String? rangeText;
 
   @override
-  State<_KioskBadgePrompt> createState() => _KioskBadgePromptState();
+  State<_KioskSuccessCard> createState() => _KioskSuccessCardState();
 }
 
-/// What the RFID path is doing, shown IN the sheet (field report: "the
-/// RFID was not read" was undiagnosable at the wall — no NFC hardware,
-/// NFC off in Android settings and a dead session all looked identical).
-enum _NfcUiState { checking, reading, off, unsupported, failed, featureOff }
-
-class _KioskBadgePromptState extends State<_KioskBadgePrompt> {
-  final _controller = TextEditingController();
-  _NfcUiState _nfc = _NfcUiState.checking;
-  bool _cameraReady = false;
-
-  /// Whether the camera scanner is mounted. Field-proven root cause: on
-  /// the wall tablet the RFID tap reads fine in the registration dialog
-  /// (NFC armed, NO camera) but never in this sheet with the camera
-  /// streaming next to it — Samsung camera/NFC coexistence. So when NFC
-  /// is ready the sheet opens in CARD mode (no camera — the exact
-  /// environment registration proved working) and the QR camera is one
-  /// tap away; without NFC the camera mounts directly as before.
-  bool _cameraMode = true;
-  bool _done = false;
+class _KioskSuccessCardState extends State<_KioskSuccessCard> {
+  Timer? _dismiss;
 
   @override
   void initState() {
     super.initState();
-    _startReaders();
-  }
-
-  /// NFC first, camera second: the RFID reader-mode session must be
-  /// registered before the camera pipeline spins up — starting both at
-  /// once left the tap path dead on the wall tablet while the barcode
-  /// still scanned (field report).
-  Future<void> _startReaders() async {
-    await _startNfc();
-    if (mounted) setState(() => _cameraReady = true);
-  }
-
-  Future<void> _startNfc() async {
-    if (!widget.nfcEnabled) {
-      if (mounted) setState(() => _nfc = _NfcUiState.featureOff);
-      return;
-    }
-    final status = await widget.reader.status();
-    if (!mounted) return;
-    if (status != NfcStatus.ready) {
-      TraceLogger.instance.warn('kiosk', 'nfc not ready: ${status.name}');
-      setState(() => _nfc = status == NfcStatus.off
-          ? _NfcUiState.off
-          : _NfcUiState.unsupported);
-      return;
-    }
-    // Card mode: the tap path owns the sheet, the camera stays down.
-    setState(() {
-      _nfc = _NfcUiState.reading;
-      _cameraMode = false;
+    _dismiss = Timer(const Duration(seconds: 4), () {
+      if (mounted) Navigator.of(context).pop();
     });
-    final started =
-        await widget.reader.startRead(onUid: (uid) => _submit(uid));
-    if (!mounted || started) return;
-    // startRead already traced the failure — surface it at the wall and
-    // fall back to the camera.
-    setState(() {
-      _nfc = _NfcUiState.failed;
-      _cameraMode = true;
-    });
-  }
-
-  void _submit(String value) {
-    final code = value.trim();
-    if (_done || !mounted || code.isEmpty) return;
-    _done = true;
-    Navigator.of(context).pop(code);
   }
 
   @override
   void dispose() {
-    unawaited(widget.reader.stop());
-    _controller.dispose();
+    _dismiss?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = widget.l10n;
-    // Precomputed (lint: no literals inside Text with interpolation).
-    final nfcProblem = switch (_nfc) {
-      _NfcUiState.off => l10n?.kioskNfcOff ??
-          "NFC is turned off in this tablet's Android settings — turn it "
-              'on to read RFID cards.',
-      _NfcUiState.unsupported => l10n?.kioskNfcUnsupported ??
-          'This tablet has no NFC reader — scan the QR badge instead.',
-      _NfcUiState.failed => l10n?.kioskNfcFailed ??
-          'The RFID reader did not start — restart the app and try again.',
-      _ => null,
-    };
-    return SheetShell(
-      title: l10n?.kioskPresentBadge ?? 'Present your badge',
-      children: [
-        const SizedBox(height: 8),
-        Text(
-          _nfc == _NfcUiState.reading
-              ? (l10n?.kioskBadgeHintNfc ??
-                  'Tap your card, scan your QR, or type its code.')
-              : (l10n?.kioskBadgeHint ??
-                  'Scan your badge QR, or type its code.'),
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
-        if (_nfc == _NfcUiState.reading)
-          const Padding(
-            padding: EdgeInsets.only(top: 12),
-            child: Center(
-              child: Icon(Icons.contactless_outlined, size: 44),
+    final rangeText = widget.rangeText;
+    return AlertDialog(
+      key: const ValueKey('kiosk-success-card'),
+      icon: Icon(
+        Icons.check_circle_outline,
+        size: 44,
+        color: Theme.of(context).colorScheme.primary,
+      ),
+      title: Text(widget.actionLabel),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            widget.memberName,
+            key: const ValueKey('kiosk-summary-name'),
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(height: 4),
+          Text(widget.targetName),
+          if (rangeText != null) ...[
+            const SizedBox(height: 4),
+            Text(
+              rangeText,
+              style: Theme.of(context).textTheme.bodySmall,
             ),
-          ),
-        // The RFID path explains itself when it cannot read — the
-        // difference between "no hardware", "NFC off in settings" and
-        // "session failed" is exactly what a wall diagnosis needs.
-        if (nfcProblem != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 12),
-            child: Row(
-              key: const ValueKey('kiosk-nfc-status'),
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.mobile_off_outlined,
-                  size: 20,
-                  color: Theme.of(context).colorScheme.error,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    nfcProblem,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        // With NFC reading, the camera stays DOWN (see _cameraMode) —
-        // one tap brings it up for QR badges.
-        if (widget.scanBuilder != null && _cameraReady && !_cameraMode)
-          Padding(
-            padding: const EdgeInsets.only(top: 12),
-            child: OutlinedButton.icon(
-              key: const ValueKey('kiosk-scan-qr-button'),
-              onPressed: () => setState(() => _cameraMode = true),
-              icon: const Icon(Icons.qr_code_scanner_outlined),
-              label: Text(
-                l10n?.kioskScanQr ?? 'Scan the QR badge',
-              ),
-            ),
-          ),
-        // The camera reads the printed badge QR right in the sheet —
-        // no external scanner needed on the wall tablet (K3). It mounts
-        // only after the NFC session is up (see _startReaders).
-        if (widget.scanBuilder != null && _cameraReady && _cameraMode) ...[
-          const SizedBox(height: 12),
-          // Shared camera box with the lens FLIP button (field request).
-          ScanCameraBox(
-            cameraKey: const ValueKey('kiosk-badge-camera'),
-            onCode: _submit,
-          ),
+          ],
         ],
-        const SizedBox(height: 12),
-        TextField(
-          key: const ValueKey('kiosk-badge-field'),
-          controller: _controller,
-          // The camera embed owns the screen when present; the field
-          // stays for wedge scanners and manual entry without popping
-          // the soft keyboard over the preview.
-          autofocus: widget.scanBuilder == null,
-          obscureText: true,
-          decoration: InputDecoration(
-            labelText: l10n?.kioskBadgeFieldLabel ?? 'Badge code',
-          ),
-          // Wedge scanners terminate with Enter — submit directly.
-          onSubmitted: _submit,
-        ),
-        const SizedBox(height: 16),
-        FilledButton(
-          key: const ValueKey('kiosk-badge-submit'),
-          onPressed: () => _submit(_controller.text),
-          child: Text(l10n?.kioskBadgeConfirm ?? 'Confirm'),
-        ),
-      ],
+      ),
     );
   }
 }

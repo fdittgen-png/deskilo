@@ -40,6 +40,7 @@ Future<FakeReservationRepository> pumpKiosk(
   bool bookableLevel = false,
   bool startKiosk = true,
   FakeRealtimeSync? realtime,
+  List<int>? openWeekdays,
 }) async {
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   if (bookableLevel) {
@@ -51,6 +52,9 @@ Future<FakeReservationRepository> pumpKiosk(
       FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags);
   if (granularity != null) {
     workspace.bookingGranularities['ws-1'] = granularity;
+  }
+  if (openWeekdays != null) {
+    workspace.openWeekdays['ws-1'] = openWeekdays;
   }
   workspace.myMember = workspace.myMember.copyWith(
     isAdmin: false,
@@ -89,15 +93,17 @@ Offset seatCenter(WidgetTester tester) {
       );
 }
 
-/// Confirms the summary dialog (identify → résumé → Confirm) the
-/// confirm-step flow inserts between the badge read and kiosk_act.
+/// The badge acts IMMEDIATELY (no confirm step); the self-dismissing
+/// receipt card names who acted. Asserts it, then lets it auto-close.
 Future<void> confirmSummary(WidgetTester tester) async {
   expect(
     find.byKey(const ValueKey('kiosk-summary-name')),
     findsOneWidget,
   );
-  await tester.tap(find.byKey(const ValueKey('kiosk-summary-confirm')));
+  // The card dismisses itself after 4 seconds.
+  await tester.pump(const Duration(seconds: 5));
   await tester.pumpAndSettle();
+  expect(find.byKey(const ValueKey('kiosk-success-card')), findsNothing);
 }
 
 void main() {
@@ -219,8 +225,6 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
     await tester.pumpAndSettle();
     // #519 — the period step sits between action and badge.
-    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
-    await tester.pumpAndSettle();
 
     // Badge prompt: a wedge scanner types the code and submits with Enter.
     await tester.enterText(
@@ -235,7 +239,6 @@ void main() {
     expect(act.action, 'check_in');
     expect(act.badgeToken, 'badge-token-1');
     expect(act.seatId, isNotNull);
-    expect(find.textContaining("all set"), findsOneWidget);
   });
 
   testWidgets('a kiosk RFID tap sends the card UID straight to kiosk_act '
@@ -248,8 +251,6 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
     await tester.pumpAndSettle();
     // #519 — the period step sits between action and badge.
-    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
-    await tester.pumpAndSettle();
 
     // NFC available → the prompt shows the tap hint; a card tap acts as
     // the credential without any typing.
@@ -261,7 +262,6 @@ void main() {
     final act = reservations.kioskActs.single;
     expect(act.action, 'check_in');
     expect(act.badgeToken, '04a2b3c4d5');
-    expect(find.textContaining("all set"), findsOneWidget);
   });
 
   testWidgets('an unknown badge is refused with the badge error, not the '
@@ -297,8 +297,6 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
     await tester.pumpAndSettle();
     // #519 — the period step sits between action and badge.
-    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
-    await tester.pumpAndSettle();
 
     await tester.enterText(
       find.byKey(const ValueKey('kiosk-badge-field')),
@@ -334,8 +332,6 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
     await tester.pumpAndSettle();
     // #519 — the period step sits between action and badge.
-    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
-    await tester.pumpAndSettle();
 
     // The camera area is embedded in the badge sheet.
     expect(
@@ -359,8 +355,6 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
     await tester.pumpAndSettle();
     // #519 — the period step sits between action and badge.
-    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
-    await tester.pumpAndSettle();
   }
 
   const nfcStatusKey = ValueKey('kiosk-nfc-status');
@@ -460,17 +454,13 @@ void main() {
   });
 
   testWidgets(
-      'the summary names the identified member and the target; Reject '
-      'discards — nothing runs and the readers stay off', (tester) async {
+      'the badge acts IMMEDIATELY — the receipt card names the member '
+      'and the target and dismisses itself', (tester) async {
     final reservations = await pumpKiosk(tester);
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
-    await tester.pumpAndSettle();
-    // #519 — the period step sits between action and badge.
-    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
-    await tester.pumpAndSettle();
+    // Check in is PRESELECTED; the badge field is in the same sheet.
     await tester.enterText(
       find.byKey(const ValueKey('kiosk-badge-field')),
       'badge-token-1',
@@ -478,14 +468,15 @@ void main() {
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pumpAndSettle();
 
-    // The résumé: who (identified from the badge) and where.
+    // The act ran with no further tap; the receipt names who and where.
+    expect(reservations.kioskActs, hasLength(1));
+    expect(find.byKey(const ValueKey('kiosk-success-card')), findsOneWidget);
     expect(find.text('Flo'), findsOneWidget);
     expect(find.text('A1'), findsWidgets);
 
-    await tester.tap(find.byKey(const ValueKey('kiosk-summary-reject')));
+    // ...and clears the wall by itself.
+    await tester.pump(const Duration(seconds: 5));
     await tester.pumpAndSettle();
-
-    expect(reservations.kioskActs, isEmpty);
     expect(find.byKey(const ValueKey('kiosk-summary-name')), findsNothing);
   });
 
@@ -547,8 +538,6 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
     await tester.pumpAndSettle();
     // #519 — the period step sits between action and badge.
-    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
-    await tester.pumpAndSettle();
 
     expect(frontCamera.value, isTrue); // front by default
     await tester.tap(find.byKey(const ValueKey('scan-flip-camera')));
@@ -589,8 +578,6 @@ void main() {
     expect(swtch, findsOneWidget);
     expect(tester.widget<SwitchListTile>(swtch).value, isTrue);
 
-    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
-    await tester.pumpAndSettle();
     await submitBadge(tester);
 
     // The summary is honest about the combined action.
@@ -614,8 +601,6 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('kiosk-reserve')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('kiosk-period-checkin-now')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
     await tester.pumpAndSettle();
     await submitBadge(tester);
     await confirmSummary(tester);
@@ -648,8 +633,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('kiosk-period-checkin-now')),
         findsNothing);
-    await tester.tap(find.byKey(const ValueKey('kiosk-period-continue')));
-    await tester.pumpAndSettle();
     await submitBadge(tester);
     await confirmSummary(tester);
 
@@ -682,5 +665,32 @@ void main() {
       isNull,
     );
     expect(startButton, findsOneWidget);
+  });
+
+  testWidgets(
+      'CLOSED TODAY (settings gate): the banner says it up front and a '
+      'seat tap never opens the flow', (tester) async {
+    // kioskClock is a Wednesday — open Mon+Tue only.
+    await pumpKiosk(tester, openWeekdays: const [1, 2]);
+
+    expect(
+        find.byKey(const ValueKey('kiosk-closed-banner')), findsOneWidget);
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('kiosk-badge-field')), findsNothing);
+    expect(find.textContaining('closed today'), findsWidgets);
+  });
+
+  testWidgets(
+      'the sheet SPELLS OUT the settings the window derives from '
+      '(granularity + working hours)', (tester) async {
+    await pumpKiosk(tester, granularity: BookingGranularity.halfDay);
+
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    final basis =
+        tester.widget<Text>(find.byKey(const ValueKey('kiosk-basis')));
+    expect(basis.data, contains('Half days'));
+    expect(basis.data, contains('today'));
   });
 }

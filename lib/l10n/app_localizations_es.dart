@@ -2586,6 +2586,15 @@ class AppLocalizationsEs extends AppLocalizations {
       '¿Eliminar definitivamente esta credencial revocada?';
 
   @override
+  String get kioskClosedToday =>
+      'El espacio está cerrado hoy — no es posible registrarse ni reservar.';
+
+  @override
+  String kioskBasis(String granularity, String hours) {
+    return 'Regla: $granularity · hoy $hours';
+  }
+
+  @override
   String get languageTitle => 'Idioma';
 
   @override

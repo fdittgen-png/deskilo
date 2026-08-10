@@ -86,5 +86,21 @@
   "badgeDeleteConfirm": "Dieses widerrufene Badge endgültig löschen?",
   "@badgeDeleteConfirm": {
     "description": "Confirmation before deleting a revoked badge by swipe (#523)"
+  },
+  "kioskClosedToday": "Der Workspace ist heute geschlossen — Check-in und Reservierungen sind nicht möglich.",
+  "@kioskClosedToday": {
+    "description": "Kiosk banner/snack when today is not an open day (open weekdays or a closure day)"
+  },
+  "kioskBasis": "Regel: {granularity} · heute {hours}",
+  "@kioskBasis": {
+    "description": "Kiosk sheet line naming the settings the derived window follows",
+    "placeholders": {
+      "granularity": {
+        "type": "String"
+      },
+      "hours": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -2567,6 +2567,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get badgeDeleteConfirm => 'Delete this revoked badge for good?';
 
   @override
+  String get kioskClosedToday =>
+      'The workspace is closed today — check-in and reservations are not possible.';
+
+  @override
+  String kioskBasis(String granularity, String hours) {
+    return 'Rule: $granularity · today $hours';
+  }
+
+  @override
   String get languageTitle => 'Language';
 
   @override
