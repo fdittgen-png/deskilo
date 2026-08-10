@@ -19,6 +19,75 @@ def asc_api_key
   )
 end
 
+# ---------------------------------------------------------------------------
+# Beta App Review test-info — single source of truth (tankstellen #2611/#2612
+# pattern). Consumed by `upload_testflight distribute_external:true`, so even
+# a fresh app record has its Beta App Review data filled with the build.
+# ---------------------------------------------------------------------------
+
+# Localized "Beta App Description" shown to TestFlight reviewers and external
+# testers, keyed by ASC locale. NOTE: App Store Connect's Italian locale code
+# is "it", NOT "it-IT" (fastlane deliver/lib/deliver/languages.rb — "it-IT"
+# is rejected with "The 'locale' value is invalid").
+BETA_APP_DESCRIPTIONS = {
+  "en-US" => "DesKilo is a free, privacy-first app for small self-organized coworking communities: draw your space as a visual floor plan, reserve seats, desks, rooms or whole levels, check in on site, message members, and manage fair member billing with invoices and reports. Open source (MIT).",
+  "fr-FR" => "DesKilo est une app gratuite et respectueuse de la vie privée pour les petites communautés de coworking auto-organisées : dessinez votre espace en plan visuel, réservez sièges, tables, bureaux ou niveaux entiers, pointez sur place, échangez des messages et gérez une facturation équitable avec factures et rapports. Open source (MIT).",
+  "de-DE" => "DesKilo ist eine kostenlose, datenschutzfreundliche App für kleine selbstorganisierte Coworking-Gemeinschaften: zeichne deinen Raum als visuellen Grundriss, reserviere Sitze, Tische, Büros oder ganze Etagen, checke vor Ort ein, schreibe Mitgliedern Nachrichten und verwalte faire Abrechnung mit Rechnungen und Berichten. Open Source (MIT).",
+  "es-ES" => "DesKilo es una app gratuita y respetuosa con la privacidad para pequeñas comunidades de coworking autoorganizadas: dibuja tu espacio como plano visual, reserva asientos, mesas, salas o plantas enteras, regístrate in situ, envía mensajes a los miembros y gestiona una facturación justa con facturas e informes. Código abierto (MIT).",
+  "it" => "DesKilo è un'app gratuita e rispettosa della privacy per piccole comunità di coworking auto-organizzate: disegna il tuo spazio come pianta visuale, prenota posti, tavoli, stanze o interi piani, fai check-in sul posto, scambia messaggi con i membri e gestisci una fatturazione equa con fatture e report. Open source (MIT).",
+}.freeze
+
+# Read an env var, falling back to `default` when unset OR empty — CI passes
+# optional secrets through as "" (`|| ''`), which ENV.fetch would keep.
+def beta_env(name, default)
+  value = ENV[name]
+  (value.nil? || value.strip.empty?) ? default : value.strip
+end
+
+# Feedback email shown to beta testers (overridable via BETA_FEEDBACK_EMAIL).
+def beta_feedback_email
+  beta_env("BETA_FEEDBACK_EMAIL", "fdittgen@gmail.com")
+end
+
+# App-Review contact block in *snake_case* — the casing pilot's
+# `beta_app_review_info` expects. Returns nil when BETA_CONTACT_PHONE is
+# unset so a plain upload doesn't crash; the phone is mandatory for the
+# Beta App Review submission and must come from the repo secret (never
+# fabricated). DesKilo REQUIRES sign-in, so the demo account (a real test
+# login the owner creates, secrets BETA_DEMO_EMAIL/BETA_DEMO_PASSWORD) is
+# what lets the review team past the auth screen.
+def beta_review_contact_info_snake
+  phone = ENV["BETA_CONTACT_PHONE"]
+  return nil if phone.nil? || phone.strip.empty?
+
+  demo_email = ENV["BETA_DEMO_EMAIL"]
+  demo_password = ENV["BETA_DEMO_PASSWORD"]
+  has_demo = !(demo_email.nil? || demo_email.strip.empty? ||
+               demo_password.nil? || demo_password.strip.empty?)
+  info = {
+    contact_first_name: beta_env("BETA_CONTACT_FIRST", "Florian"),
+    contact_last_name: beta_env("BETA_CONTACT_LAST", "Dittgen"),
+    contact_phone: phone.strip,
+    contact_email: beta_feedback_email,
+    demo_account_required: has_demo,
+    notes: "DesKilo requires sign-in (email + password). Use the demo " \
+           "account to log in; it is already a member of a demo workspace, " \
+           "so every feature (floor plan, reservations, check-in, messages, " \
+           "billing views) is reachable immediately. Free, ad-free, open " \
+           "source (MIT).",
+  }
+  if has_demo
+    info[:demo_account_name] = demo_email.strip
+    info[:demo_account_password] = demo_password.strip
+  else
+    UI.important("BETA_DEMO_EMAIL/BETA_DEMO_PASSWORD unset — submitting " \
+                 "WITHOUT demo credentials. DesKilo requires sign-in, so " \
+                 "Beta App Review will likely reject: set the secrets to a " \
+                 "real test account inside a demo workspace.")
+  end
+  info
+end
+
 platform :ios do
   # A DEDICATED, unlocked keychain on CI.
   #
@@ -114,21 +183,61 @@ platform :ios do
     )
   end
 
-  desc "Upload build/ios/ipa/Runner.ipa to TestFlight (internal testers only,"
-  desc "no review). External groups come later — mirror tankstellen's"
-  desc "upload_testflight when the time comes."
+  desc "Upload build/ios/ipa/Runner.ipa to TestFlight (internal testers,"
+  desc "no review). Pass distribute_external:true to ALSO push the build to"
+  desc "the external 'Coworking externe' group — the one behind the public"
+  desc "link — which submits it for Beta App Review (tankstellen #2612"
+  desc "pattern; only the FIRST external build waits on Apple, later ones"
+  desc "reach the group directly)."
   lane :upload_testflight do |options|
     changelog = options[:changelog] || ENV["TESTFLIGHT_CHANGELOG"] || "Internal build."
-    pilot(
+    # Strict boolean: release_testflight may forward nil, the workflow
+    # passes the string "true"/"false".
+    raw_distribute = options.fetch(:distribute_external, false)
+    distribute_external = [true, "true", "1"].include?(raw_distribute)
+
+    pilot_args = {
       api_key: asc_api_key,
       app_identifier: "de.deskilo.app",
       team_id: "C4Y5RDF8P9",
       ipa: "../build/ios/ipa/Runner.ipa",
       changelog: changelog,
-      distribute_external: false,
+      distribute_external: distribute_external,
+    }
+
+    if distribute_external
+      # The build must finish processing before pilot can attach it to the
+      # external group and submit it for Beta App Review — no skipping the
+      # wait. Don't spam testers with emails; the public link is the door.
+      pilot_args[:skip_waiting_for_build_processing] = false
+      pilot_args[:groups] = ["Coworking externe"]
+      pilot_args[:notify_external_testers] = false
+
+      # Carry the localized test info + contact block inline, so even a
+      # fresh app record has its Beta App Review data filled.
+      pilot_args[:beta_app_description] = BETA_APP_DESCRIPTIONS["en-US"]
+      pilot_args[:localized_app_info] =
+        BETA_APP_DESCRIPTIONS.each_with_object({}) do |(locale, description), acc|
+          acc[locale] = {
+            feedback_email: beta_feedback_email,
+            description: description,
+          }
+        end
+
+      contact = beta_review_contact_info_snake
+      if contact
+        pilot_args[:beta_app_review_info] = contact
+      else
+        UI.important("BETA_CONTACT_PHONE unset — distributing externally " \
+                     "WITHOUT the App-Review contact block. Set the secret " \
+                     "so Beta App Review can clear.")
+      end
+    else
       # Internal-only upload: nothing to review, skip the processing wait.
-      skip_waiting_for_build_processing: true,
-    )
+      pilot_args[:skip_waiting_for_build_processing] = true
+    end
+
+    pilot(**pilot_args)
   end
 
   desc "Make sure Apple knows about de.deskilo.app, and SAY what it knows."
@@ -181,10 +290,15 @@ platform :ios do
   end
 
   desc "End-to-end CI release: fetch certs, build, upload to TestFlight."
+  desc "Pass distribute_external:true to also push the build to the external"
+  desc "'Coworking externe' group (forwarded to upload_testflight)."
   lane :release_testflight do |options|
     match(type: "appstore", api_key: asc_api_key)
     build_appstore(build_number: options[:build_number])
-    upload_testflight(changelog: options[:changelog])
+    upload_testflight(
+      changelog: options[:changelog],
+      distribute_external: options[:distribute_external],
+    )
   end
 
   desc "Fetch (or, in the sync workflow, mint) the DEVELOPER ID certificate"

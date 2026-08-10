@@ -16,6 +16,16 @@ on:
         required: false
         type: string
         default: Internal build.
+      distribute_external:
+        description: >-
+          Also push the build to the external 'Coworking externe' group —
+          the one behind the public TestFlight link. The FIRST such build
+          goes through Apple's Beta App Review (needs the BETA_CONTACT_PHONE
+          + BETA_DEMO_EMAIL/BETA_DEMO_PASSWORD secrets); later builds reach
+          the group directly.
+        required: false
+        type: boolean
+        default: false
       upload_metadata:
         description: >-
           Push the App Store listing text (five locales, URLs, categories)
@@ -136,6 +146,12 @@ jobs:
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
           IOS_BUILD_NUMBER: ${{ steps.bn.outputs.build_number }}
           TESTFLIGHT_CHANGELOG: ${{ github.event.inputs.release_notes || 'Internal build.' }}
+          # External-distribution test info (only read when
+          # distribute_external=true; empty values degrade gracefully).
+          BETA_CONTACT_PHONE: ${{ secrets.BETA_CONTACT_PHONE || '' }}
+          BETA_FEEDBACK_EMAIL: ${{ secrets.BETA_FEEDBACK_EMAIL || '' }}
+          BETA_DEMO_EMAIL: ${{ secrets.BETA_DEMO_EMAIL || '' }}
+          BETA_DEMO_PASSWORD: ${{ secrets.BETA_DEMO_PASSWORD || '' }}
           FASTLANE_DISABLE_COLORS: "1"
           FASTLANE_HIDE_CHANGELOG: "1"
         run: |
@@ -146,7 +162,7 @@ jobs:
           elif [ "${{ inputs.sync_certs }}" = "true" ]; then
             bundle exec fastlane match_sync_appstore
           else
-            bundle exec fastlane release_testflight build_number:"${IOS_BUILD_NUMBER}" changelog:"${TESTFLIGHT_CHANGELOG}"
+            bundle exec fastlane release_testflight build_number:"${IOS_BUILD_NUMBER}" changelog:"${TESTFLIGHT_CHANGELOG}" distribute_external:"${{ inputs.distribute_external }}"
           fi
 
       - name: Clean up decoded API key
