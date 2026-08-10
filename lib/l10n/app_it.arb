@@ -1405,6 +1405,14 @@
   "@noteRefWholeLevel": {
     "description": "Space picker: the level-as-a-whole entry suffix (#523)"
   },
+  "memberMessagesAction": "Messaggi",
+  "@memberMessagesAction": {
+    "description": "Member-sheet/profile action opening the conversation thread (messaging refactor)"
+  },
+  "conversationEmpty": "Ancora nessun messaggio — saluta!",
+  "@conversationEmpty": {
+    "description": "Empty state of a fresh conversation thread"
+  },
   "moneyBaseFee": "Abbonamento base",
   "moneyUsage": "{used} mezze giornate usate su {included}",
   "moneyUsageUnlimited": "{used} mezze giornate usate",

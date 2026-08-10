@@ -2714,6 +2714,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noteRefWholeLevel => 'whole level';
 
   @override
+  String get memberMessagesAction => 'Messages';
+
+  @override
+  String get conversationEmpty => 'No messages yet — say hello!';
+
+  @override
   String get moneyBaseFee => 'Base subscription';
 
   @override

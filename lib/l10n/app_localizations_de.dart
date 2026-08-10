@@ -2740,6 +2740,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get noteRefWholeLevel => 'ganze Etage';
 
   @override
+  String get memberMessagesAction => 'Nachrichten';
+
+  @override
+  String get conversationEmpty => 'Noch keine Nachrichten — sag hallo!';
+
+  @override
   String get moneyBaseFee => 'Basis-Abo';
 
   @override
