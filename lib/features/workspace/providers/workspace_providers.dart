@@ -190,6 +190,22 @@ class UnreadNoteCount extends _$UnreadNoteCount {
     // Newest first (repository order) — the first entry is the stamp.
     await ref.read(noteSeenStoreProvider).writeSeen(notes.first.createdAt);
     ref.invalidateSelf();
+    // Read receipts (0105): stamp my unread notes server-side so the
+    // sender's grey check turns blue (their realtime refetch shows it).
+    // Best-effort — reading messages must never fail on a network blip.
+    final me = await ref.read(myMemberProvider.future);
+    final workspace = await ref.read(currentWorkspaceProvider.future);
+    final unread = workspace != null &&
+        notes.any((n) => n.toMemberId == me?.id && n.readAt == null);
+    if (!unread) return;
+    try {
+      await ref
+          .read(workspaceRepositoryProvider)
+          .markMyNotesRead(workspace.id);
+    } catch (e, st) {
+      TraceLogger.instance
+          .error('workspace', 'mark notes read failed', error: e, stackTrace: st);
+    }
   }
 }
 

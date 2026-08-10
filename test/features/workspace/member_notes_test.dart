@@ -33,6 +33,40 @@ void main() {
       expect(note.body, 'Team meeting at 3');
     });
 
+    test('read receipts (0105): read_at round-trips; absent = delivered',
+        () {
+      final read = MemberNote.fromRow(const {
+        'id': 'n1',
+        'workspace_id': 'ws-1',
+        'from_member_id': 'member-1',
+        'to_member_id': 'member-2',
+        'body': 'hi',
+        'created_at': '2026-08-09T12:00:00Z',
+        'read_at': '2026-08-09T12:30:00Z',
+      });
+      expect(read.readAt, DateTime.utc(2026, 8, 9, 12, 30));
+      final delivered = MemberNote.fromRow(const {
+        'id': 'n2',
+        'workspace_id': 'ws-1',
+        'from_member_id': 'member-1',
+        'to_member_id': 'member-2',
+        'body': 'hi',
+        'created_at': '2026-08-09T12:00:00Z',
+        'read_at': null,
+      });
+      expect(delivered.readAt, isNull);
+    });
+
+    test('pins the read-receipt contract against migration 0105', () {
+      final sql = File('supabase/migrations/0105_member_note_read_receipts.sql')
+          .readAsStringSync();
+      expect(sql, contains('add column read_at'));
+      expect(sql, contains('mark_member_notes_read'));
+      expect(sql, contains('to_member_id = v_me.id'));
+      expect(sql, contains('read_at is null'));
+      expect(sql, contains('revoke execute'));
+    });
+
     test('pins the 500-char cap against migration 0089', () {
       expect(MemberNoteRules.maxLength, 500);
       final sql = File('supabase/migrations/0089_member_notes.sql')

@@ -10,6 +10,7 @@ class MemberNote {
     required this.toMemberId,
     required this.body,
     required this.createdAt,
+    this.readAt,
   });
 
   factory MemberNote.fromRow(Map<String, dynamic> row) => MemberNote(
@@ -19,6 +20,9 @@ class MemberNote {
         toMemberId: row['to_member_id'] as String?,
         body: row['body'] as String? ?? '',
         createdAt: DateTime.parse(row['created_at'] as String).toUtc(),
+        readAt: row['read_at'] == null
+            ? null
+            : DateTime.parse(row['read_at'] as String).toUtc(),
       );
 
   final String id;
@@ -27,6 +31,10 @@ class MemberNote {
   final String? toMemberId;
   final String body;
   final DateTime createdAt;
+
+  /// When the DIRECT recipient read it (0105); null = delivered only.
+  /// Broadcasts have many readers and never carry a read stamp.
+  final DateTime? readAt;
 
   bool get isBroadcast => toMemberId == null;
 }

@@ -180,6 +180,52 @@ void main() {
   });
 
   testWidgets(
+      'READ RECEIPTS (0105): my sent note carries a grey check, a read '
+      'one a blue check, received notes none — and opening Events '
+      'stamps my received notes read on the server', (tester) async {
+    const readBlue = Color(0xFF42A5F5);
+    final workspace = await _pump(tester, notes: [
+      // Mine, delivered but unread.
+      MemberNote(
+        id: 'note-sent',
+        workspaceId: 'ws-1',
+        fromMemberId: 'member-1',
+        toMemberId: 'member-2',
+        body: 'Sent and delivered.',
+        createdAt: DateTime.utc(2026, 5, 12, 8),
+      ),
+      // Mine, already read by Ana.
+      MemberNote(
+        id: 'note-read',
+        workspaceId: 'ws-1',
+        fromMemberId: 'member-1',
+        toMemberId: 'member-2',
+        body: 'Sent and read.',
+        createdAt: DateTime.utc(2026, 5, 12, 8, 30),
+        readAt: DateTime.utc(2026, 5, 12, 9),
+      ),
+      // From Ana to me, unread — Events opening must stamp it.
+      _noteFromAna('Hello!'),
+    ]);
+    await _openEvents(tester);
+
+    final grey = tester.widget<Icon>(
+        find.byKey(const ValueKey('note-check-note-sent')));
+    expect(grey.color, isNot(readBlue));
+    final blue = tester.widget<Icon>(
+        find.byKey(const ValueKey('note-check-note-read')));
+    expect(blue.color, readBlue);
+    // Received notes carry no check at all.
+    expect(find.byKey(const ValueKey('note-check-note-in')), findsNothing);
+
+    // Opening the surface marked MY received note read server-side —
+    // Ana's client would now show her check in blue.
+    final mine =
+        workspace.memberNotes.singleWhere((n) => n.id == 'note-in');
+    expect(mine.readAt, isNotNull);
+  });
+
+  testWidgets(
       'the composer chips attach a space and a reservation as tokens '
       '(#523)', (tester) async {
     final workspace = await _pump(tester);

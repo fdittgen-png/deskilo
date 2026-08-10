@@ -687,6 +687,12 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   @override
+  Future<void> markMyNotesRead(String workspaceId) async {
+    await _client.rpc<void>('mark_member_notes_read',
+        params: {'p_workspace_id': workspaceId});
+  }
+
+  @override
   Future<List<MemberNote>> fetchMyNotes(String workspaceId) async {
     final rows = await _client
         .from('member_notes')
