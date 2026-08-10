@@ -4958,6 +4958,18 @@ abstract class AppLocalizations {
   /// **'whole level'**
   String get noteRefWholeLevel;
 
+  /// Member-sheet/profile action opening the conversation thread (messaging refactor)
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get memberMessagesAction;
+
+  /// Empty state of a fresh conversation thread
+  ///
+  /// In en, this message translates to:
+  /// **'No messages yet — say hello!'**
+  String get conversationEmpty;
+
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:

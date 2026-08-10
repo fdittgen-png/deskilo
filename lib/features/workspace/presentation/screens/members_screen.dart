@@ -17,6 +17,7 @@ import '../../domain/member.dart';
 import '../../domain/overage_policy.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/conversation_sheet.dart';
 import '../widgets/member_note_dialog.dart';
 import '../widgets/badge_manager_dialog.dart';
 import '../../../events/providers/event_providers.dart';
@@ -264,17 +265,19 @@ class MembersScreen extends ConsumerWidget {
               'Send the financial agreement',
           onTap: () => _sendAgreement(context, ref, member, name),
         ),
-      // Member notes (#456): reach the person before managing them.
+      // Messaging (#456, refactor): the member's CONVERSATION — read
+      // the whole exchange and send from the same thread every other
+      // surface opens.
       if (notesOn && !isSelf && !member.isKiosk && active)
         _sheetAction(
           context,
-          icon: Icons.notifications_active_outlined,
-          label: l10n?.memberNotifyAction ?? 'Send notification',
-          onTap: () => showMemberNoteDialog(
+          icon: Icons.chat_outlined,
+          label: l10n?.memberMessagesAction ?? 'Messages',
+          onTap: () => showConversationSheet(
             context,
             ref,
-            toMemberId: member.id,
-            recipientName: name,
+            otherMemberId: member.id,
+            otherName: name,
           ),
         ),
       // New-member validation (0052): a pending membership offers the

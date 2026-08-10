@@ -5,19 +5,13 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
-import '../../../../core/trace/trace_logger.dart';
-import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member_note.dart';
 import '../../../workspace/domain/member_note_refs.dart';
-import '../../../workspace/presentation/widgets/member_note_dialog.dart';
+import '../../../workspace/presentation/widgets/conversation_sheet.dart';
+import '../../../workspace/presentation/widgets/member_note_actions.dart';
 import '../../../workspace/presentation/widgets/member_note_sheet.dart';
-import '../../../workspace/providers/workspace_providers.dart';
-
-/// Read-check blue (0105) — the calendar's fixed "others" hue, chosen
-/// once for both themes: the receipt must read as "blue" everywhere,
-/// including on the orange brand palette.
-const _readBlue = Color(0xFF42A5F5);
+import '../../../workspace/presentation/widgets/note_check.dart';
 
 /// One member note in the Messages inbox (#460, #523): direction +
 /// sender or recipient, a 64-CHARACTER PREVIEW, and when it was sent.
@@ -38,60 +32,11 @@ class NoteRow extends ConsumerWidget {
   final Map<String, String> names;
   final String? myMemberId;
 
-  /// #523 — deleting is destructive: every path (swipe and the sheet's
-  /// button) asks first.
-  Future<bool> _confirmDelete(BuildContext context) async {
-    final l10n = AppLocalizations.of(context);
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n?.memberNoteDelete ?? 'Delete'),
-        content: Text(l10n?.memberNoteDeleteConfirm ??
-            'Delete this message? This cannot be undone.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
-          ),
-          FilledButton(
-            key: const ValueKey('note-delete-confirm'),
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n?.memberNoteDelete ?? 'Delete'),
-          ),
-        ],
-      ),
-    );
-    return confirmed ?? false;
-  }
-
-  Future<void> _delete(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
-    if (!await _confirmDelete(context)) return;
-    if (!context.mounted) return;
-    try {
-      await ref
-          .read(workspaceRepositoryProvider)
-          .deleteMemberNote(note.id);
-    } catch (e, st) {
-      TraceLogger.instance.error('workspace', 'delete member note failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
-      ref.invalidate(myNotesProvider);
-      return;
-    }
-    ref.invalidate(myNotesProvider);
-    if (!context.mounted) return;
-    AppSnack.info(
-      context,
-      l10n?.memberNoteDeleted ?? 'Message deleted.',
-      replace: true,
-    );
-  }
+  /// The direct-thread partner: whoever ISN'T me. A broadcast I sent
+  /// has no single partner (null → the full-message sheet handles it);
+  /// a received broadcast converses with its sender.
+  String? _counterpartId(bool sentByMe) =>
+      sentByMe ? note.toMemberId : note.fromMemberId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -143,29 +88,39 @@ class NoteRow extends ConsumerWidget {
               // readers and no single read state — it stays grey.
               if (sentByMe) ...[
                 const SizedBox(width: 4),
-                Icon(
-                  Icons.done,
-                  key: ValueKey('note-check-${note.id}'),
-                  size: 14,
-                  color: note.readAt != null
-                      ? _readBlue
-                      : theme.colorScheme.onSurfaceVariant,
-                ),
+                NoteCheck(note: note),
               ],
             ],
           ),
         ],
       ),
-      onTap: () => showMemberNoteSheet(
-        context,
-        ref,
-        note: note,
-        title: title,
-        replyToMemberId: canReply ? note.fromMemberId : null,
-        replyToName: names[note.fromMemberId] ?? '',
-        onDelete:
-            canDelete ? () => _delete(context, ref) : null,
-      ),
+      // A direct message opens ITS CONVERSATION (messaging refactor):
+      // the same thread the member sheet and directory profile open.
+      // Only a broadcast — no single partner — keeps the full-message
+      // sheet.
+      onTap: () {
+        final partner = _counterpartId(sentByMe);
+        if (!note.isBroadcast && partner != null) {
+          showConversationSheet(
+            context,
+            ref,
+            otherMemberId: partner,
+            otherName: names[partner] ?? '',
+          );
+          return;
+        }
+        showMemberNoteSheet(
+          context,
+          ref,
+          note: note,
+          title: title,
+          replyToMemberId: canReply ? note.fromMemberId : null,
+          replyToName: names[note.fromMemberId] ?? '',
+          onDelete: canDelete
+              ? () => deleteMemberNoteGuarded(context, ref, note)
+              : null,
+        );
+      },
     );
     return Dismissible(
       key: ValueKey('note-dismiss-${note.id}'),
@@ -179,16 +134,19 @@ class NoteRow extends ConsumerWidget {
       // async repository do not mix.
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.startToEnd) {
-          if (canReply) {
-            await showMemberNoteDialog(
+          // Replying = opening the conversation (refactor): the whole
+          // exchange in view beats a blank dialog.
+          final partner = _counterpartId(sentByMe);
+          if (canReply && partner != null) {
+            await showConversationSheet(
               context,
               ref,
-              toMemberId: note.fromMemberId,
-              recipientName: names[note.fromMemberId] ?? '',
+              otherMemberId: partner,
+              otherName: names[partner] ?? '',
             );
           }
         } else if (canDelete) {
-          await _delete(context, ref);
+          await deleteMemberNoteGuarded(context, ref, note);
         }
         return false;
       },

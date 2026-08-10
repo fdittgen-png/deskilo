@@ -2738,6 +2738,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get noteRefWholeLevel => 'piano intero';
 
   @override
+  String get memberMessagesAction => 'Messaggi';
+
+  @override
+  String get conversationEmpty => 'Ancora nessun messaggio — saluta!';
+
+  @override
   String get moneyBaseFee => 'Abbonamento base';
 
   @override

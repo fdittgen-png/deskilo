@@ -75,5 +75,13 @@
   "noteRefWholeLevel": "whole level",
   "@noteRefWholeLevel": {
     "description": "Space picker: the level-as-a-whole entry suffix (#523)"
+  },
+  "memberMessagesAction": "Messages",
+  "@memberMessagesAction": {
+    "description": "Member-sheet/profile action opening the conversation thread (messaging refactor)"
+  },
+  "conversationEmpty": "No messages yet — say hello!",
+  "@conversationEmpty": {
+    "description": "Empty state of a fresh conversation thread"
   }
 }

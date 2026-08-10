@@ -42,5 +42,13 @@
   "noteRefWholeLevel": "planta entera",
   "@noteRefWholeLevel": {
     "description": "Space picker: the level-as-a-whole entry suffix (#523)"
+  },
+  "memberMessagesAction": "Mensajes",
+  "@memberMessagesAction": {
+    "description": "Member-sheet/profile action opening the conversation thread (messaging refactor)"
+  },
+  "conversationEmpty": "Aún no hay mensajes — ¡saluda!",
+  "@conversationEmpty": {
+    "description": "Empty state of a fresh conversation thread"
   }
 }

@@ -2733,6 +2733,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noteRefWholeLevel => 'planta entera';
 
   @override
+  String get memberMessagesAction => 'Mensajes';
+
+  @override
+  String get conversationEmpty => 'Aún no hay mensajes — ¡saluda!';
+
+  @override
   String get moneyBaseFee => 'Suscripción base';
 
   @override

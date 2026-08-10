@@ -77,14 +77,16 @@ void main() {
     });
   });
 
-  testWidgets('the member sheet offers Send notification and the dialog '
-      'sends the note (#456)', (tester) async {
+  testWidgets('the member sheet offers Messages and the CONVERSATION '
+      'sends the note (#456, refactor)', (tester) async {
     final workspace = await pumpMembersWithAna(tester);
 
     await tester.tap(find.text('Ana'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Send notification'));
+    await tester.tap(find.text('Messages'));
     await tester.pumpAndSettle();
+    expect(
+        find.byKey(const ValueKey('conversation-sheet')), findsOneWidget);
 
     await tester.enterText(
       find.byKey(const ValueKey('member-note-body')),
@@ -95,7 +97,8 @@ void main() {
 
     expect(workspace.memberNotes.single.toMemberId, 'member-2');
     expect(workspace.memberNotes.single.body, 'Your desk lamp is still on!');
-    expect(find.text('Notification sent.'), findsOneWidget);
+    // The message lands as a bubble in the open thread.
+    expect(find.byKey(const ValueKey('bubble-note-1')), findsOneWidget);
   });
 
   testWidgets('the app bar broadcast sends to ALL admins (null recipient) '
@@ -254,7 +257,7 @@ void main() {
   });
 
   testWidgets('SWIPE (#467): left deletes a received note; right opens '
-      'the reply dialog to the sender', (tester) async {
+      'the CONVERSATION with the sender (refactor)', (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace()
       ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
       ..otherMembers.add(
@@ -287,14 +290,20 @@ void main() {
     await tester.tap(find.byTooltip('Events'));
     await tester.pumpAndSettle();
 
-    // Swipe RIGHT → the reply dialog opens, addressed to Ana; the row
-    // never dismisses.
+    // Swipe RIGHT → Ana's CONVERSATION opens; the row never dismisses.
     await tester.drag(
       find.byKey(const ValueKey('note-dismiss-note-in')),
       const Offset(400, 0),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Notify Ana'), findsOneWidget);
+    expect(
+        find.byKey(const ValueKey('conversation-sheet')), findsOneWidget);
+    // Her message reads IN FULL as a bubble of the thread.
+    expect(
+        find.descendant(
+            of: find.byKey(const ValueKey('conversation-sheet')),
+            matching: find.text('Lamp is on.', findRichText: true)),
+        findsOneWidget);
     await tester.enterText(
       find.byKey(const ValueKey('member-note-body')),
       'Turning it off now.',
@@ -303,6 +312,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(workspace.memberNotes.last.toMemberId, 'member-2');
     expect(workspace.memberNotes.last.body, 'Turning it off now.');
+    // Close the thread to get back to the inbox rows.
+    await tester.tap(find.byIcon(Icons.close));
+    await tester.pumpAndSettle();
 
     // Swipe LEFT → confirmation first (#523), then the note is deleted.
     await tester.drag(
@@ -326,6 +338,6 @@ void main() {
         find.byKey(const ValueKey('members-notify-admins')), findsNothing);
     await tester.tap(find.text('Ana'));
     await tester.pumpAndSettle();
-    expect(find.text('Send notification'), findsNothing);
+    expect(find.text('Messages'), findsNothing);
   });
 }

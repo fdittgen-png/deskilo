@@ -112,15 +112,13 @@ void main() {
 
     await tester.tap(find.text(preview));
     await tester.pumpAndSettle();
-    // The sheet shows the COMPLETE message.
-    expect(find.byKey(const ValueKey('note-sheet-body')), findsOneWidget);
+    // The CONVERSATION opens (refactor) and shows the COMPLETE message
+    // as a bubble, with the shared composer ready to reply to Ana.
+    expect(
+        find.byKey(const ValueKey('conversation-sheet')), findsOneWidget);
     expect(find.textContaining('have a look at the cable?', findRichText: true),
         findsOneWidget);
-
-    // Reply from the sheet goes back to Ana.
-    await tester.tap(find.byKey(const ValueKey('note-sheet-reply')));
-    await tester.pumpAndSettle();
-    expect(find.text('Notify Ana'), findsOneWidget);
+    expect(find.byKey(const ValueKey('member-note-body')), findsOneWidget);
   });
 
   testWidgets(
@@ -180,6 +178,50 @@ void main() {
   });
 
   testWidgets(
+      'CONVERSATION (refactor): the thread shows both sides oldest-up, '
+      'and long-pressing my bubble deletes after confirmation',
+      (tester) async {
+    final workspace = await _pump(tester, notes: [
+      MemberNote(
+        id: 'note-mine',
+        workspaceId: 'ws-1',
+        fromMemberId: 'member-1',
+        toMemberId: 'member-2',
+        body: 'Coffee at ten?',
+        createdAt: DateTime.utc(2026, 5, 12, 8),
+      ),
+      _noteFromAna('Yes! ☕'),
+    ]);
+    await _openEvents(tester);
+    await tester.tap(find.byKey(const ValueKey('note-dismiss-note-in')));
+    await tester.pumpAndSettle();
+
+    // BOTH sides of the exchange read in full.
+    expect(
+        find.byKey(const ValueKey('conversation-sheet')), findsOneWidget);
+    Finder inSheet(String text) => find.descendant(
+        of: find.byKey(const ValueKey('conversation-sheet')),
+        matching: find.text(text, findRichText: true));
+    expect(inSheet('Coffee at ten?'), findsOneWidget);
+    expect(inSheet('Yes! ☕'), findsOneWidget);
+    // My bubble carries the delivery check (scoped: the inbox row
+    // behind the sheet shows the same check).
+    expect(
+        find.descendant(
+            of: find.byKey(const ValueKey('bubble-note-mine')),
+            matching: find.byKey(const ValueKey('note-check-note-mine'))),
+        findsOneWidget);
+
+    // Long-press my message → confirm → gone everywhere.
+    await tester.longPress(find.byKey(const ValueKey('bubble-note-mine')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('note-delete-confirm')));
+    await tester.pumpAndSettle();
+    expect(workspace.memberNotes.where((n) => n.id == 'note-mine'),
+        isEmpty);
+  });
+
+  testWidgets(
       'READ RECEIPTS (0105): my sent note carries a grey check, a read '
       'one a blue check, received notes none — and opening Events '
       'stamps my received notes read on the server', (tester) async {
@@ -235,7 +277,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Ana'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Send notification'));
+    await tester.tap(find.text('Messages'));
     await tester.pumpAndSettle();
 
     await tester.enterText(

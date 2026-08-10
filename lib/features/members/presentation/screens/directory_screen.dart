@@ -24,7 +24,7 @@ import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/presentation/widgets/member_note_dialog.dart';
+import '../../../workspace/presentation/widgets/conversation_sheet.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/directory_status.dart';
 import '../../providers/directory_providers.dart';
@@ -225,12 +225,15 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
                       onWhatsapp: (uri) => _openLink(context, ref, uri),
                       onOpenReservation: (reservation) =>
                           _openReservation(context, reservation),
+                      // Messaging refactor: the profile opens the same
+                      // conversation thread as everywhere else — read
+                      // AND send in one place.
                       onNotify: notesOn && member.id != myMemberId
-                          ? () => showMemberNoteDialog(
+                          ? () => showConversationSheet(
                                 context,
                                 ref,
-                                toMemberId: member.id,
-                                recipientName: names[member.id] ?? '',
+                                otherMemberId: member.id,
+                                otherName: names[member.id] ?? '',
                               )
                           : null,
                     ),
