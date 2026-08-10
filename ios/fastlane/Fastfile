@@ -340,6 +340,43 @@ platform :ios do
     )
   end
 
+  desc "Attach the newest PROCESSED TestFlight build to the editable App"
+  desc "Store version. App Store Connect shows the placeholder GRID next to"
+  desc "the app in the Apps list until a build is linked to a version — the"
+  desc "icon in the list is the linked build's icon (Sparkilo shows its"
+  desc "icon because its 6.0 version carries a build). Linking only; never"
+  desc "submits anything for review."
+  lane :attach_build_to_version do
+    require "spaceship"
+    Spaceship::ConnectAPI.token =
+      Spaceship::ConnectAPI::Token.from(hash: asc_api_key)
+
+    app = Spaceship::ConnectAPI::App.find("de.deskilo.app")
+    UI.user_error!("No app record for de.deskilo.app") if app.nil?
+
+    version = app.get_edit_app_store_version(
+      platform: Spaceship::ConnectAPI::Platform::IOS,
+    )
+    UI.user_error!(
+      "No editable iOS App Store version — create one in ASC first.",
+    ) if version.nil?
+
+    build = app.get_builds(
+      filter: { processingState: "VALID" },
+      sort: "-uploadedDate",
+      limit: 1,
+    ).first
+    UI.user_error!(
+      "No fully processed (VALID) build on this app — upload one via " \
+      "release_testflight and wait for Apple's processing, then re-run.",
+    ) if build.nil?
+
+    version.select_build(build_id: build.id)
+    UI.success("Attached build #{build.version} to App Store version " \
+               "#{version.version_string} — the Apps list now shows the " \
+               "real icon.")
+  end
+
   # ── TestFlight testers ──────────────────────────────────────────────
   #
   # Ported from tankstellen's manage_testers (only the bundle id differs):

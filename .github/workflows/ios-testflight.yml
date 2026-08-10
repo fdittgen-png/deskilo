@@ -43,6 +43,15 @@ on:
         required: false
         type: boolean
         default: false
+      attach_build:
+        description: >-
+          Link the newest processed TestFlight build to the editable App
+          Store version — makes App Store Connect's Apps list show the real
+          app icon instead of the placeholder grid. Linking only, nothing
+          is submitted for review. Safe to re-run.
+        required: false
+        type: boolean
+        default: false
       sync_certs:
         description: >-
           Repair mode: run write-mode match to (re)generate the de.deskilo.app
@@ -159,6 +168,8 @@ jobs:
             bundle exec fastlane upload_metadata
           elif [ "${{ inputs.create_app }}" = "true" ]; then
             bundle exec fastlane create_app_record
+          elif [ "${{ inputs.attach_build }}" = "true" ]; then
+            bundle exec fastlane attach_build_to_version
           elif [ "${{ inputs.sync_certs }}" = "true" ]; then
             bundle exec fastlane match_sync_appstore
           else
@@ -171,7 +182,8 @@ jobs:
 
       - name: Tag the shipped build (vX.Y.Z+BUILD-ios)
         if: ${{ inputs.sync_certs != true && inputs.create_app != true
-                && inputs.upload_metadata != true }}
+                && inputs.upload_metadata != true
+                && inputs.attach_build != true }}
         run: |
           set -euo pipefail
           VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}' | cut -d+ -f1)
@@ -184,7 +196,8 @@ jobs:
 
       - name: Upload obfuscation symbols
         if: ${{ always() && inputs.sync_certs != true && inputs.create_app != true
-                && inputs.upload_metadata != true }}
+                && inputs.upload_metadata != true
+                && inputs.attach_build != true }}
         uses: actions/upload-artifact@v4
         with:
           name: ios-symbols-${{ steps.bn.outputs.build_number }}
