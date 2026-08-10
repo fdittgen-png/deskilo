@@ -309,6 +309,10 @@ abstract class WorkspaceRepository {
   /// recipient; received broadcasts are refused server-side.
   Future<void> deleteMemberNote(String noteId);
 
+  /// Stamps every unread note ADDRESSED TO ME as read (0105) — called
+  /// when the messages surface opens; senders see the check turn blue.
+  Future<void> markMyNotesRead(String workspaceId);
+
   /// The signed-in USER's default workspace (#458, 0090) — stored on
   /// their profile so it survives reinstalls and follows them across
   /// platforms. Null = none chosen (or signed out).

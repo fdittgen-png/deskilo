@@ -855,6 +855,26 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     memberNotes.removeWhere((n) => n.id == noteId);
   }
 
+  /// Read receipts (0105): notes addressed to me ('member-1', the
+  /// fake's signed-in member) get their read stamp.
+  @override
+  Future<void> markMyNotesRead(String workspaceId) async {
+    for (var i = 0; i < memberNotes.length; i++) {
+      final n = memberNotes[i];
+      if (n.toMemberId == 'member-1' && n.readAt == null) {
+        memberNotes[i] = MemberNote(
+          id: n.id,
+          workspaceId: n.workspaceId,
+          fromMemberId: n.fromMemberId,
+          toMemberId: n.toMemberId,
+          body: n.body,
+          createdAt: n.createdAt,
+          readAt: DateTime.utc(2026, 8, 9, 12),
+        );
+      }
+    }
+  }
+
   /// Server-side default workspace (#458).
   String? serverDefaultWorkspaceId;
 

@@ -14,6 +14,11 @@ import '../../../workspace/presentation/widgets/member_note_dialog.dart';
 import '../../../workspace/presentation/widgets/member_note_sheet.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 
+/// Read-check blue (0105) — the calendar's fixed "others" hue, chosen
+/// once for both themes: the receipt must read as "blue" everywhere,
+/// including on the orange brand palette.
+const _readBlue = Color(0xFF42A5F5);
+
 /// One member note in the Messages inbox (#460, #523): direction +
 /// sender or recipient, a 64-CHARACTER PREVIEW, and when it was sent.
 /// Tapping the row opens the full message — emojis, reference links
@@ -125,11 +130,29 @@ class NoteRow extends ConsumerWidget {
           // #523 — the list carries only the first 64 characters; the
           // full message (emojis, reference links) lives in the sheet.
           Text(notePreview(note.body)),
-          Text(
-            when,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
+          Row(
+            children: [
+              Text(
+                when,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+              // Read receipt on what I sent (0105): grey = delivered,
+              // blue = the recipient read it. A broadcast has many
+              // readers and no single read state — it stays grey.
+              if (sentByMe) ...[
+                const SizedBox(width: 4),
+                Icon(
+                  Icons.done,
+                  key: ValueKey('note-check-${note.id}'),
+                  size: 14,
+                  color: note.readAt != null
+                      ? _readBlue
+                      : theme.colorScheme.onSurfaceVariant,
+                ),
+              ],
+            ],
           ),
         ],
       ),
