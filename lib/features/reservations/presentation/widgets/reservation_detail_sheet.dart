@@ -605,5 +605,11 @@ Future<void> showReservationDetail(
           at: reservation.startsAt,
         ),
       );
+  // The jump must land on a VISIBLE plan: when the detail sheet was
+  // stacked over other sheets (a conversation's message link, the
+  // booking sheet), those would keep covering the plan tab — close
+  // every remaining sheet/dialog first (field report).
+  Navigator.of(context).popUntil((route) =>
+      route is! ModalBottomSheetRoute && route is! RawDialogRoute);
   context.go('/plan');
 }

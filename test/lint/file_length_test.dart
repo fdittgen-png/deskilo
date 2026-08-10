@@ -154,7 +154,9 @@ const Map<String, int> _baseline = {
   // 730→770 (2026-08-05): #500 the document-library reads/writes.
   'lib/features/workspace/data/supabase_workspace_repository.dart': 790,
   // 770→790 (2026-08-06): #513 setRolePermissions + role_permissions row.
-  'lib/features/calendar/presentation/screens/calendar_screen.dart': 630,
+  // 630→640 (2026-08-10): two-dot month markers (mine + others per day)
+  // — a dozen lines of dot layout, no new concern worth a split.
+  'lib/features/calendar/presentation/screens/calendar_screen.dart': 640,
 };
 
 void main() {
