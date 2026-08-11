@@ -2767,6 +2767,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce message se trouve dans votre boîte de réception.';
 
   @override
+  String get whatsappNotesUnconfigured =>
+      'Le canal WhatsApp de l\'espace n\'est pas encore configuré (propriétaire : WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — d\'ici là, les messages arrivent dans l\'app et en push seulement.';
+
+  @override
   String get moneyBaseFee => 'Abonnement de base';
 
   @override

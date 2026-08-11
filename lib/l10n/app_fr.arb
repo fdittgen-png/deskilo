@@ -1441,6 +1441,10 @@
   "@messageLinkGone": {
     "description": "Deep-link landing when a /msg link points at a broadcast or a gone note"
   },
+  "whatsappNotesUnconfigured": "Le canal WhatsApp de l'espace n'est pas encore configuré (propriétaire : WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — d'ici là, les messages arrivent dans l'app et en push seulement.",
+  "@whatsappNotesUnconfigured": {
+    "description": "Warning under the WhatsApp-mirror opt-in switch when the server channel lacks its secrets (#538)"
+  },
   "moneyBaseFee": "Abonnement de base",
   "moneyUsage": "{used} demi-journées utilisées sur {included}",
   "moneyUsageUnlimited": "{used} demi-journées utilisées",

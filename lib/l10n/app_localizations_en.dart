@@ -2739,6 +2739,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get messageLinkGone => 'This message lives in your inbox.';
 
   @override
+  String get whatsappNotesUnconfigured =>
+      'The workspace\'s WhatsApp channel is not configured yet (owner: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — until then, messages arrive in-app and by push only.';
+
+  @override
   String get moneyBaseFee => 'Base subscription';
 
   @override

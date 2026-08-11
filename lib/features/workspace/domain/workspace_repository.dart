@@ -313,6 +313,11 @@ abstract class WorkspaceRepository {
   /// when the messages surface opens; senders see the check turn blue.
   Future<void> markMyNotesRead(String workspaceId);
 
+  /// Whether the WhatsApp message-mirror channel (0106) is actually
+  /// configured server-side (WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — the
+  /// opt-in switch warns instead of silently promising delivery.
+  Future<bool> fetchWhatsappMirrorConfigured();
+
   /// The signed-in USER's default workspace (#458, 0090) — stored on
   /// their profile so it survives reinstalls and follows them across
   /// platforms. Null = none chosen (or signed out).

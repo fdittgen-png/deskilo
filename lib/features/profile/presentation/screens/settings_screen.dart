@@ -291,10 +291,21 @@ class SettingsScreen extends ConsumerWidget {
               secondary: const Icon(Icons.forward_to_inbox_outlined),
               title: Text(l10n?.whatsappNotesTitle ??
                   'Receive messages on WhatsApp'),
-              subtitle: Text(l10n?.whatsappNotesSubtitle ??
-                  'Member messages arrive on WhatsApp too, with their '
-                      'links — tapping the DesKilo link opens the '
-                      'conversation in the app.'),
+              subtitle: Builder(builder: (context) {
+                final configured =
+                    ref.watch(whatsappMirrorConfiguredProvider).value;
+                final base = l10n?.whatsappNotesSubtitle ??
+                    'Member messages arrive on WhatsApp too, with their '
+                        'links — tapping the DesKilo link opens the '
+                        'conversation in the app.';
+                if (configured != false) return Text(base);
+                // #538 field report — the switch used to promise a
+                // channel the server cannot deliver on. Say it.
+                return Text(
+                  '$base\n${l10n?.whatsappNotesUnconfigured ?? "The workspace's WhatsApp channel is not configured yet (owner: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — until then, messages arrive in-app and by push only."}',
+                  key: const ValueKey('whatsapp-notes-unconfigured'),
+                );
+              }),
               value: myProfile?.whatsappNotes ?? false,
               onChanged: (enabled) async {
                 try {

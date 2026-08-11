@@ -2763,6 +2763,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get messageLinkGone => 'Questo messaggio è nella tua casella.';
 
   @override
+  String get whatsappNotesUnconfigured =>
+      'Il canale WhatsApp dello spazio non è ancora configurato (proprietario: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — fino ad allora i messaggi arrivano solo in-app e via push.';
+
+  @override
   String get moneyBaseFee => 'Abbonamento base';
 
   @override

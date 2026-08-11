@@ -5000,6 +5000,12 @@ abstract class AppLocalizations {
   /// **'This message lives in your inbox.'**
   String get messageLinkGone;
 
+  /// Warning under the WhatsApp-mirror opt-in switch when the server channel lacks its secrets (#538)
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s WhatsApp channel is not configured yet (owner: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — until then, messages arrive in-app and by push only.'**
+  String get whatsappNotesUnconfigured;
+
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:

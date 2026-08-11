@@ -151,4 +151,46 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('reservation-cancel')), findsOneWidget);
   });
+
+  testWidgets(
+      'an UNCONFIGURED server channel warns under the switch instead of '
+      'silently promising delivery (#538)', (tester) async {
+    final profile = FakeProfileRepository(profiles: [
+      const Profile(id: 'user-1', whatsapp: '+491701234567'),
+    ]);
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..whatsappMirrorConfigured = false;
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+            workspace: workspace, profile: profile),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.pumpAndSettle();
+    final swtch = find.byKey(const ValueKey('whatsapp-notes-switch'));
+    await tester.scrollUntilVisible(swtch, 200,
+        scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('whatsapp-notes-unconfigured')),
+        findsOneWidget);
+  });
+
+  testWidgets('a configured channel shows no warning (#538)',
+      (tester) async {
+    final profile = FakeProfileRepository(profiles: [
+      const Profile(id: 'user-1', whatsapp: '+491701234567'),
+    ]);
+    await _pump(tester, profile: profile);
+    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.pumpAndSettle();
+    final swtch = find.byKey(const ValueKey('whatsapp-notes-switch'));
+    await tester.scrollUntilVisible(swtch, 200,
+        scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('whatsapp-notes-unconfigured')),
+        findsNothing);
+  });
 }

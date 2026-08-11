@@ -2765,6 +2765,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get messageLinkGone => 'Diese Nachricht liegt in deinem Posteingang.';
 
   @override
+  String get whatsappNotesUnconfigured =>
+      'Der WhatsApp-Kanal des Space ist noch nicht konfiguriert (Inhaber: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — bis dahin kommen Nachrichten nur in der App und per Push an.';
+
+  @override
   String get moneyBaseFee => 'Basis-Abo';
 
   @override

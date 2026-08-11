@@ -62,5 +62,9 @@
   "messageLinkGone": "Questo messaggio è nella tua casella.",
   "@messageLinkGone": {
     "description": "Deep-link landing when a /msg link points at a broadcast or a gone note"
+  },
+  "whatsappNotesUnconfigured": "Il canale WhatsApp dello spazio non è ancora configurato (proprietario: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — fino ad allora i messaggi arrivano solo in-app e via push.",
+  "@whatsappNotesUnconfigured": {
+    "description": "Warning under the WhatsApp-mirror opt-in switch when the server channel lacks its secrets (#538)"
   }
 }
