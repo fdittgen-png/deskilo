@@ -3053,6 +3053,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String billingTariffVatHint(String rate) {
+    return 'Les prix sont TTC — la TVA $rate (taux des paliers) est incluse.';
+  }
+
+  @override
   String get billingNewPackage => 'Nouveau forfait';
 
   @override

@@ -3892,6 +3892,15 @@
       }
     }
   },
+  "billingTariffVatHint": "Prices are gross — VAT {rate} (the tariff rate) is included.",
+  "@billingTariffVatHint": {
+    "description": "Fee-band hint when the tariff carries its own configured rate (#542)",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
   "billingNewPackage": "New package",
   "@billingNewPackage": {
     "description": "Title above the new-day-pack form on the billing screen (#537)"

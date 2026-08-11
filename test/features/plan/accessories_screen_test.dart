@@ -7,7 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo/features/plan/domain/accessory.dart';
+
 import '../../helpers/fake_accessory_repository.dart';
+import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 
 /// Widget tests default to 800x600 with lazy lists — use a taller
@@ -21,6 +25,8 @@ void useTallViewport(WidgetTester tester) {
 Future<FakeAccessoryRepository> pumpAccessories(
   WidgetTester tester, {
   FakeAccessoryRepository? accessories,
+  FakeWorkspaceRepository? workspace,
+  FakeMoneyRepository? money,
 }) async {
   useTallViewport(tester);
   accessories ??= FakeAccessoryRepository()..seedSmallCatalog();
@@ -29,10 +35,12 @@ Future<FakeAccessoryRepository> pumpAccessories(
       overrides: standardTestOverrides(
         // /accessories is gated on the accessorySupplements feature (#170,
         // default-off) since the admin-menu feature-gating refactor.
-        workspace: FakeWorkspaceRepository.withWorkspace(
-          featureFlags: const {'accessorySupplements': true},
-        ),
+        workspace: workspace ??
+            FakeWorkspaceRepository.withWorkspace(
+              featureFlags: const {'accessorySupplements': true},
+            ),
         accessories: accessories,
+        money: money,
       ),
       child: const DeskiloApp(),
     ),
@@ -218,5 +226,65 @@ void main() {
 
     expect(find.byType(AccessoriesScreen), findsOneWidget);
     expect(find.text('Monitor'), findsOneWidget);
+  });
+
+  testWidgets(
+      'per-accessory VAT (#542): each row names ITS rate — own rate or '
+      'the workspace default — and the editor changes it', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+      featureFlags: const {'accessorySupplements': true},
+    );
+    workspace.workspaces[0] =
+        workspace.workspaces[0].copyWith(vatRegime: 'vat_registered');
+    final money = FakeMoneyRepository()
+      ..vatRates = [
+        const VatRate(
+            id: 'vat-1', label: 'Standard', percent: 20, isDefault: true),
+        const VatRate(id: 'vat-2', label: 'Reduced', percent: 5.5),
+      ];
+    final accessories = FakeAccessoryRepository()
+      ..accessories.addAll(const [
+        Accessory(
+          id: 'acc-default',
+          workspaceId: 'ws-1',
+          name: 'Monitor',
+          supplementCents: 2000,
+          active: true,
+          sortOrder: 0,
+        ),
+        Accessory(
+          id: 'acc-reduced',
+          workspaceId: 'ws-1',
+          name: 'Locker',
+          supplementCents: 2000,
+          active: true,
+          sortOrder: 1,
+          vatRateId: 'vat-2',
+        ),
+      ]);
+    await pumpAccessories(tester,
+        accessories: accessories, workspace: workspace, money: money);
+
+    expect(find.textContaining('incl. VAT 20 %'), findsOneWidget);
+    expect(find.textContaining('incl. VAT 5.5 %'), findsOneWidget);
+
+    // Re-rate the Monitor to the reduced rate through the edit sheet.
+    await tester.tap(find.text('Monitor'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('vat-rate-field')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Reduced (5.5 %)').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    expect(
+      accessories.accessories
+          .firstWhere((a) => a.id == 'acc-default')
+          .vatRateId,
+      'vat-2',
+    );
+    expect(find.textContaining('incl. VAT 5.5 %'), findsNWidgets(2));
+    expect(find.textContaining('incl. VAT 20 %'), findsNothing);
   });
 }

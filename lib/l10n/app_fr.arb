@@ -1644,6 +1644,15 @@
       }
     }
   },
+  "billingTariffVatHint": "Les prix sont TTC — la TVA {rate} (taux des paliers) est incluse.",
+  "@billingTariffVatHint": {
+    "description": "Fee-band hint when the tariff carries its own configured rate (#542)",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
   "billingNewPackage": "Nouveau forfait",
   "@billingNewPackage": {
     "description": "Title above the new-day-pack form on the billing screen (#537)"

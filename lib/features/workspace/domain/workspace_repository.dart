@@ -90,6 +90,10 @@ abstract class WorkspaceRepository {
     required String vatAccount,
   });
 
+  /// Owner-only: the subscription tariff's VAT rate (#542) — '' resets
+  /// to the workspace default.
+  Future<void> setSubscriptionVatRate(String workspaceId, String vatRateId);
+
   /// The document library (#500, 0099) — RLS already trims rows to
   /// what the caller's role may see.
   Future<List<WorkspaceDocument>> fetchDocuments(String workspaceId);

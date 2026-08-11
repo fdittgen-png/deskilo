@@ -638,6 +638,17 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     );
   }
 
+  @override
+  Future<void> setSubscriptionVatRate(
+    String workspaceId,
+    String vatRateId,
+  ) async {
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i < 0) return;
+    workspaces[i] =
+        workspaces[i].copyWith(subscriptionVatRateId: vatRateId);
+  }
+
   /// #500 — the in-memory document library.
   final List<WorkspaceDocument> documents = [];
 

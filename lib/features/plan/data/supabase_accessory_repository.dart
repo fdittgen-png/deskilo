@@ -16,6 +16,7 @@ class SupabaseAccessoryRepository implements AccessoryRepository {
         supplementCents: row['supplement_cents'] as int,
         active: row['active'] as bool,
         sortOrder: row['sort_order'] as int,
+        vatRateId: row['vat_rate_id'] as String? ?? '',
       );
 
   @override
@@ -38,6 +39,7 @@ class SupabaseAccessoryRepository implements AccessoryRepository {
     required String name,
     int supplementCents = 0,
     int sortOrder = 0,
+    String vatRateId = '',
   }) async {
     final row = await _client
         .from('accessories')
@@ -46,6 +48,7 @@ class SupabaseAccessoryRepository implements AccessoryRepository {
           'name': name,
           'supplement_cents': supplementCents,
           'sort_order': sortOrder,
+          'vat_rate_id': vatRateId.isEmpty ? null : vatRateId,
         })
         .select()
         .single();
@@ -59,6 +62,7 @@ class SupabaseAccessoryRepository implements AccessoryRepository {
     int? supplementCents,
     bool? active,
     int? sortOrder,
+    String? vatRateId,
   }) async {
     final row = await _client
         .from('accessories')
@@ -67,6 +71,8 @@ class SupabaseAccessoryRepository implements AccessoryRepository {
           'supplement_cents': ?supplementCents,
           'active': ?active,
           'sort_order': ?sortOrder,
+          if (vatRateId != null)
+            'vat_rate_id': vatRateId.isEmpty ? null : vatRateId,
         })
         .eq('id', accessoryId)
         .select()

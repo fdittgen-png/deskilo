@@ -17,5 +17,9 @@ sealed class Accessory with _$Accessory {
     required int supplementCents,
     required bool active,
     required int sortOrder,
+
+    /// The accessory's own VAT rate (#542), or '' for the workspace
+    /// default — the services/packages resolution.
+    @Default('') String vatRateId,
   }) = _Accessory;
 }

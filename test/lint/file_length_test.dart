@@ -119,7 +119,9 @@ const Map<String, int> _baseline = {
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
   // 630→660 (2026-08-11): #537 follow-up — live VAT-share helpers under
   // the band amount fields (default-rate resolver + helper text).
-  'lib/features/money/presentation/screens/billing_screen.dart': 660,
+  // 660→700 (2026-08-11): #542 — the tariff's configurable VAT rate
+  // (picker, resolution with inactive-rate fallback, immediate save).
+  'lib/features/money/presentation/screens/billing_screen.dart': 700,
   // 750→880 (2026-08-05): #510 the month-invoice card + settlement-
   // driven balance footer (the invoice decides settled/outstanding).
   'lib/features/money/presentation/widgets/bill_view.dart': 880,
@@ -161,7 +163,8 @@ const Map<String, int> _baseline = {
   // 730→770 (2026-08-05): #500 the document-library reads/writes.
   // 790→800 (2026-08-11): #538 the WhatsApp-mirror config probe (one
   // functions.invoke method — same data client, no new concern).
-  'lib/features/workspace/data/supabase_workspace_repository.dart': 800,
+  // 800→820 (2026-08-11): #542 setSubscriptionVatRate.
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 820,
   // 770→790 (2026-08-06): #513 setRolePermissions + role_permissions row.
   // 630→640 (2026-08-10): two-dot month markers (mine + others per day)
   // — a dozen lines of dot layout, no new concern worth a split.

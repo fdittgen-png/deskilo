@@ -1644,6 +1644,15 @@
       }
     }
   },
+  "billingTariffVatHint": "Los precios son con IVA incluido — IVA {rate} (tipo de las tarifas).",
+  "@billingTariffVatHint": {
+    "description": "Fee-band hint when the tariff carries its own configured rate (#542)",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
   "billingNewPackage": "Nuevo bono",
   "@billingNewPackage": {
     "description": "Title above the new-day-pack form on the billing screen (#537)"

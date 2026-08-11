@@ -3052,6 +3052,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String billingTariffVatHint(String rate) {
+    return 'Preise sind brutto — USt $rate (Tarifsatz) ist enthalten.';
+  }
+
+  @override
   String get billingNewPackage => 'Neues Paket';
 
   @override
