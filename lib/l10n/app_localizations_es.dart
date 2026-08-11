@@ -3025,6 +3025,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las declaraciones solo existen bajo el régimen sujeto a IVA — configúrelo en los ajustes de IVA.';
 
   @override
+  String get featureVatManagementTitle => 'Gestión del IVA';
+
+  @override
+  String get featureVatManagementDesc =>
+      'El editor de tipos de IVA y los selectores de tipo en servicios, bonos, accesorios y tarifas. Desactivado oculta la configuración; los tipos guardados siguen aplicándose.';
+
+  @override
   String get featureVatDeclarationsTitle => 'Declaraciones de IVA';
 
   @override

@@ -5504,6 +5504,18 @@ abstract class AppLocalizations {
   /// **'Declarations exist only under the VAT-registered regime — configure it under VAT settings.'**
   String get vatDeclRegimeGate;
 
+  /// Feature toggle title: VAT management (#544)
+  ///
+  /// In en, this message translates to:
+  /// **'VAT management'**
+  String get featureVatManagementTitle;
+
+  /// Feature toggle description: VAT management (#544)
+  ///
+  /// In en, this message translates to:
+  /// **'The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying.'**
+  String get featureVatManagementDesc;
+
   /// Feature toggle title (#534)
   ///
   /// In en, this message translates to:

@@ -1618,6 +1618,14 @@
   "@vatDeclRegimeGate": {
     "description": "Gate banner when the workspace is not vat_registered"
   },
+  "featureVatManagementTitle": "Gestión del IVA",
+  "@featureVatManagementTitle": {
+    "description": "Feature toggle title: VAT management (#544)"
+  },
+  "featureVatManagementDesc": "El editor de tipos de IVA y los selectores de tipo en servicios, bonos, accesorios y tarifas. Desactivado oculta la configuración; los tipos guardados siguen aplicándose.",
+  "@featureVatManagementDesc": {
+    "description": "Feature toggle description: VAT management (#544)"
+  },
   "featureVatDeclarationsTitle": "Declaraciones de IVA",
   "@featureVatDeclarationsTitle": {
     "description": "Feature toggle title (#534)"

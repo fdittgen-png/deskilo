@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/vat_rate.dart';
 import '../../domain/vat_regime.dart';
@@ -39,7 +40,14 @@ class VatRateField extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final regime = vatRegimeFromWire(
         ref.watch(currentWorkspaceProvider).value?.vatRegime);
-    if (rates.isEmpty || regime != VatRegime.vatRegistered) {
+    // #544 — rate pickers are VAT MANAGEMENT: with the feature off the
+    // picker disappears everywhere at once and stored rates keep
+    // applying (the flag hides configuration, never the tax math).
+    if (rates.isEmpty ||
+        regime != VatRegime.vatRegistered ||
+        !ref
+            .watch(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.vatManagement)) {
       return const SizedBox.shrink();
     }
     final l10n = AppLocalizations.of(context);
