@@ -129,6 +129,11 @@ class FeaturesScreen extends ConsumerWidget {
               'The central role→permission matrix: the owner decides '
                   'which role holds which permission; everyone else '
                   'reads their own. Off, the defaults simply apply.',
+        WorkspaceFeature.vatDeclarations =>
+          l10n?.featureVatDeclarationsDesc ??
+              'Generate the periodic VAT return from issued invoices, '
+                  'map it to the official form and transmit or export '
+                  'it.',
       };
 
   Future<void> _toggle(

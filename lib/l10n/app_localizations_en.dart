@@ -2918,6 +2918,92 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moneySectionDocuments => 'Documents';
 
   @override
+  String get vatDeclTitle => 'VAT declaration';
+
+  @override
+  String get vatDeclPeriod => 'Period';
+
+  @override
+  String get vatDeclSeller => 'Seller';
+
+  @override
+  String get vatDeclVatId => 'VAT ID';
+
+  @override
+  String get vatDeclRate => 'Rate';
+
+  @override
+  String get vatDeclNet => 'Net base';
+
+  @override
+  String get vatDeclVat => 'VAT';
+
+  @override
+  String get vatDeclInvoices => 'Invoices';
+
+  @override
+  String get vatDeclTotals => 'Totals';
+
+  @override
+  String get vatDeclBoxes => 'Official form lines';
+
+  @override
+  String get vatDeclBox => 'Box';
+
+  @override
+  String get vatDeclStatus => 'Status';
+
+  @override
+  String get vatDeclDisclaimer =>
+      'Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.';
+
+  @override
+  String get vatDeclGenerate => 'Generate';
+
+  @override
+  String get vatDeclEmpty =>
+      'No declarations yet — pick a period and generate the first one.';
+
+  @override
+  String get vatDeclDraft => 'Draft';
+
+  @override
+  String get vatDeclSubmitted => 'Submitted';
+
+  @override
+  String get vatDeclTransmit => 'Transmit';
+
+  @override
+  String get vatDeclMarkFiled => 'Mark as filed';
+
+  @override
+  String get vatDeclMarkFiledConfirm =>
+      'Confirm you filed this declaration yourself (tax-office portal or your accountant). It becomes immutable.';
+
+  @override
+  String get vatDeclXml => 'XML export';
+
+  @override
+  String get vatDeclPdf => 'PDF';
+
+  @override
+  String get vatDeclSent => 'Declaration transmitted.';
+
+  @override
+  String get vatDeclRejected => 'The platform refused the declaration.';
+
+  @override
+  String get vatDeclRegimeGate =>
+      'Declarations exist only under the VAT-registered regime — configure it under VAT settings.';
+
+  @override
+  String get featureVatDeclarationsTitle => 'VAT declarations';
+
+  @override
+  String get featureVatDeclarationsDesc =>
+      'Generate the periodic VAT return from issued invoices, map it to the official form and transmit or export it.';
+
+  @override
   String get planNoLevels => 'The workspace has no floor plan yet.';
 
   @override

@@ -3754,6 +3754,114 @@
   "@moneySectionDocuments": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
+  "vatDeclTitle": "VAT declaration",
+  "@vatDeclTitle": {
+    "description": "Title of the periodic VAT declaration screen/PDF (#534)"
+  },
+  "vatDeclPeriod": "Period",
+  "@vatDeclPeriod": {
+    "description": "Filing-period label"
+  },
+  "vatDeclSeller": "Seller",
+  "@vatDeclSeller": {
+    "description": "Seller identity line on the declaration PDF"
+  },
+  "vatDeclVatId": "VAT ID",
+  "@vatDeclVatId": {
+    "description": "VAT identifier label"
+  },
+  "vatDeclRate": "Rate",
+  "@vatDeclRate": {
+    "description": "Rate column"
+  },
+  "vatDeclNet": "Net base",
+  "@vatDeclNet": {
+    "description": "Net taxable base column"
+  },
+  "vatDeclVat": "VAT",
+  "@vatDeclVat": {
+    "description": "Tax amount column"
+  },
+  "vatDeclInvoices": "Invoices",
+  "@vatDeclInvoices": {
+    "description": "Invoice-count column"
+  },
+  "vatDeclTotals": "Totals",
+  "@vatDeclTotals": {
+    "description": "Totals row"
+  },
+  "vatDeclBoxes": "Official form lines",
+  "@vatDeclBoxes": {
+    "description": "Header of the official-box mapping (CA3/UStVA)"
+  },
+  "vatDeclBox": "Box",
+  "@vatDeclBox": {
+    "description": "Box-code column"
+  },
+  "vatDeclStatus": "Status",
+  "@vatDeclStatus": {
+    "description": "Status label on the PDF"
+  },
+  "vatDeclDisclaimer": "Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.",
+  "@vatDeclDisclaimer": {
+    "description": "Disclaimer at the bottom of the declaration PDF"
+  },
+  "vatDeclGenerate": "Generate",
+  "@vatDeclGenerate": {
+    "description": "Generate-declaration button"
+  },
+  "vatDeclEmpty": "No declarations yet — pick a period and generate the first one.",
+  "@vatDeclEmpty": {
+    "description": "Empty state of the declarations list"
+  },
+  "vatDeclDraft": "Draft",
+  "@vatDeclDraft": {
+    "description": "Draft status chip"
+  },
+  "vatDeclSubmitted": "Submitted",
+  "@vatDeclSubmitted": {
+    "description": "Submitted status chip"
+  },
+  "vatDeclTransmit": "Transmit",
+  "@vatDeclTransmit": {
+    "description": "Send through the configured platform channel"
+  },
+  "vatDeclMarkFiled": "Mark as filed",
+  "@vatDeclMarkFiled": {
+    "description": "Manual-filing action"
+  },
+  "vatDeclMarkFiledConfirm": "Confirm you filed this declaration yourself (tax-office portal or your accountant). It becomes immutable.",
+  "@vatDeclMarkFiledConfirm": {
+    "description": "Confirmation before marking a declaration manually filed"
+  },
+  "vatDeclXml": "XML export",
+  "@vatDeclXml": {
+    "description": "Machine-readable export button"
+  },
+  "vatDeclPdf": "PDF",
+  "@vatDeclPdf": {
+    "description": "PDF button on a declaration card"
+  },
+  "vatDeclSent": "Declaration transmitted.",
+  "@vatDeclSent": {
+    "description": "Success snack after platform transmission"
+  },
+  "vatDeclRejected": "The platform refused the declaration.",
+  "@vatDeclRejected": {
+    "description": "Error snack when the platform rejects"
+  },
+  "vatDeclRegimeGate": "Declarations exist only under the VAT-registered regime — configure it under VAT settings.",
+  "@vatDeclRegimeGate": {
+    "description": "Gate banner when the workspace is not vat_registered"
+  },
+  "featureVatDeclarationsTitle": "VAT declarations",
+  "@featureVatDeclarationsTitle": {
+    "description": "Feature toggle title (#534)"
+  },
+  "featureVatDeclarationsDesc": "Generate the periodic VAT return from issued invoices, map it to the official form and transmit or export it.",
+  "@featureVatDeclarationsDesc": {
+    "description": "Feature toggle description (#534)"
+  },
   "planNoLevels": "The workspace has no floor plan yet.",
   "@planNoLevels": {
     "description": "Empty state of the Plan tab before the owner drew levels"

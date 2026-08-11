@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -12,6 +13,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/vat_catalogue.dart';
 import '../../domain/vat_rate.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
 
@@ -172,6 +174,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
     }
     final regime = vatRegimeFromWire(workspace.vatRegime);
     final catalogue = vatCatalogueFor(workspace.countryCode);
+    final catalogueNote = vatCatalogueNote(workspace.countryCode);
 
     return Scaffold(
       appBar: AppBar(title: title),
@@ -297,7 +300,33 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                   '(${catalogue.map((r) => '${_percentText(r.percent)} %').join(', ')})',
                 ),
               ),
+            // #534 — country caveats (US sales tax, Canadian provinces,
+            // the Swiss accommodation rate).
+            if (catalogueNote != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(
+                  catalogueNote,
+                  key: const ValueKey('vat-catalogue-note'),
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
           ]),
+          // #534 — the periodic return, one tap from where VAT lives.
+          if (regime == VatRegime.vatRegistered &&
+              ref
+                  .watch(enabledFeaturesSyncProvider)
+                  .contains(WorkspaceFeature.vatDeclarations))
+            Padding(
+              padding: const EdgeInsets.only(top: AppSpacing.sm),
+              child: OutlinedButton.icon(
+                key: const ValueKey('vat-declarations-button'),
+                onPressed: () => context.go('/vat-declarations'),
+                icon: const Icon(Icons.receipt_long_outlined),
+                label: Text(
+                    l10n?.vatDeclTitle ?? 'VAT declaration'),
+              ),
+            ),
           const SizedBox(height: AppSpacing.md),
           FilledButton(
             key: const ValueKey('vat-save'),

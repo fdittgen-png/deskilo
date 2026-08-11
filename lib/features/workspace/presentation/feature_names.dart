@@ -64,4 +64,6 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureDeletionRequests ?? 'Booking deletion requests',
       WorkspaceFeature.roleManagement =>
         l10n?.featureRoleManagement ?? 'Role management',
+      WorkspaceFeature.vatDeclarations =>
+        l10n?.featureVatDeclarationsTitle ?? 'VAT declarations',
     };

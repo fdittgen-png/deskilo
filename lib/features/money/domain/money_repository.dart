@@ -6,6 +6,7 @@ import 'vat_rate.dart';
 import 'fee_band.dart';
 
 import 'invoice.dart';
+import 'vat_declaration.dart';
 import 'member_account.dart';
 import 'dunning.dart';
 import 'invoice_pdf_template.dart';import 'ledger_entry.dart';
@@ -24,6 +25,40 @@ abstract class MoneyRepository {
   /// The invoice archive (0060): the member's own invoices — admins see
   /// everyone's (RLS decides).
   Future<List<Invoice>> fetchInvoices(String workspaceId);
+
+  /// The workspace's VAT declarations (0107), newest period first.
+  Future<List<VatDeclaration>> fetchVatDeclarations(String workspaceId);
+
+  /// Creates or regenerates the DRAFT declaration for a period (0107) —
+  /// numbers computed client-side with the invoices' own vatSplit.
+  Future<String> saveVatDeclaration({
+    required String workspaceId,
+    required DateTime periodStart,
+    required DateTime periodEnd,
+    required List<VatDeclarationLine> lines,
+    required int totalNetCents,
+    required int totalVatCents,
+    required String currency,
+    required int invoiceCount,
+  });
+
+  /// Stamps a draft submitted (channel: platform | export | manual).
+  Future<void> markVatDeclarationSubmitted({
+    required String declarationId,
+    required String channel,
+    String receipt = '',
+  });
+
+  /// Transmits the declaration document through the configured
+  /// e-invoicing platform channel (#534) — an accepted upload stamps
+  /// the declaration submitted server-side with the receipt.
+  Future<EInvoiceSubmission> sendVatDeclaration({
+    required String workspaceId,
+    required String declarationId,
+    required String fileName,
+    required String mimeType,
+    required List<int> bytes,
+  });
 
   /// The workspace's invoice-PDF template (#454, 0088); empty when the
   /// column holds no keys.

@@ -2947,6 +2947,92 @@ class AppLocalizationsFr extends AppLocalizations {
   String get moneySectionDocuments => 'Documents';
 
   @override
+  String get vatDeclTitle => 'Déclaration de TVA';
+
+  @override
+  String get vatDeclPeriod => 'Période';
+
+  @override
+  String get vatDeclSeller => 'Vendeur';
+
+  @override
+  String get vatDeclVatId => 'N° TVA';
+
+  @override
+  String get vatDeclRate => 'Taux';
+
+  @override
+  String get vatDeclNet => 'Base HT';
+
+  @override
+  String get vatDeclVat => 'TVA';
+
+  @override
+  String get vatDeclInvoices => 'Factures';
+
+  @override
+  String get vatDeclTotals => 'Totaux';
+
+  @override
+  String get vatDeclBoxes => 'Lignes du formulaire officiel (CA3)';
+
+  @override
+  String get vatDeclBox => 'Ligne';
+
+  @override
+  String get vatDeclStatus => 'Statut';
+
+  @override
+  String get vatDeclDisclaimer =>
+      'Générée à partir des factures émises de la période. Vérifiez avec votre comptabilité avant de déclarer — aide à la déclaration, pas un conseil fiscal.';
+
+  @override
+  String get vatDeclGenerate => 'Générer';
+
+  @override
+  String get vatDeclEmpty =>
+      'Aucune déclaration — choisissez une période et générez la première.';
+
+  @override
+  String get vatDeclDraft => 'Brouillon';
+
+  @override
+  String get vatDeclSubmitted => 'Déposée';
+
+  @override
+  String get vatDeclTransmit => 'Télétransmettre';
+
+  @override
+  String get vatDeclMarkFiled => 'Marquer comme déposée';
+
+  @override
+  String get vatDeclMarkFiledConfirm =>
+      'Confirmez avoir déposé cette déclaration vous-même (portail des impôts ou votre comptable). Elle devient immuable.';
+
+  @override
+  String get vatDeclXml => 'Export XML';
+
+  @override
+  String get vatDeclPdf => 'PDF';
+
+  @override
+  String get vatDeclSent => 'Déclaration télétransmise.';
+
+  @override
+  String get vatDeclRejected => 'La plateforme a refusé la déclaration.';
+
+  @override
+  String get vatDeclRegimeGate =>
+      'Les déclarations n’existent que sous le régime assujetti à la TVA — configurez-le dans les réglages TVA.';
+
+  @override
+  String get featureVatDeclarationsTitle => 'Déclarations de TVA';
+
+  @override
+  String get featureVatDeclarationsDesc =>
+      'Générer la déclaration périodique de TVA depuis les factures émises, la rapprocher du formulaire officiel et la télétransmettre ou l’exporter.';
+
+  @override
   String get planNoLevels => 'L\'espace n\'a pas encore de plan.';
 
   @override

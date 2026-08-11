@@ -237,7 +237,7 @@ void main() {
     test('offers a country its usual rates, standard first and default', () {
       final rates = vatCatalogueFor('FR');
 
-      expect(rates.map((r) => r.percent), [20, 10, 5.5]);
+      expect(rates.map((r) => r.percent), [20, 10, 5.5, 2.1]);
       expect(rates.first.isDefault, isTrue);
       expect(rates.where((r) => r.isDefault), hasLength(1),
           reason: 'set_vat_rates accepts exactly one default');

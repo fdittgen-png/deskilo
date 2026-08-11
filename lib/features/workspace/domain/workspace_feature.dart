@@ -36,7 +36,8 @@ enum WorkspaceFeature {
   dunning,
   memberReports,
   deletionRequests,
-  roleManagement;
+  roleManagement,
+  vatDeclarations;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -200,6 +201,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // matrix is then simply not editable in the app).
   WorkspaceFeature.roleManagement:
       FeatureManifestEntry(feature: WorkspaceFeature.roleManagement),
+  // Periodic VAT declarations (#534/0107) — only meaningful where
+  // invoices exist; the vat_registered regime gates it further at the
+  // screen (an exempt workspace has nothing to declare).
+  WorkspaceFeature.vatDeclarations: FeatureManifestEntry(
+    feature: WorkspaceFeature.vatDeclarations,
+    requires: WorkspaceFeature.invoicing,
+  ),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start

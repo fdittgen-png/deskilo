@@ -5336,6 +5336,168 @@ abstract class AppLocalizations {
   /// **'Documents'**
   String get moneySectionDocuments;
 
+  /// Title of the periodic VAT declaration screen/PDF (#534)
+  ///
+  /// In en, this message translates to:
+  /// **'VAT declaration'**
+  String get vatDeclTitle;
+
+  /// Filing-period label
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get vatDeclPeriod;
+
+  /// Seller identity line on the declaration PDF
+  ///
+  /// In en, this message translates to:
+  /// **'Seller'**
+  String get vatDeclSeller;
+
+  /// VAT identifier label
+  ///
+  /// In en, this message translates to:
+  /// **'VAT ID'**
+  String get vatDeclVatId;
+
+  /// Rate column
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get vatDeclRate;
+
+  /// Net taxable base column
+  ///
+  /// In en, this message translates to:
+  /// **'Net base'**
+  String get vatDeclNet;
+
+  /// Tax amount column
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get vatDeclVat;
+
+  /// Invoice-count column
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get vatDeclInvoices;
+
+  /// Totals row
+  ///
+  /// In en, this message translates to:
+  /// **'Totals'**
+  String get vatDeclTotals;
+
+  /// Header of the official-box mapping (CA3/UStVA)
+  ///
+  /// In en, this message translates to:
+  /// **'Official form lines'**
+  String get vatDeclBoxes;
+
+  /// Box-code column
+  ///
+  /// In en, this message translates to:
+  /// **'Box'**
+  String get vatDeclBox;
+
+  /// Status label on the PDF
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get vatDeclStatus;
+
+  /// Disclaimer at the bottom of the declaration PDF
+  ///
+  /// In en, this message translates to:
+  /// **'Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.'**
+  String get vatDeclDisclaimer;
+
+  /// Generate-declaration button
+  ///
+  /// In en, this message translates to:
+  /// **'Generate'**
+  String get vatDeclGenerate;
+
+  /// Empty state of the declarations list
+  ///
+  /// In en, this message translates to:
+  /// **'No declarations yet — pick a period and generate the first one.'**
+  String get vatDeclEmpty;
+
+  /// Draft status chip
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get vatDeclDraft;
+
+  /// Submitted status chip
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted'**
+  String get vatDeclSubmitted;
+
+  /// Send through the configured platform channel
+  ///
+  /// In en, this message translates to:
+  /// **'Transmit'**
+  String get vatDeclTransmit;
+
+  /// Manual-filing action
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as filed'**
+  String get vatDeclMarkFiled;
+
+  /// Confirmation before marking a declaration manually filed
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm you filed this declaration yourself (tax-office portal or your accountant). It becomes immutable.'**
+  String get vatDeclMarkFiledConfirm;
+
+  /// Machine-readable export button
+  ///
+  /// In en, this message translates to:
+  /// **'XML export'**
+  String get vatDeclXml;
+
+  /// PDF button on a declaration card
+  ///
+  /// In en, this message translates to:
+  /// **'PDF'**
+  String get vatDeclPdf;
+
+  /// Success snack after platform transmission
+  ///
+  /// In en, this message translates to:
+  /// **'Declaration transmitted.'**
+  String get vatDeclSent;
+
+  /// Error snack when the platform rejects
+  ///
+  /// In en, this message translates to:
+  /// **'The platform refused the declaration.'**
+  String get vatDeclRejected;
+
+  /// Gate banner when the workspace is not vat_registered
+  ///
+  /// In en, this message translates to:
+  /// **'Declarations exist only under the VAT-registered regime — configure it under VAT settings.'**
+  String get vatDeclRegimeGate;
+
+  /// Feature toggle title (#534)
+  ///
+  /// In en, this message translates to:
+  /// **'VAT declarations'**
+  String get featureVatDeclarationsTitle;
+
+  /// Feature toggle description (#534)
+  ///
+  /// In en, this message translates to:
+  /// **'Generate the periodic VAT return from issued invoices, map it to the official form and transmit or export it.'**
+  String get featureVatDeclarationsDesc;
+
   /// Empty state of the Plan tab before the owner drew levels
   ///
   /// In en, this message translates to:
