@@ -1445,6 +1445,14 @@
   "@whatsappNotesUnconfigured": {
     "description": "Warning under the WhatsApp-mirror opt-in switch when the server channel lacks its secrets (#538)"
   },
+  "notesFilterUnread": "Ungelesen",
+  "@notesFilterUnread": {
+    "description": "Messages-inbox filter chip showing only unread messages (#539)"
+  },
+  "notesFilterEmpty": "Keine ungelesenen Nachrichten — alles gelesen.",
+  "@notesFilterEmpty": {
+    "description": "Empty state of the unread filter (#539)"
+  },
   "moneyBaseFee": "Basis-Abo",
   "moneyUsage": "{used} von {included} halben Tagen genutzt",
   "moneyUsageUnlimited": "{used} halbe Tage genutzt",
@@ -1643,6 +1651,15 @@
   "priceGrossHint": "Bruttopreis — was das Mitglied zahlt; die USt steckt darin.",
   "@priceGrossHint": {
     "description": "Helper under price inputs clarifying gross-inclusive pricing (#537)"
+  },
+  "vatShareAmount": "inkl. USt {amount}",
+  "@vatShareAmount": {
+    "description": "Helper under an amount field: the VAT share contained in the gross amount (#537)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "planNoLevels": "Der Workspace hat noch keinen Plan.",
   "planLevelLabel": "Etage",

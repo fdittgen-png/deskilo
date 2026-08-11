@@ -51,6 +51,10 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
 
   EventType? _typeFilter;
 
+  /// #539 — the Messages section's read filter: false = all, true =
+  /// only unread.
+  bool _unreadOnly = false;
+
   String _line(
     AppLocalizations? l10n,
     WorkspaceEvent event,
@@ -255,6 +259,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     // Member notes (#460): the push is content-free by design (0012),
     // so THIS is where the actual text is read — received and sent,
     // newest first.
+    final unreadIds =
+        ref.watch(unreadNoteIdsProvider).value ?? const <String>{};
     final notes = ref
             .watch(enabledFeaturesSyncProvider)
             .contains(WorkspaceFeature.memberNotifications)
@@ -412,17 +418,50 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                       AppSpacing.lg,
                       AppSpacing.xs,
                     ),
-                    child: Text(
-                      l10n?.eventsMessagesHeader ?? 'Messages',
-                      style: Theme.of(context).textTheme.titleSmall,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            l10n?.eventsMessagesHeader ?? 'Messages',
+                            style:
+                                Theme.of(context).textTheme.titleSmall,
+                          ),
+                        ),
+                        // #539 — read and unread are distinguishable
+                        // AND filterable.
+                        FilterChip(
+                          key: const ValueKey('notes-filter-unread'),
+                          label: Text(
+                            '${l10n?.notesFilterUnread ?? 'Unread'}'
+                            '${unreadIds.isEmpty ? '' : ' (${unreadIds.length})'}',
+                          ),
+                          selected: _unreadOnly,
+                          visualDensity: VisualDensity.compact,
+                          onSelected: (value) =>
+                              setState(() => _unreadOnly = value),
+                        ),
+                      ],
                     ),
                   ),
                   for (final note in notes)
-                    NoteRow(
-                      key: ValueKey('note-${note.id}'),
-                      note: note,
-                      names: names,
-                      myMemberId: myMember?.id,
+                    if (!_unreadOnly || unreadIds.contains(note.id))
+                      NoteRow(
+                        key: ValueKey('note-${note.id}'),
+                        note: note,
+                        names: names,
+                        myMemberId: myMember?.id,
+                        unread: unreadIds.contains(note.id),
+                      ),
+                  if (_unreadOnly &&
+                      notes.every((n) => !unreadIds.contains(n.id)))
+                    Padding(
+                      padding: AppSpacing.lgAll,
+                      child: Text(
+                        l10n?.notesFilterEmpty ??
+                            'No unread messages — all caught up.',
+                        key: const ValueKey('notes-filter-empty'),
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
                     ),
                   const Divider(),
                 ],

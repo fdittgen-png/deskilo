@@ -99,5 +99,13 @@
   "whatsappNotesUnconfigured": "The workspace's WhatsApp channel is not configured yet (owner: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — until then, messages arrive in-app and by push only.",
   "@whatsappNotesUnconfigured": {
     "description": "Warning under the WhatsApp-mirror opt-in switch when the server channel lacks its secrets (#538)"
+  },
+  "notesFilterUnread": "Unread",
+  "@notesFilterUnread": {
+    "description": "Messages-inbox filter chip showing only unread messages (#539)"
+  },
+  "notesFilterEmpty": "No unread messages — all caught up.",
+  "@notesFilterEmpty": {
+    "description": "Empty state of the unread filter (#539)"
   }
 }

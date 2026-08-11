@@ -26,11 +26,16 @@ class NoteRow extends ConsumerWidget {
     required this.note,
     required this.names,
     required this.myMemberId,
+    this.unread = false,
   });
 
   final MemberNote note;
   final Map<String, String> names;
   final String? myMemberId;
+
+  /// #539 — unread rows read as such: bold, tinted icon, a dot. Read
+  /// rows recede. Computed by the screen from `unreadNoteIds`.
+  final bool unread;
 
   /// The direct-thread partner: whoever ISN'T me. A broadcast I sent
   /// has no single partner (null → the full-message sheet handles it);
@@ -61,14 +66,25 @@ class NoteRow extends ConsumerWidget {
             ? (note.isBroadcast
                 ? Icons.campaign_outlined
                 : Icons.outbox_outlined)
-            : Icons.mark_email_unread_outlined,
+            : (unread
+                ? Icons.mark_email_unread
+                : Icons.drafts_outlined),
+        color: unread ? theme.colorScheme.primary : null,
       ),
       title: Text(
         title,
         style: theme.textTheme.bodyMedium?.copyWith(
-          fontWeight: sentByMe ? null : FontWeight.w600,
+          fontWeight: unread ? FontWeight.w700 : null,
         ),
       ),
+      trailing: unread
+          ? Icon(
+              Icons.circle,
+              key: ValueKey('note-unread-${note.id}'),
+              size: 10,
+              color: theme.colorScheme.primary,
+            )
+          : null,
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

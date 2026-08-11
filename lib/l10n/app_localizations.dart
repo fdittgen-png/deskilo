@@ -5006,6 +5006,18 @@ abstract class AppLocalizations {
   /// **'The workspace\'s WhatsApp channel is not configured yet (owner: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — until then, messages arrive in-app and by push only.'**
   String get whatsappNotesUnconfigured;
 
+  /// Messages-inbox filter chip showing only unread messages (#539)
+  ///
+  /// In en, this message translates to:
+  /// **'Unread'**
+  String get notesFilterUnread;
+
+  /// Empty state of the unread filter (#539)
+  ///
+  /// In en, this message translates to:
+  /// **'No unread messages — all caught up.'**
+  String get notesFilterEmpty;
+
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:
@@ -5527,6 +5539,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Gross price — what the member pays; VAT is part of it.'**
   String get priceGrossHint;
+
+  /// Helper under an amount field: the VAT share contained in the gross amount (#537)
+  ///
+  /// In en, this message translates to:
+  /// **'incl. VAT {amount}'**
+  String vatShareAmount(String amount);
 
   /// Empty state of the Plan tab before the owner drew levels
   ///

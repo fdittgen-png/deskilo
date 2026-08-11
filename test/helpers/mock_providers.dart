@@ -867,10 +867,13 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   /// Read receipts (0105): notes addressed to me ('member-1', the
   /// fake's signed-in member) get their read stamp.
   @override
-  Future<void> markMyNotesRead(String workspaceId) async {
+  Future<void> markMyNotesRead(String workspaceId,
+      {String? fromMemberId}) async {
     for (var i = 0; i < memberNotes.length; i++) {
       final n = memberNotes[i];
-      if (n.toMemberId == 'member-1' && n.readAt == null) {
+      if (n.toMemberId == 'member-1' &&
+          n.readAt == null &&
+          (fromMemberId == null || n.fromMemberId == fromMemberId)) {
         memberNotes[i] = MemberNote(
           id: n.id,
           workspaceId: n.workspaceId,

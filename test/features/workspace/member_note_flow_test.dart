@@ -230,9 +230,9 @@ void main() {
   });
 
   testWidgets(
-      'READ RECEIPTS (0105): my sent note carries a grey check, a read '
-      'one a blue check, received notes none — and opening Events '
-      'stamps my received notes read on the server', (tester) async {
+      'READ RECEIPTS (0105/#539): my sent note carries a grey check, a '
+      'read one a blue check, received notes none — and opening the '
+      'CONVERSATION (not the inbox) stamps them read', (tester) async {
     const readBlue = Color(0xFF42A5F5);
     final workspace = await _pump(tester, notes: [
       // Mine, delivered but unread.
@@ -268,11 +268,30 @@ void main() {
     // Received notes carry no check at all.
     expect(find.byKey(const ValueKey('note-check-note-in')), findsNothing);
 
-    // Opening the surface marked MY received note read server-side —
-    // Ana's client would now show her check in blue.
-    final mine =
-        workspace.memberNotes.singleWhere((n) => n.id == 'note-in');
-    expect(mine.readAt, isNotNull);
+    // #539 — merely OPENING the inbox does not read a direct note…
+    expect(
+        workspace.memberNotes
+            .singleWhere((n) => n.id == 'note-in')
+            .readAt,
+        isNull);
+    // …its row is visibly unread and the filter can isolate it…
+    expect(find.byKey(const ValueKey('note-unread-note-in')),
+        findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('notes-filter-unread')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('note-dismiss-note-sent')),
+        findsNothing);
+    expect(find.byKey(const ValueKey('note-dismiss-note-in')),
+        findsOneWidget);
+    // …and opening ITS conversation stamps it read — Ana's client
+    // would now show her check in blue.
+    await tester.tap(find.byKey(const ValueKey('note-dismiss-note-in')));
+    await tester.pumpAndSettle();
+    expect(
+        workspace.memberNotes
+            .singleWhere((n) => n.id == 'note-in')
+            .readAt,
+        isNotNull);
   });
 
   testWidgets(

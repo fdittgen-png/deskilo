@@ -687,9 +687,12 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   @override
-  Future<void> markMyNotesRead(String workspaceId) async {
-    await _client.rpc<void>('mark_member_notes_read',
-        params: {'p_workspace_id': workspaceId});
+  Future<void> markMyNotesRead(String workspaceId,
+      {String? fromMemberId}) async {
+    await _client.rpc<void>('mark_member_notes_read', params: {
+      'p_workspace_id': workspaceId,
+      'p_from_member_id': ?fromMemberId,
+    });
   }
 
   @override

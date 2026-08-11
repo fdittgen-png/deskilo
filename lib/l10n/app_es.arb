@@ -1445,6 +1445,14 @@
   "@whatsappNotesUnconfigured": {
     "description": "Warning under the WhatsApp-mirror opt-in switch when the server channel lacks its secrets (#538)"
   },
+  "notesFilterUnread": "No leídos",
+  "@notesFilterUnread": {
+    "description": "Messages-inbox filter chip showing only unread messages (#539)"
+  },
+  "notesFilterEmpty": "No hay mensajes sin leer — todo al día.",
+  "@notesFilterEmpty": {
+    "description": "Empty state of the unread filter (#539)"
+  },
   "moneyBaseFee": "Suscripción base",
   "moneyUsage": "{used} de {included} medias jornadas usadas",
   "moneyUsageUnlimited": "{used} medias jornadas usadas",
@@ -1643,6 +1651,15 @@
   "priceGrossHint": "Precio bruto — lo que paga el miembro; el IVA está dentro.",
   "@priceGrossHint": {
     "description": "Helper under price inputs clarifying gross-inclusive pricing (#537)"
+  },
+  "vatShareAmount": "IVA incl. {amount}",
+  "@vatShareAmount": {
+    "description": "Helper under an amount field: the VAT share contained in the gross amount (#537)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "planNoLevels": "El espacio aún no tiene plano.",
   "planLevelLabel": "Planta",

@@ -27,8 +27,12 @@ Future<void> showConversationSheet(
   required String otherMemberId,
   required String otherName,
 }) {
-  // Opening the thread reads it — same stamp as the Events screen.
-  ref.read(unreadNoteCountProvider.notifier).markAllSeen();
+  // Opening the thread reads THIS exchange (0108) — the partner's
+  // check turns blue, the inbox rows un-bold; everything else stays
+  // visibly unread.
+  ref
+      .read(unreadNoteCountProvider.notifier)
+      .markConversationRead(otherMemberId);
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,

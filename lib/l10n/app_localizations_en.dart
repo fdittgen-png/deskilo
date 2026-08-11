@@ -2743,6 +2743,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'The workspace\'s WhatsApp channel is not configured yet (owner: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — until then, messages arrive in-app and by push only.';
 
   @override
+  String get notesFilterUnread => 'Unread';
+
+  @override
+  String get notesFilterEmpty => 'No unread messages — all caught up.';
+
+  @override
   String get moneyBaseFee => 'Base subscription';
 
   @override
@@ -3023,6 +3029,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get priceGrossHint =>
       'Gross price — what the member pays; VAT is part of it.';
+
+  @override
+  String vatShareAmount(String amount) {
+    return 'incl. VAT $amount';
+  }
 
   @override
   String get planNoLevels => 'The workspace has no floor plan yet.';
