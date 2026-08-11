@@ -693,6 +693,20 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   @override
+  Future<bool> fetchWhatsappMirrorConfigured() async {
+    try {
+      final response = await _client.functions
+          .invoke('send-whatsapp', body: {'action': 'config'});
+      final data = response.data;
+      return data is Map && data['configured'] == true;
+    } on FunctionException {
+      // trace-exempt: 404 = not deployed, any error = not configured —
+      // the caller only shows/hides a warning line.
+      return false;
+    }
+  }
+
+  @override
   Future<List<MemberNote>> fetchMyNotes(String workspaceId) async {
     final rows = await _client
         .from('member_notes')

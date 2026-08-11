@@ -2758,6 +2758,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get messageLinkGone => 'Este mensaje está en tu bandeja de entrada.';
 
   @override
+  String get whatsappNotesUnconfigured =>
+      'El canal de WhatsApp del espacio aún no está configurado (propietario: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — hasta entonces, los mensajes llegan solo en la app y por push.';
+
+  @override
   String get moneyBaseFee => 'Suscripción base';
 
   @override

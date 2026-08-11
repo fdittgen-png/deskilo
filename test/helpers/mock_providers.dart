@@ -855,6 +855,15 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     memberNotes.removeWhere((n) => n.id == noteId);
   }
 
+  /// Whether the WhatsApp mirror channel is configured (0106 probe) —
+  /// defaults true so the settings switch shows no warning in tests
+  /// that don't care.
+  bool whatsappMirrorConfigured = true;
+
+  @override
+  Future<bool> fetchWhatsappMirrorConfigured() async =>
+      whatsappMirrorConfigured;
+
   /// Read receipts (0105): notes addressed to me ('member-1', the
   /// fake's signed-in member) get their read stamp.
   @override

@@ -602,6 +602,51 @@ final class MyNotesProvider
 
 String _$myNotesHash() => r'd6e2756b52ed2e4dd8aaf427eb15c34a4162d278';
 
+/// Whether the WhatsApp message mirror (0106) can actually deliver —
+/// probes the send-whatsapp function's config. keepAlive: the answer
+/// only changes when the owner sets the secrets.
+
+@ProviderFor(whatsappMirrorConfigured)
+final whatsappMirrorConfiguredProvider = WhatsappMirrorConfiguredProvider._();
+
+/// Whether the WhatsApp message mirror (0106) can actually deliver —
+/// probes the send-whatsapp function's config. keepAlive: the answer
+/// only changes when the owner sets the secrets.
+
+final class WhatsappMirrorConfiguredProvider
+    extends $FunctionalProvider<AsyncValue<bool>, bool, FutureOr<bool>>
+    with $FutureModifier<bool>, $FutureProvider<bool> {
+  /// Whether the WhatsApp message mirror (0106) can actually deliver —
+  /// probes the send-whatsapp function's config. keepAlive: the answer
+  /// only changes when the owner sets the secrets.
+  WhatsappMirrorConfiguredProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'whatsappMirrorConfiguredProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$whatsappMirrorConfiguredHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<bool> create(Ref ref) {
+    return whatsappMirrorConfigured(ref);
+  }
+}
+
+String _$whatsappMirrorConfiguredHash() =>
+    r'005a0bd836786924e17deb216fff00286acc5a38';
+
 /// Unread member notes (#464): notes from someone else, newer than the
 /// device's SEEN stamp — the bell and the app-icon badge count them,
 /// the Events screen clears them on open.

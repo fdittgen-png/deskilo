@@ -52,11 +52,21 @@ function render(body: string, noteId: string): string {
 Deno.serve(async (req) => {
   const token = Deno.env.get("WHATSAPP_TOKEN");
   const phoneId = Deno.env.get("WHATSAPP_PHONE_ID");
+
+  const payload = await req.json().catch(() => ({}));
+  // The client probes BEFORE offering the opt-in switch as functional —
+  // a silently dead channel reads as "not working" (field report).
+  if (payload.action === "config") {
+    return new Response(
+      JSON.stringify({ configured: Boolean(token && phoneId) }),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  }
   if (!token || !phoneId) {
     return new Response("whatsapp not configured", { status: 200 });
   }
 
-  const { note_id } = await req.json().catch(() => ({}));
+  const note_id = payload.note_id;
   if (!note_id) return new Response("missing note_id", { status: 400 });
 
   const { data: note } = await supabase

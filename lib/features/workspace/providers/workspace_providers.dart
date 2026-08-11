@@ -165,6 +165,13 @@ Future<List<MemberNote>> myNotes(Ref ref) async {
   return ref.watch(workspaceRepositoryProvider).fetchMyNotes(workspace.id);
 }
 
+/// Whether the WhatsApp message mirror (0106) can actually deliver —
+/// probes the send-whatsapp function's config. keepAlive: the answer
+/// only changes when the owner sets the secrets.
+@Riverpod(keepAlive: true)
+Future<bool> whatsappMirrorConfigured(Ref ref) =>
+    ref.watch(workspaceRepositoryProvider).fetchWhatsappMirrorConfigured();
+
 /// Unread member notes (#464): notes from someone else, newer than the
 /// device's SEEN stamp — the bell and the app-icon badge count them,
 /// the Events screen clears them on open.
