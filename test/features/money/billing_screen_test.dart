@@ -251,7 +251,7 @@ void main() {
 
     // The default fake seeds one 5-day pack at €40.
     expect(find.text('5-day pack'), findsOneWidget);
-    expect(find.text('5 days · 40'), findsOneWidget);
+    expect(find.text('5 days · 40 EUR'), findsOneWidget);
 
     await tester.enterText(
       find.widgetWithText(TextField, 'Name'),

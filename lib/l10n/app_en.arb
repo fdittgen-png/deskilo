@@ -3862,6 +3862,32 @@
   "@featureVatDeclarationsDesc": {
     "description": "Feature toggle description (#534)"
   },
+  "priceVatIncluded": "incl. VAT {rate}",
+  "@priceVatIncluded": {
+    "description": "Suffix after a gross price naming the included VAT rate (#537)",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "billingPricesVatHint": "Prices are gross — VAT {rate} (the workspace default rate) is included.",
+  "@billingPricesVatHint": {
+    "description": "Hint under the billing fee-band section under a VAT-charging regime (#537)",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "billingNewPackage": "New package",
+  "@billingNewPackage": {
+    "description": "Title above the new-day-pack form on the billing screen (#537)"
+  },
+  "priceGrossHint": "Gross price — what the member pays; VAT is part of it.",
+  "@priceGrossHint": {
+    "description": "Helper under price inputs clarifying gross-inclusive pricing (#537)"
+  },
   "planNoLevels": "The workspace has no floor plan yet.",
   "@planNoLevels": {
     "description": "Empty state of the Plan tab before the owner drew levels"

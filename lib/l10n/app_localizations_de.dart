@@ -3031,6 +3031,23 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die periodische USt-Voranmeldung aus den Rechnungen erzeugen, auf das amtliche Formular abbilden und übermitteln oder exportieren.';
 
   @override
+  String priceVatIncluded(String rate) {
+    return 'inkl. $rate USt';
+  }
+
+  @override
+  String billingPricesVatHint(String rate) {
+    return 'Preise sind brutto — die USt $rate (Standardsatz des Space) ist enthalten.';
+  }
+
+  @override
+  String get billingNewPackage => 'Neues Paket';
+
+  @override
+  String get priceGrossHint =>
+      'Bruttopreis — was das Mitglied zahlt; die USt steckt darin.';
+
+  @override
   String get planNoLevels => 'Der Workspace hat noch keinen Plan.';
 
   @override

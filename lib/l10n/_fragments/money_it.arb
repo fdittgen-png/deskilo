@@ -172,5 +172,31 @@
   "featureVatDeclarationsDesc": "Genera la dichiarazione IVA periodica dalle fatture emesse, mappala sul modulo ufficiale e trasmettila o esportala.",
   "@featureVatDeclarationsDesc": {
     "description": "Feature toggle description (#534)"
+  },
+  "priceVatIncluded": "IVA {rate} incl.",
+  "@priceVatIncluded": {
+    "description": "Suffix after a gross price naming the included VAT rate (#537)",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "billingPricesVatHint": "I prezzi sono lordi — l’IVA {rate} (aliquota predefinita dello spazio) è inclusa.",
+  "@billingPricesVatHint": {
+    "description": "Hint under the billing fee-band section under a VAT-charging regime (#537)",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "billingNewPackage": "Nuovo pacchetto",
+  "@billingNewPackage": {
+    "description": "Title above the new-day-pack form on the billing screen (#537)"
+  },
+  "priceGrossHint": "Prezzo lordo — ciò che paga il membro; l’IVA è compresa.",
+  "@priceGrossHint": {
+    "description": "Helper under price inputs clarifying gross-inclusive pricing (#537)"
   }
 }

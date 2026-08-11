@@ -3029,6 +3029,23 @@ class AppLocalizationsIt extends AppLocalizations {
       'Genera la dichiarazione IVA periodica dalle fatture emesse, mappala sul modulo ufficiale e trasmettila o esportala.';
 
   @override
+  String priceVatIncluded(String rate) {
+    return 'IVA $rate incl.';
+  }
+
+  @override
+  String billingPricesVatHint(String rate) {
+    return 'I prezzi sono lordi — l’IVA $rate (aliquota predefinita dello spazio) è inclusa.';
+  }
+
+  @override
+  String get billingNewPackage => 'Nuovo pacchetto';
+
+  @override
+  String get priceGrossHint =>
+      'Prezzo lordo — ciò che paga il membro; l’IVA è compresa.';
+
+  @override
   String get planNoLevels => 'Lo spazio non ha ancora una piantina.';
 
   @override

@@ -3004,6 +3004,23 @@ class AppLocalizationsEn extends AppLocalizations {
       'Generate the periodic VAT return from issued invoices, map it to the official form and transmit or export it.';
 
   @override
+  String priceVatIncluded(String rate) {
+    return 'incl. VAT $rate';
+  }
+
+  @override
+  String billingPricesVatHint(String rate) {
+    return 'Prices are gross — VAT $rate (the workspace default rate) is included.';
+  }
+
+  @override
+  String get billingNewPackage => 'New package';
+
+  @override
+  String get priceGrossHint =>
+      'Gross price — what the member pays; VAT is part of it.';
+
+  @override
   String get planNoLevels => 'The workspace has no floor plan yet.';
 
   @override

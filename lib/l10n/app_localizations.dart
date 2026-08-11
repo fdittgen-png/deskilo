@@ -5498,6 +5498,30 @@ abstract class AppLocalizations {
   /// **'Generate the periodic VAT return from issued invoices, map it to the official form and transmit or export it.'**
   String get featureVatDeclarationsDesc;
 
+  /// Suffix after a gross price naming the included VAT rate (#537)
+  ///
+  /// In en, this message translates to:
+  /// **'incl. VAT {rate}'**
+  String priceVatIncluded(String rate);
+
+  /// Hint under the billing fee-band section under a VAT-charging regime (#537)
+  ///
+  /// In en, this message translates to:
+  /// **'Prices are gross — VAT {rate} (the workspace default rate) is included.'**
+  String billingPricesVatHint(String rate);
+
+  /// Title above the new-day-pack form on the billing screen (#537)
+  ///
+  /// In en, this message translates to:
+  /// **'New package'**
+  String get billingNewPackage;
+
+  /// Helper under price inputs clarifying gross-inclusive pricing (#537)
+  ///
+  /// In en, this message translates to:
+  /// **'Gross price — what the member pays; VAT is part of it.'**
+  String get priceGrossHint;
+
   /// Empty state of the Plan tab before the owner drew levels
   ///
   /// In en, this message translates to:
