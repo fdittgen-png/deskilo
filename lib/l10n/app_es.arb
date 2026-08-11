@@ -1614,6 +1614,32 @@
   "@featureVatDeclarationsDesc": {
     "description": "Feature toggle description (#534)"
   },
+  "priceVatIncluded": "IVA {rate} incl.",
+  "@priceVatIncluded": {
+    "description": "Suffix after a gross price naming the included VAT rate (#537)",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "billingPricesVatHint": "Los precios son brutos — el IVA {rate} (tipo por defecto del espacio) está incluido.",
+  "@billingPricesVatHint": {
+    "description": "Hint under the billing fee-band section under a VAT-charging regime (#537)",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "billingNewPackage": "Nuevo bono",
+  "@billingNewPackage": {
+    "description": "Title above the new-day-pack form on the billing screen (#537)"
+  },
+  "priceGrossHint": "Precio bruto — lo que paga el miembro; el IVA está dentro.",
+  "@priceGrossHint": {
+    "description": "Helper under price inputs clarifying gross-inclusive pricing (#537)"
+  },
   "planNoLevels": "El espacio aún no tiene plano.",
   "planLevelLabel": "Planta",
   "planCheckInTitle": "Registrarse",

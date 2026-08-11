@@ -12,6 +12,7 @@ import '../../domain/fee_band.dart';
 import '../../domain/package.dart';
 import '../../domain/subscription_levels.dart';
 import '../../providers/money_providers.dart';
+import '../vat_price_label.dart';
 import '../widgets/vat_rate_field.dart';
 
 /// Owner-only billing editor (#128, ADR 0008): the fee bands pricing the
@@ -401,6 +402,31 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           l10n?.billingFeeBands ?? 'Fee bands',
           style: Theme.of(context).textTheme.titleMedium,
         ),
+        // #537 — the one VAT fact this whole page's prices share: they
+        // are GROSS, taxed at the workspace's default rate.
+        Builder(builder: (context) {
+          final chargesVat =
+              ref.watch(currentWorkspaceProvider).value?.vatRegime ==
+                  'vat_registered';
+          final rate = vatRateSuffix(
+            chargesVat: chargesVat,
+            rates: ref.watch(vatRatesProvider).value ?? const [],
+            vatRateId: '',
+          );
+          if (rate == null) return const SizedBox.shrink();
+          return Padding(
+            padding: const EdgeInsets.only(top: 2, bottom: 4),
+            child: Text(
+              l10n?.billingPricesVatHint(rate) ??
+                  'Prices are gross — VAT $rate (the workspace default '
+                      'rate) is included.',
+              key: const ValueKey('billing-vat-hint'),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+            ),
+          );
+        }),
         for (var i = 0; i < _bands.length; i++) _bandRow(l10n, i),
         if (_bandsInvalid)
           Padding(
@@ -505,15 +531,45 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
             key: ValueKey('package-${package.id}'),
             contentPadding: EdgeInsets.zero,
             title: Text(package.name),
-            subtitle: Text(
-              l10n?.billingPackageSummary(package.days, centsToMajor(package.priceCents)) ??
-                  '${package.days} days · ${centsToMajor(package.priceCents)}',
-            ),
+            // #537 — currency + the pack's own VAT rate on the row:
+            // "2 days · 200.00 EUR · incl. VAT 20 %".
+            subtitle: Builder(builder: (context) {
+              final currencyCode = ref
+                      .watch(currentWorkspaceProvider)
+                      .value
+                      ?.currencyCode ??
+                  '';
+              final price =
+                  '${centsToMajor(package.priceCents)} $currencyCode'
+                      .trim();
+              final summary =
+                  l10n?.billingPackageSummary(package.days, price) ??
+                      '${package.days} days · $price';
+              final rate = vatRateSuffix(
+                chargesVat: ref
+                        .watch(currentWorkspaceProvider)
+                        .value
+                        ?.vatRegime ==
+                    'vat_registered',
+                rates: ref.watch(vatRatesProvider).value ?? const [],
+                vatRateId: package.vatRateId,
+              );
+              final vatLabel = rate == null
+                  ? null
+                  : (l10n?.priceVatIncluded(rate) ?? 'incl. VAT $rate');
+              return Text(
+                  vatLabel == null ? summary : '$summary · $vatLabel');
+            }),
             trailing: Switch(
               value: package.active,
               onChanged: (_) => _togglePackage(package),
             ),
           ),
+        const SizedBox(height: 8),
+        Text(
+          l10n?.billingNewPackage ?? 'New package',
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

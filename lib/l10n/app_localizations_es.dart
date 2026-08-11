@@ -3022,6 +3022,23 @@ class AppLocalizationsEs extends AppLocalizations {
       'Generar la declaración periódica de IVA desde las facturas emitidas, mapearla al formulario oficial y transmitirla o exportarla.';
 
   @override
+  String priceVatIncluded(String rate) {
+    return 'IVA $rate incl.';
+  }
+
+  @override
+  String billingPricesVatHint(String rate) {
+    return 'Los precios son brutos — el IVA $rate (tipo por defecto del espacio) está incluido.';
+  }
+
+  @override
+  String get billingNewPackage => 'Nuevo bono';
+
+  @override
+  String get priceGrossHint =>
+      'Precio bruto — lo que paga el miembro; el IVA está dentro.';
+
+  @override
   String get planNoLevels => 'El espacio aún no tiene plano.';
 
   @override

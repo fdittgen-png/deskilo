@@ -3033,6 +3033,23 @@ class AppLocalizationsFr extends AppLocalizations {
       'Générer la déclaration périodique de TVA depuis les factures émises, la rapprocher du formulaire officiel et la télétransmettre ou l’exporter.';
 
   @override
+  String priceVatIncluded(String rate) {
+    return 'dont TVA $rate';
+  }
+
+  @override
+  String billingPricesVatHint(String rate) {
+    return 'Les prix sont TTC — la TVA $rate (taux par défaut de l’espace) est incluse.';
+  }
+
+  @override
+  String get billingNewPackage => 'Nouveau forfait';
+
+  @override
+  String get priceGrossHint =>
+      'Prix TTC — ce que paie le membre ; la TVA en fait partie.';
+
+  @override
   String get planNoLevels => 'L\'espace n\'a pas encore de plan.';
 
   @override

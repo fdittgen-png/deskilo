@@ -13,6 +13,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/service_item.dart';
 import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
+import '../vat_price_label.dart';
 import '../widgets/vat_rate_field.dart';
 
 /// Owner-only consumable-service catalog editor (#123): name and price
@@ -85,6 +86,10 @@ class ServicesScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final servicesAsync = ref.watch(allServicesProvider);
+    final chargesVat =
+        ref.watch(currentWorkspaceProvider).value?.vatRegime ==
+            'vat_registered';
+    final vatRates = ref.watch(vatRatesProvider).value ?? const <VatRate>[];
     final currency = NumberFormat.simpleCurrency(
       name: ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR',
     );
@@ -119,7 +124,24 @@ class ServicesScreen extends ConsumerWidget {
                         ? null
                         : TextStyle(color: inactiveColor),
                   ),
-                  subtitle: Text(currency.format(service.priceCents / 100)),
+                  // #537 — a gross price under a VAT-charging regime
+                  // NAMES its tax: the service's own rate, or the
+                  // workspace default when it has none.
+                  subtitle: Builder(builder: (context) {
+                    final price =
+                        currency.format(service.priceCents / 100);
+                    final rate = vatRateSuffix(
+                      chargesVat: chargesVat,
+                      rates: vatRates,
+                      vatRateId: service.vatRateId,
+                    );
+                    final vatLabel = rate == null
+                        ? null
+                        : (l10n?.priceVatIncluded(rate) ??
+                            'incl. VAT $rate');
+                    return Text(
+                        vatLabel == null ? price : '$price · $vatLabel');
+                  }),
                   trailing: service.active
                       ? null
                       : Text(l10n?.servicesInactive ?? 'Inactive'),
@@ -241,6 +263,9 @@ class _ServiceSheetState extends State<_ServiceSheet> {
                 const TextInputType.numberWithOptions(decimal: true),
             decoration: InputDecoration(
               labelText: l10n?.servicesPrice ?? 'Price',
+              // #537 — kill the net-or-gross ambiguity at the input.
+              helperText: l10n?.priceGrossHint ??
+                  'Gross price — what the member pays; VAT is part of it.',
             ),
           ),
           // The price stays what the member pays; the rate only decides

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/money/domain/service_item.dart';
+import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,11 +14,13 @@ import '../../helpers/mock_providers.dart';
 Future<FakeMoneyRepository> pumpServices(
   WidgetTester tester, {
   FakeMoneyRepository? money,
+  FakeWorkspaceRepository? workspace,
 }) async {
   money ??= FakeMoneyRepository();
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(money: money),
+      overrides:
+          standardTestOverrides(money: money, workspace: workspace),
       child: const DeskiloApp(),
     ),
   );
@@ -120,5 +124,46 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Services'), findsNothing);
+  });
+
+  testWidgets(
+      'VAT-charging regime: every row names its rate — own rate, or the '
+      'workspace default (#537)', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.workspaces[0] =
+        workspace.workspaces[0].copyWith(vatRegime: 'vat_registered');
+    final money = FakeMoneyRepository()
+      ..vatRates = [
+        const VatRate(
+            id: 'vat-1', label: 'Standard', percent: 20, isDefault: true),
+        const VatRate(id: 'vat-2', label: 'Reduced', percent: 5.5),
+      ];
+    // Seed BEFORE the pump — the provider caches its first read.
+    money.services.clear();
+    money.services.addAll([
+      const ServiceItem(
+          id: 's1',
+          workspaceId: 'ws-1',
+          name: 'Coffee',
+          priceCents: 2000,
+          active: true,
+          vatRateId: 'vat-2'),
+      const ServiceItem(
+          id: 's2',
+          workspaceId: 'ws-1',
+          name: 'Locker',
+          priceCents: 1000,
+          active: true,
+          vatRateId: ''),
+    ]);
+    await pumpServices(tester, money: money, workspace: workspace);
+
+    expect(find.textContaining('incl. VAT 5.5 %'), findsOneWidget);
+    expect(find.textContaining('incl. VAT 20 %'), findsOneWidget);
+  });
+
+  testWidgets('no VAT regime → prices stay bare (#537)', (tester) async {
+    await pumpServices(tester);
+    expect(find.textContaining('incl. VAT'), findsNothing);
   });
 }
