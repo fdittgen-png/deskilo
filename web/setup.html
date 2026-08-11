@@ -48,7 +48,7 @@ footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px sol
 <body>
 <header>
   <h1>DesKilo — Document de configuration</h1>
-  <p>Répondez aux questions (choix prédéfinis, noms, adresses — rien à interpréter), sur Mac, PC ou téléphone. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. À la fin, <b>Exporter le XML</b> produit le fichier : l'app l'importe (Réglages de l'espace → Importer l'espace) pour créer réglages, accessoires et plan ; la section &lt;setup&gt; du même fichier porte tout le reste (facturation, disponibilité, services, identité légale, rôles, membres) pour finir la configuration.</p>
+  <p>Répondez aux questions (choix prédéfinis, noms, adresses — rien à interpréter), sur Mac, PC ou téléphone. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. À la fin, <b>Exporter le XML</b> produit le fichier : l'app l'importe (Réglages de l'espace → Importer l'espace) pour créer réglages, accessoires et plan ; la section &lt;setup&gt; du même fichier porte tout le reste (facturation, disponibilité, services, identité légale et TVA — régime, taux, déclarations —, rôles, membres) pour finir la configuration.</p>
 </header>
 <main id="form"></main>
 <footer>
@@ -93,10 +93,31 @@ const FEATURES=[
  ['memberReports','Rapports des membres','Accord financier, rapport des paiements.',1],
  ['deletionRequests','Demandes de suppression de réservation','Suppression validée des réservations passées.',1],
  ['roleManagement','Gestion des rôles','La matrice rôle → permission.',1],
+ ['vatDeclarations','Déclarations de TVA','Déclaration périodique générée depuis les factures (CA3/UStVA), export PDF/XML, télétransmission.',1],
 ];
 const PERMS=[['manageRoles','Gérer les rôles et permissions'],['manageMembers','Gérer les membres'],['manageValidation','Configurer les règles de validation'],['workspaceSettings',"Modifier les réglages de l'espace"],['issueInvoices','Émettre les factures et rapprocher les paiements'],['viewFinances',"Consulter les finances de l'espace"],['manageDocuments','Gérer la bibliothèque de documents'],['manageServices','Gérer les services et forfaits'],['approveExpenses','Approuver les dépenses']];
 const PERM_DEFAULTS={co_owner:PERMS.map(p=>p[0]),admin:['manageMembers','manageDocuments','manageServices','approveExpenses','viewFinances'],member:[]};
-const COUNTRIES=[['FR','France','EUR','Europe/Paris'],['DE','Allemagne','EUR','Europe/Berlin'],['BE','Belgique','EUR','Europe/Brussels'],['ES','Espagne','EUR','Europe/Madrid'],['IT','Italie','EUR','Europe/Rome'],['LU','Luxembourg','EUR','Europe/Luxembourg'],['CH','Suisse','CHF','Europe/Zurich'],['AT','Autriche','EUR','Europe/Vienna'],['NL','Pays-Bas','EUR','Europe/Amsterdam'],['PT','Portugal','EUR','Europe/Lisbon'],['GB','Royaume-Uni','GBP','Europe/London'],['US','États-Unis','USD','America/New_York'],['CA','Canada','CAD','America/Toronto']];
+const COUNTRIES=[['FR','France','EUR','Europe/Paris'],['DE','Allemagne','EUR','Europe/Berlin'],['BE','Belgique','EUR','Europe/Brussels'],['ES','Espagne','EUR','Europe/Madrid'],['IT','Italie','EUR','Europe/Rome'],['LU','Luxembourg','EUR','Europe/Luxembourg'],['CH','Suisse','CHF','Europe/Zurich'],['AT','Autriche','EUR','Europe/Vienna'],['NL','Pays-Bas','EUR','Europe/Amsterdam'],['PT','Portugal','EUR','Europe/Lisbon'],['GB','Royaume-Uni','GBP','Europe/London'],['NO','Norvège','NOK','Europe/Oslo'],['US','États-Unis','USD','America/New_York'],['CA','Canada','CAD','America/Toronto']];
+const VAT_RATES={
+ FR:[['Standard 20 %',20],['Intermédiaire 10 %',10],['Réduit 5,5 %',5.5],['Particulier 2,1 %',2.1]],
+ DE:[['Regelsatz 19 %',19],['Ermäßigt 7 %',7]],
+ BE:[['Standaard 21 %',21],['Verlaagd 12 %',12],['Verlaagd 6 %',6]],
+ ES:[['General 21 %',21],['Reducido 10 %',10],['Superreducido 4 %',4]],
+ IT:[['Ordinaria 22 %',22],['Ridotta 10 %',10],['Ridotta 5 %',5],['Minima 4 %',4]],
+ LU:[['Normal 17 %',17],['Intermédiaire 14 %',14],['Réduit 8 %',8],['Super-réduit 3 %',3]],
+ CH:[['Normal 8,1 %',8.1],['Hébergement 3,8 %',3.8],['Réduit 2,6 %',2.6]],
+ AT:[['Normalsatz 20 %',20],['Ermäßigt 13 %',13],['Ermäßigt 10 %',10]],
+ NL:[['Hoog 21 %',21],['Laag 9 %',9]],
+ PT:[['Normal 23 %',23],['Intermédia 13 %',13],['Reduzida 6 %',6]],
+ GB:[['Standard 20 %',20],['Reduced 5 %',5]],
+ NO:[['Alminnelig 25 %',25],['Næringsmidler 15 %',15],['Redusert 12 %',12]],
+ CA:[['GST 5 % (AB/NT/NU/YT)',5],['HST 13 % (ON)',13],['HST 14 % (NS)',14],['HST 15 % (NB/NL/PE)',15],['GST+QST 14,975 % (QC)',14.975],['GST+PST 12 % (BC/MB)',12],['GST+PST 11 % (SK)',11]],
+};
+const VAT_NOTES={
+ US:'Les États-Unis n’ont pas de TVA fédérale — la sales tax varie par État et localité : saisissez votre taux local combiné à la main.',
+ CA:'Le Canada taxe par province : gardez la ligne de la vôtre (GST, HST ou GST+PST/QST) et supprimez les autres.',
+ CH:'Le taux spécial 3,8 % ne s’applique qu’à l’hébergement.',
+};
 const GRAN=[['half_day','Demi-journées (matin / après-midi)'],['full_day','Journées entières uniquement'],['hours','Heures réelles (de–à exact, demi/journées en raccourcis)'],['minutes_60',"Créneaux d'une heure"],['minutes_30','Créneaux de 30 minutes'],['minutes_15','Créneaux de 15 minutes'],['minutes_5','Créneaux de 5 minutes'],['flexible','Plage horaire libre']];
 const LANGS=[['','Langue de l’app de l’expéditeur'],['fr','Français'],['en','English'],['de','Deutsch'],['es','Español'],['it','Italiano']];
 const WD=[['1','lun.'],['2','mar.'],['3','mer.'],['4','jeu.'],['5','ven.'],['6','sam.'],['7','dim.']];
@@ -109,7 +130,7 @@ let S=JSON.parse(localStorage.getItem(LS)||'null')||{
  levels:[{name:'1er étage',offices:[{name:'Bureau 1',bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]}]}],
  accessories:[],services:[],tiers:[{from:0,to:100,fee:'',over:''}],subLevels:['25','50','75','100'],freeLevel:false,packages:[],
  pay:{iban:'',paypal_me:'',wero:'',lydia:'',wise:'',reference:''},
- org:'association',vatRegime:'not_subject',regNumber:'',vatId:'',exemption:'',street:'',postal:'',city:'',
+ org:'association',vatRegime:'not_subject',regNumber:'',vatId:'',exemption:'',street:'',postal:'',city:'',vatRates:[],
  mentions:{legalForm:'',register:'',terms:'',penalty:'',recovery:'',escompte:'',insurance:'',special:''},
  reminders:{levels:2,firstDays:14,betweenDays:14},
  perms:JSON.parse(JSON.stringify(PERM_DEFAULTS)),
@@ -203,6 +224,11 @@ function render(){
   selectEl('Régime de TVA','vatRegime',[['not_subject','Hors du champ de la TVA'],['exempt','Franchise / exonéré (avec n° de TVA)'],['registered','Assujetti à la TVA (taux sur les prix)']],''),
   h('div',{class:'row'},input("Numéro d'immatriculation",'regNumber',S.org==='association'?'RNA W… · SIRET si attribué':'RCS / SIREN'),input('Numéro de TVA (si applicable)','vatId','')),
   input('Motif de non-application de la TVA','exemption','Ex. « TVA non applicable, art. 293 B du CGI » ou « Exonération de TVA, art. 261, 7-1° du CGI ».'),
+  h('label',{},'Taux de TVA (si assujetti — le premier devient le taux par défaut)'),
+  h('p',{class:'hint'},'Point de départ, pas un conseil fiscal : dans l’app, chaque service/forfait peut porter son propre taux, et les déclarations périodiques (CA3, UStVA…) se génèrent depuis les factures.'),
+  ...(VAT_NOTES[S.country]?[h('p',{class:'hint'},VAT_NOTES[S.country])]:[]),
+  tableRows(['Libellé','Taux %'],S.vatRates,(r)=>[bind(r,'label'),bind(r,'percent','number')],()=>({label:'',percent:''}),'+ Ajouter un taux'),
+  (VAT_RATES[S.country]?(()=>{const b=h('button',{class:'chip',type:'button'},'Proposer les taux usuels du pays ('+VAT_RATES[S.country].map(r=>r[1]).join(', ')+' %)');b.onclick=()=>{S.vatRates=VAT_RATES[S.country].map(([label,percent])=>({label,percent}));save();render()};return b})():null),
   h('div',{class:'row'},input('Rue','street',''),input('Code postal','postal',''),input('Ville','city','')),
   h('label',{},'Mentions de facturation (vide = formule légale par défaut)'),
   input('Forme juridique et capital','mentions.legalForm','Ex. Association loi 1901'),
@@ -282,6 +308,7 @@ function exportXml(){
  S.services.filter(s=>s.name.trim()).forEach(s=>push(`      <service name="${esc(s.name)}" price-cents="${Math.round((parseFloat(s.price)||0)*100)}"${s.vat!==''&&s.vat!=null?` vat-percent="${s.vat}"`:''}/>`));
  push('    </services>');
  push(`    <legal organization="${S.org}" vat-regime="${S.vatRegime}" registration="${esc(S.regNumber)}" vat-id="${esc(S.vatId)}" exemption-reason="${esc(S.exemption)}" street="${esc(S.street)}" postal-code="${esc(S.postal)}" city="${esc(S.city)}">`);
+ S.vatRates.filter(r=>String(r.label).trim()&&r.percent!==''&&r.percent!=null).forEach((r,i)=>push(`      <vat-rate label="${esc(r.label)}" percent="${r.percent}" default="${i===0}"/>`));
  for(const[k,v]of Object.entries(S.mentions))if(String(v).trim())push(`      <mention key="${k}" value="${esc(v.trim())}"/>`);
  push(`      <reminders levels="${S.reminders.levels}" first-days="${S.reminders.firstDays}" between-days="${S.reminders.betweenDays}"/>`);
  push('    </legal>');
@@ -315,7 +342,7 @@ function parseBack(text){
  const id=su.querySelector('identity');if(id){S.language=id.getAttribute('language')||'';S.address=id.getAttribute('address')||'';S.whatsapp=id.getAttribute('whatsapp-group')||''}
  const bi=su.querySelector('billing');if(bi){S.tiers=[...bi.querySelectorAll('tier')].map(t=>({from:t.getAttribute('from-pct'),to:t.getAttribute('to-pct'),fee:String((parseInt(t.getAttribute('fee-cents'))||0)/100),over:String((parseInt(t.getAttribute('overage-cents'))||0)/100)}));const sl=bi.querySelector('subscription-levels');if(sl){S.subLevels=(sl.getAttribute('values')||'').split(',').filter(Boolean);S.freeLevel=sl.getAttribute('free-value')==='true'}S.packages=[...bi.querySelectorAll('package')].map(p=>({name:p.getAttribute('name'),days:p.getAttribute('days'),price:String((parseInt(p.getAttribute('price-cents'))||0)/100)}))}
  S.services=[...su.querySelectorAll('services > service')].map(s=>({name:s.getAttribute('name'),price:String((parseInt(s.getAttribute('price-cents'))||0)/100),vat:s.getAttribute('vat-percent')??''}));
- const le=su.querySelector('legal');if(le){S.org=le.getAttribute('organization')||S.org;S.vatRegime=le.getAttribute('vat-regime')||S.vatRegime;S.regNumber=le.getAttribute('registration')||'';S.vatId=le.getAttribute('vat-id')||'';S.exemption=le.getAttribute('exemption-reason')||'';S.street=le.getAttribute('street')||'';S.postal=le.getAttribute('postal-code')||'';S.city=le.getAttribute('city')||'';le.querySelectorAll('mention').forEach(m=>S.mentions[m.getAttribute('key')]=m.getAttribute('value')||'');const rm=le.querySelector('reminders');if(rm){S.reminders={levels:rm.getAttribute('levels'),firstDays:rm.getAttribute('first-days'),betweenDays:rm.getAttribute('between-days')}}}
+ const le=su.querySelector('legal');if(le){S.org=le.getAttribute('organization')||S.org;S.vatRegime=le.getAttribute('vat-regime')||S.vatRegime;S.regNumber=le.getAttribute('registration')||'';S.vatId=le.getAttribute('vat-id')||'';S.exemption=le.getAttribute('exemption-reason')||'';S.street=le.getAttribute('street')||'';S.postal=le.getAttribute('postal-code')||'';S.city=le.getAttribute('city')||'';S.vatRates=[...le.querySelectorAll('vat-rate')].map(r=>({label:r.getAttribute('label')||'',percent:r.getAttribute('percent')||''}));le.querySelectorAll('mention').forEach(m=>S.mentions[m.getAttribute('key')]=m.getAttribute('value')||'');const rm=le.querySelector('reminders');if(rm){S.reminders={levels:rm.getAttribute('levels'),firstDays:rm.getAttribute('first-days'),betweenDays:rm.getAttribute('between-days')}}}
  su.querySelectorAll('roles > role').forEach(r=>S.perms[r.getAttribute('name')]=(r.getAttribute('permissions')||'').split(',').filter(Boolean));
  const va=su.querySelector('roles > validation');if(va)S.validation={required:va.getAttribute('required'),ownerSignOff:va.getAttribute('owner-sign-off')==='true'};
  S.members=[...su.querySelectorAll('members > member')].map(m=>({name:m.getAttribute('name'),email:m.getAttribute('email'),role:m.getAttribute('role'),pct:m.getAttribute('subscription-pct')}));
