@@ -165,6 +165,14 @@
   "@vatDeclRegimeGate": {
     "description": "Gate banner when the workspace is not vat_registered"
   },
+  "featureVatManagementTitle": "Gestion de la TVA",
+  "@featureVatManagementTitle": {
+    "description": "Feature toggle title: VAT management (#544)"
+  },
+  "featureVatManagementDesc": "L'éditeur des taux de TVA et les sélecteurs de taux des services, forfaits, accessoires et paliers. Désactivé, la configuration disparaît ; les taux enregistrés continuent de s'appliquer.",
+  "@featureVatManagementDesc": {
+    "description": "Feature toggle description: VAT management (#544)"
+  },
   "featureVatDeclarationsTitle": "Déclarations de TVA",
   "@featureVatDeclarationsTitle": {
     "description": "Feature toggle title (#534)"

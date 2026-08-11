@@ -165,6 +165,14 @@
   "@vatDeclRegimeGate": {
     "description": "Gate banner when the workspace is not vat_registered"
   },
+  "featureVatManagementTitle": "Gestione IVA",
+  "@featureVatManagementTitle": {
+    "description": "Feature toggle title: VAT management (#544)"
+  },
+  "featureVatManagementDesc": "L'editor delle aliquote IVA e i selettori di aliquota su servizi, pacchetti, accessori e tariffe. Disattivato nasconde la configurazione; le aliquote salvate continuano ad applicarsi.",
+  "@featureVatManagementDesc": {
+    "description": "Feature toggle description: VAT management (#544)"
+  },
   "featureVatDeclarationsTitle": "Dichiarazioni IVA",
   "@featureVatDeclarationsTitle": {
     "description": "Feature toggle title (#534)"

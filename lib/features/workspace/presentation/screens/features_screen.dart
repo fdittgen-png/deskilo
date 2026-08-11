@@ -129,6 +129,11 @@ class FeaturesScreen extends ConsumerWidget {
               'The central role→permission matrix: the owner decides '
                   'which role holds which permission; everyone else '
                   'reads their own. Off, the defaults simply apply.',
+        WorkspaceFeature.vatManagement =>
+          l10n?.featureVatManagementDesc ??
+              'The VAT rate editor and the rate pickers on services, '
+                  'packs, accessories and the tariff. Off hides the '
+                  'configuration; stored rates keep applying.',
         WorkspaceFeature.vatDeclarations =>
           l10n?.featureVatDeclarationsDesc ??
               'Generate the periodic VAT return from issued invoices, '

@@ -20,7 +20,9 @@ import 'package:flutter_test/flutter_test.dart';
 /// deletionRequests (#502).
 // 30→31 (2026-08-06): #513 roleManagement.
 // 31→32 (2026-08-11): #534 vatDeclarations (requires invoicing).
-const int _expectedFeatureCount = 32;
+// 32→33 (2026-08-11): #544 vatManagement (rates editor + rate pickers;
+// vatDeclarations re-parented under it).
+const int _expectedFeatureCount = 33;
 
 void main() {
   test('every functionality is registered — the pin', () {

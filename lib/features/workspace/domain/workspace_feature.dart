@@ -37,6 +37,7 @@ enum WorkspaceFeature {
   memberReports,
   deletionRequests,
   roleManagement,
+  vatManagement,
   vatDeclarations;
 
   /// The key of this feature inside `workspaces.feature_flags`.
@@ -201,12 +202,20 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // matrix is then simply not editable in the app).
   WorkspaceFeature.roleManagement:
       FeatureManifestEntry(feature: WorkspaceFeature.roleManagement),
-  // Periodic VAT declarations (#534/0107) — only meaningful where
-  // invoices exist; the vat_registered regime gates it further at the
-  // screen (an exempt workspace has nothing to declare).
+  // VAT management (#544): the rates editor and every per-item/tariff
+  // rate picker. OFF hides the CONFIG surfaces only — a vat_registered
+  // workspace keeps taxing at its stored/default rates (legal math is
+  // never toggleable). Under invoicing, like the /vat screen always was.
+  WorkspaceFeature.vatManagement: FeatureManifestEntry(
+    feature: WorkspaceFeature.vatManagement,
+    requires: WorkspaceFeature.invoicing,
+  ),
+  // Periodic VAT declarations (#534/0107) — a child of VAT management;
+  // the vat_registered regime gates it further at the screen (an exempt
+  // workspace has nothing to declare).
   WorkspaceFeature.vatDeclarations: FeatureManifestEntry(
     feature: WorkspaceFeature.vatDeclarations,
-    requires: WorkspaceFeature.invoicing,
+    requires: WorkspaceFeature.vatManagement,
   ),
 };
 

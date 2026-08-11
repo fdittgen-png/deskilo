@@ -3035,6 +3035,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Voranmeldungen gibt es nur unter dem umsatzsteuerpflichtigen Regime — in den USt-Einstellungen konfigurieren.';
 
   @override
+  String get featureVatManagementTitle => 'USt-Verwaltung';
+
+  @override
+  String get featureVatManagementDesc =>
+      'Der USt-Satz-Editor und die Satz-Auswahl bei Services, Paketen, Ausstattungen und Tarif. Aus blendet die Konfiguration aus; gespeicherte Sätze gelten weiter.';
+
+  @override
   String get featureVatDeclarationsTitle => 'USt-Voranmeldungen';
 
   @override

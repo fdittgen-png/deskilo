@@ -3007,6 +3007,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Declarations exist only under the VAT-registered regime — configure it under VAT settings.';
 
   @override
+  String get featureVatManagementTitle => 'VAT management';
+
+  @override
+  String get featureVatManagementDesc =>
+      'The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying.';
+
+  @override
   String get featureVatDeclarationsTitle => 'VAT declarations';
 
   @override

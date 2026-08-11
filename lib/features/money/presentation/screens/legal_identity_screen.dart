@@ -9,6 +9,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice_legal.dart';
 import '../../domain/vat_regime.dart';
@@ -252,7 +253,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                       'invoices show no tax and the XML export stays '
                       'disabled until you add one.',
             ),
-          if (_regime == VatRegime.vatRegistered)
+          if (_regime == VatRegime.vatRegistered &&
+              ref
+                  .watch(enabledFeaturesSyncProvider)
+                  .contains(WorkspaceFeature.vatManagement))
           ListTile(
             key: const ValueKey('legal-identity-vat-rates'),
             contentPadding: EdgeInsets.zero,

@@ -352,6 +352,14 @@
   "@vatDeclRegimeGate": {
     "description": "Gate banner when the workspace is not vat_registered"
   },
+  "featureVatManagementTitle": "VAT management",
+  "@featureVatManagementTitle": {
+    "description": "Feature toggle title: VAT management (#544)"
+  },
+  "featureVatManagementDesc": "The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying.",
+  "@featureVatManagementDesc": {
+    "description": "Feature toggle description: VAT management (#544)"
+  },
   "featureVatDeclarationsTitle": "VAT declarations",
   "@featureVatDeclarationsTitle": {
     "description": "Feature toggle title (#534)"

@@ -3036,6 +3036,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les déclarations n’existent que sous le régime assujetti à la TVA — configurez-le dans les réglages TVA.';
 
   @override
+  String get featureVatManagementTitle => 'Gestion de la TVA';
+
+  @override
+  String get featureVatManagementDesc =>
+      'L\'éditeur des taux de TVA et les sélecteurs de taux des services, forfaits, accessoires et paliers. Désactivé, la configuration disparaît ; les taux enregistrés continuent de s\'appliquer.';
+
+  @override
   String get featureVatDeclarationsTitle => 'Déclarations de TVA';
 
   @override

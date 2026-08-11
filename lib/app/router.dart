@@ -428,7 +428,7 @@ GoRouter router(Ref ref) {
         path: '/vat',
         redirect: (context, state) {
           final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner && featureEnabled(WorkspaceFeature.invoicing)
+          return isOwner && featureEnabled(WorkspaceFeature.vatManagement)
               ? null
               : '/money';
         },

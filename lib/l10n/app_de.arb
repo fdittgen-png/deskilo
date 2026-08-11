@@ -1618,6 +1618,14 @@
   "@vatDeclRegimeGate": {
     "description": "Gate banner when the workspace is not vat_registered"
   },
+  "featureVatManagementTitle": "USt-Verwaltung",
+  "@featureVatManagementTitle": {
+    "description": "Feature toggle title: VAT management (#544)"
+  },
+  "featureVatManagementDesc": "Der USt-Satz-Editor und die Satz-Auswahl bei Services, Paketen, Ausstattungen und Tarif. Aus blendet die Konfiguration aus; gespeicherte Sätze gelten weiter.",
+  "@featureVatManagementDesc": {
+    "description": "Feature toggle description: VAT management (#544)"
+  },
   "featureVatDeclarationsTitle": "USt-Voranmeldungen",
   "@featureVatDeclarationsTitle": {
     "description": "Feature toggle title (#534)"

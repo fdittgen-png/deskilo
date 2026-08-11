@@ -255,4 +255,35 @@ void main() {
 
     expect(find.byKey(const ValueKey('vat-rate-field')), findsNothing);
   });
+
+  testWidgets(
+      'vatManagement feature off (#544): /vat bounces to /money, the '
+      'rates tile disappears, and rate pickers hide everywhere',
+      (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+      featureFlags: const {'vatManagement': false},
+    );
+    workspace.workspaces[0] =
+        workspace.workspaces[0].copyWith(vatRegime: 'vat_registered');
+    final money = FakeMoneyRepository()
+      ..vatRates = [
+        const VatRate(
+            id: 'vat-1', label: 'Standard', percent: 19, isDefault: true),
+      ];
+    await pumpVat(tester, money: money, workspace: workspace);
+
+    // The route bounced: no rates editor on screen.
+    expect(find.byKey(const ValueKey('vat-rate-label-0')), findsNothing);
+    expect(find.byKey(const ValueKey('vat-save')), findsNothing);
+
+    // The legal identity screen keeps its identity fields but loses the
+    // rates entry — the regime still charges, only the CONFIG is gone.
+    final context = tester.element(find.byType(Scaffold).first);
+    GoRouter.of(context).push('/legal-identity');
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('legal-identity-vat-id')),
+        findsOneWidget);
+    expect(find.byKey(const ValueKey('legal-identity-vat-rates')),
+        findsNothing);
+  });
 }
