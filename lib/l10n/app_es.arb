@@ -1506,6 +1506,114 @@
   "@moneySectionDocuments": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
+  "vatDeclTitle": "Declaración de IVA",
+  "@vatDeclTitle": {
+    "description": "Title of the periodic VAT declaration screen/PDF (#534)"
+  },
+  "vatDeclPeriod": "Periodo",
+  "@vatDeclPeriod": {
+    "description": "Filing-period label"
+  },
+  "vatDeclSeller": "Vendedor",
+  "@vatDeclSeller": {
+    "description": "Seller identity line on the declaration PDF"
+  },
+  "vatDeclVatId": "NIF-IVA",
+  "@vatDeclVatId": {
+    "description": "VAT identifier label"
+  },
+  "vatDeclRate": "Tipo",
+  "@vatDeclRate": {
+    "description": "Rate column"
+  },
+  "vatDeclNet": "Base imponible",
+  "@vatDeclNet": {
+    "description": "Net taxable base column"
+  },
+  "vatDeclVat": "IVA",
+  "@vatDeclVat": {
+    "description": "Tax amount column"
+  },
+  "vatDeclInvoices": "Facturas",
+  "@vatDeclInvoices": {
+    "description": "Invoice-count column"
+  },
+  "vatDeclTotals": "Totales",
+  "@vatDeclTotals": {
+    "description": "Totals row"
+  },
+  "vatDeclBoxes": "Casillas del formulario oficial",
+  "@vatDeclBoxes": {
+    "description": "Header of the official-box mapping (CA3/UStVA)"
+  },
+  "vatDeclBox": "Casilla",
+  "@vatDeclBox": {
+    "description": "Box-code column"
+  },
+  "vatDeclStatus": "Estado",
+  "@vatDeclStatus": {
+    "description": "Status label on the PDF"
+  },
+  "vatDeclDisclaimer": "Generada a partir de las facturas emitidas del periodo. Verifíquela con su contabilidad antes de presentarla — es una ayuda, no asesoría fiscal.",
+  "@vatDeclDisclaimer": {
+    "description": "Disclaimer at the bottom of the declaration PDF"
+  },
+  "vatDeclGenerate": "Generar",
+  "@vatDeclGenerate": {
+    "description": "Generate-declaration button"
+  },
+  "vatDeclEmpty": "Aún no hay declaraciones — elija un periodo y genere la primera.",
+  "@vatDeclEmpty": {
+    "description": "Empty state of the declarations list"
+  },
+  "vatDeclDraft": "Borrador",
+  "@vatDeclDraft": {
+    "description": "Draft status chip"
+  },
+  "vatDeclSubmitted": "Presentada",
+  "@vatDeclSubmitted": {
+    "description": "Submitted status chip"
+  },
+  "vatDeclTransmit": "Transmitir",
+  "@vatDeclTransmit": {
+    "description": "Send through the configured platform channel"
+  },
+  "vatDeclMarkFiled": "Marcar como presentada",
+  "@vatDeclMarkFiled": {
+    "description": "Manual-filing action"
+  },
+  "vatDeclMarkFiledConfirm": "Confirme que presentó esta declaración usted mismo (portal de Hacienda o su gestor). Se vuelve inmutable.",
+  "@vatDeclMarkFiledConfirm": {
+    "description": "Confirmation before marking a declaration manually filed"
+  },
+  "vatDeclXml": "Exportar XML",
+  "@vatDeclXml": {
+    "description": "Machine-readable export button"
+  },
+  "vatDeclPdf": "PDF",
+  "@vatDeclPdf": {
+    "description": "PDF button on a declaration card"
+  },
+  "vatDeclSent": "Declaración transmitida.",
+  "@vatDeclSent": {
+    "description": "Success snack after platform transmission"
+  },
+  "vatDeclRejected": "La plataforma rechazó la declaración.",
+  "@vatDeclRejected": {
+    "description": "Error snack when the platform rejects"
+  },
+  "vatDeclRegimeGate": "Las declaraciones solo existen bajo el régimen sujeto a IVA — configúrelo en los ajustes de IVA.",
+  "@vatDeclRegimeGate": {
+    "description": "Gate banner when the workspace is not vat_registered"
+  },
+  "featureVatDeclarationsTitle": "Declaraciones de IVA",
+  "@featureVatDeclarationsTitle": {
+    "description": "Feature toggle title (#534)"
+  },
+  "featureVatDeclarationsDesc": "Generar la declaración periódica de IVA desde las facturas emitidas, mapearla al formulario oficial y transmitirla o exportarla.",
+  "@featureVatDeclarationsDesc": {
+    "description": "Feature toggle description (#534)"
+  },
   "planNoLevels": "El espacio aún no tiene plano.",
   "planLevelLabel": "Planta",
   "planCheckInTitle": "Registrarse",

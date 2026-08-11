@@ -112,7 +112,9 @@ const Map<String, int> _baseline = {
   // fetch on the floor-plans bucket).
   // 870→890 (2026-08-05): #506 the consumed-payments junction read.
   // 890→900 (2026-08-06): #512 the member_account fetch.
-  'lib/features/money/data/supabase_money_repository.dart': 900,
+  // 900→980 (2026-08-11): #534 VAT declarations — fetch/save/mark/send
+  // repository methods (one cohesive data client, no new concern).
+  'lib/features/money/data/supabase_money_repository.dart': 980,
   // 750→880 (2026-08-05): #510 the month-invoice card + settlement-
   // driven balance footer (the invoice decides settled/outstanding).
   'lib/features/money/presentation/widgets/bill_view.dart': 880,

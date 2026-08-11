@@ -19,7 +19,8 @@ import 'package:flutter_test/flutter_test.dart';
 /// 27 pre-#502 + documents (#500) + dunning + memberReports +
 /// deletionRequests (#502).
 // 30→31 (2026-08-06): #513 roleManagement.
-const int _expectedFeatureCount = 31;
+// 31→32 (2026-08-11): #534 vatDeclarations (requires invoicing).
+const int _expectedFeatureCount = 32;
 
 void main() {
   test('every functionality is registered — the pin', () {

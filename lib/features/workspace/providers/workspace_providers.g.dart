@@ -636,7 +636,7 @@ final class UnreadNoteCountProvider
   UnreadNoteCount create() => UnreadNoteCount();
 }
 
-String _$unreadNoteCountHash() => r'61e351ac783100c73aa7f576b72d69dd3d261798';
+String _$unreadNoteCountHash() => r'789d8adb96c69869332060b5cce72553970bf210';
 
 /// Unread member notes (#464): notes from someone else, newer than the
 /// device's SEEN stamp — the bell and the app-icon badge count them,

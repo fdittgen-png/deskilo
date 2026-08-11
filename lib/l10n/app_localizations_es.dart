@@ -2936,6 +2936,92 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moneySectionDocuments => 'Documentos';
 
   @override
+  String get vatDeclTitle => 'Declaración de IVA';
+
+  @override
+  String get vatDeclPeriod => 'Periodo';
+
+  @override
+  String get vatDeclSeller => 'Vendedor';
+
+  @override
+  String get vatDeclVatId => 'NIF-IVA';
+
+  @override
+  String get vatDeclRate => 'Tipo';
+
+  @override
+  String get vatDeclNet => 'Base imponible';
+
+  @override
+  String get vatDeclVat => 'IVA';
+
+  @override
+  String get vatDeclInvoices => 'Facturas';
+
+  @override
+  String get vatDeclTotals => 'Totales';
+
+  @override
+  String get vatDeclBoxes => 'Casillas del formulario oficial';
+
+  @override
+  String get vatDeclBox => 'Casilla';
+
+  @override
+  String get vatDeclStatus => 'Estado';
+
+  @override
+  String get vatDeclDisclaimer =>
+      'Generada a partir de las facturas emitidas del periodo. Verifíquela con su contabilidad antes de presentarla — es una ayuda, no asesoría fiscal.';
+
+  @override
+  String get vatDeclGenerate => 'Generar';
+
+  @override
+  String get vatDeclEmpty =>
+      'Aún no hay declaraciones — elija un periodo y genere la primera.';
+
+  @override
+  String get vatDeclDraft => 'Borrador';
+
+  @override
+  String get vatDeclSubmitted => 'Presentada';
+
+  @override
+  String get vatDeclTransmit => 'Transmitir';
+
+  @override
+  String get vatDeclMarkFiled => 'Marcar como presentada';
+
+  @override
+  String get vatDeclMarkFiledConfirm =>
+      'Confirme que presentó esta declaración usted mismo (portal de Hacienda o su gestor). Se vuelve inmutable.';
+
+  @override
+  String get vatDeclXml => 'Exportar XML';
+
+  @override
+  String get vatDeclPdf => 'PDF';
+
+  @override
+  String get vatDeclSent => 'Declaración transmitida.';
+
+  @override
+  String get vatDeclRejected => 'La plataforma rechazó la declaración.';
+
+  @override
+  String get vatDeclRegimeGate =>
+      'Las declaraciones solo existen bajo el régimen sujeto a IVA — configúrelo en los ajustes de IVA.';
+
+  @override
+  String get featureVatDeclarationsTitle => 'Declaraciones de IVA';
+
+  @override
+  String get featureVatDeclarationsDesc =>
+      'Generar la declaración periódica de IVA desde las facturas emitidas, mapearla al formulario oficial y transmitirla o exportarla.';
+
+  @override
   String get planNoLevels => 'El espacio aún no tiene plano.';
 
   @override

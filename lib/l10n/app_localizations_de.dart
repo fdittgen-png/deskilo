@@ -2945,6 +2945,92 @@ class AppLocalizationsDe extends AppLocalizations {
   String get moneySectionDocuments => 'Dokumente';
 
   @override
+  String get vatDeclTitle => 'Umsatzsteuer-Voranmeldung';
+
+  @override
+  String get vatDeclPeriod => 'Zeitraum';
+
+  @override
+  String get vatDeclSeller => 'Verkäufer';
+
+  @override
+  String get vatDeclVatId => 'USt-IdNr.';
+
+  @override
+  String get vatDeclRate => 'Steuersatz';
+
+  @override
+  String get vatDeclNet => 'Bemessungsgrundlage';
+
+  @override
+  String get vatDeclVat => 'USt';
+
+  @override
+  String get vatDeclInvoices => 'Rechnungen';
+
+  @override
+  String get vatDeclTotals => 'Summen';
+
+  @override
+  String get vatDeclBoxes => 'Kennzahlen des amtlichen Formulars';
+
+  @override
+  String get vatDeclBox => 'Kz';
+
+  @override
+  String get vatDeclStatus => 'Status';
+
+  @override
+  String get vatDeclDisclaimer =>
+      'Aus den ausgestellten Rechnungen des Zeitraums erzeugt. Vor der Abgabe mit der Buchhaltung abgleichen — eine Abgabehilfe, keine Steuerberatung.';
+
+  @override
+  String get vatDeclGenerate => 'Erstellen';
+
+  @override
+  String get vatDeclEmpty =>
+      'Noch keine Voranmeldungen — Zeitraum wählen und die erste erstellen.';
+
+  @override
+  String get vatDeclDraft => 'Entwurf';
+
+  @override
+  String get vatDeclSubmitted => 'Übermittelt';
+
+  @override
+  String get vatDeclTransmit => 'Übermitteln';
+
+  @override
+  String get vatDeclMarkFiled => 'Als abgegeben markieren';
+
+  @override
+  String get vatDeclMarkFiledConfirm =>
+      'Bestätige, dass du diese Voranmeldung selbst abgegeben hast (ELSTER/Portal oder Steuerberater). Sie wird unveränderlich.';
+
+  @override
+  String get vatDeclXml => 'XML-Export';
+
+  @override
+  String get vatDeclPdf => 'PDF';
+
+  @override
+  String get vatDeclSent => 'Voranmeldung übermittelt.';
+
+  @override
+  String get vatDeclRejected => 'Die Plattform hat die Voranmeldung abgelehnt.';
+
+  @override
+  String get vatDeclRegimeGate =>
+      'Voranmeldungen gibt es nur unter dem umsatzsteuerpflichtigen Regime — in den USt-Einstellungen konfigurieren.';
+
+  @override
+  String get featureVatDeclarationsTitle => 'USt-Voranmeldungen';
+
+  @override
+  String get featureVatDeclarationsDesc =>
+      'Die periodische USt-Voranmeldung aus den Rechnungen erzeugen, auf das amtliche Formular abbilden und übermitteln oder exportieren.';
+
+  @override
   String get planNoLevels => 'Der Workspace hat noch keinen Plan.';
 
   @override

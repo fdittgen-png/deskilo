@@ -64,5 +64,113 @@
   "moneySectionDocuments": "Dokumente",
   "@moneySectionDocuments": {
     "description": "Finance/settings UX + workspace language (#486)"
+  },
+  "vatDeclTitle": "Umsatzsteuer-Voranmeldung",
+  "@vatDeclTitle": {
+    "description": "Title of the periodic VAT declaration screen/PDF (#534)"
+  },
+  "vatDeclPeriod": "Zeitraum",
+  "@vatDeclPeriod": {
+    "description": "Filing-period label"
+  },
+  "vatDeclSeller": "Verkäufer",
+  "@vatDeclSeller": {
+    "description": "Seller identity line on the declaration PDF"
+  },
+  "vatDeclVatId": "USt-IdNr.",
+  "@vatDeclVatId": {
+    "description": "VAT identifier label"
+  },
+  "vatDeclRate": "Steuersatz",
+  "@vatDeclRate": {
+    "description": "Rate column"
+  },
+  "vatDeclNet": "Bemessungsgrundlage",
+  "@vatDeclNet": {
+    "description": "Net taxable base column"
+  },
+  "vatDeclVat": "USt",
+  "@vatDeclVat": {
+    "description": "Tax amount column"
+  },
+  "vatDeclInvoices": "Rechnungen",
+  "@vatDeclInvoices": {
+    "description": "Invoice-count column"
+  },
+  "vatDeclTotals": "Summen",
+  "@vatDeclTotals": {
+    "description": "Totals row"
+  },
+  "vatDeclBoxes": "Kennzahlen des amtlichen Formulars",
+  "@vatDeclBoxes": {
+    "description": "Header of the official-box mapping (CA3/UStVA)"
+  },
+  "vatDeclBox": "Kz",
+  "@vatDeclBox": {
+    "description": "Box-code column"
+  },
+  "vatDeclStatus": "Status",
+  "@vatDeclStatus": {
+    "description": "Status label on the PDF"
+  },
+  "vatDeclDisclaimer": "Aus den ausgestellten Rechnungen des Zeitraums erzeugt. Vor der Abgabe mit der Buchhaltung abgleichen — eine Abgabehilfe, keine Steuerberatung.",
+  "@vatDeclDisclaimer": {
+    "description": "Disclaimer at the bottom of the declaration PDF"
+  },
+  "vatDeclGenerate": "Erstellen",
+  "@vatDeclGenerate": {
+    "description": "Generate-declaration button"
+  },
+  "vatDeclEmpty": "Noch keine Voranmeldungen — Zeitraum wählen und die erste erstellen.",
+  "@vatDeclEmpty": {
+    "description": "Empty state of the declarations list"
+  },
+  "vatDeclDraft": "Entwurf",
+  "@vatDeclDraft": {
+    "description": "Draft status chip"
+  },
+  "vatDeclSubmitted": "Übermittelt",
+  "@vatDeclSubmitted": {
+    "description": "Submitted status chip"
+  },
+  "vatDeclTransmit": "Übermitteln",
+  "@vatDeclTransmit": {
+    "description": "Send through the configured platform channel"
+  },
+  "vatDeclMarkFiled": "Als abgegeben markieren",
+  "@vatDeclMarkFiled": {
+    "description": "Manual-filing action"
+  },
+  "vatDeclMarkFiledConfirm": "Bestätige, dass du diese Voranmeldung selbst abgegeben hast (ELSTER/Portal oder Steuerberater). Sie wird unveränderlich.",
+  "@vatDeclMarkFiledConfirm": {
+    "description": "Confirmation before marking a declaration manually filed"
+  },
+  "vatDeclXml": "XML-Export",
+  "@vatDeclXml": {
+    "description": "Machine-readable export button"
+  },
+  "vatDeclPdf": "PDF",
+  "@vatDeclPdf": {
+    "description": "PDF button on a declaration card"
+  },
+  "vatDeclSent": "Voranmeldung übermittelt.",
+  "@vatDeclSent": {
+    "description": "Success snack after platform transmission"
+  },
+  "vatDeclRejected": "Die Plattform hat die Voranmeldung abgelehnt.",
+  "@vatDeclRejected": {
+    "description": "Error snack when the platform rejects"
+  },
+  "vatDeclRegimeGate": "Voranmeldungen gibt es nur unter dem umsatzsteuerpflichtigen Regime — in den USt-Einstellungen konfigurieren.",
+  "@vatDeclRegimeGate": {
+    "description": "Gate banner when the workspace is not vat_registered"
+  },
+  "featureVatDeclarationsTitle": "USt-Voranmeldungen",
+  "@featureVatDeclarationsTitle": {
+    "description": "Feature toggle title (#534)"
+  },
+  "featureVatDeclarationsDesc": "Die periodische USt-Voranmeldung aus den Rechnungen erzeugen, auf das amtliche Formular abbilden und übermitteln oder exportieren.",
+  "@featureVatDeclarationsDesc": {
+    "description": "Feature toggle description (#534)"
   }
 }

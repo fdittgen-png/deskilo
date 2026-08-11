@@ -17,6 +17,7 @@ import '../features/money/presentation/screens/invoices_screen.dart';
 import '../features/money/presentation/screens/einvoice_config_screen.dart';
 import '../features/money/presentation/screens/invoice_register_screen.dart';
 import '../features/money/presentation/screens/legal_identity_screen.dart';
+import '../features/money/presentation/screens/vat_declarations_screen.dart';
 import '../features/reservations/domain/space_code.dart';
 import '../features/reservations/presentation/screens/reference_link_screen.dart';
 import '../features/workspace/presentation/screens/message_link_screen.dart';
@@ -409,6 +410,20 @@ GoRouter router(Ref ref) {
       ),
       // The workspace's VAT rates (0072) — owner-only, like the identity
       // they belong to.
+      // Periodic VAT declarations (#534) — owner-only, needs invoicing
+      // AND the vatDeclarations feature; the screen gates the regime.
+      GoRoute(
+        path: '/vat-declarations',
+        redirect: (context, state) {
+          final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
+          return isOwner &&
+                  featureEnabled(WorkspaceFeature.invoicing) &&
+                  featureEnabled(WorkspaceFeature.vatDeclarations)
+              ? null
+              : '/money';
+        },
+        builder: (context, state) => const VatDeclarationsScreen(),
+      ),
       GoRoute(
         path: '/vat',
         redirect: (context, state) {

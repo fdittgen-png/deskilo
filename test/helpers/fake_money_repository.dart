@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
@@ -25,6 +26,104 @@ import 'fake_event_repository.dart';
 /// In-memory [MoneyRepository]; recorded payments are captured for
 /// assertions (they only become ledger credits after confirmation).
 class FakeMoneyRepository implements MoneyRepository {
+  /// VAT declarations (0107), newest period first on read.
+  final List<VatDeclaration> vatDeclarations = [];
+
+  @override
+  Future<List<VatDeclaration>> fetchVatDeclarations(
+          String workspaceId) async =>
+      List.of(vatDeclarations);
+
+  @override
+  Future<String> saveVatDeclaration({
+    required String workspaceId,
+    required DateTime periodStart,
+    required DateTime periodEnd,
+    required List<VatDeclarationLine> lines,
+    required int totalNetCents,
+    required int totalVatCents,
+    required String currency,
+    required int invoiceCount,
+  }) async {
+    final existing = vatDeclarations.indexWhere((d) =>
+        d.periodStart == periodStart && d.periodEnd == periodEnd);
+    if (existing != -1 && vatDeclarations[existing].isSubmitted) {
+      throw StateError('declaration already submitted for this period');
+    }
+    final declaration = VatDeclaration(
+      id: existing != -1
+          ? vatDeclarations[existing].id
+          : 'decl-${vatDeclarations.length + 1}',
+      workspaceId: workspaceId,
+      periodStart: periodStart,
+      periodEnd: periodEnd,
+      status: 'draft',
+      lines: lines,
+      totalNetCents: totalNetCents,
+      totalVatCents: totalVatCents,
+      currency: currency,
+      invoiceCount: invoiceCount,
+      createdAt: DateTime.utc(2026, 8, 11),
+    );
+    if (existing != -1) {
+      vatDeclarations[existing] = declaration;
+    } else {
+      vatDeclarations.add(declaration);
+    }
+    return declaration.id;
+  }
+
+  @override
+  Future<void> markVatDeclarationSubmitted({
+    required String declarationId,
+    required String channel,
+    String receipt = '',
+  }) async {
+    final index =
+        vatDeclarations.indexWhere((d) => d.id == declarationId);
+    if (index == -1) throw StateError('unknown declaration');
+    final d = vatDeclarations[index];
+    vatDeclarations[index] = VatDeclaration(
+      id: d.id,
+      workspaceId: d.workspaceId,
+      periodStart: d.periodStart,
+      periodEnd: d.periodEnd,
+      status: 'submitted',
+      lines: d.lines,
+      totalNetCents: d.totalNetCents,
+      totalVatCents: d.totalVatCents,
+      currency: d.currency,
+      invoiceCount: d.invoiceCount,
+      createdAt: d.createdAt,
+      submittedAt: DateTime.utc(2026, 8, 11, 12),
+      submittedChannel: channel,
+      submittedReceipt: receipt,
+    );
+  }
+
+  /// Platform sends recorded for assertions; each accepted send stamps
+  /// the declaration submitted like the edge function does.
+  final List<String> sentDeclarationIds = [];
+
+  @override
+  Future<EInvoiceSubmission> sendVatDeclaration({
+    required String workspaceId,
+    required String declarationId,
+    required String fileName,
+    required String mimeType,
+    required List<int> bytes,
+  }) async {
+    sentDeclarationIds.add(declarationId);
+    await markVatDeclarationSubmitted(
+        declarationId: declarationId,
+        channel: 'platform',
+        receipt: 'fake-receipt');
+    return const EInvoiceSubmission(
+      status: EInvoiceSubmissionStatus.accepted,
+      externalId: 'fake-receipt',
+    );
+  }
+
   /// #488 — the in-memory report-image library.
   final Map<String, List<int>> reportImages = {};
 

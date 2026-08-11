@@ -117,6 +117,7 @@ Deno.serve(async (req) => {
   let payload: {
     workspace_id?: string;
     invoice_id?: string;
+    declaration_id?: string;
     file_name?: string;
     mime_type?: string;
     content_base64?: string;
@@ -177,6 +178,64 @@ Deno.serve(async (req) => {
     .maybeSingle();
   if (!me || me.status !== "active" || !(me.is_admin || me.is_owner)) {
     return json({ error: "not an admin of this workspace" }, 403);
+  }
+
+  // #534 — VAT declarations ride the SAME configured channel: the owner
+  // (only) posts the declaration document to the platform; an accepted
+  // upload stamps the declaration submitted with the platform's receipt.
+  const declarationId = payload.declaration_id ?? "";
+  if (declarationId) {
+    if (!me.is_owner) {
+      return json({ error: "only the owner files VAT declarations" }, 403);
+    }
+    const content2 = payload.content_base64 ?? "";
+    if (!content2) return json({ error: "content_base64 required" }, 400);
+    const { data: declaration } = await admin
+      .from("vat_declarations")
+      .select("id, workspace_id, status, period_start")
+      .eq("id", declarationId)
+      .maybeSingle();
+    if (!declaration || declaration.workspace_id !== workspaceId) {
+      return json({ error: "unknown declaration" }, 404);
+    }
+    if (declaration.status === "submitted") {
+      return json({ error: "already submitted" }, 409);
+    }
+    const bytes2 = Uint8Array.from(atob(content2), (c) => c.charCodeAt(0));
+    let outcome2: {
+      status: "accepted" | "rejected" | "failed";
+      externalId: string;
+      detail: string;
+    };
+    try {
+      outcome2 = await submitGeneric(
+        configFor(cfg, environment),
+        payload.file_name || `vat-${declaration.period_start}.pdf`,
+        payload.mime_type || "application/pdf",
+        bytes2,
+      );
+    } catch (error) {
+      outcome2 = {
+        status: "failed",
+        externalId: "",
+        detail: String(error).slice(0, 500),
+      };
+    }
+    if (outcome2.status === "accepted") {
+      await admin.from("vat_declarations").update({
+        status: "submitted",
+        submitted_at: new Date().toISOString(),
+        submitted_channel: "platform",
+        submitted_receipt:
+          (outcome2.externalId || outcome2.detail).slice(0, 500),
+      }).eq("id", declarationId);
+    }
+    return json({
+      status: outcome2.status,
+      external_id: outcome2.externalId,
+      detail: outcome2.detail,
+      environment,
+    }, outcome2.status === "accepted" ? 200 : 502);
   }
 
   const invoiceId = payload.invoice_id ?? "";
