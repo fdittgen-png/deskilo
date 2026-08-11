@@ -18,6 +18,7 @@ abstract class AccessoryRepository {
     required String name,
     int supplementCents = 0,
     int sortOrder = 0,
+    String vatRateId = '',
   });
 
   /// Owner/admin-only: partial update of name, supplement, active flag and
@@ -30,6 +31,7 @@ abstract class AccessoryRepository {
     int? supplementCents,
     bool? active,
     int? sortOrder,
+    String? vatRateId,
   });
 
   /// seat id → assigned accessory ids for the whole workspace (one fetch

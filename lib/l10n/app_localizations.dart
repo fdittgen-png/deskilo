@@ -5528,6 +5528,12 @@ abstract class AppLocalizations {
   /// **'Prices are gross — VAT {rate} (the workspace default rate) is included.'**
   String billingPricesVatHint(String rate);
 
+  /// Fee-band hint when the tariff carries its own configured rate (#542)
+  ///
+  /// In en, this message translates to:
+  /// **'Prices are gross — VAT {rate} (the tariff rate) is included.'**
+  String billingTariffVatHint(String rate);
+
   /// Title above the new-day-pack form on the billing screen (#537)
   ///
   /// In en, this message translates to:

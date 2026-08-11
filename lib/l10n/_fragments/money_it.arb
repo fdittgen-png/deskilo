@@ -191,6 +191,15 @@
       }
     }
   },
+  "billingTariffVatHint": "I prezzi sono lordi — IVA {rate} (aliquota delle tariffe) inclusa.",
+  "@billingTariffVatHint": {
+    "description": "Fee-band hint when the tariff carries its own configured rate (#542)",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
   "billingNewPackage": "Nuovo pacchetto",
   "@billingNewPackage": {
     "description": "Title above the new-day-pack form on the billing screen (#537)"

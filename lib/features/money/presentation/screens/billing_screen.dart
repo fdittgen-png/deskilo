@@ -96,6 +96,9 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
   /// rather than re-taxed.
   String _pkgVatRateId = '';
 
+  /// Unsaved tariff-rate pick (#542); null = show the stored one.
+  String? _tariffVatRateDraft;
+
   @override
   void initState() {
     super.initState();
@@ -321,22 +324,51 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
 
   // ---- build --------------------------------------------------------------
 
-  /// The workspace default VAT percent, or null when the regime charges
-  /// no VAT — the per-amount "incl. VAT x" helpers hang off it (#537).
-  double? get _defaultVatPercent {
+  /// The rate id the TARIFF (fee bands) taxes at: the unsaved pick, else
+  /// the workspace's stored choice; '' = the workspace default (#542).
+  String get _tariffVatRateId =>
+      _tariffVatRateDraft ??
+      ref.read(currentWorkspaceProvider).value?.subscriptionVatRateId ??
+      '';
+
+  /// The tariff's VAT percent, or null when the regime charges no VAT —
+  /// the per-amount "incl. VAT x" helpers hang off it (#537/#542).
+  double? get _tariffVatPercent {
     if (ref.read(currentWorkspaceProvider).value?.vatRegime !=
         'vat_registered') {
       return null;
     }
-    final rate = (ref.read(vatRatesProvider).value ?? const <VatRate>[])
-        .where((r) => r.isDefault && r.active)
-        .firstOrNull;
+    final rates = ref.read(vatRatesProvider).value ?? const <VatRate>[];
+    final chosen = _tariffVatRateId;
+    // An inactive/unknown chosen rate falls back to the default — the
+    // services resolution, mirrored server-side (0109).
+    final rate = (chosen.isEmpty
+            ? null
+            : rates.where((r) => r.id == chosen && r.active).firstOrNull) ??
+        rates.where((r) => r.isDefault && r.active).firstOrNull;
     return rate == null || rate.percent <= 0 ? null : rate.percent;
   }
 
-  /// "incl. VAT 41.67" for a gross amount at the default rate (#537).
+  /// Owner picked a tariff rate: persist immediately, like a toggle.
+  Future<void> _saveTariffVat(String vatRateId) async {
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    setState(() => _tariffVatRateDraft = vatRateId);
+    if (!await _run(
+      'tariff vat save failed',
+      () => ref
+          .read(workspaceRepositoryProvider)
+          .setSubscriptionVatRate(workspace.id, vatRateId),
+    )) {
+      return;
+    }
+    ref.invalidate(currentWorkspaceProvider);
+    _showSaved();
+  }
+
+  /// "incl. VAT 41.67" for a gross amount at the tariff rate (#537).
   String? _vatShare(AppLocalizations? l10n, int? cents) {
-    final percent = _defaultVatPercent;
+    final percent = _tariffVatPercent;
     if (percent == null || cents == null || cents <= 0) return null;
     final share = centsToMajor(vatSplit(cents, percent).vatCents);
     return l10n?.vatShareAmount(share) ?? 'incl. VAT $share';
@@ -430,23 +462,29 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           style: Theme.of(context).textTheme.titleMedium,
         ),
         // #537 — the one VAT fact this whole page's prices share: they
-        // are GROSS, taxed at the workspace's default rate.
+        // are GROSS, taxed at the tariff's rate (#542: configurable,
+        // default = the workspace default).
         Builder(builder: (context) {
           final chargesVat =
               ref.watch(currentWorkspaceProvider).value?.vatRegime ==
                   'vat_registered';
+          final tariffRateId = _tariffVatRateId;
           final rate = vatRateSuffix(
             chargesVat: chargesVat,
             rates: ref.watch(vatRatesProvider).value ?? const [],
-            vatRateId: '',
+            vatRateId: tariffRateId,
           );
           if (rate == null) return const SizedBox.shrink();
           return Padding(
             padding: const EdgeInsets.only(top: 2, bottom: 4),
             child: Text(
-              l10n?.billingPricesVatHint(rate) ??
-                  'Prices are gross — VAT $rate (the workspace default '
-                      'rate) is included.',
+              tariffRateId.isEmpty
+                  ? (l10n?.billingPricesVatHint(rate) ??
+                      'Prices are gross — VAT $rate (the workspace '
+                          'default rate) is included.')
+                  : (l10n?.billingTariffVatHint(rate) ??
+                      'Prices are gross — VAT $rate (the tariff rate) '
+                          'is included.'),
               key: const ValueKey('billing-vat-hint'),
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -464,6 +502,14 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               style: TextStyle(color: Theme.of(context).colorScheme.error),
             ),
           ),
+        // #542 — the rate the tariff amounts above tax at; saves on
+        // pick, like a toggle (the bands' Save covers the bands only).
+        VatRateField(
+          dropdownKey: const ValueKey('billing-tariff-vat'),
+          rates: ref.watch(vatRatesProvider).value ?? const [],
+          value: _tariffVatRateId,
+          onChanged: _saveTariffVat,
+        ),
         Row(
           children: [
             TextButton.icon(

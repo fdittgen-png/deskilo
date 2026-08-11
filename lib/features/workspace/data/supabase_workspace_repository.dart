@@ -119,6 +119,17 @@ class SupabaseWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setSubscriptionVatRate(
+    String workspaceId,
+    String vatRateId,
+  ) async {
+    // Owner-only via workspaces_update RLS, like the legal identity.
+    await _client.from('workspaces').update({
+      'subscription_vat_rate_id': vatRateId.isEmpty ? null : vatRateId,
+    }).eq('id', workspaceId);
+  }
+
+  @override
   Future<List<WorkspaceDocument>> fetchDocuments(String workspaceId) async {
     final rows = await _client
         .from('workspace_documents')
@@ -319,6 +330,8 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         city: row['city'] as String? ?? '',
         postalCode: row['postal_code'] as String? ?? '',
         vatAccount: row['vat_account'] as String? ?? '',
+        subscriptionVatRateId:
+            row['subscription_vat_rate_id'] as String? ?? '',
         invoiceLegal:
             row['invoice_legal'] as Map<String, dynamic>? ?? const {},
         defaultLocale: row['default_locale'] as String? ?? '',

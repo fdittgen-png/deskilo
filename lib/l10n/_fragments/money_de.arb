@@ -191,6 +191,15 @@
       }
     }
   },
+  "billingTariffVatHint": "Preise sind brutto — USt {rate} (Tarifsatz) ist enthalten.",
+  "@billingTariffVatHint": {
+    "description": "Fee-band hint when the tariff carries its own configured rate (#542)",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
   "billingNewPackage": "Neues Paket",
   "@billingNewPackage": {
     "description": "Title above the new-day-pack form on the billing screen (#537)"

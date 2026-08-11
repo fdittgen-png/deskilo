@@ -3049,6 +3049,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String billingTariffVatHint(String rate) {
+    return 'I prezzi sono lordi — IVA $rate (aliquota delle tariffe) inclusa.';
+  }
+
+  @override
   String get billingNewPackage => 'Nuovo pacchetto';
 
   @override

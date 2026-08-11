@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:io';
+
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +15,7 @@ import '../../helpers/mock_providers.dart';
 Future<FakeMoneyRepository> pumpBilling(
   WidgetTester tester, {
   FakeMoneyRepository? money,
+  FakeWorkspaceRepository? workspace,
 }) async {
   money ??= FakeMoneyRepository();
   // The editor stacks both sections; a taller surface keeps every control
@@ -20,7 +24,7 @@ Future<FakeMoneyRepository> pumpBilling(
   addTearDown(() => tester.binding.setSurfaceSize(null));
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(money: money),
+      overrides: standardTestOverrides(money: money, workspace: workspace),
       child: const DeskiloApp(),
     ),
   );
@@ -278,5 +282,61 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(money.packages.single.active, isFalse);
+  });
+
+  testWidgets(
+      'the tariff VAT rate is configurable (#542): picking a rate persists '
+      'it and re-prices the band VAT shares', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.workspaces[0] =
+        workspace.workspaces[0].copyWith(vatRegime: 'vat_registered');
+    final money = FakeMoneyRepository()
+      ..vatRates = [
+        const VatRate(
+            id: 'vat-1', label: 'Standard', percent: 20, isDefault: true),
+        const VatRate(id: 'vat-2', label: 'Reduced', percent: 10),
+      ];
+    await pumpBilling(tester, money: money, workspace: workspace);
+
+    // Default: the workspace default rate prices the bands (band-3 fee
+    // 250.00 gross → 41.67 VAT at 20 %).
+    expect(find.textContaining('(the workspace default'), findsOneWidget);
+    expect(find.textContaining('incl. VAT 41.67'), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('billing-tariff-vat')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Reduced (10 %)').last);
+    await tester.pumpAndSettle();
+
+    // Persisted on pick, and every band share re-prices at 10 %
+    // (250.00 gross → 22.73 VAT).
+    expect(workspace.workspaces[0].subscriptionVatRateId, 'vat-2');
+    expect(find.textContaining('(the tariff rate)'), findsOneWidget);
+    expect(find.textContaining('incl. VAT 22.73'), findsOneWidget);
+    expect(find.textContaining('incl. VAT 41.67'), findsNothing);
+  });
+
+  test(
+      'migration 0109 wires the configurable tariff/accessory rates into '
+      'the invoice', () {
+    final sql =
+        File('supabase/migrations/0109_configurable_tariff_accessory_vat.sql')
+            .readAsStringSync();
+    // The two new nullable rate columns (null = workspace default).
+    expect(sql, contains('alter table public.accessories'));
+    expect(sql, contains('alter table public.workspaces'));
+    expect(sql, contains('subscription_vat_rate_id'));
+    // The tariff resolution helper + its use for subscription/overage.
+    expect(sql, contains('workspace_tariff_vat_percent'));
+    expect(sql, contains("'vat_percent', v_tariff,"));
+    // The statement's per-rate accessory breakdown feeds one invoice
+    // line per rate.
+    expect(sql, contains("'accessory_supplement_by_rate', v_supp_by_rate"));
+    expect(sql, contains("jsonb_array_elements(v_stmt->'accessory_supplement_by_rate')"));
+    // Both regenerated functions stay locked away from clients.
+    expect(sql,
+        contains('revoke execute on function public.member_statement'));
+    expect(sql,
+        contains('revoke execute on function public.invoice_lines_for'));
   });
 }

@@ -14,7 +14,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Accessory {
 
- String get id; String get workspaceId; String get name; int get supplementCents; bool get active; int get sortOrder;
+ String get id; String get workspaceId; String get name; int get supplementCents; bool get active; int get sortOrder;/// The accessory's own VAT rate (#542), or '' for the workspace
+/// default — the services/packages resolution.
+ String get vatRateId;
 /// Create a copy of Accessory
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +27,16 @@ $AccessoryCopyWith<Accessory> get copyWith => _$AccessoryCopyWithImpl<Accessory>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Accessory&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.supplementCents, supplementCents) || other.supplementCents == supplementCents)&&(identical(other.active, active) || other.active == active)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Accessory&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.supplementCents, supplementCents) || other.supplementCents == supplementCents)&&(identical(other.active, active) || other.active == active)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder)&&(identical(other.vatRateId, vatRateId) || other.vatRateId == vatRateId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,name,supplementCents,active,sortOrder);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,name,supplementCents,active,sortOrder,vatRateId);
 
 @override
 String toString() {
-  return 'Accessory(id: $id, workspaceId: $workspaceId, name: $name, supplementCents: $supplementCents, active: $active, sortOrder: $sortOrder)';
+  return 'Accessory(id: $id, workspaceId: $workspaceId, name: $name, supplementCents: $supplementCents, active: $active, sortOrder: $sortOrder, vatRateId: $vatRateId)';
 }
 
 
@@ -45,7 +47,7 @@ abstract mixin class $AccessoryCopyWith<$Res>  {
   factory $AccessoryCopyWith(Accessory value, $Res Function(Accessory) _then) = _$AccessoryCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, String name, int supplementCents, bool active, int sortOrder
+ String id, String workspaceId, String name, int supplementCents, bool active, int sortOrder, String vatRateId
 });
 
 
@@ -62,7 +64,7 @@ class _$AccessoryCopyWithImpl<$Res>
 
 /// Create a copy of Accessory
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? supplementCents = null,Object? active = null,Object? sortOrder = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? supplementCents = null,Object? active = null,Object? sortOrder = null,Object? vatRateId = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -70,7 +72,8 @@ as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non
 as String,supplementCents: null == supplementCents ? _self.supplementCents : supplementCents // ignore: cast_nullable_to_non_nullable
 as int,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
 as bool,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
-as int,
+as int,vatRateId: null == vatRateId ? _self.vatRateId : vatRateId // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -152,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int supplementCents,  bool active,  int sortOrder)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int supplementCents,  bool active,  int sortOrder,  String vatRateId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Accessory() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.name,_that.supplementCents,_that.active,_that.sortOrder);case _:
+return $default(_that.id,_that.workspaceId,_that.name,_that.supplementCents,_that.active,_that.sortOrder,_that.vatRateId);case _:
   return orElse();
 
 }
@@ -173,10 +176,10 @@ return $default(_that.id,_that.workspaceId,_that.name,_that.supplementCents,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int supplementCents,  bool active,  int sortOrder)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int supplementCents,  bool active,  int sortOrder,  String vatRateId)  $default,) {final _that = this;
 switch (_that) {
 case _Accessory():
-return $default(_that.id,_that.workspaceId,_that.name,_that.supplementCents,_that.active,_that.sortOrder);}
+return $default(_that.id,_that.workspaceId,_that.name,_that.supplementCents,_that.active,_that.sortOrder,_that.vatRateId);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -190,10 +193,10 @@ return $default(_that.id,_that.workspaceId,_that.name,_that.supplementCents,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String name,  int supplementCents,  bool active,  int sortOrder)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String name,  int supplementCents,  bool active,  int sortOrder,  String vatRateId)?  $default,) {final _that = this;
 switch (_that) {
 case _Accessory() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.name,_that.supplementCents,_that.active,_that.sortOrder);case _:
+return $default(_that.id,_that.workspaceId,_that.name,_that.supplementCents,_that.active,_that.sortOrder,_that.vatRateId);case _:
   return null;
 
 }
@@ -205,7 +208,7 @@ return $default(_that.id,_that.workspaceId,_that.name,_that.supplementCents,_tha
 
 
 class _Accessory implements Accessory {
-  const _Accessory({required this.id, required this.workspaceId, required this.name, required this.supplementCents, required this.active, required this.sortOrder});
+  const _Accessory({required this.id, required this.workspaceId, required this.name, required this.supplementCents, required this.active, required this.sortOrder, this.vatRateId = ''});
   
 
 @override final  String id;
@@ -214,6 +217,9 @@ class _Accessory implements Accessory {
 @override final  int supplementCents;
 @override final  bool active;
 @override final  int sortOrder;
+/// The accessory's own VAT rate (#542), or '' for the workspace
+/// default — the services/packages resolution.
+@override@JsonKey() final  String vatRateId;
 
 /// Create a copy of Accessory
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +231,16 @@ _$AccessoryCopyWith<_Accessory> get copyWith => __$AccessoryCopyWithImpl<_Access
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Accessory&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.supplementCents, supplementCents) || other.supplementCents == supplementCents)&&(identical(other.active, active) || other.active == active)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Accessory&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.supplementCents, supplementCents) || other.supplementCents == supplementCents)&&(identical(other.active, active) || other.active == active)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder)&&(identical(other.vatRateId, vatRateId) || other.vatRateId == vatRateId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,name,supplementCents,active,sortOrder);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,name,supplementCents,active,sortOrder,vatRateId);
 
 @override
 String toString() {
-  return 'Accessory(id: $id, workspaceId: $workspaceId, name: $name, supplementCents: $supplementCents, active: $active, sortOrder: $sortOrder)';
+  return 'Accessory(id: $id, workspaceId: $workspaceId, name: $name, supplementCents: $supplementCents, active: $active, sortOrder: $sortOrder, vatRateId: $vatRateId)';
 }
 
 
@@ -245,7 +251,7 @@ abstract mixin class _$AccessoryCopyWith<$Res> implements $AccessoryCopyWith<$Re
   factory _$AccessoryCopyWith(_Accessory value, $Res Function(_Accessory) _then) = __$AccessoryCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, String name, int supplementCents, bool active, int sortOrder
+ String id, String workspaceId, String name, int supplementCents, bool active, int sortOrder, String vatRateId
 });
 
 
@@ -262,7 +268,7 @@ class __$AccessoryCopyWithImpl<$Res>
 
 /// Create a copy of Accessory
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? supplementCents = null,Object? active = null,Object? sortOrder = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? supplementCents = null,Object? active = null,Object? sortOrder = null,Object? vatRateId = null,}) {
   return _then(_Accessory(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -270,7 +276,8 @@ as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non
 as String,supplementCents: null == supplementCents ? _self.supplementCents : supplementCents // ignore: cast_nullable_to_non_nullable
 as int,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
 as bool,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
-as int,
+as int,vatRateId: null == vatRateId ? _self.vatRateId : vatRateId // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

@@ -63,6 +63,7 @@ class FakeAccessoryRepository implements AccessoryRepository {
     required String name,
     int supplementCents = 0,
     int sortOrder = 0,
+    String vatRateId = '',
   }) async {
     if (accessories
         .any((a) => a.workspaceId == workspaceId && a.name == name)) {
@@ -75,6 +76,7 @@ class FakeAccessoryRepository implements AccessoryRepository {
       supplementCents: supplementCents,
       active: true,
       sortOrder: sortOrder,
+      vatRateId: vatRateId,
     );
     accessories.add(accessory);
     return accessory;
@@ -87,6 +89,7 @@ class FakeAccessoryRepository implements AccessoryRepository {
     int? supplementCents,
     bool? active,
     int? sortOrder,
+    String? vatRateId,
   }) async {
     final i = accessories.indexWhere((a) => a.id == accessoryId);
     if (i < 0) throw StateError('unknown accessory $accessoryId');
@@ -97,6 +100,7 @@ class FakeAccessoryRepository implements AccessoryRepository {
     }
     if (active != null) updated = updated.copyWith(active: active);
     if (sortOrder != null) updated = updated.copyWith(sortOrder: sortOrder);
+    if (vatRateId != null) updated = updated.copyWith(vatRateId: vatRateId);
     accessories[i] = updated;
     return updated;
   }

@@ -3024,6 +3024,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String billingTariffVatHint(String rate) {
+    return 'Prices are gross — VAT $rate (the tariff rate) is included.';
+  }
+
+  @override
   String get billingNewPackage => 'New package';
 
   @override

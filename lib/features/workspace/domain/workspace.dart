@@ -86,6 +86,10 @@ sealed class Workspace with _$Workspace {
     /// app books nothing itself.
     @Default('') String vatAccount,
 
+    /// The subscription tariff's VAT rate (#542, 0109) — fee bands and
+    /// overage tax at this rate; '' = the workspace default rate.
+    @Default('') String subscriptionVatRateId,
+
     /// Desk fill opacity percentage (0040): 100 = solid (default), lower
     /// makes desks translucent so a level's background photo shows through.
     /// Clamped 20..100 by the column check.

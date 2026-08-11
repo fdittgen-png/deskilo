@@ -9,7 +9,9 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../money/domain/vat_rate.dart';
 import '../../../money/presentation/vat_price_label.dart';
+import '../../../money/presentation/widgets/vat_rate_field.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/accessory.dart';
@@ -34,7 +36,10 @@ class AccessoriesScreen extends ConsumerWidget {
     final result = await showModalBottomSheet<_AccessoryDraft>(
       context: context,
       isScrollControlled: true,
-      builder: (context) => _AccessorySheet(accessory: accessory),
+      builder: (context) => _AccessorySheet(
+        accessory: accessory,
+        rates: ref.read(vatRatesProvider).value ?? const [],
+      ),
     );
     if (result == null || !context.mounted) return;
 
@@ -62,6 +67,7 @@ class AccessoriesScreen extends ConsumerWidget {
             name: result.name,
             supplementCents: result.supplementCents,
             sortOrder: nextSortOrder,
+            vatRateId: result.vatRateId,
           );
         } else {
           await repo.updateAccessory(
@@ -69,6 +75,7 @@ class AccessoriesScreen extends ConsumerWidget {
             name: result.name,
             supplementCents: result.supplementCents,
             active: result.active,
+            vatRateId: result.vatRateId,
           );
         }
       },
@@ -88,15 +95,12 @@ class AccessoriesScreen extends ConsumerWidget {
     );
     final inactiveColor = Theme.of(context).disabledColor;
 
-    // #537 — supplements bill at the WORKSPACE DEFAULT rate (0095's
-    // statement path), so the rows name it like every other price.
-    final vatRate = vatRateSuffix(
-      chargesVat:
-          ref.watch(currentWorkspaceProvider).value?.vatRegime ==
-              'vat_registered',
-      rates: ref.watch(vatRatesProvider).value ?? const [],
-      vatRateId: '',
-    );
+    // #537/#542 — each row names the rate ITS supplement carries: the
+    // accessory's own rate, or the workspace default when it has none.
+    final chargesVat =
+        ref.watch(currentWorkspaceProvider).value?.vatRegime ==
+            'vat_registered';
+    final vatRates = ref.watch(vatRatesProvider).value ?? const <VatRate>[];
 
     String supplementLabel(Accessory accessory) {
       if (accessory.supplementCents == 0) {
@@ -105,6 +109,11 @@ class AccessoriesScreen extends ConsumerWidget {
       final amount = currency.format(accessory.supplementCents / 100);
       final base =
           l10n?.accessoriesPerHalfDay(amount) ?? '$amount / half-day';
+      final vatRate = vatRateSuffix(
+        chargesVat: chargesVat,
+        rates: vatRates,
+        vatRateId: accessory.vatRateId,
+      );
       if (vatRate == null) return base;
       return '$base · ${l10n?.priceVatIncluded(vatRate) ?? 'incl. VAT $vatRate'}';
     }
@@ -166,17 +175,20 @@ class _AccessoryDraft {
     required this.name,
     required this.supplementCents,
     required this.active,
+    required this.vatRateId,
   });
 
   final String name;
   final int supplementCents;
   final bool active;
+  final String vatRateId;
 }
 
 class _AccessorySheet extends StatefulWidget {
-  const _AccessorySheet({this.accessory});
+  const _AccessorySheet({this.accessory, this.rates = const []});
 
   final Accessory? accessory;
+  final List<VatRate> rates;
 
   @override
   State<_AccessorySheet> createState() => _AccessorySheetState();
@@ -186,6 +198,7 @@ class _AccessorySheetState extends State<_AccessorySheet> {
   late final TextEditingController _name;
   late final TextEditingController _supplement;
   late bool _active;
+  late String _vatRateId;
 
   @override
   void initState() {
@@ -196,6 +209,7 @@ class _AccessorySheetState extends State<_AccessorySheet> {
       text: accessory == null ? '' : centsToMajor(accessory.supplementCents),
     );
     _active = accessory?.active ?? true;
+    _vatRateId = accessory?.vatRateId ?? '';
   }
 
   @override
@@ -214,6 +228,7 @@ class _AccessorySheetState extends State<_AccessorySheet> {
         name: name,
         supplementCents: supplement,
         active: _active,
+        vatRateId: _vatRateId,
       ),
     );
   }
@@ -260,6 +275,12 @@ class _AccessorySheetState extends State<_AccessorySheet> {
               helperText: l10n?.priceGrossHint ??
                   'Gross price — what the member pays; VAT is part of it.',
             ),
+          ),
+          // #542 — per-accessory rate, defaulted to the workspace default.
+          VatRateField(
+            rates: widget.rates,
+            value: _vatRateId,
+            onChanged: (id) => setState(() => _vatRateId = id),
           ),
           if (widget.accessory != null)
             SwitchListTile(

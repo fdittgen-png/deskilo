@@ -22,9 +22,14 @@ class VatRateField extends ConsumerWidget {
     required this.rates,
     required this.value,
     required this.onChanged,
+    this.dropdownKey = const ValueKey('vat-rate-field'),
   });
 
   final List<VatRate> rates;
+
+  /// Key of the inner dropdown — override when two pickers share a
+  /// screen (#542: the billing page has the pack AND the tariff one).
+  final Key dropdownKey;
 
   /// A rate id, or '' for the workspace default.
   final String value;
@@ -43,7 +48,7 @@ class VatRateField extends ConsumerWidget {
     // re-taxing it here.
     final known = rates.any((rate) => rate.id == value);
     return DropdownButtonFormField<String>(
-      key: const ValueKey('vat-rate-field'),
+      key: dropdownKey,
       initialValue: known ? value : '',
       decoration: InputDecoration(
         labelText: l10n?.vatServiceRate ?? 'VAT rate',
