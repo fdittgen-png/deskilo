@@ -66,5 +66,13 @@
   "whatsappNotesUnconfigured": "Der WhatsApp-Kanal des Space ist noch nicht konfiguriert (Inhaber: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — bis dahin kommen Nachrichten nur in der App und per Push an.",
   "@whatsappNotesUnconfigured": {
     "description": "Warning under the WhatsApp-mirror opt-in switch when the server channel lacks its secrets (#538)"
+  },
+  "notesFilterUnread": "Ungelesen",
+  "@notesFilterUnread": {
+    "description": "Messages-inbox filter chip showing only unread messages (#539)"
+  },
+  "notesFilterEmpty": "Keine ungelesenen Nachrichten — alles gelesen.",
+  "@notesFilterEmpty": {
+    "description": "Empty state of the unread filter (#539)"
   }
 }

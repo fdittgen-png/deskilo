@@ -647,21 +647,77 @@ final class WhatsappMirrorConfiguredProvider
 String _$whatsappMirrorConfiguredHash() =>
     r'005a0bd836786924e17deb216fff00286acc5a38';
 
-/// Unread member notes (#464): notes from someone else, newer than the
-/// device's SEEN stamp — the bell and the app-icon badge count them,
-/// the Events screen clears them on open.
+/// The ids of my UNREAD received notes (#539): a direct note is unread
+/// until its read receipt lands (0105 — stamped when its CONVERSATION
+/// opens, 0108); a broadcast has no per-reader server state, so it
+/// counts until the Events screen has been opened (the device stamp).
+/// Rows bold on it, the bell counts it, the Unread filter shows it.
+
+@ProviderFor(unreadNoteIds)
+final unreadNoteIdsProvider = UnreadNoteIdsProvider._();
+
+/// The ids of my UNREAD received notes (#539): a direct note is unread
+/// until its read receipt lands (0105 — stamped when its CONVERSATION
+/// opens, 0108); a broadcast has no per-reader server state, so it
+/// counts until the Events screen has been opened (the device stamp).
+/// Rows bold on it, the bell counts it, the Unread filter shows it.
+
+final class UnreadNoteIdsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Set<String>>,
+          Set<String>,
+          FutureOr<Set<String>>
+        >
+    with $FutureModifier<Set<String>>, $FutureProvider<Set<String>> {
+  /// The ids of my UNREAD received notes (#539): a direct note is unread
+  /// until its read receipt lands (0105 — stamped when its CONVERSATION
+  /// opens, 0108); a broadcast has no per-reader server state, so it
+  /// counts until the Events screen has been opened (the device stamp).
+  /// Rows bold on it, the bell counts it, the Unread filter shows it.
+  UnreadNoteIdsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'unreadNoteIdsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$unreadNoteIdsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Set<String>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Set<String>> create(Ref ref) {
+    return unreadNoteIds(ref);
+  }
+}
+
+String _$unreadNoteIdsHash() => r'6edef797a043bcafc79a7a635c8b1695fbca352f';
+
+/// Unread member notes (#464, reworked #539): the bell and the
+/// app-icon badge count [unreadNoteIds]. Direct notes clear when their
+/// conversation is opened; broadcasts when the Events screen is.
 
 @ProviderFor(UnreadNoteCount)
 final unreadNoteCountProvider = UnreadNoteCountProvider._();
 
-/// Unread member notes (#464): notes from someone else, newer than the
-/// device's SEEN stamp — the bell and the app-icon badge count them,
-/// the Events screen clears them on open.
+/// Unread member notes (#464, reworked #539): the bell and the
+/// app-icon badge count [unreadNoteIds]. Direct notes clear when their
+/// conversation is opened; broadcasts when the Events screen is.
 final class UnreadNoteCountProvider
     extends $AsyncNotifierProvider<UnreadNoteCount, int> {
-  /// Unread member notes (#464): notes from someone else, newer than the
-  /// device's SEEN stamp — the bell and the app-icon badge count them,
-  /// the Events screen clears them on open.
+  /// Unread member notes (#464, reworked #539): the bell and the
+  /// app-icon badge count [unreadNoteIds]. Direct notes clear when their
+  /// conversation is opened; broadcasts when the Events screen is.
   UnreadNoteCountProvider._()
     : super(
         from: null,
@@ -681,11 +737,11 @@ final class UnreadNoteCountProvider
   UnreadNoteCount create() => UnreadNoteCount();
 }
 
-String _$unreadNoteCountHash() => r'789d8adb96c69869332060b5cce72553970bf210';
+String _$unreadNoteCountHash() => r'cce3ecd7115d752d28443cfe63bd94fde8b2dfa3';
 
-/// Unread member notes (#464): notes from someone else, newer than the
-/// device's SEEN stamp — the bell and the app-icon badge count them,
-/// the Events screen clears them on open.
+/// Unread member notes (#464, reworked #539): the bell and the
+/// app-icon badge count [unreadNoteIds]. Direct notes clear when their
+/// conversation is opened; broadcasts when the Events screen is.
 
 abstract class _$UnreadNoteCount extends $AsyncNotifier<int> {
   FutureOr<int> build();

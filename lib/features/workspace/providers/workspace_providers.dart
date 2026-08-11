@@ -172,47 +172,74 @@ Future<List<MemberNote>> myNotes(Ref ref) async {
 Future<bool> whatsappMirrorConfigured(Ref ref) =>
     ref.watch(workspaceRepositoryProvider).fetchWhatsappMirrorConfigured();
 
-/// Unread member notes (#464): notes from someone else, newer than the
-/// device's SEEN stamp — the bell and the app-icon badge count them,
-/// the Events screen clears them on open.
+/// The ids of my UNREAD received notes (#539): a direct note is unread
+/// until its read receipt lands (0105 — stamped when its CONVERSATION
+/// opens, 0108); a broadcast has no per-reader server state, so it
+/// counts until the Events screen has been opened (the device stamp).
+/// Rows bold on it, the bell counts it, the Unread filter shows it.
+@Riverpod(keepAlive: true)
+Future<Set<String>> unreadNoteIds(Ref ref) async {
+  final me = await ref.watch(myMemberProvider.future);
+  final notes = await ref.watch(myNotesProvider.future);
+  final seen = await ref.watch(noteSeenStoreProvider).readSeen();
+  return {
+    for (final n in notes)
+      if (n.fromMemberId != me?.id &&
+          (n.isBroadcast
+              ? (seen == null || n.createdAt.isAfter(seen))
+              : n.readAt == null))
+        n.id,
+  };
+}
+
+/// Unread member notes (#464, reworked #539): the bell and the
+/// app-icon badge count [unreadNoteIds]. Direct notes clear when their
+/// conversation is opened; broadcasts when the Events screen is.
 @Riverpod(keepAlive: true)
 class UnreadNoteCount extends _$UnreadNoteCount {
   @override
-  Future<int> build() async {
-    final me = await ref.watch(myMemberProvider.future);
-    final notes = await ref.watch(myNotesProvider.future);
-    final seen = await ref.watch(noteSeenStoreProvider).readSeen();
-    return notes
-        .where((n) =>
-            n.fromMemberId != me?.id &&
-            (seen == null || n.createdAt.isAfter(seen)))
-        .length;
-  }
+  Future<int> build() async =>
+      (await ref.watch(unreadNoteIdsProvider.future)).length;
 
-  /// The Events screen was opened — everything currently loaded counts
-  /// as read.
+  /// The Events screen was opened — BROADCASTS count as read (they
+  /// have no per-reader server state); direct notes stay visibly
+  /// unread until their conversation opens (#539).
   Future<void> markAllSeen() async {
     final notes = await ref.read(myNotesProvider.future);
     if (notes.isEmpty) return;
     // Newest first (repository order) — the first entry is the stamp.
     await ref.read(noteSeenStoreProvider).writeSeen(notes.first.createdAt);
-    ref.invalidateSelf();
-    // Read receipts (0105): stamp my unread notes server-side so the
-    // sender's grey check turns blue (their realtime refetch shows it).
-    // Best-effort — reading messages must never fail on a network blip.
+    ref
+      ..invalidate(unreadNoteIdsProvider)
+      ..invalidateSelf();
+  }
+
+  /// A conversation was opened: read receipts for THAT exchange only
+  /// (0108) — the sender's grey check turns blue, the rows un-bold.
+  /// Best-effort — reading messages must never fail on a network blip.
+  Future<void> markConversationRead(String fromMemberId) async {
     final me = await ref.read(myMemberProvider.future);
     final workspace = await ref.read(currentWorkspaceProvider.future);
+    final notes = await ref.read(myNotesProvider.future);
     final unread = workspace != null &&
-        notes.any((n) => n.toMemberId == me?.id && n.readAt == null);
+        notes.any((n) =>
+            n.fromMemberId == fromMemberId &&
+            n.toMemberId == me?.id &&
+            n.readAt == null);
     if (!unread) return;
     try {
       await ref
           .read(workspaceRepositoryProvider)
-          .markMyNotesRead(workspace.id);
+          .markMyNotesRead(workspace.id, fromMemberId: fromMemberId);
     } catch (e, st) {
-      TraceLogger.instance
-          .error('workspace', 'mark notes read failed', error: e, stackTrace: st);
+      TraceLogger.instance.error('workspace', 'mark conversation read failed',
+          error: e, stackTrace: st);
+      return;
     }
+    ref
+      ..invalidate(myNotesProvider)
+      ..invalidate(unreadNoteIdsProvider)
+      ..invalidateSelf();
   }
 }
 

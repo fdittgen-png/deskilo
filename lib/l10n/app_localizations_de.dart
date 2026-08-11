@@ -2769,6 +2769,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der WhatsApp-Kanal des Space ist noch nicht konfiguriert (Inhaber: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — bis dahin kommen Nachrichten nur in der App und per Push an.';
 
   @override
+  String get notesFilterUnread => 'Ungelesen';
+
+  @override
+  String get notesFilterEmpty =>
+      'Keine ungelesenen Nachrichten — alles gelesen.';
+
+  @override
   String get moneyBaseFee => 'Basis-Abo';
 
   @override
@@ -3050,6 +3057,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get priceGrossHint =>
       'Bruttopreis — was das Mitglied zahlt; die USt steckt darin.';
+
+  @override
+  String vatShareAmount(String amount) {
+    return 'inkl. USt $amount';
+  }
 
   @override
   String get planNoLevels => 'Der Workspace hat noch keinen Plan.';

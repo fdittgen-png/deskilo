@@ -238,11 +238,30 @@ void main() {
       findsOneWidget,
     );
 
-    // …until the Events surface is opened, which reads it.
+    // …opening Events shows it (and stamps the broadcast-seen store)
+    // but a DIRECT note stays unread until its CONVERSATION opens
+    // (#539) — the bell keeps counting it.
     await tester.tap(find.byTooltip('Events'));
     await tester.pumpAndSettle();
     expect(find.text('Your desk lamp is still on!'), findsOneWidget);
     expect(noteSeen.seen, DateTime.utc(2026, 8, 4, 9));
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(
+      find.descendant(
+        of: find.byTooltip('Events'),
+        matching: find.text('1'),
+      ),
+      findsOneWidget,
+    );
+
+    // Opening the conversation reads it — NOW the bell clears.
+    await tester.tap(find.byTooltip('Events'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('note-dismiss-note-offline')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.close));
+    await tester.pumpAndSettle();
     await tester.pageBack();
     await tester.pumpAndSettle();
     expect(

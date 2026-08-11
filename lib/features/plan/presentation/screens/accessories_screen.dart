@@ -9,6 +9,8 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../money/presentation/vat_price_label.dart';
+import '../../../money/providers/money_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/accessory.dart';
 import '../../providers/accessory_providers.dart';
@@ -86,12 +88,25 @@ class AccessoriesScreen extends ConsumerWidget {
     );
     final inactiveColor = Theme.of(context).disabledColor;
 
+    // #537 — supplements bill at the WORKSPACE DEFAULT rate (0095's
+    // statement path), so the rows name it like every other price.
+    final vatRate = vatRateSuffix(
+      chargesVat:
+          ref.watch(currentWorkspaceProvider).value?.vatRegime ==
+              'vat_registered',
+      rates: ref.watch(vatRatesProvider).value ?? const [],
+      vatRateId: '',
+    );
+
     String supplementLabel(Accessory accessory) {
       if (accessory.supplementCents == 0) {
         return l10n?.accessoriesNoSupplement ?? 'No supplement';
       }
       final amount = currency.format(accessory.supplementCents / 100);
-      return l10n?.accessoriesPerHalfDay(amount) ?? '$amount / half-day';
+      final base =
+          l10n?.accessoriesPerHalfDay(amount) ?? '$amount / half-day';
+      if (vatRate == null) return base;
+      return '$base · ${l10n?.priceVatIncluded(vatRate) ?? 'incl. VAT $vatRate'}';
     }
 
     return Scaffold(
@@ -241,6 +256,9 @@ class _AccessorySheetState extends State<_AccessorySheet> {
             decoration: InputDecoration(
               labelText:
                   l10n?.accessoriesSupplement ?? 'Supplement per half-day',
+              // #537 — gross, like every DesKilo price.
+              helperText: l10n?.priceGrossHint ??
+                  'Gross price — what the member pays; VAT is part of it.',
             ),
           ),
           if (widget.accessory != null)

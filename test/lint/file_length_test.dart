@@ -117,7 +117,9 @@ const Map<String, int> _baseline = {
   'lib/features/money/data/supabase_money_repository.dart': 980,
   // 600→630 (2026-08-11): #537 VAT price transparency — the gross-price
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
-  'lib/features/money/presentation/screens/billing_screen.dart': 630,
+  // 630→660 (2026-08-11): #537 follow-up — live VAT-share helpers under
+  // the band amount fields (default-rate resolver + helper text).
+  'lib/features/money/presentation/screens/billing_screen.dart': 660,
   // 750→880 (2026-08-05): #510 the month-invoice card + settlement-
   // driven balance footer (the invoice decides settled/outstanding).
   'lib/features/money/presentation/widgets/bill_view.dart': 880,

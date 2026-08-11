@@ -385,5 +385,14 @@
   "priceGrossHint": "Gross price — what the member pays; VAT is part of it.",
   "@priceGrossHint": {
     "description": "Helper under price inputs clarifying gross-inclusive pricing (#537)"
+  },
+  "vatShareAmount": "incl. VAT {amount}",
+  "@vatShareAmount": {
+    "description": "Helper under an amount field: the VAT share contained in the gross amount (#537)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

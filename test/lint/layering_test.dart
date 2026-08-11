@@ -73,6 +73,10 @@ const Set<String> _knownPairs = {
   'reservations -> events',
   'reservations -> members',
   'reservations -> money',
+  // #537 (2026-08-11): accessory supplements are PRICED — the plan's
+  // accessories screen names the workspace default VAT rate on its
+  // rows, via money's vat_price_label + vatRatesProvider.
+  'plan -> money',
   'reservations -> plan',
   'reservations -> workspace',
   'workspace -> auth',

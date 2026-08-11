@@ -198,5 +198,14 @@
   "priceGrossHint": "Precio bruto — lo que paga el miembro; el IVA está dentro.",
   "@priceGrossHint": {
     "description": "Helper under price inputs clarifying gross-inclusive pricing (#537)"
+  },
+  "vatShareAmount": "IVA incl. {amount}",
+  "@vatShareAmount": {
+    "description": "Helper under an amount field: the VAT share contained in the gross amount (#537)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

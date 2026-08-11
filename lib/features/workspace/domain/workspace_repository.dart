@@ -309,9 +309,10 @@ abstract class WorkspaceRepository {
   /// recipient; received broadcasts are refused server-side.
   Future<void> deleteMemberNote(String noteId);
 
-  /// Stamps every unread note ADDRESSED TO ME as read (0105) — called
-  /// when the messages surface opens; senders see the check turn blue.
-  Future<void> markMyNotesRead(String workspaceId);
+  /// Stamps unread notes ADDRESSED TO ME as read (0105/0108). With
+  /// [fromMemberId] only that sender's notes — opening a conversation
+  /// reads that exchange, nothing else. Senders see the check turn blue.
+  Future<void> markMyNotesRead(String workspaceId, {String? fromMemberId});
 
   /// Whether the WhatsApp message-mirror channel (0106) is actually
   /// configured server-side (WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — the

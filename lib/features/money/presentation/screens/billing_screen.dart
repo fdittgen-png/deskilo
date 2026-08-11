@@ -12,6 +12,7 @@ import '../../domain/fee_band.dart';
 import '../../domain/package.dart';
 import '../../domain/subscription_levels.dart';
 import '../../providers/money_providers.dart';
+import '../../domain/vat_rate.dart';
 import '../vat_price_label.dart';
 import '../widgets/vat_rate_field.dart';
 
@@ -320,6 +321,27 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
 
   // ---- build --------------------------------------------------------------
 
+  /// The workspace default VAT percent, or null when the regime charges
+  /// no VAT — the per-amount "incl. VAT x" helpers hang off it (#537).
+  double? get _defaultVatPercent {
+    if (ref.read(currentWorkspaceProvider).value?.vatRegime !=
+        'vat_registered') {
+      return null;
+    }
+    final rate = (ref.read(vatRatesProvider).value ?? const <VatRate>[])
+        .where((r) => r.isDefault && r.active)
+        .firstOrNull;
+    return rate == null || rate.percent <= 0 ? null : rate.percent;
+  }
+
+  /// "incl. VAT 41.67" for a gross amount at the default rate (#537).
+  String? _vatShare(AppLocalizations? l10n, int? cents) {
+    final percent = _defaultVatPercent;
+    if (percent == null || cents == null || cents <= 0) return null;
+    final share = centsToMajor(vatSplit(cents, percent).vatCents);
+    return l10n?.vatShareAmount(share) ?? 'incl. VAT $share';
+  }
+
   Widget _bandRow(AppLocalizations? l10n, int index) {
     final draft = _bands[index];
     final isLast = index == _bands.length - 1;
@@ -360,8 +382,11 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
                   const TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
                 labelText: l10n?.billingBandFee ?? 'Monthly fee',
+                helperText: _vatShare(l10n, draft.feeCents),
               ),
-              onChanged: (raw) => draft.feeCents = parseCentsInput(raw),
+              // setState so the VAT-share helper tracks the amount live.
+              onChanged: (raw) => setState(
+                  () => draft.feeCents = parseCentsInput(raw)),
             ),
           ),
           const SizedBox(width: 8),
@@ -372,8 +397,10 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
                   const TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
                 labelText: l10n?.billingBandOverage ?? 'Overage',
+                helperText: _vatShare(l10n, draft.overageCents),
               ),
-              onChanged: (raw) => draft.overageCents = parseCentsInput(raw),
+              onChanged: (raw) => setState(
+                  () => draft.overageCents = parseCentsInput(raw)),
             ),
           ),
           if (isLast)
