@@ -164,7 +164,8 @@ const Map<String, int> _baseline = {
   // 790→800 (2026-08-11): #538 the WhatsApp-mirror config probe (one
   // functions.invoke method — same data client, no new concern).
   // 800→820 (2026-08-11): #542 setSubscriptionVatRate.
-  'lib/features/workspace/data/supabase_workspace_repository.dart': 820,
+  // 820→840 (2026-08-12): #552 setWhatsappChannel + workspace-scoped probe.
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 840,
   // 770→790 (2026-08-06): #513 setRolePermissions + role_permissions row.
   // 630→640 (2026-08-10): two-dot month markers (mine + others per day)
   // — a dozen lines of dot layout, no new concern worth a split.

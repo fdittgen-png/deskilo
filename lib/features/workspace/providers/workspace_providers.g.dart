@@ -645,7 +645,7 @@ final class WhatsappMirrorConfiguredProvider
 }
 
 String _$whatsappMirrorConfiguredHash() =>
-    r'005a0bd836786924e17deb216fff00286acc5a38';
+    r'194d098b1e669d644927d33f816473fa64ae42ab';
 
 /// The ids of my UNREAD received notes (#539): a direct note is unread
 /// until its read receipt lands (0105 — stamped when its CONVERSATION

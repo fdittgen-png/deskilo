@@ -2757,14 +2757,42 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get whatsappNotesSubtitle =>
-      'I messaggi dei membri arrivano anche su WhatsApp, con i loro link — il link DesKilo apre la conversazione nell’app.';
+      'I messaggi dei membri arrivano anche su WhatsApp.';
 
   @override
   String get messageLinkGone => 'Questo messaggio è nella tua casella.';
 
   @override
   String get whatsappNotesUnconfigured =>
-      'Il canale WhatsApp dello spazio non è ancora configurato (proprietario: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — fino ad allora i messaggi arrivano solo in-app e via push.';
+      'Canale non configurato — i messaggi arrivano solo in app e via push.';
+
+  @override
+  String get whatsappChannelTitle => 'Canale WhatsApp';
+
+  @override
+  String get whatsappChannelConfigured =>
+      'Canale configurato — i messaggi arrivano anche su WhatsApp, con i loro link; il link DesKilo apre la conversazione nell\'app.';
+
+  @override
+  String get whatsappChannelNotConfigured =>
+      'Non configurato — i messaggi arrivano solo in app e via push.';
+
+  @override
+  String get whatsappChannelHelp =>
+      '1. Crea un\'app (gratuita) su developers.facebook.com e aggiungi il prodotto WhatsApp.\n2. In WhatsApp → Configurazione API, copia il token di accesso permanente e l\'ID del numero di telefono.\n3. Incolla entrambi qui sotto — i messaggi dei membri partono da quel numero.\nNota: WhatsApp consegna solo entro 24 h dall\'ultimo messaggio WhatsApp del destinatario al tuo numero (la sua finestra di servizio).';
+
+  @override
+  String get whatsappChannelToken => 'Token di accesso';
+
+  @override
+  String get whatsappChannelPhoneId => 'ID del numero di telefono';
+
+  @override
+  String get whatsappChannelKeepHint =>
+      'Lascia vuoto per mantenere il valore salvato.';
+
+  @override
+  String get whatsappChannelSaved => 'Canale WhatsApp salvato.';
 
   @override
   String get notesFilterUnread => 'Non letti';

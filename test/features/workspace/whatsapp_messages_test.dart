@@ -193,4 +193,74 @@ void main() {
     expect(find.byKey(const ValueKey('whatsapp-notes-unconfigured')),
         findsNothing);
   });
+
+  testWidgets(
+      'the OWNER configures the channel IN THE APP (#552): the how-to '
+      'and the credentials live in the channel sheet, the switch keeps '
+      'one short line, and saving stores the workspace channel',
+      (tester) async {
+    final profile = FakeProfileRepository(profiles: [
+      const Profile(id: 'user-1', whatsapp: '+491701234567'),
+    ]);
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..whatsappMirrorConfigured = false;
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+            workspace: workspace, profile: profile),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.pumpAndSettle();
+
+    // The switch subtitle is SHORT: the env-secret prose is gone.
+    final tile = find.byKey(const ValueKey('whatsapp-channel-tile'));
+    await tester.scrollUntilVisible(tile, 200,
+        scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('WHATSAPP_TOKEN'), findsNothing);
+
+    // The owner tile opens the sheet: how-to steps + status + fields.
+    await tester.tap(tile);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('whatsapp-channel-help')),
+        findsOneWidget);
+    expect(find.byKey(const ValueKey('whatsapp-channel-status')),
+        findsOneWidget);
+
+    await tester.enterText(
+        find.byKey(const ValueKey('whatsapp-channel-token')),
+        'EAAG-token');
+    await tester.enterText(
+        find.byKey(const ValueKey('whatsapp-channel-phone')),
+        '123456789012345');
+    await tester
+        .tap(find.byKey(const ValueKey('whatsapp-channel-save')));
+    await tester.pumpAndSettle();
+
+    expect(workspace.whatsappChannels['ws-1'],
+        {'token': 'EAAG-token', 'phone_id': '123456789012345'});
+    // The probe now reports the workspace channel as configured.
+    expect(
+        await workspace.fetchWhatsappMirrorConfigured(workspaceId: 'ws-1'),
+        isTrue);
+  });
+
+  test('migration 0110 files the deny-all channel table and the owner '
+      'RPCs', () {
+    final sql = File('supabase/migrations/0110_whatsapp_channel.sql')
+        .readAsStringSync();
+    expect(sql, contains('create table public.workspace_channels'));
+    expect(sql, contains('enable row level security'));
+    // Deny-all: no policy statements — only the RPCs and the service
+    // role ever touch the secrets.
+    expect(sql, isNot(contains('create policy')));
+    expect(sql, contains('set_whatsapp_channel'));
+    expect(sql, contains('clear_whatsapp_channel'));
+    expect(sql, contains('is_owner_of'));
+    expect(sql,
+        contains("key in ('token', 'phone_id')"));
+  });
 }
