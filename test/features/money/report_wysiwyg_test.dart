@@ -6,6 +6,7 @@
 import 'dart:convert' show base64Decode;
 
 import 'package:deskilo/features/money/domain/invoice_report.dart';
+import 'package:deskilo/features/money/presentation/widgets/report_page_style.dart';
 import 'package:deskilo/features/money/presentation/widgets/report_preview.dart';
 import 'package:deskilo/features/money/presentation/widgets/report_visual_editor.dart';
 import 'package:flutter/material.dart';
@@ -174,5 +175,92 @@ void main() {
         .controller!
         .text;
     expect(headerText, contains('![logo.png]'));
+  });
+
+  testWidgets(
+      'PAGE-TRUE design surface (#548): the bands are edited on white '
+      'A4 paper with PRINT typography — the PDF renderer\'s exact '
+      'sizes, colors, font and right-aligned amount cells',
+      (tester) async {
+    await pumpInvoices(tester, money: await seededMoney());
+    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
+    await tester.pump();
+    await tester.ensureVisible(
+        find.byKey(const ValueKey('invoice-template-mode')));
+    await tester.tap(find.text('Visual'));
+    await tester.pumpAndSettle();
+
+    // The paper: an A4-wide white page (595.28pt) at the document's own
+    // margins — not a theme-colored card.
+    final page = tester.widgetList<Container>(find.byType(Container)).where(
+        (c) =>
+            c.constraints?.minHeight == ReportPage.height &&
+            (c.decoration as BoxDecoration?)?.color == ReportPage.paper);
+    expect(page, hasLength(1));
+    expect(page.single.padding, ReportPage.margins);
+
+    // A title line prints at 20pt bold ink in the embedded Roboto —
+    // the styled span sits under Text.rich's default wrapper.
+    final wrapper = tester
+        .widgetList<RichText>(find.descendant(
+            of: find.byKey(const ValueKey('visual-header-line-1')),
+            matching: find.byType(RichText)))
+        .first
+        .text as TextSpan;
+    final title = (wrapper.children!.single as TextSpan).style!;
+    expect(title.fontSize, 20);
+    expect(title.color, ReportPage.ink);
+    expect(title.fontFamily, ReportPage.fontFamily);
+  });
+
+  testWidgets(
+      'Design ↔ Preview (#548): the toggle merges the CURRENT bands '
+      'with data through the real engine on the same page — tokens '
+      'out, values in — and back', (tester) async {
+    await pumpInvoices(tester, money: await seededMoney());
+    await tester.tap(find.byKey(const ValueKey('invoice-template-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
+    await tester.pump();
+    await tester.ensureVisible(
+        find.byKey(const ValueKey('invoice-template-mode')));
+    await tester.tap(find.text('Visual'));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(
+        find.byKey(const ValueKey('report-designer-mode')));
+    await tester.tap(find.descendant(
+        of: find.byKey(const ValueKey('report-designer-mode')),
+        matching: find.text('Preview')));
+    await tester.pumpAndSettle();
+
+    // Merged: real values render, the field tokens are gone.
+    expect(find.byKey(const ValueKey('report-designer-preview')),
+        findsOneWidget);
+    expect(
+        find.descendant(
+            of: find.byKey(const ValueKey('report-designer-preview')),
+            matching: find.textContaining('{{', findRichText: true)),
+        findsNothing);
+    expect(find.byKey(const ValueKey('visual-header-line-1')),
+        findsNothing);
+
+    await tester.tap(find.descendant(
+        of: find.byKey(const ValueKey('report-designer-mode')),
+        matching: find.text('Design')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('visual-header-line-1')),
+        findsOneWidget);
+
+    // The zoom control offers fixed scales beside fit-width.
+    await tester
+        .tap(find.byKey(const ValueKey('report-designer-zoom')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('100 %'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('visual-header-line-1')),
+        findsOneWidget);
   });
 }

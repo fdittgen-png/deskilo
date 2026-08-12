@@ -3926,6 +3926,22 @@
       }
     }
   },
+  "reportDesignerDesign": "Design",
+  "@reportDesignerDesign": {
+    "description": "Report page designer: the editable-fields mode (#548)"
+  },
+  "reportDesignerPreview": "Preview",
+  "@reportDesignerPreview": {
+    "description": "Report page designer: the merged-data preview mode (#548)"
+  },
+  "reportDesignerZoom": "Zoom",
+  "@reportDesignerZoom": {
+    "description": "Report page designer: zoom menu tooltip (#548)"
+  },
+  "reportDesignerZoomFit": "Fit width",
+  "@reportDesignerZoomFit": {
+    "description": "Report page designer: fit-the-width zoom option (#548)"
+  },
   "planNoLevels": "The workspace has no floor plan yet.",
   "@planNoLevels": {
     "description": "Empty state of the Plan tab before the owner drew levels"

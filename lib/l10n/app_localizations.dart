@@ -5564,6 +5564,30 @@ abstract class AppLocalizations {
   /// **'incl. VAT {amount}'**
   String vatShareAmount(String amount);
 
+  /// Report page designer: the editable-fields mode (#548)
+  ///
+  /// In en, this message translates to:
+  /// **'Design'**
+  String get reportDesignerDesign;
+
+  /// Report page designer: the merged-data preview mode (#548)
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get reportDesignerPreview;
+
+  /// Report page designer: zoom menu tooltip (#548)
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom'**
+  String get reportDesignerZoom;
+
+  /// Report page designer: fit-the-width zoom option (#548)
+  ///
+  /// In en, this message translates to:
+  /// **'Fit width'**
+  String get reportDesignerZoomFit;
+
   /// Empty state of the Plan tab before the owner drew levels
   ///
   /// In en, this message translates to:

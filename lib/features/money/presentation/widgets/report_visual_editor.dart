@@ -6,11 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/files/file_names.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../providers/money_providers.dart';
+import 'report_page_style.dart';
 
 /// The kinds a visual line can be (#488) — one per markup prefix. The
 /// visual editor is WYSIWYG over the SAME markup the text mode edits:
@@ -319,9 +319,10 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
   }
 
   /// Text with `{{ field }}` / `{% logic %}` rendered as TOKENS — the
-  /// designer idiom for data fields.
-  InlineSpan _tokenized(String text, TextStyle? style) {
-    final theme = Theme.of(context);
+  /// designer idiom for data fields. The token chrome is the ONLY
+  /// deviation from print (#548): the surrounding text keeps the
+  /// document's exact style, so the line's metrics stay honest.
+  InlineSpan _tokenized(String text, TextStyle style) {
     final spans = <InlineSpan>[];
     final pattern = RegExp(r'\{\{.*?\}\}|\{%.*?%\}');
     var last = 0;
@@ -331,12 +332,11 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
       }
       spans.add(TextSpan(
         text: match.group(0),
-        style: (style ?? const TextStyle()).copyWith(
-          color: theme.colorScheme.primary,
-          backgroundColor:
-              theme.colorScheme.primaryContainer.withValues(alpha: .35),
+        style: style.copyWith(
+          color: ReportPage.chrome,
+          backgroundColor: ReportPage.backdrop,
           fontFamily: 'monospace',
-          fontSize: (style?.fontSize ?? 14) * .85,
+          fontSize: (style.fontSize ?? 10) * .85,
         ),
       ));
       last = match.end;
@@ -345,97 +345,96 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
     return TextSpan(style: style, children: spans);
   }
 
+  /// One line, styled EXACTLY as `invoice_pdf.dart` prints its block
+  /// (#548) — sizes, paddings, alignment and colors from [ReportPage].
   Widget _styledContent(ReportVisualLine line) {
-    final theme = Theme.of(context);
-    final muted = theme.colorScheme.onSurfaceVariant;
     switch (line.kind) {
       case ReportLineKind.title:
-        return Text.rich(_tokenized(
-            line.content,
-            theme.textTheme.titleLarge
-                ?.copyWith(fontWeight: FontWeight.bold)));
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 4),
+          child: Text.rich(_tokenized(line.content, ReportPage.heading)),
+        );
       case ReportLineKind.section:
         return Padding(
-          padding: const EdgeInsets.only(top: 4),
+          padding: const EdgeInsets.only(top: 6, bottom: 3),
           child: Text.rich(_tokenized(
-              line.content.toUpperCase(),
-              theme.textTheme.labelSmall?.copyWith(
-                  color: muted,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.2))),
+              line.content.toUpperCase(), ReportPage.subheading)),
         );
       case ReportLineKind.text:
-        return Text.rich(
-            _tokenized(line.content, theme.textTheme.bodyMedium));
+        return Text.rich(_tokenized(line.content, ReportPage.body));
       case ReportLineKind.small:
-        return Text.rich(_tokenized(line.content,
-            theme.textTheme.bodySmall?.copyWith(color: muted)));
+        return Text.rich(_tokenized(line.content, ReportPage.small));
       case ReportLineKind.row:
       case ReportLineKind.boldRow:
-        final style = theme.textTheme.bodyMedium?.copyWith(
-            fontWeight: line.kind == ReportLineKind.boldRow
-                ? FontWeight.bold
-                : null);
+        final style =
+            ReportPage.row(bold: line.kind == ReportLineKind.boldRow);
         final cells = line.content.split('|');
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            for (var c = 0; c < cells.length; c++)
-              c == 0
-                  ? Expanded(
-                      child:
-                          Text.rich(_tokenized(cells[c].trim(), style)))
-                  : Padding(
-                      padding: const EdgeInsets.only(left: 12),
-                      child:
-                          Text.rich(_tokenized(cells[c].trim(), style)),
-                    ),
-          ],
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 3),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              for (var c = 0; c < cells.length; c++)
+                c == 0
+                    ? Expanded(
+                        child:
+                            Text.rich(_tokenized(cells[c].trim(), style)))
+                    : Padding(
+                        padding: const EdgeInsets.only(left: 12),
+                        child: Text.rich(
+                            _tokenized(cells[c].trim(), style),
+                            textAlign: TextAlign.right),
+                      ),
+            ],
+          ),
         );
       case ReportLineKind.divider:
         return Container(
-            margin: const EdgeInsets.symmetric(vertical: 6),
+            margin: const EdgeInsets.symmetric(vertical: 8),
             height: 2,
-            color: theme.colorScheme.primary);
+            color: ReportPage.accent);
       case ReportLineKind.spacer:
         return Container(
-          height: 14,
+          height: 8,
           alignment: Alignment.center,
           child: Container(
               height: 1,
               margin: const EdgeInsets.symmetric(horizontal: 48),
-              color: theme.colorScheme.outlineVariant
-                  .withValues(alpha: .4)),
+              color: ReportPage.backdrop),
         );
       case ReportLineKind.image:
         final bytes =
             ref.watch(reportImageBytesProvider(line.content)).value;
         return bytes == null
             ? Row(mainAxisSize: MainAxisSize.min, children: [
-                Icon(Icons.image_outlined,
-                    size: 18, color: theme.colorScheme.primary),
+                const Icon(Icons.image_outlined,
+                    size: 18, color: ReportPage.chrome),
                 const SizedBox(width: 4),
-                Text(line.content, style: theme.textTheme.bodySmall),
+                Text(line.content, style: ReportPage.small),
               ])
             : Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child:
-                      Image.memory(bytes, height: 48, fit: BoxFit.contain),
+                      Image.memory(bytes, height: 64, fit: BoxFit.contain),
                 ),
               );
       case ReportLineKind.logic:
+        // Logic never prints — pure designer chrome, kept visually
+        // OUTSIDE the document's typography.
         return Row(children: [
-          Icon(Icons.code, size: 14, color: muted),
+          const Icon(Icons.code, size: 14, color: ReportPage.chrome),
           const SizedBox(width: 4),
           Expanded(
             child: Text(
               line.content,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodySmall?.copyWith(
-                  color: muted, fontFamily: 'monospace', fontSize: 10),
+              style: const TextStyle(
+                  color: ReportPage.chrome,
+                  fontFamily: 'monospace',
+                  fontSize: 10),
             ),
           ),
         ]);
@@ -444,19 +443,21 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
         // Boundaries render as part of the group chrome; standalone
         // (orphaned) markers show as their name.
         return Text(reportLineName(line.kind, AppLocalizations.of(context)),
-            style: theme.textTheme.bodySmall
-                ?.copyWith(color: theme.colorScheme.tertiary));
+            style: const TextStyle(
+                fontSize: 10, color: ReportPage.chrome));
     }
   }
 
-  /// The active element: the in-place editor + its toolbar.
+  /// The active element: the in-place editor + its toolbar. Designer
+  /// CHROME on the paper — deliberately styled as tooling, so the
+  /// document content around it keeps reading like the document.
   Widget _editor(int index) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final line = _lines[index];
     return Container(
       decoration: BoxDecoration(
-        color: theme.colorScheme.primaryContainer.withValues(alpha: .15),
+        color: ReportPage.backdrop.withValues(alpha: .6),
         borderRadius: const BorderRadius.all(Radius.circular(6)),
         border: Border.all(color: theme.colorScheme.primary, width: 1),
       ),
@@ -471,13 +472,17 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
               autofocus: true,
               maxLines: null,
               onChanged: (_) => _commitEditing(),
-              style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+              style: const TextStyle(
+                  fontFamily: 'monospace',
+                  fontSize: 12,
+                  color: ReportPage.ink),
               decoration: const InputDecoration(
                   isDense: true, border: InputBorder.none),
             )
           else
             Text(reportLineName(line.kind, l10n),
-                style: theme.textTheme.bodySmall),
+                style: const TextStyle(
+                    fontSize: 11, color: ReportPage.chrome)),
           Row(children: [
             PopupMenuButton<ReportLineKind>(
               key: ValueKey('${widget.bandKey}-type-$index'),
@@ -548,9 +553,9 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
     );
   }
 
-  /// A tappable dashed group boundary (the `:::` / `|||` markers).
+  /// A tappable dashed group boundary (the `:::` / `|||` markers) —
+  /// designer chrome, never printed.
   Widget _boundary(int index, {required bool split}) {
-    final theme = Theme.of(context);
     if (index == _editing) return _editor(index);
     return InkWell(
       key: ValueKey('${widget.bandKey}-line-$index'),
@@ -562,9 +567,7 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
           Expanded(
             child: Container(
               height: 1,
-              decoration: BoxDecoration(
-                color: theme.colorScheme.tertiary.withValues(alpha: .5),
-              ),
+              color: ReportPage.chrome.withValues(alpha: .5),
             ),
           ),
           Icon(
@@ -572,7 +575,7 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
                   ? Icons.vertical_split_outlined
                   : Icons.view_column_outlined,
               size: 10,
-              color: theme.colorScheme.tertiary),
+              color: ReportPage.chrome),
         ]),
       ),
     );
@@ -581,115 +584,117 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     final segments = _segments();
-    return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.sm),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(widget.label, style: theme.textTheme.labelMedium),
-          const SizedBox(height: 4),
-          // #498 — the data-field palette: tap to insert at the cursor
-          // of the active element (the designer idiom).
-          if (_editing != null)
-            SizedBox(
-              height: 34,
-              child: ListView(
-                key: ValueKey('${widget.bandKey}-palette'),
-                scrollDirection: Axis.horizontal,
-                children: [
-                  for (final field in InvoicePdfTemplate.placeholders)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 4),
-                      child: ActionChip(
-                        key: ValueKey('${widget.bandKey}-token-$field'),
-                        visualDensity: VisualDensity.compact,
-                        label: Text(field,
-                            style: const TextStyle(
-                                fontFamily: 'monospace', fontSize: 10)),
-                        onPressed: () => _insertToken('{{ $field }}'),
-                      ),
-                    ),
-                ],
-              ),
+    // #548 — the band renders DIRECTLY on the page the designer
+    // provides: no paper of its own, no theme colors. The strip above
+    // it is the banded-designer idiom (DevExpress/Crystal): a labeled
+    // chrome separator marking where the band begins.
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+          color: ReportPage.backdrop,
+          child: Text(
+            widget.label.toUpperCase(),
+            style: const TextStyle(
+              fontSize: 8,
+              letterSpacing: 1.1,
+              fontWeight: FontWeight.bold,
+              color: ReportPage.chrome,
             ),
-          // The PAPER: the band as the document lays it out.
-          Container(
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surface,
-              border: Border.all(color: theme.colorScheme.outlineVariant),
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-            ),
-            padding: AppSpacing.mdAll,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+          ),
+        ),
+        // #498 — the data-field palette: tap to insert at the cursor
+        // of the active element (the designer idiom).
+        if (_editing != null)
+          SizedBox(
+            height: 34,
+            child: ListView(
+              key: ValueKey('${widget.bandKey}-palette'),
+              scrollDirection: Axis.horizontal,
               children: [
-                if (_lines.isEmpty)
-                  Text(
-                    l10n?.reportDesignEmpty ??
-                        'Empty band — add an element below.',
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                for (final field in InvoicePdfTemplate.placeholders)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 4),
+                    child: ActionChip(
+                      key: ValueKey('${widget.bandKey}-token-$field'),
+                      visualDensity: VisualDensity.compact,
+                      label: Text(field,
+                          style: const TextStyle(
+                              fontFamily: 'monospace', fontSize: 10)),
+                      onPressed: () => _insertToken('{{ $field }}'),
+                    ),
                   ),
-                for (final segment in segments)
-                  switch (segment) {
-                    _LineSegment(:final index) => _lineWidget(index),
-                    _GroupSegment(
-                      :final openIndex,
-                      :final columns,
-                      :final closeIndex,
-                    ) =>
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          _boundary(openIndex, split: false),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              for (var c = 0; c < columns.length; c++) ...[
-                                if (c > 0)
-                                  _splitHandle(columns, c),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      for (final index in columns[c])
-                                        _lineWidget(index),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ],
-                          ),
-                          if (closeIndex != null)
-                            _boundary(closeIndex, split: false),
-                        ],
-                      ),
-                  },
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton.icon(
-              key: ValueKey('${widget.bandKey}-add'),
-              icon: const Icon(Icons.add, size: 18),
-              label: Text(l10n?.reportVisualAddLine ?? 'Add line'),
-              onPressed: () => _mutate(() {
-                _lines.add(ReportVisualLine(ReportLineKind.text, ''));
-                _editing = _lines.length - 1;
-                _editController.text = '';
-              }),
-            ),
+        if (_lines.isEmpty)
+          Text(
+            l10n?.reportDesignEmpty ??
+                'Empty band — add an element below.',
+            style:
+                const TextStyle(fontSize: 9, color: ReportPage.chrome),
           ),
-        ],
-      ),
+        for (final segment in segments)
+          switch (segment) {
+            _LineSegment(:final index) => _lineWidget(index),
+            _GroupSegment(
+              :final openIndex,
+              :final columns,
+              :final closeIndex,
+            ) =>
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _boundary(openIndex, split: false),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (var c = 0; c < columns.length; c++) ...[
+                        if (c > 0) _splitHandle(columns, c),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment:
+                                CrossAxisAlignment.stretch,
+                            children: [
+                              for (final index in columns[c])
+                                _lineWidget(index),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                  if (closeIndex != null)
+                    _boundary(closeIndex, split: false),
+                ],
+              ),
+          },
+        Align(
+          alignment: Alignment.centerLeft,
+          child: TextButton.icon(
+            key: ValueKey('${widget.bandKey}-add'),
+            icon: const Icon(Icons.add, size: 18),
+            label: Text(l10n?.reportVisualAddLine ?? 'Add line'),
+            style: TextButton.styleFrom(
+              foregroundColor: ReportPage.chrome,
+              visualDensity: VisualDensity.compact,
+            ),
+            onPressed: () => _mutate(() {
+              _lines.add(ReportVisualLine(ReportLineKind.text, ''));
+              _editing = _lines.length - 1;
+              _editController.text = '';
+            }),
+          ),
+        ),
+      ],
     );
   }
 
-  /// The vertical `|||` handle between two columns.
+  /// The vertical `|||` handle between two columns — 16 wide, the
+  /// PDF's column gutter, so column widths read true (#548).
   Widget _splitHandle(List<List<int>> columns, int column) {
     // The split marker sits right before this column's first line (or
     // right after the previous column's last line).
@@ -698,20 +703,19 @@ class _ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
         : (columns[column - 1].isNotEmpty
             ? columns[column - 1].last + 1
             : null);
-    final theme = Theme.of(context);
     return InkWell(
       key: before == null
           ? null
           : ValueKey('${widget.bandKey}-line-$before'),
       onTap: before == null ? null : () => _select(before),
       child: Container(
-        width: 10,
+        width: 16,
         constraints: const BoxConstraints(minHeight: 24),
         alignment: Alignment.center,
         child: Container(
           width: 1,
           height: 24,
-          color: theme.colorScheme.tertiary.withValues(alpha: .5),
+          color: ReportPage.chrome.withValues(alpha: .5),
         ),
       ),
     );

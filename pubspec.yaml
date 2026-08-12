@@ -117,3 +117,11 @@ flutter:
     # PDF/A-3 demands an embedded colour profile, and Factur-X demands
     # PDF/A-3.
     - assets/pdf/
+  # The SAME Roboto files the PDF embeds, as a Flutter family — the
+  # report design surface renders glyph-identical to the document (#548).
+  fonts:
+    - family: ReportRoboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700

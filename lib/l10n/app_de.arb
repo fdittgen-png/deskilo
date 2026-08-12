@@ -1678,6 +1678,22 @@
       }
     }
   },
+  "reportDesignerDesign": "Entwurf",
+  "@reportDesignerDesign": {
+    "description": "Report page designer: the editable-fields mode (#548)"
+  },
+  "reportDesignerPreview": "Vorschau",
+  "@reportDesignerPreview": {
+    "description": "Report page designer: the merged-data preview mode (#548)"
+  },
+  "reportDesignerZoom": "Zoom",
+  "@reportDesignerZoom": {
+    "description": "Report page designer: zoom menu tooltip (#548)"
+  },
+  "reportDesignerZoomFit": "An Breite anpassen",
+  "@reportDesignerZoomFit": {
+    "description": "Report page designer: fit-the-width zoom option (#548)"
+  },
   "planNoLevels": "Der Workspace hat noch keinen Plan.",
   "planLevelLabel": "Etage",
   "planCheckInTitle": "Einchecken",

@@ -224,5 +224,21 @@
         "type": "String"
       }
     }
+  },
+  "reportDesignerDesign": "Conception",
+  "@reportDesignerDesign": {
+    "description": "Report page designer: the editable-fields mode (#548)"
+  },
+  "reportDesignerPreview": "Aperçu",
+  "@reportDesignerPreview": {
+    "description": "Report page designer: the merged-data preview mode (#548)"
+  },
+  "reportDesignerZoom": "Zoom",
+  "@reportDesignerZoom": {
+    "description": "Report page designer: zoom menu tooltip (#548)"
+  },
+  "reportDesignerZoomFit": "Ajuster à la largeur",
+  "@reportDesignerZoomFit": {
+    "description": "Report page designer: fit-the-width zoom option (#548)"
   }
 }

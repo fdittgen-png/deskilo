@@ -25,6 +25,7 @@ import '../invoice_actions.dart';
 import '../report_defaults.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import 'report_preview.dart';
+import 'report_page_designer.dart';
 import 'report_visual_editor.dart';
 
 /// The invoice REPORT editor (#454, rebuilt as a banded reporting tool
@@ -622,26 +623,23 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
               }),
             ),
             if (_visual) ...[
-              ReportVisualEditor(
-                key: ValueKey('visual-header-$_doc-$_visualEpoch'),
-                controller: _header,
-                label:
+              // #548 — the page-true design surface: one A4 page, the
+              // document's margins, band strips, page-break guides,
+              // zoom, and a Design ↔ Preview toggle.
+              ReportPageDesigner(
+                key: ValueKey('designer-$_doc-$_visualEpoch'),
+                header: _header,
+                body: _body,
+                footer: _footer,
+                headerLabel:
                     l10n?.invoiceTemplateHeaderLabel ?? 'Header band',
-                bandKey: 'visual-header',
-              ),
-              ReportVisualEditor(
-                key: ValueKey('visual-body-$_doc-$_visualEpoch'),
-                controller: _body,
-                label: l10n?.invoiceTemplateBodyLabel ??
+                bodyLabel: l10n?.invoiceTemplateBodyLabel ??
                     'Body band (the invoice lines)',
-                bandKey: 'visual-body',
-              ),
-              ReportVisualEditor(
-                key: ValueKey('visual-footer-$_doc-$_visualEpoch'),
-                controller: _footer,
-                label: l10n?.invoiceTemplateFooterLabel ??
+                footerLabel: l10n?.invoiceTemplateFooterLabel ??
                     'Footer band (payment terms, legal mentions)',
-                bandKey: 'visual-footer',
+                editorKeyPrefix: 'visual-$_doc-$_visualEpoch',
+                previewData: () =>
+                    _liveData() ?? sampleReportData(l10n),
               ),
             ] else ...[
               _bandField(

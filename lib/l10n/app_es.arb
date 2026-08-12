@@ -1678,6 +1678,22 @@
       }
     }
   },
+  "reportDesignerDesign": "Diseño",
+  "@reportDesignerDesign": {
+    "description": "Report page designer: the editable-fields mode (#548)"
+  },
+  "reportDesignerPreview": "Vista previa",
+  "@reportDesignerPreview": {
+    "description": "Report page designer: the merged-data preview mode (#548)"
+  },
+  "reportDesignerZoom": "Zoom",
+  "@reportDesignerZoom": {
+    "description": "Report page designer: zoom menu tooltip (#548)"
+  },
+  "reportDesignerZoomFit": "Ajustar al ancho",
+  "@reportDesignerZoomFit": {
+    "description": "Report page designer: fit-the-width zoom option (#548)"
+  },
   "planNoLevels": "El espacio aún no tiene plano.",
   "planLevelLabel": "Planta",
   "planCheckInTitle": "Registrarse",
