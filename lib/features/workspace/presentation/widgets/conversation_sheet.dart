@@ -182,29 +182,44 @@ class _Bubble extends ConsumerWidget {
                 : theme.colorScheme.surfaceContainerHighest,
             borderRadius: AppRadius.lgAll,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              MemberNoteBody(body: note.body),
-              const SizedBox(height: 2),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    when,
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
+          // Field report: the DARK theme keeps a LIGHT primaryContainer,
+          // so my bubble must use its on-color for EVERYTHING inside —
+          // body, links, timestamp and the delivery check. Inheriting
+          // the theme's light body color made my own texts unreadable.
+          child: Builder(builder: (context) {
+            final fg = mine
+                ? theme.colorScheme.onPrimaryContainer
+                : theme.colorScheme.onSurface;
+            final fgMuted = mine
+                ? fg.withValues(alpha: .7)
+                : theme.colorScheme.onSurfaceVariant;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                MemberNoteBody(
+                  body: note.body,
+                  style: theme.textTheme.bodyMedium?.copyWith(color: fg),
+                  linkColor: mine ? fg : null,
+                ),
+                const SizedBox(height: 2),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      when,
+                      style: theme.textTheme.labelSmall
+                          ?.copyWith(color: fgMuted),
                     ),
-                  ),
-                  if (mine) ...[
-                    const SizedBox(width: 4),
-                    NoteCheck(note: note),
+                    if (mine) ...[
+                      const SizedBox(width: 4),
+                      NoteCheck(note: note, unreadColor: fgMuted),
+                    ],
                   ],
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );

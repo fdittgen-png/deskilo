@@ -13,9 +13,13 @@ const Color noteReadBlue = Color(0xFF42A5F5);
 /// and no single read state — it stays grey. One widget, so the inbox
 /// row and the conversation bubble can never drift apart.
 class NoteCheck extends StatelessWidget {
-  const NoteCheck({super.key, required this.note});
+  const NoteCheck({super.key, required this.note, this.unreadColor});
 
   final MemberNote note;
+
+  /// The delivered-not-read tint — a bubble on `primaryContainer`
+  /// passes its muted on-color so the check stays visible (contrast).
+  final Color? unreadColor;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,7 @@ class NoteCheck extends StatelessWidget {
       size: 14,
       color: note.readAt != null
           ? noteReadBlue
-          : theme.colorScheme.onSurfaceVariant,
+          : unreadColor ?? theme.colorScheme.onSurfaceVariant,
     );
   }
 }

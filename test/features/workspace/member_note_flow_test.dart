@@ -220,6 +220,38 @@ void main() {
             matching: find.byKey(const ValueKey('note-check-note-mine'))),
         findsOneWidget);
 
+    // CONTRAST (field report): my bubble paints primaryContainer —
+    // which stays LIGHT in the dark theme — so its body, links and
+    // timestamp must carry onPrimaryContainer, never the theme's
+    // surface ink. Structural pin: the style is the on-color.
+    final bubbleContext =
+        tester.element(find.byKey(const ValueKey('bubble-note-mine')));
+    final scheme = Theme.of(bubbleContext).colorScheme;
+    Color? bodyInk(String bubbleKey) {
+      final rich = tester.widget<RichText>(find
+          .descendant(
+              of: find.byKey(ValueKey(bubbleKey)),
+              matching: find.byType(RichText))
+          .first);
+      // The ink sits on the first STYLED text segment — Text.rich
+      // wraps the note's spans in unstyled parents.
+      Color? firstInk(InlineSpan span) {
+        if (span is! TextSpan) return null;
+        if (span.text != null) return span.style?.color;
+        for (final child in span.children ?? const <InlineSpan>[]) {
+          final ink = firstInk(child);
+          if (ink != null) return ink;
+        }
+        return null;
+      }
+
+      return firstInk(rich.text);
+    }
+
+    expect(bodyInk('bubble-note-mine'), scheme.onPrimaryContainer);
+    // Ana's bubble sits on surfaceContainerHighest and keeps onSurface.
+    expect(bodyInk('bubble-note-in'), scheme.onSurface);
+
     // Long-press my message → confirm → gone everywhere.
     await tester.longPress(find.byKey(const ValueKey('bubble-note-mine')));
     await tester.pumpAndSettle();

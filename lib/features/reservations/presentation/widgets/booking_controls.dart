@@ -218,6 +218,12 @@ class LevelSelector extends StatelessWidget {
                               fontWeight: level.id == current.id
                                   ? FontWeight.w700
                                   : null,
+                              // secondaryContainer stays LIGHT in the
+                              // dark theme — the pill must carry its
+                              // on-color (contrast, field report).
+                              color: level.id == current.id
+                                  ? scheme.onSecondaryContainer
+                                  : null,
                             ),
                       ),
                     ),

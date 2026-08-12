@@ -250,9 +250,15 @@ class _DayCell extends StatelessWidget {
           .withValues(alpha: 0.55);
     }
 
-    final onFill = inMonth
-        ? scheme.onSurface
-        : scheme.onSurfaceVariant.withValues(alpha: 0.5);
+    // The heat tints stay LIGHT in the dark theme (the brand containers
+    // are light in both schemes) — pick the day number's ink from the
+    // ACTUAL blended cell color, not from the theme (contrast).
+    final blended = Color.alphaBlend(fill, scheme.surface);
+    final onFill = !inMonth
+        ? scheme.onSurfaceVariant.withValues(alpha: 0.5)
+        : ThemeData.estimateBrightnessForColor(blended) == Brightness.light
+            ? Colors.black87
+            : scheme.onSurface;
 
     return Padding(
       padding: const EdgeInsets.all(MonthGridMetrics.cellInset),
