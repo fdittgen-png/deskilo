@@ -3048,6 +3048,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get reportDesignerDesign => 'Design';
+
+  @override
+  String get reportDesignerPreview => 'Preview';
+
+  @override
+  String get reportDesignerZoom => 'Zoom';
+
+  @override
+  String get reportDesignerZoomFit => 'Fit width';
+
+  @override
   String get planNoLevels => 'The workspace has no floor plan yet.';
 
   @override

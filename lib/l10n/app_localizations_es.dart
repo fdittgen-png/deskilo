@@ -3066,6 +3066,18 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get reportDesignerDesign => 'Diseño';
+
+  @override
+  String get reportDesignerPreview => 'Vista previa';
+
+  @override
+  String get reportDesignerZoom => 'Zoom';
+
+  @override
+  String get reportDesignerZoomFit => 'Ajustar al ancho';
+
+  @override
   String get planNoLevels => 'El espacio aún no tiene plano.';
 
   @override

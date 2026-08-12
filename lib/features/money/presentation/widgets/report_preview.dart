@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_report.dart';
+import 'report_page_style.dart';
 
-/// The QUICK preview (#474): the report engine's blocks rendered as
-/// Flutter widgets — instant, in-app, no PDF round-trip. The mapping
-/// mirrors the PDF renderer's styles, so what you see here is what the
-/// document will say (typography aside).
+/// The report blocks rendered as Flutter widgets with PRINT FIDELITY
+/// (#474, refit in #548): every style, padding, color and the font
+/// itself come from [ReportPage], the shared mirror of the PDF
+/// renderer — what you see here IS what the document prints, typography
+/// included. Always ink-on-paper, independent of the app theme.
 class ReportBlocksView extends StatelessWidget {
   const ReportBlocksView({
     super.key,
@@ -25,33 +27,22 @@ class ReportBlocksView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final accent = theme.colorScheme.primary;
-    final muted = theme.colorScheme.onSurfaceVariant;
-
     Widget block(ReportBlock b) => switch (b) {
           ReportHeading(:final text) => Padding(
               padding: const EdgeInsets.only(bottom: 4),
-              child: Text(text,
-                  style: theme.textTheme.titleLarge
-                      ?.copyWith(fontWeight: FontWeight.bold)),
+              child: Text(text, style: ReportPage.heading),
             ),
           ReportSubheading(:final text) => Padding(
               padding: const EdgeInsets.only(top: 6, bottom: 3),
-              child: Text(text.toUpperCase(),
-                  style: theme.textTheme.labelSmall?.copyWith(
-                      color: muted,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.2)),
+              child:
+                  Text(text.toUpperCase(), style: ReportPage.subheading),
             ),
-          ReportText(:final text) =>
-            Text(text, style: theme.textTheme.bodyMedium),
-          ReportMuted(:final text) => Text(text,
-              style: theme.textTheme.bodySmall?.copyWith(color: muted)),
+          ReportText(:final text) => Text(text, style: ReportPage.body),
+          ReportMuted(:final text) => Text(text, style: ReportPage.small),
           ReportDivider() => Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               height: 2,
-              color: accent),
+              color: ReportPage.accent),
           ReportSpacer() => const SizedBox(height: 8),
           // #488 — a library image; unresolved names render nothing.
           ReportImage(:final name) => images[name] == null
@@ -68,14 +59,15 @@ class ReportBlocksView extends StatelessWidget {
                   ),
                 ),
           // #482 — side-by-side columns; an empty first column pushes
-          // the second (totals, the client box) to the right.
+          // the second (totals, the client box) to the right. 16pt
+          // gutter, like the PDF.
           ReportColumns(:final columns) => Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 for (var i = 0; i < columns.length; i++)
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.only(left: i == 0 ? 0 : 12),
+                      padding: EdgeInsets.only(left: i == 0 ? 0 : 16),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [for (final c in columns[i]) block(c)],
@@ -93,21 +85,13 @@ class ReportBlocksView extends StatelessWidget {
                     i == 0
                         ? Expanded(
                             child: Text(cells[i],
-                                style: theme.textTheme.bodyMedium
-                                    ?.copyWith(
-                                        fontWeight: bold
-                                            ? FontWeight.bold
-                                            : null)),
+                                style: ReportPage.row(bold: bold)),
                           )
                         : Padding(
                             padding: const EdgeInsets.only(left: 12),
                             child: Text(cells[i],
                                 textAlign: TextAlign.right,
-                                style: theme.textTheme.bodyMedium
-                                    ?.copyWith(
-                                        fontWeight: bold
-                                            ? FontWeight.bold
-                                            : null)),
+                                style: ReportPage.row(bold: bold)),
                           ),
                 ],
               ),
@@ -127,7 +111,9 @@ class ReportBlocksView extends StatelessWidget {
   }
 }
 
-/// Opens the quick preview as a paper-like dialog.
+/// Opens the quick preview as a PAGE (#548): white A4-wide paper at the
+/// document's own margins, panning sideways on narrow screens instead
+/// of reflowing — the preview never lies about the layout.
 Future<void> showReportQuickPreview(
   BuildContext context, {
   required InvoiceReport report,
@@ -140,7 +126,7 @@ Future<void> showReportQuickPreview(
         final l10n = AppLocalizations.of(context);
         return Dialog(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 480),
+            constraints: const BoxConstraints(maxWidth: 640),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -158,19 +144,20 @@ Future<void> showReportQuickPreview(
                   ),
                 ),
                 Flexible(
-                  child: SingleChildScrollView(
-                    key: const ValueKey('report-quick-preview'),
-                    padding: AppSpacing.lgAll,
-                    // Paper metaphor (UX audit): the document keeps a
-                    // fixed readable width; a narrow phone pans
-                    // sideways instead of crushing the table's first
-                    // column to one letter per line.
+                  child: ColoredBox(
+                    color: ReportPage.backdrop,
                     child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: SizedBox(
-                        width: 432,
-                        child: ReportBlocksView(
-                            report: report, images: images),
+                      key: const ValueKey('report-quick-preview'),
+                      padding: AppSpacing.mdAll,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Container(
+                          width: ReportPage.width,
+                          color: ReportPage.paper,
+                          padding: ReportPage.margins,
+                          child: ReportBlocksView(
+                              report: report, images: images),
+                        ),
                       ),
                     ),
                   ),
