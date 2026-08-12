@@ -319,9 +319,19 @@ abstract class WorkspaceRepository {
   Future<void> markMyNotesRead(String workspaceId, {String? fromMemberId});
 
   /// Whether the WhatsApp message-mirror channel (0106) is actually
-  /// configured server-side (WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — the
-  /// opt-in switch warns instead of silently promising delivery.
-  Future<bool> fetchWhatsappMirrorConfigured();
+  /// configured — the workspace's own credentials (#552) or the
+  /// operator env secrets. The opt-in switch warns instead of silently
+  /// promising delivery.
+  Future<bool> fetchWhatsappMirrorConfigured({String? workspaceId});
+
+  /// Owner-only (#552): store the workspace's WhatsApp Business Cloud
+  /// API credentials. Blank fields keep the stored value (the merge
+  /// semantics of set_whatsapp_channel — secrets are never read back).
+  Future<void> setWhatsappChannel(
+    String workspaceId, {
+    required String token,
+    required String phoneId,
+  });
 
   /// The signed-in USER's default workspace (#458, 0090) — stored on
   /// their profile so it survives reinstalls and follows them across

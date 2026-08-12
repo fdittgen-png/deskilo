@@ -9,12 +9,14 @@
 // reference as a tappable web link, and a final link that opens the app
 // directly on the conversation.
 //
-// Secrets: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID — a WhatsApp Business
-// Cloud API access token and phone-number id. Absent -> the function
-// no-ops politely so the trigger never fails. NOTE: WhatsApp only
-// delivers free-form messages inside the 24h service window; outside it
-// the API rejects and the send is logged and dropped (the in-app
-// message and push are the source of truth, WhatsApp is a mirror).
+// Credentials (#552): the workspace's own channel from the deny-all
+// workspace_channels table (owner-configured in the app), else the
+// WHATSAPP_TOKEN + WHATSAPP_PHONE_ID env secrets. Neither present ->
+// the function no-ops politely so the trigger never fails. NOTE:
+// WhatsApp only delivers free-form messages inside the 24h service
+// window; outside it the API rejects and the send is logged and
+// dropped (the in-app message and push are the source of truth,
+// WhatsApp is a mirror).
 
 import { createClient } from "npm:@supabase/supabase-js@2";
 
@@ -49,21 +51,40 @@ function render(body: string, noteId: string): string {
   return parts.join("\n");
 }
 
-Deno.serve(async (req) => {
+/// The workspace's own channel (#552), else the env secrets, else null.
+async function channelFor(
+  workspaceId: string | null,
+): Promise<{ token: string; phoneId: string } | null> {
+  if (workspaceId) {
+    const { data } = await supabase
+      .from("workspace_channels")
+      .select("whatsapp")
+      .eq("workspace_id", workspaceId)
+      .maybeSingle();
+    const cfg = (data?.whatsapp ?? {}) as {
+      token?: string;
+      phone_id?: string;
+    };
+    if (cfg.token && cfg.phone_id) {
+      return { token: cfg.token, phoneId: cfg.phone_id };
+    }
+  }
   const token = Deno.env.get("WHATSAPP_TOKEN");
   const phoneId = Deno.env.get("WHATSAPP_PHONE_ID");
+  return token && phoneId ? { token, phoneId } : null;
+}
 
+Deno.serve(async (req) => {
   const payload = await req.json().catch(() => ({}));
   // The client probes BEFORE offering the opt-in switch as functional —
   // a silently dead channel reads as "not working" (field report).
+  // #552: the probe is per WORKSPACE when the client names one.
   if (payload.action === "config") {
+    const channel = await channelFor(payload.workspace_id ?? null);
     return new Response(
-      JSON.stringify({ configured: Boolean(token && phoneId) }),
+      JSON.stringify({ configured: channel !== null }),
       { status: 200, headers: { "Content-Type": "application/json" } },
     );
-  }
-  if (!token || !phoneId) {
-    return new Response("whatsapp not configured", { status: 200 });
   }
 
   const note_id = payload.note_id;
@@ -75,6 +96,12 @@ Deno.serve(async (req) => {
     .eq("id", note_id)
     .maybeSingle();
   if (!note) return new Response("unknown note", { status: 200 });
+
+  const channel = await channelFor(note.workspace_id);
+  if (!channel) {
+    return new Response("whatsapp not configured", { status: 200 });
+  }
+  const { token, phoneId } = channel;
 
   // Recipients: the direct addressee, or — broadcast — every admin and
   // the owner except the sender.

@@ -55,7 +55,7 @@
   "@whatsappNotesTitle": {
     "description": "Settings switch: mirror member messages to WhatsApp (0106)"
   },
-  "whatsappNotesSubtitle": "Les messages des membres arrivent aussi sur WhatsApp, avec leurs liens — le lien DesKilo ouvre la conversation dans l’app.",
+  "whatsappNotesSubtitle": "Les messages des membres arrivent aussi sur WhatsApp.",
   "@whatsappNotesSubtitle": {
     "description": "Settings switch subtitle for the WhatsApp message mirror (0106)"
   },
@@ -63,9 +63,41 @@
   "@messageLinkGone": {
     "description": "Deep-link landing when a /msg link points at a broadcast or a gone note"
   },
-  "whatsappNotesUnconfigured": "Le canal WhatsApp de l'espace n'est pas encore configuré (propriétaire : WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — d'ici là, les messages arrivent dans l'app et en push seulement.",
+  "whatsappNotesUnconfigured": "Canal non configuré — les messages arrivent dans l'app et en push seulement.",
   "@whatsappNotesUnconfigured": {
     "description": "Warning under the WhatsApp-mirror opt-in switch when the server channel lacks its secrets (#538)"
+  },
+  "whatsappChannelTitle": "Canal WhatsApp",
+  "@whatsappChannelTitle": {
+    "description": "Owner tile + sheet title: the workspace WhatsApp channel (#552)"
+  },
+  "whatsappChannelConfigured": "Canal configuré — les messages arrivent aussi sur WhatsApp, avec leurs liens ; le lien DesKilo ouvre la conversation dans l'app.",
+  "@whatsappChannelConfigured": {
+    "description": "Channel status line when configured (#552)"
+  },
+  "whatsappChannelNotConfigured": "Non configuré — les messages arrivent dans l'app et en push seulement.",
+  "@whatsappChannelNotConfigured": {
+    "description": "Channel status line when NOT configured (#552)"
+  },
+  "whatsappChannelHelp": "1. Créez une app (gratuite) sur developers.facebook.com et ajoutez le produit WhatsApp.\n2. Sous WhatsApp → Configuration de l'API, copiez le jeton d'accès permanent et l'ID du numéro de téléphone.\n3. Collez les deux ci-dessous — les messages des membres partent alors de ce numéro.\nNote : WhatsApp ne livre que dans les 24 h suivant le dernier message WhatsApp du destinataire vers votre numéro (sa fenêtre de service).",
+  "@whatsappChannelHelp": {
+    "description": "How-to steps for obtaining WhatsApp Business Cloud API credentials (#552)"
+  },
+  "whatsappChannelToken": "Jeton d'accès",
+  "@whatsappChannelToken": {
+    "description": "Label of the access-token field (#552)"
+  },
+  "whatsappChannelPhoneId": "ID du numéro de téléphone",
+  "@whatsappChannelPhoneId": {
+    "description": "Label of the phone-number-ID field (#552)"
+  },
+  "whatsappChannelKeepHint": "Laissez vide pour conserver la valeur enregistrée.",
+  "@whatsappChannelKeepHint": {
+    "description": "Helper under both credential fields: blank keeps stored (#552)"
+  },
+  "whatsappChannelSaved": "Canal WhatsApp enregistré.",
+  "@whatsappChannelSaved": {
+    "description": "Snack after saving the channel (#552)"
   },
   "notesFilterUnread": "Non lus",
   "@notesFilterUnread": {

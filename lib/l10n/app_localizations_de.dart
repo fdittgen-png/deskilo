@@ -2759,14 +2759,42 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get whatsappNotesSubtitle =>
-      'Mitglieder-Nachrichten kommen auch auf WhatsApp an, samt Links — der DesKilo-Link öffnet die Unterhaltung in der App.';
+      'Mitglieder-Nachrichten kommen auch auf WhatsApp an.';
 
   @override
   String get messageLinkGone => 'Diese Nachricht liegt in deinem Posteingang.';
 
   @override
   String get whatsappNotesUnconfigured =>
-      'Der WhatsApp-Kanal des Space ist noch nicht konfiguriert (Inhaber: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — bis dahin kommen Nachrichten nur in der App und per Push an.';
+      'Kanal nicht konfiguriert — Nachrichten kommen nur in der App und per Push an.';
+
+  @override
+  String get whatsappChannelTitle => 'WhatsApp-Kanal';
+
+  @override
+  String get whatsappChannelConfigured =>
+      'Kanal konfiguriert — Nachrichten kommen auch auf WhatsApp an, mit ihren Links; der DesKilo-Link öffnet die Unterhaltung in der App.';
+
+  @override
+  String get whatsappChannelNotConfigured =>
+      'Nicht konfiguriert — Nachrichten kommen nur in der App und per Push an.';
+
+  @override
+  String get whatsappChannelHelp =>
+      '1. Erstelle eine (kostenlose) App auf developers.facebook.com und füge das Produkt WhatsApp hinzu.\n2. Unter WhatsApp → API-Setup den permanenten Zugriffstoken und die Telefonnummern-ID kopieren.\n3. Beides unten einfügen — Mitglieder-Nachrichten gehen dann von dieser Nummer aus.\nHinweis: WhatsApp stellt nur innerhalb von 24 h nach der letzten WhatsApp-Nachricht des Empfängers an deine Nummer zu (Service-Fenster).';
+
+  @override
+  String get whatsappChannelToken => 'Zugriffstoken';
+
+  @override
+  String get whatsappChannelPhoneId => 'Telefonnummern-ID';
+
+  @override
+  String get whatsappChannelKeepHint =>
+      'Leer lassen, um den gespeicherten Wert zu behalten.';
+
+  @override
+  String get whatsappChannelSaved => 'WhatsApp-Kanal gespeichert.';
 
   @override
   String get notesFilterUnread => 'Ungelesen';

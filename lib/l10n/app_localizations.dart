@@ -4991,7 +4991,7 @@ abstract class AppLocalizations {
   /// Settings switch subtitle for the WhatsApp message mirror (0106)
   ///
   /// In en, this message translates to:
-  /// **'Member messages arrive on WhatsApp too, with their links — tapping the DesKilo link opens the conversation in the app.'**
+  /// **'Member messages arrive on WhatsApp too.'**
   String get whatsappNotesSubtitle;
 
   /// Deep-link landing when a /msg link points at a broadcast or a gone note
@@ -5003,8 +5003,56 @@ abstract class AppLocalizations {
   /// Warning under the WhatsApp-mirror opt-in switch when the server channel lacks its secrets (#538)
   ///
   /// In en, this message translates to:
-  /// **'The workspace\'s WhatsApp channel is not configured yet (owner: WHATSAPP_TOKEN + WHATSAPP_PHONE_ID) — until then, messages arrive in-app and by push only.'**
+  /// **'Channel not configured — messages arrive in-app and by push only.'**
   String get whatsappNotesUnconfigured;
+
+  /// Owner tile + sheet title: the workspace WhatsApp channel (#552)
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp channel'**
+  String get whatsappChannelTitle;
+
+  /// Channel status line when configured (#552)
+  ///
+  /// In en, this message translates to:
+  /// **'Channel configured — messages mirror to WhatsApp, with their links; the DesKilo link opens the conversation in the app.'**
+  String get whatsappChannelConfigured;
+
+  /// Channel status line when NOT configured (#552)
+  ///
+  /// In en, this message translates to:
+  /// **'Not configured — messages arrive in-app and by push only.'**
+  String get whatsappChannelNotConfigured;
+
+  /// How-to steps for obtaining WhatsApp Business Cloud API credentials (#552)
+  ///
+  /// In en, this message translates to:
+  /// **'1. Create a (free) app on developers.facebook.com and add the WhatsApp product.\n2. Under WhatsApp → API setup, copy the permanent access token and the phone number ID.\n3. Paste both below — member messages are then sent from that number.\nNote: WhatsApp only delivers within 24 h of the recipient\'s last WhatsApp message to your number (their service window).'**
+  String get whatsappChannelHelp;
+
+  /// Label of the access-token field (#552)
+  ///
+  /// In en, this message translates to:
+  /// **'Access token'**
+  String get whatsappChannelToken;
+
+  /// Label of the phone-number-ID field (#552)
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number ID'**
+  String get whatsappChannelPhoneId;
+
+  /// Helper under both credential fields: blank keeps stored (#552)
+  ///
+  /// In en, this message translates to:
+  /// **'Leave blank to keep the stored value.'**
+  String get whatsappChannelKeepHint;
+
+  /// Snack after saving the channel (#552)
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp channel saved.'**
+  String get whatsappChannelSaved;
 
   /// Messages-inbox filter chip showing only unread messages (#539)
   ///
