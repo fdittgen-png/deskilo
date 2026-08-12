@@ -295,6 +295,58 @@ void main() {
   });
 
   testWidgets(
+      'the bell screen has its own unread filter (#546): the app-bar '
+      'toggle carries the count and narrows everything to unread',
+      (tester) async {
+    await _pump(tester, notes: [
+      MemberNote(
+        id: 'note-sent',
+        workspaceId: 'ws-1',
+        fromMemberId: 'member-1',
+        toMemberId: 'member-2',
+        body: 'Sent and delivered.',
+        createdAt: DateTime.utc(2026, 5, 12, 8),
+      ),
+      _noteFromAna('Hello!'),
+    ]);
+    await _openEvents(tester);
+
+    // The app-bar filter is there, badged with the unread count.
+    final toggle = find.byKey(const ValueKey('events-filter-unread'));
+    expect(toggle, findsOneWidget);
+    expect(
+      find.descendant(of: toggle, matching: find.text('1')),
+      findsOneWidget,
+    );
+
+    await tester.tap(toggle);
+    await tester.pumpAndSettle();
+
+    // Only the unread message remains; my sent note and the audit
+    // feed's type-filter line step aside.
+    expect(find.byKey(const ValueKey('note-dismiss-note-in')),
+        findsOneWidget);
+    expect(find.byKey(const ValueKey('note-dismiss-note-sent')),
+        findsNothing);
+    expect(find.text('All'), findsNothing);
+    // The Messages-section chip reflects the same state.
+    expect(
+      tester
+          .widget<FilterChip>(
+              find.byKey(const ValueKey('notes-filter-unread')))
+          .selected,
+      isTrue,
+    );
+
+    // Toggling back restores the full feed.
+    await tester.tap(toggle);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('note-dismiss-note-sent')),
+        findsOneWidget);
+    expect(find.text('All'), findsOneWidget);
+  });
+
+  testWidgets(
       'the composer chips attach a space and a reservation as tokens '
       '(#523)', (tester) async {
     final workspace = await _pump(tester);
