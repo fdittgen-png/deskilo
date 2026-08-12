@@ -308,7 +308,10 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
               child: ListView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 children: [
-                if (pendingForMe.isNotEmpty) ...[
+                // #546 — the bell's unread filter narrows the whole
+                // screen to the unread messages; decisions and the
+                // audit feed step aside while it is on.
+                if (!_unreadOnly && pendingForMe.isNotEmpty) ...[
                   Padding(
                     padding: const EdgeInsets.fromLTRB(
                       AppSpacing.lg,
@@ -410,7 +413,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 // AND sent, so both sides can verify what the
                 // notification actually said. The push carries no
                 // content (0012); this list does.
-                if (notes.isNotEmpty) ...[
+                if (notes.isNotEmpty || _unreadOnly) ...[
                   Padding(
                     padding: const EdgeInsets.fromLTRB(
                       AppSpacing.lg,
@@ -467,6 +470,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 ],
                 // #440: ONE horizontally scrollable filter line — the
                 // Wrap stacked six rows deep mid-screen.
+                if (!_unreadOnly) ...[
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   padding: AppSpacing.mdH,
@@ -542,6 +546,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                     },
                   ),
                 ],
+                ],
               ),
             );
           },
@@ -555,7 +560,29 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       _ => const LoadingView(),
     };
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.tabEvents ?? 'Events')),
+      appBar: AppBar(
+        title: Text(l10n?.tabEvents ?? 'Events'),
+        actions: [
+          // #546 — the same unread filter as the Messages chip, but
+          // reachable the moment the bell lands you here, badge and
+          // all, even when the section is scrolled away.
+          IconButton(
+            key: const ValueKey('events-filter-unread'),
+            tooltip: l10n?.notesFilterUnread ?? 'Unread',
+            isSelected: _unreadOnly,
+            onPressed: () => setState(() => _unreadOnly = !_unreadOnly),
+            icon: Badge.count(
+              count: unreadIds.length,
+              isLabelVisible: unreadIds.isNotEmpty,
+              child: Icon(
+                _unreadOnly
+                    ? Icons.mark_email_unread
+                    : Icons.mark_email_unread_outlined,
+              ),
+            ),
+          ),
+        ],
+      ),
       body: body,
     );
   }
