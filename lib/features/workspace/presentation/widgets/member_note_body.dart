@@ -14,10 +14,20 @@ import '../../domain/member_note_refs.dart';
 /// opens the space's booking sheet, ready to discuss (and book) a
 /// future reservation of the seat, table, room or level.
 class MemberNoteBody extends ConsumerWidget {
-  const MemberNoteBody({super.key, required this.body, this.style});
+  const MemberNoteBody({
+    super.key,
+    required this.body,
+    this.style,
+    this.linkColor,
+  });
 
   final String body;
   final TextStyle? style;
+
+  /// Link color override — a bubble on `primaryContainer` must carry
+  /// its on-color, not the theme primary (contrast, field report).
+  /// Bold + underline keep the links distinguishable either way.
+  final Color? linkColor;
 
   IconData _spaceIcon(SpaceKind kind) => switch (kind) {
         SpaceKind.seat => Icons.chair_outlined,
@@ -30,11 +40,12 @@ class MemberNoteBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final base = style ?? theme.textTheme.bodyMedium;
+    final linkInk = linkColor ?? theme.colorScheme.primary;
     final linkStyle = base?.copyWith(
-      color: theme.colorScheme.primary,
+      color: linkInk,
       fontWeight: FontWeight.w600,
       decoration: TextDecoration.underline,
-      decorationColor: theme.colorScheme.primary,
+      decorationColor: linkInk,
     );
 
     // Each link is a REAL widget (field report): TextSpan tap

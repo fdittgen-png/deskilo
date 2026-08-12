@@ -239,7 +239,14 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
                     widget.status.configured
                         ? (l10n?.payConfigConfigured ?? 'Configured')
                         : (l10n?.payConfigNotConfigured ?? 'Not configured'),
-                    style: theme.textTheme.labelSmall,
+                    // The tinted chip must carry the container's
+                    // on-color (contrast, field report — the container
+                    // stays light in the dark theme).
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: widget.status.configured
+                          ? theme.colorScheme.onSecondaryContainer
+                          : null,
+                    ),
                   ),
                   visualDensity: VisualDensity.compact,
                   backgroundColor: widget.status.configured
