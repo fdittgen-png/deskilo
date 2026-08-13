@@ -97,8 +97,15 @@ class _CanvasControlsState extends State<CanvasControls> {
     final maxX = widget.contentSize.width + widget.boundaryMargin - windowW;
     final minY = -widget.boundaryMargin;
     final maxY = widget.contentSize.height + widget.boundaryMargin - windowH;
-    final x = maxX < minX ? minX : topLeft.dx.clamp(minX, maxX);
-    final y = maxY < minY ? minY : topLeft.dy.clamp(minY, maxY);
+    // A window LARGER than the pannable span CENTRES the content on
+    // that axis (field report): pinning to the min edge made the +/−
+    // buttons jump a small, fit-centred level to the left border.
+    final x = maxX < minX
+        ? (widget.contentSize.width - windowW) / 2
+        : topLeft.dx.clamp(minX, maxX);
+    final y = maxY < minY
+        ? (widget.contentSize.height - windowH) / 2
+        : topLeft.dy.clamp(minY, maxY);
     return Matrix4.diagonal3Values(scale, scale, 1)
       ..setTranslationRaw(-x * scale, -y * scale, 0);
   }

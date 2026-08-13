@@ -1065,8 +1065,9 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       maxScale: CanvasControls.defaultMaxScale,
       panEnabled: !drawing && !selecting,
       scaleEnabled: !drawing && !selecting,
-      boundaryMargin:
-          const EdgeInsets.all(CanvasControls.defaultBoundaryMargin),
+      // UNBOUNDED pan — the same fit-vs-clamp fight as the live plan
+      // (see plan_canvas.dart): a centred small level must stay legal.
+      boundaryMargin: const EdgeInsets.all(double.infinity),
       child: GestureDetector(
         // `down` so onPanStart reports the touch-down cell, not the position
         // where the drag cleared the touch slop.

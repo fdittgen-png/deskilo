@@ -132,8 +132,13 @@ class _PlanCanvasState extends State<PlanCanvas> {
           constrained: false,
           minScale: CanvasControls.defaultMinScale,
           maxScale: CanvasControls.defaultMaxScale,
-          boundaryMargin:
-              const EdgeInsets.all(CanvasControls.defaultBoundaryMargin),
+          // UNBOUNDED pan (field report): the auto-fit centres a SMALL
+          // level by translating beyond any finite margin — the first
+          // finger-pan then made InteractiveViewer clamp the transform,
+          // snapping the plan to the left edge and locking horizontal
+          // movement. Fit, reset and the scrollbars keep the user
+          // oriented; the viewer must never fight the fit.
+          boundaryMargin: const EdgeInsets.all(double.infinity),
           child: GestureDetector(
             onTapUp: (details) {
               const cell = PlanCanvasMetrics.cellSize;

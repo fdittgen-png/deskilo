@@ -221,4 +221,15 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets(
+      'the plan viewer pans UNBOUNDED (field report): a finite boundary '
+      'made InteractiveViewer clamp the centred auto-fit of a small '
+      'level — snapping it to the left border and locking horizontal '
+      'panning', (tester) async {
+    await pumpPlan(tester);
+    final viewer = tester.widget<InteractiveViewer>(
+        find.byType(InteractiveViewer).first);
+    expect(viewer.boundaryMargin, const EdgeInsets.all(double.infinity));
+  });
 }

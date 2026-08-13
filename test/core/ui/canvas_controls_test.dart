@@ -9,6 +9,7 @@ Future<TransformationController> _pump(
   WidgetTester tester, {
   Rect? fitBounds,
   String? fitKey,
+  Size contentSize = const Size(1680, 1680),
 }) async {
   final controller = TransformationController();
   addTearDown(controller.dispose);
@@ -20,7 +21,7 @@ Future<TransformationController> _pump(
           height: 400,
           child: CanvasControls(
             controller: controller,
-            contentSize: const Size(1680, 1680),
+            contentSize: contentSize,
             fitBounds: fitBounds,
             fitKey: fitKey,
           ),
@@ -96,5 +97,22 @@ void main() {
           .onTap,
       isNull,
     );
+  });
+
+  testWidgets(
+      'a window LARGER than the pannable span CENTRES the content — '
+      'zooming out never pins a small level to the left border '
+      '(field report)', (tester) async {
+    // Content 100×100 + 200 margins = a 500 span; one zoom-out from
+    // identity makes the 400 viewport window 560 wide — larger.
+    final controller =
+        await _pump(tester, contentSize: const Size(100, 100));
+
+    await tester.tap(find.byKey(const ValueKey('canvas-zoom-out')));
+    await tester.pump();
+
+    final centre = controller.toScene(const Offset(200, 200));
+    expect(centre.dx, closeTo(50, 1));
+    expect(centre.dy, closeTo(50, 1));
   });
 }
