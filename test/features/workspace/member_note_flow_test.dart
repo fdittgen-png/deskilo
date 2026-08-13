@@ -423,4 +423,30 @@ void main() {
     // The label names the participant: who · space · when.
     expect(body, contains('[res:res-ana|Ana · A1 ·'));
   });
+
+  testWidgets(
+      'the KEYBOARD never buries the composer (field report): the '
+      'conversation sheet lifts and shrinks with the view inset',
+      (tester) async {
+    await _pump(tester, notes: [_noteFromAna('Hello!')]);
+    await _openEvents(tester);
+    await tester.tap(find.byKey(const ValueKey('note-dismiss-note-in')));
+    await tester.pumpAndSettle();
+    expect(
+        find.byKey(const ValueKey('conversation-sheet')), findsOneWidget);
+
+    // The keyboard opens: 400 physical px of bottom inset (dpr 1).
+    tester.view.viewInsets = const FakeViewPadding(bottom: 400);
+    addTearDown(() => tester.view.resetViewInsets());
+    await tester.pumpAndSettle();
+
+    // The composer stays fully ABOVE the keyboard band.
+    final composer =
+        find.byKey(const ValueKey('member-note-body'));
+    expect(composer, findsOneWidget);
+    final keyboardTop = tester.view.physicalSize.height /
+            tester.view.devicePixelRatio -
+        400;
+    expect(tester.getBottomLeft(composer).dy, lessThan(keyboardTop));
+  });
 }
