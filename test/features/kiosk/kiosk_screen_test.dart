@@ -693,4 +693,28 @@ void main() {
     expect(basis.data, contains('Half days'));
     expect(basis.data, contains('today'));
   });
+
+  testWidgets(
+      'ONE header row (field report): title, the level button and the '
+      'hint share a single line instead of three stacked rows — the '
+      'plan gets the vertical space', (tester) async {
+    await pumpKiosk(
+      tester,
+      bookableLevel: true,
+      featureFlags: const {'levelBooking': true},
+    );
+
+    final titleY = tester
+        .getCenter(find.byKey(const ValueKey('kiosk-title')))
+        .dy;
+    final buttonY = tester
+        .getCenter(find.byKey(const ValueKey('kiosk-level-button')))
+        .dy;
+    expect((buttonY - titleY).abs(), lessThan(24));
+    // The canvas starts right under that one row.
+    final canvasTop = tester
+        .getTopLeft(find.byKey(const ValueKey('kiosk-plan-canvas')))
+        .dy;
+    expect(canvasTop, lessThan(100));
+  });
 }

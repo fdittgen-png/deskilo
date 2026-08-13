@@ -280,8 +280,17 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
         body: SafeArea(
           child: Column(
           children: [
+            // ONE header row (field report: three stacked rows — title,
+            // level chips, "This level" — ate a third of a small wall
+            // tablet). Title, chips, the level button and the hint share
+            // a single 48dp line; the plan gets the rest.
             Padding(
-              padding: AppSpacing.lgAll,
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.lg,
+                AppSpacing.sm,
+                AppSpacing.lg,
+                0,
+              ),
               child: Row(
                 children: [
                   Icon(
@@ -289,7 +298,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   const SizedBox(width: AppSpacing.sm),
-                  Expanded(
+                  Flexible(
                     child: Text(
                       workspace?.name ?? '',
                       key: const ValueKey('kiosk-title'),
@@ -297,9 +306,42 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  Text(
-                    l10n?.kioskTapHint ?? 'Tap a seat to check in',
-                    style: Theme.of(context).textTheme.bodySmall,
+                  const SizedBox(width: AppSpacing.sm),
+                  // Scrolls when tight; renders nothing with one level.
+                  Expanded(
+                    flex: 2,
+                    child: LevelChipRow(
+                      levels: levels,
+                      selectedLevelId: level.id,
+                      onSelected: (id) => setState(() => _levelId = id),
+                    ),
+                  ),
+                  // Whole-level booking at the wall (0050): tap → pick
+                  // the action → authenticate with the RFID/NFC card, a
+                  // scanned badge, or the typed code — like a seat.
+                  if (level.bookableAsWhole &&
+                      ref
+                          .watch(enabledFeaturesSyncProvider)
+                          .contains(WorkspaceFeature.levelBooking))
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(right: AppSpacing.md),
+                      child: OutlinedButton.icon(
+                        key: const ValueKey('kiosk-level-button'),
+                        onPressed: () => _onLevelTap(level),
+                        icon: const Icon(Icons.layers_outlined),
+                        label: Text(
+                          l10n?.kioskLevelButton ?? 'This level',
+                        ),
+                      ),
+                    ),
+                  Flexible(
+                    child: Text(
+                      l10n?.kioskTapHint ?? 'Tap a seat to check in',
+                      style: Theme.of(context).textTheme.bodySmall,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.end,
+                    ),
                   ),
                 ],
               ),
@@ -318,35 +360,6 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                   text: l10n?.kioskClosedToday ??
                       'The workspace is closed today — check-in and '
                           'reservations are not possible.',
-                ),
-              ),
-            LevelChipRow(
-              levels: levels,
-              selectedLevelId: level.id,
-              onSelected: (id) => setState(() => _levelId = id),
-            ),
-            // Whole-level booking at the wall (0050): tap → pick the
-            // action → authenticate with the RFID/NFC card, a scanned
-            // badge, or the typed code — exactly like a seat.
-            if (level.bookableAsWhole &&
-                ref
-                    .watch(enabledFeaturesSyncProvider)
-                    .contains(WorkspaceFeature.levelBooking))
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.lg,
-                  vertical: AppSpacing.xs,
-                ),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: OutlinedButton.icon(
-                    key: const ValueKey('kiosk-level-button'),
-                    onPressed: () => _onLevelTap(level),
-                    icon: const Icon(Icons.layers_outlined),
-                    label: Text(
-                      l10n?.kioskLevelButton ?? 'This level',
-                    ),
-                  ),
                 ),
               ),
             Expanded(
