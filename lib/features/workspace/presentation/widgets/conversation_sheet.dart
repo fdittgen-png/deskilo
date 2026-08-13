@@ -33,17 +33,14 @@ Future<void> showConversationSheet(
   ref
       .read(unreadNoteCountProvider.notifier)
       .markConversationRead(otherMemberId);
+  // The keyboard inset is handled INSIDE the sheet (field report): the
+  // caller's context sits in a Scaffold body, where viewInsets read 0 —
+  // padding from here left the composer buried under the keyboard.
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
-    builder: (_) => Padding(
-      padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      child: ConversationSheet(
-        otherMemberId: otherMemberId,
-        otherName: otherName,
-      ),
-    ),
+    builder: (_) =>
+        ConversationSheet(otherMemberId: otherMemberId, otherName: otherName),
   );
 }
 
@@ -66,85 +63,95 @@ class ConversationSheet extends ConsumerWidget {
     // The thread: direct messages between the two of us, oldest first
     // (myNotes arrives newest-first).
     final thread = notes
-        .where((n) =>
-            (n.fromMemberId == me?.id && n.toMemberId == otherMemberId) ||
-            (n.fromMemberId == otherMemberId && n.toMemberId == me?.id))
+        .where(
+          (n) =>
+              (n.fromMemberId == me?.id && n.toMemberId == otherMemberId) ||
+              (n.fromMemberId == otherMemberId && n.toMemberId == me?.id),
+        )
         .toList()
         .reversed
         .toList();
-    return SafeArea(
-      child: SizedBox(
-        key: const ValueKey('conversation-sheet'),
-        height: MediaQuery.of(context).size.height * 0.72,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.xl,
-                AppSpacing.lg,
-                AppSpacing.xl,
-                AppSpacing.xs,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      otherName,
-                      style: theme.textTheme.titleMedium,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: thread.isEmpty
-                  ? Center(
+    // This context lives in the SHEET route, above the Scaffold, so it
+    // sees the real keyboard inset: the padding lifts the composer over
+    // the keyboard and the height SHRINKS with it — the thread stays
+    // scrollable (reverse list keeps the newest message in view).
+    final media = MediaQuery.of(context);
+    return Padding(
+      padding: EdgeInsets.only(bottom: media.viewInsets.bottom),
+      child: SafeArea(
+        child: SizedBox(
+          key: const ValueKey('conversation-sheet'),
+          height: (media.size.height - media.viewInsets.bottom) * 0.72,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.xl,
+                  AppSpacing.lg,
+                  AppSpacing.xl,
+                  AppSpacing.xs,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
                       child: Text(
-                        l10n?.conversationEmpty ??
-                            'No messages yet — say hello!',
-                        style: theme.textTheme.bodySmall,
-                      ),
-                    )
-                  : ListView.builder(
-                      reverse: true,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.lg,
-                        vertical: AppSpacing.sm,
-                      ),
-                      itemCount: thread.length,
-                      itemBuilder: (context, index) => _Bubble(
-                        note: thread[thread.length - 1 - index],
-                        mine: thread[thread.length - 1 - index]
-                                .fromMemberId ==
-                            me?.id,
+                        otherName,
+                        style: theme.textTheme.titleMedium,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.lg,
-                0,
-                AppSpacing.lg,
-                AppSpacing.lg,
-              ),
-              child: MemberNoteComposer(
-                autofocus: false,
-                onSend: (body) => sendMemberNoteGuarded(
-                  context,
-                  ref,
-                  toMemberId: otherMemberId,
-                  body: body,
-                  // The thread itself shows the message land — no snack.
-                  confirmWithSnack: false,
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
+              Expanded(
+                child: thread.isEmpty
+                    ? Center(
+                        child: Text(
+                          l10n?.conversationEmpty ??
+                              'No messages yet — say hello!',
+                          style: theme.textTheme.bodySmall,
+                        ),
+                      )
+                    : ListView.builder(
+                        reverse: true,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.lg,
+                          vertical: AppSpacing.sm,
+                        ),
+                        itemCount: thread.length,
+                        itemBuilder: (context, index) => _Bubble(
+                          note: thread[thread.length - 1 - index],
+                          mine:
+                              thread[thread.length - 1 - index].fromMemberId ==
+                              me?.id,
+                        ),
+                      ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.lg,
+                  0,
+                  AppSpacing.lg,
+                  AppSpacing.lg,
+                ),
+                child: MemberNoteComposer(
+                  autofocus: false,
+                  onSend: (body) => sendMemberNoteGuarded(
+                    context,
+                    ref,
+                    toMemberId: otherMemberId,
+                    body: body,
+                    // The thread itself shows the message land — no snack.
+                    confirmWithSnack: false,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -160,8 +167,7 @@ class _Bubble extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final when =
-        DateFormat.MMMd().add_Hm().format(note.createdAt.toLocal());
+    final when = DateFormat.MMMd().add_Hm().format(note.createdAt.toLocal());
     return Align(
       alignment: mine ? Alignment.centerRight : Alignment.centerLeft,
       child: GestureDetector(
@@ -186,40 +192,43 @@ class _Bubble extends ConsumerWidget {
           // so my bubble must use its on-color for EVERYTHING inside —
           // body, links, timestamp and the delivery check. Inheriting
           // the theme's light body color made my own texts unreadable.
-          child: Builder(builder: (context) {
-            final fg = mine
-                ? theme.colorScheme.onPrimaryContainer
-                : theme.colorScheme.onSurface;
-            final fgMuted = mine
-                ? fg.withValues(alpha: .7)
-                : theme.colorScheme.onSurfaceVariant;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                MemberNoteBody(
-                  body: note.body,
-                  style: theme.textTheme.bodyMedium?.copyWith(color: fg),
-                  linkColor: mine ? fg : null,
-                ),
-                const SizedBox(height: 2),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      when,
-                      style: theme.textTheme.labelSmall
-                          ?.copyWith(color: fgMuted),
-                    ),
-                    if (mine) ...[
-                      const SizedBox(width: 4),
-                      NoteCheck(note: note, unreadColor: fgMuted),
+          child: Builder(
+            builder: (context) {
+              final fg = mine
+                  ? theme.colorScheme.onPrimaryContainer
+                  : theme.colorScheme.onSurface;
+              final fgMuted = mine
+                  ? fg.withValues(alpha: .7)
+                  : theme.colorScheme.onSurfaceVariant;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  MemberNoteBody(
+                    body: note.body,
+                    style: theme.textTheme.bodyMedium?.copyWith(color: fg),
+                    linkColor: mine ? fg : null,
+                  ),
+                  const SizedBox(height: 2),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        when,
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: fgMuted,
+                        ),
+                      ),
+                      if (mine) ...[
+                        const SizedBox(width: 4),
+                        NoteCheck(note: note, unreadColor: fgMuted),
+                      ],
                     ],
-                  ],
-                ),
-              ],
-            );
-          }),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
