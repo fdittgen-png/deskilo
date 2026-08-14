@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/test_clock.dart';
+import '../../helpers/fake_event_repository.dart';
 import '../calendar/reservation_detail_sheet_test.dart'
     show reservationAt, pumpCalendarApp;
 
@@ -127,5 +128,59 @@ void main() {
     expect(sql, contains('does NOT set events.reservation_id'));
     // The verbatim-copied service_charge branch keeps its amount.
     expect(sql, contains("(v_event.payload->>'amount_cents')::int,\n        (v_event.payload->>'name')"));
+  });
+
+  testWidgets(
+      'RE-REQUESTING supersedes (#562): the second demand expires the '
+      'pending event and files a fresh one — no error', (tester) async {
+    final reservation = pastReservation();
+    final events = FakeEventRepository();
+    await pumpCalendarApp(tester, seed: [reservation], events: events);
+
+    Future<void> request(String reason) async {
+      await openSheet(tester, reservation.startsAt);
+      final requestButton =
+          find.byKey(const ValueKey('reservation-delete-request'));
+      await tester.ensureVisible(requestButton);
+      await tester.tap(requestButton);
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byKey(const ValueKey('reservation-delete-reason')),
+        reason,
+      );
+      await tester
+          .tap(find.byKey(const ValueKey('reservation-delete-submit')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Deletion requested'), findsOneWidget);
+      // The sheet popped on submit; let the snack expire so it never
+      // occludes the next round's request button.
+      await tester.pump(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+    }
+
+    await request('first try');
+    await request('second try — nobody reacted');
+
+    final deleteEvents = events.events
+        .where((e) => e.type == EventType.reservationDelete)
+        .toList();
+    expect(deleteEvents, hasLength(2));
+    expect(
+        deleteEvents.where((e) => e.status == EventStatus.pending).single
+            .payload['reason'],
+        'second try — nobody reacted');
+    expect(deleteEvents.where((e) => e.status == EventStatus.expired),
+        hasLength(1));
+  });
+
+  test('migration 0111 supersedes instead of refusing — and re-inserts '
+      'so the validator notification re-fires', () {
+    final sql = File('supabase/migrations/0111_delete_request_supersede.sql')
+        .readAsStringSync();
+    expect(sql, contains("set status = 'expired'"));
+    expect(sql,
+        isNot(contains("raise exception 'deletion already requested'")));
+    expect(sql, contains('request_reservation_deletion'));
+    expect(sql, contains('revoke execute'));
   });
 }
