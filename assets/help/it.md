@@ -493,6 +493,7 @@ La tua schermata personale, dall'alto in basso:
 - **Aiuto** — la guida integrata, nella tua lingua; **Il mio badge** (§8); **Account collegati** — collega un accesso Google al tuo account email; **Documenti** — la biblioteca documenti dello spazio (§11d).
 - **Preferenze** — **Lingua** (predefinita di sistema o una delle cinque), **Tema** (sistema / chiaro / scuro), **Scansiona con la fotocamera frontale** (per i tablet a parete).
 - **Avanzate** — lo stato delle notifiche push di questo dispositivo, l'interruttore della **Modalità sviluppatore** a livello di spazio e la schermata delle tracce **Sviluppatore** (§8 pagamenti).
+- **Informazioni** — la versione dell'app, l'autore (Florian DITTGEN), la licenza open source (0BSD) con il codice su GitHub, l'informativa sulla privacy, un link per segnalare bug, e come **sostenere il progetto** (PayPal, Revolut).
 - **Esci**.
 
 ## 13. Notifiche

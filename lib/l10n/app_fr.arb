@@ -246,6 +246,43 @@
   "commonSavedTo": "Enregistré dans {path}",
   "commonSaveFailed": "Impossible d'enregistrer le fichier.",
   "commonRetry": "Réessayer",
+  "settingsSectionAbout": "À propos",
+  "@settingsSectionAbout": {
+    "description": "Settings section header: About (#560)"
+  },
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "description": "Version line under the app name (#560)",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutOpenSource": "Open source (licence 0BSD)",
+  "@aboutOpenSource": {
+    "description": "About tile: licence (#560)"
+  },
+  "aboutOpenSourceDesc": "Code source sur GitHub",
+  "@aboutOpenSourceDesc": {
+    "description": "About tile subtitle: source on GitHub (#560)"
+  },
+  "aboutPrivacy": "Politique de confidentialité",
+  "@aboutPrivacy": {
+    "description": "About tile: privacy policy link (#560)"
+  },
+  "aboutReportBug": "Signaler un bug / suggérer une fonctionnalité",
+  "@aboutReportBug": {
+    "description": "About tile: GitHub issue link (#560)"
+  },
+  "aboutSupportTitle": "Soutenir ce projet",
+  "@aboutSupportTitle": {
+    "description": "Support block title (#560)"
+  },
+  "aboutSupportBody": "Cette application est gratuite, open source et sans publicité. Si vous la trouvez utile, soutenez le développeur.",
+  "@aboutSupportBody": {
+    "description": "Support block body (#560)"
+  },
   "consumptionAdd": "Ajouter une consommation",
   "consumptionAddForMember": "Ajouter un service pour {name}",
   "consumptionService": "Service",

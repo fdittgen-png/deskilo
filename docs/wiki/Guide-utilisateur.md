@@ -449,6 +449,7 @@ Votre écran personnel, de haut en bas :
 - **Aide** — le guide intégré, dans votre langue ; **Mon badge** (§8) ; **Comptes liés** — attachez une connexion Google à votre compte e-mail ; **Documents** — la bibliothèque de documents (§11d).
 - **Préférences** — **Langue** (par défaut du système ou l'une des cinq), **Thème** (système / clair / sombre), **Scanner avec la caméra avant** (pour tablettes murales).
 - **Avancé** — l'état des notifications push de cet appareil, l'interrupteur **Mode développeur** (à l'échelle de l'espace) et l'écran de traces **Développeur** (§8 paiements).
+- **À propos** — la version de l'app, l'auteur (Florian DITTGEN), la licence open source (0BSD) avec le code sur GitHub, la politique de confidentialité, un lien pour signaler un bug, et comment **soutenir le projet** (PayPal, Revolut).
 - **Se déconnecter**.
 
 ## 13. Notifications

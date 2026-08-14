@@ -841,6 +841,43 @@
   "@commonRetry": {
     "description": "Generic retry button"
   },
+  "settingsSectionAbout": "About",
+  "@settingsSectionAbout": {
+    "description": "Settings section header: About (#560)"
+  },
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "description": "Version line under the app name (#560)",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutOpenSource": "Open source (0BSD)",
+  "@aboutOpenSource": {
+    "description": "About tile: licence (#560)"
+  },
+  "aboutOpenSourceDesc": "Source code on GitHub",
+  "@aboutOpenSourceDesc": {
+    "description": "About tile subtitle: source on GitHub (#560)"
+  },
+  "aboutPrivacy": "Privacy policy",
+  "@aboutPrivacy": {
+    "description": "About tile: privacy policy link (#560)"
+  },
+  "aboutReportBug": "Report a bug / suggest a feature",
+  "@aboutReportBug": {
+    "description": "About tile: GitHub issue link (#560)"
+  },
+  "aboutSupportTitle": "Support this project",
+  "@aboutSupportTitle": {
+    "description": "Support block title (#560)"
+  },
+  "aboutSupportBody": "This app is free, open source and ad-free. If you find it useful, support the developer.",
+  "@aboutSupportBody": {
+    "description": "Support block body (#560)"
+  },
   "consumptionAdd": "Add consumption",
   "@consumptionAdd": {
     "description": "Button + sheet title recording my own consumed services (#129)"

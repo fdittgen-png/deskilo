@@ -428,6 +428,7 @@ Dein persönlicher Bildschirm, von oben nach unten:
 - **Hilfe** — das eingebaute Handbuch, in deiner Sprache; **Mein Badge** (§8); **Verknüpfte Konten** — Google-Anmeldung ans E-Mail-Konto hängen; **Dokumente** — die Dokumentbibliothek (§11d).
 - **Präferenzen** — **Sprache** (Systemstandard oder eine von fünf), **Thema** (System / Hell / Dunkel), **Mit der Frontkamera scannen** (für Wandtablets).
 - **Erweitert** — der Push-Status dieses Geräts, der workspace-weite **Entwicklermodus** und der **Entwickler**-Trace-Bildschirm (§8 Zahlungen).
+- **Über** — die App-Version, der Autor (Florian DITTGEN), die Open-Source-Lizenz (0BSD) mit dem Code auf GitHub, die Datenschutzerklärung, ein Link zum Fehlermelden, und wie man **das Projekt unterstützt** (PayPal, Revolut).
 - **Abmelden**.
 
 ## 13. Benachrichtigungen

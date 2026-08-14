@@ -1238,6 +1238,54 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get commonRetry;
 
+  /// Settings section header: About (#560)
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get settingsSectionAbout;
+
+  /// Version line under the app name (#560)
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String aboutVersion(String version);
+
+  /// About tile: licence (#560)
+  ///
+  /// In en, this message translates to:
+  /// **'Open source (0BSD)'**
+  String get aboutOpenSource;
+
+  /// About tile subtitle: source on GitHub (#560)
+  ///
+  /// In en, this message translates to:
+  /// **'Source code on GitHub'**
+  String get aboutOpenSourceDesc;
+
+  /// About tile: privacy policy link (#560)
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get aboutPrivacy;
+
+  /// About tile: GitHub issue link (#560)
+  ///
+  /// In en, this message translates to:
+  /// **'Report a bug / suggest a feature'**
+  String get aboutReportBug;
+
+  /// Support block title (#560)
+  ///
+  /// In en, this message translates to:
+  /// **'Support this project'**
+  String get aboutSupportTitle;
+
+  /// Support block body (#560)
+  ///
+  /// In en, this message translates to:
+  /// **'This app is free, open source and ad-free. If you find it useful, support the developer.'**
+  String get aboutSupportBody;
+
   /// Button + sheet title recording my own consumed services (#129)
   ///
   /// In en, this message translates to:

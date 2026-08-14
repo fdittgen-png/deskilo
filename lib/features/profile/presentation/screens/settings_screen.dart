@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/app_info.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/push/push_status_tile.dart';
+import '../../../../core/links/link_launcher.dart';
 import '../../../../core/locale/locale_controller.dart';
 import '../../../../core/scan/front_camera.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -41,6 +43,20 @@ const _endonyms = <String, String>{
 /// Radio sentinel for "follow the system locale" (the override itself is
 /// null, which a radio group cannot use as a selectable value).
 const _systemDefault = 'system';
+
+// About-section facts (#560): proper nouns and URLs, identical in every
+// UI language — consts like the endonyms, not l10n keys.
+const _appName = 'DesKilo';
+const _authorName = 'Florian DITTGEN';
+const _authorEmail = 'fdittgen@gmail.com';
+const _repoUrl = 'https://github.com/fdittgen-png/deskilo';
+const _privacyUrl =
+    'https://github.com/fdittgen-png/deskilo/blob/master/PRIVACY.md';
+const _issuesUrl = 'https://github.com/fdittgen-png/deskilo/issues/new';
+const _paypalName = 'PayPal';
+const _paypalHandle = 'paypal.me/FlorianDITTGEN';
+const _revolutName = 'Revolut';
+const _revolutHandle = 'revolut.me/floriamcep';
 
 /// App settings. Sign-out lives here; more sections arrive with their Epics.
 class SettingsScreen extends ConsumerWidget {
@@ -648,6 +664,99 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l10n?.developerTitle ?? 'Developer'),
               onTap: () => context.push('/developer'),
             ),
+          // ABOUT (#560, the Sparkilo section): who builds this, under
+          // which licence, where to report — and how to support it.
+          // Names, links and handles are proper nouns/URLs, identical in
+          // every language: consts, not l10n keys (the endonym idiom).
+          const Divider(),
+          _SectionHeader(l10n?.settingsSectionAbout ?? 'About'),
+          ListTile(
+            key: const ValueKey('about-version'),
+            leading: const Icon(Icons.info_outline),
+            title: const Text(_appName),
+            subtitle: switch (ref.watch(appVersionProvider).value) {
+              null || '' => null,
+              final version => Text(
+                  l10n?.aboutVersion(version) ?? 'Version $version',
+                ),
+            },
+          ),
+          ListTile(
+            key: const ValueKey('about-author'),
+            leading: const Icon(Icons.person_outline),
+            title: const Text(_authorName),
+            subtitle: const Text(_authorEmail),
+            onTap: () => ref
+                .read(linkLauncherProvider)
+                (Uri(scheme: 'mailto', path: _authorEmail)),
+          ),
+          ListTile(
+            key: const ValueKey('about-source'),
+            leading: const Icon(Icons.code),
+            title: Text(l10n?.aboutOpenSource ?? 'Open source (0BSD)'),
+            subtitle:
+                Text(l10n?.aboutOpenSourceDesc ?? 'Source code on GitHub'),
+            onTap: () =>
+                ref.read(linkLauncherProvider)(Uri.parse(_repoUrl)),
+          ),
+          ListTile(
+            key: const ValueKey('about-privacy'),
+            leading: const Icon(Icons.shield_outlined),
+            title: Text(l10n?.aboutPrivacy ?? 'Privacy policy'),
+            onTap: () =>
+                ref.read(linkLauncherProvider)(Uri.parse(_privacyUrl)),
+          ),
+          ListTile(
+            key: const ValueKey('about-issues'),
+            leading: const Icon(Icons.bug_report_outlined),
+            title: Text(l10n?.aboutReportBug ??
+                'Report a bug / suggest a feature'),
+            onTap: () =>
+                ref.read(linkLauncherProvider)(Uri.parse(_issuesUrl)),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg,
+              AppSpacing.md,
+              AppSpacing.lg,
+              AppSpacing.xs,
+            ),
+            child: Column(
+              children: [
+                Text(
+                  l10n?.aboutSupportTitle ?? 'Support this project',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall
+                      ?.copyWith(fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  l10n?.aboutSupportBody ??
+                      'This app is free, open source and ad-free. If '
+                          'you find it useful, support the developer.',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ),
+          ),
+          ListTile(
+            key: const ValueKey('about-paypal'),
+            leading: const Icon(Icons.payment_outlined),
+            title: const Text(_paypalName),
+            subtitle: const Text(_paypalHandle),
+            onTap: () => ref
+                .read(linkLauncherProvider)(Uri.parse('https://$_paypalHandle')),
+          ),
+          ListTile(
+            key: const ValueKey('about-revolut'),
+            leading: const Icon(Icons.account_balance_wallet_outlined),
+            title: const Text(_revolutName),
+            subtitle: const Text(_revolutHandle),
+            onTap: () => ref.read(linkLauncherProvider)(
+                Uri.parse('https://$_revolutHandle')),
+          ),
           // Sign out sits apart from the sections, with the destructive
           // foreground treatment used elsewhere (colorScheme.error, as in
           // the billing validation message).

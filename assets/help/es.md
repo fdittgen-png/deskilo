@@ -493,6 +493,7 @@ Tu pantalla personal, de arriba abajo:
 - **Ayuda** — la guía integrada, en tu idioma; **Mi credencial** (§8); **Cuentas vinculadas** — vincula un acceso con Google a tu cuenta de correo; **Documentos** — la biblioteca de documentos del espacio (§11d).
 - **Preferencias** — **Idioma** (el del sistema o uno de cinco), **Tema** (sistema / claro / oscuro), **Escanear con la cámara frontal** (para tabletas de pared).
 - **Avanzado** — el estado de notificaciones push de este dispositivo, el interruptor del **Modo desarrollador** de todo el espacio y la pantalla de trazas **Desarrollador** (§8 pagos).
+- **Acerca de** — la versión de la app, el autor (Florian DITTGEN), la licencia open source (0BSD) con el código en GitHub, la política de privacidad, un enlace para informar de errores, y cómo **apoyar el proyecto** (PayPal, Revolut).
 - **Cerrar sesión**.
 
 ## 13. Notificaciones

@@ -449,6 +449,7 @@ Your personal screen, top to bottom:
 - **Help** — the built-in guide, in your language; **My badge** (§8); **Linked accounts** — attach a Google sign-in to your email account; **Documents** — the workspace's document library (§11d).
 - **Preferences** — **Language** (system default or one of five), **Theme** (system / light / dark), **Scan with the front camera** (for wall tablets).
 - **Advanced** — the push-notification status of this device, the workspace-wide **Developer mode** switch and the **Developer** trace screen (§8 payments).
+- **About** — the app version, the author (Florian DITTGEN), the open-source licence (0BSD) with the source on GitHub, the privacy policy, a bug-report/feature link, and how to **support the project** (PayPal, Revolut).
 - **Sign out**.
 
 ## 13. Notifications
