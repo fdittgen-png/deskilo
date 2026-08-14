@@ -35,6 +35,21 @@ QrScanWidgetBuilder qrScanWidgetBuilder(Ref ref) {
         showFlashlight: false,
         showGallery: false,
         showToggleCamera: false,
+        // Our scan boxes clip the preview — the default crop overlay
+        // would mark a region that isn't where decoding happens.
+        showScannerOverlay: false,
+        // Decode the FULL frame (field report: the card's QR was
+        // clearly visible in the preview but sat outside the default
+        // CENTRED 50% crop square, so nothing ever decoded). 0 is the
+        // library's own no-crop path (multi-scan uses it).
+        cropPercent: 0,
+        // Printed cards get scanned at an angle, on glossy paper, in
+        // kiosk lighting — the harder/inverted passes read them.
+        tryHarder: true,
+        tryInverted: true,
+        // Every DesKilo code is a QR (badges, space cards, join codes):
+        // restricting the format keeps full-frame decoding fast.
+        codeFormat: Format.qrCode,
         lensDirection: front
             ? CameraLensDirection.front
             : CameraLensDirection.back,
