@@ -47,6 +47,15 @@ from googleapiclient.http import MediaFileUpload
 httplib2.REDIRECT_CODES = frozenset(httplib2.REDIRECT_CODES - {308})
 
 DEFAULT_PACKAGE = "de.deskilo.app"
+def _gh_output(key: str, value: str) -> None:
+    """Publish a step output when running under GitHub Actions."""
+    path = os.environ.get("GITHUB_OUTPUT")
+    if not path:
+        return
+    with open(path, "a", encoding="utf-8") as fh:
+        fh.write(f"{key}={value}\n")
+
+
 DEFAULT_TRACK = "internal"  # 'internal' = internal testing, 'alpha' = closed, 'beta' = open, 'production' = prod
 DEFAULT_AAB = "build/app/outputs/bundle/release/app-release.aab"
 DEFAULT_KEY = os.path.expanduser("~/.play-console-key.json")
@@ -299,7 +308,26 @@ def main() -> int:
             release_status = "draft"
             try:
                 _update_track(release_status)
-            except (HttpError, httplib2.HttpLib2Error, TimeoutError) as e2:
+            except HttpError as e2:
+                if "Precondition" in str(e2):
+                    # Even a DRAFT is refused: Play LOCKS this track until
+                    # the Console prerequisites are done (app setup, the
+                    # closed test, production access for open testing).
+                    # That is store policy, not a build failure — report
+                    # it loudly and end GREEN so the pipeline stays honest
+                    # about real errors.
+                    print(f"\nUPLOAD SKIPPED: Play refuses ANY release on "
+                          f"track '{args.track}' until the Console "
+                          f"prerequisites are completed (app setup tasks, "
+                          f"closed test, production access). versionCode "
+                          f"{version_code} was built and validated; rerun "
+                          f"this workflow once the track is unlocked.")
+                    _gh_output("uploaded", "false")
+                    _gh_output("skip_reason", "track locked by Play policy")
+                    return 0
+                print(f"ERROR: track update failed: {e2}", file=sys.stderr)
+                return 5
+            except (httplib2.HttpLib2Error, TimeoutError) as e2:
                 print(f"ERROR: track update failed: {e2}", file=sys.stderr)
                 return 5
         else:
@@ -322,6 +350,8 @@ def main() -> int:
         except (HttpError, httplib2.HttpLib2Error, TimeoutError) as e:
             print(f"ERROR: validation failed: {e}", file=sys.stderr)
             return 6
+        _gh_output("uploaded", "false")
+        _gh_output("skip_reason", "dry-run")
         return 0
 
     print("Committing edit")
@@ -379,6 +409,7 @@ def main() -> int:
                 )
                 print(f"\nSUCCESS: versionCode {version_code} uploaded to "
                       f"track '{args.track}' as a DRAFT release")
+                _gh_output("uploaded", "true")
                 return 0
             except (HttpError, httplib2.HttpLib2Error, TimeoutError) as e2:
                 print(f"ERROR: draft retry failed: {e2}", file=sys.stderr)
@@ -386,6 +417,7 @@ def main() -> int:
         print(f"ERROR: edits.commit failed: {e}", file=sys.stderr)
         return 7
 
+    _gh_output("uploaded", "true")
     print(f"\nSUCCESS: versionCode {version_code} published to track '{args.track}'")
     print(f"https://play.google.com/console/u/0/developers/5325652654414690657/app/4973487066249778216/tracks/open-testing")
     return 0
