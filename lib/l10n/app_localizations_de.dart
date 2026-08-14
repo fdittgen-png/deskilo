@@ -638,6 +638,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get commonRetry => 'Erneut versuchen';
 
   @override
+  String get settingsSectionAbout => 'Über';
+
+  @override
+  String aboutVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get aboutOpenSource => 'Open Source (0BSD-Lizenz)';
+
+  @override
+  String get aboutOpenSourceDesc => 'Quellcode auf GitHub';
+
+  @override
+  String get aboutPrivacy => 'Datenschutzerklärung';
+
+  @override
+  String get aboutReportBug => 'Fehler melden / Funktion vorschlagen';
+
+  @override
+  String get aboutSupportTitle => 'Dieses Projekt unterstützen';
+
+  @override
+  String get aboutSupportBody =>
+      'Diese App ist kostenlos, Open Source und werbefrei. Wenn sie dir nützt, unterstütze den Entwickler.';
+
+  @override
   String get consumptionAdd => 'Verbrauch erfassen';
 
   @override

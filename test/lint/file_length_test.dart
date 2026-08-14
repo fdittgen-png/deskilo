@@ -41,7 +41,9 @@ const Map<String, int> _baseline = {
   // workspace hint subtitle and the RPC write helper.
   // 990→1000 (2026-08-05): #478 Billing & reports admin entry.
   // 1000→1020 (2026-08-05): #486 Payment methods admin entry.
-  'lib/features/profile/presentation/screens/settings_screen.dart': 1040,
+  // 1040→1140 (2026-08-13): #560 the About section (author, licence,
+  // privacy, bug link, support tiles).
+  'lib/features/profile/presentation/screens/settings_screen.dart': 1140,
   // 1020→1040 (2026-08-06): #513 the Role management tile.
   // 980→1030 (2026-08-05): #476 the statement export honors the
   // owner's report template (#478 Invoices button joins the grid).

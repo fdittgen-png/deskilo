@@ -13,5 +13,42 @@
   "shellReserveButton": "Prenota",
   "commonSavedTo": "Salvato in {path}",
   "commonSaveFailed": "Impossibile salvare il file.",
-  "commonRetry": "Riprova"
+  "commonRetry": "Riprova",
+  "settingsSectionAbout": "Informazioni",
+  "@settingsSectionAbout": {
+    "description": "Settings section header: About (#560)"
+  },
+  "aboutVersion": "Versione {version}",
+  "@aboutVersion": {
+    "description": "Version line under the app name (#560)",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutOpenSource": "Open source (licenza 0BSD)",
+  "@aboutOpenSource": {
+    "description": "About tile: licence (#560)"
+  },
+  "aboutOpenSourceDesc": "Codice sorgente su GitHub",
+  "@aboutOpenSourceDesc": {
+    "description": "About tile subtitle: source on GitHub (#560)"
+  },
+  "aboutPrivacy": "Informativa sulla privacy",
+  "@aboutPrivacy": {
+    "description": "About tile: privacy policy link (#560)"
+  },
+  "aboutReportBug": "Segnala un bug / suggerisci una funzione",
+  "@aboutReportBug": {
+    "description": "About tile: GitHub issue link (#560)"
+  },
+  "aboutSupportTitle": "Sostieni questo progetto",
+  "@aboutSupportTitle": {
+    "description": "Support block title (#560)"
+  },
+  "aboutSupportBody": "Questa app è gratuita, open source e senza pubblicità. Se la trovi utile, sostieni lo sviluppatore.",
+  "@aboutSupportBody": {
+    "description": "Support block body (#560)"
+  }
 }

@@ -246,6 +246,43 @@
   "commonSavedTo": "Gespeichert unter {path}",
   "commonSaveFailed": "Datei konnte nicht gespeichert werden.",
   "commonRetry": "Erneut versuchen",
+  "settingsSectionAbout": "Über",
+  "@settingsSectionAbout": {
+    "description": "Settings section header: About (#560)"
+  },
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "description": "Version line under the app name (#560)",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutOpenSource": "Open Source (0BSD-Lizenz)",
+  "@aboutOpenSource": {
+    "description": "About tile: licence (#560)"
+  },
+  "aboutOpenSourceDesc": "Quellcode auf GitHub",
+  "@aboutOpenSourceDesc": {
+    "description": "About tile subtitle: source on GitHub (#560)"
+  },
+  "aboutPrivacy": "Datenschutzerklärung",
+  "@aboutPrivacy": {
+    "description": "About tile: privacy policy link (#560)"
+  },
+  "aboutReportBug": "Fehler melden / Funktion vorschlagen",
+  "@aboutReportBug": {
+    "description": "About tile: GitHub issue link (#560)"
+  },
+  "aboutSupportTitle": "Dieses Projekt unterstützen",
+  "@aboutSupportTitle": {
+    "description": "Support block title (#560)"
+  },
+  "aboutSupportBody": "Diese App ist kostenlos, Open Source und werbefrei. Wenn sie dir nützt, unterstütze den Entwickler.",
+  "@aboutSupportBody": {
+    "description": "Support block body (#560)"
+  },
   "consumptionAdd": "Verbrauch erfassen",
   "consumptionAddForMember": "Leistung für {name} erfassen",
   "consumptionService": "Leistung",
