@@ -11,6 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 
 import '../../helpers/fake_accessory_repository.dart';
+import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/in_memory_default_level_store.dart';
@@ -38,6 +39,7 @@ Future<InMemoryDefaultLevelStore> pumpCalendarApp(
   WidgetTester tester, {
   required List<Reservation> seed,
   FakeAccessoryRepository? accessories,
+  FakeEventRepository? events,
   bool twoLevels = false,
   String? storedLevelId,
 }) async {
@@ -60,6 +62,7 @@ Future<InMemoryDefaultLevelStore> pumpCalendarApp(
         floorPlan: plans,
         reservations: FakeReservationRepository()..reservations.addAll(seed),
         accessories: accessories ?? FakeAccessoryRepository(),
+        events: events,
         defaultLevel: store,
       ),
       child: const DeskiloApp(),

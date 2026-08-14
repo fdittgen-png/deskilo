@@ -114,8 +114,17 @@ class FakeEventRepository implements EventRepository {
     String reservationId, {
     String reason = '',
   }) async {
-    // Mirrors request_reservation_deletion (0097): a pending
-    // self-initiated 'reservation_delete' event that validators decide.
+    // Mirrors request_reservation_deletion (0097, supersede 0111): a
+    // pending self-initiated 'reservation_delete' event that validators
+    // decide; a re-request EXPIRES the previous pending one.
+    for (var i = 0; i < events.length; i++) {
+      final e = events[i];
+      if (e.type == EventType.reservationDelete &&
+          e.status == EventStatus.pending &&
+          e.payload['reservation_id'] == reservationId) {
+        events[i] = e.copyWith(status: EventStatus.expired);
+      }
+    }
     final event = WorkspaceEvent(
       id: 'resdel-${_nextEventId++}',
       workspaceId: 'ws-1',
