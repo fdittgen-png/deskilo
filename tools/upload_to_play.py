@@ -264,9 +264,9 @@ def main() -> int:
     # draft isn't rolled out, so commit succeeds with no country requirement.
     # Testing tracks (internal/alpha/beta) still roll out fully ('completed').
     release_status = "draft" if args.track == "production" else "completed"
-    print(f"Assigning to track '{args.track}' (release status: {release_status})")
-    try:
-        _execute_with_retry(
+
+    def _update_track(status):
+        return _execute_with_retry(
             lambda: edits.tracks().update(
                 packageName=args.package,
                 editId=edit_id,
@@ -276,14 +276,36 @@ def main() -> int:
                     "releases": [{
                         "name": f"{version_code}",
                         "versionCodes": [str(version_code)],
-                        "status": release_status,
+                        "status": status,
                         "releaseNotes": release_notes,
                     }],
                 },
             ),
             label="tracks.update",
         )
-    except (HttpError, httplib2.HttpLib2Error, TimeoutError) as e:
+
+    print(f"Assigning to track '{args.track}' (release status: {release_status})")
+    try:
+        _update_track(release_status)
+    except HttpError as e:
+        # A FRESH alpha/beta track rejects a full rollout before the
+        # Console prerequisites (countries, app setup): "Precondition
+        # check failed". Stage the release as a DRAFT instead — it lands
+        # on the track ready to roll out from the Console (the same
+        # bootstrap contract production always used).
+        if release_status == "completed" and "Precondition" in str(e):
+            print("  full rollout refused (Console prerequisites pending) "
+                  "— staging as DRAFT instead")
+            release_status = "draft"
+            try:
+                _update_track(release_status)
+            except (HttpError, httplib2.HttpLib2Error, TimeoutError) as e2:
+                print(f"ERROR: track update failed: {e2}", file=sys.stderr)
+                return 5
+        else:
+            print(f"ERROR: track update failed: {e}", file=sys.stderr)
+            return 5
+    except (httplib2.HttpLib2Error, TimeoutError) as e:
         print(f"ERROR: track update failed: {e}", file=sys.stderr)
         return 5
 
