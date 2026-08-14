@@ -135,6 +135,7 @@ jobs:
           echo "PLAY_KEY_PATH=$RUNNER_TEMP/play-key.json" >> "$GITHUB_ENV"
 
       - name: Upload to Play Store
+        id: upload
         if: ${{ env.HAS_PLAY_SA == 'true' }}
         run: |
           python tools/upload_to_play.py \
@@ -148,7 +149,9 @@ jobs:
         run: rm -f "$PLAY_KEY_PATH"
 
       - name: Tag the shipped build (vX.Y.Z+BUILD)
-        if: ${{ env.HAS_PLAY_SA == 'true' }}
+        # Only when a release actually LANDED on the track — a policy-
+        # locked track ends green with uploaded=false and must not tag.
+        if: ${{ env.HAS_PLAY_SA == 'true' && steps.upload.outputs.uploaded == 'true' }}
         run: |
           set -euo pipefail
           VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}' | cut -d+ -f1)
@@ -171,5 +174,11 @@ jobs:
             echo "- **AAB size:** $(( BYTES / 1024 / 1024 )) MiB ($BYTES bytes)" >> "$GITHUB_STEP_SUMMARY"
           fi
           echo "- **Track:** ${{ github.event.inputs.track || 'internal' }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "- **Play upload:** ${{ env.HAS_PLAY_SA == 'true' && 'attempted' || 'SKIPPED (no service-account secret)' }}" >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ env.HAS_PLAY_SA }}" != "true" ]; then
+            echo "- **Play upload:** SKIPPED (no service-account secret)" >> "$GITHUB_STEP_SUMMARY"
+          elif [ "${{ steps.upload.outputs.uploaded }}" = "false" ]; then
+            echo "- **Play upload:** SKIPPED — ${{ steps.upload.outputs.skip_reason }}" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "- **Play upload:** shipped" >> "$GITHUB_STEP_SUMMARY"
+          fi
           echo "- **Trigger:** ${{ github.event_name }}" >> "$GITHUB_STEP_SUMMARY"
