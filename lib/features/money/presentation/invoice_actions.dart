@@ -1185,6 +1185,7 @@ Future<void> sendEInvoice(
   required String iban,
   required String workspaceId,
   String environment = 'prod',
+  String destination = 'government',
 }) async {
   final l10n = AppLocalizations.of(context);
   EInvoiceSubmission? result;
@@ -1211,6 +1212,7 @@ Future<void> sendEInvoice(
             mimeType: 'application/pdf',
             bytes: file.bytes,
             environment: environment,
+            destination: destination,
           );
     },
   )) {
@@ -1223,10 +1225,14 @@ Future<void> sendEInvoice(
   if (submission.accepted) {
     AppSnack.success(
       context,
-      environment == 'prod'
-          ? (l10n?.invoiceSendAccepted ?? 'Sent — the platform accepted it.')
-          : (l10n?.invoiceSendAcceptedTest(environment.toUpperCase()) ??
-              'Test send accepted (${environment.toUpperCase()}).'),
+      environment != 'prod'
+          ? (l10n?.invoiceSendAcceptedTest(environment.toUpperCase()) ??
+              'Test send accepted (${environment.toUpperCase()}).')
+          : destination == 'customer'
+              ? (l10n?.invoiceSendCustomerAccepted ??
+                  "Sent — the customer's service accepted it.")
+              : (l10n?.invoiceSendAccepted ??
+                  'Sent — the platform accepted it.'),
     );
     return;
   }
@@ -1671,6 +1677,7 @@ Future<void> exportEInvoice(
     gateway = EInvoiceGatewayConfig.notConfigured;
   }
   if (!context.mounted) return;
+  final isIssuer = me?.actsAsOwner == true || me?.canAdminister == true;
   final export = await showEInvoiceSheet(
     context,
     route: route,
@@ -1678,8 +1685,14 @@ Future<void> exportEInvoice(
     canFixIdentity: me?.actsAsOwner ?? false,
     identityFixedSince: identityFixedSince,
     // Only an issuer sends, and only when a platform is configured.
-    canSend: gateway.configured &&
-        (me?.actsAsOwner == true || me?.canAdminister == true),
+    canSend: gateway.configured && isIssuer,
+    // The customer leg (#568): its own endpoint, its own flag, the same
+    // issuer gate.
+    canSendCustomer: gateway.customerConfigured &&
+        isIssuer &&
+        ref
+            .read(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.einvoiceCustomerDelivery),
   );
   if (export == null || !context.mounted) return;
   if (export == EInvoiceExport.fixIdentity) {
@@ -1687,11 +1700,21 @@ Future<void> exportEInvoice(
     return;
   }
   final l10nForFile = AppLocalizations.of(context);
-  if (export == EInvoiceExport.send) {
+  if (export == EInvoiceExport.send ||
+      export == EInvoiceExport.sendCustomer) {
+    final toCustomer = export == EInvoiceExport.sendCustomer;
     // Dev mode + a configured test platform → choose the target (#393);
-    // anyone else goes straight to production, no extra tap.
+    // anyone else goes straight to production, no extra tap. The picker
+    // judges the DESTINATION's environments (#568).
+    final envGateway = toCustomer
+        ? EInvoiceGatewayConfig(
+            configured: true,
+            environments:
+                gateway.destinations['customer']?.environments ?? const {},
+          )
+        : gateway;
     final environment =
-        await pickEInvoiceEnvironment(context, ref, gateway: gateway);
+        await pickEInvoiceEnvironment(context, ref, gateway: envGateway);
     if (environment == null || !context.mounted) return;
     await sendEInvoice(
       context,
@@ -1702,6 +1725,7 @@ Future<void> exportEInvoice(
       iban: workspaceIban(workspace),
       workspaceId: workspace.id,
       environment: environment,
+      destination: toCustomer ? 'customer' : 'government',
     );
     return;
   }

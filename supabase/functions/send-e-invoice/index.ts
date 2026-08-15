@@ -33,7 +33,31 @@ const REQUIRED = ["endpoint", "auth_value"];
 const ENVIRONMENTS = ["prod", "uat", "dev"] as const;
 type Environment = (typeof ENVIRONMENTS)[number];
 
+/** WHO receives the document (#568): the platform the government mandate
+ * points at, or the customer's own delivery service. 'government' is the
+ * unprefixed key set that predates destinations; 'customer' reads the
+ * customer_-prefixed keys. */
+const DESTINATIONS = ["government", "customer"] as const;
+type Destination = (typeof DESTINATIONS)[number];
+
 type Config = Record<string, string>;
+
+/** The config as one destination sees it. The customer channel is a
+ * SEPARATE endpoint and credential — never a fallback to the government
+ * ones, because an invoice quietly landing on the wrong platform is the
+ * accident this split exists to prevent. */
+function configForDestination(cfg: Config, dest: Destination): Config {
+  if (dest === "government") {
+    return Object.fromEntries(
+      Object.entries(cfg).filter(([key]) => !key.startsWith("customer_")),
+    );
+  }
+  return Object.fromEntries(
+    Object.entries(cfg)
+      .filter(([key]) => key.startsWith("customer_"))
+      .map(([key, value]) => [key.slice("customer_".length), value]),
+  );
+}
 
 /** The config as one environment sees it. endpoint and auth_value are
  * STRICTLY per-environment — no fallback to prod, because a UAT document
@@ -123,6 +147,7 @@ Deno.serve(async (req) => {
     content_base64?: string;
     action?: string;
     environment?: string;
+    destination?: string;
   };
   try {
     payload = await req.json();
@@ -138,12 +163,18 @@ Deno.serve(async (req) => {
     .select("provider, config")
     .eq("workspace_id", workspaceId)
     .maybeSingle();
-  const cfg = (credentials?.config ?? {}) as Config;
+  const fullCfg = (credentials?.config ?? {}) as Config;
   const environment = (
     ENVIRONMENTS as readonly string[]
   ).includes(payload.environment ?? "")
     ? (payload.environment as Environment)
     : "prod";
+  const destination = (
+    DESTINATIONS as readonly string[]
+  ).includes(payload.destination ?? "")
+    ? (payload.destination as Destination)
+    : "government";
+  const cfg = configForDestination(fullCfg, destination);
   const missing = missingFor(cfg, environment);
 
   // The client asks first whether sending is even possible, so it can hide
@@ -151,13 +182,29 @@ Deno.serve(async (req) => {
   // per-environment map doubles as the deployment probe: a client only
   // offers the UAT/dev choice when this function demonstrably understands
   // it — an older function would ignore the parameter and send to prod.
+  // The per-destination map (#568) is the same latch for the customer leg.
   if (payload.action === "config") {
+    const govCfg = configForDestination(fullCfg, "government");
     return json({
-      configured: missingFor(cfg, "prod").length === 0,
+      configured: missingFor(govCfg, "prod").length === 0,
       provider: credentials?.provider ?? "generic",
-      missing: missingFor(cfg, "prod"),
+      missing: missingFor(govCfg, "prod"),
       environments: Object.fromEntries(
-        ENVIRONMENTS.map((env) => [env, missingFor(cfg, env).length === 0]),
+        ENVIRONMENTS.map((env) => [env, missingFor(govCfg, env).length === 0]),
+      ),
+      destinations: Object.fromEntries(
+        DESTINATIONS.map((dest) => {
+          const scoped = configForDestination(fullCfg, dest);
+          return [dest, {
+            configured: missingFor(scoped, "prod").length === 0,
+            missing: missingFor(scoped, "prod"),
+            environments: Object.fromEntries(
+              ENVIRONMENTS.map(
+                (env) => [env, missingFor(scoped, env).length === 0],
+              ),
+            ),
+          }];
+        }),
       ),
     });
   }
@@ -208,8 +255,10 @@ Deno.serve(async (req) => {
       detail: string;
     };
     try {
+      // A declaration is a filing: it goes to the government platform no
+      // matter what destination a client claims.
       outcome2 = await submitGeneric(
-        configFor(cfg, environment),
+        configFor(configForDestination(fullCfg, "government"), environment),
         payload.file_name || `vat-${declaration.period_start}.pdf`,
         payload.mime_type || "application/pdf",
         bytes2,
@@ -293,6 +342,7 @@ Deno.serve(async (req) => {
     detail: outcome.detail,
     by_name: profile?.display_name ?? "",
     environment,
+    destination,
   });
 
   return json({
@@ -300,5 +350,6 @@ Deno.serve(async (req) => {
     external_id: outcome.externalId,
     detail: outcome.detail,
     environment,
+    destination,
   }, outcome.status === "accepted" ? 200 : 502);
 });

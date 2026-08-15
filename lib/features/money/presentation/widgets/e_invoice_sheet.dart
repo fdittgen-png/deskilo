@@ -9,8 +9,11 @@ import '../../domain/invoice_ubl_check.dart';
 
 /// What to do with the generated XML.
 enum EInvoiceExport {
-  /// Post the document to the workspace's platform (0073).
+  /// Post the document to the government platform (0073).
   send,
+
+  /// Post the document to the customer's delivery service (#568).
+  sendCustomer,
 
   /// The hybrid document: PDF with the XML inside (Factur-X).
   facturXDownload,
@@ -61,6 +64,7 @@ Future<EInvoiceExport?> showEInvoiceSheet(
   required EInvoiceReadiness readiness,
   required bool canFixIdentity,
   bool canSend = false,
+  bool canSendCustomer = false,
   bool identityFixedSince = false,
 }) =>
     showModalBottomSheet<EInvoiceExport>(
@@ -73,6 +77,7 @@ Future<EInvoiceExport?> showEInvoiceSheet(
         readiness: readiness,
         canFixIdentity: canFixIdentity,
         canSend: canSend,
+        canSendCustomer: canSendCustomer,
         identityFixedSince: identityFixedSince,
       ),
     );
@@ -83,6 +88,7 @@ class _EInvoiceBody extends StatelessWidget {
     required this.readiness,
     required this.canFixIdentity,
     required this.canSend,
+    this.canSendCustomer = false,
     this.identityFixedSince = false,
   });
 
@@ -96,8 +102,13 @@ class _EInvoiceBody extends StatelessWidget {
   final bool canFixIdentity;
 
   /// A platform is configured and the function is deployed (0073): the
-  /// document can LEAVE, not just be downloaded.
+  /// document can LEAVE for the government platform, not just be
+  /// downloaded.
   final bool canSend;
+
+  /// The customer's own delivery service is configured too (#568) — the
+  /// document can go straight to the customer.
+  final bool canSendCustomer;
 
   /// The workspace's identity WOULD satisfy the norm — it is this
   /// document's snapshot that does not. Without saying so, the sheet asks
@@ -250,21 +261,39 @@ class _EInvoiceBody extends StatelessWidget {
               const SizedBox(height: AppSpacing.lg),
               if (readiness.ready) ...[
                 // Sending beats saving: if the platform is there, the file
-                // never has to touch the user's downloads folder.
+                // never has to touch the user's downloads folder. Two legs
+                // (#568): the government platform the mandate points at,
+                // and the customer's own delivery service.
                 if (canSend) ...[
                   FilledButton.icon(
                     key: const ValueKey('invoice-einvoice-send'),
                     onPressed: () =>
                         Navigator.of(context).pop(EInvoiceExport.send),
+                    icon: const Icon(Icons.account_balance_outlined),
+                    label: Text(
+                      l10n?.invoiceSendAction ??
+                          'Send to the government platform',
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                ],
+                if (canSendCustomer) ...[
+                  (canSend ? OutlinedButton.icon : FilledButton.icon)(
+                    key: const ValueKey('invoice-einvoice-send-customer'),
+                    onPressed: () => Navigator.of(context)
+                        .pop(EInvoiceExport.sendCustomer),
                     icon: const Icon(Icons.send_outlined),
                     label: Text(
-                      l10n?.invoiceSendAction ?? 'Send to the platform',
+                      l10n?.invoiceSendCustomerAction ??
+                          "Send to the customer's service",
                     ),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                 ],
                 // The hybrid document first: one file, both readers.
-                (canSend ? OutlinedButton.icon : FilledButton.icon)(
+                ((canSend || canSendCustomer)
+                    ? OutlinedButton.icon
+                    : FilledButton.icon)(
                   key: const ValueKey('invoice-facturx-download'),
                   onPressed: () => Navigator.of(context)
                       .pop(EInvoiceExport.facturXDownload),

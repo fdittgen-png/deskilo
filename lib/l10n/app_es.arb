@@ -850,8 +850,24 @@
   "invoiceFacturXDownload": "Descargar Factur-X (PDF)",
   "invoiceFacturXShare": "Compartir Factur-X (PDF)",
   "invoiceFacturXExplain": "Un solo archivo: la factura que lee una persona, con el XML legible por máquina dentro. Es lo que esperan la mayoría de las plataformas.",
-  "invoiceSendAction": "Enviar a la plataforma",
+  "invoiceSendAction": "Enviar a la plataforma gubernamental",
   "invoiceSendAccepted": "Enviada — la plataforma la aceptó.",
+  "invoiceSendCustomerAction": "Enviar al servicio del cliente",
+  "@invoiceSendCustomerAction": {
+    "description": "E-invoice sheet: post the document to the customer's delivery service (#568)"
+  },
+  "invoiceSendCustomerAccepted": "Enviada — el servicio del cliente la aceptó.",
+  "@invoiceSendCustomerAccepted": {
+    "description": "Snackbar: the customer's service took the document (#568)"
+  },
+  "einvoiceCustomerSectionTitle": "Servicio de entrega al cliente",
+  "@einvoiceCustomerSectionTitle": {
+    "description": "E-invoicing config: customer delivery section title (#568)"
+  },
+  "einvoiceCustomerSectionHelp": "Adónde van las facturas para el cliente: su punto de acceso Peppol, portal o la API acordada — separado de la plataforma gubernamental.",
+  "@einvoiceCustomerSectionHelp": {
+    "description": "E-invoicing config: customer delivery section help (#568)"
+  },
   "invoiceSendRejected": "La plataforma la rechazó.",
   "invoiceSentOn": "Enviada el {date} · {status}",
   "@invoiceSentOn": {
@@ -1702,6 +1718,14 @@
   "featureVatDeclarationsDesc": "Generar la declaración periódica de IVA desde las facturas emitidas, mapearla al formulario oficial y transmitirla o exportarla.",
   "@featureVatDeclarationsDesc": {
     "description": "Feature toggle description (#534)"
+  },
+  "featureEinvoiceCustomerDeliveryTitle": "Entrega de facturas al cliente",
+  "@featureEinvoiceCustomerDeliveryTitle": {
+    "description": "Features screen: e-invoice customer delivery flag name (#568)"
+  },
+  "featureEinvoiceCustomerDeliveryDesc": "Un segundo canal de envío junto a la plataforma gubernamental: transmitir la factura emitida directamente al servicio de facturación del cliente.",
+  "@featureEinvoiceCustomerDeliveryDesc": {
+    "description": "Features screen: e-invoice customer delivery flag description (#568)"
   },
   "priceVatIncluded": "IVA {rate} incl.",
   "@priceVatIncluded": {

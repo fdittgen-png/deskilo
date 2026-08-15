@@ -68,4 +68,7 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureVatManagementTitle ?? 'VAT management',
       WorkspaceFeature.vatDeclarations =>
         l10n?.featureVatDeclarationsTitle ?? 'VAT declarations',
+      WorkspaceFeature.einvoiceCustomerDelivery =>
+        l10n?.featureEinvoiceCustomerDeliveryTitle ??
+            'E-invoice delivery to customers',
     };

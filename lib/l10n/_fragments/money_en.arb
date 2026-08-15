@@ -368,6 +368,14 @@
   "@featureVatDeclarationsDesc": {
     "description": "Feature toggle description (#534)"
   },
+  "featureEinvoiceCustomerDeliveryTitle": "E-invoice delivery to customers",
+  "@featureEinvoiceCustomerDeliveryTitle": {
+    "description": "Features screen: e-invoice customer delivery flag name (#568)"
+  },
+  "featureEinvoiceCustomerDeliveryDesc": "A second sending channel beside the government platform: post the issued invoice straight to the customer's own e-invoicing service.",
+  "@featureEinvoiceCustomerDeliveryDesc": {
+    "description": "Features screen: e-invoice customer delivery flag description (#568)"
+  },
   "priceVatIncluded": "incl. VAT {rate}",
   "@priceVatIncluded": {
     "description": "Suffix after a gross price naming the included VAT rate (#537)",

@@ -22,7 +22,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 31→32 (2026-08-11): #534 vatDeclarations (requires invoicing).
 // 32→33 (2026-08-11): #544 vatManagement (rates editor + rate pickers;
 // vatDeclarations re-parented under it).
-const int _expectedFeatureCount = 33;
+// 33→34 (2026-08-14): #568 einvoiceCustomerDelivery (second send leg).
+const int _expectedFeatureCount = 34;
 
 void main() {
   test('every functionality is registered — the pin', () {

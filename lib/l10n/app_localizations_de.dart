@@ -1847,11 +1847,25 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine Datei: die Rechnung für Menschen, mit dem maschinenlesbaren XML darin. Das erwarten die meisten Plattformen.';
 
   @override
-  String get invoiceSendAction => 'An die Plattform senden';
+  String get invoiceSendAction => 'An die staatliche Plattform senden';
 
   @override
   String get invoiceSendAccepted =>
       'Gesendet — die Plattform hat sie angenommen.';
+
+  @override
+  String get invoiceSendCustomerAction => 'An den Dienst des Kunden senden';
+
+  @override
+  String get invoiceSendCustomerAccepted =>
+      'Gesendet — der Dienst des Kunden hat sie angenommen.';
+
+  @override
+  String get einvoiceCustomerSectionTitle => 'Zustelldienst des Kunden';
+
+  @override
+  String get einvoiceCustomerSectionHelp =>
+      'Wohin Rechnungen für den Kunden gehen: sein Peppol-Zugangspunkt, Portal oder die vereinbarte Upload-API — getrennt von der staatlichen Plattform.';
 
   @override
   String get invoiceSendRejected => 'Die Plattform hat sie abgelehnt.';
@@ -3102,6 +3116,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureVatDeclarationsDesc =>
       'Die periodische USt-Voranmeldung aus den Rechnungen erzeugen, auf das amtliche Formular abbilden und übermitteln oder exportieren.';
+
+  @override
+  String get featureEinvoiceCustomerDeliveryTitle =>
+      'E-Rechnungszustellung an Kunden';
+
+  @override
+  String get featureEinvoiceCustomerDeliveryDesc =>
+      'Ein zweiter Sendekanal neben der staatlichen Plattform: die ausgestellte Rechnung direkt an den E-Rechnungsdienst des Kunden übermitteln.';
 
   @override
   String priceVatIncluded(String rate) {

@@ -714,13 +714,29 @@
   "@invoiceFacturXExplain": {
     "description": "E-invoice sheet: what the hybrid document is and why it is the default"
   },
-  "invoiceSendAction": "Send to the platform",
+  "invoiceSendAction": "Send to the government platform",
   "@invoiceSendAction": {
     "description": "E-invoice sheet: post the document to the platform (0073)"
   },
   "invoiceSendAccepted": "Sent — the platform accepted it.",
   "@invoiceSendAccepted": {
     "description": "Snackbar: the platform took the document"
+  },
+  "invoiceSendCustomerAction": "Send to the customer's service",
+  "@invoiceSendCustomerAction": {
+    "description": "E-invoice sheet: post the document to the customer's delivery service (#568)"
+  },
+  "invoiceSendCustomerAccepted": "Sent — the customer's service accepted it.",
+  "@invoiceSendCustomerAccepted": {
+    "description": "Snackbar: the customer's service took the document (#568)"
+  },
+  "einvoiceCustomerSectionTitle": "Customer delivery service",
+  "@einvoiceCustomerSectionTitle": {
+    "description": "E-invoicing config: customer delivery section title (#568)"
+  },
+  "einvoiceCustomerSectionHelp": "Where invoices go for the customer: their Peppol access point, portal or agreed upload API — separate from the government platform.",
+  "@einvoiceCustomerSectionHelp": {
+    "description": "E-invoicing config: customer delivery section help (#568)"
   },
   "invoiceSendRejected": "The platform refused it.",
   "@invoiceSendRejected": {

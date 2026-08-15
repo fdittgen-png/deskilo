@@ -181,6 +181,14 @@
   "@featureVatDeclarationsDesc": {
     "description": "Feature toggle description (#534)"
   },
+  "featureEinvoiceCustomerDeliveryTitle": "Entrega de facturas al cliente",
+  "@featureEinvoiceCustomerDeliveryTitle": {
+    "description": "Features screen: e-invoice customer delivery flag name (#568)"
+  },
+  "featureEinvoiceCustomerDeliveryDesc": "Un segundo canal de envío junto a la plataforma gubernamental: transmitir la factura emitida directamente al servicio de facturación del cliente.",
+  "@featureEinvoiceCustomerDeliveryDesc": {
+    "description": "Features screen: e-invoice customer delivery flag description (#568)"
+  },
   "priceVatIncluded": "IVA {rate} incl.",
   "@priceVatIncluded": {
     "description": "Suffix after a gross price naming the included VAT rate (#537)",

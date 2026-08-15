@@ -1849,10 +1849,24 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un unico file: la fattura che legge una persona, con l\'XML leggibile dalle macchine al suo interno. È ciò che si aspettano la maggior parte delle piattaforme.';
 
   @override
-  String get invoiceSendAction => 'Invia alla piattaforma';
+  String get invoiceSendAction => 'Invia alla piattaforma governativa';
 
   @override
   String get invoiceSendAccepted => 'Inviata — la piattaforma l’ha accettata.';
+
+  @override
+  String get invoiceSendCustomerAction => 'Invia al servizio del cliente';
+
+  @override
+  String get invoiceSendCustomerAccepted =>
+      'Inviata — il servizio del cliente l’ha accettata.';
+
+  @override
+  String get einvoiceCustomerSectionTitle => 'Servizio di recapito al cliente';
+
+  @override
+  String get einvoiceCustomerSectionHelp =>
+      'Dove vanno le fatture per il cliente: il suo punto di accesso Peppol, il portale o l’API concordata — separato dalla piattaforma governativa.';
 
   @override
   String get invoiceSendRejected => 'La piattaforma l’ha rifiutata.';
@@ -3099,6 +3113,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featureVatDeclarationsDesc =>
       'Genera la dichiarazione IVA periodica dalle fatture emesse, mappala sul modulo ufficiale e trasmettila o esportala.';
+
+  @override
+  String get featureEinvoiceCustomerDeliveryTitle =>
+      'Recapito delle fatture al cliente';
+
+  @override
+  String get featureEinvoiceCustomerDeliveryDesc =>
+      'Un secondo canale di invio accanto alla piattaforma governativa: trasmettere la fattura emessa direttamente al servizio di fatturazione del cliente.';
 
   @override
   String priceVatIncluded(String rate) {

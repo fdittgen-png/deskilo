@@ -316,8 +316,24 @@
   "invoiceFacturXDownload": "Scarica Factur-X (PDF)",
   "invoiceFacturXShare": "Condividi Factur-X (PDF)",
   "invoiceFacturXExplain": "Un unico file: la fattura che legge una persona, con l'XML leggibile dalle macchine al suo interno. È ciò che si aspettano la maggior parte delle piattaforme.",
-  "invoiceSendAction": "Invia alla piattaforma",
+  "invoiceSendAction": "Invia alla piattaforma governativa",
   "invoiceSendAccepted": "Inviata — la piattaforma l’ha accettata.",
+  "invoiceSendCustomerAction": "Invia al servizio del cliente",
+  "@invoiceSendCustomerAction": {
+    "description": "E-invoice sheet: post the document to the customer's delivery service (#568)"
+  },
+  "invoiceSendCustomerAccepted": "Inviata — il servizio del cliente l’ha accettata.",
+  "@invoiceSendCustomerAccepted": {
+    "description": "Snackbar: the customer's service took the document (#568)"
+  },
+  "einvoiceCustomerSectionTitle": "Servizio di recapito al cliente",
+  "@einvoiceCustomerSectionTitle": {
+    "description": "E-invoicing config: customer delivery section title (#568)"
+  },
+  "einvoiceCustomerSectionHelp": "Dove vanno le fatture per il cliente: il suo punto di accesso Peppol, il portale o l’API concordata — separato dalla piattaforma governativa.",
+  "@einvoiceCustomerSectionHelp": {
+    "description": "E-invoicing config: customer delivery section help (#568)"
+  },
   "invoiceSendRejected": "La piattaforma l’ha rifiutata.",
   "invoiceSentOn": "Inviata il {date} · {status}",
   "@invoiceSentOn": {

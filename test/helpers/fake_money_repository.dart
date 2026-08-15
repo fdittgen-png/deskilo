@@ -751,8 +751,13 @@ class FakeMoneyRepository implements MoneyRepository {
   /// The next submission's outcome, and what was actually posted.
   EInvoiceSubmissionStatus einvoiceOutcome =
       EInvoiceSubmissionStatus.accepted;
-  final sentEInvoices =
-      <({String invoiceId, String fileName, int bytes, String environment})>[];
+  final sentEInvoices = <({
+    String invoiceId,
+    String fileName,
+    int bytes,
+    String environment,
+    String destination,
+  })>[];
   final transmissions = <String, InvoiceTransmission>{};
   final einvoiceConfig = <String, String>{};
 
@@ -770,12 +775,14 @@ class FakeMoneyRepository implements MoneyRepository {
     required String mimeType,
     required List<int> bytes,
     String environment = 'prod',
+    String destination = 'government',
   }) async {
     sentEInvoices.add((
       invoiceId: invoiceId,
       fileName: fileName,
       bytes: bytes.length,
       environment: environment,
+      destination: destination,
     ));
     transmissions[invoiceId] = InvoiceTransmission(
       invoiceId: invoiceId,
@@ -783,6 +790,7 @@ class FakeMoneyRepository implements MoneyRepository {
       sentAt: kTestNow,
       externalId: 'platform-${sentEInvoices.length}',
       environment: environment,
+      destination: destination,
     );
     return EInvoiceSubmission(
       status: einvoiceOutcome,

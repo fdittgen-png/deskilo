@@ -139,6 +139,11 @@ class FeaturesScreen extends ConsumerWidget {
               'Generate the periodic VAT return from issued invoices, '
                   'map it to the official form and transmit or export '
                   'it.',
+        WorkspaceFeature.einvoiceCustomerDelivery =>
+          l10n?.featureEinvoiceCustomerDeliveryDesc ??
+              "A second sending channel beside the government platform: "
+                  "post the issued invoice straight to the customer's "
+                  "own e-invoicing service.",
       };
 
   Future<void> _toggle(

@@ -8,6 +8,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/money_providers.dart';
 
@@ -39,6 +40,12 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
   final _uatToken = TextEditingController();
   final _devEndpoint = TextEditingController();
   final _devToken = TextEditingController();
+  // The customer's delivery service (#568): the second leg, its own
+  // endpoint and credential.
+  final _customerEndpoint = TextEditingController();
+  final _customerToken = TextEditingController();
+  final _customerHeader = TextEditingController();
+  final _customerField = TextEditingController();
   bool _saving = false;
   bool _loaded = false;
 
@@ -52,6 +59,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
     _uatToken.dispose();
     _devEndpoint.dispose();
     _devToken.dispose();
+    _customerEndpoint.dispose();
+    _customerToken.dispose();
+    _customerHeader.dispose();
+    _customerField.dispose();
     super.dispose();
   }
 
@@ -79,6 +90,11 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
               'auth_value_uat': _uatToken.text.trim(),
               'endpoint_dev': _devEndpoint.text.trim(),
               'auth_value_dev': _devToken.text.trim(),
+              // #568 — the customer leg, same merge semantics.
+              'customer_endpoint': _customerEndpoint.text.trim(),
+              'customer_auth_value': _customerToken.text.trim(),
+              'customer_auth_header': _customerHeader.text.trim(),
+              'customer_field_name': _customerField.text.trim(),
             },
           ),
     );
@@ -88,6 +104,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
     _token.clear();
     _uatToken.clear();
     _devToken.clear();
+    _customerToken.clear();
     ref
       ..invalidate(eInvoiceStatusProvider)
       ..invalidate(eInvoiceGatewayProvider);
@@ -119,6 +136,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
     _uatToken.clear();
     _devEndpoint.clear();
     _devToken.clear();
+    _customerEndpoint.clear();
+    _customerToken.clear();
+    _customerHeader.clear();
+    _customerField.clear();
     ref
       ..invalidate(eInvoiceStatusProvider)
       ..invalidate(eInvoiceGatewayProvider);
@@ -144,6 +165,10 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
       // works — degraded read-back, never broken config.
       _uatEndpoint.text = status.fields['endpoint_uat'] ?? '';
       _devEndpoint.text = status.fields['endpoint_dev'] ?? '';
+      // Pre-0112 the customer keys are classified secret the same way.
+      _customerEndpoint.text = status.fields['customer_endpoint'] ?? '';
+      _customerHeader.text = status.fields['customer_auth_header'] ?? '';
+      _customerField.text = status.fields['customer_field_name'] ?? '';
     }
 
     return Scaffold(
@@ -225,6 +250,72 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                     labelText: l10n?.einvoiceConfigField ?? 'File field name',
                   ),
                 ),
+                // #568 — the customer's own delivery service, beside the
+                // government platform above. Behind its feature flag.
+                if (ref
+                    .watch(enabledFeaturesSyncProvider)
+                    .contains(WorkspaceFeature.einvoiceCustomerDelivery)) ...[
+                  const SizedBox(height: AppSpacing.lg),
+                  Text(
+                    l10n?.einvoiceCustomerSectionTitle ??
+                        'Customer delivery service',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  Text(
+                    l10n?.einvoiceCustomerSectionHelp ??
+                        "Where invoices go for the customer: their Peppol "
+                            "access point, portal or agreed upload API — "
+                            "separate from the government platform.",
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color:
+                              Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  TextField(
+                    key: const ValueKey('einvoice-customer-endpoint'),
+                    controller: _customerEndpoint,
+                    keyboardType: TextInputType.url,
+                    decoration: InputDecoration(
+                      labelText: l10n?.einvoiceConfigEndpoint ?? 'Upload URL',
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  TextField(
+                    key: const ValueKey('einvoice-customer-token'),
+                    controller: _customerToken,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText:
+                          l10n?.einvoiceConfigToken ?? 'Token or credential',
+                      helperMaxLines: 2,
+                      helperText:
+                          status.secretsSet.contains('customer_auth_value')
+                              ? (l10n?.einvoiceConfigTokenSet ??
+                                  'A token is stored (type a new one to '
+                                      'replace it).')
+                              : null,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  TextField(
+                    key: const ValueKey('einvoice-customer-header'),
+                    controller: _customerHeader,
+                    decoration: InputDecoration(
+                      labelText: l10n?.einvoiceConfigHeader ?? 'Auth header',
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  TextField(
+                    key: const ValueKey('einvoice-customer-field'),
+                    controller: _customerField,
+                    decoration: InputDecoration(
+                      labelText:
+                          l10n?.einvoiceConfigField ?? 'File field name',
+                    ),
+                  ),
+                ],
                 const SizedBox(height: AppSpacing.lg),
                 Text(
                   l10n?.einvoiceTestEnvsTitle ??
