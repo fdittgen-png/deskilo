@@ -850,8 +850,24 @@
   "invoiceFacturXDownload": "Factur-X (PDF) herunterladen",
   "invoiceFacturXShare": "Factur-X (PDF) teilen",
   "invoiceFacturXExplain": "Eine Datei: die Rechnung für Menschen, mit dem maschinenlesbaren XML darin. Das erwarten die meisten Plattformen.",
-  "invoiceSendAction": "An die Plattform senden",
+  "invoiceSendAction": "An die staatliche Plattform senden",
   "invoiceSendAccepted": "Gesendet — die Plattform hat sie angenommen.",
+  "invoiceSendCustomerAction": "An den Dienst des Kunden senden",
+  "@invoiceSendCustomerAction": {
+    "description": "E-invoice sheet: post the document to the customer's delivery service (#568)"
+  },
+  "invoiceSendCustomerAccepted": "Gesendet — der Dienst des Kunden hat sie angenommen.",
+  "@invoiceSendCustomerAccepted": {
+    "description": "Snackbar: the customer's service took the document (#568)"
+  },
+  "einvoiceCustomerSectionTitle": "Zustelldienst des Kunden",
+  "@einvoiceCustomerSectionTitle": {
+    "description": "E-invoicing config: customer delivery section title (#568)"
+  },
+  "einvoiceCustomerSectionHelp": "Wohin Rechnungen für den Kunden gehen: sein Peppol-Zugangspunkt, Portal oder die vereinbarte Upload-API — getrennt von der staatlichen Plattform.",
+  "@einvoiceCustomerSectionHelp": {
+    "description": "E-invoicing config: customer delivery section help (#568)"
+  },
   "invoiceSendRejected": "Die Plattform hat sie abgelehnt.",
   "invoiceSentOn": "Gesendet am {date} · {status}",
   "@invoiceSentOn": {
@@ -1702,6 +1718,14 @@
   "featureVatDeclarationsDesc": "Die periodische USt-Voranmeldung aus den Rechnungen erzeugen, auf das amtliche Formular abbilden und übermitteln oder exportieren.",
   "@featureVatDeclarationsDesc": {
     "description": "Feature toggle description (#534)"
+  },
+  "featureEinvoiceCustomerDeliveryTitle": "E-Rechnungszustellung an Kunden",
+  "@featureEinvoiceCustomerDeliveryTitle": {
+    "description": "Features screen: e-invoice customer delivery flag name (#568)"
+  },
+  "featureEinvoiceCustomerDeliveryDesc": "Ein zweiter Sendekanal neben der staatlichen Plattform: die ausgestellte Rechnung direkt an den E-Rechnungsdienst des Kunden übermitteln.",
+  "@featureEinvoiceCustomerDeliveryDesc": {
+    "description": "Features screen: e-invoice customer delivery flag description (#568)"
   },
   "priceVatIncluded": "inkl. {rate} USt",
   "@priceVatIncluded": {

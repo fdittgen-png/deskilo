@@ -770,6 +770,27 @@ class SupabaseMoneyRepository implements MoneyRepository {
             in (data['environments'] as Map? ?? const {}).entries)
           entry.key as String: entry.value == true,
       },
+      // #568 — absent on a pre-destination function: the customer leg
+      // then stays hidden (the deployment latch).
+      destinations: {
+        for (final entry
+            in (data['destinations'] as Map? ?? const {}).entries)
+          entry.key as String: EInvoiceDestination(
+            configured: (entry.value as Map)['configured'] == true,
+            missing: [
+              for (final field
+                  in ((entry.value as Map)['missing'] as List? ?? const []))
+                field as String,
+            ],
+            environments: {
+              for (final env in ((entry.value as Map)['environments']
+                          as Map? ??
+                      const {})
+                  .entries)
+                env.key as String: env.value == true,
+            },
+          ),
+      },
     );
   }
 
@@ -781,6 +802,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     required String mimeType,
     required List<int> bytes,
     String environment = 'prod',
+    String destination = 'government',
   }) async {
     final data = await _invokeSend({
       'workspace_id': workspaceId,
@@ -789,6 +811,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
       'mime_type': mimeType,
       'content_base64': base64Encode(bytes),
       'environment': environment,
+      'destination': destination,
     });
     if (data == null) {
       return const EInvoiceSubmission(

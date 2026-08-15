@@ -1846,10 +1846,24 @@ class AppLocalizationsEs extends AppLocalizations {
       'Un solo archivo: la factura que lee una persona, con el XML legible por máquina dentro. Es lo que esperan la mayoría de las plataformas.';
 
   @override
-  String get invoiceSendAction => 'Enviar a la plataforma';
+  String get invoiceSendAction => 'Enviar a la plataforma gubernamental';
 
   @override
   String get invoiceSendAccepted => 'Enviada — la plataforma la aceptó.';
+
+  @override
+  String get invoiceSendCustomerAction => 'Enviar al servicio del cliente';
+
+  @override
+  String get invoiceSendCustomerAccepted =>
+      'Enviada — el servicio del cliente la aceptó.';
+
+  @override
+  String get einvoiceCustomerSectionTitle => 'Servicio de entrega al cliente';
+
+  @override
+  String get einvoiceCustomerSectionHelp =>
+      'Adónde van las facturas para el cliente: su punto de acceso Peppol, portal o la API acordada — separado de la plataforma gubernamental.';
 
   @override
   String get invoiceSendRejected => 'La plataforma la rechazó.';
@@ -3092,6 +3106,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureVatDeclarationsDesc =>
       'Generar la declaración periódica de IVA desde las facturas emitidas, mapearla al formulario oficial y transmitirla o exportarla.';
+
+  @override
+  String get featureEinvoiceCustomerDeliveryTitle =>
+      'Entrega de facturas al cliente';
+
+  @override
+  String get featureEinvoiceCustomerDeliveryDesc =>
+      'Un segundo canal de envío junto a la plataforma gubernamental: transmitir la factura emitida directamente al servicio de facturación del cliente.';
 
   @override
   String priceVatIncluded(String rate) {

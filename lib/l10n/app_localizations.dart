@@ -3341,7 +3341,7 @@ abstract class AppLocalizations {
   /// E-invoice sheet: post the document to the platform (0073)
   ///
   /// In en, this message translates to:
-  /// **'Send to the platform'**
+  /// **'Send to the government platform'**
   String get invoiceSendAction;
 
   /// Snackbar: the platform took the document
@@ -3349,6 +3349,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sent — the platform accepted it.'**
   String get invoiceSendAccepted;
+
+  /// E-invoice sheet: post the document to the customer's delivery service (#568)
+  ///
+  /// In en, this message translates to:
+  /// **'Send to the customer\'s service'**
+  String get invoiceSendCustomerAction;
+
+  /// Snackbar: the customer's service took the document (#568)
+  ///
+  /// In en, this message translates to:
+  /// **'Sent — the customer\'s service accepted it.'**
+  String get invoiceSendCustomerAccepted;
+
+  /// E-invoicing config: customer delivery section title (#568)
+  ///
+  /// In en, this message translates to:
+  /// **'Customer delivery service'**
+  String get einvoiceCustomerSectionTitle;
+
+  /// E-invoicing config: customer delivery section help (#568)
+  ///
+  /// In en, this message translates to:
+  /// **'Where invoices go for the customer: their Peppol access point, portal or agreed upload API — separate from the government platform.'**
+  String get einvoiceCustomerSectionHelp;
 
   /// Snackbar: the platform refused it
   ///
@@ -5623,6 +5647,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Generate the periodic VAT return from issued invoices, map it to the official form and transmit or export it.'**
   String get featureVatDeclarationsDesc;
+
+  /// Features screen: e-invoice customer delivery flag name (#568)
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoice delivery to customers'**
+  String get featureEinvoiceCustomerDeliveryTitle;
+
+  /// Features screen: e-invoice customer delivery flag description (#568)
+  ///
+  /// In en, this message translates to:
+  /// **'A second sending channel beside the government platform: post the issued invoice straight to the customer\'s own e-invoicing service.'**
+  String get featureEinvoiceCustomerDeliveryDesc;
 
   /// Suffix after a gross price naming the included VAT rate (#537)
   ///

@@ -181,6 +181,14 @@
   "@featureVatDeclarationsDesc": {
     "description": "Feature toggle description (#534)"
   },
+  "featureEinvoiceCustomerDeliveryTitle": "E-Rechnungszustellung an Kunden",
+  "@featureEinvoiceCustomerDeliveryTitle": {
+    "description": "Features screen: e-invoice customer delivery flag name (#568)"
+  },
+  "featureEinvoiceCustomerDeliveryDesc": "Ein zweiter Sendekanal neben der staatlichen Plattform: die ausgestellte Rechnung direkt an den E-Rechnungsdienst des Kunden übermitteln.",
+  "@featureEinvoiceCustomerDeliveryDesc": {
+    "description": "Features screen: e-invoice customer delivery flag description (#568)"
+  },
   "priceVatIncluded": "inkl. {rate} USt",
   "@priceVatIncluded": {
     "description": "Suffix after a gross price naming the included VAT rate (#537)",

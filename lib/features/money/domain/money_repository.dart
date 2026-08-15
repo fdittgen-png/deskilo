@@ -329,10 +329,11 @@ abstract class MoneyRepository {
   /// the affordance rather than offering a button that cannot work.
   Future<EInvoiceGatewayConfig> fetchEInvoiceGateway(String workspaceId);
 
-  /// Posts an issued invoice's document to the workspace's e-invoicing
-  /// platform (Edge Function `send-e-invoice`). The CLIENT builds the
-  /// bytes with the same builder the download uses; the function holds the
-  /// credential and records the attempt.
+  /// Posts an issued invoice's document to one of the workspace's
+  /// e-invoicing channels (Edge Function `send-e-invoice`): the
+  /// government platform, or the customer's own delivery service (#568).
+  /// The CLIENT builds the bytes with the same builder the download uses;
+  /// the function holds the credential and records the attempt.
   Future<EInvoiceSubmission> sendEInvoice({
     required String workspaceId,
     required String invoiceId,
@@ -340,6 +341,7 @@ abstract class MoneyRepository {
     required String mimeType,
     required List<int> bytes,
     String environment = 'prod',
+    String destination = 'government',
   });
 
   /// invoiceId → its LATEST transmission (0071); invoices never sent are

@@ -17,8 +17,11 @@ import '../../helpers/mock_providers.dart';
 
 /// A workspace with a complete legal identity — otherwise the export
 /// refuses before any of this matters (0069).
-FakeWorkspaceRepository _identified() {
-  final workspace = FakeWorkspaceRepository.withWorkspace();
+FakeWorkspaceRepository _identified({
+  Map<String, dynamic> featureFlags = const {},
+}) {
+  final workspace =
+      FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags);
   workspace.workspaces[0] = workspace.workspaces[0].copyWith(
     legalId: 'HRB 12345 B',
     city: 'Berlin',
@@ -305,5 +308,133 @@ void main() {
     expect(money.einvoiceConfig['endpoint'], 'https://prod.example/upload');
     expect(money.einvoiceConfig['endpoint_uat'], 'https://uat.example/upload');
     expect(money.einvoiceConfig['auth_value_uat'], 'uat-secret');
+  });
+
+  // ── Destinations (#568) ────────────────────────────────────────────
+
+  /// The gateway as the NEW function reports it: government AND the
+  /// customer's delivery service, each its own leg.
+  const gatewayBothLegs = EInvoiceGatewayConfig(
+    configured: true,
+    destinations: {
+      'government': EInvoiceDestination(configured: true),
+      'customer': EInvoiceDestination(configured: true),
+    },
+  );
+
+  testWidgets(
+      'with BOTH legs configured the sheet offers government and customer, '
+      'and the customer send posts destination=customer and says whose '
+      'service took it', (tester) async {
+    final money = await _seeded()..einvoiceGateway = gatewayBothLegs;
+    await _pumpArchive(tester, money: money);
+    final invoice = money.invoices.single;
+
+    await _openEInvoiceSheet(tester, invoice.id);
+    expect(find.byKey(const ValueKey('invoice-einvoice-send')), findsOneWidget);
+    expect(find.byKey(const ValueKey('invoice-einvoice-send-customer')),
+        findsOneWidget);
+
+    await tester.runAsync(() async {
+      await tester
+          .tap(find.byKey(const ValueKey('invoice-einvoice-send-customer')));
+      await tester.pump();
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+    });
+    await tester.pumpAndSettle();
+
+    final sent = money.sentEInvoices.single;
+    expect(sent.invoiceId, invoice.id);
+    expect(sent.destination, 'customer');
+    expect(find.text("Sent — the customer's service accepted it."),
+        findsOneWidget);
+    expect(money.transmissions[invoice.id]!.destination, 'customer');
+  });
+
+  testWidgets(
+      'the government send still posts destination=government',
+      (tester) async {
+    final money = await _seeded()..einvoiceGateway = gatewayBothLegs;
+    await _pumpArchive(tester, money: money);
+
+    await _openEInvoiceSheet(tester, money.invoices.single.id);
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const ValueKey('invoice-einvoice-send')));
+      await tester.pump();
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+    });
+    await tester.pumpAndSettle();
+
+    expect(money.sentEInvoices.single.destination, 'government');
+  });
+
+  testWidgets(
+      'the DEPLOYED function predates destinations → no customer button, '
+      'the latch against misrouting to the government platform',
+      (tester) async {
+    // An old function's probe carries no destinations map at all.
+    final money = await _seeded()
+      ..einvoiceGateway = const EInvoiceGatewayConfig(configured: true);
+    await _pumpArchive(tester, money: money);
+
+    await _openEInvoiceSheet(tester, money.invoices.single.id);
+
+    expect(find.byKey(const ValueKey('invoice-einvoice-send')), findsOneWidget);
+    expect(find.byKey(const ValueKey('invoice-einvoice-send-customer')),
+        findsNothing);
+  });
+
+  testWidgets(
+      'the einvoiceCustomerDelivery flag OFF hides the customer leg even '
+      'when its endpoint is configured', (tester) async {
+    final money = await _seeded()..einvoiceGateway = gatewayBothLegs;
+    await _pumpArchive(
+      tester,
+      money: money,
+      workspace:
+          _identified(featureFlags: {'einvoiceCustomerDelivery': false}),
+    );
+
+    await _openEInvoiceSheet(tester, money.invoices.single.id);
+
+    expect(find.byKey(const ValueKey('invoice-einvoice-send')), findsOneWidget);
+    expect(find.byKey(const ValueKey('invoice-einvoice-send-customer')),
+        findsNothing);
+  });
+
+  testWidgets(
+      'the platform screen saves the customer endpoint as customer_-prefixed '
+      'keys — the shape the function slices per destination (#568)',
+      (tester) async {
+    final money = FakeMoneyRepository();
+    tester.view.physicalSize = const Size(800, 2600);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(money: money),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final context = tester.element(find.byType(Scaffold).first);
+    GoRouter.of(context).push('/einvoice-config');
+    await tester.pumpAndSettle();
+
+    await tester.enterText(
+      find.byKey(const ValueKey('einvoice-customer-endpoint')),
+      'https://ap.example/peppol',
+    );
+    await tester.enterText(
+      find.byKey(const ValueKey('einvoice-customer-token')),
+      'customer-secret',
+    );
+    await tester.ensureVisible(find.byKey(const ValueKey('einvoice-save')));
+    await tester.tap(find.byKey(const ValueKey('einvoice-save')));
+    await tester.pumpAndSettle();
+
+    expect(
+        money.einvoiceConfig['customer_endpoint'], 'https://ap.example/peppol');
+    expect(money.einvoiceConfig['customer_auth_value'], 'customer-secret');
   });
 }

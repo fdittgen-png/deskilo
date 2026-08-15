@@ -1834,10 +1834,24 @@ class AppLocalizationsEn extends AppLocalizations {
       'One file: the invoice a human reads, with the machine-readable XML inside it. This is what most platforms expect.';
 
   @override
-  String get invoiceSendAction => 'Send to the platform';
+  String get invoiceSendAction => 'Send to the government platform';
 
   @override
   String get invoiceSendAccepted => 'Sent — the platform accepted it.';
+
+  @override
+  String get invoiceSendCustomerAction => 'Send to the customer\'s service';
+
+  @override
+  String get invoiceSendCustomerAccepted =>
+      'Sent — the customer\'s service accepted it.';
+
+  @override
+  String get einvoiceCustomerSectionTitle => 'Customer delivery service';
+
+  @override
+  String get einvoiceCustomerSectionHelp =>
+      'Where invoices go for the customer: their Peppol access point, portal or agreed upload API — separate from the government platform.';
 
   @override
   String get invoiceSendRejected => 'The platform refused it.';
@@ -3072,6 +3086,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureVatDeclarationsDesc =>
       'Generate the periodic VAT return from issued invoices, map it to the official form and transmit or export it.';
+
+  @override
+  String get featureEinvoiceCustomerDeliveryTitle =>
+      'E-invoice delivery to customers';
+
+  @override
+  String get featureEinvoiceCustomerDeliveryDesc =>
+      'A second sending channel beside the government platform: post the issued invoice straight to the customer\'s own e-invoicing service.';
 
   @override
   String priceVatIncluded(String rate) {

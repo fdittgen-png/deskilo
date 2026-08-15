@@ -38,7 +38,8 @@ enum WorkspaceFeature {
   deletionRequests,
   roleManagement,
   vatManagement,
-  vatDeclarations;
+  vatDeclarations,
+  einvoiceCustomerDelivery;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -216,6 +217,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   WorkspaceFeature.vatDeclarations: FeatureManifestEntry(
     feature: WorkspaceFeature.vatDeclarations,
     requires: WorkspaceFeature.vatManagement,
+  ),
+  // Direct delivery to the CUSTOMER's e-invoicing service (#568) — the
+  // second leg beside the government platform. Under invoicing: it only
+  // ever shows on the send sheet of an issued invoice.
+  WorkspaceFeature.einvoiceCustomerDelivery: FeatureManifestEntry(
+    feature: WorkspaceFeature.einvoiceCustomerDelivery,
+    requires: WorkspaceFeature.invoicing,
   ),
 };
 

@@ -83,7 +83,8 @@ const Map<String, int> _baseline = {
   // 1680→1740 (2026-08-05): #496 the language-resolution helpers threaded through the builders.
   // 1740→1820 (2026-08-05): #504 the write-off request dialog.
   // 1820→1910 (2026-08-05): #508 the credit-note refund dialog.
-  'lib/features/money/presentation/invoice_actions.dart': 1960,
+  // 1960→2000 (2026-08-14): #568 the customer-delivery send leg.
+  'lib/features/money/presentation/invoice_actions.dart': 2000,
   // 1920→1960 (2026-08-06): #514 quickViewInvoice + the proforma triad.
   // 1910→1920 (2026-08-06): #512 imputation candidates (adjustment
   // credits, baked-credit filter).
@@ -116,7 +117,8 @@ const Map<String, int> _baseline = {
   // 890→900 (2026-08-06): #512 the member_account fetch.
   // 900→980 (2026-08-11): #534 VAT declarations — fetch/save/mark/send
   // repository methods (one cohesive data client, no new concern).
-  'lib/features/money/data/supabase_money_repository.dart': 980,
+  // 980→1020 (2026-08-14): #568 per-destination gateway probe parse.
+  'lib/features/money/data/supabase_money_repository.dart': 1020,
   // 600→630 (2026-08-11): #537 VAT price transparency — the gross-price
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
   // 630→660 (2026-08-11): #537 follow-up — live VAT-share helpers under

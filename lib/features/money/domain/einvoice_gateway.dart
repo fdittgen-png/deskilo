@@ -10,6 +10,7 @@ class EInvoiceGatewayConfig {
     this.provider = 'generic',
     this.missing = const [],
     this.environments = const {},
+    this.destinations = const {},
   });
 
   /// No platform, or no function deployed — the affordance stays hidden.
@@ -30,11 +31,38 @@ class EInvoiceGatewayConfig {
   /// ignore it and send the test document to production.
   final Map<String, bool> environments;
 
+  /// destination name → its readiness (#568). EMPTY when the deployed
+  /// function predates destinations — the same latch as [environments]:
+  /// the customer leg is only offered when the function demonstrably
+  /// understands the parameter, because an older one would ignore it and
+  /// post the document to the government platform.
+  final Map<String, EInvoiceDestination> destinations;
+
   /// Test environments (anything but prod) that are ready to send.
   List<String> get testEnvironments => [
         for (final entry in environments.entries)
           if (entry.key != 'prod' && entry.value) entry.key,
       ];
+
+  /// The customer's delivery service is configured AND the function
+  /// understands destinations (#568).
+  bool get customerConfigured =>
+      destinations['customer']?.configured ?? false;
+}
+
+/// One destination's readiness (#568): the government platform or the
+/// customer's own delivery service, each with its own endpoint and
+/// credential.
+class EInvoiceDestination {
+  const EInvoiceDestination({
+    required this.configured,
+    this.missing = const [],
+    this.environments = const {},
+  });
+
+  final bool configured;
+  final List<String> missing;
+  final Map<String, bool> environments;
 }
 
 /// What the platform answered.
@@ -80,6 +108,7 @@ class InvoiceTransmission {
     this.detail = '',
     this.byName = '',
     this.environment = 'prod',
+    this.destination = 'government',
   });
 
   final String invoiceId;
@@ -96,6 +125,10 @@ class InvoiceTransmission {
   /// Where it went (#393): a rehearsal must never read like the real
   /// submission. 'prod' for every row that predates environments.
   final String environment;
+
+  /// WHO received it (#568): 'government' or 'customer'. 'government'
+  /// for every row that predates destinations.
+  final String destination;
 
   bool get accepted => status == EInvoiceSubmissionStatus.accepted;
 
@@ -115,6 +148,7 @@ class InvoiceTransmission {
         detail: row['detail'] as String? ?? '',
         byName: row['by_name'] as String? ?? '',
         environment: row['environment'] as String? ?? 'prod',
+        destination: row['destination'] as String? ?? 'government',
       );
 }
 
