@@ -1,0 +1,197 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: 0BSD
+
+name: Release Train
+
+# #570 — ONE workflow that deploys everything: Android (Play), Apple
+# (TestFlight), macOS (DMG), Windows (MSI) and web (GitHub Pages), on a
+# beta or a production track. The legs are the EXISTING per-platform
+# workflows called verbatim (workflow_call), so the train can never drift
+# from what a solo dispatch builds.
+#
+# The legs are independent: one failing platform never stops another —
+# the train always runs to the end, ships what works, and the `report`
+# job (if: always()) then says what did not, with each failed leg's own
+# log excerpt:
+#   - a GitHub issue is opened (the notification — GitHub relays it to
+#     the owner's devices/inbox natively), and
+#   - an e-mail is sent when the SMTP secrets are configured
+#     (SMTP_HOST, SMTP_PORT optional [465], SMTP_USERNAME, SMTP_PASSWORD,
+#     NOTIFY_EMAIL_TO). Without them the e-mail step is skipped with a
+#     loud summary note — never a failure of the report itself.
+#
+# Track mapping (what "beta" and "production" mean per platform):
+#   android  beta → Play 'beta' track      production → Play 'production'
+#   apple    beta → TestFlight internal    production → TestFlight external
+#                                            group (the public link)
+#   macos    DMG artifact (no store channel — same build both tracks)
+#   windows  MSI artifact (no store channel — same build both tracks)
+#   web      beta → build-check only       production → Pages deploy
+#
+# Play may refuse a track that is still policy-locked (production access
+# pending): that leg then fails and the report says so in Play's own
+# words — exactly the honest outcome the train exists to surface.
+
+on:
+  workflow_dispatch:
+    inputs:
+      track:
+        description: Which train — beta or production
+        required: true
+        type: choice
+        options:
+          - beta
+          - production
+        default: beta
+
+# The called workflows' permissions must fit inside this grant:
+# contents:write (Play tag push), pages+id-token (web deploy),
+# issues:write (the failure notification), actions:read (log fetch).
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  issues: write
+  actions: read
+
+concurrency:
+  group: release-train
+  cancel-in-progress: false
+
+jobs:
+  android:
+    uses: ./.github/workflows/play-internal.yml
+    with:
+      track: ${{ inputs.track == 'production' && 'production' || 'beta' }}
+    secrets: inherit
+
+  apple:
+    uses: ./.github/workflows/ios-testflight.yml
+    with:
+      release_notes: ${{ inputs.track == 'production'
+        && 'Production candidate.' || 'Beta build.' }}
+      distribute_external: ${{ inputs.track == 'production' }}
+    secrets: inherit
+
+  macos:
+    uses: ./.github/workflows/macos-app.yml
+    with:
+      ref: ${{ github.ref_name }}
+    secrets: inherit
+
+  windows:
+    uses: ./.github/workflows/windows-msi.yml
+    with:
+      ref: ${{ github.ref_name }}
+    secrets: inherit
+
+  web:
+    uses: ./.github/workflows/web.yml
+    with:
+      ref: ${{ github.ref_name }}
+      deploy: ${{ inputs.track == 'production' }}
+    secrets: inherit
+
+  # Always runs, whatever the legs did: collects each leg's outcome, digs
+  # the failed jobs' logs out of THIS run, and turns failures into an
+  # issue + e-mail. A train that quietly half-ships is worse than one
+  # that fails loudly.
+  report:
+    needs: [android, apple, macos, windows, web]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      # secrets are not allowed in step-level `if` — bridge via job env.
+      HAS_SMTP: ${{ secrets.SMTP_HOST != '' && secrets.SMTP_USERNAME != ''
+        && secrets.SMTP_PASSWORD != '' && secrets.NOTIFY_EMAIL_TO != '' }}
+      RESULT_ANDROID: ${{ needs.android.result }}
+      RESULT_APPLE: ${{ needs.apple.result }}
+      RESULT_MACOS: ${{ needs.macos.result }}
+      RESULT_WINDOWS: ${{ needs.windows.result }}
+      RESULT_WEB: ${{ needs.web.result }}
+      TRACK: ${{ inputs.track }}
+    steps:
+      - name: Compose the per-leg report
+        id: compose
+        run: |
+          set -euo pipefail
+          declare -A results=(
+            [android]="$RESULT_ANDROID" [apple]="$RESULT_APPLE"
+            [macos]="$RESULT_MACOS" [windows]="$RESULT_WINDOWS"
+            [web]="$RESULT_WEB"
+          )
+          failed=()
+          {
+            echo "# Release train ($TRACK) — $(date -u +%Y-%m-%dT%H:%MZ)"
+            echo
+            echo "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            echo
+            echo "| Leg | Result |"
+            echo "| --- | --- |"
+            for leg in android apple macos windows web; do
+              r="${results[$leg]}"
+              icon="✅"
+              if [ "$r" = "failure" ]; then icon="❌"; failed+=("$leg"); fi
+              if [ "$r" = "cancelled" ]; then icon="🚫"; failed+=("$leg"); fi
+              echo "| $leg | $icon $r |"
+            done
+            echo
+          } > report.md
+
+          # The failed legs' own words: every job of this run whose name
+          # starts with "<leg> /" and failed, tail of its log.
+          if [ "${#failed[@]}" -gt 0 ]; then
+            echo "## What failed, in the logs' own words" >> report.md
+            gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=100" \
+              --paginate --jq '.jobs[] | {id, name, conclusion}' > jobs.jsonl
+            for leg in "${failed[@]}"; do
+              while IFS=$'\t' read -r job_id job_name; do
+                echo "" >> report.md
+                echo "### $job_name" >> report.md
+                echo '```' >> report.md
+                # Failed-step log tail; the API returns the full text log.
+                (gh api "repos/${GITHUB_REPOSITORY}/actions/jobs/${job_id}/logs" \
+                  2>/dev/null || echo "log not retrievable") \
+                  | grep -v '^.\{0,29\}##\[group\]' | tail -n 60 \
+                  | cut -c1-400 >> report.md
+                echo '```' >> report.md
+              done < <(jq -r --arg leg "$leg" \
+                'select(.conclusion == "failure" and (.name | startswith($leg + " /")))
+                 | [(.id | tostring), .name] | @tsv' jobs.jsonl)
+            done
+          else
+            echo "All legs green — nothing failed, nothing to notify." >> report.md
+          fi
+
+          cat report.md >> "$GITHUB_STEP_SUMMARY"
+          echo "failed_count=${#failed[@]}" >> "$GITHUB_OUTPUT"
+          echo "failed_legs=${failed[*]:-}" >> "$GITHUB_OUTPUT"
+
+      - name: Open the failure issue (the notification)
+        if: ${{ steps.compose.outputs.failed_count != '0' }}
+        run: |
+          set -euo pipefail
+          gh issue create \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Release train ($TRACK): ${{ steps.compose.outputs.failed_count }} leg(s) failed — ${{ steps.compose.outputs.failed_legs }}" \
+            --body-file report.md
+
+      - name: E-mail the failure report
+        if: ${{ steps.compose.outputs.failed_count != '0' && env.HAS_SMTP == 'true' }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_HOST }}
+          server_port: ${{ secrets.SMTP_PORT || 465 }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          from: DesKilo release train <${{ secrets.SMTP_USERNAME }}>
+          to: ${{ secrets.NOTIFY_EMAIL_TO }}
+          subject: "Release train (${{ inputs.track }}): ${{ steps.compose.outputs.failed_legs }} failed"
+          body: file://report.md
+
+      - name: Note the missing e-mail channel
+        if: ${{ steps.compose.outputs.failed_count != '0' && env.HAS_SMTP != 'true' }}
+        run: |
+          echo "::warning::Failure e-mail NOT sent — set SMTP_HOST, SMTP_USERNAME, SMTP_PASSWORD and NOTIFY_EMAIL_TO (optionally SMTP_PORT) to enable it. The issue notification was still created."
+          echo "- **E-mail:** skipped (SMTP secrets not configured)" >> "$GITHUB_STEP_SUMMARY"

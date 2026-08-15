@@ -44,6 +44,14 @@ on:
       - macos/**
   push:
     tags: ["v*"]
+  # #570 — the release train reuses this workflow verbatim; sync_certs
+  # stays dispatch-only (undeclared inputs read as false under call).
+  workflow_call:
+    inputs:
+      ref:
+        required: false
+        type: string
+        default: master
 
 env:
   FLUTTER_VERSION: "3.41.9"
