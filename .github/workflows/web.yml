@@ -30,6 +30,17 @@ on:
         required: false
         type: boolean
         default: false
+  # #570 — the release train reuses this workflow verbatim.
+  workflow_call:
+    inputs:
+      ref:
+        required: false
+        type: string
+        default: master
+      deploy:
+        required: false
+        type: boolean
+        default: false
   pull_request:
     paths:
       - .github/workflows/web.yml
@@ -98,7 +109,9 @@ jobs:
 
   deploy:
     # Only ever on an explicit dispatch with deploy=true — never on a PR.
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.deploy == true }}
+    # Not on pull_request builds; a dispatch OR a release-train call with
+    # deploy=true publishes (#570).
+    if: ${{ github.event_name != 'pull_request' && inputs.deploy == true }}
     needs: build
     runs-on: ubuntu-latest
     environment:

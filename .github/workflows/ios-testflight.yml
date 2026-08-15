@@ -60,6 +60,19 @@ on:
         required: false
         type: boolean
         default: false
+  # #570 — the release train reuses this workflow verbatim. Only the two
+  # inputs a train run needs; the maintenance switches stay dispatch-only
+  # (an undeclared input reads as empty/false under workflow_call).
+  workflow_call:
+    inputs:
+      release_notes:
+        required: false
+        type: string
+        default: Internal build.
+      distribute_external:
+        required: false
+        type: boolean
+        default: false
 
 concurrency:
   group: ios-testflight
@@ -154,7 +167,7 @@ jobs:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
           IOS_BUILD_NUMBER: ${{ steps.bn.outputs.build_number }}
-          TESTFLIGHT_CHANGELOG: ${{ github.event.inputs.release_notes || 'Internal build.' }}
+          TESTFLIGHT_CHANGELOG: ${{ inputs.release_notes || 'Internal build.' }}
           # External-distribution test info (only read when
           # distribute_external=true; empty values degrade gracefully).
           BETA_CONTACT_PHONE: ${{ secrets.BETA_CONTACT_PHONE || '' }}
