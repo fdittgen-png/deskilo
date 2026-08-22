@@ -1058,6 +1058,18 @@ abstract class AppLocalizations {
   /// **'Wero (via Mollie)'**
   String get paymentProviderWero;
 
+  /// Detail sheet: extend a running booking's end (#574)
+  ///
+  /// In en, this message translates to:
+  /// **'Stay longer'**
+  String get reservationExtendButton;
+
+  /// Extend flow: picked time not after the current end (#574)
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a time after the current end.'**
+  String get reservationExtendLaterOnly;
+
   /// Calendar filter showing only the user's reservations
   ///
   /// In en, this message translates to:

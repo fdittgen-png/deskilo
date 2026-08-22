@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
+import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
+import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 
 import 'test_clock.dart';
 
@@ -13,6 +15,11 @@ class FakeReservationRepository implements ReservationRepository {
 
   final String myMemberId;
   final reservations = <Reservation>[];
+
+  /// The workspace granularity the SERVER would read (#573): the fake
+  /// mirrors the canonical walk-up snap-back and the same-day presence
+  /// rule only when a test sets a day-based/hours granularity.
+  BookingGranularity granularity = BookingGranularity.flexible;
 
   @override
   Future<Reservation?> fetchById(String reservationId) async =>
@@ -118,20 +125,39 @@ class FakeReservationRepository implements ReservationRepository {
     if (targets != 1) {
       throw StateError('exactly one of seat, desk, office or level required');
     }
-    if (levelId != null &&
-        reservations.any((r) =>
-            r.levelId == levelId && r.coversRange(startsAt, endsAt))) {
-      throw StateError('the level has reservations in that period');
+    // #573 — a day-based walk-up check-in books the SLOT the chosen end
+    // belongs to: the start snaps back; if the early slot part is taken,
+    // ONE retry anchors at now() (mirroring create_reservation v9).
+    var snapped = false;
+    if (checkIn && granularity.isDayBased) {
+      final canon = _canonicalStartFor(startsAt, endsAt);
+      if (canon != null && canon.isBefore(startsAt)) {
+        startsAt = canon;
+        snapped = true;
+      }
     }
-    if (deskId != null &&
-        reservations.any((r) =>
-            r.deskId == deskId && r.coversRange(startsAt, endsAt))) {
-      throw StateError('conflict');
+    for (var attempt = 1; attempt <= 2; attempt++) {
+      try {
+        _validateCreate(
+          seatId: seatId,
+          deskId: deskId,
+          officeId: officeId,
+          levelId: levelId,
+          startsAt: startsAt,
+          endsAt: endsAt,
+        );
+        break;
+      } catch (_) {
+        if (attempt == 1 &&
+            snapped &&
+            startsAt.isBefore(now()) &&
+            now().isBefore(endsAt)) {
+          startsAt = now();
+        } else {
+          rethrow;
+        }
+      }
     }
-    if (_overlapsActive(seatId, officeId, startsAt, endsAt)) {
-      throw StateError('conflict');
-    }
-    _assertMemberFree(myMemberId, startsAt, endsAt);
     final reservation = Reservation(
       id: 'res-${_nextId++}',
       workspaceId: workspaceId,
@@ -148,6 +174,49 @@ class FakeReservationRepository implements ReservationRepository {
     );
     reservations.add(reservation);
     return reservation.id;
+  }
+
+  /// canonical_walkup_start (0113): the slot start pairing with the
+  /// chosen end, or null for overtime/odd windows.
+  DateTime? _canonicalStartFor(DateTime startsAt, DateTime endsAt) {
+    final day = startsAt;
+    final morning = HalfDayWindows.morning(day);
+    final afternoon = HalfDayWindows.afternoon(day);
+    final full = HalfDayWindows.fullDay(day);
+    if (granularity == BookingGranularity.halfDay) {
+      if (endsAt == morning.end) return morning.start;
+      if (endsAt == full.end) {
+        return startsAt.isBefore(afternoon.start)
+            ? full.start
+            : afternoon.start;
+      }
+      return null;
+    }
+    return endsAt == full.end ? full.start : null;
+  }
+
+  void _validateCreate({
+    String? seatId,
+    String? deskId,
+    String? officeId,
+    String? levelId,
+    required DateTime startsAt,
+    required DateTime endsAt,
+  }) {
+    if (levelId != null &&
+        reservations.any((r) =>
+            r.levelId == levelId && r.coversRange(startsAt, endsAt))) {
+      throw StateError('the level has reservations in that period');
+    }
+    if (deskId != null &&
+        reservations.any((r) =>
+            r.deskId == deskId && r.coversRange(startsAt, endsAt))) {
+      throw StateError('conflict');
+    }
+    if (_overlapsActive(seatId, officeId, startsAt, endsAt)) {
+      throw StateError('conflict');
+    }
+    _assertMemberFree(myMemberId, startsAt, endsAt);
   }
 
   Reservation _byId(String id) =>
@@ -209,10 +278,21 @@ class FakeReservationRepository implements ReservationRepository {
     if (r.status != ReservationStatus.reserved) {
       throw StateError('not in reserved state');
     }
-    // Presence rule (#408, migration 0077): check-in only inside
-    // [starts − 15 min, end) — pinned substrings, like the server.
+    // Presence rule (#408 → #573, migration 0113): 15-minute leeway
+    // (one grid step for minute grids), OR the reservation's own
+    // workspace day under day-based/hours granularity — being early on
+    // your own slot's day is presence. Pinned substrings.
     final at = now();
-    if (at.isBefore(r.startsAt.subtract(Reservation.checkInLeeway))) {
+    var leeway = Reservation.checkInLeeway;
+    final step = granularity.stepMinutes;
+    if (step != null && step > leeway.inMinutes) {
+      leeway = Duration(minutes: step);
+    }
+    final sameDay = granularity.offersDayWindows &&
+        at.year == r.startsAt.year &&
+        at.month == r.startsAt.month &&
+        at.day == r.startsAt.day;
+    if (at.isBefore(r.startsAt.subtract(leeway)) && !sameDay) {
       throw const PostgrestException(message: 'check-in window not open yet');
     }
     if (!at.isBefore(r.endsAt)) {
@@ -320,6 +400,21 @@ class FakeReservationRepository implements ReservationRepository {
     final i = reservations.indexWhere((r) => r.id == reservationId);
     if (i < 0) throw StateError('unknown reservation');
     final r = reservations[i];
+    // update_reservation v2 (0113): a RUNNING booking may only move its
+    // end (later than now); anything not active is uneditable.
+    if (r.status == ReservationStatus.checkedIn) {
+      if (startsAt != r.startsAt) {
+        throw const PostgrestException(
+            message: 'a running booking keeps its start');
+      }
+      if (!endsAt.isAfter(now())) {
+        throw const PostgrestException(
+            message: 'the new end must lie ahead');
+      }
+    } else if (r.status != ReservationStatus.reserved) {
+      throw const PostgrestException(
+          message: 'only upcoming reservations can be edited');
+    }
     if (_overlapsActive(r.seatId, r.officeId, startsAt, endsAt,
         ignoreId: reservationId)) {
       throw StateError('seat already reserved in that window');

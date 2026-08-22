@@ -539,6 +539,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get paymentProviderWero => 'Wero (con Mollie)';
 
   @override
+  String get reservationExtendButton => 'Quedarse más tiempo';
+
+  @override
+  String get reservationExtendLaterOnly =>
+      'Elige una hora posterior al final actual.';
+
+  @override
   String get calendarMineTab => 'Mías';
 
   @override

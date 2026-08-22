@@ -1,4 +1,12 @@
 {
+  "reservationExtendButton": "Stay longer",
+  "@reservationExtendButton": {
+    "description": "Detail sheet: extend a running booking's end (#574)"
+  },
+  "reservationExtendLaterOnly": "Pick a time after the current end.",
+  "@reservationExtendLaterOnly": {
+    "description": "Extend flow: picked time not after the current end (#574)"
+  },
   "@@locale": "en",
   "calendarMineTab": "Mine",
   "@calendarMineTab": {

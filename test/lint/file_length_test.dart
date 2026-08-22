@@ -92,7 +92,8 @@ const Map<String, int> _baseline = {
   // 1410→1440 (2026-08-05): #496 the language chain on the workspace report.
   'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1440,
   // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
-  'lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart': 640,
+  // 640→760 (2026-08-22): #574 the running-booking extension flow.
+  'lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart': 760,
   // 600→660 (2026-08-05): #488 the editor's mode toggle + image insert
   // flow; the visual editor itself is its own file.
   // new→840 (2026-08-05): #498 the WYSIWYG design surface — styled

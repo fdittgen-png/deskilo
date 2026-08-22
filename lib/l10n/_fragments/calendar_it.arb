@@ -1,4 +1,12 @@
 {
+  "reservationExtendButton": "Restare più a lungo",
+  "@reservationExtendButton": {
+    "description": "Detail sheet: extend a running booking's end (#574)"
+  },
+  "reservationExtendLaterOnly": "Scegli un orario dopo la fine attuale.",
+  "@reservationExtendLaterOnly": {
+    "description": "Extend flow: picked time not after the current end (#574)"
+  },
   "@@locale": "it",
   "calendarMineTab": "Le mie",
   "calendarEveryoneTab": "Tutti",
