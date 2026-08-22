@@ -216,6 +216,14 @@
   "payFieldWebhookSecret": "Secret de signature du webhook",
   "payFieldApiKey": "Clé API",
   "paymentProviderWero": "Wero (via Mollie)",
+  "reservationExtendButton": "Rester plus longtemps",
+  "@reservationExtendButton": {
+    "description": "Detail sheet: extend a running booking's end (#574)"
+  },
+  "reservationExtendLaterOnly": "Choisissez une heure après la fin actuelle.",
+  "@reservationExtendLaterOnly": {
+    "description": "Extend flow: picked time not after the current end (#574)"
+  },
   "calendarMineTab": "Les miennes",
   "calendarEveryoneTab": "Tout le monde",
   "calendarNoReservations": "Aucune réservation ce jour-là.",

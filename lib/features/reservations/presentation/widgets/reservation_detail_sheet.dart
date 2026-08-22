@@ -12,6 +12,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/domain/half_day_windows.dart';
+import '../../domain/booking_error_text.dart';
 import '../../../plan/domain/seat_context.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
 import '../../../plan/providers/plan_focus_controller.dart';
@@ -68,6 +69,13 @@ class ReservationDetailSheet extends ConsumerWidget {
     final started = !r.startsAt.isAfter(now);
     final editable =
         mine && r.status == ReservationStatus.reserved && !started;
+    // #574 — a RUNNING booking may still grow: sitting in the morning
+    // seat and staying the day extends the end to a later canonical
+    // edge (the server keeps the start immovable).
+    final extendable = mine &&
+        r.status == ReservationStatus.checkedIn &&
+        r.endsAt.isAfter(now) &&
+        _laterEndFor(ref, r) != null;
     final deletionRequestable = mine &&
         !editable &&
         ref
@@ -196,6 +204,17 @@ class ReservationDetailSheet extends ConsumerWidget {
                     ),
                   ),
                 ],
+              ),
+            ],
+            if (extendable) ...[
+              const SizedBox(height: 8),
+              OutlinedButton.icon(
+                key: const ValueKey('reservation-extend'),
+                icon: const Icon(Icons.more_time_outlined),
+                onPressed: () => _extendEnd(context, ref),
+                label: Text(
+                  l10n?.reservationExtendButton ?? 'Stay longer',
+                ),
               ),
             ],
             if (deletionRequestable) ...[
@@ -413,10 +432,106 @@ class ReservationDetailSheet extends ConsumerWidget {
           'reservations', 'reservation edit failed',
           error: e, stackTrace: st);
       if (!context.mounted) return;
+      // #574 — the server's own reason (granularity, one-place, quota),
+      // not a generic "taken": the edit flow used to swallow it.
       AppSnack.error(
         context,
-        l10n?.reserveBookingFailed ??
-            'Could not reserve — the seat may have just been taken.',
+        bookingErrorText(
+          l10n,
+          e,
+          l10n?.reserveBookingFailed ??
+              'Could not reserve — the seat may have just been taken.',
+          stepMinutes: granularity.stepMinutes,
+        ),
+      );
+      return;
+    }
+    invalidateBookingData(ref);
+    if (!context.mounted) return;
+    Navigator.of(context).pop();
+    AppSnack.success(
+      context,
+      l10n?.reservationUpdatedSnack ?? 'Reservation updated.',
+    );
+  }
+
+  /// The next canonical LATER end for a running booking (#574), or null
+  /// when nothing later exists: under half-day granularity a morning
+  /// grows to the day's end; grids/hours/flexible may pick any later
+  /// time; a booking already at its day's end has nowhere to grow.
+  DateTime? _laterEndFor(WidgetRef ref, Reservation r) {
+    final granularity = ref.read(bookingGranularityProvider).value ??
+        BookingGranularity.flexible;
+    final day = WorkspaceTime.dateOf(r.startsAt);
+    final dayEnd = HalfDayWindows.fullDay(day).end;
+    if (granularity == BookingGranularity.halfDay ||
+        granularity == BookingGranularity.fullDay) {
+      return r.endsAt.isBefore(dayEnd) ? dayEnd : null;
+    }
+    // Grids, hours, flexible: anything later the same day works — the
+    // picker decides; the day's midnight bounds it.
+    final next = day.add(const Duration(days: 1));
+    final midnight = WorkspaceTime.at(next.year, next.month, next.day, 0, 0);
+    return r.endsAt.isBefore(midnight) ? midnight : null;
+  }
+
+  /// #574 — extend a RUNNING booking's end within the workspace's
+  /// granularity. Day-based: one confirm to the day's end (that IS the
+  /// only later canonical edge). Grids/hours: a snapped time picker.
+  Future<void> _extendEnd(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final r = reservation;
+    final granularity = ref.read(bookingGranularityProvider).value ??
+        BookingGranularity.flexible;
+    final day = WorkspaceTime.dateOf(r.startsAt);
+
+    DateTime? newEnd;
+    if (granularity.isDayBased) {
+      newEnd = HalfDayWindows.fullDay(day).end;
+    } else {
+      final picked = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(
+          WorkspaceTime.display(r.endsAt),
+        ),
+      );
+      if (picked == null || !context.mounted) return;
+      final step = granularity.stepMinutes ?? 15;
+      final snapped =
+          ((picked.hour * 60 + picked.minute) / step).round() * step;
+      newEnd = WorkspaceTime.at(day.year, day.month, day.day, 0, 0)
+          .add(Duration(minutes: snapped.clamp(0, 24 * 60)));
+    }
+    if (!newEnd.isAfter(r.endsAt)) {
+      if (!context.mounted) return;
+      AppSnack.info(
+        context,
+        l10n?.reservationExtendLaterOnly ??
+            'Pick a time after the current end.',
+      );
+      return;
+    }
+
+    try {
+      await ref.read(reservationRepositoryProvider).updateTimes(
+            r.id,
+            startsAt: r.startsAt,
+            endsAt: newEnd,
+          );
+    } catch (e, st) {
+      TraceLogger.instance.error(
+          'reservations', 'reservation extension failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      AppSnack.error(
+        context,
+        bookingErrorText(
+          l10n,
+          e,
+          l10n?.reserveBookingFailed ??
+              'Could not reserve — the seat may have just been taken.',
+          stepMinutes: granularity.stepMinutes,
+        ),
       );
       return;
     }
