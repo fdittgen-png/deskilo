@@ -2031,6 +2031,10 @@
   "inviteAdminNewCode": "Neuer Admin-Code",
   "inviteOwnerNote": "Es gibt keine Eigentümer-Einladung — nur ein Eigentümer kann Eigentum vergeben, unter Mitglieder & Pläne.",
   "scanJoinTitle": "Workspace-QR scannen",
+  "scanJoinHelp": "Richte die Kamera auf den Einladungs-QR — der Code wird übernommen und der Beitritt läuft automatisch.",
+  "@scanJoinHelp": {
+    "description": "Join-QR scanner: helper line under the camera (#572)"
+  },
   "onboardingScanButton": "QR-Code scannen",
   "workspaceCodeSharePng": "Als PNG teilen",
   "workspaceSettingsTitle": "Workspace",

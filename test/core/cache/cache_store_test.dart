@@ -170,6 +170,46 @@ void main() {
       expect(((await store.get('fresh'))!.payload as Map)['a'], 1);
     });
   });
+
+  group('cacheable judgement (#572)', () {
+    test(
+        'a payload judged not cacheable is served but NEVER persisted, '
+        'and it evicts what was stored under the key', () async {
+      // The invitation bug: a pending member's RLS-empty level list was
+      // disk-cached and outlived the approval that ended it.
+      final cache = InMemoryCacheStore();
+      await cache.put('levels:w1', <Object?>[],
+          ttl: const Duration(minutes: 10));
+
+      final value = await cachedFetch<List<Object?>>(
+        cache: cache,
+        key: 'levels:w1',
+        ttl: const Duration(minutes: 10),
+        // networkFirst so the poisoned entry does not answer the read.
+        mode: CacheReadMode.networkFirst,
+        fetchRaw: () async => <Object?>[],
+        cacheable: (payload) => payload is List && payload.isNotEmpty,
+        parse: (payload) => payload as List<Object?>,
+      );
+      expect(value, isEmpty);
+      // Both the new write AND the old entry are gone.
+      await Future<void>.delayed(Duration.zero);
+      expect(await cache.get('levels:w1'), isNull);
+
+      // A non-empty answer caches normally again.
+      await cachedFetch<List<Object?>>(
+        cache: cache,
+        key: 'levels:w1',
+        ttl: const Duration(minutes: 10),
+        mode: CacheReadMode.networkFirst,
+        fetchRaw: () async => <Object?>[1],
+        cacheable: (payload) => payload is List && payload.isNotEmpty,
+        parse: (payload) => payload as List<Object?>,
+      );
+      await Future<void>.delayed(Duration.zero);
+      expect(await cache.get('levels:w1'), isNotNull);
+    });
+  });
 }
 
 /// A [FileCacheStore] whose directory resolution is pinned to [dir].

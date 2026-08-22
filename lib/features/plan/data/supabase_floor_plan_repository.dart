@@ -37,6 +37,9 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   }
 
   @override
+  Future<void> invalidateCache() => _bust();
+
+  @override
   Future<List<Level>> fetchLevels(String workspaceId) =>
       cachedFetch<List<Level>>(
         cache: _cache,
@@ -48,6 +51,11 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
             .select()
             .eq('workspace_id', workspaceId)
             .order('sort_order', ascending: true),
+        // #572 — a PENDING member reads zero levels through RLS; caching
+        // that emptiness made the workspace stay blank after approval
+        // until the entry died. Emptiness is cheap to refetch and never
+        // worth persisting.
+        cacheable: (payload) => payload is List && payload.isNotEmpty,
         parse: (payload) => [
           for (final row in payload as List)
             _levelFromRow(Map<String, dynamic>.from(row as Map)),

@@ -80,6 +80,21 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
           ..invalidate(memberEmailsProvider)
           ..invalidate(myMemberProvider)
           ..invalidate(myMembershipsProvider);
+        // #572 — a members change can be THIS user's approval: pending →
+        // active widens what RLS lets them read, so everything fetched
+        // under the old horizon (zero levels, zero reservations) must
+        // refetch. Member changes are rare; over-invalidation is cheap,
+        // a workspace that stays blank after approval is not.
+        unawaited(
+          ref.read(floorPlanRepositoryProvider).invalidateCache(),
+        );
+        ref
+          ..invalidate(levelsProvider)
+          ..invalidate(floorPlanProvider)
+          ..invalidate(targetNamesProvider)
+          ..invalidate(reservationsForDayProvider)
+          ..invalidate(reservationsForMonthProvider)
+          ..invalidate(myUpcomingReservationsProvider);
       case 'workspaces':
         // Flags, granularity, rules and the availability config all
         // derive from the workspace row.

@@ -13,6 +13,9 @@ import 'package:deskilo/features/plan/domain/seat_context.dart';
 
 /// In-memory [FloorPlanRepository] (fakes over mocks).
 class FakeFloorPlanRepository implements FloorPlanRepository {
+  @override
+  Future<void> invalidateCache() async {}
+
   final levels = <Level>[];
   final offices = <Office>[];
   final desks = <Desk>[];

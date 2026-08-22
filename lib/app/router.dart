@@ -112,10 +112,17 @@ GoRouter router(Ref ref) {
       // onboarding from Profiles (#89 add-a-profile) is never hijacked.
       final workspaces = ref.read(myWorkspacesProvider);
       final atOnboarding = state.matchedLocation == '/onboarding';
+      // The join-QR camera is PART of onboarding (#572): the redirect
+      // used to evict it back to the join form the instant it was
+      // pushed, because the scanner's only audience is exactly the user
+      // with zero workspaces.
+      final atScanJoin = state.matchedLocation == '/scan-join';
       final firstRun = state.uri.queryParameters['first'] == '1';
       final list = workspaces.value;
       if (list != null) {
-        if (list.isEmpty && !atOnboarding) return '/onboarding?first=1';
+        if (list.isEmpty && !atOnboarding && !atScanJoin) {
+          return '/onboarding?first=1';
+        }
         if (list.isNotEmpty && atOnboarding && firstRun) return '/reserve';
       }
 

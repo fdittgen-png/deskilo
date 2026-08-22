@@ -22,6 +22,11 @@ enum CacheReadMode {
 /// payload (raw rows / row bundles), [parse] turns it into the domain
 /// value — parsing always runs with CURRENT code, whatever build wrote
 /// the entry.
+///
+/// [cacheable] (optional) judges a payload before it is persisted:
+/// `false` skips the write AND drops any stored entry under [key]. The
+/// #572 use: an RLS-empty answer (a pending member reads zero levels)
+/// must never be cached, or it outlives the approval that ends it.
 Future<T> cachedFetch<T>({
   required CacheStore cache,
   required String key,
@@ -29,6 +34,7 @@ Future<T> cachedFetch<T>({
   required CacheReadMode mode,
   required Future<Object?> Function() fetchRaw,
   required T Function(Object? payload) parse,
+  bool Function(Object? payload)? cacheable,
 }) async {
   if (mode == CacheReadMode.cacheFirst) {
     final hit = await cache.get(key);
@@ -37,7 +43,11 @@ Future<T> cachedFetch<T>({
   try {
     final raw = await fetchRaw();
     // The write must never delay the answer.
-    unawaited(cache.put(key, raw, ttl: ttl));
+    if (cacheable == null || cacheable(raw)) {
+      unawaited(cache.put(key, raw, ttl: ttl));
+    } else {
+      unawaited(cache.invalidatePrefix(key));
+    }
     return parse(raw);
   } catch (e, st) {
     final stale = await cache.get(key);

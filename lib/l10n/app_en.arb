@@ -5064,6 +5064,10 @@
   "@scanJoinTitle": {
     "description": "App-bar title of the QR scanner screen"
   },
+  "scanJoinHelp": "Point the camera at the invitation QR — the code is taken over and joined automatically.",
+  "@scanJoinHelp": {
+    "description": "Join-QR scanner: helper line under the camera (#572)"
+  },
   "@inviteRoleMember": {
     "description": "Segment label: invite QR/code that joins as a plain member"
   },

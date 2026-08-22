@@ -7190,6 +7190,12 @@ abstract class AppLocalizations {
   /// **'Scan QR code'**
   String get onboardingScanButton;
 
+  /// Join-QR scanner: helper line under the camera (#572)
+  ///
+  /// In en, this message translates to:
+  /// **'Point the camera at the invitation QR — the code is taken over and joined automatically.'**
+  String get scanJoinHelp;
+
   /// Button exporting the workspace QR as a PNG via the share sheet (#112)
   ///
   /// In en, this message translates to:
