@@ -124,4 +124,8 @@ abstract class FloorPlanRepository {
   /// again. Permission (owner, or admin with the adminSeatBlocking
   /// feature) is enforced server-side by the set_seat_block RPC.
   Future<void> setSeatBlock(String seatId, {DateTime? from, DateTime? to});
+
+  /// #585 — the seat carrying NFC tag [uid] (normalized lowercase hex)
+  /// in [workspaceId], or null when the tag is linked to no chair.
+  Future<String?> seatIdForNfcUid(String workspaceId, String uid);
 }

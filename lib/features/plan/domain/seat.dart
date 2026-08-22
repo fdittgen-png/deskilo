@@ -33,6 +33,9 @@ sealed class Seat with _$Seat {
     required List<String> amenities,
     DateTime? blockedFrom,
     DateTime? blockedTo,
+    /// #585 — the chair's physical NFC/RFID tag uid (normalized
+    /// lowercase hex); tapping it resolves to this seat like its QR.
+    String? nfcUid,
   }) = _Seat;
 
   /// 6×4 for n/s (sitting edge horizontal), 4×6 for e/w.

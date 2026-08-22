@@ -10,5 +10,7 @@
   "reserveWeekView": "Woche",
   "reserveFullDayChip": "Ganzer Tag",
   "reservePickDateTooltip": "Datum wählen",
-  "reserveBookingFailed": "Reservieren nicht möglich — der Platz wurde eventuell gerade belegt."
+  "reserveBookingFailed": "Reservieren nicht möglich — der Platz wurde eventuell gerade belegt.",
+  "spaceScanNfcHint": "…oder das Telefon an den NFC-Tag eines Stuhls halten.",
+  "spaceScanUnknownTag": "Dieser Tag ist mit keinem Stuhl verknüpft."
 }

@@ -511,8 +511,22 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       'amenities': seat.amenities,
       'blocked_from': seat.blockedFrom?.toUtc().toIso8601String(),
       'blocked_to': seat.blockedTo?.toUtc().toIso8601String(),
+      'nfc_uid': seat.nfcUid,
     }).eq('id', seat.id);
     await _bust();
+  }
+
+  @override
+  Future<String?> seatIdForNfcUid(String workspaceId, String uid) async {
+    final rows = await _client
+        .from('seats')
+        .select('id')
+        .eq('workspace_id', workspaceId)
+        .eq('nfc_uid', uid)
+        .limit(1);
+    return (rows as List).isEmpty
+        ? null
+        : (rows.first as Map)['id'] as String;
   }
 
   @override
@@ -589,5 +603,6 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         blockedTo: row['blocked_to'] == null
             ? null
             : DateTime.parse(row['blocked_to'] as String),
+        nfcUid: row['nfc_uid'] as String?,
       );
 }

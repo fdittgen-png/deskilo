@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:typed_data';
 
+import 'package:supabase_flutter/supabase_flutter.dart'
+    show PostgrestException;
+
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/floor_plan_repository.dart';
@@ -356,9 +359,27 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
 
   @override
   Future<void> updateSeat(Seat seat) async {
+    // #585 — mirror the partial unique index (workspace_id, nfc_uid).
+    if (seat.nfcUid != null &&
+        seats.any((s) =>
+            s.id != seat.id &&
+            s.workspaceId == seat.workspaceId &&
+            s.nfcUid == seat.nfcUid)) {
+      throw const PostgrestException(
+        message: 'duplicate key value violates unique constraint '
+            '"seats_nfc_uid_unique"',
+      );
+    }
     final i = seats.indexWhere((s) => s.id == seat.id);
     if (i >= 0) seats[i] = seat;
   }
+
+  @override
+  Future<String?> seatIdForNfcUid(String workspaceId, String uid) async =>
+      seats
+          .where((s) => s.workspaceId == workspaceId && s.nfcUid == uid)
+          .firstOrNull
+          ?.id;
 
   @override
   Future<void> deleteSeat(String seatId) async {

@@ -978,6 +978,24 @@ class AppLocalizationsEs extends AppLocalizations {
       'Todavía no hay accesorios — añádelos en Ajustes → Accesorios.';
 
   @override
+  String get editorSeatNfcLabel => 'Etiqueta NFC/RFID';
+
+  @override
+  String get editorSeatNfcHelp =>
+      'UID de la etiqueta en hexadecimal — dejar vacío para ninguna.';
+
+  @override
+  String get editorSeatNfcRead => 'Leer una etiqueta ahora';
+
+  @override
+  String get editorSeatNfcReadFailed =>
+      'No se pudo iniciar el lector de etiquetas.';
+
+  @override
+  String get editorSeatNfcDuplicate =>
+      'Esta etiqueta ya está vinculada a otra silla.';
+
+  @override
   String get eventsPendingHeader => 'Esperando tu confirmación';
 
   @override
@@ -3650,6 +3668,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get reserveBookingFailed =>
       'No se pudo reservar — puede que el asiento se acabe de ocupar.';
+
+  @override
+  String get spaceScanNfcHint =>
+      '…o acerca el teléfono a la etiqueta NFC de una silla.';
+
+  @override
+  String get spaceScanUnknownTag =>
+      'Esta etiqueta no está vinculada a ninguna silla.';
 
   @override
   String get servicesTitle => 'Servicios';

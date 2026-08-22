@@ -383,4 +383,90 @@ void main() {
     expect(r.deskId, plans.desks.single.id);
     expect(r.seatId, isNull);
   });
+
+  // ── chair NFC tags (#585) ──────────────────────────────────────────
+
+  /// Pumps the hub with an NFC-capable device and opens the scanner.
+  Future<({FakeFloorPlanRepository plans, FakeNfcUidReader nfc})>
+      pumpNfcScanner(WidgetTester tester) async {
+    tester.view.physicalSize = const Size(800, 1400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    final plans = FakeFloorPlanRepository()..seedSmallPlan();
+    final seat = plans.seats.single;
+    plans.seats[0] = seat.copyWith(nfcUid: 'aabbccdd');
+    final nfc = FakeNfcUidReader(available: true);
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..openWeekdays['ws-1'] = [1, 2, 3, 4, 5, 6, 7];
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          floorPlan: plans,
+          reservations: FakeReservationRepository(),
+          workspace: workspace,
+          nfc: nfc,
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('reserve-scan-button')));
+    await tester.pumpAndSettle();
+    return (plans: plans, nfc: nfc);
+  }
+
+  testWidgets(
+      'tapping a linked chair tag resolves to that seat like its QR '
+      '(#585)', (tester) async {
+    final env = await pumpNfcScanner(tester);
+
+    // The scanner advertises the tap path on NFC-capable devices.
+    expect(find.byKey(const ValueKey('space-scan-nfc-hint')),
+        findsOneWidget);
+
+    env.nfc.tap('aabbccdd');
+    await tester.pumpAndSettle();
+
+    // Straight to the seat's space sheet, named with its desk.
+    expect(find.text('A1 · Window desk'), findsOneWidget);
+  });
+
+  testWidgets('an unlinked tag reports and keeps the scanner open',
+      (tester) async {
+    final env = await pumpNfcScanner(tester);
+
+    env.nfc.tap('deadbeef');
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('space-scan-unknown-tag')),
+        findsOneWidget);
+    expect(find.byKey(const ValueKey('space-scan-field')),
+        findsOneWidget);
+  });
+
+  test('the fake mirrors the 0114 unique index: one tag, one chair',
+      () async {
+    final plans = FakeFloorPlanRepository()..seedSmallPlan();
+    final seat = plans.seats.single;
+    plans.seats[0] = seat.copyWith(nfcUid: 'aabbccdd');
+    await plans.createSeat(
+      workspaceId: seat.workspaceId,
+      deskId: seat.deskId,
+      name: 'B1',
+      x: 20,
+      y: 0,
+      orientation: seat.orientation,
+    );
+    final other = plans.seats.last;
+    await expectLater(
+      plans.updateSeat(other.copyWith(nfcUid: 'aabbccdd')),
+      throwsA(isA<Object>()),
+    );
+    expect(
+      await plans.seatIdForNfcUid(seat.workspaceId, 'aabbccdd'),
+      seat.id,
+    );
+    expect(await plans.seatIdForNfcUid(seat.workspaceId, 'ffff0000'),
+        isNull);
+  });
 }

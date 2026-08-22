@@ -1856,6 +1856,36 @@ abstract class AppLocalizations {
   /// **'No accessories yet — add them in Settings → Accessories.'**
   String get editorNoAccessories;
 
+  /// No description provided for @editorSeatNfcLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC/RFID tag'**
+  String get editorSeatNfcLabel;
+
+  /// No description provided for @editorSeatNfcHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag uid in hex — leave empty for no tag.'**
+  String get editorSeatNfcHelp;
+
+  /// No description provided for @editorSeatNfcRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Read a tag now'**
+  String get editorSeatNfcRead;
+
+  /// No description provided for @editorSeatNfcReadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not start the tag reader.'**
+  String get editorSeatNfcReadFailed;
+
+  /// No description provided for @editorSeatNfcDuplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'This tag is already linked to another chair.'**
+  String get editorSeatNfcDuplicate;
+
   /// Header above pinned pending-confirmation cards (spec §8)
   ///
   /// In en, this message translates to:
@@ -6589,6 +6619,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not reserve — the seat may have just been taken.'**
   String get reserveBookingFailed;
+
+  /// No description provided for @spaceScanNfcHint.
+  ///
+  /// In en, this message translates to:
+  /// **'…or hold the phone to a chair\'s NFC tag.'**
+  String get spaceScanNfcHint;
+
+  /// No description provided for @spaceScanUnknownTag.
+  ///
+  /// In en, this message translates to:
+  /// **'This tag is not linked to any chair.'**
+  String get spaceScanUnknownTag;
 
   /// App-bar title of the owner service-catalog editor and its settings tile
   ///

@@ -36,7 +36,7 @@ const Map<String, int> _baseline = {
   'lib/features/plan/presentation/widgets/floor_plan_painter.dart': 700,
   // 1290→1330 (2026-08-02): #395 Excel-export tile — feature lines, the
   // orchestration itself lives in excel_export.dart.
-  'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1160,
+  'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1250, // 2026-08 #585 seat NFC field
   // 1010→1020 (2026-08-04): #462 whole-space overlays on the plan view.
   // 1020→1070: #466 the hub's whole-level reserve button + visibility.
   'lib/features/reservations/presentation/screens/reserve_screen.dart': 1090, // 2026-08 #586 preferred default window
@@ -122,6 +122,9 @@ const Map<String, int> _baseline = {
   // 900→980 (2026-08-11): #534 VAT declarations — fetch/save/mark/send
   // repository methods (one cohesive data client, no new concern).
   // 980→1020 (2026-08-14): #568 per-destination gateway probe parse.
+  // 600→630 (2026-08-22): #585 seatIdForNfcUid + the nfc_uid column in
+  // the seat row mapping.
+  'lib/features/plan/data/supabase_floor_plan_repository.dart': 630,
   'lib/features/money/data/supabase_money_repository.dart': 1020,
   // 600→630 (2026-08-11): #537 VAT price transparency — the gross-price
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
@@ -143,7 +146,7 @@ const Map<String, int> _baseline = {
   // 750→770 (2026-08-05): #490 workspace-clock day instants beside the
   // naive axis anchor.
   'lib/features/calendar/presentation/widgets/day_timeline.dart': 770,
-  'lib/features/reservations/presentation/widgets/space_scan.dart': 730,
+  'lib/features/reservations/presentation/widgets/space_scan.dart': 820, // 2026-08 #585 chair NFC tap path
   // 600→640 (2026-08-04): #460/#464 Messages inbox rows + mark-seen —
   // the note row widget lives with the feed it sits in. 640→700: #467
   // swipe reply/delete on the rows.

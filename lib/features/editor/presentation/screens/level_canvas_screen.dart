@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import 'package:supabase_flutter/supabase_flutter.dart'
+    show PostgrestException;
+
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/format/cents.dart';
+import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -458,6 +462,13 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
 
     final name = TextEditingController(text: seat.name);
     final chair = TextEditingController(text: seat.chair);
+    // #585 — the chair's NFC/RFID tag. The field takes a typed/pasted
+    // uid on any platform; the Read button fills it from a live tap
+    // where the device can (Android with NFC on).
+    final nfcUid = TextEditingController(text: seat.nfcUid ?? '');
+    final nfcReader = ref.read(nfcUidReaderProvider);
+    final nfcReady = await nfcReader.isAvailable();
+    if (!mounted) return;
     var orientation = seat.orientation;
     var blocked = seat.isBlockedAt(ref.read(clockProvider).now());
 
@@ -548,6 +559,42 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                         ),
                     ],
                   ),
+                const SizedBox(height: 12),
+                // #585 — a physical tag on the chair resolves to this
+                // seat like its printed QR card.
+                TextField(
+                  key: const ValueKey('editor-seat-nfc'),
+                  controller: nfcUid,
+                  decoration: InputDecoration(
+                    labelText:
+                        l10n?.editorSeatNfcLabel ?? 'NFC/RFID tag',
+                    helperText: l10n?.editorSeatNfcHelp ??
+                        'Tag uid in hex — leave empty for no tag.',
+                    suffixIcon: nfcReady
+                        ? IconButton(
+                            key: const ValueKey('editor-seat-nfc-read'),
+                            tooltip: l10n?.editorSeatNfcRead ??
+                                'Read a tag now',
+                            icon: const Icon(Icons.nfc),
+                            onPressed: () async {
+                              final ok = await nfcReader.startRead(
+                                onUid: (uid) {
+                                  nfcUid.text = uid;
+                                  nfcReader.stop();
+                                },
+                              );
+                              if (!ok && context.mounted) {
+                                AppSnack.error(
+                                  context,
+                                  l10n?.editorSeatNfcReadFailed ??
+                                      'Could not start the tag reader.',
+                                );
+                              }
+                            },
+                          )
+                        : null,
+                  ),
+                ),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Text(
@@ -571,19 +618,41 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
 
     // #168: `seat.amenities` is intentionally NOT written anymore — the
     // seat_accessories joins are the write path for seat equipment.
+    // #585 — mirror the server normalization: lowercase hex, no
+    // separators; empty clears the tag.
+    final tag = nfcUid.text.toLowerCase().replaceAll(
+          RegExp('[^0-9a-f]'), '');
     final updated = seat.copyWith(
       name: name.text.trim().isEmpty ? seat.name : name.text.trim(),
       chair: chair.text.trim(),
       orientation: orientation,
       blockedFrom: blocked ? (seat.blockedFrom ?? ref.read(clockProvider).now()) : null,
       blockedTo: blocked ? seat.blockedTo : null,
+      nfcUid: tag.isEmpty ? null : tag,
     );
     final problem = validateSeatInPlan(plan, updated);
     if (problem != null) {
       _showProblem(problem);
       return;
     }
-    await ref.read(floorPlanRepositoryProvider).updateSeat(updated);
+    try {
+      await ref.read(floorPlanRepositoryProvider).updateSeat(updated);
+    } on PostgrestException catch (e, st) {
+      // The partial unique index (0114): one tag, one chair.
+      if (e.message.contains('seats_nfc_uid_unique')) {
+        TraceLogger.instance.error('editor', 'nfc tag already linked',
+            error: e, stackTrace: st);
+        if (mounted) {
+          AppSnack.error(
+            context,
+            l10n?.editorSeatNfcDuplicate ??
+                'This tag is already linked to another chair.',
+          );
+        }
+        return;
+      }
+      rethrow;
+    }
     final accessoriesChanged =
         selectedAccessories.length != initialAccessories.length ||
             !selectedAccessories.containsAll(initialAccessories);

@@ -46,5 +46,10 @@
   "commonSave": "Salva",
   "commonDelete": "Elimina",
   "editorAccessoriesLabel": "Accessori",
-  "editorNoAccessories": "Ancora nessun accessorio — aggiungili in Impostazioni → Accessori."
+  "editorNoAccessories": "Ancora nessun accessorio — aggiungili in Impostazioni → Accessori.",
+  "editorSeatNfcLabel": "Tag NFC/RFID",
+  "editorSeatNfcHelp": "UID del tag in esadecimale — lasciare vuoto per nessun tag.",
+  "editorSeatNfcRead": "Leggi un tag ora",
+  "editorSeatNfcReadFailed": "Impossibile avviare il lettore di tag.",
+  "editorSeatNfcDuplicate": "Questo tag è già collegato a un'altra sedia."
 }
