@@ -3455,6 +3455,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsBillingReports => 'Billing & reports';
 
   @override
+  String get defaultPeriodTitle => 'Default booking period';
+
+  @override
+  String get defaultPeriodNone => 'No preference (full day)';
+
+  @override
   String get profilesDefault => 'Default at startup';
 
   @override

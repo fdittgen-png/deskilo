@@ -3478,6 +3478,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsBillingReports => 'Facturación e informes';
 
   @override
+  String get defaultPeriodTitle => 'Período de reserva predeterminado';
+
+  @override
+  String get defaultPeriodNone => 'Sin preferencia (día completo)';
+
+  @override
   String get profilesDefault => 'Predeterminado al iniciar';
 
   @override

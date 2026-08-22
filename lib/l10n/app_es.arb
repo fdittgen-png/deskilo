@@ -1891,6 +1891,8 @@
   "profilePhotoSaveFailed": "No se pudo actualizar la foto",
   "profilePhotoFileType": "Imagen",
   "settingsBillingReports": "Facturación e informes",
+  "defaultPeriodTitle": "Período de reserva predeterminado",
+  "defaultPeriodNone": "Sin preferencia (día completo)",
   "profilesDefault": "Predeterminado al iniciar",
   "profilesMakeDefault": "Usar como predeterminado al iniciar",
   "eventTypeRoleChange": "Cambio de rol",

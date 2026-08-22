@@ -68,6 +68,8 @@ const Set<String> _knownPairs = {
   'plan -> workspace',
   'profile -> auth',
   'profile -> members',
+  // #586 — Settings surfaces the member's default reservation period.
+  'profile -> reservations',
   'profile -> workspace',
   'reservations -> calendar',
   'reservations -> events',

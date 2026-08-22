@@ -43,6 +43,7 @@ import 'package:deskilo/features/plan/domain/accessory_repository.dart';
 import 'package:deskilo/features/plan/domain/floor_plan_repository.dart';
 import 'package:deskilo/features/plan/providers/accessory_providers.dart';
 import 'package:deskilo/features/plan/providers/default_level_controller.dart';
+import 'package:deskilo/features/reservations/providers/default_period_controller.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/features/profile/domain/profile_repository.dart';
 import 'package:deskilo/features/profile/providers/profile_providers.dart';
@@ -1019,6 +1020,7 @@ List<Override> standardTestOverrides({
   FakeQrScanner? qrScan,
   DefaultWorkspaceStore? defaultWorkspace,
   DefaultLevelStore? defaultLevel,
+  DefaultPeriodStore? defaultPeriod,
   ProfileRepository? profile,
   NfcUidReader? nfc,
   FrontCameraStore? frontCamera,
@@ -1066,6 +1068,9 @@ List<Override> standardTestOverrides({
         .overrideWithValue(defaultWorkspace ?? InMemoryDefaultWorkspaceStore()),
     defaultLevelStoreProvider
         .overrideWithValue(defaultLevel ?? InMemoryDefaultLevelStore()),
+    // #586: the default booking period persists on-device.
+    defaultPeriodStoreProvider
+        .overrideWithValue(defaultPeriod ?? InMemoryDefaultPeriodStore()),
     // #464: an in-memory read state — the prefs impl would need a
     // SharedPreferences mock in every widget test.
     noteSeenStoreProvider
