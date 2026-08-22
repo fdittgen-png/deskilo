@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: 0BSD
 import '../../plan/domain/floor_plan.dart';
 import '../../plan/domain/level.dart';
 import '../../reservations/domain/space_code.dart';
