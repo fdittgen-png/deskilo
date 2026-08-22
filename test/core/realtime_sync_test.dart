@@ -8,6 +8,7 @@
 // callback does.
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/realtime/invalidation_map.dart';
 import 'package:deskilo/core/realtime/realtime_providers.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -87,5 +88,45 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Florian'), findsOneWidget);
+  });
+
+  testWidgets(
+      'the RESYNC signal refreshes everything — a change committed while '
+      'the channel was down still lands on screen (#577)', (tester) async {
+    final realtime = FakeRealtimeSync();
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..memberNames = {'member-1': 'Flo'};
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          workspace: workspace,
+          realtime: realtime,
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.descendant(
+        of: find.byType(ShellBottomBar), matching: find.text('Members')));
+    await tester.pumpAndSettle();
+    expect(find.text('Ana Lima'), findsNothing);
+
+    // Ana joined while the socket was down: NO members event was ever
+    // delivered. The re-subscribe emits one resync instead.
+    workspace
+      ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana Lima'}
+      ..otherMembers.add(const Member(
+        id: 'member-2',
+        workspaceId: 'ws-1',
+        userId: 'user-2',
+        isAdmin: false,
+        isOwner: false,
+        status: MemberStatus.active,
+      ));
+    realtime.emit(kResyncSignal);
+    await tester.pump(kRealtimeDebounce + const Duration(milliseconds: 50));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Ana Lima'), findsOneWidget);
   });
 }

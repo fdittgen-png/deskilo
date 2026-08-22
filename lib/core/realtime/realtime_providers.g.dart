@@ -53,7 +53,9 @@ String _$realtimeSyncHash() => r'15e9454f53dadd2fbc6739919a737ca3d8b855ca';
 /// Subscribes to the active workspace's change feed and invalidates
 /// exactly the providers that cache each table — so every device,
 /// INCLUDING the one that made the change, repaints without restarts or
-/// manual refreshes (#413). Watched from the shell, alive with the app.
+/// manual refreshes (#413). Watched from the shell and the kiosk, alive
+/// with the app. The table → providers map lives in
+/// [invalidationFor] (#577) and is shared with the manual mutation path.
 
 @ProviderFor(RealtimeInvalidator)
 final realtimeInvalidatorProvider = RealtimeInvalidatorProvider._();
@@ -61,13 +63,17 @@ final realtimeInvalidatorProvider = RealtimeInvalidatorProvider._();
 /// Subscribes to the active workspace's change feed and invalidates
 /// exactly the providers that cache each table — so every device,
 /// INCLUDING the one that made the change, repaints without restarts or
-/// manual refreshes (#413). Watched from the shell, alive with the app.
+/// manual refreshes (#413). Watched from the shell and the kiosk, alive
+/// with the app. The table → providers map lives in
+/// [invalidationFor] (#577) and is shared with the manual mutation path.
 final class RealtimeInvalidatorProvider
     extends $AsyncNotifierProvider<RealtimeInvalidator, void> {
   /// Subscribes to the active workspace's change feed and invalidates
   /// exactly the providers that cache each table — so every device,
   /// INCLUDING the one that made the change, repaints without restarts or
-  /// manual refreshes (#413). Watched from the shell, alive with the app.
+  /// manual refreshes (#413). Watched from the shell and the kiosk, alive
+  /// with the app. The table → providers map lives in
+  /// [invalidationFor] (#577) and is shared with the manual mutation path.
   RealtimeInvalidatorProvider._()
     : super(
         from: null,
@@ -88,12 +94,14 @@ final class RealtimeInvalidatorProvider
 }
 
 String _$realtimeInvalidatorHash() =>
-    r'f35f0e6479f657d88f6d1095e4a27cf60105854a';
+    r'0c3a01b59453ec001342af82f5b4677fca2557ae';
 
 /// Subscribes to the active workspace's change feed and invalidates
 /// exactly the providers that cache each table — so every device,
 /// INCLUDING the one that made the change, repaints without restarts or
-/// manual refreshes (#413). Watched from the shell, alive with the app.
+/// manual refreshes (#413). Watched from the shell and the kiosk, alive
+/// with the app. The table → providers map lives in
+/// [invalidationFor] (#577) and is shared with the manual mutation path.
 
 abstract class _$RealtimeInvalidator extends $AsyncNotifier<void> {
   FutureOr<void> build();
