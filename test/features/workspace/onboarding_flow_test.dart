@@ -109,4 +109,62 @@ void main() {
     expect(find.byType(ShellBottomBar), findsOneWidget);
     expect(find.text('Welcome to DesKilo'), findsNothing);
   });
+
+  // ── QR join (#572) ─────────────────────────────────────────────────
+
+  testWidgets(
+      'the scan screen SURVIVES the no-workspace redirect: scanning an '
+      'invite URL joins and lands in the shell', (tester) async {
+    // The regression: /scan-join was evicted back to onboarding by the
+    // "no workspace → onboarding" redirect — its only audience is
+    // exactly the user with zero workspaces.
+    final repo = FakeWorkspaceRepository();
+    final scanner = FakeQrScanner();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(workspace: repo, qrScan: scanner),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Join a workspace'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Scan QR code'));
+    await tester.pumpAndSettle();
+
+    // The camera screen is REACHED, not bounced back to the join form.
+    expect(find.byKey(const ValueKey('scan-join-camera')), findsOneWidget);
+
+    scanner.emit('deskilo://join?role=user&code=GOODCODE22');
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ShellBottomBar), findsOneWidget);
+  });
+
+  testWidgets('an unrelated QR is ignored and the scanner stays open',
+      (tester) async {
+    final scanner = FakeQrScanner();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          workspace: FakeWorkspaceRepository(),
+          qrScan: scanner,
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Join a workspace'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Scan QR code'));
+    await tester.pumpAndSettle();
+
+    scanner.emit('https://example.com/not-an-invite');
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('scan-join-camera')), findsOneWidget);
+    expect(find.byType(ShellBottomBar), findsNothing);
+  });
 }

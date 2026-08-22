@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:async' show unawaited;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../plan/providers/floor_plan_providers.dart';
 import '../../providers/workspace_providers.dart';
 
 /// The waiting room (0052): a freshly joined member is PENDING until the
@@ -61,9 +64,21 @@ class PendingApprovalScreen extends ConsumerWidget {
                 const SizedBox(height: AppSpacing.lg),
                 FilledButton.icon(
                   key: const ValueKey('pending-refresh'),
-                  onPressed: () => ref
-                    ..invalidate(myWorkspacesProvider)
-                    ..invalidate(myMemberProvider),
+                  // #572 — the tap that follows an approval must refetch
+                  // EVERYTHING the pending horizon hid, and the plan's
+                  // disk cache first, or the rebuild re-serves the
+                  // cached emptiness and the workspace stays blank.
+                  onPressed: () {
+                    unawaited(ref
+                        .read(floorPlanRepositoryProvider)
+                        .invalidateCache());
+                    ref
+                      ..invalidate(myWorkspacesProvider)
+                      ..invalidate(myMemberProvider)
+                      ..invalidate(levelsProvider)
+                      ..invalidate(floorPlanProvider)
+                      ..invalidate(targetNamesProvider);
+                  },
                   icon: const Icon(Icons.refresh),
                   label: Text(
                     l10n?.pendingApprovalRefresh ?? 'Check again',

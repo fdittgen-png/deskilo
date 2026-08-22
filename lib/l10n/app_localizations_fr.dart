@@ -3990,6 +3990,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get onboardingScanButton => 'Scanner un QR code';
 
   @override
+  String get scanJoinHelp =>
+      'Visez le QR d’invitation avec la caméra — le code est repris et l’adhésion se fait automatiquement.';
+
+  @override
   String get workspaceCodeSharePng => 'Partager en PNG';
 
   @override

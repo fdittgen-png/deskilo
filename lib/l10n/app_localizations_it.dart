@@ -3983,6 +3983,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get onboardingScanButton => 'Scansiona codice QR';
 
   @override
+  String get scanJoinHelp =>
+      'Inquadra il QR d’invito con la fotocamera — il codice viene acquisito e l’adesione avviene automaticamente.';
+
+  @override
   String get workspaceCodeSharePng => 'Condividi come PNG';
 
   @override

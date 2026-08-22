@@ -13,6 +13,11 @@ import 'seat_context.dart';
 /// Pure-Dart floor-plan boundary. Writes are owner-only (enforced by RLS;
 /// the UI additionally hides editor affordances from non-owners).
 abstract class FloorPlanRepository {
+  /// Drops every locally cached plan read (#572) — called when what RLS
+  /// lets this user see may have CHANGED (membership approved), so the
+  /// next fetch is network-true instead of a replay of the old horizon.
+  Future<void> invalidateCache();
+
   Future<List<Level>> fetchLevels(String workspaceId);
   Future<Level> createLevel(String workspaceId, String name, int sortOrder);
   Future<void> renameLevel(String levelId, String name);

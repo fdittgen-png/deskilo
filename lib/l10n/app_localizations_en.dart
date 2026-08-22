@@ -3951,6 +3951,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingScanButton => 'Scan QR code';
 
   @override
+  String get scanJoinHelp =>
+      'Point the camera at the invitation QR — the code is taken over and joined automatically.';
+
+  @override
   String get workspaceCodeSharePng => 'Share as PNG';
 
   @override
