@@ -3788,6 +3788,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get spaceYoursNow => 'Réservé par vous pour ce créneau.';
 
   @override
+  String get spaceCardSizeLabel => 'Taille de la carte';
+
+  @override
+  String get spaceCardSizeSmall => 'Petite';
+
+  @override
+  String get spaceCardSizeMedium => 'Moyenne';
+
+  @override
+  String get spaceCardSizeLarge => 'Grande';
+
+  @override
+  String get spaceCardInfoLabel => 'Informations sur la carte';
+
+  @override
+  String get spaceCardInfoWorkspace => 'Espace de travail';
+
+  @override
   String get themeTitle => 'Thème';
 
   @override

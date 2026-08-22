@@ -3785,6 +3785,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get spaceYoursNow => 'Von dir für dieses Zeitfenster reserviert.';
 
   @override
+  String get spaceCardSizeLabel => 'Kartengröße';
+
+  @override
+  String get spaceCardSizeSmall => 'Klein';
+
+  @override
+  String get spaceCardSizeMedium => 'Mittel';
+
+  @override
+  String get spaceCardSizeLarge => 'Groß';
+
+  @override
+  String get spaceCardInfoLabel => 'Informationen auf der Karte';
+
+  @override
+  String get spaceCardInfoWorkspace => 'Workspace';
+
+  @override
   String get themeTitle => 'Design';
 
   @override

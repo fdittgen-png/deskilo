@@ -23,12 +23,13 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
 import '../../../../core/files/file_names.dart';
-import '../../../reservations/domain/space_code.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../plan/providers/accessory_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/booking_granularity.dart';
+import '../../domain/space_code_entries.dart';
+import '../widgets/space_codes_options_dialog.dart';
 import '../../domain/member.dart';
 import '../../domain/overage_policy.dart';
 import '../../domain/payment_instructions.dart';
@@ -506,9 +507,16 @@ class _WorkspaceSettingsScreenState
   }
 
   /// Prints the space QR sheet (field request): one card per desk,
-  /// office and level, in the badge-sheet A4 grid — saved to Downloads.
+  /// office, level and chair, in an A4 grid — saved to Downloads.
+  /// #584 — the owner first picks the card size (S/M/L) and which
+  /// information rides each card (printed AND embedded in the QR).
   Future<void> _exportSpaceCodes(Workspace workspace) async {
     final l10n = AppLocalizations.of(context);
+    final options = await showDialog<SpaceCodesOptions>(
+      context: context,
+      builder: (_) => const SpaceCodesOptionsDialog(),
+    );
+    if (options == null || !mounted) return;
     setState(() => _busy = true);
     if (!await runGuarded(
       context,
@@ -518,44 +526,21 @@ class _WorkspaceSettingsScreenState
           'Something went wrong. Please try again.',
       action: () async {
         final levels = await ref.read(levelsProvider.future);
-        final entries = <SpaceCodeEntry>[];
-        String payload(SpaceKind kind, String id) => SpaceCodeCodec.encode(
-              workspaceId: workspace.id,
-              kind: kind,
-              id: id,
-            );
-        for (final level in levels) {
-          final plan = await ref.read(floorPlanProvider(level.id).future);
-          entries.add((
-            name: level.name,
-            kindLabel: l10n?.spaceKindLevel ?? 'Level',
-            payload: payload(SpaceKind.level, level.id),
-          ));
-          for (final office in plan.offices) {
-            entries.add((
-              name: office.name,
-              kindLabel: l10n?.spaceKindOffice ?? 'Office',
-              payload: payload(SpaceKind.office, office.id),
-            ));
-          }
-          for (final desk in plan.desks) {
-            entries.add((
-              name: desk.name,
-              kindLabel: l10n?.spaceKindDesk ?? 'Desk',
-              payload: payload(SpaceKind.desk, desk.id),
-            ));
-            // One card per WORKSTATION too (field request): the card
-            // names seat and desk — tables share seat letters.
-            for (final seat
-                in plan.seats.where((s) => s.deskId == desk.id)) {
-              entries.add((
-                name: '${seat.name} · ${desk.name}',
-                kindLabel: l10n?.spaceKindSeat ?? 'Seat',
-                payload: payload(SpaceKind.seat, seat.id),
-              ));
-            }
-          }
-        }
+        final entries = buildSpaceCodeEntries(
+          workspaceId: workspace.id,
+          workspaceName: workspace.name,
+          plans: [
+            for (final level in levels)
+              (level, await ref.read(floorPlanProvider(level.id).future)),
+          ],
+          info: options.info,
+          kindLabels: (
+            level: l10n?.spaceKindLevel ?? 'Level',
+            office: l10n?.spaceKindOffice ?? 'Office',
+            desk: l10n?.spaceKindDesk ?? 'Desk',
+            seat: l10n?.spaceKindSeat ?? 'Seat',
+          ),
+        );
         if (entries.isEmpty) {
           if (!mounted) return;
           AppSnack.info(
@@ -572,6 +557,7 @@ class _WorkspaceSettingsScreenState
           entries: entries,
           baseFont: pw.Font.ttf(regular),
           boldFont: pw.Font.ttf(bold),
+          size: options.size,
         );
         final path = await ref.read(fileSaverProvider)(
           bytes: bytes,
@@ -1423,3 +1409,4 @@ class _ResetConfirmDialogState extends State<_ResetConfirmDialog> {
     );
   }
 }
+

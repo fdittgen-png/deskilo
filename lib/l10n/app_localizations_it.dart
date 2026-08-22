@@ -3783,6 +3783,24 @@ class AppLocalizationsIt extends AppLocalizations {
   String get spaceYoursNow => 'Riservato da te per questa fascia.';
 
   @override
+  String get spaceCardSizeLabel => 'Dimensione della scheda';
+
+  @override
+  String get spaceCardSizeSmall => 'Piccola';
+
+  @override
+  String get spaceCardSizeMedium => 'Media';
+
+  @override
+  String get spaceCardSizeLarge => 'Grande';
+
+  @override
+  String get spaceCardInfoLabel => 'Informazioni sulla scheda';
+
+  @override
+  String get spaceCardInfoWorkspace => 'Spazio di lavoro';
+
+  @override
   String get themeTitle => 'Tema';
 
   @override

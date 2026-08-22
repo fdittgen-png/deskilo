@@ -330,6 +330,46 @@ void main() {
   });
 
   testWidgets(
+      '#584 — the space-code export asks size + info first: cancel saves '
+      'nothing; small size with the chair line dropped still saves the PDF',
+      (tester) async {
+    final saved = <String>[];
+    final floorPlan = FakeFloorPlanRepository()..seedSmallPlan();
+    await pumpWorkspaceSettings(
+      tester,
+      floorPlan: floorPlan,
+      saver: ({required bytes, required fileName}) async {
+        saved.add(fileName);
+        expect(bytes, isNotEmpty);
+        return '/local/$fileName';
+      },
+    );
+
+    final tile = find.byKey(const Key('workspaceSettingsSpaceCodes'));
+    await tester.ensureVisible(tile);
+    await tester.tap(tile);
+    await tester.pumpAndSettle();
+
+    // Cancelling the options dialog generates nothing.
+    expect(find.byKey(const Key('space-codes-export')), findsOneWidget);
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+    expect(saved, isEmpty);
+
+    // Again: small size, drop the chair line, export.
+    await tester.tap(tile);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('space-card-size-small')));
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('space-card-info-chair')));
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('space-codes-export')));
+    await tester.pumpAndSettle();
+
+    expect(saved, ['test-space-space-codes.pdf']);
+  });
+
+  testWidgets(
       'reset workspace is gated on typing the confirm phrase, then calls the '
       'repository', (tester) async {
     final workspace = await pumpWorkspaceSettings(tester);

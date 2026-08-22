@@ -3747,6 +3747,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get spaceYoursNow => 'Reserved by you for this slot.';
 
   @override
+  String get spaceCardSizeLabel => 'Card size';
+
+  @override
+  String get spaceCardSizeSmall => 'Small';
+
+  @override
+  String get spaceCardSizeMedium => 'Medium';
+
+  @override
+  String get spaceCardSizeLarge => 'Large';
+
+  @override
+  String get spaceCardInfoLabel => 'Information on the card';
+
+  @override
+  String get spaceCardInfoWorkspace => 'Workspace';
+
+  @override
   String get themeTitle => 'Theme';
 
   @override

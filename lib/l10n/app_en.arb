@@ -4815,6 +4815,12 @@
   "@spaceYoursNow": {
     "description": "Space sheet: the viewer already holds the reservation — the button below checks in"
   },
+  "spaceCardSizeLabel": "Card size",
+  "spaceCardSizeSmall": "Small",
+  "spaceCardSizeMedium": "Medium",
+  "spaceCardSizeLarge": "Large",
+  "spaceCardInfoLabel": "Information on the card",
+  "spaceCardInfoWorkspace": "Workspace",
   "themeTitle": "Theme",
   "@themeTitle": {
     "description": "Settings entry and dialog title for the in-app theme selection"

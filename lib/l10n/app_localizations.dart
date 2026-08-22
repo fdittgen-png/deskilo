@@ -6812,6 +6812,42 @@ abstract class AppLocalizations {
   /// **'Reserved by you for this slot.'**
   String get spaceYoursNow;
 
+  /// No description provided for @spaceCardSizeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Card size'**
+  String get spaceCardSizeLabel;
+
+  /// No description provided for @spaceCardSizeSmall.
+  ///
+  /// In en, this message translates to:
+  /// **'Small'**
+  String get spaceCardSizeSmall;
+
+  /// No description provided for @spaceCardSizeMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get spaceCardSizeMedium;
+
+  /// No description provided for @spaceCardSizeLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'Large'**
+  String get spaceCardSizeLarge;
+
+  /// No description provided for @spaceCardInfoLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Information on the card'**
+  String get spaceCardInfoLabel;
+
+  /// No description provided for @spaceCardInfoWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace'**
+  String get spaceCardInfoWorkspace;
+
   /// Settings entry and dialog title for the in-app theme selection
   ///
   /// In en, this message translates to:

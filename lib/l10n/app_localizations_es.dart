@@ -3777,6 +3777,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get spaceYoursNow => 'Reservado por ti para esta franja.';
 
   @override
+  String get spaceCardSizeLabel => 'Tamaño de la tarjeta';
+
+  @override
+  String get spaceCardSizeSmall => 'Pequeña';
+
+  @override
+  String get spaceCardSizeMedium => 'Mediana';
+
+  @override
+  String get spaceCardSizeLarge => 'Grande';
+
+  @override
+  String get spaceCardInfoLabel => 'Información en la tarjeta';
+
+  @override
+  String get spaceCardInfoWorkspace => 'Espacio de trabajo';
+
+  @override
   String get themeTitle => 'Tema';
 
   @override
