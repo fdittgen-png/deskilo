@@ -2024,6 +2024,36 @@ abstract class AppLocalizations {
   /// **'Deletion requested — an owner or admin will decide.'**
   String get reservationDeleteSubmitted;
 
+  /// No description provided for @notifCategoryCheckIns.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-ins'**
+  String get notifCategoryCheckIns;
+
+  /// No description provided for @notifCategoryMoney.
+  ///
+  /// In en, this message translates to:
+  /// **'Money'**
+  String get notifCategoryMoney;
+
+  /// No description provided for @notifCategoryMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get notifCategoryMembers;
+
+  /// No description provided for @notesFilterRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Read'**
+  String get notesFilterRead;
+
+  /// No description provided for @notifSortByDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort by date'**
+  String get notifSortByDate;
+
   /// App-bar title of the owner feature-management screen and its settings tile
   ///
   /// In en, this message translates to:

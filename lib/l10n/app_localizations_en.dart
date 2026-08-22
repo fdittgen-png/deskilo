@@ -1072,6 +1072,21 @@ class AppLocalizationsEn extends AppLocalizations {
       'Deletion requested — an owner or admin will decide.';
 
   @override
+  String get notifCategoryCheckIns => 'Check-ins';
+
+  @override
+  String get notifCategoryMoney => 'Money';
+
+  @override
+  String get notifCategoryMembers => 'Members';
+
+  @override
+  String get notesFilterRead => 'Read';
+
+  @override
+  String get notifSortByDate => 'Sort by date';
+
+  @override
   String get featuresTitle => 'Features';
 
   @override
