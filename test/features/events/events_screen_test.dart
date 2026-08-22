@@ -432,7 +432,7 @@ void main() {
     expect(find.textContaining('Validated by System'), findsOneWidget);
   });
 
-  testWidgets('type filter narrows the feed', (tester) async {
+  testWidgets('category filter narrows the feed (#581)', (tester) async {
     await pumpEvents(
       tester,
       seed: [
@@ -443,7 +443,7 @@ void main() {
 
     expect(find.text('Flo booked A1'), findsOneWidget);
 
-    await tester.tap(find.widgetWithText(FilterChip, 'Payment'));
+    await tester.tap(find.byKey(const ValueKey('notif-cat-money')));
     await tester.pumpAndSettle();
 
     expect(find.text('Flo booked A1'), findsNothing);

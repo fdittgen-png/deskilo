@@ -360,8 +360,10 @@ void main() {
         findsOneWidget);
     expect(find.byKey(const ValueKey('note-dismiss-note-sent')),
         findsNothing);
-    expect(find.text('All'), findsNothing);
-    // The Messages-section chip reflects the same state.
+    // #581 — the category chips STAY available in unread mode: read
+    // state and category combine instead of hiding one another.
+    expect(find.text('All'), findsOneWidget);
+    // The chip-line unread chip reflects the same state.
     expect(
       tester
           .widget<FilterChip>(

@@ -20,16 +20,20 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../../money/domain/payment_method.dart';
 import '../../../money/presentation/payment_method_labels.dart';
 import '../../domain/event_decision.dart';
+import '../../domain/notification_feed.dart';
 import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
 import '../../providers/event_providers.dart';
+import '../../providers/notification_filter_providers.dart';
 import '../widgets/note_row.dart';
 
 /// The Events space (spec §8.1): pending confirmations pinned on top,
-/// audited feed below. Server RLS scopes workers to their own events and
-/// admins to everything. Since #230 it is no longer a shell tab but a
-/// pushed route behind the app-bar bell, so it carries its own Scaffold
-/// and app bar.
+/// ONE mixed date-sorted feed below (#581) — messages and workspace
+/// events interleaved chronologically, filtered by category × read
+/// state, and the filter choice persists across app restarts. Server
+/// RLS scopes workers to their own events and admins to everything.
+/// Since #230 it is no longer a shell tab but a pushed route behind the
+/// app-bar bell, so it carries its own Scaffold and app bar.
 class EventsScreen extends ConsumerStatefulWidget {
   const EventsScreen({super.key});
 
@@ -42,18 +46,32 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
   void initState() {
     super.initState();
     // Opening the notification surface reads the messages (#464): the
-    // unread counters on the bell and the app icon clear here.
+    // unread counters on the bell and the app icon clear here. The
+    // events-seen stamp advances too (#581) — but the PREVIOUS stamp
+    // keeps serving this visit, so "new" rows do not vanish mid-look.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       ref.read(unreadNoteCountProvider.notifier).markAllSeen();
+      ref.read(eventsSeenCutoffProvider.notifier).markOpened();
     });
   }
 
-  EventType? _typeFilter;
-
-  /// #539 — the Messages section's read filter: false = all, true =
-  /// only unread.
-  bool _unreadOnly = false;
+  String _categoryLabel(
+    AppLocalizations? l10n,
+    NotificationCategory category,
+  ) {
+    return switch (category) {
+      NotificationCategory.messages =>
+        l10n?.eventsMessagesHeader ?? 'Messages',
+      NotificationCategory.reservations =>
+        l10n?.eventTypeReservation ?? 'Reservation',
+      NotificationCategory.checkIns =>
+        l10n?.notifCategoryCheckIns ?? 'Check-ins',
+      NotificationCategory.money => l10n?.notifCategoryMoney ?? 'Money',
+      NotificationCategory.members =>
+        l10n?.notifCategoryMembers ?? 'Members',
+    };
+  }
 
   String _line(
     AppLocalizations? l10n,
@@ -266,6 +284,12 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
             .contains(WorkspaceFeature.memberNotifications)
         ? ref.watch(myNotesProvider).value ?? const <MemberNote>[]
         : const <MemberNote>[];
+    // #581 — the persisted filter and the previous-visit stamp that
+    // "new" events are measured against.
+    final filter = ref.watch(notificationFilterProvider).value ??
+        const NotificationFilterState();
+    final seenBefore = ref.watch(eventsSeenCutoffProvider).value;
+    final unreadOnly = filter.read == ReadFilter.unread;
 
     final body = switch (eventsAsync) {
       AsyncData(value: final all) => Builder(
@@ -280,12 +304,15 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                     .any((d) => d.memberId == myMember.id),
               );
             }).toList();
-            final feed = all
-                .where((e) => !pendingForMe.contains(e))
-                .where(
-                  (e) => _typeFilter == null || e.type == _typeFilter,
-                )
-                .toList();
+            final feed = buildNotificationFeed(
+              events: all
+                  .where((e) => !pendingForMe.contains(e))
+                  .toList(),
+              notes: notes,
+              unreadNoteIds: unreadIds,
+              eventsSeenBefore: seenBefore,
+              filter: filter,
+            );
             if (all.isEmpty && notes.isEmpty) {
               return RefreshIndicator(
                 onRefresh: () async => invalidateBookingData(ref),
@@ -309,9 +336,9 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 children: [
                 // #546 — the bell's unread filter narrows the whole
-                // screen to the unread messages; decisions and the
-                // audit feed step aside while it is on.
-                if (!_unreadOnly && pendingForMe.isNotEmpty) ...[
+                // screen to what is new; the pending decisions step
+                // aside while it is on.
+                if (!unreadOnly && pendingForMe.isNotEmpty) ...[
                   Padding(
                     padding: const EdgeInsets.fromLTRB(
                       AppSpacing.lg,
@@ -409,68 +436,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                     ),
                   const Divider(),
                 ],
-                // Member notes (#460): the readable inbox — received
-                // AND sent, so both sides can verify what the
-                // notification actually said. The push carries no
-                // content (0012); this list does.
-                if (notes.isNotEmpty || _unreadOnly) ...[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      AppSpacing.lg,
-                      AppSpacing.md,
-                      AppSpacing.lg,
-                      AppSpacing.xs,
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            l10n?.eventsMessagesHeader ?? 'Messages',
-                            style:
-                                Theme.of(context).textTheme.titleSmall,
-                          ),
-                        ),
-                        // #539 — read and unread are distinguishable
-                        // AND filterable.
-                        FilterChip(
-                          key: const ValueKey('notes-filter-unread'),
-                          label: Text(
-                            '${l10n?.notesFilterUnread ?? 'Unread'}'
-                            '${unreadIds.isEmpty ? '' : ' (${unreadIds.length})'}',
-                          ),
-                          selected: _unreadOnly,
-                          visualDensity: VisualDensity.compact,
-                          onSelected: (value) =>
-                              setState(() => _unreadOnly = value),
-                        ),
-                      ],
-                    ),
-                  ),
-                  for (final note in notes)
-                    if (!_unreadOnly || unreadIds.contains(note.id))
-                      NoteRow(
-                        key: ValueKey('note-${note.id}'),
-                        note: note,
-                        names: names,
-                        myMemberId: myMember?.id,
-                        unread: unreadIds.contains(note.id),
-                      ),
-                  if (_unreadOnly &&
-                      notes.every((n) => !unreadIds.contains(n.id)))
-                    Padding(
-                      padding: AppSpacing.lgAll,
-                      child: Text(
-                        l10n?.notesFilterEmpty ??
-                            'No unread messages — all caught up.',
-                        key: const ValueKey('notes-filter-empty'),
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ),
-                  const Divider(),
-                ],
-                // #440: ONE horizontally scrollable filter line — the
-                // Wrap stacked six rows deep mid-screen.
-                if (!_unreadOnly) ...[
+                // #581 — ONE filter line: categories × read state, all
+                // persisted. Empty category selection = everything.
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   padding: AppSpacing.mdH,
@@ -478,74 +445,151 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                     children: [
                       FilterChip(
                         label: Text(l10n?.eventsFilterAll ?? 'All'),
-                        selected: _typeFilter == null,
-                        onSelected: (_) =>
-                            setState(() => _typeFilter = null),
+                        selected: filter.categories.isEmpty,
+                        visualDensity: VisualDensity.compact,
+                        onSelected: (_) => ref
+                            .read(notificationFilterProvider.notifier)
+                            .clearCategories(),
                       ),
-                      for (final type in EventType.values) ...[
+                      for (final category
+                          in NotificationCategory.values) ...[
                         const SizedBox(width: 8),
                         FilterChip(
-                          label: Text(_typeLabel(l10n, type)),
-                          selected: _typeFilter == type,
-                          onSelected: (_) =>
-                              setState(() => _typeFilter = type),
+                          key: ValueKey('notif-cat-${category.wire}'),
+                          label: Text(_categoryLabel(l10n, category)),
+                          selected:
+                              filter.categories.contains(category),
+                          visualDensity: VisualDensity.compact,
+                          onSelected: (_) => ref
+                              .read(notificationFilterProvider.notifier)
+                              .toggleCategory(category),
                         ),
                       ],
                     ],
                   ),
                 ),
-                for (final event in feed)
-                  ListTile(
-                    leading: Icon(_icon(event)),
-                    title: Text(_line(l10n, event, names, targets, currency)),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(_when(event)),
-                        // #154 — how the money moved; absent / pre-#154
-                        // payloads render no method line.
-                        if (_methodLine(l10n, event) case final method?)
-                          Text(method),
-                        for (final decision
-                            in decisions[event.id] ??
-                                const <EventDecision>[])
-                          _DecisionRow(decision: decision, names: names),
-                        // Quorum progress stays neutral: it only renders
-                        // while the event is pending, i.e. before the
-                        // quorum is satisfied (#196).
-                        if (_quorumProgress(
-                          l10n,
-                          event,
-                          decisions[event.id] ?? const [],
-                          policies,
-                        ) case final progress?)
-                          Text(progress),
-                      ],
-                    ),
-                    // #196 — semantic outcome trailing: pending waits,
-                    // applied/confirmed succeeded (green), rejected failed
-                    // (red). Expired events carry no outcome mark.
-                    trailing: switch (event.status) {
-                      EventStatus.pending =>
-                        const Icon(Icons.hourglass_top, size: 18),
-                      EventStatus.applied ||
-                      EventStatus.confirmed =>
-                        Icon(
-                          Icons.check_circle_outline,
-                          size: 18,
-                          color: AppStatusColors.successOf(
-                            Theme.of(context).brightness,
-                          ),
+                // Read-state line, kept OFF the category line so both
+                // stay reachable without scrolling (#539/#546 — the
+                // keys predate the mixed feed).
+                Padding(
+                  padding: AppSpacing.mdH,
+                  child: Row(
+                    children: [
+                      FilterChip(
+                        key: const ValueKey('notes-filter-unread'),
+                        label: Text(
+                          '${l10n?.notesFilterUnread ?? 'Unread'}'
+                          '${unreadIds.isEmpty ? '' : ' (${unreadIds.length})'}',
                         ),
-                      EventStatus.rejected => Icon(
-                          Icons.cancel_outlined,
-                          size: 18,
-                          color: Theme.of(context).colorScheme.error,
-                        ),
-                      EventStatus.expired => null,
-                    },
+                        selected: unreadOnly,
+                        visualDensity: VisualDensity.compact,
+                        onSelected: (value) => ref
+                            .read(notificationFilterProvider.notifier)
+                            .setRead(
+                              value ? ReadFilter.unread : ReadFilter.all,
+                            ),
+                      ),
+                      const SizedBox(width: 8),
+                      FilterChip(
+                        key: const ValueKey('notes-filter-read'),
+                        label:
+                            Text(l10n?.notesFilterRead ?? 'Read'),
+                        selected: filter.read == ReadFilter.read,
+                        visualDensity: VisualDensity.compact,
+                        onSelected: (value) => ref
+                            .read(notificationFilterProvider.notifier)
+                            .setRead(
+                              value ? ReadFilter.read : ReadFilter.all,
+                            ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
+                // The MIXED feed (#581): notes and events interleaved,
+                // date-sorted under the user's direction of choice.
+                for (final item in feed)
+                  switch (item) {
+                    NoteFeedItem(:final note, :final unread) => NoteRow(
+                        key: ValueKey('note-${note.id}'),
+                        note: note,
+                        names: names,
+                        myMemberId: myMember?.id,
+                        unread: unread,
+                      ),
+                    EventFeedItem(:final event, :final unread) =>
+                      ListTile(
+                        leading: Icon(_icon(event)),
+                        title: Text(
+                          _line(l10n, event, names, targets, currency),
+                          style: unread
+                              ? const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                )
+                              : null,
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(_when(event)),
+                            // #154 — how the money moved; absent /
+                            // pre-#154 payloads render no method line.
+                            if (_methodLine(l10n, event)
+                                case final method?)
+                              Text(method),
+                            for (final decision in decisions[event.id] ??
+                                const <EventDecision>[])
+                              _DecisionRow(
+                                decision: decision,
+                                names: names,
+                              ),
+                            // Quorum progress stays neutral: it only
+                            // renders while the event is pending, i.e.
+                            // before the quorum is satisfied (#196).
+                            if (_quorumProgress(
+                              l10n,
+                              event,
+                              decisions[event.id] ?? const [],
+                              policies,
+                            ) case final progress?)
+                              Text(progress),
+                          ],
+                        ),
+                        // #196 — semantic outcome trailing: pending
+                        // waits, applied/confirmed succeeded (green),
+                        // rejected failed (red). Expired events carry no
+                        // outcome mark.
+                        trailing: switch (event.status) {
+                          EventStatus.pending =>
+                            const Icon(Icons.hourglass_top, size: 18),
+                          EventStatus.applied ||
+                          EventStatus.confirmed =>
+                            Icon(
+                              Icons.check_circle_outline,
+                              size: 18,
+                              color: AppStatusColors.successOf(
+                                Theme.of(context).brightness,
+                              ),
+                            ),
+                          EventStatus.rejected => Icon(
+                              Icons.cancel_outlined,
+                              size: 18,
+                              color:
+                                  Theme.of(context).colorScheme.error,
+                            ),
+                          EventStatus.expired => null,
+                        },
+                      ),
+                  },
+                if (feed.isEmpty)
+                  Padding(
+                    padding: AppSpacing.lgAll,
+                    child: Text(
+                      l10n?.notesFilterEmpty ??
+                          'No unread messages — all caught up.',
+                      key: const ValueKey('notes-filter-empty'),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
                 ],
               ),
             );
@@ -563,19 +607,37 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       appBar: AppBar(
         title: Text(l10n?.tabEvents ?? 'Events'),
         actions: [
-          // #546 — the same unread filter as the Messages chip, but
+          // #581 — flip the date sort; the choice persists like the
+          // rest of the filter.
+          IconButton(
+            key: const ValueKey('events-sort-toggle'),
+            tooltip: l10n?.notifSortByDate ?? 'Sort by date',
+            onPressed: () => ref
+                .read(notificationFilterProvider.notifier)
+                .toggleSort(),
+            icon: Icon(
+              filter.sort == FeedSort.newestFirst
+                  ? Icons.arrow_downward
+                  : Icons.arrow_upward,
+            ),
+          ),
+          // #546 — the same unread filter as the chip line, but
           // reachable the moment the bell lands you here, badge and
-          // all, even when the section is scrolled away.
+          // all, even when the chips are scrolled away.
           IconButton(
             key: const ValueKey('events-filter-unread'),
             tooltip: l10n?.notesFilterUnread ?? 'Unread',
-            isSelected: _unreadOnly,
-            onPressed: () => setState(() => _unreadOnly = !_unreadOnly),
+            isSelected: unreadOnly,
+            onPressed: () => ref
+                .read(notificationFilterProvider.notifier)
+                .setRead(
+                  unreadOnly ? ReadFilter.all : ReadFilter.unread,
+                ),
             icon: Badge.count(
               count: unreadIds.length,
               isLabelVisible: unreadIds.isNotEmpty,
               child: Icon(
-                _unreadOnly
+                unreadOnly
                     ? Icons.mark_email_unread
                     : Icons.mark_email_unread_outlined,
               ),

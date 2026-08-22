@@ -65,5 +65,10 @@
   "reservationDeleteSubmitted": "Eliminación solicitada — un propietario o admin decidirá.",
   "@reservationDeleteSubmitted": {
     "description": "Reservation deletion requests (#492)"
-  }
+  },
+  "notifCategoryCheckIns": "Registros",
+  "notifCategoryMoney": "Dinero",
+  "notifCategoryMembers": "Miembros",
+  "notesFilterRead": "Leídos",
+  "notifSortByDate": "Ordenar por fecha"
 }

@@ -450,6 +450,11 @@
   "@reservationDeleteSubmitted": {
     "description": "Reservation deletion requests (#492)"
   },
+  "notifCategoryCheckIns": "Check-ins",
+  "notifCategoryMoney": "Finanzen",
+  "notifCategoryMembers": "Mitglieder",
+  "notesFilterRead": "Gelesen",
+  "notifSortByDate": "Nach Datum sortieren",
   "featuresTitle": "Funktionen",
   "featureCalendarTab": "Kalender-Tab",
   "featureCalendarTabDesc": "Monatsübersicht über Buchungen und Schließtage.",

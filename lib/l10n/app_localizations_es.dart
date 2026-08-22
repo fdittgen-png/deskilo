@@ -1078,6 +1078,21 @@ class AppLocalizationsEs extends AppLocalizations {
       'Eliminación solicitada — un propietario o admin decidirá.';
 
   @override
+  String get notifCategoryCheckIns => 'Registros';
+
+  @override
+  String get notifCategoryMoney => 'Dinero';
+
+  @override
+  String get notifCategoryMembers => 'Miembros';
+
+  @override
+  String get notesFilterRead => 'Leídos';
+
+  @override
+  String get notifSortByDate => 'Ordenar por fecha';
+
+  @override
   String get featuresTitle => 'Funciones';
 
   @override

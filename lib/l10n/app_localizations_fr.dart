@@ -1079,6 +1079,21 @@ class AppLocalizationsFr extends AppLocalizations {
       'Suppression demandée — un propriétaire ou un admin décidera.';
 
   @override
+  String get notifCategoryCheckIns => 'Check-ins';
+
+  @override
+  String get notifCategoryMoney => 'Finances';
+
+  @override
+  String get notifCategoryMembers => 'Membres';
+
+  @override
+  String get notesFilterRead => 'Lus';
+
+  @override
+  String get notifSortByDate => 'Trier par date';
+
+  @override
   String get featuresTitle => 'Fonctionnalités';
 
   @override

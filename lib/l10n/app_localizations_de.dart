@@ -1080,6 +1080,21 @@ class AppLocalizationsDe extends AppLocalizations {
       'Löschung beantragt — Inhaber oder Admin entscheiden.';
 
   @override
+  String get notifCategoryCheckIns => 'Check-ins';
+
+  @override
+  String get notifCategoryMoney => 'Finanzen';
+
+  @override
+  String get notifCategoryMembers => 'Mitglieder';
+
+  @override
+  String get notesFilterRead => 'Gelesen';
+
+  @override
+  String get notifSortByDate => 'Nach Datum sortieren';
+
+  @override
   String get featuresTitle => 'Funktionen';
 
   @override

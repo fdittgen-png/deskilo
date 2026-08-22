@@ -450,6 +450,11 @@
   "@reservationDeleteSubmitted": {
     "description": "Reservation deletion requests (#492)"
   },
+  "notifCategoryCheckIns": "Check-ins",
+  "notifCategoryMoney": "Finances",
+  "notifCategoryMembers": "Membres",
+  "notesFilterRead": "Lus",
+  "notifSortByDate": "Trier par date",
   "featuresTitle": "Fonctionnalités",
   "featureCalendarTab": "Onglet Calendrier",
   "featureCalendarTabDesc": "Vue mensuelle des réservations et jours de fermeture.",

@@ -450,6 +450,11 @@
   "@reservationDeleteSubmitted": {
     "description": "Reservation deletion requests (#492)"
   },
+  "notifCategoryCheckIns": "Registros",
+  "notifCategoryMoney": "Dinero",
+  "notifCategoryMembers": "Miembros",
+  "notesFilterRead": "Leídos",
+  "notifSortByDate": "Ordenar por fecha",
   "featuresTitle": "Funciones",
   "featureCalendarTab": "Pestaña Calendario",
   "featureCalendarTabDesc": "Vista mensual de reservas y días de cierre.",

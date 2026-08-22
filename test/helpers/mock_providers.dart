@@ -29,6 +29,7 @@ import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/core/scan/qr_scan_widget.dart';
 import 'package:deskilo/core/storage/active_workspace_store.dart';
 import 'package:deskilo/core/storage/note_seen_store.dart';
+import 'package:deskilo/core/storage/notification_filter_store.dart';
 import 'package:deskilo/core/time/clock.dart';
 
 import 'fake_realtime_sync.dart';
@@ -1025,6 +1026,7 @@ List<Override> standardTestOverrides({
   RealtimeSync? realtime,
   FakeAppBadge? badge,
   NoteSeenStore? noteSeen,
+  NotificationFilterStore? notificationFilters,
 }) {
   return [
     // No-op realtime by default: the real impl touches Supabase.instance,
@@ -1068,6 +1070,9 @@ List<Override> standardTestOverrides({
     // SharedPreferences mock in every widget test.
     noteSeenStoreProvider
         .overrideWithValue(noteSeen ?? InMemoryNoteSeenStore()),
+    // #581: the bell filter persists on-device — in-memory for tests.
+    notificationFilterStoreProvider.overrideWithValue(
+        notificationFilters ?? InMemoryNotificationFilterStore()),
     profileRepositoryProvider
         .overrideWithValue(profile ?? FakeProfileRepository()),
     nfcUidReaderProvider.overrideWithValue(nfc ?? FakeNfcUidReader()),
