@@ -23,5 +23,7 @@
   "profilePhotoRemoved": "Foto entfernt",
   "profilePhotoSaveFailed": "Foto konnte nicht aktualisiert werden",
   "profilePhotoFileType": "Bild",
-  "settingsBillingReports": "Abrechnung & Berichte"
+  "settingsBillingReports": "Abrechnung & Berichte",
+  "defaultPeriodTitle": "Standard-Buchungszeitraum",
+  "defaultPeriodNone": "Keine Präferenz (ganzer Tag)"
 }

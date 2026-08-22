@@ -20,6 +20,9 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/presentation/country_names.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../../members/providers/directory_providers.dart';
+import '../../../reservations/domain/default_booking_period.dart';
+import '../../../reservations/providers/default_period_controller.dart';
+import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/presentation/widgets/badge_manager_dialog.dart';
@@ -383,6 +386,60 @@ class SettingsScreen extends ConsumerWidget {
               builder: (_) => const _StatusDialog(),
             ),
           ),
+          // #586 — the member's default reservation period; only shown
+          // when the workspace's booking configuration offers a choice.
+          if (defaultPeriodChoicesFor(
+            ref.watch(bookingGranularityProvider).value ??
+                BookingGranularity.flexible,
+          ).isNotEmpty)
+            ListTile(
+              key: const ValueKey('settings-default-period'),
+              leading: const Icon(Icons.schedule_outlined),
+              title: Text(
+                  l10n?.defaultPeriodTitle ?? 'Default booking period'),
+              subtitle: Text(switch (
+                  ref.watch(defaultPeriodProvider).value) {
+                DefaultBookingPeriod.morning =>
+                  l10n?.planMorningChip ?? 'Morning',
+                DefaultBookingPeriod.afternoon =>
+                  l10n?.planAfternoonChip ?? 'Afternoon',
+                DefaultBookingPeriod.fullDay =>
+                  l10n?.reserveFullDayChip ?? 'Full day',
+                null => l10n?.defaultPeriodNone ??
+                    'No preference (full day)',
+              }),
+              onTap: () => showDialog<void>(
+                context: context,
+                builder: (dialogContext) => SimpleDialog(
+                  title: Text(l10n?.defaultPeriodTitle ??
+                      'Default booking period'),
+                  children: [
+                    for (final (period, label) in [
+                      (null,
+                          l10n?.defaultPeriodNone ??
+                              'No preference (full day)'),
+                      (DefaultBookingPeriod.morning,
+                          l10n?.planMorningChip ?? 'Morning'),
+                      (DefaultBookingPeriod.afternoon,
+                          l10n?.planAfternoonChip ?? 'Afternoon'),
+                      (DefaultBookingPeriod.fullDay,
+                          l10n?.reserveFullDayChip ?? 'Full day'),
+                    ])
+                      SimpleDialogOption(
+                        key: ValueKey(
+                            'default-period-${period?.wire ?? 'none'}'),
+                        onPressed: () {
+                          ref
+                              .read(defaultPeriodProvider.notifier)
+                              .select(period);
+                          Navigator.of(dialogContext).pop();
+                        },
+                        child: Text(label),
+                      ),
+                  ],
+                ),
+              ),
+            ),
           // Postal address (0060): printed on the member's invoices.
           ListTile(
             key: const ValueKey('settings-address'),

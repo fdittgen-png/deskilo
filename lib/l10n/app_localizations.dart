@@ -6260,6 +6260,18 @@ abstract class AppLocalizations {
   /// **'Billing & reports'**
   String get settingsBillingReports;
 
+  /// No description provided for @defaultPeriodTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Default booking period'**
+  String get defaultPeriodTitle;
+
+  /// No description provided for @defaultPeriodNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No preference (full day)'**
+  String get defaultPeriodNone;
+
   /// No description provided for @profilesDefault.
   ///
   /// In en, this message translates to:

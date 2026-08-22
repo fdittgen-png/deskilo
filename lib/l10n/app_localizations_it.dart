@@ -3470,6 +3470,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settingsBillingReports => 'Fatturazione e report';
 
   @override
+  String get defaultPeriodTitle => 'Periodo di prenotazione predefinito';
+
+  @override
+  String get defaultPeriodNone => 'Nessuna preferenza (giornata intera)';
+
+  @override
   String get profilesDefault => 'Predefinito all\'avvio';
 
   @override

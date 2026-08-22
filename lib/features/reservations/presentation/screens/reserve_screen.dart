@@ -29,8 +29,10 @@ import '../../domain/booking_error_text.dart';
 import '../../../workspace/domain/workspace_availability.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/default_booking_period.dart';
 import '../../domain/reservation.dart';
 import '../../domain/seat_state_logic.dart';
+import '../../providers/default_period_controller.dart';
 import '../../providers/reservation_providers.dart';
 import '../../domain/space_code.dart';
 import '../widgets/booking_controls.dart';
@@ -167,14 +169,18 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
   }
 
   /// The window the hub currently browses/books, always on [_selectedDay].
-  /// Explicit choice wins; otherwise half-day granularity defaults to the
-  /// full-day window and flexible to "now"-anchored times of day.
+  /// Explicit choice wins; otherwise half-day granularity defaults to
+  /// the member's preferred period (#586, full day when none is set)
+  /// and flexible to "now"-anchored times of day.
   HalfDayWindow _effectiveWindow(BookingGranularity granularity) {
     final start = _windowStart;
     final end = _windowEnd;
     if (start != null && end != null) return (start: start, end: end);
     if (granularity.isDayBased) {
-      return HalfDayWindows.fullDay(_selectedDay);
+      return defaultWindowFor(
+        ref.read(defaultPeriodProvider).value,
+        _selectedDay,
+      );
     }
     final now = _snapToSlot(ref.read(clockProvider).now());
     final from = WorkspaceTime.at(

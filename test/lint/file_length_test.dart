@@ -31,7 +31,7 @@ const Map<String, int> _baseline = {
   // its action/error handling, which need the screen's ref and context.
   // 1530→1550 (2026-08-05): #490 workspace-clock browse machinery.
   // 1550→1620 (2026-08-22): #575 day-phase rings + list dots.
-  'lib/features/plan/presentation/screens/plan_screen.dart': 1620,
+  'lib/features/plan/presentation/screens/plan_screen.dart': 1650, // 2026-08 #586 default-period walk-up ends
   // new 700 (2026-08-22): #575 day-phase rings + #576 space rings.
   'lib/features/plan/presentation/widgets/floor_plan_painter.dart': 700,
   // 1290→1330 (2026-08-02): #395 Excel-export tile — feature lines, the
@@ -39,14 +39,14 @@ const Map<String, int> _baseline = {
   'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1160,
   // 1010→1020 (2026-08-04): #462 whole-space overlays on the plan view.
   // 1020→1070: #466 the hub's whole-level reserve button + visibility.
-  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1070,
+  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1090, // 2026-08 #586 preferred default window
   // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
   // workspace hint subtitle and the RPC write helper.
   // 990→1000 (2026-08-05): #478 Billing & reports admin entry.
   // 1000→1020 (2026-08-05): #486 Payment methods admin entry.
   // 1040→1140 (2026-08-13): #560 the About section (author, licence,
   // privacy, bug link, support tiles).
-  'lib/features/profile/presentation/screens/settings_screen.dart': 1140,
+  'lib/features/profile/presentation/screens/settings_screen.dart': 1200, // 2026-08 #586 default-period tile + dialog
   // 1020→1040 (2026-08-06): #513 the Role management tile.
   // 980→1030 (2026-08-05): #476 the statement export honors the
   // owner's report template (#478 Invoices button joins the grid).

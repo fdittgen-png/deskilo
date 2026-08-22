@@ -19,8 +19,10 @@ import '../../../../core/ui/motion.dart';
 import '../../../../core/ui/view_toggle.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
+import '../../../reservations/domain/default_booking_period.dart';
 import '../../../reservations/domain/walk_up_window.dart';
 import '../../../reservations/domain/reservation.dart';
+import '../../../reservations/providers/default_period_controller.dart';
 import '../../../reservations/domain/reservation_repository.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../reservations/domain/seat_state_logic.dart';
@@ -516,7 +518,13 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final dayBased = granularity.isDayBased;
     var end = walkUp
         ? (granularity == BookingGranularity.halfDay
-            ? HalfDayWindows.windowForNow(start).end
+            // #586 — a member whose default period is FULL DAY walks up
+            // for the whole day; everyone else keeps the current half.
+            ? (ref.read(defaultPeriodProvider).value ==
+                        DefaultBookingPeriod.fullDay &&
+                    HalfDayWindows.fullDay(start).end.isAfter(start)
+                ? HalfDayWindows.fullDay(start).end
+                : HalfDayWindows.windowForNow(start).end)
             // Full-day (0032) and hours (#446) walk-ups end at the end
             // of the working day (overtime-safe via walkUpWindow);
             // minute grids keep the default stay.
@@ -1162,7 +1170,12 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final granularity = _granularity;
     final end = _browseEnd ??
         (granularity == BookingGranularity.halfDay
-            ? HalfDayWindows.windowForNow(start).end
+            // #586 — the member's default period drives the suggestion.
+            ? (ref.read(defaultPeriodProvider).value ==
+                        DefaultBookingPeriod.fullDay &&
+                    HalfDayWindows.fullDay(start).end.isAfter(start)
+                ? HalfDayWindows.fullDay(start).end
+                : HalfDayWindows.windowForNow(start).end)
             : granularity == BookingGranularity.fullDay
                 ? HalfDayWindows.fullDay(start).end
                 : start.add(_kDefaultStay));

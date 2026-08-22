@@ -1886,6 +1886,8 @@
   "profilePhotoSaveFailed": "Foto konnte nicht aktualisiert werden",
   "profilePhotoFileType": "Bild",
   "settingsBillingReports": "Abrechnung & Berichte",
+  "defaultPeriodTitle": "Standard-Buchungszeitraum",
+  "defaultPeriodNone": "Keine Präferenz (ganzer Tag)",
   "profilesDefault": "Standard beim Start",
   "profilesMakeDefault": "Beim Start als Standard verwenden",
   "eventTypeRoleChange": "Rollenwechsel",

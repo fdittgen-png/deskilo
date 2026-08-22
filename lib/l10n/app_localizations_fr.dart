@@ -3475,6 +3475,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsBillingReports => 'Facturation & rapports';
 
   @override
+  String get defaultPeriodTitle => 'Période de réservation par défaut';
+
+  @override
+  String get defaultPeriodNone => 'Sans préférence (journée complète)';
+
+  @override
   String get profilesDefault => 'Profil par défaut au démarrage';
 
   @override

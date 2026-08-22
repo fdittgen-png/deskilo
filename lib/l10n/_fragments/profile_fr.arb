@@ -23,5 +23,7 @@
   "profilePhotoRemoved": "Photo supprimée",
   "profilePhotoSaveFailed": "Impossible de mettre à jour la photo",
   "profilePhotoFileType": "Image",
-  "settingsBillingReports": "Facturation & rapports"
+  "settingsBillingReports": "Facturation & rapports",
+  "defaultPeriodTitle": "Période de réservation par défaut",
+  "defaultPeriodNone": "Sans préférence (journée complète)"
 }

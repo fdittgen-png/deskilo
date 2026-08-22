@@ -3474,6 +3474,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingsBillingReports => 'Abrechnung & Berichte';
 
   @override
+  String get defaultPeriodTitle => 'Standard-Buchungszeitraum';
+
+  @override
+  String get defaultPeriodNone => 'Keine Präferenz (ganzer Tag)';
+
+  @override
   String get profilesDefault => 'Standard beim Start';
 
   @override

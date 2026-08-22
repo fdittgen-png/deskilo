@@ -4458,6 +4458,8 @@
   "@settingsBillingReports": {
     "description": "Admin settings entry to the invoicing hub (#478)"
   },
+  "defaultPeriodTitle": "Default booking period",
+  "defaultPeriodNone": "No preference (full day)",
   "profilesDefault": "Default at startup",
   "profilesMakeDefault": "Use as default at startup",
   "eventTypeRoleChange": "Role change",
