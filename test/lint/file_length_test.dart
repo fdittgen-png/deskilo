@@ -30,7 +30,10 @@ const Map<String, int> _baseline = {
   // check_in_sheets.dart; what remains is the admin-for-others gate and
   // its action/error handling, which need the screen's ref and context.
   // 1530→1550 (2026-08-05): #490 workspace-clock browse machinery.
-  'lib/features/plan/presentation/screens/plan_screen.dart': 1550,
+  // 1550→1620 (2026-08-22): #575 day-phase rings + list dots.
+  'lib/features/plan/presentation/screens/plan_screen.dart': 1620,
+  // new 700 (2026-08-22): #575 day-phase rings + #576 space rings.
+  'lib/features/plan/presentation/widgets/floor_plan_painter.dart': 700,
   // 1290→1330 (2026-08-02): #395 Excel-export tile — feature lines, the
   // orchestration itself lives in excel_export.dart.
   'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1160,

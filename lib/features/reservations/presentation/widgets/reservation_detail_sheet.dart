@@ -717,6 +717,11 @@ Future<void> showReservationDetail(
         PlanFocus(
           levelId: target.levelId,
           seatId: reservation.seatId,
+          // #576 — a whole-desk/office/level booking highlights the
+          // SPACE it covers, not nothing.
+          deskId: reservation.deskId,
+          officeId: reservation.officeId,
+          wholeLevel: reservation.levelId != null,
           at: reservation.startsAt,
         ),
       );

@@ -851,6 +851,13 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                   to: window.end,
                   dayOpen: dayOpen,
                 ),
+                // #575 — the day-phase rings on the hub's plan too.
+                seatDayPhases: seatDayPhasesFor(
+                  plan: plan,
+                  reservations: reservations,
+                  at: window.start,
+                  dayOpen: dayOpen,
+                ),
                 seatLabels: {
                   for (final seat in plan.seats)
                     seat.id: occupantLabelFor(

@@ -239,4 +239,114 @@ void main() {
     );
     expect(next?.id, 'res-level');
   });
+
+  group('seatDayPhaseAt (#575) — the day at a glance', () {
+    SeatDayPhase phaseAt(List<Reservation> reservations, DateTime at) =>
+        seatDayPhaseAt(
+          plan: plan,
+          seat: seat,
+          reservations: reservations,
+          at: at,
+        );
+
+    test('no reservation today → none', () {
+      expect(phaseAt(const [], noon), SeatDayPhase.none);
+    });
+
+    test('a booking covering NOW → ongoing (reserved or checked in)', () {
+      expect(
+        phaseAt([reservation(start: morning, end: evening)], noon),
+        SeatDayPhase.ongoing,
+      );
+      expect(
+        phaseAt(
+          [
+            reservation(
+                start: morning,
+                end: evening,
+                status: ReservationStatus.checkedIn)
+          ],
+          noon,
+        ),
+        SeatDayPhase.ongoing,
+      );
+    });
+
+    test('a COMPLETED morning → past: the served day greys the seat', () {
+      expect(
+        phaseAt(
+          [
+            reservation(
+                start: morning,
+                end: noon,
+                status: ReservationStatus.completed)
+          ],
+          evening,
+        ),
+        SeatDayPhase.past,
+      );
+    });
+
+    test('a booking still ahead today → upcoming; ahead BEATS behind',
+        () {
+      expect(
+        phaseAt([reservation(start: evening, end: evening.add(const Duration(hours: 2)))], noon),
+        SeatDayPhase.upcoming,
+      );
+      expect(
+        phaseAt(
+          [
+            reservation(
+                id: 'res-am',
+                start: morning,
+                end: noon,
+                status: ReservationStatus.completed),
+            reservation(
+                id: 'res-pm',
+                start: evening,
+                end: evening.add(const Duration(hours: 2))),
+          ],
+          noon.add(const Duration(hours: 1)),
+        ),
+        SeatDayPhase.upcoming,
+      );
+    });
+
+    test('cancelled and released rows never phase the seat', () {
+      expect(
+        phaseAt(
+          [
+            reservation(
+                start: morning,
+                end: noon,
+                status: ReservationStatus.cancelled),
+            reservation(
+                id: 'res-2',
+                start: evening,
+                end: evening.add(const Duration(hours: 1)),
+                status: ReservationStatus.released),
+          ],
+          noon.add(const Duration(hours: 1)),
+        ),
+        SeatDayPhase.none,
+      );
+    });
+
+    test('whole-desk and whole-level bookings phase their seats too', () {
+      expect(
+        phaseAt(
+          [reservation(seatId: null, deskId: 'desk-1', start: morning, end: noon, status: ReservationStatus.completed)],
+          evening,
+        ),
+        SeatDayPhase.past,
+      );
+      expect(
+        phaseAt(
+          [reservation(seatId: null, levelId: 'level-1', start: evening, end: evening.add(const Duration(hours: 1)))],
+          noon,
+        ),
+        SeatDayPhase.upcoming,
+      );
+    });
+  });
 }

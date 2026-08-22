@@ -89,6 +89,11 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   /// canvas shows: a seat tap, a level-chip tap, or any time-scroller
   /// change (from/to chip pick, date pick, Now).
   String? _highlightedSeatId;
+  // #576 — the space the last "Show on plan" targeted: table, office or
+  // the whole floor. Cleared with the seat highlight.
+  String? _highlightedDeskId;
+  String? _highlightedOfficeId;
+  bool _highlightLevel = false;
 
   @override
   void initState() {
@@ -121,6 +126,15 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     });
   }
 
+  /// Drops every show-on-plan highlight (#182/#576) — seat ring and
+  /// space rings together, on any interaction that moves the view.
+  void _clearHighlights() {
+    _highlightedSeatId = null;
+    _highlightedDeskId = null;
+    _highlightedOfficeId = null;
+    _highlightLevel = false;
+  }
+
   /// Consumes a calendar "Show on plan" request (#182): switch the level
   /// transiently (never persisting the member's default), browse to the
   /// reservation start when it is still ahead (otherwise stay live), leave
@@ -137,6 +151,9 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     setState(() {
       _listView = false;
       _highlightedSeatId = focus.seatId;
+      _highlightedDeskId = focus.deskId;
+      _highlightedOfficeId = focus.officeId;
+      _highlightLevel = focus.wholeLevel;
       _browse = from;
       // Provisional default window (#184); refined to the reservation's own
       // end once the day's reservations are in.
@@ -261,7 +278,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
   ) async {
     // Any seat interaction dismisses the calendar-jump ring (#182).
     if (_highlightedSeatId != null) {
-      setState(() => _highlightedSeatId = null);
+      setState(_clearHighlights);
     }
     final l10n = AppLocalizations.of(context);
     // Closed day (#186): no sheet at all — the server would reject any
@@ -771,7 +788,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
               levels: levels.length > 1 ? levels : const <Level>[],
               current: level,
               onSelected: (id) {
-                setState(() => _highlightedSeatId = null);
+                setState(_clearHighlights);
                 ref.read(selectedLevelIdProvider.notifier).select(id);
               },
               trailing: _levelReserveVisible(level)
@@ -840,6 +857,14 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                       to: windowEnd,
                       dayOpen: dayOpen,
                     ),
+                    // #575 — the day-phase rings: served / running /
+                    // still ahead, per browsed day.
+                    seatDayPhases: seatDayPhasesFor(
+                      plan: plan,
+                      reservations: reservations,
+                      at: at,
+                      dayOpen: dayOpen,
+                    ),
                     seatLabels: {
                       for (final seat in plan.seats)
                         seat.id: occupantLabelFor(
@@ -862,6 +887,9 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                       to: windowEnd,
                     ),
                     highlightedSeatId: _highlightedSeatId,
+                    highlightedDeskId: _highlightedDeskId,
+                    highlightedOfficeId: _highlightedOfficeId,
+                    highlightLevel: _highlightLevel,
                     onlineSeatIds: onlineSeatIdsFor(
                       plan: plan,
                       reservations: reservations,
@@ -1028,7 +1056,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                 end = kept;
               }
               setState(() {
-                _highlightedSeatId = null;
+                _clearHighlights();
                 _browse = from;
                 _browseEnd = end;
               });
@@ -1050,7 +1078,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             onPickWindow: (w) => setState(() {
               // Window change drops the #182 jump highlight like every
               // other time-scroller interaction.
-              _highlightedSeatId = null;
+              _clearHighlights();
               _browse = w.start;
               _browseEnd = w.end;
             }),
@@ -1069,7 +1097,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
               tooltip: l10n?.planNowButton ?? 'Now',
               icon: const Icon(Icons.schedule_outlined),
               onPressed: () => setState(() {
-                _highlightedSeatId = null;
+                _clearHighlights();
                 _browse = null;
                 _browseEnd = null;
               }),
@@ -1264,7 +1292,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     if (end.isAfter(last)) end = last;
     if (!end.isAfter(from)) end = from.add(_timeSnap);
     setState(() {
-      _highlightedSeatId = null;
+      _clearHighlights();
       _browse = from;
       _browseEnd = end;
     });
@@ -1303,7 +1331,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       return;
     }
     setState(() {
-      _highlightedSeatId = null;
+      _clearHighlights();
       _browse = from;
       _browseEnd = end;
     });
@@ -1410,14 +1438,57 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
           state,
           brightness: Theme.of(context).brightness,
         );
+        // #575 — the same day-phase glance as the canvas ring: a dot
+        // beside the seat icon (green = running, half green = still
+        // ahead today, grey = already served).
+        final phase = !dayOpen
+            ? SeatDayPhase.none
+            : seatDayPhaseAt(
+                plan: plan,
+                seat: seat,
+                reservations: reservations,
+                at: at,
+              );
+        final freeColor = SeatStateColors.of(
+          SeatState.free,
+          brightness: Theme.of(context).brightness,
+        );
+        final phaseColor = switch (phase) {
+          SeatDayPhase.ongoing => freeColor,
+          SeatDayPhase.upcoming => freeColor.withValues(alpha: 0.5),
+          SeatDayPhase.past => SeatStateColors.of(
+              SeatState.blocked,
+              brightness: Theme.of(context).brightness,
+            ),
+          SeatDayPhase.none => null,
+        };
         return ListTile(
-          leading: Icon(
-            switch (state) {
-              SeatState.free => Icons.event_seat_outlined,
-              SeatState.blocked => Icons.block,
-              _ => Icons.event_seat,
-            },
-            color: accent,
+          leading: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Icon(
+                switch (state) {
+                  SeatState.free => Icons.event_seat_outlined,
+                  SeatState.blocked => Icons.block,
+                  _ => Icons.event_seat,
+                },
+                color: accent,
+              ),
+              if (phaseColor != null)
+                Positioned(
+                  right: -3,
+                  top: -3,
+                  child: Container(
+                    key: ValueKey('seat-day-phase-${seat.id}'),
+                    width: 10,
+                    height: 10,
+                    decoration: BoxDecoration(
+                      color: phaseColor,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+            ],
           ),
           title: Text(seat.name.isEmpty ? contextOf(seat) : seat.name),
           subtitle: Text(

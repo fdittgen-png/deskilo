@@ -690,10 +690,17 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
             icon: const Icon(Icons.map_outlined),
             label: Text(l10n?.calendarShowOnPlan ?? 'Show on plan'),
             onPressed: () {
+              // #576 — the highlight matches WHAT was selected: seat,
+              // table, office or the whole floor.
               ref.read(planFocusControllerProvider.notifier).setFocus(
                     PlanFocus(
                       levelId: level.id,
                       seatId: scannedSeat?.id,
+                      deskId: desk?.id,
+                      officeId: desk == null ? office?.id : null,
+                      wholeLevel: scannedSeat == null &&
+                          desk == null &&
+                          office == null,
                     ),
                   );
               Navigator.of(context).popUntil((route) =>

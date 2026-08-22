@@ -7,7 +7,8 @@ import '../../plan/domain/floor_plan.dart';
 import '../../plan/domain/seat.dart';
 import 'reservation.dart';
 
-export '../../../core/theme/seat_state_colors.dart' show SeatState;
+export '../../../core/theme/seat_state_colors.dart'
+    show SeatState, SeatDayPhase;
 
 /// Whether [r] covers [seat] — directly (seat_id), as part of a
 /// whole-desk (desk_id), whole-office (office_id via [officeId]) or
@@ -141,4 +142,36 @@ Reservation? nextReservationOnSeat({
     }
   }
   return next;
+}
+
+/// The seat's DAY PHASE (#575): what the browsed day holds for this seat
+/// beyond the instant state — a finished booking (grey hint), one
+/// running right now (green ring), or one still ahead today (light
+/// green ring). [reservations] is the browsed DAY's slice; completed
+/// bookings count for [SeatDayPhase.past] — that a reservation HAPPENED
+/// is exactly what the glance must show.
+SeatDayPhase seatDayPhaseAt({
+  required FloorPlan plan,
+  required Seat seat,
+  required List<Reservation> reservations,
+  required DateTime at,
+}) {
+  final officeId = _officeIdOf(plan, seat);
+  var past = false;
+  var upcoming = false;
+  for (final r in reservations) {
+    if (r.status == ReservationStatus.cancelled ||
+        r.status == ReservationStatus.released) {
+      continue;
+    }
+    if (!_covers(plan, seat, officeId, r)) continue;
+    if (r.isActive && r.coversInstant(at)) return SeatDayPhase.ongoing;
+    if (!r.endsAt.isAfter(at)) past = true;
+    if (r.startsAt.isAfter(at) && r.isActive) upcoming = true;
+  }
+  // Ahead beats behind: the seat's next relevant fact is the booking
+  // still coming, not the one already over.
+  if (upcoming) return SeatDayPhase.upcoming;
+  if (past) return SeatDayPhase.past;
+  return SeatDayPhase.none;
 }

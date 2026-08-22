@@ -24,8 +24,12 @@ class FloorPlanPainter extends CustomPainter {
     this.background,
     this.images = const {},
     this.seatStates,
+    this.seatDayPhases = const {},
     this.seatLabels,
     this.highlightedSeatId,
+    this.highlightedDeskId,
+    this.highlightedOfficeId,
+    this.highlightLevel = false,
     this.deskOpacity = 1,
     this.spaceOverlays,
     this.onlineSeatIds = const {},
@@ -56,6 +60,12 @@ class FloorPlanPainter extends CustomPainter {
   /// Live mode: seat id → state. Null = editor mode (uniform styling).
   final Map<String, SeatState>? seatStates;
 
+  /// The browsed day's per-seat phase (#575): the painter rings a seat
+  /// whose day already held a booking (grey), holds one right now
+  /// (green) or still holds one ahead (light green) — the at-a-glance
+  /// answer to "did/does/will anything happen here today".
+  final Map<String, SeatDayPhase> seatDayPhases;
+
   /// Live mode: seat id → occupant display name (empty = no label).
   final Map<String, String>? seatLabels;
 
@@ -67,6 +77,12 @@ class FloorPlanPainter extends CustomPainter {
   /// Seat to ring with a thick tertiary outline (#182): the calendar's
   /// "Show on plan" jump points at the reserved seat. Null = no highlight.
   final String? highlightedSeatId;
+
+  /// #576 — the space "Show on plan" targeted: the tertiary ring the
+  /// seat jump always had, now for tables, offices and the whole floor.
+  final String? highlightedDeskId;
+  final String? highlightedOfficeId;
+  final bool highlightLevel;
 
   /// Desk fill opacity 0..1 (0040): 1 = solid (default); lower makes desks
   /// translucent so a background photo shows through. The desk border stays
@@ -273,6 +289,30 @@ class FloorPlanPainter extends CustomPainter {
           ..strokeWidth = state == SeatState.mine ? 2 : 1.3
           ..color = accent.withValues(alpha: 0.9),
       );
+      // #575 — the day ring, in the user's own colours: green for a
+      // booking running NOW, half-transparent green for one still ahead
+      // today, grey for a day already served. Distinct channel from the
+      // state fill, so the palette's colourblind pairing stays intact.
+      final phase = seatDayPhases[seat.id] ?? SeatDayPhase.none;
+      if (phase != SeatDayPhase.none && state != null) {
+        final ringColor = switch (phase) {
+          SeatDayPhase.ongoing => SeatStateColors.of(SeatState.free,
+              brightness: brightness),
+          SeatDayPhase.upcoming => SeatStateColors.of(SeatState.free,
+                  brightness: brightness)
+              .withValues(alpha: 0.5),
+          _ => SeatStateColors.of(SeatState.blocked,
+              brightness: brightness),
+        };
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(
+              rect.inflate(2), Radius.circular(radius + 2)),
+          Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 2.5
+            ..color = ringColor,
+        );
+      }
       if (seat.id == highlightedSeatId) {
         // #182: ring around the focused seat; tertiary so it stands out
         // against both the primary editor accent and the state colors.
@@ -312,6 +352,42 @@ class FloorPlanPainter extends CustomPainter {
           _label(canvas, label, rect, colorScheme.onSurface, center: true);
         }
       }
+    }
+
+    // #576 — the space highlight rings, on top of everything painted.
+    Paint spaceRing() => Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3
+      ..color = colorScheme.tertiary;
+    if (highlightedDeskId != null) {
+      final desk =
+          plan.desks.where((d) => d.id == highlightedDeskId).firstOrNull;
+      if (desk != null) {
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(
+              _toPx(desk.rect).inflate(3), const Radius.circular(8)),
+          spaceRing(),
+        );
+      }
+    }
+    if (highlightedOfficeId != null) {
+      final office = plan.offices
+          .where((o) => o.id == highlightedOfficeId)
+          .firstOrNull;
+      if (office != null) {
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(
+              _toPx(office.rect).inflate(3), const Radius.circular(10)),
+          spaceRing(),
+        );
+      }
+    }
+    if (highlightLevel) {
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+            (Offset.zero & size).deflate(2), const Radius.circular(12)),
+        spaceRing(),
+      );
     }
 
     final sel = selection;
@@ -563,9 +639,13 @@ class FloorPlanPainter extends CustomPainter {
       oldDelegate.selectionResizable != selectionResizable ||
       oldDelegate.selectionValid != selectionValid ||
       !mapEquals(oldDelegate.seatStates, seatStates) ||
+      !mapEquals(oldDelegate.seatDayPhases, seatDayPhases) ||
       !mapEquals(oldDelegate.seatLabels, seatLabels) ||
       !mapEquals(oldDelegate.spaceOverlays, spaceOverlays) ||
       oldDelegate.highlightedSeatId != highlightedSeatId ||
+      oldDelegate.highlightedDeskId != highlightedDeskId ||
+      oldDelegate.highlightedOfficeId != highlightedOfficeId ||
+      oldDelegate.highlightLevel != highlightLevel ||
       oldDelegate.deskOpacity != deskOpacity ||
       !setEquals(oldDelegate.onlineSeatIds, onlineSeatIds) ||
       oldDelegate.cellSize != cellSize;
