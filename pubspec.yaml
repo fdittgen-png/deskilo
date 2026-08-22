@@ -1,7 +1,7 @@
 name: deskilo
 description: "Free, privacy-first coworking community app — visual desk booking plus the community money layer."
 publish_to: 'none'
-version: 0.1.0+1
+version: 1.0.0+1
 
 environment:
   sdk: ^3.11.5
