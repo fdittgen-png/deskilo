@@ -43,10 +43,14 @@ class PlanCanvas extends StatefulWidget {
     required this.paintKey,
     required this.plan,
     required this.seatStates,
+    this.seatDayPhases = const {},
     required this.seatLabels,
     required this.onSeatTap,
     this.onSpaceDoubleTap,
     this.highlightedSeatId,
+    this.highlightedDeskId,
+    this.highlightedOfficeId,
+    this.highlightLevel = false,
     this.onlineSeatIds = const {},
     this.deskOpacity = 1,
     this.spaceOverlays = const {},
@@ -60,6 +64,9 @@ class PlanCanvas extends StatefulWidget {
 
   final FloorPlan plan;
   final Map<String, SeatState> seatStates;
+
+  /// The browsed day's per-seat phase rings (#575).
+  final Map<String, SeatDayPhase> seatDayPhases;
   final Map<String, String> seatLabels;
 
   /// Whole-space overlays (#462) — see [FloorPlanPainter.spaceOverlays].
@@ -75,6 +82,11 @@ class PlanCanvas extends StatefulWidget {
 
   /// Seat ringed by the painter after a calendar jump (#182).
   final String? highlightedSeatId;
+
+  /// #576 — space highlight passthrough (table / office / whole floor).
+  final String? highlightedDeskId;
+  final String? highlightedOfficeId;
+  final bool highlightLevel;
 
   /// Seats whose occupant is online (presence dot).
   final Set<String> onlineSeatIds;
@@ -170,12 +182,16 @@ class _PlanCanvasState extends State<PlanCanvas> {
                 colorScheme: Theme.of(context).colorScheme,
                 brightness: Theme.of(context).brightness,
                 seatStates: widget.seatStates,
+                seatDayPhases: widget.seatDayPhases,
                 seatLabels: widget.seatLabels,
                 spaceOverlays: widget.spaceOverlays,
                 semanticLabels: _semanticLabels(context),
                 semanticsDirection: Directionality.of(context),
                 onSeatSemanticTap: widget.onSeatTap,
                 highlightedSeatId: widget.highlightedSeatId,
+                highlightedDeskId: widget.highlightedDeskId,
+                highlightedOfficeId: widget.highlightedOfficeId,
+                highlightLevel: widget.highlightLevel,
                 onlineSeatIds: widget.onlineSeatIds,
                 deskOpacity: widget.deskOpacity,
                 background: widget.background,

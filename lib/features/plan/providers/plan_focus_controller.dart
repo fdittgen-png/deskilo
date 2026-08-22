@@ -8,14 +8,29 @@ part 'plan_focus_controller.g.dart';
 /// screen consumes it (transient level switch, browse time, highlighted
 /// seat) and clears it again.
 class PlanFocus {
-  const PlanFocus({required this.levelId, this.seatId, this.at});
+  const PlanFocus({
+    required this.levelId,
+    this.seatId,
+    this.deskId,
+    this.officeId,
+    this.wholeLevel = false,
+    this.at,
+  });
 
   /// Level to show — transient only, never persisted as the member's
   /// default level.
   final String levelId;
 
-  /// Seat to highlight on the canvas; null for whole-office reservations.
+  /// Seat to highlight on the canvas; null for whole-space jumps.
   final String? seatId;
+
+  /// #576 — a TABLE/office/level jump highlights the space itself, so
+  /// "Show on plan" always answers WHERE, whatever was selected.
+  final String? deskId;
+  final String? officeId;
+
+  /// The whole floor is the target: the canvas rings its content bounds.
+  final bool wholeLevel;
 
   /// Reservation start: browsed when still in the future, otherwise the
   /// plan stays live.

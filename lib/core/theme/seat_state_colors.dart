@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 /// The five floor-plan seat states (spec §4.1).
 enum SeatState { free, reserved, occupied, mine, blocked }
 
+/// What the browsed DAY holds for a seat beyond the instant state
+/// (#575): a booking already served (grey ring), one running right now
+/// (green ring) or one still ahead today (half-transparent green ring).
+enum SeatDayPhase { none, past, ongoing, upcoming }
+
 /// Muted, colorblind-aware accent palette for seat states — the DesKilo
 /// analog of Sparkilo's fuel-color palette (spec §14).
 ///

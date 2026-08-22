@@ -140,6 +140,27 @@ Map<String, SeatState> seatStatesFor({
                   ),
     };
 
+/// Per-seat DAY PHASES (#575): what the browsed day already held or
+/// still holds for each seat — the ring the painter draws so a glance
+/// answers "did/does/will anything happen on this seat today". Closed
+/// days carry no phases: every seat is blocked anyway.
+Map<String, SeatDayPhase> seatDayPhasesFor({
+  required FloorPlan plan,
+  required List<Reservation> reservations,
+  required DateTime at,
+  bool dayOpen = true,
+}) =>
+    {
+      if (dayOpen)
+        for (final seat in plan.seats)
+          seat.id: seatDayPhaseAt(
+            plan: plan,
+            seat: seat,
+            reservations: reservations,
+            at: at,
+          ),
+    };
+
 /// Seats whose occupant is online (presence heartbeat): the painter marks
 /// them with a green dot. Resolves each taken seat's occupant → member →
 /// profile last-seen, same rule as the directory.

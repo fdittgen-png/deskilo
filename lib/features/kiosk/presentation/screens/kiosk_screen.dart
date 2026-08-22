@@ -374,6 +374,13 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                       myMemberId: null,
                       from: now,
                     ),
+                    // #575 — the wall display answers the same glance:
+                    // served / running / still ahead today.
+                    seatDayPhases: seatDayPhasesFor(
+                      plan: plan,
+                      reservations: reservations,
+                      at: now,
+                    ),
                     seatLabels: {
                       for (final seat in plan.seats)
                         seat.id: occupantLabelFor(
