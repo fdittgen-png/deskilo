@@ -55,5 +55,11 @@
   "spaceYoursNow": "Reserved by you for this slot.",
   "@spaceYoursNow": {
     "description": "Space sheet: the viewer already holds the reservation — the button below checks in"
-  }
+  },
+  "spaceCardSizeLabel": "Card size",
+  "spaceCardSizeSmall": "Small",
+  "spaceCardSizeMedium": "Medium",
+  "spaceCardSizeLarge": "Large",
+  "spaceCardInfoLabel": "Information on the card",
+  "spaceCardInfoWorkspace": "Workspace"
 }

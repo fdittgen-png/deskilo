@@ -506,9 +506,17 @@ class _WorkspaceSettingsScreenState
   }
 
   /// Prints the space QR sheet (field request): one card per desk,
-  /// office and level, in the badge-sheet A4 grid — saved to Downloads.
+  /// office, level and chair, in an A4 grid — saved to Downloads.
+  /// #584 — the owner first picks the card size (S/M/L) and which
+  /// information rides each card (printed AND embedded in the QR).
   Future<void> _exportSpaceCodes(Workspace workspace) async {
     final l10n = AppLocalizations.of(context);
+    final options = await showDialog<
+        ({SpaceCardSize size, Set<SpaceCardInfo> info})>(
+      context: context,
+      builder: (_) => const _SpaceCodesOptionsDialog(),
+    );
+    if (options == null || !mounted) return;
     setState(() => _busy = true);
     if (!await runGuarded(
       context,
@@ -519,39 +527,82 @@ class _WorkspaceSettingsScreenState
       action: () async {
         final levels = await ref.read(levelsProvider.future);
         final entries = <SpaceCodeEntry>[];
-        String payload(SpaceKind kind, String id) => SpaceCodeCodec.encode(
+        // The card's context: selected info entries, in enum order, up
+        // to the card's own depth (a room card names no table/chair).
+        List<String> lines(Map<SpaceCardInfo, String?> facts) => [
+              for (final info in SpaceCardInfo.values)
+                if (options.info.contains(info) &&
+                    (facts[info]?.isNotEmpty ?? false))
+                  facts[info]!,
+            ];
+        String payload(
+          SpaceKind kind,
+          String id,
+          Map<SpaceCardInfo, String?> facts,
+        ) =>
+            SpaceCodeCodec.encode(
               workspaceId: workspace.id,
               kind: kind,
               id: id,
+              info: {
+                for (final info in SpaceCardInfo.values)
+                  if (options.info.contains(info) &&
+                      (facts[info]?.isNotEmpty ?? false))
+                    info.wire: facts[info]!,
+              },
             );
         for (final level in levels) {
           final plan = await ref.read(floorPlanProvider(level.id).future);
+          final levelFacts = <SpaceCardInfo, String?>{
+            SpaceCardInfo.workspace: workspace.name,
+            SpaceCardInfo.level: level.name,
+          };
           entries.add((
             name: level.name,
             kindLabel: l10n?.spaceKindLevel ?? 'Level',
-            payload: payload(SpaceKind.level, level.id),
+            payload: payload(SpaceKind.level, level.id, levelFacts),
+            contextLines: lines(levelFacts),
           ));
           for (final office in plan.offices) {
+            final officeFacts = {
+              ...levelFacts,
+              SpaceCardInfo.room: office.name,
+            };
             entries.add((
               name: office.name,
               kindLabel: l10n?.spaceKindOffice ?? 'Office',
-              payload: payload(SpaceKind.office, office.id),
+              payload: payload(SpaceKind.office, office.id, officeFacts),
+              contextLines: lines(officeFacts),
             ));
           }
           for (final desk in plan.desks) {
+            final deskFacts = {
+              ...levelFacts,
+              SpaceCardInfo.room: plan.offices
+                  .where((o) => o.id == desk.officeId)
+                  .firstOrNull
+                  ?.name,
+              SpaceCardInfo.table: desk.name,
+            };
             entries.add((
               name: desk.name,
               kindLabel: l10n?.spaceKindDesk ?? 'Desk',
-              payload: payload(SpaceKind.desk, desk.id),
+              payload: payload(SpaceKind.desk, desk.id, deskFacts),
+              contextLines: lines(deskFacts),
             ));
             // One card per WORKSTATION too (field request): the card
             // names seat and desk — tables share seat letters.
             for (final seat
                 in plan.seats.where((s) => s.deskId == desk.id)) {
+              final seatFacts = {
+                ...deskFacts,
+                SpaceCardInfo.chair: seat.name,
+              };
               entries.add((
                 name: '${seat.name} · ${desk.name}',
                 kindLabel: l10n?.spaceKindSeat ?? 'Seat',
-                payload: payload(SpaceKind.seat, seat.id),
+                payload: payload(SpaceKind.seat, seat.id, seatFacts),
+                contextLines: lines(seatFacts),
               ));
             }
           }
@@ -572,6 +623,7 @@ class _WorkspaceSettingsScreenState
           entries: entries,
           baseFont: pw.Font.ttf(regular),
           boldFont: pw.Font.ttf(bold),
+          size: options.size,
         );
         final path = await ref.read(fileSaverProvider)(
           bytes: bytes,
@@ -1418,6 +1470,100 @@ class _ResetConfirmDialogState extends State<_ResetConfirmDialog> {
           onPressed:
               matches ? () => Navigator.of(context).pop(true) : null,
           child: Text(l10n?.workspaceResetConfirmButton ?? 'Reset workspace'),
+        ),
+      ],
+    );
+  }
+}
+
+/// #584 — the space-card export options: size (S/M/L) and which
+/// information rides each card. Pops the chosen pair, or null on
+/// cancel; defaults are the historical card (medium, all info).
+class _SpaceCodesOptionsDialog extends StatefulWidget {
+  const _SpaceCodesOptionsDialog();
+
+  @override
+  State<_SpaceCodesOptionsDialog> createState() =>
+      _SpaceCodesOptionsDialogState();
+}
+
+class _SpaceCodesOptionsDialogState
+    extends State<_SpaceCodesOptionsDialog> {
+  SpaceCardSize _size = SpaceCardSize.medium;
+  final Set<SpaceCardInfo> _info = {...SpaceCardInfo.values};
+
+  String _sizeLabel(AppLocalizations? l10n, SpaceCardSize size) =>
+      switch (size) {
+        SpaceCardSize.small => l10n?.spaceCardSizeSmall ?? 'Small',
+        SpaceCardSize.medium => l10n?.spaceCardSizeMedium ?? 'Medium',
+        SpaceCardSize.large => l10n?.spaceCardSizeLarge ?? 'Large',
+      };
+
+  String _infoLabel(AppLocalizations? l10n, SpaceCardInfo info) =>
+      switch (info) {
+        SpaceCardInfo.workspace =>
+          l10n?.spaceCardInfoWorkspace ?? 'Workspace',
+        SpaceCardInfo.level => l10n?.spaceKindLevel ?? 'Level',
+        SpaceCardInfo.room => l10n?.spaceKindOffice ?? 'Office',
+        SpaceCardInfo.table => l10n?.spaceKindDesk ?? 'Desk',
+        SpaceCardInfo.chair => l10n?.spaceKindSeat ?? 'Seat',
+      };
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return AlertDialog(
+      title: Text(l10n?.spaceCodesTitle ?? 'Space QR codes (PDF)'),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l10n?.spaceCardSizeLabel ?? 'Card size'),
+            const SizedBox(height: 4),
+            SegmentedButton<SpaceCardSize>(
+              segments: [
+                for (final size in SpaceCardSize.values)
+                  ButtonSegment(
+                    value: size,
+                    label: Text(
+                      _sizeLabel(l10n, size),
+                      key: ValueKey('space-card-size-${size.name}'),
+                    ),
+                  ),
+              ],
+              selected: {_size},
+              onSelectionChanged: (selection) =>
+                  setState(() => _size = selection.first),
+            ),
+            const SizedBox(height: 16),
+            Text(l10n?.spaceCardInfoLabel ?? 'Information on the card'),
+            for (final info in SpaceCardInfo.values)
+              CheckboxListTile(
+                key: ValueKey('space-card-info-${info.wire}'),
+                contentPadding: EdgeInsets.zero,
+                dense: true,
+                title: Text(_infoLabel(l10n, info)),
+                value: _info.contains(info),
+                onChanged: (checked) => setState(() {
+                  checked == true
+                      ? _info.add(info)
+                      : _info.remove(info);
+                }),
+              ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n?.commonCancel ?? 'Cancel'),
+        ),
+        FilledButton(
+          key: const ValueKey('space-codes-export'),
+          onPressed: () => Navigator.of(context)
+              .pop((size: _size, info: Set.of(_info))),
+          child: Text(l10n?.commonSave ?? 'Save'),
         ),
       ],
     );

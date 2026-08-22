@@ -16,15 +16,25 @@ abstract final class SpaceCodeCodec {
   static const String scheme = 'deskilo';
   static const String host = 'space';
 
+  /// [info] (#584) adds owner-selected human-readable parameters
+  /// (workspace/level/room/table/chair names) to the URI so a generic
+  /// scanner app shows them; [decode] reads only ws/kind/id and is
+  /// unaffected.
   static String encode({
     required String workspaceId,
     required SpaceKind kind,
     required String id,
+    Map<String, String> info = const {},
   }) =>
       Uri(
         scheme: scheme,
         host: host,
-        queryParameters: {'ws': workspaceId, 'kind': kind.name, 'id': id},
+        queryParameters: {
+          'ws': workspaceId,
+          'kind': kind.name,
+          'id': id,
+          ...info,
+        },
       ).toString();
 
   /// Decodes a scanned/typed payload; null for anything that is not a

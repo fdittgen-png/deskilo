@@ -13,5 +13,11 @@
   "spaceKindOffice": "Büro",
   "spaceKindLevel": "Etage",
   "spaceKindSeat": "Platz",
-  "spaceYoursNow": "Von dir für dieses Zeitfenster reserviert."
+  "spaceYoursNow": "Von dir für dieses Zeitfenster reserviert.",
+  "spaceCardSizeLabel": "Kartengröße",
+  "spaceCardSizeSmall": "Klein",
+  "spaceCardSizeMedium": "Mittel",
+  "spaceCardSizeLarge": "Groß",
+  "spaceCardInfoLabel": "Informationen auf der Karte",
+  "spaceCardInfoWorkspace": "Workspace"
 }

@@ -38,6 +38,17 @@ void main() {
     expect(SpaceCodeCodec.decode('deskilo://space?ws=ws-1&kind=desk'),
         isNull);
     expect(SpaceCodeCodec.decode('not a uri at all'), isNull);
+    // #584 — embedded info params ride along without breaking decode.
+    final informed = SpaceCodeCodec.encode(
+      workspaceId: 'ws-1',
+      kind: SpaceKind.seat,
+      id: 's-1',
+      info: {'workspace': 'Pézenas', 'chair': 'A1'},
+    );
+    expect(informed, contains('chair=A1'));
+    final decodedInformed = SpaceCodeCodec.decode(informed);
+    expect(decodedInformed!.kind, SpaceKind.seat);
+    expect(decodedInformed.id, 's-1');
   });
 
   /// Pumps the hub, opens the scanner and submits [payload] typed.

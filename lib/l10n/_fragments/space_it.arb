@@ -13,5 +13,11 @@
   "spaceKindOffice": "Ufficio",
   "spaceKindLevel": "Piano",
   "spaceKindSeat": "Postazione",
-  "spaceYoursNow": "Riservato da te per questa fascia."
+  "spaceYoursNow": "Riservato da te per questa fascia.",
+  "spaceCardSizeLabel": "Dimensione della scheda",
+  "spaceCardSizeSmall": "Piccola",
+  "spaceCardSizeMedium": "Media",
+  "spaceCardSizeLarge": "Grande",
+  "spaceCardInfoLabel": "Informazioni sulla scheda",
+  "spaceCardInfoWorkspace": "Spazio di lavoro"
 }
