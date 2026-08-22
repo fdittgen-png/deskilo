@@ -997,6 +997,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce tag est déjà associé à une autre chaise.';
 
   @override
+  String get editorDeleteElementConfirmAudit =>
+      'Supprimer cet élément ? Tout ce qui y est placé est également retiré. Les réservations qui y font référence gardent un instantané texte pour les audits ; les réservations ouvertes sont annulées.';
+
+  @override
+  String get editorDeleteLevelConfirmAudit =>
+      'Supprimer ce niveau ? Tous les bureaux, tables et places qui s\'y trouvent sont retirés. Les réservations qui y font référence gardent un instantané texte pour les audits ; les réservations ouvertes sont annulées.';
+
+  @override
   String get eventsPendingHeader => 'En attente de votre confirmation';
 
   @override
@@ -1309,6 +1317,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureDeletionRequestsDesc =>
       'Les membres peuvent DEMANDER la suppression d\'une réservation passée ou pointée ; un propriétaire/admin valide. Désactivé, ces réservations ne peuvent pas être supprimées.';
+
+  @override
+  String get featurePlanObjectDeleteTitle =>
+      'Supprimer des espaces avec historique';
+
+  @override
+  String get featurePlanObjectDeleteDesc =>
+      'Les propriétaires peuvent supprimer niveaux, bureaux, tables et places même si d\'anciennes réservations y font référence — les réservations gardent un instantané texte pour les audits et rapports.';
 
   @override
   String get helpTitle => 'Aide';

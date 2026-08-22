@@ -73,5 +73,13 @@
   "featureDeletionRequestsDesc": "Les membres peuvent DEMANDER la suppression d'une réservation passée ou pointée ; un propriétaire/admin valide. Désactivé, ces réservations ne peuvent pas être supprimées.",
   "@featureDeletionRequestsDesc": {
     "description": "Feature-registry completeness (#502)"
+  },
+  "featurePlanObjectDeleteTitle": "Supprimer des espaces avec historique",
+  "@featurePlanObjectDeleteTitle": {
+    "description": "Feature-registry completeness (#587)"
+  },
+  "featurePlanObjectDeleteDesc": "Les propriétaires peuvent supprimer niveaux, bureaux, tables et places même si d'anciennes réservations y font référence — les réservations gardent un instantané texte pour les audits et rapports.",
+  "@featurePlanObjectDeleteDesc": {
+    "description": "Feature-registry completeness (#587)"
   }
 }

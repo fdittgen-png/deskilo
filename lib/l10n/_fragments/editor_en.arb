@@ -192,5 +192,13 @@
   "editorSeatNfcHelp": "Tag uid in hex — leave empty for no tag.",
   "editorSeatNfcRead": "Read a tag now",
   "editorSeatNfcReadFailed": "Could not start the tag reader.",
-  "editorSeatNfcDuplicate": "This tag is already linked to another chair."
+  "editorSeatNfcDuplicate": "This tag is already linked to another chair.",
+  "editorDeleteElementConfirmAudit": "Delete this element? Anything placed on it is removed too. Bookings that reference it keep a text snapshot for audits; open bookings are cancelled.",
+  "@editorDeleteElementConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  },
+  "editorDeleteLevelConfirmAudit": "Delete this level? All offices, desks and seats on it are removed. Bookings that reference them keep a text snapshot for audits; open bookings are cancelled.",
+  "@editorDeleteLevelConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  }
 }

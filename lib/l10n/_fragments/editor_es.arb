@@ -51,5 +51,13 @@
   "editorSeatNfcHelp": "UID de la etiqueta en hexadecimal — dejar vacío para ninguna.",
   "editorSeatNfcRead": "Leer una etiqueta ahora",
   "editorSeatNfcReadFailed": "No se pudo iniciar el lector de etiquetas.",
-  "editorSeatNfcDuplicate": "Esta etiqueta ya está vinculada a otra silla."
+  "editorSeatNfcDuplicate": "Esta etiqueta ya está vinculada a otra silla.",
+  "editorDeleteElementConfirmAudit": "¿Eliminar este elemento? Todo lo colocado sobre él también se elimina. Las reservas que hacen referencia a él conservan una instantánea de texto para auditorías; las reservas abiertas se cancelan.",
+  "@editorDeleteElementConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  },
+  "editorDeleteLevelConfirmAudit": "¿Eliminar esta planta? Se eliminan todas las oficinas, mesas y asientos que contiene. Las reservas que hacen referencia a ellos conservan una instantánea de texto para auditorías; las reservas abiertas se cancelan.",
+  "@editorDeleteLevelConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  }
 }

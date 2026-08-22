@@ -1886,6 +1886,18 @@ abstract class AppLocalizations {
   /// **'This tag is already linked to another chair.'**
   String get editorSeatNfcDuplicate;
 
+  /// #587 delete despite reservations — audit substitution warning
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this element? Anything placed on it is removed too. Bookings that reference it keep a text snapshot for audits; open bookings are cancelled.'**
+  String get editorDeleteElementConfirmAudit;
+
+  /// #587 delete despite reservations — audit substitution warning
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this level? All offices, desks and seats on it are removed. Bookings that reference them keep a text snapshot for audits; open bookings are cancelled.'**
+  String get editorDeleteLevelConfirmAudit;
+
   /// Header above pinned pending-confirmation cards (spec §8)
   ///
   /// In en, this message translates to:
@@ -2419,6 +2431,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Members may REQUEST deletion of a past or checked-in booking; an owner/admin validates. Off, such bookings cannot be deleted at all.'**
   String get featureDeletionRequestsDesc;
+
+  /// Feature-registry completeness (#587)
+  ///
+  /// In en, this message translates to:
+  /// **'Delete spaces with history'**
+  String get featurePlanObjectDeleteTitle;
+
+  /// Feature-registry completeness (#587)
+  ///
+  /// In en, this message translates to:
+  /// **'Owners may delete levels, offices, desks and seats even when past reservations reference them — the bookings keep a text snapshot for audits and reports.'**
+  String get featurePlanObjectDeleteDesc;
 
   /// No description provided for @helpTitle.
   ///

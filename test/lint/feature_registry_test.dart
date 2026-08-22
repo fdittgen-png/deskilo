@@ -23,7 +23,9 @@ import 'package:flutter_test/flutter_test.dart';
 // 32→33 (2026-08-11): #544 vatManagement (rates editor + rate pickers;
 // vatDeclarations re-parented under it).
 // 33→34 (2026-08-14): #568 einvoiceCustomerDelivery (second send leg).
-const int _expectedFeatureCount = 34;
+// 34→35 (2026-08-22): #587 planObjectDelete (delete plan objects past
+// reservations reference; audit substitution text).
+const int _expectedFeatureCount = 35;
 
 void main() {
   test('every functionality is registered — the pin', () {

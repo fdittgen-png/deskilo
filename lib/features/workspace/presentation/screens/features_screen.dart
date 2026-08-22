@@ -144,6 +144,11 @@ class FeaturesScreen extends ConsumerWidget {
               "A second sending channel beside the government platform: "
                   "post the issued invoice straight to the customer's "
                   "own e-invoicing service.",
+        WorkspaceFeature.planObjectDelete =>
+          l10n?.featurePlanObjectDeleteDesc ??
+              'Owners may delete levels, offices, desks and seats even '
+                  'when past reservations reference them — the bookings '
+                  'keep a text snapshot for audits and reports.',
       };
 
   Future<void> _toggle(

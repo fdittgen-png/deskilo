@@ -39,7 +39,8 @@ enum WorkspaceFeature {
   roleManagement,
   vatManagement,
   vatDeclarations,
-  einvoiceCustomerDelivery;
+  einvoiceCustomerDelivery,
+  planObjectDelete;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -225,6 +226,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.einvoiceCustomerDelivery,
     requires: WorkspaceFeature.invoicing,
   ),
+  // #587 — owners may delete plan objects that reservations reference;
+  // the references survive as an audit substitution text. OFF keeps the
+  // historic refusal (the server re-checks the flag in the RPC).
+  WorkspaceFeature.planObjectDelete:
+      FeatureManifestEntry(feature: WorkspaceFeature.planObjectDelete),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start

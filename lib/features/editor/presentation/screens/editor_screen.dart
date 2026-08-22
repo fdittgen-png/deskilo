@@ -9,6 +9,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/level.dart';
+import '../delete_confirm_text.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 
@@ -193,11 +194,8 @@ class _LevelList extends ConsumerWidget {
                     context: context,
                     builder: (context) => AlertDialog(
                       title: Text(l10n?.commonDelete ?? 'Delete'),
-                      content: Text(
-                        l10n?.editorDeleteLevelConfirm ??
-                            'Delete this level? All offices, desks and '
-                                'seats on it are removed.',
-                      ),
+                      content:
+                          Text(deleteLevelConfirmText(ref, l10n)),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(false),

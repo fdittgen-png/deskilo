@@ -51,10 +51,24 @@ sealed class Reservation with _$Reservation {
     String? seriesPattern,
     DateTime? checkedInAt,
     DateTime? checkedOutAt,
+
+    /// Audit substitution snapshot (#587): the human-readable chain
+    /// (workspace · level · room · table · chair, up to the deleted
+    /// target's depth) written when an OWNER deleted the plan object
+    /// this reservation pointed at. Null while the target lives.
+    String? spaceLabel,
   }) = _Reservation;
 
   /// How early check-in opens before the start (spec §4.3, #408).
   static const checkInLeeway = Duration(minutes: 15);
+
+  /// The display name of the booked space: the live plan name while the
+  /// target exists, else the #587 substitution snapshot written when the
+  /// plan object was deleted — past bookings stay traceable.
+  String spaceNameFrom(Map<String, String> targetNames) =>
+      targetNames[seatId ?? deskId ?? officeId ?? levelId] ??
+      spaceLabel ??
+      '';
 
   bool get isActive =>
       status == ReservationStatus.reserved ||

@@ -117,12 +117,25 @@ class ReservationDetailSheet extends ConsumerWidget {
               subtitle: target == null &&
                       r.seriesId == null &&
                       r.levelId == null &&
-                      r.deskId == null
+                      r.deskId == null &&
+                      r.spaceLabel == null
                   ? null
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (target != null) Text(target.locationLine),
+                        // #587 — the target was deleted: show the audit
+                        // substitution snapshot instead of nothing.
+                        if (target == null &&
+                            r.seatId == null &&
+                            r.deskId == null &&
+                            r.officeId == null &&
+                            r.levelId == null &&
+                            r.spaceLabel != null)
+                          Text(
+                            r.spaceLabel!,
+                            key: const ValueKey('reservation-substitution'),
+                          ),
                         // Whole-desk booking (0059): name the table.
                         if (r.deskId != null)
                           Consumer(

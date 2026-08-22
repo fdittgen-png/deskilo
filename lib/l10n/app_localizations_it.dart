@@ -998,6 +998,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo tag è già collegato a un\'altra sedia.';
 
   @override
+  String get editorDeleteElementConfirmAudit =>
+      'Eliminare questo elemento? Anche tutto ciò che vi è collocato viene rimosso. Le prenotazioni che vi fanno riferimento conservano un\'istantanea di testo per gli audit; le prenotazioni aperte vengono annullate.';
+
+  @override
+  String get editorDeleteLevelConfirmAudit =>
+      'Eliminare questo piano? Tutti gli uffici, i tavoli e i posti su di esso vengono rimossi. Le prenotazioni che vi fanno riferimento conservano un\'istantanea di testo per gli audit; le prenotazioni aperte vengono annullate.';
+
+  @override
   String get eventsPendingHeader => 'In attesa della tua conferma';
 
   @override
@@ -1308,6 +1316,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featureDeletionRequestsDesc =>
       'I membri possono RICHIEDERE l\'eliminazione di una prenotazione passata o con check-in; un proprietario/admin convalida. Disattivato, tali prenotazioni non sono eliminabili.';
+
+  @override
+  String get featurePlanObjectDeleteTitle => 'Eliminare spazi con cronologia';
+
+  @override
+  String get featurePlanObjectDeleteDesc =>
+      'I proprietari possono eliminare piani, uffici, tavoli e posti anche se prenotazioni passate vi fanno riferimento: le prenotazioni conservano un\'istantanea di testo per audit e report.';
 
   @override
   String get helpTitle => 'Aiuto';

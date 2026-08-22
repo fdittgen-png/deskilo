@@ -51,5 +51,13 @@
   "editorSeatNfcHelp": "UID del tag in esadecimale — lasciare vuoto per nessun tag.",
   "editorSeatNfcRead": "Leggi un tag ora",
   "editorSeatNfcReadFailed": "Impossibile avviare il lettore di tag.",
-  "editorSeatNfcDuplicate": "Questo tag è già collegato a un'altra sedia."
+  "editorSeatNfcDuplicate": "Questo tag è già collegato a un'altra sedia.",
+  "editorDeleteElementConfirmAudit": "Eliminare questo elemento? Anche tutto ciò che vi è collocato viene rimosso. Le prenotazioni che vi fanno riferimento conservano un'istantanea di testo per gli audit; le prenotazioni aperte vengono annullate.",
+  "@editorDeleteElementConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  },
+  "editorDeleteLevelConfirmAudit": "Eliminare questo piano? Tutti gli uffici, i tavoli e i posti su di esso vengono rimossi. Le prenotazioni che vi fanno riferimento conservano un'istantanea di testo per gli audit; le prenotazioni aperte vengono annullate.",
+  "@editorDeleteLevelConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  }
 }
