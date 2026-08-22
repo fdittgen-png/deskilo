@@ -10,5 +10,7 @@
   "reserveWeekView": "Semana",
   "reserveFullDayChip": "Día completo",
   "reservePickDateTooltip": "Elegir una fecha",
-  "reserveBookingFailed": "No se pudo reservar — puede que el asiento se acabe de ocupar."
+  "reserveBookingFailed": "No se pudo reservar — puede que el asiento se acabe de ocupar.",
+  "spaceScanNfcHint": "…o acerca el teléfono a la etiqueta NFC de una silla.",
+  "spaceScanUnknownTag": "Esta etiqueta no está vinculada a ninguna silla."
 }

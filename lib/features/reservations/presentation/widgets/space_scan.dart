@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -16,6 +17,7 @@ import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
 import '../../../plan/domain/office.dart';
 import '../../../plan/domain/seat.dart';
+import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/providers/plan_focus_controller.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -43,6 +45,12 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
 
+  // #585 — the tap path joins the camera and the typed field when this
+  // device can read NFC.
+  final nfcReader = ref.read(nfcUidReaderProvider);
+  final nfcReady = await nfcReader.isAvailable();
+  if (!context.mounted) return;
+
   final code = await showModalBottomSheet<SpaceCode>(
     context: context,
     isScrollControlled: true,
@@ -51,6 +59,10 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
       scanBuilder:
           qrScanSupported ? ref.read(qrScanWidgetBuilderProvider) : null,
       l10n: l10n,
+      nfc: nfcReady ? nfcReader : null,
+      seatIdForUid: (uid) => ref
+          .read(floorPlanRepositoryProvider)
+          .seatIdForNfcUid(workspace.id, uid),
     ),
   );
   if (code == null || !context.mounted) return;
@@ -122,11 +134,19 @@ class SpaceScanSheet extends StatefulWidget {
     required this.workspaceId,
     required this.scanBuilder,
     required this.l10n,
+    this.nfc,
+    this.seatIdForUid,
   });
 
   final String workspaceId;
   final QrScanWidgetBuilder? scanBuilder;
   final AppLocalizations? l10n;
+
+  /// #585 — when the device can read NFC, a chair-tag tap resolves to
+  /// its seat exactly like scanning the seat's QR card. Null hides the
+  /// tap path (non-Android, NFC off).
+  final NfcUidReader? nfc;
+  final Future<String?> Function(String uid)? seatIdForUid;
 
   @override
   State<SpaceScanSheet> createState() => _SpaceScanSheetState();
@@ -135,13 +155,45 @@ class SpaceScanSheet extends StatefulWidget {
 class _SpaceScanSheetState extends State<SpaceScanSheet> {
   final _controller = TextEditingController();
   bool _invalid = false;
+  bool _unknownTag = false;
   bool _done = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final nfc = widget.nfc;
+    if (nfc != null) {
+      nfc.startRead(onUid: _onTag);
+    }
+  }
+
+  Future<void> _onTag(String uid) async {
+    if (_done || !mounted) return;
+    final seatId = await widget.seatIdForUid?.call(uid);
+    if (_done || !mounted) return;
+    if (seatId == null) {
+      setState(() {
+        _unknownTag = true;
+        _invalid = false;
+      });
+      return;
+    }
+    _done = true;
+    Navigator.of(context).pop((
+      workspaceId: widget.workspaceId,
+      kind: SpaceKind.seat,
+      id: seatId,
+    ));
+  }
 
   void _submit(String raw) {
     if (_done || !mounted || raw.trim().isEmpty) return;
     final code = SpaceCodeCodec.decode(raw);
     if (code == null || code.workspaceId != widget.workspaceId) {
-      setState(() => _invalid = true);
+      setState(() {
+        _invalid = true;
+        _unknownTag = false;
+      });
       return;
     }
     _done = true;
@@ -150,6 +202,7 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
 
   @override
   void dispose() {
+    widget.nfc?.stop();
     _controller.dispose();
     super.dispose();
   }
@@ -167,6 +220,35 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
                   'type its code.',
           style: Theme.of(context).textTheme.bodySmall,
         ),
+        if (widget.nfc != null) ...[
+          const SizedBox(height: 4),
+          Row(
+            key: const ValueKey('space-scan-nfc-hint'),
+            children: [
+              const Icon(Icons.nfc, size: 16),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  l10n?.spaceScanNfcHint ??
+                      "…or hold the phone to a chair's NFC tag.",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+            ],
+          ),
+        ],
+        if (_unknownTag)
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              l10n?.spaceScanUnknownTag ??
+                  'This tag is not linked to any chair.',
+              key: const ValueKey('space-scan-unknown-tag'),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.error,
+              ),
+            ),
+          ),
         if (widget.scanBuilder != null) ...[
           const SizedBox(height: 12),
           // Shared camera box with the lens FLIP button (field request).

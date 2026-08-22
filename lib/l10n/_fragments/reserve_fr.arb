@@ -10,5 +10,7 @@
   "reserveWeekView": "Semaine",
   "reserveFullDayChip": "Journée entière",
   "reservePickDateTooltip": "Choisir une date",
-  "reserveBookingFailed": "Réservation impossible — la place vient peut-être d'être prise."
+  "reserveBookingFailed": "Réservation impossible — la place vient peut-être d'être prise.",
+  "spaceScanNfcHint": "…ou approchez le téléphone du tag NFC d'une chaise.",
+  "spaceScanUnknownTag": "Ce tag n'est associé à aucune chaise."
 }

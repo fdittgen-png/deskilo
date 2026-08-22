@@ -979,6 +979,24 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucun accessoire pour l\'instant — ajoutez-les dans Réglages → Accessoires.';
 
   @override
+  String get editorSeatNfcLabel => 'Tag NFC/RFID';
+
+  @override
+  String get editorSeatNfcHelp =>
+      'UID du tag en hexadécimal — laisser vide pour aucun tag.';
+
+  @override
+  String get editorSeatNfcRead => 'Lire un tag maintenant';
+
+  @override
+  String get editorSeatNfcReadFailed =>
+      'Impossible de démarrer le lecteur de tag.';
+
+  @override
+  String get editorSeatNfcDuplicate =>
+      'Ce tag est déjà associé à une autre chaise.';
+
+  @override
   String get eventsPendingHeader => 'En attente de votre confirmation';
 
   @override
@@ -3656,6 +3674,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get reserveBookingFailed =>
       'Réservation impossible — la place vient peut-être d\'être prise.';
+
+  @override
+  String get spaceScanNfcHint =>
+      '…ou approchez le téléphone du tag NFC d\'une chaise.';
+
+  @override
+  String get spaceScanUnknownTag => 'Ce tag n\'est associé à aucune chaise.';
 
   @override
   String get servicesTitle => 'Services';

@@ -46,5 +46,10 @@
   "commonSave": "Guardar",
   "commonDelete": "Eliminar",
   "editorAccessoriesLabel": "Accesorios",
-  "editorNoAccessories": "Todavía no hay accesorios — añádelos en Ajustes → Accesorios."
+  "editorNoAccessories": "Todavía no hay accesorios — añádelos en Ajustes → Accesorios.",
+  "editorSeatNfcLabel": "Etiqueta NFC/RFID",
+  "editorSeatNfcHelp": "UID de la etiqueta en hexadecimal — dejar vacío para ninguna.",
+  "editorSeatNfcRead": "Leer una etiqueta ahora",
+  "editorSeatNfcReadFailed": "No se pudo iniciar el lector de etiquetas.",
+  "editorSeatNfcDuplicate": "Esta etiqueta ya está vinculada a otra silla."
 }

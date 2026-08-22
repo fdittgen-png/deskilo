@@ -8,8 +8,12 @@
   "@monthFreeCount": {
     "description": "Free-desks-of-total label in a month calendar cell (#7)",
     "placeholders": {
-      "free": {"type": "int"},
-      "total": {"type": "int"}
+      "free": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "reservationRecurring": "Recurring booking",
@@ -47,5 +51,7 @@
   "reserveBookingFailed": "Could not reserve — the seat may have just been taken.",
   "@reserveBookingFailed": {
     "description": "Snackbar when creating a reservation from the Reserve hub fails for a generic reason (#208)"
-  }
+  },
+  "spaceScanNfcHint": "…or hold the phone to a chair's NFC tag.",
+  "spaceScanUnknownTag": "This tag is not linked to any chair."
 }

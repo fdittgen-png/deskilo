@@ -1299,6 +1299,11 @@
   "@editorNoAccessories": {
     "description": "Hint in the seat sheet when the workspace accessory catalog is empty"
   },
+  "editorSeatNfcLabel": "NFC/RFID tag",
+  "editorSeatNfcHelp": "Tag uid in hex — leave empty for no tag.",
+  "editorSeatNfcRead": "Read a tag now",
+  "editorSeatNfcReadFailed": "Could not start the tag reader.",
+  "editorSeatNfcDuplicate": "This tag is already linked to another chair.",
   "eventsPendingHeader": "Waiting for your confirmation",
   "@eventsPendingHeader": {
     "description": "Header above pinned pending-confirmation cards (spec §8)"
@@ -4703,6 +4708,8 @@
   "@reserveBookingFailed": {
     "description": "Snackbar when creating a reservation from the Reserve hub fails for a generic reason (#208)"
   },
+  "spaceScanNfcHint": "…or hold the phone to a chair's NFC tag.",
+  "spaceScanUnknownTag": "This tag is not linked to any chair.",
   "servicesTitle": "Services",
   "@servicesTitle": {
     "description": "App-bar title of the owner service-catalog editor and its settings tile"
