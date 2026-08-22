@@ -143,6 +143,21 @@ class _BookingSheetState extends State<BookingSheet> {
     final showTimePickers = !widget.walkUp && !widget.fixedEnd;
     final hoursWalkUp = widget.walkUp &&
         widget.granularity == BookingGranularity.hours;
+    // #574 — minute-grid workspaces get the SLIDER: the duration in the
+    // workspace's own steps, walk-up and punctual alike (a 10:00 arrival
+    // under a 5-minute grid slides to "until 12:00" in 5-minute ticks).
+    final gridStep = switch (widget.granularity) {
+      BookingGranularity.minutes5 ||
+      BookingGranularity.minutes15 ||
+      BookingGranularity.minutes30 ||
+      BookingGranularity.minutes60 =>
+        widget.granularity.stepMinutes,
+      _ => null,
+    };
+    final maxDuration =
+        gridStep == null ? 0 : _maxDurationMinutes(gridStep);
+    final showDurationSlider =
+        gridStep != null && maxDuration >= gridStep && !widget.fixedEnd;
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -212,6 +227,35 @@ class _BookingSheetState extends State<BookingSheet> {
                   final cap = widget.cap;
                   if (cap != null && end.isAfter(cap)) end = cap;
                   setState(() => _end = end);
+                },
+              ),
+            ],
+            if (showDurationSlider) ...[
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                '${l10n?.planDurationLabel ?? 'Duration'} · '
+                '${bookingRangeText(l10n, _start, _end)}',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color:
+                          Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+              ),
+              Slider(
+                key: const ValueKey('booking-duration-slider'),
+                value: _end
+                    .difference(_start)
+                    .inMinutes
+                    .clamp(gridStep, maxDuration)
+                    .toDouble(),
+                min: gridStep.toDouble(),
+                max: maxDuration.toDouble(),
+                divisions:
+                    ((maxDuration - gridStep) ~/ gridStep).clamp(1, 288),
+                label: bookingRangeText(l10n, _start, _end),
+                onChanged: (v) {
+                  final minutes = (v / gridStep).round() * gridStep;
+                  setState(() =>
+                      _end = _start.add(Duration(minutes: minutes)));
                 },
               ),
             ],
@@ -319,6 +363,19 @@ class _BookingSheetState extends State<BookingSheet> {
         ),
       ),
     );
+  }
+
+  /// The longest grid-aligned duration from [_start] (#574): bounded by
+  /// the next reservation on the seat ([widget.cap]) or the day's last
+  /// slot, floored to the step.
+  int _maxDurationMinutes(int step) {
+    final lastSlot =
+        WorkspaceTime.at(_day.year, _day.month, _day.day, 23, 45);
+    final cap = widget.cap;
+    final limit =
+        cap != null && cap.isBefore(lastSlot) ? cap : lastSlot;
+    final minutes = limit.difference(_start).inMinutes;
+    return (minutes ~/ step) * step;
   }
 
   Duration get _slot => Duration(

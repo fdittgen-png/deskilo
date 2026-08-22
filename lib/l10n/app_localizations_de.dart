@@ -3172,6 +3172,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reportDesignerZoomFit => 'An Breite anpassen';
 
   @override
+  String get planDurationLabel => 'Dauer';
+
+  @override
   String get planNoLevels => 'Der Workspace hat noch keinen Plan.';
 
   @override

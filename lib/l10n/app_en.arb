@@ -4043,6 +4043,10 @@
   "@reportDesignerZoomFit": {
     "description": "Report page designer: fit-the-width zoom option (#548)"
   },
+  "planDurationLabel": "Duration",
+  "@planDurationLabel": {
+    "description": "Booking sheet: grid duration slider label (#574)"
+  },
   "planNoLevels": "The workspace has no floor plan yet.",
   "@planNoLevels": {
     "description": "Empty state of the Plan tab before the owner drew levels"

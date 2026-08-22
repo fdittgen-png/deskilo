@@ -3169,6 +3169,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reportDesignerZoomFit => 'Adatta alla larghezza';
 
   @override
+  String get planDurationLabel => 'Durata';
+
+  @override
   String get planNoLevels => 'Lo spazio non ha ancora una piantina.';
 
   @override
