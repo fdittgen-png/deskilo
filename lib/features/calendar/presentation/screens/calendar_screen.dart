@@ -310,7 +310,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                       final r = dayReservations[index];
                       return _ReservationCard(
                         reservation: r,
-                        seatLabel: targets[r.seatId ?? r.officeId] ?? '',
+                        seatLabel: r.spaceNameFrom(targets),
                         occupant: _everyone ? (names[r.memberId] ?? '') : '',
                         own: r.memberId == myMember?.id,
                         onTap: () => _detailSheet(r),

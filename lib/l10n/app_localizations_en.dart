@@ -988,6 +988,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'This tag is already linked to another chair.';
 
   @override
+  String get editorDeleteElementConfirmAudit =>
+      'Delete this element? Anything placed on it is removed too. Bookings that reference it keep a text snapshot for audits; open bookings are cancelled.';
+
+  @override
+  String get editorDeleteLevelConfirmAudit =>
+      'Delete this level? All offices, desks and seats on it are removed. Bookings that reference them keep a text snapshot for audits; open bookings are cancelled.';
+
+  @override
   String get eventsPendingHeader => 'Waiting for your confirmation';
 
   @override
@@ -1294,6 +1302,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureDeletionRequestsDesc =>
       'Members may REQUEST deletion of a past or checked-in booking; an owner/admin validates. Off, such bookings cannot be deleted at all.';
+
+  @override
+  String get featurePlanObjectDeleteTitle => 'Delete spaces with history';
+
+  @override
+  String get featurePlanObjectDeleteDesc =>
+      'Owners may delete levels, offices, desks and seats even when past reservations reference them — the bookings keep a text snapshot for audits and reports.';
 
   @override
   String get helpTitle => 'Help';

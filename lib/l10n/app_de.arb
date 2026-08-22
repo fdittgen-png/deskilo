@@ -389,6 +389,14 @@
   "editorSeatNfcRead": "Jetzt einen Tag lesen",
   "editorSeatNfcReadFailed": "Der Tag-Leser konnte nicht gestartet werden.",
   "editorSeatNfcDuplicate": "Dieser Tag ist bereits mit einem anderen Stuhl verknüpft.",
+  "editorDeleteElementConfirmAudit": "Dieses Element löschen? Alles darauf Platzierte wird ebenfalls entfernt. Buchungen, die darauf verweisen, behalten einen Text-Schnappschuss für Audits; offene Buchungen werden storniert.",
+  "@editorDeleteElementConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  },
+  "editorDeleteLevelConfirmAudit": "Diese Ebene löschen? Alle Büros, Tische und Sitzplätze darauf werden entfernt. Buchungen, die darauf verweisen, behalten einen Text-Schnappschuss für Audits; offene Buchungen werden storniert.",
+  "@editorDeleteLevelConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  },
   "eventsPendingHeader": "Wartet auf deine Bestätigung",
   "eventAccept": "Annehmen",
   "eventReject": "Ablehnen",
@@ -533,6 +541,14 @@
   "featureDeletionRequestsDesc": "Mitglieder können die Löschung einer vergangenen oder eingecheckten Buchung BEANTRAGEN; Inhaber/Admin validieren. Aus: solche Buchungen sind gar nicht löschbar.",
   "@featureDeletionRequestsDesc": {
     "description": "Feature-registry completeness (#502)"
+  },
+  "featurePlanObjectDeleteTitle": "Räume mit Historie löschen",
+  "@featurePlanObjectDeleteTitle": {
+    "description": "Feature-registry completeness (#587)"
+  },
+  "featurePlanObjectDeleteDesc": "Inhaber können Ebenen, Büros, Tische und Sitzplätze auch dann löschen, wenn frühere Reservierungen darauf verweisen — die Buchungen behalten einen Text-Schnappschuss für Audits und Berichte.",
+  "@featurePlanObjectDeleteDesc": {
+    "description": "Feature-registry completeness (#587)"
   },
   "helpTitle": "Hilfe",
   "helpContents": "Inhalt",

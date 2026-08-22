@@ -18,7 +18,11 @@ mixin _$Reservation {
 /// seat/office/level is non-null.
  String? get levelId; String get memberId; DateTime get startsAt; DateTime get endsAt; ReservationStatus get status; String? get seriesId;/// Repetition modality of the series ('daily' / 'weekdays' /
 /// 'weekly', 0034); null on single bookings and pre-0034 series.
- String? get seriesPattern; DateTime? get checkedInAt; DateTime? get checkedOutAt;
+ String? get seriesPattern; DateTime? get checkedInAt; DateTime? get checkedOutAt;/// Audit substitution snapshot (#587): the human-readable chain
+/// (workspace · level · room · table · chair, up to the deleted
+/// target's depth) written when an OWNER deleted the plan object
+/// this reservation pointed at. Null while the target lives.
+ String? get spaceLabel;
 /// Create a copy of Reservation
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +33,16 @@ $ReservationCopyWith<Reservation> get copyWith => _$ReservationCopyWithImpl<Rese
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Reservation&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.seatId, seatId) || other.seatId == seatId)&&(identical(other.deskId, deskId) || other.deskId == deskId)&&(identical(other.officeId, officeId) || other.officeId == officeId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.startsAt, startsAt) || other.startsAt == startsAt)&&(identical(other.endsAt, endsAt) || other.endsAt == endsAt)&&(identical(other.status, status) || other.status == status)&&(identical(other.seriesId, seriesId) || other.seriesId == seriesId)&&(identical(other.seriesPattern, seriesPattern) || other.seriesPattern == seriesPattern)&&(identical(other.checkedInAt, checkedInAt) || other.checkedInAt == checkedInAt)&&(identical(other.checkedOutAt, checkedOutAt) || other.checkedOutAt == checkedOutAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Reservation&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.seatId, seatId) || other.seatId == seatId)&&(identical(other.deskId, deskId) || other.deskId == deskId)&&(identical(other.officeId, officeId) || other.officeId == officeId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.startsAt, startsAt) || other.startsAt == startsAt)&&(identical(other.endsAt, endsAt) || other.endsAt == endsAt)&&(identical(other.status, status) || other.status == status)&&(identical(other.seriesId, seriesId) || other.seriesId == seriesId)&&(identical(other.seriesPattern, seriesPattern) || other.seriesPattern == seriesPattern)&&(identical(other.checkedInAt, checkedInAt) || other.checkedInAt == checkedInAt)&&(identical(other.checkedOutAt, checkedOutAt) || other.checkedOutAt == checkedOutAt)&&(identical(other.spaceLabel, spaceLabel) || other.spaceLabel == spaceLabel));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,seatId,deskId,officeId,levelId,memberId,startsAt,endsAt,status,seriesId,seriesPattern,checkedInAt,checkedOutAt);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,seatId,deskId,officeId,levelId,memberId,startsAt,endsAt,status,seriesId,seriesPattern,checkedInAt,checkedOutAt,spaceLabel);
 
 @override
 String toString() {
-  return 'Reservation(id: $id, workspaceId: $workspaceId, seatId: $seatId, deskId: $deskId, officeId: $officeId, levelId: $levelId, memberId: $memberId, startsAt: $startsAt, endsAt: $endsAt, status: $status, seriesId: $seriesId, seriesPattern: $seriesPattern, checkedInAt: $checkedInAt, checkedOutAt: $checkedOutAt)';
+  return 'Reservation(id: $id, workspaceId: $workspaceId, seatId: $seatId, deskId: $deskId, officeId: $officeId, levelId: $levelId, memberId: $memberId, startsAt: $startsAt, endsAt: $endsAt, status: $status, seriesId: $seriesId, seriesPattern: $seriesPattern, checkedInAt: $checkedInAt, checkedOutAt: $checkedOutAt, spaceLabel: $spaceLabel)';
 }
 
 
@@ -49,7 +53,7 @@ abstract mixin class $ReservationCopyWith<$Res>  {
   factory $ReservationCopyWith(Reservation value, $Res Function(Reservation) _then) = _$ReservationCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, String? seatId, String? deskId, String? officeId, String? levelId, String memberId, DateTime startsAt, DateTime endsAt, ReservationStatus status, String? seriesId, String? seriesPattern, DateTime? checkedInAt, DateTime? checkedOutAt
+ String id, String workspaceId, String? seatId, String? deskId, String? officeId, String? levelId, String memberId, DateTime startsAt, DateTime endsAt, ReservationStatus status, String? seriesId, String? seriesPattern, DateTime? checkedInAt, DateTime? checkedOutAt, String? spaceLabel
 });
 
 
@@ -66,7 +70,7 @@ class _$ReservationCopyWithImpl<$Res>
 
 /// Create a copy of Reservation
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? seatId = freezed,Object? deskId = freezed,Object? officeId = freezed,Object? levelId = freezed,Object? memberId = null,Object? startsAt = null,Object? endsAt = null,Object? status = null,Object? seriesId = freezed,Object? seriesPattern = freezed,Object? checkedInAt = freezed,Object? checkedOutAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? seatId = freezed,Object? deskId = freezed,Object? officeId = freezed,Object? levelId = freezed,Object? memberId = null,Object? startsAt = null,Object? endsAt = null,Object? status = null,Object? seriesId = freezed,Object? seriesPattern = freezed,Object? checkedInAt = freezed,Object? checkedOutAt = freezed,Object? spaceLabel = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -82,7 +86,8 @@ as ReservationStatus,seriesId: freezed == seriesId ? _self.seriesId : seriesId /
 as String?,seriesPattern: freezed == seriesPattern ? _self.seriesPattern : seriesPattern // ignore: cast_nullable_to_non_nullable
 as String?,checkedInAt: freezed == checkedInAt ? _self.checkedInAt : checkedInAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,checkedOutAt: freezed == checkedOutAt ? _self.checkedOutAt : checkedOutAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,spaceLabel: freezed == spaceLabel ? _self.spaceLabel : spaceLabel // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -164,10 +169,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String? seatId,  String? deskId,  String? officeId,  String? levelId,  String memberId,  DateTime startsAt,  DateTime endsAt,  ReservationStatus status,  String? seriesId,  String? seriesPattern,  DateTime? checkedInAt,  DateTime? checkedOutAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String? seatId,  String? deskId,  String? officeId,  String? levelId,  String memberId,  DateTime startsAt,  DateTime endsAt,  ReservationStatus status,  String? seriesId,  String? seriesPattern,  DateTime? checkedInAt,  DateTime? checkedOutAt,  String? spaceLabel)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Reservation() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.seatId,_that.deskId,_that.officeId,_that.levelId,_that.memberId,_that.startsAt,_that.endsAt,_that.status,_that.seriesId,_that.seriesPattern,_that.checkedInAt,_that.checkedOutAt);case _:
+return $default(_that.id,_that.workspaceId,_that.seatId,_that.deskId,_that.officeId,_that.levelId,_that.memberId,_that.startsAt,_that.endsAt,_that.status,_that.seriesId,_that.seriesPattern,_that.checkedInAt,_that.checkedOutAt,_that.spaceLabel);case _:
   return orElse();
 
 }
@@ -185,10 +190,10 @@ return $default(_that.id,_that.workspaceId,_that.seatId,_that.deskId,_that.offic
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String? seatId,  String? deskId,  String? officeId,  String? levelId,  String memberId,  DateTime startsAt,  DateTime endsAt,  ReservationStatus status,  String? seriesId,  String? seriesPattern,  DateTime? checkedInAt,  DateTime? checkedOutAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String? seatId,  String? deskId,  String? officeId,  String? levelId,  String memberId,  DateTime startsAt,  DateTime endsAt,  ReservationStatus status,  String? seriesId,  String? seriesPattern,  DateTime? checkedInAt,  DateTime? checkedOutAt,  String? spaceLabel)  $default,) {final _that = this;
 switch (_that) {
 case _Reservation():
-return $default(_that.id,_that.workspaceId,_that.seatId,_that.deskId,_that.officeId,_that.levelId,_that.memberId,_that.startsAt,_that.endsAt,_that.status,_that.seriesId,_that.seriesPattern,_that.checkedInAt,_that.checkedOutAt);}
+return $default(_that.id,_that.workspaceId,_that.seatId,_that.deskId,_that.officeId,_that.levelId,_that.memberId,_that.startsAt,_that.endsAt,_that.status,_that.seriesId,_that.seriesPattern,_that.checkedInAt,_that.checkedOutAt,_that.spaceLabel);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -202,10 +207,10 @@ return $default(_that.id,_that.workspaceId,_that.seatId,_that.deskId,_that.offic
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String? seatId,  String? deskId,  String? officeId,  String? levelId,  String memberId,  DateTime startsAt,  DateTime endsAt,  ReservationStatus status,  String? seriesId,  String? seriesPattern,  DateTime? checkedInAt,  DateTime? checkedOutAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String? seatId,  String? deskId,  String? officeId,  String? levelId,  String memberId,  DateTime startsAt,  DateTime endsAt,  ReservationStatus status,  String? seriesId,  String? seriesPattern,  DateTime? checkedInAt,  DateTime? checkedOutAt,  String? spaceLabel)?  $default,) {final _that = this;
 switch (_that) {
 case _Reservation() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.seatId,_that.deskId,_that.officeId,_that.levelId,_that.memberId,_that.startsAt,_that.endsAt,_that.status,_that.seriesId,_that.seriesPattern,_that.checkedInAt,_that.checkedOutAt);case _:
+return $default(_that.id,_that.workspaceId,_that.seatId,_that.deskId,_that.officeId,_that.levelId,_that.memberId,_that.startsAt,_that.endsAt,_that.status,_that.seriesId,_that.seriesPattern,_that.checkedInAt,_that.checkedOutAt,_that.spaceLabel);case _:
   return null;
 
 }
@@ -217,7 +222,7 @@ return $default(_that.id,_that.workspaceId,_that.seatId,_that.deskId,_that.offic
 
 
 class _Reservation extends Reservation {
-  const _Reservation({required this.id, required this.workspaceId, this.seatId, this.deskId, this.officeId, this.levelId, required this.memberId, required this.startsAt, required this.endsAt, required this.status, this.seriesId, this.seriesPattern, this.checkedInAt, this.checkedOutAt}): super._();
+  const _Reservation({required this.id, required this.workspaceId, this.seatId, this.deskId, this.officeId, this.levelId, required this.memberId, required this.startsAt, required this.endsAt, required this.status, this.seriesId, this.seriesPattern, this.checkedInAt, this.checkedOutAt, this.spaceLabel}): super._();
   
 
 @override final  String id;
@@ -238,6 +243,11 @@ class _Reservation extends Reservation {
 @override final  String? seriesPattern;
 @override final  DateTime? checkedInAt;
 @override final  DateTime? checkedOutAt;
+/// Audit substitution snapshot (#587): the human-readable chain
+/// (workspace · level · room · table · chair, up to the deleted
+/// target's depth) written when an OWNER deleted the plan object
+/// this reservation pointed at. Null while the target lives.
+@override final  String? spaceLabel;
 
 /// Create a copy of Reservation
 /// with the given fields replaced by the non-null parameter values.
@@ -249,16 +259,16 @@ _$ReservationCopyWith<_Reservation> get copyWith => __$ReservationCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Reservation&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.seatId, seatId) || other.seatId == seatId)&&(identical(other.deskId, deskId) || other.deskId == deskId)&&(identical(other.officeId, officeId) || other.officeId == officeId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.startsAt, startsAt) || other.startsAt == startsAt)&&(identical(other.endsAt, endsAt) || other.endsAt == endsAt)&&(identical(other.status, status) || other.status == status)&&(identical(other.seriesId, seriesId) || other.seriesId == seriesId)&&(identical(other.seriesPattern, seriesPattern) || other.seriesPattern == seriesPattern)&&(identical(other.checkedInAt, checkedInAt) || other.checkedInAt == checkedInAt)&&(identical(other.checkedOutAt, checkedOutAt) || other.checkedOutAt == checkedOutAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Reservation&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.seatId, seatId) || other.seatId == seatId)&&(identical(other.deskId, deskId) || other.deskId == deskId)&&(identical(other.officeId, officeId) || other.officeId == officeId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.startsAt, startsAt) || other.startsAt == startsAt)&&(identical(other.endsAt, endsAt) || other.endsAt == endsAt)&&(identical(other.status, status) || other.status == status)&&(identical(other.seriesId, seriesId) || other.seriesId == seriesId)&&(identical(other.seriesPattern, seriesPattern) || other.seriesPattern == seriesPattern)&&(identical(other.checkedInAt, checkedInAt) || other.checkedInAt == checkedInAt)&&(identical(other.checkedOutAt, checkedOutAt) || other.checkedOutAt == checkedOutAt)&&(identical(other.spaceLabel, spaceLabel) || other.spaceLabel == spaceLabel));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,seatId,deskId,officeId,levelId,memberId,startsAt,endsAt,status,seriesId,seriesPattern,checkedInAt,checkedOutAt);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,seatId,deskId,officeId,levelId,memberId,startsAt,endsAt,status,seriesId,seriesPattern,checkedInAt,checkedOutAt,spaceLabel);
 
 @override
 String toString() {
-  return 'Reservation(id: $id, workspaceId: $workspaceId, seatId: $seatId, deskId: $deskId, officeId: $officeId, levelId: $levelId, memberId: $memberId, startsAt: $startsAt, endsAt: $endsAt, status: $status, seriesId: $seriesId, seriesPattern: $seriesPattern, checkedInAt: $checkedInAt, checkedOutAt: $checkedOutAt)';
+  return 'Reservation(id: $id, workspaceId: $workspaceId, seatId: $seatId, deskId: $deskId, officeId: $officeId, levelId: $levelId, memberId: $memberId, startsAt: $startsAt, endsAt: $endsAt, status: $status, seriesId: $seriesId, seriesPattern: $seriesPattern, checkedInAt: $checkedInAt, checkedOutAt: $checkedOutAt, spaceLabel: $spaceLabel)';
 }
 
 
@@ -269,7 +279,7 @@ abstract mixin class _$ReservationCopyWith<$Res> implements $ReservationCopyWith
   factory _$ReservationCopyWith(_Reservation value, $Res Function(_Reservation) _then) = __$ReservationCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, String? seatId, String? deskId, String? officeId, String? levelId, String memberId, DateTime startsAt, DateTime endsAt, ReservationStatus status, String? seriesId, String? seriesPattern, DateTime? checkedInAt, DateTime? checkedOutAt
+ String id, String workspaceId, String? seatId, String? deskId, String? officeId, String? levelId, String memberId, DateTime startsAt, DateTime endsAt, ReservationStatus status, String? seriesId, String? seriesPattern, DateTime? checkedInAt, DateTime? checkedOutAt, String? spaceLabel
 });
 
 
@@ -286,7 +296,7 @@ class __$ReservationCopyWithImpl<$Res>
 
 /// Create a copy of Reservation
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? seatId = freezed,Object? deskId = freezed,Object? officeId = freezed,Object? levelId = freezed,Object? memberId = null,Object? startsAt = null,Object? endsAt = null,Object? status = null,Object? seriesId = freezed,Object? seriesPattern = freezed,Object? checkedInAt = freezed,Object? checkedOutAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? seatId = freezed,Object? deskId = freezed,Object? officeId = freezed,Object? levelId = freezed,Object? memberId = null,Object? startsAt = null,Object? endsAt = null,Object? status = null,Object? seriesId = freezed,Object? seriesPattern = freezed,Object? checkedInAt = freezed,Object? checkedOutAt = freezed,Object? spaceLabel = freezed,}) {
   return _then(_Reservation(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -302,7 +312,8 @@ as ReservationStatus,seriesId: freezed == seriesId ? _self.seriesId : seriesId /
 as String?,seriesPattern: freezed == seriesPattern ? _self.seriesPattern : seriesPattern // ignore: cast_nullable_to_non_nullable
 as String?,checkedInAt: freezed == checkedInAt ? _self.checkedInAt : checkedInAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,checkedOutAt: freezed == checkedOutAt ? _self.checkedOutAt : checkedOutAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,spaceLabel: freezed == spaceLabel ? _self.spaceLabel : spaceLabel // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

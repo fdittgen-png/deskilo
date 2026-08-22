@@ -270,5 +270,6 @@ class SupabaseReservationRepository implements ReservationRepository {
         checkedOutAt: row['checked_out_at'] == null
             ? null
             : DateTime.parse(row['checked_out_at'] as String),
+        spaceLabel: row['space_label'] as String?,
       );
 }

@@ -26,7 +26,7 @@ List<ReminderRequest> upcomingCheckInReminders({
     if (!r.startsAt.isAfter(now) || r.startsAt.isAfter(horizon)) continue;
     final remindAt = r.startsAt.subtract(before);
     if (!remindAt.isAfter(now)) continue;
-    final target = targetNames[r.seatId ?? r.officeId] ?? '';
+    final target = r.spaceNameFrom(targetNames);
     result.add(
       ReminderRequest(
         reservationId: r.id,

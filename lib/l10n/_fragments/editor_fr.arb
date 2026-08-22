@@ -51,5 +51,13 @@
   "editorSeatNfcHelp": "UID du tag en hexadécimal — laisser vide pour aucun tag.",
   "editorSeatNfcRead": "Lire un tag maintenant",
   "editorSeatNfcReadFailed": "Impossible de démarrer le lecteur de tag.",
-  "editorSeatNfcDuplicate": "Ce tag est déjà associé à une autre chaise."
+  "editorSeatNfcDuplicate": "Ce tag est déjà associé à une autre chaise.",
+  "editorDeleteElementConfirmAudit": "Supprimer cet élément ? Tout ce qui y est placé est également retiré. Les réservations qui y font référence gardent un instantané texte pour les audits ; les réservations ouvertes sont annulées.",
+  "@editorDeleteElementConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  },
+  "editorDeleteLevelConfirmAudit": "Supprimer ce niveau ? Tous les bureaux, tables et places qui s'y trouvent sont retirés. Les réservations qui y font référence gardent un instantané texte pour les audits ; les réservations ouvertes sont annulées.",
+  "@editorDeleteLevelConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  }
 }

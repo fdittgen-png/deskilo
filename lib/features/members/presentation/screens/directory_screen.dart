@@ -350,8 +350,8 @@ Widget? _reservationChip(
   final theme = Theme.of(context);
   final brightness = theme.brightness;
   final reservation = info.reservation;
-  final seatName =
-      targetNames[reservation.seatId ?? reservation.officeId] ?? '';
+  // #587 — a deleted target falls back to its audit substitution text.
+  final seatName = reservation.spaceNameFrom(targetNames);
   return switch (info) {
     CheckedInNow() => _StatusChip(
       chipKey: ValueKey('$keyPrefix-$memberId'),
@@ -541,9 +541,7 @@ Future<void> _showMemberSheet(
                 for (final reservation in memberReservations)
                   _ReservationTile(
                     reservation: reservation,
-                    seatName: targetNames[reservation.seatId ??
-                            reservation.officeId] ??
-                        '',
+                    seatName: reservation.spaceNameFrom(targetNames),
                     onTap: () {
                       Navigator.of(sheetContext).pop();
                       onOpenReservation(reservation);

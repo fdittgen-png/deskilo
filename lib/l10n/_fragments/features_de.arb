@@ -73,5 +73,13 @@
   "featureDeletionRequestsDesc": "Mitglieder können die Löschung einer vergangenen oder eingecheckten Buchung BEANTRAGEN; Inhaber/Admin validieren. Aus: solche Buchungen sind gar nicht löschbar.",
   "@featureDeletionRequestsDesc": {
     "description": "Feature-registry completeness (#502)"
+  },
+  "featurePlanObjectDeleteTitle": "Räume mit Historie löschen",
+  "@featurePlanObjectDeleteTitle": {
+    "description": "Feature-registry completeness (#587)"
+  },
+  "featurePlanObjectDeleteDesc": "Inhaber können Ebenen, Büros, Tische und Sitzplätze auch dann löschen, wenn frühere Reservierungen darauf verweisen — die Buchungen behalten einen Text-Schnappschuss für Audits und Berichte.",
+  "@featurePlanObjectDeleteDesc": {
+    "description": "Feature-registry completeness (#587)"
   }
 }

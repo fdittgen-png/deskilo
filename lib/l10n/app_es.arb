@@ -389,6 +389,14 @@
   "editorSeatNfcRead": "Leer una etiqueta ahora",
   "editorSeatNfcReadFailed": "No se pudo iniciar el lector de etiquetas.",
   "editorSeatNfcDuplicate": "Esta etiqueta ya está vinculada a otra silla.",
+  "editorDeleteElementConfirmAudit": "¿Eliminar este elemento? Todo lo colocado sobre él también se elimina. Las reservas que hacen referencia a él conservan una instantánea de texto para auditorías; las reservas abiertas se cancelan.",
+  "@editorDeleteElementConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  },
+  "editorDeleteLevelConfirmAudit": "¿Eliminar esta planta? Se eliminan todas las oficinas, mesas y asientos que contiene. Las reservas que hacen referencia a ellos conservan una instantánea de texto para auditorías; las reservas abiertas se cancelan.",
+  "@editorDeleteLevelConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  },
   "eventsPendingHeader": "Esperando tu confirmación",
   "eventAccept": "Aceptar",
   "eventReject": "Rechazar",
@@ -533,6 +541,14 @@
   "featureDeletionRequestsDesc": "Los miembros pueden SOLICITAR la eliminación de una reserva pasada o registrada; un propietario/admin valida. Desactivado, esas reservas no se pueden eliminar.",
   "@featureDeletionRequestsDesc": {
     "description": "Feature-registry completeness (#502)"
+  },
+  "featurePlanObjectDeleteTitle": "Eliminar espacios con historial",
+  "@featurePlanObjectDeleteTitle": {
+    "description": "Feature-registry completeness (#587)"
+  },
+  "featurePlanObjectDeleteDesc": "Los propietarios pueden eliminar plantas, oficinas, mesas y asientos aunque reservas pasadas hagan referencia a ellos: las reservas conservan una instantánea de texto para auditorías e informes.",
+  "@featurePlanObjectDeleteDesc": {
+    "description": "Feature-registry completeness (#587)"
   },
   "helpTitle": "Ayuda",
   "helpContents": "Índice",

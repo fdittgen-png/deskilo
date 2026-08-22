@@ -25,6 +25,7 @@ import '../../../plan/domain/floor_plan_rules.dart';
 import '../../../plan/domain/grid_geometry.dart';
 import '../../../plan/domain/office.dart';
 import '../../../plan/domain/seat.dart';
+import '../delete_confirm_text.dart';
 import '../../../plan/providers/accessory_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -671,10 +672,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(l10n?.commonDelete ?? 'Delete'),
-        content: Text(
-          l10n?.editorDeleteElementConfirm ??
-              'Delete this element? Anything placed on it is removed too.',
-        ),
+        content: Text(deleteElementConfirmText(ref, l10n)),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),

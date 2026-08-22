@@ -51,5 +51,13 @@
   "editorSeatNfcHelp": "Tag-UID in Hex — leer lassen für keinen Tag.",
   "editorSeatNfcRead": "Jetzt einen Tag lesen",
   "editorSeatNfcReadFailed": "Der Tag-Leser konnte nicht gestartet werden.",
-  "editorSeatNfcDuplicate": "Dieser Tag ist bereits mit einem anderen Stuhl verknüpft."
+  "editorSeatNfcDuplicate": "Dieser Tag ist bereits mit einem anderen Stuhl verknüpft.",
+  "editorDeleteElementConfirmAudit": "Dieses Element löschen? Alles darauf Platzierte wird ebenfalls entfernt. Buchungen, die darauf verweisen, behalten einen Text-Schnappschuss für Audits; offene Buchungen werden storniert.",
+  "@editorDeleteElementConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  },
+  "editorDeleteLevelConfirmAudit": "Diese Ebene löschen? Alle Büros, Tische und Sitzplätze darauf werden entfernt. Buchungen, die darauf verweisen, behalten einen Text-Schnappschuss für Audits; offene Buchungen werden storniert.",
+  "@editorDeleteLevelConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  }
 }

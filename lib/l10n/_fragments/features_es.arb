@@ -73,5 +73,13 @@
   "featureDeletionRequestsDesc": "Los miembros pueden SOLICITAR la eliminación de una reserva pasada o registrada; un propietario/admin valida. Desactivado, esas reservas no se pueden eliminar.",
   "@featureDeletionRequestsDesc": {
     "description": "Feature-registry completeness (#502)"
+  },
+  "featurePlanObjectDeleteTitle": "Eliminar espacios con historial",
+  "@featurePlanObjectDeleteTitle": {
+    "description": "Feature-registry completeness (#587)"
+  },
+  "featurePlanObjectDeleteDesc": "Los propietarios pueden eliminar plantas, oficinas, mesas y asientos aunque reservas pasadas hagan referencia a ellos: las reservas conservan una instantánea de texto para auditorías e informes.",
+  "@featurePlanObjectDeleteDesc": {
+    "description": "Feature-registry completeness (#587)"
   }
 }

@@ -997,6 +997,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Tag ist bereits mit einem anderen Stuhl verknüpft.';
 
   @override
+  String get editorDeleteElementConfirmAudit =>
+      'Dieses Element löschen? Alles darauf Platzierte wird ebenfalls entfernt. Buchungen, die darauf verweisen, behalten einen Text-Schnappschuss für Audits; offene Buchungen werden storniert.';
+
+  @override
+  String get editorDeleteLevelConfirmAudit =>
+      'Diese Ebene löschen? Alle Büros, Tische und Sitzplätze darauf werden entfernt. Buchungen, die darauf verweisen, behalten einen Text-Schnappschuss für Audits; offene Buchungen werden storniert.';
+
+  @override
   String get eventsPendingHeader => 'Wartet auf deine Bestätigung';
 
   @override
@@ -1305,6 +1313,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureDeletionRequestsDesc =>
       'Mitglieder können die Löschung einer vergangenen oder eingecheckten Buchung BEANTRAGEN; Inhaber/Admin validieren. Aus: solche Buchungen sind gar nicht löschbar.';
+
+  @override
+  String get featurePlanObjectDeleteTitle => 'Räume mit Historie löschen';
+
+  @override
+  String get featurePlanObjectDeleteDesc =>
+      'Inhaber können Ebenen, Büros, Tische und Sitzplätze auch dann löschen, wenn frühere Reservierungen darauf verweisen — die Buchungen behalten einen Text-Schnappschuss für Audits und Berichte.';
 
   @override
   String get helpTitle => 'Hilfe';

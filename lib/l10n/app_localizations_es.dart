@@ -996,6 +996,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta etiqueta ya está vinculada a otra silla.';
 
   @override
+  String get editorDeleteElementConfirmAudit =>
+      '¿Eliminar este elemento? Todo lo colocado sobre él también se elimina. Las reservas que hacen referencia a él conservan una instantánea de texto para auditorías; las reservas abiertas se cancelan.';
+
+  @override
+  String get editorDeleteLevelConfirmAudit =>
+      '¿Eliminar esta planta? Se eliminan todas las oficinas, mesas y asientos que contiene. Las reservas que hacen referencia a ellos conservan una instantánea de texto para auditorías; las reservas abiertas se cancelan.';
+
+  @override
   String get eventsPendingHeader => 'Esperando tu confirmación';
 
   @override
@@ -1306,6 +1314,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureDeletionRequestsDesc =>
       'Los miembros pueden SOLICITAR la eliminación de una reserva pasada o registrada; un propietario/admin valida. Desactivado, esas reservas no se pueden eliminar.';
+
+  @override
+  String get featurePlanObjectDeleteTitle => 'Eliminar espacios con historial';
+
+  @override
+  String get featurePlanObjectDeleteDesc =>
+      'Los propietarios pueden eliminar plantas, oficinas, mesas y asientos aunque reservas pasadas hagan referencia a ellos: las reservas conservan una instantánea de texto para auditorías e informes.';
 
   @override
   String get helpTitle => 'Ayuda';

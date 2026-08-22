@@ -389,6 +389,14 @@
   "editorSeatNfcRead": "Lire un tag maintenant",
   "editorSeatNfcReadFailed": "Impossible de démarrer le lecteur de tag.",
   "editorSeatNfcDuplicate": "Ce tag est déjà associé à une autre chaise.",
+  "editorDeleteElementConfirmAudit": "Supprimer cet élément ? Tout ce qui y est placé est également retiré. Les réservations qui y font référence gardent un instantané texte pour les audits ; les réservations ouvertes sont annulées.",
+  "@editorDeleteElementConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  },
+  "editorDeleteLevelConfirmAudit": "Supprimer ce niveau ? Tous les bureaux, tables et places qui s'y trouvent sont retirés. Les réservations qui y font référence gardent un instantané texte pour les audits ; les réservations ouvertes sont annulées.",
+  "@editorDeleteLevelConfirmAudit": {
+    "description": "#587 delete despite reservations — audit substitution warning"
+  },
   "eventsPendingHeader": "En attente de votre confirmation",
   "eventAccept": "Accepter",
   "eventReject": "Refuser",
@@ -533,6 +541,14 @@
   "featureDeletionRequestsDesc": "Les membres peuvent DEMANDER la suppression d'une réservation passée ou pointée ; un propriétaire/admin valide. Désactivé, ces réservations ne peuvent pas être supprimées.",
   "@featureDeletionRequestsDesc": {
     "description": "Feature-registry completeness (#502)"
+  },
+  "featurePlanObjectDeleteTitle": "Supprimer des espaces avec historique",
+  "@featurePlanObjectDeleteTitle": {
+    "description": "Feature-registry completeness (#587)"
+  },
+  "featurePlanObjectDeleteDesc": "Les propriétaires peuvent supprimer niveaux, bureaux, tables et places même si d'anciennes réservations y font référence — les réservations gardent un instantané texte pour les audits et rapports.",
+  "@featurePlanObjectDeleteDesc": {
+    "description": "Feature-registry completeness (#587)"
   },
   "helpTitle": "Aide",
   "helpContents": "Sommaire",

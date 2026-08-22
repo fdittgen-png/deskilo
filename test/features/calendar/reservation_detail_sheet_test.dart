@@ -206,4 +206,40 @@ void main() {
     );
     expect(planPainter(tester).highlightedSeatId, 'seat-4');
   });
+
+  testWidgets(
+      '#587 — a reservation whose plan object was deleted shows its audit '
+      'substitution text in the calendar list and the detail sheet',
+      (tester) async {
+    final now = kTestNow;
+    final start = WorkspaceTime.at(now.year, now.month, now.day, 9);
+    final substituted = Reservation(
+      id: 'res-sub',
+      workspaceId: 'ws-1',
+      memberId: 'member-1',
+      startsAt: start,
+      endsAt: start.add(const Duration(hours: 2)),
+      status: ReservationStatus.reserved,
+      spaceLabel: 'Test Space · Ground floor · Main room · Window desk · A1',
+    );
+    await pumpCalendarApp(tester, seed: [substituted]);
+
+    // The calendar card labels the booking with the snapshot.
+    expect(
+      find.textContaining('Window desk · A1'),
+      findsWidgets,
+    );
+
+    await tester.tap(find.textContaining('09:00'));
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('reservation-substitution')),
+      findsOneWidget,
+    );
+    // Once on the calendar card behind the sheet, once inside it.
+    expect(
+      find.text('Test Space · Ground floor · Main room · Window desk · A1'),
+      findsWidgets,
+    );
+  });
 }
