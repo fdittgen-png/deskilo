@@ -1795,6 +1795,10 @@
   "@reportDesignerZoomFit": {
     "description": "Report page designer: fit-the-width zoom option (#548)"
   },
+  "planDurationLabel": "Duración",
+  "@planDurationLabel": {
+    "description": "Booking sheet: grid duration slider label (#574)"
+  },
   "planNoLevels": "El espacio aún no tiene plano.",
   "planLevelLabel": "Planta",
   "planCheckInTitle": "Registrarse",

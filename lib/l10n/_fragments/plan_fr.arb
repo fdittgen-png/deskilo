@@ -1,4 +1,8 @@
 {
+  "planDurationLabel": "Durée",
+  "@planDurationLabel": {
+    "description": "Booking sheet: grid duration slider label (#574)"
+  },
   "@@locale": "fr",
   "planNoLevels": "L'espace n'a pas encore de plan.",
   "planLevelLabel": "Étage",

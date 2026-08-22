@@ -5732,6 +5732,12 @@ abstract class AppLocalizations {
   /// **'Fit width'**
   String get reportDesignerZoomFit;
 
+  /// Booking sheet: grid duration slider label (#574)
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get planDurationLabel;
+
   /// Empty state of the Plan tab before the owner drew levels
   ///
   /// In en, this message translates to:
