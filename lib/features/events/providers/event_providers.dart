@@ -3,8 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../money/providers/money_providers.dart';
-import '../../reservations/providers/reservation_providers.dart';
+import '../../../core/realtime/invalidation_map.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_event_repository.dart';
 import '../domain/event_decision.dart';
@@ -83,15 +82,14 @@ Future<int> myPendingEventCount(Ref ref) async =>
 /// accept, and only the fresh decision row moves it off my pending pile.
 /// The bill refreshes as well: confirming a payment/expense/service charge
 /// posts a ledger entry, so statement + ledger must refetch (#134).
+///
+/// #577 — the provider sets come from the SAME table → providers map the
+/// realtime invalidator uses, so the local and remote freshness paths
+/// cannot drift apart again.
 void invalidateBookingData(WidgetRef ref) {
-  ref
-    ..invalidate(reservationsForDayProvider)
-    ..invalidate(reservationsForMonthProvider)
-    ..invalidate(myUpcomingReservationsProvider)
-    ..invalidate(eventsProvider)
-    ..invalidate(eventDecisionsProvider)
-    ..invalidate(myStatementProvider)
-    ..invalidate(myLedgerProvider)
-    // #512 — every money mutation can move the cross-month position.
-    ..invalidate(myAccountProvider);
+  for (final table in bookingMutationTables) {
+    for (final provider in invalidationFor(table).providers) {
+      ref.invalidate(provider);
+    }
+  }
 }
