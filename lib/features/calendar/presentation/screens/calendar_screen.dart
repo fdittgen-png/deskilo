@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_elevation.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -40,6 +41,15 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   /// #187: selected-day area as timeline instead of list. Session-only —
   /// deliberately a plain State field, no persistence.
   bool _timeline = false;
+
+  /// #611 — the sense of the last month navigation (+1 next, -1
+  /// previous): the month grid slides in from that side.
+  int _monthDelta = 1;
+
+  void _goToMonth(int delta) => setState(() {
+        _monthDelta = delta;
+        _month = DateTime(_month.year, _month.month + delta);
+      });
 
   @override
   void initState() {
@@ -151,7 +161,8 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
       mainAxisSize: MainAxisSize.min,
       children: [
         // #606 — the calendar's contextual how-to; gated in the widget.
-        const HelpHint(HelpHintId.calendar),
+        // #611 — eased in/out at the call site instead of popping.
+        const MotionReveal(child: HelpHint(HelpHintId.calendar)),
         Padding(
           padding: AppSpacing.smH,
           child: Row(
@@ -159,9 +170,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
               IconButton(
                 icon: const Icon(Icons.chevron_left),
                 tooltip: l10n?.calendarPreviousMonth ?? 'Previous month',
-                onPressed: () => setState(
-                  () => _month = DateTime(_month.year, _month.month - 1),
-                ),
+                onPressed: () => _goToMonth(-1),
               ),
               Expanded(
                 child: Text(
@@ -173,9 +182,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
               IconButton(
                 icon: const Icon(Icons.chevron_right),
                 tooltip: l10n?.calendarNextMonth ?? 'Next month',
-                onPressed: () => setState(
-                  () => _month = DateTime(_month.year, _month.month + 1),
-                ),
+                onPressed: () => _goToMonth(1),
               ),
             ],
           ),
@@ -241,7 +248,36 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
             borderRadius: AppRadius.xlAll,
             boxShadow: AppElevation.low(Theme.of(context).brightness),
           ),
-          child: _MonthGrid(
+          // The slide must not paint outside the rounded card (#611).
+          clipBehavior: Clip.antiAlias,
+          // #611 — month navigation slides horizontally in the sense of
+          // travel: "next" enters from the right, "previous" from the
+          // left; the outgoing month leaves through the opposite edge.
+          child: AnimatedSwitcher(
+            duration: motionDuration(context, MotionTokens.emphasized),
+            switchInCurve: MotionTokens.enter,
+            switchOutCurve: MotionTokens.ease,
+            transitionBuilder: (child, animation) {
+              final incoming = child.key ==
+                  ValueKey<String>('month-${monthKeyOf(_month)}');
+              // The outgoing grid reverses toward its own begin offset,
+              // so mirroring it sends old and new the same way.
+              final dx = (_monthDelta >= 0 ? 0.25 : -0.25) *
+                  (incoming ? 1 : -1);
+              return FadeTransition(
+                opacity: animation,
+                child: SlideTransition(
+                  position: Tween<Offset>(
+                    begin: Offset(dx, 0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                ),
+              );
+            },
+            child: KeyedSubtree(
+              key: ValueKey<String>('month-${monthKeyOf(_month)}'),
+              child: _MonthGrid(
             month: _month,
             selectedDay: _selectedDay,
             today: DateUtils.dateOnly(ref.watch(clockProvider).now()),
@@ -259,6 +295,8 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                   WorkspaceTime.dateOf(r.startsAt),
             },
             onSelect: (day) => setState(() => _selectedDay = day),
+              ),
+            ),
           ),
         ),
         const SizedBox(height: AppSpacing.xs),

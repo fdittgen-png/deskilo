@@ -40,19 +40,19 @@ void main() {
     expect(_scale(controller), 1.0);
 
     await tester.tap(find.byKey(const ValueKey('canvas-zoom-in')));
-    await tester.pump();
+    await tester.pumpAndSettle();
     expect(_scale(controller), greaterThan(1.0));
 
     final zoomed = _scale(controller);
     await tester.tap(find.byKey(const ValueKey('canvas-zoom-out')));
-    await tester.pump();
+    await tester.pumpAndSettle();
     expect(_scale(controller), lessThan(zoomed));
 
     // Zoom in twice, then reset returns to identity.
     await tester.tap(find.byKey(const ValueKey('canvas-zoom-in')));
-    await tester.pump();
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('canvas-zoom-reset')));
-    await tester.pump();
+    await tester.pumpAndSettle();
     expect(_scale(controller), 1.0);
     expect(controller.value.getTranslation().x, 0);
     expect(controller.value.getTranslation().y, 0);
@@ -87,7 +87,7 @@ void main() {
       final inButton = find.byKey(const ValueKey('canvas-zoom-in'));
       if (tester.widget<InkWell>(inButton).onTap == null) break;
       await tester.tap(inButton);
-      await tester.pump();
+      await tester.pumpAndSettle();
     }
     expect(_scale(controller), closeTo(3.0, 1e-6));
     // At the ceiling the in-button is disabled (no onTap).
@@ -109,10 +109,55 @@ void main() {
         await _pump(tester, contentSize: const Size(100, 100));
 
     await tester.tap(find.byKey(const ValueKey('canvas-zoom-out')));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     final centre = controller.toScene(const Offset(200, 200));
     expect(centre.dx, closeTo(50, 1));
     expect(centre.dy, closeTo(50, 1));
+  });
+
+  testWidgets(
+      '#611 — the zoom button GLIDES to its target: mid-flight the scale '
+      'sits between start and target, and settle lands it exactly',
+      (tester) async {
+    final controller = await _pump(tester);
+
+    await tester.tap(find.byKey(const ValueKey('canvas-zoom-in')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    final mid = _scale(controller);
+    expect(mid, greaterThan(1.0));
+    expect(mid, lessThan(1.4));
+
+    await tester.pumpAndSettle();
+    expect(_scale(controller), closeTo(1.4, 1e-9));
+  });
+
+  testWidgets('#611 — reduced motion zooms instantly (one frame)',
+      (tester) async {
+    final controller = TransformationController();
+    addTearDown(controller.dispose);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: MediaQuery(
+          data: const MediaQueryData(disableAnimations: true),
+          child: Scaffold(
+            body: SizedBox(
+              width: 400,
+              height: 400,
+              child: CanvasControls(
+                controller: controller,
+                contentSize: const Size(1680, 1680),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('canvas-zoom-in')));
+    await tester.pump();
+    expect(_scale(controller), closeTo(1.4, 1e-9));
   });
 }

@@ -1404,6 +1404,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Courtes astuces refermables sur les formulaires et écrans, chacune renvoyant à la section correspondante du guide.';
 
   @override
+  String get featureUiAnimationsTitle => 'Animations de l\'interface';
+
+  @override
+  String get featureUiAnimationsDesc =>
+      'Transitions fluides et animations d\'état dans toute l\'application. Désactivé, chaque changement est instantané ; le réglage « réduire les animations » de l\'appareil prime toujours.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override

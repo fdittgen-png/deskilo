@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/badge/app_badge.dart';
+import '../../core/motion/motion.dart';
 import '../../core/realtime/realtime_providers.dart';
 import '../../core/notifications/notification_providers.dart';
 import '../../core/push/push_providers.dart';
@@ -39,8 +40,25 @@ class _EventsBellIcon extends ConsumerWidget {
     final count = (ref.watch(myPendingEventCountProvider).value ?? 0) +
         (ref.watch(unreadNoteCountProvider).value ?? 0);
     const icon = Icon(Icons.notifications_outlined);
-    if (count == 0) return icon;
-    return Badge.count(count: count, child: icon);
+    // #611 — a changed count scales in briefly, so "something new needs
+    // you" registers peripherally. Keyed per count: 1→2 animates too.
+    return AnimatedSwitcher(
+      duration: motionDuration(context, MotionTokens.quick),
+      switchInCurve: MotionTokens.enter,
+      switchOutCurve: MotionTokens.ease,
+      transitionBuilder: (child, animation) => ScaleTransition(
+        scale: animation,
+        child: FadeTransition(opacity: animation, child: child),
+      ),
+      child: count == 0
+          ? const KeyedSubtree(
+              key: ValueKey('events-bell-plain'), child: icon)
+          : Badge.count(
+              key: ValueKey('events-bell-$count'),
+              count: count,
+              child: icon,
+            ),
+    );
   }
 }
 
@@ -264,7 +282,14 @@ class ShellScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: navigationShell,
+      // #611 — the tab switch fades the incoming branch in. The
+      // FadeIndexedStack pattern: the shell's IndexedStack (and with it
+      // the #111 per-tab keep-alive state) stays untouched; only an
+      // opacity layer above it animates, keyed by the active branch.
+      body: FadeInOnChange(
+        changeKey: navigationShell.currentIndex,
+        child: navigationShell,
+      ),
       // The bar needs at least two destinations to flank the notch. Since
       // #230 the ungated Members tab guarantees Plan + Members even with
       // everything gated off; the guard stays as a safety net should a

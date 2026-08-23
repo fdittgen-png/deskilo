@@ -1385,6 +1385,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Short dismissible how-to hints on forms and screens, each linking into the matching guide section.';
 
   @override
+  String get featureUiAnimationsTitle => 'Interface animations';
+
+  @override
+  String get featureUiAnimationsDesc =>
+      'Smooth transitions and state animations across the app. Off means every change is instant; the device\'s reduced-motion setting always wins.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override

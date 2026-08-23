@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/motion/motion.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -784,9 +785,14 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       mainAxisSize: MainAxisSize.min,
       children: [
         // #606 — the plan's contextual how-to; gated inside the widget.
-        const HelpHint(HelpHintId.plan),
+        // #611 — eased in/out at the call site instead of popping.
+        const MotionReveal(child: HelpHint(HelpHintId.plan)),
         _scrollerRow(at, granularity, levels, level),
-        if (!dayOpen) _closedDayBanner(l10n),
+        MotionReveal(
+          child: dayOpen
+              ? const SizedBox.shrink(key: ValueKey('plan-open-day'))
+              : _closedDayBanner(l10n),
+        ),
       ],
     );
     // Floor switcher floats over the view (indoor-maps idiom, UX pass):

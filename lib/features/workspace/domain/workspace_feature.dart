@@ -45,7 +45,8 @@ enum WorkspaceFeature {
   bookingPolicies,
   nfcSeatTags,
   qrBadges,
-  formHelpHints;
+  formHelpHints,
+  uiAnimations;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -259,6 +260,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // exactly for the members who have not found their way around yet.
   WorkspaceFeature.formHelpHints:
       FeatureManifestEntry(feature: WorkspaceFeature.formHelpHints),
+  // #611 — the motion pass: purposeful animations (route transitions,
+  // view cross-fades, state-colour changes, feedback moments). Default
+  // ON; OFF returns the whole app to instant transitions. Reduced
+  // motion (the OS accessibility setting) overrides regardless.
+  WorkspaceFeature.uiAnimations:
+      FeatureManifestEntry(feature: WorkspaceFeature.uiAnimations),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start

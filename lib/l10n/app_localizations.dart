@@ -2576,6 +2576,18 @@ abstract class AppLocalizations {
   /// **'Short dismissible how-to hints on forms and screens, each linking into the matching guide section.'**
   String get featureFormHelpHintsDesc;
 
+  /// No description provided for @featureUiAnimationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Interface animations'**
+  String get featureUiAnimationsTitle;
+
+  /// No description provided for @featureUiAnimationsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Smooth transitions and state animations across the app. Off means every change is instant; the device\'s reduced-motion setting always wins.'**
+  String get featureUiAnimationsDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:

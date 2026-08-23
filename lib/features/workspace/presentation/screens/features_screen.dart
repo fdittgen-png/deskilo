@@ -173,6 +173,11 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureFormHelpHintsDesc ??
               'Short dismissible how-to hints on forms and screens, '
                   'each linking into the matching guide section.',
+        WorkspaceFeature.uiAnimations =>
+          l10n?.featureUiAnimationsDesc ??
+              'Smooth transitions and state animations across the app. '
+                  'Off means every change is instant; the device\'s '
+                  'reduced-motion setting always wins.',
       };
 
   Future<void> _toggle(

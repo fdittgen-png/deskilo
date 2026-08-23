@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 
+import '../motion/motion.dart';
 import '../theme/app_radius.dart';
 
 /// Content-pixel fit rectangle from a plan's used-cell [bounds] and the
@@ -68,7 +69,8 @@ class CanvasControls extends StatefulWidget {
   State<CanvasControls> createState() => _CanvasControlsState();
 }
 
-class _CanvasControlsState extends State<CanvasControls> {
+class _CanvasControlsState extends State<CanvasControls>
+    with SingleTickerProviderStateMixin {
   static const double _thickness = 8;
   static const double _minThumb = 24;
 
@@ -76,6 +78,50 @@ class _CanvasControlsState extends State<CanvasControls> {
   /// level and again on rotation, but not on every rebuild.
   String? _fittedKey;
   Size? _fittedViewport;
+
+  /// #611 — the zoom buttons and the reset glide the shared transform to
+  /// its target instead of jumping. Finite; gestures interrupt it.
+  late final AnimationController _glide = AnimationController(
+    vsync: this,
+    duration: MotionTokens.emphasized,
+  );
+  Matrix4Tween? _glideTween;
+
+  @override
+  void initState() {
+    super.initState();
+    _glide.addListener(() {
+      final tween = _glideTween;
+      if (tween == null) return;
+      widget.controller.value = tween.evaluate(
+        CurvedAnimation(parent: _glide, curve: MotionTokens.ease),
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _glide.dispose();
+    super.dispose();
+  }
+
+  /// Applies [target] to the shared transform: eased over the motion
+  /// duration, or instantly when motion is off ([motionDuration] zero)
+  /// or the change must not animate (initial auto-fit).
+  void _applyTransform(Matrix4 target, {bool animate = true}) {
+    _glide.stop();
+    final duration =
+        animate ? motionDuration(context, MotionTokens.emphasized) : Duration.zero;
+    if (duration == Duration.zero) {
+      _glideTween = null;
+      widget.controller.value = target;
+      return;
+    }
+    _glideTween =
+        Matrix4Tween(begin: widget.controller.value.clone(), end: target);
+    _glide.duration = duration;
+    _glide.forward(from: 0);
+  }
 
   double _scaleOf(Matrix4 m) => m.getMaxScaleOnAxis();
 
@@ -117,22 +163,24 @@ class _CanvasControlsState extends State<CanvasControls> {
     final anchorScene = widget.controller.toScene(viewportPoint);
     final topLeft =
         anchorScene - Offset(viewportPoint.dx, viewportPoint.dy) / next;
-    widget.controller.value = _matrixFor(next, topLeft, viewport);
+    _applyTransform(_matrixFor(next, topLeft, viewport));
   }
 
   /// Reset = fit the content bounds when known, else identity.
   void _reset(Size viewport) {
     if (widget.fitBounds != null) {
-      _applyFit(widget.fitBounds!, viewport);
+      _applyFit(widget.fitBounds!, viewport, animate: true);
     } else {
-      widget.controller.value = _matrixFor(1, Offset.zero, viewport);
+      _applyTransform(_matrixFor(1, Offset.zero, viewport));
     }
   }
 
   /// Scale [bounds] (content px) to fill the viewport with a little breathing
   /// room, centred — "size the office to the screen". Not clamped to the pan
-  /// bounds so a small office can sit dead-centre.
-  void _applyFit(Rect bounds, Size viewport) {
+  /// bounds so a small office can sit dead-centre. [animate] glides there
+  /// (reset button); the initial auto-fit lands instantly — motion must
+  /// explain a change, and "the level appeared" is not one.
+  void _applyFit(Rect bounds, Size viewport, {bool animate = false}) {
     if (bounds.width <= 0 || bounds.height <= 0) return;
     const pad = 0.92;
     final scale = (viewport.width / bounds.width)
@@ -140,8 +188,11 @@ class _CanvasControlsState extends State<CanvasControls> {
     final fitted = (scale * pad).clamp(widget.minScale, widget.maxScale);
     final topLeft = bounds.center -
         Offset(viewport.width / 2, viewport.height / 2) / fitted;
-    widget.controller.value = Matrix4.diagonal3Values(fitted, fitted, 1)
-      ..setTranslationRaw(-topLeft.dx * fitted, -topLeft.dy * fitted, 0);
+    _applyTransform(
+      Matrix4.diagonal3Values(fitted, fitted, 1)
+        ..setTranslationRaw(-topLeft.dx * fitted, -topLeft.dy * fitted, 0),
+      animate: animate,
+    );
   }
 
   /// Fires the auto-fit once per (fitKey, viewport). Called from build; it
@@ -205,6 +256,7 @@ class _CanvasControlsState extends State<CanvasControls> {
                     thumbLength: hThumb.$2,
                     color: scheme.onSurfaceVariant,
                     onDrag: (delta) {
+                      _glide.stop(); // a drag interrupts a zoom glide
                       final ds = delta / hTrack * span.width;
                       controller.value = _matrixFor(
                         scale,
@@ -225,6 +277,7 @@ class _CanvasControlsState extends State<CanvasControls> {
                     thumbLength: vThumb.$2,
                     color: scheme.onSurfaceVariant,
                     onDrag: (delta) {
+                      _glide.stop(); // a drag interrupts a zoom glide
                       final ds = delta / vTrack * span.height;
                       controller.value = _matrixFor(
                         scale,

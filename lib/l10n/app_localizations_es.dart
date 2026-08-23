@@ -1399,6 +1399,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Breves consejos descartables en formularios y pantallas, cada uno enlazado a la sección correspondiente de la guía.';
 
   @override
+  String get featureUiAnimationsTitle => 'Animaciones de la interfaz';
+
+  @override
+  String get featureUiAnimationsDesc =>
+      'Transiciones suaves y animaciones de estado en toda la aplicación. Desactivado, cada cambio es instantáneo; el ajuste de reducción de movimiento del dispositivo siempre prevalece.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override

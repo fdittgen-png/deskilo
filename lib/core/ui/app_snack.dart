@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 
+import '../motion/motion.dart';
 import '../theme/status_colors.dart';
 
 /// Semantic snackbars (#209): every `showSnackBar` call site goes through
@@ -33,18 +34,22 @@ abstract final class AppSnack {
     );
   }
 
-  /// A saved/booked/copied confirmation.
+  /// A saved/booked/copied confirmation. #611 — the check scales in
+  /// briefly (finite, settles), marking the success moment; instant
+  /// under reduced motion / uiAnimations off.
   static void success(
     BuildContext context,
     String text, {
     bool replace = false,
   }) {
     final brightness = Theme.of(context).brightness;
+    final foreground = AppStatusColors.onSuccessOf(brightness);
     _show(
       context,
       text,
       background: AppStatusColors.successOf(brightness),
-      foreground: AppStatusColors.onSuccessOf(brightness),
+      foreground: foreground,
+      leading: _ScaleInCheck(color: foreground),
       replace: replace,
     );
   }
@@ -63,6 +68,7 @@ abstract final class AppSnack {
     String text, {
     Color? background,
     Color? foreground,
+    Widget? leading,
     required bool replace,
   }) {
     final messenger = ScaffoldMessenger.of(context);
@@ -70,15 +76,44 @@ abstract final class AppSnack {
     // sites (seat taps, placement refusals): the newest message wins
     // instead of queuing.
     if (replace) messenger.clearSnackBars();
+    // The message stays a plain [Text] — tests assert on the exact text.
+    final message = Text(
+      text,
+      style: foreground == null ? null : TextStyle(color: foreground),
+    );
     messenger.showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
         backgroundColor: background,
-        content: Text(
-          text,
-          style: foreground == null ? null : TextStyle(color: foreground),
-        ),
+        content: leading == null
+            ? message
+            : Row(children: [
+                leading,
+                const SizedBox(width: 12),
+                Expanded(child: message),
+              ]),
       ),
+    );
+  }
+}
+
+/// The success check, scaling in with a slight overshoot (#611). A
+/// one-shot [TweenAnimationBuilder]: finite by construction, and with
+/// motion off the duration is zero — the icon is simply there.
+class _ScaleInCheck extends StatelessWidget {
+  const _ScaleInCheck({required this.color});
+
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: motionDuration(context, MotionTokens.standard),
+      curve: Curves.easeOutBack,
+      builder: (context, value, child) =>
+          Transform.scale(scale: value, child: child),
+      child: Icon(Icons.check_circle_outline, color: color, size: 20),
     );
   }
 }

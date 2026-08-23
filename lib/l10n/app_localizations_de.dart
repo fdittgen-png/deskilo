@@ -1398,6 +1398,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Kurze, ausblendbare Hinweise auf Formularen und Bildschirmen, jeweils mit Link zum passenden Abschnitt des Handbuchs.';
 
   @override
+  String get featureUiAnimationsTitle => 'Oberflächen-Animationen';
+
+  @override
+  String get featureUiAnimationsDesc =>
+      'Sanfte Übergänge und Zustandsanimationen in der ganzen App. Aus bedeutet: Jede Änderung erfolgt sofort; die Bewegung-reduzieren-Einstellung des Geräts hat immer Vorrang.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override

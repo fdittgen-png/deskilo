@@ -24,6 +24,8 @@ class FloorPlanPainter extends CustomPainter {
     this.background,
     this.images = const {},
     this.seatStates,
+    this.previousSeatStates,
+    this.seatStateLerp = 1,
     this.seatDayPhases = const {},
     this.seatLabels,
     this.highlightedSeatId,
@@ -59,6 +61,16 @@ class FloorPlanPainter extends CustomPainter {
 
   /// Live mode: seat id → state. Null = editor mode (uniform styling).
   final Map<String, SeatState>? seatStates;
+
+  /// Motion pass (#611): the state a just-changed seat had BEFORE, only
+  /// for seats currently animating — the seat's colour lerps from the
+  /// old state's to the new one's by [seatStateLerp]. Null/absent seat
+  /// = paint the current state directly.
+  final Map<String, SeatState>? previousSeatStates;
+
+  /// 0..1 progress of the state-colour lerp; 1 (the default) paints the
+  /// final state exactly. Driven by the host widget's finite animation.
+  final double seatStateLerp;
 
   /// The browsed day's per-seat phase (#575): the painter rings a seat
   /// whose day already held a booking (grey), holds one right now
@@ -261,9 +273,19 @@ class FloorPlanPainter extends CustomPainter {
     for (final seat in plan.seats) {
       final rect = _toPx(seat.footprint).deflate(3);
       final state = seatStates?[seat.id];
-      final accent = state == null
+      var accent = state == null
           ? colorScheme.primary
           : SeatStateColors.of(state, brightness: brightness);
+      // #611 — a state change eases the accent from the old colour.
+      final previous = previousSeatStates?[seat.id];
+      if (state != null && previous != null && seatStateLerp < 1) {
+        accent = Color.lerp(
+              SeatStateColors.of(previous, brightness: brightness),
+              accent,
+              seatStateLerp,
+            ) ??
+            accent;
+      }
       // Radius scales with the tile so a seat always reads as a soft,
       // rounded pad — the signature "living plan" tile.
       final radius = (rect.shortestSide * 0.24).clamp(4.0, 10.0);
@@ -639,6 +661,8 @@ class FloorPlanPainter extends CustomPainter {
       oldDelegate.selectionResizable != selectionResizable ||
       oldDelegate.selectionValid != selectionValid ||
       !mapEquals(oldDelegate.seatStates, seatStates) ||
+      !mapEquals(oldDelegate.previousSeatStates, previousSeatStates) ||
+      oldDelegate.seatStateLerp != seatStateLerp ||
       !mapEquals(oldDelegate.seatDayPhases, seatDayPhases) ||
       !mapEquals(oldDelegate.seatLabels, seatLabels) ||
       !mapEquals(oldDelegate.spaceOverlays, spaceOverlays) ||
