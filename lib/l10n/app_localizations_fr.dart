@@ -1397,10 +1397,114 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cartes badge QR imprimables pour le kiosque, à côté des cartes NFC/RFID.';
 
   @override
+  String get featureFormHelpHintsTitle => 'Astuces d\'aide';
+
+  @override
+  String get featureFormHelpHintsDesc =>
+      'Courtes astuces refermables sur les formulaires et écrans, chacune renvoyant à la section correspondante du guide.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override
   String get helpContents => 'Sommaire';
+
+  @override
+  String get helpHintLearnMore => 'En savoir plus';
+
+  @override
+  String get helpHintDismiss => 'Masquer l\'astuce';
+
+  @override
+  String get helpHintRestoreTitle => 'Réafficher les astuces d\'aide';
+
+  @override
+  String get helpHintRestored =>
+      'Les astuces d\'aide seront de nouveau affichées.';
+
+  @override
+  String get helpHintReserve =>
+      'Choisissez un jour et un créneau, puis touchez une place libre pour la réserver.';
+
+  @override
+  String get helpHintReserveTopic => 'hub Réserver';
+
+  @override
+  String get helpHintPlan =>
+      'Le plan en direct : touchez une place libre pour réserver, touchez votre réservation pour pointer votre arrivée.';
+
+  @override
+  String get helpHintPlanTopic => 'onglet Plan';
+
+  @override
+  String get helpHintCalendar =>
+      'Parcourez les réservations mois par mois ; touchez un jour pour voir et gérer ses réservations.';
+
+  @override
+  String get helpHintCalendarTopic => 'Calendrier';
+
+  @override
+  String get helpHintEvents =>
+      'Tout ce qui s\'est passé, dans un seul fil. Les décisions qui vous attendent sont en haut ; les filtres affinent le reste.';
+
+  @override
+  String get helpHintEventsTopic => 'Événements';
+
+  @override
+  String get helpHintEditor =>
+      'Dessinez salles et bureaux, posez les places — touchez deux fois une place pour modifier ses propriétés.';
+
+  @override
+  String get helpHintEditorTopic => 'éditeur d\'espace';
+
+  @override
+  String get helpHintAvailability =>
+      'Définissez les jours d\'ouverture et les horaires, et ajoutez des jours de fermeture que personne ne peut réserver.';
+
+  @override
+  String get helpHintAvailabilityTopic => 'Disponibilité';
+
+  @override
+  String get helpHintFeatures =>
+      'Activez ou désactivez les fonctionnalités de l\'espace — l\'application de chaque membre suit immédiatement.';
+
+  @override
+  String get helpHintFeaturesTopic => 'Fonctionnalités';
+
+  @override
+  String get helpHintMembers =>
+      'Invitez des membres, réglez leur forfait et leur rôle, et gérez leurs badges.';
+
+  @override
+  String get helpHintMembersTopic => 'Membres et forfaits';
+
+  @override
+  String get helpHintMoney =>
+      'Votre relevé mensuel : parcourez les mois avec les flèches ; payez, exportez ou partagez d\'ici.';
+
+  @override
+  String get helpHintMoneyTopic => 'Argent';
+
+  @override
+  String get helpHintValidation =>
+      'Décidez quelles actions demandent confirmation, qui confirme et combien d\'approbations il faut.';
+
+  @override
+  String get helpHintValidationTopic => 'confirmations';
+
+  @override
+  String get helpHintWorkspace =>
+      'Pays, devise, langue et coordonnées de facturation — documents et taxes suivent ces réglages.';
+
+  @override
+  String get helpHintWorkspaceTopic => 'Réglages de l\'espace';
+
+  @override
+  String get helpHintBadges =>
+      'Émettez un badge QR imprimable ou enregistrez une carte NFC ; révoquez un badge perdu à tout moment.';
+
+  @override
+  String get helpHintBadgesTopic => 'badges RFID';
 
   @override
   String get inviteSectionTitle => 'Inviter quelqu\'un';

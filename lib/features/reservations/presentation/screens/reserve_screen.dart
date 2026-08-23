@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -673,6 +674,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // #606 — the hub's contextual how-to; gated inside the widget.
+          const HelpHint(HelpHintId.reserve),
           if (!dayOpen) _closedDayBanner(l10n),
           Padding(
             padding: const EdgeInsets.only(

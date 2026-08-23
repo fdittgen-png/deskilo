@@ -10,6 +10,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../../core/files/file_names.dart';
 import '../../../../core/files/file_saver.dart';
+import '../../../../core/help/help_hint.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -405,6 +406,8 @@ class _BadgeManagerDialogState
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // #606 — contextual how-to; gated inside the widget.
+            const HelpHint(HelpHintId.badges),
             // Badges are PER WORKSPACE (0056) — say which one this
             // manager registers into, so a card is never silently
             // attached to the wrong profile's workspace (field trap:

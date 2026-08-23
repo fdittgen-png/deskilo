@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show AuthException, PostgrestException;
 
+import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -765,7 +766,11 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
           ),
         ],
       ),
-      body: body,
+      // #606 — the feed's contextual how-to; gated inside the widget.
+      body: Column(children: [
+        const HelpHint(HelpHintId.events),
+        Expanded(child: body),
+      ]),
     );
   }
 }

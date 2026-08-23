@@ -21,7 +21,12 @@ String helpAssetFor(String languageCode) =>
 /// natively — fully offline, identical on Android, iOS, and F-Droid.
 /// The outline button opens a table of contents that jumps to a section.
 class HelpScreen extends ConsumerStatefulWidget {
-  const HelpScreen({super.key});
+  const HelpScreen({super.key, this.topic});
+
+  /// Deep link from a help hint (#606): once the markdown is loaded,
+  /// jump to the first heading whose text contains this fragment
+  /// (case-insensitive). No match = stay at the top, never crash.
+  final String? topic;
 
   @override
   ConsumerState<HelpScreen> createState() => _HelpScreenState();
@@ -29,11 +34,27 @@ class HelpScreen extends ConsumerStatefulWidget {
 
 class _HelpScreenState extends ConsumerState<HelpScreen> {
   final _toc = TocController();
+  var _jumpScheduled = false;
 
   @override
   void dispose() {
     _toc.dispose();
     super.dispose();
+  }
+
+  /// Runs post-frame, after [MarkdownWidget] has generated the toc list.
+  void _jumpToTopic(String topic) {
+    if (!mounted) return;
+    final needle = topic.toLowerCase();
+    for (final toc in _toc.tocList) {
+      // childrenSpan, not build(): h1/h2 builds wrap the text in a
+      // WidgetSpan (divider layout) whose plain text is a placeholder.
+      final heading = toc.node.childrenSpan.toPlainText();
+      if (heading.toLowerCase().contains(needle)) {
+        _toc.jumpToIndex(toc.widgetIndex);
+        return;
+      }
+    }
   }
 
   @override
@@ -64,6 +85,14 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
           if (data == null) {
             // Asset loads in one frame; a spinner would only flash.
             return const SizedBox.shrink();
+          }
+          // #606 — the MarkdownWidget below fills the toc during THIS
+          // frame's build; the jump must wait for the frame to finish.
+          if (!_jumpScheduled && widget.topic != null) {
+            _jumpScheduled = true;
+            WidgetsBinding.instance.addPostFrameCallback(
+              (_) => _jumpToTopic(widget.topic!),
+            );
           }
           return MarkdownWidget(
             data: data,

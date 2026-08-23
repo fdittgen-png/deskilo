@@ -267,9 +267,11 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         // In-app help: the bundled wiki user guide — every member,
-        // fully offline, no guard.
+        // fully offline, no guard. `?topic=` (#606) jumps to the first
+        // section whose heading contains the fragment.
         path: '/help',
-        builder: (context, state) => const HelpScreen(),
+        builder: (context, state) =>
+            HelpScreen(topic: state.uri.queryParameters['topic']),
       ),
       GoRoute(
         // Linked accounts (0051): the signed-in user's own identities.

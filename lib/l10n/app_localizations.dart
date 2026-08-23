@@ -2564,6 +2564,18 @@ abstract class AppLocalizations {
   /// **'Printable QR badge cards for the kiosk, beside the NFC/RFID cards.'**
   String get featureQrBadgesDesc;
 
+  /// No description provided for @featureFormHelpHintsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help hints'**
+  String get featureFormHelpHintsTitle;
+
+  /// No description provided for @featureFormHelpHintsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Short dismissible how-to hints on forms and screens, each linking into the matching guide section.'**
+  String get featureFormHelpHintsDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -2575,6 +2587,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Contents'**
   String get helpContents;
+
+  /// No description provided for @helpHintLearnMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn more'**
+  String get helpHintLearnMore;
+
+  /// No description provided for @helpHintDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss hint'**
+  String get helpHintDismiss;
+
+  /// No description provided for @helpHintRestoreTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show help hints again'**
+  String get helpHintRestoreTitle;
+
+  /// No description provided for @helpHintRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Help hints will be shown again.'**
+  String get helpHintRestored;
+
+  /// No description provided for @helpHintReserve.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a day and time window, then tap a free seat to book it.'**
+  String get helpHintReserve;
+
+  /// No description provided for @helpHintReserveTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve hub'**
+  String get helpHintReserveTopic;
+
+  /// No description provided for @helpHintPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'The live floor plan: tap a free seat to book it, tap your own booking to check in.'**
+  String get helpHintPlan;
+
+  /// No description provided for @helpHintPlanTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'floor plan'**
+  String get helpHintPlanTopic;
+
+  /// No description provided for @helpHintCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse bookings by month; tap a day to see and manage its reservations.'**
+  String get helpHintCalendar;
+
+  /// No description provided for @helpHintCalendarTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get helpHintCalendarTopic;
+
+  /// No description provided for @helpHintEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything that happened, in one feed. Decisions waiting for you sit on top; the chips filter the rest.'**
+  String get helpHintEvents;
+
+  /// No description provided for @helpHintEventsTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'confirmations'**
+  String get helpHintEventsTopic;
+
+  /// No description provided for @helpHintEditor.
+  ///
+  /// In en, this message translates to:
+  /// **'Draw rooms and desks, stamp seats onto them — tap a seat twice to edit its properties.'**
+  String get helpHintEditor;
+
+  /// No description provided for @helpHintEditorTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'space editor'**
+  String get helpHintEditorTopic;
+
+  /// No description provided for @helpHintAvailability.
+  ///
+  /// In en, this message translates to:
+  /// **'Set the open weekdays and working hours, and add closure days nobody can book.'**
+  String get helpHintAvailability;
+
+  /// No description provided for @helpHintAvailabilityTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability'**
+  String get helpHintAvailabilityTopic;
+
+  /// No description provided for @helpHintFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch workspace functionality on or off — every member\'s app follows immediately.'**
+  String get helpHintFeatures;
+
+  /// No description provided for @helpHintFeaturesTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Features'**
+  String get helpHintFeaturesTopic;
+
+  /// No description provided for @helpHintMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite members, set their plan percentage and role, and manage their badges.'**
+  String get helpHintMembers;
+
+  /// No description provided for @helpHintMembersTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Members & plans'**
+  String get helpHintMembersTopic;
+
+  /// No description provided for @helpHintMoney.
+  ///
+  /// In en, this message translates to:
+  /// **'Your monthly bill: browse months with the arrows; pay, export or share from here.'**
+  String get helpHintMoney;
+
+  /// No description provided for @helpHintMoneyTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Money'**
+  String get helpHintMoneyTopic;
+
+  /// No description provided for @helpHintValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Decide which actions need confirmation, who confirms, and how many approvals it takes.'**
+  String get helpHintValidation;
+
+  /// No description provided for @helpHintValidationTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'confirmations'**
+  String get helpHintValidationTopic;
+
+  /// No description provided for @helpHintWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Country, currency, language and billing details — documents and taxes follow these settings.'**
+  String get helpHintWorkspace;
+
+  /// No description provided for @helpHintWorkspaceTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace settings'**
+  String get helpHintWorkspaceTopic;
+
+  /// No description provided for @helpHintBadges.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue a printable QR badge or register an NFC card; revoke lost badges any time.'**
+  String get helpHintBadges;
+
+  /// No description provided for @helpHintBadgesTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC badges'**
+  String get helpHintBadgesTopic;
 
   /// No description provided for @inviteSectionTitle.
   ///

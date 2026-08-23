@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_sheet.dart';
@@ -919,6 +920,8 @@ class MembersScreen extends ConsumerWidget {
       body: switch (membersAsync) {
         AsyncData(value: final members) => ListView(
             children: [
+              // #606 — contextual how-to; gated inside the widget.
+              const HelpHint(HelpHintId.members),
               for (final member in members)
                 ListTile(
                   leading: CircleAvatar(

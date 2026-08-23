@@ -95,5 +95,7 @@
   "featureNfcSeatTagsTitle": "Etiquetas NFC/RFID de las sillas",
   "featureNfcSeatTagsDesc": "Una etiqueta NFC/RFID física en una silla lleva a su asiento como la tarjeta QR impresa; el campo se rellena acercando el chip.",
   "featureQrBadgesTitle": "Credenciales QR",
-  "featureQrBadgesDesc": "Tarjetas de credencial QR imprimibles para el quiosco, junto a las tarjetas NFC/RFID."
+  "featureQrBadgesDesc": "Tarjetas de credencial QR imprimibles para el quiosco, junto a las tarjetas NFC/RFID.",
+  "featureFormHelpHintsTitle": "Consejos de ayuda",
+  "featureFormHelpHintsDesc": "Breves consejos descartables en formularios y pantallas, cada uno enlazado a la sección correspondiente de la guía."
 }

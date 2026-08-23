@@ -80,6 +80,73 @@ void main() {
     expect(find.byType(HelpScreen), findsOneWidget);
   });
 
+  testWidgets('?topic= jumps to the first heading containing the fragment '
+      '(case-insensitive) — #606', (tester) async {
+    // A guide long enough that the jump actually has to scroll.
+    final guide = StringBuffer('# User Guide\n');
+    for (var i = 1; i <= 20; i++) {
+      guide
+        ..writeln('\n## Section $i\n')
+        ..writeln(List.filled(15, 'Body line for section $i.').join('\n\n'));
+    }
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(),
+          helpContentProvider
+              .overrideWith((ref, languageCode) async => guide.toString()),
+        ],
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final context = tester.element(find.byType(Scaffold).first);
+    GoRouter.of(context).push('/help?topic=section 18');
+    await tester.pumpAndSettle();
+
+    expect(find.byType(HelpScreen), findsOneWidget);
+    final position = tester
+        .state<ScrollableState>(
+          find
+              .descendant(
+                of: find.byType(HelpScreen),
+                matching: find.byType(Scrollable),
+              )
+              .first,
+        )
+        .position;
+    expect(position.pixels, greaterThan(0));
+  });
+
+  testWidgets('a topic matching nothing stays at the top and never crashes',
+      (tester) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [...standardTestOverrides(), _helpOverride()],
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final context = tester.element(find.byType(Scaffold).first);
+    GoRouter.of(context).push('/help?topic=zzz-no-such-heading');
+    await tester.pumpAndSettle();
+
+    expect(find.byType(HelpScreen), findsOneWidget);
+    expect(find.textContaining('Getting started', findRichText: true),
+        findsWidgets);
+    final position = tester
+        .state<ScrollableState>(
+          find
+              .descendant(
+                of: find.byType(HelpScreen),
+                matching: find.byType(Scrollable),
+              )
+              .first,
+        )
+        .position;
+    expect(position.pixels, 0);
+  });
+
   test('every supported locale maps to its own asset, others fall back', () {
     expect(helpAssetFor('fr'), 'assets/help/fr.md');
     expect(helpAssetFor('de'), 'assets/help/de.md');

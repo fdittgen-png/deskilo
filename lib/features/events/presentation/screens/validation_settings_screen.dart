@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -172,6 +173,8 @@ class ValidationSettingsScreen extends ConsumerWidget {
       body: switch (policiesAsync) {
         AsyncData(value: final policies) => ListView(
             children: [
+              // #606 — contextual how-to; gated inside the widget.
+              const HelpHint(HelpHintId.validation),
               _PolicyCard(
                 label: l10n?.validationDefaultPolicy ?? 'Default policy',
                 effective: policies

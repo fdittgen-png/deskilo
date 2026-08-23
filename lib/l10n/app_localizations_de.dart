@@ -1391,10 +1391,113 @@ class AppLocalizationsDe extends AppLocalizations {
       'Druckbare QR-Badge-Karten für den Kiosk, neben den NFC/RFID-Karten.';
 
   @override
+  String get featureFormHelpHintsTitle => 'Hilfe-Hinweise';
+
+  @override
+  String get featureFormHelpHintsDesc =>
+      'Kurze, ausblendbare Hinweise auf Formularen und Bildschirmen, jeweils mit Link zum passenden Abschnitt des Handbuchs.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override
   String get helpContents => 'Inhalt';
+
+  @override
+  String get helpHintLearnMore => 'Mehr erfahren';
+
+  @override
+  String get helpHintDismiss => 'Hinweis ausblenden';
+
+  @override
+  String get helpHintRestoreTitle => 'Hilfe-Hinweise wieder anzeigen';
+
+  @override
+  String get helpHintRestored => 'Die Hilfe-Hinweise werden wieder angezeigt.';
+
+  @override
+  String get helpHintReserve =>
+      'Tag und Zeitfenster wählen, dann einen freien Platz antippen, um ihn zu buchen.';
+
+  @override
+  String get helpHintReserveTopic => 'Reservieren-Hub';
+
+  @override
+  String get helpHintPlan =>
+      'Der Live-Grundriss: freien Platz antippen zum Buchen, die eigene Buchung antippen zum Einchecken.';
+
+  @override
+  String get helpHintPlanTopic => 'Grundriss';
+
+  @override
+  String get helpHintCalendar =>
+      'Buchungen monatsweise durchblättern; einen Tag antippen, um seine Reservierungen zu sehen und zu verwalten.';
+
+  @override
+  String get helpHintCalendarTopic => 'Kalender';
+
+  @override
+  String get helpHintEvents =>
+      'Alles, was passiert ist, in einem Feed. Ausstehende Entscheidungen stehen oben; die Chips filtern den Rest.';
+
+  @override
+  String get helpHintEventsTopic => 'Ereignisse';
+
+  @override
+  String get helpHintEditor =>
+      'Räume und Schreibtische zeichnen, Plätze aufstempeln — einen Platz zweimal antippen, um seine Eigenschaften zu bearbeiten.';
+
+  @override
+  String get helpHintEditorTopic => 'Space-Editor';
+
+  @override
+  String get helpHintAvailability =>
+      'Öffnungstage und Arbeitszeiten festlegen und Schließtage eintragen, die niemand buchen kann.';
+
+  @override
+  String get helpHintAvailabilityTopic => 'Verfügbarkeit';
+
+  @override
+  String get helpHintFeatures =>
+      'Workspace-Funktionen ein- oder ausschalten — die App jedes Mitglieds folgt sofort.';
+
+  @override
+  String get helpHintFeaturesTopic => 'Funktionen';
+
+  @override
+  String get helpHintMembers =>
+      'Mitglieder einladen, Plan-Prozentsatz und Rolle festlegen und ihre Badges verwalten.';
+
+  @override
+  String get helpHintMembersTopic => 'Mitglieder & Pläne';
+
+  @override
+  String get helpHintMoney =>
+      'Die Monatsabrechnung: mit den Pfeilen durch die Monate blättern; von hier zahlen, exportieren oder teilen.';
+
+  @override
+  String get helpHintMoneyTopic => 'Geld';
+
+  @override
+  String get helpHintValidation =>
+      'Festlegen, welche Aktionen eine Bestätigung brauchen, wer bestätigt und wie viele Zustimmungen nötig sind.';
+
+  @override
+  String get helpHintValidationTopic => 'Bestätigungen';
+
+  @override
+  String get helpHintWorkspace =>
+      'Land, Währung, Sprache und Rechnungsdaten — Dokumente und Steuern folgen diesen Einstellungen.';
+
+  @override
+  String get helpHintWorkspaceTopic => 'Workspace-Einstellungen';
+
+  @override
+  String get helpHintBadges =>
+      'Druckbares QR-Badge ausstellen oder NFC-Karte registrieren; verlorene Badges jederzeit sperren.';
+
+  @override
+  String get helpHintBadgesTopic => 'NFC-Badges';
 
   @override
   String get inviteSectionTitle => 'Jemanden einladen';
