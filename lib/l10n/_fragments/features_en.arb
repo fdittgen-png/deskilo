@@ -222,5 +222,7 @@
   "featureQrBadgesTitle": "QR badges",
   "featureQrBadgesDesc": "Printable QR badge cards for the kiosk, beside the NFC/RFID cards.",
   "featureFormHelpHintsTitle": "Help hints",
-  "featureFormHelpHintsDesc": "Short dismissible how-to hints on forms and screens, each linking into the matching guide section."
+  "featureFormHelpHintsDesc": "Short dismissible how-to hints on forms and screens, each linking into the matching guide section.",
+  "featureUiAnimationsTitle": "Interface animations",
+  "featureUiAnimationsDesc": "Smooth transitions and state animations across the app. Off means every change is instant; the device's reduced-motion setting always wins."
 }

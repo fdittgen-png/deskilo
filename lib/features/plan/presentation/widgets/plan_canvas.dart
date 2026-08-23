@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../l10n/app_localizations.dart';
 
+import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/canvas_controls.dart';
 import '../../domain/desk.dart';
@@ -104,11 +105,50 @@ class PlanCanvas extends StatefulWidget {
   State<PlanCanvas> createState() => _PlanCanvasState();
 }
 
-class _PlanCanvasState extends State<PlanCanvas> {
+class _PlanCanvasState extends State<PlanCanvas>
+    with SingleTickerProviderStateMixin {
   final _viewTransform = TransformationController();
+
+  /// #611 — drives the seat state-colour lerp. Rests at 1 (the final
+  /// colours); a detected state diff restarts it from 0, so it only
+  /// ever ticks briefly after an actual change.
+  late final AnimationController _stateFade = AnimationController(
+    vsync: this,
+    value: 1,
+    duration: MotionTokens.standard,
+  );
+
+  /// The pre-change states of ONLY the seats whose state just changed —
+  /// the painter lerps these toward the current map.
+  Map<String, SeatState>? _previousSeatStates;
+
+  @override
+  void didUpdateWidget(PlanCanvas oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (identical(oldWidget.seatStates, widget.seatStates)) return;
+    // Diff bound to seats present in BOTH maps: a level switch swaps the
+    // whole id set and must not animate anything.
+    final changed = <String, SeatState>{
+      for (final entry in oldWidget.seatStates.entries)
+        if (widget.seatStates.containsKey(entry.key) &&
+            widget.seatStates[entry.key] != entry.value)
+          entry.key: entry.value,
+    };
+    if (changed.isEmpty) return;
+    final duration = motionDuration(context, MotionTokens.standard);
+    if (duration == Duration.zero) {
+      _previousSeatStates = null;
+      _stateFade.value = 1;
+      return;
+    }
+    _previousSeatStates = changed;
+    _stateFade.duration = duration;
+    _stateFade.forward(from: 0);
+  }
 
   @override
   void dispose() {
+    _stateFade.dispose();
     _viewTransform.dispose();
     super.dispose();
   }
@@ -173,7 +213,11 @@ class _PlanCanvasState extends State<PlanCanvas> {
             // The down handler carries the position; this registers the
             // recognizer.
             onDoubleTap: widget.onSpaceDoubleTap == null ? null : () {},
-            child: CustomPaint(
+            // #611 — the AnimatedBuilder only re-renders while the
+            // brief state-colour lerp runs; at rest it costs nothing.
+            child: AnimatedBuilder(
+              animation: _stateFade,
+              builder: (context, _) => CustomPaint(
               key: widget.paintKey,
               size: PlanCanvasMetrics.size,
               painter: FloorPlanPainter(
@@ -182,6 +226,9 @@ class _PlanCanvasState extends State<PlanCanvas> {
                 colorScheme: Theme.of(context).colorScheme,
                 brightness: Theme.of(context).brightness,
                 seatStates: widget.seatStates,
+                previousSeatStates: _previousSeatStates,
+                seatStateLerp:
+                    MotionTokens.ease.transform(_stateFade.value),
                 seatDayPhases: widget.seatDayPhases,
                 seatLabels: widget.seatLabels,
                 spaceOverlays: widget.spaceOverlays,
@@ -196,6 +243,7 @@ class _PlanCanvasState extends State<PlanCanvas> {
                 deskOpacity: widget.deskOpacity,
                 background: widget.background,
                 images: widget.images,
+              ),
               ),
             ),
           ),

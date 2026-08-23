@@ -33,7 +33,9 @@ import 'package:flutter_test/flutter_test.dart';
 // #585 retro-flagged) and qrBadges (QR badge issuance beside nfcBadges).
 // 39→40 (2026-08-23): #606 formHelpHints (dismissible contextual help
 // hints deep-linking into the guide; Settings restores dismissed ones).
-const int _expectedFeatureCount = 40;
+// 40→41 (2026-08-23): #611 uiAnimations (the motion pass — purposeful
+// animations app-wide; OFF = instant everything, reduced motion wins).
+const int _expectedFeatureCount = 41;
 
 void main() {
   test('every functionality is registered — the pin', () {

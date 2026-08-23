@@ -578,6 +578,8 @@
   "featureQrBadgesDesc": "Tarjetas de credencial QR imprimibles para el quiosco, junto a las tarjetas NFC/RFID.",
   "featureFormHelpHintsTitle": "Consejos de ayuda",
   "featureFormHelpHintsDesc": "Breves consejos descartables en formularios y pantallas, cada uno enlazado a la sección correspondiente de la guía.",
+  "featureUiAnimationsTitle": "Animaciones de la interfaz",
+  "featureUiAnimationsDesc": "Transiciones suaves y animaciones de estado en toda la aplicación. Desactivado, cada cambio es instantáneo; el ajuste de reducción de movimiento del dispositivo siempre prevalece.",
   "helpTitle": "Ayuda",
   "helpContents": "Índice",
   "helpHintLearnMore": "Más información",

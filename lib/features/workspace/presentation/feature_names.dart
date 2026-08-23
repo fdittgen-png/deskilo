@@ -84,4 +84,6 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureQrBadgesTitle ?? 'QR badges',
       WorkspaceFeature.formHelpHints =>
         l10n?.featureFormHelpHintsTitle ?? 'Help hints',
+      WorkspaceFeature.uiAnimations =>
+        l10n?.featureUiAnimationsTitle ?? 'Interface animations',
     };

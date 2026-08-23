@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -675,8 +676,15 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           // #606 — the hub's contextual how-to; gated inside the widget.
-          const HelpHint(HelpHintId.reserve),
-          if (!dayOpen) _closedDayBanner(l10n),
+          // #611 — MotionReveal eases it (and the closed-day banner
+          // below) in/out instead of popping; call-site wrap only.
+          const MotionReveal(child: HelpHint(HelpHintId.reserve)),
+          MotionReveal(
+            child: dayOpen
+                ? const SizedBox.shrink(
+                    key: ValueKey('reserve-open-day'))
+                : _closedDayBanner(l10n),
+          ),
           Padding(
             padding: const EdgeInsets.only(
               left: AppSpacing.lg,
@@ -699,8 +707,20 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
             // #209: cross-fade the Plan/Day/Week toggle. Distinct subtree
             // keys make the switcher animate the swap; the fade stays
             // OUTSIDE the canvas's InteractiveViewer transform.
+            // #611 — fade-through style: the incoming view also scales
+            // 0.97→1, per the M3 top-level-switch pattern.
             child: AnimatedSwitcher(
               duration: AppMotion.viewSwitchOf(context),
+              switchInCurve: MotionTokens.enter,
+              switchOutCurve: MotionTokens.ease,
+              transitionBuilder: (child, animation) => FadeTransition(
+                opacity: animation,
+                child: ScaleTransition(
+                  scale: Tween<double>(begin: 0.97, end: 1)
+                      .animate(animation),
+                  child: child,
+                ),
+              ),
               child: switch (_view) {
                 _ReserveView.plan => KeyedSubtree(
                     key: const ValueKey('reserve-plan-view'),

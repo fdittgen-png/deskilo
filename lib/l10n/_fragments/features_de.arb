@@ -97,5 +97,7 @@
   "featureQrBadgesTitle": "QR-Badges",
   "featureQrBadgesDesc": "Druckbare QR-Badge-Karten für den Kiosk, neben den NFC/RFID-Karten.",
   "featureFormHelpHintsTitle": "Hilfe-Hinweise",
-  "featureFormHelpHintsDesc": "Kurze, ausblendbare Hinweise auf Formularen und Bildschirmen, jeweils mit Link zum passenden Abschnitt des Handbuchs."
+  "featureFormHelpHintsDesc": "Kurze, ausblendbare Hinweise auf Formularen und Bildschirmen, jeweils mit Link zum passenden Abschnitt des Handbuchs.",
+  "featureUiAnimationsTitle": "Oberflächen-Animationen",
+  "featureUiAnimationsDesc": "Sanfte Übergänge und Zustandsanimationen in der ganzen App. Aus bedeutet: Jede Änderung erfolgt sofort; die Bewegung-reduzieren-Einstellung des Geräts hat immer Vorrang."
 }

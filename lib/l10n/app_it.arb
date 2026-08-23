@@ -578,6 +578,8 @@
   "featureQrBadgesDesc": "Schede badge QR stampabili per il chiosco, accanto alle carte NFC/RFID.",
   "featureFormHelpHintsTitle": "Suggerimenti di aiuto",
   "featureFormHelpHintsDesc": "Brevi suggerimenti richiudibili su moduli e schermate, ognuno collegato alla sezione corrispondente della guida.",
+  "featureUiAnimationsTitle": "Animazioni dell'interfaccia",
+  "featureUiAnimationsDesc": "Transizioni fluide e animazioni di stato in tutta l'app. Disattivato, ogni cambiamento è istantaneo; l'impostazione di riduzione del movimento del dispositivo prevale sempre.",
   "helpHintLearnMore": "Scopri di più",
   "helpHintDismiss": "Nascondi suggerimento",
   "helpHintPrevTip": "Suggerimento precedente",

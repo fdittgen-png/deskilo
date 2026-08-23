@@ -39,7 +39,9 @@ const Map<String, int> _baseline = {
   'lib/features/editor/presentation/screens/level_canvas_screen.dart': 1250, // 2026-08 #585 seat NFC field
   // 1010→1020 (2026-08-04): #462 whole-space overlays on the plan view.
   // 1020→1070: #466 the hub's whole-level reserve button + visibility.
-  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1090, // 2026-08 #586 preferred default window
+  // 1090→1110 (2026-08-23): #611 fade-through view switch + MotionReveal
+  // on the hint/closed-day banner.
+  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1110,
   // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
   // workspace hint subtitle and the RPC write helper.
   // 990→1000 (2026-08-05): #478 Billing & reports admin entry.
@@ -187,7 +189,8 @@ const Map<String, int> _baseline = {
   // 770→790 (2026-08-06): #513 setRolePermissions + role_permissions row.
   // 630→640 (2026-08-10): two-dot month markers (mine + others per day)
   // — a dozen lines of dot layout, no new concern worth a split.
-  'lib/features/calendar/presentation/screens/calendar_screen.dart': 640,
+  // 640→690 (2026-08-23): #611 directional month-slide switcher.
+  'lib/features/calendar/presentation/screens/calendar_screen.dart': 690,
 };
 
 void main() {

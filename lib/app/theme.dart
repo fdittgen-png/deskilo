@@ -41,9 +41,10 @@ const FlexSubThemesData _subThemes = FlexSubThemesData(
 /// system default; chips read as one calm family with a hairline border;
 /// cards sit flat on tonal surfaces (depth comes from [AppElevation]
 /// where it means something, not from Material's default drop shadow).
-ThemeData _finish(ThemeData base) {
+ThemeData _finish(ThemeData base, {required bool animations}) {
   final scheme = base.colorScheme;
   return base.copyWith(
+    pageTransitionsTheme: _pageTransitions(animations: animations),
     textTheme: base.textTheme.copyWith(
       // The app-bar title: confident, a touch tighter — personality
       // without a custom font dependency.
@@ -90,35 +91,113 @@ ThemeData _finish(ThemeData base) {
   );
 }
 
+/// Route transitions of the motion pass (#611): fade-forwards (the M3
+/// fade-through successor of the zoom default) on Android and every
+/// desktop/web platform, Cupertino on iOS so the native back-swipe
+/// stays. Each builder is wrapped reduced-motion-aware: when the
+/// platform asks for no animations the pushed page just appears.
+///
+/// `animations: false` (the `uiAnimations` feature off) swaps in the
+/// instant builder for every platform. The bool is baked into the
+/// ThemeData on purpose — the app root watches the feature set, so a
+/// flag flip rebuilds MaterialApp with the other theme immediately (the
+/// Features screen invalidates the providers on toggle).
+PageTransitionsTheme _pageTransitions({required bool animations}) {
+  if (!animations) {
+    return PageTransitionsTheme(builders: {
+      for (final platform in TargetPlatform.values)
+        platform: const _InstantPageTransitionsBuilder(),
+    });
+  }
+  const fade =
+      _ReducedMotionAware(FadeForwardsPageTransitionsBuilder());
+  const cupertino = _ReducedMotionAware(CupertinoPageTransitionsBuilder());
+  return const PageTransitionsTheme(builders: {
+    TargetPlatform.android: fade,
+    TargetPlatform.fuchsia: fade,
+    TargetPlatform.linux: fade,
+    TargetPlatform.windows: fade,
+    TargetPlatform.macOS: fade,
+    TargetPlatform.iOS: cupertino,
+  });
+}
+
+/// No transition at all: the new route is simply there.
+class _InstantPageTransitionsBuilder extends PageTransitionsBuilder {
+  const _InstantPageTransitionsBuilder();
+
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) =>
+      child;
+}
+
+/// Delegates to [_delegate] unless the platform requests reduced motion
+/// — then the route content renders static (no fade, no slide).
+class _ReducedMotionAware extends PageTransitionsBuilder {
+  const _ReducedMotionAware(this._delegate);
+
+  final PageTransitionsBuilder _delegate;
+
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    if (MediaQuery.maybeDisableAnimationsOf(context) ?? false) return child;
+    return _delegate.buildTransitions(
+        route, context, animation, secondaryAnimation, child);
+  }
+}
+
 /// The three DesKilo themes: [light], [dark], and the signature
 /// orange-forward [warm] (the analog of Sparkilo's eco theme).
+/// [animations] carries the `uiAnimations` feature (#611) into the
+/// route-transition theme; everything else is identical either way.
 abstract final class DeskiloTheme {
-  static ThemeData light() {
-    return _finish(FlexThemeData.light(
-      colors: _burntOrange,
-      blendLevel: 8,
-      subThemesData: _subThemes,
-      useMaterial3: true,
-    ));
+  static ThemeData light({bool animations = true}) {
+    return _finish(
+      FlexThemeData.light(
+        colors: _burntOrange,
+        blendLevel: 8,
+        subThemesData: _subThemes,
+        useMaterial3: true,
+      ),
+      animations: animations,
+    );
   }
 
-  static ThemeData dark() {
-    return _finish(FlexThemeData.dark(
-      colors: _burntOrange.toDark(28),
-      blendLevel: 22,
-      subThemesData: _subThemes,
-      useMaterial3: true,
-    ));
+  static ThemeData dark({bool animations = true}) {
+    return _finish(
+      FlexThemeData.dark(
+        colors: _burntOrange.toDark(28),
+        blendLevel: 22,
+        subThemesData: _subThemes,
+        useMaterial3: true,
+      ),
+      animations: animations,
+    );
   }
 
-  static ThemeData warm() {
-    return _finish(FlexThemeData.light(
-      colors: _burntOrange,
-      blendLevel: 20,
-      // custom pulls the scheme's appBarColor (the warm container tint).
-      appBarStyle: FlexAppBarStyle.custom,
-      subThemesData: _subThemes,
-      useMaterial3: true,
-    ));
+  static ThemeData warm({bool animations = true}) {
+    return _finish(
+      FlexThemeData.light(
+        colors: _burntOrange,
+        blendLevel: 20,
+        // custom pulls the scheme's appBarColor (the warm container tint).
+        appBarStyle: FlexAppBarStyle.custom,
+        subThemesData: _subThemes,
+        useMaterial3: true,
+      ),
+      animations: animations,
+    );
   }
 }

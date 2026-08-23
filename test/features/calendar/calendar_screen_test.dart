@@ -202,4 +202,24 @@ void main() {
     expect(find.text('No reservations on this day.'), findsNothing);
     expect(find.textContaining('09:00'), findsOneWidget);
   });
+
+  testWidgets(
+      '#611 — month navigation still lands on the right month after the '
+      'slide settles (next, then twice back)', (tester) async {
+    await pumpCalendar(tester);
+    expect(find.text('May 2026'), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.chevron_right));
+    await tester.pumpAndSettle();
+    expect(find.text('June 2026'), findsOneWidget);
+    expect(find.text('May 2026'), findsNothing);
+
+    await tester.tap(find.byIcon(Icons.chevron_left));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.chevron_left));
+    await tester.pumpAndSettle();
+    expect(find.text('April 2026'), findsOneWidget);
+    // April's grid: 30 days, no 31st — the OLD month's grid is gone.
+    expect(find.text('31'), findsNothing);
+  });
 }

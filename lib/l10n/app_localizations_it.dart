@@ -1402,6 +1402,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Brevi suggerimenti richiudibili su moduli e schermate, ognuno collegato alla sezione corrispondente della guida.';
 
   @override
+  String get featureUiAnimationsTitle => 'Animazioni dell\'interfaccia';
+
+  @override
+  String get featureUiAnimationsDesc =>
+      'Transizioni fluide e animazioni di stato in tutta l\'app. Disattivato, ogni cambiamento è istantaneo; l\'impostazione di riduzione del movimento del dispositivo prevale sempre.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override
