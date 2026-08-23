@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -45,12 +46,20 @@ Future<void> main() async {
   }));
 
   NotificationService notifications = const NoopNotificationService();
-  try {
-    notifications = await LocalNotificationService.initialize();
-  } catch (e, st) {
-    debugPrint('Notification initialization failed: $e\n$st');
-    trace.error('boot', 'Notification initialization failed',
-        error: e, stackTrace: st);
+  // #614: the web has no local-notification scheduling (zonedSchedule
+  // and the pending mirror both throw) — the Noop service IS the web
+  // implementation, said once instead of erroring on every sweep.
+  if (kIsWeb) {
+    trace.log(TraceLevel.info, 'notifications',
+        'web build — local notifications disabled');
+  } else {
+    try {
+      notifications = await LocalNotificationService.initialize();
+    } catch (e, st) {
+      debugPrint('Notification initialization failed: $e\n$st');
+      trace.error('boot', 'Notification initialization failed',
+          error: e, stackTrace: st);
+    }
   }
 
   runApp(

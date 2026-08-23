@@ -38,6 +38,11 @@ const _exempt = <String, String>{
   // by app logic a test asserts on.
   'lib/core/trace/trace_logger.dart': 'log timestamps',
   'lib/core/notifications/local_notification_service.dart': 'OS scheduling',
+  // #614: drives the REAL service, whose past-reminder skip compares
+  // against the real clock — a pinned test instant would filter every
+  // reminder out before the overlap under test even starts.
+  'test/core/notifications/reminder_overlap_test.dart':
+      'exercises the real-clock reminder sweep',
   'lib/app/boot.dart': 'boot-time housekeeping, nothing asserts on it',
 
   // Pure-Dart default for call sites with no Ref; every widget call site

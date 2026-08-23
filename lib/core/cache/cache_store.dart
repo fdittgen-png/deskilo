@@ -2,6 +2,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -67,14 +69,27 @@ class FileCacheStore implements CacheStore {
 
   Directory? _dir;
 
+  /// Set after the first failed resolution (#614): path_provider has no
+  /// web implementation and every fetch used to re-try and re-WARN with
+  /// a full stack — the trace drowned in it. Unavailable is a state,
+  /// diagnosed once.
+  bool _unavailable = false;
+
   Future<Directory?> _cacheDir() async {
     if (_dir != null) return _dir;
+    if (_unavailable) return null;
+    if (kIsWeb) {
+      // No disk on the web by design — cache misses, silently.
+      _unavailable = true;
+      return null;
+    }
     try {
       final support = await getApplicationSupportDirectory();
       final dir = Directory('${support.path}/cache');
       if (!dir.existsSync()) dir.createSync(recursive: true);
       return _dir = dir;
     } catch (e, st) {
+      _unavailable = true;
       TraceLogger.instance.warn('cache', 'cache dir unavailable',
           error: e, stackTrace: st);
       return null;

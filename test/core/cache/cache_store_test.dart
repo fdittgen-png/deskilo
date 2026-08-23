@@ -8,6 +8,7 @@ import 'dart:io';
 
 import 'package:deskilo/core/cache/cache_store.dart';
 import 'package:deskilo/core/cache/cached_fetch.dart';
+import 'package:deskilo/core/trace/trace_logger.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
@@ -208,6 +209,26 @@ void main() {
       );
       await Future<void>.delayed(Duration.zero);
       expect(await cache.get('levels:w1'), isNotNull);
+    });
+  });
+
+  group('unavailable cache dir (#614)', () {
+    test('degrades to misses and warns at most once', () async {
+      // No pinned directory + no path_provider in the test VM: the
+      // resolution fails on first use and must stay failed quietly.
+      final store = FileCacheStore();
+      final warningsBefore = TraceLogger.instance.entries
+          .where((e) => e.message == 'cache dir unavailable')
+          .length;
+      expect(await store.get('k'), isNull);
+      await store.put('k', 'v', ttl: const Duration(minutes: 5));
+      expect(await store.get('k'), isNull);
+      expect(await store.evictExpired(), 0);
+      final warningsAfter = TraceLogger.instance.entries
+          .where((e) => e.message == 'cache dir unavailable')
+          .length;
+      expect(warningsAfter - warningsBefore, lessThanOrEqualTo(1),
+          reason: 'unavailable is a state, diagnosed once — not per call');
     });
   });
 }
