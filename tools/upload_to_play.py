@@ -56,6 +56,20 @@ def _gh_output(key: str, value: str) -> None:
         fh.write(f"{key}={value}\n")
 
 
+def _gh_annotate(level: str, message: str) -> None:
+    """Surface a message as a GitHub Actions annotation (#594).
+
+    Job logs can be unretrievable through the API while the run they
+    belong to is still in progress, so the release train's report job
+    falls back to check-run annotations — which only carry what a step
+    annotated. Annotate the real cause here so it always survives.
+    Workflow commands are single-line: newlines fold to ' | '.
+    """
+    if not os.environ.get("GITHUB_ACTIONS"):
+        return
+    print(f"::{level}::{str(message).replace(chr(10), ' | ')}")
+
+
 DEFAULT_TRACK = "internal"  # 'internal' = internal testing, 'alpha' = closed, 'beta' = open, 'production' = prod
 DEFAULT_AAB = "build/app/outputs/bundle/release/app-release.aab"
 DEFAULT_KEY = os.path.expanduser("~/.play-console-key.json")
@@ -196,10 +210,12 @@ def main() -> int:
 
     if not aab.is_file():
         print(f"ERROR: AAB not found at {aab}", file=sys.stderr)
+        _gh_annotate("error", f"AAB not found at {aab}")
         print("       Run `flutter build appbundle --release` first.", file=sys.stderr)
         return 2
     if not key.is_file():
         print(f"ERROR: service-account key not found at {key}", file=sys.stderr)
+        _gh_annotate("error", f"service-account key not found at {key}")
         return 2
 
     fallback_notes = args.release_notes or f"Daily build {date.today().isoformat()}"
@@ -227,6 +243,7 @@ def main() -> int:
         )
     except (HttpError, httplib2.HttpLib2Error, TimeoutError) as e:
         print(f"ERROR: edits.insert failed: {e}", file=sys.stderr)
+        _gh_annotate("error", f"edits.insert failed: {e}")
         return 3
     edit_id = edit["id"]
     print(f"  edit id: {edit_id}")
@@ -258,6 +275,7 @@ def main() -> int:
         )
     except (HttpError, httplib2.HttpLib2Error, TimeoutError) as e:
         print(f"ERROR: bundle upload failed: {e}", file=sys.stderr)
+        _gh_annotate("error", f"bundle upload failed: {e}")
         return 4
     version_code = bundle["versionCode"]
     print(f"  uploaded versionCode: {version_code}")
@@ -322,19 +340,24 @@ def main() -> int:
                           f"closed test, production access). versionCode "
                           f"{version_code} was built and validated; rerun "
                           f"this workflow once the track is unlocked.")
+                    _gh_annotate("notice", f"UPLOAD SKIPPED: track '{args.track}' is locked by Play policy until the Console prerequisites are completed; versionCode {version_code} was built and validated")
                     _gh_output("uploaded", "false")
                     _gh_output("skip_reason", "track locked by Play policy")
                     return 0
                 print(f"ERROR: track update failed: {e2}", file=sys.stderr)
+                _gh_annotate("error", f"tracks.update failed: {e2}")
                 return 5
             except (httplib2.HttpLib2Error, TimeoutError) as e2:
                 print(f"ERROR: track update failed: {e2}", file=sys.stderr)
+                _gh_annotate("error", f"tracks.update failed: {e2}")
                 return 5
         else:
             print(f"ERROR: track update failed: {e}", file=sys.stderr)
+            _gh_annotate("error", f"tracks.update failed: {e}")
             return 5
     except (httplib2.HttpLib2Error, TimeoutError) as e:
         print(f"ERROR: track update failed: {e}", file=sys.stderr)
+        _gh_annotate("error", f"tracks.update failed: {e}")
         return 5
 
     if args.dry_run:
@@ -349,6 +372,7 @@ def main() -> int:
             print("Validation OK — edit will NOT be committed (dry-run).")
         except (HttpError, httplib2.HttpLib2Error, TimeoutError) as e:
             print(f"ERROR: validation failed: {e}", file=sys.stderr)
+            _gh_annotate("error", f"edits.validate failed: {e}")
             return 6
         _gh_output("uploaded", "false")
         _gh_output("skip_reason", "dry-run")
@@ -413,8 +437,10 @@ def main() -> int:
                 return 0
             except (HttpError, httplib2.HttpLib2Error, TimeoutError) as e2:
                 print(f"ERROR: draft retry failed: {e2}", file=sys.stderr)
+                _gh_annotate("error", f"draft retry failed: {e2}")
                 return 7
         print(f"ERROR: edits.commit failed: {e}", file=sys.stderr)
+        _gh_annotate("error", f"edits.commit failed: {e}")
         return 7
 
     _gh_output("uploaded", "true")
