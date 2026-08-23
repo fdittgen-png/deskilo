@@ -104,6 +104,45 @@ Cada puesto, mesa, oficina y planta puede llevar una **tarjeta QR** impresa (§8
 
 **Los conflictos protegen en ambos sentidos:** una oficina o planta no puede reservarse mientras algún puesto de su interior ya esté reservado en esa ventana — y ningún puesto puede reservarse mientras su oficina o planta esté reservada entera.
 
+### 4b. Cómo se comporta la reserva
+
+Cada regla de abajo se aplica **en el servidor** — el plano, el hub Reservar, un escaneo QR y el quiosco ofrecen exactamente lo que será aceptado, y una petición que se cuele por una pantalla desfasada se rechaza con el motivo nombrado. Todas las horas son locales del espacio; los ejemplos asumen la jornada laboral por defecto (08:00 – 12:00 – 17:00).
+
+**Reservar con antelación.** La forma posible de una ventana depende de la granularidad del espacio (§8 Disponibilidad):
+
+| Pides | Medias jornadas | Jornadas completas | Rejilla de minutos (5/15/30/60 min) |
+|---|---|---|---|
+| La mañana (8–12) | ✅ | ❌ — debe cubrir el día completo | ✅ si los bordes caen en la rejilla |
+| La tarde (12–17) | ✅ | ❌ | ✅ |
+| Toda la jornada laboral (8–17) | ✅ | ✅ | ✅ |
+| Antes de abrir / fuera de horario (inicio 6:00, 17–21) | ❌ | ❌ | ✅ por defecto — las rejillas son libres; la política **Reservas por minutos dentro del horario laboral** (§8) lo convierte en ❌ |
+| Una ventana atípica (9–15) | ❌ | ❌ | ✅ si cae en la rejilla |
+| Fuera de la rejilla (10:02) o más corta que la duración mínima (30 min por defecto) | — | — | ❌ — el rechazo nombra la rejilla o el mínimo |
+
+Y en todas las granularidades por igual: el futuro está abierto hasta el **horizonte de reserva** (90 días por defecto) y rechazado más allá; una reserva en un **día ya terminado** (ayer y antes) se rechaza — *«completamente en el pasado»* — salvo que el propietario haya activado **Permitir reservas pasadas**, mientras que reservar la ventana de esta mañana más tarde el mismo día funciona siempre; un **día de cierre** rechaza nombrándose; un puesto ocupado rechaza, y un miembro mantiene **un sitio a la vez** (§4).
+
+**Las llegadas espontáneas encajan en el tramo.** Una llegada espontánea (tocar un puesto libre, escanear su QR/NFC, o el quiosco) reserva desde *ahora* hasta un borde canónico — el límite de media jornada, el fin del día o un borde de la rejilla. Con granularidad por jornadas, la reserva cubre el **tramo entero al que pertenece el fin**: llegar a las 10:00 y elegir *hasta las 12:00* reserva toda la mañana de 8:00–12:00; solo si la primera parte está realmente tomada por otra persona la reserva se ancla en tu llegada. Al final de la jornada laboral o después, una llegada espontánea puede correr hasta la **medianoche local** (horas extra vespertinas — en todas las granularidades, digan lo que digan las políticas). Y un check-in espontáneo debe empezar **hoy**: crear una reserva «registrada» para mañana se rechaza.
+
+**Registrarse (check-in).** La ventana abre **15 minutos antes** de tu inicio — y con medias jornadas, jornadas completas y horas reales abre para **todo el día reservado**: a las 10:00 ya puedes registrarte en tu tarde de las 12:00, porque el tramo *es* la jornada laboral (las rejillas de minutos amplían en cambio el margen un paso de rejilla). Registrarse otro día («la reserva de mañana hoy»), después de terminar la reserva, dos veces, o en un día de cierre se rechaza con el motivo. Si sigues registrado **en otro sitio**: una reserva aún en curso bloquea el nuevo registro (*haz allí primero el check-out*); una ya terminada se cierra en silencio — sellada en su propio fin — y el nuevo registro procede. Un admin puede registrar a un miembro mientras *Reservar para otros* esté activo (§8 Funcionalidades).
+
+**Salir (check-out).** Salir antes del fin reservado **recorta la reserva a ahora** — el puesto se libera inmediatamente para los demás. Tras un registro anticipado el mismo día, salir antes del inicio reservado conserva la **presencia real** (del instante del registro a ahora). ¿Lo olvidaste y volviste después? El check-out sigue funcionando: el fin reservado se queda, el sello es veraz. Salir sin haberse registrado — o dos veces — se rechaza. Por defecto el **check-out es personal**: un admin solo puede terminar el registro en curso de un miembro si el propietario activó **Los administradores pueden hacer el check-out de los miembros** (§8). Un registro nunca cerrado se completa solo en cuanto te registras en otro sitio después de su fin — o, con la **entrada/salida automática**, en el barrido de fin de día.
+
+**Ausencias.** Una reserva nunca registrada simplemente queda *reservada* en el historial. Con la **entrada/salida automática**, el barrido de fin de día marca el día pasado como asistido — registrado al inicio, salido al final, completado.
+
+**Cancelar.**
+
+| Caso | Qué pasa |
+|---|---|
+| Una reserva futura tuya | ✅ cancelada con un toque |
+| Tu reserva en curso, registrada | ✅ cancelada de una pieza (los sellos de presencia quedan en la fila) — para *conservar* la parte asistida, sal en su lugar, o recorta (abajo) |
+| «Cancelar el resto del día» | ✅ baja el **fin** de la reserva al límite de media jornada — el inicio es inamovible, el nuevo fin debe quedar por delante — y la tarde liberada es inmediatamente reservable por otros |
+| Una reserva completada o ya cancelada | ❌ no queda nada que cancelar |
+| La reserva de otra persona | ❌ para un miembro; ✅ para un admin/propietario — la anulación (§4), atribuida al admin en el hilo de eventos |
+| Una serie, «esta y las siguientes» | ✅ cancela las ocurrencias *reservadas* restantes desde esa fecha; las registradas y completadas conservan su historial |
+| Una reserva **pasada o registrada** que quieres eliminar | una **solicitud de eliminación** (§4): un validador confirma (eliminada) o rechaza (se mantiene); una nueva solicitud sustituye a una pendiente, y las reservas futuras se cancelan directamente |
+
+**Aprobaciones.** Donde el propietario puso una regla de validación sobre las **reservas de espacios enteros** (§7), la reserva bloquea el espacio inmediatamente y espera el quórum — un rechazo la cancela; sin regla, sin paso de aprobación. Las solicitudes de eliminación siguen el mismo marco. **Nadie valida jamás su propio evento.**
+
 ## 5. Calendario (pestaña Calendario)
 
 El mes de un vistazo, con dos alcances y dos formas:
@@ -126,7 +165,7 @@ Mira quién forma tu comunidad:
 
 ## 7. Eventos y confirmaciones (icono de campana)
 
-El hilo de eventos es la pista de auditoría de tu espacio: reservas creadas/cambiadas/canceladas, pagos registrados, facturas pagadas, gastos presentados, solicitudes de días extra, cambios de rol, solicitudes de eliminación. Los miembros ven sus propios eventos; los admins y propietarios ven los de todos. Los **chips de filtro** (Todo · Reserva · Pago · Gasto · …) acotan la lista; cada fila lleva su icono de estado — un **reloj de arena** mientras está pendiente, una **marca verde** una vez confirmado — y los eventos de dinero muestran *quién los validó y cuándo* directamente en la fila.
+El hilo de eventos es la pista de auditoría de tu espacio: reservas creadas/cambiadas/canceladas, pagos registrados, facturas pagadas, gastos presentados, solicitudes de días extra, cambios de rol, solicitudes de eliminación. Los miembros ven sus propios eventos; los admins y propietarios ven los de todos. Los **chips de filtro** (Todo · Reserva · Pago · Gasto · …) acotan la lista — tu elección se recuerda — y un menú **Agrupar por** pliega el hilo en grupos por tipo, día o miembro (tocar el símbolo del grupo vuelve a la lista plana); cada fila lleva su icono de estado — un **reloj de arena** mientras está pendiente, una **marca verde** una vez confirmado — y los eventos de dinero muestran *quién los validó y cuándo* directamente en la fila.
 
 **A la espera de tu confirmación:** siempre que un admin hace algo *por otra persona* — te reserva un puesto, registra tu pago, degrada a un admin — queda **pendiente hasta que se confirme**. Lo pendiente se fija arriba con una ✕ roja y un botón verde **Aceptar**, y recibes una notificación. Lo que haces sobre ti mismo nunca requiere confirmación.
 
@@ -170,12 +209,16 @@ Tus invitaciones ligadas a rol (§2): invitación de miembro = el propio ID del 
 - **Granularidad de reserva** — una de: *rango horario libre*, *tramos de 5 / 15 / 30 / 60 minutos*, *medias jornadas (mañana y tarde)*, *solo días completos* u *horas reales* (de–a exacto, con los atajos de media jornada y jornada completa).
 - **Horario laboral** — inicio del día, límite de media jornada, fin del día (por defecto 08:00 / 12:00 / 17:00). Las medias jornadas y jornadas completas de toda la app — reservas, registro y facturación — siguen este horario; con *horas reales* defines además cuántas horas se facturan como media jornada y como jornada completa.
 - **Días de cierre** — excepciones con fecha, añadidas con **+**.
+- **Políticas de reserva** — tres interruptores, todos **desactivados por defecto**, que relajan o endurecen las reglas del §4b (la sección sigue la función *Políticas de reserva*):
+  - **Permitir reservas pasadas** — los miembros pueden registrar a posteriori una reserva ya finalizada (ayer y antes). Desactivado, tales reservas se rechazan; reservar una ventana anterior del *mismo día* está siempre permitido. Actívalo en espacios que apuntan la asistencia después.
+  - **Reservas por minutos dentro del horario laboral** — limita las reservas de rejilla de minutos a la jornada laboral. Desactivado (el defecto), las rejillas son libres: los miembros pueden reservar a las 6:00 o de 17 a 21. Las horas extra vespertinas espontáneas al final del día siguen siendo posibles en ambos casos.
+  - **Los administradores pueden hacer el check-out de los miembros** — un admin puede terminar el registro en curso de un miembro. Desactivado, el check-out es estrictamente personal. Útil donde el personal cierra la sala por la noche.
 
 ### Funciones
 
-Activa o desactiva módulos enteros por espacio — cada interruptor lleva su descripción en la propia pantalla: pestaña calendario, pestaña eventos, pestaña finanzas, servicios, suplementos de accesorios, pagos en línea, facturas, los admins emiten facturas, exportar PDF, reserva en serie, reservar para otros, notificaciones push, los administradores pueden bloquear sitios, reservas de mesa, oficina y planta, los admins pueden asignar plantas, modo quiosco, credenciales RFID/NFC, directorio de miembros, integración con WhatsApp, códigos QR de espacios, copropietarios, entrada/salida automática, exportación de datos (Excel), horario laboral, plantilla del PDF de factura, notificaciones entre miembros, biblioteca de documentos, recordatorios de pago (Mahnwesen), informes de miembros, solicitudes de eliminación de reservas, gestión de roles. Desactivar un módulo elimina *todas* sus pantallas y botones para todos los miembros.
+Activa o desactiva módulos enteros por espacio — cada interruptor lleva su descripción en la propia pantalla: pestaña calendario, pestaña eventos, agrupación de notificaciones, pestaña finanzas, servicios, suplementos de accesorios, pagos en línea, facturas, los admins emiten facturas, gestión del IVA, declaraciones de IVA, envío de la factura electrónica al cliente, exportar PDF, reserva en serie, reservar para otros, notificaciones push, los administradores pueden bloquear sitios, reservas de mesa, oficina y planta, los admins pueden asignar plantas, modo quiosco, credenciales RFID/NFC, directorio de miembros, integración con WhatsApp, códigos QR de espacios, copropietarios, entrada/salida automática, exportación de datos (Excel), horario laboral, políticas de reserva, plantilla del PDF de factura, notificaciones entre miembros, biblioteca de documentos, recordatorios de pago (Mahnwesen), informes de miembros, solicitudes de eliminación de reservas, gestión de roles, eliminación de objetos del plano. Desactivar un módulo elimina *todas* sus pantallas y botones para todos los miembros.
 
-La lista es **jerárquica**: una función que necesita otra aparece indentada bajo ella con una nota *Requiere…*, y queda atenuada mientras su padre está desactivado — *Finanzas* lleva los servicios, los suplementos, los pagos en línea y la facturación; *Facturas* lleva la delegación a admins, la plantilla PDF y los recordatorios de pago; *Modo quiosco* lleva las credenciales RFID/NFC; *Directorio de miembros* lleva la integración con WhatsApp. Desactivar un padre saca todo su subárbol de la app; la elección guardada del hijo vuelve intacta cuando el padre regresa.
+La lista es **jerárquica**: una función que necesita otra aparece indentada bajo ella con una nota *Requiere…*, y queda atenuada mientras su padre está desactivado — *Finanzas* lleva los servicios, los suplementos, los pagos en línea y la facturación; *Facturas* lleva la delegación a admins, la gestión del IVA (con las declaraciones debajo), el envío al cliente, la plantilla PDF y los recordatorios de pago; *Modo quiosco* lleva las credenciales RFID/NFC; *Directorio de miembros* lleva la integración con WhatsApp; la *pestaña eventos* lleva la agrupación del hilo. Desactivar un padre saca todo su subárbol de la app; la elección guardada del hijo vuelve intacta cuando el padre regresa.
 
 ![](assets/help/images/workspace-id-qr.jpg)
 

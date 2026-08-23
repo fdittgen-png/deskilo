@@ -104,6 +104,45 @@ Ogni postazione, tavolo, ufficio e piano può avere una **scheda QR** stampata (
 
 **I conflitti proteggono in entrambe le direzioni:** un ufficio o un piano non può essere prenotato mentre una postazione al suo interno è già prenotata in quella finestra — e nessuna postazione può essere prenotata mentre il suo ufficio o piano è prenotato per intero.
 
+### 4b. Come si comporta la prenotazione
+
+Ogni regola qui sotto è applicata **sul server** — la planimetria, l'hub Prenota, una scansione QR e il chiosco offrono esattamente ciò che sarà accettato, e una richiesta che sfuggisse da una schermata non aggiornata viene rifiutata con il motivo indicato. Tutti gli orari sono locali dello spazio; gli esempi assumono la giornata lavorativa predefinita (08:00 – 12:00 – 17:00).
+
+**Prenotare in anticipo.** La forma possibile di una finestra dipende dalla granularità dello spazio (§8 Disponibilità):
+
+| Chiedi | Mezze giornate | Giornate intere | Griglia di minuti (5/15/30/60 min) |
+|---|---|---|---|
+| La mattina (8–12) | ✅ | ❌ — deve coprire la giornata intera | ✅ se i bordi cadono sulla griglia |
+| Il pomeriggio (12–17) | ✅ | ❌ | ✅ |
+| Tutta la giornata lavorativa (8–17) | ✅ | ✅ | ✅ |
+| Prima dell'apertura / fuori orario (inizio 6:00, 17–21) | ❌ | ❌ | ✅ per impostazione predefinita — le griglie sono libere; la regola **Prenotazioni al minuto negli orari di lavoro** (§8) lo trasforma in ❌ |
+| Una finestra atipica (9–15) | ❌ | ❌ | ✅ se sulla griglia |
+| Fuori griglia (10:02) o più corta della durata minima (30 min predefiniti) | — | — | ❌ — il rifiuto nomina la griglia o il minimo |
+
+E su ogni granularità allo stesso modo: il futuro è aperto fino all'**orizzonte di prenotazione** (90 giorni predefiniti) e rifiutato oltre; una prenotazione in un **giorno già terminato** (ieri e prima) viene rifiutata — *«interamente nel passato»* — a meno che il proprietario non abbia attivato **Consenti prenotazioni passate**, mentre prenotare la finestra di stamattina più tardi lo stesso giorno funziona sempre; un **giorno di chiusura** rifiuta nominandosi; una postazione occupata rifiuta, e un membro tiene **un posto alla volta** (§4).
+
+**Gli arrivi spontanei si agganciano allo slot.** Un arrivo spontaneo (toccare una postazione libera, scansionare il suo QR/NFC, o il chiosco) prenota da *adesso* fino a un bordo canonico — il limite di mezza giornata, la fine della giornata o un bordo della griglia. Con la granularità a giornate, la prenotazione copre l'**intero slot a cui appartiene la fine**: arrivare alle 10:00 e scegliere *fino alle 12:00* prenota tutta la mattina 8:00–12:00; solo se la prima parte è davvero presa da qualcun altro la prenotazione si ancora al tuo arrivo. Alla fine della giornata lavorativa o dopo, un arrivo spontaneo può correre fino alla **mezzanotte locale** (straordinario serale — su ogni granularità, qualunque cosa dicano le regole). E un check-in spontaneo deve iniziare **oggi**: creare una prenotazione «con check-in» per domani viene rifiutato.
+
+**Fare check-in.** La finestra apre **15 minuti prima** del tuo inizio — e con mezze giornate, giornate intere e orari reali apre per l'**intera giornata prenotata**: alle 10:00 puoi già fare check-in sul tuo pomeriggio delle 12:00, perché lo slot *è* la giornata lavorativa (le griglie di minuti allargano invece il margine di un passo di griglia). Fare check-in in un altro giorno («la prenotazione di domani oggi»), dopo la fine della prenotazione, due volte, o in un giorno di chiusura viene rifiutato con il motivo. Se sei ancora in check-in **altrove**: una prenotazione ancora in corso blocca il nuovo check-in (*fai prima il check-out lì*); una già terminata si chiude in silenzio — timbrata alla propria fine — e il nuovo check-in procede. Un admin può fare il check-in di un membro finché *Prenota per altri* è attivo (§8 Funzionalità).
+
+**Fare check-out.** Fare check-out prima della fine prenotata **accorcia la prenotazione ad adesso** — la postazione si libera subito per tutti. Dopo un check-in anticipato lo stesso giorno, il check-out prima dell'inizio prenotato conserva la **presenza reale** (dall'istante del check-in ad adesso). Dimenticato e tornato più tardi? Il check-out funziona ancora: la fine prenotata resta, il timbro è veritiero. Fare check-out senza check-in — o due volte — viene rifiutato. Per impostazione predefinita il **check-out è personale**: un admin può terminare il check-in in corso di un membro solo se il proprietario ha attivato **Gli amministratori possono fare il check-out dei membri** (§8). Un check-in mai chiuso si completa da solo appena fai check-in altrove dopo la sua fine — o, con il **check-in/out automatico**, alla chiusura di fine giornata.
+
+**Assenze.** Una prenotazione mai passata dal check-in resta semplicemente *prenotata* nello storico. Con il **check-in/out automatico**, la chiusura di fine giornata segna il giorno passato come frequentato — check-in all'inizio, check-out alla fine, completata.
+
+**Annullare.**
+
+| Caso | Cosa succede |
+|---|---|
+| Una tua prenotazione futura | ✅ annullata con un tocco |
+| La tua prenotazione in corso, con check-in | ✅ annullata in blocco (i timbri di presenza restano sulla riga) — per *conservare* la parte frequentata, fai invece check-out, o accorcia (sotto) |
+| «Annullare il resto della giornata» | ✅ abbassa la **fine** della prenotazione al limite di mezza giornata — l'inizio è immutabile, la nuova fine deve stare davanti — e il pomeriggio liberato è subito prenotabile da altri |
+| Una prenotazione completata o già annullata | ❌ non resta nulla da annullare |
+| La prenotazione di qualcun altro | ❌ per un membro; ✅ per un admin/proprietario — la rimozione d'autorità (§4), attribuita all'admin nel flusso eventi |
+| Una serie, «questa e le seguenti» | ✅ annulla le occorrenze *prenotate* rimanenti da quella data; quelle con check-in e completate conservano il loro storico |
+| Una prenotazione **passata o con check-in** che vuoi rimuovere | una **richiesta di eliminazione** (§4): un validatore conferma (rimossa) o respinge (conservata); una nuova richiesta sostituisce quella in sospeso, e le prenotazioni future si annullano direttamente |
+
+**Approvazioni.** Dove il proprietario ha posto una regola di validazione sulle **prenotazioni di spazi interi** (§7), la prenotazione blocca subito lo spazio e attende il quorum — un rifiuto la annulla; nessuna regola, nessun passaggio di approvazione. Le richieste di eliminazione seguono lo stesso quadro. **Nessuno valida mai il proprio evento.**
+
 ## 5. Calendario (scheda Calendario)
 
 Il mese a colpo d'occhio, con due ambiti e due forme:
@@ -126,7 +165,7 @@ Guarda chi fa parte della tua comunità:
 
 ## 7. Eventi e conferme (icona campanella)
 
-Il flusso eventi è la traccia di controllo del tuo spazio: prenotazioni create/modificate/cancellate, pagamenti registrati, fatture pagate, spese presentate, richieste di giorni extra, cambi di ruolo, richieste di eliminazione. I membri vedono i propri eventi; admin e proprietari vedono quelli di tutti. I **chip di filtro** (Tutti · Prenotazione · Pagamento · Spesa · …) restringono l'elenco; ogni riga porta la sua icona di stato — una **clessidra** finché in sospeso, una **spunta verde** una volta confermata — e gli eventi di denaro mostrano *chi li ha validati e quando* direttamente sulla riga.
+Il flusso eventi è la traccia di controllo del tuo spazio: prenotazioni create/modificate/cancellate, pagamenti registrati, fatture pagate, spese presentate, richieste di giorni extra, cambi di ruolo, richieste di eliminazione. I membri vedono i propri eventi; admin e proprietari vedono quelli di tutti. I **chip di filtro** (Tutti · Prenotazione · Pagamento · Spesa · …) restringono l'elenco — la tua scelta viene ricordata — e un menu **Raggruppa per** ripiega il feed in gruppi per tipo, giorno o membro (toccare il simbolo del gruppo riporta all'elenco piatto); ogni riga porta la sua icona di stato — una **clessidra** finché in sospeso, una **spunta verde** una volta confermata — e gli eventi di denaro mostrano *chi li ha validati e quando* direttamente sulla riga.
 
 **In attesa della tua conferma:** ogni volta che un admin fa qualcosa *per qualcun altro* — ti prenota un posto, registra il tuo pagamento, retrocede un admin — resta **in sospeso finché non viene confermato**. Le voci in sospeso sono fissate in alto con una ✕ rossa e un pulsante verde **Accetta**, e ricevi una notifica. Le azioni che compi su te stesso non richiedono mai conferma.
 
@@ -166,12 +205,16 @@ I tuoi inviti legati ai ruoli (§2): invito membro = l'ID dello spazio (sostitui
 - **Granularità di prenotazione** — una tra: *orari liberi*, *griglia di 5 / 15 / 30 / 60 minuti*, *mezze giornate (mattina e pomeriggio)*, *solo giornate intere*, oppure *orari reali* (da–a esatto, con le scorciatoie di mezza/giornata intera).
 - **Orario di lavoro** — inizio giornata, limite di mezza giornata, fine giornata (predefinito 08:00 / 12:00 / 17:00). Le mezze giornate e le giornate intere ovunque — prenotazioni, check-in e fatturazione — seguono questi orari; con gli *orari reali* imposti anche quante ore vengono fatturate come mezza giornata e come giornata intera.
 - **Giorni di chiusura** — eccezioni datate, aggiunte con **+**.
+- **Regole di prenotazione** — tre interruttori, tutti **disattivati per impostazione predefinita**, che allentano o stringono le regole del §4b (la sezione segue la funzionalità *Regole di prenotazione*):
+  - **Consenti prenotazioni passate** — i membri possono registrare a posteriori una prenotazione già terminata (ieri e prima). Disattivato, tali prenotazioni sono rifiutate; prenotare una finestra precedente dello *stesso giorno* è sempre permesso. Attivalo negli spazi che annotano la presenza a cose fatte.
+  - **Prenotazioni al minuto negli orari di lavoro** — limita le prenotazioni su griglia di minuti alla giornata lavorativa. Disattivato (il predefinito), le griglie sono libere: i membri possono prenotare alle 6:00 o dalle 17 alle 21. Gli straordinari serali spontanei a fine giornata restano possibili in entrambi i casi.
+  - **Gli amministratori possono fare il check-out dei membri** — un admin può terminare il check-in in corso di un membro. Disattivato, il check-out è strettamente personale. Utile dove il personale chiude la sala la sera.
 
 ### Funzionalità
 
-Attiva o disattiva interi moduli per spazio — ogni interruttore porta la sua descrizione direttamente sullo schermo: scheda Calendario, scheda Eventi, scheda Finanze, servizi, supplementi accessori, pagamenti online, fatture, gli admin emettono fatture, esportazione PDF, prenotazione in serie, prenota per altri, notifiche push, gli admin possono bloccare i posti, prenotazioni di tavolo/ufficio e piano, gli admin possono assegnare piani, modalità chiosco, badge RFID/NFC, elenco dei membri, integrazione WhatsApp, codici QR degli spazi, comproprietari, check-in/out automatico, esportazione dati (Excel), orario di lavoro, modello PDF della fattura, notifiche tra membri, biblioteca documenti, solleciti di pagamento (Mahnwesen), report dei membri, richieste di eliminazione prenotazioni, gestione dei ruoli. Disattivare un modulo rimuove *tutte* le sue schermate e i suoi pulsanti per ogni membro.
+Attiva o disattiva interi moduli per spazio — ogni interruttore porta la sua descrizione direttamente sullo schermo: scheda Calendario, scheda Eventi, raggruppamento delle notifiche, scheda Finanze, servizi, supplementi accessori, pagamenti online, fatture, gli admin emettono fatture, gestione dell'IVA, dichiarazioni IVA, invio della fattura elettronica al cliente, esportazione PDF, prenotazione in serie, prenota per altri, notifiche push, gli admin possono bloccare i posti, prenotazioni di tavolo/ufficio e piano, gli admin possono assegnare piani, modalità chiosco, badge RFID/NFC, elenco dei membri, integrazione WhatsApp, codici QR degli spazi, comproprietari, check-in/out automatico, esportazione dati (Excel), orario di lavoro, regole di prenotazione, modello PDF della fattura, notifiche tra membri, biblioteca documenti, solleciti di pagamento (Mahnwesen), report dei membri, richieste di eliminazione prenotazioni, gestione dei ruoli, eliminazione di oggetti della planimetria. Disattivare un modulo rimuove *tutte* le sue schermate e i suoi pulsanti per ogni membro.
 
-L'elenco è **gerarchico**: una funzionalità che ne richiede un'altra compare rientrata sotto di essa con una nota *Richiede…*, ed è in grigio finché la funzionalità madre è disattivata — *Finanze* porta con sé servizi, supplementi, pagamenti online e fatturazione; *Fatture* porta la delega agli admin, il modello PDF e i solleciti di pagamento; *Modalità chiosco* porta i badge RFID/NFC; *Elenco dei membri* porta l'integrazione WhatsApp. Disattivare una funzionalità madre toglie dall'app tutto il suo sottoalbero; la scelta salvata della funzionalità figlia torna intatta quando la madre riappare.
+L'elenco è **gerarchico**: una funzionalità che ne richiede un'altra compare rientrata sotto di essa con una nota *Richiede…*, ed è in grigio finché la funzionalità madre è disattivata — *Finanze* porta con sé servizi, supplementi, pagamenti online e fatturazione; *Fatture* porta la delega agli admin, la gestione dell'IVA (con le dichiarazioni sotto), l'invio al cliente, il modello PDF e i solleciti di pagamento; *Modalità chiosco* porta i badge RFID/NFC; *Elenco dei membri* porta l'integrazione WhatsApp; la *scheda Eventi* porta il raggruppamento del feed. Disattivare una funzionalità madre toglie dall'app tutto il suo sottoalbero; la scelta salvata della funzionalità figlia torna intatta quando la madre riappare.
 
 <p><img src="images/workspace-id-qr.jpg" width="220"> <img src="images/availability-granularity.jpg" width="220"> <img src="images/features-toggles-1.jpg" width="220"> <img src="images/features-toggles-2.jpg" width="220"></p>
 

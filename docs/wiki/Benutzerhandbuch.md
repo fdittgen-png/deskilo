@@ -104,6 +104,45 @@ Jeder Platz, Tisch, jedes Büro und jede Etage kann eine gedruckte **QR-Karte** 
 
 **Konflikte schützen in beide Richtungen:** ein Büro/eine Etage ist nicht reservierbar, solange ein Platz darin im Fenster belegt ist — und kein Platz, solange sein Büro/seine Etage als Ganzes reserviert ist.
 
+### 4b. Wie sich Buchungen verhalten
+
+Jede Regel unten wird **auf dem Server** durchgesetzt — Plan, Reservieren-Hub, QR-Scan und Kiosk bieten genau das an, was akzeptiert wird, und eine Anfrage, die durch einen veralteten Bildschirm rutscht, wird mit benanntem Grund abgelehnt. Alle Zeiten sind Ortszeit des Space; die Beispiele nehmen den Standard-Arbeitstag an (08:00 – 12:00 – 17:00).
+
+**Im Voraus buchen.** Wie ein Zeitfenster aussehen darf, hängt von der Granularität des Space ab (§8 Verfügbarkeit):
+
+| Du möchtest | Halbtage | Ganze Tage | Minutenraster (5/15/30/60 min) |
+|---|---|---|---|
+| Den Vormittag (8–12) | ✅ | ❌ — muss den ganzen Tag abdecken | ✅ wenn die Ränder auf dem Raster liegen |
+| Den Nachmittag (12–17) | ✅ | ❌ | ✅ |
+| Den ganzen Arbeitstag (8–17) | ✅ | ✅ | ✅ |
+| Vor Öffnung / nach Feierabend (Start 6:00, 17–21) | ❌ | ❌ | ✅ standardmäßig — die Raster sind frei; die Regel **Minutenbuchungen innerhalb der Arbeitszeiten** (§8) macht daraus ❌ |
+| Ein ungewöhnliches Fenster (9–15) | ❌ | ❌ | ✅ wenn auf dem Raster |
+| Neben dem Raster (10:02) oder kürzer als die Mindestdauer (Standard 30 min) | — | — | ❌ — die Ablehnung nennt Raster oder Minimum |
+
+Und auf jeder Granularität gleichermaßen: die Zukunft ist offen bis zum **Buchungshorizont** (Standard 90 Tage) und dahinter gesperrt; eine Buchung an einem **bereits beendeten Tag** (gestern und früher) wird abgelehnt — *„liegt vollständig in der Vergangenheit"* — außer die Inhaberin hat **Vergangene Buchungen erlauben** eingeschaltet, während das Fenster von heute Vormittag später am selben Tag immer buchbar bleibt; ein **Schließtag** lehnt mit Namen ab; ein belegter Platz lehnt ab, und ein Mitglied hält **einen Platz zur Zeit** (§4).
+
+**Spontan-Check-ins rasten auf den Slot ein.** Ein Spontan-Check-in (freien Platz antippen, QR/NFC scannen, oder am Kiosk) bucht von *jetzt* bis zu einem kanonischen Rand — der Halbtagsgrenze, dem Tagesende oder einem Rasterrand. Bei tagesbasierter Granularität deckt die Buchung den **ganzen Slot, zu dem das Ende gehört**: um 10:00 ankommen und *bis 12:00* wählen bucht den vollen Vormittag 8:00–12:00; nur wenn der frühe Teil wirklich von jemand anderem belegt ist, ankert die Buchung stattdessen an deiner Ankunft. Am oder nach dem Ende des Arbeitstags darf ein Spontan-Check-in bis **Mitternacht (Ortszeit)** laufen (Abend-Überstunden — auf jeder Granularität, unabhängig von den Regeln). Und ein Spontan-Check-in muss **heute** beginnen: eine „eingecheckte" Buchung für morgen wird abgelehnt.
+
+**Einchecken.** Das Fenster öffnet **15 Minuten vor** deinem Start — und bei Halbtagen, ganzen Tagen und echten Stunden für den **ganzen gebuchten Tag**: um 10:00 kannst du schon auf deinen 12:00-Nachmittag einchecken, denn der Slot *ist* der Arbeitstag (Minutenraster weiten stattdessen die Kulanz um einen Rasterschritt). Einchecken an einem anderen Tag („die Buchung von morgen heute"), nach dem Ende der Reservierung, doppelt oder an einem Schließtag wird mit Grund abgelehnt. Bist du noch **woanders** eingecheckt: eine noch laufende Buchung blockiert den neuen Check-in (*dort erst auschecken*); eine bereits abgelaufene schließt sich still — gestempelt auf ihr eigenes Ende — und der neue Check-in geht durch. Ein Admin kann ein Mitglied einchecken, solange *Für andere buchen* aktiv ist (§8 Funktionen).
+
+**Auschecken.** Auschecken vor dem reservierten Ende **kürzt die Buchung auf jetzt** — der Platz wird sofort für alle frei. Nach einem frühen Check-in am selben Tag hält Auschecken vor dem reservierten Start die **echte Anwesenheit** fest (vom Check-in-Moment bis jetzt). Vergessen und später zurückgekommen? Der Check-out geht noch: das gebuchte Ende bleibt, der Stempel ist wahrhaftig. Auschecken ohne Check-in — oder doppelt — wird abgelehnt. Standardmäßig ist der **Check-out persönlich**: ein Admin kann den laufenden Check-in eines Mitglieds nur beenden, wenn die Inhaberin **Admins dürfen Mitglieder auschecken** eingeschaltet hat (§8). Ein nie geschlossener Check-in schließt sich von selbst, sobald du nach seinem Ende woanders eincheckst — oder, mit **Auto-Ein-/Auschecken**, beim Tagesende-Durchlauf.
+
+**No-Shows.** Eine nie eingecheckte Reservierung bleibt einfach *reserviert* in der Historie. Mit **Auto-Ein-/Auschecken** markiert der Tagesende-Durchlauf den vergangenen Tag als wahrgenommen — eingecheckt am Start, ausgecheckt am Ende, abgeschlossen.
+
+**Stornieren.**
+
+| Fall | Was passiert |
+|---|---|
+| Deine künftige Buchung | ✅ mit einem Tipp storniert |
+| Deine laufende, eingecheckte Buchung | ✅ komplett storniert (die Anwesenheitsstempel bleiben auf der Zeile) — um den wahrgenommenen Teil zu *behalten*, checke stattdessen aus oder kürze (unten) |
+| „Den Rest des Tages absagen" | ✅ das **Ende** der Buchung auf die Halbtagsgrenze herunterziehen — der Start ist unverrückbar, das neue Ende muss vor dir liegen — und der freie Nachmittag ist sofort für andere buchbar |
+| Eine abgeschlossene oder schon stornierte Buchung | ❌ nichts mehr zu stornieren |
+| Die Buchung von jemand anderem | ❌ als Mitglied; ✅ als Admin/Inhaberin — der Eingriff (§4), im Ereignis-Feed dem Admin zugeschrieben |
+| Eine Serie, „diese und folgende" | ✅ storniert die verbleibenden *reservierten* Termine ab diesem Datum; eingecheckte und abgeschlossene behalten ihre Historie |
+| Eine **vergangene oder eingecheckte** Buchung, die weg soll | ein **Löschantrag** (§4): ein Validierer bestätigt (entfernt) oder lehnt ab (bleibt); ein neuer Antrag ersetzt einen offenen, und künftige Buchungen stornierst du direkt |
+
+**Freigaben.** Wo die Inhaberin eine Validierungsregel auf **Ganzraum-Reservierungen** gelegt hat (§7), blockiert die Buchung den Raum sofort und wartet auf das Quorum — eine Ablehnung storniert sie; keine Regel, kein Freigabeschritt. Löschanträge fahren im selben Rahmen. **Niemand validiert je das eigene Ereignis.**
+
 ## 5. Kalender (Kalender-Tab)
 
 Der Monat auf einen Blick, mit zwei Reichweiten und zwei Formen:
@@ -126,7 +165,7 @@ Sieh, wer zur Community gehört:
 
 ## 7. Ereignisse & Bestätigungen (Glocke)
 
-Der Ereignis-Feed ist die Prüfspur deines Space: Buchungen erstellt/geändert/storniert, Zahlungen erfasst, Rechnungen bezahlt, Ausgaben eingereicht, Extratage-Anträge, Rollenwechsel, Löschanträge. Mitglieder sehen ihre eigenen Ereignisse; Admins und Inhaber alles. **Filter-Chips** (Alle · Reservierung · Zahlung · Ausgabe · …) engen die Liste ein; jede Zeile trägt ihr Status-Icon — **Sanduhr** wartend, **grünes Häkchen** bestätigt — und Geld-Ereignisse zeigen *wer wann validierte* direkt auf der Zeile.
+Der Ereignis-Feed ist die Prüfspur deines Space: Buchungen erstellt/geändert/storniert, Zahlungen erfasst, Rechnungen bezahlt, Ausgaben eingereicht, Extratage-Anträge, Rollenwechsel, Löschanträge. Mitglieder sehen ihre eigenen Ereignisse; Admins und Inhaber alles. **Filter-Chips** (Alle · Reservierung · Zahlung · Ausgabe · …) engen die Liste ein — deine Wahl wird gemerkt — und ein **Gruppieren nach**-Menü faltet den Feed in Gruppen nach Typ, Tag oder Mitglied (das Gruppensymbol antippen führt zur flachen Liste zurück); jede Zeile trägt ihr Status-Icon — **Sanduhr** wartend, **grünes Häkchen** bestätigt — und Geld-Ereignisse zeigen *wer wann validierte* direkt auf der Zeile.
 
 **Wartet auf deine Bestätigung:** Handelt ein Admin *für jemand anderen* — bucht dir einen Platz, erfasst deine Zahlung, stuft einen Admin zurück — bleibt es **bis zur Bestätigung offen**. Offenes ist oben angepinnt mit rotem ✕ und grünem **Annehmen**, plus Benachrichtigung. Eigene Aktionen auf dich selbst brauchen nie eine Bestätigung.
 
@@ -164,12 +203,16 @@ Die rollengebundenen Einladungen (§2): Mitglieder-Einladung = die Workspace-ID 
 - **Buchungsgranularität** — *freier Zeitraum*, *5/15/30/60-Minuten-Raster*, *Halbtage (Vormittag & Nachmittag)*, *nur ganze Tage* oder *echte Uhrzeiten* (exakt von–bis, Halb-/Ganztag als Kurzwahl).
 - **Arbeitszeiten** — Tagesbeginn, Halbtagsgrenze, Tagesende (Standard 08:00 / 12:00 / 17:00). Halb- und Ganztags-Slots überall — Buchen, Einchecken, Abrechnen — folgen diesen Zeiten; unter *echten Uhrzeiten* legst du auch fest, wie viele Stunden als halber und ganzer Tag abrechnen.
 - **Schließtage** — datierte Ausnahmen, per **+**.
+- **Buchungsregeln** — drei Schalter, alle **standardmäßig aus**, die die Regeln aus §4b lockern oder straffen (der Abschnitt folgt der Funktion *Buchungsregeln*):
+  - **Vergangene Buchungen erlauben** — Mitglieder können eine bereits beendete Buchung nachtragen (gestern und früher). Aus, werden solche Buchungen abgelehnt; ein Fenster früher am *selben Tag* zu buchen bleibt immer erlaubt. Einschalten für Spaces, die Anwesenheit nachträglich erfassen.
+  - **Minutenbuchungen innerhalb der Arbeitszeiten** — begrenzt Minutenraster-Buchungen auf den Arbeitstag. Aus (der Standard) sind die Raster frei: Mitglieder können 6:00 oder 17–21 buchen. Spontane Abend-Überstunden am Tagesende bleiben in beiden Fällen möglich.
+  - **Admins dürfen Mitglieder auschecken** — ein Admin kann den laufenden Check-in eines Mitglieds beenden. Aus, ist der Check-out strikt persönlich. Nützlich, wo das Personal abends den Raum schließt.
 
 ### Funktionen
 
-Ganze Module je Workspace ein- oder ausschalten — jeder Schalter trägt seine Beschreibung: Kalender-Tab, Ereignisse-Tab, Finanzen-Tab, Services, Zubehör-Aufpreise, Online-Zahlungen, Rechnungen, Admins stellen Rechnungen aus, PDF-Export, Serienbuchung, für andere buchen, Push-Benachrichtigungen, Admins dürfen Plätze sperren, Tisch-/Büro-/Etagen-Reservierungen, Admins dürfen Etagen zuweisen, Kiosk-Modus, RFID/NFC-Badges, Mitgliederverzeichnis, WhatsApp-Integration, Raum-QR-Codes, Co-Inhaber, Auto-Ein-/Auschecken, Datenexport (Excel), Arbeitszeiten, Rechnungs-PDF-Vorlage, Mitglieder-Benachrichtigungen, Dokumentbibliothek, Zahlungserinnerungen (Mahnwesen), Mitglieder-Berichte, Buchungslöschanträge, Rollenverwaltung. Ein Modul aus = *alle* seine Bildschirme und Knöpfe verschwinden für jedes Mitglied.
+Ganze Module je Workspace ein- oder ausschalten — jeder Schalter trägt seine Beschreibung: Kalender-Tab, Ereignisse-Tab, Gruppierung der Benachrichtigungen, Finanzen-Tab, Services, Zubehör-Aufpreise, Online-Zahlungen, Rechnungen, Admins stellen Rechnungen aus, Verwaltung der Mehrwertsteuer, Umsatzsteuer-Erklärungen, E-Rechnung an den Kunden, PDF-Export, Serienbuchung, für andere buchen, Push-Benachrichtigungen, Admins dürfen Plätze sperren, Tisch-/Büro-/Etagen-Reservierungen, Admins dürfen Etagen zuweisen, Kiosk-Modus, RFID/NFC-Badges, Mitgliederverzeichnis, WhatsApp-Integration, Raum-QR-Codes, Co-Inhaber, Auto-Ein-/Auschecken, Datenexport (Excel), Arbeitszeiten, Buchungsregeln, Rechnungs-PDF-Vorlage, Mitglieder-Benachrichtigungen, Dokumentbibliothek, Zahlungserinnerungen (Mahnwesen), Mitglieder-Berichte, Buchungslöschanträge, Rollenverwaltung, Löschen von Plan-Objekten. Ein Modul aus = *alle* seine Bildschirme und Knöpfe verschwinden für jedes Mitglied.
 
-Die Liste ist **hierarchisch**: eine Funktion, die eine andere braucht, sitzt eingerückt darunter mit *Benötigt…*, ausgegraut solange der Elternteil aus ist — *Finanzen* trägt Services, Aufpreise, Online-Zahlungen und Rechnungen; *Rechnungen* die Admin-Delegation, die PDF-Vorlage und die Mahnungen; *Kiosk-Modus* die Badges; *Verzeichnis* die WhatsApp-Integration. Elternteil aus = ganzer Teilbaum weg; die gespeicherte Wahl des Kindes kehrt unversehrt zurück.
+Die Liste ist **hierarchisch**: eine Funktion, die eine andere braucht, sitzt eingerückt darunter mit *Benötigt…*, ausgegraut solange der Elternteil aus ist — *Finanzen* trägt Services, Aufpreise, Online-Zahlungen und Rechnungen; *Rechnungen* die Admin-Delegation, die Mehrwertsteuer-Verwaltung (mit den Erklärungen darunter), die Kundenzustellung, die PDF-Vorlage und die Mahnungen; *Kiosk-Modus* die Badges; *Verzeichnis* die WhatsApp-Integration; *Ereignisse-Tab* die Feed-Gruppierung. Elternteil aus = ganzer Teilbaum weg; die gespeicherte Wahl des Kindes kehrt unversehrt zurück.
 
 <p><img src="images/workspace-id-qr.jpg" width="220"> <img src="images/availability-granularity.jpg" width="220"> <img src="images/features-toggles-1.jpg" width="220"> <img src="images/features-toggles-2.jpg" width="220"></p>
 
