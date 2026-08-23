@@ -70,3 +70,66 @@ abstract class _$DismissedHelpHints extends $AsyncNotifier<Set<String>> {
     element.handleCreate(ref, build);
   }
 }
+
+/// The last-shown tip index per surface (#610) — the memory behind the
+/// carousel's rotation: a fresh visit opens on the tip AFTER this one.
+/// Stored indices from an older tip list are tolerated: the widget takes
+/// them modulo the current tip count.
+
+@ProviderFor(HelpHintPositions)
+final helpHintPositionsProvider = HelpHintPositionsProvider._();
+
+/// The last-shown tip index per surface (#610) — the memory behind the
+/// carousel's rotation: a fresh visit opens on the tip AFTER this one.
+/// Stored indices from an older tip list are tolerated: the widget takes
+/// them modulo the current tip count.
+final class HelpHintPositionsProvider
+    extends $AsyncNotifierProvider<HelpHintPositions, Map<String, int>> {
+  /// The last-shown tip index per surface (#610) — the memory behind the
+  /// carousel's rotation: a fresh visit opens on the tip AFTER this one.
+  /// Stored indices from an older tip list are tolerated: the widget takes
+  /// them modulo the current tip count.
+  HelpHintPositionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'helpHintPositionsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$helpHintPositionsHash();
+
+  @$internal
+  @override
+  HelpHintPositions create() => HelpHintPositions();
+}
+
+String _$helpHintPositionsHash() => r'26d412e376dd949eab017c3016b1eb2f3f9f1a6f';
+
+/// The last-shown tip index per surface (#610) — the memory behind the
+/// carousel's rotation: a fresh visit opens on the tip AFTER this one.
+/// Stored indices from an older tip list are tolerated: the widget takes
+/// them modulo the current tip count.
+
+abstract class _$HelpHintPositions extends $AsyncNotifier<Map<String, int>> {
+  FutureOr<Map<String, int>> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref =
+        this.ref as $Ref<AsyncValue<Map<String, int>>, Map<String, int>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<Map<String, int>>, Map<String, int>>,
+              AsyncValue<Map<String, int>>,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}

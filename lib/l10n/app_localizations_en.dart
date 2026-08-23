@@ -1397,6 +1397,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpHintDismiss => 'Dismiss hint';
 
   @override
+  String get helpHintPrevTip => 'Previous tip';
+
+  @override
+  String get helpHintNextTip => 'Next tip';
+
+  @override
   String get helpHintRestoreTitle => 'Show help hints again';
 
   @override
@@ -1410,11 +1416,55 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpHintReserveTopic => 'Reserve hub';
 
   @override
+  String get helpHintReserveTip2 =>
+      'The Week and Month views find a free half-day at a glance — tap a free cell or day to book right there.';
+
+  @override
+  String get helpHintReserveTip3 =>
+      'Tap the scan button and point the camera at a space\'s QR card — the sheet shows exactly what you may do there.';
+
+  @override
+  String get helpHintReserveTip3Topic => 'Scan a space code';
+
+  @override
+  String get helpHintReserveTip4 =>
+      'The morning, afternoon and full-day chips pick your window before you choose a seat — a booked morning counts as half a day.';
+
+  @override
+  String get helpHintReserveTip4Topic => 'How booking behaves';
+
+  @override
+  String get helpHintReserveTip5 =>
+      'Set your default booking period in Settings — the hub preselects it on every visit.';
+
+  @override
+  String get helpHintReserveTip5Topic => 'Settings & profile';
+
+  @override
   String get helpHintPlan =>
       'The live floor plan: tap a free seat to book it, tap your own booking to check in.';
 
   @override
   String get helpHintPlanTopic => 'floor plan';
+
+  @override
+  String get helpHintPlanTip2 =>
+      'Standing at a free seat? Tap it — the sheet suggests now until closing, and confirming checks you in on the spot.';
+
+  @override
+  String get helpHintPlanTip3 =>
+      'Browse another moment with the date chip and the time scroller — the plan shows who sits where at any future time.';
+
+  @override
+  String get helpHintPlanTip4 =>
+      'Double-tap a desk, a room or the floor itself — or tap the layers icon on the level rail — to reserve the whole space at once.';
+
+  @override
+  String get helpHintPlanTip5 =>
+      'Tap your own seat for its sheet: check in from 15 minutes before your start, check out when you leave.';
+
+  @override
+  String get helpHintPlanTip5Topic => 'How booking behaves';
 
   @override
   String get helpHintCalendar =>
@@ -1424,11 +1474,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpHintCalendarTopic => 'Calendar';
 
   @override
+  String get helpHintCalendarTip2 =>
+      'The Mine / Everyone toggle shows just your bookings or the whole community\'s — red dots are yours, blue ones are other members\'.';
+
+  @override
+  String get helpHintCalendarTip3 =>
+      'The shape toggle switches the lower half between the week grid and the agenda list; the floor chips filter both.';
+
+  @override
+  String get helpHintCalendarTip4 =>
+      'Cancelling one occurrence of a series offers \"this and following\" — checked-in and completed occurrences keep their history.';
+
+  @override
+  String get helpHintCalendarTip4Topic => 'How booking behaves';
+
+  @override
   String get helpHintEvents =>
       'Everything that happened, in one feed. Decisions waiting for you sit on top; the chips filter the rest.';
 
   @override
   String get helpHintEventsTopic => 'confirmations';
+
+  @override
+  String get helpHintEventsTip2 =>
+      'The filter chips remember your choice across visits — and the Unread chip narrows the list to unread messages.';
+
+  @override
+  String get helpHintEventsTip3 =>
+      'Group the feed by type, day or member from the Group by menu; tap the group symbol to return to the flat list.';
+
+  @override
+  String get helpHintEventsTip4 =>
+      'Pending decisions sit pinned on top with Accept and reject — and nobody ever validates their own event.';
 
   @override
   String get helpHintEditor =>
@@ -1438,11 +1515,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpHintEditorTopic => 'space editor';
 
   @override
+  String get helpHintEditorTip2 =>
+      'Pick Office or Table in the toolbar and drag on the grid to draw it; Select moves and resizes what is already there.';
+
+  @override
+  String get helpHintEditorTip3 =>
+      'The Seat tool stamps seats onto desks; a seat\'s sheet sets its direction, chair type, accessories and a maintenance block.';
+
+  @override
+  String get helpHintEditorTip4 =>
+      'Give a seat its NFC/RFID tag from the seat sheet — tap the chip on the phone and the field fills itself.';
+
+  @override
+  String get helpHintEditorTip5 =>
+      'Print a QR card for every seat, desk, office and level — pick the card size and what each card shows before exporting.';
+
+  @override
+  String get helpHintEditorTip5Topic => 'Space QR codes';
+
+  @override
   String get helpHintAvailability =>
       'Set the open weekdays and working hours, and add closure days nobody can book.';
 
   @override
   String get helpHintAvailabilityTopic => 'Availability';
+
+  @override
+  String get helpHintAvailabilityTip2 =>
+      'The booking granularity decides what a window may look like: half-days, full days, minute grids or free times.';
+
+  @override
+  String get helpHintAvailabilityTip3 =>
+      'Day start, half-day boundary and day end drive every half-day and full-day slot — booking, check-in and billing follow them.';
+
+  @override
+  String get helpHintAvailabilityTip4 =>
+      'Three booking policies tighten or relax the rules: past bookings, minute bookings kept within working hours, and admin check-out.';
 
   @override
   String get helpHintFeatures =>
@@ -1452,11 +1560,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpHintFeaturesTopic => 'Features';
 
   @override
+  String get helpHintFeaturesTip2 =>
+      'The list is hierarchical — a feature that needs another sits indented under it and greys out while its parent is off.';
+
+  @override
+  String get helpHintFeaturesTip3 =>
+      'Switching a parent off takes its whole subtree out of the app; the children\'s stored choices return untouched with the parent.';
+
+  @override
+  String get helpHintFeaturesTip4 =>
+      'A feature\'s settings entry only appears while the feature is on — the Features screen itself always stays reachable.';
+
+  @override
   String get helpHintMembers =>
       'Invite members, set their plan percentage and role, and manage their badges.';
 
   @override
   String get helpHintMembersTopic => 'Members & plans';
+
+  @override
+  String get helpHintMembersTip2 =>
+      'Tap a member for their management sheet — subscription, reservation limit, badges, services and more in one place.';
+
+  @override
+  String get helpHintMembersTip3 =>
+      'Badges live per member: mint a printable QR badge, or register their NFC card by holding it to the device.';
+
+  @override
+  String get helpHintMembersTip3Topic => 'NFC badges';
+
+  @override
+  String get helpHintMembersTip4 =>
+      'Name admin grants admin rights after validation; the role matrix under Role management decides what every role may do.';
+
+  @override
+  String get helpHintMembersTip4Topic => 'Role management';
 
   @override
   String get helpHintMoney =>
@@ -1466,11 +1604,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpHintMoneyTopic => 'Money';
 
   @override
+  String get helpHintMoneyTip2 =>
+      'Every document offers the same three actions: quick view on screen, download as PDF, and share to any app.';
+
+  @override
+  String get helpHintMoneyTip2Topic => 'Quick view, save, share';
+
+  @override
+  String get helpHintMoneyTip3 =>
+      'Record a payment with the date the money moved and the month it settles — the other side confirms it.';
+
+  @override
+  String get helpHintMoneyTip4 =>
+      'Once the month is invoiced, the invoice decides: the month reads settled as soon as its invoice is paid.';
+
+  @override
+  String get helpHintMoneyTip4Topic => 'the invoice decides';
+
+  @override
   String get helpHintValidation =>
       'Decide which actions need confirmation, who confirms, and how many approvals it takes.';
 
   @override
   String get helpHintValidationTopic => 'confirmations';
+
+  @override
+  String get helpHintValidationTip2 =>
+      'One card per event type, each inheriting from the default rule until you edit it — payments, expenses, role changes and more.';
+
+  @override
+  String get helpHintValidationTip3 =>
+      'Nobody ever validates their own event, and unanswered requests expire after 7 days — nothing is granted silently.';
 
   @override
   String get helpHintWorkspace =>
@@ -1480,11 +1644,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpHintWorkspaceTopic => 'Workspace settings';
 
   @override
+  String get helpHintWorkspaceTip2 =>
+      'Print the space QR cards from Exports — choose the card size and the info each card carries, ten per A4 page.';
+
+  @override
+  String get helpHintWorkspaceTip2Topic => 'Space QR codes';
+
+  @override
+  String get helpHintWorkspaceTip3 =>
+      'Export the space as XML to back it up or template a new one; the setup questionnaire prefills a fresh workspace end to end.';
+
+  @override
+  String get helpHintWorkspaceTip4 =>
+      'Reset the workspace wipes reservations, accounting and the floor plan — settings and members survive, and a typed confirmation guards it.';
+
+  @override
   String get helpHintBadges =>
       'Issue a printable QR badge or register an NFC card; revoke lost badges any time.';
 
   @override
   String get helpHintBadgesTopic => 'NFC badges';
+
+  @override
+  String get helpHintBadgesTip2 =>
+      'Register a card by holding it to the device — any readable chip works, and the dialog names the workspace it joins.';
+
+  @override
+  String get helpHintBadgesTip3 =>
+      'Save a QR badge as PDF to print ten credit-card copies on one A4 page — spares included.';
+
+  @override
+  String get helpHintBadgesTip4 =>
+      'Revoke a lost badge any time; swipe a revoked badge to the right to delete it for good.';
 
   @override
   String get inviteSectionTitle => 'Invite someone';

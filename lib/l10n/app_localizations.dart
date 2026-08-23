@@ -2600,6 +2600,18 @@ abstract class AppLocalizations {
   /// **'Dismiss hint'**
   String get helpHintDismiss;
 
+  /// No description provided for @helpHintPrevTip.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous tip'**
+  String get helpHintPrevTip;
+
+  /// No description provided for @helpHintNextTip.
+  ///
+  /// In en, this message translates to:
+  /// **'Next tip'**
+  String get helpHintNextTip;
+
   /// No description provided for @helpHintRestoreTitle.
   ///
   /// In en, this message translates to:
@@ -2624,6 +2636,48 @@ abstract class AppLocalizations {
   /// **'Reserve hub'**
   String get helpHintReserveTopic;
 
+  /// No description provided for @helpHintReserveTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'The Week and Month views find a free half-day at a glance — tap a free cell or day to book right there.'**
+  String get helpHintReserveTip2;
+
+  /// No description provided for @helpHintReserveTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the scan button and point the camera at a space\'s QR card — the sheet shows exactly what you may do there.'**
+  String get helpHintReserveTip3;
+
+  /// No description provided for @helpHintReserveTip3Topic.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan a space code'**
+  String get helpHintReserveTip3Topic;
+
+  /// No description provided for @helpHintReserveTip4.
+  ///
+  /// In en, this message translates to:
+  /// **'The morning, afternoon and full-day chips pick your window before you choose a seat — a booked morning counts as half a day.'**
+  String get helpHintReserveTip4;
+
+  /// No description provided for @helpHintReserveTip4Topic.
+  ///
+  /// In en, this message translates to:
+  /// **'How booking behaves'**
+  String get helpHintReserveTip4Topic;
+
+  /// No description provided for @helpHintReserveTip5.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your default booking period in Settings — the hub preselects it on every visit.'**
+  String get helpHintReserveTip5;
+
+  /// No description provided for @helpHintReserveTip5Topic.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings & profile'**
+  String get helpHintReserveTip5Topic;
+
   /// No description provided for @helpHintPlan.
   ///
   /// In en, this message translates to:
@@ -2635,6 +2689,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'floor plan'**
   String get helpHintPlanTopic;
+
+  /// No description provided for @helpHintPlanTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Standing at a free seat? Tap it — the sheet suggests now until closing, and confirming checks you in on the spot.'**
+  String get helpHintPlanTip2;
+
+  /// No description provided for @helpHintPlanTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse another moment with the date chip and the time scroller — the plan shows who sits where at any future time.'**
+  String get helpHintPlanTip3;
+
+  /// No description provided for @helpHintPlanTip4.
+  ///
+  /// In en, this message translates to:
+  /// **'Double-tap a desk, a room or the floor itself — or tap the layers icon on the level rail — to reserve the whole space at once.'**
+  String get helpHintPlanTip4;
+
+  /// No description provided for @helpHintPlanTip5.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap your own seat for its sheet: check in from 15 minutes before your start, check out when you leave.'**
+  String get helpHintPlanTip5;
+
+  /// No description provided for @helpHintPlanTip5Topic.
+  ///
+  /// In en, this message translates to:
+  /// **'How booking behaves'**
+  String get helpHintPlanTip5Topic;
 
   /// No description provided for @helpHintCalendar.
   ///
@@ -2648,6 +2732,30 @@ abstract class AppLocalizations {
   /// **'Calendar'**
   String get helpHintCalendarTopic;
 
+  /// No description provided for @helpHintCalendarTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'The Mine / Everyone toggle shows just your bookings or the whole community\'s — red dots are yours, blue ones are other members\'.'**
+  String get helpHintCalendarTip2;
+
+  /// No description provided for @helpHintCalendarTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'The shape toggle switches the lower half between the week grid and the agenda list; the floor chips filter both.'**
+  String get helpHintCalendarTip3;
+
+  /// No description provided for @helpHintCalendarTip4.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelling one occurrence of a series offers \"this and following\" — checked-in and completed occurrences keep their history.'**
+  String get helpHintCalendarTip4;
+
+  /// No description provided for @helpHintCalendarTip4Topic.
+  ///
+  /// In en, this message translates to:
+  /// **'How booking behaves'**
+  String get helpHintCalendarTip4Topic;
+
   /// No description provided for @helpHintEvents.
   ///
   /// In en, this message translates to:
@@ -2659,6 +2767,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'confirmations'**
   String get helpHintEventsTopic;
+
+  /// No description provided for @helpHintEventsTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'The filter chips remember your choice across visits — and the Unread chip narrows the list to unread messages.'**
+  String get helpHintEventsTip2;
+
+  /// No description provided for @helpHintEventsTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Group the feed by type, day or member from the Group by menu; tap the group symbol to return to the flat list.'**
+  String get helpHintEventsTip3;
+
+  /// No description provided for @helpHintEventsTip4.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending decisions sit pinned on top with Accept and reject — and nobody ever validates their own event.'**
+  String get helpHintEventsTip4;
 
   /// No description provided for @helpHintEditor.
   ///
@@ -2672,6 +2798,36 @@ abstract class AppLocalizations {
   /// **'space editor'**
   String get helpHintEditorTopic;
 
+  /// No description provided for @helpHintEditorTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Office or Table in the toolbar and drag on the grid to draw it; Select moves and resizes what is already there.'**
+  String get helpHintEditorTip2;
+
+  /// No description provided for @helpHintEditorTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'The Seat tool stamps seats onto desks; a seat\'s sheet sets its direction, chair type, accessories and a maintenance block.'**
+  String get helpHintEditorTip3;
+
+  /// No description provided for @helpHintEditorTip4.
+  ///
+  /// In en, this message translates to:
+  /// **'Give a seat its NFC/RFID tag from the seat sheet — tap the chip on the phone and the field fills itself.'**
+  String get helpHintEditorTip4;
+
+  /// No description provided for @helpHintEditorTip5.
+  ///
+  /// In en, this message translates to:
+  /// **'Print a QR card for every seat, desk, office and level — pick the card size and what each card shows before exporting.'**
+  String get helpHintEditorTip5;
+
+  /// No description provided for @helpHintEditorTip5Topic.
+  ///
+  /// In en, this message translates to:
+  /// **'Space QR codes'**
+  String get helpHintEditorTip5Topic;
+
   /// No description provided for @helpHintAvailability.
   ///
   /// In en, this message translates to:
@@ -2683,6 +2839,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Availability'**
   String get helpHintAvailabilityTopic;
+
+  /// No description provided for @helpHintAvailabilityTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'The booking granularity decides what a window may look like: half-days, full days, minute grids or free times.'**
+  String get helpHintAvailabilityTip2;
+
+  /// No description provided for @helpHintAvailabilityTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Day start, half-day boundary and day end drive every half-day and full-day slot — booking, check-in and billing follow them.'**
+  String get helpHintAvailabilityTip3;
+
+  /// No description provided for @helpHintAvailabilityTip4.
+  ///
+  /// In en, this message translates to:
+  /// **'Three booking policies tighten or relax the rules: past bookings, minute bookings kept within working hours, and admin check-out.'**
+  String get helpHintAvailabilityTip4;
 
   /// No description provided for @helpHintFeatures.
   ///
@@ -2696,6 +2870,24 @@ abstract class AppLocalizations {
   /// **'Features'**
   String get helpHintFeaturesTopic;
 
+  /// No description provided for @helpHintFeaturesTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'The list is hierarchical — a feature that needs another sits indented under it and greys out while its parent is off.'**
+  String get helpHintFeaturesTip2;
+
+  /// No description provided for @helpHintFeaturesTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Switching a parent off takes its whole subtree out of the app; the children\'s stored choices return untouched with the parent.'**
+  String get helpHintFeaturesTip3;
+
+  /// No description provided for @helpHintFeaturesTip4.
+  ///
+  /// In en, this message translates to:
+  /// **'A feature\'s settings entry only appears while the feature is on — the Features screen itself always stays reachable.'**
+  String get helpHintFeaturesTip4;
+
   /// No description provided for @helpHintMembers.
   ///
   /// In en, this message translates to:
@@ -2707,6 +2899,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Members & plans'**
   String get helpHintMembersTopic;
+
+  /// No description provided for @helpHintMembersTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a member for their management sheet — subscription, reservation limit, badges, services and more in one place.'**
+  String get helpHintMembersTip2;
+
+  /// No description provided for @helpHintMembersTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Badges live per member: mint a printable QR badge, or register their NFC card by holding it to the device.'**
+  String get helpHintMembersTip3;
+
+  /// No description provided for @helpHintMembersTip3Topic.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC badges'**
+  String get helpHintMembersTip3Topic;
+
+  /// No description provided for @helpHintMembersTip4.
+  ///
+  /// In en, this message translates to:
+  /// **'Name admin grants admin rights after validation; the role matrix under Role management decides what every role may do.'**
+  String get helpHintMembersTip4;
+
+  /// No description provided for @helpHintMembersTip4Topic.
+  ///
+  /// In en, this message translates to:
+  /// **'Role management'**
+  String get helpHintMembersTip4Topic;
 
   /// No description provided for @helpHintMoney.
   ///
@@ -2720,6 +2942,36 @@ abstract class AppLocalizations {
   /// **'Money'**
   String get helpHintMoneyTopic;
 
+  /// No description provided for @helpHintMoneyTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Every document offers the same three actions: quick view on screen, download as PDF, and share to any app.'**
+  String get helpHintMoneyTip2;
+
+  /// No description provided for @helpHintMoneyTip2Topic.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick view, save, share'**
+  String get helpHintMoneyTip2Topic;
+
+  /// No description provided for @helpHintMoneyTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Record a payment with the date the money moved and the month it settles — the other side confirms it.'**
+  String get helpHintMoneyTip3;
+
+  /// No description provided for @helpHintMoneyTip4.
+  ///
+  /// In en, this message translates to:
+  /// **'Once the month is invoiced, the invoice decides: the month reads settled as soon as its invoice is paid.'**
+  String get helpHintMoneyTip4;
+
+  /// No description provided for @helpHintMoneyTip4Topic.
+  ///
+  /// In en, this message translates to:
+  /// **'the invoice decides'**
+  String get helpHintMoneyTip4Topic;
+
   /// No description provided for @helpHintValidation.
   ///
   /// In en, this message translates to:
@@ -2731,6 +2983,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'confirmations'**
   String get helpHintValidationTopic;
+
+  /// No description provided for @helpHintValidationTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'One card per event type, each inheriting from the default rule until you edit it — payments, expenses, role changes and more.'**
+  String get helpHintValidationTip2;
+
+  /// No description provided for @helpHintValidationTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody ever validates their own event, and unanswered requests expire after 7 days — nothing is granted silently.'**
+  String get helpHintValidationTip3;
 
   /// No description provided for @helpHintWorkspace.
   ///
@@ -2744,6 +3008,30 @@ abstract class AppLocalizations {
   /// **'Workspace settings'**
   String get helpHintWorkspaceTopic;
 
+  /// No description provided for @helpHintWorkspaceTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Print the space QR cards from Exports — choose the card size and the info each card carries, ten per A4 page.'**
+  String get helpHintWorkspaceTip2;
+
+  /// No description provided for @helpHintWorkspaceTip2Topic.
+  ///
+  /// In en, this message translates to:
+  /// **'Space QR codes'**
+  String get helpHintWorkspaceTip2Topic;
+
+  /// No description provided for @helpHintWorkspaceTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Export the space as XML to back it up or template a new one; the setup questionnaire prefills a fresh workspace end to end.'**
+  String get helpHintWorkspaceTip3;
+
+  /// No description provided for @helpHintWorkspaceTip4.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset the workspace wipes reservations, accounting and the floor plan — settings and members survive, and a typed confirmation guards it.'**
+  String get helpHintWorkspaceTip4;
+
   /// No description provided for @helpHintBadges.
   ///
   /// In en, this message translates to:
@@ -2755,6 +3043,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'NFC badges'**
   String get helpHintBadgesTopic;
+
+  /// No description provided for @helpHintBadgesTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Register a card by holding it to the device — any readable chip works, and the dialog names the workspace it joins.'**
+  String get helpHintBadgesTip2;
+
+  /// No description provided for @helpHintBadgesTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Save a QR badge as PDF to print ten credit-card copies on one A4 page — spares included.'**
+  String get helpHintBadgesTip3;
+
+  /// No description provided for @helpHintBadgesTip4.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke a lost badge any time; swipe a revoked badge to the right to delete it for good.'**
+  String get helpHintBadgesTip4;
 
   /// No description provided for @inviteSectionTitle.
   ///
