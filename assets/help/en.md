@@ -104,6 +104,45 @@ Every seat, desk, office and level can carry a printed **QR card** (§8). Tap th
 
 **Conflicts protect both directions:** an office or level cannot be reserved while any seat inside is already booked in that window — and no seat can be booked while its office or level is reserved as a whole.
 
+### 4b. How booking behaves
+
+Every rule below is enforced **on the server** — the plan, the Reserve hub, a QR scan and the kiosk all offer exactly what will be accepted, and a request that slips past a stale screen is refused with the reason named. All times are workspace-local; the examples assume the default working day (08:00 – 12:00 – 17:00).
+
+**Booking ahead.** What a time window may look like depends on the workspace granularity (§8 Availability):
+
+| You ask for | Half-days | Full days | Minute grid (5/15/30/60 min) |
+|---|---|---|---|
+| The morning (8–12) | ✅ | ❌ — must cover the full day | ✅ if the edges sit on the grid |
+| The afternoon (12–17) | ✅ | ❌ | ✅ |
+| The whole working day (8–17) | ✅ | ✅ | ✅ |
+| Before opening / after hours (6:00 start, 17–21) | ❌ | ❌ | ✅ by default — the grids are free-time; the **Minute bookings within working hours** policy (§8) turns this into ❌ |
+| An odd window (9–15) | ❌ | ❌ | ✅ if on the grid |
+| Off the grid (10:02) or shorter than the minimum duration (default 30 min) | — | — | ❌ — the refusal names the grid or the minimum |
+
+And on every granularity alike: the future is open up to the **advance horizon** (default 90 days) and refused beyond it; a booking on a **day that already ended** (yesterday and earlier) is refused — *"lies entirely in the past"* — unless the owner switched **Allow past bookings** on, while booking this morning's window later the same day always works; a **closed day** refuses by name; an occupied seat refuses, and one member holds **one place at a time** (§4).
+
+**Walk-ups snap to the slot.** A walk-up (tap a free seat, scan its QR/NFC, or the kiosk) books *now* until a canonical edge — the half-day boundary, the day end, or a grid edge. Under day-based granularities the booking covers the **whole slot the end belongs to**: arriving at 10:00 and choosing *until 12:00* books the full 8:00–12:00 morning; only when the early part is genuinely taken by someone else does the booking anchor at your arrival instead. At or after the working day's end a walk-up may run to **local midnight** (evening overtime — on every granularity, whatever the policies say). And a walk-up check-in must start **today**: creating a "checked-in" booking for tomorrow is refused.
+
+**Checking in.** The window opens **15 minutes before** your start — and under half-days, full days and real hours it opens for the **whole booked day**: at 10:00 you can already check in on your 12:00 afternoon, because the slot *is* the working day (minute grids widen the leeway by one grid step instead). Checking in on a different day ("tomorrow's booking today"), after the reservation ended, twice, or on a closed day is refused with the reason. If you are still checked in **elsewhere**: a booking still running blocks the new check-in (*check out there first*); one that already ended completes itself silently — stamped at its own end — and the new check-in proceeds. An admin can check a member in while *Booking for others* is on (§8 Features).
+
+**Checking out.** Checking out before the reserved end **truncates the booking to now** — the seat frees immediately for everyone else. After an early same-day check-in, checking out before the reserved start keeps the **real presence** (from the check-in instant to now). Forgot and came back later? The check-out still works: the booked end stays, the stamp is truthful. Checking out without a check-in — or twice — is refused. By default **check-out is personal**: an admin can only end a member's running check-in once the owner switched **Admins may check members out** on (§8). A check-in never closed at all completes itself the moment you check in somewhere else after it ended — or, with **auto check-in/out** on, at the day-end sweep.
+
+**No-shows.** A reservation never checked in simply stays *reserved* in the history. With **auto check-in/out** on, the day-end sweep marks the past day attended — checked in at the start, checked out at the end, completed.
+
+**Cancelling.**
+
+| Case | What happens |
+|---|---|
+| A future booking of yours | ✅ cancelled with one tap |
+| Your running, checked-in booking | ✅ cancelled outright (the presence stamps stay on the record) — to *keep* the attended part, check out instead, or shrink (below) |
+| "Cancel the rest of the day" | ✅ edit the booking's **end** down to the half-day boundary — the start is immovable, the new end must lie ahead — and the freed afternoon is immediately bookable by others |
+| A completed or already cancelled booking | ❌ nothing left to cancel |
+| Someone else's booking | ❌ for a member; ✅ for an admin/owner — the overrule (§4), attributed to the admin in the events feed |
+| A series, "this and following" | ✅ cancels the remaining *reserved* occurrences from that date; checked-in and completed ones keep their history |
+| A **past or checked-in** booking you want removed | a **deletion request** (§4): a validator confirms (removed) or rejects (kept); a new request supersedes a pending one, and future bookings are told to cancel directly |
+
+**Approvals.** Where the owner put a validation policy on **whole-space reservations** (§7), the booking blocks the space immediately and waits for the quorum — a reject cancels it; no policy, no approval step. Deletion requests ride the same framework. **Nobody ever validates their own event.**
+
 ## 5. Calendar (Calendar tab)
 
 The month at a glance, with two scopes and two shapes:
@@ -126,7 +165,7 @@ See who's part of your community:
 
 ## 7. Events & confirmations (bell icon)
 
-The events feed is the audit trail of your workspace: reservations created/changed/cancelled, payments recorded, invoices paid, expenses submitted, extra-days requests, role changes, deletion requests. Members see their own events; admins and owners see everyone's. **Filter chips** (All · Reservation · Payment · Expense · …) narrow the list; each row carries its status icon — an **hourglass** while pending, a **green check** once confirmed — and money events show *who validated them and when* right on the row.
+The events feed is the audit trail of your workspace: reservations created/changed/cancelled, payments recorded, invoices paid, expenses submitted, extra-days requests, role changes, deletion requests. Members see their own events; admins and owners see everyone's. **Filter chips** (All · Reservation · Payment · Expense · …) narrow the list — your choice is remembered — and a **Group by** menu folds the feed into groups by type, day or member (tap the group symbol to return to the flat list); each row carries its status icon — an **hourglass** while pending, a **green check** once confirmed — and money events show *who validated them and when* right on the row.
 
 **Waiting for your confirmation:** whenever an admin does something *for somebody else* — books a seat for you, records your payment, demotes an admin — it stays **pending until confirmed**. Pending items are pinned on top with a red ✕ and a green **Accept** button, and you get a notification. Actions you take on yourself never need confirmation.
 
@@ -170,12 +209,16 @@ Your role-bound invites (§2): member invite = the workspace ID (replace it with
 - **Booking granularity** — one of: *free time range*, *5 / 15 / 30 / 60-minute slots*, *half-days (morning & afternoon)*, *full days only*, or *real hours* (exact from–to, with half/full-day shortcuts).
 - **Working hours** — day start, half-day boundary, day end (default 08:00 / 12:00 / 17:00). Half-day and full-day slots everywhere — reservations, check-in and billing — follow these hours; under *real hours* you also set how many hours bill as a half and a full day.
 - **Closure days** — dated exceptions, added with **+**.
+- **Booking policies** — three switches, all **off by default**, that relax or tighten the rules of §4b (the section rides the *Booking policies* feature):
+  - **Allow past bookings** — members may backfill a booking that already ended (yesterday and earlier). Off, such bookings are refused; booking a window earlier the *same day* is always allowed either way. Switch it on for spaces that record attendance after the fact.
+  - **Minute bookings within working hours** — confines minute-grid bookings to the working day. Off (the default), the grids are free-time: members may book 6:00 or 17–21. Evening overtime walk-ups at the day's end stay possible either way.
+  - **Admins may check members out** — an admin can end a member's running check-in. Off, check-out is strictly personal. Useful where staff closes the room in the evening.
 
 ### Features
 
-Switch whole modules on or off per workspace — each toggle carries its description right on the screen: calendar tab, events tab, finances tab, services, accessory supplements, online payments, invoices, admins issue invoices, PDF export, series booking, booking for others, push notifications, admins may block seats, table/desk & level reservations, admins may assign levels, kiosk mode, RFID/NFC badges, members directory, WhatsApp integration, space QR codes, co-owners, auto check-in/out, data export (Excel), working hours, invoice PDF template, member notifications, document library, payment reminders (dunning), member reports, booking deletion requests, role management. Switching a module off removes *all* of its screens and buttons for every member.
+Switch whole modules on or off per workspace — each toggle carries its description right on the screen: calendar tab, events tab, notification feed grouping, finances tab, services, accessory supplements, online payments, invoices, admins issue invoices, VAT management, VAT declarations, e-invoice delivery to the customer, PDF export, series booking, booking for others, push notifications, admins may block seats, table/desk & level reservations, admins may assign levels, kiosk mode, RFID/NFC badges, members directory, WhatsApp integration, space QR codes, co-owners, auto check-in/out, data export (Excel), working hours, booking policies, invoice PDF template, member notifications, document library, payment reminders (dunning), member reports, booking deletion requests, role management, plan-object deletion. Switching a module off removes *all* of its screens and buttons for every member.
 
-The list is **hierarchical**: a feature that needs another sits indented under it with a *Requires…* note, and is greyed out while its parent is off — *Finances* carries services, supplements, online payments and invoicing; *Invoices* carries the admin delegation, the PDF template and the payment reminders; *Kiosk mode* carries RFID/NFC badges; *Members directory* carries the WhatsApp integration. Switching a parent off takes its whole subtree out of the app; the child's stored choice comes back untouched when the parent returns.
+The list is **hierarchical**: a feature that needs another sits indented under it with a *Requires…* note, and is greyed out while its parent is off — *Finances* carries services, supplements, online payments and invoicing; *Invoices* carries the admin delegation, VAT management (with the declarations beneath it), the customer e-invoice delivery, the PDF template and the payment reminders; *Kiosk mode* carries RFID/NFC badges; *Members directory* carries the WhatsApp integration; *Events tab* carries the feed grouping. Switching a parent off takes its whole subtree out of the app; the child's stored choice comes back untouched when the parent returns.
 
 ![](assets/help/images/workspace-id-qr.jpg)
 

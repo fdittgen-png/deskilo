@@ -104,6 +104,45 @@ Chaque place, table, bureau et niveau peut porter une **carte QR** imprimée (§
 
 **Les conflits protègent dans les deux sens :** un bureau ou un niveau ne se réserve pas tant qu'une place à l'intérieur est prise sur la fenêtre — et aucune place ne se réserve tant que son bureau ou niveau est réservé en entier.
 
+### 4b. Comment la réservation se comporte
+
+Chaque règle ci-dessous est appliquée **côté serveur** — le plan, le hub Réserver, un scan QR et la borne proposent exactement ce qui sera accepté, et une demande qui passerait par un écran périmé est refusée avec le motif nommé. Toutes les heures sont dans le fuseau de l'espace ; les exemples supposent la journée de travail par défaut (08:00 – 12:00 – 17:00).
+
+**Réserver à l'avance.** La forme possible d'une fenêtre dépend de la granularité de l'espace (§8 Disponibilité) :
+
+| Vous demandez | Demi-journées | Journées entières | Grille de minutes (5/15/30/60 min) |
+|---|---|---|---|
+| Le matin (8–12) | ✅ | ❌ — doit couvrir la journée entière | ✅ si les bords tombent sur la grille |
+| L'après-midi (12–17) | ✅ | ❌ | ✅ |
+| Toute la journée de travail (8–17) | ✅ | ✅ | ✅ |
+| Avant l'ouverture / après les heures (début 6:00, 17–21) | ❌ | ❌ | ✅ par défaut — les grilles sont libres ; la règle **Réservations à la minute dans les heures d'ouverture** (§8) transforme cela en ❌ |
+| Une fenêtre atypique (9–15) | ❌ | ❌ | ✅ si sur la grille |
+| Hors grille (10:02) ou plus court que la durée minimale (30 min par défaut) | — | — | ❌ — le refus nomme la grille ou le minimum |
+
+Et sur toutes les granularités pareillement : l'avenir est ouvert jusqu'à l'**horizon de réservation** (90 jours par défaut) et refusé au-delà ; une réservation sur un **jour déjà terminé** (hier et avant) est refusée — *« entièrement dans le passé »* — sauf si le propriétaire a activé **Autoriser les réservations passées**, tandis que réserver la fenêtre de ce matin plus tard le même jour marche toujours ; un **jour de fermeture** refuse en le nommant ; une place occupée refuse, et un membre ne tient qu'**une place à la fois** (§4).
+
+**Les arrivées spontanées s'alignent sur le créneau.** Une arrivée spontanée (toucher une place libre, scanner son QR/NFC, ou la borne) réserve de *maintenant* jusqu'à un bord canonique — la limite de demi-journée, la fin de journée, ou un bord de grille. En granularité par journées, la réservation couvre le **créneau entier auquel la fin appartient** : arriver à 10:00 et choisir *jusqu'à 12:00* réserve toute la matinée 8:00–12:00 ; ce n'est que si le début est réellement pris par quelqu'un d'autre que la réservation s'ancre à votre arrivée. À la fin de la journée de travail ou après, une arrivée spontanée peut courir jusqu'à **minuit local** (prolongation du soir — sur toutes les granularités, quelles que soient les règles). Et un check-in spontané doit commencer **aujourd'hui** : créer une réservation « pointée » pour demain est refusé.
+
+**Pointer (check-in).** La fenêtre s'ouvre **15 minutes avant** votre début — et en demi-journées, journées entières et heures réelles, elle s'ouvre pour la **journée réservée entière** : à 10:00 vous pouvez déjà pointer sur votre après-midi de 12:00, car le créneau *est* la journée de travail (les grilles de minutes élargissent plutôt la marge d'un pas de grille). Pointer un autre jour (« la réservation de demain aujourd'hui »), après la fin de la réservation, deux fois, ou un jour de fermeture est refusé avec le motif. Si vous êtes encore pointé **ailleurs** : une réservation encore en cours bloque le nouveau pointage (*faites-y d'abord le check-out*) ; une déjà terminée se clôt silencieusement — horodatée à sa propre fin — et le nouveau pointage passe. Un admin peut pointer un membre tant que *Réserver pour d'autres* est actif (§8 Fonctionnalités).
+
+**Sortir (check-out).** Sortir avant la fin réservée **raccourcit la réservation à maintenant** — la place se libère immédiatement pour les autres. Après un pointage anticipé le même jour, sortir avant le début réservé garde la **présence réelle** (de l'instant du pointage à maintenant). Oublié, puis revenu ? Le check-out marche encore : la fin réservée reste, l'horodatage est véridique. Sortir sans avoir pointé — ou deux fois — est refusé. Par défaut le **check-out est personnel** : un admin ne peut terminer le pointage en cours d'un membre que si le propriétaire a activé **Les admins peuvent faire le check-out des membres** (§8). Un pointage jamais clos se termine tout seul au moment où vous pointez ailleurs après sa fin — ou, avec **arrivée/départ auto**, au balayage de fin de journée.
+
+**Absences.** Une réservation jamais pointée reste simplement *réservée* dans l'historique. Avec **arrivée/départ auto**, le balayage de fin de journée marque le jour passé comme honoré — pointé au début, sorti à la fin, terminé.
+
+**Annuler.**
+
+| Cas | Ce qui se passe |
+|---|---|
+| Votre réservation future | ✅ annulée d'un geste |
+| Votre réservation en cours, pointée | ✅ annulée d'un bloc (les horodatages de présence restent sur la ligne) — pour *garder* la partie honorée, sortez plutôt, ou raccourcissez (ci-dessous) |
+| « Annuler le reste de la journée » | ✅ ramenez la **fin** de la réservation à la limite de demi-journée — le début est immuable, la nouvelle fin doit être devant — et l'après-midi libéré est immédiatement réservable par d'autres |
+| Une réservation terminée ou déjà annulée | ❌ plus rien à annuler |
+| La réservation de quelqu'un d'autre | ❌ pour un membre ; ✅ pour un admin/propriétaire — l'annulation d'autorité (§4), attribuée à l'admin dans le fil des événements |
+| Une série, « celle-ci et les suivantes » | ✅ annule les occurrences *réservées* restantes à partir de cette date ; les pointées et terminées gardent leur historique |
+| Une réservation **passée ou pointée** que vous voulez retirer | une **demande de suppression** (§4) : un validateur confirme (retirée) ou rejette (conservée) ; une nouvelle demande remplace une demande en attente, et les réservations futures s'annulent directement |
+
+**Approbations.** Là où le propriétaire a posé une règle de validation sur les **réservations d'espaces entiers** (§7), la réservation bloque l'espace immédiatement et attend le quorum — un rejet l'annule ; pas de règle, pas d'étape d'approbation. Les demandes de suppression empruntent le même cadre. **Personne ne valide jamais son propre événement.**
+
 ## 5. Calendrier (onglet Calendrier)
 
 Le mois d'un coup d'œil, avec deux portées et deux formes :
@@ -126,7 +165,7 @@ Voyez qui fait partie de votre communauté :
 
 ## 7. Événements et confirmations (cloche)
 
-Le fil des événements est la piste d'audit de votre espace : réservations créées/modifiées/annulées, paiements enregistrés, factures payées, dépenses soumises, demandes de demi-journées, changements de rôle, demandes de suppression. Les membres voient leurs propres événements ; admins et propriétaires voient tout. Les **puces de filtre** (Tous · Réservation · Paiement · Dépense · …) resserrent la liste ; chaque ligne porte son icône d'état — un **sablier** en attente, une **coche verte** une fois confirmé — et les événements d'argent affichent *qui a validé et quand* sur la ligne même.
+Le fil des événements est la piste d'audit de votre espace : réservations créées/modifiées/annulées, paiements enregistrés, factures payées, dépenses soumises, demandes de demi-journées, changements de rôle, demandes de suppression. Les membres voient leurs propres événements ; admins et propriétaires voient tout. Les **puces de filtre** (Tous · Réservation · Paiement · Dépense · …) resserrent la liste — votre choix est mémorisé — et un menu **Grouper par** replie le fil en groupes par type, jour ou membre (toucher le symbole du groupe ramène à la liste plate) ; chaque ligne porte son icône d'état — un **sablier** en attente, une **coche verte** une fois confirmé — et les événements d'argent affichent *qui a validé et quand* sur la ligne même.
 
 **En attente de votre confirmation :** dès qu'un admin agit *pour quelqu'un d'autre* — réserve une place pour vous, enregistre votre paiement, rétrograde un admin — cela reste **en attente jusqu'à confirmation**. Les éléments en attente sont épinglés en haut avec un ✕ rouge et un bouton **Accepter** vert, et vous êtes notifié. Vos propres actions sur vous-même ne demandent jamais confirmation.
 
@@ -166,12 +205,16 @@ Vos invitations liées au rôle (§2) : invitation membre = l'ID de l'espace (re
 - **Granularité des réservations** — au choix : *plage horaire libre*, *créneaux de 5 / 15 / 30 / 60 minutes*, *demi-journées (matin et après-midi)*, *journées entières uniquement*, ou *heures réelles* (de–à exact, demi/journées en raccourcis).
 - **Horaires de travail** — début de journée, limite de demi-journée, fin de journée (par défaut 08:00 / 12:00 / 17:00). Les créneaux demi-journée et journée partout — réservations, pointage et facturation — suivent ces horaires ; en *heures réelles* vous fixez aussi combien d'heures se facturent en demi et en pleine journée.
 - **Jours de fermeture** — exceptions datées, ajoutées au **+**.
+- **Règles de réservation** — trois interrupteurs, tous **coupés par défaut**, qui assouplissent ou resserrent les règles du §4b (la section suit la fonctionnalité *Règles de réservation*) :
+  - **Autoriser les réservations passées** — les membres peuvent enregistrer après coup une réservation déjà terminée (hier et avant). Coupé, ces réservations sont refusées ; réserver une fenêtre plus tôt le *même jour* reste toujours permis. Activez-le pour les espaces qui consignent la présence a posteriori.
+  - **Réservations à la minute dans les heures d'ouverture** — confine les réservations sur grille de minutes à la journée de travail. Coupé (le défaut), les grilles sont libres : les membres peuvent réserver 6:00 ou 17–21. Les prolongations spontanées du soir en fin de journée restent possibles dans les deux cas.
+  - **Les admins peuvent faire le check-out des membres** — un admin peut terminer le pointage en cours d'un membre. Coupé, le check-out est strictement personnel. Utile là où le personnel ferme la salle le soir.
 
 ### Fonctionnalités
 
-Activez ou coupez des modules entiers par espace — chaque interrupteur porte sa description à l'écran : onglet Calendrier, onglet Événements, onglet Finances, services, suppléments d'accessoires, paiements en ligne, factures, les admins émettent des factures, export PDF, réservation en série, réserver pour d'autres, notifications push, les admins peuvent bloquer des places, réservations de table/bureau/niveau, les admins peuvent attribuer des niveaux, mode borne, badges RFID/NFC, annuaire des membres, intégration WhatsApp, codes QR des espaces, copropriétaires, arrivée/départ auto, export des données (Excel), horaires de travail, modèle de PDF de facture, notifications entre membres, bibliothèque de documents, relances de paiement, rapports des membres, demandes de suppression de réservation, gestion des rôles. Couper un module retire *tous* ses écrans et boutons pour chaque membre.
+Activez ou coupez des modules entiers par espace — chaque interrupteur porte sa description à l'écran : onglet Calendrier, onglet Événements, regroupement des notifications, onglet Finances, services, suppléments d'accessoires, paiements en ligne, factures, les admins émettent des factures, gestion de la TVA, déclarations de TVA, envoi de la facture électronique au client, export PDF, réservation en série, réserver pour d'autres, notifications push, les admins peuvent bloquer des places, réservations de table/bureau/niveau, les admins peuvent attribuer des niveaux, mode borne, badges RFID/NFC, annuaire des membres, intégration WhatsApp, codes QR des espaces, copropriétaires, arrivée/départ auto, export des données (Excel), horaires de travail, règles de réservation, modèle de PDF de facture, notifications entre membres, bibliothèque de documents, relances de paiement, rapports des membres, demandes de suppression de réservation, gestion des rôles, suppression d'objets du plan. Couper un module retire *tous* ses écrans et boutons pour chaque membre.
 
-La liste est **hiérarchique** : une fonctionnalité qui en nécessite une autre s'indente sous elle avec une note *Nécessite…*, grisée tant que le parent est coupé — *Finances* porte services, suppléments, paiements en ligne et factures ; *Factures* porte la délégation admin, le modèle PDF et les relances ; *Mode borne* porte les badges RFID/NFC ; *Annuaire* porte l'intégration WhatsApp. Couper un parent retire tout son sous-arbre ; le choix stocké de l'enfant revient intact au retour du parent.
+La liste est **hiérarchique** : une fonctionnalité qui en nécessite une autre s'indente sous elle avec une note *Nécessite…*, grisée tant que le parent est coupé — *Finances* porte services, suppléments, paiements en ligne et factures ; *Factures* porte la délégation admin, la gestion de la TVA (avec les déclarations en dessous), l'envoi au client, le modèle PDF et les relances ; *Mode borne* porte les badges RFID/NFC ; *Annuaire* porte l'intégration WhatsApp ; *Onglet Événements* porte le regroupement du fil. Couper un parent retire tout son sous-arbre ; le choix stocké de l'enfant revient intact au retour du parent.
 
 <p><img src="images/workspace-id-qr.jpg" width="220"> <img src="images/availability-granularity.jpg" width="220"> <img src="images/features-toggles-1.jpg" width="220"> <img src="images/features-toggles-2.jpg" width="220"></p>
 

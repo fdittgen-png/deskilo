@@ -37,6 +37,10 @@ td input,td select{padding:8px}
 .add{background:none;border:1px dashed var(--accent);color:var(--accent);border-radius:8px;padding:8px 14px;cursor:pointer;margin-top:8px;font-size:.9rem}
 .del{background:none;border:none;color:#a33;cursor:pointer;font-size:1.05rem;padding:6px}
 .card{border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0;background:#fdfbf9}
+.matrix{overflow-x:auto}
+.matrix table{min-width:560px}
+.matrix th{padding:6px}
+.matrix td{border-top:1px solid var(--line);padding:6px;font-size:.85rem}
 footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:10px 16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .btn{border:none;border-radius:999px;padding:12px 22px;font-size:.95rem;cursor:pointer}
 .primary{background:var(--accent);color:#fff}
@@ -48,7 +52,7 @@ footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px sol
 <body>
 <header>
   <h1>DesKilo — Document de configuration</h1>
-  <p>Répondez aux questions (choix prédéfinis, noms, adresses — rien à interpréter), sur Mac, PC ou téléphone. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. À la fin, <b>Exporter le XML</b> produit le fichier : l'app l'importe (Réglages de l'espace → Importer l'espace) pour créer réglages, accessoires et plan ; la section &lt;setup&gt; du même fichier porte tout le reste (facturation, disponibilité, services, identité légale et TVA — régime, taux, déclarations —, rôles, membres) pour finir la configuration.</p>
+  <p>Répondez aux questions (choix prédéfinis, noms, adresses — rien à interpréter), sur Mac, PC ou téléphone. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. À la fin, <b>Exporter le XML</b> produit le fichier : l'app l'importe (Réglages de l'espace → Importer l'espace) pour créer réglages, accessoires et plan ; la section &lt;setup&gt; du même fichier porte tout le reste (facturation, disponibilité et règles de réservation, services, identité légale et TVA — régime, taux, déclarations —, rôles, membres) pour finir la configuration.</p>
 </header>
 <main id="form"></main>
 <footer>
@@ -95,6 +99,10 @@ const FEATURES=[
  ['roleManagement','Gestion des rôles','La matrice rôle → permission.',1],
  ['vatManagement','Gestion de la TVA','L\'éditeur des taux et les sélecteurs de taux (services, forfaits, accessoires, paliers).',1],
  ['vatDeclarations','Déclarations de TVA','Déclaration périodique générée depuis les factures (CA3/UStVA), export PDF/XML, télétransmission.',1],
+ ['einvoiceCustomerDelivery','Facture électronique au client','Envoi de la facture électronique au service du client, en plus de la plateforme gouvernementale.',1],
+ ['planObjectDelete','Suppression d\'objets du plan','Supprimer des objets du plan encore référencés par des réservations (texte de substitution d\'audit).',1],
+ ['notificationGrouping','Regroupement des notifications','Grouper le fil de notifications par type, jour ou membre.',1],
+ ['bookingPolicies','Règles de réservation','Comportement de réservation configurable : réservations passées, minutes hors heures, check-out par un admin (section 2).',1],
 ];
 const PERMS=[['manageRoles','Gérer les rôles et permissions'],['manageMembers','Gérer les membres'],['manageValidation','Configurer les règles de validation'],['workspaceSettings',"Modifier les réglages de l'espace"],['issueInvoices','Émettre les factures et rapprocher les paiements'],['viewFinances',"Consulter les finances de l'espace"],['manageDocuments','Gérer la bibliothèque de documents'],['manageServices','Gérer les services et forfaits'],['approveExpenses','Approuver les dépenses']];
 const PERM_DEFAULTS={co_owner:PERMS.map(p=>p[0]),admin:['manageMembers','manageDocuments','manageServices','approveExpenses','viewFinances'],member:[]};
@@ -127,6 +135,7 @@ const WD=[['1','lun.'],['2','mar.'],['3','mer.'],['4','jeu.'],['5','ven.'],['6',
 let S=JSON.parse(localStorage.getItem(LS)||'null')||{
  name:'',country:'FR',currency:'EUR',timezone:'Europe/Paris',language:'',address:'',whatsapp:'',
  weekdays:['1','2','3','4','5'],granularity:'half_day',dayStart:'08:00',boundary:'12:00',dayEnd:'17:00',closures:[],
+ policies:{allowPast:false,gridHours:false,adminCheckout:false},
  features:Object.fromEntries(FEATURES.map(f=>[f[0],!!f[3]])),
  levels:[{name:'1er étage',offices:[{name:'Bureau 1',bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]}]}],
  accessories:[],services:[],tiers:[{from:0,to:100,fee:'',over:''}],subLevels:['25','50','75','100'],freeLevel:false,packages:[],
@@ -137,6 +146,7 @@ let S=JSON.parse(localStorage.getItem(LS)||'null')||{
  perms:JSON.parse(JSON.stringify(PERM_DEFAULTS)),
  validation:{required:1,ownerSignOff:false},
  members:[]};
+S.policies=S.policies||{allowPast:false,gridHours:false,adminCheckout:false};
 function save(){localStorage.setItem(LS,JSON.stringify(S));document.getElementById('saved').textContent='Enregistré '+new Date().toLocaleTimeString()}
 function set(path,val){const p=path.split('.');let o=S;while(p.length>1)o=o[p.shift()];o[p[0]]=val;save()}
 
@@ -169,7 +179,33 @@ function render(){
   selectEl('Granularité des réservations','granularity',GRAN,''),
   h('div',{class:'row'},input('Début de journée','dayStart','','time'),input('Limite de demi-journée','boundary','','time'),input('Fin de journée','dayEnd','','time')),
   h('label',{},'Jours de fermeture'),
-  tableRows(['Date'],S.closures,(r,i)=>[cell(`closures.${i}`,'date')],()=> '', '+ Ajouter un jour de fermeture')));
+  tableRows(['Date'],S.closures,(r,i)=>[cell(`closures.${i}`,'date')],()=> '', '+ Ajouter un jour de fermeture'),
+  h('label',{},'Règles de réservation'),
+  h('p',{class:'hint'},'Trois interrupteurs, tous désactivés par défaut (fonctionnalité « Règles de réservation »). La matrice ci-dessous montre ce qu\'ils changent.'),
+  ...[['allowPast','Autoriser les réservations passées','Les membres peuvent enregistrer après coup une réservation déjà terminée (hier et avant). Réserver plus tôt le même jour reste toujours permis.'],
+      ['gridHours','Réservations à la minute dans les heures d\'ouverture','Confine les grilles de minutes à la journée de travail ; sinon elles sont libres (6:00 ou 17–21 possibles). Les prolongations spontanées du soir restent permises dans les deux cas.'],
+      ['adminCheckout','Les admins peuvent faire le check-out des membres','Un admin peut terminer le pointage en cours d\'un membre ; sinon le check-out est strictement personnel.']]
+   .map(([k,t,d])=>{const c=h('input',{type:'checkbox'});c.checked=!!S.policies[k];c.onchange=()=>{S.policies[k]=c.checked;save()};return h('label',{class:'check'},c,h('span',{},t,h('div',{class:'d'},d)))}),
+  h('label',{},'Comment les réservations se comporteront'),
+  h('p',{class:'hint'},'Le résumé du comportement appliqué côté serveur, selon la granularité choisie ci-dessus. Heures données pour la journée par défaut 08:00 / 12:00 / 17:00.'),
+  h('div',{class:'matrix',html:
+   '<table><tr><th>Demande</th><th>Demi-journées</th><th>Journées entières</th><th>Grille de minutes (5/15/30/60)</th></tr>'+
+   '<tr><td>Matin (8–12) ou après-midi (12–17)</td><td>✅</td><td>❌ journée entière exigée</td><td>✅ si les bords tombent sur la grille</td></tr>'+
+   '<tr><td>Journée de travail entière (8–17)</td><td>✅</td><td>✅</td><td>✅</td></tr>'+
+   '<tr><td>Avant l\'ouverture / après les heures (6:00, 17–21)</td><td>❌</td><td>❌</td><td>✅ par défaut ; ❌ avec « Réservations à la minute dans les heures d\'ouverture »</td></tr>'+
+   '<tr><td>Fenêtre atypique (9–15)</td><td>❌</td><td>❌</td><td>✅ si sur la grille (durée min. 30 min par défaut)</td></tr>'+
+   '<tr><td>Hier et avant</td><td colspan="3">❌ « entièrement dans le passé » — ✅ avec « Autoriser les réservations passées » ; le rattrapage du même jour marche toujours</td></tr>'+
+   '<tr><td>Au-delà de l\'horizon (90 j), jour fermé, place occupée</td><td colspan="3">❌ refus nommé ; un membre ne tient qu\'une place à la fois</td></tr>'+
+   '</table>'}),
+  h('div',{class:'matrix',html:
+   '<table><tr><th>Check-in / check-out / annulation</th><th>Comportement</th></tr>'+
+   '<tr><td>Arrivée spontanée (place libre, QR/NFC, borne)</td><td>De maintenant jusqu\'à un bord canonique ; en journées, le créneau entier de la fin est réservé (10:00 → « jusqu\'à 12:00 » réserve la matinée 8–12). En fin de journée, prolongation jusqu\'à minuit. Doit commencer aujourd\'hui.</td></tr>'+
+   '<tr><td>Check-in sur réservation</td><td>Ouvre 15 min avant le début — et toute la journée réservée en demi-journées/journées/heures (grilles de minutes : un pas de grille). Autre jour, réservation finie, double pointage, jour fermé : refus. Encore pointé ailleurs : la réservation en cours bloque ; une finie se clôt seule.</td></tr>'+
+   '<tr><td>Check-out</td><td>Avant la fin réservée : la réservation est raccourcie à maintenant, la place se libère. Après la fin : l\'horodatage reste véridique, la fin réservée demeure. Par un admin : seulement avec « Les admins peuvent faire le check-out des membres ».</td></tr>'+
+   '<tr><td>Absence (jamais pointé)</td><td>Reste « réservée » dans l\'historique — ou, avec Arrivée/départ auto, comptée honorée au balayage de fin de journée.</td></tr>'+
+   '<tr><td>Annuler</td><td>Réservation future : un geste. Pointée en cours : annulable d\'un bloc, ou raccourcir la fin (« annuler le reste de la journée »). Passée ou pointée à retirer : demande de suppression validée. Admin : peut retirer la réservation d\'autrui (notifié au fil des événements).</td></tr>'+
+   '<tr><td>Espaces entiers</td><td>Avec une règle de validation, la réservation bloque l\'espace et attend le quorum ; personne ne valide son propre événement.</td></tr>'+
+   '</table>'})));
  // 3 floor plan
  const planBody=[h('p',{class:'hint'},"Décrivez la structure — l'app génère un plan de départ que vous affinerez dans l'éditeur (photos de fond, positions exactes).")];
  S.levels.forEach((lv,li)=>{
@@ -296,7 +332,7 @@ function exportXml(){
  push('  </floor-plan>');
  // setup extension — ignored by the app importer, read by the configurator
  push('  <setup>');
- push(`    <availability granularity="${S.granularity}" day-start="${S.dayStart}" half-boundary="${S.boundary}" day-end="${S.dayEnd}" open-weekdays="${S.weekdays.join(',')}">`);
+ push(`    <availability granularity="${S.granularity}" day-start="${S.dayStart}" half-boundary="${S.boundary}" day-end="${S.dayEnd}" open-weekdays="${S.weekdays.join(',')}" allow-past-bookings="${!!S.policies.allowPast}" grid-within-hours="${!!S.policies.gridHours}" admin-checkout="${!!S.policies.adminCheckout}">`);
  S.closures.filter(Boolean).forEach(c=>push(`      <closure day="${esc(c)}"/>`));
  push('    </availability>');
  push(`    <identity language="${esc(S.language)}" address="${esc(S.address)}" whatsapp-group="${esc(S.whatsapp)}"/>`);
@@ -339,7 +375,7 @@ function parseBack(text){
  const lvls=[...root.querySelectorAll('floor-plan > level')];
  if(lvls.length)S.levels=lvls.map(l=>({name:l.getAttribute('name'),offices:[...l.querySelectorAll('office')].map(o=>({name:o.getAttribute('name'),bookable:o.getAttribute('bookable-as-whole')==='true',price:'',desks:[...o.querySelectorAll('desk')].map(d=>{const seats=[...d.querySelectorAll('seat')];const first=seats[0]?.getAttribute('name')||'Place 1';return{name:d.getAttribute('name'),seats:seats.length,prefix:first.replace(/\s*\d+$/,'')||'Place'}})}))}));
  const su=root.querySelector('setup');if(!su)return;
- const av=su.querySelector('availability');if(av){S.granularity=av.getAttribute('granularity')||S.granularity;S.dayStart=av.getAttribute('day-start')||S.dayStart;S.boundary=av.getAttribute('half-boundary')||S.boundary;S.dayEnd=av.getAttribute('day-end')||S.dayEnd;S.weekdays=(av.getAttribute('open-weekdays')||'1,2,3,4,5').split(',');S.closures=[...av.querySelectorAll('closure')].map(c=>c.getAttribute('day'))}
+ const av=su.querySelector('availability');if(av){S.granularity=av.getAttribute('granularity')||S.granularity;S.dayStart=av.getAttribute('day-start')||S.dayStart;S.boundary=av.getAttribute('half-boundary')||S.boundary;S.dayEnd=av.getAttribute('day-end')||S.dayEnd;S.weekdays=(av.getAttribute('open-weekdays')||'1,2,3,4,5').split(',');S.closures=[...av.querySelectorAll('closure')].map(c=>c.getAttribute('day'));S.policies={allowPast:av.getAttribute('allow-past-bookings')==='true',gridHours:av.getAttribute('grid-within-hours')==='true',adminCheckout:av.getAttribute('admin-checkout')==='true'}}
  const id=su.querySelector('identity');if(id){S.language=id.getAttribute('language')||'';S.address=id.getAttribute('address')||'';S.whatsapp=id.getAttribute('whatsapp-group')||''}
  const bi=su.querySelector('billing');if(bi){S.tiers=[...bi.querySelectorAll('tier')].map(t=>({from:t.getAttribute('from-pct'),to:t.getAttribute('to-pct'),fee:String((parseInt(t.getAttribute('fee-cents'))||0)/100),over:String((parseInt(t.getAttribute('overage-cents'))||0)/100)}));const sl=bi.querySelector('subscription-levels');if(sl){S.subLevels=(sl.getAttribute('values')||'').split(',').filter(Boolean);S.freeLevel=sl.getAttribute('free-value')==='true'}S.packages=[...bi.querySelectorAll('package')].map(p=>({name:p.getAttribute('name'),days:p.getAttribute('days'),price:String((parseInt(p.getAttribute('price-cents'))||0)/100)}))}
  S.services=[...su.querySelectorAll('services > service')].map(s=>({name:s.getAttribute('name'),price:String((parseInt(s.getAttribute('price-cents'))||0)/100),vat:s.getAttribute('vat-percent')??''}));
