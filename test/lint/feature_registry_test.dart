@@ -29,7 +29,9 @@ import 'package:flutter_test/flutter_test.dart';
 // type, day or member; requires eventsTab).
 // 36→37 (2026-08-23): #600 bookingPolicies (owner-configurable booking
 // behavior matrix: past bookings, grid-vs-hours, admin check-out).
-const int _expectedFeatureCount = 37;
+// 37→39 (2026-08-23): #604 nfcSeatTags (chair-tag config + resolution,
+// #585 retro-flagged) and qrBadges (QR badge issuance beside nfcBadges).
+const int _expectedFeatureCount = 39;
 
 void main() {
   test('every functionality is registered — the pin', () {

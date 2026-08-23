@@ -441,7 +441,11 @@ class _BadgeManagerDialogState
             icon: const Icon(Icons.contactless_outlined),
             label: Text(l10n?.badgeRegisterCard ?? 'Register card'),
           ),
-        if (issued == null)
+        // #604 — QR badge issuance rides its own flag beside nfcBadges.
+        if (issued == null &&
+            ref
+                .watch(enabledFeaturesSyncProvider)
+                .contains(WorkspaceFeature.qrBadges))
           FilledButton.icon(
             key: const ValueKey('badge-issue-button'),
             onPressed: _issue,

@@ -5,16 +5,19 @@ import 'package:nfc_manager/nfc_manager_android.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../trace/trace_logger.dart';
+import 'web_nfc_stub.dart' if (dart.library.js_interop) 'web_nfc_web.dart';
 
 part 'nfc_uid_reader.g.dart';
 
 /// Reads RFID/NFC tag UIDs for the kiosk badge flow (0046).
 ///
 /// The UID is normalized to the badge credential contract shared with
-/// `register_nfc_badge`: lowercase hex, no separators. Android-only —
-/// iPads have no NFC hardware and iPhone kiosks would need the CoreNFC
-/// entitlement, so every other platform reads as unavailable and the UI
-/// simply hides the tap path.
+/// `register_nfc_badge`: lowercase hex, no separators. Android-native
+/// via nfc_manager; on the WEB (#604) Chromium-on-Android's NDEFReader
+/// covers the owner-side tag-configuration forms. iPads have no NFC
+/// hardware and iPhone kiosks would need the CoreNFC entitlement, so
+/// every other platform reads as unavailable and the UI simply hides
+/// the tap path.
 /// The precise NFC state of THIS device — the kiosk sheet shows it so a
 /// silent tap path is diagnosable at the wall (field report: "the RFID
 /// was not read" with no way to tell whether the pad lacks hardware, has
@@ -33,7 +36,13 @@ enum NfcStatus {
 class NfcUidReader {
   /// The device's NFC state, resolved fresh on every call.
   Future<NfcStatus> status() async {
-    if (kIsWeb || defaultTargetPlatform != TargetPlatform.android) {
+    if (kIsWeb) {
+      // #604: NDEFReader exists only in Chromium on Android; whether
+      // the adapter is ON is unknowable before scan(), so supported
+      // means ready and a refused scan reports through startRead.
+      return webNfcSupported() ? NfcStatus.ready : NfcStatus.unsupported;
+    }
+    if (defaultTargetPlatform != TargetPlatform.android) {
       return NfcStatus.unsupported;
     }
     try {
@@ -64,6 +73,7 @@ class NfcUidReader {
   /// a dead reader): trace it and retry once. Returns whether a read
   /// session is actually up, so the UI can say so.
   Future<bool> startRead({required ValueChanged<String> onUid}) async {
+    if (kIsWeb) return webNfcStartRead(onUid);
     await stop();
     try {
       await _startSession(onUid);
@@ -99,6 +109,7 @@ class NfcUidReader {
       );
 
   Future<void> stop() async {
+    if (kIsWeb) return webNfcStop();
     try {
       await NfcManager.instance.stopSession();
     } catch (e, st) {

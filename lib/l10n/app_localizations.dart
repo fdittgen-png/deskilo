@@ -2540,6 +2540,30 @@ abstract class AppLocalizations {
   /// **'Owner-configurable booking behavior: past bookings, minute bookings outside the working hours, and check-out by admins.'**
   String get featureBookingPoliciesDesc;
 
+  /// No description provided for @featureNfcSeatTagsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC/RFID chair tags'**
+  String get featureNfcSeatTagsTitle;
+
+  /// No description provided for @featureNfcSeatTagsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'A physical NFC/RFID tag on a chair resolves to its seat like the printed QR card; owners fill the tag field by tapping the chip.'**
+  String get featureNfcSeatTagsDesc;
+
+  /// No description provided for @featureQrBadgesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'QR badges'**
+  String get featureQrBadgesTitle;
+
+  /// No description provided for @featureQrBadgesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Printable QR badge cards for the kiosk, beside the NFC/RFID cards.'**
+  String get featureQrBadgesDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:

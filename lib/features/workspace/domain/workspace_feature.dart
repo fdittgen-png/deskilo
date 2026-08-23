@@ -42,7 +42,9 @@ enum WorkspaceFeature {
   einvoiceCustomerDelivery,
   planObjectDelete,
   notificationGrouping,
-  bookingPolicies;
+  bookingPolicies,
+  nfcSeatTags,
+  qrBadges;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -241,6 +243,16 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   ),
   WorkspaceFeature.bookingPolicies:
       FeatureManifestEntry(feature: WorkspaceFeature.bookingPolicies),
+  // #604 — the chair-tag functionality (#585): configuring a tag on a
+  // seat and resolving a tapped tag to that seat.
+  WorkspaceFeature.nfcSeatTags:
+      FeatureManifestEntry(feature: WorkspaceFeature.nfcSeatTags),
+  // #604 — barcode/QR badge issuance, beside nfcBadges: both are badge
+  // credentials the kiosk accepts, so both sit under kioskMode.
+  WorkspaceFeature.qrBadges: FeatureManifestEntry(
+    feature: WorkspaceFeature.qrBadges,
+    requires: WorkspaceFeature.kioskMode,
+  ),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start

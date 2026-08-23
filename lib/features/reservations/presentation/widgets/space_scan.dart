@@ -46,9 +46,12 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
   if (workspace == null) return;
 
   // #585 — the tap path joins the camera and the typed field when this
-  // device can read NFC.
+  // device can read NFC and the chair-tag feature is on (#604).
   final nfcReader = ref.read(nfcUidReaderProvider);
-  final nfcReady = await nfcReader.isAvailable();
+  final seatTagsOn = ref
+      .read(enabledFeaturesSyncProvider)
+      .contains(WorkspaceFeature.nfcSeatTags);
+  final nfcReady = seatTagsOn && await nfcReader.isAvailable();
   if (!context.mounted) return;
 
   final code = await showModalBottomSheet<SpaceCode>(

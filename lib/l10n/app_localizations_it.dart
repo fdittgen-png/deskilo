@@ -1381,6 +1381,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'Comportamento di prenotazione configurabile: prenotazioni passate, prenotazioni al minuto fuori orario e check-out da parte degli amministratori.';
 
   @override
+  String get featureNfcSeatTagsTitle => 'Tag NFC/RFID delle sedie';
+
+  @override
+  String get featureNfcSeatTagsDesc =>
+      'Un tag NFC/RFID fisico su una sedia porta al suo posto come la scheda QR stampata; il campo si compila avvicinando il chip.';
+
+  @override
+  String get featureQrBadgesTitle => 'Badge QR';
+
+  @override
+  String get featureQrBadgesDesc =>
+      'Schede badge QR stampabili per il chiosco, accanto alle carte NFC/RFID.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override
