@@ -153,6 +153,79 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     return line;
   }
 
+  /// #598 — the symbol of a grouping axis; it fronts both the chip and
+  /// every group header (where tapping it ungroups).
+  IconData _groupingIcon(FeedGrouping grouping) {
+    return switch (grouping) {
+      FeedGrouping.type => Icons.category_outlined,
+      FeedGrouping.date => Icons.today_outlined,
+      FeedGrouping.user => Icons.person_outline,
+      FeedGrouping.none => Icons.notes,
+    };
+  }
+
+  String _groupingLabel(AppLocalizations? l10n, FeedGrouping grouping) {
+    return switch (grouping) {
+      FeedGrouping.type => l10n?.notifGroupByType ?? 'Type',
+      FeedGrouping.date => l10n?.notifGroupByDate ?? 'Date',
+      FeedGrouping.user => l10n?.notifGroupByUser ?? 'Member',
+      FeedGrouping.none => '',
+    };
+  }
+
+  String _groupTitle(
+    AppLocalizations? l10n,
+    FeedGrouping grouping,
+    FeedGroup group,
+    Map<String, String> names,
+  ) {
+    return switch (grouping) {
+      FeedGrouping.type =>
+        _categoryLabel(l10n, group.key as NotificationCategory),
+      FeedGrouping.date =>
+        DateFormat.yMMMEd().format(group.key as DateTime),
+      FeedGrouping.user => names[group.key] ?? '',
+      FeedGrouping.none => '',
+    };
+  }
+
+  /// One group header (#598): the grouping symbol — one tap on it flips
+  /// straight back to the flat list — followed by the group's name.
+  Widget _groupHeader(
+    BuildContext context,
+    AppLocalizations? l10n,
+    FeedGrouping grouping,
+    FeedGroup group,
+    Map<String, String> names,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.xs,
+        AppSpacing.xs,
+        AppSpacing.lg,
+        0,
+      ),
+      child: Row(
+        children: [
+          IconButton(
+            key: ValueKey('notif-ungroup-${group.id}'),
+            tooltip: l10n?.notifUngroup ?? 'Ungroup',
+            onPressed: () => ref
+                .read(notificationFilterProvider.notifier)
+                .setGrouping(FeedGrouping.none),
+            icon: Icon(_groupingIcon(grouping), size: 20),
+          ),
+          Expanded(
+            child: Text(
+              _groupTitle(l10n, grouping, group, names),
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   String _typeLabel(AppLocalizations? l10n, EventType type) {
     return switch (type) {
       EventType.reservation => l10n?.eventTypeReservation ?? 'Reservation',
@@ -290,6 +363,12 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         const NotificationFilterState();
     final seenBefore = ref.watch(eventsSeenCutoffProvider).value;
     final unreadOnly = filter.read == ReadFilter.unread;
+    // #598 — the regrouping axis; the flag OFF forces the flat list
+    // even when an older persisted choice still says otherwise.
+    final groupingOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.notificationGrouping);
+    final grouping = groupingOn ? filter.grouping : FeedGrouping.none;
 
     final body = switch (eventsAsync) {
       AsyncData(value: final all) => Builder(
@@ -505,9 +584,49 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                     ],
                   ),
                 ),
+                // #598 — the regrouping line: fold the feed by type,
+                // day or member. Tapping the selected chip — or the
+                // symbol on any group header — returns to flat.
+                if (groupingOn)
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    padding: AppSpacing.mdH,
+                    child: Row(
+                      children: [
+                        Text(
+                          l10n?.notifGroupBy ?? 'Group by',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                        for (final axis in const [
+                          FeedGrouping.type,
+                          FeedGrouping.date,
+                          FeedGrouping.user,
+                        ]) ...[
+                          const SizedBox(width: 8),
+                          FilterChip(
+                            key: ValueKey('notif-group-${axis.name}'),
+                            avatar: Icon(_groupingIcon(axis), size: 18),
+                            label: Text(_groupingLabel(l10n, axis)),
+                            selected: filter.grouping == axis,
+                            visualDensity: VisualDensity.compact,
+                            onSelected: (value) => ref
+                                .read(
+                                    notificationFilterProvider.notifier)
+                                .setGrouping(
+                                  value ? axis : FeedGrouping.none,
+                                ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
                 // The MIXED feed (#581): notes and events interleaved,
-                // date-sorted under the user's direction of choice.
-                for (final item in feed)
+                // date-sorted under the user's direction of choice —
+                // optionally folded into groups (#598).
+                for (final group in groupFeed(feed, grouping)) ...[
+                  if (grouping != FeedGrouping.none)
+                    _groupHeader(context, l10n, grouping, group, names),
+                for (final item in group.items)
                   switch (item) {
                     NoteFeedItem(:final note, :final unread) => NoteRow(
                         key: ValueKey('note-${note.id}'),
@@ -580,6 +699,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                         },
                       ),
                   },
+                ],
                 if (feed.isEmpty)
                   Padding(
                     padding: AppSpacing.lgAll,

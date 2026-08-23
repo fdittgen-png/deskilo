@@ -172,5 +172,10 @@
   "notifCategoryMoney": "Money",
   "notifCategoryMembers": "Members",
   "notesFilterRead": "Read",
-  "notifSortByDate": "Sort by date"
+  "notifSortByDate": "Sort by date",
+  "notifGroupBy": "Group by",
+  "notifGroupByType": "Type",
+  "notifGroupByDate": "Date",
+  "notifGroupByUser": "Member",
+  "notifUngroup": "Ungroup"
 }

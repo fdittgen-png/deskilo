@@ -25,7 +25,9 @@ import 'package:flutter_test/flutter_test.dart';
 // 33→34 (2026-08-14): #568 einvoiceCustomerDelivery (second send leg).
 // 34→35 (2026-08-22): #587 planObjectDelete (delete plan objects past
 // reservations reference; audit substitution text).
-const int _expectedFeatureCount = 35;
+// 35→36 (2026-08-23): #598 notificationGrouping (regroup the feed by
+// type, day or member; requires eventsTab).
+const int _expectedFeatureCount = 36;
 
 void main() {
   test('every functionality is registered — the pin', () {

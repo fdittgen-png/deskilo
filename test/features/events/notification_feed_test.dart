@@ -173,6 +173,92 @@ void main() {
     }
   });
 
+  group('feed regrouping (#598)', () {
+    List<FeedItem> feedOf({
+      List<WorkspaceEvent> events = const [],
+      List<MemberNote> notes = const [],
+    }) =>
+        buildNotificationFeed(
+          events: events,
+          notes: notes,
+          unreadNoteIds: const {},
+          eventsSeenBefore: null,
+          filter: const NotificationFilterState(),
+        );
+
+    test('groupFeed by type folds by category, groups in feed order', () {
+      final feed = feedOf(
+        events: [
+          _event('res-1', t0.add(const Duration(hours: 3))),
+          _event('pay', t0.add(const Duration(hours: 2)),
+              type: EventType.payment),
+          _event('res-2', t0),
+        ],
+      );
+      final groups = groupFeed(feed, FeedGrouping.type);
+      expect(groups.map((g) => g.id),
+          ['reservations', 'money']); // first-occurrence order
+      expect(groups.first.key, NotificationCategory.reservations);
+      expect(
+        groups.first.items
+            .map((i) => (i as EventFeedItem).event.id),
+        ['res-1', 'res-2'],
+      );
+    });
+
+    test('groupFeed by date folds by local calendar day', () {
+      final feed = feedOf(
+        events: [
+          _event('day2-a', DateTime.utc(2026, 5, 14, 10)),
+          _event('day2-b', DateTime.utc(2026, 5, 14, 8)),
+          _event('day1', DateTime.utc(2026, 5, 13, 9)),
+        ],
+      );
+      final groups = groupFeed(feed, FeedGrouping.date);
+      expect(groups, hasLength(2));
+      expect(groups.first.items, hasLength(2));
+      final day = groups.first.key as DateTime;
+      final local = DateTime.utc(2026, 5, 14, 10).toLocal();
+      expect((day.year, day.month, day.day),
+          (local.year, local.month, local.day));
+    });
+
+    test('groupFeed by user folds by acting member — note sender and '
+        'event actor', () {
+      final feed = feedOf(
+        events: [_event('e', t0)], // actor member-1
+        notes: [_note('n', t0.add(const Duration(minutes: 1)))],
+      );
+      final groups = groupFeed(feed, FeedGrouping.user);
+      expect(groups.map((g) => g.id), ['member-2', 'member-1']);
+      expect(feedItemActor(feed.first), 'member-2');
+    });
+
+    test('grouping none returns ONE group carrying the flat feed', () {
+      final feed = feedOf(events: [_event('e', t0)]);
+      final groups = groupFeed(feed, FeedGrouping.none);
+      expect(groups, hasLength(1));
+      expect(groups.single.items, same(feed));
+    });
+
+    test('the grouping choice rides the wire form; a pre-#598 stored '
+        'value decodes to flat', () {
+      const state = NotificationFilterState(grouping: FeedGrouping.date);
+      expect(
+        NotificationFilterState.decode(state.encode()).grouping,
+        FeedGrouping.date,
+      );
+      expect(
+        NotificationFilterState.decode('|all|newestFirst').grouping,
+        FeedGrouping.none,
+      );
+      expect(
+        NotificationFilterState.decode('|all|newestFirst|wat').grouping,
+        FeedGrouping.none,
+      );
+    });
+  });
+
   test('the filter provider loads the LAST persisted choice on build — '
       'the restart survival #581 asks for', () async {
     final store = InMemoryNotificationFilterStore()

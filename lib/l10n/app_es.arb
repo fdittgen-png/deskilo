@@ -468,6 +468,11 @@
   "notifCategoryMembers": "Miembros",
   "notesFilterRead": "Leídos",
   "notifSortByDate": "Ordenar por fecha",
+  "notifGroupBy": "Agrupar por",
+  "notifGroupByType": "Tipo",
+  "notifGroupByDate": "Fecha",
+  "notifGroupByUser": "Miembro",
+  "notifUngroup": "Desagrupar",
   "featuresTitle": "Funciones",
   "featureCalendarTab": "Pestaña Calendario",
   "featureCalendarTabDesc": "Vista mensual de reservas y días de cierre.",
@@ -549,6 +554,14 @@
   "featurePlanObjectDeleteDesc": "Los propietarios pueden eliminar plantas, oficinas, mesas y asientos aunque reservas pasadas hagan referencia a ellos: las reservas conservan una instantánea de texto para auditorías e informes.",
   "@featurePlanObjectDeleteDesc": {
     "description": "Feature-registry completeness (#587)"
+  },
+  "featureNotificationGroupingTitle": "Agrupación de notificaciones",
+  "@featureNotificationGroupingTitle": {
+    "description": "Feature-registry completeness (#598)"
+  },
+  "featureNotificationGroupingDesc": "Los miembros pueden agrupar el hilo de notificaciones por tipo, día o miembro; tocar el símbolo del grupo vuelve a la lista plana.",
+  "@featureNotificationGroupingDesc": {
+    "description": "Feature-registry completeness (#598)"
   },
   "helpTitle": "Ayuda",
   "helpContents": "Índice",

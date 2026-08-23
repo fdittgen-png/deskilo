@@ -2096,6 +2096,36 @@ abstract class AppLocalizations {
   /// **'Sort by date'**
   String get notifSortByDate;
 
+  /// No description provided for @notifGroupBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Group by'**
+  String get notifGroupBy;
+
+  /// No description provided for @notifGroupByType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get notifGroupByType;
+
+  /// No description provided for @notifGroupByDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get notifGroupByDate;
+
+  /// No description provided for @notifGroupByUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get notifGroupByUser;
+
+  /// No description provided for @notifUngroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Ungroup'**
+  String get notifUngroup;
+
   /// App-bar title of the owner feature-management screen and its settings tile
   ///
   /// In en, this message translates to:
@@ -2443,6 +2473,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Owners may delete levels, offices, desks and seats even when past reservations reference them — the bookings keep a text snapshot for audits and reports.'**
   String get featurePlanObjectDeleteDesc;
+
+  /// Feature-registry completeness (#598)
+  ///
+  /// In en, this message translates to:
+  /// **'Notification feed grouping'**
+  String get featureNotificationGroupingTitle;
+
+  /// Feature-registry completeness (#598)
+  ///
+  /// In en, this message translates to:
+  /// **'Members may fold the notification feed into groups by type, day or member; tapping the group symbol returns to the flat list.'**
+  String get featureNotificationGroupingDesc;
 
   /// No description provided for @helpTitle.
   ///

@@ -81,5 +81,13 @@
   "featurePlanObjectDeleteDesc": "Les propriétaires peuvent supprimer niveaux, bureaux, tables et places même si d'anciennes réservations y font référence — les réservations gardent un instantané texte pour les audits et rapports.",
   "@featurePlanObjectDeleteDesc": {
     "description": "Feature-registry completeness (#587)"
+  },
+  "featureNotificationGroupingTitle": "Regroupement des notifications",
+  "@featureNotificationGroupingTitle": {
+    "description": "Feature-registry completeness (#598)"
+  },
+  "featureNotificationGroupingDesc": "Les membres peuvent regrouper le fil de notifications par type, jour ou membre ; toucher le symbole du groupe ramène à la liste plate.",
+  "@featureNotificationGroupingDesc": {
+    "description": "Feature-registry completeness (#598)"
   }
 }

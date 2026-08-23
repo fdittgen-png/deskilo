@@ -70,5 +70,10 @@
   "notifCategoryMoney": "Finanzen",
   "notifCategoryMembers": "Mitglieder",
   "notesFilterRead": "Gelesen",
-  "notifSortByDate": "Nach Datum sortieren"
+  "notifSortByDate": "Nach Datum sortieren",
+  "notifGroupBy": "Gruppieren nach",
+  "notifGroupByType": "Typ",
+  "notifGroupByDate": "Datum",
+  "notifGroupByUser": "Mitglied",
+  "notifUngroup": "Gruppierung aufheben"
 }
