@@ -358,7 +358,8 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
         // any admin/owner, any time). The server re-checks everything.
         final offerCheckIn = _browse == null &&
             _canCheckInForOthers &&
-            other.checkInWindowOpen(ref.read(clockProvider).now());
+            other.checkInWindowOpen(ref.read(clockProvider).now(),
+                granularity: ref.read(bookingGranularityProvider).value);
         final canOverrule =
             ref.read(myMemberProvider).value?.canAdminister ?? false;
         if (offerCheckIn || canOverrule) {
@@ -671,6 +672,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
       seat: seat,
       mine: mine,
       now: ref.read(clockProvider).now(),
+      granularity: ref.read(bookingGranularityProvider).value,
     );
     if (action == null) return;
     final repo = ref.read(reservationRepositoryProvider);

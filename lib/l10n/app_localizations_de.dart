@@ -217,6 +217,31 @@ class AppLocalizationsDe extends AppLocalizations {
       'Es muss gelten: Beginn < Halbtagsgrenze < Ende.';
 
   @override
+  String get availabilityPoliciesTitle => 'Buchungsregeln';
+
+  @override
+  String get policyAllowPastTitle => 'Vergangene Buchungen erlauben';
+
+  @override
+  String get policyAllowPastDesc =>
+      'Mitglieder können eine bereits beendete Buchung nachtragen.';
+
+  @override
+  String get policyGridHoursTitle =>
+      'Minutenbuchungen innerhalb der Arbeitszeiten';
+
+  @override
+  String get policyGridHoursDesc =>
+      'Minutenraster-Buchungen auf den Arbeitstag begrenzen; Abend-Check-ins bleiben möglich.';
+
+  @override
+  String get policyAdminCheckoutTitle => 'Admins dürfen Mitglieder auschecken';
+
+  @override
+  String get policyAdminCheckoutDesc =>
+      'Ein Admin kann den laufenden Check-in eines Mitglieds beenden.';
+
+  @override
   String get myBadgeTitle => 'Mein Badge';
 
   @override
@@ -1343,6 +1368,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureNotificationGroupingDesc =>
       'Mitglieder können den Benachrichtigungs-Feed nach Typ, Tag oder Mitglied gruppieren; ein Tipp auf das Gruppensymbol führt zurück zur flachen Liste.';
+
+  @override
+  String get featureBookingPoliciesTitle => 'Buchungsregeln';
+
+  @override
+  String get featureBookingPoliciesDesc =>
+      'Konfigurierbares Buchungsverhalten: vergangene Buchungen, Minutenbuchungen außerhalb der Arbeitszeiten, Admin-Check-out.';
 
   @override
   String get helpTitle => 'Hilfe';
@@ -2807,6 +2839,18 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get editorLevelBookableOff => 'Nicht als Ganzes buchbar';
+
+  @override
+  String get bookingPastError =>
+      'Diese Buchung liegt vollständig in der Vergangenheit.';
+
+  @override
+  String get bookingWalkUpTodayError =>
+      'Ein spontaner Check-in muss heute beginnen.';
+
+  @override
+  String get bookingOutsideHoursError =>
+      'Buchungen müssen innerhalb der Arbeitszeiten liegen.';
 
   @override
   String get membersTitle => 'Mitglieder & Tarife';

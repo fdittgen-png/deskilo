@@ -154,6 +154,11 @@ class FeaturesScreen extends ConsumerWidget {
               'Members may fold the notification feed into groups by '
                   'type, day or member; tapping the group symbol '
                   'returns to the flat list.',
+        WorkspaceFeature.bookingPolicies =>
+          l10n?.featureBookingPoliciesDesc ??
+              'Owner-configurable booking behavior: past bookings, '
+                  'minute bookings outside the working hours, and '
+                  'check-out by admins.',
       };
 
   Future<void> _toggle(

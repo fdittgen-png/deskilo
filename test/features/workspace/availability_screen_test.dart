@@ -263,4 +263,39 @@ void main() {
     expect(created.reason, 'Deep clean');
     expect(find.text('Deep clean'), findsOneWidget);
   });
+
+  testWidgets('#600 — the booking-policy switches render OFF, toggling '
+      'one persists its booking_rules key', (tester) async {
+    final workspace = await pumpAvailability(tester);
+
+    final pastSwitch = find.byKey(const Key('policy-allow-past'));
+    await tester.ensureVisible(pastSwitch);
+    expect(tester.widget<SwitchListTile>(pastSwitch).value, isFalse);
+
+    await tester.tap(pastSwitch);
+    await tester.pumpAndSettle();
+    expect(
+      workspace.bookingPolicies['ws-1']?.allowPastBookings,
+      isTrue,
+      reason: 'the toggle writes allow_past_bookings',
+    );
+    expect(tester.widget<SwitchListTile>(pastSwitch).value, isTrue);
+
+    final adminSwitch = find.byKey(const Key('policy-admin-checkout'));
+    await tester.ensureVisible(adminSwitch);
+    await tester.tap(adminSwitch);
+    await tester.pumpAndSettle();
+    expect(workspace.bookingPolicies['ws-1']?.adminCheckOut, isTrue);
+    expect(workspace.bookingPolicies['ws-1']?.gridWithinHours, isFalse);
+  });
+
+  testWidgets('#600 — the bookingPolicies flag OFF hides the section',
+      (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+      featureFlags: {'bookingPolicies': false},
+    );
+    await pumpAvailability(tester, workspace: workspace);
+    expect(find.byKey(const Key('policy-allow-past')), findsNothing);
+    expect(find.byKey(const Key('policy-grid-hours')), findsNothing);
+  });
 }

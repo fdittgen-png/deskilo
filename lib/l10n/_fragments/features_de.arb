@@ -89,5 +89,7 @@
   "featureNotificationGroupingDesc": "Mitglieder können den Benachrichtigungs-Feed nach Typ, Tag oder Mitglied gruppieren; ein Tipp auf das Gruppensymbol führt zurück zur flachen Liste.",
   "@featureNotificationGroupingDesc": {
     "description": "Feature-registry completeness (#598)"
-  }
+  },
+  "featureBookingPoliciesTitle": "Buchungsregeln",
+  "featureBookingPoliciesDesc": "Konfigurierbares Buchungsverhalten: vergangene Buchungen, Minutenbuchungen außerhalb der Arbeitszeiten, Admin-Check-out."
 }

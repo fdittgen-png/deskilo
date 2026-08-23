@@ -27,5 +27,12 @@
   "availabilityHalfDayHours": "Horas facturadas como media jornada",
   "availabilityFullDayHours": "Horas facturadas como jornada completa",
   "availabilityHourOption": "{count} h",
-  "availabilityWorkHoursInvalid": "Debe cumplirse: inicio < límite de media jornada < fin."
+  "availabilityWorkHoursInvalid": "Debe cumplirse: inicio < límite de media jornada < fin.",
+  "availabilityPoliciesTitle": "Políticas de reserva",
+  "policyAllowPastTitle": "Permitir reservas pasadas",
+  "policyAllowPastDesc": "Los miembros pueden registrar una reserva ya finalizada.",
+  "policyGridHoursTitle": "Reservas por minutos dentro del horario laboral",
+  "policyGridHoursDesc": "Limitar las reservas por minutos a la jornada laboral; los check-ins vespertinos siguen siendo posibles.",
+  "policyAdminCheckoutTitle": "Los administradores pueden hacer el check-out de los miembros",
+  "policyAdminCheckoutDesc": "Un administrador puede finalizar el check-in en curso de un miembro."
 }

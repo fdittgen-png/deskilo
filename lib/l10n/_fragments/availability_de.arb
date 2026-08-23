@@ -27,5 +27,12 @@
   "availabilityHalfDayHours": "Stunden, die als halber Tag gelten",
   "availabilityFullDayHours": "Stunden, die als ganzer Tag gelten",
   "availabilityHourOption": "{count} h",
-  "availabilityWorkHoursInvalid": "Es muss gelten: Beginn < Halbtagsgrenze < Ende."
+  "availabilityWorkHoursInvalid": "Es muss gelten: Beginn < Halbtagsgrenze < Ende.",
+  "availabilityPoliciesTitle": "Buchungsregeln",
+  "policyAllowPastTitle": "Vergangene Buchungen erlauben",
+  "policyAllowPastDesc": "Mitglieder können eine bereits beendete Buchung nachtragen.",
+  "policyGridHoursTitle": "Minutenbuchungen innerhalb der Arbeitszeiten",
+  "policyGridHoursDesc": "Minutenraster-Buchungen auf den Arbeitstag begrenzen; Abend-Check-ins bleiben möglich.",
+  "policyAdminCheckoutTitle": "Admins dürfen Mitglieder auschecken",
+  "policyAdminCheckoutDesc": "Ein Admin kann den laufenden Check-in eines Mitglieds beenden."
 }

@@ -215,6 +215,30 @@ class AppLocalizationsEn extends AppLocalizations {
       'The day must run start < half-day boundary < end.';
 
   @override
+  String get availabilityPoliciesTitle => 'Booking policies';
+
+  @override
+  String get policyAllowPastTitle => 'Allow past bookings';
+
+  @override
+  String get policyAllowPastDesc =>
+      'Members may record a booking that already ended (backfill).';
+
+  @override
+  String get policyGridHoursTitle => 'Minute bookings within working hours';
+
+  @override
+  String get policyGridHoursDesc =>
+      'Confine minute-grid bookings to the working day; evening walk-ups stay possible.';
+
+  @override
+  String get policyAdminCheckoutTitle => 'Admins may check members out';
+
+  @override
+  String get policyAdminCheckoutDesc =>
+      'An admin can end a member\'s running check-in.';
+
+  @override
   String get myBadgeTitle => 'My badge';
 
   @override
@@ -1331,6 +1355,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureNotificationGroupingDesc =>
       'Members may fold the notification feed into groups by type, day or member; tapping the group symbol returns to the flat list.';
+
+  @override
+  String get featureBookingPoliciesTitle => 'Booking policies';
+
+  @override
+  String get featureBookingPoliciesDesc =>
+      'Owner-configurable booking behavior: past bookings, minute bookings outside the working hours, and check-out by admins.';
 
   @override
   String get helpTitle => 'Help';
@@ -2778,6 +2809,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorLevelBookableOff => 'Not bookable as a whole';
+
+  @override
+  String get bookingPastError => 'This booking lies entirely in the past.';
+
+  @override
+  String get bookingWalkUpTodayError => 'A walk-up check-in must start today.';
+
+  @override
+  String get bookingOutsideHoursError =>
+      'Bookings must stay within the working hours.';
 
   @override
   String get membersTitle => 'Members & plans';

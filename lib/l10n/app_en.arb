@@ -244,6 +244,13 @@
     }
   },
   "availabilityWorkHoursInvalid": "The day must run start < half-day boundary < end.",
+  "availabilityPoliciesTitle": "Booking policies",
+  "policyAllowPastTitle": "Allow past bookings",
+  "policyAllowPastDesc": "Members may record a booking that already ended (backfill).",
+  "policyGridHoursTitle": "Minute bookings within working hours",
+  "policyGridHoursDesc": "Confine minute-grid bookings to the working day; evening walk-ups stay possible.",
+  "policyAdminCheckoutTitle": "Admins may check members out",
+  "policyAdminCheckoutDesc": "An admin can end a member's running check-in.",
   "myBadgeTitle": "My badge",
   "billSubscription": "Subscription {pct}%",
   "@billSubscription": {
@@ -1705,6 +1712,8 @@
   "@featureNotificationGroupingDesc": {
     "description": "Feature-registry completeness (#598)"
   },
+  "featureBookingPoliciesTitle": "Booking policies",
+  "featureBookingPoliciesDesc": "Owner-configurable booking behavior: past bookings, minute bookings outside the working hours, and check-out by admins.",
   "helpTitle": "Help",
   "helpContents": "Contents",
   "inviteSectionTitle": "Invite someone",
@@ -3506,6 +3515,9 @@
   "@editorLevelBookableOff": {
     "description": "Level row booking-state subtitle in the editor (#466)"
   },
+  "bookingPastError": "This booking lies entirely in the past.",
+  "bookingWalkUpTodayError": "A walk-up check-in must start today.",
+  "bookingOutsideHoursError": "Bookings must stay within the working hours.",
   "membersTitle": "Members & plans",
   "@membersTitle": {
     "description": "Title of the owner-only member management screen + its settings entry"

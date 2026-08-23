@@ -23,5 +23,8 @@
   "deskDetail": "Ganzer Tisch",
   "deskSupplementLabel": "Tisch-Reservierungen",
   "editorLevelBookableOn": "Als Ganzes buchbar",
-  "editorLevelBookableOff": "Nicht als Ganzes buchbar"
+  "editorLevelBookableOff": "Nicht als Ganzes buchbar",
+  "bookingPastError": "Diese Buchung liegt vollständig in der Vergangenheit.",
+  "bookingWalkUpTodayError": "Ein spontaner Check-in muss heute beginnen.",
+  "bookingOutsideHoursError": "Buchungen müssen innerhalb der Arbeitszeiten liegen."
 }

@@ -94,5 +94,12 @@
       }
     }
   },
-  "availabilityWorkHoursInvalid": "The day must run start < half-day boundary < end."
+  "availabilityWorkHoursInvalid": "The day must run start < half-day boundary < end.",
+  "availabilityPoliciesTitle": "Booking policies",
+  "policyAllowPastTitle": "Allow past bookings",
+  "policyAllowPastDesc": "Members may record a booking that already ended (backfill).",
+  "policyGridHoursTitle": "Minute bookings within working hours",
+  "policyGridHoursDesc": "Confine minute-grid bookings to the working day; evening walk-ups stay possible.",
+  "policyAdminCheckoutTitle": "Admins may check members out",
+  "policyAdminCheckoutDesc": "An admin can end a member's running check-in."
 }

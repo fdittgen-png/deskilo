@@ -27,5 +27,12 @@
   "availabilityHalfDayHours": "Heures facturées comme demi-journée",
   "availabilityFullDayHours": "Heures facturées comme journée complète",
   "availabilityHourOption": "{count} h",
-  "availabilityWorkHoursInvalid": "La journée doit respecter début < limite de demi-journée < fin."
+  "availabilityWorkHoursInvalid": "La journée doit respecter début < limite de demi-journée < fin.",
+  "availabilityPoliciesTitle": "Règles de réservation",
+  "policyAllowPastTitle": "Autoriser les réservations passées",
+  "policyAllowPastDesc": "Les membres peuvent enregistrer une réservation déjà terminée (rattrapage).",
+  "policyGridHoursTitle": "Réservations à la minute dans les heures d'ouverture",
+  "policyGridHoursDesc": "Limiter les réservations à la minute à la journée de travail ; les check-ins du soir restent possibles.",
+  "policyAdminCheckoutTitle": "Les admins peuvent faire le check-out des membres",
+  "policyAdminCheckoutDesc": "Un admin peut terminer le check-in en cours d'un membre."
 }

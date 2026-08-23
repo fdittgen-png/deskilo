@@ -9,6 +9,7 @@ import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
+import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:deskilo/core/badge/app_badge.dart';
 import 'package:deskilo/core/realtime/realtime_providers.dart';
@@ -834,6 +835,30 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     BookingGranularity granularity,
   ) async {
     bookingGranularities[workspaceId] = granularity;
+  }
+
+  /// The #600 policy switches per workspace; all OFF when unseeded.
+  final Map<String, BookingPolicies> bookingPolicies = {};
+
+  @override
+  Future<BookingPolicies> fetchBookingPolicies(String workspaceId) async =>
+      bookingPolicies[workspaceId] ?? const BookingPolicies();
+
+  @override
+  Future<void> setBookingPolicy(
+    String workspaceId,
+    String key, {
+    required bool enabled,
+  }) async {
+    final p = bookingPolicies[workspaceId] ?? const BookingPolicies();
+    bookingPolicies[workspaceId] = switch (key) {
+      BookingPolicies.allowPastBookingsKey =>
+        p.copyWith(allowPastBookings: enabled),
+      BookingPolicies.gridWithinHoursKey =>
+        p.copyWith(gridWithinHours: enabled),
+      BookingPolicies.adminCheckOutKey => p.copyWith(adminCheckOut: enabled),
+      _ => p,
+    };
   }
 
   /// Working day per workspace (#446); defaults like the real repo.

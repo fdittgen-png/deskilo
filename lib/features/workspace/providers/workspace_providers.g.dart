@@ -509,6 +509,53 @@ final class BookingGranularityProvider
 String _$bookingGranularityHash() =>
     r'bf5e00802791de2482d6dd476a2a5ab5c4a698b2';
 
+/// The #600 booking-policy switches of the active workspace; all OFF
+/// while no workspace is selected or the keys are absent.
+
+@ProviderFor(bookingPolicies)
+final bookingPoliciesProvider = BookingPoliciesProvider._();
+
+/// The #600 booking-policy switches of the active workspace; all OFF
+/// while no workspace is selected or the keys are absent.
+
+final class BookingPoliciesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<BookingPolicies>,
+          BookingPolicies,
+          FutureOr<BookingPolicies>
+        >
+    with $FutureModifier<BookingPolicies>, $FutureProvider<BookingPolicies> {
+  /// The #600 booking-policy switches of the active workspace; all OFF
+  /// while no workspace is selected or the keys are absent.
+  BookingPoliciesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'bookingPoliciesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$bookingPoliciesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<BookingPolicies> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<BookingPolicies> create(Ref ref) {
+    return bookingPolicies(ref);
+  }
+}
+
+String _$bookingPoliciesHash() => r'fbcb72f764ca9790de2ffcdc3be5e3ef1499084f';
+
 /// Working day of the active workspace (#446); [WorkHours.defaults]
 /// while no workspace is selected or the keys are absent.
 

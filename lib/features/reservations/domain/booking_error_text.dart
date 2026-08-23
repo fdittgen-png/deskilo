@@ -47,6 +47,19 @@ String bookingErrorText(
     return l10n?.planSlotError(step) ??
         'Bookings must start and end on the $step-minute grid.';
   }
+  // #600 booking-policy refusals (migration 0116).
+  if (message.contains('lies entirely in the past')) {
+    return l10n?.bookingPastError ??
+        'This booking lies entirely in the past.';
+  }
+  if (message.contains('must start today')) {
+    return l10n?.bookingWalkUpTodayError ??
+        'A walk-up check-in must start today.';
+  }
+  if (message.contains('stay within the working hours')) {
+    return l10n?.bookingOutsideHoursError ??
+        'Bookings must stay within the working hours.';
+  }
   // Presence rule (#408, migration 0077): check-in only inside
   // [starts − 15 min, end).
   if (message.contains('check-in window not open yet')) {

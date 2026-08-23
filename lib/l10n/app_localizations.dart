@@ -488,6 +488,48 @@ abstract class AppLocalizations {
   /// **'The day must run start < half-day boundary < end.'**
   String get availabilityWorkHoursInvalid;
 
+  /// No description provided for @availabilityPoliciesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking policies'**
+  String get availabilityPoliciesTitle;
+
+  /// No description provided for @policyAllowPastTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow past bookings'**
+  String get policyAllowPastTitle;
+
+  /// No description provided for @policyAllowPastDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Members may record a booking that already ended (backfill).'**
+  String get policyAllowPastDesc;
+
+  /// No description provided for @policyGridHoursTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Minute bookings within working hours'**
+  String get policyGridHoursTitle;
+
+  /// No description provided for @policyGridHoursDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Confine minute-grid bookings to the working day; evening walk-ups stay possible.'**
+  String get policyGridHoursDesc;
+
+  /// No description provided for @policyAdminCheckoutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Admins may check members out'**
+  String get policyAdminCheckoutTitle;
+
+  /// No description provided for @policyAdminCheckoutDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'An admin can end a member\'s running check-in.'**
+  String get policyAdminCheckoutDesc;
+
   /// No description provided for @myBadgeTitle.
   ///
   /// In en, this message translates to:
@@ -2485,6 +2527,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Members may fold the notification feed into groups by type, day or member; tapping the group symbol returns to the flat list.'**
   String get featureNotificationGroupingDesc;
+
+  /// No description provided for @featureBookingPoliciesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking policies'**
+  String get featureBookingPoliciesTitle;
+
+  /// No description provided for @featureBookingPoliciesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner-configurable booking behavior: past bookings, minute bookings outside the working hours, and check-out by admins.'**
+  String get featureBookingPoliciesDesc;
 
   /// No description provided for @helpTitle.
   ///
@@ -5065,6 +5119,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not bookable as a whole'**
   String get editorLevelBookableOff;
+
+  /// No description provided for @bookingPastError.
+  ///
+  /// In en, this message translates to:
+  /// **'This booking lies entirely in the past.'**
+  String get bookingPastError;
+
+  /// No description provided for @bookingWalkUpTodayError.
+  ///
+  /// In en, this message translates to:
+  /// **'A walk-up check-in must start today.'**
+  String get bookingWalkUpTodayError;
+
+  /// No description provided for @bookingOutsideHoursError.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings must stay within the working hours.'**
+  String get bookingOutsideHoursError;
 
   /// Title of the owner-only member management screen + its settings entry
   ///

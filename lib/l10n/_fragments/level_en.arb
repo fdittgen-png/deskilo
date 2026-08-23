@@ -53,5 +53,8 @@
   "editorLevelBookableOff": "Not bookable as a whole",
   "@editorLevelBookableOff": {
     "description": "Level row booking-state subtitle in the editor (#466)"
-  }
+  },
+  "bookingPastError": "This booking lies entirely in the past.",
+  "bookingWalkUpTodayError": "A walk-up check-in must start today.",
+  "bookingOutsideHoursError": "Bookings must stay within the working hours."
 }

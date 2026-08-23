@@ -9,6 +9,7 @@ import '../../../core/time/work_hours.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../data/supabase_workspace_repository.dart';
 import '../domain/booking_granularity.dart';
+import '../domain/booking_policies.dart';
 import '../domain/closure_day.dart';
 import '../domain/member.dart';
 import '../domain/member_note.dart';
@@ -145,6 +146,17 @@ Future<BookingGranularity> bookingGranularity(Ref ref) async {
   return ref
       .watch(workspaceRepositoryProvider)
       .fetchBookingGranularity(workspace.id);
+}
+
+/// The #600 booking-policy switches of the active workspace; all OFF
+/// while no workspace is selected or the keys are absent.
+@riverpod
+Future<BookingPolicies> bookingPolicies(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const BookingPolicies();
+  return ref
+      .watch(workspaceRepositoryProvider)
+      .fetchBookingPolicies(workspace.id);
 }
 
 /// Working day of the active workspace (#446); [WorkHours.defaults]

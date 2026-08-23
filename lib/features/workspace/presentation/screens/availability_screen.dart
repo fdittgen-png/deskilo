@@ -10,6 +10,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/time/work_hours.dart';
 import '../../domain/booking_granularity.dart';
+import '../../domain/booking_policies.dart';
 import '../../domain/closure_day.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
@@ -112,6 +113,30 @@ class AvailabilityScreen extends ConsumerWidget {
     ref.invalidate(workHoursProvider);
   }
 
+  Future<void> _setPolicy(
+    BuildContext context,
+    WidgetRef ref,
+    String key,
+    bool enabled,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    try {
+      await ref
+          .read(workspaceRepositoryProvider)
+          .setBookingPolicy(workspace.id, key, enabled: enabled);
+    } catch (e, st) {
+      debugPrint('set booking policy failed: $e\n$st');
+      TraceLogger.instance.error('workspace', 'set booking policy failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      _showGenericError(context, l10n);
+      return;
+    }
+    ref.invalidate(bookingPoliciesProvider);
+  }
+
   Future<void> _pickWorkTime(
     BuildContext context,
     WidgetRef ref,
@@ -204,6 +229,12 @@ class AvailabilityScreen extends ConsumerWidget {
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.workingHours);
     final workHours = ref.watch(workHoursProvider).value ?? WorkHours.defaults;
+    // #600: the owner-configurable booking-behavior matrix.
+    final policiesOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.bookingPolicies);
+    final policies =
+        ref.watch(bookingPoliciesProvider).value ?? const BookingPolicies();
 
     return Scaffold(
       appBar: AppBar(
@@ -404,6 +435,43 @@ class AvailabilityScreen extends ConsumerWidget {
                     ),
                   ),
                 ],
+              ],
+              if (policiesOn) ...[
+                _SectionHeader(
+                  l10n?.availabilityPoliciesTitle ?? 'Booking policies',
+                ),
+                SwitchListTile(
+                  key: const Key('policy-allow-past'),
+                  title: Text(l10n?.policyAllowPastTitle ??
+                      'Allow past bookings'),
+                  subtitle: Text(l10n?.policyAllowPastDesc ??
+                      'Members may record a booking that already '
+                          'ended (backfill).'),
+                  value: policies.allowPastBookings,
+                  onChanged: (v) => _setPolicy(context, ref,
+                      BookingPolicies.allowPastBookingsKey, v),
+                ),
+                SwitchListTile(
+                  key: const Key('policy-grid-hours'),
+                  title: Text(l10n?.policyGridHoursTitle ??
+                      'Minute bookings within working hours'),
+                  subtitle: Text(l10n?.policyGridHoursDesc ??
+                      'Confine minute-grid bookings to the working '
+                          'day; evening walk-ups stay possible.'),
+                  value: policies.gridWithinHours,
+                  onChanged: (v) => _setPolicy(context, ref,
+                      BookingPolicies.gridWithinHoursKey, v),
+                ),
+                SwitchListTile(
+                  key: const Key('policy-admin-checkout'),
+                  title: Text(l10n?.policyAdminCheckoutTitle ??
+                      'Admins may check members out'),
+                  subtitle: Text(l10n?.policyAdminCheckoutDesc ??
+                      "An admin can end a member's running check-in."),
+                  value: policies.adminCheckOut,
+                  onChanged: (v) => _setPolicy(context, ref,
+                      BookingPolicies.adminCheckOutKey, v),
+                ),
               ],
               _SectionHeader(
                 l10n?.availabilityClosureDays ?? 'Closure days',
