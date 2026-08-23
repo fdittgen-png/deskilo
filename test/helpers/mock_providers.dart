@@ -29,6 +29,7 @@ import 'package:deskilo/core/scan/front_camera.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/core/scan/qr_scan_widget.dart';
 import 'package:deskilo/core/storage/active_workspace_store.dart';
+import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/core/storage/note_seen_store.dart';
 import 'package:deskilo/core/storage/notification_filter_store.dart';
 import 'package:deskilo/core/time/clock.dart';
@@ -1054,6 +1055,7 @@ List<Override> standardTestOverrides({
   FakeAppBadge? badge,
   NoteSeenStore? noteSeen,
   NotificationFilterStore? notificationFilters,
+  HelpHintStore? helpHints,
 }) {
   return [
     // No-op realtime by default: the real impl touches Supabase.instance,
@@ -1103,6 +1105,9 @@ List<Override> standardTestOverrides({
     // #581: the bell filter persists on-device — in-memory for tests.
     notificationFilterStoreProvider.overrideWithValue(
         notificationFilters ?? InMemoryNotificationFilterStore()),
+    // #606: dismissed help hints persist on-device — in-memory for tests.
+    helpHintStoreProvider
+        .overrideWithValue(helpHints ?? InMemoryHelpHintStore()),
     profileRepositoryProvider
         .overrideWithValue(profile ?? FakeProfileRepository()),
     nfcUidReaderProvider.overrideWithValue(nfc ?? FakeNfcUidReader()),

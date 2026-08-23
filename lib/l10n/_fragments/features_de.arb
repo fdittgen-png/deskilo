@@ -95,5 +95,7 @@
   "featureNfcSeatTagsTitle": "NFC/RFID-Tags an Stühlen",
   "featureNfcSeatTagsDesc": "Ein physischer NFC/RFID-Tag an einem Stuhl führt zu seinem Platz wie die gedruckte QR-Karte; das Feld füllt sich durch Antippen des Chips.",
   "featureQrBadgesTitle": "QR-Badges",
-  "featureQrBadgesDesc": "Druckbare QR-Badge-Karten für den Kiosk, neben den NFC/RFID-Karten."
+  "featureQrBadgesDesc": "Druckbare QR-Badge-Karten für den Kiosk, neben den NFC/RFID-Karten.",
+  "featureFormHelpHintsTitle": "Hilfe-Hinweise",
+  "featureFormHelpHintsDesc": "Kurze, ausblendbare Hinweise auf Formularen und Bildschirmen, jeweils mit Link zum passenden Abschnitt des Handbuchs."
 }

@@ -95,5 +95,7 @@
   "featureNfcSeatTagsTitle": "Tag NFC/RFID delle sedie",
   "featureNfcSeatTagsDesc": "Un tag NFC/RFID fisico su una sedia porta al suo posto come la scheda QR stampata; il campo si compila avvicinando il chip.",
   "featureQrBadgesTitle": "Badge QR",
-  "featureQrBadgesDesc": "Schede badge QR stampabili per il chiosco, accanto alle carte NFC/RFID."
+  "featureQrBadgesDesc": "Schede badge QR stampabili per il chiosco, accanto alle carte NFC/RFID.",
+  "featureFormHelpHintsTitle": "Suggerimenti di aiuto",
+  "featureFormHelpHintsDesc": "Brevi suggerimenti richiudibili su moduli e schermate, ognuno collegato alla sezione corrispondente della guida."
 }

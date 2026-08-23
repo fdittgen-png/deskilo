@@ -1378,10 +1378,113 @@ class AppLocalizationsEn extends AppLocalizations {
       'Printable QR badge cards for the kiosk, beside the NFC/RFID cards.';
 
   @override
+  String get featureFormHelpHintsTitle => 'Help hints';
+
+  @override
+  String get featureFormHelpHintsDesc =>
+      'Short dismissible how-to hints on forms and screens, each linking into the matching guide section.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
   String get helpContents => 'Contents';
+
+  @override
+  String get helpHintLearnMore => 'Learn more';
+
+  @override
+  String get helpHintDismiss => 'Dismiss hint';
+
+  @override
+  String get helpHintRestoreTitle => 'Show help hints again';
+
+  @override
+  String get helpHintRestored => 'Help hints will be shown again.';
+
+  @override
+  String get helpHintReserve =>
+      'Pick a day and time window, then tap a free seat to book it.';
+
+  @override
+  String get helpHintReserveTopic => 'Reserve hub';
+
+  @override
+  String get helpHintPlan =>
+      'The live floor plan: tap a free seat to book it, tap your own booking to check in.';
+
+  @override
+  String get helpHintPlanTopic => 'floor plan';
+
+  @override
+  String get helpHintCalendar =>
+      'Browse bookings by month; tap a day to see and manage its reservations.';
+
+  @override
+  String get helpHintCalendarTopic => 'Calendar';
+
+  @override
+  String get helpHintEvents =>
+      'Everything that happened, in one feed. Decisions waiting for you sit on top; the chips filter the rest.';
+
+  @override
+  String get helpHintEventsTopic => 'confirmations';
+
+  @override
+  String get helpHintEditor =>
+      'Draw rooms and desks, stamp seats onto them — tap a seat twice to edit its properties.';
+
+  @override
+  String get helpHintEditorTopic => 'space editor';
+
+  @override
+  String get helpHintAvailability =>
+      'Set the open weekdays and working hours, and add closure days nobody can book.';
+
+  @override
+  String get helpHintAvailabilityTopic => 'Availability';
+
+  @override
+  String get helpHintFeatures =>
+      'Switch workspace functionality on or off — every member\'s app follows immediately.';
+
+  @override
+  String get helpHintFeaturesTopic => 'Features';
+
+  @override
+  String get helpHintMembers =>
+      'Invite members, set their plan percentage and role, and manage their badges.';
+
+  @override
+  String get helpHintMembersTopic => 'Members & plans';
+
+  @override
+  String get helpHintMoney =>
+      'Your monthly bill: browse months with the arrows; pay, export or share from here.';
+
+  @override
+  String get helpHintMoneyTopic => 'Money';
+
+  @override
+  String get helpHintValidation =>
+      'Decide which actions need confirmation, who confirms, and how many approvals it takes.';
+
+  @override
+  String get helpHintValidationTopic => 'confirmations';
+
+  @override
+  String get helpHintWorkspace =>
+      'Country, currency, language and billing details — documents and taxes follow these settings.';
+
+  @override
+  String get helpHintWorkspaceTopic => 'Workspace settings';
+
+  @override
+  String get helpHintBadges =>
+      'Issue a printable QR badge or register an NFC card; revoke lost badges any time.';
+
+  @override
+  String get helpHintBadgesTopic => 'NFC badges';
 
   @override
   String get inviteSectionTitle => 'Invite someone';

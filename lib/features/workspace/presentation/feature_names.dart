@@ -82,4 +82,6 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureNfcSeatTagsTitle ?? 'NFC/RFID chair tags',
       WorkspaceFeature.qrBadges =>
         l10n?.featureQrBadgesTitle ?? 'QR badges',
+      WorkspaceFeature.formHelpHints =>
+        l10n?.featureFormHelpHintsTitle ?? 'Help hints',
     };

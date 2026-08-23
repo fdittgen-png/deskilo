@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -78,7 +79,10 @@ class EditorScreen extends ConsumerWidget {
         icon: const Icon(Icons.add),
         label: Text(l10n?.editorAddLevel ?? 'Add level'),
       ),
-      body: switch (levelsAsync) {
+      // #606 — the editor's contextual how-to; gated inside the widget.
+      body: Column(children: [
+        const HelpHint(HelpHintId.editor),
+        Expanded(child: switch (levelsAsync) {
         AsyncData(value: final levels) when levels.isEmpty => Center(
             child: Padding(
               padding: AppSpacing.xlAll,
@@ -97,7 +101,8 @@ class EditorScreen extends ConsumerWidget {
             ),
           ),
         _ => const LoadingView(),
-      },
+        }),
+      ]),
     );
   }
 }

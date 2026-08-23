@@ -95,5 +95,7 @@
   "featureNfcSeatTagsTitle": "Tags NFC/RFID des chaises",
   "featureNfcSeatTagsDesc": "Un tag NFC/RFID physique sur une chaise mène à sa place comme la carte QR imprimée ; le champ se remplit en approchant la puce.",
   "featureQrBadgesTitle": "Badges QR",
-  "featureQrBadgesDesc": "Cartes badge QR imprimables pour le kiosque, à côté des cartes NFC/RFID."
+  "featureQrBadgesDesc": "Cartes badge QR imprimables pour le kiosque, à côté des cartes NFC/RFID.",
+  "featureFormHelpHintsTitle": "Astuces d'aide",
+  "featureFormHelpHintsDesc": "Courtes astuces refermables sur les formulaires et écrans, chacune renvoyant à la section correspondante du guide."
 }

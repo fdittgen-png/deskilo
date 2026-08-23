@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/help/help_hint.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -782,6 +783,8 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     final header = Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        // #606 — the plan's contextual how-to; gated inside the widget.
+        const HelpHint(HelpHintId.plan),
         _scrollerRow(at, granularity, levels, level),
         if (!dayOpen) _closedDayBanner(l10n),
       ],

@@ -220,5 +220,7 @@
   "featureNfcSeatTagsTitle": "NFC/RFID chair tags",
   "featureNfcSeatTagsDesc": "A physical NFC/RFID tag on a chair resolves to its seat like the printed QR card; owners fill the tag field by tapping the chip.",
   "featureQrBadgesTitle": "QR badges",
-  "featureQrBadgesDesc": "Printable QR badge cards for the kiosk, beside the NFC/RFID cards."
+  "featureQrBadgesDesc": "Printable QR badge cards for the kiosk, beside the NFC/RFID cards.",
+  "featureFormHelpHintsTitle": "Help hints",
+  "featureFormHelpHintsDesc": "Short dismissible how-to hints on forms and screens, each linking into the matching guide section."
 }

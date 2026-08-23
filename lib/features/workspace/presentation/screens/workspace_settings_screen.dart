@@ -12,6 +12,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/format/cents.dart';
+import '../../../../core/help/help_hint.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -859,6 +860,8 @@ class _WorkspaceSettingsScreenState
               child: ListView(
                 padding: AppSpacing.gutterAll,
                 children: [
+                  // #606 — contextual how-to; gated inside the widget.
+                  const HelpHint(HelpHintId.workspaceSettings),
                   Text(
                     workspace.name,
                     style: Theme.of(context).textTheme.titleLarge,

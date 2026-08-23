@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../../../../core/help/help_hint.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/links/link_launcher.dart';
@@ -1139,6 +1140,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
+                          // #606 — gated inside the widget.
+                          const HelpHint(HelpHintId.money),
                           periodHeader,
                           balanceCard,
                           ...actionChildren,
@@ -1159,6 +1162,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             return ListView(
               padding: AppSpacing.mdAll,
               children: [
+                // #606 — contextual how-to; gated inside the widget.
+                const HelpHint(HelpHintId.money),
                 periodHeader,
                 ...billChildren,
                 ...actionChildren,

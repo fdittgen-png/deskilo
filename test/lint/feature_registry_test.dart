@@ -31,7 +31,9 @@ import 'package:flutter_test/flutter_test.dart';
 // behavior matrix: past bookings, grid-vs-hours, admin check-out).
 // 37→39 (2026-08-23): #604 nfcSeatTags (chair-tag config + resolution,
 // #585 retro-flagged) and qrBadges (QR badge issuance beside nfcBadges).
-const int _expectedFeatureCount = 39;
+// 39→40 (2026-08-23): #606 formHelpHints (dismissible contextual help
+// hints deep-linking into the guide; Settings restores dismissed ones).
+const int _expectedFeatureCount = 40;
 
 void main() {
   test('every functionality is registered — the pin', () {

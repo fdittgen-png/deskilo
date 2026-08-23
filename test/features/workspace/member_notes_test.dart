@@ -260,7 +260,11 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('note-dismiss-note-offline')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byIcon(Icons.close));
+    // Scoped: the events screen's help hint (#606) has an X of its own.
+    await tester.tap(find.descendant(
+      of: find.byKey(const ValueKey('conversation-sheet')),
+      matching: find.byIcon(Icons.close),
+    ));
     await tester.pumpAndSettle();
     await tester.pageBack();
     await tester.pumpAndSettle();
@@ -331,8 +335,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(workspace.memberNotes.last.toMemberId, 'member-2');
     expect(workspace.memberNotes.last.body, 'Turning it off now.');
-    // Close the thread to get back to the inbox rows.
-    await tester.tap(find.byIcon(Icons.close));
+    // Close the thread to get back to the inbox rows. Scoped: the
+    // events screen's help hint (#606) has an X of its own.
+    await tester.tap(find.descendant(
+      of: find.byKey(const ValueKey('conversation-sheet')),
+      matching: find.byIcon(Icons.close),
+    ));
     await tester.pumpAndSettle();
 
     // Swipe LEFT → confirmation first (#523), then the note is deleted.

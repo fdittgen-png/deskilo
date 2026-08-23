@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_hint.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -168,6 +169,10 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureQrBadgesDesc ??
               'Printable QR badge cards for the kiosk, beside the '
                   'NFC/RFID cards.',
+        WorkspaceFeature.formHelpHints =>
+          l10n?.featureFormHelpHintsDesc ??
+              'Short dismissible how-to hints on forms and screens, '
+                  'each linking into the matching guide section.',
       };
 
   Future<void> _toggle(
@@ -221,6 +226,8 @@ class FeaturesScreen extends ConsumerWidget {
           ? const LoadingView()
           : ListView(
               children: [
+                // #606 — contextual how-to; gated inside the widget.
+                const HelpHint(HelpHintId.features),
                 for (final entry in featureManifest.values)
                   _FeatureTile(
                     entry: entry,

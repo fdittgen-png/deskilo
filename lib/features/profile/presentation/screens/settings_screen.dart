@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/app_info.dart';
 import '../../../../core/files/file_picker.dart';
+import '../../../../core/help/help_hint_providers.dart';
 import '../../../../core/push/push_status_tile.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/locale/locale_controller.dart';
@@ -465,6 +466,28 @@ class SettingsScreen extends ConsumerWidget {
             title: Text(l10n?.helpTitle ?? 'Help'),
             onTap: () => context.push('/help'),
           ),
+          // #606 — bring every dismissed contextual hint back. Rides
+          // the same flag as the hints themselves: no hints, no row.
+          if (ref
+              .watch(enabledFeaturesSyncProvider)
+              .contains(WorkspaceFeature.formHelpHints))
+            ListTile(
+              key: const ValueKey('settings-restore-hints'),
+              leading: const Icon(Icons.lightbulb_outline),
+              title: Text(l10n?.helpHintRestoreTitle ??
+                  'Show help hints again'),
+              onTap: () async {
+                await ref
+                    .read(dismissedHelpHintsProvider.notifier)
+                    .restoreAll();
+                if (!context.mounted) return;
+                AppSnack.success(
+                  context,
+                  l10n?.helpHintRestored ??
+                      'Help hints will be shown again.',
+                );
+              },
+            ),
           // Kiosk escape hatch (0056, field report: "cannot be undone"):
           // a profile flagged as kiosk reverts ITSELF to a regular
           // member right here — the kiosk gate stops appearing on start.
