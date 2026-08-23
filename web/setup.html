@@ -103,6 +103,9 @@ const FEATURES=[
  ['planObjectDelete','Suppression d\'objets du plan','Supprimer des objets du plan encore référencés par des réservations (texte de substitution d\'audit).',1],
  ['notificationGrouping','Regroupement des notifications','Grouper le fil de notifications par type, jour ou membre.',1],
  ['bookingPolicies','Règles de réservation','Comportement de réservation configurable : réservations passées, minutes hors heures, check-out par un admin (section 2).',1],
+ ['nfcSeatTags','Tags NFC/RFID des chaises','Un tag physique sur une chaise mène à sa place comme la carte QR ; le champ se remplit en approchant la puce — aussi dans le navigateur (Chrome/Android).',1],
+ ['qrBadges','Badges QR','Cartes badge QR imprimables pour la borne, à côté des badges NFC/RFID.',1],
+ ['formHelpHints','Aides contextuelles','Un encart d\'aide sur chaque écran principal : le mode d\'emploi du formulaire, masquable, avec lien vers l\'aide complète ; réactivable dans les réglages.',1],
 ];
 const PERMS=[['manageRoles','Gérer les rôles et permissions'],['manageMembers','Gérer les membres'],['manageValidation','Configurer les règles de validation'],['workspaceSettings',"Modifier les réglages de l'espace"],['issueInvoices','Émettre les factures et rapprocher les paiements'],['viewFinances',"Consulter les finances de l'espace"],['manageDocuments','Gérer la bibliothèque de documents'],['manageServices','Gérer les services et forfaits'],['approveExpenses','Approuver les dépenses']];
 const PERM_DEFAULTS={co_owner:PERMS.map(p=>p[0]),admin:['manageMembers','manageDocuments','manageServices','approveExpenses','viewFinances'],member:[]};
@@ -205,9 +208,10 @@ function render(){
    '<tr><td>Absence (jamais pointé)</td><td>Reste « réservée » dans l\'historique — ou, avec Arrivée/départ auto, comptée honorée au balayage de fin de journée.</td></tr>'+
    '<tr><td>Annuler</td><td>Réservation future : un geste. Pointée en cours : annulable d\'un bloc, ou raccourcir la fin (« annuler le reste de la journée »). Passée ou pointée à retirer : demande de suppression validée. Admin : peut retirer la réservation d\'autrui (notifié au fil des événements).</td></tr>'+
    '<tr><td>Espaces entiers</td><td>Avec une règle de validation, la réservation bloque l\'espace et attend le quorum ; personne ne valide son propre événement.</td></tr>'+
+   '<tr><td>Badges à la borne</td><td>Deux supports au choix, activables séparément : cartes QR imprimables (« Badges QR ») et cartes NFC/RFID (« Badges RFID / NFC ») — enregistrées en approchant la carte, y compris depuis le navigateur.</td></tr>'+
    '</table>'})));
  // 3 floor plan
- const planBody=[h('p',{class:'hint'},"Décrivez la structure — l'app génère un plan de départ que vous affinerez dans l'éditeur (photos de fond, positions exactes).")];
+ const planBody=[h('p',{class:'hint'},"Décrivez la structure — l'app génère un plan de départ que vous affinerez dans l'éditeur (photos de fond, positions exactes). Les tags NFC/RFID des chaises se configurent dans l'éditeur de l'app : ouvrez la place et approchez la puce — le champ se remplit tout seul (Android, et navigateur Chrome/Android) ; la saisie en hexadécimal reste possible partout.")];
  S.levels.forEach((lv,li)=>{
   const offices=[];
   lv.offices.forEach((of,oi)=>{
