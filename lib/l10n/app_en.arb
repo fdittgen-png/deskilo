@@ -4832,6 +4832,7 @@
     "description": "Space sheet: the viewer already holds the reservation — the button below checks in"
   },
   "spaceCardSizeLabel": "Card size",
+  "spaceQrSizeLabel": "QR code size",
   "spaceCardSizeSmall": "Small",
   "spaceCardSizeMedium": "Medium",
   "spaceCardSizeLarge": "Large",

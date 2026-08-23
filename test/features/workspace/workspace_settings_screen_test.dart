@@ -356,10 +356,13 @@ void main() {
     await tester.pumpAndSettle();
     expect(saved, isEmpty);
 
-    // Again: small size, drop the chair line, export.
+    // Again: small card, LARGE code (#596 — the barcode sizes on its
+    // own), drop the chair line, export.
     await tester.tap(tile);
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('space-card-size-small')));
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('space-qr-size-large')));
     await tester.pump();
     await tester.tap(find.byKey(const Key('space-card-info-chair')));
     await tester.pump();

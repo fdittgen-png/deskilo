@@ -3803,6 +3803,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get spaceCardSizeLabel => 'Kartengröße';
 
   @override
+  String get spaceQrSizeLabel => 'Größe des QR-Codes';
+
+  @override
   String get spaceCardSizeSmall => 'Klein';
 
   @override

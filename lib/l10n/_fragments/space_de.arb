@@ -15,6 +15,7 @@
   "spaceKindSeat": "Platz",
   "spaceYoursNow": "Von dir für dieses Zeitfenster reserviert.",
   "spaceCardSizeLabel": "Kartengröße",
+  "spaceQrSizeLabel": "Größe des QR-Codes",
   "spaceCardSizeSmall": "Klein",
   "spaceCardSizeMedium": "Mittel",
   "spaceCardSizeLarge": "Groß",

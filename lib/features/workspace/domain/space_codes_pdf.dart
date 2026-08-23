@@ -21,6 +21,29 @@ typedef SpaceCodeEntry = ({
 /// code, ~2× the usual 10–15 cm scan-distance minimum.
 enum SpaceCardSize { small, medium, large }
 
+/// The barcode's own size on the card (#596) — independent of the card
+/// format, as a share of the card's usable height. MEDIUM reproduces
+/// the historical #584 proportions on every card; LARGE stops at 92%
+/// so the card padding keeps serving as the QR quiet zone; SMALL still
+/// clears the module-size floor on the smallest card (~19 mm edge).
+enum SpaceQrSize { small, medium, large }
+
+double _qrShareOf(SpaceQrSize size) => switch (size) {
+      SpaceQrSize.small => 0.55,
+      SpaceQrSize.medium => 0.78,
+      SpaceQrSize.large => 0.92,
+    };
+
+/// The QR edge, in PDF points, for a card/code size combination — the
+/// chosen share of the card's height inside its padding. Pure so the
+/// nine combinations are testable without rendering a document.
+double spaceQrEdge(SpaceCardSize card, SpaceQrSize qr) {
+  final g = _geometryOf(card);
+  return (g.height - 2 * _cardPadding) * _qrShareOf(qr);
+}
+
+const double _cardPadding = 8;
+
 /// Which information the owner puts on the cards (#584): printed as
 /// context lines AND embedded in the QR's URI, so a generic scanner
 /// app shows the names too. Declaration order is the print order.
@@ -37,12 +60,11 @@ enum SpaceCardInfo {
   final String wire;
 }
 
-/// Per-size geometry: card box, QR edge, grid, and type sizes. The
-/// medium card is the proven badge-sheet credit card (2×5 per A4).
+/// Per-size geometry: card box, grid, and type sizes. The medium card
+/// is the proven badge-sheet credit card (2×5 per A4).
 ({
   double width,
   double height,
-  double qr,
   int columns,
   int rows,
   double nameSize,
@@ -51,7 +73,6 @@ enum SpaceCardInfo {
       SpaceCardSize.small => (
           width: 60 * PdfPageFormat.mm,
           height: 40 * PdfPageFormat.mm,
-          qr: 26 * PdfPageFormat.mm,
           columns: 3,
           rows: 6,
           nameSize: 9,
@@ -60,7 +81,6 @@ enum SpaceCardInfo {
       SpaceCardSize.medium => (
           width: badgeCardWidth,
           height: badgeCardHeight,
-          qr: 38 * PdfPageFormat.mm,
           columns: 2,
           rows: 5,
           nameSize: 12,
@@ -69,7 +89,6 @@ enum SpaceCardInfo {
       SpaceCardSize.large => (
           width: 186 * PdfPageFormat.mm,
           height: 84 * PdfPageFormat.mm,
-          qr: 64 * PdfPageFormat.mm,
           columns: 1,
           rows: 3,
           nameSize: 18,
@@ -87,10 +106,12 @@ Future<Uint8List> buildSpaceCodesPdf({
   required pw.Font baseFont,
   required pw.Font boldFont,
   SpaceCardSize size = SpaceCardSize.medium,
+  SpaceQrSize qrSize = SpaceQrSize.medium,
 }) async {
   final doc = pw.Document();
   final theme = pw.ThemeData.withFont(base: baseFont, bold: boldFont);
   final g = _geometryOf(size);
+  final qrEdge = spaceQrEdge(size, qrSize);
   final perPage = g.columns * g.rows;
 
   pw.Widget card(SpaceCodeEntry entry) => pw.Container(
@@ -100,15 +121,15 @@ Future<Uint8List> buildSpaceCodesPdf({
           border: pw.Border.all(color: PdfColors.grey600, width: 0.5),
           borderRadius: const pw.BorderRadius.all(pw.Radius.circular(6)),
         ),
-        padding: const pw.EdgeInsets.all(8),
+        padding: const pw.EdgeInsets.all(_cardPadding),
         child: pw.Row(
           crossAxisAlignment: pw.CrossAxisAlignment.center,
           children: [
             pw.BarcodeWidget(
               barcode: pw.Barcode.qrCode(),
               data: entry.payload,
-              width: g.qr,
-              height: g.qr,
+              width: qrEdge,
+              height: qrEdge,
             ),
             pw.SizedBox(width: 8),
             pw.Expanded(

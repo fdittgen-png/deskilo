@@ -4,12 +4,18 @@ import 'package:flutter/material.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/space_codes_pdf.dart';
 
-/// The pair the dialog pops: chosen card size + selected info entries.
-typedef SpaceCodesOptions = ({SpaceCardSize size, Set<SpaceCardInfo> info});
+/// What the dialog pops: card size, the barcode's own size (#596),
+/// and the selected info entries.
+typedef SpaceCodesOptions = ({
+  SpaceCardSize size,
+  SpaceQrSize qrSize,
+  Set<SpaceCardInfo> info,
+});
 
-/// #584 — the space-card export options: size (S/M/L) and which
-/// information rides each card. Pops the chosen pair, or null on
-/// cancel; defaults are the historical card (medium, all info).
+/// #584/#596 — the space-card export options: card size (S/M/L), the
+/// QR code's own size (S/M/L, independent of the card), and which
+/// information rides each card. Pops the choices, or null on cancel;
+/// defaults are the historical card (medium/medium, all info).
 class SpaceCodesOptionsDialog extends StatefulWidget {
   const SpaceCodesOptionsDialog({super.key});
 
@@ -20,6 +26,7 @@ class SpaceCodesOptionsDialog extends StatefulWidget {
 
 class _SpaceCodesOptionsDialogState extends State<SpaceCodesOptionsDialog> {
   SpaceCardSize _size = SpaceCardSize.medium;
+  SpaceQrSize _qrSize = SpaceQrSize.medium;
   final Set<SpaceCardInfo> _info = {...SpaceCardInfo.values};
 
   String _sizeLabel(AppLocalizations? l10n, SpaceCardSize size) =>
@@ -27,6 +34,13 @@ class _SpaceCodesOptionsDialogState extends State<SpaceCodesOptionsDialog> {
         SpaceCardSize.small => l10n?.spaceCardSizeSmall ?? 'Small',
         SpaceCardSize.medium => l10n?.spaceCardSizeMedium ?? 'Medium',
         SpaceCardSize.large => l10n?.spaceCardSizeLarge ?? 'Large',
+      };
+
+  String _qrSizeLabel(AppLocalizations? l10n, SpaceQrSize size) =>
+      switch (size) {
+        SpaceQrSize.small => l10n?.spaceCardSizeSmall ?? 'Small',
+        SpaceQrSize.medium => l10n?.spaceCardSizeMedium ?? 'Medium',
+        SpaceQrSize.large => l10n?.spaceCardSizeLarge ?? 'Large',
       };
 
   String _infoLabel(AppLocalizations? l10n, SpaceCardInfo info) =>
@@ -66,6 +80,24 @@ class _SpaceCodesOptionsDialogState extends State<SpaceCodesOptionsDialog> {
                   setState(() => _size = selection.first),
             ),
             const SizedBox(height: 16),
+            Text(l10n?.spaceQrSizeLabel ?? 'QR code size'),
+            const SizedBox(height: 4),
+            SegmentedButton<SpaceQrSize>(
+              segments: [
+                for (final size in SpaceQrSize.values)
+                  ButtonSegment(
+                    value: size,
+                    label: Text(
+                      _qrSizeLabel(l10n, size),
+                      key: ValueKey('space-qr-size-${size.name}'),
+                    ),
+                  ),
+              ],
+              selected: {_qrSize},
+              onSelectionChanged: (selection) =>
+                  setState(() => _qrSize = selection.first),
+            ),
+            const SizedBox(height: 16),
             Text(l10n?.spaceCardInfoLabel ?? 'Information on the card'),
             for (final info in SpaceCardInfo.values)
               CheckboxListTile(
@@ -88,8 +120,8 @@ class _SpaceCodesOptionsDialogState extends State<SpaceCodesOptionsDialog> {
         ),
         FilledButton(
           key: const ValueKey('space-codes-export'),
-          onPressed: () =>
-              Navigator.of(context).pop((size: _size, info: Set.of(_info))),
+          onPressed: () => Navigator.of(context).pop(
+              (size: _size, qrSize: _qrSize, info: Set.of(_info))),
           child: Text(l10n?.commonSave ?? 'Save'),
         ),
       ],

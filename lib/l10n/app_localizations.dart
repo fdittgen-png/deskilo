@@ -6842,6 +6842,12 @@ abstract class AppLocalizations {
   /// **'Card size'**
   String get spaceCardSizeLabel;
 
+  /// No description provided for @spaceQrSizeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'QR code size'**
+  String get spaceQrSizeLabel;
+
   /// No description provided for @spaceCardSizeSmall.
   ///
   /// In en, this message translates to:

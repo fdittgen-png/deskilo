@@ -3807,6 +3807,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get spaceCardSizeLabel => 'Taille de la carte';
 
   @override
+  String get spaceQrSizeLabel => 'Taille du code QR';
+
+  @override
   String get spaceCardSizeSmall => 'Petite';
 
   @override
