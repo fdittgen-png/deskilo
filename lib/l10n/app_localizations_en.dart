@@ -1364,6 +1364,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Owner-configurable booking behavior: past bookings, minute bookings outside the working hours, and check-out by admins.';
 
   @override
+  String get featureNfcSeatTagsTitle => 'NFC/RFID chair tags';
+
+  @override
+  String get featureNfcSeatTagsDesc =>
+      'A physical NFC/RFID tag on a chair resolves to its seat like the printed QR card; owners fill the tag field by tapping the chip.';
+
+  @override
+  String get featureQrBadgesTitle => 'QR badges';
+
+  @override
+  String get featureQrBadgesDesc =>
+      'Printable QR badge cards for the kiosk, beside the NFC/RFID cards.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override

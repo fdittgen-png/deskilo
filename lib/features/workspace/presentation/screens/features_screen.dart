@@ -159,6 +159,15 @@ class FeaturesScreen extends ConsumerWidget {
               'Owner-configurable booking behavior: past bookings, '
                   'minute bookings outside the working hours, and '
                   'check-out by admins.',
+        WorkspaceFeature.nfcSeatTags =>
+          l10n?.featureNfcSeatTagsDesc ??
+              'A physical NFC/RFID tag on a chair resolves to its seat '
+                  'like the printed QR card; owners fill the tag field '
+                  'by tapping the chip.',
+        WorkspaceFeature.qrBadges =>
+          l10n?.featureQrBadgesDesc ??
+              'Printable QR badge cards for the kiosk, beside the '
+                  'NFC/RFID cards.',
       };
 
   Future<void> _toggle(

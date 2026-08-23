@@ -28,6 +28,7 @@ import '../../../plan/domain/seat.dart';
 import '../delete_confirm_text.dart';
 import '../../../plan/providers/accessory_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../../plan/presentation/widgets/floor_plan_painter.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
@@ -468,7 +469,11 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     // where the device can (Android with NFC on).
     final nfcUid = TextEditingController(text: seat.nfcUid ?? '');
     final nfcReader = ref.read(nfcUidReaderProvider);
-    final nfcReady = await nfcReader.isAvailable();
+    // #604: the whole chair-tag block rides the nfcSeatTags flag.
+    final seatTagsOn = ref
+        .read(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.nfcSeatTags);
+    final nfcReady = seatTagsOn && await nfcReader.isAvailable();
     if (!mounted) return;
     var orientation = seat.orientation;
     var blocked = seat.isBlockedAt(ref.read(clockProvider).now());
@@ -562,7 +567,8 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                   ),
                 const SizedBox(height: 12),
                 // #585 — a physical tag on the chair resolves to this
-                // seat like its printed QR card.
+                // seat like its printed QR card (#604: flag-gated).
+                if (seatTagsOn)
                 TextField(
                   key: const ValueKey('editor-seat-nfc'),
                   controller: nfcUid,

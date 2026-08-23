@@ -91,5 +91,9 @@
     "description": "Feature-registry completeness (#598)"
   },
   "featureBookingPoliciesTitle": "Regole di prenotazione",
-  "featureBookingPoliciesDesc": "Comportamento di prenotazione configurabile: prenotazioni passate, prenotazioni al minuto fuori orario e check-out da parte degli amministratori."
+  "featureBookingPoliciesDesc": "Comportamento di prenotazione configurabile: prenotazioni passate, prenotazioni al minuto fuori orario e check-out da parte degli amministratori.",
+  "featureNfcSeatTagsTitle": "Tag NFC/RFID delle sedie",
+  "featureNfcSeatTagsDesc": "Un tag NFC/RFID fisico su una sedia porta al suo posto come la scheda QR stampata; il campo si compila avvicinando il chip.",
+  "featureQrBadgesTitle": "Badge QR",
+  "featureQrBadgesDesc": "Schede badge QR stampabili per il chiosco, accanto alle carte NFC/RFID."
 }

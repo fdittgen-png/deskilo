@@ -78,4 +78,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
             'Notification feed grouping',
       WorkspaceFeature.bookingPolicies =>
         l10n?.featureBookingPoliciesTitle ?? 'Booking policies',
+      WorkspaceFeature.nfcSeatTags =>
+        l10n?.featureNfcSeatTagsTitle ?? 'NFC/RFID chair tags',
+      WorkspaceFeature.qrBadges =>
+        l10n?.featureQrBadgesTitle ?? 'QR badges',
     };
