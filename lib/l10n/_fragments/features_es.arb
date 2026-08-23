@@ -81,5 +81,13 @@
   "featurePlanObjectDeleteDesc": "Los propietarios pueden eliminar plantas, oficinas, mesas y asientos aunque reservas pasadas hagan referencia a ellos: las reservas conservan una instantánea de texto para auditorías e informes.",
   "@featurePlanObjectDeleteDesc": {
     "description": "Feature-registry completeness (#587)"
+  },
+  "featureNotificationGroupingTitle": "Agrupación de notificaciones",
+  "@featureNotificationGroupingTitle": {
+    "description": "Feature-registry completeness (#598)"
+  },
+  "featureNotificationGroupingDesc": "Los miembros pueden agrupar el hilo de notificaciones por tipo, día o miembro; tocar el símbolo del grupo vuelve a la lista plana.",
+  "@featureNotificationGroupingDesc": {
+    "description": "Feature-registry completeness (#598)"
   }
 }

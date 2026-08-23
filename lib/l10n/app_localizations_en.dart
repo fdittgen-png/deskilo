@@ -1111,6 +1111,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifSortByDate => 'Sort by date';
 
   @override
+  String get notifGroupBy => 'Group by';
+
+  @override
+  String get notifGroupByType => 'Type';
+
+  @override
+  String get notifGroupByDate => 'Date';
+
+  @override
+  String get notifGroupByUser => 'Member';
+
+  @override
+  String get notifUngroup => 'Ungroup';
+
+  @override
   String get featuresTitle => 'Features';
 
   @override
@@ -1309,6 +1324,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featurePlanObjectDeleteDesc =>
       'Owners may delete levels, offices, desks and seats even when past reservations reference them — the bookings keep a text snapshot for audits and reports.';
+
+  @override
+  String get featureNotificationGroupingTitle => 'Notification feed grouping';
+
+  @override
+  String get featureNotificationGroupingDesc =>
+      'Members may fold the notification feed into groups by type, day or member; tapping the group symbol returns to the flat list.';
 
   @override
   String get helpTitle => 'Help';

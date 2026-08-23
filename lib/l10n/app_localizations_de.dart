@@ -1121,6 +1121,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get notifSortByDate => 'Nach Datum sortieren';
 
   @override
+  String get notifGroupBy => 'Gruppieren nach';
+
+  @override
+  String get notifGroupByType => 'Typ';
+
+  @override
+  String get notifGroupByDate => 'Datum';
+
+  @override
+  String get notifGroupByUser => 'Mitglied';
+
+  @override
+  String get notifUngroup => 'Gruppierung aufheben';
+
+  @override
   String get featuresTitle => 'Funktionen';
 
   @override
@@ -1320,6 +1335,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featurePlanObjectDeleteDesc =>
       'Inhaber können Ebenen, Büros, Tische und Sitzplätze auch dann löschen, wenn frühere Reservierungen darauf verweisen — die Buchungen behalten einen Text-Schnappschuss für Audits und Berichte.';
+
+  @override
+  String get featureNotificationGroupingTitle =>
+      'Gruppierung der Benachrichtigungen';
+
+  @override
+  String get featureNotificationGroupingDesc =>
+      'Mitglieder können den Benachrichtigungs-Feed nach Typ, Tag oder Mitglied gruppieren; ein Tipp auf das Gruppensymbol führt zurück zur flachen Liste.';
 
   @override
   String get helpTitle => 'Hilfe';

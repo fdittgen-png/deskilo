@@ -35,6 +35,11 @@ enum NotificationCategory {
 /// The read-state axis: everything, only new, only already-read.
 enum ReadFilter { all, unread, read }
 
+/// The optional regrouping axis (#598): the flat feed can fold into
+/// groups by category, calendar day or acting member. `none` is the
+/// default — exactly the pre-#598 flat list.
+enum FeedGrouping { none, type, date, user }
+
 /// Sort direction of the mixed feed.
 enum FeedSort { newestFirst, oldestFirst }
 
@@ -45,28 +50,33 @@ class NotificationFilterState {
     this.categories = const {},
     this.read = ReadFilter.all,
     this.sort = FeedSort.newestFirst,
+    this.grouping = FeedGrouping.none,
   });
 
   final Set<NotificationCategory> categories;
   final ReadFilter read;
   final FeedSort sort;
+  final FeedGrouping grouping;
 
   NotificationFilterState copyWith({
     Set<NotificationCategory>? categories,
     ReadFilter? read,
     FeedSort? sort,
+    FeedGrouping? grouping,
   }) =>
       NotificationFilterState(
         categories: categories ?? this.categories,
         read: read ?? this.read,
         sort: sort ?? this.sort,
+        grouping: grouping ?? this.grouping,
       );
 
-  /// Wire form: `messages,reservations|unread|newestFirst`.
+  /// Wire form: `messages,reservations|unread|newestFirst|type`.
   String encode() => [
         categories.map((c) => c.wire).join(','),
         read.name,
         sort.name,
+        grouping.name,
       ].join('|');
 
   /// Tolerant of anything: an unknown or mangled stored value falls
@@ -88,10 +98,18 @@ class NotificationFilterState {
         ? FeedSort.values.where((s) => s.name == parts[2]).firstOrNull ??
             FeedSort.newestFirst
         : FeedSort.newestFirst;
+    // A pre-#598 stored value has three parts — it simply stays flat.
+    final grouping = parts.length > 3
+        ? FeedGrouping.values
+                .where((g) => g.name == parts[3])
+                .firstOrNull ??
+            FeedGrouping.none
+        : FeedGrouping.none;
     return NotificationFilterState(
       categories: categories,
       read: read,
       sort: sort,
+      grouping: grouping,
     );
   }
 }
@@ -203,4 +221,55 @@ List<FeedItem> buildNotificationFeed({
           : a.at.compareTo(b.at),
     );
   return filtered;
+}
+
+/// One fold of the grouped feed (#598). [key] is what the group IS —
+/// a [NotificationCategory] (type), a local-midnight [DateTime] (date)
+/// or a member id [String] (user); [id] is its stable widget-key form.
+class FeedGroup {
+  const FeedGroup({required this.id, required this.key, required this.items});
+
+  final String id;
+  final Object key;
+  final List<FeedItem> items;
+}
+
+/// The acting member of a row: who sent the note / who did the thing.
+String feedItemActor(FeedItem item) => switch (item) {
+      NoteFeedItem(:final note) => note.fromMemberId,
+      EventFeedItem(:final event) => event.actorMemberId,
+    };
+
+/// Folds an already-sorted feed into groups (#598). Group order follows
+/// first occurrence, so the date sort keeps steering the screen; within
+/// a group the feed order survives untouched. `none` returns ONE group
+/// carrying the whole feed — the caller just skips the headers.
+List<FeedGroup> groupFeed(List<FeedItem> feed, FeedGrouping grouping) {
+  if (grouping == FeedGrouping.none) {
+    return [FeedGroup(id: 'all', key: 'all', items: feed)];
+  }
+  (String, Object) keyOf(FeedItem item) {
+    switch (grouping) {
+      case FeedGrouping.type:
+        return (item.category.wire, item.category);
+      case FeedGrouping.date:
+        final local = item.at.toLocal();
+        final day = DateTime(local.year, local.month, local.day);
+        return (day.toIso8601String().split('T').first, day);
+      case FeedGrouping.user:
+        final actor = feedItemActor(item);
+        return (actor, actor);
+      case FeedGrouping.none:
+        return ('all', 'all');
+    }
+  }
+
+  final groups = <String, FeedGroup>{};
+  for (final item in feed) {
+    final (id, key) = keyOf(item);
+    (groups[id] ??= FeedGroup(id: id, key: key, items: []))
+        .items
+        .add(item);
+  }
+  return groups.values.toList();
 }

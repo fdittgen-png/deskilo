@@ -81,5 +81,13 @@
   "featurePlanObjectDeleteDesc": "I proprietari possono eliminare piani, uffici, tavoli e posti anche se prenotazioni passate vi fanno riferimento: le prenotazioni conservano un'istantanea di testo per audit e report.",
   "@featurePlanObjectDeleteDesc": {
     "description": "Feature-registry completeness (#587)"
+  },
+  "featureNotificationGroupingTitle": "Raggruppamento delle notifiche",
+  "@featureNotificationGroupingTitle": {
+    "description": "Feature-registry completeness (#598)"
+  },
+  "featureNotificationGroupingDesc": "I membri possono raggruppare il feed delle notifiche per tipo, giorno o membro; toccando il simbolo del gruppo si torna all'elenco piatto.",
+  "@featureNotificationGroupingDesc": {
+    "description": "Feature-registry completeness (#598)"
   }
 }

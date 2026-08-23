@@ -40,7 +40,8 @@ enum WorkspaceFeature {
   vatManagement,
   vatDeclarations,
   einvoiceCustomerDelivery,
-  planObjectDelete;
+  planObjectDelete,
+  notificationGrouping;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -231,6 +232,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // historic refusal (the server re-checks the flag in the RPC).
   WorkspaceFeature.planObjectDelete:
       FeatureManifestEntry(feature: WorkspaceFeature.planObjectDelete),
+  // #598 — regroup the notification feed by type, day or member. A
+  // child of the events feed: no feed, nothing to group.
+  WorkspaceFeature.notificationGrouping: FeatureManifestEntry(
+    feature: WorkspaceFeature.notificationGrouping,
+    requires: WorkspaceFeature.eventsTab,
+  ),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start

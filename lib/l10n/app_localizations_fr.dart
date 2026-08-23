@@ -1120,6 +1120,21 @@ class AppLocalizationsFr extends AppLocalizations {
   String get notifSortByDate => 'Trier par date';
 
   @override
+  String get notifGroupBy => 'Grouper par';
+
+  @override
+  String get notifGroupByType => 'Type';
+
+  @override
+  String get notifGroupByDate => 'Date';
+
+  @override
+  String get notifGroupByUser => 'Membre';
+
+  @override
+  String get notifUngroup => 'Dégrouper';
+
+  @override
   String get featuresTitle => 'Fonctionnalités';
 
   @override
@@ -1325,6 +1340,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featurePlanObjectDeleteDesc =>
       'Les propriétaires peuvent supprimer niveaux, bureaux, tables et places même si d\'anciennes réservations y font référence — les réservations gardent un instantané texte pour les audits et rapports.';
+
+  @override
+  String get featureNotificationGroupingTitle =>
+      'Regroupement des notifications';
+
+  @override
+  String get featureNotificationGroupingDesc =>
+      'Les membres peuvent regrouper le fil de notifications par type, jour ou membre ; toucher le symbole du groupe ramène à la liste plate.';
 
   @override
   String get helpTitle => 'Aide';

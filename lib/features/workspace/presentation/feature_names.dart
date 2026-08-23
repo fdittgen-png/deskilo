@@ -73,4 +73,7 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
             'E-invoice delivery to customers',
       WorkspaceFeature.planObjectDelete =>
         l10n?.featurePlanObjectDeleteTitle ?? 'Delete spaces with history',
+      WorkspaceFeature.notificationGrouping =>
+        l10n?.featureNotificationGroupingTitle ??
+            'Notification feed grouping',
     };

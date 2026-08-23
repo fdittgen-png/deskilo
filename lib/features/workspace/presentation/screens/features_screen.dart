@@ -149,6 +149,11 @@ class FeaturesScreen extends ConsumerWidget {
               'Owners may delete levels, offices, desks and seats even '
                   'when past reservations reference them — the bookings '
                   'keep a text snapshot for audits and reports.',
+        WorkspaceFeature.notificationGrouping =>
+          l10n?.featureNotificationGroupingDesc ??
+              'Members may fold the notification feed into groups by '
+                  'type, day or member; tapping the group symbol '
+                  'returns to the flat list.',
       };
 
   Future<void> _toggle(

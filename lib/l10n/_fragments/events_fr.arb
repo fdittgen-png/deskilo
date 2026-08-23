@@ -70,5 +70,10 @@
   "notifCategoryMoney": "Finances",
   "notifCategoryMembers": "Membres",
   "notesFilterRead": "Lus",
-  "notifSortByDate": "Trier par date"
+  "notifSortByDate": "Trier par date",
+  "notifGroupBy": "Grouper par",
+  "notifGroupByType": "Type",
+  "notifGroupByDate": "Date",
+  "notifGroupByUser": "Membre",
+  "notifUngroup": "Dégrouper"
 }

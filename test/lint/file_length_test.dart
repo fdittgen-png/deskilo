@@ -151,7 +151,9 @@ const Map<String, int> _baseline = {
   // the note row widget lives with the feed it sits in. 640→700: #467
   // swipe reply/delete on the rows.
   // 700→720 (2026-08-05): #504 the invoice-writeoff event rendering.
-  'lib/features/events/presentation/screens/events_screen.dart': 720,
+  // 720→830 (2026-08-23): #598 feed regrouping — the group-by chip
+  // line, the group headers with the ungroup symbol and their labels.
+  'lib/features/events/presentation/screens/events_screen.dart': 830,
   // 680→700 (2026-08-04): #454 owner-template intro/footer blocks.
   // 700→790: #470 the banded report renderer (_reportWidgets) and the
   // header/body/footer band branches.

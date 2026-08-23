@@ -41,6 +41,12 @@ class NotificationFilter extends _$NotificationFilter {
     await _set(current.copyWith(read: read));
   }
 
+  /// #598 — the regrouping choice persists exactly like the filter.
+  Future<void> setGrouping(FeedGrouping grouping) async {
+    final current = state.value ?? const NotificationFilterState();
+    await _set(current.copyWith(grouping: grouping));
+  }
+
   Future<void> toggleSort() async {
     final current = state.value ?? const NotificationFilterState();
     await _set(current.copyWith(
