@@ -90,10 +90,15 @@ class LocalNotificationService implements NotificationService {
     List<ReminderRequest> reminders,
   ) async {
     try {
-      for (final id in _reminderIds) {
+      // #614: two resyncs can overlap (realtime bursts) — iterating the
+      // live set across awaits threw ConcurrentModificationError. Take
+      // the stale snapshot and clear BEFORE the first await, so a
+      // concurrent call never mutates a set mid-iteration.
+      final stale = _reminderIds.toList();
+      _reminderIds.clear();
+      for (final id in stale) {
         await _plugin.cancel(id: id);
       }
-      _reminderIds.clear();
       for (final reminder in reminders) {
         if (reminder.remindAt.isBefore(DateTime.now())) continue;
         _reminderIds.add(reminder.reservationId.hashCode);
