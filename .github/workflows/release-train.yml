@@ -46,13 +46,15 @@ on:
 
 # The called workflows' permissions must fit inside this grant:
 # contents:write (Play tag push), pages+id-token (web deploy),
-# issues:write (the failure notification), actions:read (log fetch).
+# issues:write (the failure notification), actions:read (log fetch),
+# checks:read (annotation fallback when logs are not yet archived).
 permissions:
   contents: write
   pages: write
   id-token: write
   issues: write
   actions: read
+  checks: read
 
 concurrency:
   group: release-train
@@ -140,25 +142,46 @@ jobs:
           } > report.md
 
           # The failed legs' own words: every job of this run whose name
-          # starts with "<leg> /" and failed, tail of its log.
+          # starts with "<leg> /" and failed, tail of its log. The
+          # per-job logs endpoint can 404 while THIS run is still in
+          # progress (#594 shipped "log not retrievable"), so: retry,
+          # then fall back to the job's check-run annotations — which
+          # the upload script now feeds via ::error:: — and always
+          # link the job so a human can click through.
           if [ "${#failed[@]}" -gt 0 ]; then
             echo "## What failed, in the logs' own words" >> report.md
             gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/jobs?per_page=100" \
-              --paginate --jq '.jobs[] | {id, name, conclusion}' > jobs.jsonl
+              --paginate --jq '.jobs[] | {id, name, conclusion, html_url}' > jobs.jsonl
             for leg in "${failed[@]}"; do
-              while IFS=$'\t' read -r job_id job_name; do
+              while IFS=$'\t' read -r job_id job_name job_url; do
                 echo "" >> report.md
-                echo "### $job_name" >> report.md
+                echo "### [$job_name]($job_url)" >> report.md
+                log=""
+                for attempt in 1 2 3; do
+                  log=$(gh api "repos/${GITHUB_REPOSITORY}/actions/jobs/${job_id}/logs" \
+                    2>/dev/null || true)
+                  [ -n "$log" ] && break
+                  sleep 10
+                done
                 echo '```' >> report.md
-                # Failed-step log tail; the API returns the full text log.
-                (gh api "repos/${GITHUB_REPOSITORY}/actions/jobs/${job_id}/logs" \
-                  2>/dev/null || echo "log not retrievable") \
-                  | grep -v '^.\{0,29\}##\[group\]' | tail -n 60 \
-                  | cut -c1-400 >> report.md
+                if [ -n "$log" ]; then
+                  printf '%s\n' "$log" \
+                    | grep -v '^.\{0,29\}##\[group\]' | tail -n 60 \
+                    | cut -c1-400 >> report.md
+                else
+                  notes=$(gh api "repos/${GITHUB_REPOSITORY}/check-runs/${job_id}/annotations" \
+                    --jq '.[] | select(.annotation_level != "warning")
+                          | "\(.annotation_level): \(.message)"' 2>/dev/null || true)
+                  if [ -n "$notes" ]; then
+                    printf '%s\n' "$notes" >> report.md
+                  else
+                    echo "log not retrievable — follow the job link above" >> report.md
+                  fi
+                fi
                 echo '```' >> report.md
               done < <(jq -r --arg leg "$leg" \
                 'select(.conclusion == "failure" and (.name | startswith($leg + " /")))
-                 | [(.id | tostring), .name] | @tsv' jobs.jsonl)
+                 | [(.id | tostring), .name, .html_url] | @tsv' jobs.jsonl)
             done
           else
             echo "All legs green — nothing failed, nothing to notify." >> report.md
