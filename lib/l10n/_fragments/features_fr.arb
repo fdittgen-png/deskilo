@@ -89,5 +89,7 @@
   "featureNotificationGroupingDesc": "Les membres peuvent regrouper le fil de notifications par type, jour ou membre ; toucher le symbole du groupe ramène à la liste plate.",
   "@featureNotificationGroupingDesc": {
     "description": "Feature-registry completeness (#598)"
-  }
+  },
+  "featureBookingPoliciesTitle": "Règles de réservation",
+  "featureBookingPoliciesDesc": "Comportement de réservation configurable : réservations passées, réservations à la minute hors heures, check-out par un admin."
 }

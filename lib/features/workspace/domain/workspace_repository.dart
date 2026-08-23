@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import '../../../core/time/work_hours.dart';
 import 'booking_granularity.dart';
+import 'booking_policies.dart';
 import 'closure_day.dart';
 import 'member.dart';
 import 'member_badge.dart';
@@ -295,6 +296,16 @@ abstract class WorkspaceRepository {
   /// Owner-only (RLS-enforced): persist the working day inside
   /// booking_rules without clobbering its other keys.
   Future<void> setWorkHours(String workspaceId, WorkHours hours);
+
+  /// The three #600 booking-policy switches (booking_rules keys).
+  Future<BookingPolicies> fetchBookingPolicies(String workspaceId);
+
+  /// Writes one #600 policy key, preserving the other booking_rules.
+  Future<void> setBookingPolicy(
+    String workspaceId,
+    String key, {
+    required bool enabled,
+  });
 
   /// Sends a member note (#456, RPC `send_member_note`): to one member,
   /// or — [toMemberId] null — to all admins incl. the owner (the server

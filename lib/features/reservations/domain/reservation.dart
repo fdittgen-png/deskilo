@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../core/time/workspace_time.dart';
+import '../../workspace/domain/booking_granularity.dart';
+
 part 'reservation.freezed.dart';
 
 /// Lifecycle per spec §3. Persisted by name — never rename values.
@@ -74,15 +77,27 @@ sealed class Reservation with _$Reservation {
       status == ReservationStatus.reserved ||
       status == ReservationStatus.checkedIn;
 
-  /// Presence rule (#408): checking in means "I am standing here NOW".
-  /// Allowed only while [now] is inside `[startsAt − 15 min, endsAt)` —
-  /// never ahead of the window (the future), never after the
-  /// reservation ended (the past). Mirrors `check_in_reservation`
-  /// (migration 0077); the server is the authority, this gates the UI.
-  bool checkInWindowOpen(DateTime now) =>
-      status == ReservationStatus.reserved &&
-      !now.isBefore(startsAt.subtract(checkInLeeway)) &&
-      now.isBefore(endsAt);
+  /// Presence rule (#408 → 0113/#600): checking in means "I am here".
+  /// Base window is `[startsAt − 15 min, endsAt)`; minute grids widen
+  /// the leeway to one grid step, and under the day-based and hours
+  /// granularities the slot IS the working day, so ANY arrival on the
+  /// slot's workspace-local day counts (an early same-day check-in the
+  /// old flat leeway silently hid from the UI). Mirrors
+  /// `check_in_reservation` (0113); the server stays the authority.
+  bool checkInWindowOpen(DateTime now, {BookingGranularity? granularity}) {
+    if (status != ReservationStatus.reserved || !now.isBefore(endsAt)) {
+      return false;
+    }
+    var leeway = checkInLeeway;
+    final step = granularity?.stepMinutes;
+    if (step != null && step > checkInLeeway.inMinutes) {
+      leeway = Duration(minutes: step);
+    }
+    if (!now.isBefore(startsAt.subtract(leeway))) return true;
+    return granularity != null &&
+        (granularity.isDayBased || granularity == BookingGranularity.hours) &&
+        WorkspaceTime.dateOf(startsAt) == WorkspaceTime.dateOf(now);
+  }
 
   /// Active and covering the instant [at] (start inclusive, end exclusive).
   bool coversInstant(DateTime at) =>

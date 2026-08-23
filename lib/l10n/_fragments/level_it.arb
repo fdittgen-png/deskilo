@@ -23,5 +23,8 @@
   "deskDetail": "Tavolo intero",
   "deskSupplementLabel": "Prenotazioni di tavolo",
   "editorLevelBookableOn": "Prenotabile per intero",
-  "editorLevelBookableOff": "Non prenotabile per intero"
+  "editorLevelBookableOff": "Non prenotabile per intero",
+  "bookingPastError": "Questa prenotazione è interamente nel passato.",
+  "bookingWalkUpTodayError": "Un check-in spontaneo deve iniziare oggi.",
+  "bookingOutsideHoursError": "Le prenotazioni devono restare negli orari di lavoro."
 }

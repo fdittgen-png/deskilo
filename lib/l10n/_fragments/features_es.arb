@@ -89,5 +89,7 @@
   "featureNotificationGroupingDesc": "Los miembros pueden agrupar el hilo de notificaciones por tipo, día o miembro; tocar el símbolo del grupo vuelve a la lista plana.",
   "@featureNotificationGroupingDesc": {
     "description": "Feature-registry completeness (#598)"
-  }
+  },
+  "featureBookingPoliciesTitle": "Políticas de reserva",
+  "featureBookingPoliciesDesc": "Comportamiento de reserva configurable: reservas pasadas, reservas por minutos fuera de horario y check-out por administradores."
 }

@@ -27,7 +27,9 @@ import 'package:flutter_test/flutter_test.dart';
 // reservations reference; audit substitution text).
 // 35→36 (2026-08-23): #598 notificationGrouping (regroup the feed by
 // type, day or member; requires eventsTab).
-const int _expectedFeatureCount = 36;
+// 36→37 (2026-08-23): #600 bookingPolicies (owner-configurable booking
+// behavior matrix: past bookings, grid-vs-hours, admin check-out).
+const int _expectedFeatureCount = 37;
 
 void main() {
   test('every functionality is registered — the pin', () {

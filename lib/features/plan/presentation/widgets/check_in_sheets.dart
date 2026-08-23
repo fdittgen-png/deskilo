@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/domain/reservation.dart';
+import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/seat.dart';
 import '../../../../core/time/workspace_time.dart';
 
@@ -21,6 +22,7 @@ Future<String?> showMySeatSheet(
   required Seat seat,
   required Reservation mine,
   required DateTime now,
+  BookingGranularity? granularity,
 }) {
   final l10n = AppLocalizations.of(context);
   // #490 — the window opens on the WORKSPACE clock.
@@ -47,7 +49,7 @@ Future<String?> showMySeatSheet(
               title: Text(l10n?.planCheckOutButton ?? 'Check out'),
               onTap: () => Navigator.of(context).pop('checkout'),
             )
-          else if (mine.checkInWindowOpen(now))
+          else if (mine.checkInWindowOpen(now, granularity: granularity))
             ListTile(
               leading: const Icon(Icons.login),
               title: Text(l10n?.planCheckInButton ?? 'Check in'),

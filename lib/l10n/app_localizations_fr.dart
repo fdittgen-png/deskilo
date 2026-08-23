@@ -218,6 +218,32 @@ class AppLocalizationsFr extends AppLocalizations {
       'La journée doit respecter début < limite de demi-journée < fin.';
 
   @override
+  String get availabilityPoliciesTitle => 'Règles de réservation';
+
+  @override
+  String get policyAllowPastTitle => 'Autoriser les réservations passées';
+
+  @override
+  String get policyAllowPastDesc =>
+      'Les membres peuvent enregistrer une réservation déjà terminée (rattrapage).';
+
+  @override
+  String get policyGridHoursTitle =>
+      'Réservations à la minute dans les heures d\'ouverture';
+
+  @override
+  String get policyGridHoursDesc =>
+      'Limiter les réservations à la minute à la journée de travail ; les check-ins du soir restent possibles.';
+
+  @override
+  String get policyAdminCheckoutTitle =>
+      'Les admins peuvent faire le check-out des membres';
+
+  @override
+  String get policyAdminCheckoutDesc =>
+      'Un admin peut terminer le check-in en cours d\'un membre.';
+
+  @override
   String get myBadgeTitle => 'Mon badge';
 
   @override
@@ -1348,6 +1374,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureNotificationGroupingDesc =>
       'Les membres peuvent regrouper le fil de notifications par type, jour ou membre ; toucher le symbole du groupe ramène à la liste plate.';
+
+  @override
+  String get featureBookingPoliciesTitle => 'Règles de réservation';
+
+  @override
+  String get featureBookingPoliciesDesc =>
+      'Comportement de réservation configurable : réservations passées, réservations à la minute hors heures, check-out par un admin.';
 
   @override
   String get helpTitle => 'Aide';
@@ -2810,6 +2843,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get editorLevelBookableOff => 'Non réservable en entier';
+
+  @override
+  String get bookingPastError =>
+      'Cette réservation est entièrement dans le passé.';
+
+  @override
+  String get bookingWalkUpTodayError =>
+      'Un check-in spontané doit commencer aujourd\'hui.';
+
+  @override
+  String get bookingOutsideHoursError =>
+      'Les réservations doivent rester dans les heures d\'ouverture.';
 
   @override
   String get membersTitle => 'Membres et forfaits';

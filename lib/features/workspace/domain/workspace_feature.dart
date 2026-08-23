@@ -41,7 +41,8 @@ enum WorkspaceFeature {
   vatDeclarations,
   einvoiceCustomerDelivery,
   planObjectDelete,
-  notificationGrouping;
+  notificationGrouping,
+  bookingPolicies;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -238,6 +239,8 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.notificationGrouping,
     requires: WorkspaceFeature.eventsTab,
   ),
+  WorkspaceFeature.bookingPolicies:
+      FeatureManifestEntry(feature: WorkspaceFeature.bookingPolicies),
 };
 
 /// Resolves the stored [featureFlags] jsonb against the registry: start

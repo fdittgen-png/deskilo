@@ -23,5 +23,8 @@
   "deskDetail": "Mesa entera",
   "deskSupplementLabel": "Reservas de mesa",
   "editorLevelBookableOn": "Reservable por completo",
-  "editorLevelBookableOff": "No reservable por completo"
+  "editorLevelBookableOff": "No reservable por completo",
+  "bookingPastError": "Esta reserva está completamente en el pasado.",
+  "bookingWalkUpTodayError": "Un check-in espontáneo debe empezar hoy.",
+  "bookingOutsideHoursError": "Las reservas deben permanecer dentro del horario laboral."
 }

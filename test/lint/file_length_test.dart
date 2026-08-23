@@ -178,7 +178,12 @@ const Map<String, int> _baseline = {
   // functions.invoke method — same data client, no new concern).
   // 800→820 (2026-08-11): #542 setSubscriptionVatRate.
   // 820→840 (2026-08-12): #552 setWhatsappChannel + workspace-scoped probe.
-  'lib/features/workspace/data/supabase_workspace_repository.dart': 840,
+  // 840→870 (2026-08-23): #600 fetchBookingPolicies/setBookingPolicy —
+  // the same merge-preserving booking_rules write the granularity uses.
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 870,
+  // 600→660 (2026-08-23): #600 the Booking policies section — three
+  // switches + one write handler on the existing availability screen.
+  'lib/features/workspace/presentation/screens/availability_screen.dart': 660,
   // 770→790 (2026-08-06): #513 setRolePermissions + role_permissions row.
   // 630→640 (2026-08-10): two-dot month markers (mine + others per day)
   // — a dozen lines of dot layout, no new concern worth a split.

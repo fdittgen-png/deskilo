@@ -217,6 +217,32 @@ class AppLocalizationsIt extends AppLocalizations {
       'Deve valere: inizio < limite di mezza giornata < fine.';
 
   @override
+  String get availabilityPoliciesTitle => 'Regole di prenotazione';
+
+  @override
+  String get policyAllowPastTitle => 'Consenti prenotazioni passate';
+
+  @override
+  String get policyAllowPastDesc =>
+      'I membri possono registrare una prenotazione già terminata.';
+
+  @override
+  String get policyGridHoursTitle =>
+      'Prenotazioni al minuto negli orari di lavoro';
+
+  @override
+  String get policyGridHoursDesc =>
+      'Limita le prenotazioni al minuto alla giornata lavorativa; i check-in serali restano possibili.';
+
+  @override
+  String get policyAdminCheckoutTitle =>
+      'Gli amministratori possono fare il check-out dei membri';
+
+  @override
+  String get policyAdminCheckoutDesc =>
+      'Un amministratore può terminare il check-in in corso di un membro.';
+
+  @override
   String get myBadgeTitle => 'Il mio badge';
 
   @override
@@ -1346,6 +1372,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featureNotificationGroupingDesc =>
       'I membri possono raggruppare il feed delle notifiche per tipo, giorno o membro; toccando il simbolo del gruppo si torna all\'elenco piatto.';
+
+  @override
+  String get featureBookingPoliciesTitle => 'Regole di prenotazione';
+
+  @override
+  String get featureBookingPoliciesDesc =>
+      'Comportamento di prenotazione configurabile: prenotazioni passate, prenotazioni al minuto fuori orario e check-out da parte degli amministratori.';
 
   @override
   String get helpTitle => 'Aiuto';
@@ -2805,6 +2838,18 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get editorLevelBookableOff => 'Non prenotabile per intero';
+
+  @override
+  String get bookingPastError =>
+      'Questa prenotazione è interamente nel passato.';
+
+  @override
+  String get bookingWalkUpTodayError =>
+      'Un check-in spontaneo deve iniziare oggi.';
+
+  @override
+  String get bookingOutsideHoursError =>
+      'Le prenotazioni devono restare negli orari di lavoro.';
 
   @override
   String get membersTitle => 'Membri e piani';

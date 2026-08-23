@@ -6,6 +6,7 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'test_clock.dart';
 
 /// In-memory [ReservationRepository] mimicking the DB exclusion constraint
@@ -25,6 +26,10 @@ class FakeReservationRepository implements ReservationRepository {
   Future<Reservation?> fetchById(String reservationId) async =>
       reservations.where((r) => r.id == reservationId).firstOrNull;
   var _nextId = 1;
+  /// Mirror of booking_rules.allow_past_bookings (#600) — OFF like the
+  /// server default; tests flip it to exercise the backfill path.
+  bool allowPastBookings = false;
+
   /// The fake's clock — defaults to [kTestNow], matching the
   /// FixedClock the standard overrides install (#408: the check-in
   /// window enforcement below must agree with the seeded times).
@@ -124,6 +129,18 @@ class FakeReservationRepository implements ReservationRepository {
         [seatId, deskId, officeId, levelId].whereType<String>().length;
     if (targets != 1) {
       throw StateError('exactly one of seat, desk, office or level required');
+    }
+    // #600 guards, mirroring create_reservation v10: past means the
+    // booking's workspace-local DAY already ended, not its instant.
+    final lastDay = WorkspaceTime.dateOf(
+        endsAt.subtract(const Duration(seconds: 1)));
+    if (lastDay.isBefore(WorkspaceTime.dateOf(now())) &&
+        !allowPastBookings) {
+      throw StateError('the booking lies entirely in the past');
+    }
+    if (checkIn &&
+        WorkspaceTime.dateOf(startsAt) != WorkspaceTime.dateOf(now())) {
+      throw StateError('a walk-up check-in must start today');
     }
     // #573 — a day-based walk-up check-in books the SLOT the chosen end
     // belongs to: the start snaps back; if the early slot part is taken,
@@ -376,11 +393,21 @@ class FakeReservationRepository implements ReservationRepository {
     if (r.status != ReservationStatus.checkedIn) {
       throw StateError('not checked in');
     }
+    // #600 complete_check_out: the completed row records the REAL
+    // presence — an early same-day check-in (0113) can sit before
+    // startsAt, so the window becomes [checkedInAt, now), floored at
+    // one minute, never end <= start.
     final at = now();
+    var start = r.startsAt;
+    final checkedIn = r.checkedInAt;
+    if (checkedIn != null && checkedIn.isBefore(start)) start = checkedIn;
+    var end = at.isBefore(r.endsAt) ? at : r.endsAt;
+    if (!end.isAfter(start)) end = start.add(const Duration(minutes: 1));
     _replace(r.copyWith(
       status: ReservationStatus.completed,
       checkedOutAt: at,
-      endsAt: at.isBefore(r.endsAt) ? at : r.endsAt,
+      startsAt: start,
+      endsAt: end,
     ));
   }
 

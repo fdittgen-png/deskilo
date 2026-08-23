@@ -89,5 +89,7 @@
   "featureNotificationGroupingDesc": "I membri possono raggruppare il feed delle notifiche per tipo, giorno o membro; toccando il simbolo del gruppo si torna all'elenco piatto.",
   "@featureNotificationGroupingDesc": {
     "description": "Feature-registry completeness (#598)"
-  }
+  },
+  "featureBookingPoliciesTitle": "Regole di prenotazione",
+  "featureBookingPoliciesDesc": "Comportamento di prenotazione configurabile: prenotazioni passate, prenotazioni al minuto fuori orario e check-out da parte degli amministratori."
 }

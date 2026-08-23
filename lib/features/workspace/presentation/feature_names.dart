@@ -76,4 +76,6 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.notificationGrouping =>
         l10n?.featureNotificationGroupingTitle ??
             'Notification feed grouping',
+      WorkspaceFeature.bookingPolicies =>
+        l10n?.featureBookingPoliciesTitle ?? 'Booking policies',
     };
