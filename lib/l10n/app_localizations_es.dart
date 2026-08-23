@@ -1411,6 +1411,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpHintDismiss => 'Ocultar consejo';
 
   @override
+  String get helpHintPrevTip => 'Consejo anterior';
+
+  @override
+  String get helpHintNextTip => 'Consejo siguiente';
+
+  @override
   String get helpHintRestoreTitle => 'Volver a mostrar los consejos de ayuda';
 
   @override
@@ -1424,11 +1430,55 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpHintReserveTopic => 'hub Reservar';
 
   @override
+  String get helpHintReserveTip2 =>
+      'Las vistas Semana y Mes encuentran un medio día libre de un vistazo: toca una celda o un día libre para reservar ahí mismo.';
+
+  @override
+  String get helpHintReserveTip3 =>
+      'Toca el botón de escaneo y apunta la cámara a la tarjeta QR de un espacio: la ficha muestra exactamente qué puedes hacer allí.';
+
+  @override
+  String get helpHintReserveTip3Topic => 'Escanear un código de espacio';
+
+  @override
+  String get helpHintReserveTip4 =>
+      'Los chips de mañana, tarde y día completo fijan tu franja antes de elegir asiento: una mañana reservada cuenta como medio día.';
+
+  @override
+  String get helpHintReserveTip4Topic => 'Cómo se comporta la reserva';
+
+  @override
+  String get helpHintReserveTip5 =>
+      'Define tu periodo de reserva por defecto en Ajustes: el hub lo preselecciona en cada visita.';
+
+  @override
+  String get helpHintReserveTip5Topic => 'Ajustes y perfil';
+
+  @override
   String get helpHintPlan =>
       'El plano en vivo: toca un asiento libre para reservar, toca tu reserva para registrar tu llegada.';
 
   @override
   String get helpHintPlanTopic => 'pestaña Plano';
+
+  @override
+  String get helpHintPlanTip2 =>
+      '¿Estás ante un asiento libre? Tócalo: la ficha propone desde ahora hasta el cierre, y al confirmar quedas registrado al instante.';
+
+  @override
+  String get helpHintPlanTip3 =>
+      'Recorre otro momento con el chip de fecha y el selector de hora: el plano muestra quién ocupa qué en cualquier instante futuro.';
+
+  @override
+  String get helpHintPlanTip4 =>
+      'Toca dos veces un escritorio, una sala o la planta entera —o el icono de capas de la barra de niveles— para reservar todo el espacio de una vez.';
+
+  @override
+  String get helpHintPlanTip5 =>
+      'Toca tu propio asiento para abrir su ficha: registra tu llegada desde 15 minutos antes del inicio y tu salida al marcharte.';
+
+  @override
+  String get helpHintPlanTip5Topic => 'Cómo se comporta la reserva';
 
   @override
   String get helpHintCalendar =>
@@ -1438,11 +1488,38 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpHintCalendarTopic => 'Calendario';
 
   @override
+  String get helpHintCalendarTip2 =>
+      'El conmutador Mías / Todos muestra solo tus reservas o las de toda la comunidad: los puntos rojos son tuyos, los azules de los demás.';
+
+  @override
+  String get helpHintCalendarTip3 =>
+      'El conmutador de vista cambia la mitad inferior entre la cuadrícula semanal y la lista de agenda; los chips de planta filtran ambas.';
+
+  @override
+  String get helpHintCalendarTip4 =>
+      'Cancelar una ocurrencia de una serie ofrece «esta y las siguientes»: las ocurrencias registradas o completadas conservan su historial.';
+
+  @override
+  String get helpHintCalendarTip4Topic => 'Cómo se comporta la reserva';
+
+  @override
   String get helpHintEvents =>
       'Todo lo ocurrido, en un solo hilo. Las decisiones que te esperan van arriba; los filtros acotan el resto.';
 
   @override
   String get helpHintEventsTopic => 'Eventos';
+
+  @override
+  String get helpHintEventsTip2 =>
+      'Los chips de filtro recuerdan tu elección entre visitas, y el chip No leídos reduce la lista a los mensajes sin leer.';
+
+  @override
+  String get helpHintEventsTip3 =>
+      'Agrupa el hilo por tipo, día o miembro desde el menú Agrupar por; toca el símbolo de grupo para volver a la lista plana.';
+
+  @override
+  String get helpHintEventsTip4 =>
+      'Las decisiones pendientes quedan fijadas arriba con Aceptar y rechazar, y nadie valida nunca su propio evento.';
 
   @override
   String get helpHintEditor =>
@@ -1452,11 +1529,42 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpHintEditorTopic => 'editor del espacio';
 
   @override
+  String get helpHintEditorTip2 =>
+      'Elige Oficina o Mesa en la barra de herramientas y arrastra sobre la cuadrícula para dibujarla; Seleccionar mueve y redimensiona lo existente.';
+
+  @override
+  String get helpHintEditorTip3 =>
+      'La herramienta Asiento estampa asientos en los escritorios; la ficha de un asiento fija su orientación, tipo de silla, accesorios y un bloqueo por mantenimiento.';
+
+  @override
+  String get helpHintEditorTip4 =>
+      'Da a un asiento su etiqueta NFC/RFID desde su ficha: acerca el chip al teléfono y el campo se rellena solo.';
+
+  @override
+  String get helpHintEditorTip5 =>
+      'Imprime una tarjeta QR para cada asiento, escritorio, oficina y planta: elige el tamaño de la tarjeta y qué muestra antes de exportar.';
+
+  @override
+  String get helpHintEditorTip5Topic => 'Códigos QR de espacios';
+
+  @override
   String get helpHintAvailability =>
       'Define los días de apertura y el horario, y añade días de cierre que nadie puede reservar.';
 
   @override
   String get helpHintAvailabilityTopic => 'Disponibilidad';
+
+  @override
+  String get helpHintAvailabilityTip2 =>
+      'La granularidad de reserva decide la forma de una franja: medios días, días completos, rejillas de minutos u horarios libres.';
+
+  @override
+  String get helpHintAvailabilityTip3 =>
+      'El inicio del día, el límite del medio día y el fin del día rigen cada franja: reserva, registro y facturación los siguen.';
+
+  @override
+  String get helpHintAvailabilityTip4 =>
+      'Tres políticas de reserva endurecen o relajan las reglas: reservas pasadas, minutos confinados al horario laboral y salida por un admin.';
 
   @override
   String get helpHintFeatures =>
@@ -1466,11 +1574,41 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpHintFeaturesTopic => 'Funciones';
 
   @override
+  String get helpHintFeaturesTip2 =>
+      'La lista es jerárquica: una función que necesita otra aparece sangrada debajo y se atenúa mientras su padre está apagado.';
+
+  @override
+  String get helpHintFeaturesTip3 =>
+      'Apagar un padre saca todo su subárbol de la app; las elecciones guardadas de los hijos vuelven intactas con el padre.';
+
+  @override
+  String get helpHintFeaturesTip4 =>
+      'La entrada de ajustes de una función solo aparece mientras está activada; la pantalla Funciones, en cambio, siempre queda accesible.';
+
+  @override
   String get helpHintMembers =>
       'Invita a miembros, ajusta su plan y su rol, y gestiona sus credenciales.';
 
   @override
   String get helpHintMembersTopic => 'Miembros y planes';
+
+  @override
+  String get helpHintMembersTip2 =>
+      'Toca un miembro para su ficha de gestión: suscripción, límite de reservas, credenciales, servicios y más en un solo lugar.';
+
+  @override
+  String get helpHintMembersTip3 =>
+      'Las credenciales son por miembro: emite una credencial QR imprimible o registra su tarjeta NFC acercándola al dispositivo.';
+
+  @override
+  String get helpHintMembersTip3Topic => 'credenciales RFID';
+
+  @override
+  String get helpHintMembersTip4 =>
+      'Nombrar admin concede permisos tras validación; la matriz de roles bajo Gestión de roles decide qué puede hacer cada rol.';
+
+  @override
+  String get helpHintMembersTip4Topic => 'Gestión de roles';
 
   @override
   String get helpHintMoney =>
@@ -1480,11 +1618,37 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpHintMoneyTopic => 'dinero';
 
   @override
+  String get helpHintMoneyTip2 =>
+      'Cada documento ofrece las mismas tres acciones: vista rápida en pantalla, descarga en PDF y compartir con cualquier app.';
+
+  @override
+  String get helpHintMoneyTip2Topic => 'Vista rápida, guardar, compartir';
+
+  @override
+  String get helpHintMoneyTip3 =>
+      'Registra un pago con la fecha en que se movió el dinero y el mes que salda: la otra parte lo confirma.';
+
+  @override
+  String get helpHintMoneyTip4 =>
+      'Una vez facturado el mes, decide la factura: el mes aparece saldado en cuanto su factura queda pagada.';
+
+  @override
+  String get helpHintMoneyTip4Topic => 'decide la factura';
+
+  @override
   String get helpHintValidation =>
       'Decide qué acciones necesitan confirmación, quién confirma y cuántas aprobaciones hacen falta.';
 
   @override
   String get helpHintValidationTopic => 'confirmaciones';
+
+  @override
+  String get helpHintValidationTip2 =>
+      'Una tarjeta por tipo de evento, cada una heredando de la regla por defecto hasta que la edites: pagos, gastos, cambios de rol y más.';
+
+  @override
+  String get helpHintValidationTip3 =>
+      'Nadie valida nunca su propio evento, y una solicitud sin respuesta caduca a los 7 días: nada se concede en silencio.';
 
   @override
   String get helpHintWorkspace =>
@@ -1494,11 +1658,38 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpHintWorkspaceTopic => 'Ajustes del espacio';
 
   @override
+  String get helpHintWorkspaceTip2 =>
+      'Imprime las tarjetas QR de los espacios desde Exportaciones: elige el tamaño y la información de cada tarjeta, diez por página A4.';
+
+  @override
+  String get helpHintWorkspaceTip2Topic => 'Códigos QR de espacios';
+
+  @override
+  String get helpHintWorkspaceTip3 =>
+      'Exporta el espacio como XML para respaldarlo o usarlo de plantilla; el cuestionario de configuración prepara un espacio nuevo de principio a fin.';
+
+  @override
+  String get helpHintWorkspaceTip4 =>
+      'Restablecer el espacio borra reservas, contabilidad y plano: ajustes y miembros sobreviven, y una confirmación escrita protege la acción.';
+
+  @override
   String get helpHintBadges =>
       'Emite una credencial QR imprimible o registra una tarjeta NFC; revoca credenciales perdidas en cualquier momento.';
 
   @override
   String get helpHintBadgesTopic => 'credenciales RFID';
+
+  @override
+  String get helpHintBadgesTip2 =>
+      'Registra una tarjeta acercándola al dispositivo: cualquier chip legible sirve, y el diálogo indica a qué espacio se asocia.';
+
+  @override
+  String get helpHintBadgesTip3 =>
+      'Guarda una credencial QR como PDF para imprimir diez copias tamaño tarjeta en una página A4, con repuestos incluidos.';
+
+  @override
+  String get helpHintBadgesTip4 =>
+      'Revoca una credencial perdida en cualquier momento; desliza una credencial revocada hacia la derecha para eliminarla definitivamente.';
 
   @override
   String get inviteSectionTitle => 'Invitar a alguien';

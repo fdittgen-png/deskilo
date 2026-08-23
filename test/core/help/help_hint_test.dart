@@ -5,6 +5,10 @@
 // more" deep-links into /help with the surface's localized topic, the
 // Settings row restores every dismissed hint, and the formHelpHints
 // flag OFF removes hints and the Settings row alike.
+// #610 — the hints are tip carousels: 3–5 tips per surface, chevrons +
+// indicator + swiping, a fresh visit opens on the tip after the last
+// shown one (rotating), manual paging updates that memory, and every
+// tip's Learn more lands on its own guide section.
 import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
@@ -23,8 +27,8 @@ import 'package:visibility_detector/visibility_detector.dart';
 import '../../helpers/mock_providers.dart';
 
 Override _helpOverride() => helpContentProvider.overrideWith(
-      (ref, languageCode) async => '# User Guide\n\n## 1. Intro\n\nHi.\n',
-    );
+  (ref, languageCode) async => '# User Guide\n\n## 1. Intro\n\nHi.\n',
+);
 
 Future<void> _pumpApp(
   WidgetTester tester, {
@@ -39,8 +43,9 @@ Future<void> _pumpApp(
       overrides: [
         ...standardTestOverrides(
           helpHints: store,
-          workspace:
-              FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags),
+          workspace: FakeWorkspaceRepository.withWorkspace(
+            featureFlags: featureFlags,
+          ),
         ),
         _helpOverride(),
       ],
@@ -50,6 +55,10 @@ Future<void> _pumpApp(
   await tester.pumpAndSettle();
 }
 
+/// The carousel's compact "2/5" position indicator for [id].
+String _position(WidgetTester tester, String id) =>
+    tester.widget<Text>(find.byKey(ValueKey('help-hint-pos-$id'))).data!;
+
 void main() {
   setUpAll(() {
     // markdown_widget wraps blocks in VisibilityDetector (TOC tracking),
@@ -57,14 +66,89 @@ void main() {
     VisibilityDetectorController.instance.updateInterval = Duration.zero;
   });
 
-  testWidgets('the hint renders on the reserve hub (top of content)',
-      (tester) async {
+  testWidgets('the hint renders on the reserve hub (top of content)', (
+    tester,
+  ) async {
     await _pumpApp(tester);
     expect(find.byKey(const ValueKey('help-hint-reserve')), findsOneWidget);
-    expect(
-      find.textContaining('tap a free seat'),
-      findsOneWidget,
+    expect(find.textContaining('tap a free seat'), findsOneWidget);
+    // The carousel indicator says where we are — first visit, tip 1.
+    expect(_position(tester, 'reserve'), '1/5');
+  });
+
+  testWidgets('the next visit opens on the NEXT tip, rotating past the end', (
+    tester,
+  ) async {
+    final store = InMemoryHelpHintStore();
+    await _pumpApp(tester, store: store);
+    expect(_position(tester, 'reserve'), '1/5');
+    // Showing tip 1 recorded it as the last shown.
+    expect(store.positions['reserve'], 0);
+
+    // A fresh app boot with the SAME device store teaches the next tip.
+    // (Tear the tree down first — a visit begins with a fresh screen.)
+    await tester.pumpWidget(const SizedBox.shrink());
+    await _pumpApp(tester, store: store);
+    expect(_position(tester, 'reserve'), '2/5');
+    expect(find.textContaining('Week and Month views'), findsOneWidget);
+    expect(store.positions['reserve'], 1);
+
+    // A stored index past the end (an older, longer tip list) rotates
+    // back to the start instead of crashing.
+    store.positions['reserve'] = 99;
+    await tester.pumpWidget(const SizedBox.shrink());
+    await _pumpApp(tester, store: store);
+    expect(_position(tester, 'reserve'), '1/5');
+  });
+
+  testWidgets('chevrons page forward and backward, wrapping, and persist', (
+    tester,
+  ) async {
+    final store = InMemoryHelpHintStore();
+    await _pumpApp(tester, store: store);
+    expect(_position(tester, 'reserve'), '1/5');
+
+    await tester.tap(find.byKey(const ValueKey('help-hint-next-reserve')));
+    await tester.pumpAndSettle();
+    expect(_position(tester, 'reserve'), '2/5');
+    expect(find.textContaining('Week and Month views'), findsOneWidget);
+    // Manual paging updates the rotation memory.
+    expect(store.positions['reserve'], 1);
+
+    await tester.tap(find.byKey(const ValueKey('help-hint-prev-reserve')));
+    await tester.pumpAndSettle();
+    expect(_position(tester, 'reserve'), '1/5');
+    expect(store.positions['reserve'], 0);
+
+    // Backward from tip 1 wraps to the last tip — the indicator keeps
+    // the position obvious.
+    await tester.tap(find.byKey(const ValueKey('help-hint-prev-reserve')));
+    await tester.pumpAndSettle();
+    expect(_position(tester, 'reserve'), '5/5');
+    expect(store.positions['reserve'], 4);
+  });
+
+  testWidgets('swiping the card pages too, in sync with the indicator', (
+    tester,
+  ) async {
+    final store = InMemoryHelpHintStore();
+    await _pumpApp(tester, store: store);
+
+    await tester.drag(
+      find.byKey(const ValueKey('help-hint-pager-reserve')),
+      const Offset(-400, 0),
     );
+    await tester.pumpAndSettle();
+    expect(_position(tester, 'reserve'), '2/5');
+    expect(store.positions['reserve'], 1);
+
+    await tester.drag(
+      find.byKey(const ValueKey('help-hint-pager-reserve')),
+      const Offset(400, 0),
+    );
+    await tester.pumpAndSettle();
+    expect(_position(tester, 'reserve'), '1/5');
+    expect(store.positions['reserve'], 0);
   });
 
   testWidgets('the hint renders on the events feed too', (tester) async {
@@ -75,15 +159,14 @@ void main() {
     expect(find.byKey(const ValueKey('help-hint-events')), findsOneWidget);
   });
 
-  testWidgets('X dismisses the hint and the dismissal survives a rebuild',
-      (tester) async {
+  testWidgets('X dismisses the hint and the dismissal survives a rebuild', (
+    tester,
+  ) async {
     final store = InMemoryHelpHintStore();
     await _pumpApp(tester, store: store);
     expect(find.byKey(const ValueKey('help-hint-reserve')), findsOneWidget);
 
-    await tester.tap(
-      find.byKey(const ValueKey('help-hint-dismiss-reserve')),
-    );
+    await tester.tap(find.byKey(const ValueKey('help-hint-dismiss-reserve')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('help-hint-reserve')), findsNothing);
     expect(store.dismissed, contains('reserve'));
@@ -98,8 +181,9 @@ void main() {
     expect(find.byKey(const ValueKey('help-hint-events')), findsOneWidget);
   });
 
-  testWidgets('"Learn more" opens /help carrying the localized topic',
-      (tester) async {
+  testWidgets('"Learn more" opens /help carrying the localized topic', (
+    tester,
+  ) async {
     await _pumpApp(tester);
     await tester.tap(
       find.byKey(const ValueKey('help-hint-learn-more-reserve')),
@@ -116,8 +200,31 @@ void main() {
     );
   });
 
-  testWidgets('Settings → "Show help hints again" restores dismissed hints',
-      (tester) async {
+  testWidgets('a tip with its own topic deep-links to that guide section', (
+    tester,
+  ) async {
+    await _pumpApp(tester);
+    // Page to tip 3 — the QR-scan tip, which carries its own topic.
+    await tester.tap(find.byKey(const ValueKey('help-hint-next-reserve')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('help-hint-next-reserve')));
+    await tester.pumpAndSettle();
+    expect(_position(tester, 'reserve'), '3/5');
+
+    await tester.tap(
+      find.byKey(const ValueKey('help-hint-learn-more-reserve')),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(HelpScreen), findsOneWidget);
+    expect(
+      tester.widget<HelpScreen>(find.byType(HelpScreen)).topic,
+      'Scan a space code',
+    );
+  });
+
+  testWidgets('Settings → "Show help hints again" restores dismissed hints', (
+    tester,
+  ) async {
     final store = InMemoryHelpHintStore()..dismissed = {'reserve'};
     await _pumpApp(tester, store: store);
     expect(find.byKey(const ValueKey('help-hint-reserve')), findsNothing);
@@ -140,8 +247,9 @@ void main() {
     expect(find.byKey(const ValueKey('help-hint-reserve')), findsOneWidget);
   });
 
-  testWidgets('flag OFF hides every hint and the Settings restore row',
-      (tester) async {
+  testWidgets('flag OFF hides every hint and the Settings restore row', (
+    tester,
+  ) async {
     await _pumpApp(tester, featureFlags: {'formHelpHints': false});
     expect(find.byKey(const ValueKey('help-hint-reserve')), findsNothing);
 
@@ -152,23 +260,49 @@ void main() {
       200,
       scrollable: find.byType(Scrollable).first,
     );
-    expect(
-      find.byKey(const ValueKey('settings-restore-hints')),
-      findsNothing,
-    );
+    expect(find.byKey(const ValueKey('settings-restore-hints')), findsNothing);
   });
 
   test('every hint id resolves a non-empty text and topic (fallbacks)', () {
     for (final id in HelpHintId.values) {
-      expect(HelpHint.text(null, id).trim(), isNotEmpty,
-          reason: '${id.name} has no fallback text');
-      expect(HelpHint.topic(null, id).trim(), isNotEmpty,
-          reason: '${id.name} has no fallback topic');
+      expect(
+        HelpHint.text(null, id).trim(),
+        isNotEmpty,
+        reason: '${id.name} has no fallback text',
+      );
+      expect(
+        HelpHint.topic(null, id).trim(),
+        isNotEmpty,
+        reason: '${id.name} has no fallback topic',
+      );
     }
   });
 
-  test('every localized topic matches a heading of its language\'s guide — '
-      'the deep link must land in all five languages', () {
+  test('every surface carries 3–5 tips, tip 1 being the #606 how-to', () {
+    for (final id in HelpHintId.values) {
+      final tips = HelpHint.tips(null, id);
+      expect(
+        tips.length,
+        inInclusiveRange(3, 5),
+        reason: '${id.name} has ${tips.length} tips',
+      );
+      expect(
+        tips.first.text,
+        HelpHint.text(null, id),
+        reason: '${id.name}: tip 1 must stay the original hint',
+      );
+      for (final tip in tips) {
+        expect(
+          tip.text.trim(),
+          isNotEmpty,
+          reason: '${id.name} has an empty tip',
+        );
+      }
+    }
+  });
+
+  test('every localized tip topic matches a heading of its language\'s '
+      'guide — each Learn more must land in all five languages', () {
     for (final locale in helpLocales) {
       final l10n = lookupAppLocalizations(Locale(locale));
       final headings = File('assets/help/$locale.md')
@@ -176,14 +310,29 @@ void main() {
           .where((line) => line.startsWith('#'))
           .map((line) => line.replaceFirst(RegExp(r'^#+\s*'), ''))
           .toList();
+      bool lands(String topic) =>
+          headings.any((h) => h.toLowerCase().contains(topic.toLowerCase()));
       for (final id in HelpHintId.values) {
-        final topic = HelpHint.topic(l10n, id).toLowerCase();
+        // The surface's default topic…
         expect(
-          headings.any((h) => h.toLowerCase().contains(topic)),
+          lands(HelpHint.topic(l10n, id)),
           isTrue,
-          reason: '$locale: topic "$topic" of ${id.name} matches no '
-              'heading in assets/help/$locale.md',
+          reason:
+              '$locale: topic "${HelpHint.topic(l10n, id)}" of '
+              '${id.name} matches no heading in assets/help/$locale.md',
         );
+        // …and every tip's own topic (falling back to the surface's).
+        final tips = HelpHint.tips(l10n, id);
+        for (var i = 0; i < tips.length; i++) {
+          final topic = tips[i].topic ?? HelpHint.topic(l10n, id);
+          expect(
+            lands(topic),
+            isTrue,
+            reason:
+                '$locale: topic "$topic" of ${id.name} tip ${i + 1} '
+                'matches no heading in assets/help/$locale.md',
+          );
+        }
       }
     }
   });

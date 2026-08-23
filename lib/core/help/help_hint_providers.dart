@@ -27,3 +27,20 @@ class DismissedHelpHints extends _$DismissedHelpHints {
     await ref.read(helpHintStoreProvider).writeDismissed(const {});
   }
 }
+
+/// The last-shown tip index per surface (#610) — the memory behind the
+/// carousel's rotation: a fresh visit opens on the tip AFTER this one.
+/// Stored indices from an older tip list are tolerated: the widget takes
+/// them modulo the current tip count.
+@Riverpod(keepAlive: true)
+class HelpHintPositions extends _$HelpHintPositions {
+  @override
+  Future<Map<String, int>> build() =>
+      ref.watch(helpHintStoreProvider).readPositions();
+
+  Future<void> setPosition(String id, int index) async {
+    final next = {...state.value ?? const <String, int>{}, id: index};
+    state = AsyncData(next);
+    await ref.read(helpHintStoreProvider).writePositions(next);
+  }
+}

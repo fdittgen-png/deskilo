@@ -1410,6 +1410,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpHintDismiss => 'Hinweis ausblenden';
 
   @override
+  String get helpHintPrevTip => 'Vorheriger Tipp';
+
+  @override
+  String get helpHintNextTip => 'Nächster Tipp';
+
+  @override
   String get helpHintRestoreTitle => 'Hilfe-Hinweise wieder anzeigen';
 
   @override
@@ -1423,11 +1429,55 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpHintReserveTopic => 'Reservieren-Hub';
 
   @override
+  String get helpHintReserveTip2 =>
+      'Die Wochen- und Monatsansicht finden einen freien halben Tag auf einen Blick — freie Zelle oder freien Tag antippen und direkt buchen.';
+
+  @override
+  String get helpHintReserveTip3 =>
+      'Den Scan-Knopf antippen und die Kamera auf die QR-Karte eines Raums richten — das Blatt zeigt genau, was dort möglich ist.';
+
+  @override
+  String get helpHintReserveTip3Topic => 'Einen Raumcode scannen';
+
+  @override
+  String get helpHintReserveTip4 =>
+      'Die Chips Vormittag, Nachmittag und ganzer Tag legen das Zeitfenster fest, bevor der Platz gewählt wird — ein gebuchter Vormittag zählt als halber Tag.';
+
+  @override
+  String get helpHintReserveTip4Topic => 'Wie sich Buchungen verhalten';
+
+  @override
+  String get helpHintReserveTip5 =>
+      'Die Standard-Buchungsperiode in den Einstellungen festlegen — der Hub wählt sie bei jedem Besuch vor.';
+
+  @override
+  String get helpHintReserveTip5Topic => 'Einstellungen & Profil';
+
+  @override
   String get helpHintPlan =>
       'Der Live-Grundriss: freien Platz antippen zum Buchen, die eigene Buchung antippen zum Einchecken.';
 
   @override
   String get helpHintPlanTopic => 'Grundriss';
+
+  @override
+  String get helpHintPlanTip2 =>
+      'Direkt am freien Platz? Antippen — das Blatt schlägt jetzt bis Feierabend vor, und Bestätigen checkt sofort ein.';
+
+  @override
+  String get helpHintPlanTip3 =>
+      'Mit dem Datums-Chip und dem Zeitregler einen anderen Moment ansehen — der Grundriss zeigt die Belegung zu jedem künftigen Zeitpunkt.';
+
+  @override
+  String get helpHintPlanTip4 =>
+      'Einen Schreibtisch, einen Raum oder die Etage doppelt antippen — oder das Ebenen-Symbol der Etagenleiste — und den ganzen Bereich auf einmal reservieren.';
+
+  @override
+  String get helpHintPlanTip5 =>
+      'Den eigenen Platz antippen für sein Blatt: Einchecken ab 15 Minuten vor dem Start, Auschecken beim Gehen.';
+
+  @override
+  String get helpHintPlanTip5Topic => 'Wie sich Buchungen verhalten';
 
   @override
   String get helpHintCalendar =>
@@ -1437,11 +1487,38 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpHintCalendarTopic => 'Kalender';
 
   @override
+  String get helpHintCalendarTip2 =>
+      'Der Schalter Meine / Alle zeigt nur die eigenen Buchungen oder die der ganzen Community — rote Punkte sind die eigenen, blaue die der anderen.';
+
+  @override
+  String get helpHintCalendarTip3 =>
+      'Der Ansichtsschalter wechselt die untere Hälfte zwischen Wochenraster und Agenda-Liste; die Etagen-Chips filtern beide.';
+
+  @override
+  String get helpHintCalendarTip4 =>
+      'Beim Stornieren einer Serien-Buchung gibt es „diese und folgende“ — eingecheckte und abgeschlossene Termine behalten ihre Historie.';
+
+  @override
+  String get helpHintCalendarTip4Topic => 'Wie sich Buchungen verhalten';
+
+  @override
   String get helpHintEvents =>
       'Alles, was passiert ist, in einem Feed. Ausstehende Entscheidungen stehen oben; die Chips filtern den Rest.';
 
   @override
   String get helpHintEventsTopic => 'Ereignisse';
+
+  @override
+  String get helpHintEventsTip2 =>
+      'Die Filter-Chips merken sich die Auswahl über Besuche hinweg — und der Chip Ungelesen zeigt nur die ungelesenen Nachrichten.';
+
+  @override
+  String get helpHintEventsTip3 =>
+      'Den Feed über das Menü Gruppieren nach Typ, Tag oder Mitglied falten; das Gruppensymbol antippen führt zur flachen Liste zurück.';
+
+  @override
+  String get helpHintEventsTip4 =>
+      'Ausstehende Entscheidungen stehen oben angepinnt mit Annehmen und Ablehnen — und niemand bestätigt je das eigene Ereignis.';
 
   @override
   String get helpHintEditor =>
@@ -1451,11 +1528,42 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpHintEditorTopic => 'Space-Editor';
 
   @override
+  String get helpHintEditorTip2 =>
+      'Büro oder Tisch in der Werkzeugleiste wählen und auf dem Raster aufziehen; Auswählen verschiebt und skaliert Vorhandenes.';
+
+  @override
+  String get helpHintEditorTip3 =>
+      'Das Platz-Werkzeug stempelt Plätze auf die Tische; das Blatt eines Platzes regelt Ausrichtung, Stuhltyp, Zubehör und eine Wartungssperre.';
+
+  @override
+  String get helpHintEditorTip4 =>
+      'Einem Platz seinen NFC/RFID-Tag im Platz-Blatt geben — den Chip ans Telefon halten und das Feld füllt sich von selbst.';
+
+  @override
+  String get helpHintEditorTip5 =>
+      'Für jeden Platz, Tisch, Raum und jede Etage eine QR-Karte drucken — Kartengröße und Karteninhalt vor dem Export wählen.';
+
+  @override
+  String get helpHintEditorTip5Topic => 'Raum-QR-Codes';
+
+  @override
   String get helpHintAvailability =>
       'Öffnungstage und Arbeitszeiten festlegen und Schließtage eintragen, die niemand buchen kann.';
 
   @override
   String get helpHintAvailabilityTopic => 'Verfügbarkeit';
+
+  @override
+  String get helpHintAvailabilityTip2 =>
+      'Die Buchungsgranularität bestimmt, wie ein Zeitfenster aussehen darf: halbe Tage, ganze Tage, Minutenraster oder freie Zeiten.';
+
+  @override
+  String get helpHintAvailabilityTip3 =>
+      'Tagesbeginn, Halbtagsgrenze und Tagesende steuern jeden Halbtags- und Ganztagsslot — Buchung, Check-in und Abrechnung folgen ihnen.';
+
+  @override
+  String get helpHintAvailabilityTip4 =>
+      'Drei Buchungsrichtlinien lockern oder verschärfen die Regeln: vergangene Buchungen, Minutenbuchungen nur in der Arbeitszeit, Admin-Check-out.';
 
   @override
   String get helpHintFeatures =>
@@ -1465,11 +1573,41 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpHintFeaturesTopic => 'Funktionen';
 
   @override
+  String get helpHintFeaturesTip2 =>
+      'Die Liste ist hierarchisch — eine Funktion, die eine andere braucht, steht eingerückt darunter und ist ausgegraut, solange der Elternschalter aus ist.';
+
+  @override
+  String get helpHintFeaturesTip3 =>
+      'Einen Elternschalter auszuschalten nimmt den ganzen Teilbaum aus der App; die gespeicherten Einstellungen der Kinder kehren mit dem Elternteil unverändert zurück.';
+
+  @override
+  String get helpHintFeaturesTip4 =>
+      'Der Einstellungs-Eintrag einer Funktion erscheint nur, solange sie an ist — der Funktionen-Bildschirm selbst bleibt immer erreichbar.';
+
+  @override
   String get helpHintMembers =>
       'Mitglieder einladen, Plan-Prozentsatz und Rolle festlegen und ihre Badges verwalten.';
 
   @override
   String get helpHintMembersTopic => 'Mitglieder & Pläne';
+
+  @override
+  String get helpHintMembersTip2 =>
+      'Ein Mitglied antippen für sein Verwaltungsblatt — Abonnement, Reservierungslimit, Badges, Services und mehr an einem Ort.';
+
+  @override
+  String get helpHintMembersTip3 =>
+      'Badges gehören zum Mitglied: ein druckbares QR-Badge ausstellen oder die NFC-Karte registrieren, indem man sie ans Gerät hält.';
+
+  @override
+  String get helpHintMembersTip3Topic => 'NFC-Badges';
+
+  @override
+  String get helpHintMembersTip4 =>
+      'Zum Admin ernennen vergibt Adminrechte nach Bestätigung; die Rollenmatrix unter Rollenverwaltung entscheidet, was jede Rolle darf.';
+
+  @override
+  String get helpHintMembersTip4Topic => 'Rollenverwaltung';
 
   @override
   String get helpHintMoney =>
@@ -1479,11 +1617,37 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpHintMoneyTopic => 'Geld';
 
   @override
+  String get helpHintMoneyTip2 =>
+      'Jedes Dokument bietet dieselben drei Aktionen: Schnellansicht auf dem Bildschirm, Download als PDF und Teilen an jede App.';
+
+  @override
+  String get helpHintMoneyTip2Topic => 'Schnellansicht, Speichern, Teilen';
+
+  @override
+  String get helpHintMoneyTip3 =>
+      'Eine Zahlung mit dem Datum der Überweisung und dem Monat erfassen, den sie ausgleicht — die Gegenseite bestätigt.';
+
+  @override
+  String get helpHintMoneyTip4 =>
+      'Sobald der Monat fakturiert ist, entscheidet die Rechnung: der Monat gilt als beglichen, sobald seine Rechnung bezahlt ist.';
+
+  @override
+  String get helpHintMoneyTip4Topic => 'entscheidet die Rechnung';
+
+  @override
   String get helpHintValidation =>
       'Festlegen, welche Aktionen eine Bestätigung brauchen, wer bestätigt und wie viele Zustimmungen nötig sind.';
 
   @override
   String get helpHintValidationTopic => 'Bestätigungen';
+
+  @override
+  String get helpHintValidationTip2 =>
+      'Eine Karte pro Ereignistyp, jede erbt von der Standardregel, bis sie bearbeitet wird — Zahlungen, Ausgaben, Rollenwechsel und mehr.';
+
+  @override
+  String get helpHintValidationTip3 =>
+      'Niemand bestätigt je das eigene Ereignis, und unbeantwortete Anfragen verfallen nach 7 Tagen — nichts wird stillschweigend gewährt.';
 
   @override
   String get helpHintWorkspace =>
@@ -1493,11 +1657,38 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpHintWorkspaceTopic => 'Workspace-Einstellungen';
 
   @override
+  String get helpHintWorkspaceTip2 =>
+      'Die Raum-QR-Karten unter Exporte drucken — Kartengröße und Karteninhalt wählen, zehn pro A4-Seite.';
+
+  @override
+  String get helpHintWorkspaceTip2Topic => 'Raum-QR-Codes';
+
+  @override
+  String get helpHintWorkspaceTip3 =>
+      'Den Workspace als XML exportieren, um ihn zu sichern oder als Vorlage zu nutzen; der Einrichtungs-Fragebogen füllt einen neuen Workspace von A bis Z.';
+
+  @override
+  String get helpHintWorkspaceTip4 =>
+      'Workspace zurücksetzen löscht Reservierungen, Buchhaltung und Grundriss — Einstellungen und Mitglieder bleiben, eine getippte Bestätigung schützt davor.';
+
+  @override
   String get helpHintBadges =>
       'Druckbares QR-Badge ausstellen oder NFC-Karte registrieren; verlorene Badges jederzeit sperren.';
 
   @override
   String get helpHintBadgesTopic => 'NFC-Badges';
+
+  @override
+  String get helpHintBadgesTip2 =>
+      'Eine Karte registrieren, indem man sie ans Gerät hält — jeder lesbare Chip funktioniert, und der Dialog nennt den Workspace, für den sie gilt.';
+
+  @override
+  String get helpHintBadgesTip3 =>
+      'Ein QR-Badge als PDF speichern und zehn Exemplare im Scheckkartenformat auf einer A4-Seite drucken — Ersatz inklusive.';
+
+  @override
+  String get helpHintBadgesTip4 =>
+      'Ein verlorenes Badge jederzeit sperren; ein gesperrtes Badge nach rechts wischen, um es endgültig zu löschen.';
 
   @override
   String get inviteSectionTitle => 'Jemanden einladen';

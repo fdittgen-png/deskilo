@@ -1414,6 +1414,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpHintDismiss => 'Nascondi suggerimento';
 
   @override
+  String get helpHintPrevTip => 'Suggerimento precedente';
+
+  @override
+  String get helpHintNextTip => 'Suggerimento successivo';
+
+  @override
   String get helpHintRestoreTitle => 'Mostra di nuovo i suggerimenti di aiuto';
 
   @override
@@ -1428,11 +1434,55 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpHintReserveTopic => 'hub Prenota';
 
   @override
+  String get helpHintReserveTip2 =>
+      'Le viste Settimana e Mese trovano una mezza giornata libera a colpo d\'occhio: tocca una cella o un giorno libero per prenotare al volo.';
+
+  @override
+  String get helpHintReserveTip3 =>
+      'Tocca il pulsante di scansione e inquadra la tessera QR di uno spazio: la scheda mostra esattamente cosa puoi fare lì.';
+
+  @override
+  String get helpHintReserveTip3Topic => 'Scansionare un codice spazio';
+
+  @override
+  String get helpHintReserveTip4 =>
+      'I chip mattina, pomeriggio e giornata intera fissano la fascia prima di scegliere il posto: una mattina prenotata vale mezza giornata.';
+
+  @override
+  String get helpHintReserveTip4Topic => 'Come si comporta la prenotazione';
+
+  @override
+  String get helpHintReserveTip5 =>
+      'Imposta il tuo periodo di prenotazione predefinito nelle Impostazioni: l\'hub lo preseleziona a ogni visita.';
+
+  @override
+  String get helpHintReserveTip5Topic => 'Impostazioni e profilo';
+
+  @override
   String get helpHintPlan =>
       'La piantina dal vivo: tocca un posto libero per prenotare, tocca la tua prenotazione per fare il check-in.';
 
   @override
   String get helpHintPlanTopic => 'Piantina';
+
+  @override
+  String get helpHintPlanTip2 =>
+      'Sei davanti a un posto libero? Toccalo: la scheda propone da adesso fino alla chiusura, e confermando fai subito il check-in.';
+
+  @override
+  String get helpHintPlanTip3 =>
+      'Sfoglia un altro momento con il chip della data e il selettore orario: la piantina mostra chi occupa cosa in qualsiasi istante futuro.';
+
+  @override
+  String get helpHintPlanTip4 =>
+      'Tocca due volte una scrivania, una stanza o l\'intero piano — o l\'icona dei livelli sulla barra dei piani — per prenotare tutto lo spazio in una volta.';
+
+  @override
+  String get helpHintPlanTip5 =>
+      'Tocca il tuo posto per aprire la sua scheda: check-in da 15 minuti prima dell\'inizio, check-out quando vai via.';
+
+  @override
+  String get helpHintPlanTip5Topic => 'Come si comporta la prenotazione';
 
   @override
   String get helpHintCalendar =>
@@ -1442,11 +1492,38 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpHintCalendarTopic => 'Calendario';
 
   @override
+  String get helpHintCalendarTip2 =>
+      'L\'interruttore Mie / Tutti mostra solo le tue prenotazioni o quelle di tutta la comunità: i punti rossi sono i tuoi, i blu degli altri.';
+
+  @override
+  String get helpHintCalendarTip3 =>
+      'L\'interruttore di vista alterna la metà inferiore tra la griglia settimanale e l\'elenco agenda; i chip dei piani filtrano entrambe.';
+
+  @override
+  String get helpHintCalendarTip4 =>
+      'Annullare un\'occorrenza di una serie offre «questa e le successive»: le occorrenze con check-in o completate conservano la loro storia.';
+
+  @override
+  String get helpHintCalendarTip4Topic => 'Come si comporta la prenotazione';
+
+  @override
   String get helpHintEvents =>
       'Tutto quello che è successo, in un unico feed. Le decisioni in attesa stanno in alto; i filtri restringono il resto.';
 
   @override
   String get helpHintEventsTopic => 'Eventi';
+
+  @override
+  String get helpHintEventsTip2 =>
+      'I chip di filtro ricordano la tua scelta da una visita all\'altra, e il chip Non letti riduce l\'elenco ai messaggi da leggere.';
+
+  @override
+  String get helpHintEventsTip3 =>
+      'Raggruppa il feed per tipo, giorno o membro dal menu Raggruppa per; tocca il simbolo del gruppo per tornare all\'elenco piatto.';
+
+  @override
+  String get helpHintEventsTip4 =>
+      'Le decisioni in sospeso restano fissate in alto con Accetta e rifiuta, e nessuno convalida mai il proprio evento.';
 
   @override
   String get helpHintEditor =>
@@ -1456,11 +1533,42 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpHintEditorTopic => 'editor dello spazio';
 
   @override
+  String get helpHintEditorTip2 =>
+      'Scegli Ufficio o Tavolo nella barra degli strumenti e trascina sulla griglia per disegnarlo; Seleziona sposta e ridimensiona ciò che c\'è già.';
+
+  @override
+  String get helpHintEditorTip3 =>
+      'Lo strumento Posto timbra i posti sulle scrivanie; la scheda di un posto imposta orientamento, tipo di sedia, accessori e un blocco per manutenzione.';
+
+  @override
+  String get helpHintEditorTip4 =>
+      'Assegna a un posto il suo tag NFC/RFID dalla sua scheda: avvicina il chip al telefono e il campo si riempie da solo.';
+
+  @override
+  String get helpHintEditorTip5 =>
+      'Stampa una tessera QR per ogni posto, scrivania, ufficio e piano: scegli la dimensione della tessera e cosa mostra prima di esportare.';
+
+  @override
+  String get helpHintEditorTip5Topic => 'Codici QR degli spazi';
+
+  @override
   String get helpHintAvailability =>
       'Imposta i giorni di apertura e gli orari, e aggiungi giorni di chiusura che nessuno può prenotare.';
 
   @override
   String get helpHintAvailabilityTopic => 'Disponibilità';
+
+  @override
+  String get helpHintAvailabilityTip2 =>
+      'La granularità di prenotazione decide la forma di una fascia: mezze giornate, giornate intere, griglie ai minuti oppure orari liberi.';
+
+  @override
+  String get helpHintAvailabilityTip3 =>
+      'Inizio giornata, limite della mezza giornata e fine giornata guidano ogni fascia: prenotazione, check-in e fatturazione li seguono.';
+
+  @override
+  String get helpHintAvailabilityTip4 =>
+      'Tre regole di prenotazione stringono o allentano le maglie: prenotazioni passate, minuti confinati all\'orario di lavoro, check-out da admin.';
 
   @override
   String get helpHintFeatures =>
@@ -1470,11 +1578,41 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpHintFeaturesTopic => 'Funzionalità';
 
   @override
+  String get helpHintFeaturesTip2 =>
+      'L\'elenco è gerarchico: una funzionalità che ne richiede un\'altra sta rientrata sotto di essa e si attenua finché il genitore è spento.';
+
+  @override
+  String get helpHintFeaturesTip3 =>
+      'Spegnere un genitore toglie dall\'app l\'intero sottoalbero; le scelte salvate dei figli tornano intatte insieme al genitore.';
+
+  @override
+  String get helpHintFeaturesTip4 =>
+      'La voce di impostazioni di una funzionalità compare solo mentre è attiva; la schermata Funzionalità, invece, resta sempre raggiungibile.';
+
+  @override
   String get helpHintMembers =>
       'Invita membri, imposta piano e ruolo, e gestisci i loro badge.';
 
   @override
   String get helpHintMembersTopic => 'Membri e piani';
+
+  @override
+  String get helpHintMembersTip2 =>
+      'Tocca un membro per la sua scheda di gestione: abbonamento, limite di prenotazioni, badge, servizi e altro in un unico posto.';
+
+  @override
+  String get helpHintMembersTip3 =>
+      'I badge sono per membro: emetti un badge QR stampabile o registra la sua tessera NFC avvicinandola al dispositivo.';
+
+  @override
+  String get helpHintMembersTip3Topic => 'badge RFID';
+
+  @override
+  String get helpHintMembersTip4 =>
+      'Nomina admin concede i permessi dopo la convalida; la matrice dei ruoli sotto Gestione dei ruoli decide cosa può fare ogni ruolo.';
+
+  @override
+  String get helpHintMembersTip4Topic => 'Gestione dei ruoli';
 
   @override
   String get helpHintMoney =>
@@ -1484,11 +1622,37 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpHintMoneyTopic => 'Denaro';
 
   @override
+  String get helpHintMoneyTip2 =>
+      'Ogni documento offre le stesse tre azioni: anteprima rapida sullo schermo, download in PDF e condivisione con qualsiasi app.';
+
+  @override
+  String get helpHintMoneyTip2Topic => 'Anteprima rapida, scarica, condividi';
+
+  @override
+  String get helpHintMoneyTip3 =>
+      'Registra un pagamento con la data del movimento e il mese che salda: l\'altra parte conferma.';
+
+  @override
+  String get helpHintMoneyTip4 =>
+      'Una volta fatturato il mese, decide la fattura: il mese risulta saldato appena la sua fattura è pagata.';
+
+  @override
+  String get helpHintMoneyTip4Topic => 'decide la fattura';
+
+  @override
   String get helpHintValidation =>
       'Decidi quali azioni richiedono conferma, chi conferma e quante approvazioni servono.';
 
   @override
   String get helpHintValidationTopic => 'conferme';
+
+  @override
+  String get helpHintValidationTip2 =>
+      'Una scheda per tipo di evento, ognuna eredita dalla regola predefinita finché non la modifichi: pagamenti, spese, cambi di ruolo e altro.';
+
+  @override
+  String get helpHintValidationTip3 =>
+      'Nessuno convalida mai il proprio evento, e una richiesta senza risposta scade dopo 7 giorni: nulla viene concesso in silenzio.';
 
   @override
   String get helpHintWorkspace =>
@@ -1498,11 +1662,38 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpHintWorkspaceTopic => 'Impostazioni dello spazio';
 
   @override
+  String get helpHintWorkspaceTip2 =>
+      'Stampa le tessere QR degli spazi dalle Esportazioni: scegli la dimensione e le informazioni di ogni tessera, dieci per pagina A4.';
+
+  @override
+  String get helpHintWorkspaceTip2Topic => 'Codici QR degli spazi';
+
+  @override
+  String get helpHintWorkspaceTip3 =>
+      'Esporta lo spazio in XML per farne una copia o un modello; il questionario di configurazione prepara uno spazio nuovo da cima a fondo.';
+
+  @override
+  String get helpHintWorkspaceTip4 =>
+      'Ripristina lo spazio cancella prenotazioni, contabilità e piantina: impostazioni e membri sopravvivono, e una conferma digitata protegge l\'azione.';
+
+  @override
   String get helpHintBadges =>
       'Emetti un badge QR stampabile o registra una tessera NFC; revoca i badge persi in qualsiasi momento.';
 
   @override
   String get helpHintBadgesTopic => 'badge RFID';
+
+  @override
+  String get helpHintBadgesTip2 =>
+      'Registra una tessera avvicinandola al dispositivo: qualsiasi chip leggibile funziona, e la finestra indica lo spazio a cui si associa.';
+
+  @override
+  String get helpHintBadgesTip3 =>
+      'Salva un badge QR come PDF per stampare dieci copie formato carta di credito su una pagina A4, scorte comprese.';
+
+  @override
+  String get helpHintBadgesTip4 =>
+      'Revoca un badge perso in qualsiasi momento; scorri un badge revocato verso destra per eliminarlo definitivamente.';
 
   @override
   String get inviteSectionTitle => 'Invita qualcuno';
