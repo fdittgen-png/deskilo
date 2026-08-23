@@ -1995,6 +1995,7 @@
   "spaceKindSeat": "Puesto",
   "spaceYoursNow": "Reservado por ti para esta franja.",
   "spaceCardSizeLabel": "Tamaño de la tarjeta",
+  "spaceQrSizeLabel": "Tamaño del código QR",
   "spaceCardSizeSmall": "Pequeña",
   "spaceCardSizeMedium": "Mediana",
   "spaceCardSizeLarge": "Grande",

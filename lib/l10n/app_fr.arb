@@ -1995,6 +1995,7 @@
   "spaceKindSeat": "Poste",
   "spaceYoursNow": "Réservé par vous pour ce créneau.",
   "spaceCardSizeLabel": "Taille de la carte",
+  "spaceQrSizeLabel": "Taille du code QR",
   "spaceCardSizeSmall": "Petite",
   "spaceCardSizeMedium": "Moyenne",
   "spaceCardSizeLarge": "Grande",

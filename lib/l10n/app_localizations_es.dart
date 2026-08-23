@@ -3795,6 +3795,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get spaceCardSizeLabel => 'Tamaño de la tarjeta';
 
   @override
+  String get spaceQrSizeLabel => 'Tamaño del código QR';
+
+  @override
   String get spaceCardSizeSmall => 'Pequeña';
 
   @override

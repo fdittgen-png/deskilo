@@ -558,6 +558,7 @@ class _WorkspaceSettingsScreenState
           baseFont: pw.Font.ttf(regular),
           boldFont: pw.Font.ttf(bold),
           size: options.size,
+          qrSize: options.qrSize,
         );
         final path = await ref.read(fileSaverProvider)(
           bytes: bytes,

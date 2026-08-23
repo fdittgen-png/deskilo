@@ -1995,6 +1995,7 @@
   "spaceKindSeat": "Postazione",
   "spaceYoursNow": "Riservato da te per questa fascia.",
   "spaceCardSizeLabel": "Dimensione della scheda",
+  "spaceQrSizeLabel": "Dimensione del codice QR",
   "spaceCardSizeSmall": "Piccola",
   "spaceCardSizeMedium": "Media",
   "spaceCardSizeLarge": "Grande",
