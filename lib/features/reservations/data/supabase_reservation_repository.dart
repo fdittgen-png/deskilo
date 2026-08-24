@@ -133,7 +133,7 @@ class SupabaseReservationRepository implements ReservationRepository {
   }
 
   @override
-  Future<String> kioskIdentify({
+  Future<KioskIdentity> kioskIdentify({
     required String workspaceId,
     required String badgeToken,
   }) async {
@@ -141,7 +141,13 @@ class SupabaseReservationRepository implements ReservationRepository {
       'p_workspace_id': workspaceId,
       'p_badge_token': badgeToken,
     }) as Map<String, dynamic>;
-    return result['display_name'] as String;
+    // #616: pre-0117 servers answer without the avatar keys — the
+    // receipt then simply shows the initial, never an error.
+    return (
+      name: result['display_name'] as String,
+      userId: result['user_id'] as String? ?? '',
+      hasAvatar: result['has_avatar'] as bool? ?? false,
+    );
   }
 
   @override

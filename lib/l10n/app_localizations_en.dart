@@ -1392,6 +1392,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Smooth transitions and state animations across the app. Off means every change is instant; the device\'s reduced-motion setting always wins.';
 
   @override
+  String get featureKioskMemberPhotosTitle => 'Member photos at the kiosk';
+
+  @override
+  String get featureKioskMemberPhotosDesc =>
+      'The kiosk receipt shows the member\'s profile photo — the visual wrong-badge check.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override

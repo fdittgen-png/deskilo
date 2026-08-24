@@ -21,6 +21,10 @@ class SeriesResult {
 /// Pure-Dart reservation boundary. All writes go through backend RPCs that
 /// re-check conflicts transactionally — the client never decides
 /// availability on its own (spec §4.2).
+/// Who a kiosk badge resolved to (#616): the display name plus what the
+/// receipt needs to show their profile photo (0038 avatars bucket).
+typedef KioskIdentity = ({String name, String userId, bool hasAvatar});
+
 abstract class ReservationRepository {
   /// Active + recent reservations of the workspace intersecting
   /// [from, to). Includes all statuses so history views work.
@@ -73,12 +77,12 @@ abstract class ReservationRepository {
   /// resolves to — 'reserve' | 'check_in' | 'check_out'. Stateless: the
   /// member's "session" begins and ends inside the call, so nothing is
   /// cached on the device. Returns the acted-on reservation id.
-  /// Kiosk identification (RPC `kiosk_identify`, migration 0054): who
+  /// Kiosk identification (RPC `kiosk_identify`, 0054 → 0117): who
   /// does [badgeToken] belong to? Resolves the badge to the member's
   /// display name WITHOUT acting — the confirm step between reading the
   /// badge and running [kioskAct]. Pinned refusal: 'badge not
   /// recognized'.
-  Future<String> kioskIdentify({
+  Future<KioskIdentity> kioskIdentify({
     required String workspaceId,
     required String badgeToken,
   });

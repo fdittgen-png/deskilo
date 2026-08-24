@@ -345,15 +345,20 @@ class FakeReservationRepository implements ReservationRepository {
   })>[];
 
   @override
-  Future<String> kioskIdentify({
+  Future<KioskIdentity> kioskIdentify({
     required String workspaceId,
     required String badgeToken,
   }) async {
     if (badgeToken == 'bad-badge') {
       throw const PostgrestException(message: 'badge not recognized');
     }
-    return 'Flo';
+    return (name: 'Flo', userId: kioskUserId, hasAvatar: kioskHasAvatar);
   }
+
+  /// #616 — what kioskIdentify resolves to; tests flip these to
+  /// exercise the receipt's photo path.
+  String kioskUserId = 'user-1';
+  bool kioskHasAvatar = false;
 
   @override
   Future<String> kioskAct({

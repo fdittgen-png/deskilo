@@ -580,6 +580,8 @@
   "featureFormHelpHintsDesc": "Brevi suggerimenti richiudibili su moduli e schermate, ognuno collegato alla sezione corrispondente della guida.",
   "featureUiAnimationsTitle": "Animazioni dell'interfaccia",
   "featureUiAnimationsDesc": "Transizioni fluide e animazioni di stato in tutta l'app. Disattivato, ogni cambiamento è istantaneo; l'impostazione di riduzione del movimento del dispositivo prevale sempre.",
+  "featureKioskMemberPhotosTitle": "Foto dei membri al chiosco",
+  "featureKioskMemberPhotosDesc": "La ricevuta del chiosco mostra la foto del profilo del membro — il controllo visivo del badge sbagliato.",
   "helpHintLearnMore": "Scopri di più",
   "helpHintDismiss": "Nascondi suggerimento",
   "helpHintPrevTip": "Suggerimento precedente",

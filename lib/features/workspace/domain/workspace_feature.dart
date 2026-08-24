@@ -45,6 +45,7 @@ enum WorkspaceFeature {
   bookingPolicies,
   nfcSeatTags,
   qrBadges,
+  kioskMemberPhotos,
   formHelpHints,
   uiAnimations;
 
@@ -253,6 +254,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // credentials the kiosk accepts, so both sit under kioskMode.
   WorkspaceFeature.qrBadges: FeatureManifestEntry(
     feature: WorkspaceFeature.qrBadges,
+    requires: WorkspaceFeature.kioskMode,
+  ),
+  // #616 — the kiosk receipt shows the member's profile photo.
+  WorkspaceFeature.kioskMemberPhotos: FeatureManifestEntry(
+    feature: WorkspaceFeature.kioskMemberPhotos,
     requires: WorkspaceFeature.kioskMode,
   ),
   // #606 — dismissible contextual help hints on forms and screens, each

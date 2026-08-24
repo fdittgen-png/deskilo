@@ -21,6 +21,9 @@ import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../plan/domain/level.dart';
+import '../../../profile/presentation/widgets/member_avatar.dart';
+import '../../../reservations/domain/reservation_repository.dart'
+    show KioskIdentity;
 import '../../../reservations/presentation/widgets/booking_range_text.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/presentation/seat_occupancy.dart';
@@ -169,9 +172,9 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     // Identify + act in one go: the badge IS the confirmation. The
     // success card below names WHO acted — the wrong-badge guard
     // without an extra mandatory tap.
-    final String memberName;
+    final KioskIdentity identity;
     try {
-      memberName =
+      identity =
           await ref.read(reservationRepositoryProvider).kioskIdentify(
                 workspaceId: workspace.id,
                 badgeToken: request.badgeToken,
@@ -222,11 +225,18 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
             KioskAction.reserve => l10n?.kioskReserve ?? 'Reserve',
             KioskAction.checkOut => l10n?.kioskCheckOut ?? 'Check out',
           };
+    // #616 — the member's own photo on the receipt: the visual
+    // wrong-badge check, behind its own kiosk-family toggle.
+    final showPhoto = ref
+        .read(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.kioskMemberPhotos);
     unawaited(showDialog<void>(
       context: context,
       builder: (_) => _KioskSuccessCard(
         actionLabel: actionLabel,
-        memberName: memberName,
+        memberName: identity.name,
+        avatarUserId: showPhoto ? identity.userId : null,
+        hasAvatar: identity.hasAvatar,
         targetName: title,
         rangeText: booksWindow
             ? bookingRangeText(l10n, request.start, request.end)
@@ -447,12 +457,19 @@ class _KioskSuccessCard extends StatefulWidget {
   const _KioskSuccessCard({
     required this.actionLabel,
     required this.memberName,
+    required this.avatarUserId,
+    required this.hasAvatar,
     required this.targetName,
     required this.rangeText,
   });
 
   final String actionLabel;
   final String memberName;
+
+  /// The subject's auth user id for their profile photo (#616) — null
+  /// hides the avatar entirely (feature off or unknown user).
+  final String? avatarUserId;
+  final bool hasAvatar;
   final String targetName;
   final String? rangeText;
 
@@ -491,6 +508,19 @@ class _KioskSuccessCardState extends State<_KioskSuccessCard> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // #616 — the badge's face: the member's photo when they set
+          // one, their initial otherwise.
+          if (widget.avatarUserId case final userId?
+              when userId.isNotEmpty) ...[
+            MemberAvatar(
+              key: const ValueKey('kiosk-summary-avatar'),
+              userId: userId,
+              name: widget.memberName,
+              hasAvatar: widget.hasAvatar,
+              radius: 32,
+            ),
+            const SizedBox(height: 8),
+          ],
           Text(
             widget.memberName,
             key: const ValueKey('kiosk-summary-name'),
