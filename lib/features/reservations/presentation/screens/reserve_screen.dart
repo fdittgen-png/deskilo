@@ -25,6 +25,8 @@ import '../../../plan/domain/seat.dart';
 import '../../../plan/presentation/seat_occupancy.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
+import '../../../plan/presentation/widgets/seat_photos.dart';
+import '../../../profile/domain/profile.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/member.dart';
 import '../../domain/booking_error_text.dart';
@@ -808,6 +810,16 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
         reservationsAcrossWindow(ref, window.start, window.end);
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     final names = ref.watch(memberNamesProvider).value ?? const {};
+    // #620 — occupant profile photos on every map, kiosk or not.
+    final photosOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.planMemberPhotos);
+    final memberUserIds = {
+      for (final m in ref.watch(workspaceMembersProvider).value ?? <Member>[])
+        m.id: m.userId,
+    };
+    final memberProfiles =
+        ref.watch(memberProfilesProvider).value ?? const <String, Profile>{};
 
     // Floor switcher floats over the canvas (indoor-maps idiom, UX
     // pass) — hub-local browsing state (#187), never the plan tab's
@@ -818,7 +830,25 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
       children: [
         Expanded(
           child: switch (planAsync) {
-            AsyncData(value: final plan) => PlanCanvas(
+            AsyncData(value: final plan) => SeatPhotoLoader(
+                seatUserIds: !photosOn
+                    ? const {}
+                    : {
+                        for (final seat in plan.seats)
+                          if (occupantOnSeat(
+                                plan: plan,
+                                seat: seat,
+                                reservations: reservations,
+                                from: window.start,
+                                to: window.end,
+                              )?.memberId
+                              case final occupantMemberId?)
+                            if (memberUserIds[occupantMemberId] case final userId?)
+                              if (memberProfiles[userId]?.hasAvatar ?? false)
+                                seat.id: userId,
+                      },
+                builder: (context, seatPhotos) => PlanCanvas(
+                seatPhotos: seatPhotos,
                 paintKey: const ValueKey('reserve-plan-canvas'),
                 plan: plan,
                 // Double tap = whole-space reserve / check-in (field
@@ -910,6 +940,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                 ),
                 onSeatTap: (seat) =>
                     _onSeatTap(plan, seat, reservations, window),
+              ),
               ),
             AsyncError() => Center(
                 child: Text(

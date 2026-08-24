@@ -1418,6 +1418,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le reçu de la borne affiche la photo de profil du membre — le contrôle visuel du mauvais badge.';
 
   @override
+  String get featurePlanMemberPhotosTitle => 'Photos des membres sur le plan';
+
+  @override
+  String get featurePlanMemberPhotosDesc =>
+      'Les places occupées de l\'onglet Plan et du hub Réserver affichent la photo de profil de l\'occupant au lieu de l\'initiale.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override

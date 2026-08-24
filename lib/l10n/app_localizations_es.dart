@@ -1414,6 +1414,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'El recibo del quiosco muestra la foto de perfil del miembro: el control visual de credencial equivocada.';
 
   @override
+  String get featurePlanMemberPhotosTitle =>
+      'Fotos de los miembros en el plano';
+
+  @override
+  String get featurePlanMemberPhotosDesc =>
+      'Los asientos ocupados en la pestaña Plano y en el centro Reservar muestran la foto de perfil del ocupante en lugar de la inicial.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override

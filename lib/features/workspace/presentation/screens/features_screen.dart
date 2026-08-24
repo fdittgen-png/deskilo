@@ -182,6 +182,10 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featureKioskMemberPhotosDesc ??
               "The kiosk receipt shows the member's profile photo — the "
                   'visual wrong-badge check.',
+        WorkspaceFeature.planMemberPhotos =>
+          l10n?.featurePlanMemberPhotosDesc ??
+              'Occupied seats on the Plan tab and Reserve hub show the '
+                  "occupant's profile photo instead of the initial.",
       };
 
   Future<void> _toggle(

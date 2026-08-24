@@ -101,5 +101,7 @@
   "featureUiAnimationsTitle": "Animaciones de la interfaz",
   "featureUiAnimationsDesc": "Transiciones suaves y animaciones de estado en toda la aplicación. Desactivado, cada cambio es instantáneo; el ajuste de reducción de movimiento del dispositivo siempre prevalece.",
   "featureKioskMemberPhotosTitle": "Fotos de los miembros en el quiosco",
-  "featureKioskMemberPhotosDesc": "El recibo del quiosco muestra la foto de perfil del miembro: el control visual de credencial equivocada."
+  "featureKioskMemberPhotosDesc": "El recibo del quiosco muestra la foto de perfil del miembro: el control visual de credencial equivocada.",
+  "featurePlanMemberPhotosTitle": "Fotos de los miembros en el plano",
+  "featurePlanMemberPhotosDesc": "Los asientos ocupados en la pestaña Plano y en el centro Reservar muestran la foto de perfil del ocupante en lugar de la inicial."
 }

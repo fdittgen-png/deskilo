@@ -31,7 +31,9 @@ const Map<String, int> _baseline = {
   // its action/error handling, which need the screen's ref and context.
   // 1530→1550 (2026-08-05): #490 workspace-clock browse machinery.
   // 1550→1620 (2026-08-22): #575 day-phase rings + list dots.
-  'lib/features/plan/presentation/screens/plan_screen.dart': 1650, // 2026-08 #586 default-period walk-up ends
+// 1650→1690 (2026-08-24): #620 the same photo-loader wrap on the
+  // Plan tab canvas.
+    'lib/features/plan/presentation/screens/plan_screen.dart': 1690, // 2026-08 #586 default-period walk-up ends
   // new 700 (2026-08-22): #575 day-phase rings + #576 space rings.
 // 700→740 (2026-08-24): #618 the occupant photo marker — clipped
   // photo draw beside the initial disc, one concern, same method.
@@ -43,7 +45,9 @@ const Map<String, int> _baseline = {
   // 1020→1070: #466 the hub's whole-level reserve button + visibility.
   // 1090→1110 (2026-08-23): #611 fade-through view switch + MotionReveal
   // on the hint/closed-day banner.
-  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1110,
+// 1110→1140 (2026-08-24): #620 the occupant-photo loader wrap on the
+  // hub canvas — the #618 mechanism, no new concern.
+    'lib/features/reservations/presentation/screens/reserve_screen.dart': 1140,
   // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
   // workspace hint subtitle and the RPC write helper.
   // 990→1000 (2026-08-05): #478 Billing & reports admin entry.
