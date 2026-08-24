@@ -21,6 +21,9 @@ import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../plan/domain/level.dart';
+import '../../../plan/presentation/widgets/seat_photos.dart';
+import '../../../profile/domain/profile.dart';
+import '../../../workspace/domain/member.dart';
 import '../../../profile/presentation/widgets/member_avatar.dart';
 import '../../../reservations/domain/reservation_repository.dart'
     show KioskIdentity;
@@ -282,6 +285,17 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
         ref.watch(reservationsForDayProvider(dayKeyOf(now))).value ??
             const [];
     final names = ref.watch(memberNamesProvider).value ?? const {};
+    // #618 — occupant profile photos on the wall plan, same toggle as
+    // the receipt photo.
+    final photosOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.kioskMemberPhotos);
+    final memberUserIds = {
+      for (final m in ref.watch(workspaceMembersProvider).value ?? <Member>[])
+        m.id: m.userId,
+    };
+    final memberProfiles =
+        ref.watch(memberProfilesProvider).value ?? const <String, Profile>{};
 
     // canPop:false — the back button/gesture never leaves kiosk mode.
     return PopScope(
@@ -374,7 +388,26 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
               ),
             Expanded(
               child: switch (planAsync) {
-                AsyncData(value: final plan) => PlanCanvas(
+                AsyncData(value: final plan) => SeatPhotoLoader(
+                  seatUserIds: !photosOn
+                      ? const {}
+                      : {
+                          for (final seat in plan.seats)
+                            if (occupantOnSeat(
+                                  plan: plan,
+                                  seat: seat,
+                                  reservations: reservations,
+                                  from: now,
+                                )?.memberId
+                                case final memberId?)
+                              if (memberUserIds[memberId]
+                                  case final userId?)
+                                if (memberProfiles[userId]?.hasAvatar ??
+                                    false)
+                                  seat.id: userId,
+                        },
+                  builder: (context, seatPhotos) => PlanCanvas(
+                    seatPhotos: seatPhotos,
                     paintKey: const ValueKey('kiosk-plan-canvas'),
                     plan: plan,
                     // Live "now" occupancy — a wall display's one job.
@@ -432,6 +465,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                     },
                     onSeatTap: _onSeatTap,
                   ),
+                ),
                 AsyncError() => Center(
                     child: Text(
                       l10n?.workspaceGenericError ??
