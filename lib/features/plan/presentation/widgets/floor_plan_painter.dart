@@ -28,6 +28,7 @@ class FloorPlanPainter extends CustomPainter {
     this.seatStateLerp = 1,
     this.seatDayPhases = const {},
     this.seatLabels,
+    this.seatPhotos = const {},
     this.highlightedSeatId,
     this.highlightedDeskId,
     this.highlightedOfficeId,
@@ -80,6 +81,10 @@ class FloorPlanPainter extends CustomPainter {
 
   /// Live mode: seat id → occupant display name (empty = no label).
   final Map<String, String>? seatLabels;
+
+  /// Occupant profile photos (#618): seat id → decoded bitmap, drawn
+  /// clipped inside the marker circle instead of the initial.
+  final Map<String, ui.Image> seatPhotos;
 
   /// Whole-space overlays (#462): office/desk id → reserved state +
   /// occupant first name. The rect tints in the state colour, the
@@ -364,6 +369,7 @@ class FloorPlanPainter extends CustomPainter {
           rect,
           label,
           accent,
+          photo: seatPhotos[seat.id],
           checkedIn: state == SeatState.occupied,
           online: onlineSeatIds.contains(seat.id),
         );
@@ -563,31 +569,63 @@ class FloorPlanPainter extends CustomPainter {
     Rect rect,
     String name,
     Color accent, {
+    ui.Image? photo,
     bool checkedIn = false,
     bool online = false,
   }) {
     final r = (rect.shortestSide * 0.34).clamp(8.0, 16.0);
     final center = rect.center;
-    canvas.drawCircle(center, r, Paint()..color = accent);
-    final initial = name.trim().isEmpty
-        ? '?'
-        : name.trim().characters.first.toUpperCase();
-    final painter = TextPainter(
-      text: TextSpan(
-        text: initial,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: r * 1.05,
-          fontWeight: FontWeight.w600,
-          height: 1,
+    if (photo != null) {
+      // #618 — the member's own face on the seat: the photo clipped to
+      // the marker circle; the accent ring keeps the state colour
+      // language the initial disc had.
+      final side = photo.width < photo.height ? photo.width : photo.height;
+      final src = Rect.fromCenter(
+        center: Offset(photo.width / 2, photo.height / 2),
+        width: side.toDouble(),
+        height: side.toDouble(),
+      );
+      final dst = Rect.fromCircle(center: center, radius: r);
+      canvas
+        ..save()
+        ..clipPath(Path()..addOval(dst))
+        ..drawImageRect(
+          photo,
+          src,
+          dst,
+          Paint()..filterQuality = FilterQuality.medium,
+        )
+        ..restore()
+        ..drawCircle(
+          center,
+          r,
+          Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 2
+            ..color = accent,
+        );
+    } else {
+      canvas.drawCircle(center, r, Paint()..color = accent);
+      final initial = name.trim().isEmpty
+          ? '?'
+          : name.trim().characters.first.toUpperCase();
+      final painter = TextPainter(
+        text: TextSpan(
+          text: initial,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: r * 1.05,
+            fontWeight: FontWeight.w600,
+            height: 1,
+          ),
         ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
-    painter.paint(
-      canvas,
-      center - Offset(painter.width / 2, painter.height / 2),
-    );
+        textDirection: TextDirection.ltr,
+      )..layout();
+      painter.paint(
+        canvas,
+        center - Offset(painter.width / 2, painter.height / 2),
+      );
+    }
 
     // Corner badges — a small radius keeps them legible on tiny seats.
     final badgeR = (r * 0.42).clamp(4.0, 7.0);
@@ -655,6 +693,7 @@ class FloorPlanPainter extends CustomPainter {
       // and every rebuild forced a full canvas repaint — including a
       // TextPainter.layout per seat label — even when nothing changed.
       !mapEquals(oldDelegate.images, images) ||
+      !mapEquals(oldDelegate.seatPhotos, seatPhotos) ||
       oldDelegate.marquee != marquee ||
       oldDelegate.marqueeValid != marqueeValid ||
       oldDelegate.selection != selection ||

@@ -9,15 +9,20 @@ import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/core/nfc/nfc_uid_reader.dart';
 import 'package:deskilo/features/kiosk/presentation/screens/kiosk_screen.dart';
 import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
+import 'package:deskilo/features/plan/presentation/widgets/seat_photos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/features/profile/domain/profile.dart';
+import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
+import 'dart:ui' as ui;
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
+import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/fake_realtime_sync.dart';
 import '../../helpers/mock_providers.dart';
 
@@ -784,5 +789,77 @@ void main() {
         .getTopLeft(find.byKey(const ValueKey('kiosk-plan-canvas')))
         .dy;
     expect(canvasTop, lessThan(100));
+  });
+
+  testWidgets('#618 — an occupant with a profile photo appears as their '
+      'photo on the kiosk plan; kioskMemberPhotos OFF keeps initials',
+      (tester) async {
+    // A REAL png, engine-encoded — hand-rolled bytes fail the codec.
+    final png = await tester.runAsync(() async {
+      final recorder = ui.PictureRecorder();
+      ui.Canvas(recorder)
+          .drawColor(const ui.Color(0xFF336699), ui.BlendMode.src);
+      final image = await recorder.endRecording().toImage(4, 4);
+      final data =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      return data!.buffer.asUint8List();
+    });
+    final profile = FakeProfileRepository(profiles: [
+      const Profile(
+        id: 'user-1',
+        displayName: 'Flo',
+        avatarPath: 'user-1/avatar',
+      ),
+    ]);
+    profile.avatarBytes['user-1'] = png!;
+    final plans = FakeFloorPlanRepository()..seedSmallPlan();
+    final reservations = FakeReservationRepository()
+      ..granularity = BookingGranularity.halfDay;
+    // member-1 sits on A1 right now (the kiosk clock's working day).
+    reservations.reservations.add(Reservation(
+      id: 'res-photo',
+      workspaceId: 'ws-1',
+      seatId: 'seat-4',
+      memberId: 'member-1',
+      startsAt: WorkspaceTime.at(
+          kTestNow.year, kTestNow.month, kTestNow.day, 8),
+      endsAt: WorkspaceTime.at(
+          kTestNow.year, kTestNow.month, kTestNow.day, 17),
+      status: ReservationStatus.checkedIn,
+    ));
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.myMember = workspace.myMember.copyWith(
+      isAdmin: false,
+      isOwner: false,
+      isKiosk: true,
+    );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          floorPlan: plans,
+          reservations: reservations,
+          workspace: workspace,
+          profile: profile,
+          clock: kioskClock,
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-gate-start')));
+    await tester.pumpAndSettle();
+
+    final loader =
+        tester.widget<SeatPhotoLoader>(find.byType(SeatPhotoLoader));
+    expect(loader.seatUserIds, {'seat-4': 'user-1'},
+        reason: 'occupant → user id resolution (flag ON, avatar set)');
+    // The image codec is REAL async — let it finish outside the fake
+    // zone, then settle the resulting setState frame.
+    await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 100)));
+    await tester.pumpAndSettle();
+    final canvas = tester.widget<PlanCanvas>(find.byType(PlanCanvas));
+    expect(canvas.seatPhotos.keys, contains('seat-4'),
+        reason: "the occupant's decoded photo reaches the painter");
   });
 }

@@ -57,6 +57,7 @@ class PlanCanvas extends StatefulWidget {
     this.spaceOverlays = const {},
     this.background,
     this.images = const {},
+    this.seatPhotos = const {},
   });
 
   /// Key of the [CustomPaint] — the tests' canvas handle
@@ -100,6 +101,10 @@ class PlanCanvas extends StatefulWidget {
 
   /// Illustration images (0037): id → decoded bitmap.
   final Map<String, ui.Image> images;
+
+  /// Occupant profile photos (#618): seat id → decoded marker bitmap;
+  /// seats absent here keep the initial marker.
+  final Map<String, ui.Image> seatPhotos;
 
   @override
   State<PlanCanvas> createState() => _PlanCanvasState();
@@ -243,6 +248,7 @@ class _PlanCanvasState extends State<PlanCanvas>
                 deskOpacity: widget.deskOpacity,
                 background: widget.background,
                 images: widget.images,
+                seatPhotos: widget.seatPhotos,
               ),
               ),
             ),
