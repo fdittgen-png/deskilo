@@ -35,6 +35,7 @@ import '../../../reservations/presentation/widgets/booking_sheet.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../workspace/domain/booking_granularity.dart';
+import '../../../profile/domain/profile.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../reservations/domain/booking_error_text.dart';
 import '../../../workspace/domain/workspace_availability.dart';
@@ -49,6 +50,7 @@ import '../../providers/default_level_controller.dart';
 import '../../providers/floor_plan_providers.dart';
 import '../../providers/plan_focus_controller.dart';
 import '../seat_occupancy.dart';
+import '../widgets/seat_photos.dart';
 import '../widgets/admin_seat_actions.dart';
 import '../widgets/check_in_sheets.dart';
 import '../widgets/plan_canvas.dart';
@@ -758,6 +760,16 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     );
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     final names = ref.watch(memberNamesProvider).value ?? const {};
+    // #620 — occupant profile photos on every map, kiosk or not.
+    final photosOn = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.planMemberPhotos);
+    final memberUserIds = {
+      for (final m in ref.watch(workspaceMembersProvider).value ?? <Member>[])
+        m.id: m.userId,
+    };
+    final memberProfiles =
+        ref.watch(memberProfilesProvider).value ?? const <String, Profile>{};
 
     // Closed day (#186): banner + muted seats + gated taps instead of
     // green "bookable" seats the server would reject. Watched (not the
@@ -836,8 +848,26 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                     child: _seatList(plan, reservations, names, at,
                         dayOpen: dayOpen),
                   )
-                : PlanCanvas(
+                : SeatPhotoLoader(
                     key: const ValueKey('plan-canvas-view'),
+                    seatUserIds: !photosOn
+                        ? const {}
+                        : {
+                            for (final seat in plan.seats)
+                              if (occupantOnSeat(
+                                    plan: plan,
+                                    seat: seat,
+                                    reservations: reservations,
+                                    from: at,
+                                    to: windowEnd,
+                                  )?.memberId
+                                  case final occupantMemberId?)
+                                if (memberUserIds[occupantMemberId] case final userId?)
+                                  if (memberProfiles[userId]?.hasAvatar ?? false)
+                                    seat.id: userId,
+                          },
+                    builder: (context, seatPhotos) => PlanCanvas(
+                    seatPhotos: seatPhotos,
                     paintKey: const ValueKey('live-plan-canvas'),
                     plan: plan,
                     // Double tap = whole-space reserve / check-in
@@ -938,6 +968,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
                     },
                     onSeatTap: (seat) =>
                         _onSeatTap(plan, seat, reservations, at),
+                  ),
                   ),
             AsyncError() => Center(
                 child: Text(

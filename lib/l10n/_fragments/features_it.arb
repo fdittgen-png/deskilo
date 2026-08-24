@@ -101,5 +101,7 @@
   "featureUiAnimationsTitle": "Animazioni dell'interfaccia",
   "featureUiAnimationsDesc": "Transizioni fluide e animazioni di stato in tutta l'app. Disattivato, ogni cambiamento è istantaneo; l'impostazione di riduzione del movimento del dispositivo prevale sempre.",
   "featureKioskMemberPhotosTitle": "Foto dei membri al chiosco",
-  "featureKioskMemberPhotosDesc": "La ricevuta del chiosco mostra la foto del profilo del membro — il controllo visivo del badge sbagliato."
+  "featureKioskMemberPhotosDesc": "La ricevuta del chiosco mostra la foto del profilo del membro — il controllo visivo del badge sbagliato.",
+  "featurePlanMemberPhotosTitle": "Foto dei membri sulla piantina",
+  "featurePlanMemberPhotosDesc": "I posti occupati nella scheda Piantina e nel hub Prenota mostrano la foto del profilo al posto dell’iniziale."
 }

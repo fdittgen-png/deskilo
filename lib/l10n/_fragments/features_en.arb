@@ -226,5 +226,7 @@
   "featureUiAnimationsTitle": "Interface animations",
   "featureUiAnimationsDesc": "Smooth transitions and state animations across the app. Off means every change is instant; the device's reduced-motion setting always wins.",
   "featureKioskMemberPhotosTitle": "Member photos at the kiosk",
-  "featureKioskMemberPhotosDesc": "The kiosk receipt shows the member's profile photo — the visual wrong-badge check."
+  "featureKioskMemberPhotosDesc": "The kiosk receipt shows the member's profile photo — the visual wrong-badge check.",
+  "featurePlanMemberPhotosTitle": "Member photos on the plan",
+  "featurePlanMemberPhotosDesc": "Occupied seats on the Plan tab and Reserve hub show the occupant's profile photo instead of the initial."
 }

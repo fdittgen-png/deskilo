@@ -47,7 +47,8 @@ enum WorkspaceFeature {
   qrBadges,
   kioskMemberPhotos,
   formHelpHints,
-  uiAnimations;
+  uiAnimations,
+  planMemberPhotos;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -261,6 +262,10 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.kioskMemberPhotos,
     requires: WorkspaceFeature.kioskMode,
   ),
+  // #620 — occupant profile photos on the Plan tab and Reserve hub
+  // maps, kiosk or not.
+  WorkspaceFeature.planMemberPhotos:
+      FeatureManifestEntry(feature: WorkspaceFeature.planMemberPhotos),
   // #606 — dismissible contextual help hints on forms and screens, each
   // deep-linking into the matching guide section. Default ON: they are
   // exactly for the members who have not found their way around yet.

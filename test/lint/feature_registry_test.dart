@@ -37,7 +37,9 @@ import 'package:flutter_test/flutter_test.dart';
 // animations app-wide; OFF = instant everything, reduced motion wins).
 // 41→42 (2026-08-24): #616 kioskMemberPhotos (receipt shows the
 // member's profile photo; child of kioskMode).
-const int _expectedFeatureCount = 42;
+// 42→43 (2026-08-24): #620 planMemberPhotos (occupant photos on the
+// Plan tab and Reserve hub maps; standalone, kiosk not required).
+const int _expectedFeatureCount = 43;
 
 void main() {
   test('every functionality is registered — the pin', () {

@@ -2600,6 +2600,18 @@ abstract class AppLocalizations {
   /// **'The kiosk receipt shows the member\'s profile photo — the visual wrong-badge check.'**
   String get featureKioskMemberPhotosDesc;
 
+  /// No description provided for @featurePlanMemberPhotosTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Member photos on the plan'**
+  String get featurePlanMemberPhotosTitle;
+
+  /// No description provided for @featurePlanMemberPhotosDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Occupied seats on the Plan tab and Reserve hub show the occupant\'s profile photo instead of the initial.'**
+  String get featurePlanMemberPhotosDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:

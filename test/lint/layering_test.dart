@@ -51,6 +51,9 @@ const Set<String> _knownPairs = {
   // #616: the kiosk receipt reuses the shared MemberAvatar widget —
   // the same avatar building block the directory uses.
   'kiosk -> profile',
+  // #620: the Reserve hub map resolves occupant photos through the
+  // profile providers — the same building block as plan and kiosk.
+  'reservations -> profile',
   'members -> reservations',
   'members -> workspace',
   'money -> events',

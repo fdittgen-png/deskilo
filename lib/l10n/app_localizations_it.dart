@@ -1416,6 +1416,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'La ricevuta del chiosco mostra la foto del profilo del membro — il controllo visivo del badge sbagliato.';
 
   @override
+  String get featurePlanMemberPhotosTitle => 'Foto dei membri sulla piantina';
+
+  @override
+  String get featurePlanMemberPhotosDesc =>
+      'I posti occupati nella scheda Piantina e nel hub Prenota mostrano la foto del profilo al posto dell’iniziale.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override

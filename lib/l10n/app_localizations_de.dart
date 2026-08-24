@@ -1412,6 +1412,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Kiosk-Beleg zeigt das Profilfoto des Mitglieds — die visuelle Falsch-Badge-Kontrolle.';
 
   @override
+  String get featurePlanMemberPhotosTitle => 'Mitgliederfotos auf dem Plan';
+
+  @override
+  String get featurePlanMemberPhotosDesc =>
+      'Belegte Plätze im Plan-Tab und im Reservieren-Hub zeigen das Profilfoto statt der Initiale.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override

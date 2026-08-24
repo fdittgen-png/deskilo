@@ -582,6 +582,8 @@
   "featureUiAnimationsDesc": "Sanfte Übergänge und Zustandsanimationen in der ganzen App. Aus bedeutet: Jede Änderung erfolgt sofort; die Bewegung-reduzieren-Einstellung des Geräts hat immer Vorrang.",
   "featureKioskMemberPhotosTitle": "Mitgliederfotos am Kiosk",
   "featureKioskMemberPhotosDesc": "Der Kiosk-Beleg zeigt das Profilfoto des Mitglieds — die visuelle Falsch-Badge-Kontrolle.",
+  "featurePlanMemberPhotosTitle": "Mitgliederfotos auf dem Plan",
+  "featurePlanMemberPhotosDesc": "Belegte Plätze im Plan-Tab und im Reservieren-Hub zeigen das Profilfoto statt der Initiale.",
   "helpTitle": "Hilfe",
   "helpContents": "Inhalt",
   "helpHintLearnMore": "Mehr erfahren",

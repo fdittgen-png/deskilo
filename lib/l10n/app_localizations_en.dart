@@ -1399,6 +1399,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'The kiosk receipt shows the member\'s profile photo — the visual wrong-badge check.';
 
   @override
+  String get featurePlanMemberPhotosTitle => 'Member photos on the plan';
+
+  @override
+  String get featurePlanMemberPhotosDesc =>
+      'Occupied seats on the Plan tab and Reserve hub show the occupant\'s profile photo instead of the initial.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override

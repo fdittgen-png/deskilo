@@ -101,5 +101,7 @@
   "featureUiAnimationsTitle": "Animations de l'interface",
   "featureUiAnimationsDesc": "Transitions fluides et animations d'état dans toute l'application. Désactivé, chaque changement est instantané ; le réglage « réduire les animations » de l'appareil prime toujours.",
   "featureKioskMemberPhotosTitle": "Photos des membres à la borne",
-  "featureKioskMemberPhotosDesc": "Le reçu de la borne affiche la photo de profil du membre — le contrôle visuel du mauvais badge."
+  "featureKioskMemberPhotosDesc": "Le reçu de la borne affiche la photo de profil du membre — le contrôle visuel du mauvais badge.",
+  "featurePlanMemberPhotosTitle": "Photos des membres sur le plan",
+  "featurePlanMemberPhotosDesc": "Les places occupées de l'onglet Plan et du hub Réserver affichent la photo de profil de l'occupant au lieu de l'initiale."
 }
