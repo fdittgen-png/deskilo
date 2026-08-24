@@ -1405,6 +1405,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sanfte Übergänge und Zustandsanimationen in der ganzen App. Aus bedeutet: Jede Änderung erfolgt sofort; die Bewegung-reduzieren-Einstellung des Geräts hat immer Vorrang.';
 
   @override
+  String get featureKioskMemberPhotosTitle => 'Mitgliederfotos am Kiosk';
+
+  @override
+  String get featureKioskMemberPhotosDesc =>
+      'Der Kiosk-Beleg zeigt das Profilfoto des Mitglieds — die visuelle Falsch-Badge-Kontrolle.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override

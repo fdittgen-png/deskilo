@@ -2588,6 +2588,18 @@ abstract class AppLocalizations {
   /// **'Smooth transitions and state animations across the app. Off means every change is instant; the device\'s reduced-motion setting always wins.'**
   String get featureUiAnimationsDesc;
 
+  /// No description provided for @featureKioskMemberPhotosTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Member photos at the kiosk'**
+  String get featureKioskMemberPhotosTitle;
+
+  /// No description provided for @featureKioskMemberPhotosDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The kiosk receipt shows the member\'s profile photo — the visual wrong-badge check.'**
+  String get featureKioskMemberPhotosDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:

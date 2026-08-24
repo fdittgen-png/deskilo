@@ -1409,6 +1409,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Transizioni fluide e animazioni di stato in tutta l\'app. Disattivato, ogni cambiamento è istantaneo; l\'impostazione di riduzione del movimento del dispositivo prevale sempre.';
 
   @override
+  String get featureKioskMemberPhotosTitle => 'Foto dei membri al chiosco';
+
+  @override
+  String get featureKioskMemberPhotosDesc =>
+      'La ricevuta del chiosco mostra la foto del profilo del membro — il controllo visivo del badge sbagliato.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override

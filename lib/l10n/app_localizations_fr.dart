@@ -1411,6 +1411,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Transitions fluides et animations d\'état dans toute l\'application. Désactivé, chaque changement est instantané ; le réglage « réduire les animations » de l\'appareil prime toujours.';
 
   @override
+  String get featureKioskMemberPhotosTitle => 'Photos des membres à la borne';
+
+  @override
+  String get featureKioskMemberPhotosDesc =>
+      'Le reçu de la borne affiche la photo de profil du membre — le contrôle visuel du mauvais badge.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override

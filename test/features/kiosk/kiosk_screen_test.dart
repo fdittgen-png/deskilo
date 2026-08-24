@@ -241,6 +241,74 @@ void main() {
     expect(act.seatId, isNotNull);
   });
 
+  testWidgets('#616 — the receipt carries the member avatar (photo flag '
+      'wired through kiosk_identify); kioskMemberPhotos OFF keeps the '
+      'plain receipt', (tester) async {
+    final nfc = FakeNfcUidReader(available: true);
+    final reservations = await pumpKiosk(tester, nfc: nfc);
+    reservations.kioskHasAvatar = true;
+
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
+    await tester.pumpAndSettle();
+    nfc.tap('04a2b3c4d5');
+    await tester.pumpAndSettle();
+
+    // The avatar rides the receipt beside the name (initial fallback in
+    // this harness — the photo bytes are a profile fetch away).
+    expect(
+      find.byKey(const ValueKey('kiosk-summary-avatar')),
+      findsOneWidget,
+    );
+    await confirmSummary(tester);
+  });
+
+  testWidgets('#616 — kioskMemberPhotos OFF hides the receipt avatar',
+      (tester) async {
+    final nfc = FakeNfcUidReader(available: true);
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+      featureFlags: const {'kioskMemberPhotos': false},
+    );
+    workspace.myMember = workspace.myMember.copyWith(
+      isAdmin: false,
+      isOwner: false,
+      isKiosk: true,
+    );
+    final plans = FakeFloorPlanRepository()..seedSmallPlan();
+    final reservations = FakeReservationRepository()
+      ..granularity = BookingGranularity.halfDay;
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          floorPlan: plans,
+          reservations: reservations,
+          workspace: workspace,
+          nfc: nfc,
+          clock: kioskClock,
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-gate-start')));
+    await tester.pumpAndSettle();
+
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
+    await tester.pumpAndSettle();
+    nfc.tap('04a2b3c4d5');
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('kiosk-summary-name')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('kiosk-summary-avatar')),
+      findsNothing,
+    );
+    await confirmSummary(tester);
+  });
+
   testWidgets('a kiosk RFID tap sends the card UID straight to kiosk_act '
       '(0046)', (tester) async {
     final nfc = FakeNfcUidReader(available: true);

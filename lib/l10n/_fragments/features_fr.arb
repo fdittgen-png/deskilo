@@ -99,5 +99,7 @@
   "featureFormHelpHintsTitle": "Astuces d'aide",
   "featureFormHelpHintsDesc": "Courtes astuces refermables sur les formulaires et écrans, chacune renvoyant à la section correspondante du guide.",
   "featureUiAnimationsTitle": "Animations de l'interface",
-  "featureUiAnimationsDesc": "Transitions fluides et animations d'état dans toute l'application. Désactivé, chaque changement est instantané ; le réglage « réduire les animations » de l'appareil prime toujours."
+  "featureUiAnimationsDesc": "Transitions fluides et animations d'état dans toute l'application. Désactivé, chaque changement est instantané ; le réglage « réduire les animations » de l'appareil prime toujours.",
+  "featureKioskMemberPhotosTitle": "Photos des membres à la borne",
+  "featureKioskMemberPhotosDesc": "Le reçu de la borne affiche la photo de profil du membre — le contrôle visuel du mauvais badge."
 }

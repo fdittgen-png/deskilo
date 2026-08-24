@@ -35,7 +35,9 @@ import 'package:flutter_test/flutter_test.dart';
 // hints deep-linking into the guide; Settings restores dismissed ones).
 // 40→41 (2026-08-23): #611 uiAnimations (the motion pass — purposeful
 // animations app-wide; OFF = instant everything, reduced motion wins).
-const int _expectedFeatureCount = 41;
+// 41→42 (2026-08-24): #616 kioskMemberPhotos (receipt shows the
+// member's profile photo; child of kioskMode).
+const int _expectedFeatureCount = 42;
 
 void main() {
   test('every functionality is registered — the pin', () {

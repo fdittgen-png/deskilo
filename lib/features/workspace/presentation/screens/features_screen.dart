@@ -178,6 +178,10 @@ class FeaturesScreen extends ConsumerWidget {
               'Smooth transitions and state animations across the app. '
                   'Off means every change is instant; the device\'s '
                   'reduced-motion setting always wins.',
+        WorkspaceFeature.kioskMemberPhotos =>
+          l10n?.featureKioskMemberPhotosDesc ??
+              "The kiosk receipt shows the member's profile photo — the "
+                  'visual wrong-badge check.',
       };
 
   Future<void> _toggle(
