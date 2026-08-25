@@ -143,12 +143,26 @@ void main() {
         contains('v_member.is_admin and '
             'coalesce(v_policy.auto_validate_admin, false)'),
       );
-      // Mirrors respond_to_event's reservation_delete confirm branch.
-      expect(fn, contains("update public.events\n       set status = "
-          "'confirmed'"));
+      // Born SETTLED: an auto-validated request is never pending for a
+      // moment, or the realtime feed and the pending push mirror would
+      // ask validators to decide something already decided.
+      expect(
+        fn,
+        contains("case when v_auto then 'confirmed' else 'pending' end"),
+        reason: 'the status is chosen at INSERT, not patched afterwards',
+      );
+      expect(
+        fn,
+        isNot(contains("set status = 'confirmed'")),
+        reason: 'no pending-then-settle: that emits a real validator ping',
+      );
+      // Same effect as respond_to_event's reservation_delete confirm.
       expect(fn, contains("update public.reservations set status = "
           "'cancelled'"));
-      expect(fn, contains('insert into public.event_decisions'));
+      // The 0017 idiom for a decision no human made — attributing it to
+      // the requester would forge the peer review 0086 forbids.
+      expect(fn, contains("values (v_id, null, 'accept', true)"));
+      expect(fn, contains('decided_by_system'));
       expect(fn, contains("jsonb_build_object('auto_validated', true)"),
           reason: 'the feed and the audit must tell it apart');
     });

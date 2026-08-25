@@ -538,15 +538,32 @@ begin
   if v_res.status = 'reserved' and v_res.starts_at > now() then
     raise exception 'cancel directly — this booking has not started';
   end if;
-  -- #562: supersede, don't refuse — the fresh insert below re-triggers
-  -- the validator notification.
+  -- #629 — the owner-configured auto-validation exception, decided
+  -- BEFORE the insert. Scoped to the workspace's OWN reservation_delete
+  -- policy row: the null fallback row is deliberately NOT consulted, so
+  -- the exception can never leak to another event type.
+  select * into v_policy from public.validation_policies
+    where workspace_id = v_res.workspace_id
+      and event_type = 'reservation_delete';
+  v_auto := (v_member.is_owner and coalesce(v_policy.auto_validate_owner, false))
+         or (v_member.is_admin and coalesce(v_policy.auto_validate_admin, false));
+
+  -- #562: supersede, don't refuse — a fresh PENDING insert re-triggers
+  -- the validator notification (an auto-validated request never asks).
   update public.events
      set status = 'expired'
    where type = 'reservation_delete' and status = 'pending'
      and (payload->>'reservation_id')::uuid = p_reservation_id;
+
+  -- Auto-validated requests are born SETTLED. Inserting them pending
+  -- and confirming a statement later would emit a real "please
+  -- validate" ping (realtime + the pending push mirror) for something
+  -- already decided — validators chasing a closed question. The audit
+  -- keeps everything that matters: the event, its actor, a system
+  -- decision row and the payload flag.
   insert into public.events
     (workspace_id, type, action, actor_member_id, subject_member_id,
-     payload, status)
+     payload, status, decided_at)
   values (
     v_res.workspace_id, 'reservation_delete', 'submitted',
     v_member.id, v_member.id,
@@ -556,32 +573,24 @@ begin
       'ends_at', v_res.ends_at,
       'was_checked_in', v_res.status <> 'reserved',
       'reason', left(coalesce(p_reason, ''), 300)
-    ),
-    'pending'
+    ) || case when v_auto
+           then jsonb_build_object('auto_validated', true)
+           else '{}'::jsonb end,
+    case when v_auto then 'confirmed' else 'pending' end,
+    case when v_auto then now() end
   )
   returning id into v_id;
 
-  -- #629 — the owner-configured auto-validation exception. Scoped to
-  -- the workspace's OWN reservation_delete policy row: the null
-  -- fallback row is deliberately NOT consulted, so the exception can
-  -- never leak to another event type.
-  select * into v_policy from public.validation_policies
-    where workspace_id = v_res.workspace_id
-      and event_type = 'reservation_delete';
-  v_auto := (v_member.is_owner and coalesce(v_policy.auto_validate_owner, false))
-         or (v_member.is_admin and coalesce(v_policy.auto_validate_admin, false));
   if v_auto then
-    -- Settle exactly like respond_to_event's reservation_delete confirm
-    -- branch (0101): an accept decision attributed to the requester,
-    -- the event confirmed, the reservation cancelled. The payload flag
-    -- is what tells the feed and the audit this was not a peer review.
-    insert into public.event_decisions (event_id, member_id, decision)
-      values (v_id, v_member.id, 'accept');
-    update public.events
-       set status = 'confirmed',
-           decided_at = now(),
-           payload = payload || jsonb_build_object('auto_validated', true)
-     where id = v_id;
+    -- The 0017 idiom for a decision no human made: member_id null,
+    -- decided_by_system true. Attributing it to the requester would
+    -- forge exactly the peer review that 0086 forbids — the rule
+    -- settled this, not a colleague.
+    insert into public.event_decisions
+      (event_id, member_id, decision, decided_by_system)
+      values (v_id, null, 'accept', true);
+    -- Same effect as respond_to_event's reservation_delete confirm
+    -- branch (0101): the booking goes away.
     update public.reservations set status = 'cancelled'
       where id = v_res.id
         and status in ('reserved','checked_in','completed');
