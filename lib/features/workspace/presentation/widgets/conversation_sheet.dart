@@ -26,6 +26,7 @@ Future<void> showConversationSheet(
   WidgetRef ref, {
   required String otherMemberId,
   required String otherName,
+  String? seedBody,
 }) {
   // Opening the thread reads THIS exchange (0108) — the partner's
   // check turns blue, the inbox rows un-bold; everything else stays
@@ -39,8 +40,11 @@ Future<void> showConversationSheet(
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
-    builder: (_) =>
-        ConversationSheet(otherMemberId: otherMemberId, otherName: otherName),
+    builder: (_) => ConversationSheet(
+      otherMemberId: otherMemberId,
+      otherName: otherName,
+      seedBody: seedBody,
+    ),
   );
 }
 
@@ -49,10 +53,15 @@ class ConversationSheet extends ConsumerWidget {
     super.key,
     required this.otherMemberId,
     required this.otherName,
+    this.seedBody,
   });
 
   final String otherMemberId;
   final String otherName;
+
+  /// #622 — pre-seeds the composer (e.g. the blocking reservation's
+  /// `[res:…]` reference) so the message points at what it is about.
+  final String? seedBody;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -140,6 +149,7 @@ class ConversationSheet extends ConsumerWidget {
                 ),
                 child: MemberNoteComposer(
                   autofocus: false,
+                  seedBody: seedBody,
                   onSend: (body) => sendMemberNoteGuarded(
                     context,
                     ref,

@@ -8,6 +8,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../reservations/domain/booking_error_text.dart';
 import '../../../reservations/domain/reservation.dart';
+import '../../../reservations/presentation/widgets/message_reserver.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/seat.dart';
 import 'check_in_sheets.dart';
@@ -24,6 +25,7 @@ Future<void> runAdminSeatActions(
   required String name,
   required bool offerCheckIn,
   required int? stepMinutes,
+  bool offerMessage = false,
 }) async {
   final l10n = AppLocalizations.of(context);
   final action = await showCheckInOtherSheet(
@@ -32,8 +34,21 @@ Future<void> runAdminSeatActions(
     other: other,
     name: name,
     offerCheckIn: offerCheckIn,
+    offerMessage: offerMessage,
   );
   if (action == null || !context.mounted) return;
+  // #622 — the message tile opens the conversation with the holder,
+  // seeded with the reservation reference; no repository act follows.
+  if (action == 'message') {
+    await messageReserver(
+      context,
+      ref,
+      blocking: other,
+      name: name,
+      spaceName: seat.name,
+    );
+    return;
+  }
   final repo = ref.read(reservationRepositoryProvider);
   try {
     switch (action) {

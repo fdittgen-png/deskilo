@@ -20,5 +20,6 @@
   "spaceCardSizeMedium": "Mittel",
   "spaceCardSizeLarge": "Groß",
   "spaceCardInfoLabel": "Informationen auf der Karte",
-  "spaceCardInfoWorkspace": "Workspace"
+  "spaceCardInfoWorkspace": "Workspace",
+  "spaceMessageReserver": "Nachricht an {name}"
 }

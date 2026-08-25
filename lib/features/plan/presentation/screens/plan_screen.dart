@@ -30,6 +30,7 @@ import '../../../members/providers/directory_providers.dart';
 import '../../../reservations/domain/seat_state_logic.dart';
 import '../../../reservations/domain/space_code.dart';
 import '../../../reservations/presentation/widgets/booking_controls.dart';
+import '../../../reservations/presentation/widgets/message_reserver.dart';
 import '../../../reservations/presentation/widgets/space_scan.dart';
 import '../../../reservations/presentation/widgets/booking_sheet.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -375,6 +376,9 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             name: name,
             offerCheckIn: offerCheckIn,
             stepMinutes: _granularity.stepMinutes,
+            // #622 — admins get the message affordance ON TOP of their
+            // admin actions (messaging's own flag gates it).
+            offerMessage: canMessageReserver(ref, other),
           );
           return;
         }
@@ -383,9 +387,25 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
             : (l10n?.planReservedBy(name) ?? 'Reserved by $name');
         final until =
             DateFormat.Hm().format(WorkspaceTime.wall(other.endsAt));
+        final infoLine =
+            '$template · ${l10n?.planUntil(until) ?? 'until $until'}';
+        // #622 — a REGULAR member can message the holder instead of a
+        // dead-end info snack; flag off keeps the plain explanation.
+        if (canMessageReserver(ref, other)) {
+          await showBlockedSpaceSheet(
+            context,
+            ref,
+            title: seat.name,
+            infoLine: infoLine,
+            blocking: other,
+            name: name,
+            spaceName: seat.name,
+          );
+          return;
+        }
         AppSnack.info(
           context,
-          '$template · ${l10n?.planUntil(until) ?? 'until $until'}',
+          infoLine,
           replace: true,
         );
     }

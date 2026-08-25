@@ -5504,6 +5504,12 @@ abstract class AppLocalizations {
   /// **'Rule: {granularity} · today {hours}'**
   String kioskBasis(String granularity, String hours);
 
+  /// Appended to a kiosk occupancy refusal: names the reservation holder and points to the app for messaging — the wall device itself cannot write as the member (#622)
+  ///
+  /// In en, this message translates to:
+  /// **'Held by {name} — you can message them from the app on your phone.'**
+  String kioskBlockedContactHint(String name);
+
   /// Settings entry and dialog title for the in-app language selection
   ///
   /// In en, this message translates to:
@@ -7537,6 +7543,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace'**
   String get spaceCardInfoWorkspace;
+
+  /// Action opening the conversation with the member whose reservation blocks the tapped/scanned space (#622)
+  ///
+  /// In en, this message translates to:
+  /// **'Message {name}'**
+  String spaceMessageReserver(String name);
 
   /// Settings entry and dialog title for the in-app theme selection
   ///

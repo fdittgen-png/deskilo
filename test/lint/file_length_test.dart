@@ -154,7 +154,10 @@ const Map<String, int> _baseline = {
   // 750→770 (2026-08-05): #490 workspace-clock day instants beside the
   // naive axis anchor.
   'lib/features/calendar/presentation/widgets/day_timeline.dart': 770,
-  'lib/features/reservations/presentation/widgets/space_scan.dart': 820, // 2026-08 #585 chair NFC tap path
+  // 820→830 (2026-08-25): #622 the whole-space conflict now resolves
+  // the blocking RESERVATION (message-the-reserver affordance); the
+  // seat action dialog moved OUT into the shared space_act_sheet.
+  'lib/features/reservations/presentation/widgets/space_scan.dart': 830,
   // 600→640 (2026-08-04): #460/#464 Messages inbox rows + mark-seen —
   // the note row widget lives with the feed it sits in. 640→700: #467
   // swipe reply/delete on the rows.

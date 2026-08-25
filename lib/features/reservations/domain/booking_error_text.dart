@@ -104,3 +104,16 @@ String bookingErrorText(
   }
   return fallback;
 }
+
+/// #622 — whether [error] is an occupancy refusal caused by ANOTHER
+/// member's reservation (the pinned others-blocking substrings above;
+/// 'you already have a reservation in that period' is the member's OWN
+/// booking and deliberately not matched). Surfaces use this to offer
+/// contacting the reserver.
+bool isBlockedByOtherError(Object error) {
+  if (error is! PostgrestException) return false;
+  final message = error.message;
+  return message.contains('reservations in that period') ||
+      message.contains('already reserved') ||
+      message.contains('reserved as a whole');
+}

@@ -23,14 +23,23 @@ Future<
     })> pumpPlan(
   WidgetTester tester, {
   void Function(FakeReservationRepository repo)? seedReservations,
+  // #622 — regular members see the message-the-reserver sheet where
+  // admins get the admin actions; flags flow through as usual.
+  bool regularMember = false,
+  Map<String, dynamic> featureFlags = const {},
 }) async {
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   final reservations = FakeReservationRepository();
-  final workspace = FakeWorkspaceRepository.withWorkspace()
+  final workspace =
+      FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags)
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana Lima'}
     // Open every weekday: booking tests must not hit the closed-day
     // gating (#186) when the suite runs on a weekend.
     ..openWeekdays['ws-1'] = const [1, 2, 3, 4, 5, 6, 7];
+  if (regularMember) {
+    workspace.myMember =
+        workspace.myMember.copyWith(isAdmin: false, isOwner: false);
+  }
   seedReservations?.call(reservations);
   await tester.pumpWidget(
     ProviderScope(

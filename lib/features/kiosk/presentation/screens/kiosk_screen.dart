@@ -25,6 +25,7 @@ import '../../../plan/presentation/widgets/seat_photos.dart';
 import '../../../profile/domain/profile.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../profile/presentation/widgets/member_avatar.dart';
+import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/domain/reservation_repository.dart'
     show KioskIdentity;
 import '../../../reservations/presentation/widgets/booking_range_text.dart';
@@ -197,7 +198,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
           .error('kiosk', 'kiosk act failed', error: e, stackTrace: st);
       if (!mounted) return;
       // #430: bookingErrorText is THE mapper; kiosk cases stay.
-      final message = switch (e) {
+      var message = switch (e) {
         PostgrestException(:final message)
             when message.contains(KioskBadgeError.serverSubstring) =>
           l10n?.kioskBadgeRejected ?? 'Badge not recognized.',
@@ -212,6 +213,21 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                 'Something went wrong. Please try again.',
           ),
       };
+      // #622 — an occupancy refusal NAMES the holder and points to the
+      // app: the wall device cannot write messages as the member, but
+      // the member's own phone can.
+      if (isBlockedByOtherError(e)) {
+        final holder = _blockingHolderName(
+          seatId: seatId,
+          levelId: levelId,
+          start: request.start,
+          end: request.end,
+        );
+        if (holder != null) {
+          message = '$message\n'
+              '${l10n?.kioskBlockedContactHint(holder) ?? 'Held by $holder — you can message them from the app on your phone.'}';
+        }
+      }
       AppSnack.error(context, message, replace: true);
       return;
     }
@@ -246,6 +262,31 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
             : null,
       ),
     ));
+  }
+
+  /// The member whose reservation blocks the requested window on the
+  /// tapped seat/level, resolved CLIENT-SIDE from the day's
+  /// reservations (#622) — null when nothing matches or has no name.
+  String? _blockingHolderName({
+    String? seatId,
+    String? levelId,
+    required DateTime start,
+    required DateTime end,
+  }) {
+    final now = ref.read(clockProvider).now();
+    final reservations =
+        ref.read(reservationsForDayProvider(dayKeyOf(now))).value ??
+            const <Reservation>[];
+    final blocking = reservations
+        .where((r) =>
+            ((seatId != null && r.seatId == seatId) ||
+                (levelId != null && r.levelId == levelId)) &&
+            r.coversRange(start, end))
+        .firstOrNull;
+    if (blocking == null) return null;
+    final names = ref.read(memberNamesProvider).value ?? const {};
+    final name = names[blocking.memberId] ?? '';
+    return name.isEmpty ? null : name;
   }
 
   @override

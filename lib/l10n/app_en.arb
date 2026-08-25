@@ -3543,6 +3543,15 @@
       }
     }
   },
+  "kioskBlockedContactHint": "Held by {name} — you can message them from the app on your phone.",
+  "@kioskBlockedContactHint": {
+    "description": "Appended to a kiosk occupancy refusal: names the reservation holder and points to the app for messaging — the wall device itself cannot write as the member (#622)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "languageTitle": "Language",
   "@languageTitle": {
     "description": "Settings entry and dialog title for the in-app language selection"
@@ -4954,6 +4963,15 @@
   "spaceCardSizeLarge": "Large",
   "spaceCardInfoLabel": "Information on the card",
   "spaceCardInfoWorkspace": "Workspace",
+  "spaceMessageReserver": "Message {name}",
+  "@spaceMessageReserver": {
+    "description": "Action opening the conversation with the member whose reservation blocks the tapped/scanned space (#622)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "themeTitle": "Theme",
   "@themeTitle": {
     "description": "Settings entry and dialog title for the in-app theme selection"

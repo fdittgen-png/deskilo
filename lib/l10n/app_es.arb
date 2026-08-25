@@ -1551,6 +1551,7 @@
       }
     }
   },
+  "kioskBlockedContactHint": "Ocupado por {name} — puedes escribirle desde la aplicación en tu teléfono.",
   "languageTitle": "Idioma",
   "languageSystemDefault": "Predeterminado del sistema",
   "levelReserveButton": "Reservar la planta",
@@ -2117,6 +2118,7 @@
   "spaceCardSizeLarge": "Grande",
   "spaceCardInfoLabel": "Información en la tarjeta",
   "spaceCardInfoWorkspace": "Espacio de trabajo",
+  "spaceMessageReserver": "Escribir a {name}",
   "themeTitle": "Tema",
   "themeSystem": "Predeterminado del sistema",
   "themeLight": "Claro",

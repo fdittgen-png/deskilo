@@ -26,7 +26,9 @@ import '../../domain/reservation.dart';
 import '../../domain/reservation_repository.dart';
 import '../../domain/booking_error_text.dart';
 import 'booking_sheet.dart';
+import 'message_reserver.dart';
 import 'series_result_dialog.dart';
+import 'space_act_sheet.dart';
 import '../../domain/space_code.dart';
 import 'reference_open.dart';
 import '../../domain/walk_up_window.dart';
@@ -88,6 +90,19 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
   final desk = resolved.desk;
   final seat = resolved.seat;
   final plan = resolved.plan;
+
+  // #622 — a scanned WORKSTATION acts like tapping it on the kiosk:
+  // straight into the shared one-sheet (action + derived period), the
+  // signed-in member confirming instead of a badge.
+  if (code.kind == SpaceKind.seat && seat != null) {
+    await showSpaceActSheet(
+      context,
+      seat: seat,
+      plan: plan,
+      title: desk == null ? seat.name : '${seat.name} · ${desk.name}',
+    );
+    return;
+  }
 
   await showSpaceSheet(
     context,
@@ -512,31 +527,16 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
     await showSeriesResultDialog(context, result);
   }
 
-  /// Reserve-or-check-in picker for one free seat (the kiosk action
-  /// idiom, without the badge — the member is signed in).
-  Future<void> _seatActions(Seat seat) async {
-    final l10n = AppLocalizations.of(context);
-    final checkIn = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => SimpleDialog(
-        title: Text(seat.name),
-        children: [
-          SimpleDialogOption(
-            key: const ValueKey('space-act-checkin'),
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n?.kioskCheckIn ?? 'Check in'),
-          ),
-          SimpleDialogOption(
-            key: const ValueKey('space-act-reserve'),
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n?.kioskReserve ?? 'Reserve'),
-          ),
-        ],
-      ),
-    );
-    if (checkIn == null || !mounted) return;
-    await _create(seatId: seat.id, checkIn: checkIn);
-  }
+  /// Reserve-or-check-in for one free seat — since #622 the SHARED
+  /// kiosk one-sheet core (action + derived period), authenticated:
+  /// the member confirms instead of presenting a badge.
+  Future<void> _seatActions(Seat seat) =>
+      showSpaceActSheet(
+        context,
+        seat: seat,
+        plan: widget.plan,
+        title: seat.name,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -611,26 +611,41 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
     final wholeAllowed =
         wholeTarget != null && featureOn && wholeTarget.bookable && granted;
     // Visible conflicts disable the whole-space buttons up front; the
-    // server re-checks (offices/levels elsewhere, series, races).
-    final wholeConflict = switch (widget.kind) {
-      SpaceKind.desk => seats.any(seatTaken) ||
-          reservations.any((r) =>
-              (r.deskId == desk?.id ||
-                  r.officeId == desk?.officeId ||
-                  r.levelId == office?.levelId) &&
-              r.coversRange(window.start, window.end)),
-      SpaceKind.office => seats.any(seatTaken) ||
-          reservations.any((r) =>
-              (r.officeId == office?.id ||
-                  r.levelId == office?.levelId ||
-                  (r.deskId != null &&
-                      (plan?.desks ?? const <Desk>[])
-                          .any((d) => d.id == r.deskId))) &&
-              r.coversRange(window.start, window.end)),
-      _ => reservations.any((r) =>
-          r.levelId == level?.id &&
-              r.coversRange(window.start, window.end)),
+    // server re-checks (offices/levels elsewhere, series, races). #622
+    // resolves the blocking RESERVATION (not just a bool) so the
+    // conflict note can offer messaging its holder.
+    final seatBlocking = reservations
+        .where((r) =>
+            r.seatId != null &&
+            seats.any((s) => s.id == r.seatId) &&
+            r.coversRange(window.start, window.end))
+        .firstOrNull;
+    final wholeBlocking = switch (widget.kind) {
+      SpaceKind.desk => seatBlocking ??
+          reservations
+              .where((r) =>
+                  (r.deskId == desk?.id ||
+                      r.officeId == desk?.officeId ||
+                      r.levelId == office?.levelId) &&
+                  r.coversRange(window.start, window.end))
+              .firstOrNull,
+      SpaceKind.office => seatBlocking ??
+          reservations
+              .where((r) =>
+                  (r.officeId == office?.id ||
+                      r.levelId == office?.levelId ||
+                      (r.deskId != null &&
+                          (plan?.desks ?? const <Desk>[])
+                              .any((d) => d.id == r.deskId))) &&
+                  r.coversRange(window.start, window.end))
+              .firstOrNull,
+      _ => reservations
+          .where((r) =>
+              r.levelId == level?.id &&
+              r.coversRange(window.start, window.end))
+          .firstOrNull,
     };
+    final wholeConflict = wholeBlocking != null;
 
     // My own live reservation of exactly this space in the window: the
     // sheet then offers CHECK IN to it instead of a disabled conflict.
@@ -729,6 +744,19 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
                 key: const ValueKey('space-conflict'),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
+              // #622 — the block names a holder? Offer the message
+              // thread (messaging's own flag gates the affordance).
+              if (canMessageReserver(ref, wholeBlocking)) ...[
+                const SizedBox(height: 8),
+                MessageReserverButton(
+                  widgetKey: const ValueKey('space-conflict-message'),
+                  blocking: wholeBlocking,
+                  name: (ref.watch(memberNamesProvider).value ??
+                          const {})[wholeBlocking.memberId] ??
+                      '',
+                  spaceName: title,
+                ),
+              ],
             ],
           ] else ...[
             // Permission transparency (field request: "show the

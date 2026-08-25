@@ -62,5 +62,14 @@
   "spaceCardSizeMedium": "Medium",
   "spaceCardSizeLarge": "Large",
   "spaceCardInfoLabel": "Information on the card",
-  "spaceCardInfoWorkspace": "Workspace"
+  "spaceCardInfoWorkspace": "Workspace",
+  "spaceMessageReserver": "Message {name}",
+  "@spaceMessageReserver": {
+    "description": "Action opening the conversation with the member whose reservation blocks the tapped/scanned space (#622)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

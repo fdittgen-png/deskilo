@@ -102,5 +102,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "kioskBlockedContactHint": "Occupé par {name} — vous pouvez lui écrire depuis l'application sur votre téléphone."
 }

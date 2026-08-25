@@ -26,8 +26,9 @@ Future<String?> showMySeatSheet(
 }) {
   final l10n = AppLocalizations.of(context);
   // #490 — the window opens on the WORKSPACE clock.
-  final opensAt = DateFormat.Hm().format(WorkspaceTime.wall(
-      mine.startsAt.subtract(Reservation.checkInLeeway)));
+  final opensAt = DateFormat.Hm().format(
+    WorkspaceTime.wall(mine.startsAt.subtract(Reservation.checkInLeeway)),
+  );
   return showModalBottomSheet<String>(
     context: context,
     builder: (context) => SafeArea(
@@ -36,7 +37,9 @@ Future<String?> showMySeatSheet(
         children: [
           ListTile(
             title: Text(
-              seat.name.isEmpty ? (l10n?.planYourSeat ?? 'Your seat') : seat.name,
+              seat.name.isEmpty
+                  ? (l10n?.planYourSeat ?? 'Your seat')
+                  : seat.name,
             ),
             subtitle: Text(
               '${DateFormat.Hm().format(mine.startsAt.toLocal())} – '
@@ -65,10 +68,10 @@ Future<String?> showMySeatSheet(
               subtitle: Text(
                 now.isBefore(mine.startsAt)
                     ? (l10n?.planCheckInOpensAt(opensAt) ??
-                        'Check-in opens at $opensAt')
+                          'Check-in opens at $opensAt')
                     : (l10n?.planCheckInOverError ??
-                        'This reservation is over — check-in is no '
-                            'longer possible.'),
+                          'This reservation is over — check-in is no '
+                              'longer possible.'),
               ),
             ),
           ListTile(
@@ -89,50 +92,66 @@ Future<String?> showMySeatSheet(
 /// are present (#408, window open) and/or OVERRULE — remove the
 /// reservation entirely (#412): "the other will be removed and the user
 /// and all admins/owners will be notified" (the 0007 event trigger is
-/// the notification channel). Returns 'checkin' / 'remove' / null; the
-/// caller performs the calls — everything is re-checked server-side.
+/// the notification channel). Since #622 [offerMessage] adds the
+/// message-the-reserver tile on top. Returns 'checkin' / 'remove' /
+/// 'message' / null; the caller performs the calls — everything is
+/// re-checked server-side.
 Future<String?> showCheckInOtherSheet(
   BuildContext context, {
   required Seat seat,
   required Reservation other,
   required String name,
   required bool offerCheckIn,
+  bool offerMessage = false,
 }) {
   final l10n = AppLocalizations.of(context);
   final reservedBy = l10n?.planReservedBy(name) ?? 'Reserved by $name';
   return showModalBottomSheet<String>(
     context: context,
     builder: (context) => SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            title: Text(seat.name.isEmpty ? reservedBy : seat.name),
-            subtitle: Text(
-              '$reservedBy · '
-              '${DateFormat.Hm().format(other.startsAt.toLocal())} – '
-              '${DateFormat.Hm().format(other.endsAt.toLocal())}',
-            ),
-          ),
-          if (offerCheckIn)
+      // Scrolls, never clips: the #622 message tile can push the sheet
+      // past a small screen's default sheet height.
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
             ListTile(
-              leading: const Icon(Icons.login),
-              title: Text(l10n?.planCheckInFor(name) ?? 'Check in $name'),
-              onTap: () => Navigator.of(context).pop('checkin'),
+              title: Text(seat.name.isEmpty ? reservedBy : seat.name),
+              subtitle: Text(
+                '$reservedBy · '
+                '${DateFormat.Hm().format(other.startsAt.toLocal())} – '
+                '${DateFormat.Hm().format(other.endsAt.toLocal())}',
+              ),
             ),
-          ListTile(
-            leading: const Icon(Icons.person_remove_outlined),
-            title: Text(
-              l10n?.planOverruleRemove ?? 'Remove reservation (overrule)',
+            if (offerCheckIn)
+              ListTile(
+                leading: const Icon(Icons.login),
+                title: Text(l10n?.planCheckInFor(name) ?? 'Check in $name'),
+                onTap: () => Navigator.of(context).pop('checkin'),
+              ),
+            if (offerMessage)
+              ListTile(
+                key: const ValueKey('admin-message-reserver'),
+                leading: const Icon(Icons.chat_outlined),
+                title: Text(
+                  l10n?.spaceMessageReserver(name) ?? 'Message $name',
+                ),
+                onTap: () => Navigator.of(context).pop('message'),
+              ),
+            ListTile(
+              leading: const Icon(Icons.person_remove_outlined),
+              title: Text(
+                l10n?.planOverruleRemove ?? 'Remove reservation (overrule)',
+              ),
+              subtitle: Text(
+                l10n?.planOverruleHint(name) ??
+                    '$name and all admins will be notified.',
+              ),
+              onTap: () => Navigator.of(context).pop('remove'),
             ),
-            subtitle: Text(
-              l10n?.planOverruleHint(name) ??
-                  '$name and all admins will be notified.',
-            ),
-            onTap: () => Navigator.of(context).pop('remove'),
-          ),
-          const SizedBox(height: 8),
-        ],
+            const SizedBox(height: 8),
+          ],
+        ),
       ),
     ),
   );
