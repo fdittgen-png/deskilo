@@ -251,6 +251,11 @@
   "policyGridHoursDesc": "Confine minute-grid bookings to the working day; evening walk-ups stay possible.",
   "policyAdminCheckoutTitle": "Admins may check members out",
   "policyAdminCheckoutDesc": "An admin can end a member's running check-in.",
+  "policyOutsideHoursTitle": "Outside the opening hours",
+  "policyOutsideHoursDesc": "Off refuses such bookings; Free never counts them; Charged counts them unless the member already has a regular booking that day.",
+  "policyOutsideHoursOff": "Off",
+  "policyOutsideHoursFree": "Free",
+  "policyOutsideHoursCharged": "Charged",
   "myBadgeTitle": "My badge",
   "billSubscription": "Subscription {pct}%",
   "@billSubscription": {
@@ -3618,6 +3623,7 @@
   "bookingPastError": "This booking lies entirely in the past.",
   "bookingWalkUpTodayError": "A walk-up check-in must start today.",
   "bookingOutsideHoursError": "Bookings must stay within the working hours.",
+  "bookingOutsideOffError": "Bookings outside the opening hours are not allowed.",
   "membersTitle": "Members & plans",
   "@membersTitle": {
     "description": "Title of the owner-only member management screen + its settings entry"

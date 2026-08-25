@@ -5,7 +5,9 @@ import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
+import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 
+import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'test_clock.dart';
 
@@ -29,6 +31,25 @@ class FakeReservationRepository implements ReservationRepository {
   /// Mirror of booking_rules.allow_past_bookings (#600) — OFF like the
   /// server default; tests flip it to exercise the backfill path.
   bool allowPastBookings = false;
+
+  /// Mirror of booking_rules.outside_hours_mode (#624) — charged like
+  /// the server's absent default. Only the 'off' refusal is mirrored
+  /// here (creation-side); the free/charged counting is quota math and
+  /// lives server-side.
+  OutsideHoursMode outsideHoursMode = OutsideHoursMode.charged;
+
+  /// #624: entirely outside the working day — no intersection with
+  /// [day start, day end) of the booking's workspace-local day
+  /// ([WorkHours.current], defaults 8:00–17:00), like
+  /// enforce_booking_rules v7.
+  bool _outsideOnly(DateTime startsAt, DateTime endsAt) {
+    final hours = WorkHours.current;
+    final day = WorkspaceTime.dateOf(startsAt);
+    DateTime at(int minutes) => WorkspaceTime.at(
+        day.year, day.month, day.day, minutes ~/ 60, minutes % 60);
+    return !(startsAt.isBefore(at(hours.endMinutes)) &&
+        endsAt.isAfter(at(hours.startMinutes)));
+  }
 
   /// The fake's clock — defaults to [kTestNow], matching the
   /// FixedClock the standard overrides install (#408: the check-in
@@ -141,6 +162,14 @@ class FakeReservationRepository implements ReservationRepository {
     if (checkIn &&
         WorkspaceTime.dateOf(startsAt) != WorkspaceTime.dateOf(now())) {
       throw StateError('a walk-up check-in must start today');
+    }
+    // #624: mode 'off' refuses outside-only windows on every
+    // granularity, walk-up or not — pinned substring like the server
+    // (enforce_booking_rules v7, migration 0118).
+    if (outsideHoursMode == OutsideHoursMode.off &&
+        _outsideOnly(startsAt, endsAt)) {
+      throw const PostgrestException(
+          message: 'bookings outside the opening hours are not allowed');
     }
     // #573 — a day-based walk-up check-in books the SLOT the chosen end
     // belongs to: the start snaps back; if the early slot part is taken,

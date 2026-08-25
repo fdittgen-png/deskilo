@@ -34,5 +34,10 @@
   "policyGridHoursTitle": "Minutenbuchungen innerhalb der Arbeitszeiten",
   "policyGridHoursDesc": "Minutenraster-Buchungen auf den Arbeitstag begrenzen; Abend-Check-ins bleiben möglich.",
   "policyAdminCheckoutTitle": "Admins dürfen Mitglieder auschecken",
-  "policyAdminCheckoutDesc": "Ein Admin kann den laufenden Check-in eines Mitglieds beenden."
+  "policyAdminCheckoutDesc": "Ein Admin kann den laufenden Check-in eines Mitglieds beenden.",
+  "policyOutsideHoursTitle": "Außerhalb der Öffnungszeiten",
+  "policyOutsideHoursDesc": "Aus lehnt solche Buchungen ab; Gratis zählt sie nie; Berechnet zählt sie, außer das Mitglied hat an dem Tag bereits eine reguläre Buchung.",
+  "policyOutsideHoursOff": "Aus",
+  "policyOutsideHoursFree": "Gratis",
+  "policyOutsideHoursCharged": "Berechnet"
 }

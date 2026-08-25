@@ -34,5 +34,10 @@
   "policyGridHoursTitle": "Réservations à la minute dans les heures d'ouverture",
   "policyGridHoursDesc": "Limiter les réservations à la minute à la journée de travail ; les check-ins du soir restent possibles.",
   "policyAdminCheckoutTitle": "Les admins peuvent faire le check-out des membres",
-  "policyAdminCheckoutDesc": "Un admin peut terminer le check-in en cours d'un membre."
+  "policyAdminCheckoutDesc": "Un admin peut terminer le check-in en cours d'un membre.",
+  "policyOutsideHoursTitle": "En dehors des heures d'ouverture",
+  "policyOutsideHoursDesc": "Interdit les refuse ; Gratuit ne les compte jamais ; Facturé les compte, sauf si le membre a déjà une réservation normale ce jour-là.",
+  "policyOutsideHoursOff": "Interdit",
+  "policyOutsideHoursFree": "Gratuit",
+  "policyOutsideHoursCharged": "Facturé"
 }

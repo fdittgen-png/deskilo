@@ -307,6 +307,13 @@ abstract class WorkspaceRepository {
     required bool enabled,
   });
 
+  /// Writes the #624 outside-hours mode (`outside_hours_mode` string
+  /// key), preserving the other booking_rules.
+  Future<void> setOutsideHoursMode(
+    String workspaceId,
+    OutsideHoursMode mode,
+  );
+
   /// Sends a member note (#456, RPC `send_member_note`): to one member,
   /// or — [toMemberId] null — to all admins incl. the owner (the server
   /// requires the sender to be an admin for that).

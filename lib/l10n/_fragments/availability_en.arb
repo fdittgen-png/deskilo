@@ -101,5 +101,10 @@
   "policyGridHoursTitle": "Minute bookings within working hours",
   "policyGridHoursDesc": "Confine minute-grid bookings to the working day; evening walk-ups stay possible.",
   "policyAdminCheckoutTitle": "Admins may check members out",
-  "policyAdminCheckoutDesc": "An admin can end a member's running check-in."
+  "policyAdminCheckoutDesc": "An admin can end a member's running check-in.",
+  "policyOutsideHoursTitle": "Outside the opening hours",
+  "policyOutsideHoursDesc": "Off refuses such bookings; Free never counts them; Charged counts them unless the member already has a regular booking that day.",
+  "policyOutsideHoursOff": "Off",
+  "policyOutsideHoursFree": "Free",
+  "policyOutsideHoursCharged": "Charged"
 }

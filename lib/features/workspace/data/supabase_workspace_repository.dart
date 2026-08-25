@@ -655,13 +655,14 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         row['booking_rules'] as Map<String, dynamic>?);
   }
 
-  @override
-  Future<void> setBookingPolicy(
+  /// THE merge-preserving policy write (#600/#624): one booking_rules
+  /// key changes, every other key survives — the same jsonb merge as
+  /// setBookingGranularity.
+  Future<void> _mergeBookingRule(
     String workspaceId,
-    String key, {
-    required bool enabled,
-  }) async {
-    // Same merge-preserving jsonb write as setBookingGranularity.
+    String key,
+    Object value,
+  ) async {
     final row = await _client
         .from('workspaces')
         .select('booking_rules')
@@ -669,12 +670,28 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
         .single();
     final rules = <String, dynamic>{
       ...?row['booking_rules'] as Map<String, dynamic>?,
-      key: enabled,
+      key: value,
     };
     await _client
         .from('workspaces')
         .update({'booking_rules': rules}).eq('id', workspaceId);
   }
+
+  @override
+  Future<void> setBookingPolicy(
+    String workspaceId,
+    String key, {
+    required bool enabled,
+  }) =>
+      _mergeBookingRule(workspaceId, key, enabled);
+
+  @override
+  Future<void> setOutsideHoursMode(
+    String workspaceId,
+    OutsideHoursMode mode,
+  ) =>
+      _mergeBookingRule(
+          workspaceId, BookingPolicies.outsideHoursModeKey, mode.wire);
 
   @override
   Future<void> setWorkHours(String workspaceId, WorkHours hours) async {

@@ -862,6 +862,15 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     };
   }
 
+  @override
+  Future<void> setOutsideHoursMode(
+    String workspaceId,
+    OutsideHoursMode mode,
+  ) async {
+    final p = bookingPolicies[workspaceId] ?? const BookingPolicies();
+    bookingPolicies[workspaceId] = p.copyWith(outsideHoursMode: mode);
+  }
+
   /// Working day per workspace (#446); defaults like the real repo.
   final Map<String, WorkHours> workHours = {};
 
