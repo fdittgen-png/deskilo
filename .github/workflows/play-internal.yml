@@ -169,9 +169,22 @@ jobs:
           TAG="v${VERSION}+${{ steps.bn.outputs.build_number }}"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # #630 — the tag is an AUDIT convenience, never the deliverable:
+          # the binary is already in the store when this runs. A tag push
+          # can be rejected for reasons that say nothing about the build
+          # (notably: a workflow file changed on master mid-run, and a CI
+          # token may never create or update .github/workflows/*), and a
+          # shipped build reported as a FAILED run is a lie that sends
+          # someone hunting a release that actually went out. Warn loudly,
+          # record it in the summary, keep the run honest — green.
           git tag -a "$TAG" -m "Play build ${{ steps.bn.outputs.build_number }} (track: ${{ inputs.track || 'internal' }}) — $GITHUB_SHA"
-          git push origin "$TAG"
-          echo "Tagged $TAG"
+          if git push origin "$TAG"; then
+            echo "Tagged $TAG"
+            echo "- **Tagged:** \`$TAG\`" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::The Play upload SUCCEEDED; only the audit tag $TAG could not be pushed. Create it by hand: git tag -a $TAG $GITHUB_SHA -m 'Play build ${{ steps.bn.outputs.build_number }}' && git push origin $TAG"
+            echo "- **Tag NOT pushed:** \`$TAG\` — the build shipped; create the tag by hand." >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Summary
         if: always()
