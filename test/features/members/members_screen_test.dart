@@ -397,12 +397,42 @@ void main() {
     expect(workspace.otherMembers.single.maxActiveReservations, isNull);
   });
 
+  testWidgets("#628 — the owner raises another member's SIMULTANEOUS "
+      'allowance: the value persists and the row shows it', (tester) async {
+    final workspace = await pumpMembers(tester);
+
+    // Nothing set: the effective allowance is 1, so no chip.
+    expect(workspace.otherMembers.single.maxSimultaneousReservations, isNull);
+    expect(find.text('3 at once'), findsNothing);
+
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Simultaneous reservations'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('simultaneous-3')));
+    await tester.pumpAndSettle();
+
+    expect(workspace.otherMembers.single.maxSimultaneousReservations, 3);
+    expect(find.text('3 at once'), findsOneWidget);
+
+    // "Workspace default" clears the explicit permission again.
+    await openSheet(tester, 'Ana');
+    await tester.tap(find.text('Simultaneous reservations'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('simultaneous-default')));
+    await tester.pumpAndSettle();
+    expect(
+        workspace.otherMembers.single.maxSimultaneousReservations, isNull);
+    expect(find.text('3 at once'), findsNothing);
+  });
+
   testWidgets('the own sheet never offers the reservation limit '
       '(0044: not for themselves)', (tester) async {
     await pumpMembers(tester);
 
     await openSheet(tester, 'Flo');
     expect(find.text('Reservation limit'), findsNothing);
+    // #628 — the simultaneous permission is governance too, never self.
+    expect(find.text('Simultaneous reservations'), findsNothing);
     // …while other self-service-safe actions are present.
     expect(find.text('Subscription'), findsOneWidget);
   });

@@ -301,6 +301,50 @@ void main() {
     expect(find.byKey(const Key('policy-grid-hours')), findsNothing);
     // #624: the outside-hours control lives in the same section.
     expect(find.byKey(const Key('policy-outside-hours')), findsNothing);
+    // #628: so does the simultaneous-reservations stepper.
+    expect(find.byKey(const Key('policy-simultaneous')), findsNothing);
+  });
+
+  testWidgets('#628 — the simultaneous-reservations stepper starts at 1 '
+      'and stepping up writes the booking_rules key', (tester) async {
+    final workspace = await pumpAvailability(tester);
+
+    final stepper = find.byKey(const Key('policy-simultaneous'));
+    await tester.ensureVisible(stepper);
+    expect(
+      workspace.bookingPolicies['ws-1'],
+      isNull,
+      reason: 'nothing written before the owner touches it',
+    );
+    // 1 = one place at a time, the historical behavior; there is
+    // nothing below it, so the minus button is disabled.
+    expect(
+      tester
+          .widget<IconButton>(
+              find.byKey(const Key('policy-simultaneous-minus')))
+          .onPressed,
+      isNull,
+    );
+
+    await tester.tap(find.byKey(const Key('policy-simultaneous-plus')));
+    await tester.pumpAndSettle();
+    expect(
+      workspace.bookingPolicies['ws-1']?.simultaneousReservations,
+      2,
+      reason: 'the stepper writes simultaneous_reservations',
+    );
+    // The other policy keys are untouched by the merge-preserving write.
+    expect(workspace.bookingPolicies['ws-1']?.allowPastBookings, isFalse);
+    expect(workspace.bookingPolicies['ws-1']?.outsideHoursMode,
+        OutsideHoursMode.charged);
+
+    await tester.tap(find.byKey(const Key('policy-simultaneous-plus')));
+    await tester.pumpAndSettle();
+    expect(workspace.bookingPolicies['ws-1']?.simultaneousReservations, 3);
+
+    await tester.tap(find.byKey(const Key('policy-simultaneous-minus')));
+    await tester.pumpAndSettle();
+    expect(workspace.bookingPolicies['ws-1']?.simultaneousReservations, 2);
   });
 
   testWidgets('#624 — the outside-hours control renders with Charged '

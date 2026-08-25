@@ -258,6 +258,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get policyOutsideHoursCharged => 'De pago';
 
   @override
+  String get policySimultaneousTitle => 'Reservas simultáneas por miembro';
+
+  @override
+  String get policySimultaneousDesc =>
+      'Cuántas reservas superpuestas puede tener un miembro. 1 mantiene un solo sitio a la vez.';
+
+  @override
   String get myBadgeTitle => 'Mi credencial';
 
   @override
@@ -4072,6 +4079,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get memberNoteDeleted => 'Mensaje eliminado.';
 
   @override
+  String get memberSimultaneousLimitLabel => 'Reservas simultáneas';
+
+  @override
+  String get memberSimultaneousLimitExplainer =>
+      'Cuántas reservas puede tener este miembro en el mismo periodo. Sin definir, se aplica el valor por defecto del espacio.';
+
+  @override
+  String get memberSimultaneousLimitDefault => 'Valor del espacio';
+
+  @override
+  String memberSimultaneousLimitChip(int n) {
+    return '$n a la vez';
+  }
+
+  @override
   String get reserveMonthView => 'Mes';
 
   @override
@@ -4305,6 +4327,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get validationSaved => 'Regla de validación guardada.';
+
+  @override
+  String get validationAutoValidateOwner =>
+      'Los propietarios eliminan sin validación';
+
+  @override
+  String get validationAutoValidateAdmin =>
+      'Los admins eliminan sin validación';
+
+  @override
+  String get validationAutoValidateDesc =>
+      'Su propia solicitud de eliminación se resuelve sola y queda marcada como autovalidada.';
 
   @override
   String get vatTitle => 'IVA';

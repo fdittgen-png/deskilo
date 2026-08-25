@@ -255,6 +255,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get policyOutsideHoursCharged => 'Charged';
 
   @override
+  String get policySimultaneousTitle => 'Simultaneous reservations per member';
+
+  @override
+  String get policySimultaneousDesc =>
+      'How many overlapping bookings one member may hold. 1 keeps one place at a time.';
+
+  @override
   String get myBadgeTitle => 'My badge';
 
   @override
@@ -4039,6 +4046,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get memberNoteDeleted => 'Message deleted.';
 
   @override
+  String get memberSimultaneousLimitLabel => 'Simultaneous reservations';
+
+  @override
+  String get memberSimultaneousLimitExplainer =>
+      'How many bookings this member may hold over the same period. Unset follows the workspace default.';
+
+  @override
+  String get memberSimultaneousLimitDefault => 'Workspace default';
+
+  @override
+  String memberSimultaneousLimitChip(int n) {
+    return '$n at once';
+  }
+
+  @override
   String get reserveMonthView => 'Month';
 
   @override
@@ -4269,6 +4291,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get validationSaved => 'Validation rule saved.';
+
+  @override
+  String get validationAutoValidateOwner => 'Owners delete without validation';
+
+  @override
+  String get validationAutoValidateAdmin => 'Admins delete without validation';
+
+  @override
+  String get validationAutoValidateDesc =>
+      'Their own deletion request settles itself and stays marked as auto-validated.';
 
   @override
   String get vatTitle => 'VAT';

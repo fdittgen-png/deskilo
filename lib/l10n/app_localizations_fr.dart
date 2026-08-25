@@ -260,6 +260,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get policyOutsideHoursCharged => 'Facturé';
 
   @override
+  String get policySimultaneousTitle => 'Réservations simultanées par membre';
+
+  @override
+  String get policySimultaneousDesc =>
+      'Combien de réservations qui se chevauchent un membre peut détenir. 1 garde une seule place à la fois.';
+
+  @override
   String get myBadgeTitle => 'Mon badge';
 
   @override
@@ -4085,6 +4092,21 @@ class AppLocalizationsFr extends AppLocalizations {
   String get memberNoteDeleted => 'Message supprimé.';
 
   @override
+  String get memberSimultaneousLimitLabel => 'Réservations simultanées';
+
+  @override
+  String get memberSimultaneousLimitExplainer =>
+      'Combien de réservations ce membre peut détenir sur une même période. Non défini : le réglage de l\'espace s\'applique.';
+
+  @override
+  String get memberSimultaneousLimitDefault => 'Réglage de l\'espace';
+
+  @override
+  String memberSimultaneousLimitChip(int n) {
+    return '$n à la fois';
+  }
+
+  @override
   String get reserveMonthView => 'Mois';
 
   @override
@@ -4317,6 +4339,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get validationSaved => 'Règle de validation enregistrée.';
+
+  @override
+  String get validationAutoValidateOwner =>
+      'Les propriétaires suppriment sans validation';
+
+  @override
+  String get validationAutoValidateAdmin =>
+      'Les admins suppriment sans validation';
+
+  @override
+  String get validationAutoValidateDesc =>
+      'Leur propre demande de suppression se règle d\'elle-même et reste marquée comme auto-validée.';
 
   @override
   String get vatTitle => 'TVA';

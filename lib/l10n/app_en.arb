@@ -256,6 +256,14 @@
   "policyOutsideHoursOff": "Off",
   "policyOutsideHoursFree": "Free",
   "policyOutsideHoursCharged": "Charged",
+  "policySimultaneousTitle": "Simultaneous reservations per member",
+  "@policySimultaneousTitle": {
+    "description": "#628 - title of the workspace-wide simultaneous-reservations stepper"
+  },
+  "policySimultaneousDesc": "How many overlapping bookings one member may hold. 1 keeps one place at a time.",
+  "@policySimultaneousDesc": {
+    "description": "#628 - subtitle explaining the simultaneous-reservations stepper"
+  },
   "myBadgeTitle": "My badge",
   "billSubscription": "Subscription {pct}%",
   "@billSubscription": {
@@ -4805,6 +4813,27 @@
   "@memberNoteDeleted": {
     "description": "Snack after swipe-deleting a note (#467)"
   },
+  "memberSimultaneousLimitLabel": "Simultaneous reservations",
+  "@memberSimultaneousLimitLabel": {
+    "description": "#628 - member sheet action and dialog title for the per-member overlap permission"
+  },
+  "memberSimultaneousLimitExplainer": "How many bookings this member may hold over the same period. Unset follows the workspace default.",
+  "@memberSimultaneousLimitExplainer": {
+    "description": "#628 - explainer inside the per-member simultaneous-reservations dialog"
+  },
+  "memberSimultaneousLimitDefault": "Workspace default",
+  "@memberSimultaneousLimitDefault": {
+    "description": "#628 - chip clearing the per-member override so the workspace default applies"
+  },
+  "memberSimultaneousLimitChip": "{n} at once",
+  "@memberSimultaneousLimitChip": {
+    "description": "#628 - subtitle chip on a member row with an explicit simultaneous allowance",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "reserveMonthView": "Month",
   "@reserveMonthView": {
     "description": "Reserve hub view segment: month availability calendar (#7)"
@@ -5081,6 +5110,18 @@
   "validationSaved": "Validation rule saved.",
   "@validationSaved": {
     "description": "Snackbar after a policy row was stored successfully"
+  },
+  "validationAutoValidateOwner": "Owners delete without validation",
+  "@validationAutoValidateOwner": {
+    "description": "#629 - switch letting an owner auto-validate their own booking deletion"
+  },
+  "validationAutoValidateAdmin": "Admins delete without validation",
+  "@validationAutoValidateAdmin": {
+    "description": "#629 - switch letting an admin auto-validate their own booking deletion"
+  },
+  "validationAutoValidateDesc": "Their own deletion request settles itself and stays marked as auto-validated.",
+  "@validationAutoValidateDesc": {
+    "description": "#629 - subtitle under the auto-validation switches"
   },
   "vatTitle": "VAT",
   "@vatTitle": {

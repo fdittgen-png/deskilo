@@ -47,5 +47,17 @@
   "validationSaved": "Validation rule saved.",
   "@validationSaved": {
     "description": "Snackbar after a policy row was stored successfully"
+  },
+  "validationAutoValidateOwner": "Owners delete without validation",
+  "@validationAutoValidateOwner": {
+    "description": "#629 - switch letting an owner auto-validate their own booking deletion"
+  },
+  "validationAutoValidateAdmin": "Admins delete without validation",
+  "@validationAutoValidateAdmin": {
+    "description": "#629 - switch letting an admin auto-validate their own booking deletion"
+  },
+  "validationAutoValidateDesc": "Their own deletion request settles itself and stays marked as auto-validated.",
+  "@validationAutoValidateDesc": {
+    "description": "#629 - subtitle under the auto-validation switches"
   }
 }

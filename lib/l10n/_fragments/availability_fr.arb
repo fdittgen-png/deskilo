@@ -39,5 +39,7 @@
   "policyOutsideHoursDesc": "Interdit les refuse ; Gratuit ne les compte jamais ; Facturé les compte, sauf si le membre a déjà une réservation normale ce jour-là.",
   "policyOutsideHoursOff": "Interdit",
   "policyOutsideHoursFree": "Gratuit",
-  "policyOutsideHoursCharged": "Facturé"
+  "policyOutsideHoursCharged": "Facturé",
+  "policySimultaneousTitle": "Réservations simultanées par membre",
+  "policySimultaneousDesc": "Combien de réservations qui se chevauchent un membre peut détenir. 1 garde une seule place à la fois."
 }

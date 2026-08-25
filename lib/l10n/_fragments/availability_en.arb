@@ -106,5 +106,13 @@
   "policyOutsideHoursDesc": "Off refuses such bookings; Free never counts them; Charged counts them unless the member already has a regular booking that day.",
   "policyOutsideHoursOff": "Off",
   "policyOutsideHoursFree": "Free",
-  "policyOutsideHoursCharged": "Charged"
+  "policyOutsideHoursCharged": "Charged",
+  "policySimultaneousTitle": "Simultaneous reservations per member",
+  "@policySimultaneousTitle": {
+    "description": "#628 - title of the workspace-wide simultaneous-reservations stepper"
+  },
+  "policySimultaneousDesc": "How many overlapping bookings one member may hold. 1 keeps one place at a time.",
+  "@policySimultaneousDesc": {
+    "description": "#628 - subtitle explaining the simultaneous-reservations stepper"
+  }
 }

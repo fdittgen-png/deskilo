@@ -120,6 +120,9 @@ class SupabaseEventRepository implements EventRepository {
         'admins_may_validate': policy.adminsMayValidate,
         'eligible_admin_ids': policy.eligibleAdminIds,
         'owner_required': policy.ownerRequired,
+        // #629 — reservation_delete only; false everywhere else.
+        'auto_validate_admin': policy.autoValidateAdmin,
+        'auto_validate_owner': policy.autoValidateOwner,
       },
       onConflict: 'workspace_id,event_type',
     );
@@ -160,5 +163,7 @@ class SupabaseEventRepository implements EventRepository {
         eligibleAdminIds:
             (row['eligible_admin_ids'] as List).cast<String>(),
         ownerRequired: row['owner_required'] as bool,
+        autoValidateAdmin: row['auto_validate_admin'] as bool? ?? false,
+        autoValidateOwner: row['auto_validate_owner'] as bool? ?? false,
       );
 }

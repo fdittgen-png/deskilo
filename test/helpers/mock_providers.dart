@@ -499,6 +499,19 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     }
   }
 
+  @override
+  Future<void> setMemberSimultaneousLimit(String memberId, int? limit) async {
+    // #628 — the 0119 RPC mirrors 0044's governance: never for oneself.
+    if (myMember.id == memberId) {
+      throw StateError('cannot set your own simultaneous limit');
+    }
+    final i = otherMembers.indexWhere((m) => m.id == memberId);
+    if (i >= 0) {
+      otherMembers[i] =
+          otherMembers[i].copyWith(maxSimultaneousReservations: limit);
+    }
+  }
+
   /// (0050) member id → last level-permission written, for assertions.
   final levelPermissions = <String, bool>{};
 
@@ -860,6 +873,16 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       BookingPolicies.adminCheckOutKey => p.copyWith(adminCheckOut: enabled),
       _ => p,
     };
+  }
+
+  @override
+  Future<void> setSimultaneousReservations(
+    String workspaceId,
+    int value,
+  ) async {
+    final p = bookingPolicies[workspaceId] ?? const BookingPolicies();
+    bookingPolicies[workspaceId] =
+        p.copyWith(simultaneousReservations: value);
   }
 
   @override

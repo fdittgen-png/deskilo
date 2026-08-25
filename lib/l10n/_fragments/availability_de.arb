@@ -39,5 +39,7 @@
   "policyOutsideHoursDesc": "Aus lehnt solche Buchungen ab; Gratis zählt sie nie; Berechnet zählt sie, außer das Mitglied hat an dem Tag bereits eine reguläre Buchung.",
   "policyOutsideHoursOff": "Aus",
   "policyOutsideHoursFree": "Gratis",
-  "policyOutsideHoursCharged": "Berechnet"
+  "policyOutsideHoursCharged": "Berechnet",
+  "policySimultaneousTitle": "Gleichzeitige Reservierungen pro Mitglied",
+  "policySimultaneousDesc": "Wie viele sich überschneidende Buchungen ein Mitglied halten darf. 1 bedeutet ein Platz zur selben Zeit."
 }

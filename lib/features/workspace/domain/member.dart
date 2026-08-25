@@ -62,6 +62,13 @@ sealed class Member with _$Member {
     /// never self-service.
     int? maxActiveReservations,
 
+    /// Explicit permission to hold OVERLAPPING bookings (#628, migration
+    /// 0119): how many active reservations may cover the same moment.
+    /// Null = follow `booking_rules.simultaneous_reservations`, itself
+    /// defaulting to 1 — the historical one place at a time. Set by
+    /// owner/admins for OTHERS only, never self-service.
+    int? maxSimultaneousReservations,
+
     /// Whether this member may reserve/check into a WHOLE level (0050);
     /// granted by the owner or an admin, never self-set.
     @Default(false) bool canReserveLevel,

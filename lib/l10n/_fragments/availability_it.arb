@@ -39,5 +39,7 @@
   "policyOutsideHoursDesc": "Vietato le rifiuta; Gratis non le conta mai; A pagamento le conta, salvo che il membro abbia già una prenotazione normale quel giorno.",
   "policyOutsideHoursOff": "Vietato",
   "policyOutsideHoursFree": "Gratis",
-  "policyOutsideHoursCharged": "A pagamento"
+  "policyOutsideHoursCharged": "A pagamento",
+  "policySimultaneousTitle": "Prenotazioni simultanee per membro",
+  "policySimultaneousDesc": "Quante prenotazioni sovrapposte può avere un membro. 1 mantiene un solo posto alla volta."
 }
