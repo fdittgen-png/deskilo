@@ -22,6 +22,15 @@ sealed class ValidationPolicy with _$ValidationPolicy {
     /// Empty = every admin may validate (owners always may).
     required List<String> eligibleAdminIds,
     required bool ownerRequired,
+
+    /// #629 (migration 0119) — the owner-configured exception to the
+    /// 0086 "nobody validates their own event" rule, deliberately
+    /// scoped to `reservation_delete` and OFF by default: an admin's
+    /// (resp. the owner's) own deletion request settles itself, and the
+    /// settled event carries `payload.auto_validated = true` so the
+    /// feed and the audit can tell it from a peer review.
+    @Default(false) bool autoValidateAdmin,
+    @Default(false) bool autoValidateOwner,
   }) = _ValidationPolicy;
 
   /// Pre-quorum behavior for workspaces/types without a stored row:

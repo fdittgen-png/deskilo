@@ -160,6 +160,66 @@ void main() {
     expect(find.text('Validation rule saved.'), findsNothing);
   });
 
+  testWidgets('#629 — the auto-validation switches exist ONLY on the '
+      'booking-deletion card, and default OFF', (tester) async {
+    await pumpValidationSettings(tester);
+
+    // Every other card: no trace of the exception.
+    await tester.tap(find.text('Payment'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('auto-validate-owner')), findsNothing);
+    expect(find.byKey(const Key('auto-validate-admin')), findsNothing);
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Booking deletion'));
+    await tester.pumpAndSettle();
+    final owner = find.byKey(const Key('auto-validate-owner'));
+    final admin = find.byKey(const Key('auto-validate-admin'));
+    expect(tester.widget<SwitchListTile>(owner).value, isFalse);
+    expect(tester.widget<SwitchListTile>(admin).value, isFalse);
+  });
+
+  testWidgets('#629 — toggling both auto-validation switches persists '
+      'them on the reservation_delete row', (tester) async {
+    final events = await pumpValidationSettings(tester);
+
+    await tester.tap(find.text('Booking deletion'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('auto-validate-owner')));
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('auto-validate-admin')));
+    await tester.pump();
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    final stored = events.policies.single;
+    expect(stored.eventType, 'reservation_delete');
+    expect(stored.autoValidateOwner, isTrue);
+    expect(stored.autoValidateAdmin, isTrue);
+    // The quorum fields are untouched by the new switches.
+    expect(stored.requiredCount, 1);
+    expect(stored.adminsMayValidate, isTrue);
+    expect(find.text('Validation rule saved.'), findsOneWidget);
+
+    // Re-opening reflects what was stored, and turning one back off
+    // persists that too.
+    await tester.tap(find.text('Booking deletion'));
+    await tester.pumpAndSettle();
+    expect(
+      tester
+          .widget<SwitchListTile>(find.byKey(const Key('auto-validate-admin')))
+          .value,
+      isTrue,
+    );
+    await tester.tap(find.byKey(const Key('auto-validate-admin')));
+    await tester.pump();
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+    expect(events.policies.single.autoValidateAdmin, isFalse);
+    expect(events.policies.single.autoValidateOwner, isTrue);
+  });
+
   testWidgets('a per-type card shows "Customized" once its own row exists',
       (tester) async {
     await pumpValidationSettings(

@@ -185,5 +185,26 @@
   "memberNoteDeleted": "Message deleted.",
   "@memberNoteDeleted": {
     "description": "Snack after swipe-deleting a note (#467)"
+  },
+  "memberSimultaneousLimitLabel": "Simultaneous reservations",
+  "@memberSimultaneousLimitLabel": {
+    "description": "#628 - member sheet action and dialog title for the per-member overlap permission"
+  },
+  "memberSimultaneousLimitExplainer": "How many bookings this member may hold over the same period. Unset follows the workspace default.",
+  "@memberSimultaneousLimitExplainer": {
+    "description": "#628 - explainer inside the per-member simultaneous-reservations dialog"
+  },
+  "memberSimultaneousLimitDefault": "Workspace default",
+  "@memberSimultaneousLimitDefault": {
+    "description": "#628 - chip clearing the per-member override so the workspace default applies"
+  },
+  "memberSimultaneousLimitChip": "{n} at once",
+  "@memberSimultaneousLimitChip": {
+    "description": "#628 - subtitle chip on a member row with an explicit simultaneous allowance",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
   }
 }

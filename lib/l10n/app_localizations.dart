@@ -560,6 +560,18 @@ abstract class AppLocalizations {
   /// **'Charged'**
   String get policyOutsideHoursCharged;
 
+  /// #628 - title of the workspace-wide simultaneous-reservations stepper
+  ///
+  /// In en, this message translates to:
+  /// **'Simultaneous reservations per member'**
+  String get policySimultaneousTitle;
+
+  /// #628 - subtitle explaining the simultaneous-reservations stepper
+  ///
+  /// In en, this message translates to:
+  /// **'How many overlapping bookings one member may hold. 1 keeps one place at a time.'**
+  String get policySimultaneousDesc;
+
   /// No description provided for @myBadgeTitle.
   ///
   /// In en, this message translates to:
@@ -7280,6 +7292,30 @@ abstract class AppLocalizations {
   /// **'Message deleted.'**
   String get memberNoteDeleted;
 
+  /// #628 - member sheet action and dialog title for the per-member overlap permission
+  ///
+  /// In en, this message translates to:
+  /// **'Simultaneous reservations'**
+  String get memberSimultaneousLimitLabel;
+
+  /// #628 - explainer inside the per-member simultaneous-reservations dialog
+  ///
+  /// In en, this message translates to:
+  /// **'How many bookings this member may hold over the same period. Unset follows the workspace default.'**
+  String get memberSimultaneousLimitExplainer;
+
+  /// #628 - chip clearing the per-member override so the workspace default applies
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace default'**
+  String get memberSimultaneousLimitDefault;
+
+  /// #628 - subtitle chip on a member row with an explicit simultaneous allowance
+  ///
+  /// In en, this message translates to:
+  /// **'{n} at once'**
+  String memberSimultaneousLimitChip(int n);
+
   /// Reserve hub view segment: month availability calendar (#7)
   ///
   /// In en, this message translates to:
@@ -7705,6 +7741,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Validation rule saved.'**
   String get validationSaved;
+
+  /// #629 - switch letting an owner auto-validate their own booking deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Owners delete without validation'**
+  String get validationAutoValidateOwner;
+
+  /// #629 - switch letting an admin auto-validate their own booking deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Admins delete without validation'**
+  String get validationAutoValidateAdmin;
+
+  /// #629 - subtitle under the auto-validation switches
+  ///
+  /// In en, this message translates to:
+  /// **'Their own deletion request settles itself and stays marked as auto-validated.'**
+  String get validationAutoValidateDesc;
 
   /// VAT settings screen title
   ///

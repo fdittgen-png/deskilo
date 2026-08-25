@@ -34,5 +34,9 @@
   "eventsMessagesHeader": "Messages",
   "memberNoteTo": "À {name}",
   "memberNoteToAllAdmins": "À tous les admins",
-  "memberNoteDeleted": "Message supprimé."
+  "memberNoteDeleted": "Message supprimé.",
+  "memberSimultaneousLimitLabel": "Réservations simultanées",
+  "memberSimultaneousLimitExplainer": "Combien de réservations ce membre peut détenir sur une même période. Non défini : le réglage de l'espace s'applique.",
+  "memberSimultaneousLimitDefault": "Réglage de l'espace",
+  "memberSimultaneousLimitChip": "{n} à la fois"
 }

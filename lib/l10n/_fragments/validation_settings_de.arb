@@ -11,5 +11,8 @@
   "validationSpecificAdmins": "Bestimmte Admins",
   "validationOwnerRequired": "Inhaber muss immer validieren",
   "validationNotEnough": "Nicht genügend berechtigte Validierer.",
-  "validationSaved": "Validierungsregel gespeichert."
+  "validationSaved": "Validierungsregel gespeichert.",
+  "validationAutoValidateOwner": "Inhaber löschen ohne Validierung",
+  "validationAutoValidateAdmin": "Admins löschen ohne Validierung",
+  "validationAutoValidateDesc": "Ihr eigener Löschantrag erledigt sich selbst und bleibt als automatisch validiert markiert."
 }

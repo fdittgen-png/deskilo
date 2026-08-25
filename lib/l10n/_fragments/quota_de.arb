@@ -34,5 +34,9 @@
   "eventsMessagesHeader": "Nachrichten",
   "memberNoteTo": "An {name}",
   "memberNoteToAllAdmins": "An alle Admins",
-  "memberNoteDeleted": "Nachricht gelöscht."
+  "memberNoteDeleted": "Nachricht gelöscht.",
+  "memberSimultaneousLimitLabel": "Gleichzeitige Reservierungen",
+  "memberSimultaneousLimitExplainer": "Wie viele Buchungen dieses Mitglied im selben Zeitraum halten darf. Ohne Angabe gilt die Vorgabe des Arbeitsraums.",
+  "memberSimultaneousLimitDefault": "Vorgabe des Arbeitsraums",
+  "memberSimultaneousLimitChip": "{n} gleichzeitig"
 }

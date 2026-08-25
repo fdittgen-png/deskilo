@@ -33,13 +33,15 @@ enum OutsideHoursMode {
 /// (the historical behavior). The server enforces them in migration
 /// 0116 (`create_reservation` v10, `enforce_booking_rules` v6,
 /// `check_out_reservation` v2); this class is the client mirror.
-/// #624 adds the outside-hours mode (see [OutsideHoursMode]).
+/// #624 adds the outside-hours mode (see [OutsideHoursMode]) and #628
+/// the simultaneous-reservations allowance (migration 0119).
 class BookingPolicies {
   const BookingPolicies({
     this.allowPastBookings = false,
     this.gridWithinHours = false,
     this.adminCheckOut = false,
     this.outsideHoursMode = OutsideHoursMode.charged,
+    this.simultaneousReservations = defaultSimultaneous,
   });
 
   /// `allow_past_bookings` — ON lets a member record a booking that
@@ -58,12 +60,25 @@ class BookingPolicies {
   /// `outside_hours_mode` (#624) — the outside-only booking policy.
   final OutsideHoursMode outsideHoursMode;
 
+  /// `simultaneous_reservations` (#628) — how many overlapping active
+  /// bookings one member may hold. 1 is the historical "one place at a
+  /// time" (#412); a per-member permission may raise it further.
+  final int simultaneousReservations;
+
   static const allowPastBookingsKey = 'allow_past_bookings';
   static const gridWithinHoursKey = 'grid_within_hours';
   static const adminCheckOutKey = 'admin_check_out';
   static const outsideHoursModeKey = 'outside_hours_mode';
+  static const simultaneousReservationsKey = 'simultaneous_reservations';
 
-  /// Reads the three keys from a `booking_rules` map; the server treats
+  /// Absent/invalid reads as one place at a time — exactly what the
+  /// server's `member_simultaneous_allowance` falls back to.
+  static const defaultSimultaneous = 1;
+
+  /// The sanity ceiling the server pins in its 1..20 check constraint.
+  static const maxSimultaneous = 20;
+
+  /// Reads the policy keys from a `booking_rules` map; the server treats
   /// only jsonb `true` (rendered `'true'` by `->>`) as ON, so both the
   /// boolean and its string form count.
   factory BookingPolicies.fromRules(Map<String, dynamic>? rules) {
@@ -78,19 +93,48 @@ class BookingPolicies {
       adminCheckOut: on(adminCheckOutKey),
       outsideHoursMode:
           OutsideHoursMode.fromWire(rules?[outsideHoursModeKey]),
+      simultaneousReservations:
+          simultaneousFromWire(rules?[simultaneousReservationsKey]),
     );
   }
+
+  /// #628 — a jsonb number or its string form; anything else (absent,
+  /// text, zero, negative) falls back to [defaultSimultaneous], and
+  /// anything above [maxSimultaneous] is clamped, like the server.
+  static int simultaneousFromWire(Object? value) {
+    final n = switch (value) {
+      final int v => v,
+      final num v => v.floor(),
+      final String v => int.tryParse(v.trim()) ?? defaultSimultaneous,
+      _ => defaultSimultaneous,
+    };
+    if (n < defaultSimultaneous) return defaultSimultaneous;
+    return n > maxSimultaneous ? maxSimultaneous : n;
+  }
+
+  /// Mirror of the server's `member_simultaneous_allowance` (#628,
+  /// migration 0119): the member's explicit permission wins, else the
+  /// workspace default, else one place at a time. [memberOverride] is
+  /// `members.max_simultaneous_reservations` — null means "follow the
+  /// workspace".
+  static int allowanceFor(int? memberOverride, BookingPolicies policies) =>
+      memberOverride == null
+          ? policies.simultaneousReservations
+          : simultaneousFromWire(memberOverride);
 
   BookingPolicies copyWith({
     bool? allowPastBookings,
     bool? gridWithinHours,
     bool? adminCheckOut,
     OutsideHoursMode? outsideHoursMode,
+    int? simultaneousReservations,
   }) =>
       BookingPolicies(
         allowPastBookings: allowPastBookings ?? this.allowPastBookings,
         gridWithinHours: gridWithinHours ?? this.gridWithinHours,
         adminCheckOut: adminCheckOut ?? this.adminCheckOut,
         outsideHoursMode: outsideHoursMode ?? this.outsideHoursMode,
+        simultaneousReservations:
+            simultaneousReservations ?? this.simultaneousReservations,
       );
 }

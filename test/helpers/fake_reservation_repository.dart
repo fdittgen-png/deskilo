@@ -56,16 +56,24 @@ class FakeReservationRepository implements ReservationRepository {
   /// window enforcement below must agree with the seeded times).
   DateTime Function() now = () => kTestNow;
 
-  /// One place at a time (#412, 0079 trigger): a member with an ACTIVE
-  /// reservation overlapping the window cannot take another — pinned
-  /// substring, like the server.
+  /// Mirror of `member_simultaneous_allowance` (#628, migration 0119):
+  /// how many overlapping active reservations one member may hold. 1 is
+  /// the server's fallback and the historical one-place-at-a-time
+  /// (#412); tests raise it to exercise the configured allowance.
+  int simultaneousAllowance = BookingPolicies.defaultSimultaneous;
+
+  /// One place at a time (#412, `enforce_one_place` v2): a member whose
+  /// ACTIVE reservations already cover the window [simultaneousAllowance]
+  /// times over cannot take another — pinned substring, like the server.
   void _assertMemberFree(String memberId, DateTime start, DateTime end) {
-    final busy = reservations.any((r) =>
-        r.memberId == memberId &&
-        r.isActive &&
-        start.isBefore(r.endsAt) &&
-        r.startsAt.isBefore(end));
-    if (busy) {
+    final busy = reservations
+        .where((r) =>
+            r.memberId == memberId &&
+            r.isActive &&
+            start.isBefore(r.endsAt) &&
+            r.startsAt.isBefore(end))
+        .length;
+    if (busy >= simultaneousAllowance) {
       throw const PostgrestException(
           message: 'you already have a reservation in that period');
     }
@@ -344,8 +352,10 @@ class FakeReservationRepository implements ReservationRepository {
     if (!at.isBefore(r.endsAt)) {
       throw const PostgrestException(message: 'check-in window closed');
     }
-    // 0079 mirror: stale check-ins complete at their own end; a check-in
-    // still RUNNING elsewhere refuses.
+    // 0079/0119 mirror: stale check-ins complete at their own end;
+    // check-ins still RUNNING elsewhere refuse once they reach the
+    // configured allowance (#628 — at 1, the historical behavior).
+    var running = 0;
     for (final other in reservations
         .where((o) =>
             o.memberId == r.memberId &&
@@ -353,7 +363,12 @@ class FakeReservationRepository implements ReservationRepository {
             o.status == ReservationStatus.checkedIn)
         .toList()) {
       if (other.endsAt.isAfter(at)) {
-        throw const PostgrestException(message: 'already checked in elsewhere');
+        running++;
+        if (running >= simultaneousAllowance) {
+          throw const PostgrestException(
+              message: 'already checked in elsewhere');
+        }
+        continue;
       }
       _replace(other.copyWith(
           status: ReservationStatus.completed, checkedOutAt: other.endsAt));

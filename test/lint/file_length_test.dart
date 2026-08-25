@@ -68,7 +68,10 @@ const Map<String, int> _baseline = {
   // the dialog itself is its own file.
   // 950→990 (2026-08-05): #494 send-the-agreement action.
   // 990→1020 (2026-08-05): #496 the member-language agreement send.
-  'lib/features/workspace/presentation/screens/members_screen.dart': 1020,
+  // 1020→1120 (2026-08-25): #628 the per-member simultaneous-reservations
+  // permission — one sheet action, one preset dialog and one row chip,
+  // the 0044 reservation-limit shape next to it, same concern.
+  'lib/features/workspace/presentation/screens/members_screen.dart': 1130,
   // 900→920 (2026-08-03): #410 admin-visible email line on the member
   // row — the row shares its chip helpers with the detail sheet, so
   // extracting it would drag half the file; 15 feature lines instead.
@@ -193,12 +196,16 @@ const Map<String, int> _baseline = {
   // the same merge-preserving booking_rules write the granularity uses.
   // 870→890 (2026-08-25): #624 setOutsideHoursMode — the policy writes
   // now share ONE private _mergeBookingRule helper.
-  'lib/features/workspace/data/supabase_workspace_repository.dart': 890,
+  // 890→900 (2026-08-25): #628 setSimultaneousReservations (through the
+  // SAME _mergeBookingRule helper) + setMemberSimultaneousLimit.
+  'lib/features/workspace/data/supabase_workspace_repository.dart': 900,
   // 600→660 (2026-08-23): #600 the Booking policies section — three
   // switches + one write handler on the existing availability screen.
   // 660→730 (2026-08-25): #624 the outside-hours segmented control +
   // its write handler in the same section.
-  'lib/features/workspace/presentation/screens/availability_screen.dart': 730,
+  // 730→790 (2026-08-25): #628 the simultaneous-reservations stepper —
+  // one extracted tile widget + its write handler, same section.
+  'lib/features/workspace/presentation/screens/availability_screen.dart': 800,
   // 770→790 (2026-08-06): #513 setRolePermissions + role_permissions row.
   // 630→640 (2026-08-10): two-dot month markers (mine + others per day)
   // — a dozen lines of dot layout, no new concern worth a split.

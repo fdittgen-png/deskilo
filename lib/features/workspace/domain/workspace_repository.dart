@@ -171,6 +171,12 @@ abstract class WorkspaceRepository {
   /// cap. The server refuses self-setting.
   Future<void> setMemberReservationLimit(String memberId, int? limit);
 
+  /// Admin/owner (RPC `set_member_simultaneous_limit`, migration 0119):
+  /// how many OVERLAPPING bookings this member may hold (#628). Null
+  /// falls back to the workspace default. The server refuses
+  /// self-setting, exactly like [setMemberReservationLimit].
+  Future<void> setMemberSimultaneousLimit(String memberId, int? limit);
+
   /// Admin/owner (RPC `set_member_level_permission`, migration 0050):
   /// grant or revoke another member's right to reserve a whole level.
   /// The server refuses self-setting.
@@ -313,6 +319,11 @@ abstract class WorkspaceRepository {
     String workspaceId,
     OutsideHoursMode mode,
   );
+
+  /// Writes the #628 workspace default for simultaneous reservations
+  /// (`simultaneous_reservations`, an int key), preserving the other
+  /// booking_rules. 1 = the historical one-place-at-a-time.
+  Future<void> setSimultaneousReservations(String workspaceId, int value);
 
   /// Sends a member note (#456, RPC `send_member_note`): to one member,
   /// or — [toMemberId] null — to all admins incl. the owner (the server

@@ -112,6 +112,10 @@ class ValidationSettingsScreen extends ConsumerWidget {
       adminsMayValidate: base.adminsMayValidate,
       eligibleAdminIds: base.eligibleAdminIds,
       ownerRequired: base.ownerRequired,
+      // #629 — never inherited: the exception is per-row and only ever
+      // means anything on the reservation_delete row.
+      autoValidateAdmin: own?.autoValidateAdmin ?? false,
+      autoValidateOwner: own?.autoValidateOwner ?? false,
     );
     final admins = <_AdminChoice>[
       for (final m in members)
@@ -298,6 +302,15 @@ class _PolicyEditorSheetState extends State<_PolicyEditorSheet> {
   late bool _adminsMayValidate = widget.initial.adminsMayValidate;
   late bool _ownerRequired = widget.initial.ownerRequired;
 
+  /// #629 — only the reservation_delete row offers these.
+  late bool _autoValidateAdmin = widget.initial.autoValidateAdmin;
+  late bool _autoValidateOwner = widget.initial.autoValidateOwner;
+
+  /// The DELIBERATE exception to "nobody validates their own event"
+  /// (0086) is scoped to booking deletions; every other card hides it.
+  bool get _offersAutoValidation =>
+      widget.initial.eventType == EventType.reservationDelete.dbName;
+
   /// Empty = all admins. Stored ids of members no longer pickable are
   /// dropped so the pool math below never counts ghosts.
   late final Set<String> _selectedAdminIds = {
@@ -330,6 +343,8 @@ class _PolicyEditorSheetState extends State<_PolicyEditorSheet> {
         eligibleAdminIds:
             _adminsMayValidate ? (_selectedAdminIds.toList()..sort()) : const [],
         ownerRequired: _ownerRequired,
+        autoValidateAdmin: _offersAutoValidation && _autoValidateAdmin,
+        autoValidateOwner: _offersAutoValidation && _autoValidateOwner,
       ),
     );
   }
@@ -440,6 +455,36 @@ class _PolicyEditorSheetState extends State<_PolicyEditorSheet> {
                 onChanged: (value) =>
                     setState(() => _ownerRequired = value),
               ),
+              // #629 — booking deletions only, both OFF by default.
+              if (_offersAutoValidation) ...[
+                SwitchListTile(
+                  key: const Key('auto-validate-owner'),
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    l10n?.validationAutoValidateOwner ??
+                        'Owners delete without validation',
+                  ),
+                  subtitle: Text(
+                    l10n?.validationAutoValidateDesc ??
+                        'Their own deletion request settles itself and '
+                            'stays marked as auto-validated.',
+                  ),
+                  value: _autoValidateOwner,
+                  onChanged: (value) =>
+                      setState(() => _autoValidateOwner = value),
+                ),
+                SwitchListTile(
+                  key: const Key('auto-validate-admin'),
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    l10n?.validationAutoValidateAdmin ??
+                        'Admins delete without validation',
+                  ),
+                  value: _autoValidateAdmin,
+                  onChanged: (value) =>
+                      setState(() => _autoValidateAdmin = value),
+                ),
+              ],
               if (_notEnough)
                 Padding(
                   padding: const EdgeInsets.only(top: AppSpacing.xs),

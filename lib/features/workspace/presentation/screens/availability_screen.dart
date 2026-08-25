@@ -161,6 +161,32 @@ class AvailabilityScreen extends ConsumerWidget {
     ref.invalidate(bookingPoliciesProvider);
   }
 
+  /// #628 — the workspace default for simultaneous reservations, through
+  /// the same merge-preserving booking_rules write as the other policies.
+  Future<void> _setSimultaneous(
+    BuildContext context,
+    WidgetRef ref,
+    int value,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    try {
+      await ref
+          .read(workspaceRepositoryProvider)
+          .setSimultaneousReservations(workspace.id, value);
+    } catch (e, st) {
+      debugPrint('set simultaneous reservations failed: $e\n$st');
+      TraceLogger.instance.error(
+          'workspace', 'set simultaneous reservations failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      _showGenericError(context, l10n);
+      return;
+    }
+    ref.invalidate(bookingPoliciesProvider);
+  }
+
   Future<void> _pickWorkTime(
     BuildContext context,
     WidgetRef ref,
@@ -538,6 +564,11 @@ class AvailabilityScreen extends ConsumerWidget {
                         context, ref, selection.single),
                   ),
                 ),
+                // #628 — how many overlapping bookings a member may hold.
+                _SimultaneousTile(
+                  value: policies.simultaneousReservations,
+                  onChanged: (v) => _setSimultaneous(context, ref, v),
+                ),
               ],
               _SectionHeader(
                 l10n?.availabilityClosureDays ?? 'Closure days',
@@ -612,6 +643,54 @@ class _WorkTimeTile extends StatelessWidget {
 
 /// Whole-hour count picker (1-16) for the half/full-day billing
 /// equivalents under the hours granularity.
+/// #628 — the workspace default for simultaneous reservations, 1..20.
+/// 1 is the historical one-place-at-a-time (#412); a per-member
+/// permission on the Members screen may raise it for individuals.
+class _SimultaneousTile extends StatelessWidget {
+  const _SimultaneousTile({required this.value, required this.onChanged});
+
+  final int value;
+  final ValueChanged<int> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return ListTile(
+      key: const Key('policy-simultaneous'),
+      title: Text(l10n?.policySimultaneousTitle ??
+          'Simultaneous reservations per member'),
+      subtitle: Text(l10n?.policySimultaneousDesc ??
+          'How many overlapping bookings one member may hold. '
+              '1 keeps one place at a time.'),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            key: const Key('policy-simultaneous-minus'),
+            icon: const Icon(Icons.remove),
+            onPressed: value > BookingPolicies.defaultSimultaneous
+                ? () => onChanged(value - 1)
+                : null,
+          ),
+          Text(
+            NumberFormat.decimalPattern(
+                    Localizations.localeOf(context).toLanguageTag())
+                .format(value),
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          IconButton(
+            key: const Key('policy-simultaneous-plus'),
+            icon: const Icon(Icons.add),
+            onPressed: value < BookingPolicies.maxSimultaneous
+                ? () => onChanged(value + 1)
+                : null,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _HourCountTile extends StatelessWidget {
   const _HourCountTile({
     required this.keySuffix,

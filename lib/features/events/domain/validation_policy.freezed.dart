@@ -18,7 +18,13 @@ mixin _$ValidationPolicy {
  String? get id; String get workspaceId;/// events.type db value; null = workspace default for types without
 /// their own row.
  String? get eventType; int get requiredCount; bool get adminsMayValidate;/// Empty = every admin may validate (owners always may).
- List<String> get eligibleAdminIds; bool get ownerRequired;
+ List<String> get eligibleAdminIds; bool get ownerRequired;/// #629 (migration 0119) — the owner-configured exception to the
+/// 0086 "nobody validates their own event" rule, deliberately
+/// scoped to `reservation_delete` and OFF by default: an admin's
+/// (resp. the owner's) own deletion request settles itself, and the
+/// settled event carries `payload.auto_validated = true` so the
+/// feed and the audit can tell it from a peer review.
+ bool get autoValidateAdmin; bool get autoValidateOwner;
 /// Create a copy of ValidationPolicy
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +35,16 @@ $ValidationPolicyCopyWith<ValidationPolicy> get copyWith => _$ValidationPolicyCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ValidationPolicy&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.eventType, eventType) || other.eventType == eventType)&&(identical(other.requiredCount, requiredCount) || other.requiredCount == requiredCount)&&(identical(other.adminsMayValidate, adminsMayValidate) || other.adminsMayValidate == adminsMayValidate)&&const DeepCollectionEquality().equals(other.eligibleAdminIds, eligibleAdminIds)&&(identical(other.ownerRequired, ownerRequired) || other.ownerRequired == ownerRequired));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ValidationPolicy&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.eventType, eventType) || other.eventType == eventType)&&(identical(other.requiredCount, requiredCount) || other.requiredCount == requiredCount)&&(identical(other.adminsMayValidate, adminsMayValidate) || other.adminsMayValidate == adminsMayValidate)&&const DeepCollectionEquality().equals(other.eligibleAdminIds, eligibleAdminIds)&&(identical(other.ownerRequired, ownerRequired) || other.ownerRequired == ownerRequired)&&(identical(other.autoValidateAdmin, autoValidateAdmin) || other.autoValidateAdmin == autoValidateAdmin)&&(identical(other.autoValidateOwner, autoValidateOwner) || other.autoValidateOwner == autoValidateOwner));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,eventType,requiredCount,adminsMayValidate,const DeepCollectionEquality().hash(eligibleAdminIds),ownerRequired);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,eventType,requiredCount,adminsMayValidate,const DeepCollectionEquality().hash(eligibleAdminIds),ownerRequired,autoValidateAdmin,autoValidateOwner);
 
 @override
 String toString() {
-  return 'ValidationPolicy(id: $id, workspaceId: $workspaceId, eventType: $eventType, requiredCount: $requiredCount, adminsMayValidate: $adminsMayValidate, eligibleAdminIds: $eligibleAdminIds, ownerRequired: $ownerRequired)';
+  return 'ValidationPolicy(id: $id, workspaceId: $workspaceId, eventType: $eventType, requiredCount: $requiredCount, adminsMayValidate: $adminsMayValidate, eligibleAdminIds: $eligibleAdminIds, ownerRequired: $ownerRequired, autoValidateAdmin: $autoValidateAdmin, autoValidateOwner: $autoValidateOwner)';
 }
 
 
@@ -49,7 +55,7 @@ abstract mixin class $ValidationPolicyCopyWith<$Res>  {
   factory $ValidationPolicyCopyWith(ValidationPolicy value, $Res Function(ValidationPolicy) _then) = _$ValidationPolicyCopyWithImpl;
 @useResult
 $Res call({
- String? id, String workspaceId, String? eventType, int requiredCount, bool adminsMayValidate, List<String> eligibleAdminIds, bool ownerRequired
+ String? id, String workspaceId, String? eventType, int requiredCount, bool adminsMayValidate, List<String> eligibleAdminIds, bool ownerRequired, bool autoValidateAdmin, bool autoValidateOwner
 });
 
 
@@ -66,7 +72,7 @@ class _$ValidationPolicyCopyWithImpl<$Res>
 
 /// Create a copy of ValidationPolicy
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? workspaceId = null,Object? eventType = freezed,Object? requiredCount = null,Object? adminsMayValidate = null,Object? eligibleAdminIds = null,Object? ownerRequired = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? workspaceId = null,Object? eventType = freezed,Object? requiredCount = null,Object? adminsMayValidate = null,Object? eligibleAdminIds = null,Object? ownerRequired = null,Object? autoValidateAdmin = null,Object? autoValidateOwner = null,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -75,6 +81,8 @@ as String?,requiredCount: null == requiredCount ? _self.requiredCount : required
 as int,adminsMayValidate: null == adminsMayValidate ? _self.adminsMayValidate : adminsMayValidate // ignore: cast_nullable_to_non_nullable
 as bool,eligibleAdminIds: null == eligibleAdminIds ? _self.eligibleAdminIds : eligibleAdminIds // ignore: cast_nullable_to_non_nullable
 as List<String>,ownerRequired: null == ownerRequired ? _self.ownerRequired : ownerRequired // ignore: cast_nullable_to_non_nullable
+as bool,autoValidateAdmin: null == autoValidateAdmin ? _self.autoValidateAdmin : autoValidateAdmin // ignore: cast_nullable_to_non_nullable
+as bool,autoValidateOwner: null == autoValidateOwner ? _self.autoValidateOwner : autoValidateOwner // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -157,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  String workspaceId,  String? eventType,  int requiredCount,  bool adminsMayValidate,  List<String> eligibleAdminIds,  bool ownerRequired)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  String workspaceId,  String? eventType,  int requiredCount,  bool adminsMayValidate,  List<String> eligibleAdminIds,  bool ownerRequired,  bool autoValidateAdmin,  bool autoValidateOwner)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ValidationPolicy() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_that.adminsMayValidate,_that.eligibleAdminIds,_that.ownerRequired);case _:
+return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_that.adminsMayValidate,_that.eligibleAdminIds,_that.ownerRequired,_that.autoValidateAdmin,_that.autoValidateOwner);case _:
   return orElse();
 
 }
@@ -178,10 +186,10 @@ return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  String workspaceId,  String? eventType,  int requiredCount,  bool adminsMayValidate,  List<String> eligibleAdminIds,  bool ownerRequired)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  String workspaceId,  String? eventType,  int requiredCount,  bool adminsMayValidate,  List<String> eligibleAdminIds,  bool ownerRequired,  bool autoValidateAdmin,  bool autoValidateOwner)  $default,) {final _that = this;
 switch (_that) {
 case _ValidationPolicy():
-return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_that.adminsMayValidate,_that.eligibleAdminIds,_that.ownerRequired);}
+return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_that.adminsMayValidate,_that.eligibleAdminIds,_that.ownerRequired,_that.autoValidateAdmin,_that.autoValidateOwner);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -195,10 +203,10 @@ return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  String workspaceId,  String? eventType,  int requiredCount,  bool adminsMayValidate,  List<String> eligibleAdminIds,  bool ownerRequired)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  String workspaceId,  String? eventType,  int requiredCount,  bool adminsMayValidate,  List<String> eligibleAdminIds,  bool ownerRequired,  bool autoValidateAdmin,  bool autoValidateOwner)?  $default,) {final _that = this;
 switch (_that) {
 case _ValidationPolicy() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_that.adminsMayValidate,_that.eligibleAdminIds,_that.ownerRequired);case _:
+return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_that.adminsMayValidate,_that.eligibleAdminIds,_that.ownerRequired,_that.autoValidateAdmin,_that.autoValidateOwner);case _:
   return null;
 
 }
@@ -210,7 +218,7 @@ return $default(_that.id,_that.workspaceId,_that.eventType,_that.requiredCount,_
 
 
 class _ValidationPolicy extends ValidationPolicy {
-  const _ValidationPolicy({this.id, required this.workspaceId, this.eventType, required this.requiredCount, required this.adminsMayValidate, required final  List<String> eligibleAdminIds, required this.ownerRequired}): _eligibleAdminIds = eligibleAdminIds,super._();
+  const _ValidationPolicy({this.id, required this.workspaceId, this.eventType, required this.requiredCount, required this.adminsMayValidate, required final  List<String> eligibleAdminIds, required this.ownerRequired, this.autoValidateAdmin = false, this.autoValidateOwner = false}): _eligibleAdminIds = eligibleAdminIds,super._();
   
 
 /// Null until persisted (defaults are never stored).
@@ -231,6 +239,14 @@ class _ValidationPolicy extends ValidationPolicy {
 }
 
 @override final  bool ownerRequired;
+/// #629 (migration 0119) — the owner-configured exception to the
+/// 0086 "nobody validates their own event" rule, deliberately
+/// scoped to `reservation_delete` and OFF by default: an admin's
+/// (resp. the owner's) own deletion request settles itself, and the
+/// settled event carries `payload.auto_validated = true` so the
+/// feed and the audit can tell it from a peer review.
+@override@JsonKey() final  bool autoValidateAdmin;
+@override@JsonKey() final  bool autoValidateOwner;
 
 /// Create a copy of ValidationPolicy
 /// with the given fields replaced by the non-null parameter values.
@@ -242,16 +258,16 @@ _$ValidationPolicyCopyWith<_ValidationPolicy> get copyWith => __$ValidationPolic
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ValidationPolicy&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.eventType, eventType) || other.eventType == eventType)&&(identical(other.requiredCount, requiredCount) || other.requiredCount == requiredCount)&&(identical(other.adminsMayValidate, adminsMayValidate) || other.adminsMayValidate == adminsMayValidate)&&const DeepCollectionEquality().equals(other._eligibleAdminIds, _eligibleAdminIds)&&(identical(other.ownerRequired, ownerRequired) || other.ownerRequired == ownerRequired));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ValidationPolicy&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.eventType, eventType) || other.eventType == eventType)&&(identical(other.requiredCount, requiredCount) || other.requiredCount == requiredCount)&&(identical(other.adminsMayValidate, adminsMayValidate) || other.adminsMayValidate == adminsMayValidate)&&const DeepCollectionEquality().equals(other._eligibleAdminIds, _eligibleAdminIds)&&(identical(other.ownerRequired, ownerRequired) || other.ownerRequired == ownerRequired)&&(identical(other.autoValidateAdmin, autoValidateAdmin) || other.autoValidateAdmin == autoValidateAdmin)&&(identical(other.autoValidateOwner, autoValidateOwner) || other.autoValidateOwner == autoValidateOwner));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,eventType,requiredCount,adminsMayValidate,const DeepCollectionEquality().hash(_eligibleAdminIds),ownerRequired);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,eventType,requiredCount,adminsMayValidate,const DeepCollectionEquality().hash(_eligibleAdminIds),ownerRequired,autoValidateAdmin,autoValidateOwner);
 
 @override
 String toString() {
-  return 'ValidationPolicy(id: $id, workspaceId: $workspaceId, eventType: $eventType, requiredCount: $requiredCount, adminsMayValidate: $adminsMayValidate, eligibleAdminIds: $eligibleAdminIds, ownerRequired: $ownerRequired)';
+  return 'ValidationPolicy(id: $id, workspaceId: $workspaceId, eventType: $eventType, requiredCount: $requiredCount, adminsMayValidate: $adminsMayValidate, eligibleAdminIds: $eligibleAdminIds, ownerRequired: $ownerRequired, autoValidateAdmin: $autoValidateAdmin, autoValidateOwner: $autoValidateOwner)';
 }
 
 
@@ -262,7 +278,7 @@ abstract mixin class _$ValidationPolicyCopyWith<$Res> implements $ValidationPoli
   factory _$ValidationPolicyCopyWith(_ValidationPolicy value, $Res Function(_ValidationPolicy) _then) = __$ValidationPolicyCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, String workspaceId, String? eventType, int requiredCount, bool adminsMayValidate, List<String> eligibleAdminIds, bool ownerRequired
+ String? id, String workspaceId, String? eventType, int requiredCount, bool adminsMayValidate, List<String> eligibleAdminIds, bool ownerRequired, bool autoValidateAdmin, bool autoValidateOwner
 });
 
 
@@ -279,7 +295,7 @@ class __$ValidationPolicyCopyWithImpl<$Res>
 
 /// Create a copy of ValidationPolicy
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? workspaceId = null,Object? eventType = freezed,Object? requiredCount = null,Object? adminsMayValidate = null,Object? eligibleAdminIds = null,Object? ownerRequired = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? workspaceId = null,Object? eventType = freezed,Object? requiredCount = null,Object? adminsMayValidate = null,Object? eligibleAdminIds = null,Object? ownerRequired = null,Object? autoValidateAdmin = null,Object? autoValidateOwner = null,}) {
   return _then(_ValidationPolicy(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -288,6 +304,8 @@ as String?,requiredCount: null == requiredCount ? _self.requiredCount : required
 as int,adminsMayValidate: null == adminsMayValidate ? _self.adminsMayValidate : adminsMayValidate // ignore: cast_nullable_to_non_nullable
 as bool,eligibleAdminIds: null == eligibleAdminIds ? _self._eligibleAdminIds : eligibleAdminIds // ignore: cast_nullable_to_non_nullable
 as List<String>,ownerRequired: null == ownerRequired ? _self.ownerRequired : ownerRequired // ignore: cast_nullable_to_non_nullable
+as bool,autoValidateAdmin: null == autoValidateAdmin ? _self.autoValidateAdmin : autoValidateAdmin // ignore: cast_nullable_to_non_nullable
+as bool,autoValidateOwner: null == autoValidateOwner ? _self.autoValidateOwner : autoValidateOwner // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

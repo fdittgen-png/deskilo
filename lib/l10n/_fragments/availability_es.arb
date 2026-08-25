@@ -39,5 +39,7 @@
   "policyOutsideHoursDesc": "Prohibido las rechaza; Gratis nunca las cuenta; De pago las cuenta, salvo que el miembro ya tenga una reserva normal ese día.",
   "policyOutsideHoursOff": "Prohibido",
   "policyOutsideHoursFree": "Gratis",
-  "policyOutsideHoursCharged": "De pago"
+  "policyOutsideHoursCharged": "De pago",
+  "policySimultaneousTitle": "Reservas simultáneas por miembro",
+  "policySimultaneousDesc": "Cuántas reservas superpuestas puede tener un miembro. 1 mantiene un solo sitio a la vez."
 }

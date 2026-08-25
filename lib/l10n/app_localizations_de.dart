@@ -258,6 +258,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get policyOutsideHoursCharged => 'Berechnet';
 
   @override
+  String get policySimultaneousTitle =>
+      'Gleichzeitige Reservierungen pro Mitglied';
+
+  @override
+  String get policySimultaneousDesc =>
+      'Wie viele sich überschneidende Buchungen ein Mitglied halten darf. 1 bedeutet ein Platz zur selben Zeit.';
+
+  @override
   String get myBadgeTitle => 'Mein Badge';
 
   @override
@@ -4080,6 +4088,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberNoteDeleted => 'Nachricht gelöscht.';
 
   @override
+  String get memberSimultaneousLimitLabel => 'Gleichzeitige Reservierungen';
+
+  @override
+  String get memberSimultaneousLimitExplainer =>
+      'Wie viele Buchungen dieses Mitglied im selben Zeitraum halten darf. Ohne Angabe gilt die Vorgabe des Arbeitsraums.';
+
+  @override
+  String get memberSimultaneousLimitDefault => 'Vorgabe des Arbeitsraums';
+
+  @override
+  String memberSimultaneousLimitChip(int n) {
+    return '$n gleichzeitig';
+  }
+
+  @override
   String get reserveMonthView => 'Monat';
 
   @override
@@ -4311,6 +4334,16 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get validationSaved => 'Validierungsregel gespeichert.';
+
+  @override
+  String get validationAutoValidateOwner => 'Inhaber löschen ohne Validierung';
+
+  @override
+  String get validationAutoValidateAdmin => 'Admins löschen ohne Validierung';
+
+  @override
+  String get validationAutoValidateDesc =>
+      'Ihr eigener Löschantrag erledigt sich selbst und bleibt als automatisch validiert markiert.';
 
   @override
   String get vatTitle => 'Mehrwertsteuer';

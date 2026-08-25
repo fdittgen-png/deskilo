@@ -396,6 +396,14 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   @override
+  Future<void> setMemberSimultaneousLimit(String memberId, int? limit) async {
+    await _client.rpc<dynamic>('set_member_simultaneous_limit', params: {
+      'p_member_id': memberId,
+      'p_limit': limit,
+    });
+  }
+
+  @override
   Future<void> setMemberLevelPermission(
     String memberId, {
     required bool allowed,
@@ -694,6 +702,11 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
           workspaceId, BookingPolicies.outsideHoursModeKey, mode.wire);
 
   @override
+  Future<void> setSimultaneousReservations(String workspaceId, int value) =>
+      _mergeBookingRule(workspaceId,
+          BookingPolicies.simultaneousReservationsKey, value);
+
+  @override
   Future<void> setWorkHours(String workspaceId, WorkHours hours) async {
     // Same merge-preserving jsonb write as setBookingGranularity.
     final row = await _client
@@ -872,6 +885,8 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
             OveragePolicy.fromName(row['overage_policy'] as String?),
         isKiosk: row['is_kiosk'] as bool? ?? false,
         maxActiveReservations: row['max_active_reservations'] as int?,
+        maxSimultaneousReservations:
+            row['max_simultaneous_reservations'] as int?,
         canReserveLevel: row['can_reserve_level'] as bool? ?? false,
       );
 }

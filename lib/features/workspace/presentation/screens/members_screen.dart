@@ -14,6 +14,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../domain/booking_policies.dart';
 import '../../domain/member.dart';
 import '../../domain/overage_policy.dart';
 import '../../domain/workspace_feature.dart';
@@ -332,6 +333,16 @@ class MembersScreen extends ConsumerWidget {
           icon: Icons.stacked_bar_chart_outlined,
           label: l10n?.memberReservationLimitLabel ?? 'Reservation limit',
           onTap: () => _pickReservationLimit(context, ref, member),
+        ),
+      // #628 — the explicit permission to hold OVERLAPPING bookings;
+      // same authorization as the cap above, never for themselves.
+      if (!isSelf && !member.isKiosk && active)
+        _sheetAction(
+          context,
+          icon: Icons.splitscreen_outlined,
+          label: l10n?.memberSimultaneousLimitLabel ??
+              'Simultaneous reservations',
+          onTap: () => _pickSimultaneousLimit(context, ref, member),
         ),
       // Whole-level reservations (0050): grant/revoke — owner or admin,
       // never self (the reservation-limit rule), feature-gated.
@@ -710,6 +721,86 @@ class MembersScreen extends ConsumerWidget {
     ref.invalidate(workspaceMembersProvider);
   }
 
+  /// #628 (migration 0119) — how many OVERLAPPING bookings [member] may
+  /// hold. Presets plus a workspace-default reset; the server refuses
+  /// self-setting exactly like the 0044 cap above.
+  Future<void> _pickSimultaneousLimit(
+    BuildContext context,
+    WidgetRef ref,
+    Member member,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    const presets = [1, 2, 3, 5];
+    const defaultSentinel = -1;
+    final chosen = await showDialog<int>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          l10n?.memberSimultaneousLimitLabel ?? 'Simultaneous reservations',
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              l10n?.memberSimultaneousLimitExplainer ??
+                  'How many bookings this member may hold over the same '
+                      'period. Unset follows the workspace default.',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              children: [
+                ChoiceChip(
+                  key: const Key('simultaneous-default'),
+                  label: Text(
+                    l10n?.memberSimultaneousLimitDefault ??
+                        'Workspace default',
+                  ),
+                  selected: member.maxSimultaneousReservations == null,
+                  onSelected: (_) =>
+                      Navigator.of(context).pop(defaultSentinel),
+                ),
+                for (final preset in presets)
+                  ChoiceChip(
+                    key: Key('simultaneous-$preset'),
+                    label: Text(preset.toString()),
+                    selected: member.maxSimultaneousReservations == preset,
+                    onSelected: (_) => Navigator.of(context).pop(preset),
+                  ),
+              ],
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(l10n?.commonCancel ?? 'Cancel'),
+          ),
+        ],
+      ),
+    );
+    if (chosen == null || !context.mounted) return;
+    final limit = chosen == defaultSentinel ? null : chosen;
+    if (limit == member.maxSimultaneousReservations) return;
+
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'simultaneous limit update failed',
+      errorText: l10n?.workspaceGenericError ??
+          'Something went wrong. Please try again.',
+      action: () => ref
+          .read(workspaceRepositoryProvider)
+          .setMemberSimultaneousLimit(member.id, limit),
+    )) {
+      return;
+    }
+    ref.invalidate(workspaceMembersProvider);
+  }
+
   /// Flags [member] as a wall-mounted kiosk device — or reverts it
   /// (0043, owner-only server-side). Kiosks lock to the plan view and act
   /// only through member badges.
@@ -874,6 +965,9 @@ class MembersScreen extends ConsumerWidget {
     final isOwner = me?.actsAsOwner ?? false;
     // Consumption entry points follow the services feature (#146).
     final features = ref.watch(enabledFeaturesSyncProvider);
+    // #628 — the workspace default the per-member permission overrides.
+    final policies =
+        ref.watch(bookingPoliciesProvider).value ?? const BookingPolicies();
     final servicesOn = features.contains(WorkspaceFeature.services);
     final kioskOn = features.contains(WorkspaceFeature.kioskMode);
     final coOwnerOn = features.contains(WorkspaceFeature.coOwner);
@@ -954,6 +1048,21 @@ class MembersScreen extends ConsumerWidget {
                                 member.maxActiveReservations!,
                               ) ??
                               'max ${member.maxActiveReservations}',
+                        ),
+                      // #628 — the EFFECTIVE overlap allowance (member
+                      // permission, else the workspace default); 1 is
+                      // one place at a time and needs no chip.
+                      if (BookingPolicies.allowanceFor(
+                              member.maxSimultaneousReservations,
+                              policies) >
+                          BookingPolicies.defaultSimultaneous)
+                        Text(
+                          l10n?.memberSimultaneousLimitChip(
+                                BookingPolicies.allowanceFor(
+                                    member.maxSimultaneousReservations,
+                                    policies),
+                              ) ??
+                              '${member.maxSimultaneousReservations} at once',
                         ),
                       if (member.isOwner)
                         Text(l10n?.memberRoleOwner ?? 'Owner'),

@@ -11,5 +11,8 @@
   "validationSpecificAdmins": "Admins específicos",
   "validationOwnerRequired": "El propietario siempre debe validar",
   "validationNotEnough": "No hay suficientes validadores elegibles.",
-  "validationSaved": "Regla de validación guardada."
+  "validationSaved": "Regla de validación guardada.",
+  "validationAutoValidateOwner": "Los propietarios eliminan sin validación",
+  "validationAutoValidateAdmin": "Los admins eliminan sin validación",
+  "validationAutoValidateDesc": "Su propia solicitud de eliminación se resuelve sola y queda marcada como autovalidada."
 }
