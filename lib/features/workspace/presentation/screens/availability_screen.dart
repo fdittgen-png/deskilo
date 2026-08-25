@@ -138,6 +138,29 @@ class AvailabilityScreen extends ConsumerWidget {
     ref.invalidate(bookingPoliciesProvider);
   }
 
+  Future<void> _setOutsideHoursMode(
+    BuildContext context,
+    WidgetRef ref,
+    OutsideHoursMode mode,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    try {
+      await ref
+          .read(workspaceRepositoryProvider)
+          .setOutsideHoursMode(workspace.id, mode);
+    } catch (e, st) {
+      debugPrint('set outside-hours mode failed: $e\n$st');
+      TraceLogger.instance.error('workspace', 'set outside-hours mode failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      _showGenericError(context, l10n);
+      return;
+    }
+    ref.invalidate(bookingPoliciesProvider);
+  }
+
   Future<void> _pickWorkTime(
     BuildContext context,
     WidgetRef ref,
@@ -474,6 +497,46 @@ class AvailabilityScreen extends ConsumerWidget {
                   value: policies.adminCheckOut,
                   onChanged: (v) => _setPolicy(context, ref,
                       BookingPolicies.adminCheckOutKey, v),
+                ),
+                // #624 — the outside-opening-hours mode.
+                ListTile(
+                  title: Text(l10n?.policyOutsideHoursTitle ??
+                      'Outside the opening hours'),
+                  subtitle: Text(l10n?.policyOutsideHoursDesc ??
+                      'Charged bookings ride free next to a regular '
+                          'same-day booking.'),
+                ),
+                Padding(
+                  padding: AppSpacing.lgH,
+                  child: SegmentedButton<OutsideHoursMode>(
+                    key: const Key('policy-outside-hours'),
+                    segments: [
+                      ButtonSegment(
+                        value: OutsideHoursMode.off,
+                        label: Text(
+                          l10n?.policyOutsideHoursOff ?? 'Off',
+                          key: const Key('policy-outside-hours-off'),
+                        ),
+                      ),
+                      ButtonSegment(
+                        value: OutsideHoursMode.free,
+                        label: Text(
+                          l10n?.policyOutsideHoursFree ?? 'Free',
+                          key: const Key('policy-outside-hours-free'),
+                        ),
+                      ),
+                      ButtonSegment(
+                        value: OutsideHoursMode.charged,
+                        label: Text(
+                          l10n?.policyOutsideHoursCharged ?? 'Charged',
+                          key: const Key('policy-outside-hours-charged'),
+                        ),
+                      ),
+                    ],
+                    selected: {policies.outsideHoursMode},
+                    onSelectionChanged: (selection) => _setOutsideHoursMode(
+                        context, ref, selection.single),
+                  ),
                 ),
               ],
               _SectionHeader(

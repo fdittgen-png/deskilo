@@ -242,6 +242,22 @@ class AppLocalizationsEs extends AppLocalizations {
       'Un administrador puede finalizar el check-in en curso de un miembro.';
 
   @override
+  String get policyOutsideHoursTitle => 'Fuera del horario de apertura';
+
+  @override
+  String get policyOutsideHoursDesc =>
+      'Prohibido las rechaza; Gratis nunca las cuenta; De pago las cuenta, salvo que el miembro ya tenga una reserva normal ese día.';
+
+  @override
+  String get policyOutsideHoursOff => 'Prohibido';
+
+  @override
+  String get policyOutsideHoursFree => 'Gratis';
+
+  @override
+  String get policyOutsideHoursCharged => 'De pago';
+
+  @override
   String get myBadgeTitle => 'Mi credencial';
 
   @override
@@ -3181,6 +3197,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get bookingOutsideHoursError =>
       'Las reservas deben permanecer dentro del horario laboral.';
+
+  @override
+  String get bookingOutsideOffError =>
+      'Las reservas fuera del horario de apertura no están permitidas.';
 
   @override
   String get membersTitle => 'Miembros y planes';

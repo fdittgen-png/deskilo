@@ -60,6 +60,11 @@ String bookingErrorText(
     return l10n?.bookingOutsideHoursError ??
         'Bookings must stay within the working hours.';
   }
+  // #624 outside-hours mode 'off' (migration 0118, pinned substring).
+  if (message.contains('outside the opening hours')) {
+    return l10n?.bookingOutsideOffError ??
+        'Bookings outside the opening hours are not allowed.';
+  }
   // Presence rule (#408, migration 0077): check-in only inside
   // [starts − 15 min, end).
   if (message.contains('check-in window not open yet')) {

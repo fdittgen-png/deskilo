@@ -26,5 +26,6 @@
   "editorLevelBookableOff": "Non prenotabile per intero",
   "bookingPastError": "Questa prenotazione è interamente nel passato.",
   "bookingWalkUpTodayError": "Un check-in spontaneo deve iniziare oggi.",
-  "bookingOutsideHoursError": "Le prenotazioni devono restare negli orari di lavoro."
+  "bookingOutsideHoursError": "Le prenotazioni devono restare negli orari di lavoro.",
+  "bookingOutsideOffError": "Le prenotazioni fuori dagli orari di apertura non sono consentite."
 }

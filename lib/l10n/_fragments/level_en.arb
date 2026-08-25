@@ -56,5 +56,6 @@
   },
   "bookingPastError": "This booking lies entirely in the past.",
   "bookingWalkUpTodayError": "A walk-up check-in must start today.",
-  "bookingOutsideHoursError": "Bookings must stay within the working hours."
+  "bookingOutsideHoursError": "Bookings must stay within the working hours.",
+  "bookingOutsideOffError": "Bookings outside the opening hours are not allowed."
 }

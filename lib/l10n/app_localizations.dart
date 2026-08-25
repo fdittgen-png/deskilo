@@ -530,6 +530,36 @@ abstract class AppLocalizations {
   /// **'An admin can end a member\'s running check-in.'**
   String get policyAdminCheckoutDesc;
 
+  /// No description provided for @policyOutsideHoursTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Outside the opening hours'**
+  String get policyOutsideHoursTitle;
+
+  /// No description provided for @policyOutsideHoursDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Off refuses such bookings; Free never counts them; Charged counts them unless the member already has a regular booking that day.'**
+  String get policyOutsideHoursDesc;
+
+  /// No description provided for @policyOutsideHoursOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get policyOutsideHoursOff;
+
+  /// No description provided for @policyOutsideHoursFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get policyOutsideHoursFree;
+
+  /// No description provided for @policyOutsideHoursCharged.
+  ///
+  /// In en, this message translates to:
+  /// **'Charged'**
+  String get policyOutsideHoursCharged;
+
   /// No description provided for @myBadgeTitle.
   ///
   /// In en, this message translates to:
@@ -5689,6 +5719,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Bookings must stay within the working hours.'**
   String get bookingOutsideHoursError;
+
+  /// No description provided for @bookingOutsideOffError.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings outside the opening hours are not allowed.'**
+  String get bookingOutsideOffError;
 
   /// Title of the owner-only member management screen + its settings entry
   ///

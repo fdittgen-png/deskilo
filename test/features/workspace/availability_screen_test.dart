@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
+import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,8 +17,9 @@ Future<FakeWorkspaceRepository> pumpAvailability(
 }) async {
   workspace ??= FakeWorkspaceRepository.withWorkspace();
   // The 0032 granularity radios outgrew the 800×600 default surface;
-  // a taller one keeps the closure-day section hit-testable.
-  await tester.binding.setSurfaceSize(const Size(800, 2400));
+  // a taller one keeps the closure-day section hit-testable (#624 grew
+  // the policies section by the outside-hours control).
+  await tester.binding.setSurfaceSize(const Size(800, 2700));
   addTearDown(() => tester.binding.setSurfaceSize(null));
   await tester.pumpWidget(
     ProviderScope(
@@ -297,5 +299,44 @@ void main() {
     await pumpAvailability(tester, workspace: workspace);
     expect(find.byKey(const Key('policy-allow-past')), findsNothing);
     expect(find.byKey(const Key('policy-grid-hours')), findsNothing);
+    // #624: the outside-hours control lives in the same section.
+    expect(find.byKey(const Key('policy-outside-hours')), findsNothing);
+  });
+
+  testWidgets('#624 — the outside-hours control renders with Charged '
+      'preselected and switching writes the booking_rules key',
+      (tester) async {
+    final workspace = await pumpAvailability(tester);
+
+    final control = find.byKey(const Key('policy-outside-hours'));
+    await tester.ensureVisible(control);
+    expect(
+      tester
+          .widget<SegmentedButton<OutsideHoursMode>>(control)
+          .selected,
+      {OutsideHoursMode.charged},
+      reason: 'absent booking_rules key reads as charged',
+    );
+
+    await tester.tap(find.byKey(const Key('policy-outside-hours-off')));
+    await tester.pumpAndSettle();
+    expect(
+      workspace.bookingPolicies['ws-1']?.outsideHoursMode,
+      OutsideHoursMode.off,
+      reason: 'the segment writes outside_hours_mode',
+    );
+    expect(
+      tester
+          .widget<SegmentedButton<OutsideHoursMode>>(control)
+          .selected,
+      {OutsideHoursMode.off},
+    );
+
+    await tester.tap(find.byKey(const Key('policy-outside-hours-free')));
+    await tester.pumpAndSettle();
+    expect(
+      workspace.bookingPolicies['ws-1']?.outsideHoursMode,
+      OutsideHoursMode.free,
+    );
   });
 }
