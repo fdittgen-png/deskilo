@@ -189,6 +189,30 @@ gh workflow run web.yml -f deploy=true      # …and publish to GitHub Pages
   off (`kIsWeb`), and an export downloads through the browser instead of
   landing in a Downloads folder (`file_saver_web.dart`).
 
+## Ship the testers a build — both platforms, one command (#626)
+
+The testers are enrolled in TWO places: the Play **closed alpha** track
+(the test whose 12-tester / 14-day countdown gates production access) and
+the **external** TestFlight group behind the public link. The beta train
+targets exactly those, from ONE commit, so Android and iOS testers always
+hold the same version:
+
+```bash
+gh workflow run release-train.yml -f track=beta \
+  -f release_notes="What changed in this build."
+```
+
+Same notes reach both stores; empty notes fall back to the per-version
+changelog files (Play) and 'Beta build.' (TestFlight). The train also
+builds the macOS DMG and Windows MSI and checks the web build; a leg that
+fails never stops the others, and the report job files an issue naming
+what broke. Per-platform build NUMBERS differ by design (each store gets
+its own wall-clock-monotonic counter) — the version name and the commit
+are what testers share.
+
+`-f track=production` is the same train pointed at Play production + the
+public TestFlight group + the Pages deploy.
+
 ## Release checklist (every release)
 
 1. `git tag vX.Y.Z` on master with a green CI run.

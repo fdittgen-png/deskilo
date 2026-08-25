@@ -20,10 +20,16 @@ name: Release Train
 #     NOTIFY_EMAIL_TO). Without them the e-mail step is skipped with a
 #     loud summary note — never a failure of the report itself.
 #
-# Track mapping (what "beta" and "production" mean per platform):
-#   android  beta → Play 'beta' track      production → Play 'production'
-#   apple    beta → TestFlight internal    production → TestFlight external
-#                                            group (the public link)
+# Track mapping (what "beta" and "production" mean per platform).
+# #626 — the BETA train is the TESTER train: it must land exactly where
+# the enrolled testers are, or "test the same build on both" is a lie.
+# On Android that is the CLOSED alpha track (the one whose 12-tester /
+# 14-day countdown gates production access), not the open 'beta' track;
+# on Apple it is the EXTERNAL group behind the public TestFlight link,
+# not the internal-only build.
+#   android  beta → Play 'alpha' (closed)  production → Play 'production'
+#   apple    beta → TestFlight external    production → TestFlight external
+#                     group (public link)      group (the public link)
 #   macos    DMG artifact (no store channel — same build both tracks)
 #   windows  MSI artifact (no store channel — same build both tracks)
 #   web      beta → build-check only       production → Pages deploy
@@ -43,6 +49,14 @@ on:
           - beta
           - production
         default: beta
+      release_notes:
+        description: >-
+          Changelog for BOTH stores (#626) — one text, one commit, so the
+          Play and TestFlight testers read the same notes. Empty uses the
+          per-track default.
+        required: false
+        type: string
+        default: ''
 
 # The called workflows' permissions must fit inside this grant:
 # contents:write (Play tag push), pages+id-token (web deploy),
@@ -64,15 +78,21 @@ jobs:
   android:
     uses: ./.github/workflows/play-internal.yml
     with:
-      track: ${{ inputs.track == 'production' && 'production' || 'beta' }}
+      # #626 — 'alpha' IS the closed test the testers are enrolled in.
+      track: ${{ inputs.track == 'production' && 'production' || 'alpha' }}
+      release_notes: ${{ inputs.release_notes }}
     secrets: inherit
 
   apple:
     uses: ./.github/workflows/ios-testflight.yml
     with:
-      release_notes: ${{ inputs.track == 'production'
-        && 'Production candidate.' || 'Beta build.' }}
-      distribute_external: ${{ inputs.track == 'production' }}
+      release_notes: ${{ inputs.release_notes != '' && inputs.release_notes
+        || (inputs.track == 'production'
+            && 'Production candidate.' || 'Beta build.') }}
+      # #626 — the public-link group is where the testers are; the first
+      # external build already cleared Apple's Beta App Review, so later
+      # ones reach the group directly.
+      distribute_external: true
     secrets: inherit
 
   macos:
