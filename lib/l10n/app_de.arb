@@ -1551,6 +1551,7 @@
       }
     }
   },
+  "kioskBlockedContactHint": "Belegt von {name} — du kannst ihm/ihr über die App auf deinem Handy schreiben.",
   "languageTitle": "Sprache",
   "languageSystemDefault": "Systemstandard",
   "levelReserveButton": "Etage reservieren",
@@ -2117,6 +2118,7 @@
   "spaceCardSizeLarge": "Groß",
   "spaceCardInfoLabel": "Informationen auf der Karte",
   "spaceCardInfoWorkspace": "Workspace",
+  "spaceMessageReserver": "Nachricht an {name}",
   "themeTitle": "Design",
   "themeSystem": "Systemstandard",
   "themeLight": "Hell",

@@ -102,5 +102,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "kioskBlockedContactHint": "Belegt von {name} — du kannst ihm/ihr über die App auf deinem Handy schreiben."
 }

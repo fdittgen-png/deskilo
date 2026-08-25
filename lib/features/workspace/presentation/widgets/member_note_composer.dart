@@ -24,12 +24,18 @@ class MemberNoteComposer extends ConsumerStatefulWidget {
     super.key,
     required this.onSend,
     this.autofocus = true,
+    this.seedBody,
   });
 
   /// Called with the trimmed body; returns true when it went out (the
   /// field then clears).
   final Future<bool> Function(String body) onSend;
   final bool autofocus;
+
+  /// #622 — pre-seeded body (e.g. a `[res:…]` reference to the booking
+  /// the conversation is about); the caret lands after it so the
+  /// member just types around the reference.
+  final String? seedBody;
 
   @override
   ConsumerState<MemberNoteComposer> createState() =>
@@ -39,6 +45,16 @@ class MemberNoteComposer extends ConsumerStatefulWidget {
 class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
   final _body = TextEditingController();
   bool _sending = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final seed = widget.seedBody;
+    if (seed != null && seed.trim().isNotEmpty) {
+      _body.text = seed;
+      _body.selection = TextSelection.collapsed(offset: seed.length);
+    }
+  }
 
   @override
   void dispose() {

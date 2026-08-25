@@ -3086,6 +3086,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String kioskBlockedContactHint(String name) {
+    return 'Occupé par $name — vous pouvez lui écrire depuis l\'application sur votre téléphone.';
+  }
+
+  @override
   String get languageTitle => 'Langue';
 
   @override
@@ -4221,6 +4226,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get spaceCardInfoWorkspace => 'Espace de travail';
+
+  @override
+  String spaceMessageReserver(String name) {
+    return 'Écrire à $name';
+  }
 
   @override
   String get themeTitle => 'Thème';

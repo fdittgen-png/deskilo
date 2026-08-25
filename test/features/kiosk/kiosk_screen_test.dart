@@ -862,4 +862,66 @@ void main() {
     expect(canvas.seatPhotos.keys, contains('seat-4'),
         reason: "the occupant's decoded photo reaches the painter");
   });
+
+  testWidgets(
+      '#622 — a kiosk occupancy refusal NAMES the holder and points to '
+      'the app for contact; the wall offers NO message affordance',
+      (tester) async {
+    final plans = FakeFloorPlanRepository()..seedSmallPlan();
+    final reservations = FakeReservationRepository();
+    // ANOTHER member holds A1 for the whole working day.
+    reservations.reservations.add(Reservation(
+      id: 'res-blocker',
+      workspaceId: 'ws-1',
+      seatId: 'seat-4',
+      memberId: 'member-2',
+      startsAt: WorkspaceTime.at(
+          kTestNow.year, kTestNow.month, kTestNow.day, 8),
+      endsAt: WorkspaceTime.at(
+          kTestNow.year, kTestNow.month, kTestNow.day, 17),
+      status: ReservationStatus.checkedIn,
+    ));
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'};
+    workspace.myMember = workspace.myMember.copyWith(
+      isAdmin: false,
+      isOwner: false,
+      isKiosk: true,
+    );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          floorPlan: plans,
+          reservations: reservations,
+          workspace: workspace,
+          clock: kioskClock,
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-gate-start')));
+    await tester.pumpAndSettle();
+
+    await tester.tapAt(seatCenter(tester));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('kiosk-check-in')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('kiosk-badge-field')),
+      'badge-token-1',
+    );
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle();
+
+    // Refused — no receipt; the snack names WHO holds the seat and
+    // points to the app on the member's own phone.
+    expect(find.byKey(const ValueKey('kiosk-success-card')), findsNothing);
+    expect(find.textContaining('Ana'), findsOneWidget);
+    expect(find.textContaining('from the app'), findsOneWidget);
+    // The wall device cannot message as the member — no affordance.
+    expect(find.byKey(const ValueKey('space-act-message')), findsNothing);
+    expect(find.byKey(const ValueKey('blocked-message-reserver')),
+        findsNothing);
+  });
 }

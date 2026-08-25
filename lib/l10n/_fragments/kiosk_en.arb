@@ -266,5 +266,14 @@
         "type": "String"
       }
     }
+  },
+  "kioskBlockedContactHint": "Held by {name} — you can message them from the app on your phone.",
+  "@kioskBlockedContactHint": {
+    "description": "Appended to a kiosk occupancy refusal: names the reservation holder and points to the app for messaging — the wall device itself cannot write as the member (#622)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

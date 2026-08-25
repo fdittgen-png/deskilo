@@ -381,6 +381,24 @@ class FakeReservationRepository implements ReservationRepository {
       throw const PostgrestException(
           message: 'you already have a reservation in that period');
     }
+    // #622 — mirror the exclusion constraint for kiosk walk-ups: an
+    // ACTIVE reservation by ANOTHER member on the target refuses with
+    // the pinned occupancy substring (the badge member's own booking is
+    // the check-in path, not a conflict).
+    if ((action == 'check_in' || action == 'reserve') &&
+        startsAt != null &&
+        endsAt != null) {
+      final blocked = reservations.any((r) =>
+          r.isActive &&
+          r.memberId != myMemberId &&
+          ((seatId != null && r.seatId == seatId) ||
+              (levelId != null && r.levelId == levelId)) &&
+          r.startsAt.isBefore(endsAt) &&
+          startsAt.isBefore(r.endsAt));
+      if (blocked) {
+        throw const PostgrestException(message: 'already reserved');
+      }
+    }
     kioskActs.add((
       action: action,
       badgeToken: badgeToken,
