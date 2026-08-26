@@ -60,6 +60,15 @@ String bookingErrorText(
     return l10n?.bookingOutsideHoursError ??
         'Bookings must stay within the working hours.';
   }
+  // #634 outside-hours mode 'walkup_only' (migration 0120): the same
+  // pinned substring plus 'spontaneous check-in' — checked FIRST, so
+  // the member learns the door is only closed for booking AHEAD.
+  if (message.contains('spontaneous check-in') &&
+      message.contains('outside the opening hours')) {
+    return l10n?.bookingOutsideWalkUpError ??
+        'Outside the opening hours only a spontaneous check-in is '
+            'possible — booking ahead is not.';
+  }
   // #624 outside-hours mode 'off' (migration 0118, pinned substring).
   if (message.contains('outside the opening hours')) {
     return l10n?.bookingOutsideOffError ??

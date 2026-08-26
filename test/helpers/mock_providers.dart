@@ -868,8 +868,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     bookingPolicies[workspaceId] = switch (key) {
       BookingPolicies.allowPastBookingsKey =>
         p.copyWith(allowPastBookings: enabled),
-      BookingPolicies.gridWithinHoursKey =>
-        p.copyWith(gridWithinHours: enabled),
+      // #634: grid_within_hours is read-only legacy — no writer.
       BookingPolicies.adminCheckOutKey => p.copyWith(adminCheckOut: enabled),
       _ => p,
     };

@@ -141,8 +141,9 @@ class AvailabilityScreen extends ConsumerWidget {
   Future<void> _setOutsideHoursMode(
     BuildContext context,
     WidgetRef ref,
-    OutsideHoursMode mode,
+    OutsideHoursMode? mode,
   ) async {
+    if (mode == null) return;
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
@@ -504,17 +505,6 @@ class AvailabilityScreen extends ConsumerWidget {
                       BookingPolicies.allowPastBookingsKey, v),
                 ),
                 SwitchListTile(
-                  key: const Key('policy-grid-hours'),
-                  title: Text(l10n?.policyGridHoursTitle ??
-                      'Minute bookings within working hours'),
-                  subtitle: Text(l10n?.policyGridHoursDesc ??
-                      'Confine minute-grid bookings to the working '
-                          'day; evening walk-ups stay possible.'),
-                  value: policies.gridWithinHours,
-                  onChanged: (v) => _setPolicy(context, ref,
-                      BookingPolicies.gridWithinHoursKey, v),
-                ),
-                SwitchListTile(
                   key: const Key('policy-admin-checkout'),
                   title: Text(l10n?.policyAdminCheckoutTitle ??
                       'Admins may check members out'),
@@ -524,44 +514,64 @@ class AvailabilityScreen extends ConsumerWidget {
                   onChanged: (v) => _setPolicy(context, ref,
                       BookingPolicies.adminCheckOutKey, v),
                 ),
-                // #624 — the outside-opening-hours mode.
+                // #634 — ONE question, four mutually exclusive answers
+                // (#600's grid switch folded in). Radio rows, not a
+                // four-way SegmentedButton: four labels do not fit a
+                // 360dp phone.
                 ListTile(
                   title: Text(l10n?.policyOutsideHoursTitle ??
                       'Outside the opening hours'),
                   subtitle: Text(l10n?.policyOutsideHoursDesc ??
-                      'Charged bookings ride free next to a regular '
-                          'same-day booking.'),
+                      'What may happen outside the working day — the '
+                          'same answer on every granularity.'),
                 ),
-                Padding(
-                  padding: AppSpacing.lgH,
-                  child: SegmentedButton<OutsideHoursMode>(
-                    key: const Key('policy-outside-hours'),
-                    segments: [
-                      ButtonSegment(
+                RadioGroup<OutsideHoursMode>(
+                  key: const Key('policy-outside-hours'),
+                  groupValue: policies.outsideHoursMode,
+                  onChanged: (mode) =>
+                      _setOutsideHoursMode(context, ref, mode),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      RadioListTile<OutsideHoursMode>(
+                        key: const Key('policy-outside-hours-off'),
                         value: OutsideHoursMode.off,
-                        label: Text(
-                          l10n?.policyOutsideHoursOff ?? 'Off',
-                          key: const Key('policy-outside-hours-off'),
-                        ),
+                        title: Text(l10n?.policyOutsideHoursOff ?? 'Off'),
+                        subtitle: Text(l10n?.policyOutsideHoursOffDesc ??
+                            'Nothing outside the hours: no booking '
+                                'ahead, no walk-up, and a booking '
+                                'running past the day end is refused.'),
                       ),
-                      ButtonSegment(
+                      RadioListTile<OutsideHoursMode>(
+                        key: const Key('policy-outside-hours-walkup'),
+                        value: OutsideHoursMode.walkupOnly,
+                        title: Text(l10n?.policyOutsideHoursWalkUp ??
+                            'Spontaneous only'),
+                        subtitle: Text(l10n?.policyOutsideHoursWalkUpDesc ??
+                            'Walk-up check-ins stay possible (evening '
+                                'overtime included); booking ahead '
+                                'outside the hours is refused.'),
+                      ),
+                      RadioListTile<OutsideHoursMode>(
+                        key: const Key('policy-outside-hours-free'),
                         value: OutsideHoursMode.free,
-                        label: Text(
-                          l10n?.policyOutsideHoursFree ?? 'Free',
-                          key: const Key('policy-outside-hours-free'),
-                        ),
+                        title: Text(l10n?.policyOutsideHoursFree ?? 'Free'),
+                        subtitle: Text(l10n?.policyOutsideHoursFreeDesc ??
+                            'Allowed, never counted and never charged — '
+                                'pure presence information.'),
                       ),
-                      ButtonSegment(
+                      RadioListTile<OutsideHoursMode>(
+                        key: const Key('policy-outside-hours-charged'),
                         value: OutsideHoursMode.charged,
-                        label: Text(
-                          l10n?.policyOutsideHoursCharged ?? 'Charged',
-                          key: const Key('policy-outside-hours-charged'),
-                        ),
+                        title: Text(
+                            l10n?.policyOutsideHoursCharged ?? 'Charged'),
+                        subtitle: Text(
+                            l10n?.policyOutsideHoursChargedDesc ??
+                                'Allowed and counted like ordinary '
+                                    'usage — except next to a regular '
+                                    'booking the same day.'),
                       ),
                     ],
-                    selected: {policies.outsideHoursMode},
-                    onSelectionChanged: (selection) => _setOutsideHoursMode(
-                        context, ref, selection.single),
                   ),
                 ),
                 // #628 — how many overlapping bookings a member may hold.

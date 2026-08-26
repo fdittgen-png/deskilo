@@ -228,14 +228,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les membres peuvent enregistrer une réservation déjà terminée (rattrapage).';
 
   @override
-  String get policyGridHoursTitle =>
-      'Réservations à la minute dans les heures d\'ouverture';
-
-  @override
-  String get policyGridHoursDesc =>
-      'Limiter les réservations à la minute à la journée de travail ; les check-ins du soir restent possibles.';
-
-  @override
   String get policyAdminCheckoutTitle =>
       'Les admins peuvent faire le check-out des membres';
 
@@ -248,16 +240,35 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get policyOutsideHoursDesc =>
-      'Interdit les refuse ; Gratuit ne les compte jamais ; Facturé les compte, sauf si le membre a déjà une réservation normale ce jour-là.';
+      'Ce qui est possible en dehors de la journée de travail — une seule réponse, pour toutes les granularités. Une réservation qui touche les heures d\'ouverture reste une réservation normale.';
 
   @override
   String get policyOutsideHoursOff => 'Interdit';
 
   @override
+  String get policyOutsideHoursOffDesc =>
+      'Rien en dehors des heures : ni réservation à l\'avance, ni check-in spontané, et une réservation qui dépasse la fin de journée est refusée aussi.';
+
+  @override
+  String get policyOutsideHoursWalkUp => 'Spontané uniquement';
+
+  @override
+  String get policyOutsideHoursWalkUpDesc =>
+      'Les check-ins spontanés restent possibles, heures supplémentaires du soir comprises ; réserver à l\'avance en dehors des heures est refusé.';
+
+  @override
   String get policyOutsideHoursFree => 'Gratuit';
 
   @override
+  String get policyOutsideHoursFreeDesc =>
+      'Autorisé, jamais compté ni facturé — pure information de présence.';
+
+  @override
   String get policyOutsideHoursCharged => 'Facturé';
+
+  @override
+  String get policyOutsideHoursChargedDesc =>
+      'Autorisé et compté comme un usage normal — sauf les jours où le membre a déjà une réservation normale.';
 
   @override
   String get policySimultaneousTitle => 'Réservations simultanées par membre';
@@ -3220,6 +3231,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get bookingOutsideOffError =>
       'Les réservations en dehors des heures d\'ouverture ne sont pas autorisées.';
+
+  @override
+  String get bookingOutsideWalkUpError =>
+      'En dehors des heures d\'ouverture, seul un check-in spontané est possible — pas une réservation à l\'avance.';
 
   @override
   String get membersTitle => 'Membres et forfaits';

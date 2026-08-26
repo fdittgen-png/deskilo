@@ -506,18 +506,6 @@ abstract class AppLocalizations {
   /// **'Members may record a booking that already ended (backfill).'**
   String get policyAllowPastDesc;
 
-  /// No description provided for @policyGridHoursTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Minute bookings within working hours'**
-  String get policyGridHoursTitle;
-
-  /// No description provided for @policyGridHoursDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Confine minute-grid bookings to the working day; evening walk-ups stay possible.'**
-  String get policyGridHoursDesc;
-
   /// No description provided for @policyAdminCheckoutTitle.
   ///
   /// In en, this message translates to:
@@ -536,10 +524,10 @@ abstract class AppLocalizations {
   /// **'Outside the opening hours'**
   String get policyOutsideHoursTitle;
 
-  /// No description provided for @policyOutsideHoursDesc.
+  /// #634 - helper text above the four outside-hours options
   ///
   /// In en, this message translates to:
-  /// **'Off refuses such bookings; Free never counts them; Charged counts them unless the member already has a regular booking that day.'**
+  /// **'What may happen outside the working day — one answer, on every granularity. A booking that touches the working hours is an ordinary booking.'**
   String get policyOutsideHoursDesc;
 
   /// No description provided for @policyOutsideHoursOff.
@@ -548,17 +536,47 @@ abstract class AppLocalizations {
   /// **'Off'**
   String get policyOutsideHoursOff;
 
+  /// No description provided for @policyOutsideHoursOffDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing outside the hours: no booking ahead, no walk-up, and a booking running past the day end is refused too.'**
+  String get policyOutsideHoursOffDesc;
+
+  /// #634 - outside-hours option: walk-ups yes, booking ahead no
+  ///
+  /// In en, this message translates to:
+  /// **'Spontaneous only'**
+  String get policyOutsideHoursWalkUp;
+
+  /// No description provided for @policyOutsideHoursWalkUpDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk-up check-ins stay possible, evening overtime included; booking ahead outside the hours is refused.'**
+  String get policyOutsideHoursWalkUpDesc;
+
   /// No description provided for @policyOutsideHoursFree.
   ///
   /// In en, this message translates to:
   /// **'Free'**
   String get policyOutsideHoursFree;
 
+  /// No description provided for @policyOutsideHoursFreeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed, never counted and never charged — pure presence information.'**
+  String get policyOutsideHoursFreeDesc;
+
   /// No description provided for @policyOutsideHoursCharged.
   ///
   /// In en, this message translates to:
   /// **'Charged'**
   String get policyOutsideHoursCharged;
+
+  /// No description provided for @policyOutsideHoursChargedDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed and counted like ordinary usage — except on a day the member already holds a regular booking.'**
+  String get policyOutsideHoursChargedDesc;
 
   /// #628 - title of the workspace-wide simultaneous-reservations stepper
   ///
@@ -5743,6 +5761,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Bookings outside the opening hours are not allowed.'**
   String get bookingOutsideOffError;
+
+  /// #634 - refusal under the walkup_only outside-hours mode
+  ///
+  /// In en, this message translates to:
+  /// **'Outside the opening hours only a spontaneous check-in is possible — booking ahead is not.'**
+  String get bookingOutsideWalkUpError;
 
   /// Title of the owner-only member management screen + its settings entry
   ///

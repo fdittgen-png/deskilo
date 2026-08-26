@@ -227,14 +227,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'I membri possono registrare una prenotazione già terminata.';
 
   @override
-  String get policyGridHoursTitle =>
-      'Prenotazioni al minuto negli orari di lavoro';
-
-  @override
-  String get policyGridHoursDesc =>
-      'Limita le prenotazioni al minuto alla giornata lavorativa; i check-in serali restano possibili.';
-
-  @override
   String get policyAdminCheckoutTitle =>
       'Gli amministratori possono fare il check-out dei membri';
 
@@ -247,16 +239,35 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get policyOutsideHoursDesc =>
-      'Vietato le rifiuta; Gratis non le conta mai; A pagamento le conta, salvo che il membro abbia già una prenotazione normale quel giorno.';
+      'Che cosa è possibile fuori dalla giornata lavorativa: una sola risposta, per tutte le granularità. Una prenotazione che tocca gli orari di lavoro è una prenotazione normale.';
 
   @override
   String get policyOutsideHoursOff => 'Vietato';
 
   @override
+  String get policyOutsideHoursOffDesc =>
+      'Niente fuori dagli orari: né prenotazioni in anticipo, né check-in spontanei, e anche una prenotazione che sfora la fine della giornata viene rifiutata.';
+
+  @override
+  String get policyOutsideHoursWalkUp => 'Solo spontaneo';
+
+  @override
+  String get policyOutsideHoursWalkUpDesc =>
+      'I check-in spontanei restano possibili, straordinari serali compresi; prenotare in anticipo fuori dagli orari viene rifiutato.';
+
+  @override
   String get policyOutsideHoursFree => 'Gratis';
 
   @override
+  String get policyOutsideHoursFreeDesc =>
+      'Consentito, mai contato né addebitato: pura informazione di presenza.';
+
+  @override
   String get policyOutsideHoursCharged => 'A pagamento';
+
+  @override
+  String get policyOutsideHoursChargedDesc =>
+      'Consentito e contato come uso normale, salvo nei giorni in cui il membro ha già una prenotazione normale.';
 
   @override
   String get policySimultaneousTitle => 'Prenotazioni simultanee per membro';
@@ -3215,6 +3226,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get bookingOutsideOffError =>
       'Le prenotazioni fuori dagli orari di apertura non sono consentite.';
+
+  @override
+  String get bookingOutsideWalkUpError =>
+      'Fuori dagli orari di apertura è possibile solo un check-in spontaneo, non una prenotazione in anticipo.';
 
   @override
   String get membersTitle => 'Membri e piani';

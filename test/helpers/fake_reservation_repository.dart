@@ -32,24 +32,38 @@ class FakeReservationRepository implements ReservationRepository {
   /// server default; tests flip it to exercise the backfill path.
   bool allowPastBookings = false;
 
-  /// Mirror of booking_rules.outside_hours_mode (#624) — charged like
-  /// the server's absent default. Only the 'off' refusal is mirrored
-  /// here (creation-side); the free/charged counting is quota math and
-  /// lives server-side.
+  /// Mirror of booking_rules.outside_hours_mode (#624, four-valued
+  /// since #634) — charged like the server's absent default. Only the
+  /// refusing modes are mirrored here (creation-side); the free/charged
+  /// counting is quota math and lives server-side.
   OutsideHoursMode outsideHoursMode = OutsideHoursMode.charged;
 
-  /// #624: entirely outside the working day — no intersection with
-  /// [day start, day end) of the booking's workspace-local day
-  /// ([WorkHours.current], defaults 8:00–17:00), like
-  /// enforce_booking_rules v7.
-  bool _outsideOnly(DateTime startsAt, DateTime endsAt) {
+  /// #634: the window LEAVES the working day at either edge — the
+  /// enforcement predicate of enforce_booking_rules v8 (migration
+  /// 0120), which strictly contains "entirely outside". Hours from
+  /// [WorkHours.current] (defaults 8:00–17:00) on the booking's
+  /// workspace-local day.
+  bool _touchesOutside(DateTime startsAt, DateTime endsAt) {
     final hours = WorkHours.current;
     final day = WorkspaceTime.dateOf(startsAt);
-    DateTime at(int minutes) => WorkspaceTime.at(
-        day.year, day.month, day.day, minutes ~/ 60, minutes % 60);
-    return !(startsAt.isBefore(at(hours.endMinutes)) &&
-        endsAt.isAfter(at(hours.startMinutes)));
+    return startsAt.isBefore(_atMinutes(day, hours.startMinutes)) ||
+        endsAt.isAfter(_atMinutes(day, hours.endMinutes));
   }
+
+  /// The one spontaneous shape `walkup_only` still allows: a walk-up
+  /// starting at/after the day's end and ending by local midnight.
+  bool _spontaneousOvertime(
+      DateTime startsAt, DateTime endsAt, bool checkIn) {
+    if (!checkIn) return false;
+    final hours = WorkHours.current;
+    final day = WorkspaceTime.dateOf(startsAt);
+    final end = _atMinutes(day, hours.endMinutes);
+    final midnight = WorkspaceTime.at(day.year, day.month, day.day + 1, 0, 0);
+    return !startsAt.isBefore(end) && !endsAt.isAfter(midnight);
+  }
+
+  DateTime _atMinutes(DateTime day, int minutes) => WorkspaceTime.at(
+      day.year, day.month, day.day, minutes ~/ 60, minutes % 60);
 
   /// The fake's clock — defaults to [kTestNow], matching the
   /// FixedClock the standard overrides install (#408: the check-in
@@ -171,13 +185,21 @@ class FakeReservationRepository implements ReservationRepository {
         WorkspaceTime.dateOf(startsAt) != WorkspaceTime.dateOf(now())) {
       throw StateError('a walk-up check-in must start today');
     }
-    // #624: mode 'off' refuses outside-only windows on every
-    // granularity, walk-up or not — pinned substring like the server
-    // (enforce_booking_rules v7, migration 0118).
-    if (outsideHoursMode == OutsideHoursMode.off &&
-        _outsideOnly(startsAt, endsAt)) {
-      throw const PostgrestException(
-          message: 'bookings outside the opening hours are not allowed');
+    // #634: THE outside-hours gate (enforce_booking_rules v8, migration
+    // 0120) — 'off' refuses any window leaving the working day, walk-up
+    // or not; 'walkup_only' refuses the same except the spontaneous
+    // evening overtime run. Pinned substrings like the server.
+    if (_touchesOutside(startsAt, endsAt)) {
+      if (outsideHoursMode == OutsideHoursMode.off) {
+        throw const PostgrestException(
+            message: 'bookings outside the opening hours are not allowed');
+      }
+      if (outsideHoursMode == OutsideHoursMode.walkupOnly &&
+          !_spontaneousOvertime(startsAt, endsAt, checkIn)) {
+        throw const PostgrestException(
+            message: 'only spontaneous check-ins are possible outside '
+                'the opening hours — booking ahead is not');
+      }
     }
     // #573 — a day-based walk-up check-in books the SLOT the chosen end
     // belongs to: the start snaps back; if the early slot part is taken,

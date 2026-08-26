@@ -247,15 +247,24 @@
   "availabilityPoliciesTitle": "Booking policies",
   "policyAllowPastTitle": "Allow past bookings",
   "policyAllowPastDesc": "Members may record a booking that already ended (backfill).",
-  "policyGridHoursTitle": "Minute bookings within working hours",
-  "policyGridHoursDesc": "Confine minute-grid bookings to the working day; evening walk-ups stay possible.",
   "policyAdminCheckoutTitle": "Admins may check members out",
   "policyAdminCheckoutDesc": "An admin can end a member's running check-in.",
   "policyOutsideHoursTitle": "Outside the opening hours",
-  "policyOutsideHoursDesc": "Off refuses such bookings; Free never counts them; Charged counts them unless the member already has a regular booking that day.",
+  "policyOutsideHoursDesc": "What may happen outside the working day — one answer, on every granularity. A booking that touches the working hours is an ordinary booking.",
+  "@policyOutsideHoursDesc": {
+    "description": "#634 - helper text above the four outside-hours options"
+  },
   "policyOutsideHoursOff": "Off",
+  "policyOutsideHoursOffDesc": "Nothing outside the hours: no booking ahead, no walk-up, and a booking running past the day end is refused too.",
+  "policyOutsideHoursWalkUp": "Spontaneous only",
+  "policyOutsideHoursWalkUpDesc": "Walk-up check-ins stay possible, evening overtime included; booking ahead outside the hours is refused.",
+  "@policyOutsideHoursWalkUp": {
+    "description": "#634 - outside-hours option: walk-ups yes, booking ahead no"
+  },
   "policyOutsideHoursFree": "Free",
+  "policyOutsideHoursFreeDesc": "Allowed, never counted and never charged — pure presence information.",
   "policyOutsideHoursCharged": "Charged",
+  "policyOutsideHoursChargedDesc": "Allowed and counted like ordinary usage — except on a day the member already holds a regular booking.",
   "policySimultaneousTitle": "Simultaneous reservations per member",
   "@policySimultaneousTitle": {
     "description": "#628 - title of the workspace-wide simultaneous-reservations stepper"
@@ -3636,6 +3645,10 @@
   "bookingWalkUpTodayError": "A walk-up check-in must start today.",
   "bookingOutsideHoursError": "Bookings must stay within the working hours.",
   "bookingOutsideOffError": "Bookings outside the opening hours are not allowed.",
+  "bookingOutsideWalkUpError": "Outside the opening hours only a spontaneous check-in is possible — booking ahead is not.",
+  "@bookingOutsideWalkUpError": {
+    "description": "#634 - refusal under the walkup_only outside-hours mode"
+  },
   "membersTitle": "Members & plans",
   "@membersTitle": {
     "description": "Title of the owner-only member management screen + its settings entry"

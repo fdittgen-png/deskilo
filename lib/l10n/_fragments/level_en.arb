@@ -57,5 +57,9 @@
   "bookingPastError": "This booking lies entirely in the past.",
   "bookingWalkUpTodayError": "A walk-up check-in must start today.",
   "bookingOutsideHoursError": "Bookings must stay within the working hours.",
-  "bookingOutsideOffError": "Bookings outside the opening hours are not allowed."
+  "bookingOutsideOffError": "Bookings outside the opening hours are not allowed.",
+  "bookingOutsideWalkUpError": "Outside the opening hours only a spontaneous check-in is possible — booking ahead is not.",
+  "@bookingOutsideWalkUpError": {
+    "description": "#634 - refusal under the walkup_only outside-hours mode"
+  }
 }
