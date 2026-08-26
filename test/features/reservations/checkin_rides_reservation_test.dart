@@ -185,6 +185,27 @@ void main() {
       );
     });
 
+    test('#638 — the end may also SHRINK to an edge still ahead of now; '
+        'an end behind now is refused', () async {
+      final repo = FakeReservationRepository();
+      repo.reservations.add(_row(
+        start: _at(8),
+        end: _at(17),
+        status: ReservationStatus.checkedIn,
+      ));
+      // Freeing the afternoon of a running full day — the server has
+      // always accepted this; only the client refused to offer it.
+      await repo.updateTimes('res-1', startsAt: _at(8), endsAt: _at(12));
+      expect(repo.reservations.single.startsAt, _at(8));
+      expect(repo.reservations.single.endsAt, _at(12));
+
+      await expectLater(
+        repo.updateTimes('res-1', startsAt: _at(8), endsAt: _at(9)),
+        throwsA(isA<PostgrestException>().having((e) => e.message,
+            'message', contains('ahead'))),
+      );
+    });
+
     test('a completed booking is uneditable', () async {
       final repo = FakeReservationRepository();
       repo.reservations.add(_row(
@@ -198,6 +219,159 @@ void main() {
             'message', contains('only upcoming'))),
       );
     });
+  });
+
+  /// Opens the detail sheet of [seed] from the hub's Day view, with the
+  /// workspace clock pinned to [nowHour] Berlin — the zone-consistent
+  /// idiom the extension test established (the suite VM runs at UTC-7).
+  Future<FakeReservationRepository> pumpDetailSheet(
+    WidgetTester tester, {
+    required Reservation Function(DateTime Function(int hour) berlin) seed,
+    required BookingGranularity granularity,
+    int nowHour = 10,
+  }) async {
+    WorkspaceTime.install('Europe/Berlin');
+    DateTime berlin(int hour) => WorkspaceTime.at(
+        kTestNow.year, kTestNow.month, kTestNow.day, hour);
+    final repo = FakeReservationRepository()
+      ..granularity = granularity
+      ..now = () => berlin(nowHour);
+    repo.reservations.add(seed(berlin));
+    tester.view.physicalSize = const Size(800, 1400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    final plans = FakeFloorPlanRepository()..seedSmallPlan();
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..memberNames = {'member-1': 'Flo'}
+      ..openWeekdays['ws-1'] = [1, 2, 3, 4, 5, 6, 7]
+      ..bookingGranularities['ws-1'] = granularity;
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          floorPlan: plans,
+          reservations: repo,
+          workspace: workspace,
+          clock: FixedClock(berlin(nowHour)),
+        ),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Reserve'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Day'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('timeline-block-res-own')));
+    await tester.pumpAndSettle();
+    return repo;
+  }
+
+  /// The Material time picker in keyboard-input mode (dragging the dial
+  /// is not reliable in widget tests); [hour] is 24-hour.
+  Future<void> enterPickerTime(
+    WidgetTester tester, {
+    required int hour,
+    required String minute,
+  }) async {
+    await tester.tap(find.byIcon(Icons.keyboard_outlined));
+    await tester.pumpAndSettle();
+    final isPm = hour >= 12;
+    var h12 = hour % 12;
+    if (h12 == 0) h12 = 12;
+    final fields = find.byType(TextFormField);
+    await tester.enterText(fields.first, '$h12');
+    await tester.enterText(fields.last, minute);
+    await tester.tap(find.text(isPm ? 'PM' : 'AM'));
+    await tester.pump();
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+  }
+
+  testWidgets(
+      'the detail sheet of my RUNNING full day offers "End earlier" and '
+      'one tap frees the afternoon — same start, the half-day boundary '
+      'as the new end (#638)', (tester) async {
+    final repo = await pumpDetailSheet(
+      tester,
+      granularity: BookingGranularity.halfDay,
+      seed: (berlin) => Reservation(
+        id: 'res-own',
+        workspaceId: 'ws-1',
+        seatId: 'seat-4',
+        memberId: 'member-1',
+        startsAt: berlin(8),
+        endsAt: berlin(17),
+        status: ReservationStatus.checkedIn,
+        checkedInAt: berlin(8),
+      ),
+    );
+    DateTime berlin(int hour) => WorkspaceTime.at(
+        kTestNow.year, kTestNow.month, kTestNow.day, hour);
+
+    await tester.tap(find.byKey(const ValueKey('reservation-end-early')));
+    await tester.pumpAndSettle();
+
+    final r = repo.reservations.single;
+    expect(r.startsAt, berlin(8), reason: 'the start is immovable');
+    expect(r.endsAt, berlin(12));
+    expect(find.text('Reservation updated.'), findsOneWidget);
+  });
+
+  testWidgets(
+      'end-earlier under a minute grid refuses a time that is not ahead '
+      'of now — nothing is written (#638)', (tester) async {
+    final repo = await pumpDetailSheet(
+      tester,
+      granularity: BookingGranularity.minutes30,
+      seed: (berlin) => Reservation(
+        id: 'res-own',
+        workspaceId: 'ws-1',
+        seatId: 'seat-4',
+        memberId: 'member-1',
+        startsAt: berlin(8),
+        endsAt: berlin(17),
+        status: ReservationStatus.checkedIn,
+        checkedInAt: berlin(8),
+      ),
+    );
+    DateTime berlin(int hour) => WorkspaceTime.at(
+        kTestNow.year, kTestNow.month, kTestNow.day, hour);
+
+    await tester.tap(find.byKey(const ValueKey('reservation-end-early')));
+    await tester.pumpAndSettle();
+    // 09:00 is behind the 10:00 clock: refused before any round trip.
+    await enterPickerTime(tester, hour: 9, minute: '00');
+
+    expect(repo.reservations.single.endsAt, berlin(17));
+    expect(
+      find.text(
+          'Pick a time still ahead of now and before the current end.'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets(
+      'a RESERVED booking still ahead keeps today\'s Edit/Cancel actions '
+      'and offers no end change (#638)', (tester) async {
+    await pumpDetailSheet(
+      tester,
+      granularity: BookingGranularity.minutes30,
+      seed: (berlin) => Reservation(
+        id: 'res-own',
+        workspaceId: 'ws-1',
+        seatId: 'seat-4',
+        memberId: 'member-1',
+        startsAt: berlin(14),
+        endsAt: berlin(17),
+        status: ReservationStatus.reserved,
+      ),
+    );
+
+    expect(find.byKey(const ValueKey('reservation-edit')), findsOneWidget);
+    expect(find.byKey(const ValueKey('reservation-cancel')), findsOneWidget);
+    expect(
+        find.byKey(const ValueKey('reservation-end-early')), findsNothing);
+    expect(find.byKey(const ValueKey('reservation-extend')), findsNothing);
   });
 
   testWidgets(

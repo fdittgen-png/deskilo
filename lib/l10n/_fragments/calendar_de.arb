@@ -7,6 +7,8 @@
   "@reservationExtendLaterOnly": {
     "description": "Extend flow: picked time not after the current end (#574)"
   },
+  "reservationEndEarlyButton": "Früher beenden",
+  "reservationEndEarlyAheadOnly": "Wähle eine Zeit, die noch bevorsteht und vor dem aktuellen Ende liegt.",
   "@@locale": "de",
   "calendarMineTab": "Meine",
   "calendarEveryoneTab": "Alle",

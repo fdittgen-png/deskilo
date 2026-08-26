@@ -103,7 +103,14 @@ class _BookingSheetState extends State<BookingSheet> {
   late DateTime _end = widget.initialEnd;
   SeriesPattern? _pattern;
   late DateTime _until = widget.start.add(const Duration(days: 28));
-  late String? _forMemberId = widget.myMemberId;
+  // #638 — the subject defaults to me, EXCEPT when the caller offered a
+  // roster I am not part of (a delegated admin who may assign a whole
+  // level without holding the personal grant): the booking then lands on
+  // the first candidate, never silently on a subject the server refuses.
+  late String? _forMemberId = widget.members.isEmpty ||
+          widget.members.any((m) => m.id == widget.myMemberId)
+      ? widget.myMemberId
+      : widget.members.first.id;
 
   bool get _forOther =>
       _forMemberId != null && _forMemberId != widget.myMemberId;
@@ -280,8 +287,14 @@ class _BookingSheetState extends State<BookingSheet> {
                 },
               ),
 
-            if (widget.members.length > 1)
+            // Shown whenever there is a real choice OR the only subject
+            // is not me — the actor must always SEE who it lands on
+            // (#638, the rule the deleted level sheet enforced).
+            if (widget.members.length > 1 ||
+                (widget.members.length == 1 &&
+                    widget.members.first.id != widget.myMemberId))
               DropdownButtonFormField<String>(
+                key: const ValueKey('booking-for-member'),
                 initialValue: _forMemberId,
                 decoration: InputDecoration(
                   labelText: l10n?.planBookForLabel ?? 'Book for',
@@ -383,8 +396,8 @@ class _BookingSheetState extends State<BookingSheet> {
       );
 
   DateTime _snap(DateTime t) {
-    final step = widget.granularity.stepMinutes ?? 15;
-    final m = (t.hour * 60 + t.minute) ~/ step * step;
+    // #638 — the shared grid rule; no surface snaps on its own any more.
+    final m = widget.granularity.snapMinutesOfDay(t.hour * 60 + t.minute);
     return DateTime(t.year, t.month, t.day, m ~/ 60, m % 60);
   }
 

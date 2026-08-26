@@ -76,6 +76,14 @@ class ReservationDetailSheet extends ConsumerWidget {
         r.status == ReservationStatus.checkedIn &&
         r.endsAt.isAfter(now) &&
         _laterEndFor(ref, r) != null;
+    // #638 — and a RUNNING booking may also SHRINK: `update_reservation`
+    // v2 accepts an earlier canonical end ahead of now, but the client
+    // only ever offered "later", so "cancel the rest of the day" was
+    // documented and impossible.
+    final endEarlyable = mine &&
+        r.status == ReservationStatus.checkedIn &&
+        r.endsAt.isAfter(now) &&
+        _earlierEndFor(ref, r, now) != null;
     final deletionRequestable = mine &&
         !editable &&
         ref
@@ -227,6 +235,17 @@ class ReservationDetailSheet extends ConsumerWidget {
                 onPressed: () => _extendEnd(context, ref),
                 label: Text(
                   l10n?.reservationExtendButton ?? 'Stay longer',
+                ),
+              ),
+            ],
+            if (endEarlyable) ...[
+              const SizedBox(height: 8),
+              OutlinedButton.icon(
+                key: const ValueKey('reservation-end-early'),
+                icon: const Icon(Icons.timelapse_outlined),
+                onPressed: () => _endEarly(context, ref),
+                label: Text(
+                  l10n?.reservationEndEarlyButton ?? 'End earlier',
                 ),
               ),
             ],
@@ -488,6 +507,46 @@ class ReservationDetailSheet extends ConsumerWidget {
     return r.endsAt.isBefore(midnight) ? midnight : null;
   }
 
+  /// The canonical EARLIER end a running booking may shrink to (#638),
+  /// or null when nothing earlier is reachable. Day-based granularity
+  /// has exactly one earlier canonical edge — the half-day boundary —
+  /// and it only counts while it still lies ahead of [now] (and after
+  /// the immovable start). Grids/hours/flexible let the picker choose:
+  /// they qualify as soon as one whole step still fits between now and
+  /// the current end.
+  DateTime? _earlierEndFor(WidgetRef ref, Reservation r, DateTime now) {
+    final granularity = ref.read(bookingGranularityProvider).value ??
+        BookingGranularity.flexible;
+    final day = WorkspaceTime.dateOf(r.startsAt);
+    if (granularity.isDayBased) {
+      final boundary = HalfDayWindows.morning(day).end;
+      return boundary.isBefore(r.endsAt) &&
+              boundary.isAfter(now) &&
+              boundary.isAfter(r.startsAt)
+          ? boundary
+          : null;
+    }
+    // The picker decides; one grid step ahead of now is the earliest
+    // end that can still be reached.
+    final step = granularity.stepMinutes ?? 15;
+    final earliest = now.add(Duration(minutes: step));
+    return earliest.isBefore(r.endsAt) ? earliest : null;
+  }
+
+  /// One snapped instant on [day] from a clock pick — the SHARED grid
+  /// rule ([BookingGranularity.snapMinutesOfDay], #638), so extend and
+  /// shrink can never drift apart the way they had.
+  DateTime _snappedOnDay(
+    DateTime day,
+    TimeOfDay picked,
+    BookingGranularity granularity,
+  ) {
+    final minutes =
+        granularity.snapMinutesOfDay(picked.hour * 60 + picked.minute);
+    return WorkspaceTime.at(day.year, day.month, day.day, 0, 0)
+        .add(Duration(minutes: minutes.clamp(0, 24 * 60)));
+  }
+
   /// #574 — extend a RUNNING booking's end within the workspace's
   /// granularity. Day-based: one confirm to the day's end (that IS the
   /// only later canonical edge). Grids/hours: a snapped time picker.
@@ -509,11 +568,7 @@ class ReservationDetailSheet extends ConsumerWidget {
         ),
       );
       if (picked == null || !context.mounted) return;
-      final step = granularity.stepMinutes ?? 15;
-      final snapped =
-          ((picked.hour * 60 + picked.minute) / step).round() * step;
-      newEnd = WorkspaceTime.at(day.year, day.month, day.day, 0, 0)
-          .add(Duration(minutes: snapped.clamp(0, 24 * 60)));
+      newEnd = _snappedOnDay(day, picked, granularity);
     }
     if (!newEnd.isAfter(r.endsAt)) {
       if (!context.mounted) return;
@@ -524,7 +579,64 @@ class ReservationDetailSheet extends ConsumerWidget {
       );
       return;
     }
+    await _writeEnd(context, ref, newEnd, granularity);
+  }
 
+  /// #638 — free the rest of the booking: shrink a RUNNING booking's end
+  /// to an earlier canonical edge, the start untouched (the server keeps
+  /// it immovable anyway). Day-based granularity offers the half-day
+  /// boundary — "cancel the rest of the day", the affordance the guide
+  /// already described; grids/hours offer a snapped picker that refuses
+  /// anything not still ahead of now.
+  Future<void> _endEarly(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final r = reservation;
+    final granularity = ref.read(bookingGranularityProvider).value ??
+        BookingGranularity.flexible;
+    final now = ref.read(clockProvider).now();
+    final day = WorkspaceTime.dateOf(r.startsAt);
+
+    DateTime newEnd;
+    if (granularity.isDayBased) {
+      final boundary = _earlierEndFor(ref, r, now);
+      if (boundary == null) return; // the button is not offered then
+      newEnd = boundary;
+    } else {
+      final picked = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(
+          WorkspaceTime.display(r.endsAt),
+        ),
+      );
+      if (picked == null || !context.mounted) return;
+      newEnd = _snappedOnDay(day, picked, granularity);
+    }
+    // Ahead of now AND before the current end — the two halves of the
+    // server's own rule, refused here with the reason instead of a
+    // round-trip that says "invalid".
+    if (!newEnd.isBefore(r.endsAt) || !newEnd.isAfter(now)) {
+      if (!context.mounted) return;
+      AppSnack.info(
+        context,
+        l10n?.reservationEndEarlyAheadOnly ??
+            'Pick a time still ahead of now and before the current end.',
+      );
+      return;
+    }
+    await _writeEnd(context, ref, newEnd, granularity);
+  }
+
+  /// The one write both end changes share (#638): the start is passed
+  /// back untouched, refusals go through [bookingErrorText] like every
+  /// neighbouring action, success pops the sheet.
+  Future<void> _writeEnd(
+    BuildContext context,
+    WidgetRef ref,
+    DateTime newEnd,
+    BookingGranularity granularity,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final r = reservation;
     try {
       await ref.read(reservationRepositoryProvider).updateTimes(
             r.id,
@@ -533,7 +645,7 @@ class ReservationDetailSheet extends ConsumerWidget {
           );
     } catch (e, st) {
       TraceLogger.instance.error(
-          'reservations', 'reservation extension failed',
+          'reservations', 'reservation end change failed',
           error: e, stackTrace: st);
       if (!context.mounted) return;
       AppSnack.error(
@@ -698,7 +810,8 @@ class ReservationDetailSheet extends ConsumerWidget {
     );
     if (to == null) return null;
     DateTime snapDown(int hour, int minute) {
-      final m = (hour * 60 + minute) ~/ snap * snap;
+      // #638 — the shared grid rule, not a private copy of it.
+      final m = granularity.snapMinutesOfDay(hour * 60 + minute);
       return DateTime(local.year, local.month, local.day, m ~/ 60, m % 60);
     }
 

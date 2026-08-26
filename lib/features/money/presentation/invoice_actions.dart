@@ -62,6 +62,7 @@ import '../../plan/providers/floor_plan_providers.dart';
 import '../domain/package.dart';
 import '../domain/service_item.dart';
 import '../domain/fee_band.dart';
+import '../../plan/domain/desk.dart';
 import '../../plan/domain/office.dart';
 import '../../plan/domain/level.dart';
 import '../../plan/domain/floor_plan.dart';
@@ -375,6 +376,15 @@ Map<String, Object?> agreementReportData(
       ...(ref.read(floorPlanProvider(level.id)).value?.offices ??
           const <Office>[]),
   ];
+  // #638 — DESKS are priced (0059), billed (`desk_supplement_cents`) and
+  // shown on the bill as "Desk reservations": the agreement disclosed
+  // every other scale but this one, so a member could be charged a price
+  // their own agreement never named.
+  final desks = [
+    for (final level in levels)
+      ...(ref.read(floorPlanProvider(level.id)).value?.desks ??
+          const <Desk>[]),
+  ];
   final accessories =
       ref.read(accessoriesProvider()).value ?? const <Accessory>[];
   final lines = <Map<String, Object?>>[
@@ -409,6 +419,13 @@ Map<String, Object?> agreementReportData(
           'label':
               '${office.name} — ${l10n?.officeSupplementLabel ?? 'Office reservations'}',
           'amount': money(office.priceCents),
+        },
+    for (final desk in desks)
+      if (desk.bookableAsWhole && desk.priceCents > 0)
+        {
+          'label':
+              '${desk.name} — ${l10n?.deskSupplementLabel ?? 'Desk reservations'}',
+          'amount': money(desk.priceCents),
         },
     for (final accessory in accessories)
       if (accessory.supplementCents > 0)

@@ -116,9 +116,12 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
 }
 
 /// Opens the whole-space sheet for an ALREADY-RESOLVED target — the
-/// scan flow above, and the plan canvases' double-tap (field request:
+/// scan flow above, the plan canvases' double-tap (field request:
 /// double-tapping a table or a room/level on the plan reserves it, or
-/// checks in when it is already reserved).
+/// checks in when it is already reserved) AND, since #638, the level
+/// rail's layers icon. That last one used to open a SECOND sheet with
+/// the assignment dropdown but no period picker and no series; the two
+/// converged here rather than each keeping half the capability.
 Future<void> showSpaceSheet(
   BuildContext context, {
   required SpaceKind kind,
@@ -128,6 +131,7 @@ Future<void> showSpaceSheet(
   Seat? seat,
   FloorPlan? plan,
   ({DateTime start, DateTime end})? initialWindow,
+  List<({String id, String name})> members = const [],
 }) =>
     showModalBottomSheet<void>(
       context: context,
@@ -140,6 +144,7 @@ Future<void> showSpaceSheet(
         seat: seat,
         plan: plan,
         initialWindow: initialWindow,
+        members: members,
       ),
     );
 
@@ -313,6 +318,7 @@ class SpaceSheet extends ConsumerStatefulWidget {
     this.seat,
     this.plan,
     this.initialWindow,
+    this.members = const [],
   });
 
   final SpaceKind kind;
@@ -326,6 +332,15 @@ class SpaceSheet extends ConsumerStatefulWidget {
   /// scrubber): seeds the reserve picker so "reserve for the day I am
   /// looking at" works — a scan defaults to today's walk-up window.
   final ({DateTime start, DateTime end})? initialWindow;
+
+  /// Members this actor may book the WHOLE SPACE for (#638): empty for
+  /// everyone but an owner/delegated admin, and the presence of the
+  /// list is itself the assignment right — the caller holds the roster
+  /// and the gate (`bookForOthers` / `adminLevelAssign`), the sheet only
+  /// offers the choice. Only `admin_create_reservation_for` scales
+  /// exist server-side (seat and level), so the selector rides the LEVEL
+  /// kind; a desk/office keeps booking for the actor.
+  final List<({String id, String name})> members;
 
   @override
   ConsumerState<SpaceSheet> createState() => _SpaceSheetState();
@@ -399,6 +414,60 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
     invalidateBookingData(ref);
   }
 
+  /// Books the whole space FOR another member (#638, the level sheet's
+  /// own 0050 behavior): `admin_create_reservation_for` re-checks the
+  /// assignment right, and the subject confirms it themselves (#106) —
+  /// so the snack says "sent", not "done".
+  Future<void> _createFor({
+    required String subjectMemberId,
+    String? levelId,
+    required DateTime startsAt,
+    required DateTime endsAt,
+  }) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null || _busy) return;
+    setState(() => _busy = true);
+    final who =
+        (ref.read(memberNamesProvider).value ?? const {})[subjectMemberId] ??
+            '';
+    try {
+      await ref.read(reservationRepositoryProvider).createFor(
+            workspaceId: workspace.id,
+            subjectMemberId: subjectMemberId,
+            levelId: levelId,
+            startsAt: startsAt,
+            endsAt: endsAt,
+          );
+    } catch (e, st) {
+      debugPrint('space booking for member failed: $e\n$st');
+      TraceLogger.instance.error(
+          'reservations', 'space booking for member failed',
+          error: e, stackTrace: st);
+      if (!mounted) return;
+      setState(() => _busy = false);
+      AppSnack.error(
+        context,
+        bookingErrorText(
+          l10n,
+          e,
+          l10n?.workspaceGenericError ??
+              'Something went wrong. Please try again.',
+        ),
+        replace: true,
+      );
+      return;
+    }
+    if (!mounted) return;
+    Navigator.of(context).pop();
+    AppSnack.success(
+      context,
+      l10n?.planBookedForPending(who) ?? 'Sent to $who for confirmation.',
+      replace: true,
+    );
+    invalidateBookingData(ref);
+  }
+
   /// Checks in to MY existing reservation of this space (field
   /// request: an already-reserved table/room must check in, not sit
   /// behind a disabled "conflict" button — my own reservation IS the
@@ -438,15 +507,42 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
     invalidateBookingData(ref);
   }
 
+  /// The subjects the reserve picker offers (#638): myself when I hold
+  /// the whole-space grant, plus every candidate the caller passed. An
+  /// empty list means no selector at all — a plain member never sees one.
+  List<({String id, String name})> _subjectOptions(
+    AppLocalizations? l10n, {
+    required bool granted,
+  }) {
+    final me = ref.read(myMemberProvider).value;
+    // Only the LEVEL scale exists on `admin_create_reservation_for`.
+    if (me == null || widget.kind != SpaceKind.level) {
+      return const <({String id, String name})>[];
+    }
+    final others = [
+      for (final m in widget.members)
+        if (m.id != me.id) m,
+    ];
+    if (others.isEmpty) return const <({String id, String name})>[];
+    return [
+      if (granted)
+        (id: me.id, name: l10n?.levelAssignMyself ?? 'Myself'),
+      ...others,
+    ];
+  }
+
   /// Whole-space RESERVE (0065, field request): the same
   /// granularity-aware period picker and repetition the seat sheet
   /// offers — the configuration decides which picker shows. The
-  /// server re-checks conflicts for whatever window is chosen.
+  /// server re-checks conflicts for whatever window is chosen. Since
+  /// #638 the SAME sheet also carries the "For the member" selector the
+  /// level rail's own sheet used to own alone.
   Future<void> _reserveSpace({
     String? deskId,
     String? officeId,
     String? levelId,
     required String name,
+    required bool granted,
   }) async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
@@ -459,6 +555,7 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
         .read(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.seriesBooking);
     final initial = widget.initialWindow ?? _window;
+    final subjects = _subjectOptions(l10n, granted: granted);
 
     final choice = await showModalBottomSheet<BookingChoice>(
       context: context,
@@ -472,13 +569,26 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
         granularity: granularity,
         walkUp: false,
         fixedEnd: granularity.isDayBased,
-        members: const [],
+        members: subjects,
         myMemberId: me?.id,
         allowSeries: allowSeries,
         allowBlocking: false,
       ),
     );
     if (choice == null || !mounted) return;
+
+    // Assigned to somebody else: the 0079 admin path — their own
+    // confirmation flow applies (#106), so no series, no check-in.
+    final subjectId = choice.forMemberId;
+    if (subjectId != null && subjectId != me?.id) {
+      await _createFor(
+        subjectMemberId: subjectId,
+        levelId: levelId,
+        startsAt: choice.start,
+        endsAt: choice.end,
+      );
+      return;
+    }
 
     if (choice.pattern == null) {
       await _create(
@@ -608,8 +718,14 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
     };
     final granted = // owners/admins implicitly allowed since 0079 (#412)
         (me?.canReserveLevel ?? false) || (me?.canAdminister ?? false);
-    final wholeAllowed =
-        wholeTarget != null && featureOn && wholeTarget.bookable && granted;
+    // #638 — the caller handed a roster: this actor may ASSIGN the space
+    // even without holding the personal grant (an active co-owner who is
+    // not flagged admin), exactly what the deleted level sheet allowed.
+    final canAssign = widget.members.isNotEmpty;
+    final wholeAllowed = wholeTarget != null &&
+        featureOn &&
+        wholeTarget.bookable &&
+        (granted || canAssign);
     // Visible conflicts disable the whole-space buttons up front; the
     // server re-checks (offices/levels elsewhere, series, races). #622
     // resolves the blocking RESERVATION (not just a bool) so the
@@ -680,7 +796,13 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
         ),
         if (priceLine != null) ...[
           const SizedBox(height: 4),
-          Text(priceLine, style: Theme.of(context).textTheme.bodySmall),
+          Text(
+            priceLine,
+            // #638 — the converged sheet carries the level sheet's own
+            // price line; the key travelled with it.
+            key: const ValueKey('space-price-line'),
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
         ],
         if (wholeTarget != null) ...[
           const SizedBox(height: 12),
@@ -700,23 +822,28 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
               label: Text(l10n?.kioskCheckIn ?? 'Check in'),
             ),
           ] else if (wholeAllowed) ...[
-            FilledButton.icon(
-              key: const ValueKey('space-checkin'),
-              onPressed: _busy || wholeConflict
-                  ? null
-                  : () => _create(
-                        deskId:
-                            widget.kind == SpaceKind.desk ? desk?.id : null,
-                        officeId:
-                            widget.kind == SpaceKind.office ? office?.id : null,
-                        levelId:
-                            widget.kind == SpaceKind.level ? level?.id : null,
-                        checkIn: true,
-                      ),
-              icon: const Icon(Icons.login_outlined),
-              label: Text(l10n?.kioskCheckIn ?? 'Check in'),
-            ),
-            const SizedBox(height: 8),
+            // Checking in seats ME here and now — that needs the
+            // personal grant, never the assignment right alone (#638).
+            if (granted) ...[
+              FilledButton.icon(
+                key: const ValueKey('space-checkin'),
+                onPressed: _busy || wholeConflict
+                    ? null
+                    : () => _create(
+                          deskId:
+                              widget.kind == SpaceKind.desk ? desk?.id : null,
+                          officeId: widget.kind == SpaceKind.office
+                              ? office?.id
+                              : null,
+                          levelId:
+                              widget.kind == SpaceKind.level ? level?.id : null,
+                          checkIn: true,
+                        ),
+                icon: const Icon(Icons.login_outlined),
+                label: Text(l10n?.kioskCheckIn ?? 'Check in'),
+              ),
+              const SizedBox(height: 8),
+            ],
             OutlinedButton.icon(
               key: const ValueKey('space-reserve'),
               // A visible conflict only blocks the NOW-based check-in:
@@ -732,6 +859,7 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
                         levelId:
                             widget.kind == SpaceKind.level ? level?.id : null,
                         name: title,
+                        granted: granted,
                       ),
               icon: const Icon(Icons.event_available_outlined),
               label: Text(l10n?.kioskReserve ?? 'Reserve'),
