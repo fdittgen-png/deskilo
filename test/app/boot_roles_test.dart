@@ -58,8 +58,7 @@ void main() {
     expect(find.text('Members & plans'), findsOneWidget);
   });
 
-  testWidgets(
-      'admin boots into the shell with everyone-calendar but no editor',
+  testWidgets('admin boots into the shell with member management but no editor',
       (tester) async {
     await bootAs(tester, isAdmin: true, isOwner: false);
 
@@ -77,15 +76,18 @@ void main() {
     expect(find.text('Members & plans'), findsOneWidget);
   });
 
-  testWidgets('worker boots into the shell with neither admin affordance',
-      (tester) async {
+  testWidgets('worker boots into the shell without the editor', (tester) async {
     await bootAs(tester, isAdmin: false, isOwner: false);
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
     expect(find.byIcon(Icons.design_services_outlined), findsNothing);
 
+    // The calendar's Mine/Everyone scope is NOT an admin affordance: the
+    // plan and the Reserve hub's week grid already show every member the
+    // whole community's occupancy, so gating it here only hid one view of
+    // information that was never private.
     await tester.tap(find.text('Calendar'));
     await tester.pumpAndSettle();
-    expect(find.text('Everyone'), findsNothing);
+    expect(find.text('Everyone'), findsOneWidget);
   });
 }

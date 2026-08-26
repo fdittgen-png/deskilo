@@ -25,7 +25,10 @@ import '../widgets/day_timeline.dart';
 import '../../../../core/time/workspace_time.dart';
 
 /// Reservations calendar (spec §6): month grid with markers + day list.
-/// Workers see their own bookings; admins can switch to everyone's.
+/// Every member can switch between their own bookings and everyone's: the
+/// Plan tab and the Reserve hub's week grid already show the whole
+/// community's occupancy to everybody, so gating this toggle on
+/// canAdminister only hid one view of information that was never private.
 class CalendarScreen extends ConsumerStatefulWidget {
   const CalendarScreen({super.key});
 
@@ -191,26 +194,23 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
           padding: AppSpacing.lgH,
           child: Row(
             children: [
-              if (myMember?.canAdminister ?? false)
-                Expanded(
-                  child: SegmentedButton<bool>(
-                    segments: [
-                      ButtonSegment(
-                        value: false,
-                        label: Text(l10n?.calendarMineTab ?? 'Mine'),
-                      ),
-                      ButtonSegment(
-                        value: true,
-                        label: Text(l10n?.calendarEveryoneTab ?? 'Everyone'),
-                      ),
-                    ],
-                    selected: {_everyone},
-                    onSelectionChanged: (selection) =>
-                        setState(() => _everyone = selection.first),
-                  ),
-                )
-              else
-                const Spacer(),
+              Expanded(
+                child: SegmentedButton<bool>(
+                  segments: [
+                    ButtonSegment(
+                      value: false,
+                      label: Text(l10n?.calendarMineTab ?? 'Mine'),
+                    ),
+                    ButtonSegment(
+                      value: true,
+                      label: Text(l10n?.calendarEveryoneTab ?? 'Everyone'),
+                    ),
+                  ],
+                  selected: {_everyone},
+                  onSelectionChanged: (selection) =>
+                      setState(() => _everyone = selection.first),
+                ),
+              ),
               // #187: list vs. timeline for the selected-day area — the
               // shared toggle idiom at full 48dp tap height (#211).
               ViewToggle<bool>(

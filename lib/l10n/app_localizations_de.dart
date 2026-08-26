@@ -1655,7 +1655,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Mitglieder einladen, Plan-Prozentsatz und Rolle festlegen und ihre Badges verwalten.';
 
   @override
-  String get helpHintMembersTopic => 'Mitglieder & Pläne';
+  String get helpHintMembersTopic => 'Mitglieder & Tarife';
 
   @override
   String get helpHintMembersTip2 =>
@@ -4563,7 +4563,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get inviteOwnerNote =>
-      'Es gibt keine Eigentümer-Einladung — nur ein Eigentümer kann Eigentum vergeben, unter Mitglieder & Pläne.';
+      'Es gibt keine Eigentümer-Einladung — nur ein Eigentümer kann Eigentum vergeben, unter Mitglieder & Tarife.';
 
   @override
   String get scanJoinTitle => 'Workspace-QR scannen';

@@ -95,7 +95,7 @@ class DayTimeline extends ConsumerStatefulWidget {
   /// May span the whole month; the timeline clips to [day] itself.
   final List<Reservation> reservations;
 
-  /// Whether the admin-gated Everyone filter is active — controls whether
+  /// Whether the Everyone filter is active — controls whether
   /// occupant names are drawn inside the blocks (parity with the list's
   /// subtitle).
   final bool everyone;
