@@ -363,7 +363,7 @@ Startet eine Zahlung nicht: **Einstellungen → Erweitert → Entwicklermodus** 
 
 Physische Karten zum Einchecken per Tap — ohne Telefon.
 
-1. **Einstellungen → RFID/NFC-Badges** (nur Inhaber). **NFC-Badge-Check-in** aktivieren, die **Gerätestatus-Zeile** lesen — *bereit*, *NFC in Android aus* oder *keine NFC-Hardware* (iPads haben keine).
+1. **Einstellungen → RFID/NFC-Badges** (nur Inhaber). **NFC-Badge-Check-in** aktivieren, die **Gerätestatus-Zeile** lesen — *bereit*, *NFC in Android aus* oder *keine NFC-Hardware*. Android-Telefone und -Tablets mit NFC sowie **iPhones** können einen Tag lesen; iPads haben überhaupt keine NFC-Hardware.
 2. Jedem Mitglied eine Karte: **Mitglieder & Tarife → das Mitglied → Badges → Karte registrieren**, Karte ans Gerät halten. Jede lesbare Chipkarte geht (MIFARE, NTAG…). Mitglieder können es auch **selbst**: **Einstellungen → Mein Badge** prägt ihr druckbares QR-Badge und registriert die eigene Karte.
 3. Am **Kiosk** (§10) einsetzen. Verlorene Karte im Badges-Dialog widerrufen; **ein widerrufenes Badge nach rechts wischen** löscht es endgültig (nach Bestätigung).
 
@@ -539,4 +539,4 @@ Minimale Daten: Name, E-Mail, Plan, Buchungen, Konto. Du kontrollierst Foto, Sta
 
 Android (Google Play), iPhone/iPad, Desktop — **macOS** (DMG: DesKilo in Programme ziehen) und **Windows** (MSI-Installer) aus jedem Release — und der **Browser**: dieselbe App, nichts zu installieren. Deine Daten folgen deinem Konto.
 
-Der Browser kann mehr, als man erwartet: **Web NFC funktioniert** in Chromium-Browsern unter Android über HTTPS — genau so wird ein Stuhl-Tag vom Telefon-Browser aus eingerichtet. Was er nicht kann, ist wie der Kiosk per Kamera einen QR-Code scannen. Alles andere — Plan, Buchungen, Mitglieder, Geld, Rechnungen, PDFs — ist dieselbe App. Beim ersten Start des macOS-DMG: Rechtsklick → *Öffnen* (die Build ist noch nicht von Apple notariell beglaubigt).
+Der Browser kann mehr, als man erwartet: **Web NFC funktioniert** in Chromium-Browsern unter Android über HTTPS — so lässt sich ein Stuhl-Tag vom Telefon-Browser aus einrichten — die installierten **Android- und iPhone-Apps lesen Tags direkt**, meist der bequemere Weg. Was er nicht kann, ist wie der Kiosk per Kamera einen QR-Code scannen. Alles andere — Plan, Buchungen, Mitglieder, Geld, Rechnungen, PDFs — ist dieselbe App. Beim ersten Start des macOS-DMG: Rechtsklick → *Öffnen* (die Build ist noch nicht von Apple notariell beglaubigt).

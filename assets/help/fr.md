@@ -424,7 +424,7 @@ Séparez **strictement test et production** : chaque prestataire a des clés par
 
 Des cartes physiques pour pointer d'un geste — sans téléphone.
 
-1. Ouvrez **Réglages → Badges RFID/NFC** (propriétaire uniquement). Activez **Pointage par badge NFC** et lisez la **ligne d'état de l'appareil** — elle distingue *prêt*, *NFC coupé dans les réglages Android* et *pas de matériel NFC* (les iPad n'en ont pas).
+1. Ouvrez **Réglages → Badges RFID/NFC** (propriétaire uniquement). Activez **Pointage par badge NFC** et lisez la **ligne d'état de l'appareil** — elle distingue *prêt*, *NFC coupé dans les réglages Android* et *pas de matériel NFC*. Les téléphones et tablettes Android équipés NFC, ainsi que les **iPhone**, savent lire une puce ; les iPad n'ont aucun matériel NFC.
 2. Donnez une carte à chaque membre : **Membres et forfaits → le membre → Badges → Enregistrer une carte**, puis présentez sa carte à l'appareil. Toute carte à puce lisible convient (MIFARE, NTAG…). Les membres le font aussi **eux-mêmes** : **Réglages → Mon badge** émet leur badge QR imprimable et enregistre leur carte — sans admin.
 3. Utilisez-les à une **borne** (§10) : le membre présente la carte pour réserver ou pointer. Révoquez une carte perdue depuis le même dialogue Badges ; **balayez un badge révoqué vers la droite pour le supprimer** définitivement (après confirmation).
 
@@ -491,7 +491,7 @@ Montez une tablette Android ou un iPad près de la porte :
 
 **Ce que le mur ne peut délibérément pas faire.** Touchez une place que quelqu'un d'autre détient et la borne **nomme le détenteur et vous renvoie à votre téléphone** : un appareil mural n'envoie jamais de message au nom d'un membre, puisque n'importe qui devant lui le pourrait. L'action *Lui écrire* pour un espace bloqué vit dans l'app (§4b). Tout ce que la borne *propose* passe par les mêmes règles serveur que l'app — garde-fou du jour passé, obligation pour une arrivée spontanée de commencer aujourd'hui, règle du jour unique comprises — la borne refuse donc exactement ce que le plan refuse.
 
-Votre identité n'existe que le temps de l'opération : le justificatif ne part que **pour cette opération** — une fois pour vous identifier, une fois pour exécuter l'action — et **rien n'est stocké**, ni sur la tablette ni ailleurs. La réservation est faite **à votre nom**, et vous êtes « déconnecté » sitôt l'opération finie. (La connexion Google par opération reste sur la feuille de route ; **les iPad n'ont pas de NFC**, la voie QR caméra y est la bonne.)
+Votre identité n'existe que le temps de l'opération : le justificatif ne part que **pour cette opération** — une fois pour vous identifier, une fois pour exécuter l'action — et **rien n'est stocké**, ni sur la tablette ni ailleurs. La réservation est faite **à votre nom**, et vous êtes « déconnecté » sitôt l'opération finie. (La connexion Google par opération reste sur la feuille de route ; **les iPad n'ont aucun matériel NFC**, la voie QR caméra y est la bonne.)
 
 ## 11. Facturation (propriétaires et admins facturiers)
 
@@ -604,4 +604,4 @@ Données minimales : nom, e-mail, forfait, réservations, compte. Vous contrôle
 
 Android (Google Play), iPhone/iPad, bureau — **macOS** (un DMG : glissez DesKilo dans Applications) et **Windows** (un installeur MSI) construits à chaque version — et le **navigateur** : la même app, rien à installer, à l'adresse publiée par votre espace. Vos données suivent votre compte : une table réservée sur téléphone apparaît dans un onglet de navigateur la seconde d'après.
 
-Le navigateur en fait plus qu'on ne croit : le **Web NFC fonctionne** dans les navigateurs Chromium sur Android en HTTPS — c'est précisément ainsi qu'un tag de chaise se configure depuis le navigateur d'un téléphone. Ce qu'il ne sait pas faire, c'est scanner un QR avec la caméra à la manière de la borne. Tout le reste — plan, réservations, membres, argent, factures, PDF — est la même app. Au premier lancement du DMG macOS, clic droit → *Ouvrir* : la build n'est pas encore notariée par Apple, un double-clic simple déclenche l'avertissement Gatekeeper.
+Le navigateur en fait plus qu'on ne croit : le **Web NFC fonctionne** dans les navigateurs Chromium sur Android en HTTPS — c'est une façon de configurer un tag de chaise depuis le navigateur d'un téléphone — les applications **Android et iPhone installées lisent les tags directement**, ce qui est en général plus simple. Ce qu'il ne sait pas faire, c'est scanner un QR avec la caméra à la manière de la borne. Tout le reste — plan, réservations, membres, argent, factures, PDF — est la même app. Au premier lancement du DMG macOS, clic droit → *Ouvrir* : la build n'est pas encore notariée par Apple, un double-clic simple déclenche l'avertissement Gatekeeper.

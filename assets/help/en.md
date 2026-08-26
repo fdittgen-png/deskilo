@@ -424,7 +424,7 @@ Keep **test and live environments strictly apart**: every provider has separate 
 
 Physical cards let people check in with a tap — no phone needed.
 
-1. Open **Settings → RFID / NFC badges** (owner only). Switch **Enable NFC badge check-in** on, and read the **device status** line — it distinguishes *ready*, *NFC turned off in Android settings*, and *no NFC hardware* (iPads have none).
+1. Open **Settings → RFID / NFC badges** (owner only). Switch **Enable NFC badge check-in** on, and read the **device status** line — it distinguishes *ready*, *NFC turned off in Android settings*, and *no NFC hardware*. Android phones and tablets with NFC, and **iPhones**, can read a tag; iPads have no NFC hardware at all.
 2. Give each member a card: **Members & plans → the member → Badges → Register a card**, then hold their card to the device. Any card with a readable chip works (MIFARE, NTAG…). Members can also do it **themselves**: **Settings → My badge** mints their printable QR badge and registers their own card — no admin needed.
 3. Use them at a **kiosk** (§10): the member taps the card to reserve or check in. Revoke a lost card from the same Badges dialog; **swipe a revoked badge to the right to delete it** for good (after a confirmation).
 
@@ -491,7 +491,7 @@ Mount an Android tablet or iPad by the door and let people check in as they walk
 
 **What the wall deliberately cannot do.** Tap a seat someone else holds and the kiosk **names the holder and points you at your phone**: a wall device never sends a message on a member's behalf, because anyone standing in front of it could. The *Message them* action for a blocked space lives in the app (§4b). Everything the kiosk *does* offer is checked by the same server rules as the app — including the past-day guard, the walk-up-must-start-today guard and the same-day rule — so the wall refuses exactly what the plan refuses.
 
-Your identity exists only for the moment of the operation: the credential is sent **only for that operation** — once to identify you, once to carry out the action — and **nothing is stored**, on the tablet or anywhere else. The booking is made **in your name**, and you are "signed out" the instant it completes. (Per-operation Google sign-in is still on the roadmap; **iPads have no NFC**, so there the camera QR path is the way.)
+Your identity exists only for the moment of the operation: the credential is sent **only for that operation** — once to identify you, once to carry out the action — and **nothing is stored**, on the tablet or anywhere else. The booking is made **in your name**, and you are "signed out" the instant it completes. (Per-operation Google sign-in is still on the roadmap; **iPads have no NFC hardware**, so on an iPad the camera QR path is the way.)
 
 ## 11. Invoicing (owners & billing admins)
 
@@ -604,4 +604,4 @@ Minimal data: name, email, plan, bookings, ledger. You control your photo, your 
 
 Android (Google Play), iPhone/iPad, desktop — **macOS** (a DMG: drag DesKilo into Applications) and **Windows** (an MSI installer) built from every release — and the **browser**: the same app, nothing to install, at the address your workspace publishes. Your data follows your account, so a desk booked on a phone shows up in a browser tab a second later.
 
-The browser does more than you might expect: **Web NFC works** in Chromium browsers on Android over HTTPS, which is exactly how a chair tag gets configured from a phone browser. What it cannot do is scan a QR code with the camera the way the kiosk does. Everything else — plan, bookings, members, money, invoices, PDF downloads — is the same app. On first launch of the macOS DMG, right-click the app and choose *Open*: the build is not yet notarised by Apple, so a plain double-click gets a Gatekeeper warning.
+The browser does more than you might expect: **Web NFC works** in Chromium browsers on Android over HTTPS, which is one way a chair tag gets configured from a phone browser — the installed **Android and iPhone apps read tags directly**, so that is usually the easier route. What it cannot do is scan a QR code with the camera the way the kiosk does. Everything else — plan, bookings, members, money, invoices, PDF downloads — is the same app. On first launch of the macOS DMG, right-click the app and choose *Open*: the build is not yet notarised by Apple, so a plain double-click gets a Gatekeeper warning.
