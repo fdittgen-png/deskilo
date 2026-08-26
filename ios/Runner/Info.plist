@@ -81,5 +81,7 @@
 	<string>DesKilo uses the camera to scan workspace QR codes so you can join a coworking space.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NFCReaderUsageDescription</key>
+	<string>Hold your iPhone near a chair's tag to link it to that seat, or near a badge to register it.</string>
 </dict>
 </plist>

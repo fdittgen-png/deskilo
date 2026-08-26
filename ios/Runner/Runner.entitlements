@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- #657 — Core NFC tag reading, so an owner can hold the phone to a
+	     chair and fill its NFC/RFID tag field instead of typing hex.
+	     TAG (rather than NDEF) is what exposes the tag identifier, which
+	     is the badge credential the server stores. -->
+	<key>com.apple.developer.nfc.readersession.formats</key>
+	<array>
+		<string>TAG</string>
+	</array>
+</dict>
+</plist>

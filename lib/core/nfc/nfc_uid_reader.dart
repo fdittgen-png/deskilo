@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:nfc_manager/nfc_manager_android.dart';
+import 'package:nfc_manager/nfc_manager_ios.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../trace/trace_logger.dart';
@@ -14,10 +15,20 @@ part 'nfc_uid_reader.g.dart';
 /// The UID is normalized to the badge credential contract shared with
 /// `register_nfc_badge`: lowercase hex, no separators. Android-native
 /// via nfc_manager; on the WEB (#604) Chromium-on-Android's NDEFReader
-/// covers the owner-side tag-configuration forms. iPads have no NFC
-/// hardware and iPhone kiosks would need the CoreNFC entitlement, so
-/// every other platform reads as unavailable and the UI simply hides
-/// the tap path.
+/// covers the owner-side tag-configuration forms.
+///
+/// #657 — iPhone reads tags too, via Core NFC. This was excluded on the
+/// reasoning that "iPhone kiosks would need the CoreNFC entitlement",
+/// which conflated two things: a WALL KIOSK left polling all day, and an
+/// OWNER holding their phone to a chair to configure its tag. The second
+/// is a foreground, user-initiated scan — exactly what Core NFC is for —
+/// and it is the flow the tag-configuration forms exist to serve. The
+/// entitlement now ships (ios/Runner/Runner.entitlements) with the
+/// Info.plist usage string beside it.
+///
+/// iPads genuinely have no NFC hardware, and `checkAvailability()`
+/// reports that, so they still hide the tap path without a platform
+/// check of our own.
 /// The precise NFC state of THIS device — the kiosk sheet shows it so a
 /// silent tap path is diagnosable at the wall (field report: "the RFID
 /// was not read" with no way to tell whether the pad lacks hardware, has
@@ -42,7 +53,8 @@ class NfcUidReader {
       // means ready and a refused scan reports through startRead.
       return webNfcSupported() ? NfcStatus.ready : NfcStatus.unsupported;
     }
-    if (defaultTargetPlatform != TargetPlatform.android) {
+    if (defaultTargetPlatform != TargetPlatform.android &&
+        defaultTargetPlatform != TargetPlatform.iOS) {
       return NfcStatus.unsupported;
     }
     try {
@@ -102,11 +114,26 @@ class NfcUidReader {
           NfcPollingOption.iso15693,
         },
         onDiscovered: (tag) {
-          final id = NfcTagAndroid.from(tag)?.id;
+          final id = _uidOf(tag);
           if (id == null || id.isEmpty) return;
           onUid(normalizeUid(id));
         },
       );
+
+  /// The tag's identifier, whichever platform and technology delivered
+  /// it. Android hands back one `id` for every technology; Core NFC
+  /// splits it per protocol, and a chair tag is normally MiFare
+  /// (NTAG/Ultralight) or ISO 15693 — but read all four so an unusual
+  /// tag is not silently ignored, which is indistinguishable from a
+  /// broken reader to whoever is holding the phone.
+  static Uint8List? _uidOf(NfcTag tag) {
+    final android = NfcTagAndroid.from(tag)?.id;
+    if (android != null && android.isNotEmpty) return android;
+    return MiFareIos.from(tag)?.identifier ??
+        Iso15693Ios.from(tag)?.identifier ??
+        Iso7816Ios.from(tag)?.identifier ??
+        FeliCaIos.from(tag)?.currentIDm;
+  }
 
   Future<void> stop() async {
     if (kIsWeb) return webNfcStop();
