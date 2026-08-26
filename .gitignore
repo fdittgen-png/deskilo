@@ -28,6 +28,10 @@ key.properties
 .env
 *.local
 .claude/settings.local.json
+# .claude/settings.json IS tracked on purpose: it carries the shared MCP
+# permission allow-list, so a fresh clone gets the same tooling posture.
+# Per-machine opt-ins (the Supabase write tools) live in the local file above.
+.claude/worktrees/
 
 # macOS
 .DS_Store

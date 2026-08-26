@@ -6,11 +6,14 @@
 // / 1440 when absent; nothing in the app could ever set them, so an
 // owner met the limits only by hitting them.
 //
-// The client mirror MUST agree with the server's fallbacks, because an
-// untouched workspace stores no key at all — what the Availability
-// screen shows is the server's own default, not a stored value. The
-// pins below read the fallbacks straight out of the migration so the two
-// cannot drift apart silently.
+// The client mirror MUST agree with the server's fallbacks. Verified
+// live against the hosted project: the `workspaces.booking_rules` column
+// DEFAULT (migration 0006) already writes all three keys, so in practice
+// every existing row carries 90 / 30 / 1440 explicitly — the coalesce is
+// the fallback for a row whose booking_rules was replaced wholesale, not
+// the normal path. Either way the number the screen shows has to be the
+// number the server would use, so the pins below read the fallbacks
+// straight out of the migration and break if the two ever diverge.
 import 'dart:io';
 
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
@@ -18,7 +21,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('reading the wire', () {
-    test('an untouched workspace reads the server fallbacks', () {
+    test('an absent key reads the server fallback', () {
       const p = BookingPolicies();
       expect(p.advanceHorizonDays, 90);
       expect(p.minDurationMinutes, 30);

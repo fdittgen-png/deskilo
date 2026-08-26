@@ -40,3 +40,45 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
 
 - Branch off `master`; conventional commits; PRs < 400 lines (excluding generated); squash-merge; `Closes #NN`.
 - Forbidden: direct commits to `master`, force-push to `master`, `--no-verify`, amending pushed commits.
+
+## Agent tooling (MCP)
+
+The repo ships its own MCP configuration so a fresh clone gets the same tools with no
+setup: `.mcp.json` declares the servers, `.claude/settings.json` pre-approves them and
+carries the permission allow-list. `.claude/settings.local.json` stays git-ignored for
+per-machine opt-ins.
+
+**Dart & Flutter server** (`dart mcp-server`, official, bundled in the Dart SDK). Prefer
+it over shelling out — it is the difference between reading a verdict and grepping a
+1500-line log:
+
+- `run_tests` instead of `flutter test`. On failure it returns the failing test, expected
+  vs. actual and the source location, and nothing else. **Read the text, not `isError`** —
+  a failing run still reports `isError: false` and says *"returned a non-zero exit code"*
+  in the body. Same trap as a piped exit code.
+- `analyze_files` instead of `flutter analyze`; `dart_format`; `pub_dev_search` before
+  adding a dependency.
+- `resolve_workspace_symbol` / `hover` / `signature_help` instead of grepping for a symbol
+  — real analyzer data, not text matching. Each call costs 15–35 s (it spins up an
+  analysis server), so plain `grep` still wins for a quick literal search.
+- `launch_app` + `get_widget_tree` + `get_runtime_errors` when a question is about what the
+  running app actually renders.
+
+Version note: `dart_mcp_server` on pub (1.1.x) needs **Dart ≥ 3.12** and we are on 3.11.5,
+so the SDK-bundled 0.1.2+1 is the only route today. When the SDK moves, switch `.mcp.json`
+to `dart pub global run dart_mcp_server` for the newer `vm_service` tool and the blocking
+analysis call.
+
+**Supabase.** The tracked allow-list holds read-only tools only (`list_migrations`,
+`list_tables`, `get_advisors`, …). `execute_sql`, `apply_migration` and
+`deploy_edge_function` reach the hosted project, so each developer opts in for themselves
+in `.claude/settings.local.json`; the allow-list removes a prompt, never a credential.
+Project-destructive tools (`pause_project`, `delete_branch`, `reset_branch`,
+`create_project`) are explicitly denied.
+
+`execute_sql` is what makes the **rolled-back live-RPC harness** possible: one
+`DO $harness$` block, fixtures and `set_config('request.jwt.claims', …)` impersonation at
+top level, per-case `begin/exception` subtransactions, and a final
+`raise exception 'HARNESS_RESULTS %'` to smuggle the JSON out while aborting everything.
+That harness has caught defects no unit test would have — always run it after applying a
+migration that changes an RPC.
