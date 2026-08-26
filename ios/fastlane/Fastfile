@@ -116,10 +116,79 @@ platform :ios do
     match(type: "appstore", api_key: key, readonly: false)
   end
 
+  # #659 — the capabilities this app's entitlements depend on. A
+  # capability lives on the App ID in Apple's Developer portal, NOT in the
+  # repo: shipping an entitlement the App ID does not carry gets it
+  # stripped at signing (or fails outright), and the failure surfaces only
+  # on a device, as a feature that is visibly present and silently does
+  # nothing. Declaring the list here makes it reviewable and repeatable
+  # instead of a thing someone once clicked.
+  #
+  # Purely ADDITIVE and idempotent: an already-enabled capability is a
+  # no-op, and nothing is ever removed — this lane must never be able to
+  # take a capability away from a shipping app.
+  REQUIRED_CAPABILITIES = [
+    # #657: Core NFC tag reading, so an owner can hold the phone to a
+    # chair and fill its NFC/RFID tag field instead of typing hex.
+    "NFC_TAG_READING",
+  ].freeze
+
+  desc "Enable the App ID capabilities our entitlements need (idempotent)."
+  desc "Additive only — never removes a capability. Runs before the profile"
+  desc "is regenerated, because a profile can only carry a capability the"
+  desc "App ID already has."
+  lane :sync_capabilities do
+    require "spaceship"
+    Spaceship::ConnectAPI.token =
+      Spaceship::ConnectAPI::Token.from(hash: asc_api_key)
+
+    identifier = "de.deskilo.app"
+    bundle_id = Spaceship::ConnectAPI::BundleId.find(identifier)
+    UI.user_error!("No bundle id record for #{identifier}") if bundle_id.nil?
+
+    existing = bundle_id.get_capabilities.map(&:capability_type)
+    UI.message("App ID #{identifier} currently has: #{existing.sort.join(', ')}")
+
+    REQUIRED_CAPABILITIES.each do |capability|
+      if existing.include?(capability)
+        UI.success("#{capability} already enabled — nothing to do.")
+        next
+      end
+      begin
+        Spaceship::ConnectAPI::BundleIdCapability.create(
+          bundle_id_id: bundle_id.id,
+          capability_type: capability,
+        )
+        UI.success("Enabled #{capability} on #{identifier}.")
+      rescue => ex
+        message = ex.message.to_s
+        if message =~ /already|exist|duplicat/i
+          UI.success("#{capability} was already enabled.")
+        elsif message =~ /forbidden|not allow|permission/i
+          # Same shape as the Users-and-Access limitation: say which key
+          # right is missing rather than leaving a bare 403.
+          UI.user_error!(
+            "Cannot enable #{capability}: the App Store Connect API key " \
+            "lacks Developer-portal write permission. Re-issue the key " \
+            "with the App Manager (or Admin) role, or enable it by hand " \
+            "in Certificates, Identifiers & Profiles → Identifiers → " \
+            "#{identifier} → Capabilities. (#{message})"
+          )
+        else
+          raise
+        end
+      end
+    end
+  end
+
   desc "Repair/init: (re)generate the appstore profile for de.deskilo.app into"
   desc "the shared certs repo. Registers the bundle id at Apple if missing."
   desc "Needs a WRITE deploy key. Run via the workflow's sync_certs input."
   lane :match_sync_appstore do
+    # #659: capabilities FIRST — match can only mint a profile carrying a
+    # capability the App ID already holds, so doing this after would
+    # regenerate the same profile without the new entitlement.
+    sync_capabilities
     # force: true so entitlement changes are picked up too (tankstellen #3467).
     match(type: "appstore", api_key: asc_api_key, readonly: false, force: true)
   end
