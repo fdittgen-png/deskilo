@@ -1959,6 +1959,14 @@
   "planCheckInNotYetError": "L'arrivée ouvre 15 minutes avant le début.",
   "planCheckInOverError": "Cette réservation est terminée — s'installer n'est plus possible.",
   "planCheckInOpensAt": "L'arrivée ouvre à {time}",
+  "planCheckInOpensOn": "Le check-in ouvre le {date}",
+  "@planCheckInOpensOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "planCheckInFor": "Installer {name}",
   "planOverruleRemove": "Retirer la réservation (outrepasser)",
   "planOverruleHint": "{name} et tous les admins seront notifiés.",

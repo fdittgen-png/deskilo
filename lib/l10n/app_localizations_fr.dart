@@ -3686,6 +3686,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String planCheckInOpensOn(String date) {
+    return 'Le check-in ouvre le $date';
+  }
+
+  @override
   String planCheckInFor(String name) {
     return 'Installer $name';
   }

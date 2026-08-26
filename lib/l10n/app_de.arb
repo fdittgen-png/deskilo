@@ -1959,6 +1959,14 @@
   "planCheckInNotYetError": "Einchecken ist ab 15 Minuten vor Beginn möglich.",
   "planCheckInOverError": "Diese Reservierung ist vorbei — Einchecken ist nicht mehr möglich.",
   "planCheckInOpensAt": "Einchecken ab {time} möglich",
+  "planCheckInOpensOn": "Check-in öffnet am {date}",
+  "@planCheckInOpensOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "planCheckInFor": "{name} einchecken",
   "planOverruleRemove": "Reservierung entfernen (übersteuern)",
   "planOverruleHint": "{name} und alle Admins werden benachrichtigt.",

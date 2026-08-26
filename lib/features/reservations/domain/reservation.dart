@@ -99,6 +99,26 @@ sealed class Reservation with _$Reservation {
         WorkspaceTime.dateOf(startsAt) == WorkspaceTime.dateOf(now);
   }
 
+  /// The instant the check-in window OPENS — derived from the very rule
+  /// [checkInWindowOpen] gates on (#636). The disabled tile used to
+  /// announce `start − 15 min` while the gate had already widened the
+  /// leeway to the grid step (or opened for the whole day), so it named
+  /// a time the gate did not use — worse than saying nothing.
+  DateTime checkInOpensAt({BookingGranularity? granularity}) {
+    if (granularity != null &&
+        (granularity.isDayBased || granularity == BookingGranularity.hours)) {
+      // The slot IS the working day: the window opens with that day.
+      final day = WorkspaceTime.dateOf(startsAt);
+      return WorkspaceTime.at(day.year, day.month, day.day);
+    }
+    var leeway = checkInLeeway;
+    final step = granularity?.stepMinutes;
+    if (step != null && step > checkInLeeway.inMinutes) {
+      leeway = Duration(minutes: step);
+    }
+    return startsAt.subtract(leeway);
+  }
+
   /// Active and covering the instant [at] (start inclusive, end exclusive).
   bool coversInstant(DateTime at) =>
       isActive && !at.isBefore(startsAt) && at.isBefore(endsAt);

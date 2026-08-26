@@ -4245,6 +4245,14 @@
     "description": "Error/hint when checking in after the reservation ended (#408)"
   },
   "planCheckInOpensAt": "Check-in opens at {time}",
+  "planCheckInOpensOn": "Check-in opens on {date}",
+  "@planCheckInOpensOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "@planCheckInOpensAt": {
     "description": "Disabled check-in tile hint with the window-opening time (#408)",
     "placeholders": {

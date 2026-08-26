@@ -188,4 +188,48 @@ void main() {
       );
     });
   });
+
+  group('the tile announces the instant the gate uses (#636)', () {
+    test('minute grids: the opening follows the grid step, not a flat 15',
+        () {
+      final r = _row(start: _at(12), end: _at(17));
+      // 30-minute grid → opens at 11:30, NOT 11:45.
+      expect(
+        r.checkInOpensAt(granularity: BookingGranularity.minutes30),
+        _at(11, 30),
+      );
+      // A grid shorter than the flat leeway keeps the 15 minutes.
+      expect(
+        r.checkInOpensAt(granularity: BookingGranularity.minutes5),
+        _at(11, 45),
+      );
+      // And the announced instant is exactly where the gate flips.
+      final opens =
+          r.checkInOpensAt(granularity: BookingGranularity.minutes30);
+      expect(
+        r.checkInWindowOpen(opens, granularity: BookingGranularity.minutes30),
+        isTrue,
+      );
+      expect(
+        r.checkInWindowOpen(opens.subtract(const Duration(minutes: 1)),
+            granularity: BookingGranularity.minutes30),
+        isFalse,
+      );
+    });
+
+    test('day-based: the window opens with the booking OWN day, so the '
+        'tile names a day rather than a clock time', () {
+      final tomorrow = kTestNow.add(const Duration(days: 1));
+      final r = _row(
+        start: DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 12),
+        end: DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 17),
+      );
+      final opens =
+          r.checkInOpensAt(granularity: BookingGranularity.halfDay);
+      expect(WorkspaceTime.dateOf(opens),
+          WorkspaceTime.dateOf(r.startsAt),
+          reason: 'the whole booked day is the window');
+      expect(opens.isBefore(r.startsAt), isTrue);
+    });
+  });
 }

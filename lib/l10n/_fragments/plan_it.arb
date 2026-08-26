@@ -13,6 +13,14 @@
   "planCheckInNotYetError": "Il check-in apre 15 minuti prima dell'inizio.",
   "planCheckInOverError": "Questa prenotazione è terminata — il check-in non è più possibile.",
   "planCheckInOpensAt": "Il check-in apre alle {time}",
+  "planCheckInOpensOn": "Il check-in apre il {date}",
+  "@planCheckInOpensOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "planCheckInFor": "Fai il check-in di {name}",
   "planOverruleRemove": "Rimuovi la prenotazione (scavalca)",
   "planOverruleHint": "{name} e tutti gli admin saranno avvisati.",
