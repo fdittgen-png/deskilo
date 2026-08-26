@@ -167,7 +167,9 @@ const Map<String, int> _baseline = {
   // 700→720 (2026-08-05): #504 the invoice-writeoff event rendering.
   // 720→830 (2026-08-23): #598 feed regrouping — the group-by chip
   // line, the group headers with the ungroup symbol and their labels.
-  'lib/features/events/presentation/screens/events_screen.dart': 830,
+  // 830→850 (2026-08-25): #636 the feed marks an auto-settled deletion
+  // (#629) apart from a peer-reviewed one.
+  'lib/features/events/presentation/screens/events_screen.dart': 850,
   // 680→700 (2026-08-04): #454 owner-template intro/footer blocks.
   // 700→790: #470 the banded report renderer (_reportWidgets) and the
   // header/body/footer band branches.

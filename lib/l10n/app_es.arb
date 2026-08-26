@@ -457,6 +457,10 @@
   "@eventReservationDeleteUnused": {
     "description": "Reservation deletion requests (#492)"
   },
+  "eventAutoValidated": "Validado automáticamente",
+  "@eventAutoValidated": {
+    "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
+  },
   "reservationDeleteRequestButton": "Solicitar eliminación",
   "@reservationDeleteRequestButton": {
     "description": "Reservation deletion requests (#492)"

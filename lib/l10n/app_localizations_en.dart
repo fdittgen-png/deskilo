@@ -1126,6 +1126,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventReservationDeleteUnused => 'never used';
 
   @override
+  String get eventAutoValidated => 'Auto-validated';
+
+  @override
   String get reservationDeleteRequestButton => 'Request deletion';
 
   @override

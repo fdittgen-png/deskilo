@@ -183,4 +183,93 @@ void main() {
       expect(header.toLowerCase(), contains('never be generalized'));
     });
   });
+
+  // #636 — 0119 shipped the two switches ENTANGLED: every owner also
+  // carries is_admin (0001 seeds both, 0058 sets both), so the admin arm
+  // matched owners too and the admin switch alone auto-settled the
+  // owner's own requests. 0121 regenerates the function with the admin
+  // arm excluding owners and NOTHING else changed.
+  group('server contract (migration 0121, #636)', () {
+    final sql =
+        File('supabase/migrations/0121_autovalidate_independence.sql')
+            .readAsStringSync();
+
+    String body(String name) {
+      final start = sql.indexOf('create or replace function public.$name');
+      expect(start, greaterThanOrEqualTo(0), reason: '$name must exist');
+      final next = sql.indexOf('create or replace function', start + 1);
+      return next < 0 ? sql.substring(start) : sql.substring(start, next);
+    }
+
+    test('the admin arm excludes owners — the ADMIN switch never '
+        'settles an owner request', () {
+      final fn = body('request_reservation_deletion');
+      expect(
+        fn,
+        contains('v_member.is_admin and not v_member.is_owner'),
+        reason: 'without it the admin switch also auto-settles the owner, '
+            'making the owner switch redundant',
+      );
+      // The entangled 0119 expression must be gone.
+      expect(
+        fn,
+        isNot(contains('v_member.is_admin and '
+            'coalesce(v_policy.auto_validate_admin, false)')),
+      );
+      expect(
+        fn,
+        contains('coalesce(v_policy.auto_validate_admin, false)'),
+        reason: 'the admin arm still keys on its OWN flag',
+      );
+    });
+
+    test('the owner arm is untouched — an owner is auto-settled by the '
+        'OWNER switch and only by it', () {
+      final fn = body('request_reservation_deletion');
+      expect(
+        fn,
+        contains('v_member.is_owner and '
+            'coalesce(v_policy.auto_validate_owner, false)'),
+      );
+      expect(fn, isNot(contains('not v_member.is_admin')),
+          reason: 'the owner arm asks nothing about the admin bit');
+    });
+
+    test('everything else in the body is byte-identical to 0119', () {
+      final v3 = File(
+        'supabase/migrations/0119_simultaneous_and_autovalidate.sql',
+      ).readAsStringSync();
+      String slice(String source) {
+        final start = source
+            .indexOf('create or replace function '
+                'public.request_reservation_deletion');
+        final next =
+            source.indexOf('create or replace function', start + 1);
+        return next < 0
+            ? source.substring(start)
+            : source.substring(start, next);
+      }
+
+      // Strip comment lines and the v_auto assignment (the only patch)
+      // from both bodies: what remains must match exactly.
+      String skeleton(String fn) => fn
+          .split('\n')
+          .where((l) => !l.trimLeft().startsWith('--'))
+          .join('\n')
+          .replaceAll(RegExp(r'v_auto :=[\s\S]*?;\n'), '')
+          .replaceAll(RegExp(r'\n\s*\n'), '\n');
+      expect(skeleton(body('request_reservation_deletion')),
+          skeleton(slice(v3)));
+    });
+
+    test('the settled shape survives the regeneration', () {
+      final fn = body('request_reservation_deletion');
+      expect(fn,
+          contains("case when v_auto then 'confirmed' else 'pending' end"));
+      expect(fn, contains("values (v_id, null, 'accept', true)"));
+      expect(fn, contains("jsonb_build_object('auto_validated', true)"));
+      expect(fn, contains("and event_type = 'reservation_delete'"));
+      expect(fn, isNot(contains('event_type is null')));
+    });
+  });
 }

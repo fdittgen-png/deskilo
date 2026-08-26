@@ -295,6 +295,15 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     return paymentMethodLabel(l10n, method);
   }
 
+  /// #636 — an auto-settled deletion (#629) is a rule firing, not a
+  /// colleague agreeing, and the feed has to say which one happened.
+  /// The server stamps `payload.auto_validated` on exactly those events;
+  /// a peer-reviewed deletion carries no such key and renders as before.
+  String? _autoValidatedNote(AppLocalizations? l10n, WorkspaceEvent event) {
+    if (event.payload['auto_validated'] != true) return null;
+    return l10n?.eventAutoValidated ?? 'Auto-validated';
+  }
+
   String _when(WorkspaceEvent event) {
     final start = event.payloadStart;
     final end = event.payloadEnd;
@@ -650,7 +659,16 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(_when(event)),
+                            // #636 — the same `· suffix` idiom the
+                            // pending card uses for quorum progress:
+                            // present only when the server flagged the
+                            // event as self-settled.
+                            Text(
+                              switch (_autoValidatedNote(l10n, event)) {
+                                final note? => '${_when(event)} · $note',
+                                null => _when(event),
+                              },
+                            ),
                             // #154 — how the money moved; absent /
                             // pre-#154 payloads render no method line.
                             if (_methodLine(l10n, event)

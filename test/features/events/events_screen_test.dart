@@ -627,4 +627,100 @@ void main() {
       }
     });
   });
+
+  // #636 — the database already knew (payload.auto_validated + a
+  // decided_by_system decision row), but no client surface said so. A
+  // deletion the rule settled itself must read differently from one a
+  // colleague reviewed.
+  group('an auto-settled deletion is marked in the feed (#636)', () {
+    WorkspaceEvent deletionEvent({
+      String id = 'evt-del',
+      bool auto = false,
+    }) =>
+        WorkspaceEvent(
+          id: id,
+          workspaceId: 'ws-1',
+          type: EventType.reservationDelete,
+          action: EventAction.submitted,
+          actorMemberId: 'member-1',
+          subjectMemberId: 'member-1',
+          payload: {
+            'reservation_id': 'res-1',
+            'starts_at': '2026-07-08T09:00:00Z',
+            'ends_at': '2026-07-08T17:00:00Z',
+            'was_checked_in': true,
+            if (auto) 'auto_validated': true,
+          },
+          status: EventStatus.confirmed,
+          createdAt: kTestNow,
+        );
+
+    /// The subtitle's status lines — the row's "when", where the marker
+    /// hangs as a `· suffix` (the pending card's quorum idiom). One
+    /// entry per deletion row on screen, in feed order.
+    List<String> statusLines(WidgetTester tester) {
+      final tiles = find.ancestor(
+        of: find.textContaining('asks to delete'),
+        matching: find.byType(ListTile),
+      );
+      return [
+        for (var i = 0; i < tiles.evaluate().length; i++)
+          tester
+              .widget<Text>(
+                find
+                    .descendant(of: tiles.at(i), matching: find.byType(Text))
+                    .at(1),
+              )
+              .data!,
+      ];
+    }
+
+    String statusLine(WidgetTester tester) {
+      final lines = statusLines(tester);
+      expect(lines, hasLength(1));
+      return lines.single;
+    }
+
+    testWidgets('the payload flag shows the marker', (tester) async {
+      await pumpEvents(tester, seed: [deletionEvent(auto: true)]);
+
+      expect(find.textContaining('Auto-validated'), findsOneWidget);
+      expect(statusLine(tester), contains('· Auto-validated'));
+      // The event line itself is untouched — the marker rides the
+      // status line, it does not rewrite what happened.
+      expect(find.textContaining('asks to delete'), findsOneWidget);
+    });
+
+    testWidgets('a peer-reviewed deletion renders exactly as before',
+        (tester) async {
+      await pumpEvents(tester, seed: [deletionEvent()]);
+
+      expect(find.textContaining('Auto-validated'), findsNothing);
+      expect(statusLine(tester), isNot(contains('·  ')));
+      expect(find.textContaining('asks to delete'), findsOneWidget);
+    });
+
+    testWidgets('side by side, the two rows differ ONLY by the suffix',
+        (tester) async {
+      await pumpEvents(tester, seed: [
+        deletionEvent(id: 'evt-plain'),
+        deletionEvent(id: 'evt-auto', auto: true),
+      ]);
+
+      final lines = statusLines(tester);
+      expect(lines, hasLength(2));
+      final plain = lines.firstWhere((l) => !l.contains('Auto-validated'));
+      expect(lines, contains('$plain · Auto-validated'));
+    });
+
+    testWidgets('no other feed row grows a marker', (tester) async {
+      await pumpEvents(
+        tester,
+        seed: [
+          event(id: 'evt-plain', status: EventStatus.confirmed),
+        ],
+      );
+      expect(find.textContaining('Auto-validated'), findsNothing);
+    });
+  });
 }
