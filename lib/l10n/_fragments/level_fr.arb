@@ -28,5 +28,6 @@
   "bookingWalkUpTodayError": "Un check-in spontané doit commencer aujourd'hui.",
   "bookingOutsideHoursError": "Les réservations doivent rester dans les heures d'ouverture.",
   "bookingOutsideOffError": "Les réservations en dehors des heures d'ouverture ne sont pas autorisées.",
-  "bookingOutsideWalkUpError": "En dehors des heures d'ouverture, seul un check-in spontané est possible — pas une réservation à l'avance."
+  "bookingOutsideWalkUpError": "En dehors des heures d'ouverture, seul un check-in spontané est possible — pas une réservation à l'avance.",
+  "bookingSameDayError": "Une réservation se termine le jour où elle commence — réservez le lendemain séparément."
 }

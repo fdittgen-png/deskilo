@@ -3232,6 +3232,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Fuori dagli orari di apertura è possibile solo un check-in spontaneo, non una prenotazione in anticipo.';
 
   @override
+  String get bookingSameDayError =>
+      'Una prenotazione termina il giorno in cui inizia — prenota il giorno dopo separatamente.';
+
+  @override
   String get membersTitle => 'Membri e piani';
 
   @override

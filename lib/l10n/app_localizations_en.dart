@@ -3201,6 +3201,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Outside the opening hours only a spontaneous check-in is possible — booking ahead is not.';
 
   @override
+  String get bookingSameDayError =>
+      'A booking ends on the day it starts — book the next day separately.';
+
+  @override
   String get membersTitle => 'Members & plans';
 
   @override

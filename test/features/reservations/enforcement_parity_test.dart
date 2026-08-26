@@ -15,6 +15,9 @@
 import 'dart:io';
 
 import 'package:deskilo/features/reservations/domain/booking_error_text.dart';
+import 'package:deskilo/features/reservations/domain/walk_up_window.dart';
+import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
@@ -243,7 +246,7 @@ void main() {
     });
   });
 
-  group('reshaping is not creating (#637)', () {
+  group('a booking ends on the day it starts (#644)', () {
     String body(String name) {
       final sql = File('supabase/migrations/0122_enforcement_parity.sql')
           .readAsStringSync();
@@ -253,34 +256,40 @@ void main() {
       return sql.substring(start, end);
     }
 
-    test('the chokepoint separates a new booking from a reshape', () {
+    test('the chokepoint refuses a window that passes the start day', () {
       final fn = body('enforce_booking_rules');
-      expect(fn, contains('p_new_booking boolean default true'),
-          reason: 'creation paths keep the default; a reshape opts out');
-      expect(fn, contains('if p_walk_up and p_new_booking'),
-          reason: 'the walk-up-today guard binds NEW bookings only');
+      expect(fn, contains('if local_end > ts_midnight then'),
+          reason: 'strictly AFTER midnight — ending AT it ends the day');
+      expect(fn,
+          contains("raise exception 'a booking must end on the day it starts'"));
     });
 
-    test('the past-day guard still binds every caller, reshape included',
-        () {
+    test('no exemption parameter survives — the rule makes it moot', () {
       final fn = body('enforce_booking_rules');
-      final guard = fn.substring(fn.indexOf('lies entirely in the past') - 400,
-          fn.indexOf('lies entirely in the past'));
-      expect(guard, isNot(contains('p_new_booking')),
-          reason: 'moving any booking onto a day that ended is the abuse '
-              'that guard exists for — edit or create');
+      expect(fn, isNot(contains('p_new_booking')),
+          reason: 'a running booking always starts today, so a reshape can '
+              'never trip the walk-up-today guard');
     });
 
-    test('update_reservation asks for shape only on the running branch',
-        () {
-      final fn = body('update_reservation');
+    test('the walk-up window never crosses midnight, even at 23:50', () {
+      WorkspaceTime.reset();
+      final late = DateTime(2026, 5, 13, 23, 50);
+      final w = walkUpWindow(BookingGranularity.minutes15, late);
+      expect(w.end.isAfter(DateTime(2026, 5, 14)), isFalse,
+          reason: 'the 15-minute floor used to spill into the next day');
+      expect(w.end.isAfter(w.start), isTrue);
+    });
+
+    test('the refusal reaches the member in their own words', () {
       expect(
-        fn,
-        contains('v_res.workspace_id, p_starts_at, p_ends_at, true, false'),
-        reason: 'walk-up SHAPE rules without the creation guards',
+        bookingErrorText(
+          null,
+          const PostgrestException(
+              message: 'a booking must end on the day it starts'),
+          'fallback',
+        ),
+        contains('ends on the day it starts'),
       );
-      // The immovable start is what makes that safe — keep it pinned.
-      expect(fn, contains("raise exception 'a running booking keeps its start'"));
     });
   });
 }

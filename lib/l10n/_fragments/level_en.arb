@@ -61,5 +61,6 @@
   "bookingOutsideWalkUpError": "Outside the opening hours only a spontaneous check-in is possible — booking ahead is not.",
   "@bookingOutsideWalkUpError": {
     "description": "#634 - refusal under the walkup_only outside-hours mode"
-  }
+  },
+  "bookingSameDayError": "A booking ends on the day it starts — book the next day separately."
 }

@@ -38,22 +38,19 @@
 -- is on) and update_reservation. That is the point of the issue: the
 -- contract is the workspace's, not one function's.
 --
--- One interaction deserves its name in writing, and its own parameter.
--- update_reservation (0113) passes p_walk_up = true when RESHAPING a
--- running booking, purely to borrow the walk-up SHAPE rules (its own
--- comment says so) — no check-in happens there. Binding the
--- walk-up-today guard to that call would refuse extending a booking
--- that started on an earlier workspace-local day (an overnight stay on
--- the 'hours' and minute granularities) while preventing no abuse at
--- all: that branch already refuses to move the start
--- ('a running booking keeps its start'), so it cannot fabricate a
--- yesterday check-in even in principle.
+-- One interaction deserved a decision. update_reservation (0113)
+-- passes p_walk_up = true when RESHAPING a running booking, purely to
+-- borrow the walk-up SHAPE rules — no check-in happens there — so the
+-- today-guard could in principle refuse extending a booking that
+-- started on an earlier day. #644 settles it at the root instead: a
+-- booking must END ON THE DAY IT STARTS, so a running booking always
+-- started today and the guard can never bite a reshape. No exemption
+-- parameter is carried for a case the rules make impossible.
 --
--- So the chokepoint distinguishes the two questions with
--- p_new_booking (default true): every creation path keeps both guards;
--- update_reservation v3 below asks for shape only. The past-day guard
--- still binds it — moving any booking onto a day that already ended is
--- the abuse that guard exists for, edit or create.
+-- ALSO ENFORCED HERE (#644): a booking must END ON THE DAY IT STARTS.
+-- No window may cross midnight; a stay that continues tomorrow is
+-- tomorrow's booking. A walk-up ending exactly at local midnight ends
+-- the day rather than crossing it, and stays legal.
 --
 -- ALSO FIXED HERE, because it lives in the same regenerated body and a
 -- second migration for one predicate would be worse: under
@@ -98,15 +95,7 @@
 -- guards, then the unified outside-hours gate, then the shape arms.
 create or replace function public.enforce_booking_rules(
   p_workspace_id uuid, p_starts_at timestamptz, p_ends_at timestamptz,
-  p_walk_up boolean default false,
-  -- #637: TRUE while validating a NEW booking, FALSE while re-validating
-  -- the shape of one that already exists. update_reservation borrows the
-  -- walk-up SHAPE rules to reshape a running booking (its comment says
-  -- so), but it is not a walk-up creation — and its start is immovable,
-  -- so the today-guard below could never prevent an abuse there; it
-  -- could only refuse a legitimate extension of a booking that started
-  -- yesterday (an overnight stay on hours/minute granularities).
-  p_new_booking boolean default true
+  p_walk_up boolean default false
 ) returns void language plpgsql stable security definer set search_path = public as $$
 declare rules jsonb; horizon int; min_min int; max_min int; dur int;
         tz text; local_start timestamp; local_end timestamp;
@@ -170,10 +159,21 @@ begin
   -- the workspace-local TODAY. p_walk_up IS the p_check_in flag
   -- create_reservation passes and the p_action = 'check_in' the kiosk
   -- passes, so the wall device finally obeys it too.
-  if p_walk_up and p_new_booking
+  if p_walk_up
      and (p_starts_at at time zone tz)::date
          <> (now() at time zone tz)::date then
     raise exception 'a walk-up check-in must start today';
+  end if;
+
+  -- #644: a booking ENDS ON THE DAY IT STARTS. Continuing into the next
+  -- day is a new booking, created then — which keeps every day's
+  -- occupancy, quota and bill answerable on its own day, exactly as the
+  -- half-day and full-day windows always have. ts_midnight is the start
+  -- day's own end, so the evening overtime walk-up that finishes there
+  -- is the day's end and not a crossing; only passing it is refused.
+  -- The client pins the substring 'must end on the day it starts'.
+  if local_end > ts_midnight then
+    raise exception 'a booking must end on the day it starts';
   end if;
 
   -- #634: THE outside-hours gate — one resolution, four answers, every
@@ -773,53 +773,3 @@ begin
   return jsonb_build_object('action', p_action, 'reservation_id', v_id);
 end;
 $$;
-
--- update_reservation v3 — the 0113 v2 body with ONE hunk: the
--- checked-in branch asks the chokepoint for SHAPE rules only
--- (p_new_booking => false), so reshaping a running booking is never
--- mistaken for creating a walk-up. Everything else — the ownership
--- lookup, the immovable start, 'the new end must lie ahead', the
--- reserved branch, the seat-block assertion, the write and the quota
--- call — is byte-identical.
-create or replace function public.update_reservation(
-  p_reservation_id uuid, p_starts_at timestamptz, p_ends_at timestamptz
-) returns void language plpgsql security definer set search_path = public as $$
-declare
-  v_res public.reservations;
-begin
-  select r.* into v_res from public.reservations r
-    join public.members m on m.id = r.member_id
-    where r.id = p_reservation_id and m.user_id = auth.uid();
-  if v_res.id is null then raise exception 'not your reservation'; end if;
-
-  if v_res.status = 'checked_in' then
-    if p_starts_at <> v_res.starts_at then
-      raise exception 'a running booking keeps its start';
-    end if;
-    if p_ends_at <= now() then
-      raise exception 'the new end must lie ahead';
-    end if;
-    -- Walk-up shape checks: the END must land on a canonical edge /
-    -- the grid, the (immovable) start may sit anywhere — a running
-    -- booking's start is often the anchored arrival instant. #637:
-    -- shape only — this is not a new booking.
-    perform public.enforce_booking_rules(
-      v_res.workspace_id, p_starts_at, p_ends_at, true, false);
-  elsif v_res.status = 'reserved' then
-    perform public.enforce_booking_rules(
-      v_res.workspace_id, p_starts_at, p_ends_at);
-  else
-    raise exception 'only upcoming reservations can be edited';
-  end if;
-
-  if v_res.seat_id is not null then
-    perform public.assert_seat_not_blocked(
-      v_res.seat_id, p_starts_at, p_ends_at);
-  end if;
-  update public.reservations
-    set starts_at = p_starts_at, ends_at = p_ends_at
-    where id = p_reservation_id;
-  perform public.assert_member_quota(v_res.member_id, p_starts_at);
-end;
-$$;
-revoke execute on function public.update_reservation(uuid, timestamptz, timestamptz) from public, anon;

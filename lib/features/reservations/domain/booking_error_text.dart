@@ -47,6 +47,12 @@ String bookingErrorText(
     return l10n?.planSlotError(step) ??
         'Bookings must start and end on the $step-minute grid.';
   }
+  // #644 — a booking ends on the day it starts.
+  if (message.contains('must end on the day it starts')) {
+    return l10n?.bookingSameDayError ??
+        'A booking ends on the day it starts — book the next day '
+            'separately.';
+  }
   // #600 booking-policy refusals (migration 0116).
   if (message.contains('lies entirely in the past')) {
     return l10n?.bookingPastError ??

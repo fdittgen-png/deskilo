@@ -5768,6 +5768,12 @@ abstract class AppLocalizations {
   /// **'Outside the opening hours only a spontaneous check-in is possible — booking ahead is not.'**
   String get bookingOutsideWalkUpError;
 
+  /// No description provided for @bookingSameDayError.
+  ///
+  /// In en, this message translates to:
+  /// **'A booking ends on the day it starts — book the next day separately.'**
+  String get bookingSameDayError;
+
   /// Title of the owner-only member management screen + its settings entry
   ///
   /// In en, this message translates to:
