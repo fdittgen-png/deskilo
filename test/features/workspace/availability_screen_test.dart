@@ -288,7 +288,11 @@ void main() {
     await tester.tap(adminSwitch);
     await tester.pumpAndSettle();
     expect(workspace.bookingPolicies['ws-1']?.adminCheckOut, isTrue);
-    expect(workspace.bookingPolicies['ws-1']?.gridWithinHours, isFalse);
+    // #634: the grid switch is gone — its question is the outside-hours
+    // mode's now, and the section shows no such switch any more.
+    expect(find.byKey(const Key('policy-grid-hours')), findsNothing);
+    expect(workspace.bookingPolicies['ws-1']?.outsideHoursMode,
+        OutsideHoursMode.charged);
   });
 
   testWidgets('#600 — the bookingPolicies flag OFF hides the section',
@@ -347,40 +351,75 @@ void main() {
     expect(workspace.bookingPolicies['ws-1']?.simultaneousReservations, 2);
   });
 
-  testWidgets('#624 — the outside-hours control renders with Charged '
-      'preselected and switching writes the booking_rules key',
+  testWidgets('#634 — the outside-hours control offers FOUR options with '
+      'Charged preselected, and each one writes its wire value',
       (tester) async {
     final workspace = await pumpAvailability(tester);
 
     final control = find.byKey(const Key('policy-outside-hours'));
     await tester.ensureVisible(control);
     expect(
-      tester
-          .widget<SegmentedButton<OutsideHoursMode>>(control)
-          .selected,
-      {OutsideHoursMode.charged},
+      tester.widget<RadioGroup<OutsideHoursMode>>(control).groupValue,
+      OutsideHoursMode.charged,
       reason: 'absent booking_rules key reads as charged',
     );
+    // One row per mode — the four mutually exclusive answers.
+    expect(
+      find.descendant(
+        of: control,
+        matching: find.byType(RadioListTile<OutsideHoursMode>),
+      ),
+      findsNWidgets(OutsideHoursMode.values.length),
+    );
+    // #634: the retired grid switch is not on the screen any more.
+    expect(find.byKey(const Key('policy-grid-hours')), findsNothing);
 
-    await tester.tap(find.byKey(const Key('policy-outside-hours-off')));
-    await tester.pumpAndSettle();
-    expect(
-      workspace.bookingPolicies['ws-1']?.outsideHoursMode,
-      OutsideHoursMode.off,
-      reason: 'the segment writes outside_hours_mode',
-    );
-    expect(
-      tester
-          .widget<SegmentedButton<OutsideHoursMode>>(control)
-          .selected,
-      {OutsideHoursMode.off},
-    );
+    const rows = {
+      'policy-outside-hours-off': OutsideHoursMode.off,
+      'policy-outside-hours-walkup': OutsideHoursMode.walkupOnly,
+      'policy-outside-hours-free': OutsideHoursMode.free,
+      'policy-outside-hours-charged': OutsideHoursMode.charged,
+    };
+    for (final entry in rows.entries) {
+      final row = find.byKey(Key(entry.key));
+      await tester.ensureVisible(row);
+      await tester.tap(row);
+      await tester.pumpAndSettle();
+      expect(
+        workspace.bookingPolicies['ws-1']?.outsideHoursMode,
+        entry.value,
+        reason: '${entry.key} must write ${entry.value.wire}',
+      );
+      expect(
+        tester.widget<RadioGroup<OutsideHoursMode>>(control).groupValue,
+        entry.value,
+      );
+    }
+  });
 
-    await tester.tap(find.byKey(const Key('policy-outside-hours-free')));
-    await tester.pumpAndSettle();
-    expect(
-      workspace.bookingPolicies['ws-1']?.outsideHoursMode,
-      OutsideHoursMode.free,
+  testWidgets('#634 — the four-option control lays out on a 360dp phone',
+      (tester) async {
+    // A SegmentedButton of four labels overflows here; the radio rows
+    // must not. 360×3600: the narrowest supported width, tall enough to
+    // hold the whole screen without scrolling into the assertion.
+    await tester.binding.setSurfaceSize(const Size(360, 3600));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(workspace: workspace),
+        child: const DeskiloApp(),
+      ),
     );
+    await tester.pumpAndSettle();
+    final context = tester.element(find.byType(Scaffold).first);
+    GoRouter.of(context).push('/availability');
+    await tester.pumpAndSettle();
+
+    final control = find.byKey(const Key('policy-outside-hours'));
+    await tester.ensureVisible(control);
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull, reason: 'no overflow at 360dp');
+    expect(tester.getSize(control).width, lessThanOrEqualTo(360.0));
   });
 }

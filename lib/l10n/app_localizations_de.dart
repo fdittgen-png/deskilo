@@ -227,14 +227,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Mitglieder können eine bereits beendete Buchung nachtragen.';
 
   @override
-  String get policyGridHoursTitle =>
-      'Minutenbuchungen innerhalb der Arbeitszeiten';
-
-  @override
-  String get policyGridHoursDesc =>
-      'Minutenraster-Buchungen auf den Arbeitstag begrenzen; Abend-Check-ins bleiben möglich.';
-
-  @override
   String get policyAdminCheckoutTitle => 'Admins dürfen Mitglieder auschecken';
 
   @override
@@ -246,16 +238,35 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get policyOutsideHoursDesc =>
-      'Aus lehnt solche Buchungen ab; Gratis zählt sie nie; Berechnet zählt sie, außer das Mitglied hat an dem Tag bereits eine reguläre Buchung.';
+      'Was außerhalb des Arbeitstags möglich ist — eine Antwort, für alle Granularitäten. Eine Buchung, die die Arbeitszeiten berührt, ist eine ganz normale Buchung.';
 
   @override
   String get policyOutsideHoursOff => 'Aus';
 
   @override
+  String get policyOutsideHoursOffDesc =>
+      'Nichts außerhalb der Zeiten: keine Vorausbuchung, kein spontaner Check-in — und eine Buchung über das Tagesende hinaus wird ebenfalls abgelehnt.';
+
+  @override
+  String get policyOutsideHoursWalkUp => 'Nur spontan';
+
+  @override
+  String get policyOutsideHoursWalkUpDesc =>
+      'Spontane Check-ins bleiben möglich, Abend-Überstunden eingeschlossen; im Voraus außerhalb der Zeiten zu buchen wird abgelehnt.';
+
+  @override
   String get policyOutsideHoursFree => 'Gratis';
 
   @override
+  String get policyOutsideHoursFreeDesc =>
+      'Erlaubt, nie gezählt und nie berechnet — reine Anwesenheitsinformation.';
+
+  @override
   String get policyOutsideHoursCharged => 'Berechnet';
+
+  @override
+  String get policyOutsideHoursChargedDesc =>
+      'Erlaubt und wie normale Nutzung gezählt — außer an einem Tag, an dem das Mitglied bereits eine reguläre Buchung hat.';
 
   @override
   String get policySimultaneousTitle =>
@@ -3213,6 +3224,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get bookingOutsideOffError =>
       'Buchungen außerhalb der Öffnungszeiten sind nicht erlaubt.';
+
+  @override
+  String get bookingOutsideWalkUpError =>
+      'Außerhalb der Öffnungszeiten ist nur ein spontaner Check-in möglich — keine Vorausbuchung.';
 
   @override
   String get membersTitle => 'Mitglieder & Tarife';

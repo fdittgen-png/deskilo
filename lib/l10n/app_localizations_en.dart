@@ -225,13 +225,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Members may record a booking that already ended (backfill).';
 
   @override
-  String get policyGridHoursTitle => 'Minute bookings within working hours';
-
-  @override
-  String get policyGridHoursDesc =>
-      'Confine minute-grid bookings to the working day; evening walk-ups stay possible.';
-
-  @override
   String get policyAdminCheckoutTitle => 'Admins may check members out';
 
   @override
@@ -243,16 +236,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get policyOutsideHoursDesc =>
-      'Off refuses such bookings; Free never counts them; Charged counts them unless the member already has a regular booking that day.';
+      'What may happen outside the working day — one answer, on every granularity. A booking that touches the working hours is an ordinary booking.';
 
   @override
   String get policyOutsideHoursOff => 'Off';
 
   @override
+  String get policyOutsideHoursOffDesc =>
+      'Nothing outside the hours: no booking ahead, no walk-up, and a booking running past the day end is refused too.';
+
+  @override
+  String get policyOutsideHoursWalkUp => 'Spontaneous only';
+
+  @override
+  String get policyOutsideHoursWalkUpDesc =>
+      'Walk-up check-ins stay possible, evening overtime included; booking ahead outside the hours is refused.';
+
+  @override
   String get policyOutsideHoursFree => 'Free';
 
   @override
+  String get policyOutsideHoursFreeDesc =>
+      'Allowed, never counted and never charged — pure presence information.';
+
+  @override
   String get policyOutsideHoursCharged => 'Charged';
+
+  @override
+  String get policyOutsideHoursChargedDesc =>
+      'Allowed and counted like ordinary usage — except on a day the member already holds a regular booking.';
 
   @override
   String get policySimultaneousTitle => 'Simultaneous reservations per member';
@@ -3180,6 +3192,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get bookingOutsideOffError =>
       'Bookings outside the opening hours are not allowed.';
+
+  @override
+  String get bookingOutsideWalkUpError =>
+      'Outside the opening hours only a spontaneous check-in is possible — booking ahead is not.';
 
   @override
   String get membersTitle => 'Members & plans';

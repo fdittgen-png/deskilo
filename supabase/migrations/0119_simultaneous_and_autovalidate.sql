@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: 0BSD
 -- #628 configurable SIMULTANEOUS reservations + #629 auto-validated
--- delete requests for admins/owners. NOT YET applied to the hosted
--- reference project — the orchestrator applies it after review.
+-- delete requests for admins/owners. APPLIED to the hosted reference
+-- project and live-verified there.
 --
 -- ============================ #628 ============================
 -- "One place at a time" (#412, migration 0079) was a constant. Three
