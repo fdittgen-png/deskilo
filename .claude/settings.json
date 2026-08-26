@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "enabledMcpjsonServers": ["dart"],
+  "permissions": {
+    "allow": [
+      "mcp__dart__analyze_files",
+      "mcp__dart__run_tests",
+      "mcp__dart__dart_format",
+      "mcp__dart__resolve_workspace_symbol",
+      "mcp__dart__hover",
+      "mcp__dart__signature_help",
+      "mcp__dart__pub_dev_search",
+      "mcp__dart__add_roots",
+      "mcp__dart__remove_roots",
+      "mcp__dart__list_devices",
+      "mcp__dart__list_running_apps",
+      "mcp__dart__get_runtime_errors",
+      "mcp__dart__get_widget_tree",
+      "mcp__dart__get_app_logs",
+
+      "mcp__claude_ai_Supabase__list_migrations",
+      "mcp__claude_ai_Supabase__list_tables",
+      "mcp__claude_ai_Supabase__list_extensions",
+      "mcp__claude_ai_Supabase__get_advisors",
+      "mcp__claude_ai_Supabase__get_project_url",
+      "mcp__claude_ai_Supabase__search_docs"
+    ],
+    "deny": [
+      "mcp__claude_ai_Supabase__delete_branch",
+      "mcp__claude_ai_Supabase__pause_project",
+      "mcp__claude_ai_Supabase__reset_branch",
+      "mcp__claude_ai_Supabase__create_project",
+      "mcp__dart__create_project"
+    ]
+  }
+}
