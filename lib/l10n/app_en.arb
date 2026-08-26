@@ -743,6 +743,14 @@
   "@reservationExtendLaterOnly": {
     "description": "Extend flow: picked time not after the current end (#574)"
   },
+  "reservationEndEarlyButton": "End earlier",
+  "@reservationEndEarlyButton": {
+    "description": "Detail sheet: shrink a running booking's end (#638)"
+  },
+  "reservationEndEarlyAheadOnly": "Pick a time still ahead of now and before the current end.",
+  "@reservationEndEarlyAheadOnly": {
+    "description": "End-earlier flow: picked time not ahead of now, or not before the current end (#638)"
+  },
   "calendarMineTab": "Mine",
   "@calendarMineTab": {
     "description": "Calendar filter showing only the user's reservations"

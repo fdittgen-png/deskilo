@@ -5,6 +5,11 @@
 // right); booking lands on the level target; owners/delegated admins
 // assign to a member (confirmation flow); the members sheet toggles the
 // per-member grant; the bill shows the level supplement.
+//
+// #638 — the affordance now opens the SHARED whole-space sheet instead of
+// a second sheet of its own: the gates, the price line and the
+// admin-for-member assignment are unchanged, and the period picker and
+// series the level sheet never had come along for free.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +33,9 @@ Future<
   bool isOwner = false,
   List<Member> others = const [],
 }) async {
+  tester.view.physicalSize = const Size(800, 1400);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.reset);
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   if (bookable) {
     plans.levels[0] =
@@ -64,17 +72,35 @@ Future<
   return (reservations: reservations, workspace: workspace);
 }
 
+/// The converged path: layers icon → the shared whole-space sheet →
+/// its Reserve action → the granularity-aware period picker.
+Future<void> openLevelPeriodPicker(WidgetTester tester) async {
+  await tester.tap(find.byKey(const ValueKey('plan-reserve-level')));
+  await tester.pumpAndSettle();
+  await tester.tap(find.byKey(const ValueKey('space-reserve')));
+  await tester.pumpAndSettle();
+}
+
 void main() {
   testWidgets(
-      'a granted member reserves the whole level: button → sheet with the '
-      'price → one level reservation', (tester) async {
+      'a granted member reserves the whole level: button → shared sheet '
+      'with the price → period picker → one level reservation',
+      (tester) async {
     final ctx = await pumpPlan(tester);
 
     await tester.tap(find.byKey(const ValueKey('plan-reserve-level')));
     await tester.pumpAndSettle();
 
-    expect(find.byKey(const ValueKey('level-price-line')), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('level-reserve-confirm')));
+    expect(find.byKey(const ValueKey('space-price-line')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('space-reserve')));
+    await tester.pumpAndSettle();
+
+    // #638 — the capability the level sheet never had: the window is
+    // EDITABLE here, not a static line of text.
+    expect(find.byKey(const ValueKey('booking-from-tile')), findsOneWidget);
+    expect(find.byKey(const ValueKey('booking-until-tile')), findsOneWidget);
+
+    await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
     await tester.pumpAndSettle();
 
     final r = ctx.reservations.reservations.single;
@@ -111,13 +137,26 @@ void main() {
       isOwner: true,
     );
 
-    await tester.tap(find.byKey(const ValueKey('plan-reserve-level')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('level-reserve-confirm')));
+    await openLevelPeriodPicker(tester);
+    await tester.tap(find.widgetWithText(FilledButton, 'Reserve'));
     await tester.pumpAndSettle();
 
     final r = ctx.reservations.reservations.single;
     expect(r.levelId, isNotNull);
+  });
+
+  testWidgets(
+      'a plain granted member sees NO "for the member" selector (#638)',
+      (tester) async {
+    await pumpPlan(tester);
+
+    await openLevelPeriodPicker(tester);
+
+    expect(
+      find.byKey(const ValueKey('booking-for-member')),
+      findsNothing,
+      reason: 'the selector belongs to the assignment right alone',
+    );
   });
 
   testWidgets('the Reserve hub carries the same whole-level button (#466)',
@@ -150,19 +189,24 @@ void main() {
       others: [other],
     );
 
-    await tester.tap(find.byKey(const ValueKey('plan-reserve-level')));
-    await tester.pumpAndSettle();
+    await openLevelPeriodPicker(tester);
 
-    await tester.tap(find.byKey(const ValueKey('level-subject-dropdown')));
+    await tester.tap(find.byKey(const ValueKey('booking-for-member')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Other member-2').last);
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('level-reserve-confirm')));
+    await tester.tap(
+      find.widgetWithText(FilledButton, 'Send for confirmation'),
+    );
     await tester.pumpAndSettle();
 
     final assigned = ctx.reservations.bookedForOthers.single;
     expect(assigned.subjectMemberId, 'member-2');
     expect(assigned.levelId, isNotNull);
     expect(assigned.seatId, isNull);
+    expect(
+      find.text('Sent to Other member-2 for confirmation.'),
+      findsOneWidget,
+    );
   });
 }

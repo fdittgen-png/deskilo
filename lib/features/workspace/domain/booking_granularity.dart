@@ -41,6 +41,17 @@ enum BookingGranularity {
         halfDay || fullDay => null,
       };
 
+  /// Floors [minutesOfDay] onto this granularity's grid — the ONE
+  /// snapping rule every booking surface shares (#638: the booking sheet,
+  /// the window edit and the extend/shrink flows each carried their own
+  /// copy, and they had already drifted between flooring and rounding).
+  /// Day-based modes have no grid; they keep the legacy 15-minute UI snap
+  /// so a caller that reaches here with one still lands on a sane time.
+  int snapMinutesOfDay(int minutesOfDay) {
+    final step = stepMinutes ?? 15;
+    return (minutesOfDay ~/ step) * step;
+  }
+
   /// Whole-window modes: bookings cover canonical day windows (morning /
   /// afternoon / full day for [halfDay]; the full day only for
   /// [fullDay]) instead of free from→to times.

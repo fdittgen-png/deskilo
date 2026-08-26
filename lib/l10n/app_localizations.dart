@@ -1172,6 +1172,18 @@ abstract class AppLocalizations {
   /// **'Pick a time after the current end.'**
   String get reservationExtendLaterOnly;
 
+  /// Detail sheet: shrink a running booking's end (#638)
+  ///
+  /// In en, this message translates to:
+  /// **'End earlier'**
+  String get reservationEndEarlyButton;
+
+  /// End-earlier flow: picked time not ahead of now, or not before the current end (#638)
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a time still ahead of now and before the current end.'**
+  String get reservationEndEarlyAheadOnly;
+
   /// Calendar filter showing only the user's reservations
   ///
   /// In en, this message translates to:

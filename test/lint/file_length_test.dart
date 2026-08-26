@@ -33,7 +33,10 @@ const Map<String, int> _baseline = {
   // 1550→1620 (2026-08-22): #575 day-phase rings + list dots.
 // 1650→1690 (2026-08-24): #620 the same photo-loader wrap on the
   // Plan tab canvas.
-    'lib/features/plan/presentation/screens/plan_screen.dart': 1690, // 2026-08 #586 default-period walk-up ends
+  // 1690→1560 (2026-08-25): #638 — _LevelReserveSheet DELETED; the level
+  // rail's layers icon now opens the shared SpaceSheet, so the second
+  // whole-space sheet and its write/error handling left this file.
+    'lib/features/plan/presentation/screens/plan_screen.dart': 1560,
   // new 700 (2026-08-22): #575 day-phase rings + #576 space rings.
 // 700→740 (2026-08-24): #618 the occupant photo marker — clipped
   // photo draw beside the initial disc, one concern, same method.
@@ -107,7 +110,11 @@ const Map<String, int> _baseline = {
   'lib/features/workspace/presentation/screens/workspace_settings_screen.dart': 1440,
   // 600→640 (2026-08-05): #492 the request-deletion dialog + flow.
   // 640→760 (2026-08-22): #574 the running-booking extension flow.
-  'lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart': 760,
+  // 760→880 (2026-08-25): #638 the symmetric END-EARLIER flow — the
+  // earlier-edge rule, the shrink picker and the ONE shared end-write
+  // both directions now go through (the snapping itself moved to
+  // BookingGranularity, so this is the flow, not a second copy).
+  'lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart': 880,
   // 600→660 (2026-08-05): #488 the editor's mode toggle + image insert
   // flow; the visual editor itself is its own file.
   // new→840 (2026-08-05): #498 the WYSIWYG design surface — styled
@@ -160,7 +167,10 @@ const Map<String, int> _baseline = {
   // 820→830 (2026-08-25): #622 the whole-space conflict now resolves
   // the blocking RESERVATION (message-the-reserver affordance); the
   // seat action dialog moved OUT into the shared space_act_sheet.
-  'lib/features/reservations/presentation/widgets/space_scan.dart': 830,
+  // 830→980 (2026-08-25): #638 the CONVERGED whole-space sheet — the
+  // "For the member" selector and the assign write moved in from the
+  // deleted _LevelReserveSheet (plan_screen.dart shrank by more).
+  'lib/features/reservations/presentation/widgets/space_scan.dart': 980,
   // 600→640 (2026-08-04): #460/#464 Messages inbox rows + mark-seen —
   // the note row widget lives with the feed it sits in. 640→700: #467
   // swipe reply/delete on the rows.

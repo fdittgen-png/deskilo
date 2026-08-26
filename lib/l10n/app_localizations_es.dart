@@ -606,6 +606,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Elige una hora posterior al final actual.';
 
   @override
+  String get reservationEndEarlyButton => 'Terminar antes';
+
+  @override
+  String get reservationEndEarlyAheadOnly =>
+      'Elige una hora que aún esté por venir y anterior al final actual.';
+
+  @override
   String get calendarMineTab => 'Mías';
 
   @override
