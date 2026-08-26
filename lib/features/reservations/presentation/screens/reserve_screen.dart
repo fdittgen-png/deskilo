@@ -30,6 +30,7 @@ import '../../../profile/domain/profile.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/member.dart';
 import '../../domain/booking_error_text.dart';
+import '../booking_feedback.dart';
 import '../../../workspace/domain/workspace_availability.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -525,6 +526,14 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               endsAt: choice.end,
               checkIn: false,
             );
+        // #663: the Reserve hub reported every refusal and no success at
+        // all — a booking simply happened, or appeared to. Say which.
+        if (!mounted) return;
+        announceBooking(context, l10n,
+            checkedIn: false,
+            start: choice.start,
+            end: choice.end,
+            spaceName: seat.name);
       } else {
         final result =
             await ref.read(reservationRepositoryProvider).createSeries(

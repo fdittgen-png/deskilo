@@ -4203,6 +4203,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get spaceScanUnknownTag => 'This tag is not linked to any chair.';
 
   @override
+  String bookingCheckedInUntil(String until) {
+    return 'Checked in until $until.';
+  }
+
+  @override
+  String bookingCheckedInAtUntil(String space, String until) {
+    return 'Checked in at $space until $until.';
+  }
+
+  @override
+  String bookingReservedWhen(String when) {
+    return 'Reserved: $when.';
+  }
+
+  @override
+  String bookingReservedSpaceWhen(String space, String when) {
+    return 'Reserved $space: $when.';
+  }
+
+  @override
   String get servicesTitle => 'Services';
 
   @override

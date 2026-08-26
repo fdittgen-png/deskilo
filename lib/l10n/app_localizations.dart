@@ -7520,6 +7520,30 @@ abstract class AppLocalizations {
   /// **'This tag is not linked to any chair.'**
   String get spaceScanUnknownTag;
 
+  /// #663 - check-in confirmation without a space name
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in until {until}.'**
+  String bookingCheckedInUntil(String until);
+
+  /// #663 - check-in confirmation naming the space
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in at {space} until {until}.'**
+  String bookingCheckedInAtUntil(String space, String until);
+
+  /// #663 - reservation confirmation without a space name
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved: {when}.'**
+  String bookingReservedWhen(String when);
+
+  /// #663 - reservation confirmation naming the space
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved {space}: {when}.'**
+  String bookingReservedSpaceWhen(String space, String when);
+
   /// App-bar title of the owner service-catalog editor and its settings tile
   ///
   /// In en, this message translates to:

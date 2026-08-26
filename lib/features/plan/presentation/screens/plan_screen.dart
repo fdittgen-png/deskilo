@@ -37,6 +37,7 @@ import '../../../workspace/domain/booking_granularity.dart';
 import '../../../profile/domain/profile.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../reservations/domain/booking_error_text.dart';
+import '../../../reservations/presentation/booking_feedback.dart';
 import '../../../workspace/domain/workspace_availability.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -615,6 +616,20 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
               endsAt: choice.end,
               checkIn: walkUp,
             );
+        // #663: SAY it worked. This path — the ordinary booking and the
+        // walk-up check-in, by far the most used — used to end in
+        // silence, leaving the seat's colour change as the only signal.
+        // When the refresh lags, that is indistinguishable from nothing
+        // having happened, and the member's only move is to try again.
+        if (!mounted) return;
+        announceBooking(
+          context,
+          l10n,
+          checkedIn: walkUp,
+          start: walkUp ? start : choice.start,
+          end: choice.end,
+          spaceName: seat.name,
+        );
       } else {
         final result = await ref.read(reservationRepositoryProvider).createSeries(
               workspaceId: workspace.id,

@@ -4985,6 +4985,48 @@
   },
   "spaceScanNfcHint": "…or hold the phone to a chair's NFC tag.",
   "spaceScanUnknownTag": "This tag is not linked to any chair.",
+  "bookingCheckedInUntil": "Checked in until {until}.",
+  "@bookingCheckedInUntil": {
+    "description": "#663 - check-in confirmation without a space name",
+    "placeholders": {
+      "until": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingCheckedInAtUntil": "Checked in at {space} until {until}.",
+  "@bookingCheckedInAtUntil": {
+    "description": "#663 - check-in confirmation naming the space",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "until": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReservedWhen": "Reserved: {when}.",
+  "@bookingReservedWhen": {
+    "description": "#663 - reservation confirmation without a space name",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReservedSpaceWhen": "Reserved {space}: {when}.",
+  "@bookingReservedSpaceWhen": {
+    "description": "#663 - reservation confirmation naming the space",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
   "servicesTitle": "Services",
   "@servicesTitle": {
     "description": "App-bar title of the owner service-catalog editor and its settings tile"
