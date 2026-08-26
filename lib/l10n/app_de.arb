@@ -2175,6 +2175,48 @@
   "reserveBookingFailed": "Reservieren nicht möglich — der Platz wurde eventuell gerade belegt.",
   "spaceScanNfcHint": "…oder das Telefon an den NFC-Tag eines Stuhls halten.",
   "spaceScanUnknownTag": "Dieser Tag ist mit keinem Stuhl verknüpft.",
+  "bookingCheckedInUntil": "Eingecheckt bis {until}.",
+  "@bookingCheckedInUntil": {
+    "description": "#663 - check-in confirmation without a space name",
+    "placeholders": {
+      "until": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingCheckedInAtUntil": "Auf {space} eingecheckt bis {until}.",
+  "@bookingCheckedInAtUntil": {
+    "description": "#663 - check-in confirmation naming the space",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "until": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReservedWhen": "Reserviert: {when}.",
+  "@bookingReservedWhen": {
+    "description": "#663 - reservation confirmation without a space name",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReservedSpaceWhen": "{space} reserviert: {when}.",
+  "@bookingReservedSpaceWhen": {
+    "description": "#663 - reservation confirmation naming the space",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
   "servicesTitle": "Leistungen",
   "servicesEmpty": "Noch keine Leistungen.",
   "servicesNew": "Neue Leistung",

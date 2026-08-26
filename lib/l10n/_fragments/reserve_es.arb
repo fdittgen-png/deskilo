@@ -12,5 +12,47 @@
   "reservePickDateTooltip": "Elegir una fecha",
   "reserveBookingFailed": "No se pudo reservar — puede que el asiento se acabe de ocupar.",
   "spaceScanNfcHint": "…o acerca el teléfono a la etiqueta NFC de una silla.",
-  "spaceScanUnknownTag": "Esta etiqueta no está vinculada a ninguna silla."
+  "spaceScanUnknownTag": "Esta etiqueta no está vinculada a ninguna silla.",
+  "bookingCheckedInUntil": "Registrado hasta las {until}.",
+  "@bookingCheckedInUntil": {
+    "description": "#663 - check-in confirmation without a space name",
+    "placeholders": {
+      "until": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingCheckedInAtUntil": "Registrado en {space} hasta las {until}.",
+  "@bookingCheckedInAtUntil": {
+    "description": "#663 - check-in confirmation naming the space",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "until": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReservedWhen": "Reservado: {when}.",
+  "@bookingReservedWhen": {
+    "description": "#663 - reservation confirmation without a space name",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingReservedSpaceWhen": "{space} reservado: {when}.",
+  "@bookingReservedSpaceWhen": {
+    "description": "#663 - reservation confirmation naming the space",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  }
 }

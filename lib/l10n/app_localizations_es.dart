@@ -4237,6 +4237,26 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta etiqueta no está vinculada a ninguna silla.';
 
   @override
+  String bookingCheckedInUntil(String until) {
+    return 'Registrado hasta las $until.';
+  }
+
+  @override
+  String bookingCheckedInAtUntil(String space, String until) {
+    return 'Registrado en $space hasta las $until.';
+  }
+
+  @override
+  String bookingReservedWhen(String when) {
+    return 'Reservado: $when.';
+  }
+
+  @override
+  String bookingReservedSpaceWhen(String space, String when) {
+    return '$space reservado: $when.';
+  }
+
+  @override
   String get servicesTitle => 'Servicios';
 
   @override

@@ -4246,6 +4246,26 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Tag ist mit keinem Stuhl verknüpft.';
 
   @override
+  String bookingCheckedInUntil(String until) {
+    return 'Eingecheckt bis $until.';
+  }
+
+  @override
+  String bookingCheckedInAtUntil(String space, String until) {
+    return 'Auf $space eingecheckt bis $until.';
+  }
+
+  @override
+  String bookingReservedWhen(String when) {
+    return 'Reserviert: $when.';
+  }
+
+  @override
+  String bookingReservedSpaceWhen(String space, String when) {
+    return '$space reserviert: $when.';
+  }
+
+  @override
   String get servicesTitle => 'Leistungen';
 
   @override
