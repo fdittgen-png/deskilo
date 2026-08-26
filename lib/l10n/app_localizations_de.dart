@@ -277,6 +277,71 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wie viele sich überschneidende Buchungen ein Mitglied halten darf. 1 bedeutet ein Platz zur selben Zeit.';
 
   @override
+  String get policyLimitsTitle => 'Buchungsgrenzen';
+
+  @override
+  String get policyLimitsDesc =>
+      'Wie weit im Voraus gebucht werden darf und welche Dauer akzeptiert wird. Beides gilt bei jeder Granularität.';
+
+  @override
+  String get policyHorizonTitle => 'Vorausbuchungs-Horizont';
+
+  @override
+  String get policyHorizonDesc =>
+      'Wie viele Tage im Voraus eine Buchung beginnen darf. Darüber hinaus wird sie abgelehnt.';
+
+  @override
+  String get policyMinDurationTitle => 'Mindestdauer';
+
+  @override
+  String get policyMinDurationDesc =>
+      'Die kürzeste akzeptierte Buchung. Deshalb wird eine Ankunft um 11:45 für die 12:00-Grenze als zu kurz abgelehnt.';
+
+  @override
+  String get policyMaxDurationTitle => 'Höchstdauer';
+
+  @override
+  String get policyMaxDurationDesc =>
+      'Die längste akzeptierte Buchung. Eine Buchung endet an dem Tag, an dem sie beginnt — ein ganzer Tag ist also die Obergrenze.';
+
+  @override
+  String get policyDurationConflict =>
+      'Das Minimum darf das Maximum nicht überschreiten — es käme keine Buchung mehr durch.';
+
+  @override
+  String policyDaysValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Tage',
+      one: '1 Tag',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String policyMinutesValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Minuten',
+      one: '1 Minute',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String policyHoursValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Stunden',
+      one: '1 Stunde',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get myBadgeTitle => 'Mein Badge';
 
   @override

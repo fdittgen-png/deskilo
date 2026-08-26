@@ -79,6 +79,9 @@ class BookingPolicies {
     this.adminCheckOut = false,
     this.outsideHoursMode = OutsideHoursMode.charged,
     this.simultaneousReservations = defaultSimultaneous,
+    this.advanceHorizonDays = defaultHorizonDays,
+    this.minDurationMinutes = defaultMinDuration,
+    this.maxDurationMinutes = defaultMaxDuration,
   });
 
   /// `allow_past_bookings` — ON lets a member record a booking that
@@ -98,6 +101,21 @@ class BookingPolicies {
   /// time" (#412); a per-member permission may raise it further.
   final int simultaneousReservations;
 
+  /// `advance_horizon_days` (#649) — how far ahead a booking may be made.
+  /// The server has enforced this since migration 0006 and defaulted it
+  /// to 90; it simply had no control until now.
+  final int advanceHorizonDays;
+
+  /// `min_duration_minutes` (#649) — the shortest booking accepted, on
+  /// EVERY granularity. It is why an 11:45 walk-up for the 12:00
+  /// half-day boundary is refused as too short.
+  final int minDurationMinutes;
+
+  /// `max_duration_minutes` (#649) — the longest booking accepted. Since
+  /// #644 a booking ends on the day it starts, so a full day is the
+  /// natural ceiling and [maxDurationCeiling] is exactly that.
+  final int maxDurationMinutes;
+
   static const allowPastBookingsKey = 'allow_past_bookings';
   static const adminCheckOutKey = 'admin_check_out';
 
@@ -114,6 +132,27 @@ class BookingPolicies {
 
   /// The sanity ceiling the server pins in its 1..20 check constraint.
   static const maxSimultaneous = 20;
+
+  static const advanceHorizonDaysKey = 'advance_horizon_days';
+  static const minDurationMinutesKey = 'min_duration_minutes';
+  static const maxDurationMinutesKey = 'max_duration_minutes';
+
+  /// #649 — the three defaults `enforce_booking_rules` coalesces to when
+  /// the key is absent (migration 0122, lines 110–112). The client MUST
+  /// agree with them: an untouched workspace has no key at all, so what
+  /// the screen shows is a mirror of the server's fallback, not a value
+  /// anyone stored.
+  static const defaultHorizonDays = 90;
+  static const defaultMinDuration = 30;
+  static const defaultMaxDuration = 1440;
+
+  /// Bounds. The horizon spans a day to two years. Durations are minutes
+  /// of ONE day: since #644 a booking ends on the day it starts, so
+  /// nothing above a full day can ever be accepted, whatever is stored.
+  static const minHorizonDays = 1;
+  static const maxHorizonDays = 730;
+  static const durationFloor = 5;
+  static const maxDurationCeiling = 1440;
 
   /// Reads the policy keys from a `booking_rules` map; the server treats
   /// only jsonb `true` (rendered `'true'` by `->>`) as ON, so both the
@@ -135,8 +174,52 @@ class BookingPolicies {
       ),
       simultaneousReservations:
           simultaneousFromWire(rules?[simultaneousReservationsKey]),
+      advanceHorizonDays: intFromWire(
+        rules?[advanceHorizonDaysKey],
+        fallback: defaultHorizonDays,
+        min: minHorizonDays,
+        max: maxHorizonDays,
+      ),
+      minDurationMinutes: intFromWire(
+        rules?[minDurationMinutesKey],
+        fallback: defaultMinDuration,
+        min: durationFloor,
+        max: maxDurationCeiling,
+      ),
+      maxDurationMinutes: intFromWire(
+        rules?[maxDurationMinutesKey],
+        fallback: defaultMaxDuration,
+        min: durationFloor,
+        max: maxDurationCeiling,
+      ),
     );
   }
+
+  /// #649 — a jsonb number or its string form, clamped into [min]..[max];
+  /// anything unreadable (absent, text, null) falls back. Same shape as
+  /// [simultaneousFromWire], which predates it and keeps its own name
+  /// because the server has a matching check constraint only for that
+  /// one.
+  static int intFromWire(
+    Object? value, {
+    required int fallback,
+    required int min,
+    required int max,
+  }) {
+    final n = switch (value) {
+      final int v => v,
+      final num v => v.floor(),
+      final String v => int.tryParse(v.trim()),
+      _ => null,
+    };
+    if (n == null) return fallback;
+    return n.clamp(min, max);
+  }
+
+  /// True when the durations contradict each other. The server compares
+  /// each bound independently, so a minimum above the maximum refuses
+  /// EVERY booking — the screen must not let an owner save that.
+  bool get durationsAreCoherent => minDurationMinutes <= maxDurationMinutes;
 
   /// #628 — a jsonb number or its string form; anything else (absent,
   /// text, zero, negative) falls back to [defaultSimultaneous], and
@@ -167,6 +250,9 @@ class BookingPolicies {
     bool? adminCheckOut,
     OutsideHoursMode? outsideHoursMode,
     int? simultaneousReservations,
+    int? advanceHorizonDays,
+    int? minDurationMinutes,
+    int? maxDurationMinutes,
   }) =>
       BookingPolicies(
         allowPastBookings: allowPastBookings ?? this.allowPastBookings,
@@ -174,5 +260,8 @@ class BookingPolicies {
         outsideHoursMode: outsideHoursMode ?? this.outsideHoursMode,
         simultaneousReservations:
             simultaneousReservations ?? this.simultaneousReservations,
+        advanceHorizonDays: advanceHorizonDays ?? this.advanceHorizonDays,
+        minDurationMinutes: minDurationMinutes ?? this.minDurationMinutes,
+        maxDurationMinutes: maxDurationMinutes ?? this.maxDurationMinutes,
       );
 }

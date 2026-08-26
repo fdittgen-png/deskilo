@@ -325,6 +325,12 @@ abstract class WorkspaceRepository {
   /// booking_rules. 1 = the historical one-place-at-a-time.
   Future<void> setSimultaneousReservations(String workspaceId, int value);
 
+  /// #649 — writes one of the three numeric booking limits the server has
+  /// always enforced but nothing could set: `advance_horizon_days`,
+  /// `min_duration_minutes`, `max_duration_minutes`. Same
+  /// merge-preserving booking_rules write as the other policies.
+  Future<void> setBookingLimit(String workspaceId, String key, int value);
+
   /// Sends a member note (#456, RPC `send_member_note`): to one member,
   /// or — [toMemberId] null — to all admins incl. the owner (the server
   /// requires the sender to be an admin for that).

@@ -250,6 +250,14 @@ Vos invitations liées au rôle (§2) : invitation membre = l'ID de l'espace (re
   - **En dehors des heures d'ouverture** — une question, quatre réponses mutuellement exclusives, les mêmes sur toutes les granularités : *qu'est-ce qui est possible en dehors de la journée de travail ?* **Interdit** — rien : ni réservation à l'avance, ni pointage spontané, et une réservation qui dépasse la fin de journée (ou commence avant l'ouverture) est refusée aussi. **Spontané uniquement** — le pointage spontané reste possible **aux deux bouts de la journée**, l'arrivée matinale avant l'ouverture autant que la prolongation du soir jusqu'à minuit, tandis que réserver à l'avance hors horaires est refusé ; c'est là qu'est passé l'ancien interrupteur **Réservations à la minute dans les heures d'ouverture**, et les espaces qui l'avaient activé lisent cette position (cet interrupteur ne permettait que l'arrivée du soir — la position porte le nom de la spontanéité, pas celui du soir, l'arrivée du matin est donc permise aussi). **Gratuit** — permis, jamais compté ni facturé (pure information de présence). **Facturé** (le **défaut**) — compté comme un usage ordinaire, sauf un jour où le membre tient déjà une réservation normale dans les horaires : la partie hors horaires passe alors gratuitement.
   - **Réservations simultanées par membre** — combien de réservations qui se chevauchent un membre peut tenir, pointages compris. **1** par défaut : une place à la fois. Un propriétaire ou un admin peut accorder à un membre précis un quota supérieur dans *Membres et forfaits* (jamais à lui-même), et cette permission personnelle l'emporte sur ce nombre.
 
+  Juste en dessous se trouvent les **Limites de réservation** — trois nombres que le serveur a toujours appliqués et que l'app sait désormais régler :
+
+  - **Horizon de réservation** — combien de jours à l'avance une réservation peut commencer (défaut **90**) ; au-delà, elle est refusée en le disant.
+  - **Durée minimale** — la plus courte réservation acceptée (défaut **30 minutes**), sur toutes les granularités. C'est exactement pourquoi une arrivée à 11:45 pour la limite de 12:00 est refusée, trop courte.
+  - **Durée maximale** — la plus longue acceptée (défaut **24 heures**). Une réservation se terminant le jour où elle commence, la journée entière est le plafond et le sélecteur ne propose rien au-delà.
+
+  Réglez un minimum supérieur au maximum et l'écran le dit, car le serveur vérifie chaque borne séparément et refuserait simplement toute réservation sans jamais expliquer pourquoi.
+
   Les deux interrupteurs d'**auto-validation** — *les admins suppriment sans validation*, *les propriétaires suppriment sans validation* — ne sont pas ici : ils vivent avec les règles de validation (§7), coupés par défaut, et ne touchent que les suppressions de réservation.
 
 ### Fonctionnalités

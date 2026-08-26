@@ -590,6 +590,78 @@ abstract class AppLocalizations {
   /// **'How many overlapping bookings one member may hold. 1 keeps one place at a time.'**
   String get policySimultaneousDesc;
 
+  /// #649 - section header for the three numeric booking limits
+  ///
+  /// In en, this message translates to:
+  /// **'Booking limits'**
+  String get policyLimitsTitle;
+
+  /// #649 - subtitle of the booking-limits section
+  ///
+  /// In en, this message translates to:
+  /// **'How far ahead a booking may be made, and how short or long it may be. These hold on every granularity.'**
+  String get policyLimitsDesc;
+
+  /// #649 - advance_horizon_days control title
+  ///
+  /// In en, this message translates to:
+  /// **'Advance booking horizon'**
+  String get policyHorizonTitle;
+
+  /// #649 - advance_horizon_days explanation
+  ///
+  /// In en, this message translates to:
+  /// **'How many days ahead a booking may start. Beyond it the booking is refused.'**
+  String get policyHorizonDesc;
+
+  /// #649 - min_duration_minutes control title
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum duration'**
+  String get policyMinDurationTitle;
+
+  /// #649 - min_duration_minutes explanation
+  ///
+  /// In en, this message translates to:
+  /// **'The shortest booking accepted. It is why arriving at 11:45 for a 12:00 half-day boundary is refused as too short.'**
+  String get policyMinDurationDesc;
+
+  /// #649 - max_duration_minutes control title
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum duration'**
+  String get policyMaxDurationTitle;
+
+  /// #649 - max_duration_minutes explanation
+  ///
+  /// In en, this message translates to:
+  /// **'The longest booking accepted. A booking ends on the day it starts, so a full day is the ceiling.'**
+  String get policyMaxDurationDesc;
+
+  /// #649 - error when the minimum duration exceeds the maximum
+  ///
+  /// In en, this message translates to:
+  /// **'The minimum cannot exceed the maximum — no booking would be accepted.'**
+  String get policyDurationConflict;
+
+  /// #649 - a day count shown beside the horizon slider
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day} other{{count} days}}'**
+  String policyDaysValue(int count);
+
+  /// #649 - a minute count shown beside a duration control
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 minute} other{{count} minutes}}'**
+  String policyMinutesValue(int count);
+
+  /// #649 - an hour count shown beside a duration control
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 hour} other{{count} hours}}'**
+  String policyHoursValue(int count);
+
   /// No description provided for @myBadgeTitle.
   ///
   /// In en, this message translates to:

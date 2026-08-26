@@ -44,5 +44,68 @@
   "policyOutsideHoursCharged": "A pagamento",
   "policyOutsideHoursChargedDesc": "Consentito e contato come uso normale, salvo nei giorni in cui il membro ha già una prenotazione normale.",
   "policySimultaneousTitle": "Prenotazioni simultanee per membro",
-  "policySimultaneousDesc": "Quante prenotazioni sovrapposte può avere un membro. 1 mantiene un solo posto alla volta."
+  "policySimultaneousDesc": "Quante prenotazioni sovrapposte può avere un membro. 1 mantiene un solo posto alla volta.",
+  "policyLimitsTitle": "Limiti di prenotazione",
+  "@policyLimitsTitle": {
+    "description": "#649 - section header for the three numeric booking limits"
+  },
+  "policyLimitsDesc": "Con quanto anticipo si può prenotare e quale durata è accettata. Valgono su ogni granularità.",
+  "@policyLimitsDesc": {
+    "description": "#649 - subtitle of the booking-limits section"
+  },
+  "policyHorizonTitle": "Orizzonte di prenotazione",
+  "@policyHorizonTitle": {
+    "description": "#649 - advance_horizon_days control title"
+  },
+  "policyHorizonDesc": "Quanti giorni prima può iniziare una prenotazione. Oltre, viene rifiutata.",
+  "@policyHorizonDesc": {
+    "description": "#649 - advance_horizon_days explanation"
+  },
+  "policyMinDurationTitle": "Durata minima",
+  "@policyMinDurationTitle": {
+    "description": "#649 - min_duration_minutes control title"
+  },
+  "policyMinDurationDesc": "La prenotazione più breve accettata. Per questo arrivare alle 11:45 per il limite delle 12:00 viene rifiutato: troppo corta.",
+  "@policyMinDurationDesc": {
+    "description": "#649 - min_duration_minutes explanation"
+  },
+  "policyMaxDurationTitle": "Durata massima",
+  "@policyMaxDurationTitle": {
+    "description": "#649 - max_duration_minutes control title"
+  },
+  "policyMaxDurationDesc": "La prenotazione più lunga accettata. Una prenotazione finisce nel giorno in cui inizia, quindi la giornata intera è il tetto.",
+  "@policyMaxDurationDesc": {
+    "description": "#649 - max_duration_minutes explanation"
+  },
+  "policyDurationConflict": "Il minimo non può superare il massimo — nessuna prenotazione verrebbe accettata.",
+  "@policyDurationConflict": {
+    "description": "#649 - error when the minimum duration exceeds the maximum"
+  },
+  "policyDaysValue": "{count, plural, =1{1 giorno} other{{count} giorni}}",
+  "@policyDaysValue": {
+    "description": "#649 - a day count shown beside the horizon slider",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "policyMinutesValue": "{count, plural, =1{1 minuto} other{{count} minuti}}",
+  "@policyMinutesValue": {
+    "description": "#649 - a minute count shown beside a duration control",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "policyHoursValue": "{count, plural, =1{1 ora} other{{count} ore}}",
+  "@policyHoursValue": {
+    "description": "#649 - an hour count shown beside a duration control",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

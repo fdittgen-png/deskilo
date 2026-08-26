@@ -15,6 +15,7 @@ import '../../domain/booking_policies.dart';
 import '../../domain/closure_day.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/availability_tiles.dart';
 import '../../../../core/time/clock.dart';
 
 /// Owner-only availability editor (#127): which ISO weekdays (1=Mon..7=Sun,
@@ -188,6 +189,33 @@ class AvailabilityScreen extends ConsumerWidget {
     ref.invalidate(bookingPoliciesProvider);
   }
 
+  /// #649 — one writer for all three numeric limits; the key decides
+  /// which. Same merge-preserving booking_rules write as every other
+  /// policy, so the other keys survive untouched.
+  Future<void> _setLimit(
+    BuildContext context,
+    WidgetRef ref,
+    String key,
+    int value,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    try {
+      await ref
+          .read(workspaceRepositoryProvider)
+          .setBookingLimit(workspace.id, key, value);
+    } catch (e, st) {
+      debugPrint('set booking limit failed: $e\n$st');
+      TraceLogger.instance.error('workspace', 'set booking limit failed',
+          error: e, stackTrace: st);
+      if (!context.mounted) return;
+      _showGenericError(context, l10n);
+      return;
+    }
+    ref.invalidate(bookingPoliciesProvider);
+  }
+
   Future<void> _pickWorkTime(
     BuildContext context,
     WidgetRef ref,
@@ -306,7 +334,7 @@ class AvailabilityScreen extends ConsumerWidget {
             children: [
               // #606 — contextual how-to; gated inside the widget.
               const HelpHint(HelpHintId.availability),
-              _SectionHeader(
+              SectionHeader(
                 l10n?.availabilityOpenWeekdays ?? 'Open weekdays',
               ),
               Padding(
@@ -334,7 +362,7 @@ class AvailabilityScreen extends ConsumerWidget {
                   ],
                 ),
               ),
-              _SectionHeader(
+              SectionHeader(
                 l10n?.availabilityGranularityTitle ?? 'Booking granularity',
               ),
               Padding(
@@ -412,7 +440,7 @@ class AvailabilityScreen extends ConsumerWidget {
                 ),
               ),
               if (workingHoursOn) ...[
-                _SectionHeader(
+                SectionHeader(
                   l10n?.availabilityWorkHoursTitle ?? 'Working hours',
                 ),
                 Padding(
@@ -425,7 +453,7 @@ class AvailabilityScreen extends ConsumerWidget {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
-                _WorkTimeTile(
+                WorkTimeTile(
                   keySuffix: 'start',
                   title: l10n?.availabilityWorkStart ?? 'Day starts',
                   minutes: workHours.startMinutes,
@@ -437,7 +465,7 @@ class AvailabilityScreen extends ConsumerWidget {
                     (m) => workHours.copyWith(startMinutes: m),
                   ),
                 ),
-                _WorkTimeTile(
+                WorkTimeTile(
                   keySuffix: 'boundary',
                   title:
                       l10n?.availabilityHalfBoundary ?? 'Half-day boundary',
@@ -450,7 +478,7 @@ class AvailabilityScreen extends ConsumerWidget {
                     (m) => workHours.copyWith(halfBoundaryMinutes: m),
                   ),
                 ),
-                _WorkTimeTile(
+                WorkTimeTile(
                   keySuffix: 'end',
                   title: l10n?.availabilityWorkEnd ?? 'Day ends',
                   minutes: workHours.endMinutes,
@@ -465,7 +493,7 @@ class AvailabilityScreen extends ConsumerWidget {
                 // The hour counts only price bookings under the hours
                 // granularity - half-day equivalents on the statement.
                 if (granularity == BookingGranularity.hours) ...[
-                  _HourCountTile(
+                  HourCountTile(
                     keySuffix: 'half-day-hours',
                     title: l10n?.availabilityHalfDayHours ??
                         'Hours billed as a half day',
@@ -476,7 +504,7 @@ class AvailabilityScreen extends ConsumerWidget {
                       workHours.copyWith(halfDayHours: v),
                     ),
                   ),
-                  _HourCountTile(
+                  HourCountTile(
                     keySuffix: 'full-day-hours',
                     title: l10n?.availabilityFullDayHours ??
                         'Hours billed as a full day',
@@ -490,7 +518,7 @@ class AvailabilityScreen extends ConsumerWidget {
                 ],
               ],
               if (policiesOn) ...[
-                _SectionHeader(
+                SectionHeader(
                   l10n?.availabilityPoliciesTitle ?? 'Booking policies',
                 ),
                 SwitchListTile(
@@ -575,12 +603,82 @@ class AvailabilityScreen extends ConsumerWidget {
                   ),
                 ),
                 // #628 — how many overlapping bookings a member may hold.
-                _SimultaneousTile(
+                SimultaneousTile(
                   value: policies.simultaneousReservations,
                   onChanged: (v) => _setSimultaneous(context, ref, v),
                 ),
+                // #649 — the three numeric limits the server has enforced
+                // since 0006 but nothing could set. Shown with the values
+                // the server coalesces to, so an untouched workspace
+                // displays what it actually does.
+                SectionHeader(
+                  l10n?.policyLimitsTitle ?? 'Booking limits',
+                ),
+                Padding(
+                  padding: AppSpacing.lgH,
+                  child: Text(
+                    l10n?.policyLimitsDesc ??
+                        'How far ahead a booking may be made, and how '
+                            'short or long it may be. These hold on '
+                            'every granularity.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
+                LimitTile(
+                  keySuffix: 'horizon',
+                  icon: Icons.event_available_outlined,
+                  title: l10n?.policyHorizonTitle ??
+                      'Advance booking horizon',
+                  description: l10n?.policyHorizonDesc ??
+                      'How many days ahead a booking may start.',
+                  value: policies.advanceHorizonDays,
+                  options: horizonOptions,
+                  format: (v) => l10n?.policyDaysValue(v) ?? '$v days',
+                  onChanged: (v) => _setLimit(context, ref,
+                      BookingPolicies.advanceHorizonDaysKey, v),
+                ),
+                LimitTile(
+                  keySuffix: 'min-duration',
+                  icon: Icons.hourglass_bottom_outlined,
+                  title: l10n?.policyMinDurationTitle ?? 'Minimum duration',
+                  description: l10n?.policyMinDurationDesc ??
+                      'The shortest booking accepted.',
+                  value: policies.minDurationMinutes,
+                  options: durationOptions,
+                  format: (v) => formatDuration(l10n, v),
+                  onChanged: (v) => _setLimit(context, ref,
+                      BookingPolicies.minDurationMinutesKey, v),
+                ),
+                LimitTile(
+                  keySuffix: 'max-duration',
+                  icon: Icons.hourglass_top_outlined,
+                  title: l10n?.policyMaxDurationTitle ?? 'Maximum duration',
+                  description: l10n?.policyMaxDurationDesc ??
+                      'The longest booking accepted.',
+                  value: policies.maxDurationMinutes,
+                  options: durationOptions,
+                  format: (v) => formatDuration(l10n, v),
+                  onChanged: (v) => _setLimit(context, ref,
+                      BookingPolicies.maxDurationMinutesKey, v),
+                ),
+                // A minimum above the maximum refuses EVERY booking, and
+                // the server compares each bound on its own, so it would
+                // never complain — say so here instead.
+                if (!policies.durationsAreCoherent)
+                  Padding(
+                    padding: AppSpacing.lgH,
+                    child: Text(
+                      l10n?.policyDurationConflict ??
+                          'The minimum cannot exceed the maximum — no '
+                              'booking would be accepted.',
+                      key: const Key('policy-duration-conflict'),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                    ),
+                  ),
               ],
-              _SectionHeader(
+              SectionHeader(
                 l10n?.availabilityClosureDays ?? 'Closure days',
               ),
               if (closures.isEmpty)
@@ -623,141 +721,6 @@ class AvailabilityScreen extends ConsumerWidget {
 }
 
 /// One working-day bound: localized clock text, tap opens a time picker.
-class _WorkTimeTile extends StatelessWidget {
-  const _WorkTimeTile({
-    required this.keySuffix,
-    required this.title,
-    required this.minutes,
-    required this.onTap,
-  });
-
-  final String keySuffix;
-  final String title;
-  final int minutes;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) => ListTile(
-        key: ValueKey('work-hours-$keySuffix'),
-        leading: const Icon(Icons.schedule_outlined),
-        title: Text(title),
-        trailing: Text(
-          MaterialLocalizations.of(context).formatTimeOfDay(
-            TimeOfDay(hour: minutes ~/ 60, minute: minutes % 60),
-          ),
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        onTap: onTap,
-      );
-}
-
-/// Whole-hour count picker (1-16) for the half/full-day billing
-/// equivalents under the hours granularity.
-/// #628 — the workspace default for simultaneous reservations, 1..20.
-/// 1 is the historical one-place-at-a-time (#412); a per-member
-/// permission on the Members screen may raise it for individuals.
-class _SimultaneousTile extends StatelessWidget {
-  const _SimultaneousTile({required this.value, required this.onChanged});
-
-  final int value;
-  final ValueChanged<int> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return ListTile(
-      key: const Key('policy-simultaneous'),
-      title: Text(l10n?.policySimultaneousTitle ??
-          'Simultaneous reservations per member'),
-      subtitle: Text(l10n?.policySimultaneousDesc ??
-          'How many overlapping bookings one member may hold. '
-              '1 keeps one place at a time.'),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          IconButton(
-            key: const Key('policy-simultaneous-minus'),
-            icon: const Icon(Icons.remove),
-            onPressed: value > BookingPolicies.defaultSimultaneous
-                ? () => onChanged(value - 1)
-                : null,
-          ),
-          Text(
-            NumberFormat.decimalPattern(
-                    Localizations.localeOf(context).toLanguageTag())
-                .format(value),
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          IconButton(
-            key: const Key('policy-simultaneous-plus'),
-            icon: const Icon(Icons.add),
-            onPressed: value < BookingPolicies.maxSimultaneous
-                ? () => onChanged(value + 1)
-                : null,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HourCountTile extends StatelessWidget {
-  const _HourCountTile({
-    required this.keySuffix,
-    required this.title,
-    required this.value,
-    required this.onChanged,
-  });
-
-  final String keySuffix;
-  final String title;
-  final int value;
-  final ValueChanged<int> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return ListTile(
-        key: ValueKey('work-hours-$keySuffix'),
-        leading: const Icon(Icons.timelapse_outlined),
-        title: Text(title),
-        trailing: DropdownButton<int>(
-          value: value.clamp(1, 16),
-          underline: const SizedBox.shrink(),
-          items: [
-            for (var h = 1; h <= 16; h++)
-              DropdownMenuItem(
-                value: h,
-                child: Text(l10n?.availabilityHourOption(h) ?? '$h h'),
-              ),
-          ],
-          onChanged: (v) {
-            if (v != null) onChanged(v);
-          },
-        ),
-      );
-  }
-}
-
-class _SectionHeader extends StatelessWidget {
-  const _SectionHeader(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.lg,
-          AppSpacing.xl,
-          AppSpacing.lg,
-          AppSpacing.sm,
-        ),
-        child: Text(text, style: Theme.of(context).textTheme.titleMedium),
-      );
-}
-
-/// Optional closure reason. Pops null on cancel (aborts the add) and the
-/// (possibly empty) text on save.
 class _ReasonDialog extends StatefulWidget {
   const _ReasonDialog();
 

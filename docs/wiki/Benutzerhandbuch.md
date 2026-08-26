@@ -244,6 +244,14 @@ Die rollengebundenen Einladungen (§2): Mitglieder-Einladung = die Workspace-ID 
   - **Außerhalb der Öffnungszeiten** — eine Frage, vier sich gegenseitig ausschließende Antworten, auf jeder Granularität dieselben: *Was ist außerhalb des Arbeitstags möglich?* **Aus** — nichts: keine Vorausbuchung, kein Spontan-Check-in, und eine Buchung über das Tagesende hinaus (oder vor der Öffnung) wird ebenfalls abgelehnt. **Nur spontan** — der Spontan-Check-in bleibt möglich, Abend-Überstunden bis Mitternacht eingeschlossen, während Vorausbuchen außerhalb der Zeiten abgelehnt wird; hierin ist der alte Schalter **Minutenbuchungen innerhalb der Arbeitszeiten** aufgegangen, und Spaces, die ihn anhatten, lesen sich so. **Gratis** — erlaubt, nie gezählt und nie berechnet (reine Anwesenheitsinformation). **Berechnet** (der **Standard**) — wie gewöhnliche Nutzung gezählt, außer an einem Tag, an dem das Mitglied schon eine reguläre Buchung innerhalb der Zeiten hält: der Teil außerhalb fährt dann gratis mit.
   - **Gleichzeitige Reservierungen pro Mitglied** — wie viele sich überschneidende Buchungen ein Mitglied halten darf, Check-ins eingeschlossen. **1** standardmäßig: ein Platz zur Zeit. Eine Inhaberin oder ein Admin kann einem einzelnen Mitglied in *Mitglieder & Tarife* ein höheres Kontingent gewähren (nie sich selbst), und diese persönliche Erlaubnis sticht diese Zahl.
 
+  Direkt darunter stehen die **Buchungsgrenzen** — drei Zahlen, die der Server immer schon durchgesetzt hat und die die App nun einstellen kann:
+
+  - **Vorausbuchungs-Horizont** — wie viele Tage im Voraus eine Buchung beginnen darf (Standard **90**); darüber hinaus wird sie mit Begründung abgelehnt.
+  - **Mindestdauer** — die kürzeste akzeptierte Buchung (Standard **30 Minuten**), bei jeder Granularität. Genau deshalb wird eine Ankunft um 11:45 für die 12:00-Grenze als zu kurz abgelehnt.
+  - **Höchstdauer** — die längste akzeptierte (Standard **24 Stunden**). Da eine Buchung an ihrem Starttag endet, ist ein ganzer Tag die Obergrenze, und die Auswahl bietet nichts darüber.
+
+  Setzt man das Minimum über das Maximum, sagt der Bildschirm das — der Server prüft jede Grenze für sich und würde schlicht jede Buchung ablehnen, ohne je zu erklären warum.
+
   Die beiden **Auto-Validierungs**-Schalter — *Admins löschen ohne Validierung*, *Inhaber löschen ohne Validierung* — stehen nicht hier: sie leben bei den Validierungsregeln (§7), standardmäßig aus, und reichen nur an Reservierungslöschungen.
 
 ### Funktionen

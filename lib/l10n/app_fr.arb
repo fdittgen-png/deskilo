@@ -81,6 +81,69 @@
   "policyOutsideHoursChargedDesc": "Autorisé et compté comme un usage normal — sauf les jours où le membre a déjà une réservation normale.",
   "policySimultaneousTitle": "Réservations simultanées par membre",
   "policySimultaneousDesc": "Combien de réservations qui se chevauchent un membre peut détenir. 1 garde une seule place à la fois.",
+  "policyLimitsTitle": "Limites de réservation",
+  "@policyLimitsTitle": {
+    "description": "#649 - section header for the three numeric booking limits"
+  },
+  "policyLimitsDesc": "Jusqu'où l'on peut réserver à l'avance, et quelle durée est acceptée. Ces règles valent sur toutes les granularités.",
+  "@policyLimitsDesc": {
+    "description": "#649 - subtitle of the booking-limits section"
+  },
+  "policyHorizonTitle": "Horizon de réservation",
+  "@policyHorizonTitle": {
+    "description": "#649 - advance_horizon_days control title"
+  },
+  "policyHorizonDesc": "Combien de jours à l'avance une réservation peut commencer. Au-delà, elle est refusée.",
+  "@policyHorizonDesc": {
+    "description": "#649 - advance_horizon_days explanation"
+  },
+  "policyMinDurationTitle": "Durée minimale",
+  "@policyMinDurationTitle": {
+    "description": "#649 - min_duration_minutes control title"
+  },
+  "policyMinDurationDesc": "La plus courte réservation acceptée. C'est pourquoi arriver à 11:45 pour la limite de 12:00 est refusé, trop court.",
+  "@policyMinDurationDesc": {
+    "description": "#649 - min_duration_minutes explanation"
+  },
+  "policyMaxDurationTitle": "Durée maximale",
+  "@policyMaxDurationTitle": {
+    "description": "#649 - max_duration_minutes control title"
+  },
+  "policyMaxDurationDesc": "La plus longue réservation acceptée. Une réservation se termine le jour où elle commence : la journée entière est donc le plafond.",
+  "@policyMaxDurationDesc": {
+    "description": "#649 - max_duration_minutes explanation"
+  },
+  "policyDurationConflict": "Le minimum ne peut pas dépasser le maximum — plus aucune réservation ne serait acceptée.",
+  "@policyDurationConflict": {
+    "description": "#649 - error when the minimum duration exceeds the maximum"
+  },
+  "policyDaysValue": "{count, plural, =1{1 jour} other{{count} jours}}",
+  "@policyDaysValue": {
+    "description": "#649 - a day count shown beside the horizon slider",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "policyMinutesValue": "{count, plural, =1{1 minute} other{{count} minutes}}",
+  "@policyMinutesValue": {
+    "description": "#649 - a minute count shown beside a duration control",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "policyHoursValue": "{count, plural, =1{1 heure} other{{count} heures}}",
+  "@policyHoursValue": {
+    "description": "#649 - an hour count shown beside a duration control",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "myBadgeTitle": "Mon badge",
   "billSubscription": "Abonnement {pct} %",
   "billEntitlement": "{used} demi-journées utilisées sur {included} ({openDays} jours d'ouverture)",

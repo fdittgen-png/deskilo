@@ -246,6 +246,14 @@ I tuoi inviti legati ai ruoli (§2): invito membro = l'ID dello spazio (sostitui
   - **Fuori dagli orari di apertura** — una domanda, quattro risposte mutuamente esclusive, le stesse su ogni granularità: *che cosa è possibile fuori dalla giornata lavorativa?* **Vietato** — niente: né prenotazioni in anticipo, né check-in spontanei, e anche una prenotazione che sfora la fine della giornata (o inizia prima dell'apertura) viene rifiutata. **Solo spontaneo** — il check-in spontaneo resta possibile a **entrambi i bordi della giornata**, l'arrivo mattutino prima dell'apertura tanto quanto lo straordinario serale fino a mezzanotte, mentre prenotare in anticipo fuori dagli orari viene rifiutato; qui è confluito il vecchio interruttore **Prenotazioni al minuto negli orari di lavoro**, e gli spazi che l'avevano attivo leggono così (quell'interruttore permetteva solo l'arrivo serale — la modalità prende il nome dalla spontaneità, non dalla sera, quindi anche l'arrivo mattutino è ammesso). **Gratis** — consentito, mai contato né fatturato (pura informazione di presenza). **A pagamento** (il **predefinito**) — contato come uso ordinario, salvo in un giorno in cui il membro tiene già una prenotazione regolare dentro gli orari: la parte fuori orario viaggia allora gratis.
   - **Prenotazioni simultanee per membro** — quante prenotazioni sovrapposte un membro può tenere, check-in compresi. **1** per impostazione predefinita: un posto alla volta. Un proprietario o un admin può concedere a un singolo membro una quota superiore in *Membri e piani* (mai a sé stesso), e quel permesso personale prevale su questo numero.
 
+  Subito sotto stanno i **Limiti di prenotazione** — tre numeri che il server ha sempre applicato e che l'app ora sa impostare:
+
+  - **Orizzonte di prenotazione** — quanti giorni prima può iniziare una prenotazione (predefinito **90**); oltre, viene rifiutata dicendolo.
+  - **Durata minima** — la prenotazione più breve accettata (predefinito **30 minuti**), su ogni granularità. È esattamente per questo che un arrivo alle 11:45 per il limite delle 12:00 viene rifiutato: troppo corto.
+  - **Durata massima** — la più lunga accettata (predefinito **24 ore**). Poiché una prenotazione finisce nel giorno in cui inizia, la giornata intera è il tetto e il selettore non propone nulla oltre.
+
+  Se imposti un minimo superiore al massimo lo schermo lo segnala, perché il server controlla ogni limite per conto suo e si limiterebbe a rifiutare ogni prenotazione senza mai spiegare il motivo.
+
   I due interruttori di **auto-validazione** — *gli admin eliminano senza validazione*, *i proprietari eliminano senza validazione* — non stanno qui: vivono con le regole di validazione (§7), disattivati per impostazione predefinita, e arrivano soltanto alle eliminazioni di prenotazione.
 
 ### Funzionalità

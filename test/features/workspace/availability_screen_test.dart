@@ -307,6 +307,73 @@ void main() {
     expect(find.byKey(const Key('policy-outside-hours')), findsNothing);
     // #628: so does the simultaneous-reservations stepper.
     expect(find.byKey(const Key('policy-simultaneous')), findsNothing);
+    // #649: and the three numeric limits.
+    expect(find.byKey(const Key('policy-horizon')), findsNothing);
+    expect(find.byKey(const Key('policy-min-duration')), findsNothing);
+    expect(find.byKey(const Key('policy-max-duration')), findsNothing);
+  });
+
+  testWidgets('#649 — the three limits show the SERVER defaults before '
+      'anything is stored, and each writes its own booking_rules key',
+      (tester) async {
+    final workspace = await pumpAvailability(tester);
+
+    // An untouched workspace has no key at all: what the screen shows is
+    // a mirror of what enforce_booking_rules coalesces to.
+    for (final (key, expected) in [
+      ('policy-horizon', '90 days'),
+      ('policy-min-duration', '30 minutes'),
+      ('policy-max-duration', '24 hours'),
+    ]) {
+      final tile = find.byKey(Key(key));
+      await tester.ensureVisible(tile);
+      expect(find.descendant(of: tile, matching: find.text(expected)),
+          findsOneWidget,
+          reason: '$key must show the server fallback');
+    }
+    expect(workspace.bookingPolicies['ws-1'], isNull,
+        reason: 'showing a default must not write it');
+
+    // Each dropdown writes only its own key.
+    await tester.ensureVisible(find.byKey(const Key('policy-horizon')));
+    await tester.tap(find.byKey(const Key('policy-horizon-dropdown')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('30 days').last);
+    await tester.pumpAndSettle();
+    expect(workspace.bookingPolicies['ws-1']?.advanceHorizonDays, 30);
+    // The merge-preserving write leaves the rest alone.
+    expect(workspace.bookingPolicies['ws-1']?.minDurationMinutes, 30);
+    expect(workspace.bookingPolicies['ws-1']?.maxDurationMinutes, 1440);
+    expect(workspace.bookingPolicies['ws-1']?.outsideHoursMode,
+        OutsideHoursMode.charged);
+
+    await tester.ensureVisible(find.byKey(const Key('policy-min-duration')));
+    await tester.tap(find.byKey(const Key('policy-min-duration-dropdown')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('2 hours').last);
+    await tester.pumpAndSettle();
+    expect(workspace.bookingPolicies['ws-1']?.minDurationMinutes, 120);
+    expect(workspace.bookingPolicies['ws-1']?.advanceHorizonDays, 30,
+        reason: 'the horizon written a moment ago must survive');
+  });
+
+  testWidgets('#649 — a minimum above the maximum is called out, because '
+      'the server would silently refuse every booking', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.bookingPolicies['ws-1'] = const BookingPolicies(
+      minDurationMinutes: 240,
+      maxDurationMinutes: 60,
+    );
+    await pumpAvailability(tester, workspace: workspace);
+
+    final warning = find.byKey(const Key('policy-duration-conflict'));
+    await tester.ensureVisible(warning);
+    expect(warning, findsOneWidget);
+
+    // Coherent bounds say nothing.
+    workspace.bookingPolicies['ws-1'] = const BookingPolicies();
+    await pumpAvailability(tester, workspace: workspace);
+    expect(find.byKey(const Key('policy-duration-conflict')), findsNothing);
   });
 
   testWidgets('#628 — the simultaneous-reservations stepper starts at 1 '

@@ -246,6 +246,14 @@ Tus invitaciones ligadas a rol (§2): invitación de miembro = el propio ID del 
   - **Fuera del horario de apertura** — una pregunta, cuatro respuestas mutuamente excluyentes, iguales en todas las granularidades: *¿qué puede ocurrir fuera de la jornada laboral?* **Prohibido** — nada: ni reservas por adelantado, ni registros espontáneos, y una reserva que se pasa del fin de la jornada (o empieza antes de abrir) también se rechaza. **Solo espontáneo** — el registro espontáneo sigue siendo posible en **cualquiera de los dos extremos del día**, la llegada temprana antes de abrir tanto como la prórroga vespertina hasta medianoche, mientras que reservar por adelantado fuera del horario se rechaza; aquí fue a parar el antiguo interruptor **Reservas por minutos dentro del horario laboral**, y los espacios que lo tenían activo se leen así (aquel interruptor solo permitía la llegada vespertina — el modo se llama por lo espontáneo, no por la tarde, así que la llegada matinal también entra). **Gratis** — permitido, nunca contado ni facturado (pura información de presencia). **De pago** (el **defecto**) — contado como uso ordinario, salvo un día en el que el miembro ya mantiene una reserva normal dentro del horario: la parte de fuera viaja entonces gratis.
   - **Reservas simultáneas por miembro** — cuántas reservas superpuestas puede mantener un miembro, registros incluidos. **1** por defecto: un sitio a la vez. Un propietario o un admin puede conceder a un miembro concreto un cupo mayor en *Miembros y planes* (nunca a sí mismo), y ese permiso personal prevalece sobre este número.
 
+  Justo debajo están los **Límites de reserva** — tres números que el servidor siempre ha aplicado y que la app ya sabe ajustar:
+
+  - **Horizonte de reserva** — cuántos días antes puede empezar una reserva (por defecto **90**); más allá se rechaza diciéndolo.
+  - **Duración mínima** — la reserva más corta aceptada (por defecto **30 minutos**), en todas las granularidades. Por eso exactamente una llegada a las 11:45 para el límite de las 12:00 se rechaza por corta.
+  - **Duración máxima** — la más larga aceptada (por defecto **24 horas**). Como una reserva termina el día en que empieza, la jornada entera es el techo y el selector no ofrece nada por encima.
+
+  Si pones un mínimo por encima del máximo, la pantalla lo advierte: el servidor comprueba cada límite por separado y se limitaría a rechazar todas las reservas sin explicar nunca por qué.
+
   Los dos interruptores de **autovalidación** — *los admins eliminan sin validación*, *los propietarios eliminan sin validación* — no están aquí: viven con las reglas de validación (§7), desactivados por defecto, y solo alcanzan a las eliminaciones de reserva.
 
 ### Funciones
