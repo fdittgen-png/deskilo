@@ -2120,6 +2120,12 @@ abstract class AppLocalizations {
   /// **'never used'**
   String get eventReservationDeleteUnused;
 
+  /// Feed marker for a deletion the rule settled itself, with no peer review (#636)
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-validated'**
+  String get eventAutoValidated;
+
   /// Reservation deletion requests (#492)
   ///
   /// In en, this message translates to:
