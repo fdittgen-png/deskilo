@@ -123,8 +123,8 @@ All times below are workspace-local, and the examples assume the default working
 
 The last row of that table is the only one a granularity can rule out by shape; everything else about a window is decided by rules that apply **on every granularity alike**:
 
-- The future is open up to the **advance horizon** (default 90 days) and refused beyond it.
-- The **minimum and maximum duration** hold everywhere, not just on grids: with the default 30-minute minimum, a half-day walk-up started at 11:45 for the 12:00 boundary is refused as too short — arrive earlier or take the afternoon.
+- The future is open up to the **advance horizon** — 90 days unless the owner changes it (§8) — and refused beyond it.
+- The **minimum and maximum duration** hold everywhere, not just on grids. Both are owner-set (§8); with the default 30-minute minimum, a half-day walk-up started at 11:45 for the 12:00 boundary is refused as too short — arrive earlier or take the afternoon.
 - **A booking ends on the day it starts.** No window may cross midnight, whatever the granularity: an evening that runs on becomes tomorrow's booking, created tomorrow. The refusal reads *"a booking must end on the day it starts"*. The evening walk-up that runs to **local midnight** is still fine — midnight is that day's own end, not a crossing. Keeping every booking inside one day is what lets each day's occupancy, quota and bill be answered on that day alone.
 - A booking on a **day that already ended** (yesterday and earlier) is refused — *"lies entirely in the past"* — unless the owner switched **Allow past bookings** on. Booking this morning's window later the same day always works.
 - A **walk-up check-in must start today**: creating an already-checked-in booking for tomorrow is refused.
@@ -249,6 +249,14 @@ Your role-bound invites (§2): member invite = the workspace ID (replace it with
   - **Admins may check members out** — an admin can end a member's running check-in. Off, check-out is strictly personal. Useful where staff closes the room in the evening.
   - **Outside the opening hours** — one question, four mutually exclusive answers, the same on every granularity: *what may happen outside the working day?* **Off** — nothing: no booking ahead, no walk-up, and a booking spilling past the day's end (or starting before it opens) is refused too. **Spontaneous only** — the walk-up check-in stays possible at **either edge of the day**, the early arrival before opening as much as the evening overtime to midnight, while reserving ahead outside the hours is refused; this is where the old **Minute bookings within working hours** switch went, and workspaces that had it on read as this (that switch allowed only the evening walk-up — the mode is named for spontaneity, not for the evening, so the morning walk-in is allowed too). **Free** — allowed, never counted and never charged (pure presence information). **Charged** (the **default**) — counted like ordinary usage, except on a day where the member already holds a regular inside-hours booking, when the outside part rides free.
   - **Simultaneous reservations per member** — how many overlapping bookings one member may hold, check-ins included. **1** by default: one place at a time. An owner or admin can grant a single member a higher allowance in *Members & plans* (never for themselves), and that personal permission wins over this number.
+
+  Below them sits **Booking limits** — three numbers the server has always enforced and that the app can now set:
+
+  - **Advance booking horizon** — how many days ahead a booking may start (default **90**); beyond it the booking is refused by name.
+  - **Minimum duration** — the shortest booking accepted (default **30 minutes**), on every granularity. It is exactly why an 11:45 arrival for the 12:00 half-day boundary is refused as too short.
+  - **Maximum duration** — the longest accepted (default **24 hours**). Since a booking ends on the day it starts, a full day is the ceiling and the picker offers nothing above it.
+
+  Set a minimum above the maximum and the screen says so, because the server checks each bound on its own and would simply refuse every booking without explaining why.
 
   The two **auto-validation** switches — *admins delete without validation*, *owners delete without validation* — are not here: they live with the validation rules (§7), off by default, and reach reservation deletions only.
 

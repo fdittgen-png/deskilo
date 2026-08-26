@@ -277,6 +277,71 @@ class AppLocalizationsIt extends AppLocalizations {
       'Quante prenotazioni sovrapposte può avere un membro. 1 mantiene un solo posto alla volta.';
 
   @override
+  String get policyLimitsTitle => 'Limiti di prenotazione';
+
+  @override
+  String get policyLimitsDesc =>
+      'Con quanto anticipo si può prenotare e quale durata è accettata. Valgono su ogni granularità.';
+
+  @override
+  String get policyHorizonTitle => 'Orizzonte di prenotazione';
+
+  @override
+  String get policyHorizonDesc =>
+      'Quanti giorni prima può iniziare una prenotazione. Oltre, viene rifiutata.';
+
+  @override
+  String get policyMinDurationTitle => 'Durata minima';
+
+  @override
+  String get policyMinDurationDesc =>
+      'La prenotazione più breve accettata. Per questo arrivare alle 11:45 per il limite delle 12:00 viene rifiutato: troppo corta.';
+
+  @override
+  String get policyMaxDurationTitle => 'Durata massima';
+
+  @override
+  String get policyMaxDurationDesc =>
+      'La prenotazione più lunga accettata. Una prenotazione finisce nel giorno in cui inizia, quindi la giornata intera è il tetto.';
+
+  @override
+  String get policyDurationConflict =>
+      'Il minimo non può superare il massimo — nessuna prenotazione verrebbe accettata.';
+
+  @override
+  String policyDaysValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count giorni',
+      one: '1 giorno',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String policyMinutesValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count minuti',
+      one: '1 minuto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String policyHoursValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ore',
+      one: '1 ora',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get myBadgeTitle => 'Il mio badge';
 
   @override

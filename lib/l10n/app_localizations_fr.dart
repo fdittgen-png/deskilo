@@ -278,6 +278,71 @@ class AppLocalizationsFr extends AppLocalizations {
       'Combien de réservations qui se chevauchent un membre peut détenir. 1 garde une seule place à la fois.';
 
   @override
+  String get policyLimitsTitle => 'Limites de réservation';
+
+  @override
+  String get policyLimitsDesc =>
+      'Jusqu\'où l\'on peut réserver à l\'avance, et quelle durée est acceptée. Ces règles valent sur toutes les granularités.';
+
+  @override
+  String get policyHorizonTitle => 'Horizon de réservation';
+
+  @override
+  String get policyHorizonDesc =>
+      'Combien de jours à l\'avance une réservation peut commencer. Au-delà, elle est refusée.';
+
+  @override
+  String get policyMinDurationTitle => 'Durée minimale';
+
+  @override
+  String get policyMinDurationDesc =>
+      'La plus courte réservation acceptée. C\'est pourquoi arriver à 11:45 pour la limite de 12:00 est refusé, trop court.';
+
+  @override
+  String get policyMaxDurationTitle => 'Durée maximale';
+
+  @override
+  String get policyMaxDurationDesc =>
+      'La plus longue réservation acceptée. Une réservation se termine le jour où elle commence : la journée entière est donc le plafond.';
+
+  @override
+  String get policyDurationConflict =>
+      'Le minimum ne peut pas dépasser le maximum — plus aucune réservation ne serait acceptée.';
+
+  @override
+  String policyDaysValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count jours',
+      one: '1 jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String policyMinutesValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count minutes',
+      one: '1 minute',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String policyHoursValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count heures',
+      one: '1 heure',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get myBadgeTitle => 'Mon badge';
 
   @override

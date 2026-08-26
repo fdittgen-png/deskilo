@@ -274,6 +274,71 @@ class AppLocalizationsEn extends AppLocalizations {
       'How many overlapping bookings one member may hold. 1 keeps one place at a time.';
 
   @override
+  String get policyLimitsTitle => 'Booking limits';
+
+  @override
+  String get policyLimitsDesc =>
+      'How far ahead a booking may be made, and how short or long it may be. These hold on every granularity.';
+
+  @override
+  String get policyHorizonTitle => 'Advance booking horizon';
+
+  @override
+  String get policyHorizonDesc =>
+      'How many days ahead a booking may start. Beyond it the booking is refused.';
+
+  @override
+  String get policyMinDurationTitle => 'Minimum duration';
+
+  @override
+  String get policyMinDurationDesc =>
+      'The shortest booking accepted. It is why arriving at 11:45 for a 12:00 half-day boundary is refused as too short.';
+
+  @override
+  String get policyMaxDurationTitle => 'Maximum duration';
+
+  @override
+  String get policyMaxDurationDesc =>
+      'The longest booking accepted. A booking ends on the day it starts, so a full day is the ceiling.';
+
+  @override
+  String get policyDurationConflict =>
+      'The minimum cannot exceed the maximum — no booking would be accepted.';
+
+  @override
+  String policyDaysValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String policyMinutesValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count minutes',
+      one: '1 minute',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String policyHoursValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hours',
+      one: '1 hour',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get myBadgeTitle => 'My badge';
 
   @override

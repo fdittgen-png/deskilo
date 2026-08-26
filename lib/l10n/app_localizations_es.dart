@@ -276,6 +276,71 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cuántas reservas superpuestas puede tener un miembro. 1 mantiene un solo sitio a la vez.';
 
   @override
+  String get policyLimitsTitle => 'Límites de reserva';
+
+  @override
+  String get policyLimitsDesc =>
+      'Con cuánta antelación se puede reservar y qué duración se acepta. Rigen en todas las granularidades.';
+
+  @override
+  String get policyHorizonTitle => 'Horizonte de reserva';
+
+  @override
+  String get policyHorizonDesc =>
+      'Cuántos días antes puede empezar una reserva. Más allá, se rechaza.';
+
+  @override
+  String get policyMinDurationTitle => 'Duración mínima';
+
+  @override
+  String get policyMinDurationDesc =>
+      'La reserva más corta aceptada. Por eso llegar a las 11:45 para el límite de las 12:00 se rechaza por ser demasiado corta.';
+
+  @override
+  String get policyMaxDurationTitle => 'Duración máxima';
+
+  @override
+  String get policyMaxDurationDesc =>
+      'La reserva más larga aceptada. Una reserva termina el día en que empieza, así que la jornada entera es el techo.';
+
+  @override
+  String get policyDurationConflict =>
+      'El mínimo no puede superar al máximo — no se aceptaría ninguna reserva.';
+
+  @override
+  String policyDaysValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count días',
+      one: '1 día',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String policyMinutesValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count minutos',
+      one: '1 minuto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String policyHoursValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count horas',
+      one: '1 hora',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get myBadgeTitle => 'Mi credencial';
 
   @override

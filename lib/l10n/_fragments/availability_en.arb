@@ -123,5 +123,68 @@
   "policySimultaneousDesc": "How many overlapping bookings one member may hold. 1 keeps one place at a time.",
   "@policySimultaneousDesc": {
     "description": "#628 - subtitle explaining the simultaneous-reservations stepper"
+  },
+  "policyLimitsTitle": "Booking limits",
+  "@policyLimitsTitle": {
+    "description": "#649 - section header for the three numeric booking limits"
+  },
+  "policyLimitsDesc": "How far ahead a booking may be made, and how short or long it may be. These hold on every granularity.",
+  "@policyLimitsDesc": {
+    "description": "#649 - subtitle of the booking-limits section"
+  },
+  "policyHorizonTitle": "Advance booking horizon",
+  "@policyHorizonTitle": {
+    "description": "#649 - advance_horizon_days control title"
+  },
+  "policyHorizonDesc": "How many days ahead a booking may start. Beyond it the booking is refused.",
+  "@policyHorizonDesc": {
+    "description": "#649 - advance_horizon_days explanation"
+  },
+  "policyMinDurationTitle": "Minimum duration",
+  "@policyMinDurationTitle": {
+    "description": "#649 - min_duration_minutes control title"
+  },
+  "policyMinDurationDesc": "The shortest booking accepted. It is why arriving at 11:45 for a 12:00 half-day boundary is refused as too short.",
+  "@policyMinDurationDesc": {
+    "description": "#649 - min_duration_minutes explanation"
+  },
+  "policyMaxDurationTitle": "Maximum duration",
+  "@policyMaxDurationTitle": {
+    "description": "#649 - max_duration_minutes control title"
+  },
+  "policyMaxDurationDesc": "The longest booking accepted. A booking ends on the day it starts, so a full day is the ceiling.",
+  "@policyMaxDurationDesc": {
+    "description": "#649 - max_duration_minutes explanation"
+  },
+  "policyDurationConflict": "The minimum cannot exceed the maximum — no booking would be accepted.",
+  "@policyDurationConflict": {
+    "description": "#649 - error when the minimum duration exceeds the maximum"
+  },
+  "policyDaysValue": "{count, plural, =1{1 day} other{{count} days}}",
+  "@policyDaysValue": {
+    "description": "#649 - a day count shown beside the horizon slider",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "policyMinutesValue": "{count, plural, =1{1 minute} other{{count} minutes}}",
+  "@policyMinutesValue": {
+    "description": "#649 - a minute count shown beside a duration control",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "policyHoursValue": "{count, plural, =1{1 hour} other{{count} hours}}",
+  "@policyHoursValue": {
+    "description": "#649 - an hour count shown beside a duration control",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

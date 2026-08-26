@@ -707,6 +707,10 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
           BookingPolicies.simultaneousReservationsKey, value);
 
   @override
+  Future<void> setBookingLimit(String workspaceId, String key, int value) =>
+      _mergeBookingRule(workspaceId, key, value);
+
+  @override
   Future<void> setWorkHours(String workspaceId, WorkHours hours) async {
     // Same merge-preserving jsonb write as setBookingGranularity.
     final row = await _client

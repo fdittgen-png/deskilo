@@ -144,6 +144,8 @@ const DOMAINS=[
  ['reservation','Réservation'],['space_reservation',"Réservations d'espaces entiers"],
  ['invoice_payment','Paiement de facture'],['adjustment','Ajustement'],
  ['invoice_writeoff','Annulation de solde']];
+const HORIZON=[['7','7 jours'],['14','14 jours'],['30','30 jours'],['60','60 jours'],['90','90 jours (défaut)'],['120','120 jours'],['180','180 jours'],['365','1 an'],['730','2 ans']];
+const DURATIONS=[['5','5 minutes'],['10','10 minutes'],['15','15 minutes'],['30','30 minutes (défaut min.)'],['45','45 minutes'],['60','1 heure'],['90','1 h 30'],['120','2 heures'],['180','3 heures'],['240','4 heures'],['300','5 heures'],['360','6 heures'],['480','8 heures'],['600','10 heures'],['720','12 heures'],['1440','24 heures (défaut max.)']];
 const VATPERIOD=[['month','Mensuelle'],['quarter','Trimestrielle']];
 const OUTSIDE=[['charged','Facturé (défaut) — compté comme un usage ordinaire'],['free','Gratuit — autorisé, jamais compté ni facturé'],['walkup_only','Spontané seulement — arrivée impromptue oui, réservation à l\'avance non'],['off','Interdit — rien en dehors des heures, débordement compris']];
 const GRAN=[['half_day','Demi-journées (matin / après-midi)'],['full_day','Journées entières uniquement'],['hours','Heures réelles (de–à exact, demi/journées en raccourcis)'],['minutes_60',"Créneaux d'une heure"],['minutes_30','Créneaux de 30 minutes'],['minutes_15','Créneaux de 15 minutes'],['minutes_5','Créneaux de 5 minutes'],['flexible','Plage horaire libre']];
@@ -155,6 +157,7 @@ const DEFAULTS={
  name:'',country:'FR',currency:'EUR',timezone:'Europe/Paris',language:'',address:'',whatsapp:'',
  weekdays:['1','2','3','4','5'],granularity:'half_day',dayStart:'08:00',boundary:'12:00',dayEnd:'17:00',closures:[],
  halfDayHours:'4',fullDayHours:'8',deskOpacity:'100',
+ horizonDays:'90',minDuration:'30',maxDuration:'1440',
  policies:{allowPast:false,adminCheckout:false,outsideHours:'charged',simultaneous:'1'},
  invites:{fr:'',en:'',de:'',es:'',it:''},
  einvoice:{url:'',token:'',header:'',field:'',uatUrl:'',uatToken:'',devUrl:'',devToken:'',
@@ -249,7 +252,15 @@ function render(){
   selectEl('En dehors des heures d\'ouverture','policies.outsideHours',OUTSIDE,
    'Une seule question, quatre réponses exclusives, identiques sur toutes les granularités. « Interdit » refuse aussi la fenêtre qui déborde simplement (16–20). « Spontané seulement » laisse passer l\'arrivée impromptue aux deux bords de la journée — 6:00 comme le soir — et refuse la réservation à l\'avance. « Gratuit » autorise sans jamais compter ni facturer. « Facturé » (défaut) compte comme un usage ordinaire, sauf les jours où le membre tient déjà une réservation dans les heures : la part hors heures voyage alors gratuitement, ce qui évite de ne réserver que hors heures pour ne rien payer.'),
   input('Réservations simultanées par membre','policies.simultaneous','Combien de réservations peuvent se chevaucher dans le temps pour un même membre, pointages compris. 1 par défaut : une place à la fois. Une autorisation personnelle plus élevée se donne membre par membre dans l\'app (« Membres & formules »), jamais à soi-même, et prime sur ce nombre. À ne pas confondre avec la « limite de réservations », qui plafonne le nombre de réservations ouvertes en tout (section 10).'),
-  h('p',{class:'hint'},"Trois règles ne se configurent pas encore dans l'app et gardent leurs valeurs serveur : l'horizon de réservation (90 jours), la durée minimale (30 min) et la durée maximale (24 h). Elles sont appliquées quoi qu'il arrive — la matrice ci-dessous les rappelle."),
+  h('label',{},'Limites de réservation'),
+  h('p',{class:'hint'},"Jusqu'où l'on peut réserver à l'avance, et quelle durée est acceptée. Ces trois règles valent sur toutes les granularités. Le serveur les appliquait depuis toujours ; elles se règlent désormais dans l'app (Disponibilité → Limites de réservation)."),
+  h('div',{class:'row'},
+   selectEl('Horizon de réservation','horizonDays',HORIZON,'Au-delà, la réservation est refusée.'),
+   selectEl('Durée minimale','minDuration',DURATIONS,"C'est pourquoi arriver à 11:45 pour la limite de 12:00 est refusé, trop court."),
+   selectEl('Durée maximale','maxDuration',DURATIONS,'Une réservation se termine le jour où elle commence : la journée entière est le plafond.')),
+  ((parseInt(S.minDuration)||0)>(parseInt(S.maxDuration)||0)
+    ? h('p',{class:'hint',style:'color:#a33'},'Le minimum dépasse le maximum — aucune réservation ne serait acceptée.')
+    : null),
   h('label',{},'Comment les réservations se comporteront'),
   h('p',{class:'hint'},'Le résumé du comportement appliqué côté serveur, selon la granularité choisie ci-dessus. Heures données pour la journée par défaut 08:00 / 12:00 / 17:00.'),
   h('div',{class:'matrix',html:
@@ -259,7 +270,7 @@ function render(){
    '<tr><td>Fenêtre atypique (9–15)</td><td>❌</td><td>❌</td><td>✅ si sur la grille</td><td>✅</td></tr>'+
    '<tr><td>Avant l\'ouverture / après les heures (6:00, 17–21)</td><td colspan="4">Réponse donnée par « En dehors des heures d\'ouverture » ci-dessus, identique partout : interdit, spontané seulement, gratuit ou facturé. En demi-journées et journées entières, seule la prolongation spontanée du soir existe de toute façon.</td></tr>'+
    '<tr><td>Hors grille (10:02)</td><td>—</td><td>—</td><td>❌ le refus nomme la grille</td><td>—</td></tr>'+
-   '<tr><td colspan="5"><b>Et sur toutes les granularités :</b> durée minimale (30 min par défaut) et maximale — une arrivée à 11:45 pour la limite de 12:00 est refusée, trop courte ; <b>une réservation se termine le jour où elle commence</b>, rien ne franchit minuit (la prolongation du soir s\'arrête à minuit, qui est la fin de ce jour-là, pas un franchissement) ; hier et avant ❌ « entièrement dans le passé », sauf avec « Autoriser les réservations passées » — le rattrapage du même jour marche toujours ; un pointage spontané doit commencer aujourd\'hui ; au-delà de l\'horizon (90 j), jour fermé, place occupée : refus nommé ; et un membre ne tient que le nombre de réservations qui se chevauchent que son autorisation permet.</td></tr>'+
+   '<tr><td colspan="5"><b>Et sur toutes les granularités :</b> durée minimale (30 min par défaut) et maximale — une arrivée à 11:45 pour la limite de 12:00 est refusée, trop courte ; <b>une réservation se termine le jour où elle commence</b>, rien ne franchit minuit (la prolongation du soir s\'arrête à minuit, qui est la fin de ce jour-là, pas un franchissement) ; hier et avant ❌ « entièrement dans le passé », sauf avec « Autoriser les réservations passées » — le rattrapage du même jour marche toujours ; un pointage spontané doit commencer aujourd\'hui ; au-delà de l\'horizon que vous avez fixé, jour fermé, place occupée : refus nommé ; et un membre ne tient que le nombre de réservations qui se chevauchent que son autorisation permet.</td></tr>'+
    '<tr><td colspan="5">Tout cela est appliqué <b>à un seul endroit sur le serveur</b> : le plan, l\'onglet Réserver, un scan QR/NFC et la borne murale proposent exactement ce qui sera accepté, et la borne refuse précisément ce que le plan refuse.</td></tr>'+
    '</table>'}),
   h('div',{class:'matrix',html:
@@ -446,7 +457,7 @@ function exportXml(){
  push('  </floor-plan>');
  // setup extension — ignored by the app importer, read by the configurator
  push('  <setup>');
- push(`    <availability granularity="${S.granularity}" day-start="${S.dayStart}" half-boundary="${S.boundary}" day-end="${S.dayEnd}" open-weekdays="${S.weekdays.join(',')}" allow-past-bookings="${!!S.policies.allowPast}" outside-hours-mode="${S.policies.outsideHours||'charged'}" simultaneous-reservations="${S.policies.simultaneous||'1'}" admin-checkout="${!!S.policies.adminCheckout}">`);
+ push(`    <availability granularity="${S.granularity}" day-start="${S.dayStart}" half-boundary="${S.boundary}" day-end="${S.dayEnd}" open-weekdays="${S.weekdays.join(',')}" allow-past-bookings="${!!S.policies.allowPast}" outside-hours-mode="${S.policies.outsideHours||'charged'}" simultaneous-reservations="${S.policies.simultaneous||'1'}" admin-checkout="${!!S.policies.adminCheckout}" advance-horizon-days="${S.horizonDays}" min-duration-minutes="${S.minDuration}" max-duration-minutes="${S.maxDuration}">`);
  S.closures.filter(Boolean).forEach(c=>push(`      <closure day="${esc(c)}"/>`));
  if(S.granularity==='hours')push(`      <hour-equivalents half-day="${S.halfDayHours}" full-day="${S.fullDayHours}"/>`);
  push('    </availability>');
@@ -502,6 +513,9 @@ function parseBack(text){
  if(lvls.length)S.levels=lvls.map(l=>({name:l.getAttribute('name'),offices:[...l.querySelectorAll('office')].map(o=>({name:o.getAttribute('name'),bookable:o.getAttribute('bookable-as-whole')==='true',price:'',desks:[...o.querySelectorAll('desk')].map(d=>{const seats=[...d.querySelectorAll('seat')];const first=seats[0]?.getAttribute('name')||'Place 1';return{name:d.getAttribute('name'),seats:seats.length,prefix:first.replace(/\s*\d+$/,'')||'Place'}})}))}));
  const su=root.querySelector('setup');if(!su)return;
  const av=su.querySelector('availability');if(av){S.granularity=av.getAttribute('granularity')||S.granularity;S.dayStart=av.getAttribute('day-start')||S.dayStart;S.boundary=av.getAttribute('half-boundary')||S.boundary;S.dayEnd=av.getAttribute('day-end')||S.dayEnd;S.weekdays=(av.getAttribute('open-weekdays')||'1,2,3,4,5').split(',');S.closures=[...av.querySelectorAll('closure')].map(c=>c.getAttribute('day'));S.policies={allowPast:av.getAttribute('allow-past-bookings')==='true',adminCheckout:av.getAttribute('admin-checkout')==='true',outsideHours:av.getAttribute('outside-hours-mode')||(av.getAttribute('grid-within-hours')==='true'?'walkup_only':'charged'),simultaneous:av.getAttribute('simultaneous-reservations')||'1'};
+  S.horizonDays=av.getAttribute('advance-horizon-days')||S.horizonDays;
+  S.minDuration=av.getAttribute('min-duration-minutes')||S.minDuration;
+  S.maxDuration=av.getAttribute('max-duration-minutes')||S.maxDuration;
   const he=av.querySelector('hour-equivalents');if(he){S.halfDayHours=he.getAttribute('half-day')||S.halfDayHours;S.fullDayHours=he.getAttribute('full-day')||S.fullDayHours}}
  const id=su.querySelector('identity');if(id){S.language=id.getAttribute('language')||'';S.address=id.getAttribute('address')||'';S.whatsapp=id.getAttribute('whatsapp-group')||'';S.deskOpacity=id.getAttribute('desk-opacity')||S.deskOpacity;
   Object.keys(S.invites).forEach(k=>S.invites[k]='');id.querySelectorAll('invitation').forEach(iv=>{const k=iv.getAttribute('lang');if(k in S.invites)S.invites[k]=iv.getAttribute('text')||''})}

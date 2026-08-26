@@ -885,6 +885,24 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   }
 
   @override
+  Future<void> setBookingLimit(
+    String workspaceId,
+    String key,
+    int value,
+  ) async {
+    final p = bookingPolicies[workspaceId] ?? const BookingPolicies();
+    bookingPolicies[workspaceId] = switch (key) {
+      BookingPolicies.advanceHorizonDaysKey =>
+        p.copyWith(advanceHorizonDays: value),
+      BookingPolicies.minDurationMinutesKey =>
+        p.copyWith(minDurationMinutes: value),
+      BookingPolicies.maxDurationMinutesKey =>
+        p.copyWith(maxDurationMinutes: value),
+      _ => p,
+    };
+  }
+
+  @override
   Future<void> setOutsideHoursMode(
     String workspaceId,
     OutsideHoursMode mode,
