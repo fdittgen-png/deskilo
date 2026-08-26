@@ -28,7 +28,42 @@ class ScanCameraBox extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     // Watched: flipping rebuilds the scanner with the other lens.
     final builder = ref.watch(qrScanWidgetBuilderProvider);
-    final front = ref.watch(frontCameraScanProvider).value ?? true;
+    final lens = ref.watch(frontCameraScanProvider);
+
+    // #662 — WAIT for the stored lens before mounting the camera.
+    //
+    // The preference is read asynchronously, so on the first open of an
+    // app session `.value` is null and the old code fell back to `true`.
+    // With the back camera stored, the sequence was:
+    //
+    //   frame 1  loading  → front=true  → key 'scan-camera-true'
+    //                                   → camera starts initialising
+    //   prefs resolve     → front=false → key 'scan-camera-false'
+    //                                   → subtree DESTROYED and remounted
+    //                                     on top of a half-initialised
+    //                                     controller
+    //
+    // The preview came up but decoding never started, so the first scan
+    // of a session silently did nothing; closing and reopening worked
+    // because the keepAlive provider already held the value and the
+    // camera mounted once, with the right lens. Reported for the space
+    // scan sheet AND the kiosk, which is expected — both embed this box.
+    //
+    // Mounting only once the answer is known costs a frame or two of
+    // placeholder and makes the camera's lifecycle single-shot.
+    if (!lens.hasValue && !lens.hasError) {
+      return ClipRRect(
+        borderRadius: AppRadius.mdAll,
+        child: SizedBox(
+          key: cameraKey,
+          height: 220,
+          child: const Center(child: CircularProgressIndicator()),
+        ),
+      );
+    }
+    // An unreadable preference falls back to the front lens, exactly as
+    // PrefsFrontCameraStore does — but now it mounts ONCE.
+    final front = lens.value ?? true;
     return ClipRRect(
       borderRadius: AppRadius.mdAll,
       child: SizedBox(
