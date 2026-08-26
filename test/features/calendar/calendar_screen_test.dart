@@ -116,7 +116,8 @@ void main() {
     expect(dotColors(), contains(const Color(0xFF42A5F5)));
   });
 
-  testWidgets("admins can switch to everyone's reservations", (tester) async {
+  testWidgets("Everyone shows the whole community's reservations",
+      (tester) async {
     await pumpCalendar(
       tester,
       seed: [todayReservation(id: 'res-x', memberId: 'member-2')],
@@ -133,7 +134,8 @@ void main() {
     expect(find.textContaining('Ana'), findsOneWidget);
   });
 
-  testWidgets('workers get no everyone toggle', (tester) async {
+  testWidgets('a plain member gets the Everyone toggle too — the plan and '
+      'the week grid already show everybody', (tester) async {
     await pumpCalendar(
       tester,
       member: const Member(
@@ -144,9 +146,17 @@ void main() {
         isOwner: false,
         status: MemberStatus.active,
       ),
+      seed: [todayReservation(id: 'res-x', memberId: 'member-2')],
     );
 
-    expect(find.text('Everyone'), findsNothing);
+    expect(find.text('Everyone'), findsOneWidget);
+    expect(find.text('No reservations on this day.'), findsOneWidget);
+
+    await tester.tap(find.text('Everyone'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('A1'), findsOneWidget);
+    expect(find.textContaining('Ana'), findsOneWidget);
   });
 
   testWidgets('cancel this-and-following stops the series from that instance',

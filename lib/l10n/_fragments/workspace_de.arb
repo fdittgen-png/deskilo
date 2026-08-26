@@ -35,7 +35,7 @@
   "inviteRoleAdmin": "Admin-Einladung",
   "inviteAdminExplainer": "Dieser Code ist einmalig nutzbar: Er lässt EINE Person als Admin beitreten und verfällt dann. Gib ihn nur der Person, für die er bestimmt ist.",
   "inviteAdminNewCode": "Neuer Admin-Code",
-  "inviteOwnerNote": "Es gibt keine Eigentümer-Einladung — nur ein Eigentümer kann Eigentum vergeben, unter Mitglieder & Pläne.",
+  "inviteOwnerNote": "Es gibt keine Eigentümer-Einladung — nur ein Eigentümer kann Eigentum vergeben, unter Mitglieder & Tarife.",
   "scanJoinTitle": "Workspace-QR scannen",
   "scanJoinHelp": "Richte die Kamera auf den Einladungs-QR — der Code wird übernommen und der Beitritt läuft automatisch.",
   "@scanJoinHelp": {

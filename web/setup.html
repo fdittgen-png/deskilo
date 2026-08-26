@@ -70,24 +70,24 @@ const FEATURES=[
  ['eventsTab','Onglet Événements',"Fil d'activité et confirmations.",1],
  ['moneyTab','Onglet Finances','Relevés, paiements, dépenses.',1],
  ['services','Services','Catalogue de services et consommations.',1],
- ['accessorySupplements',"Suppléments d'accessoires",'Accessoires de place tarifés par demi-journée.',1],
- ['onlinePayments','Paiements en ligne','PayPal, Stripe, Mollie, Wero (config serveur requise).',1],
+ ['accessorySupplements',"Suppléments d'accessoires",'Accessoires de place tarifés par demi-journée.',0],
+ ['onlinePayments','Paiements en ligne','PayPal, Stripe, Mollie, Wero (config serveur requise).',0],
  ['invoicing','Factures','Factures immuables et signées.',1],
- ['adminInvoicing','Les admins émettent des factures','Délégation de facturation aux admins.',1],
+ ['adminInvoicing','Les admins émettent des factures','Délégation de facturation aux admins.',0],
  ['pdfExport','Export PDF','Relevé mensuel en PDF.',1],
  ['seriesBooking','Réservation en série','Quotidienne, hebdo ou jours ouvrés.',1],
  ['bookForOthers',"Réserver pour d'autres",'Admins/propriétaires réservent pour les membres.',1],
  ['pushNotifications','Notifications push','Confirmations poussées sur les appareils.',1],
- ['adminSeatBlocking','Les admins peuvent bloquer des places','Maintenance.',1],
+ ['adminSeatBlocking','Les admins peuvent bloquer des places','Maintenance.',0],
  ['levelBooking','Réservations de table, bureau et niveau','Espaces entiers, tarifés par demi-journée.',0],
- ['adminLevelAssign','Les admins peuvent attribuer des niveaux','Nécessite les réservations d’espaces entiers.',1],
+ ['adminLevelAssign','Les admins peuvent attribuer des niveaux','Nécessite les réservations d’espaces entiers.',0],
  ['kioskMode','Mode borne','Tablette murale verrouillée, badges.',1],
  ['nfcBadges','Badges RFID / NFC','Pointage par carte à une borne Android NFC.',1],
  ['membersDirectory','Annuaire des membres','Qui est là, statuts, présence.',1],
  ['whatsappIntegration','Intégration WhatsApp','Écrire aux membres, lien du groupe.',1],
  ['spaceQrCodes','Codes QR des espaces','Cartes QR imprimables par espace.',1],
  ['coOwner','Copropriétaires','Succession et permissions de propriétaire.',1],
- ['autoCheckInOut','Arrivée/départ auto','Clôture des réservations oubliées.',1],
+ ['autoCheckInOut','Arrivée/départ auto','Clôture des réservations oubliées.',0],
  ['dataExport','Export des données (Excel)','Classeur complet.',1],
  ['workingHours','Horaires de travail','Journée configurable, réservation à l’heure.',1],
  ['invoicePdfTemplate','Modèle de PDF de facture','Éditeur de rapports.',1],
@@ -102,10 +102,13 @@ const FEATURES=[
  ['einvoiceCustomerDelivery','Facture électronique au client','Envoi de la facture électronique au service du client, en plus de la plateforme gouvernementale.',1],
  ['planObjectDelete','Suppression d\'objets du plan','Supprimer des objets du plan encore référencés par des réservations (texte de substitution d\'audit).',1],
  ['notificationGrouping','Regroupement des notifications','Grouper le fil de notifications par type, jour ou membre.',1],
- ['bookingPolicies','Règles de réservation','Comportement de réservation configurable : réservations passées, minutes hors heures, check-out par un admin (section 2).',1],
+ ['bookingPolicies','Règles de réservation','Comportement de réservation configurable : réservations passées, check-out par un admin, politique hors heures d\'ouverture, réservations simultanées (section 2).',1],
  ['nfcSeatTags','Tags NFC/RFID des chaises','Un tag physique sur une chaise mène à sa place comme la carte QR ; le champ se remplit en approchant la puce — aussi dans le navigateur (Chrome/Android).',1],
  ['qrBadges','Badges QR','Cartes badge QR imprimables pour la borne, à côté des badges NFC/RFID.',1],
  ['formHelpHints','Aides contextuelles','Un encart d\'aide sur chaque écran principal : le mode d\'emploi du formulaire, masquable, avec lien vers l\'aide complète ; réactivable dans les réglages.',1],
+ ['kioskMemberPhotos','Photos des membres à la borne','Le reçu de la borne montre la photo de profil du membre reconnu.',1],
+ ['planMemberPhotos','Photos des membres sur le plan','La photo de profil de l\'occupant sur les places du plan et de l\'onglet Réserver, borne ou non.',1],
+ ['uiAnimations','Animations de l\'interface','Transitions et retours animés dans toute l\'app ; désactivé, tout devient instantané. Le réglage d\'accessibilité « animations réduites » du système prime de toute façon.',1],
 ];
 const PERMS=[['manageRoles','Gérer les rôles et permissions'],['manageMembers','Gérer les membres'],['manageValidation','Configurer les règles de validation'],['workspaceSettings',"Modifier les réglages de l'espace"],['issueInvoices','Émettre les factures et rapprocher les paiements'],['viewFinances',"Consulter les finances de l'espace"],['manageDocuments','Gérer la bibliothèque de documents'],['manageServices','Gérer les services et forfaits'],['approveExpenses','Approuver les dépenses']];
 const PERM_DEFAULTS={co_owner:PERMS.map(p=>p[0]),admin:['manageMembers','manageDocuments','manageServices','approveExpenses','viewFinances'],member:[]};
@@ -130,6 +133,7 @@ const VAT_NOTES={
  CA:'Le Canada taxe par province : gardez la ligne de la vôtre (GST, HST ou GST+PST/QST) et supprimez les autres.',
  CH:'Le taux spécial 3,8 % ne s’applique qu’à l’hébergement.',
 };
+const OUTSIDE=[['charged','Facturé (défaut) — compté comme un usage ordinaire'],['free','Gratuit — autorisé, jamais compté ni facturé'],['walkup_only','Spontané seulement — arrivée impromptue oui, réservation à l\'avance non'],['off','Interdit — rien en dehors des heures, débordement compris']];
 const GRAN=[['half_day','Demi-journées (matin / après-midi)'],['full_day','Journées entières uniquement'],['hours','Heures réelles (de–à exact, demi/journées en raccourcis)'],['minutes_60',"Créneaux d'une heure"],['minutes_30','Créneaux de 30 minutes'],['minutes_15','Créneaux de 15 minutes'],['minutes_5','Créneaux de 5 minutes'],['flexible','Plage horaire libre']];
 const LANGS=[['','Langue de l’app de l’expéditeur'],['fr','Français'],['en','English'],['de','Deutsch'],['es','Español'],['it','Italiano']];
 const WD=[['1','lun.'],['2','mar.'],['3','mer.'],['4','jeu.'],['5','ven.'],['6','sam.'],['7','dim.']];
@@ -138,7 +142,7 @@ const WD=[['1','lun.'],['2','mar.'],['3','mer.'],['4','jeu.'],['5','ven.'],['6',
 let S=JSON.parse(localStorage.getItem(LS)||'null')||{
  name:'',country:'FR',currency:'EUR',timezone:'Europe/Paris',language:'',address:'',whatsapp:'',
  weekdays:['1','2','3','4','5'],granularity:'half_day',dayStart:'08:00',boundary:'12:00',dayEnd:'17:00',closures:[],
- policies:{allowPast:false,gridHours:false,adminCheckout:false},
+ policies:{allowPast:false,adminCheckout:false,outsideHours:'charged',simultaneous:'1'},
  features:Object.fromEntries(FEATURES.map(f=>[f[0],!!f[3]])),
  levels:[{name:'1er étage',offices:[{name:'Bureau 1',bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]}]}],
  accessories:[],services:[],tiers:[{from:0,to:100,fee:'',over:''}],subLevels:['25','50','75','100'],freeLevel:false,packages:[],
@@ -184,29 +188,33 @@ function render(){
   h('label',{},'Jours de fermeture'),
   tableRows(['Date'],S.closures,(r,i)=>[cell(`closures.${i}`,'date')],()=> '', '+ Ajouter un jour de fermeture'),
   h('label',{},'Règles de réservation'),
-  h('p',{class:'hint'},'Trois interrupteurs, tous désactivés par défaut (fonctionnalité « Règles de réservation »). La matrice ci-dessous montre ce qu\'ils changent.'),
+  h('p',{class:'hint'},'Deux interrupteurs désactivés par défaut, plus deux réglages chiffrés (fonctionnalité « Règles de réservation »). La matrice ci-dessous montre ce qu\'ils changent.'),
   ...[['allowPast','Autoriser les réservations passées','Les membres peuvent enregistrer après coup une réservation déjà terminée (hier et avant). Réserver plus tôt le même jour reste toujours permis.'],
-      ['gridHours','Réservations à la minute dans les heures d\'ouverture','Confine les grilles de minutes à la journée de travail ; sinon elles sont libres (6:00 ou 17–21 possibles). Les prolongations spontanées du soir restent permises dans les deux cas.'],
       ['adminCheckout','Les admins peuvent faire le check-out des membres','Un admin peut terminer le pointage en cours d\'un membre ; sinon le check-out est strictement personnel.']]
    .map(([k,t,d])=>{const c=h('input',{type:'checkbox'});c.checked=!!S.policies[k];c.onchange=()=>{S.policies[k]=c.checked;save()};return h('label',{class:'check'},c,h('span',{},t,h('div',{class:'d'},d)))}),
+  selectEl('En dehors des heures d\'ouverture','policies.outsideHours',OUTSIDE,
+   'Une seule question, quatre réponses exclusives, identiques sur toutes les granularités. « Interdit » refuse aussi la fenêtre qui déborde simplement (16–20). « Spontané seulement » laisse passer l\'arrivée impromptue aux deux bords de la journée — 6:00 comme le soir — et refuse la réservation à l\'avance. « Gratuit » autorise sans jamais compter ni facturer. « Facturé » (défaut) compte comme un usage ordinaire, sauf les jours où le membre tient déjà une réservation dans les heures : la part hors heures voyage alors gratuitement, ce qui évite de ne réserver que hors heures pour ne rien payer.'),
+  input('Réservations simultanées par membre','policies.simultaneous','Combien de réservations peuvent se chevaucher dans le temps pour un même membre, pointages compris. 1 par défaut : une place à la fois. Une autorisation personnelle plus élevée se donne membre par membre dans l\'app (« Membres & formules »), jamais à soi-même, et prime sur ce nombre.','number','1'),
   h('label',{},'Comment les réservations se comporteront'),
   h('p',{class:'hint'},'Le résumé du comportement appliqué côté serveur, selon la granularité choisie ci-dessus. Heures données pour la journée par défaut 08:00 / 12:00 / 17:00.'),
   h('div',{class:'matrix',html:
-   '<table><tr><th>Demande</th><th>Demi-journées</th><th>Journées entières</th><th>Grille de minutes (5/15/30/60)</th></tr>'+
-   '<tr><td>Matin (8–12) ou après-midi (12–17)</td><td>✅</td><td>❌ journée entière exigée</td><td>✅ si les bords tombent sur la grille</td></tr>'+
-   '<tr><td>Journée de travail entière (8–17)</td><td>✅</td><td>✅</td><td>✅</td></tr>'+
-   '<tr><td>Avant l\'ouverture / après les heures (6:00, 17–21)</td><td>❌</td><td>❌</td><td>✅ par défaut ; ❌ avec « Réservations à la minute dans les heures d\'ouverture »</td></tr>'+
-   '<tr><td>Fenêtre atypique (9–15)</td><td>❌</td><td>❌</td><td>✅ si sur la grille (durée min. 30 min par défaut)</td></tr>'+
-   '<tr><td>Hier et avant</td><td colspan="3">❌ « entièrement dans le passé » — ✅ avec « Autoriser les réservations passées » ; le rattrapage du même jour marche toujours</td></tr>'+
-   '<tr><td>Au-delà de l\'horizon (90 j), jour fermé, place occupée</td><td colspan="3">❌ refus nommé ; un membre ne tient qu\'une place à la fois</td></tr>'+
+   '<table><tr><th>Demande</th><th>Demi-journées</th><th>Journées entières</th><th>Grille de minutes (5/15/30/60)</th><th>Heures réelles / plage libre</th></tr>'+
+   '<tr><td>Matin (8–12) ou après-midi (12–17)</td><td>✅</td><td>❌ journée entière exigée</td><td>✅ si les bords tombent sur la grille</td><td>✅</td></tr>'+
+   '<tr><td>Journée de travail entière (8–17)</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>'+
+   '<tr><td>Fenêtre atypique (9–15)</td><td>❌</td><td>❌</td><td>✅ si sur la grille</td><td>✅</td></tr>'+
+   '<tr><td>Avant l\'ouverture / après les heures (6:00, 17–21)</td><td colspan="4">Réponse donnée par « En dehors des heures d\'ouverture » ci-dessus, identique partout : interdit, spontané seulement, gratuit ou facturé. En demi-journées et journées entières, seule la prolongation spontanée du soir existe de toute façon.</td></tr>'+
+   '<tr><td>Hors grille (10:02)</td><td>—</td><td>—</td><td>❌ le refus nomme la grille</td><td>—</td></tr>'+
+   '<tr><td colspan="5"><b>Et sur toutes les granularités :</b> durée minimale (30 min par défaut) et maximale — une arrivée à 11:45 pour la limite de 12:00 est refusée, trop courte ; <b>une réservation se termine le jour où elle commence</b>, rien ne franchit minuit (la prolongation du soir s\'arrête à minuit, qui est la fin de ce jour-là, pas un franchissement) ; hier et avant ❌ « entièrement dans le passé », sauf avec « Autoriser les réservations passées » — le rattrapage du même jour marche toujours ; un pointage spontané doit commencer aujourd\'hui ; au-delà de l\'horizon (90 j), jour fermé, place occupée : refus nommé ; et un membre ne tient que le nombre de réservations qui se chevauchent que son autorisation permet.</td></tr>'+
+   '<tr><td colspan="5">Tout cela est appliqué <b>à un seul endroit sur le serveur</b> : le plan, l\'onglet Réserver, un scan QR/NFC et la borne murale proposent exactement ce qui sera accepté, et la borne refuse précisément ce que le plan refuse.</td></tr>'+
    '</table>'}),
   h('div',{class:'matrix',html:
    '<table><tr><th>Check-in / check-out / annulation</th><th>Comportement</th></tr>'+
-   '<tr><td>Arrivée spontanée (place libre, QR/NFC, borne)</td><td>De maintenant jusqu\'à un bord canonique ; en journées, le créneau entier de la fin est réservé (10:00 → « jusqu\'à 12:00 » réserve la matinée 8–12). En fin de journée, prolongation jusqu\'à minuit. Doit commencer aujourd\'hui.</td></tr>'+
-   '<tr><td>Check-in sur réservation</td><td>Ouvre 15 min avant le début — et toute la journée réservée en demi-journées/journées/heures (grilles de minutes : un pas de grille). Autre jour, réservation finie, double pointage, jour fermé : refus. Encore pointé ailleurs : la réservation en cours bloque ; une finie se clôt seule.</td></tr>'+
+   '<tr><td>Arrivée spontanée (place libre, QR/NFC, borne)</td><td>De maintenant jusqu\'à un bord canonique ; en journées, le créneau entier de la fin est réservé (10:00 → « jusqu\'à 12:00 » réserve la matinée 8–12). Si ce créneau élargi est indisponible — réservation d\'un autre, l\'une des vôtres, place bloquée, espace entier pris — la réservation s\'ancre à votre arrivée et garde la fin du créneau. En fin de journée, prolongation jusqu\'à minuit et pas au-delà. Doit commencer aujourd\'hui.</td></tr>'+
+   '<tr><td>Check-in sur réservation</td><td>En demi-journées, journées entières et heures réelles : toute la journée réservée (à 10:00 vous pointez déjà sur votre après-midi de 12:00). Sur une grille de minutes : 15 min avant le début, ou un pas de grille lorsqu\'il est plus long. Autre jour, réservation finie, double pointage, jour fermé : refus. Encore pointé ailleurs : une réservation en cours bloque dès que l\'autorisation est atteinte ; une finie se clôt seule.</td></tr>'+
    '<tr><td>Check-out</td><td>Avant la fin réservée : la réservation est raccourcie à maintenant, la place se libère. Après la fin : l\'horodatage reste véridique, la fin réservée demeure. Par un admin : seulement avec « Les admins peuvent faire le check-out des membres ».</td></tr>'+
    '<tr><td>Absence (jamais pointé)</td><td>Reste « réservée » dans l\'historique — ou, avec Arrivée/départ auto, comptée honorée au balayage de fin de journée.</td></tr>'+
-   '<tr><td>Annuler</td><td>Réservation future : un geste. Pointée en cours : annulable d\'un bloc, ou raccourcir la fin (« annuler le reste de la journée »). Passée ou pointée à retirer : demande de suppression validée. Admin : peut retirer la réservation d\'autrui (notifié au fil des événements).</td></tr>'+
+   '<tr><td>Annuler</td><td>Réservation future : un geste. Pointée en cours : pas d\'annulation sèche — « Terminer plus tôt » ramène la fin (limite de demi-journée tant qu\'elle est devant ; sur grille, un sélecteur qui refuse tout ce qui n\'est pas à venir), ou une demande de suppression validée. Passée ou pointée à retirer : demande de suppression validée, sous réserve de la fonctionnalité « Demandes de suppression ». Admin : peut retirer la réservation d\'autrui (notifié au fil des événements).</td></tr>'+
+   '<tr><td>Validation automatique des suppressions</td><td>Deux interrupteurs <b>indépendants</b> dans les règles de validation, désactivés par défaut : les admins et/ou les propriétaires règlent eux-mêmes leur propre demande de suppression. Un propriétaire dépend de l\'interrupteur « propriétaire » et de lui seul, un simple admin de l\'interrupteur « admin ». La suppression ainsi réglée reste marquée « validée automatiquement » au fil des événements.</td></tr>'+
    '<tr><td>Espaces entiers</td><td>Avec une règle de validation, la réservation bloque l\'espace et attend le quorum ; personne ne valide son propre événement.</td></tr>'+
    '<tr><td>Badges à la borne</td><td>Deux supports au choix, activables séparément : cartes QR imprimables (« Badges QR ») et cartes NFC/RFID (« Badges RFID / NFC ») — enregistrées en approchant la carte, y compris depuis le navigateur.</td></tr>'+
    '</table>'})));
@@ -336,7 +344,7 @@ function exportXml(){
  push('  </floor-plan>');
  // setup extension — ignored by the app importer, read by the configurator
  push('  <setup>');
- push(`    <availability granularity="${S.granularity}" day-start="${S.dayStart}" half-boundary="${S.boundary}" day-end="${S.dayEnd}" open-weekdays="${S.weekdays.join(',')}" allow-past-bookings="${!!S.policies.allowPast}" grid-within-hours="${!!S.policies.gridHours}" admin-checkout="${!!S.policies.adminCheckout}">`);
+ push(`    <availability granularity="${S.granularity}" day-start="${S.dayStart}" half-boundary="${S.boundary}" day-end="${S.dayEnd}" open-weekdays="${S.weekdays.join(',')}" allow-past-bookings="${!!S.policies.allowPast}" outside-hours-mode="${S.policies.outsideHours||'charged'}" simultaneous-reservations="${S.policies.simultaneous||'1'}" admin-checkout="${!!S.policies.adminCheckout}">`);
  S.closures.filter(Boolean).forEach(c=>push(`      <closure day="${esc(c)}"/>`));
  push('    </availability>');
  push(`    <identity language="${esc(S.language)}" address="${esc(S.address)}" whatsapp-group="${esc(S.whatsapp)}"/>`);
@@ -379,7 +387,7 @@ function parseBack(text){
  const lvls=[...root.querySelectorAll('floor-plan > level')];
  if(lvls.length)S.levels=lvls.map(l=>({name:l.getAttribute('name'),offices:[...l.querySelectorAll('office')].map(o=>({name:o.getAttribute('name'),bookable:o.getAttribute('bookable-as-whole')==='true',price:'',desks:[...o.querySelectorAll('desk')].map(d=>{const seats=[...d.querySelectorAll('seat')];const first=seats[0]?.getAttribute('name')||'Place 1';return{name:d.getAttribute('name'),seats:seats.length,prefix:first.replace(/\s*\d+$/,'')||'Place'}})}))}));
  const su=root.querySelector('setup');if(!su)return;
- const av=su.querySelector('availability');if(av){S.granularity=av.getAttribute('granularity')||S.granularity;S.dayStart=av.getAttribute('day-start')||S.dayStart;S.boundary=av.getAttribute('half-boundary')||S.boundary;S.dayEnd=av.getAttribute('day-end')||S.dayEnd;S.weekdays=(av.getAttribute('open-weekdays')||'1,2,3,4,5').split(',');S.closures=[...av.querySelectorAll('closure')].map(c=>c.getAttribute('day'));S.policies={allowPast:av.getAttribute('allow-past-bookings')==='true',gridHours:av.getAttribute('grid-within-hours')==='true',adminCheckout:av.getAttribute('admin-checkout')==='true'}}
+ const av=su.querySelector('availability');if(av){S.granularity=av.getAttribute('granularity')||S.granularity;S.dayStart=av.getAttribute('day-start')||S.dayStart;S.boundary=av.getAttribute('half-boundary')||S.boundary;S.dayEnd=av.getAttribute('day-end')||S.dayEnd;S.weekdays=(av.getAttribute('open-weekdays')||'1,2,3,4,5').split(',');S.closures=[...av.querySelectorAll('closure')].map(c=>c.getAttribute('day'));S.policies={allowPast:av.getAttribute('allow-past-bookings')==='true',adminCheckout:av.getAttribute('admin-checkout')==='true',outsideHours:av.getAttribute('outside-hours-mode')||(av.getAttribute('grid-within-hours')==='true'?'walkup_only':'charged'),simultaneous:av.getAttribute('simultaneous-reservations')||'1'}}
  const id=su.querySelector('identity');if(id){S.language=id.getAttribute('language')||'';S.address=id.getAttribute('address')||'';S.whatsapp=id.getAttribute('whatsapp-group')||''}
  const bi=su.querySelector('billing');if(bi){S.tiers=[...bi.querySelectorAll('tier')].map(t=>({from:t.getAttribute('from-pct'),to:t.getAttribute('to-pct'),fee:String((parseInt(t.getAttribute('fee-cents'))||0)/100),over:String((parseInt(t.getAttribute('overage-cents'))||0)/100)}));const sl=bi.querySelector('subscription-levels');if(sl){S.subLevels=(sl.getAttribute('values')||'').split(',').filter(Boolean);S.freeLevel=sl.getAttribute('free-value')==='true'}S.packages=[...bi.querySelectorAll('package')].map(p=>({name:p.getAttribute('name'),days:p.getAttribute('days'),price:String((parseInt(p.getAttribute('price-cents'))||0)/100)}))}
  S.services=[...su.querySelectorAll('services > service')].map(s=>({name:s.getAttribute('name'),price:String((parseInt(s.getAttribute('price-cents'))||0)/100),vat:s.getAttribute('vat-percent')??''}));
