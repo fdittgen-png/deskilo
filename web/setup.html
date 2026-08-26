@@ -52,7 +52,8 @@ footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px sol
 <body>
 <header>
   <h1>DesKilo — Document de configuration</h1>
-  <p>Répondez aux questions (choix prédéfinis, noms, adresses — rien à interpréter), sur Mac, PC ou téléphone. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. À la fin, <b>Exporter le XML</b> produit le fichier : l'app l'importe (Réglages de l'espace → Importer l'espace) pour créer réglages, accessoires et plan ; la section &lt;setup&gt; du même fichier porte tout le reste (facturation, disponibilité et règles de réservation, services, identité légale et TVA — régime, taux, déclarations —, rôles, membres) pour finir la configuration.</p>
+  <p>Répondez aux questions (choix prédéfinis, noms, adresses — rien à interpréter), sur Mac, PC ou téléphone. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. À la fin, <b>Exporter le XML</b> produit le fichier : l'app l'importe (Réglages de l'espace → Importer l'espace) pour créer réglages, accessoires et plan ; la section &lt;setup&gt; du même fichier porte tout le reste — disponibilité et règles de réservation (dont la politique hors heures d'ouverture et les réservations simultanées), facturation, services, identité légale et TVA (régime, taux, périodicité de déclaration, plateforme de facturation électronique et remise au client), rôles, règles de validation par domaine et membres — pour finir la configuration.</p>
+  <p style="margin-top:8px"><b>Ne mettez un jeton ou un identifiant ici que si vous remplissez ce document en privé.</b> Le fichier exporté est du texte clair : pour la facturation électronique et les paiements en ligne, vous pouvez laisser les champs vides et saisir les secrets directement dans l'app, où ils partent côté serveur sans jamais en revenir.</p>
 </header>
 <main id="form"></main>
 <footer>
@@ -133,16 +134,32 @@ const VAT_NOTES={
  CA:'Le Canada taxe par province : gardez la ligne de la vôtre (GST, HST ou GST+PST/QST) et supprimez les autres.',
  CH:'Le taux spécial 3,8 % ne s’applique qu’à l’hébergement.',
 };
+// The twelve validation domains beside the default rule, in the app's own
+// wording (eventType* / app_fr.arb). Each inherits from the default rule
+// until a card is edited, which is exactly what `on` models here.
+const DOMAINS=[
+ ['payment','Paiement'],['expense','Dépense'],['service','Service'],
+ ['quota','Demi-journées supplémentaires'],['reservation_delete','Suppression de réservation'],
+ ['role_change','Changement de rôle'],['member_join','Nouveau membre'],
+ ['reservation','Réservation'],['space_reservation',"Réservations d'espaces entiers"],
+ ['invoice_payment','Paiement de facture'],['adjustment','Ajustement'],
+ ['invoice_writeoff','Annulation de solde']];
+const VATPERIOD=[['month','Mensuelle'],['quarter','Trimestrielle']];
 const OUTSIDE=[['charged','Facturé (défaut) — compté comme un usage ordinaire'],['free','Gratuit — autorisé, jamais compté ni facturé'],['walkup_only','Spontané seulement — arrivée impromptue oui, réservation à l\'avance non'],['off','Interdit — rien en dehors des heures, débordement compris']];
 const GRAN=[['half_day','Demi-journées (matin / après-midi)'],['full_day','Journées entières uniquement'],['hours','Heures réelles (de–à exact, demi/journées en raccourcis)'],['minutes_60',"Créneaux d'une heure"],['minutes_30','Créneaux de 30 minutes'],['minutes_15','Créneaux de 15 minutes'],['minutes_5','Créneaux de 5 minutes'],['flexible','Plage horaire libre']];
 const LANGS=[['','Langue de l’app de l’expéditeur'],['fr','Français'],['en','English'],['de','Deutsch'],['es','Español'],['it','Italiano']];
 const WD=[['1','lun.'],['2','mar.'],['3','mer.'],['4','jeu.'],['5','ven.'],['6','sam.'],['7','dim.']];
 
 // ------------------------------------------------------------------ state
-let S=JSON.parse(localStorage.getItem(LS)||'null')||{
+const DEFAULTS={
  name:'',country:'FR',currency:'EUR',timezone:'Europe/Paris',language:'',address:'',whatsapp:'',
  weekdays:['1','2','3','4','5'],granularity:'half_day',dayStart:'08:00',boundary:'12:00',dayEnd:'17:00',closures:[],
+ halfDayHours:'4',fullDayHours:'8',deskOpacity:'100',
  policies:{allowPast:false,adminCheckout:false,outsideHours:'charged',simultaneous:'1'},
+ invites:{fr:'',en:'',de:'',es:'',it:''},
+ einvoice:{url:'',token:'',header:'',field:'',uatUrl:'',uatToken:'',devUrl:'',devToken:'',
+           customerUrl:'',customerToken:'',customerHeader:'',customerField:''},
+ vatPeriod:'quarter',
  features:Object.fromEntries(FEATURES.map(f=>[f[0],!!f[3]])),
  levels:[{name:'1er étage',offices:[{name:'Bureau 1',bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]}]}],
  accessories:[],services:[],tiers:[{from:0,to:100,fee:'',over:''}],subLevels:['25','50','75','100'],freeLevel:false,packages:[],
@@ -152,8 +169,35 @@ let S=JSON.parse(localStorage.getItem(LS)||'null')||{
  reminders:{levels:2,firstDays:14,betweenDays:14},
  perms:JSON.parse(JSON.stringify(PERM_DEFAULTS)),
  validation:{required:1,ownerSignOff:false},
+ domains:Object.fromEntries(DOMAINS.map(d=>[d[0],{on:false,required:1,ownerSignOff:false}])),
+ autoValidate:{admin:false,owner:false},
  members:[]};
-S.policies=S.policies||{allowPast:false,gridHours:false,adminCheckout:false};
+
+// A save written by an older version of this page is missing whatever
+// fields did not exist then, and `render()` reads them unguarded. Merge
+// the stored answers ONTO the defaults rather than replacing them, one
+// level deep — every nested value here is a flat object or an array, so
+// one level is exactly enough. An array in storage wins whole (it is the
+// owner's list); a plain object is filled in key by key.
+function restore(stored){
+ const out=JSON.parse(JSON.stringify(DEFAULTS));
+ if(!stored||typeof stored!=='object')return out;
+ for(const[k,v]of Object.entries(stored)){
+  if(v===undefined||v===null)continue;
+  const d=out[k];
+  if(Array.isArray(v)||Array.isArray(d)||typeof v!=='object'||d===undefined||typeof d!=='object')out[k]=v;
+  else out[k]=Object.assign(d,v);
+ }
+ return out;
+}
+let S=restore(JSON.parse(localStorage.getItem(LS)||'null'));
+// #600 -> #634: a questionnaire saved while the retired "minute bookings
+// within working hours" switch existed reads as the mode that replaced
+// it, exactly as the server maps the legacy booking_rules key.
+if(S.policies.gridHours!==undefined){
+ if(S.policies.gridHours&&!JSON.parse(localStorage.getItem(LS)||'{}').policies?.outsideHours)S.policies.outsideHours='walkup_only';
+ delete S.policies.gridHours;
+}
 function save(){localStorage.setItem(LS,JSON.stringify(S));document.getElementById('saved').textContent='Enregistré '+new Date().toLocaleTimeString()}
 function set(path,val){const p=path.split('.');let o=S;while(p.length>1)o=o[p.shift()];o[p[0]]=val;save()}
 
@@ -178,13 +222,23 @@ function render(){
   h('div',{class:'row'},input('Devise','currency','Code ISO, ex. EUR.'),input('Fuseau horaire','timezone','Ex. Europe/Paris.')),
   selectEl("Langue de l'espace",'language',LANGS,'Les invitations et rapports y sont rédigés par défaut.'),
   input('Adresse postale','address','Imprimée sur les factures.','text','12 rue Exemple, 34120 Pézenas'),
-  input('Lien du groupe WhatsApp','whatsapp','Facultatif — https://chat.whatsapp.com/…')));
+  input('Lien du groupe WhatsApp','whatsapp','Facultatif — https://chat.whatsapp.com/…'),
+  input('Transparence des tables','deskOpacity','0–100 %. Laisse la photo de fond du niveau transparaître à travers les tables dessinées. 100 = tables opaques.','number','100'),
+  h('label',{},"Message d'invitation, par langue"),
+  h('p',{class:'hint'},"Laissez vide pour utiliser le message traduit intégré. Placeholders disponibles : {firstName}, {workspaceName}, {inviteLink}, {downloadUrl}, {role}. L'invitation part dans la langue choisie à l'envoi, à défaut dans la langue de l'espace ci-dessus."),
+  ...[['fr','Français'],['en','English'],['de','Deutsch'],['es','Español'],['it','Italiano']]
+    .map(([k,t])=>input(t,'invites.'+k,''))));
  // 2 availability
  const wdChips=h('div',{class:'chips'},...WD.map(([v,t])=>chip(t,S.weekdays.includes(v),on=>{S.weekdays=on?[...S.weekdays,v]:S.weekdays.filter(x=>x!==v);save()})));
  F.append(section('2 · Disponibilité',
   h('label',{},"Jours d'ouverture"),wdChips,
   selectEl('Granularité des réservations','granularity',GRAN,''),
   h('div',{class:'row'},input('Début de journée','dayStart','','time'),input('Limite de demi-journée','boundary','','time'),input('Fin de journée','dayEnd','','time')),
+  ...(S.granularity==='hours'?[
+    h('label',{},'Conversion en demi-journées (granularité « heures réelles »)'),
+    h('p',{class:'hint'},"En heures réelles, le temps réservé est converti en équivalents demi-journée pour le quota et la facture. Dites combien d'heures valent une demi-journée et une journée."),
+    h('div',{class:'row'},input('Heures facturées comme une demi-journée','halfDayHours','','number','4'),
+      input('Heures facturées comme une journée','fullDayHours','','number','8'))]:[]),
   h('label',{},'Jours de fermeture'),
   tableRows(['Date'],S.closures,(r,i)=>[cell(`closures.${i}`,'date')],()=> '', '+ Ajouter un jour de fermeture'),
   h('label',{},'Règles de réservation'),
@@ -194,7 +248,8 @@ function render(){
    .map(([k,t,d])=>{const c=h('input',{type:'checkbox'});c.checked=!!S.policies[k];c.onchange=()=>{S.policies[k]=c.checked;save()};return h('label',{class:'check'},c,h('span',{},t,h('div',{class:'d'},d)))}),
   selectEl('En dehors des heures d\'ouverture','policies.outsideHours',OUTSIDE,
    'Une seule question, quatre réponses exclusives, identiques sur toutes les granularités. « Interdit » refuse aussi la fenêtre qui déborde simplement (16–20). « Spontané seulement » laisse passer l\'arrivée impromptue aux deux bords de la journée — 6:00 comme le soir — et refuse la réservation à l\'avance. « Gratuit » autorise sans jamais compter ni facturer. « Facturé » (défaut) compte comme un usage ordinaire, sauf les jours où le membre tient déjà une réservation dans les heures : la part hors heures voyage alors gratuitement, ce qui évite de ne réserver que hors heures pour ne rien payer.'),
-  input('Réservations simultanées par membre','policies.simultaneous','Combien de réservations peuvent se chevaucher dans le temps pour un même membre, pointages compris. 1 par défaut : une place à la fois. Une autorisation personnelle plus élevée se donne membre par membre dans l\'app (« Membres & formules »), jamais à soi-même, et prime sur ce nombre.','number','1'),
+  input('Réservations simultanées par membre','policies.simultaneous','Combien de réservations peuvent se chevaucher dans le temps pour un même membre, pointages compris. 1 par défaut : une place à la fois. Une autorisation personnelle plus élevée se donne membre par membre dans l\'app (« Membres & formules »), jamais à soi-même, et prime sur ce nombre. À ne pas confondre avec la « limite de réservations », qui plafonne le nombre de réservations ouvertes en tout (section 10).'),
+  h('p',{class:'hint'},"Trois règles ne se configurent pas encore dans l'app et gardent leurs valeurs serveur : l'horizon de réservation (90 jours), la durée minimale (30 min) et la durée maximale (24 h). Elles sont appliquées quoi qu'il arrive — la matrice ci-dessous les rappelle."),
   h('label',{},'Comment les réservations se comporteront'),
   h('p',{class:'hint'},'Le résumé du comportement appliqué côté serveur, selon la granularité choisie ci-dessus. Heures données pour la journée par défaut 08:00 / 12:00 / 17:00.'),
   h('div',{class:'matrix',html:
@@ -286,7 +341,24 @@ function render(){
   h('div',{class:'row'},input('Escompte','mentions.escompte',''),input('Assurance professionnelle','mentions.insurance','')),
   input('Mentions particulières','mentions.special',''),
   h('label',{},'Règles de relance'),
-  h('div',{class:'row'},input('Niveaux de relance','reminders.levels','','number'),input('Jours avant la 1re relance','reminders.firstDays','','number'),input('Jours entre les relances','reminders.betweenDays','','number'))));
+  h('div',{class:'row'},input('Niveaux de relance','reminders.levels','','number'),input('Jours avant la 1re relance','reminders.firstDays','','number'),input('Jours entre les relances','reminders.betweenDays','','number')),
+  selectEl('Période de déclaration de TVA','vatPeriod',VATPERIOD,'Seulement si vous êtes assujetti : la périodicité que votre régime impose. La déclaration agrège les factures émises de la période, par taux, et se transmet ou s\'exporte en PDF/XML.'),
+  h('label',{},'Plateforme de facturation électronique'),
+  h('p',{class:'hint'},"Là où DesKilo dépose vos factures : une plateforme agréée, un point d'accès Peppol, une plateforme nationale. Toute plateforme acceptant un envoi avec un jeton fonctionne. Le jeton est stocké côté serveur et n'en ressort jamais — ne le mettez ici que si vous remplissez ce document en privé, sinon laissez vide et saisissez-le dans l'app."),
+  input('URL de dépôt','einvoice.url','','text','https://…'),
+  h('div',{class:'row'},input('Jeton ou identifiant','einvoice.token',''),
+   input("En-tête d'authentification",'einvoice.header','Authorization par défaut.','text','Authorization')),
+  input('Nom du champ fichier','einvoice.field','file par défaut.','text','file'),
+  h('label',{},'Environnements de test (UAT / Dev)'),
+  h('p',{class:'hint'},"Points d'accès et jetons distincts pour les répétitions. Le choix n'apparaît à l'envoi que si le mode développeur de l'espace est actif ; un environnement non configuré refuse au lieu de retomber sur la production."),
+  h('div',{class:'row'},input('URL UAT','einvoice.uatUrl',''),input('Jeton UAT','einvoice.uatToken','')),
+  h('div',{class:'row'},input('URL Dev','einvoice.devUrl',''),input('Jeton Dev','einvoice.devToken','')),
+  h('label',{},'Service de remise au client (seconde destination)'),
+  h('p',{class:'hint'},"Distinct de la plateforme gouvernementale : le point d'accès Peppol du client, son portail ou l'API convenue. Configuré, l'envoi propose les deux destinations, chacune avec son propre historique de transmission. Nécessite la fonctionnalité « Facture électronique au client » (section 4)."),
+  input('URL du service client','einvoice.customerUrl',''),
+  h('div',{class:'row'},input('Jeton client','einvoice.customerToken',''),
+   input("En-tête d'authentification client",'einvoice.customerHeader','','text','Authorization')),
+  input('Nom du champ fichier client','einvoice.customerField','','text','file')));
  // 9 roles + validation
  const permRows=[];
  for(const[role,label]of[['co_owner','Copropriétaire'],['admin','Admin'],['member','Membre']]){
@@ -297,11 +369,41 @@ function render(){
   h('p',{class:'hint'},'Le propriétaire détient toujours toutes les permissions. Décidez pour les autres rôles.'),
   ...permRows,
   h('label',{},'Règle de validation par défaut'),
+  h('p',{class:'hint'},"Elle s'applique à tous les domaines qui n'ont pas leur propre règle. Rappel : personne ne valide son propre événement — la seule exception est celle que vous activez ci-dessous."),
   h('div',{class:'row'},input('Validations requises','validation.required','','number'),
-   (()=>{const c=h('input',{type:'checkbox'});c.checked=S.validation.ownerSignOff;c.onchange=()=>{S.validation.ownerSignOff=c.checked;save()};return h('label',{class:'check'},c,h('span',{},'Signature du propriétaire toujours requise'))})())));
+   (()=>{const c=h('input',{type:'checkbox'});c.checked=S.validation.ownerSignOff;c.onchange=()=>{S.validation.ownerSignOff=c.checked;save()};return h('label',{class:'check'},c,h('span',{},'Signature du propriétaire toujours requise'))})()),
+  h('label',{},'Règles par domaine'),
+  h('p',{class:'hint'},"Cochez un domaine pour lui donner sa propre règle ; décoché, il hérite de la règle par défaut. Douze domaines existent à côté de la règle par défaut."),
+  ...DOMAINS.map(([k,t])=>{
+   const d=S.domains[k];
+   const c=h('input',{type:'checkbox'});c.checked=d.on;
+   c.onchange=()=>{d.on=c.checked;save();render()};
+   const head=h('label',{class:'check'},c,h('span',{},t));
+   if(!d.on)return head;
+   const req=h('input',{type:'number'});req.value=d.required;req.oninput=()=>{d.required=req.value;save()};
+   const so=h('input',{type:'checkbox'});so.checked=d.ownerSignOff;so.onchange=()=>{d.ownerSignOff=so.checked;save()};
+   return h('div',{class:'card'},head,
+    h('div',{class:'row'},h('div',{},h('label',{},'Validations requises'),req),
+     h('div',{},h('label',{},' '),h('label',{class:'check'},so,h('span',{},'Signature du propriétaire')))));
+  }),
+  h('label',{},'Exception : validation automatique des suppressions'),
+  h('p',{class:'hint'},"La seule entorse, délibérée, à « personne ne valide son propre événement » — et elle ne concerne QUE les suppressions de réservation. Les deux interrupteurs sont indépendants : un propriétaire dépend de celui du propriétaire et de lui seul, un simple admin de celui des admins (tout propriétaire étant aussi admin, les confondre reviendrait à n'en avoir qu'un). Une suppression ainsi réglée naît déjà confirmée et reste marquée « auto-validée » au fil des événements. Désactivés par défaut."),
+  ...[['owner','Les propriétaires suppriment sans validation'],['admin','Les admins suppriment sans validation']]
+   .map(([k,t])=>{const c=h('input',{type:'checkbox'});c.checked=S.autoValidate[k];
+    c.onchange=()=>{S.autoValidate[k]=c.checked;save()};
+    return h('label',{class:'check'},c,h('span',{},t))})));
  // 10 members
  F.append(section('10 · Membres à inviter',
-  tableRows(['Nom','E-mail','Rôle','Abonnement %'],S.members,(m)=>[bind(m,'name'),bind(m,'email','email'),(()=>{const s=h('select');s.append(h('option',{value:'member'},'Membre'),h('option',{value:'admin'},'Admin'));s.value=m.role||'member';s.onchange=()=>{m.role=s.value;save()};return s})(),bind(m,'pct','number')],()=>({name:'',email:'',role:'member',pct:'100'}),'+ Ajouter un membre')));
+  h('p',{class:'hint'},"Les quatre dernières colonnes sont les réglages par membre de « Membres & formules ». **Quand les jours sont épuisés** : bloqué (défaut), paiement à l'usage, ou forfaits de jours. **Espaces entiers** : le droit de réserver une table, un bureau ou un niveau entier — les propriétaires et admins l'ont déjà sans l'interrupteur. **Simultanées** : l'autorisation personnelle de chevauchement, qui prime sur le nombre de la section 2 (vide = le nombre de l'espace). **Limite** : le plafond de réservations ouvertes en tout, une autre notion (vide = pas de plafond)."),
+  tableRows(['Nom','E-mail','Rôle','Abonnement %','Jours épuisés','Espaces entiers','Simultanées','Limite'],S.members,
+   (m)=>[bind(m,'name'),bind(m,'email','email'),
+    (()=>{const s=h('select');s.append(h('option',{value:'member'},'Membre'),h('option',{value:'admin'},'Admin'));s.value=m.role||'member';s.onchange=()=>{m.role=s.value;save()};return s})(),
+    bind(m,'pct','number'),
+    (()=>{const s=h('select');s.append(h('option',{value:'blocked'},'Bloqué'),h('option',{value:'payg'},"À l'usage"),h('option',{value:'packages'},'Forfaits'));s.value=m.overage||'blocked';s.onchange=()=>{m.overage=s.value;save()};return s})(),
+    (()=>{const c=h('input',{type:'checkbox'});c.checked=!!m.wholeSpaces;c.onchange=()=>{m.wholeSpaces=c.checked;save()};return c})(),
+    bind(m,'simultaneous','number'),bind(m,'limit','number')],
+   ()=>({name:'',email:'',role:'member',pct:'100',overage:'blocked',wholeSpaces:false,simultaneous:'',limit:''}),
+   '+ Ajouter un membre')));
  save();
 }
 
@@ -346,8 +448,11 @@ function exportXml(){
  push('  <setup>');
  push(`    <availability granularity="${S.granularity}" day-start="${S.dayStart}" half-boundary="${S.boundary}" day-end="${S.dayEnd}" open-weekdays="${S.weekdays.join(',')}" allow-past-bookings="${!!S.policies.allowPast}" outside-hours-mode="${S.policies.outsideHours||'charged'}" simultaneous-reservations="${S.policies.simultaneous||'1'}" admin-checkout="${!!S.policies.adminCheckout}">`);
  S.closures.filter(Boolean).forEach(c=>push(`      <closure day="${esc(c)}"/>`));
+ if(S.granularity==='hours')push(`      <hour-equivalents half-day="${S.halfDayHours}" full-day="${S.fullDayHours}"/>`);
  push('    </availability>');
- push(`    <identity language="${esc(S.language)}" address="${esc(S.address)}" whatsapp-group="${esc(S.whatsapp)}"/>`);
+ push(`    <identity language="${esc(S.language)}" address="${esc(S.address)}" whatsapp-group="${esc(S.whatsapp)}" desk-opacity="${S.deskOpacity}">`);
+ for(const[k,v]of Object.entries(S.invites))if(String(v).trim())push(`      <invitation lang="${k}" text="${esc(v.trim())}"/>`);
+ push('    </identity>');
  push('    <billing>');
  S.tiers.filter(t=>t.fee!=='').forEach(t=>push(`      <tier from-pct="${t.from||0}" to-pct="${t.to||100}" fee-cents="${Math.round((parseFloat(t.fee)||0)*100)}" overage-cents="${Math.round((parseFloat(t.over)||0)*100)}"/>`));
  push(`      <subscription-levels values="${S.subLevels.join(',')}" free-value="${S.freeLevel}"/>`);
@@ -360,13 +465,22 @@ function exportXml(){
  S.vatRates.filter(r=>String(r.label).trim()&&r.percent!==''&&r.percent!=null).forEach((r,i)=>push(`      <vat-rate label="${esc(r.label)}" percent="${r.percent}" default="${i===0}"/>`));
  for(const[k,v]of Object.entries(S.mentions))if(String(v).trim())push(`      <mention key="${k}" value="${esc(v.trim())}"/>`);
  push(`      <reminders levels="${S.reminders.levels}" first-days="${S.reminders.firstDays}" between-days="${S.reminders.betweenDays}"/>`);
+ push(`      <vat-declaration period="${S.vatPeriod}"/>`);
+ const ei=S.einvoice;
+ if(Object.values(ei).some(v=>String(v).trim()))
+  push(`      <einvoice url="${esc(ei.url)}" token="${esc(ei.token)}" auth-header="${esc(ei.header)}" file-field="${esc(ei.field)}" uat-url="${esc(ei.uatUrl)}" uat-token="${esc(ei.uatToken)}" dev-url="${esc(ei.devUrl)}" dev-token="${esc(ei.devToken)}" customer-url="${esc(ei.customerUrl)}" customer-token="${esc(ei.customerToken)}" customer-auth-header="${esc(ei.customerHeader)}" customer-file-field="${esc(ei.customerField)}"/>`);
  push('    </legal>');
  push('    <roles>');
  for(const[role,list]of Object.entries(S.perms))push(`      <role name="${role}" permissions="${list.join(',')}"/>`);
- push(`      <validation required="${S.validation.required}" owner-sign-off="${S.validation.ownerSignOff}"/>`);
+ push(`      <validation required="${S.validation.required}" owner-sign-off="${S.validation.ownerSignOff}">`);
+ for(const[k]of DOMAINS){const d=S.domains[k];if(d&&d.on)
+  push(`        <domain event-type="${k}" required="${d.required}" owner-sign-off="${d.ownerSignOff}"${k==='reservation_delete'?` auto-validate-admin="${!!S.autoValidate.admin}" auto-validate-owner="${!!S.autoValidate.owner}"`:''}/>`)}
+ if(!S.domains.reservation_delete.on&&(S.autoValidate.admin||S.autoValidate.owner))
+  push(`        <domain event-type="reservation_delete" auto-validate-admin="${!!S.autoValidate.admin}" auto-validate-owner="${!!S.autoValidate.owner}"/>`);
+ push('      </validation>');
  push('    </roles>');
  push('    <members>');
- S.members.filter(m=>m.email.trim()).forEach(m=>push(`      <member name="${esc(m.name)}" email="${esc(m.email)}" role="${m.role||'member'}" subscription-pct="${m.pct||100}"/>`));
+ S.members.filter(m=>m.email.trim()).forEach(m=>push(`      <member name="${esc(m.name)}" email="${esc(m.email)}" role="${m.role||'member'}" subscription-pct="${m.pct||100}" overage-policy="${m.overage||'blocked'}" may-reserve-whole-spaces="${!!m.wholeSpaces}"${String(m.simultaneous||'').trim()?` simultaneous-reservations="${m.simultaneous}"`:''}${String(m.limit||'').trim()?` reservation-limit="${m.limit}"`:''}/>`));
  push('    </members>');
  push('  </setup>');
  push('</deskilo-workspace>');
@@ -387,14 +501,23 @@ function parseBack(text){
  const lvls=[...root.querySelectorAll('floor-plan > level')];
  if(lvls.length)S.levels=lvls.map(l=>({name:l.getAttribute('name'),offices:[...l.querySelectorAll('office')].map(o=>({name:o.getAttribute('name'),bookable:o.getAttribute('bookable-as-whole')==='true',price:'',desks:[...o.querySelectorAll('desk')].map(d=>{const seats=[...d.querySelectorAll('seat')];const first=seats[0]?.getAttribute('name')||'Place 1';return{name:d.getAttribute('name'),seats:seats.length,prefix:first.replace(/\s*\d+$/,'')||'Place'}})}))}));
  const su=root.querySelector('setup');if(!su)return;
- const av=su.querySelector('availability');if(av){S.granularity=av.getAttribute('granularity')||S.granularity;S.dayStart=av.getAttribute('day-start')||S.dayStart;S.boundary=av.getAttribute('half-boundary')||S.boundary;S.dayEnd=av.getAttribute('day-end')||S.dayEnd;S.weekdays=(av.getAttribute('open-weekdays')||'1,2,3,4,5').split(',');S.closures=[...av.querySelectorAll('closure')].map(c=>c.getAttribute('day'));S.policies={allowPast:av.getAttribute('allow-past-bookings')==='true',adminCheckout:av.getAttribute('admin-checkout')==='true',outsideHours:av.getAttribute('outside-hours-mode')||(av.getAttribute('grid-within-hours')==='true'?'walkup_only':'charged'),simultaneous:av.getAttribute('simultaneous-reservations')||'1'}}
- const id=su.querySelector('identity');if(id){S.language=id.getAttribute('language')||'';S.address=id.getAttribute('address')||'';S.whatsapp=id.getAttribute('whatsapp-group')||''}
+ const av=su.querySelector('availability');if(av){S.granularity=av.getAttribute('granularity')||S.granularity;S.dayStart=av.getAttribute('day-start')||S.dayStart;S.boundary=av.getAttribute('half-boundary')||S.boundary;S.dayEnd=av.getAttribute('day-end')||S.dayEnd;S.weekdays=(av.getAttribute('open-weekdays')||'1,2,3,4,5').split(',');S.closures=[...av.querySelectorAll('closure')].map(c=>c.getAttribute('day'));S.policies={allowPast:av.getAttribute('allow-past-bookings')==='true',adminCheckout:av.getAttribute('admin-checkout')==='true',outsideHours:av.getAttribute('outside-hours-mode')||(av.getAttribute('grid-within-hours')==='true'?'walkup_only':'charged'),simultaneous:av.getAttribute('simultaneous-reservations')||'1'};
+  const he=av.querySelector('hour-equivalents');if(he){S.halfDayHours=he.getAttribute('half-day')||S.halfDayHours;S.fullDayHours=he.getAttribute('full-day')||S.fullDayHours}}
+ const id=su.querySelector('identity');if(id){S.language=id.getAttribute('language')||'';S.address=id.getAttribute('address')||'';S.whatsapp=id.getAttribute('whatsapp-group')||'';S.deskOpacity=id.getAttribute('desk-opacity')||S.deskOpacity;
+  Object.keys(S.invites).forEach(k=>S.invites[k]='');id.querySelectorAll('invitation').forEach(iv=>{const k=iv.getAttribute('lang');if(k in S.invites)S.invites[k]=iv.getAttribute('text')||''})}
  const bi=su.querySelector('billing');if(bi){S.tiers=[...bi.querySelectorAll('tier')].map(t=>({from:t.getAttribute('from-pct'),to:t.getAttribute('to-pct'),fee:String((parseInt(t.getAttribute('fee-cents'))||0)/100),over:String((parseInt(t.getAttribute('overage-cents'))||0)/100)}));const sl=bi.querySelector('subscription-levels');if(sl){S.subLevels=(sl.getAttribute('values')||'').split(',').filter(Boolean);S.freeLevel=sl.getAttribute('free-value')==='true'}S.packages=[...bi.querySelectorAll('package')].map(p=>({name:p.getAttribute('name'),days:p.getAttribute('days'),price:String((parseInt(p.getAttribute('price-cents'))||0)/100)}))}
  S.services=[...su.querySelectorAll('services > service')].map(s=>({name:s.getAttribute('name'),price:String((parseInt(s.getAttribute('price-cents'))||0)/100),vat:s.getAttribute('vat-percent')??''}));
- const le=su.querySelector('legal');if(le){S.org=le.getAttribute('organization')||S.org;S.vatRegime=le.getAttribute('vat-regime')||S.vatRegime;S.regNumber=le.getAttribute('registration')||'';S.vatId=le.getAttribute('vat-id')||'';S.exemption=le.getAttribute('exemption-reason')||'';S.street=le.getAttribute('street')||'';S.postal=le.getAttribute('postal-code')||'';S.city=le.getAttribute('city')||'';S.vatRates=[...le.querySelectorAll('vat-rate')].map(r=>({label:r.getAttribute('label')||'',percent:r.getAttribute('percent')||''}));le.querySelectorAll('mention').forEach(m=>S.mentions[m.getAttribute('key')]=m.getAttribute('value')||'');const rm=le.querySelector('reminders');if(rm){S.reminders={levels:rm.getAttribute('levels'),firstDays:rm.getAttribute('first-days'),betweenDays:rm.getAttribute('between-days')}}}
+ const le=su.querySelector('legal');if(le){S.org=le.getAttribute('organization')||S.org;S.vatRegime=le.getAttribute('vat-regime')||S.vatRegime;S.regNumber=le.getAttribute('registration')||'';S.vatId=le.getAttribute('vat-id')||'';S.exemption=le.getAttribute('exemption-reason')||'';S.street=le.getAttribute('street')||'';S.postal=le.getAttribute('postal-code')||'';S.city=le.getAttribute('city')||'';S.vatRates=[...le.querySelectorAll('vat-rate')].map(r=>({label:r.getAttribute('label')||'',percent:r.getAttribute('percent')||''}));le.querySelectorAll('mention').forEach(m=>S.mentions[m.getAttribute('key')]=m.getAttribute('value')||'');const rm=le.querySelector('reminders');if(rm){S.reminders={levels:rm.getAttribute('levels'),firstDays:rm.getAttribute('first-days'),betweenDays:rm.getAttribute('between-days')}}
+  const vd=le.querySelector('vat-declaration');if(vd)S.vatPeriod=vd.getAttribute('period')||S.vatPeriod;
+  const ei=le.querySelector('einvoice');if(ei)S.einvoice={url:ei.getAttribute('url')||'',token:ei.getAttribute('token')||'',header:ei.getAttribute('auth-header')||'',field:ei.getAttribute('file-field')||'',uatUrl:ei.getAttribute('uat-url')||'',uatToken:ei.getAttribute('uat-token')||'',devUrl:ei.getAttribute('dev-url')||'',devToken:ei.getAttribute('dev-token')||'',customerUrl:ei.getAttribute('customer-url')||'',customerToken:ei.getAttribute('customer-token')||'',customerHeader:ei.getAttribute('customer-auth-header')||'',customerField:ei.getAttribute('customer-file-field')||''}}
  su.querySelectorAll('roles > role').forEach(r=>S.perms[r.getAttribute('name')]=(r.getAttribute('permissions')||'').split(',').filter(Boolean));
- const va=su.querySelector('roles > validation');if(va)S.validation={required:va.getAttribute('required'),ownerSignOff:va.getAttribute('owner-sign-off')==='true'};
- S.members=[...su.querySelectorAll('members > member')].map(m=>({name:m.getAttribute('name'),email:m.getAttribute('email'),role:m.getAttribute('role'),pct:m.getAttribute('subscription-pct')}));
+ const va=su.querySelector('roles > validation');if(va){S.validation={required:va.getAttribute('required'),ownerSignOff:va.getAttribute('owner-sign-off')==='true'};
+  DOMAINS.forEach(([k])=>{S.domains[k]={on:false,required:1,ownerSignOff:false}});
+  S.autoValidate={admin:false,owner:false};
+  va.querySelectorAll('domain').forEach(d=>{const k=d.getAttribute('event-type');if(!(k in S.domains))return;
+   if(d.hasAttribute('required'))S.domains[k]={on:true,required:d.getAttribute('required'),ownerSignOff:d.getAttribute('owner-sign-off')==='true'};
+   if(k==='reservation_delete'){S.autoValidate={admin:d.getAttribute('auto-validate-admin')==='true',owner:d.getAttribute('auto-validate-owner')==='true'}}})}
+ S.members=[...su.querySelectorAll('members > member')].map(m=>({name:m.getAttribute('name'),email:m.getAttribute('email'),role:m.getAttribute('role'),pct:m.getAttribute('subscription-pct'),overage:m.getAttribute('overage-policy')||'blocked',wholeSpaces:m.getAttribute('may-reserve-whole-spaces')==='true',simultaneous:m.getAttribute('simultaneous-reservations')||'',limit:m.getAttribute('reservation-limit')||''}));
 }
 render();
 </script>
