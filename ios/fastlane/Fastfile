@@ -408,20 +408,27 @@ platform :ios do
     if group
       UI.success("Beta group '#{name}' already exists.")
     else
-      group = Spaceship::ConnectAPI::BetaGroup.create(
-        app_id: app.id,
-        name: name,
+      # Spaceship dropped BetaGroup.create; the App instance owns it now,
+      # and it takes the public-link options directly rather than needing
+      # a follow-up update.
+      group = app.create_beta_group(
+        group_name: name,
         is_internal_group: false,
         # Every uploaded build reaches the group without a second action —
         # the same bargain the internal group already makes.
         has_access_to_all_builds: true,
+        public_link_enabled: wants_link,
+        public_link_limit_enabled: wants_link,
+        public_link_limit: (options[:limit] || 100).to_i,
       )
       UI.success("Created external beta group '#{name}'.")
     end
 
     if wants_link
-      # publicLinkEnabled is an UPDATE on the group; the limit is what
-      # stops a shared URL turning into an unbounded invitation.
+      # A group created just above already carries the link; one that
+      # existed before this lane ran may not, so enabling it stays an
+      # UPDATE. The limit is what stops a shared URL turning into an
+      # unbounded invitation.
       group.update(attributes: {
         publicLinkEnabled: true,
         publicLinkLimitEnabled: true,
