@@ -575,20 +575,27 @@ platform :ios do
                  "#{existing ? "tester id #{existing.id}" : 'nil (not yet a tester)'}; " \
                  "target #{kind} group '#{group.name}' (#{group.id}).")
 
-      if existing && in_group.call(existing, group)
-        if resend
-          # #3088 resend: fully remove the tester from the app, then re-create
-          # below (create-new path), so App Store Connect issues a FRESH
-          # TestFlight invite email — re-adding a current member is a no-op, so
-          # a lost invite can't otherwise be re-sent.
-          UI.message("[manage_testers] resend — removing #{addr} from #{app.name} to re-issue the invite.")
-          existing.delete_from_apps(apps: [app])
-          existing = nil
-        else
-          # Truly already a member of the target group → idempotent no-op.
-          UI.success("#{addr} is already in #{kind} beta group '#{group.name}' — nothing to do.")
-          return true
-        end
+      if existing && resend
+        # #3088 resend: fully remove the tester from the app, then re-create
+        # below (create-new path), so App Store Connect issues a FRESH
+        # TestFlight invite email — re-adding a current member is a no-op, so
+        # a lost invite can't otherwise be re-sent.
+        #
+        # #656: this applies to ANY existing tester, not only one already in
+        # the target group. A record left behind by an earlier attempt —
+        # notably one aimed at the INTERNAL group, which Apple then refuses
+        # to reassign externally ("Tester(s) cannot be assigned") — is
+        # unreachable by the relationship endpoint, and removing it from the
+        # app is the only way to start that address over. Scoping the escape
+        # hatch to the already-a-member case left the one state that actually
+        # needs it with no way out.
+        UI.message("[manage_testers] resend — removing #{addr} from #{app.name} to re-issue the invite.")
+        existing.delete_from_apps(apps: [app])
+        existing = nil
+      elsif existing && in_group.call(existing, group)
+        # Truly already a member of the target group → idempotent no-op.
+        UI.success("#{addr} is already in #{kind} beta group '#{group.name}' — nothing to do.")
+        return true
       end
 
       begin
