@@ -3228,6 +3228,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Fuera del horario de apertura solo es posible un check-in espontáneo, no una reserva por adelantado.';
 
   @override
+  String get bookingSameDayError =>
+      'Una reserva termina el día en que empieza: reserva el día siguiente por separado.';
+
+  @override
   String get membersTitle => 'Miembros y planes';
 
   @override

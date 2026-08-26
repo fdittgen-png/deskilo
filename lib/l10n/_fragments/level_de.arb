@@ -28,5 +28,6 @@
   "bookingWalkUpTodayError": "Ein spontaner Check-in muss heute beginnen.",
   "bookingOutsideHoursError": "Buchungen müssen innerhalb der Arbeitszeiten liegen.",
   "bookingOutsideOffError": "Buchungen außerhalb der Öffnungszeiten sind nicht erlaubt.",
-  "bookingOutsideWalkUpError": "Außerhalb der Öffnungszeiten ist nur ein spontaner Check-in möglich — keine Vorausbuchung."
+  "bookingOutsideWalkUpError": "Außerhalb der Öffnungszeiten ist nur ein spontaner Check-in möglich — keine Vorausbuchung.",
+  "bookingSameDayError": "Eine Buchung endet an dem Tag, an dem sie beginnt — den nächsten Tag separat buchen."
 }

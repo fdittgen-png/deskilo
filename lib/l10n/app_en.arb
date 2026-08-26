@@ -3649,6 +3649,7 @@
   "@bookingOutsideWalkUpError": {
     "description": "#634 - refusal under the walkup_only outside-hours mode"
   },
+  "bookingSameDayError": "A booking ends on the day it starts — book the next day separately.",
   "membersTitle": "Members & plans",
   "@membersTitle": {
     "description": "Title of the owner-only member management screen + its settings entry"

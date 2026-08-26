@@ -1598,6 +1598,7 @@
   "bookingOutsideHoursError": "Le prenotazioni devono restare negli orari di lavoro.",
   "bookingOutsideOffError": "Le prenotazioni fuori dagli orari di apertura non sono consentite.",
   "bookingOutsideWalkUpError": "Fuori dagli orari di apertura è possibile solo un check-in spontaneo, non una prenotazione in anticipo.",
+  "bookingSameDayError": "Una prenotazione termina il giorno in cui inizia — prenota il giorno dopo separatamente.",
   "membersTitle": "Membri e piani",
   "membersPlanNone": "Nessun piano",
   "memberRoleOwner": "Proprietario",

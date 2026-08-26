@@ -301,6 +301,43 @@ void main() {
       }
     });
 
+    // #637: 0120 read "spontaneous" as the EVENING shape alone
+    // (local_start >= ts_end), so the member arriving at 06:00 was
+    // refused by a mode named for spontaneity — caught live against the
+    // hosted project. The mode's meaning is the whole rule: walk in at
+    // either edge of the day, never RESERVE AHEAD outside the hours.
+    test('the EARLY-MORNING walk-in is allowed, while the same window '
+        'booked ahead is refused', () async {
+      final repo = FakeReservationRepository()
+        ..outsideHoursMode = OutsideHoursMode.walkupOnly;
+      final id = await repo.create(
+        workspaceId: 'ws-1',
+        seatId: 'seat-1',
+        startsAt: _at(6),
+        endsAt: _at(7, 30),
+        checkIn: true,
+      );
+      expect(id, isNotEmpty, reason: 'a walk-up before the day start is '
+          'exactly the spontaneity this mode keeps');
+
+      final ahead = FakeReservationRepository()
+        ..outsideHoursMode = OutsideHoursMode.walkupOnly;
+      await expectLater(
+        ahead.create(
+          workspaceId: 'ws-1',
+          seatId: 'seat-1',
+          startsAt: _at(6),
+          endsAt: _at(7, 30),
+        ),
+        throwsA(isA<PostgrestException>().having(
+            (e) => e.message,
+            'message',
+            allOf(contains('outside the opening hours'),
+                contains('spontaneous check-in')))),
+      );
+      expect(ahead.reservations, isEmpty);
+    });
+
     test('a regular inside-hours window is untouched', () async {
       final repo = FakeReservationRepository()
         ..outsideHoursMode = OutsideHoursMode.walkupOnly;
@@ -363,6 +400,11 @@ void main() {
     });
   });
 
+  // Pins on the 0120 FILE, which is history and never changes. #637
+  // (migration 0122) regenerated the same function once more: the gate,
+  // the four modes and the legacy fallback below are carried forward
+  // verbatim there, only v_spontaneous became `p_walk_up` — pinned in
+  // enforcement_parity_test.dart.
   group('server contract (migration 0120, #634)', () {
     final sql = File('supabase/migrations/0120_unified_outside_hours.sql')
         .readAsStringSync();

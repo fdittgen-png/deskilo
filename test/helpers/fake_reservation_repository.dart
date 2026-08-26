@@ -39,8 +39,8 @@ class FakeReservationRepository implements ReservationRepository {
   OutsideHoursMode outsideHoursMode = OutsideHoursMode.charged;
 
   /// #634: the window LEAVES the working day at either edge — the
-  /// enforcement predicate of enforce_booking_rules v8 (migration
-  /// 0120), which strictly contains "entirely outside". Hours from
+  /// enforcement predicate of enforce_booking_rules (migration 0120),
+  /// which strictly contains "entirely outside". Hours from
   /// [WorkHours.current] (defaults 8:00–17:00) on the booking's
   /// workspace-local day.
   bool _touchesOutside(DateTime startsAt, DateTime endsAt) {
@@ -50,20 +50,48 @@ class FakeReservationRepository implements ReservationRepository {
         endsAt.isAfter(_atMinutes(day, hours.endMinutes));
   }
 
-  /// The one spontaneous shape `walkup_only` still allows: a walk-up
-  /// starting at/after the day's end and ending by local midnight.
-  bool _spontaneousOvertime(
-      DateTime startsAt, DateTime endsAt, bool checkIn) {
-    if (!checkIn) return false;
-    final hours = WorkHours.current;
-    final day = WorkspaceTime.dateOf(startsAt);
-    final end = _atMinutes(day, hours.endMinutes);
-    final midnight = WorkspaceTime.at(day.year, day.month, day.day + 1, 0, 0);
-    return !startsAt.isBefore(end) && !endsAt.isAfter(midnight);
-  }
-
   DateTime _atMinutes(DateTime day, int minutes) => WorkspaceTime.at(
       day.year, day.month, day.day, minutes ~/ 60, minutes % 60);
+
+  /// THE booking contract — the mirror of `enforce_booking_rules` v9
+  /// (migration 0122, #637). One rule set, asked by every creation path
+  /// the fake models: [create] and [kioskAct]. Before #637 the past-day
+  /// and walk-up-today guards lived in the create path alone, exactly
+  /// as they lived in `create_reservation` alone server-side — which is
+  /// why the wall device accepted what the plan refused.
+  void _enforceBookingRules(
+    DateTime startsAt,
+    DateTime endsAt, {
+    required bool walkUp,
+  }) {
+    // #600: past means the booking's workspace-local DAY already ended,
+    // not its instant — a window earlier the same day stays legal.
+    final lastDay =
+        WorkspaceTime.dateOf(endsAt.subtract(const Duration(seconds: 1)));
+    if (lastDay.isBefore(WorkspaceTime.dateOf(now())) && !allowPastBookings) {
+      throw StateError('the booking lies entirely in the past');
+    }
+    // #600: a walk-up check-in means "I am here NOW".
+    if (walkUp &&
+        WorkspaceTime.dateOf(startsAt) != WorkspaceTime.dateOf(now())) {
+      throw StateError('a walk-up check-in must start today');
+    }
+    // #634: THE outside-hours gate — 'off' refuses any window leaving
+    // the working day, walk-up or not; 'walkup_only' refuses the same
+    // unless it IS a walk-up (#637: spontaneity, not the evening — a
+    // 06:00 walk-in passes too). Pinned substrings like the server.
+    if (_touchesOutside(startsAt, endsAt)) {
+      if (outsideHoursMode == OutsideHoursMode.off) {
+        throw const PostgrestException(
+            message: 'bookings outside the opening hours are not allowed');
+      }
+      if (outsideHoursMode == OutsideHoursMode.walkupOnly && !walkUp) {
+        throw const PostgrestException(
+            message: 'only spontaneous check-ins are possible outside '
+                'the opening hours — booking ahead is not');
+      }
+    }
+  }
 
   /// The fake's clock — defaults to [kTestNow], matching the
   /// FixedClock the standard overrides install (#408: the check-in
@@ -173,34 +201,8 @@ class FakeReservationRepository implements ReservationRepository {
     if (targets != 1) {
       throw StateError('exactly one of seat, desk, office or level required');
     }
-    // #600 guards, mirroring create_reservation v10: past means the
-    // booking's workspace-local DAY already ended, not its instant.
-    final lastDay = WorkspaceTime.dateOf(
-        endsAt.subtract(const Duration(seconds: 1)));
-    if (lastDay.isBefore(WorkspaceTime.dateOf(now())) &&
-        !allowPastBookings) {
-      throw StateError('the booking lies entirely in the past');
-    }
-    if (checkIn &&
-        WorkspaceTime.dateOf(startsAt) != WorkspaceTime.dateOf(now())) {
-      throw StateError('a walk-up check-in must start today');
-    }
-    // #634: THE outside-hours gate (enforce_booking_rules v8, migration
-    // 0120) — 'off' refuses any window leaving the working day, walk-up
-    // or not; 'walkup_only' refuses the same except the spontaneous
-    // evening overtime run. Pinned substrings like the server.
-    if (_touchesOutside(startsAt, endsAt)) {
-      if (outsideHoursMode == OutsideHoursMode.off) {
-        throw const PostgrestException(
-            message: 'bookings outside the opening hours are not allowed');
-      }
-      if (outsideHoursMode == OutsideHoursMode.walkupOnly &&
-          !_spontaneousOvertime(startsAt, endsAt, checkIn)) {
-        throw const PostgrestException(
-            message: 'only spontaneous check-ins are possible outside '
-                'the opening hours — booking ahead is not');
-      }
-    }
+    // #637: the ONE contract, the same one kioskAct asks below.
+    _enforceBookingRules(startsAt, endsAt, walkUp: checkIn);
     // #573 — a day-based walk-up check-in books the SLOT the chosen end
     // belongs to: the start snaps back; if the early slot part is taken,
     // ONE retry anchors at now() (mirroring create_reservation v9).
@@ -454,6 +456,10 @@ class FakeReservationRepository implements ReservationRepository {
     if ((action == 'check_in' || action == 'reserve') &&
         startsAt != null &&
         endsAt != null) {
+      // #637: kiosk_act validates through enforce_booking_rules like
+      // every other entry point — the wall device offers exactly what
+      // will be accepted. A kiosk check-in IS the walk-up flag.
+      _enforceBookingRules(startsAt, endsAt, walkUp: action == 'check_in');
       final blocked = reservations.any((r) =>
           r.isActive &&
           r.memberId != myMemberId &&

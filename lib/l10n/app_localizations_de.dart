@@ -3233,6 +3233,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Außerhalb der Öffnungszeiten ist nur ein spontaner Check-in möglich — keine Vorausbuchung.';
 
   @override
+  String get bookingSameDayError =>
+      'Eine Buchung endet an dem Tag, an dem sie beginnt — den nächsten Tag separat buchen.';
+
+  @override
   String get membersTitle => 'Mitglieder & Tarife';
 
   @override
