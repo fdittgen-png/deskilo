@@ -242,4 +242,45 @@ void main() {
       );
     });
   });
+
+  group('reshaping is not creating (#637)', () {
+    String body(String name) {
+      final sql = File('supabase/migrations/0122_enforcement_parity.sql')
+          .readAsStringSync();
+      final start = sql.indexOf('create or replace function public.$name');
+      expect(start, greaterThan(-1), reason: '$name must be regenerated');
+      final end = sql.indexOf(r'$$;', start);
+      return sql.substring(start, end);
+    }
+
+    test('the chokepoint separates a new booking from a reshape', () {
+      final fn = body('enforce_booking_rules');
+      expect(fn, contains('p_new_booking boolean default true'),
+          reason: 'creation paths keep the default; a reshape opts out');
+      expect(fn, contains('if p_walk_up and p_new_booking'),
+          reason: 'the walk-up-today guard binds NEW bookings only');
+    });
+
+    test('the past-day guard still binds every caller, reshape included',
+        () {
+      final fn = body('enforce_booking_rules');
+      final guard = fn.substring(fn.indexOf('lies entirely in the past') - 400,
+          fn.indexOf('lies entirely in the past'));
+      expect(guard, isNot(contains('p_new_booking')),
+          reason: 'moving any booking onto a day that ended is the abuse '
+              'that guard exists for — edit or create');
+    });
+
+    test('update_reservation asks for shape only on the running branch',
+        () {
+      final fn = body('update_reservation');
+      expect(
+        fn,
+        contains('v_res.workspace_id, p_starts_at, p_ends_at, true, false'),
+        reason: 'walk-up SHAPE rules without the creation guards',
+      );
+      // The immovable start is what makes that safe — keep it pinned.
+      expect(fn, contains("raise exception 'a running booking keeps its start'"));
+    });
+  });
 }
