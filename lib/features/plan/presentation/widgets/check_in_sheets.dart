@@ -25,10 +25,18 @@ Future<String?> showMySeatSheet(
   BookingGranularity? granularity,
 }) {
   final l10n = AppLocalizations.of(context);
-  // #490 — the window opens on the WORKSPACE clock.
-  final opensAt = DateFormat.Hm().format(
-    WorkspaceTime.wall(mine.startsAt.subtract(Reservation.checkInLeeway)),
-  );
+  // #490 — the window opens on the WORKSPACE clock. #636: the instant
+  // comes from the reservation's OWN rule, so the tile never announces
+  // a time the gate does not use (it hard-coded 15 minutes while the
+  // gate had widened to the grid step, or opened for the whole day).
+  final opensWall =
+      WorkspaceTime.wall(mine.checkInOpensAt(granularity: granularity));
+  final nowWall = WorkspaceTime.wall(now);
+  final opensOnAnotherDay = opensWall.year != nowWall.year ||
+      opensWall.month != nowWall.month ||
+      opensWall.day != nowWall.day;
+  final opensAt = DateFormat.Hm().format(opensWall);
+  final opensOn = DateFormat.MMMd().format(opensWall);
   return showModalBottomSheet<String>(
     context: context,
     builder: (context) => SafeArea(
@@ -67,8 +75,11 @@ Future<String?> showMySeatSheet(
               title: Text(l10n?.planCheckInButton ?? 'Check in'),
               subtitle: Text(
                 now.isBefore(mine.startsAt)
-                    ? (l10n?.planCheckInOpensAt(opensAt) ??
-                          'Check-in opens at $opensAt')
+                    ? (opensOnAnotherDay
+                        ? (l10n?.planCheckInOpensOn(opensOn) ??
+                              'Check-in opens on $opensOn')
+                        : (l10n?.planCheckInOpensAt(opensAt) ??
+                              'Check-in opens at $opensAt'))
                     : (l10n?.planCheckInOverError ??
                           'This reservation is over — check-in is no '
                               'longer possible.'),

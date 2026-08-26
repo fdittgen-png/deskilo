@@ -6590,6 +6590,12 @@ abstract class AppLocalizations {
   /// **'Check-in opens at {time}'**
   String planCheckInOpensAt(String time);
 
+  /// No description provided for @planCheckInOpensOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in opens on {date}'**
+  String planCheckInOpensOn(String date);
+
   /// Admin action: check in another member who is present (#408)
   ///
   /// In en, this message translates to:

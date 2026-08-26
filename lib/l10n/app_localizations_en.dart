@@ -3645,6 +3645,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String planCheckInOpensOn(String date) {
+    return 'Check-in opens on $date';
+  }
+
+  @override
   String planCheckInFor(String name) {
     return 'Check in $name';
   }
