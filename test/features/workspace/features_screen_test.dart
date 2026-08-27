@@ -31,7 +31,7 @@ Future<FakeWorkspaceRepository> pumpFeatures(
 }) async {
   // Ten manifest features no longer fit the default 800×600 surface and
   // the lazy list drops off-screen tiles; keep every switch mounted.
-  tester.view.physicalSize = const Size(800, 4200);
+  tester.view.physicalSize = const Size(800, 4600);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final workspace =
@@ -77,8 +77,8 @@ void main() {
         .length;
     // Default-off owner decisions: adminSeatBlocking, accessorySupplements,
     // onlinePayments, levelBooking, adminLevelAssign, adminInvoicing,
-    // autoCheckInOut (#396).
-    expect(onCount, featureManifest.length - 7);
+    // autoCheckInOut (#396) and badgeSignIn (#662).
+    expect(onCount, featureManifest.length - 8);
   });
 
   testWidgets('toggling a feature persists the full map and flips the switch',
@@ -97,7 +97,8 @@ void main() {
     expect(
       flags.entries.where((e) => e.value == false).map((e) => e.key),
       unorderedEquals(
-        ['moneyTab', 'adminSeatBlocking', 'accessorySupplements',
+        ['moneyTab', 'badgeSignIn', 'adminSeatBlocking',
+          'accessorySupplements',
           'onlinePayments', 'levelBooking', 'adminLevelAssign',
           'adminInvoicing', 'autoCheckInOut'],
       ),
@@ -143,7 +144,7 @@ void main() {
       (tester) async {
     // The personal tiles above the admin section keep growing (#223/#231
     // WhatsApp + Status) — keep every asserted tile mounted.
-    tester.view.physicalSize = const Size(800, 4200);
+    tester.view.physicalSize = const Size(800, 4600);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     await pumpSettings(tester, featureFlags: const {'services': false});
@@ -158,7 +159,7 @@ void main() {
       (tester) async {
     // The personal tiles above the admin section keep growing (#223/#231
     // WhatsApp + Status, 0038 Photo) — a taller view keeps Services mounted.
-    tester.view.physicalSize = const Size(800, 4200);
+    tester.view.physicalSize = const Size(800, 4600);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     await pumpSettings(tester);

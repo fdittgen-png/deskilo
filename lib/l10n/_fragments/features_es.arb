@@ -103,5 +103,13 @@
   "featureKioskMemberPhotosTitle": "Fotos de los miembros en el quiosco",
   "featureKioskMemberPhotosDesc": "El recibo del quiosco muestra la foto de perfil del miembro: el control visual de credencial equivocada.",
   "featurePlanMemberPhotosTitle": "Fotos de los miembros en el plano",
-  "featurePlanMemberPhotosDesc": "Los asientos ocupados en la pestaña Plano y en el centro Reservar muestran la foto de perfil del ocupante en lugar de la inicial."
+  "featurePlanMemberPhotosDesc": "Los asientos ocupados en la pestaña Plano y en el centro Reservar muestran la foto de perfil del ocupante en lugar de la inicial.",
+  "featureBadgeSignInTitle": "Iniciar sesión con credencial",
+  "@featureBadgeSignInTitle": {
+    "description": "#662 - feature registry entry"
+  },
+  "featureBadgeSignInDesc": "Los miembros pueden iniciar sesión escaneando su credencial e introduciendo su PIN, en lugar de escribir un correo en una tableta compartida. Cada miembro define su propio PIN y activa su propia credencial.",
+  "@featureBadgeSignInDesc": {
+    "description": "#662 - feature registry entry"
+  }
 }

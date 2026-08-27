@@ -48,7 +48,8 @@ enum WorkspaceFeature {
   kioskMemberPhotos,
   formHelpHints,
   uiAnimations,
-  planMemberPhotos;
+  planMemberPhotos,
+  badgeSignIn;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -266,6 +267,16 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // maps, kiosk or not.
   WorkspaceFeature.planMemberPhotos:
       FeatureManifestEntry(feature: WorkspaceFeature.planMemberPhotos),
+  // #662 — signing IN by scanning a badge, then a PIN. Under nfcBadges
+  // rather than kioskMode: it needs badges to EXIST, and turning badge
+  // issuance off must take the login button with it, or the button
+  // offers a credential nobody can hold. Default OFF — a workspace opts
+  // in to its shared tablet being a login surface.
+  WorkspaceFeature.badgeSignIn: FeatureManifestEntry(
+    feature: WorkspaceFeature.badgeSignIn,
+    requires: WorkspaceFeature.nfcBadges,
+    defaultOn: false,
+  ),
   // #606 — dismissible contextual help hints on forms and screens, each
   // deep-linking into the matching guide section. Default ON: they are
   // exactly for the members who have not found their way around yet.

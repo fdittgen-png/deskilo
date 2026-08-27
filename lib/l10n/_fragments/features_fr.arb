@@ -103,5 +103,13 @@
   "featureKioskMemberPhotosTitle": "Photos des membres à la borne",
   "featureKioskMemberPhotosDesc": "Le reçu de la borne affiche la photo de profil du membre — le contrôle visuel du mauvais badge.",
   "featurePlanMemberPhotosTitle": "Photos des membres sur le plan",
-  "featurePlanMemberPhotosDesc": "Les places occupées de l'onglet Plan et du hub Réserver affichent la photo de profil de l'occupant au lieu de l'initiale."
+  "featurePlanMemberPhotosDesc": "Les places occupées de l'onglet Plan et du hub Réserver affichent la photo de profil de l'occupant au lieu de l'initiale.",
+  "featureBadgeSignInTitle": "Connexion par badge",
+  "@featureBadgeSignInTitle": {
+    "description": "#662 - feature registry entry"
+  },
+  "featureBadgeSignInDesc": "Les membres peuvent se connecter en scannant leur badge puis en saisissant leur code, au lieu de taper une adresse e-mail sur une tablette partagée. Chaque membre définit son propre code et active son propre badge.",
+  "@featureBadgeSignInDesc": {
+    "description": "#662 - feature registry entry"
+  }
 }

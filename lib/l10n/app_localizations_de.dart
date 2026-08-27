@@ -345,6 +345,98 @@ class AppLocalizationsDe extends AppLocalizations {
   String get myBadgeTitle => 'Mein Badge';
 
   @override
+  String get badgeSignInTitle => 'Mit Ausweis anmelden';
+
+  @override
+  String get badgeSignInTapPrompt => 'Halten Sie Ihren Ausweis an das Telefon.';
+
+  @override
+  String get badgeSignInNoReader =>
+      'Auf diesem Gerät ist kein Ausweisleser verfügbar.';
+
+  @override
+  String get badgeSignInRetry => 'Erneut versuchen';
+
+  @override
+  String badgeSignInHello(String name) {
+    return 'Hallo $name';
+  }
+
+  @override
+  String get badgeSignInPinLabel => 'Ihre PIN';
+
+  @override
+  String get badgeSignInButton => 'Anmelden';
+
+  @override
+  String get badgeSignInUseEmail => 'Stattdessen meine E-Mail verwenden';
+
+  @override
+  String get badgeSignInRefused =>
+      'Das hat nicht geklappt. Prüfen Sie Ausweis und PIN, oder melden Sie sich mit Ihrer E-Mail an.';
+
+  @override
+  String get badgeSignInLocked =>
+      'Zu viele Versuche. Warten Sie einige Minuten, oder melden Sie sich mit Ihrer E-Mail an.';
+
+  @override
+  String get badgeSignInUnavailable =>
+      'Die Ausweisanmeldung ist gerade nicht erreichbar. Melden Sie sich mit Ihrer E-Mail an.';
+
+  @override
+  String get badgeSignInEntry => 'Mit Ausweis anmelden';
+
+  @override
+  String get badgePinSectionTitle => 'Mein Ausweis';
+
+  @override
+  String get badgePinSet => 'PIN gesetzt';
+
+  @override
+  String get badgePinNotSet => 'Noch keine PIN';
+
+  @override
+  String get badgePinExplain =>
+      'Mit Ihrer PIN melden Sie sich an, indem Sie Ihren Ausweis scannen, statt Ihre E-Mail zu tippen. Nur Sie können sie setzen, und niemand — auch kein Eigentümer — kann sie auslesen.';
+
+  @override
+  String get badgePinSetAction => 'PIN setzen';
+
+  @override
+  String get badgePinChangeAction => 'PIN ändern';
+
+  @override
+  String get badgePinClearAction => 'PIN entfernen';
+
+  @override
+  String get badgePinNewLabel => 'Neue PIN';
+
+  @override
+  String get badgePinConfirmLabel => 'Wiederholen';
+
+  @override
+  String get badgePinMismatch => 'Die beiden Eingaben stimmen nicht überein.';
+
+  @override
+  String badgePinTooShort(int min) {
+    return 'Verwenden Sie mindestens $min Ziffern.';
+  }
+
+  @override
+  String get badgePinSaved => 'PIN gespeichert.';
+
+  @override
+  String get badgePinCleared =>
+      'PIN entfernt. Ihre Ausweise melden Sie nicht mehr an.';
+
+  @override
+  String get badgeAuthEnabledLabel => 'Meldet mich an';
+
+  @override
+  String get badgeAuthEnabledHint =>
+      'Standardmäßig aus: Ein Ausweis, der Sie eincheckt, meldet Sie nicht an, bis Sie es erlauben.';
+
+  @override
   String billSubscription(int pct) {
     return 'Abo $pct %';
   }
@@ -1576,6 +1668,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featurePlanMemberPhotosDesc =>
       'Belegte Plätze im Plan-Tab und im Reservieren-Hub zeigen das Profilfoto statt der Initiale.';
+
+  @override
+  String get featureBadgeSignInTitle => 'Anmeldung per Ausweis';
+
+  @override
+  String get featureBadgeSignInDesc =>
+      'Mitglieder melden sich an, indem sie ihren Ausweis scannen und ihre PIN eingeben, statt eine E-Mail-Adresse auf einem gemeinsam genutzten Tablet zu tippen. Jedes Mitglied setzt seine eigene PIN und aktiviert seinen eigenen Ausweis.';
 
   @override
   String get helpTitle => 'Hilfe';

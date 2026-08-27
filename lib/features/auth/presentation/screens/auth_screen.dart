@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
+import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/social_provider.dart';
 import '../../providers/auth_providers.dart';
+import '../widgets/badge_sign_in_sheet.dart';
 
 /// Email + password sign-in / sign-up. Navigation after success is handled
 /// by the router's auth redirect, not by this screen.
@@ -20,6 +22,10 @@ class AuthScreen extends ConsumerStatefulWidget {
 }
 
 class _AuthScreenState extends ConsumerState<AuthScreen> {
+  /// Asked ONCE. Probing the reader on every rebuild would restart a
+  /// platform query behind every keystroke in the e-mail field.
+  final Future<bool> _badgeReader = NfcUidReader().isAvailable();
+
   final _formKey = GlobalKey<FormState>();
   final _displayName = TextEditingController();
   final _email = TextEditingController();
@@ -404,6 +410,42 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         ),
                     ],
                   ),
+                  // #662 — badge sign-in, offered only when this device
+                  // can actually read one, and never while creating an
+                  // account (a brand-new member holds no badge).
+                  //
+                  // Deliberately NOT gated on the workspace flag: before
+                  // sign-in the app has no workspace, so it has no flags,
+                  // and `enabledFeatures` would decide on behalf of a
+                  // workspace it never read. The badge names the
+                  // workspace, so the flag is enforced server-side
+                  // (0124) and a workspace that has not opted in refuses
+                  // at the scan — with the same words a stranger's card
+                  // gets.
+                  if (!_isSignUp)
+                    FutureBuilder<bool>(
+                      future: _badgeReader,
+                      builder: (context, snapshot) =>
+                          snapshot.data == true
+                              ? Padding(
+                                  padding: const EdgeInsets.only(top: 12),
+                                  child: OutlinedButton.icon(
+                                    key: const ValueKey('auth-badge'),
+                                    onPressed: _busy
+                                        ? null
+                                        : () =>
+                                            showBadgeSignInSheet(context),
+                                    icon: const Icon(
+                                      Icons.contactless_outlined,
+                                    ),
+                                    label: Text(
+                                      l10n?.badgeSignInEntry ??
+                                          'Sign in with a badge',
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox.shrink(),
+                    ),
                   const SizedBox(height: 12),
                   TextButton(
                     onPressed: _busy

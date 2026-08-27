@@ -668,6 +668,168 @@ abstract class AppLocalizations {
   /// **'My badge'**
   String get myBadgeTitle;
 
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with your badge'**
+  String get badgeSignInTitle;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Hold your badge against the phone.'**
+  String get badgeSignInTapPrompt;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'No badge reader is available on this device.'**
+  String get badgeSignInNoReader;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get badgeSignInRetry;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Hello {name}'**
+  String badgeSignInHello(String name);
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Your PIN'**
+  String get badgeSignInPinLabel;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get badgeSignInButton;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Use my e-mail instead'**
+  String get badgeSignInUseEmail;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'That did not work. Check the badge and the PIN, or sign in with your e-mail.'**
+  String get badgeSignInRefused;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Wait a few minutes, or sign in with your e-mail.'**
+  String get badgeSignInLocked;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Badge sign-in is not reachable right now. Sign in with your e-mail instead.'**
+  String get badgeSignInUnavailable;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with a badge'**
+  String get badgeSignInEntry;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'My badge'**
+  String get badgePinSectionTitle;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'PIN set'**
+  String get badgePinSet;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'No PIN yet'**
+  String get badgePinNotSet;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Your PIN lets you sign in by scanning your badge instead of typing your e-mail. Only you can set it, and nobody — not even an owner — can read it back.'**
+  String get badgePinExplain;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Set a PIN'**
+  String get badgePinSetAction;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Change PIN'**
+  String get badgePinChangeAction;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Remove PIN'**
+  String get badgePinClearAction;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'New PIN'**
+  String get badgePinNewLabel;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat it'**
+  String get badgePinConfirmLabel;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'The two entries do not match.'**
+  String get badgePinMismatch;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Use at least {min} digits.'**
+  String badgePinTooShort(int min);
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'PIN saved.'**
+  String get badgePinSaved;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'PIN removed. Your badges no longer sign you in.'**
+  String get badgePinCleared;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Signs me in'**
+  String get badgeAuthEnabledLabel;
+
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Off by default: a badge that checks you in does not log you in until you say so.'**
+  String get badgeAuthEnabledHint;
+
   /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount
   ///
   /// In en, this message translates to:
@@ -2845,6 +3007,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Occupied seats on the Plan tab and Reserve hub show the occupant\'s profile photo instead of the initial.'**
   String get featurePlanMemberPhotosDesc;
+
+  /// #662 - feature registry entry
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with a badge'**
+  String get featureBadgeSignInTitle;
+
+  /// #662 - feature registry entry
+  ///
+  /// In en, this message translates to:
+  /// **'Members can sign in by scanning their badge and entering their PIN, instead of typing an e-mail on a shared tablet. Each member sets their own PIN and arms their own badge.'**
+  String get featureBadgeSignInDesc;
 
   /// No description provided for @helpTitle.
   ///

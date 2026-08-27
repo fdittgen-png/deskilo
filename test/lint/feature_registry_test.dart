@@ -37,9 +37,12 @@ import 'package:flutter_test/flutter_test.dart';
 // animations app-wide; OFF = instant everything, reduced motion wins).
 // 41→42 (2026-08-24): #616 kioskMemberPhotos (receipt shows the
 // member's profile photo; child of kioskMode).
+// 43→44 (2026-08-27): #662 badgeSignIn (sign in by scanning a badge,
+//   then a PIN; under nfcBadges — the login button must disappear with
+//   badge issuance, or it offers a credential nobody can hold).
 // 42→43 (2026-08-24): #620 planMemberPhotos (occupant photos on the
 // Plan tab and Reserve hub maps; standalone, kiosk not required).
-const int _expectedFeatureCount = 43;
+const int _expectedFeatureCount = 44;
 
 void main() {
   test('every functionality is registered — the pin', () {

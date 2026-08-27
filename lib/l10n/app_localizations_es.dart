@@ -344,6 +344,98 @@ class AppLocalizationsEs extends AppLocalizations {
   String get myBadgeTitle => 'Mi credencial';
 
   @override
+  String get badgeSignInTitle => 'Iniciar sesión con la credencial';
+
+  @override
+  String get badgeSignInTapPrompt => 'Acerque su credencial al teléfono.';
+
+  @override
+  String get badgeSignInNoReader =>
+      'No hay lector de credenciales en este dispositivo.';
+
+  @override
+  String get badgeSignInRetry => 'Reintentar';
+
+  @override
+  String badgeSignInHello(String name) {
+    return 'Hola $name';
+  }
+
+  @override
+  String get badgeSignInPinLabel => 'Su PIN';
+
+  @override
+  String get badgeSignInButton => 'Iniciar sesión';
+
+  @override
+  String get badgeSignInUseEmail => 'Usar mi correo en su lugar';
+
+  @override
+  String get badgeSignInRefused =>
+      'No ha funcionado. Compruebe la credencial y el PIN, o inicie sesión con su correo.';
+
+  @override
+  String get badgeSignInLocked =>
+      'Demasiados intentos. Espere unos minutos, o inicie sesión con su correo.';
+
+  @override
+  String get badgeSignInUnavailable =>
+      'El inicio con credencial no está disponible ahora. Inicie sesión con su correo.';
+
+  @override
+  String get badgeSignInEntry => 'Iniciar sesión con una credencial';
+
+  @override
+  String get badgePinSectionTitle => 'Mi credencial';
+
+  @override
+  String get badgePinSet => 'PIN definido';
+
+  @override
+  String get badgePinNotSet => 'Sin PIN todavía';
+
+  @override
+  String get badgePinExplain =>
+      'Su PIN le permite iniciar sesión escaneando su credencial en lugar de escribir su correo. Solo usted puede definirlo, y nadie — ni siquiera un propietario — puede leerlo.';
+
+  @override
+  String get badgePinSetAction => 'Definir un PIN';
+
+  @override
+  String get badgePinChangeAction => 'Cambiar el PIN';
+
+  @override
+  String get badgePinClearAction => 'Eliminar el PIN';
+
+  @override
+  String get badgePinNewLabel => 'Nuevo PIN';
+
+  @override
+  String get badgePinConfirmLabel => 'Repítalo';
+
+  @override
+  String get badgePinMismatch => 'Las dos entradas no coinciden.';
+
+  @override
+  String badgePinTooShort(int min) {
+    return 'Use al menos $min dígitos.';
+  }
+
+  @override
+  String get badgePinSaved => 'PIN guardado.';
+
+  @override
+  String get badgePinCleared =>
+      'PIN eliminado. Sus credenciales ya no inician su sesión.';
+
+  @override
+  String get badgeAuthEnabledLabel => 'Inicia mi sesión';
+
+  @override
+  String get badgeAuthEnabledHint =>
+      'Desactivado por defecto: una credencial que le registra la entrada no inicia su sesión hasta que usted lo decida.';
+
+  @override
   String billSubscription(int pct) {
     return 'Suscripción $pct %';
   }
@@ -1578,6 +1670,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featurePlanMemberPhotosDesc =>
       'Los asientos ocupados en la pestaña Plano y en el centro Reservar muestran la foto de perfil del ocupante en lugar de la inicial.';
+
+  @override
+  String get featureBadgeSignInTitle => 'Iniciar sesión con credencial';
+
+  @override
+  String get featureBadgeSignInDesc =>
+      'Los miembros pueden iniciar sesión escaneando su credencial e introduciendo su PIN, en lugar de escribir un correo en una tableta compartida. Cada miembro define su propio PIN y activa su propia credencial.';
 
   @override
   String get helpTitle => 'Ayuda';

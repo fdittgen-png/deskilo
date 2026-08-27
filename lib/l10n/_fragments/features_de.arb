@@ -103,5 +103,13 @@
   "featureKioskMemberPhotosTitle": "Mitgliederfotos am Kiosk",
   "featureKioskMemberPhotosDesc": "Der Kiosk-Beleg zeigt das Profilfoto des Mitglieds — die visuelle Falsch-Badge-Kontrolle.",
   "featurePlanMemberPhotosTitle": "Mitgliederfotos auf dem Plan",
-  "featurePlanMemberPhotosDesc": "Belegte Plätze im Plan-Tab und im Reservieren-Hub zeigen das Profilfoto statt der Initiale."
+  "featurePlanMemberPhotosDesc": "Belegte Plätze im Plan-Tab und im Reservieren-Hub zeigen das Profilfoto statt der Initiale.",
+  "featureBadgeSignInTitle": "Anmeldung per Ausweis",
+  "@featureBadgeSignInTitle": {
+    "description": "#662 - feature registry entry"
+  },
+  "featureBadgeSignInDesc": "Mitglieder melden sich an, indem sie ihren Ausweis scannen und ihre PIN eingeben, statt eine E-Mail-Adresse auf einem gemeinsam genutzten Tablet zu tippen. Jedes Mitglied setzt seine eigene PIN und aktiviert seinen eigenen Ausweis.",
+  "@featureBadgeSignInDesc": {
+    "description": "#662 - feature registry entry"
+  }
 }
