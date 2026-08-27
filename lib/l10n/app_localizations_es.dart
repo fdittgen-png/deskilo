@@ -578,6 +578,60 @@ class AppLocalizationsEs extends AppLocalizations {
       'Tu crédito puede saldar facturas abiertas: el espacio lo imputa al conciliar los pagos.';
 
   @override
+  String get invoiceExportSafTPt => 'SAF-T (Portugal)';
+
+  @override
+  String get invoiceExportDatev => 'DATEV (Buchungsstapel)';
+
+  @override
+  String get invoiceExportSage => 'Sage 50 (registro de auditoría)';
+
+  @override
+  String get invoiceExportAccountantCsv => 'CSV contable';
+
+  @override
+  String get invoiceExportAuditTrail => 'Pista de auditoría';
+
+  @override
+  String get exportClaimRegulatory =>
+      'El formato que pide su administración tributaria.';
+
+  @override
+  String get exportClaimExchange =>
+      'Para que su asesor lo importe y lo revise — no es una declaración.';
+
+  @override
+  String get exportClaimSubset =>
+      'Solo facturas y cobros, sin libro mayor. El archivo lo indica en su cabecera.';
+
+  @override
+  String get exportUncertifiedSoftware =>
+      'Generado según la especificación publicada, pero DesKilo no es software certificado en este país — consulte con su asesor si se le exige.';
+
+  @override
+  String get datevAccountsTitle => 'Exportación DATEV';
+
+  @override
+  String get datevAccountsIntro =>
+      'Su asesor le da los números de asesor y de cliente. DATEV rechaza un archivo cuyos números no coincidan — que es lo que evita que acabe en los libros de otra empresa.';
+
+  @override
+  String get datevConsultantNumber => 'Beraternummer (n.º de asesor)';
+
+  @override
+  String get datevClientNumber => 'Mandantennummer (n.º de cliente)';
+
+  @override
+  String get sageAccountsTitle => 'Exportación Sage';
+
+  @override
+  String get sageAccountsIntro =>
+      'Los valores por defecto son las cuentas que Sage trae de serie. El código de IVA decide en qué declaración caen estos asientos: contrástelo con su asesor si no está en el tipo general.';
+
+  @override
+  String get sageTaxCode => 'Código de IVA (T1 / T0 / T9)';
+
+  @override
   String get billPdfTitle => 'Factura mensual';
 
   @override

@@ -95,5 +95,69 @@
   "accountImputationHint": "Votre avoir peut solder les factures ouvertes — l'espace l'impute lors du rapprochement des paiements.",
   "@accountImputationHint": {
     "description": "Account card hint shown when credit and open invoices coexist (#512)"
+  },
+  "invoiceExportSafTPt": "SAF-T (Portugal)",
+  "@invoiceExportSafTPt": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportDatev": "DATEV (Buchungsstapel)",
+  "@invoiceExportDatev": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportSage": "Sage 50 (journal d’audit)",
+  "@invoiceExportSage": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportAccountantCsv": "CSV comptable",
+  "@invoiceExportAccountantCsv": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportAuditTrail": "Piste d’audit",
+  "@invoiceExportAuditTrail": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportClaimRegulatory": "Le format que votre administration fiscale demande.",
+  "@exportClaimRegulatory": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportClaimExchange": "Pour que votre comptable l’importe et le vérifie — ce n’est pas une déclaration.",
+  "@exportClaimExchange": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportClaimSubset": "Factures et paiements seulement, sans grand livre. Le fichier le dit dans son en-tête.",
+  "@exportClaimSubset": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportUncertifiedSoftware": "Conforme à la spécification publiée, mais DesKilo n’est pas un logiciel certifié dans ce pays — vérifiez avec votre comptable si cela vous est imposé.",
+  "@exportUncertifiedSoftware": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevAccountsTitle": "Export DATEV",
+  "@datevAccountsTitle": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevAccountsIntro": "Votre comptable vous donne les numéros de conseil et de dossier. DATEV refuse un fichier dont les numéros ne correspondent pas — c’est ce qui l’empêche d’atterrir dans les comptes d’une autre société.",
+  "@datevAccountsIntro": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevConsultantNumber": "Beraternummer (numéro de conseil)",
+  "@datevConsultantNumber": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevClientNumber": "Mandantennummer (numéro de dossier)",
+  "@datevClientNumber": {
+    "description": "#669 - accounting export formats"
+  },
+  "sageAccountsTitle": "Export Sage",
+  "@sageAccountsTitle": {
+    "description": "#669 - accounting export formats"
+  },
+  "sageAccountsIntro": "Les valeurs par défaut sont les comptes livrés par Sage. Le code de TVA détermine sur quelle déclaration ces écritures arrivent : vérifiez-le avec votre comptable si vous n’êtes pas au taux normal.",
+  "@sageAccountsIntro": {
+    "description": "#669 - accounting export formats"
+  },
+  "sageTaxCode": "Code TVA (T1 / T0 / T9)",
+  "@sageTaxCode": {
+    "description": "#669 - accounting export formats"
   }
 }

@@ -212,5 +212,69 @@
   "accountImputationHint": "Your credit can settle open invoices — the workspace applies it when matching payments.",
   "@accountImputationHint": {
     "description": "Account card hint shown when credit and open invoices coexist (#512)"
+  },
+  "invoiceExportSafTPt": "SAF-T (Portugal)",
+  "@invoiceExportSafTPt": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportDatev": "DATEV (Buchungsstapel)",
+  "@invoiceExportDatev": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportSage": "Sage 50 (audit trail)",
+  "@invoiceExportSage": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportAccountantCsv": "Accounting CSV",
+  "@invoiceExportAccountantCsv": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportAuditTrail": "Audit trail",
+  "@invoiceExportAuditTrail": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportClaimRegulatory": "The format your tax authority asks for.",
+  "@exportClaimRegulatory": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportClaimExchange": "For your accountant to import and review — not a filing.",
+  "@exportClaimExchange": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportClaimSubset": "Invoices and payments only; no general ledger. The file says so in its header.",
+  "@exportClaimSubset": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportUncertifiedSoftware": "Built to the published spec, but DesKilo is not certified software in this country — check with your accountant whether that is required of you.",
+  "@exportUncertifiedSoftware": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevAccountsTitle": "DATEV export",
+  "@datevAccountsTitle": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevAccountsIntro": "Your accountant gives you the consultant and client numbers. DATEV refuses a file whose numbers do not match — which is what keeps it out of the wrong company’s books.",
+  "@datevAccountsIntro": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevConsultantNumber": "Beraternummer",
+  "@datevConsultantNumber": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevClientNumber": "Mandantennummer",
+  "@datevClientNumber": {
+    "description": "#669 - accounting export formats"
+  },
+  "sageAccountsTitle": "Sage export",
+  "@sageAccountsTitle": {
+    "description": "#669 - accounting export formats"
+  },
+  "sageAccountsIntro": "The defaults are Sage’s own shipped nominal codes. The tax code decides which VAT return these land on, so check it with your accountant if you are not on the standard rate.",
+  "@sageAccountsIntro": {
+    "description": "#669 - accounting export formats"
+  },
+  "sageTaxCode": "VAT code (T1 / T0 / T9)",
+  "@sageTaxCode": {
+    "description": "#669 - accounting export formats"
   }
 }

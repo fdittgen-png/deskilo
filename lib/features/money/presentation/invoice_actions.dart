@@ -30,8 +30,6 @@ import '../domain/invoice_pdf.dart';
 import '../domain/einvoice_gateway.dart';
 import '../domain/invoice_cii.dart';
 import '../domain/invoice_ubl.dart';
-import '../domain/fec.dart';
-import '../domain/saf_t.dart';
 import '../domain/invoice_ubl_check.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/invoice_pdf_template.dart';
@@ -46,7 +44,6 @@ import 'e_invoice_identity.dart';
 import 'widgets/einvoice_environment_picker.dart';
 import 'invoice_line_text.dart';
 import 'period_label.dart';
-import 'widgets/accounting_export_sheet.dart';
 import 'widgets/e_invoice_sheet.dart';
 import 'widgets/invoice_detail_sheet.dart';
 import 'widgets/invoice_form_sheet.dart';
@@ -1069,122 +1066,6 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
   return (
     bytes: pdf.bytes,
     fileName: '${safeFileSlug('facturx ${invoice.number}')}.pdf',
-  );
-}
-
-/// ACCOUNTING EXPORT (0074): one SAF-T file for a period — the OECD's own
-/// XML for handing accounting data to an accountant. Saved to Downloads,
-/// because that is where a file destined for someone else's software goes.
-Future<void> exportAccountingFile(
-  BuildContext context,
-  WidgetRef ref,
-  List<Invoice> invoices, {
-  required String label,
-}) async {
-  final l10n = AppLocalizations.of(context);
-  final workspace = ref.read(currentWorkspaceProvider).value;
-  if (workspace == null) return;
-  if (invoices.isEmpty) {
-    AppSnack.info(
-      context,
-      l10n?.invoiceAccountingExportEmpty ??
-          'Nothing to export for this period.',
-    );
-    return;
-  }
-  final matches = ref.read(invoiceMatchesProvider).value ?? const {};
-  final company = sellerOf(invoices.last, workspace);
-  // Two standards, and which one is wanted depends on who asks: an
-  // accountant's software reads SAF-T, a French audit demands the FEC.
-  final format = await showAccountingExportSheet(
-    context,
-    offerFec: workspace.countryCode.toUpperCase() == 'FR',
-  );
-  if (format == null || !context.mounted) return;
-
-  if (format == AccountingExportFormat.fec) {
-    // The file NAME is the SIREN — without it the export cannot even be
-    // called what the arrêté requires.
-    if (company.legalId.replaceAll(RegExp('[^0-9]'), '').isEmpty) {
-      AppSnack.error(
-        context,
-        l10n?.fecMissingSiren ??
-            'The FEC is named after your registration number — fill it in '
-                'under Legal identity first.',
-      );
-      return;
-    }
-    // The owner's own VAT account (0072) if they set one — the dialog is
-    // where it can still be corrected.
-    final accounts = await showFecAccountsDialog(
-      context,
-      initial: workspace.vatAccount.isEmpty
-          ? const FecAccounts()
-          : FecAccounts(vat: workspace.vatAccount),
-    );
-    if (accounts == null || !context.mounted) return;
-    await runGuarded(
-      context,
-      domain: 'money',
-      message: 'FEC export failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () async {
-        final fec = buildFecFile(
-          invoices: invoices,
-          matches: matches,
-          company: company,
-          accounts: accounts,
-          lineText: (line) => invoiceLineText(l10n, line),
-          customersLabel: l10n?.fecAccountCustomers ?? 'Clients',
-          revenueLabel: l10n?.fecAccountRevenue ?? 'Ventes',
-          bankLabel: l10n?.fecAccountBank ?? 'Banque',
-          vatLabel: l10n?.fecAccountVat ?? 'TVA collectée',
-        );
-        // The fiscal year closes on 31 December of the latest invoiced
-        // year — the only close date the app can know.
-        final year = invoices
-            .map((invoice) => invoice.issuedAt.year)
-            .reduce((a, b) => a > b ? a : b);
-        final bytes = Uint8List.fromList(utf8.encode(fec));
-        if (!context.mounted) return;
-        await savePdfToDownloads(
-          context,
-          ref,
-          bytes: bytes,
-          fileName: fecFileName(company.legalId, DateTime(year, 12, 31)),
-        );
-      },
-    );
-    return;
-  }
-
-  await runGuarded(
-    context,
-    domain: 'money',
-    message: 'accounting export failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
-    action: () async {
-      final xml = buildSafTFile(
-        invoices: invoices,
-        matches: matches,
-        company: company,
-        currency: workspace.currencyCode,
-        softwareVersion: safTSoftwareVersion,
-        createdAt: ref.read(clockProvider).now(),
-        lineText: (line) => invoiceLineText(l10n, line),
-        fallbackDescription: l10n?.invoicesTitle ?? 'Invoice',
-      );
-      final bytes = Uint8List.fromList(utf8.encode(xml));
-      if (!context.mounted) return;
-      await savePdfToDownloads(
-        context,
-        ref,
-        bytes: bytes,
-        fileName: '${safeFileSlug('saf-t ${workspace.name} $label')}.xml',
-      );
-    },
   );
 }
 

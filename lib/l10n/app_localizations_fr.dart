@@ -579,6 +579,60 @@ class AppLocalizationsFr extends AppLocalizations {
       'Votre avoir peut solder les factures ouvertes — l\'espace l\'impute lors du rapprochement des paiements.';
 
   @override
+  String get invoiceExportSafTPt => 'SAF-T (Portugal)';
+
+  @override
+  String get invoiceExportDatev => 'DATEV (Buchungsstapel)';
+
+  @override
+  String get invoiceExportSage => 'Sage 50 (journal d’audit)';
+
+  @override
+  String get invoiceExportAccountantCsv => 'CSV comptable';
+
+  @override
+  String get invoiceExportAuditTrail => 'Piste d’audit';
+
+  @override
+  String get exportClaimRegulatory =>
+      'Le format que votre administration fiscale demande.';
+
+  @override
+  String get exportClaimExchange =>
+      'Pour que votre comptable l’importe et le vérifie — ce n’est pas une déclaration.';
+
+  @override
+  String get exportClaimSubset =>
+      'Factures et paiements seulement, sans grand livre. Le fichier le dit dans son en-tête.';
+
+  @override
+  String get exportUncertifiedSoftware =>
+      'Conforme à la spécification publiée, mais DesKilo n’est pas un logiciel certifié dans ce pays — vérifiez avec votre comptable si cela vous est imposé.';
+
+  @override
+  String get datevAccountsTitle => 'Export DATEV';
+
+  @override
+  String get datevAccountsIntro =>
+      'Votre comptable vous donne les numéros de conseil et de dossier. DATEV refuse un fichier dont les numéros ne correspondent pas — c’est ce qui l’empêche d’atterrir dans les comptes d’une autre société.';
+
+  @override
+  String get datevConsultantNumber => 'Beraternummer (numéro de conseil)';
+
+  @override
+  String get datevClientNumber => 'Mandantennummer (numéro de dossier)';
+
+  @override
+  String get sageAccountsTitle => 'Export Sage';
+
+  @override
+  String get sageAccountsIntro =>
+      'Les valeurs par défaut sont les comptes livrés par Sage. Le code de TVA détermine sur quelle déclaration ces écritures arrivent : vérifiez-le avec votre comptable si vous n’êtes pas au taux normal.';
+
+  @override
+  String get sageTaxCode => 'Code TVA (T1 / T0 / T9)';
+
+  @override
   String get billPdfTitle => 'Facture mensuelle';
 
   @override

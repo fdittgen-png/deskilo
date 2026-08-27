@@ -3,150 +3,133 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/fec.dart';
+import '../../domain/accounting_format.dart';
 
-/// Which accounting file the period leaves as.
-enum AccountingExportFormat {
-  /// The OECD's XML — any country, any accountant's software.
-  safT,
-
-  /// France's own flat file, the one an audit asks for.
-  fec,
-}
-
-/// Picks the format. Two standards, and which one you need depends on who
-/// is asking: an accountant's software reads SAF-T, a French tax audit
-/// demands the FEC.
-Future<AccountingExportFormat?> showAccountingExportSheet(
+/// Picks the accounting export (#669).
+///
+/// The sheet's real job is not choosing a file type. It is making sure
+/// nobody sends an authority something the app never claimed: each row
+/// states what its file IS — the tax office's own format, something an
+/// accountant imports and reviews, or a declared subset — because the
+/// person tapping is rarely the person who will be asked to defend it.
+///
+/// Ordered by the registry: the country's regulatory file first when
+/// there is one. Someone under audit is looking for one specific thing
+/// and should not have to read past three alternatives to find it.
+Future<AccountingFormat?> showAccountingExportSheet(
   BuildContext context, {
-  required bool offerFec,
+  required List<AccountingFormat> formats,
 }) async {
+  if (formats.isEmpty) return null;
   final l10n = AppLocalizations.of(context);
-  // Nothing to choose outside France.
-  if (!offerFec) return AccountingExportFormat.safT;
-  return showModalBottomSheet<AccountingExportFormat>(
+  return showModalBottomSheet<AccountingFormat>(
     context: context,
     showDragHandle: true,
     useSafeArea: true,
+    isScrollControlled: true,
     builder: (context) => SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.xl,
-          0,
-          AppSpacing.xl,
-          AppSpacing.xl,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              l10n?.invoiceExportChoose ?? 'Export for accounting',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            FilledButton.icon(
-              key: const ValueKey('accounting-export-saft'),
-              onPressed: () =>
-                  Navigator.of(context).pop(AccountingExportFormat.safT),
-              icon: const Icon(Icons.code_outlined),
-              label: Text(
-                l10n?.invoiceExportSafT ?? 'SAF-T (XML, international)',
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.xl,
+            0,
+            AppSpacing.xl,
+            AppSpacing.xl,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                l10n?.invoiceExportChoose ?? 'Export for accounting',
+                style: Theme.of(context).textTheme.titleMedium,
               ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            OutlinedButton.icon(
-              key: const ValueKey('accounting-export-fec'),
-              onPressed: () =>
-                  Navigator.of(context).pop(AccountingExportFormat.fec),
-              icon: const Icon(Icons.table_chart_outlined),
-              label: Text(
-                l10n?.invoiceExportFec ?? 'FEC (France, required in an audit)',
-              ),
-            ),
-          ],
+              const SizedBox(height: AppSpacing.lg),
+              for (final format in formats)
+                _FormatTile(format: format, l10n: l10n),
+            ],
+          ),
         ),
       ),
     ),
   );
 }
 
-/// Asks which accounts the FEC will book to. A FEC is made of accounting
-/// entries, so unlike SAF-T it cannot avoid account numbers — the honest
-/// move is to show the ones about to be used and let them be corrected,
-/// rather than inventing them behind the owner's back.
-Future<FecAccounts?> showFecAccountsDialog(
-  BuildContext context, {
-  FecAccounts initial = const FecAccounts(),
-}) {
-  final l10n = AppLocalizations.of(context);
-  final customers = TextEditingController(text: initial.customers);
-  final revenue = TextEditingController(text: initial.revenue);
-  final bank = TextEditingController(text: initial.bank);
-  final vat = TextEditingController(text: initial.vat);
-  return showDialog<FecAccounts>(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: Text(l10n?.fecAccountsTitle ?? 'Accounts to book'),
-      content: SingleChildScrollView(
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Text(
-            l10n?.fecAccountsIntro ??
-                'A FEC is made of accounting entries, so it needs account '
-                    'numbers.',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          TextField(
-            key: const ValueKey('fec-account-customers'),
-            controller: customers,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: l10n?.fecAccountCustomers ?? 'Customers',
-            ),
-          ),
-          TextField(
-            key: const ValueKey('fec-account-revenue'),
-            controller: revenue,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: l10n?.fecAccountRevenue ?? 'Revenue',
-            ),
-          ),
-          TextField(
-            key: const ValueKey('fec-account-vat'),
-            controller: vat,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: l10n?.fecAccountVat ?? 'Collected VAT',
-            ),
-          ),
-          TextField(
-            key: const ValueKey('fec-account-bank'),
-            controller: bank,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: l10n?.fecAccountBank ?? 'Bank',
-            ),
-          ),
-        ]),
+class _FormatTile extends StatelessWidget {
+  const _FormatTile({required this.format, required this.l10n});
+
+  final AccountingFormat format;
+  final AppLocalizations? l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+      child: ListTile(
+        key: ValueKey('accounting-export-${format.id}'),
+        contentPadding: EdgeInsets.zero,
+        leading: Icon(_icon),
+        title: Text(_name),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(_claimText, style: Theme.of(context).textTheme.bodySmall),
+            // The certification note is NOT folded into the claim line.
+            // "This is Portugal's own format" and "this software is not
+            // certified in Portugal" are both true, and an owner who
+            // reads only the first has been misled by omission.
+            if (format.uncertifiedSoftware)
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(
+                  l10n?.exportUncertifiedSoftware ??
+                      'Built to the published spec, but DesKilo is not '
+                          'certified software in this country — check with '
+                          'your accountant whether that is required of you.',
+                  key: const ValueKey('accounting-export-uncertified'),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(color: scheme.error),
+                ),
+              ),
+          ],
+        ),
+        onTap: () => Navigator.of(context).pop(format),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
-        ),
-        FilledButton(
-          key: const ValueKey('fec-accounts-confirm'),
-          onPressed: () => Navigator.of(context).pop(FecAccounts(
-            customers: customers.text.trim(),
-            revenue: revenue.text.trim(),
-            bank: bank.text.trim(),
-            vat: vat.text.trim(),
-          )),
-          child: Text(l10n?.commonSave ?? 'Save'),
-        ),
-      ],
-    ),
-  );
+    );
+  }
+
+  IconData get _icon => switch (format.id) {
+        'fec' || 'datev' || 'sage50' => Icons.table_chart_outlined,
+        'saft' || 'saft_pt' => Icons.code_outlined,
+        'audit_trail' => Icons.fact_check_outlined,
+        _ => Icons.description_outlined,
+      };
+
+  String get _name => switch (format.id) {
+        'fec' => l10n?.invoiceExportFec ?? 'FEC (France)',
+        'saft' => l10n?.invoiceExportSafT ?? 'SAF-T (XML, international)',
+        'saft_pt' => l10n?.invoiceExportSafTPt ?? 'SAF-T (Portugal)',
+        'datev' => l10n?.invoiceExportDatev ?? 'DATEV (Buchungsstapel)',
+        'sage50' => l10n?.invoiceExportSage ?? 'Sage 50 (audit trail)',
+        'accountant_csv' =>
+          l10n?.invoiceExportAccountantCsv ?? 'Accounting CSV',
+        'audit_trail' => l10n?.invoiceExportAuditTrail ?? 'Audit trail',
+        _ => format.id,
+      };
+
+  /// What the file claims. Deliberately blunt: this is the sentence that
+  /// stops someone filing an accountant's working file as a tax return.
+  String get _claimText => switch (format.claim) {
+        FormatClaim.regulatory => l10n?.exportClaimRegulatory ??
+            'The format your tax authority asks for.',
+        FormatClaim.exchange => l10n?.exportClaimExchange ??
+            'For your accountant to import and review — not a filing.',
+        FormatClaim.subset => l10n?.exportClaimSubset ??
+            'Invoices and payments only; no general ledger. The file says '
+                'so in its header.',
+      };
 }

@@ -95,5 +95,69 @@
   "accountImputationHint": "Il tuo credito può saldare le fatture aperte: lo spazio lo imputa durante la riconciliazione dei pagamenti.",
   "@accountImputationHint": {
     "description": "Account card hint shown when credit and open invoices coexist (#512)"
+  },
+  "invoiceExportSafTPt": "SAF-T (Portogallo)",
+  "@invoiceExportSafTPt": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportDatev": "DATEV (Buchungsstapel)",
+  "@invoiceExportDatev": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportSage": "Sage 50 (giornale di audit)",
+  "@invoiceExportSage": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportAccountantCsv": "CSV contabile",
+  "@invoiceExportAccountantCsv": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportAuditTrail": "Pista di controllo",
+  "@invoiceExportAuditTrail": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportClaimRegulatory": "Il formato richiesto dalla tua amministrazione fiscale.",
+  "@exportClaimRegulatory": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportClaimExchange": "Perché il tuo commercialista lo importi e lo verifichi — non è una dichiarazione.",
+  "@exportClaimExchange": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportClaimSubset": "Solo fatture e pagamenti, senza libro mastro. Il file lo dichiara nella propria intestazione.",
+  "@exportClaimSubset": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportUncertifiedSoftware": "Prodotto secondo la specifica pubblicata, ma DesKilo non è software certificato in questo paese — verifica con il tuo commercialista se ti è richiesto.",
+  "@exportUncertifiedSoftware": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevAccountsTitle": "Esportazione DATEV",
+  "@datevAccountsTitle": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevAccountsIntro": "I numeri di consulente e di cliente te li dà il commercialista. DATEV rifiuta un file con numeri non corrispondenti — ed è proprio questo che lo tiene fuori dai libri dell’azienda sbagliata.",
+  "@datevAccountsIntro": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevConsultantNumber": "Beraternummer (n. consulente)",
+  "@datevConsultantNumber": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevClientNumber": "Mandantennummer (n. cliente)",
+  "@datevClientNumber": {
+    "description": "#669 - accounting export formats"
+  },
+  "sageAccountsTitle": "Esportazione Sage",
+  "@sageAccountsTitle": {
+    "description": "#669 - accounting export formats"
+  },
+  "sageAccountsIntro": "I valori predefiniti sono i conti che Sage fornisce di serie. Il codice IVA decide su quale dichiarazione finiscono queste scritture: verificalo con il commercialista se non sei all’aliquota ordinaria.",
+  "@sageAccountsIntro": {
+    "description": "#669 - accounting export formats"
+  },
+  "sageTaxCode": "Codice IVA (T1 / T0 / T9)",
+  "@sageTaxCode": {
+    "description": "#669 - accounting export formats"
   }
 }

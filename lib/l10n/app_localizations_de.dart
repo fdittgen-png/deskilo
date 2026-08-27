@@ -579,6 +579,59 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dein Guthaben kann offene Rechnungen begleichen — der Space rechnet es beim Zuordnen der Zahlungen an.';
 
   @override
+  String get invoiceExportSafTPt => 'SAF-T (Portugal)';
+
+  @override
+  String get invoiceExportDatev => 'DATEV (Buchungsstapel)';
+
+  @override
+  String get invoiceExportSage => 'Sage 50 (Audit-Journal)';
+
+  @override
+  String get invoiceExportAccountantCsv => 'Buchhaltungs-CSV';
+
+  @override
+  String get invoiceExportAuditTrail => 'Prüfpfad';
+
+  @override
+  String get exportClaimRegulatory => 'Das Format, das Ihr Finanzamt verlangt.';
+
+  @override
+  String get exportClaimExchange =>
+      'Für Ihre Steuerberatung zum Importieren und Prüfen — keine Meldung an eine Behörde.';
+
+  @override
+  String get exportClaimSubset =>
+      'Nur Rechnungen und Zahlungen, kein Hauptbuch. Die Datei sagt das in ihrem Kopf.';
+
+  @override
+  String get exportUncertifiedSoftware =>
+      'Nach der veröffentlichten Spezifikation erstellt, aber DesKilo ist in diesem Land keine zertifizierte Software — klären Sie mit Ihrer Steuerberatung, ob das für Sie Pflicht ist.';
+
+  @override
+  String get datevAccountsTitle => 'DATEV-Export';
+
+  @override
+  String get datevAccountsIntro =>
+      'Berater- und Mandantennummer bekommen Sie von Ihrer Steuerberatung. DATEV lehnt eine Datei mit abweichenden Nummern ab — genau das hält sie aus den Büchern der falschen Firma heraus.';
+
+  @override
+  String get datevConsultantNumber => 'Beraternummer';
+
+  @override
+  String get datevClientNumber => 'Mandantennummer';
+
+  @override
+  String get sageAccountsTitle => 'Sage-Export';
+
+  @override
+  String get sageAccountsIntro =>
+      'Die Vorgaben sind Sages eigene Sachkonten. Der Steuerschlüssel entscheidet, auf welcher Umsatzsteuervoranmeldung die Buchungen landen — prüfen Sie ihn, wenn Sie nicht dem Regelsatz unterliegen.';
+
+  @override
+  String get sageTaxCode => 'Steuerschlüssel (T1 / T0 / T9)';
+
+  @override
   String get billPdfTitle => 'Monatsrechnung';
 
   @override

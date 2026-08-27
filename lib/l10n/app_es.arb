@@ -359,6 +359,70 @@
   "@accountImputationHint": {
     "description": "Account card hint shown when credit and open invoices coexist (#512)"
   },
+  "invoiceExportSafTPt": "SAF-T (Portugal)",
+  "@invoiceExportSafTPt": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportDatev": "DATEV (Buchungsstapel)",
+  "@invoiceExportDatev": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportSage": "Sage 50 (registro de auditoría)",
+  "@invoiceExportSage": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportAccountantCsv": "CSV contable",
+  "@invoiceExportAccountantCsv": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportAuditTrail": "Pista de auditoría",
+  "@invoiceExportAuditTrail": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportClaimRegulatory": "El formato que pide su administración tributaria.",
+  "@exportClaimRegulatory": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportClaimExchange": "Para que su asesor lo importe y lo revise — no es una declaración.",
+  "@exportClaimExchange": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportClaimSubset": "Solo facturas y cobros, sin libro mayor. El archivo lo indica en su cabecera.",
+  "@exportClaimSubset": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportUncertifiedSoftware": "Generado según la especificación publicada, pero DesKilo no es software certificado en este país — consulte con su asesor si se le exige.",
+  "@exportUncertifiedSoftware": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevAccountsTitle": "Exportación DATEV",
+  "@datevAccountsTitle": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevAccountsIntro": "Su asesor le da los números de asesor y de cliente. DATEV rechaza un archivo cuyos números no coincidan — que es lo que evita que acabe en los libros de otra empresa.",
+  "@datevAccountsIntro": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevConsultantNumber": "Beraternummer (n.º de asesor)",
+  "@datevConsultantNumber": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevClientNumber": "Mandantennummer (n.º de cliente)",
+  "@datevClientNumber": {
+    "description": "#669 - accounting export formats"
+  },
+  "sageAccountsTitle": "Exportación Sage",
+  "@sageAccountsTitle": {
+    "description": "#669 - accounting export formats"
+  },
+  "sageAccountsIntro": "Los valores por defecto son las cuentas que Sage trae de serie. El código de IVA decide en qué declaración caen estos asientos: contrástelo con su asesor si no está en el tipo general.",
+  "@sageAccountsIntro": {
+    "description": "#669 - accounting export formats"
+  },
+  "sageTaxCode": "Código de IVA (T1 / T0 / T9)",
+  "@sageTaxCode": {
+    "description": "#669 - accounting export formats"
+  },
   "billPdfTitle": "Factura mensual",
   "billPdfExport": "Exportar la factura como PDF",
   "reportCoaTitle": "Plan de cuentas — vista previa",
