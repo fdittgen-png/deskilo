@@ -2303,6 +2303,18 @@
   "spaceCardInfoLabel": "Información en la tarjeta",
   "spaceCardInfoWorkspace": "Espacio de trabajo",
   "spaceMessageReserver": "Escribir a {name}",
+  "spaceYoursCheckedIn": "Ha registrado su entrada aquí para esta franja.",
+  "@spaceYoursCheckedIn": {
+    "description": "#670 - whole-space sheet"
+  },
+  "spaceBlockedByYou": "Ya tiene este espacio para ese periodo.",
+  "@spaceBlockedByYou": {
+    "description": "#670 - whole-space sheet"
+  },
+  "spaceManageMyBooking": "Gestionar mi reserva",
+  "@spaceManageMyBooking": {
+    "description": "#670 - whole-space sheet"
+  },
   "themeTitle": "Tema",
   "themeSystem": "Predeterminado del sistema",
   "themeLight": "Claro",

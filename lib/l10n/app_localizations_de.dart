@@ -4431,6 +4431,17 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get spaceYoursCheckedIn =>
+      'Sie sind hier für diesen Zeitraum eingecheckt.';
+
+  @override
+  String get spaceBlockedByYou =>
+      'Sie halten diesen Bereich für diesen Zeitraum bereits.';
+
+  @override
+  String get spaceManageMyBooking => 'Meine Buchung verwalten';
+
+  @override
   String get themeTitle => 'Design';
 
   @override

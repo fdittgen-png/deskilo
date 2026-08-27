@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
-import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
@@ -26,7 +25,8 @@ import '../../domain/reservation.dart';
 import '../../domain/reservation_repository.dart';
 import '../../domain/booking_error_text.dart';
 import 'booking_sheet.dart';
-import 'message_reserver.dart';
+import 'space_scan_sheet.dart';
+import 'space_conflict_actions.dart';
 import 'series_result_dialog.dart';
 import 'space_act_sheet.dart';
 import '../../domain/space_code.dart';
@@ -151,163 +151,9 @@ Future<void> showSpaceSheet(
 /// The scanner: camera (injectable seam) plus a typed field — wedge
 /// scanners and tests type the payload. Foreign QR contents show an
 /// inline error and keep the sheet open.
-class SpaceScanSheet extends StatefulWidget {
-  const SpaceScanSheet({
-    super.key,
-    required this.workspaceId,
-    required this.scanBuilder,
-    required this.l10n,
-    this.nfc,
-    this.seatIdForUid,
-  });
-
-  final String workspaceId;
-  final QrScanWidgetBuilder? scanBuilder;
-  final AppLocalizations? l10n;
-
-  /// #585 — when the device can read NFC, a chair-tag tap resolves to
-  /// its seat exactly like scanning the seat's QR card. Null hides the
-  /// tap path (non-Android, NFC off).
-  final NfcUidReader? nfc;
-  final Future<String?> Function(String uid)? seatIdForUid;
-
-  @override
-  State<SpaceScanSheet> createState() => _SpaceScanSheetState();
-}
-
-class _SpaceScanSheetState extends State<SpaceScanSheet> {
-  final _controller = TextEditingController();
-  bool _invalid = false;
-  bool _unknownTag = false;
-  bool _done = false;
-
-  @override
-  void initState() {
-    super.initState();
-    final nfc = widget.nfc;
-    if (nfc != null) {
-      nfc.startRead(onUid: _onTag);
-    }
-  }
-
-  Future<void> _onTag(String uid) async {
-    if (_done || !mounted) return;
-    final seatId = await widget.seatIdForUid?.call(uid);
-    if (_done || !mounted) return;
-    if (seatId == null) {
-      setState(() {
-        _unknownTag = true;
-        _invalid = false;
-      });
-      return;
-    }
-    _done = true;
-    Navigator.of(context).pop((
-      workspaceId: widget.workspaceId,
-      kind: SpaceKind.seat,
-      id: seatId,
-    ));
-  }
-
-  void _submit(String raw) {
-    if (_done || !mounted || raw.trim().isEmpty) return;
-    final code = SpaceCodeCodec.decode(raw);
-    if (code == null || code.workspaceId != widget.workspaceId) {
-      setState(() {
-        _invalid = true;
-        _unknownTag = false;
-      });
-      return;
-    }
-    _done = true;
-    Navigator.of(context).pop(code);
-  }
-
-  @override
-  void dispose() {
-    widget.nfc?.stop();
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = widget.l10n;
-    return SheetShell(
-      title: l10n?.spaceScanTitle ?? 'Scan a space code',
-      children: [
-        const SizedBox(height: 8),
-        Text(
-          l10n?.spaceScanHint ??
-              'Point the camera at a desk, office or level card — or '
-                  'type its code.',
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
-        if (widget.nfc != null) ...[
-          const SizedBox(height: 4),
-          Row(
-            key: const ValueKey('space-scan-nfc-hint'),
-            children: [
-              const Icon(Icons.nfc, size: 16),
-              const SizedBox(width: 6),
-              Expanded(
-                child: Text(
-                  l10n?.spaceScanNfcHint ??
-                      "…or hold the phone to a chair's NFC tag.",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ),
-            ],
-          ),
-        ],
-        if (_unknownTag)
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Text(
-              l10n?.spaceScanUnknownTag ??
-                  'This tag is not linked to any chair.',
-              key: const ValueKey('space-scan-unknown-tag'),
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.error,
-              ),
-            ),
-          ),
-        if (widget.scanBuilder != null) ...[
-          const SizedBox(height: 12),
-          // Shared camera box with the lens FLIP button (field request).
-          ScanCameraBox(
-            cameraKey: const ValueKey('space-scan-camera'),
-            onCode: _submit,
-          ),
-        ],
-        const SizedBox(height: 12),
-        TextField(
-          key: const ValueKey('space-scan-field'),
-          controller: _controller,
-          autofocus: widget.scanBuilder == null,
-          decoration: InputDecoration(
-            labelText: l10n?.spaceScanField ?? 'Code',
-            errorText: _invalid
-                ? (l10n?.spaceScanInvalid ??
-                    'Not a space code of this workspace.')
-                : null,
-          ),
-          onSubmitted: _submit,
-        ),
-        const SizedBox(height: 16),
-        FilledButton(
-          key: const ValueKey('space-scan-submit'),
-          onPressed: () => _submit(_controller.text),
-          child: Text(l10n?.kioskBadgeConfirm ?? 'Confirm'),
-        ),
-      ],
-    );
-  }
-}
-
-/// The scanned space's actions, filtered to what THIS member may do —
-/// walk-up semantics: today's window (canonical day under day-based
-/// granularity, now→+4h otherwise), reserve or check in on the spot.
+// The scan sheet itself lives next door: reading a CODE and acting on a
+// SPACE are different jobs, and this file only ever held both because
+// one opens the other.
 class SpaceSheet extends ConsumerStatefulWidget {
   const SpaceSheet({
     super.key,
@@ -472,21 +318,30 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
   /// request: an already-reserved table/room must check in, not sit
   /// behind a disabled "conflict" button — my own reservation IS the
   /// conflict).
-  Future<void> _checkInExisting(Reservation reservation) async {
+  /// Checking IN to a booking of mine, and checking OUT of it, are the
+  /// same routine with a different verb — busy-guard, call, report what
+  /// the server said, close, refresh. They were written twice; one of
+  /// the two would eventually stop reporting refusals the way the other
+  /// does, which on this sheet reads as "nothing happened".
+  Future<void> _actOnExisting(
+    Reservation reservation, {
+    required Future<void> Function(String id) act,
+    required String what,
+  }) async {
     final l10n = AppLocalizations.of(context);
     if (_busy) return;
     setState(() => _busy = true);
     try {
-      await ref
-          .read(reservationRepositoryProvider)
-          .checkIn(reservation.id);
+      await act(reservation.id);
     } catch (e, st) {
-      TraceLogger.instance.error('reservations', 'space check-in failed',
-          error: e, stackTrace: st);
+      TraceLogger.instance
+          .error('reservations', 'space $what failed', error: e, stackTrace: st);
       if (!mounted) return;
       setState(() => _busy = false);
       AppSnack.error(
         context,
+        // Every rule about whether this is legal lives on the server
+        // (0116); a refusal must say WHY rather than merely fail.
         bookingErrorText(
           l10n,
           e,
@@ -504,8 +359,23 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
       l10n?.kioskDone ?? "Done — you're all set.",
       replace: true,
     );
+    // The plan behind this sheet is now stale.
     invalidateBookingData(ref);
   }
+
+  Future<void> _checkInExisting(Reservation reservation) => _actOnExisting(
+        reservation,
+        act: (id) => ref.read(reservationRepositoryProvider).checkIn(id),
+        what: 'check-in',
+      );
+
+  /// Ending a live whole-space check-in from the same sheet that started
+  /// it — the affordance whose absence made this sheet a dead end.
+  Future<void> _checkOutExisting(Reservation reservation) => _actOnExisting(
+        reservation,
+        act: (id) => ref.read(reservationRepositoryProvider).checkOut(id),
+        what: 'check-out',
+      );
 
   /// The subjects the reserve picker offers (#638): myself when I hold
   /// the whole-space grant, plus every candidate the caller passed. An
@@ -763,14 +633,19 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
     };
     final wholeConflict = wholeBlocking != null;
 
-    // My own live reservation of exactly this space in the window: the
-    // sheet then offers CHECK IN to it instead of a disabled conflict.
+    // My own live booking of exactly this space in the window. Both
+    // states, and that is the fix for a field report: with `reserved`
+    // alone, a level you had CHECKED INTO fell through to the conflict
+    // branch below and the sheet became a dead end — it stated that the
+    // space was taken, by you, and offered nothing. There was no check
+    // out anywhere on it.
     final myWholeReservation = me == null
         ? null
         : reservations
             .where((r) =>
                 r.memberId == me.id &&
-                r.status == ReservationStatus.reserved &&
+                (r.status == ReservationStatus.reserved ||
+                    r.status == ReservationStatus.checkedIn) &&
                 r.coversRange(window.start, window.end) &&
                 switch (widget.kind) {
                   SpaceKind.desk => r.deskId == desk?.id,
@@ -808,18 +683,43 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
           const SizedBox(height: 12),
           if (myWholeReservation != null) ...[
             Text(
-              l10n?.spaceYoursNow ?? 'Reserved by you for this slot.',
+              myWholeReservation.status == ReservationStatus.checkedIn
+                  ? (l10n?.spaceYoursCheckedIn ??
+                      'You are checked in here for this slot.')
+                  : (l10n?.spaceYoursNow ?? 'Reserved by you for this slot.'),
               key: const ValueKey('space-yours'),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 8),
-            FilledButton.icon(
-              key: const ValueKey('space-checkin-mine'),
-              onPressed: _busy
-                  ? null
-                  : () => _checkInExisting(myWholeReservation),
-              icon: const Icon(Icons.login_outlined),
-              label: Text(l10n?.kioskCheckIn ?? 'Check in'),
+            // The one action that moves this booking forward, whichever
+            // state it is in. Offering "check in" to a booking already
+            // checked in is what made the sheet unusable.
+            if (myWholeReservation.status == ReservationStatus.checkedIn)
+              FilledButton.icon(
+                key: const ValueKey('space-checkout-mine'),
+                onPressed:
+                    _busy ? null : () => _checkOutExisting(myWholeReservation),
+                icon: const Icon(Icons.logout_outlined),
+                label: Text(l10n?.kioskCheckOut ?? 'Check out'),
+              )
+            else
+              FilledButton.icon(
+                key: const ValueKey('space-checkin-mine'),
+                onPressed: _busy
+                    ? null
+                    : () => _checkInExisting(myWholeReservation),
+                icon: const Icon(Icons.login_outlined),
+                label: Text(l10n?.kioskCheckIn ?? 'Check in'),
+              ),
+            // ...and the way to undo it. Cancel, end early and request
+            // deletion each have their own rules and their own gates;
+            // routing to the detail sheet is what keeps this sheet from
+            // owning a second, drifting copy of them.
+            SpaceConflictActions(
+              blocking: myWholeReservation,
+              myMemberId: me?.id,
+              spaceName: title,
+              busy: _busy,
             ),
           ] else if (wholeAllowed) ...[
             // Checking in seats ME here and now — that needs the
@@ -867,24 +767,20 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
             if (wholeConflict) ...[
               const SizedBox(height: 8),
               Text(
-                l10n?.levelConflict ??
-                    'The level has reservations in that period.',
+                wholeBlocking.memberId == me?.id
+                    ? (l10n?.spaceBlockedByYou ??
+                        'You already hold this space for that period.')
+                    : (l10n?.levelConflict ??
+                        'The level has reservations in that period.'),
                 key: const ValueKey('space-conflict'),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
-              // #622 — the block names a holder? Offer the message
-              // thread (messaging's own flag gates the affordance).
-              if (canMessageReserver(ref, wholeBlocking)) ...[
-                const SizedBox(height: 8),
-                MessageReserverButton(
-                  widgetKey: const ValueKey('space-conflict-message'),
-                  blocking: wholeBlocking,
-                  name: (ref.watch(memberNamesProvider).value ??
-                          const {})[wholeBlocking.memberId] ??
-                      '',
-                  spaceName: title,
-                ),
-              ],
+              SpaceConflictActions(
+                blocking: wholeBlocking,
+                myMemberId: me?.id,
+                spaceName: title,
+                busy: _busy,
+              ),
             ],
           ] else ...[
             // Permission transparency (field request: "show the

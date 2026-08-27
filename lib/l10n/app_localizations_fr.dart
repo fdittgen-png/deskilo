@@ -4436,6 +4436,16 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get spaceYoursCheckedIn => 'Vous êtes arrivé ici pour ce créneau.';
+
+  @override
+  String get spaceBlockedByYou =>
+      'Vous détenez déjà cet espace pour cette période.';
+
+  @override
+  String get spaceManageMyBooking => 'Gérer ma réservation';
+
+  @override
   String get themeTitle => 'Thème';
 
   @override

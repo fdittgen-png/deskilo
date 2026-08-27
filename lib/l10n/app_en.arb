@@ -5194,6 +5194,18 @@
       }
     }
   },
+  "spaceYoursCheckedIn": "You are checked in here for this slot.",
+  "@spaceYoursCheckedIn": {
+    "description": "#670 - whole-space sheet"
+  },
+  "spaceBlockedByYou": "You already hold this space for that period.",
+  "@spaceBlockedByYou": {
+    "description": "#670 - whole-space sheet"
+  },
+  "spaceManageMyBooking": "Manage my booking",
+  "@spaceManageMyBooking": {
+    "description": "#670 - whole-space sheet"
+  },
   "themeTitle": "Theme",
   "@themeTitle": {
     "description": "Settings entry and dialog title for the in-app theme selection"

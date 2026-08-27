@@ -2303,6 +2303,18 @@
   "spaceCardInfoLabel": "Informationen auf der Karte",
   "spaceCardInfoWorkspace": "Workspace",
   "spaceMessageReserver": "Nachricht an {name}",
+  "spaceYoursCheckedIn": "Sie sind hier für diesen Zeitraum eingecheckt.",
+  "@spaceYoursCheckedIn": {
+    "description": "#670 - whole-space sheet"
+  },
+  "spaceBlockedByYou": "Sie halten diesen Bereich für diesen Zeitraum bereits.",
+  "@spaceBlockedByYou": {
+    "description": "#670 - whole-space sheet"
+  },
+  "spaceManageMyBooking": "Meine Buchung verwalten",
+  "@spaceManageMyBooking": {
+    "description": "#670 - whole-space sheet"
+  },
   "themeTitle": "Design",
   "themeSystem": "Systemstandard",
   "themeLight": "Hell",

@@ -7844,6 +7844,24 @@ abstract class AppLocalizations {
   /// **'Message {name}'**
   String spaceMessageReserver(String name);
 
+  /// #670 - whole-space sheet
+  ///
+  /// In en, this message translates to:
+  /// **'You are checked in here for this slot.'**
+  String get spaceYoursCheckedIn;
+
+  /// #670 - whole-space sheet
+  ///
+  /// In en, this message translates to:
+  /// **'You already hold this space for that period.'**
+  String get spaceBlockedByYou;
+
+  /// #670 - whole-space sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Manage my booking'**
+  String get spaceManageMyBooking;
+
   /// Settings entry and dialog title for the in-app theme selection
   ///
   /// In en, this message translates to:
