@@ -8,6 +8,7 @@ import 'package:deskilo/features/auth/domain/badge_sign_in.dart';
 import 'package:deskilo/features/auth/domain/social_provider.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/core/time/work_hours.dart';
+import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
@@ -980,6 +981,164 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   /// Sent member notes (#456), newest last; myNotes returns them
   /// newest-first like the real query.
   final List<MemberNote> memberNotes = [];
+
+  // ── conversations (#687) ────────────────────────────────────────────
+
+  /// Threads the fake knows about, in no particular order — the fake
+  /// SORTS on read, exactly as `my_conversations` does, so a test that
+  /// depends on ordering exercises the ordering rather than the seed
+  /// order.
+  final List<Conversation> conversations = [];
+
+  /// Messages per conversation id, oldest first.
+  final Map<String, List<MemberNote>> conversationMessages = {};
+  final Map<String, List<ConversationParticipant>> participants = {};
+
+  final List<({String conversationId, String body})> sentMessages = [];
+  final List<String> readConversations = [];
+  final List<({String conversationId, String memberId})> addedParticipants = [];
+  final List<({String conversationId, String memberId})> removedParticipants =
+      [];
+  final List<String> leftConversations = [];
+  final List<({String id, String? title, String? avatarPath})> metaWrites = [];
+
+  /// The id [createGroupConversation] hands back; tests that navigate on
+  /// it need to know it in advance.
+  String nextGroupId = 'conv-group';
+
+  @override
+  Future<List<Conversation>> fetchConversations(String workspaceId) async =>
+      [...conversations]..sort((a, b) => b.lastAt.compareTo(a.lastAt));
+
+  @override
+  Future<String> openDirectConversation(
+    String workspaceId, {
+    required String otherMemberId,
+  }) async {
+    // Idempotent like the RPC: the same pair must not yield two threads.
+    final existing = conversations
+        .where((c) => !c.isGroup && c.otherMemberId == otherMemberId)
+        .firstOrNull;
+    if (existing != null) return existing.id;
+    final created = Conversation(
+      id: 'conv-direct-$otherMemberId',
+      kind: ConversationKind.direct,
+      otherMemberId: otherMemberId,
+      lastAt: DateTime.utc(2026, 8, 27),
+    );
+    conversations.add(created);
+    return created.id;
+  }
+
+  @override
+  Future<String> createGroupConversation(
+    String workspaceId, {
+    required String title,
+    required List<String> memberIds,
+  }) async {
+    conversations.add(Conversation(
+      id: nextGroupId,
+      kind: ConversationKind.group,
+      title: title,
+      lastAt: DateTime.utc(2026, 8, 27),
+      participantCount: memberIds.length + 1,
+    ));
+    participants[nextGroupId] = [
+      const ConversationParticipant(memberId: 'member-1', isAdmin: true),
+      for (final id in memberIds)
+        ConversationParticipant(memberId: id, isAdmin: false),
+    ];
+    return nextGroupId;
+  }
+
+  @override
+  Future<List<ConversationParticipant>> fetchParticipants(
+    String conversationId,
+  ) async =>
+      participants[conversationId] ?? const [];
+
+  @override
+  Future<void> addParticipant(String conversationId, String memberId) async {
+    addedParticipants.add((conversationId: conversationId, memberId: memberId));
+    participants.putIfAbsent(conversationId, () => []).add(
+          ConversationParticipant(memberId: memberId, isAdmin: false),
+        );
+  }
+
+  @override
+  Future<void> removeParticipant(
+    String conversationId,
+    String memberId,
+  ) async {
+    removedParticipants
+        .add((conversationId: conversationId, memberId: memberId));
+    participants[conversationId] = [
+      for (final p in participants[conversationId] ?? const [])
+        if (p.memberId == memberId)
+          ConversationParticipant(
+            memberId: p.memberId,
+            isAdmin: p.isAdmin,
+            leftAt: DateTime.utc(2026, 8, 27),
+          )
+        else
+          p,
+    ];
+  }
+
+  @override
+  Future<void> leaveConversation(String conversationId) async =>
+      leftConversations.add(conversationId);
+
+  @override
+  Future<void> setConversationMeta(
+    String conversationId, {
+    String? title,
+    String? avatarPath,
+  }) async =>
+      metaWrites
+          .add((id: conversationId, title: title, avatarPath: avatarPath));
+
+  @override
+  Future<void> sendConversationMessage(
+    String conversationId,
+    String body,
+  ) async {
+    sentMessages.add((conversationId: conversationId, body: body));
+    conversationMessages.putIfAbsent(conversationId, () => []).add(MemberNote(
+          id: 'msg-${sentMessages.length}',
+          workspaceId: 'workspace-1',
+          fromMemberId: 'member-1',
+          toMemberId: null,
+          body: body,
+          createdAt: DateTime.utc(2026, 8, 27, 12, sentMessages.length),
+        ));
+  }
+
+  @override
+  Future<List<MemberNote>> fetchConversationMessages(
+    String conversationId,
+  ) async =>
+      conversationMessages[conversationId] ?? const [];
+
+  @override
+  Future<void> markConversationRead(String conversationId) async =>
+      readConversations.add(conversationId);
+
+  @override
+  Future<List<MemberNote>> searchMessages(
+    String workspaceId,
+    String query,
+  ) async {
+    // Blank is nothing, not everything — the same call the real one
+    // makes, and the one a test for "empty box shows nothing" needs.
+    final trimmed = query.trim().toLowerCase();
+    if (trimmed.isEmpty) return const [];
+    return [
+      for (final list in conversationMessages.values)
+        for (final note in list)
+          if (note.body.toLowerCase().contains(trimmed)) note,
+    ]..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+  }
 
   @override
   Future<void> sendMemberNote(
