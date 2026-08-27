@@ -7,17 +7,22 @@ import '../domain/booking_policies.dart';
 import '../domain/closure_day.dart';
 import '../domain/member.dart';
 import '../domain/member_badge.dart';
-import '../domain/member_note.dart';
 import '../domain/overage_policy.dart';
 import '../domain/payment_instructions.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_repository.dart';
+import 'conversation_api.dart';
 import '../domain/workspace_document.dart';
 
-class SupabaseWorkspaceRepository implements WorkspaceRepository {
+class SupabaseWorkspaceRepository
+    with ConversationApi
+    implements WorkspaceRepository {
   SupabaseWorkspaceRepository(this._client);
 
   final SupabaseClient _client;
+
+  @override
+  SupabaseClient get conversationClient => _client;
 
   @override
   Future<List<Workspace>> fetchMyWorkspaces() async {
@@ -728,19 +733,6 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   @override
-  Future<void> sendMemberNote(
-    String workspaceId, {
-    required String? toMemberId,
-    required String body,
-  }) async {
-    await _client.rpc<void>('send_member_note', params: {
-      'p_workspace_id': workspaceId,
-      'p_to_member_id': toMemberId,
-      'p_body': body,
-    });
-  }
-
-  @override
   Future<String?> fetchDefaultWorkspaceId() async {
     final userId = _client.auth.currentUser?.id;
     if (userId == null) return null;
@@ -759,20 +751,6 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
     await _client
         .from('profiles')
         .update({'default_workspace_id': workspaceId}).eq('id', userId);
-  }
-
-  @override
-  Future<void> deleteMemberNote(String noteId) async {
-    await _client.from('member_notes').delete().eq('id', noteId);
-  }
-
-  @override
-  Future<void> markMyNotesRead(String workspaceId,
-      {String? fromMemberId}) async {
-    await _client.rpc<void>('mark_member_notes_read', params: {
-      'p_workspace_id': workspaceId,
-      'p_from_member_id': ?fromMemberId,
-    });
   }
 
   @override
@@ -802,17 +780,6 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
       'p_workspace_id': workspaceId,
       'p_config': {'token': token, 'phone_id': phoneId},
     });
-  }
-
-  @override
-  Future<List<MemberNote>> fetchMyNotes(String workspaceId) async {
-    final rows = await _client
-        .from('member_notes')
-        .select()
-        .eq('workspace_id', workspaceId)
-        .order('created_at', ascending: false)
-        .limit(30);
-    return rows.map(MemberNote.fromRow).toList();
   }
 
   @override
