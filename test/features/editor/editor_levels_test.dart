@@ -207,10 +207,13 @@ void main() {
       await seedThreeLevels(tester);
       final list = tester.widget<ReorderableListView>(
           find.byType(ReorderableListView));
-      // ReorderableListView asserts exactly one of the two is non-null, so
-      // this also guards against a future revert reintroducing the info that
-      // fails CI's analyze.
-      expect(list.onReorder, isNull);
+      // ReorderableListView asserts exactly one of the two is non-null:
+      //   (onReorderItem != null && onReorder == null) ||
+      //   (onReorderItem == null && onReorder != null)
+      // so a non-null onReorderItem PROVES onReorder is null. Asserting the
+      // positive half deliberately: naming `onReorder` here would itself
+      // raise the deprecated_member_use info that fails CI's analyze — the
+      // very failure this test exists to prevent.
       expect(list.onReorderItem, isNotNull);
     });
   });
