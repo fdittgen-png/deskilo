@@ -4127,6 +4127,43 @@
   "@notesFilterEmpty": {
     "description": "Empty state of the unread filter (#539)"
   },
+  "conversationGroup": "Group",
+  "@conversationGroup": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationUnknownMember": "Member",
+  "@conversationUnknownMember": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationYesterday": "Yesterday",
+  "@conversationYesterday": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationYou": "You",
+  "@conversationYou": {
+    "description": "#687 - messaging centre"
+  },
+  "messagesTitle": "Messages",
+  "@messagesTitle": {
+    "description": "#687 - messaging centre"
+  },
+  "messagesEmpty": "No conversations yet.",
+  "@messagesEmpty": {
+    "description": "#687 - messaging centre"
+  },
+  "messagesEmptyHint": "Open a member’s profile to write to them, or start a group.",
+  "@messagesEmptyHint": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationMemberCount": "{count, plural, =1{1 member} other{{count} members}}",
+  "@conversationMemberCount": {
+    "description": "#687 - messaging centre",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "moneyBaseFee": "Base subscription",
   "@moneyBaseFee": {
     "description": "Statement line for the plan's monthly fee"

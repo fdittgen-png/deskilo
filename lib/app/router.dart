@@ -31,6 +31,7 @@ import '../features/plan/presentation/screens/plan_screen.dart';
 import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
+import '../features/workspace/presentation/screens/messages_screen.dart';
 import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
 import '../features/reservations/presentation/screens/reserve_screen.dart';
@@ -286,6 +287,15 @@ GoRouter router(Ref ref) {
         redirect: (context, state) =>
             featureEnabled(WorkspaceFeature.eventsTab) ? null : '/plan',
         builder: (context, state) => const EventsScreen(),
+      ),
+      // #687 — the messaging centre. Its own route BEFORE it becomes a
+      // bottom-bar destination: the tab swap removes Plan from the bar,
+      // which is a one-line change to make and a release to undo, so it
+      // waits for the owner. Everything else about messaging can be
+      // built and used against this route in the meantime.
+      GoRoute(
+        path: '/messages',
+        builder: (context, state) => const MessagesScreen(),
       ),
       // Deep links from WhatsApp-mirrored messages (0106): the message
       // itself, a referenced reservation, a referenced space. All ride

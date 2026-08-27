@@ -6452,6 +6452,54 @@ abstract class AppLocalizations {
   /// **'No unread messages — all caught up.'**
   String get notesFilterEmpty;
 
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get conversationGroup;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get conversationUnknownMember;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get conversationYesterday;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get conversationYou;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get messagesTitle;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'No conversations yet.'**
+  String get messagesEmpty;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Open a member’s profile to write to them, or start a group.'**
+  String get messagesEmptyHint;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 member} other{{count} members}}'**
+  String conversationMemberCount(int count);
+
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:

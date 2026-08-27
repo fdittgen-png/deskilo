@@ -3635,6 +3635,39 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notesFilterEmpty => 'No hay mensajes sin leer — todo al día.';
 
   @override
+  String get conversationGroup => 'Grupo';
+
+  @override
+  String get conversationUnknownMember => 'Miembro';
+
+  @override
+  String get conversationYesterday => 'Ayer';
+
+  @override
+  String get conversationYou => 'Usted';
+
+  @override
+  String get messagesTitle => 'Mensajes';
+
+  @override
+  String get messagesEmpty => 'Aún no hay conversaciones.';
+
+  @override
+  String get messagesEmptyHint =>
+      'Abra el perfil de un miembro para escribirle, o cree un grupo.';
+
+  @override
+  String conversationMemberCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count miembros',
+      one: '1 miembro',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get moneyBaseFee => 'Suscripción base';
 
   @override

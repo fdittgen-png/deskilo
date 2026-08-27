@@ -29,8 +29,10 @@ import 'package:flutter_test/flutter_test.dart';
 // 37→38 (2026-08-06): #513 /roles (feature-gated redirect).
 // 38→41 (2026-08-10): 0106 WhatsApp message mirror deep links —
 // /msg/:id (feature-gated), /res/:id, /space/:kind/:id.
+// 42→43 (2026-08-27): #687 /messages — the messaging centre, on its
+//   own route before it becomes a bottom-bar destination.
 // 41→42 (2026-08-11): #534 /vat-declarations (owner+feature-gated).
-const int _expectedRouteCount = 42;
+const int _expectedRouteCount = 43;
 
 void main() {
   test('router carries exactly $_expectedRouteCount GoRoutes', () {

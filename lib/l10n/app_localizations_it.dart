@@ -3640,6 +3640,39 @@ class AppLocalizationsIt extends AppLocalizations {
   String get notesFilterEmpty => 'Nessun messaggio non letto — tutto in pari.';
 
   @override
+  String get conversationGroup => 'Gruppo';
+
+  @override
+  String get conversationUnknownMember => 'Membro';
+
+  @override
+  String get conversationYesterday => 'Ieri';
+
+  @override
+  String get conversationYou => 'Tu';
+
+  @override
+  String get messagesTitle => 'Messaggi';
+
+  @override
+  String get messagesEmpty => 'Ancora nessuna conversazione.';
+
+  @override
+  String get messagesEmptyHint =>
+      'Apri il profilo di un membro per scrivergli, oppure crea un gruppo.';
+
+  @override
+  String conversationMemberCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count membri',
+      one: '1 membro',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get moneyBaseFee => 'Abbonamento base';
 
   @override

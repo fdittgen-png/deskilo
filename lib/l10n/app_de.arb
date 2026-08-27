@@ -2037,6 +2037,43 @@
   "@notesFilterEmpty": {
     "description": "Empty state of the unread filter (#539)"
   },
+  "conversationGroup": "Gruppe",
+  "@conversationGroup": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationUnknownMember": "Mitglied",
+  "@conversationUnknownMember": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationYesterday": "Gestern",
+  "@conversationYesterday": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationYou": "Sie",
+  "@conversationYou": {
+    "description": "#687 - messaging centre"
+  },
+  "messagesTitle": "Nachrichten",
+  "@messagesTitle": {
+    "description": "#687 - messaging centre"
+  },
+  "messagesEmpty": "Noch keine Unterhaltungen.",
+  "@messagesEmpty": {
+    "description": "#687 - messaging centre"
+  },
+  "messagesEmptyHint": "Öffnen Sie das Profil eines Mitglieds, um zu schreiben, oder erstellen Sie eine Gruppe.",
+  "@messagesEmptyHint": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationMemberCount": "{count, plural, =1{1 Mitglied} other{{count} Mitglieder}}",
+  "@conversationMemberCount": {
+    "description": "#687 - messaging centre",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "moneyBaseFee": "Basis-Abo",
   "moneyUsage": "{used} von {included} halben Tagen genutzt",
   "moneyUsageUnlimited": "{used} halbe Tage genutzt",

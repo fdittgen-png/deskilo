@@ -106,5 +106,42 @@
   "notesFilterEmpty": "No hay mensajes sin leer — todo al día.",
   "@notesFilterEmpty": {
     "description": "Empty state of the unread filter (#539)"
+  },
+  "conversationGroup": "Grupo",
+  "@conversationGroup": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationUnknownMember": "Miembro",
+  "@conversationUnknownMember": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationYesterday": "Ayer",
+  "@conversationYesterday": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationYou": "Usted",
+  "@conversationYou": {
+    "description": "#687 - messaging centre"
+  },
+  "messagesTitle": "Mensajes",
+  "@messagesTitle": {
+    "description": "#687 - messaging centre"
+  },
+  "messagesEmpty": "Aún no hay conversaciones.",
+  "@messagesEmpty": {
+    "description": "#687 - messaging centre"
+  },
+  "messagesEmptyHint": "Abra el perfil de un miembro para escribirle, o cree un grupo.",
+  "@messagesEmptyHint": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationMemberCount": "{count, plural, =1{1 miembro} other{{count} miembros}}",
+  "@conversationMemberCount": {
+    "description": "#687 - messaging centre",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

@@ -3641,6 +3641,39 @@ class AppLocalizationsDe extends AppLocalizations {
       'Keine ungelesenen Nachrichten — alles gelesen.';
 
   @override
+  String get conversationGroup => 'Gruppe';
+
+  @override
+  String get conversationUnknownMember => 'Mitglied';
+
+  @override
+  String get conversationYesterday => 'Gestern';
+
+  @override
+  String get conversationYou => 'Sie';
+
+  @override
+  String get messagesTitle => 'Nachrichten';
+
+  @override
+  String get messagesEmpty => 'Noch keine Unterhaltungen.';
+
+  @override
+  String get messagesEmptyHint =>
+      'Öffnen Sie das Profil eines Mitglieds, um zu schreiben, oder erstellen Sie eine Gruppe.';
+
+  @override
+  String conversationMemberCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mitglieder',
+      one: '1 Mitglied',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get moneyBaseFee => 'Basis-Abo';
 
   @override
