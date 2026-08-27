@@ -558,50 +558,6 @@
   "@billPdfExport": {
     "description": "Tooltip of the PDF export button next to the period header on the money tab"
   },
-  "reportCoaTitle": "Chart of accounts — preview",
-  "@reportCoaTitle": {
-    "description": "#672 - report document text (reportCoaTitle)"
-  },
-  "reportCoaIntro": "A suggestion, not your accounting. These are the accounts a bookkeeper in your country would usually use for a space like yours.",
-  "@reportCoaIntro": {
-    "description": "#672 - report document text (reportCoaIntro)"
-  },
-  "reportCoaAccounts": "Suggested accounts",
-  "@reportCoaAccounts": {
-    "description": "#672 - report document text (reportCoaAccounts)"
-  },
-  "reportCoaNumber": "Account",
-  "@reportCoaNumber": {
-    "description": "#672 - report document text (reportCoaNumber)"
-  },
-  "reportCoaLabel": "Name",
-  "@reportCoaLabel": {
-    "description": "#672 - report document text (reportCoaLabel)"
-  },
-  "reportCoaDisclaimer": "Preview only. DesKilo does not keep a ledger and does not do your accounting — your accountant's chart always wins.",
-  "@reportCoaDisclaimer": {
-    "description": "#672 - report document text (reportCoaDisclaimer)"
-  },
-  "reportBadgesTitle": "Member badges",
-  "@reportBadgesTitle": {
-    "description": "#672 - report document text (reportBadgesTitle)"
-  },
-  "reportBadgesIntro": "Cut along the lines. Each card carries one member's badge code — present it at the kiosk to check in.",
-  "@reportBadgesIntro": {
-    "description": "#672 - report document text (reportBadgesIntro)"
-  },
-  "reportBadgesFooter": "A lost badge should be revoked in Members & plans, not just replaced.",
-  "@reportBadgesFooter": {
-    "description": "#672 - report document text (reportBadgesFooter)"
-  },
-  "reportSpaceCodesTitle": "Space codes",
-  "@reportSpaceCodesTitle": {
-    "description": "#672 - report document text (reportSpaceCodesTitle)"
-  },
-  "reportSpaceCodesIntro": "One card per seat, table, room and floor. Stick each card on its space: scanning it opens the same sheet the kiosk shows.",
-  "@reportSpaceCodesIntro": {
-    "description": "#672 - report document text (reportSpaceCodesIntro)"
-  },
   "billingTitle": "Billing",
   "@billingTitle": {
     "description": "Owner billing editor (#128): fee bands + subscription levels; screen title and settings entry"

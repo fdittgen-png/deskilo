@@ -490,44 +490,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get billPdfExport => 'Export bill as PDF';
 
   @override
-  String get reportCoaTitle => 'Chart of accounts — preview';
-
-  @override
-  String get reportCoaIntro =>
-      'A suggestion, not your accounting. These are the accounts a bookkeeper in your country would usually use for a space like yours.';
-
-  @override
-  String get reportCoaAccounts => 'Suggested accounts';
-
-  @override
-  String get reportCoaNumber => 'Account';
-
-  @override
-  String get reportCoaLabel => 'Name';
-
-  @override
-  String get reportCoaDisclaimer =>
-      'Preview only. DesKilo does not keep a ledger and does not do your accounting — your accountant\'s chart always wins.';
-
-  @override
-  String get reportBadgesTitle => 'Member badges';
-
-  @override
-  String get reportBadgesIntro =>
-      'Cut along the lines. Each card carries one member\'s badge code — present it at the kiosk to check in.';
-
-  @override
-  String get reportBadgesFooter =>
-      'A lost badge should be revoked in Members & plans, not just replaced.';
-
-  @override
-  String get reportSpaceCodesTitle => 'Space codes';
-
-  @override
-  String get reportSpaceCodesIntro =>
-      'One card per seat, table, room and floor. Stick each card on its space: scanning it opens the same sheet the kiosk shows.';
-
-  @override
   String get billingTitle => 'Billing';
 
   @override

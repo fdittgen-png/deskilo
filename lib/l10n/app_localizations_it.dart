@@ -493,44 +493,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get billPdfExport => 'Esporta la fattura come PDF';
 
   @override
-  String get reportCoaTitle => 'Piano dei conti — anteprima';
-
-  @override
-  String get reportCoaIntro =>
-      'Un suggerimento, non la tua contabilità. Sono i conti che un contabile del tuo paese userebbe di solito per uno spazio come il tuo.';
-
-  @override
-  String get reportCoaAccounts => 'Conti suggeriti';
-
-  @override
-  String get reportCoaNumber => 'Conto';
-
-  @override
-  String get reportCoaLabel => 'Denominazione';
-
-  @override
-  String get reportCoaDisclaimer =>
-      'Solo un\'anteprima. DesKilo non tiene un libro mastro e non fa la tua contabilità — il piano del tuo commercialista prevale sempre.';
-
-  @override
-  String get reportBadgesTitle => 'Badge dei membri';
-
-  @override
-  String get reportBadgesIntro =>
-      'Taglia lungo le linee. Ogni tessera porta il codice badge di un membro — mostrala al chiosco per il check-in.';
-
-  @override
-  String get reportBadgesFooter =>
-      'Un badge perso va revocato in Membri e piani, non semplicemente sostituito.';
-
-  @override
-  String get reportSpaceCodesTitle => 'Codici degli spazi';
-
-  @override
-  String get reportSpaceCodesIntro =>
-      'Una tessera per postazione, tavolo, sala e piano. Attaccala sul suo spazio: scansionarla apre la stessa scheda del chiosco.';
-
-  @override
   String get billingTitle => 'Fatturazione';
 
   @override

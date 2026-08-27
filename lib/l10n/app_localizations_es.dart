@@ -492,44 +492,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get billPdfExport => 'Exportar la factura como PDF';
 
   @override
-  String get reportCoaTitle => 'Plan de cuentas — vista previa';
-
-  @override
-  String get reportCoaIntro =>
-      'Una sugerencia, no tu contabilidad. Son las cuentas que un contable de tu país usaría normalmente para un espacio como el tuyo.';
-
-  @override
-  String get reportCoaAccounts => 'Cuentas sugeridas';
-
-  @override
-  String get reportCoaNumber => 'Cuenta';
-
-  @override
-  String get reportCoaLabel => 'Nombre';
-
-  @override
-  String get reportCoaDisclaimer =>
-      'Solo una vista previa. DesKilo no lleva libro mayor ni hace tu contabilidad — el plan de tu contable siempre manda.';
-
-  @override
-  String get reportBadgesTitle => 'Credenciales de los miembros';
-
-  @override
-  String get reportBadgesIntro =>
-      'Corta por las líneas. Cada tarjeta lleva el código de un miembro — preséntala en el quiosco para registrarte.';
-
-  @override
-  String get reportBadgesFooter =>
-      'Una credencial perdida se revoca en Miembros y planes, no basta con sustituirla.';
-
-  @override
-  String get reportSpaceCodesTitle => 'Códigos de los espacios';
-
-  @override
-  String get reportSpaceCodesIntro =>
-      'Una tarjeta por puesto, mesa, sala y planta. Pega cada tarjeta en su espacio: escanearla abre la misma ficha que el quiosco.';
-
-  @override
   String get billingTitle => 'Facturación';
 
   @override
