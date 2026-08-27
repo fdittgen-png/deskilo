@@ -54,7 +54,7 @@ on:
         default: master
 
 env:
-  FLUTTER_VERSION: "3.41.9"
+  FLUTTER_VERSION: "3.44.9"
 
 jobs:
   dmg:

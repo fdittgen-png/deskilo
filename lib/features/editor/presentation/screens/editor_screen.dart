@@ -118,10 +118,14 @@ class _LevelList extends ConsumerWidget {
     return ReorderableListView.builder(
       itemCount: levels.length,
       buildDefaultDragHandles: false,
-      onReorder: (oldIndex, newIndex) async {
+      // #667 — onReorder was deprecated after Flutter 3.41. onReorderItem
+      // ALREADY applies the removed-item adjustment, so the historical
+      // `newIndex > oldIndex ? newIndex - 1 : newIndex` correction must go
+      // with it: keeping both would shift every downward drag by one.
+      onReorderItem: (oldIndex, newIndex) async {
         final ids = levels.map((l) => l.id).toList();
         final id = ids.removeAt(oldIndex);
-        ids.insert(newIndex > oldIndex ? newIndex - 1 : newIndex, id);
+        ids.insert(newIndex, id);
         await ref.read(floorPlanRepositoryProvider).reorderLevels(ids);
         ref.invalidate(levelsProvider);
       },
