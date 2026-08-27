@@ -29,6 +29,7 @@ import '../../../plan/presentation/widgets/seat_photos.dart';
 import '../../../profile/domain/profile.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/member.dart';
+import '../../domain/week_tap_window.dart';
 import '../../domain/booking_error_text.dart';
 import '../booking_feedback.dart';
 import '../../../workspace/domain/workspace_availability.dart';
@@ -659,6 +660,29 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               icon: const Icon(Icons.qr_code_scanner_outlined),
               onPressed: () => scanSpace(context, ref),
             ),
+            // 'Now' returns to today AND to the live window — parity
+            // with the Plan tab, which has had it since #184.
+            //
+            // Shown only while browsing, like Plan's: an always-visible
+            // disabled button is header noise. Without it, getting back
+            // from a browsed date meant opening the picker and hunting
+            // for today, on the surface people book from most.
+            //
+            // It clears the WINDOW too, not just the day. Leaving a
+            // hand-picked window on today reads as live while showing a
+            // slot that may already be past.
+            if (!_selectedDay.isAtSameMomentAs(_today) ||
+                _windowStart != null)
+              IconButton(
+                key: const ValueKey('reserve-now-button'),
+                tooltip: l10n?.planNowButton ?? 'Now',
+                icon: const Icon(Icons.schedule_outlined),
+                onPressed: () => setState(() {
+                  _selectedDay = _today;
+                  _windowStart = null;
+                  _windowEnd = null;
+                }),
+              ),
             // Honest controls: the window chips act on Plan (state
             // filter + booking window) and Day (the window a free-row
             // tap books). Week books per tapped half, Month is an
@@ -1076,44 +1100,16 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
       },
       onReservationTap: _detailSheet,
       onFreeSlotTap: (seat, day, {required morning}) {
-        final window = _tapWindowOn(day, morning: morning);
+        final window = weekTapWindow(
+          day: day,
+          morning: morning,
+          granularity: _granularity,
+          current: _effectiveWindow(_granularity),
+          defaultEndFor: _defaultEndFor,
+        );
         _bookingSheet(seat, byId.values.toList(), window);
       },
     );
-  }
-
-  /// The window a Week-cell tap books on [day]: the tapped half under
-  /// half-day granularity, the whole day under full-day, and the hub's
-  /// current from→to times mapped onto [day] otherwise.
-  HalfDayWindow _tapWindowOn(DateTime day, {required bool morning}) {
-    final granularity = _granularity;
-    if (granularity == BookingGranularity.halfDay) {
-      return morning
-          ? HalfDayWindows.morning(day)
-          : HalfDayWindows.afternoon(day);
-    }
-    if (granularity == BookingGranularity.fullDay) {
-      return HalfDayWindows.fullDay(day);
-    }
-    final window = _effectiveWindow(granularity);
-    final startWall = WorkspaceTime.wall(window.start);
-    final endWall = WorkspaceTime.wall(window.end);
-    final from = WorkspaceTime.at(
-      day.year,
-      day.month,
-      day.day,
-      startWall.hour,
-      startWall.minute,
-    );
-    var to = WorkspaceTime.at(
-      day.year,
-      day.month,
-      day.day,
-      endWall.hour,
-      endWall.minute,
-    );
-    if (!to.isAfter(from)) to = _defaultEndFor(from);
-    return (start: from, end: to);
   }
 
   /// Month view (#7): the selected day's month as an availability
