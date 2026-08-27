@@ -145,6 +145,124 @@
     }
   },
   "myBadgeTitle": "Mein Badge",
+  "badgeSignInTitle": "Mit Ausweis anmelden",
+  "@badgeSignInTitle": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInTapPrompt": "Halten Sie Ihren Ausweis an das Telefon.",
+  "@badgeSignInTapPrompt": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInNoReader": "Auf diesem Gerät ist kein Ausweisleser verfügbar.",
+  "@badgeSignInNoReader": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInRetry": "Erneut versuchen",
+  "@badgeSignInRetry": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInHello": "Hallo {name}",
+  "@badgeSignInHello": {
+    "description": "#662 - badge sign-in",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeSignInPinLabel": "Ihre PIN",
+  "@badgeSignInPinLabel": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInButton": "Anmelden",
+  "@badgeSignInButton": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInUseEmail": "Stattdessen meine E-Mail verwenden",
+  "@badgeSignInUseEmail": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInRefused": "Das hat nicht geklappt. Prüfen Sie Ausweis und PIN, oder melden Sie sich mit Ihrer E-Mail an.",
+  "@badgeSignInRefused": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInLocked": "Zu viele Versuche. Warten Sie einige Minuten, oder melden Sie sich mit Ihrer E-Mail an.",
+  "@badgeSignInLocked": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInUnavailable": "Die Ausweisanmeldung ist gerade nicht erreichbar. Melden Sie sich mit Ihrer E-Mail an.",
+  "@badgeSignInUnavailable": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInEntry": "Mit Ausweis anmelden",
+  "@badgeSignInEntry": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinSectionTitle": "Mein Ausweis",
+  "@badgePinSectionTitle": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinSet": "PIN gesetzt",
+  "@badgePinSet": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinNotSet": "Noch keine PIN",
+  "@badgePinNotSet": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinExplain": "Mit Ihrer PIN melden Sie sich an, indem Sie Ihren Ausweis scannen, statt Ihre E-Mail zu tippen. Nur Sie können sie setzen, und niemand — auch kein Eigentümer — kann sie auslesen.",
+  "@badgePinExplain": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinSetAction": "PIN setzen",
+  "@badgePinSetAction": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinChangeAction": "PIN ändern",
+  "@badgePinChangeAction": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinClearAction": "PIN entfernen",
+  "@badgePinClearAction": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinNewLabel": "Neue PIN",
+  "@badgePinNewLabel": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinConfirmLabel": "Wiederholen",
+  "@badgePinConfirmLabel": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinMismatch": "Die beiden Eingaben stimmen nicht überein.",
+  "@badgePinMismatch": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinTooShort": "Verwenden Sie mindestens {min} Ziffern.",
+  "@badgePinTooShort": {
+    "description": "#662 - badge sign-in",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "badgePinSaved": "PIN gespeichert.",
+  "@badgePinSaved": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinCleared": "PIN entfernt. Ihre Ausweise melden Sie nicht mehr an.",
+  "@badgePinCleared": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeAuthEnabledLabel": "Meldet mich an",
+  "@badgeAuthEnabledLabel": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeAuthEnabledHint": "Standardmäßig aus: Ein Ausweis, der Sie eincheckt, meldet Sie nicht an, bis Sie es erlauben.",
+  "@badgeAuthEnabledHint": {
+    "description": "#662 - badge sign-in"
+  },
   "billSubscription": "Abo {pct} %",
   "billEntitlement": "{used} von {included} halben Tagen genutzt ({openDays} Öffnungstage)",
   "billOverage": "{extra} zusätzliche halbe Tage",
@@ -719,6 +837,14 @@
   "featureKioskMemberPhotosDesc": "Der Kiosk-Beleg zeigt das Profilfoto des Mitglieds — die visuelle Falsch-Badge-Kontrolle.",
   "featurePlanMemberPhotosTitle": "Mitgliederfotos auf dem Plan",
   "featurePlanMemberPhotosDesc": "Belegte Plätze im Plan-Tab und im Reservieren-Hub zeigen das Profilfoto statt der Initiale.",
+  "featureBadgeSignInTitle": "Anmeldung per Ausweis",
+  "@featureBadgeSignInTitle": {
+    "description": "#662 - feature registry entry"
+  },
+  "featureBadgeSignInDesc": "Mitglieder melden sich an, indem sie ihren Ausweis scannen und ihre PIN eingeben, statt eine E-Mail-Adresse auf einem gemeinsam genutzten Tablet zu tippen. Jedes Mitglied setzt seine eigene PIN und aktiviert seinen eigenen Ausweis.",
+  "@featureBadgeSignInDesc": {
+    "description": "#662 - feature registry entry"
+  },
   "helpTitle": "Hilfe",
   "helpContents": "Inhalt",
   "helpHintLearnMore": "Mehr erfahren",

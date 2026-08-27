@@ -342,6 +342,98 @@ class AppLocalizationsEn extends AppLocalizations {
   String get myBadgeTitle => 'My badge';
 
   @override
+  String get badgeSignInTitle => 'Sign in with your badge';
+
+  @override
+  String get badgeSignInTapPrompt => 'Hold your badge against the phone.';
+
+  @override
+  String get badgeSignInNoReader =>
+      'No badge reader is available on this device.';
+
+  @override
+  String get badgeSignInRetry => 'Try again';
+
+  @override
+  String badgeSignInHello(String name) {
+    return 'Hello $name';
+  }
+
+  @override
+  String get badgeSignInPinLabel => 'Your PIN';
+
+  @override
+  String get badgeSignInButton => 'Sign in';
+
+  @override
+  String get badgeSignInUseEmail => 'Use my e-mail instead';
+
+  @override
+  String get badgeSignInRefused =>
+      'That did not work. Check the badge and the PIN, or sign in with your e-mail.';
+
+  @override
+  String get badgeSignInLocked =>
+      'Too many attempts. Wait a few minutes, or sign in with your e-mail.';
+
+  @override
+  String get badgeSignInUnavailable =>
+      'Badge sign-in is not reachable right now. Sign in with your e-mail instead.';
+
+  @override
+  String get badgeSignInEntry => 'Sign in with a badge';
+
+  @override
+  String get badgePinSectionTitle => 'My badge';
+
+  @override
+  String get badgePinSet => 'PIN set';
+
+  @override
+  String get badgePinNotSet => 'No PIN yet';
+
+  @override
+  String get badgePinExplain =>
+      'Your PIN lets you sign in by scanning your badge instead of typing your e-mail. Only you can set it, and nobody — not even an owner — can read it back.';
+
+  @override
+  String get badgePinSetAction => 'Set a PIN';
+
+  @override
+  String get badgePinChangeAction => 'Change PIN';
+
+  @override
+  String get badgePinClearAction => 'Remove PIN';
+
+  @override
+  String get badgePinNewLabel => 'New PIN';
+
+  @override
+  String get badgePinConfirmLabel => 'Repeat it';
+
+  @override
+  String get badgePinMismatch => 'The two entries do not match.';
+
+  @override
+  String badgePinTooShort(int min) {
+    return 'Use at least $min digits.';
+  }
+
+  @override
+  String get badgePinSaved => 'PIN saved.';
+
+  @override
+  String get badgePinCleared =>
+      'PIN removed. Your badges no longer sign you in.';
+
+  @override
+  String get badgeAuthEnabledLabel => 'Signs me in';
+
+  @override
+  String get badgeAuthEnabledHint =>
+      'Off by default: a badge that checks you in does not log you in until you say so.';
+
+  @override
   String billSubscription(int pct) {
     return 'Subscription $pct%';
   }
@@ -1563,6 +1655,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featurePlanMemberPhotosDesc =>
       'Occupied seats on the Plan tab and Reserve hub show the occupant\'s profile photo instead of the initial.';
+
+  @override
+  String get featureBadgeSignInTitle => 'Sign in with a badge';
+
+  @override
+  String get featureBadgeSignInDesc =>
+      'Members can sign in by scanning their badge and entering their PIN, instead of typing an e-mail on a shared tablet. Each member sets their own PIN and arms their own badge.';
 
   @override
   String get helpTitle => 'Help';

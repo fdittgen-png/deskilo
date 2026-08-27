@@ -228,5 +228,13 @@
   "featureKioskMemberPhotosTitle": "Member photos at the kiosk",
   "featureKioskMemberPhotosDesc": "The kiosk receipt shows the member's profile photo — the visual wrong-badge check.",
   "featurePlanMemberPhotosTitle": "Member photos on the plan",
-  "featurePlanMemberPhotosDesc": "Occupied seats on the Plan tab and Reserve hub show the occupant's profile photo instead of the initial."
+  "featurePlanMemberPhotosDesc": "Occupied seats on the Plan tab and Reserve hub show the occupant's profile photo instead of the initial.",
+  "featureBadgeSignInTitle": "Sign in with a badge",
+  "@featureBadgeSignInTitle": {
+    "description": "#662 - feature registry entry"
+  },
+  "featureBadgeSignInDesc": "Members can sign in by scanning their badge and entering their PIN, instead of typing an e-mail on a shared tablet. Each member sets their own PIN and arms their own badge.",
+  "@featureBadgeSignInDesc": {
+    "description": "#662 - feature registry entry"
+  }
 }

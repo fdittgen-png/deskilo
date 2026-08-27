@@ -186,6 +186,12 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featurePlanMemberPhotosDesc ??
               'Occupied seats on the Plan tab and Reserve hub show the '
                   "occupant's profile photo instead of the initial.",
+        WorkspaceFeature.badgeSignIn =>
+          l10n?.featureBadgeSignInDesc ??
+              'Members can sign in by scanning their badge and entering '
+                  'their PIN, instead of typing an e-mail on a shared '
+                  'tablet. Each member sets their own PIN and arms their '
+                  'own badge.',
       };
 
   Future<void> _toggle(

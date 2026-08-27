@@ -346,6 +346,98 @@ class AppLocalizationsFr extends AppLocalizations {
   String get myBadgeTitle => 'Mon badge';
 
   @override
+  String get badgeSignInTitle => 'Se connecter avec son badge';
+
+  @override
+  String get badgeSignInTapPrompt => 'Approchez votre badge du téléphone.';
+
+  @override
+  String get badgeSignInNoReader =>
+      'Aucun lecteur de badge disponible sur cet appareil.';
+
+  @override
+  String get badgeSignInRetry => 'Réessayer';
+
+  @override
+  String badgeSignInHello(String name) {
+    return 'Bonjour $name';
+  }
+
+  @override
+  String get badgeSignInPinLabel => 'Votre code';
+
+  @override
+  String get badgeSignInButton => 'Se connecter';
+
+  @override
+  String get badgeSignInUseEmail => 'Utiliser mon e-mail à la place';
+
+  @override
+  String get badgeSignInRefused =>
+      'Cela n’a pas fonctionné. Vérifiez le badge et le code, ou connectez-vous avec votre e-mail.';
+
+  @override
+  String get badgeSignInLocked =>
+      'Trop de tentatives. Patientez quelques minutes, ou connectez-vous avec votre e-mail.';
+
+  @override
+  String get badgeSignInUnavailable =>
+      'La connexion par badge est injoignable pour le moment. Connectez-vous avec votre e-mail.';
+
+  @override
+  String get badgeSignInEntry => 'Se connecter avec un badge';
+
+  @override
+  String get badgePinSectionTitle => 'Mon badge';
+
+  @override
+  String get badgePinSet => 'Code défini';
+
+  @override
+  String get badgePinNotSet => 'Pas encore de code';
+
+  @override
+  String get badgePinExplain =>
+      'Votre code vous permet de vous connecter en scannant votre badge au lieu de saisir votre e-mail. Vous seul pouvez le définir, et personne — pas même un propriétaire — ne peut le relire.';
+
+  @override
+  String get badgePinSetAction => 'Définir un code';
+
+  @override
+  String get badgePinChangeAction => 'Modifier le code';
+
+  @override
+  String get badgePinClearAction => 'Supprimer le code';
+
+  @override
+  String get badgePinNewLabel => 'Nouveau code';
+
+  @override
+  String get badgePinConfirmLabel => 'Répétez-le';
+
+  @override
+  String get badgePinMismatch => 'Les deux saisies ne correspondent pas.';
+
+  @override
+  String badgePinTooShort(int min) {
+    return 'Utilisez au moins $min chiffres.';
+  }
+
+  @override
+  String get badgePinSaved => 'Code enregistré.';
+
+  @override
+  String get badgePinCleared =>
+      'Code supprimé. Vos badges ne vous connectent plus.';
+
+  @override
+  String get badgeAuthEnabledLabel => 'Me connecte';
+
+  @override
+  String get badgeAuthEnabledHint =>
+      'Désactivé par défaut : un badge qui vous pointe ne vous connecte pas tant que vous ne l’avez pas décidé.';
+
+  @override
   String billSubscription(int pct) {
     return 'Abonnement $pct %';
   }
@@ -1581,6 +1673,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featurePlanMemberPhotosDesc =>
       'Les places occupées de l\'onglet Plan et du hub Réserver affichent la photo de profil de l\'occupant au lieu de l\'initiale.';
+
+  @override
+  String get featureBadgeSignInTitle => 'Connexion par badge';
+
+  @override
+  String get featureBadgeSignInDesc =>
+      'Les membres peuvent se connecter en scannant leur badge puis en saisissant leur code, au lieu de taper une adresse e-mail sur une tablette partagée. Chaque membre définit son propre code et active son propre badge.';
 
   @override
   String get helpTitle => 'Aide';

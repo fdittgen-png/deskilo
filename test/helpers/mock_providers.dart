@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart' show ValueChanged;
 import 'package:flutter/widgets.dart' show Widget, ColoredBox, Color, Center, Text;
 
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
+import 'package:deskilo/features/auth/domain/badge_sign_in.dart';
 import 'package:deskilo/features/auth/domain/social_provider.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/core/time/work_hours.dart';
@@ -113,6 +114,68 @@ class FakeAuthRepository implements AuthRepository {
     identities =
         identities.where((i) => i.id != identity.id).toList();
   }
+
+  // ── badge sign-in (#662) ────────────────────────────────────────────
+
+  /// Badge uid -> who it identifies. A uid absent from the map is an
+  /// unknown badge, which the real server refuses.
+  final Map<String, BadgeIdentity> badges = {};
+
+  /// The PIN [signInWithBadge] accepts. Any other value is refused.
+  String? badgePin;
+
+  /// When set, both badge steps report this instead of consulting the
+  /// map — models a lockout or an undeployed function.
+  BadgeSignInFailure? badgeFailure;
+
+  /// Every PIN written through [setBadgePin], in order.
+  final List<String> setPins = [];
+  bool badgePinCleared = false;
+  final List<({String badgeId, bool enabled})> badgeAuthToggles = [];
+
+  @override
+  Future<BadgeStepResult<BadgeIdentity>> identifyBadge(String uid) async {
+    if (badgeFailure != null) return BadgeStepResult.failed(badgeFailure!);
+    final who = badges[uid];
+    return who == null
+        ? const BadgeStepResult.failed(BadgeSignInFailure.refused)
+        : BadgeStepResult.ok(who);
+  }
+
+  @override
+  Future<BadgeStepResult<void>> signInWithBadge({
+    required String uid,
+    required String pin,
+  }) async {
+    if (badgeFailure != null) return BadgeStepResult.failed(badgeFailure!);
+    if (badges[uid] == null || badgePin == null || pin != badgePin) {
+      return const BadgeStepResult.failed(BadgeSignInFailure.refused);
+    }
+    _setUser(badges[uid]!.userId);
+    return const BadgeStepResult.ok(null);
+  }
+
+  @override
+  Future<bool> hasBadgePin() async => badgePin != null;
+
+  @override
+  Future<void> setBadgePin(String pin) async {
+    setPins.add(pin);
+    badgePin = pin;
+  }
+
+  @override
+  Future<void> clearBadgePin() async {
+    badgePinCleared = true;
+    badgePin = null;
+  }
+
+  @override
+  Future<void> setBadgeAuthEnabled({
+    required String badgeId,
+    required bool enabled,
+  }) async =>
+      badgeAuthToggles.add((badgeId: badgeId, enabled: enabled));
 
   /// Emails for which [signInWithPassword]/[signUp] should throw.
   final Set<String> failingEmails = {};

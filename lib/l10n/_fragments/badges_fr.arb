@@ -1,3 +1,121 @@
 {
-  "myBadgeTitle": "Mon badge"
+  "myBadgeTitle": "Mon badge",
+  "badgeSignInTitle": "Se connecter avec son badge",
+  "@badgeSignInTitle": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInTapPrompt": "Approchez votre badge du téléphone.",
+  "@badgeSignInTapPrompt": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInNoReader": "Aucun lecteur de badge disponible sur cet appareil.",
+  "@badgeSignInNoReader": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInRetry": "Réessayer",
+  "@badgeSignInRetry": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInHello": "Bonjour {name}",
+  "@badgeSignInHello": {
+    "description": "#662 - badge sign-in",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeSignInPinLabel": "Votre code",
+  "@badgeSignInPinLabel": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInButton": "Se connecter",
+  "@badgeSignInButton": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInUseEmail": "Utiliser mon e-mail à la place",
+  "@badgeSignInUseEmail": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInRefused": "Cela n’a pas fonctionné. Vérifiez le badge et le code, ou connectez-vous avec votre e-mail.",
+  "@badgeSignInRefused": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInLocked": "Trop de tentatives. Patientez quelques minutes, ou connectez-vous avec votre e-mail.",
+  "@badgeSignInLocked": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInUnavailable": "La connexion par badge est injoignable pour le moment. Connectez-vous avec votre e-mail.",
+  "@badgeSignInUnavailable": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInEntry": "Se connecter avec un badge",
+  "@badgeSignInEntry": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinSectionTitle": "Mon badge",
+  "@badgePinSectionTitle": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinSet": "Code défini",
+  "@badgePinSet": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinNotSet": "Pas encore de code",
+  "@badgePinNotSet": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinExplain": "Votre code vous permet de vous connecter en scannant votre badge au lieu de saisir votre e-mail. Vous seul pouvez le définir, et personne — pas même un propriétaire — ne peut le relire.",
+  "@badgePinExplain": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinSetAction": "Définir un code",
+  "@badgePinSetAction": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinChangeAction": "Modifier le code",
+  "@badgePinChangeAction": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinClearAction": "Supprimer le code",
+  "@badgePinClearAction": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinNewLabel": "Nouveau code",
+  "@badgePinNewLabel": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinConfirmLabel": "Répétez-le",
+  "@badgePinConfirmLabel": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinMismatch": "Les deux saisies ne correspondent pas.",
+  "@badgePinMismatch": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinTooShort": "Utilisez au moins {min} chiffres.",
+  "@badgePinTooShort": {
+    "description": "#662 - badge sign-in",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "badgePinSaved": "Code enregistré.",
+  "@badgePinSaved": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinCleared": "Code supprimé. Vos badges ne vous connectent plus.",
+  "@badgePinCleared": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeAuthEnabledLabel": "Me connecte",
+  "@badgeAuthEnabledLabel": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeAuthEnabledHint": "Désactivé par défaut : un badge qui vous pointe ne vous connecte pas tant que vous ne l’avez pas décidé.",
+  "@badgeAuthEnabledHint": {
+    "description": "#662 - badge sign-in"
+  }
 }

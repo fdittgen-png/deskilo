@@ -345,6 +345,98 @@ class AppLocalizationsIt extends AppLocalizations {
   String get myBadgeTitle => 'Il mio badge';
 
   @override
+  String get badgeSignInTitle => 'Accedi con il badge';
+
+  @override
+  String get badgeSignInTapPrompt => 'Avvicina il badge al telefono.';
+
+  @override
+  String get badgeSignInNoReader =>
+      'Nessun lettore di badge disponibile su questo dispositivo.';
+
+  @override
+  String get badgeSignInRetry => 'Riprova';
+
+  @override
+  String badgeSignInHello(String name) {
+    return 'Ciao $name';
+  }
+
+  @override
+  String get badgeSignInPinLabel => 'Il tuo PIN';
+
+  @override
+  String get badgeSignInButton => 'Accedi';
+
+  @override
+  String get badgeSignInUseEmail => 'Usa la mia e-mail';
+
+  @override
+  String get badgeSignInRefused =>
+      'Non ha funzionato. Controlla il badge e il PIN, oppure accedi con la tua e-mail.';
+
+  @override
+  String get badgeSignInLocked =>
+      'Troppi tentativi. Attendi qualche minuto, oppure accedi con la tua e-mail.';
+
+  @override
+  String get badgeSignInUnavailable =>
+      'L’accesso con badge non è raggiungibile ora. Accedi con la tua e-mail.';
+
+  @override
+  String get badgeSignInEntry => 'Accedi con un badge';
+
+  @override
+  String get badgePinSectionTitle => 'Il mio badge';
+
+  @override
+  String get badgePinSet => 'PIN impostato';
+
+  @override
+  String get badgePinNotSet => 'Nessun PIN';
+
+  @override
+  String get badgePinExplain =>
+      'Il PIN ti permette di accedere scansionando il badge invece di digitare la tua e-mail. Solo tu puoi impostarlo e nessuno — nemmeno un proprietario — può rileggerlo.';
+
+  @override
+  String get badgePinSetAction => 'Imposta un PIN';
+
+  @override
+  String get badgePinChangeAction => 'Cambia PIN';
+
+  @override
+  String get badgePinClearAction => 'Rimuovi PIN';
+
+  @override
+  String get badgePinNewLabel => 'Nuovo PIN';
+
+  @override
+  String get badgePinConfirmLabel => 'Ripetilo';
+
+  @override
+  String get badgePinMismatch => 'Le due voci non coincidono.';
+
+  @override
+  String badgePinTooShort(int min) {
+    return 'Usa almeno $min cifre.';
+  }
+
+  @override
+  String get badgePinSaved => 'PIN salvato.';
+
+  @override
+  String get badgePinCleared =>
+      'PIN rimosso. I tuoi badge non ti fanno più accedere.';
+
+  @override
+  String get badgeAuthEnabledLabel => 'Mi fa accedere';
+
+  @override
+  String get badgeAuthEnabledHint =>
+      'Disattivo per impostazione predefinita: un badge che registra la tua entrata non ti fa accedere finché non lo decidi tu.';
+
+  @override
   String billSubscription(int pct) {
     return 'Abbonamento $pct %';
   }
@@ -1579,6 +1671,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featurePlanMemberPhotosDesc =>
       'I posti occupati nella scheda Piantina e nel hub Prenota mostrano la foto del profilo al posto dell’iniziale.';
+
+  @override
+  String get featureBadgeSignInTitle => 'Accesso con badge';
+
+  @override
+  String get featureBadgeSignInDesc =>
+      'I membri possono accedere scansionando il proprio badge e inserendo il PIN, invece di digitare un\'e-mail su un tablet condiviso. Ogni membro imposta il proprio PIN e attiva il proprio badge.';
 
   @override
   String get helpTitle => 'Aiuto';

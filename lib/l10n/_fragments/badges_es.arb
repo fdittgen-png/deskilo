@@ -1,3 +1,121 @@
 {
-  "myBadgeTitle": "Mi credencial"
+  "myBadgeTitle": "Mi credencial",
+  "badgeSignInTitle": "Iniciar sesión con la credencial",
+  "@badgeSignInTitle": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInTapPrompt": "Acerque su credencial al teléfono.",
+  "@badgeSignInTapPrompt": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInNoReader": "No hay lector de credenciales en este dispositivo.",
+  "@badgeSignInNoReader": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInRetry": "Reintentar",
+  "@badgeSignInRetry": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInHello": "Hola {name}",
+  "@badgeSignInHello": {
+    "description": "#662 - badge sign-in",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeSignInPinLabel": "Su PIN",
+  "@badgeSignInPinLabel": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInButton": "Iniciar sesión",
+  "@badgeSignInButton": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInUseEmail": "Usar mi correo en su lugar",
+  "@badgeSignInUseEmail": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInRefused": "No ha funcionado. Compruebe la credencial y el PIN, o inicie sesión con su correo.",
+  "@badgeSignInRefused": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInLocked": "Demasiados intentos. Espere unos minutos, o inicie sesión con su correo.",
+  "@badgeSignInLocked": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInUnavailable": "El inicio con credencial no está disponible ahora. Inicie sesión con su correo.",
+  "@badgeSignInUnavailable": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeSignInEntry": "Iniciar sesión con una credencial",
+  "@badgeSignInEntry": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinSectionTitle": "Mi credencial",
+  "@badgePinSectionTitle": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinSet": "PIN definido",
+  "@badgePinSet": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinNotSet": "Sin PIN todavía",
+  "@badgePinNotSet": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinExplain": "Su PIN le permite iniciar sesión escaneando su credencial en lugar de escribir su correo. Solo usted puede definirlo, y nadie — ni siquiera un propietario — puede leerlo.",
+  "@badgePinExplain": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinSetAction": "Definir un PIN",
+  "@badgePinSetAction": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinChangeAction": "Cambiar el PIN",
+  "@badgePinChangeAction": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinClearAction": "Eliminar el PIN",
+  "@badgePinClearAction": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinNewLabel": "Nuevo PIN",
+  "@badgePinNewLabel": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinConfirmLabel": "Repítalo",
+  "@badgePinConfirmLabel": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinMismatch": "Las dos entradas no coinciden.",
+  "@badgePinMismatch": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinTooShort": "Use al menos {min} dígitos.",
+  "@badgePinTooShort": {
+    "description": "#662 - badge sign-in",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "badgePinSaved": "PIN guardado.",
+  "@badgePinSaved": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgePinCleared": "PIN eliminado. Sus credenciales ya no inician su sesión.",
+  "@badgePinCleared": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeAuthEnabledLabel": "Inicia mi sesión",
+  "@badgeAuthEnabledLabel": {
+    "description": "#662 - badge sign-in"
+  },
+  "badgeAuthEnabledHint": "Desactivado por defecto: una credencial que le registra la entrada no inicia su sesión hasta que usted lo decida.",
+  "@badgeAuthEnabledHint": {
+    "description": "#662 - badge sign-in"
+  }
 }
