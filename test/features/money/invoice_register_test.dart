@@ -147,6 +147,12 @@ void main() {
             'accountant actually imports');
     await tester.tap(find.byKey(const ValueKey('accounting-export-saft')));
     await tester.pumpAndSettle();
+    // #669 — the file can now carry derived postings. This test is about
+    // the PERIOD it covers, so take the documents-only branch: the
+    // postings have their own tests and an account mapping would only
+    // add noise here.
+    await tester.tap(find.byKey(const ValueKey('saft-documents-only')));
+    await tester.pumpAndSettle();
 
     final file = saved.single;
     expect(file.name, contains('saf-t'));

@@ -18,6 +18,7 @@ import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/saf_t.dart';
 import 'package:deskilo/features/money/domain/sage.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -398,6 +399,82 @@ void main() {
         workspaceName: 'Pézenas',
       );
       expect(csv, contains('"Sample, Alex"'));
+    });
+  });
+
+  group('SAF-T postings: real double entry, honestly scoped', () {
+    // The claim I had to correct twice. The app cannot STORE arbitrary
+    // ledger transactions — but it has derived the sales-cycle postings
+    // deterministically since 0074, which is exactly what the FEC does.
+    // So the file can carry them. What it cannot claim is that they are
+    // the entity's BOOKS: no rent, no payroll, no bank charges, no
+    // equipment ever passes through this system.
+    const accounts = SafTLedgerAccounts(
+      customers: '411000',
+      revenue: '706000',
+      bank: '512000',
+      vat: '445710',
+    );
+
+    String build({SafTLedgerAccounts? ledger}) => buildSafTFile(
+          invoices: [inv(vat: _vat20)],
+          matches: {'i1': match()},
+          company: const InvoiceParty(name: 'Pézenas', country: 'FR'),
+          currency: 'EUR',
+          softwareVersion: '1.0.0',
+          createdAt: DateTime(2026, 5, 1),
+          lineText: (line) => line.label,
+          ledgerAccounts: ledger,
+        );
+
+    test('no mapping means NO section — never invented numbers', () {
+      // The ELEMENT, not the word: the header comment names it precisely
+      // to say it is absent.
+      expect(build(), isNot(contains('<GeneralLedgerEntries>')));
+      expect(build(), contains('omitted on purpose'));
+    });
+
+    test('with a mapping the postings appear and BALANCE', () {
+      final xml = build(ledger: accounts);
+      expect(xml, contains('<GeneralLedgerEntries>'));
+      // 120.00 invoice + 120.00 settlement on each side.
+      expect(xml, contains('<TotalDebit>240.00</TotalDebit>'));
+      expect(xml, contains('<TotalCredit>240.00</TotalCredit>'));
+    });
+
+    test('the invoice books gross to customers, net + VAT to revenue', () {
+      final xml = build(ledger: accounts);
+      expect(xml, contains('<AccountID>411000</AccountID>'));
+      expect(xml, contains('<DebitAmount>120.00</DebitAmount>'));
+      expect(xml, contains('<CreditAmount>100.00</CreditAmount>'));
+      expect(xml, contains('<CreditAmount>20.00</CreditAmount>'),
+          reason: 'the tax sits in its own account, one pair per rate — '
+              'that is what lets a mixed-rate month reconcile');
+    });
+
+    test('the header REFUSES to let postings read as complete books', () {
+      // The whole reason this can ship: the file says what it is.
+      final xml = build(ledger: accounts);
+      expect(xml, contains('SALES CYCLE ONLY'));
+      expect(xml, contains('NOT the complete books'));
+      expect(xml, contains('payroll'),
+          reason: 'naming what is missing beats saying "partial"');
+    });
+
+    test('the file still calls itself a subset, not a filing', () {
+      // Adding postings does NOT upgrade the claim. A national SAF-T
+      // that mandates GeneralLedgerEntries wants the complete books.
+      expect(safTFormat.claim, FormatClaim.subset);
+    });
+
+    test('Portugal is never offered postings', () {
+      // Under TaxAccountingBasis 'F' the ledger sections are not part of
+      // the declaration at all, so adding them would break the very
+      // thing that makes that file valid.
+      final export =
+          File('lib/features/money/presentation/accounting_export.dart')
+              .readAsStringSync();
+      expect(export, contains('if (!portugal)'));
     });
   });
 }

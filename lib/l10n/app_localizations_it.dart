@@ -633,6 +633,19 @@ class AppLocalizationsIt extends AppLocalizations {
   String get sageTaxCode => 'Codice IVA (T1 / T0 / T9)';
 
   @override
+  String get saftLedgerTitle => 'Includere le scritture?';
+
+  @override
+  String get saftLedgerIntro =>
+      'Con i numeri di conto il file porta scritture in partita doppia che il tuo commercialista può importare invece di digitare. Coprono le vendite e i relativi incassi — non l’intera contabilità.';
+
+  @override
+  String get saftDocumentsOnly => 'Solo documenti';
+
+  @override
+  String get saftWithPostings => 'Con le scritture';
+
+  @override
   String get billPdfTitle => 'Fattura mensile';
 
   @override

@@ -1160,6 +1160,30 @@ abstract class AppLocalizations {
   /// **'VAT code (T1 / T0 / T9)'**
   String get sageTaxCode;
 
+  /// #669 - SAF-T derived postings
+  ///
+  /// In en, this message translates to:
+  /// **'Include postings?'**
+  String get saftLedgerTitle;
+
+  /// #669 - SAF-T derived postings
+  ///
+  /// In en, this message translates to:
+  /// **'With account numbers, the file carries double-entry postings your accountant can import instead of keying in. They cover your sales and the payments against them — not your whole books.'**
+  String get saftLedgerIntro;
+
+  /// #669 - SAF-T derived postings
+  ///
+  /// In en, this message translates to:
+  /// **'Documents only'**
+  String get saftDocumentsOnly;
+
+  /// #669 - SAF-T derived postings
+  ///
+  /// In en, this message translates to:
+  /// **'With postings'**
+  String get saftWithPostings;
+
   /// Document title on the exported bill PDF (#133)
   ///
   /// In en, this message translates to:

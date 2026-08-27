@@ -159,5 +159,21 @@
   "sageTaxCode": "Code TVA (T1 / T0 / T9)",
   "@sageTaxCode": {
     "description": "#669 - accounting export formats"
+  },
+  "saftLedgerTitle": "Inclure les écritures ?",
+  "@saftLedgerTitle": {
+    "description": "#669 - SAF-T derived postings"
+  },
+  "saftLedgerIntro": "Avec les numéros de comptes, le fichier porte des écritures en partie double que votre comptable peut importer au lieu de les saisir. Elles couvrent vos ventes et les règlements correspondants — pas l’ensemble de votre comptabilité.",
+  "@saftLedgerIntro": {
+    "description": "#669 - SAF-T derived postings"
+  },
+  "saftDocumentsOnly": "Documents seuls",
+  "@saftDocumentsOnly": {
+    "description": "#669 - SAF-T derived postings"
+  },
+  "saftWithPostings": "Avec les écritures",
+  "@saftWithPostings": {
+    "description": "#669 - SAF-T derived postings"
   }
 }

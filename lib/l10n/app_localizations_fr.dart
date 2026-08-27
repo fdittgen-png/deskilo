@@ -633,6 +633,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sageTaxCode => 'Code TVA (T1 / T0 / T9)';
 
   @override
+  String get saftLedgerTitle => 'Inclure les écritures ?';
+
+  @override
+  String get saftLedgerIntro =>
+      'Avec les numéros de comptes, le fichier porte des écritures en partie double que votre comptable peut importer au lieu de les saisir. Elles couvrent vos ventes et les règlements correspondants — pas l’ensemble de votre comptabilité.';
+
+  @override
+  String get saftDocumentsOnly => 'Documents seuls';
+
+  @override
+  String get saftWithPostings => 'Avec les écritures';
+
+  @override
   String get billPdfTitle => 'Facture mensuelle';
 
   @override

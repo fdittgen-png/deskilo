@@ -32,6 +32,25 @@ const String safTSoftwareVersion = '1.0.0';
 /// Line amounts are tax-EXCLUSIVE, as SAF-T defines them — with DesKilo's
 /// VAT-inclusive prices that means the extracted net, and the tax sits
 /// beside it in `TaxInformation` (0072).
+/// The four accounts the derived postings book to (#669).
+///
+/// Deliberately the same four the FEC, DATEV and Sage ask for, because
+/// they are the same four postings — one mapping, asked for once, and no
+/// second opinion about which account revenue lands in.
+class SafTLedgerAccounts {
+  const SafTLedgerAccounts({
+    required this.customers,
+    required this.revenue,
+    required this.bank,
+    required this.vat,
+  });
+
+  final String customers;
+  final String revenue;
+  final String bank;
+  final String vat;
+}
+
 /// Which national declaration the file makes about itself (#669).
 ///
 /// One tree, two headers. Every SAF-T variant is a restriction of the
@@ -68,6 +87,23 @@ String buildSafTFile({
   /// The word for a position with no better description.
   String fallbackDescription = 'Coworking',
   SafTProfile profile = SafTProfile.generic,
+  /// #669 — when given, the file carries `GeneralLedgerEntries` derived
+  /// from the same postings the FEC has produced since 0074: invoice ->
+  /// debit customers / credit revenue + VAT, settlement -> debit bank /
+  /// credit customers.
+  ///
+  /// WHAT THIS IS AND IS NOT. The postings are real double entry and
+  /// they balance. They are NOT the entity's books: this app sees the
+  /// sales cycle and nothing else — no rent, no salaries, no bank
+  /// charges, no equipment. A national SAF-T that mandates
+  /// `GeneralLedgerEntries` is asking for the complete books, and this
+  /// section does not answer that. It answers the smaller, useful
+  /// question an accountant's software actually asks: give me postings I
+  /// can import instead of documents I have to key in.
+  ///
+  /// Null omits the section entirely, which is the honest default —
+  /// there is no account mapping to invent one from.
+  SafTLedgerAccounts? ledgerAccounts,
 }) {
   String amount(int cents) => (cents / 100).toStringAsFixed(2);
   String day(DateTime date) => date.toIso8601String().split('T').first;
@@ -194,12 +230,23 @@ String buildSafTFile({
           tag('SelectionStartDate', day(from));
           tag('SelectionEndDate', day(to));
         });
-        // Says out loud what this file is and is not.
+        // Says out loud what this file is and is not. The two cases
+        // differ in a way that MATTERS to whoever receives it: a file
+        // with postings must not be read as a complete set of books.
         tag(
           'HeaderComment',
-          'Invoicing subset: Header, MasterFiles and SourceDocuments. '
-              'GeneralLedgerEntries and customer account numbers are omitted '
-              'on purpose — the chart of accounts belongs to the accountant.',
+          ledgerAccounts == null
+              ? 'Invoicing subset: Header, MasterFiles and SourceDocuments. '
+                  'GeneralLedgerEntries and customer account numbers are '
+                  'omitted on purpose — the chart of accounts belongs to '
+                  'the accountant.'
+              : 'Invoicing subset with derived postings. '
+                  'GeneralLedgerEntries covers the SALES CYCLE ONLY — '
+                  'invoices and the settlements against them, booked to '
+                  'the accounts named at export time. It is NOT the '
+                  'complete books of the entity: purchases, payroll, bank '
+                  'charges and fixed assets never pass through this '
+                  'system and are absent.',
         );
       });
     }
@@ -251,6 +298,98 @@ String buildSafTFile({
         }
       });
     });
+
+    // ── General ledger: the postings, when there is a mapping ─────────
+    //
+    // Between MasterFiles and SourceDocuments — the schema fixes the
+    // order, and an importer that reads positionally silently mis-parses
+    // a file that puts them the other way round.
+    //
+    // Omitted entirely without a mapping. A section of invented account
+    // numbers would look complete and create work: every wrong code is
+    // unbooked by hand.
+    if (ledgerAccounts case final accounts?) {
+      var debitTotal = 0;
+      var creditTotal = 0;
+      var lineNo = 0;
+      // Counted first: SAF-T states the totals BEFORE the entries, so
+      // they cannot be accumulated while writing them.
+      for (final invoice in live) {
+        debitTotal += invoice.chargesCents;
+        creditTotal += invoice.chargesCents;
+      }
+      for (final e in settled) {
+        debitTotal += e.match.paidCents;
+        creditTotal += e.match.paidCents;
+      }
+
+      builder.element('GeneralLedgerEntries', nest: () {
+        // Two journals, matching what the FEC writes: sales and bank.
+        tag('NumberOfEntries', '${live.length + settled.length}');
+        tag('TotalDebit', amount(debitTotal));
+        tag('TotalCredit', amount(creditTotal));
+
+        void line(String account, int debit, int credit, String text) {
+          lineNo++;
+          builder.element(debit > 0 ? 'DebitLine' : 'CreditLine', nest: () {
+            tag('RecordID', '$lineNo');
+            tag('AccountID', account);
+            tag('SystemEntryDate', day(createdAt));
+            tag('Description', text);
+            tag(debit > 0 ? 'DebitAmount' : 'CreditAmount',
+                amount(debit > 0 ? debit : credit));
+          });
+        }
+
+        builder.element('Journal', nest: () {
+          tag('JournalID', 'VE');
+          tag('Description', 'Sales');
+          for (final invoice in live) {
+            builder.element('Transaction', nest: () {
+              tag('TransactionID', invoice.number);
+              tag('Period', '${invoice.issuedAt.month}');
+              tag('TransactionDate', day(invoice.issuedAt));
+              tag('Description', invoice.title);
+              // The receivable at the GROSS, against revenue NET of tax
+              // and the VAT beside it — one credit pair per rate, which
+              // is what lets a mixed-rate month reconcile.
+              line(accounts.customers, invoice.chargesCents, 0,
+                  invoice.number);
+              if (invoice.vatTotals.isEmpty) {
+                line(accounts.revenue, 0, invoice.chargesCents,
+                    invoice.number);
+              } else {
+                for (final total in invoice.vatTotals) {
+                  line(accounts.revenue, 0, total.netCents, invoice.number);
+                  if (total.vatCents > 0) {
+                    line(accounts.vat, 0, total.vatCents, invoice.number);
+                  }
+                }
+              }
+            });
+          }
+        });
+
+        builder.element('Journal', nest: () {
+          tag('JournalID', 'BQ');
+          tag('Description', 'Bank');
+          for (final e in settled) {
+            builder.element('Transaction', nest: () {
+              tag('TransactionID', '${e.invoice.number}-P');
+              // Dated when the money MOVED (0070), not when it was
+              // recorded — or the ledger disagrees with the bank
+              // statement it is reconciled against.
+              tag('Period', '${e.match.matchedAt.month}');
+              tag('TransactionDate', day(e.match.matchedAt));
+              tag('Description', 'Payment ${e.invoice.number}');
+              line(accounts.bank, e.match.paidCents, 0, e.invoice.number);
+              line(accounts.customers, 0, e.match.paidCents,
+                  e.invoice.number);
+            });
+          }
+        });
+      });
+    }
 
     // ── Source documents: the invoices, and what settled them ──────────
     builder.element('SourceDocuments', nest: () {

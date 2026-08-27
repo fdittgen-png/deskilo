@@ -629,6 +629,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sageTaxCode => 'VAT code (T1 / T0 / T9)';
 
   @override
+  String get saftLedgerTitle => 'Include postings?';
+
+  @override
+  String get saftLedgerIntro =>
+      'With account numbers, the file carries double-entry postings your accountant can import instead of keying in. They cover your sales and the payments against them — not your whole books.';
+
+  @override
+  String get saftDocumentsOnly => 'Documents only';
+
+  @override
+  String get saftWithPostings => 'With postings';
+
+  @override
   String get billPdfTitle => 'Monthly bill';
 
   @override

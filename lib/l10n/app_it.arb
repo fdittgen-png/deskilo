@@ -423,6 +423,22 @@
   "@sageTaxCode": {
     "description": "#669 - accounting export formats"
   },
+  "saftLedgerTitle": "Includere le scritture?",
+  "@saftLedgerTitle": {
+    "description": "#669 - SAF-T derived postings"
+  },
+  "saftLedgerIntro": "Con i numeri di conto il file porta scritture in partita doppia che il tuo commercialista può importare invece di digitare. Coprono le vendite e i relativi incassi — non l’intera contabilità.",
+  "@saftLedgerIntro": {
+    "description": "#669 - SAF-T derived postings"
+  },
+  "saftDocumentsOnly": "Solo documenti",
+  "@saftDocumentsOnly": {
+    "description": "#669 - SAF-T derived postings"
+  },
+  "saftWithPostings": "Con le scritture",
+  "@saftWithPostings": {
+    "description": "#669 - SAF-T derived postings"
+  },
   "billPdfTitle": "Fattura mensile",
   "billPdfExport": "Esporta la fattura come PDF",
   "reportCoaTitle": "Piano dei conti — anteprima",
