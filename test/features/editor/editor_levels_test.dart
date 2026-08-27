@@ -146,4 +146,72 @@ void main() {
     expect(plans.levels.single.bookableAsWhole, isTrue);
     expect(plans.levels.single.priceCents, 2500);
   });
+
+  // #667 — the Flutter 3.44 bump forced onReorder -> onReorderItem, and the
+  // two differ in exactly one way: onReorderItem ALREADY applies the
+  // removed-item adjustment, so the historical
+  // `newIndex > oldIndex ? newIndex - 1 : newIndex` correction had to be
+  // deleted with it. Keeping both would shift every DOWNWARD drag by one —
+  // silently, and only downward, which is precisely the bug that survives
+  // manual testing. There was no reorder coverage at all before this.
+  group('#667 level reordering after the onReorderItem migration', () {
+    Future<FakeFloorPlanRepository> seedThreeLevels(WidgetTester tester) async {
+      final seeded = FakeFloorPlanRepository();
+      await seeded.createLevel('ws-1', 'Ground', 0);
+      await seeded.createLevel('ws-1', 'First', 1);
+      await seeded.createLevel('ws-1', 'Second', 2);
+      final plans = await pumpAsOwner(tester, plans: seeded);
+      await tester.tap(find.byIcon(Icons.design_services_outlined));
+      await tester.pumpAndSettle();
+      return plans;
+    }
+
+    /// Names in persisted sortOrder — what the user actually sees.
+    List<String> order(FakeFloorPlanRepository plans) {
+      final sorted = [...plans.levels]
+        ..sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
+      return sorted.map((l) => l.name).toList();
+    }
+
+    testWidgets('dragging the first level DOWN to the end lands it last',
+        (tester) async {
+      final plans = await seedThreeLevels(tester);
+      final list = tester.widget<ReorderableListView>(
+          find.byType(ReorderableListView));
+
+      // onReorderItem's newIndex is already adjusted, so moving item 0 to
+      // the end is (0 -> 2), not the raw (0 -> 3) the old callback took.
+      list.onReorderItem!(0, 2);
+      await tester.pumpAndSettle();
+
+      expect(order(plans), ['First', 'Second', 'Ground'],
+          reason: 'a stale -1 correction would leave Ground in the middle');
+    });
+
+    testWidgets('dragging the last level UP to the front lands it first',
+        (tester) async {
+      final plans = await seedThreeLevels(tester);
+      final list = tester.widget<ReorderableListView>(
+          find.byType(ReorderableListView));
+
+      // The upward direction never needed the correction, so it is the
+      // control: it must behave identically before and after the migration.
+      list.onReorderItem!(2, 0);
+      await tester.pumpAndSettle();
+
+      expect(order(plans), ['Second', 'Ground', 'First']);
+    });
+
+    testWidgets('the deprecated onReorder callback is no longer wired',
+        (tester) async {
+      await seedThreeLevels(tester);
+      final list = tester.widget<ReorderableListView>(
+          find.byType(ReorderableListView));
+      // ReorderableListView asserts exactly one of the two is non-null, so
+      // this also guards against a future revert reintroducing the info that
+      // fails CI's analyze.
+      expect(list.onReorder, isNull);
+      expect(list.onReorderItem, isNotNull);
+    });
+  });
 }
