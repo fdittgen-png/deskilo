@@ -2,6 +2,25 @@
 
 **Free, privacy-first coworking community app** — visual desk booking plus the community money layer, mobile-first. Android, iOS, Windows, macOS, and the browser. Sibling of [Sparkilo](https://github.com/fdittgen-png/tankstellen).
 
+[![CI](https://github.com/fdittgen-png/deskilo/actions/workflows/ci.yml/badge.svg)](https://github.com/fdittgen-png/deskilo/actions/workflows/ci.yml)
+[![License: 0BSD](https://img.shields.io/badge/License-0BSD-green.svg)](LICENSE)
+[![Flutter](https://img.shields.io/badge/Flutter-3.44.9-blue.svg)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.12.2-blue.svg)](https://dart.dev)
+
+<p align="center">
+  <a href="https://play.google.com/apps/testing/de.deskilo.app">
+    <img alt="Join the Android closed test" src="https://img.shields.io/badge/Android%20closed%20test-000000?style=for-the-badge&logo=googleplay&logoColor=white"/>
+  </a>
+  <a href="https://testflight.apple.com/join/RgFX9zBe">
+    <img alt="Join the iPhone beta on TestFlight" src="https://img.shields.io/badge/TestFlight%20beta-000000?style=for-the-badge&logo=apple&logoColor=white"/>
+  </a>
+  <a href="https://fdittgen-png.github.io/deskilo/">
+    <img alt="Open the web app" src="https://img.shields.io/badge/Web%20app-000000?style=for-the-badge&logo=googlechrome&logoColor=white"/>
+  </a>
+</p>
+
+> **Not yet on the public stores.** Android is in **closed testing** and iPhone on **TestFlight** — the two buttons above are how you get in, and both were checked live. A Google Play *store* badge would 404 today, so there is not one; it goes here the day the listing is public.
+
 ## The leitmotiv
 
 Every feature must serve at least one of:
@@ -32,11 +51,15 @@ Full product spec: [`docs/SPECIFICATION.md`](docs/SPECIFICATION.md) · architect
 
 ## Status
 
-Feature-complete for the v1 scope and in dogfooding: 73 SQL migrations, 1000+ tests, five locales, five Supabase Edge Functions. Google Play internal testing publishes daily; TestFlight uploads internally; macOS ships a notarised DMG and Windows an MSI on every version tag; the browser build deploys on demand. Still open: the Play production listing review, and an end-to-end e-invoice transmission against a real provider account. See the [Epics](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+label%3Aepic) for the roadmap.
+Feature-complete for the v1 scope and in dogfooding: **123 SQL migrations**, **1 575 tests**, five locales, **eight Supabase Edge Functions**.
+
+**Shipping.** One `release-train.yml` dispatch builds every platform from the SAME commit, so testers on Android and iPhone are never comparing different code: Play **closed alpha** and **TestFlight external** both carry build 1600111. macOS ships a DMG and Windows an MSI on every version tag; the browser build deploys on demand to the Pages URL above.
+
+**Still open.** Play *production* is gated on Google's own rule — twelve testers opted in to the closed test for fourteen continuous days — not on a build. Also outstanding: an end-to-end e-invoice transmission against a real provider account, and the Apple App Store submission. See the [Epics](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+label%3Aepic) for the roadmap.
 
 ## Stack (principles)
 
-Flutter · Riverpod 3 (codegen) · freezed · go_router · flex_color_scheme (Material 3) · Hive · Supabase (RLS Postgres, self-hostable) · ARB localization (EN canonical + FR/DE/ES/IT). No Google Play Services, no Firebase, no tracking, no GPL dependencies.
+Flutter 3.44.9 / Dart 3.12.2 · Riverpod 3 (codegen) · freezed · go_router · flex_color_scheme (Material 3) · Hive · Supabase (RLS Postgres, self-hostable) · ARB localization (EN canonical + FR/DE/ES/IT). Firebase Cloud Messaging is the push transport (ADR 0011) and the only Google dependency; no tracking, no analytics, no GPL dependencies.
 
 ## Languages
 
