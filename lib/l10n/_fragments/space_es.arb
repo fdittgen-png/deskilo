@@ -22,12 +22,16 @@
   "spaceCardInfoLabel": "Información en la tarjeta",
   "spaceCardInfoWorkspace": "Espacio de trabajo",
   "spaceMessageReserver": "Escribir a {name}",
-  "spaceBlockedByYou": "Ya tienes este espacio en ese periodo.",
+  "spaceYoursCheckedIn": "Ha registrado su entrada aquí para esta franja.",
+  "@spaceYoursCheckedIn": {
+    "description": "#670 - whole-space sheet"
+  },
+  "spaceBlockedByYou": "Ya tiene este espacio para ese periodo.",
   "@spaceBlockedByYou": {
-    "description": "#670 - the whole-space conflict is the caller's OWN booking"
+    "description": "#670 - whole-space sheet"
   },
   "spaceManageMyBooking": "Gestionar mi reserva",
   "@spaceManageMyBooking": {
-    "description": "#670 - opens the reservation sheet to cancel/shorten it"
+    "description": "#670 - whole-space sheet"
   }
 }

@@ -4347,6 +4347,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get spaceYoursCheckedIn => 'You are checked in here for this slot.';
+
+  @override
   String get spaceBlockedByYou =>
       'You already hold this space for that period.';
 

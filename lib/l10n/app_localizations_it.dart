@@ -4388,7 +4388,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get spaceBlockedByYou => 'Hai già questo spazio in quel periodo.';
+  String get spaceYoursCheckedIn =>
+      'Hai effettuato il check-in qui per questa fascia.';
+
+  @override
+  String get spaceBlockedByYou => 'Hai già questo spazio per quel periodo.';
 
   @override
   String get spaceManageMyBooking => 'Gestisci la mia prenotazione';

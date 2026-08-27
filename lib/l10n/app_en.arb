@@ -5146,13 +5146,17 @@
       }
     }
   },
+  "spaceYoursCheckedIn": "You are checked in here for this slot.",
+  "@spaceYoursCheckedIn": {
+    "description": "#670 - whole-space sheet"
+  },
   "spaceBlockedByYou": "You already hold this space for that period.",
   "@spaceBlockedByYou": {
-    "description": "#670 - the whole-space conflict is the caller's OWN booking"
+    "description": "#670 - whole-space sheet"
   },
   "spaceManageMyBooking": "Manage my booking",
   "@spaceManageMyBooking": {
-    "description": "#670 - opens the reservation sheet to cancel/shorten it"
+    "description": "#670 - whole-space sheet"
   },
   "themeTitle": "Theme",
   "@themeTitle": {

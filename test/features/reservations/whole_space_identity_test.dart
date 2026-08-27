@@ -115,4 +115,64 @@ void main() {
           reason: '#622 messaging must survive this change');
     });
   });
+
+  group('a booking of yours is never a dead end, in either state', () {
+    // Second field report, same sheet: "Level was reserved or checked in
+    // but no way to checkout or delete the reservation."
+    //
+    // Two separate causes. `myWholeReservation` matched `reserved` ONLY,
+    // so a level you had checked into fell past that branch into the
+    // conflict branch — which correctly said the space was taken, by
+    // you, and offered nothing. And even the reserved branch offered
+    // only "Check in": nothing on the sheet cancelled or deleted.
+    late String sheet;
+
+    setUpAll(() {
+      sheet = File('lib/features/reservations/presentation/widgets/'
+              'space_scan.dart')
+          .readAsStringSync();
+    });
+
+    test('a CHECKED-IN booking of yours is recognised as yours', () {
+      expect(sheet, contains('ReservationStatus.checkedIn'),
+          reason: 'matching only `reserved` is what sent a checked-in '
+              'level into the conflict branch, where nothing acts on it');
+    });
+
+    test('and it offers CHECK OUT, not check in', () {
+      expect(sheet, contains("ValueKey('space-checkout-mine')"),
+          reason: 'the sheet that started the check-in must be able to '
+              'end it');
+      expect(sheet, contains('_checkOutExisting'));
+      // Offering "check in" to something already checked in is what made
+      // the sheet unusable rather than merely incomplete.
+      expect(sheet, contains('ReservationStatus.checkedIn)\n'
+          '              FilledButton.icon('),
+          reason: 'the two actions must be exclusive branches, not both');
+    });
+
+    test('both states also offer the way to undo it', () {
+      // SpaceConflictActions is mounted in the OWN-booking branch too,
+      // not only under a conflict — that is what makes cancel / end
+      // early / request deletion reachable from here at all.
+      expect('SpaceConflictActions('.allMatches(sheet).length, 2,
+          reason: 'once for someone else\'s conflict, once for your own '
+              'live booking');
+      expect(sheet, contains('blocking: myWholeReservation'));
+    });
+
+    test('check-in and check-out share ONE routine', () {
+      // They were written twice, near-identically. One of the two would
+      // eventually stop reporting refusals the way the other does, which
+      // on this sheet reads as "nothing happened".
+      final body = sheet.substring(sheet.indexOf('_actOnExisting('));
+      // Every rule about whether either is legal lives on the server
+      // (0116); a refusal must say WHY rather than merely fail.
+      expect(body.substring(0, 1600), contains('bookingErrorText'));
+      expect(body.substring(0, 1600), contains('invalidateBookingData'),
+          reason: 'the plan behind the sheet is now stale');
+      expect(sheet, contains('.checkIn(id)'));
+      expect(sheet, contains('.checkOut(id)'));
+    });
+  });
 }

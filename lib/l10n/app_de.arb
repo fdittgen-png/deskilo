@@ -2255,13 +2255,17 @@
   "spaceCardInfoLabel": "Informationen auf der Karte",
   "spaceCardInfoWorkspace": "Workspace",
   "spaceMessageReserver": "Nachricht an {name}",
-  "spaceBlockedByYou": "Du hältst diesen Raum in diesem Zeitraum bereits.",
+  "spaceYoursCheckedIn": "Sie sind hier für diesen Zeitraum eingecheckt.",
+  "@spaceYoursCheckedIn": {
+    "description": "#670 - whole-space sheet"
+  },
+  "spaceBlockedByYou": "Sie halten diesen Bereich für diesen Zeitraum bereits.",
   "@spaceBlockedByYou": {
-    "description": "#670 - the whole-space conflict is the caller's OWN booking"
+    "description": "#670 - whole-space sheet"
   },
   "spaceManageMyBooking": "Meine Buchung verwalten",
   "@spaceManageMyBooking": {
-    "description": "#670 - opens the reservation sheet to cancel/shorten it"
+    "description": "#670 - whole-space sheet"
   },
   "themeTitle": "Design",
   "themeSystem": "Systemstandard",

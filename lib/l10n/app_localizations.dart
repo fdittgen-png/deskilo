@@ -7772,13 +7772,19 @@ abstract class AppLocalizations {
   /// **'Message {name}'**
   String spaceMessageReserver(String name);
 
-  /// #670 - the whole-space conflict is the caller's OWN booking
+  /// #670 - whole-space sheet
+  ///
+  /// In en, this message translates to:
+  /// **'You are checked in here for this slot.'**
+  String get spaceYoursCheckedIn;
+
+  /// #670 - whole-space sheet
   ///
   /// In en, this message translates to:
   /// **'You already hold this space for that period.'**
   String get spaceBlockedByYou;
 
-  /// #670 - opens the reservation sheet to cancel/shorten it
+  /// #670 - whole-space sheet
   ///
   /// In en, this message translates to:
   /// **'Manage my booking'**
