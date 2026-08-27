@@ -2,7 +2,7 @@
   "mcpServers": {
     "dart": {
       "command": "dart",
-      "args": ["mcp-server"]
+      "args": ["pub", "global", "run", "dart_mcp_server"]
     }
   }
 }
