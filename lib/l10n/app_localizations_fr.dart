@@ -493,6 +493,48 @@ class AppLocalizationsFr extends AppLocalizations {
   String get billPdfExport => 'Exporter la facture en PDF';
 
   @override
+  String get reportCoaTitle => 'Plan comptable — aperçu';
+
+  @override
+  String get reportCoaIntro =>
+      'Une suggestion, pas votre comptabilité. Voici les comptes qu\'un comptable de votre pays utiliserait habituellement pour un espace comme le vôtre.';
+
+  @override
+  String get reportCoaAccounts => 'Comptes suggérés';
+
+  @override
+  String get reportCoaNumber => 'Compte';
+
+  @override
+  String get reportCoaLabel => 'Libellé';
+
+  @override
+  String get reportCoaDisclaimer =>
+      'Aperçu seulement. DesKilo ne tient pas de grand livre et ne fait pas votre comptabilité — le plan de votre comptable prime toujours.';
+
+  @override
+  String get reportBadgesTitle => 'Badges des membres';
+
+  @override
+  String get reportBadgesIntro =>
+      'Découpez suivant les traits. Chaque carte porte le code badge d\'un membre — à présenter à la borne pour pointer.';
+
+  @override
+  String get reportBadgesFooter =>
+      'Un badge perdu se révoque dans Membres et forfaits, il ne suffit pas de le remplacer.';
+
+  @override
+  String get reportSpaceCodesTitle => 'Codes des espaces';
+
+  @override
+  String get reportSpaceCodesIntro =>
+      'Une carte par place, table, bureau et étage. Collez chaque carte sur son espace : la scanner ouvre la feuille que montre la borne.';
+
+  @override
+  String get reportSpaceCodesFooter =>
+      'Une carte qui ne correspond plus à son espace trompe celui qui la scanne : réimprimez la planche après avoir déplacé ou renommé un espace.';
+
+  @override
   String get billingTitle => 'Facturation';
 
   @override

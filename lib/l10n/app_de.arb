@@ -243,6 +243,54 @@
   },
   "billPdfTitle": "Monatsrechnung",
   "billPdfExport": "Rechnung als PDF exportieren",
+  "reportCoaTitle": "Kontenrahmen — Vorschau",
+  "@reportCoaTitle": {
+    "description": "#671 - report document text (reportCoaTitle)"
+  },
+  "reportCoaIntro": "Ein Vorschlag, nicht deine Buchhaltung. Das sind die Konten, die eine Buchhalterin in deinem Land für einen Space wie deinen üblicherweise nimmt.",
+  "@reportCoaIntro": {
+    "description": "#671 - report document text (reportCoaIntro)"
+  },
+  "reportCoaAccounts": "Vorgeschlagene Konten",
+  "@reportCoaAccounts": {
+    "description": "#671 - report document text (reportCoaAccounts)"
+  },
+  "reportCoaNumber": "Konto",
+  "@reportCoaNumber": {
+    "description": "#671 - report document text (reportCoaNumber)"
+  },
+  "reportCoaLabel": "Bezeichnung",
+  "@reportCoaLabel": {
+    "description": "#671 - report document text (reportCoaLabel)"
+  },
+  "reportCoaDisclaimer": "Nur eine Vorschau. DesKilo führt kein Hauptbuch und macht deine Buchhaltung nicht — der Kontenrahmen deiner Steuerberatung gilt.",
+  "@reportCoaDisclaimer": {
+    "description": "#671 - report document text (reportCoaDisclaimer)"
+  },
+  "reportBadgesTitle": "Mitglieder-Badges",
+  "@reportBadgesTitle": {
+    "description": "#671 - report document text (reportBadgesTitle)"
+  },
+  "reportBadgesIntro": "An den Linien schneiden. Jede Karte trägt den Badge-Code eines Mitglieds — am Kiosk vorzeigen zum Einchecken.",
+  "@reportBadgesIntro": {
+    "description": "#671 - report document text (reportBadgesIntro)"
+  },
+  "reportBadgesFooter": "Ein verlorenes Badge wird in Mitglieder & Tarife widerrufen, nicht bloß ersetzt.",
+  "@reportBadgesFooter": {
+    "description": "#671 - report document text (reportBadgesFooter)"
+  },
+  "reportSpaceCodesTitle": "Raum-Codes",
+  "@reportSpaceCodesTitle": {
+    "description": "#671 - report document text (reportSpaceCodesTitle)"
+  },
+  "reportSpaceCodesIntro": "Eine Karte je Platz, Tisch, Büro und Etage. Jede Karte auf ihren Raum kleben: Scannen öffnet dasselbe Blatt wie der Kiosk.",
+  "@reportSpaceCodesIntro": {
+    "description": "#671 - report document text (reportSpaceCodesIntro)"
+  },
+  "reportSpaceCodesFooter": "Eine Karte, die nicht mehr zu ihrem Bereich passt, führt jeden in die Irre, der sie scannt — drucken Sie den Bogen nach dem Verschieben oder Umbenennen neu.",
+  "@reportSpaceCodesFooter": {
+    "description": "#671 - report document text (reportSpaceCodesFooter)"
+  },
   "billingTitle": "Abrechnung",
   "billingFeeBands": "Gebührenbänder",
   "billingBandFrom": "ab {from} %",

@@ -12,6 +12,14 @@
 // Verbose · Formal (#480).
 import '../../../l10n/app_localizations.dart';
 import '../domain/invoice_pdf_template.dart';
+// The three #671 documents (CoA preview, badge sheet, space codes) live
+// in their own file; they are re-exported so every caller keeps
+// resolving document defaults from one import.
+import 'report_defaults_batch.dart';
+export 'report_defaults_batch.dart';
+// The preview fixture is a different concern from the shipped templates
+// — sample text, never live data — and lives on its own.
+export 'report_sample_data.dart';
 
 /// The seller's statutory identity block, shared by every preset's
 /// header: name, legal form & capital, address, trade register and VAT
@@ -443,86 +451,6 @@ ${l10n?.reportRegards ?? 'Kind regards'},
   }
 }
 
-/// Simulated-execution data (#474): a plausible invoice with lines and
-/// VAT, plus the reminder and legal-mention fields (#480) — the quick
-/// preview runs on it when no real invoice exists yet. Everything is
-/// sample text, no live data.
-Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
-      'workspace': 'Coworking Demo',
-      'workspace_address': '1 Example Street, 12345 Demo City',
-      'member': 'Alex Sample',
-      'number': 'INV-2026-0042',
-      'period': 'July 2026',
-      'issued': '2026-07-31',
-      'issued_by': 'Demo Owner',
-      'replaces': '',
-      'total': '145,00 €',
-      'charges': '165,00 €',
-      'payments': '-20,00 €',
-      'net_total': '120,83 €',
-      'vat_total': '24,17 €',
-      'voided': false,
-      'proforma': false,
-      'copy': false,
-      'credit_note': false,
-      'refund_total': '',
-      'has_vat': true,
-      'lines': [
-        {
-          'label': l10n?.invoicePdfDescription ?? 'Subscription',
-          'amount': '120,00 €',
-          'negative': false,
-          'qty': '1',
-          'unit_price': '120,00 €',
-          'vat_rate': '20 %',
-          'net': '100,00 €',
-        },
-        {
-          'label': 'Extra day',
-          'amount': '25,00 €',
-          'negative': false,
-          'qty': '1',
-          'unit_price': '25,00 €',
-          'vat_rate': '20 %',
-          'net': '20,83 €',
-        },
-        {
-          'label': 'Credit',
-          'amount': '-20,00 €',
-          'negative': true,
-          'qty': '1',
-          'unit_price': '-20,00 €',
-          'vat_rate': '',
-          'net': '-20,00 €',
-        },
-      ],
-      'vat': [
-        {'rate': '20 %', 'net': '120,83 €', 'amount': '24,17 €'},
-      ],
-      'reminder_level': 1,
-      'reminder_date': '2026-08-15',
-      'days_open': 15,
-      // #480 — the legal mention variables, filled like a French SARL.
-      'seller_legal_form': 'SARL au capital de 7 500 €',
-      'seller_registration': 'RCS Demo City 123 456 789',
-      'seller_vat_id': 'FR 39 680 357 910',
-      'seller_legal_id': '680 357 910',
-      'exemption_reason': '',
-      'client_address': '3 Avenue de la Liberté, 35000 Rennes',
-      'client_vat_id': 'FR 79 849 149 108',
-      'client_legal_id': '849 149 108',
-      'payment_terms':
-          l10n?.invoiceLegalPaymentTermsDefault ?? 'Payment on receipt.',
-      'late_penalty': l10n?.invoiceLegalLatePenaltyDefault ??
-          'Late-payment penalty: three times the statutory interest rate.',
-      'recovery_indemnity': l10n?.invoiceLegalRecoveryDefault ??
-          'Fixed recovery indemnity for collection costs: €40.',
-      'escompte': l10n?.invoiceLegalEscompteDefault ??
-          'No discount for early payment.',
-      'insurance': '',
-      'special_mentions': '',
-    };
-
 /// One ready-made report the owner can pick and then extend (#474).
 class ReportPreset {
   const ReportPreset({
@@ -569,6 +497,13 @@ List<ReportPreset> presetsForDoc(String docId, AppLocalizations? l10n) {
           l10n, id, l10n?.reportDocPayments ?? 'Payments report',
           subtitle: '{{ member }} — {{ period }}');
     }
+    if (docId == 'coa' || docId == 'badges' || docId == 'space_codes') {
+      // One shipped layout each. These documents are structural — a
+      // chart, a grid of cards — so the presets that make sense for an
+      // invoice (Classic / Formal letter) would only offer ways to
+      // break them.
+      return defaultBandsForDoc(docId, l10n);
+    }
     if (docId == 'workspace') {
       return id == 'classic'
           ? defaultWorkspaceBands(l10n)
@@ -596,5 +531,8 @@ ReportBands defaultBandsForDoc(String docId, AppLocalizations? l10n) {
   if (docId == 'agreement') return defaultAgreementBands(l10n);
   if (docId == 'payments') return defaultPaymentsBands(l10n);
   if (docId == 'workspace') return defaultWorkspaceBands(l10n);
+  if (docId == 'coa') return defaultCoaBands(l10n);
+  if (docId == 'badges') return defaultBadgeSheetBands(l10n);
+  if (docId == 'space_codes') return defaultSpaceCodesBands(l10n);
   return defaultReminderBands(int.tryParse(docId.substring(1)) ?? 1, l10n);
 }

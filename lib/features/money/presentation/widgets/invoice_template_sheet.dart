@@ -123,6 +123,16 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
     'agreement',
     'payments',
     'workspace',
+    // #672 — the chart-of-accounts PREVIEW. A report rather than a
+    // screen, so the owner can hand the printed page to their
+    // accountant and ask "is this your chart?".
+    'coa',
+    // #672 — batch prints join report management instead of living as
+    // two hard-coded PDFs: badges and space QR cards are documents the
+    // owner prints repeatedly, so they belong where every other
+    // printable is edited.
+    'badges',
+    'space_codes',
   ];
 
   /// The stored bands of document [doc] in the edited LANGUAGE, before
@@ -140,7 +150,10 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
         'statement' => template.statement,
         'agreement' ||
         'payments' ||
-        'workspace' =>
+        'workspace' ||
+        'coa' ||
+        'badges' ||
+        'space_codes' =>
           template.extraDocs[doc] ?? ReportBands.empty,
         _ => template
                 .reminderBands(int.tryParse(doc.substring(1)) ?? 1) ??
@@ -209,7 +222,10 @@ class _TemplateSheetState extends ConsumerState<_TemplateSheet> {
           'statement' => overlay.copyWith(statement: bands),
           'agreement' ||
           'payments' ||
-          'workspace' =>
+          'workspace' ||
+          'coa' ||
+          'badges' ||
+          'space_codes' =>
             overlay.withDoc(doc, bands),
           _ => overlay.withReminder(
               int.tryParse(doc.substring(1)) ?? 1, bands),
