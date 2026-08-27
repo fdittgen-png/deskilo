@@ -1385,7 +1385,7 @@
   "einvoiceConfigCleared": "Plattform entfernt.",
   "einvoiceConfigClear": "Plattform entfernen",
   "einvoiceConfigTokenSet": "Ein Token ist gespeichert (neues eingeben, um es zu ersetzen).",
-  "invoiceAccountingExport": "Buchhaltungs-Export (SAF-T)",
+  "invoiceAccountingExport": "Buchhaltungsexport",
   "invoiceAccountingExportEmpty": "Für diesen Zeitraum gibt es nichts zu exportieren.",
   "invoiceRegisterYear": "Jahr",
   "invoiceRegisterAllYears": "Alle Jahre",

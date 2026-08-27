@@ -1385,7 +1385,7 @@
   "einvoiceConfigCleared": "Plateforme supprimée.",
   "einvoiceConfigClear": "Supprimer la plateforme",
   "einvoiceConfigTokenSet": "Un jeton est enregistré (saisissez-en un nouveau pour le remplacer).",
-  "invoiceAccountingExport": "Export comptable (SAF-T)",
+  "invoiceAccountingExport": "Export comptable",
   "invoiceAccountingExportEmpty": "Rien à exporter pour cette période.",
   "invoiceRegisterYear": "Année",
   "invoiceRegisterAllYears": "Toutes les années",

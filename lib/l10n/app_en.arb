@@ -3018,7 +3018,7 @@
   "@einvoiceConfigTokenSet": {
     "description": "Shown instead of the stored token"
   },
-  "invoiceAccountingExport": "Accounting export (SAF-T)",
+  "invoiceAccountingExport": "Accounting export",
   "@invoiceAccountingExport": {
     "description": "Register action: the SAF-T file for the accountant (0074)"
   },
