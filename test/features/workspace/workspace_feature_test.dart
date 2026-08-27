@@ -4,7 +4,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// The features the owner must explicitly activate: adminSeatBlocking
 /// (#161), accessorySupplements (#170), onlinePayments (0043), the
-/// level-booking pair (0050) and the invoice delegation (0060).
+/// level-booking pair (0050), the invoice delegation (0060) and badge
+/// sign-in (#662).
+///
+/// The list is short on purpose, and every entry earns its place by
+/// being a decision only the owner can make — delegating an admin
+/// power, charging money, or (badgeSignIn) turning a shared tablet into
+/// a login surface. Shipping any of those ON would make the choice for
+/// them silently.
 const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.adminSeatBlocking,
   WorkspaceFeature.accessorySupplements,
@@ -13,6 +20,7 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.adminLevelAssign,
   WorkspaceFeature.adminInvoicing,
   WorkspaceFeature.autoCheckInOut,
+  WorkspaceFeature.badgeSignIn,
 };
 
 /// Every other feature ships ON.
@@ -23,7 +31,8 @@ void main() {
   test(
       'manifest covers every feature; only adminSeatBlocking, '
       'accessorySupplements, onlinePayments, levelBooking, '
-      'adminLevelAssign, adminInvoicing and autoCheckInOut default OFF', () {
+      'adminLevelAssign, adminInvoicing, autoCheckInOut and badgeSignIn '
+      'default OFF', () {
     expect(featureManifest.keys, containsAll(WorkspaceFeature.values));
     for (final entry in featureManifest.values) {
       expect(
@@ -49,7 +58,7 @@ void main() {
   });
 
   test('a stored true override enables the default-OFF features '
-      '(#161, #170, 0043, 0050, 0060)', () {
+      '(#161, #170, 0043, 0050, 0060, #662)', () {
     final enabled = resolveEnabledFeatures(const {
       'adminSeatBlocking': true,
       'accessorySupplements': true,
@@ -58,6 +67,7 @@ void main() {
       'adminLevelAssign': true,
       'adminInvoicing': true,
       'autoCheckInOut': true,
+      'badgeSignIn': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);
@@ -67,6 +77,10 @@ void main() {
     expect(enabled.contains(WorkspaceFeature.adminLevelAssign), isTrue);
     expect(enabled.contains(WorkspaceFeature.adminInvoicing), isTrue);
     expect(enabled.contains(WorkspaceFeature.autoCheckInOut), isTrue);
+    expect(enabled.contains(WorkspaceFeature.badgeSignIn), isTrue);
+    // Every default-OFF feature turned on = the whole registry. If this
+    // set ever falls short, a feature was added without a home in
+    // defaultOffFeatures above.
     expect(enabled, WorkspaceFeature.values.toSet());
   });
 
