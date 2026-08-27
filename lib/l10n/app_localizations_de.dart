@@ -632,6 +632,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get sageTaxCode => 'Steuerschlüssel (T1 / T0 / T9)';
 
   @override
+  String get saftLedgerTitle => 'Buchungen aufnehmen?';
+
+  @override
+  String get saftLedgerIntro =>
+      'Mit Kontonummern enthält die Datei doppelte Buchungen, die Ihre Steuerberatung importieren statt eintippen kann. Sie decken Ihre Umsätze und die zugehörigen Zahlungen ab — nicht Ihre gesamte Buchführung.';
+
+  @override
+  String get saftDocumentsOnly => 'Nur Belege';
+
+  @override
+  String get saftWithPostings => 'Mit Buchungen';
+
+  @override
   String get billPdfTitle => 'Monatsrechnung';
 
   @override

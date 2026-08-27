@@ -732,6 +732,22 @@
   "@sageTaxCode": {
     "description": "#669 - accounting export formats"
   },
+  "saftLedgerTitle": "Include postings?",
+  "@saftLedgerTitle": {
+    "description": "#669 - SAF-T derived postings"
+  },
+  "saftLedgerIntro": "With account numbers, the file carries double-entry postings your accountant can import instead of keying in. They cover your sales and the payments against them — not your whole books.",
+  "@saftLedgerIntro": {
+    "description": "#669 - SAF-T derived postings"
+  },
+  "saftDocumentsOnly": "Documents only",
+  "@saftDocumentsOnly": {
+    "description": "#669 - SAF-T derived postings"
+  },
+  "saftWithPostings": "With postings",
+  "@saftWithPostings": {
+    "description": "#669 - SAF-T derived postings"
+  },
   "billPdfTitle": "Monthly bill",
   "@billPdfTitle": {
     "description": "Document title on the exported bill PDF (#133)"

@@ -159,5 +159,21 @@
   "sageTaxCode": "Steuerschlüssel (T1 / T0 / T9)",
   "@sageTaxCode": {
     "description": "#669 - accounting export formats"
+  },
+  "saftLedgerTitle": "Buchungen aufnehmen?",
+  "@saftLedgerTitle": {
+    "description": "#669 - SAF-T derived postings"
+  },
+  "saftLedgerIntro": "Mit Kontonummern enthält die Datei doppelte Buchungen, die Ihre Steuerberatung importieren statt eintippen kann. Sie decken Ihre Umsätze und die zugehörigen Zahlungen ab — nicht Ihre gesamte Buchführung.",
+  "@saftLedgerIntro": {
+    "description": "#669 - SAF-T derived postings"
+  },
+  "saftDocumentsOnly": "Nur Belege",
+  "@saftDocumentsOnly": {
+    "description": "#669 - SAF-T derived postings"
+  },
+  "saftWithPostings": "Mit Buchungen",
+  "@saftWithPostings": {
+    "description": "#669 - SAF-T derived postings"
   }
 }

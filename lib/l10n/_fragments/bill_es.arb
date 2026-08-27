@@ -159,5 +159,21 @@
   "sageTaxCode": "Código de IVA (T1 / T0 / T9)",
   "@sageTaxCode": {
     "description": "#669 - accounting export formats"
+  },
+  "saftLedgerTitle": "¿Incluir asientos?",
+  "@saftLedgerTitle": {
+    "description": "#669 - SAF-T derived postings"
+  },
+  "saftLedgerIntro": "Con números de cuenta, el archivo lleva asientos por partida doble que su asesor puede importar en lugar de teclear. Cubren sus ventas y los cobros correspondientes — no toda su contabilidad.",
+  "@saftLedgerIntro": {
+    "description": "#669 - SAF-T derived postings"
+  },
+  "saftDocumentsOnly": "Solo documentos",
+  "@saftDocumentsOnly": {
+    "description": "#669 - SAF-T derived postings"
+  },
+  "saftWithPostings": "Con asientos",
+  "@saftWithPostings": {
+    "description": "#669 - SAF-T derived postings"
   }
 }

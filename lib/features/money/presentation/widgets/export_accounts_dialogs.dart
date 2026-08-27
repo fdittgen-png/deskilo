@@ -272,3 +272,92 @@ Future<SageAccounts?> showSageAccountsDialog(
     ),
   );
 }
+
+/// Whether the SAF-T carries derived postings, and to which accounts
+/// (#669).
+///
+/// [withPostings] false is a real answer, not a cancellation: a
+/// documents-only SAF-T is the right file for an accountant who will do
+/// their own mapping, and it is what this export produced before
+/// postings existed. The dialog returning null means the owner backed
+/// out, and nothing is written.
+class SafTLedgerChoice {
+  const SafTLedgerChoice({required this.withPostings, required this.accounts});
+
+  final bool withPostings;
+  final FecAccounts accounts;
+}
+
+Future<SafTLedgerChoice?> showSafTLedgerDialog(
+  BuildContext context, {
+  FecAccounts initial = const FecAccounts(),
+}) {
+  final l10n = AppLocalizations.of(context);
+  final customers = TextEditingController(text: initial.customers);
+  final revenue = TextEditingController(text: initial.revenue);
+  final bank = TextEditingController(text: initial.bank);
+  final vat = TextEditingController(text: initial.vat);
+
+  Widget field(String key, TextEditingController controller, String label) =>
+      TextField(
+        key: ValueKey(key),
+        controller: controller,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(labelText: label),
+      );
+
+  return showDialog<SafTLedgerChoice>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(l10n?.saftLedgerTitle ?? 'Include postings?'),
+      content: SingleChildScrollView(
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Text(
+            l10n?.saftLedgerIntro ??
+                'With account numbers, the file carries double-entry '
+                    'postings your accountant can import instead of '
+                    'keying in. They cover your sales and the payments '
+                    'against them — not your whole books.',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          const SizedBox(height: AppSpacing.md),
+          field('saft-account-customers', customers,
+              l10n?.fecAccountCustomers ?? 'Customers'),
+          field('saft-account-revenue', revenue,
+              l10n?.fecAccountRevenue ?? 'Revenue'),
+          field('saft-account-vat', vat, l10n?.fecAccountVat ?? 'Collected VAT'),
+          field('saft-account-bank', bank, l10n?.fecAccountBank ?? 'Bank'),
+        ]),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n?.commonCancel ?? 'Cancel'),
+        ),
+        TextButton(
+          key: const ValueKey('saft-documents-only'),
+          onPressed: () => Navigator.of(context).pop(
+            const SafTLedgerChoice(
+              withPostings: false,
+              accounts: FecAccounts(),
+            ),
+          ),
+          child: Text(l10n?.saftDocumentsOnly ?? 'Documents only'),
+        ),
+        FilledButton(
+          key: const ValueKey('saft-ledger-confirm'),
+          onPressed: () => Navigator.of(context).pop(SafTLedgerChoice(
+            withPostings: true,
+            accounts: FecAccounts(
+              customers: customers.text.trim(),
+              revenue: revenue.text.trim(),
+              bank: bank.text.trim(),
+              vat: vat.text.trim(),
+            ),
+          )),
+          child: Text(l10n?.saftWithPostings ?? 'With postings'),
+        ),
+      ],
+    ),
+  );
+}

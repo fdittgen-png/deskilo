@@ -632,6 +632,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sageTaxCode => 'Código de IVA (T1 / T0 / T9)';
 
   @override
+  String get saftLedgerTitle => '¿Incluir asientos?';
+
+  @override
+  String get saftLedgerIntro =>
+      'Con números de cuenta, el archivo lleva asientos por partida doble que su asesor puede importar en lugar de teclear. Cubren sus ventas y los cobros correspondientes — no toda su contabilidad.';
+
+  @override
+  String get saftDocumentsOnly => 'Solo documentos';
+
+  @override
+  String get saftWithPostings => 'Con asientos';
+
+  @override
   String get billPdfTitle => 'Factura mensual';
 
   @override

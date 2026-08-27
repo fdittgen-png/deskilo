@@ -189,6 +189,39 @@ Future<void> exportAccountingFile(
     case 'saft_pt':
     case 'saft':
       final portugal = format.id == 'saft_pt';
+      // #669 — the generic file can carry derived postings, which is
+      // what makes it importable rather than merely readable. Offered,
+      // never assumed: it needs an account mapping, and inventing one
+      // is the thing this whole feature refuses to do.
+      //
+      // NOT offered for Portugal. Under TaxAccountingBasis 'F' the
+      // ledger sections are not part of the declaration at all, so
+      // adding them would break the very thing that makes that file
+      // valid.
+      SafTLedgerAccounts? ledger;
+      if (!portugal) {
+        final accounts = await showSafTLedgerDialog(
+          context,
+          initial: workspace.vatAccount.isEmpty
+              ? const FecAccounts()
+              : FecAccounts(vat: workspace.vatAccount),
+        );
+        if (!context.mounted) return;
+        // The dialog distinguishes "no postings" from "cancelled": a
+        // dismissed dialog aborts, choosing documents-only proceeds.
+        if (accounts case final chosen?) {
+          ledger = chosen.withPostings
+              ? SafTLedgerAccounts(
+                  customers: chosen.accounts.customers,
+                  revenue: chosen.accounts.revenue,
+                  bank: chosen.accounts.bank,
+                  vat: chosen.accounts.vat,
+                )
+              : null;
+        } else {
+          return;
+        }
+      }
       await runGuarded(
         context,
         domain: 'money',
@@ -207,6 +240,7 @@ Future<void> exportAccountingFile(
             fallbackDescription: l10n?.invoicesTitle ?? 'Invoice',
             profile:
                 portugal ? SafTProfile.portugal : SafTProfile.generic,
+            ledgerAccounts: ledger,
           ),
           named(portugal ? 'saft pt' : 'saf-t'),
         ),
