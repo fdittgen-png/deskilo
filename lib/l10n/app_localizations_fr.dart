@@ -2692,7 +2692,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un jeton est enregistré (saisissez-en un nouveau pour le remplacer).';
 
   @override
-  String get invoiceAccountingExport => 'Export comptable (SAF-T)';
+  String get invoiceAccountingExport => 'Export comptable';
 
   @override
   String get invoiceAccountingExportEmpty =>

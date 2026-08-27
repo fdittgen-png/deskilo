@@ -2684,7 +2684,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein Token ist gespeichert (neues eingeben, um es zu ersetzen).';
 
   @override
-  String get invoiceAccountingExport => 'Buchhaltungs-Export (SAF-T)';
+  String get invoiceAccountingExport => 'Buchhaltungsexport';
 
   @override
   String get invoiceAccountingExportEmpty =>

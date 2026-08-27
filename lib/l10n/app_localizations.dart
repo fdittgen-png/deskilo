@@ -4739,7 +4739,7 @@ abstract class AppLocalizations {
   /// Register action: the SAF-T file for the accountant (0074)
   ///
   /// In en, this message translates to:
-  /// **'Accounting export (SAF-T)'**
+  /// **'Accounting export'**
   String get invoiceAccountingExport;
 
   /// Refusal when the selected period holds nothing

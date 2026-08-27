@@ -74,8 +74,10 @@ class _InvoiceRegisterScreenState
           if (canIssue)
             IconButton(
               key: const ValueKey('invoice-accounting-export'),
-              tooltip: l10n?.invoiceAccountingExport ??
-                  'Accounting export (SAF-T)',
+              // Named for the ACTION, not for one of the seven formats
+              // behind it (#669). It said "(SAF-T)" until an owner
+              // hunting for the accounting export walked past it.
+              tooltip: l10n?.invoiceAccountingExport ?? 'Accounting export',
               icon: const Icon(Icons.plagiarism_outlined),
               onPressed: () => exportAccountingFile(
                 context,

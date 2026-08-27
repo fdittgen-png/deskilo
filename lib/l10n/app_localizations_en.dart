@@ -2665,7 +2665,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'A token is stored (type a new one to replace it).';
 
   @override
-  String get invoiceAccountingExport => 'Accounting export (SAF-T)';
+  String get invoiceAccountingExport => 'Accounting export';
 
   @override
   String get invoiceAccountingExportEmpty =>
