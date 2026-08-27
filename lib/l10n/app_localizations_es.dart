@@ -436,6 +436,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Desactivado por defecto: una credencial que le registra la entrada no inicia su sesión hasta que usted lo decida.';
 
   @override
+  String get badgeAuthNeedsPin =>
+      'Defina primero un PIN de acceso — una credencial sola nunca debe bastar.';
+
+  @override
   String billSubscription(int pct) {
     return 'Suscripción $pct %';
   }

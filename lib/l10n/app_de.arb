@@ -263,6 +263,10 @@
   "@badgeAuthEnabledHint": {
     "description": "#662 - badge sign-in"
   },
+  "badgeAuthNeedsPin": "Setzen Sie zuerst eine Anmelde-PIN — ein Ausweis allein darf nie genügen.",
+  "@badgeAuthNeedsPin": {
+    "description": "#662 - badge sign-in"
+  },
   "billSubscription": "Abo {pct} %",
   "billEntitlement": "{used} von {included} halben Tagen genutzt ({openDays} Öffnungstage)",
   "billOverage": "{extra} zusätzliche halbe Tage",

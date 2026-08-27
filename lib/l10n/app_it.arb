@@ -263,6 +263,10 @@
   "@badgeAuthEnabledHint": {
     "description": "#662 - badge sign-in"
   },
+  "badgeAuthNeedsPin": "Imposta prima un PIN di accesso — il badge da solo non deve mai bastare.",
+  "@badgeAuthNeedsPin": {
+    "description": "#662 - badge sign-in"
+  },
   "billSubscription": "Abbonamento {pct} %",
   "billEntitlement": "{used} mezze giornate usate su {included} ({openDays} giorni di apertura)",
   "billOverage": "{extra} mezze giornate extra",

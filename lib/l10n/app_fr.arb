@@ -263,6 +263,10 @@
   "@badgeAuthEnabledHint": {
     "description": "#662 - badge sign-in"
   },
+  "badgeAuthNeedsPin": "Définissez d’abord un code de connexion — un badge seul ne doit jamais suffire.",
+  "@badgeAuthNeedsPin": {
+    "description": "#662 - badge sign-in"
+  },
   "billSubscription": "Abonnement {pct} %",
   "billEntitlement": "{used} demi-journées utilisées sur {included} ({openDays} jours d'ouverture)",
   "billOverage": "{extra} demi-journées supplémentaires",

@@ -437,6 +437,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Standardmäßig aus: Ein Ausweis, der Sie eincheckt, meldet Sie nicht an, bis Sie es erlauben.';
 
   @override
+  String get badgeAuthNeedsPin =>
+      'Setzen Sie zuerst eine Anmelde-PIN — ein Ausweis allein darf nie genügen.';
+
+  @override
   String billSubscription(int pct) {
     return 'Abo $pct %';
   }

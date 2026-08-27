@@ -117,5 +117,9 @@
   "badgeAuthEnabledHint": "Disattivo per impostazione predefinita: un badge che registra la tua entrata non ti fa accedere finché non lo decidi tu.",
   "@badgeAuthEnabledHint": {
     "description": "#662 - badge sign-in"
+  },
+  "badgeAuthNeedsPin": "Imposta prima un PIN di accesso — il badge da solo non deve mai bastare.",
+  "@badgeAuthNeedsPin": {
+    "description": "#662 - badge sign-in"
   }
 }

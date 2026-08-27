@@ -243,4 +243,66 @@ void main() {
       expect(source, isNot(contains('userId')));
     });
   });
+
+  group('the badge can actually be ARMED — the gap the owner hit', () {
+    // Reported as "how do I associate the badge to my account?", from
+    // the Linked-accounts screen, which is the wrong place and was the
+    // only place left to look.
+    //
+    // The cause: `setBadgeAuthEnabled` shipped in the repository with
+    // translations and NO UI, and `MemberBadge` did not even carry the
+    // field. So a member could set a PIN and then had no way to say
+    // which badge it applied to — badge sign-in could not complete end
+    // to end for anyone.
+    test('the badge model carries the flag', () {
+      final source = File('lib/features/workspace/domain/member_badge.dart')
+          .readAsStringSync();
+      expect(source, contains('authEnabled'));
+      expect(source, contains("row['auth_enabled'] == true"),
+          reason: 'a pre-0123 row has no column, and absent must read as '
+              'OFF rather than throw');
+    });
+
+    test('the badge manager offers the switch', () {
+      final dialog = File('lib/features/workspace/presentation/widgets/'
+              'badge_manager_dialog.dart')
+          .readAsStringSync();
+      expect(dialog, contains("ValueKey('badge-auth-"));
+      expect(dialog, contains('setAuthEnabled'));
+    });
+
+    test('the refusal is SURFACED, not swallowed', () {
+      // The server refuses to arm a badge before its owner has a PIN.
+      // Without surfacing it the switch flicks back with no explanation
+      // and the member cannot guess what is missing.
+      final dialog = File('lib/features/workspace/presentation/widgets/'
+              'badge_manager_dialog.dart')
+          .readAsStringSync();
+      expect(dialog, contains('badgeAuthNeedsPin'));
+    });
+
+    test('ONLY the member\'s own tile passes the callback', () {
+      // An admin who could arm a member\'s badge could sign in as them,
+      // and every check-in afterwards would carry that member\'s name.
+      // The server refuses it too ('not your badge') — this is the
+      // client half of one decision.
+      final mine = File('lib/features/workspace/presentation/widgets/'
+              'my_badge_tile.dart')
+          .readAsStringSync();
+      expect(mine, contains('setAuthEnabled:'));
+      final admins = File('lib/features/workspace/presentation/screens/'
+              'members_screen.dart')
+          .readAsStringSync();
+      expect(admins, isNot(contains('setAuthEnabled:')),
+          reason: 'the admin badge manager must not offer it');
+    });
+
+    test('the callback is optional, so omitting it hides the control', () {
+      final dialog = File('lib/features/workspace/presentation/widgets/'
+              'badge_manager_dialog.dart')
+          .readAsStringSync();
+      expect(dialog, contains('setAuthEnabled;'));
+      expect(dialog, contains('if (arm == null) return row;'));
+    });
+  });
 }

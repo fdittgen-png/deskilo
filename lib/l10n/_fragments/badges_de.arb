@@ -117,5 +117,9 @@
   "badgeAuthEnabledHint": "Standardmäßig aus: Ein Ausweis, der Sie eincheckt, meldet Sie nicht an, bis Sie es erlauben.",
   "@badgeAuthEnabledHint": {
     "description": "#662 - badge sign-in"
+  },
+  "badgeAuthNeedsPin": "Setzen Sie zuerst eine Anmelde-PIN — ein Ausweis allein darf nie genügen.",
+  "@badgeAuthNeedsPin": {
+    "description": "#662 - badge sign-in"
   }
 }
