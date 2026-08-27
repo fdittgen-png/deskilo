@@ -914,6 +914,78 @@ abstract class AppLocalizations {
   /// **'Export bill as PDF'**
   String get billPdfExport;
 
+  /// #671 - report document text (reportCoaTitle)
+  ///
+  /// In en, this message translates to:
+  /// **'Chart of accounts — preview'**
+  String get reportCoaTitle;
+
+  /// #671 - report document text (reportCoaIntro)
+  ///
+  /// In en, this message translates to:
+  /// **'A suggestion, not your accounting. These are the accounts a bookkeeper in your country would usually use for a space like yours.'**
+  String get reportCoaIntro;
+
+  /// #671 - report document text (reportCoaAccounts)
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested accounts'**
+  String get reportCoaAccounts;
+
+  /// #671 - report document text (reportCoaNumber)
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get reportCoaNumber;
+
+  /// #671 - report document text (reportCoaLabel)
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get reportCoaLabel;
+
+  /// #671 - report document text (reportCoaDisclaimer)
+  ///
+  /// In en, this message translates to:
+  /// **'Preview only. DesKilo does not keep a ledger and does not do your accounting — your accountant\'s chart always wins.'**
+  String get reportCoaDisclaimer;
+
+  /// #671 - report document text (reportBadgesTitle)
+  ///
+  /// In en, this message translates to:
+  /// **'Member badges'**
+  String get reportBadgesTitle;
+
+  /// #671 - report document text (reportBadgesIntro)
+  ///
+  /// In en, this message translates to:
+  /// **'Cut along the lines. Each card carries one member\'s badge code — present it at the kiosk to check in.'**
+  String get reportBadgesIntro;
+
+  /// #671 - report document text (reportBadgesFooter)
+  ///
+  /// In en, this message translates to:
+  /// **'A lost badge should be revoked in Members & plans, not just replaced.'**
+  String get reportBadgesFooter;
+
+  /// #671 - report document text (reportSpaceCodesTitle)
+  ///
+  /// In en, this message translates to:
+  /// **'Space codes'**
+  String get reportSpaceCodesTitle;
+
+  /// #671 - report document text (reportSpaceCodesIntro)
+  ///
+  /// In en, this message translates to:
+  /// **'One card per seat, table, room and floor. Stick each card on its space: scanning it opens the same sheet the kiosk shows.'**
+  String get reportSpaceCodesIntro;
+
+  /// #671 - report document text (reportSpaceCodesFooter)
+  ///
+  /// In en, this message translates to:
+  /// **'A card that no longer matches its space misleads whoever scans it — reprint the sheet after moving or renaming a space.'**
+  String get reportSpaceCodesFooter;
+
   /// Owner billing editor (#128): fee bands + subscription levels; screen title and settings entry
   ///
   /// In en, this message translates to:

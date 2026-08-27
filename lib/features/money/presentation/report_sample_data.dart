@@ -1,0 +1,92 @@
+// SPDX-License-Identifier: 0BSD
+//
+// The fixture the report editor's quick preview renders against when no
+// real invoice exists yet (#474). Split out of report_defaults.dart:
+// the shipped TEMPLATES and the SAMPLE DATA they are previewed with are
+// separate concerns, and only one of them is legally load-bearing.
+//
+// Everything here is invented. Nothing reads the workspace, and nothing
+// here may ever start to — a preview that quietly showed a real member's
+// name and balance would leak one member's money to whoever is editing
+// the template.
+import '../../../l10n/app_localizations.dart';
+
+/// Simulated-execution data (#474): a plausible invoice with lines and
+/// VAT, plus the reminder and legal-mention fields (#480) — the quick
+/// preview runs on it when no real invoice exists yet. Everything is
+/// sample text, no live data.
+Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
+      'workspace': 'Coworking Demo',
+      'workspace_address': '1 Example Street, 12345 Demo City',
+      'member': 'Alex Sample',
+      'number': 'INV-2026-0042',
+      'period': 'July 2026',
+      'issued': '2026-07-31',
+      'issued_by': 'Demo Owner',
+      'replaces': '',
+      'total': '145,00 €',
+      'charges': '165,00 €',
+      'payments': '-20,00 €',
+      'net_total': '120,83 €',
+      'vat_total': '24,17 €',
+      'voided': false,
+      'proforma': false,
+      'copy': false,
+      'credit_note': false,
+      'refund_total': '',
+      'has_vat': true,
+      'lines': [
+        {
+          'label': l10n?.invoicePdfDescription ?? 'Subscription',
+          'amount': '120,00 €',
+          'negative': false,
+          'qty': '1',
+          'unit_price': '120,00 €',
+          'vat_rate': '20 %',
+          'net': '100,00 €',
+        },
+        {
+          'label': 'Extra day',
+          'amount': '25,00 €',
+          'negative': false,
+          'qty': '1',
+          'unit_price': '25,00 €',
+          'vat_rate': '20 %',
+          'net': '20,83 €',
+        },
+        {
+          'label': 'Credit',
+          'amount': '-20,00 €',
+          'negative': true,
+          'qty': '1',
+          'unit_price': '-20,00 €',
+          'vat_rate': '',
+          'net': '-20,00 €',
+        },
+      ],
+      'vat': [
+        {'rate': '20 %', 'net': '120,83 €', 'amount': '24,17 €'},
+      ],
+      'reminder_level': 1,
+      'reminder_date': '2026-08-15',
+      'days_open': 15,
+      // #480 — the legal mention variables, filled like a French SARL.
+      'seller_legal_form': 'SARL au capital de 7 500 €',
+      'seller_registration': 'RCS Demo City 123 456 789',
+      'seller_vat_id': 'FR 39 680 357 910',
+      'seller_legal_id': '680 357 910',
+      'exemption_reason': '',
+      'client_address': '3 Avenue de la Liberté, 35000 Rennes',
+      'client_vat_id': 'FR 79 849 149 108',
+      'client_legal_id': '849 149 108',
+      'payment_terms':
+          l10n?.invoiceLegalPaymentTermsDefault ?? 'Payment on receipt.',
+      'late_penalty': l10n?.invoiceLegalLatePenaltyDefault ??
+          'Late-payment penalty: three times the statutory interest rate.',
+      'recovery_indemnity': l10n?.invoiceLegalRecoveryDefault ??
+          'Fixed recovery indemnity for collection costs: €40.',
+      'escompte': l10n?.invoiceLegalEscompteDefault ??
+          'No discount for early payment.',
+      'insurance': '',
+      'special_mentions': '',
+    };

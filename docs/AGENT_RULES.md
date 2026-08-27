@@ -83,26 +83,32 @@ setup: `.mcp.json` declares the servers, `.claude/settings.json` pre-approves th
 carries the permission allow-list. `.claude/settings.local.json` stays git-ignored for
 per-machine opt-ins.
 
-**Dart & Flutter server** (`dart mcp-server`, official, bundled in the Dart SDK). Prefer
-it over shelling out — it is the difference between reading a verdict and grepping a
-1500-line log:
+**Dart & Flutter server** (`dart_mcp_server`, official, by the Dart/Flutter team).
+Installed globally — `dart pub global activate dart_mcp_server` — because it cannot be a
+dev dependency here: it needs `cli_util ^0.5.0` and `flutter_launcher_icons` pins
+`^0.4.1`. `.mcp.json` runs it via `dart pub global run`.
 
-- `run_tests` instead of `flutter test`. On failure it returns the failing test, expected
-  vs. actual and the source location, and nothing else. **Read the text, not `isError`** —
-  a failing run still reports `isError: false` and says *"returned a non-zero exit code"*
-  in the body. Same trap as a piped exit code.
-- `analyze_files` instead of `flutter analyze`; `dart_format`; `pub_dev_search` before
-  adding a dependency.
-- `resolve_workspace_symbol` / `hover` / `signature_help` instead of grepping for a symbol
-  — real analyzer data, not text matching. Each call costs 15–35 s (it spins up an
-  analysis server), so plain `grep` still wins for a quick literal search.
-- `launch_app` + `get_widget_tree` + `get_runtime_errors` when a question is about what the
-  running app actually renders.
+What it is good for:
 
-Version note: `dart_mcp_server` on pub (1.1.x) needs **Dart ≥ 3.12** and we are on 3.11.5,
-so the SDK-bundled 0.1.2+1 is the only route today. When the SDK moves, switch `.mcp.json`
-to `dart pub global run dart_mcp_server` for the newer `vm_service` tool and the blocking
-analysis call.
+- `analyze_files` instead of `flutter analyze` — structured, and it blocks until analysis
+  is actually complete rather than waiting on a notification that may never arrive.
+- `lsp` for real analyzer data instead of grep: `hover`, `signatureHelp`,
+  `resolveWorkspaceSymbol`. Each call spins up an analysis server (15–35 s), so plain
+  `grep` still wins for a quick literal search.
+- `pub_dev_search` before adding a dependency; `pub` for pub commands.
+- `dtd` + `vm_service` + `widget_inspector` + `hot_reload` / `hot_restart` +
+  `get_runtime_errors` when the question is about what a RUNNING app actually does. This
+  is the closest thing to looking at the screen, and it needs no browser extension.
+
+**There is no `run_tests` tool.** Earlier versions had one and this file used to recommend
+it; upstream removed it (gone from both the pub 1.1.1 build and the SDK-bundled 0.1.4).
+Run tests with `flutter test` — and keep the discipline that already cost this project
+once: NEVER pipe it. `flutter test > suite.log 2>&1; echo EXIT=$?` — a pipe masks the exit
+code, and a background wrapper once reported success over a suite with seven failures.
+
+Version note: the pub build (1.1.x) needs **Dart ≥ 3.12** and adds `vm_service` over the
+SDK-bundled build; below that SDK, `dart mcp-server` is the only route and has one tool
+fewer.
 
 **Supabase.** The tracked allow-list holds read-only tools only (`list_migrations`,
 `list_tables`, `get_advisors`, …). `execute_sql`, `apply_migration` and
