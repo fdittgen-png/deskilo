@@ -3,16 +3,25 @@ import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// The app boots on the Reserve hub (the centre button's form is the
-/// default screen); tests exercising the Plan tab switch to it first.
-/// Scoped to the bar: the hub's view toggle also carries a 'Plan' label.
+/// Puts the plan canvas on screen (#687).
+///
+/// It used to tap the Plan TAB. There is no Plan tab any more — the hub
+/// is the only map surface, and the app already boots onto it with the
+/// plan view selected. So this settles and returns.
+///
+/// The name is kept, and that is deliberate: seventeen test files call
+/// it to mean "show me the plan", which is still exactly what it does.
+/// Renaming it would have churned every one of them to say the same
+/// thing a different way, and the churn is where a real assertion gets
+/// lost.
+///
+/// It taps the hub's plan segment when something else is showing, so a
+/// test that switched to Day or Week can still come back.
 Future<void> switchToPlanTab(WidgetTester tester) async {
-  await tester.tap(
-    find.descendant(
-      of: find.byType(ShellBottomBar),
-      matching: find.text('Plan'),
-    ),
-  );
+  final planSegment = find.byKey(const ValueKey('reserve-plan-view'));
+  if (planSegment.evaluate().isNotEmpty) {
+    await tester.tap(planSegment);
+  }
   await tester.pumpAndSettle();
 }
 

@@ -27,7 +27,6 @@ import '../features/workspace/presentation/screens/roles_screen.dart';
 import '../features/money/presentation/screens/vat_screen.dart';
 import '../features/money/presentation/screens/services_screen.dart';
 import '../features/plan/presentation/screens/accessories_screen.dart';
-import '../features/plan/presentation/screens/plan_screen.dart';
 import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
@@ -193,11 +192,15 @@ GoRouter router(Ref ref) {
         builder: (context, state, navigationShell) =>
             ShellScreen(navigationShell: navigationShell),
         branches: [
+          // #687 — the first destination is the MESSAGING CENTRE. The
+          // plan moved to Réserver, which since #685 carries the editor
+          // and the way back to now, so the tab was drawing the same
+          // canvas twice and the slot is better spent.
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/plan',
-                builder: (context, state) => const PlanScreen(),
+                path: '/messages',
+                builder: (context, state) => const MessagesScreen(),
               ),
             ],
           ),
@@ -208,7 +211,7 @@ GoRouter router(Ref ref) {
                 redirect: (context, state) =>
                     featureEnabled(WorkspaceFeature.calendarTab)
                         ? null
-                        : '/plan',
+                        : '/messages',
                 builder: (context, state) => const CalendarScreen(),
               ),
             ],
@@ -222,7 +225,7 @@ GoRouter router(Ref ref) {
                 redirect: (context, state) =>
                     featureEnabled(WorkspaceFeature.membersDirectory)
                         ? null
-                        : '/plan',
+                        : '/messages',
                 builder: (context, state) => const DirectoryScreen(),
               ),
             ],
@@ -234,7 +237,7 @@ GoRouter router(Ref ref) {
                 redirect: (context, state) =>
                     featureEnabled(WorkspaceFeature.moneyTab)
                         ? null
-                        : '/plan',
+                        : '/messages',
                 builder: (context, state) => const MoneyScreen(),
               ),
             ],
@@ -285,17 +288,16 @@ GoRouter router(Ref ref) {
         // keeps deep links of gated workspaces safe.
         path: '/events',
         redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.eventsTab) ? null : '/plan',
+            featureEnabled(WorkspaceFeature.eventsTab) ? null : '/messages',
         builder: (context, state) => const EventsScreen(),
       ),
-      // #687 — the messaging centre. Its own route BEFORE it becomes a
-      // bottom-bar destination: the tab swap removes Plan from the bar,
-      // which is a one-line change to make and a release to undo, so it
-      // waits for the owner. Everything else about messaging can be
-      // built and used against this route in the meantime.
+      // #687 — /plan outlived its tab. Kept as a REDIRECT rather than
+      // deleted: "Show on plan" (#182/#576), any stored shortcut and any
+      // link someone already sent all point at it, and a dead path is a
+      // worse answer than the map they were asking for.
       GoRoute(
-        path: '/messages',
-        builder: (context, state) => const MessagesScreen(),
+        path: '/plan',
+        redirect: (context, state) => '/reserve',
       ),
       // Deep links from WhatsApp-mirrored messages (0106): the message
       // itself, a referenced reservation, a referenced space. All ride
@@ -305,7 +307,7 @@ GoRouter router(Ref ref) {
         redirect: (context, state) =>
             featureEnabled(WorkspaceFeature.memberNotifications)
                 ? null
-                : '/plan',
+                : '/messages',
         builder: (context, state) =>
             MessageLinkScreen(noteId: state.pathParameters['id'] ?? ''),
       ),
@@ -327,7 +329,7 @@ GoRouter router(Ref ref) {
         path: '/workspace-code',
         redirect: (context, state) {
           final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner ? null : '/plan';
+          return isOwner ? null : '/messages';
         },
         builder: (context, state) => const WorkspaceCodeScreen(),
       ),
@@ -341,7 +343,7 @@ GoRouter router(Ref ref) {
           final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner && featureEnabled(WorkspaceFeature.nfcBadges)
               ? null
-              : '/plan';
+              : '/messages';
         },
         builder: (context, state) => const NfcConfigScreen(),
       ),
@@ -351,7 +353,7 @@ GoRouter router(Ref ref) {
           final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner && featureEnabled(WorkspaceFeature.onlinePayments)
               ? null
-              : '/plan';
+              : '/messages';
         },
         builder: (context, state) => const PaymentConfigScreen(),
       ),
@@ -359,7 +361,7 @@ GoRouter router(Ref ref) {
         path: '/billing',
         redirect: (context, state) {
           final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner ? null : '/plan';
+          return isOwner ? null : '/messages';
         },
         builder: (context, state) => const BillingScreen(),
       ),
@@ -393,7 +395,7 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/documents',
         redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.documents) ? null : '/plan',
+            featureEnabled(WorkspaceFeature.documents) ? null : '/messages',
         builder: (context, state) => const DocumentsScreen(),
       ),
       // #513 — the central role→permission matrix. Anyone with a role
@@ -402,7 +404,7 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/roles',
         redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.roleManagement) ? null : '/plan',
+            featureEnabled(WorkspaceFeature.roleManagement) ? null : '/messages',
         builder: (context, state) => const RolesScreen(),
       ),
       // The workspace's manual payment methods (#486) — owner-only.
@@ -459,7 +461,7 @@ GoRouter router(Ref ref) {
           final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
           return isOwner && featureEnabled(WorkspaceFeature.services)
               ? null
-              : '/plan';
+              : '/messages';
         },
         builder: (context, state) => const ServicesScreen(),
       ),
@@ -473,7 +475,7 @@ GoRouter router(Ref ref) {
           return canAdminister &&
                   featureEnabled(WorkspaceFeature.accessorySupplements)
               ? null
-              : '/plan';
+              : '/messages';
         },
         builder: (context, state) => const AccessoriesScreen(),
       ),
@@ -481,7 +483,7 @@ GoRouter router(Ref ref) {
         path: '/features',
         redirect: (context, state) {
           final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner ? null : '/plan';
+          return isOwner ? null : '/messages';
         },
         builder: (context, state) => const FeaturesScreen(),
       ),
@@ -489,7 +491,7 @@ GoRouter router(Ref ref) {
         path: '/workspace-settings',
         redirect: (context, state) {
           final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner ? null : '/plan';
+          return isOwner ? null : '/messages';
         },
         builder: (context, state) => const WorkspaceSettingsScreen(),
       ),
@@ -497,7 +499,7 @@ GoRouter router(Ref ref) {
         path: '/validation',
         redirect: (context, state) {
           final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner ? null : '/plan';
+          return isOwner ? null : '/messages';
         },
         builder: (context, state) => const ValidationSettingsScreen(),
       ),
@@ -505,7 +507,7 @@ GoRouter router(Ref ref) {
         path: '/availability',
         redirect: (context, state) {
           final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner ? null : '/plan';
+          return isOwner ? null : '/messages';
         },
         builder: (context, state) => const AvailabilityScreen(),
       ),
@@ -516,7 +518,7 @@ GoRouter router(Ref ref) {
         redirect: (context, state) {
           final canAdminister =
               ref.read(myMemberProvider).value?.canAdminister ?? false;
-          return canAdminister ? null : '/plan';
+          return canAdminister ? null : '/messages';
         },
         builder: (context, state) => const MembersScreen(),
       ),
@@ -524,7 +526,7 @@ GoRouter router(Ref ref) {
         path: '/editor',
         redirect: (context, state) {
           final isOwner = ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner ? null : '/plan';
+          return isOwner ? null : '/messages';
         },
         builder: (context, state) => const EditorScreen(),
         routes: [

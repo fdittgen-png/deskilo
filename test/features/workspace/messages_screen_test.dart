@@ -118,7 +118,11 @@ void main() {
       find.byKey(const ValueKey('conversation-list-empty')),
       findsOneWidget,
     );
-    expect(find.textContaining('profile'), findsOneWidget);
+    // UX: it points at the button on THIS screen. The first version sent
+    // people to a member's profile on another screen to start the thing
+    // they had just opened the messaging centre to start.
+    expect(find.textContaining('pencil'), findsOneWidget);
+    expect(find.byKey(const ValueKey('new-conversation')), findsOneWidget);
   });
 
   group('the pieces the widget tree cannot show', () {

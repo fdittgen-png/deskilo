@@ -10,6 +10,7 @@ import '../../domain/member_note.dart';
 import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'conversation_bubble.dart';
+import 'group_info_sheet.dart';
 import 'member_note_composer.dart';
 
 /// A conversation, by id (#687) — the thread behind a row of the
@@ -108,7 +109,20 @@ class ConversationThread extends ConsumerWidget {
               ),
               child: Row(children: [
                 Expanded(
-                  child: Column(
+                  // The HEADER is the way into the roster — WhatsApp's
+                  // idiom, and the one place people look for "who is in
+                  // this". A separate overflow menu hides it behind a
+                  // guess.
+                  child: InkWell(
+                    key: const ValueKey('conversation-header'),
+                    onTap: conversation == null || !conversation.isGroup
+                        ? null
+                        : () => showGroupInfoSheet(
+                              context,
+                              ref,
+                              conversation: conversation,
+                            ),
+                    child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -118,14 +132,25 @@ class ConversationThread extends ConsumerWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       if (conversation?.isGroup ?? false)
-                        Text(
-                          l10n?.conversationMemberCount(
-                                conversation!.participantCount,
-                              ) ??
-                              '${conversation!.participantCount} members',
-                          style: theme.textTheme.bodySmall,
-                        ),
+                        Row(mainAxisSize: MainAxisSize.min, children: [
+                          Text(
+                            l10n?.conversationMemberCount(
+                                  conversation!.participantCount,
+                                ) ??
+                                '${conversation!.participantCount} members',
+                            style: theme.textTheme.bodySmall,
+                          ),
+                          // A chevron, because a tappable subtitle that
+                          // looks like plain text is a control nobody
+                          // finds.
+                          Icon(
+                            Icons.chevron_right,
+                            size: 16,
+                            color: theme.textTheme.bodySmall?.color,
+                          ),
+                        ]),
                     ],
+                    ),
                   ),
                 ),
                 IconButton(

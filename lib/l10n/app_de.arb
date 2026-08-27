@@ -2061,7 +2061,7 @@
   "@messagesEmpty": {
     "description": "#687 - messaging centre"
   },
-  "messagesEmptyHint": "Öffnen Sie das Profil eines Mitglieds, um zu schreiben, oder erstellen Sie eine Gruppe.",
+  "messagesEmptyHint": "Tippen Sie auf den Stift, um jemandem zu schreiben, oder erstellen Sie eine Gruppe.",
   "@messagesEmptyHint": {
     "description": "#687 - messaging centre"
   },
@@ -2073,6 +2073,58 @@
         "type": "int"
       }
     }
+  },
+  "newConversationTitle": "Neue Unterhaltung",
+  "@newConversationTitle": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationSearch": "Mitglieder suchen",
+  "@newConversationSearch": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationStart": "Chat starten",
+  "@newConversationStart": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationNoMembers": "Noch niemand sonst hier.",
+  "@newConversationNoMembers": {
+    "description": "#687 - messaging centre"
+  },
+  "newGroupName": "Gruppenname",
+  "@newGroupName": {
+    "description": "#687 - messaging centre"
+  },
+  "newGroupCreate": "Gruppe erstellen",
+  "@newGroupCreate": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationGroupInfo": "Gruppe",
+  "@conversationGroupInfo": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationAddPeople": "Mitglieder hinzufügen",
+  "@conversationAddPeople": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeave": "Gruppe verlassen",
+  "@conversationLeave": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeaveConfirm": "Diese Gruppe verlassen? Sie erhalten keine Nachrichten mehr; Ihre bisherigen bleiben.",
+  "@conversationLeaveConfirm": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationRemove": "Entfernen",
+  "@conversationRemove": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationAdmin": "Admin",
+  "@conversationAdmin": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeft": "Ausgetreten",
+  "@conversationLeft": {
+    "description": "#687 - messaging centre"
   },
   "moneyBaseFee": "Basis-Abo",
   "moneyUsage": "{used} von {included} halben Tagen genutzt",

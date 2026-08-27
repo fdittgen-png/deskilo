@@ -46,7 +46,7 @@ Future<
 /// The level currently painted on the live plan canvas.
 String canvasLevelId(WidgetTester tester) {
   final paint = tester
-      .widget<CustomPaint>(find.byKey(const ValueKey('live-plan-canvas')));
+      .widget<CustomPaint>(find.byKey(const ValueKey('reserve-plan-canvas')));
   return (paint.painter! as FloorPlanPainter).plan.levelId;
 }
 
@@ -57,11 +57,11 @@ void main() {
 
     // The floor switcher floats on the canvas (indoor-maps idiom): one
     // short button per level, full name in the tooltip.
-    expect(find.byKey(const ValueKey('plan-level-level-1')), findsOneWidget);
+    expect(find.byKey(const ValueKey('reserve-level-level-1')), findsOneWidget);
     expect(canvasLevelId(tester), 'level-1');
 
     // Tap the other floor's button.
-    await tester.tap(find.byKey(const ValueKey('plan-level-level-upper')));
+    await tester.tap(find.byKey(const ValueKey('reserve-level-level-upper')));
     await tester.pumpAndSettle();
 
     expect(canvasLevelId(tester), 'level-upper');
@@ -93,7 +93,7 @@ void main() {
     await tester.pumpAndSettle();
     await switchToPlanTab(tester);
 
-    expect(find.byKey(const ValueKey('plan-level-level-1')), findsNothing);
+    expect(find.byKey(const ValueKey('reserve-level-level-1')), findsNothing);
     expect(canvasLevelId(tester), 'level-1');
   });
 
@@ -111,9 +111,9 @@ void main() {
     // Split engaged: a vertical divider separates controls from the level,
     // and the plan canvas still renders (and its controls are reachable).
     expect(find.byType(VerticalDivider), findsOneWidget);
-    expect(find.byKey(const ValueKey('live-plan-canvas')), findsOneWidget);
+    expect(find.byKey(const ValueKey('reserve-plan-canvas')), findsOneWidget);
     // The floor switcher rides the canvas, not the side panel.
-    expect(find.byKey(const ValueKey('plan-level-level-1')), findsOneWidget);
+    expect(find.byKey(const ValueKey('reserve-level-level-1')), findsOneWidget);
   });
 
   testWidgets('portrait keeps the single-column layout (no split)',
@@ -125,6 +125,6 @@ void main() {
     await pumpTwoLevelPlan(tester);
 
     expect(find.byType(VerticalDivider), findsNothing);
-    expect(find.byKey(const ValueKey('live-plan-canvas')), findsOneWidget);
+    expect(find.byKey(const ValueKey('reserve-plan-canvas')), findsOneWidget);
   });
 }

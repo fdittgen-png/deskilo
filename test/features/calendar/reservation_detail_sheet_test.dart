@@ -75,9 +75,12 @@ Future<InMemoryDefaultLevelStore> pumpCalendarApp(
 }
 
 /// The painter of the live plan canvas.
+///
+/// #687 — the canvas is the HUB's now: plan_screen.dart is deleted and
+/// Réserver is the only map surface, so "Show on plan" lands there.
 FloorPlanPainter planPainter(WidgetTester tester) {
   final paint = tester
-      .widget<CustomPaint>(find.byKey(const ValueKey('live-plan-canvas')));
+      .widget<CustomPaint>(find.byKey(const ValueKey('reserve-plan-canvas')));
   return paint.painter! as FloorPlanPainter;
 }
 
@@ -138,7 +141,7 @@ void main() {
   });
 
   testWidgets(
-      'Show on plan jumps to the Plan tab on the seat\'s level, highlights '
+      'Show on plan jumps to the HUB on the seat\'s level, highlights '
       'the seat and does NOT persist the default level', (tester) async {
     final now = kTestNow;
     final store = await pumpCalendarApp(
@@ -194,12 +197,12 @@ void main() {
     // The time scroller browses the reservation's own window (#184): its
     // date on the date button, [startsAt, endsAt) on the from/to chips.
     expect(find.text(DateFormat.MMMd().format(start)), findsOneWidget);
-    final fromChip = find.byKey(const ValueKey('plan-from-chip'));
+    final fromChip = find.byKey(const ValueKey('reserve-from-chip'));
     expect(
       find.descendant(of: fromChip, matching: find.text('09:00')),
       findsOneWidget,
     );
-    final toChip = find.byKey(const ValueKey('plan-to-chip'));
+    final toChip = find.byKey(const ValueKey('reserve-to-chip'));
     expect(
       find.descendant(of: toChip, matching: find.text('11:00')),
       findsOneWidget,

@@ -21,7 +21,7 @@ import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
 import 'plan_screen_test.dart' show seatCenter;
 
-const _bannerKey = ValueKey('plan-closed-banner');
+const _bannerKey = ValueKey('reserve-closed-banner');
 const _closedDayText = 'Closed on this day';
 const _closedDayErrorText = 'The workspace is closed on that day.';
 
@@ -71,7 +71,7 @@ Future<FakeReservationRepository> pumpAvailabilityPlan(
 /// The painter of the live plan canvas.
 FloorPlanPainter planPainter(WidgetTester tester) {
   final paint = tester
-      .widget<CustomPaint>(find.byKey(const ValueKey('live-plan-canvas')));
+      .widget<CustomPaint>(find.byKey(const ValueKey('reserve-plan-canvas')));
   return paint.painter! as FloorPlanPainter;
 }
 

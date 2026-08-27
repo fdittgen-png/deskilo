@@ -63,7 +63,7 @@ void main() {
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
     final (left, right) = splitAroundButton(tester);
-    expect(left, ['Plan', 'Calendar']);
+    expect(left, ['Messages', 'Calendar']);
     expect(right, ['Members', 'Money']);
   });
 
@@ -71,7 +71,7 @@ void main() {
     await pumpApp(tester, featureFlags: const {'moneyTab': false});
 
     final (left, right) = splitAroundButton(tester);
-    expect(left, ['Plan', 'Calendar']);
+    expect(left, ['Messages', 'Calendar']);
     expect(right, ['Members']);
   });
 
@@ -79,7 +79,7 @@ void main() {
       (tester) async {
     await pumpApp(tester, featureFlags: const {'calendarTab': false});
 
-    expect(tabLabels(tester), ['Plan', 'Members', 'Money']);
+    expect(tabLabels(tester), ['Messages', 'Members', 'Money']);
   });
 
   testWidgets(
@@ -99,11 +99,12 @@ void main() {
     expect(find.byIcon(Icons.event_seat), findsOneWidget);
     expect(find.byIcon(Icons.event_seat_outlined), findsNothing);
 
-    // Switching to Plan highlights Plan and demotes the centre button.
+    // Switching to Messages highlights it and demotes the centre button
+    // (#687 — the first destination is the messaging centre now).
     await tester.tap(
       find.descendant(
         of: find.byType(ShellBottomBar),
-        matching: find.text('Plan'),
+        matching: find.text('Messages'),
       ),
     );
     await tester.pumpAndSettle();
@@ -113,7 +114,7 @@ void main() {
         .where((t) => t.selected)
         .toList();
     expect(selected, hasLength(1));
-    expect(selected.single.destination.label, 'Plan');
+    expect(selected.single.destination.label, 'Messages');
     expect(find.byIcon(Icons.event_seat_outlined), findsOneWidget);
     expect(find.byIcon(Icons.event_seat), findsNothing);
 

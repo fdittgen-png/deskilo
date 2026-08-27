@@ -6491,7 +6491,7 @@ abstract class AppLocalizations {
   /// #687 - messaging centre
   ///
   /// In en, this message translates to:
-  /// **'Open a member’s profile to write to them, or start a group.'**
+  /// **'Tap the pencil to write to someone, or start a group.'**
   String get messagesEmptyHint;
 
   /// #687 - messaging centre
@@ -6499,6 +6499,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 member} other{{count} members}}'**
   String conversationMemberCount(int count);
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'New conversation'**
+  String get newConversationTitle;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Search members'**
+  String get newConversationSearch;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Start chat'**
+  String get newConversationStart;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody else here yet.'**
+  String get newConversationNoMembers;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Group name'**
+  String get newGroupName;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Create group'**
+  String get newGroupCreate;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get conversationGroupInfo;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Add people'**
+  String get conversationAddPeople;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Leave group'**
+  String get conversationLeave;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Leave this group? You stop receiving its messages; what you already sent stays.'**
+  String get conversationLeaveConfirm;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get conversationRemove;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Admin'**
+  String get conversationAdmin;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Left'**
+  String get conversationLeft;
 
   /// Statement line for the plan's monthly fee
   ///

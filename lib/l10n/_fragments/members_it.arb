@@ -131,7 +131,7 @@
   "@messagesEmpty": {
     "description": "#687 - messaging centre"
   },
-  "messagesEmptyHint": "Apri il profilo di un membro per scrivergli, oppure crea un gruppo.",
+  "messagesEmptyHint": "Tocca la matita per scrivere a qualcuno, oppure crea un gruppo.",
   "@messagesEmptyHint": {
     "description": "#687 - messaging centre"
   },
@@ -143,5 +143,57 @@
         "type": "int"
       }
     }
+  },
+  "newConversationTitle": "Nuova conversazione",
+  "@newConversationTitle": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationSearch": "Cerca membri",
+  "@newConversationSearch": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationStart": "Avvia chat",
+  "@newConversationStart": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationNoMembers": "Ancora nessun altro qui.",
+  "@newConversationNoMembers": {
+    "description": "#687 - messaging centre"
+  },
+  "newGroupName": "Nome del gruppo",
+  "@newGroupName": {
+    "description": "#687 - messaging centre"
+  },
+  "newGroupCreate": "Crea gruppo",
+  "@newGroupCreate": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationGroupInfo": "Gruppo",
+  "@conversationGroupInfo": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationAddPeople": "Aggiungi membri",
+  "@conversationAddPeople": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeave": "Esci dal gruppo",
+  "@conversationLeave": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeaveConfirm": "Uscire da questo gruppo? Non riceverai più i suoi messaggi; quelli già inviati restano.",
+  "@conversationLeaveConfirm": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationRemove": "Rimuovi",
+  "@conversationRemove": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationAdmin": "Admin",
+  "@conversationAdmin": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeft": "Uscito",
+  "@conversationLeft": {
+    "description": "#687 - messaging centre"
   }
 }

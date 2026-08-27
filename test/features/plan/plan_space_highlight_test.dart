@@ -13,12 +13,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'plan_screen_test.dart' show pumpPlan;
 
 FloorPlanPainter _livePainter(WidgetTester tester) => tester
-    .widget<CustomPaint>(find.byKey(const ValueKey('live-plan-canvas')))
+    .widget<CustomPaint>(find.byKey(const ValueKey('reserve-plan-canvas')))
     .painter! as FloorPlanPainter;
 
 Future<void> _focus(WidgetTester tester, PlanFocus focus) async {
   final container = ProviderScope.containerOf(
-    tester.element(find.byKey(const ValueKey('live-plan-canvas'))),
+    tester.element(find.byKey(const ValueKey('reserve-plan-canvas'))),
   );
   container.read(planFocusControllerProvider.notifier).setFocus(focus);
   await tester.pumpAndSettle();

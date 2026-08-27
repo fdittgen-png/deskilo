@@ -20,17 +20,21 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('the editor is reachable from BOTH map surfaces', () {
+  group('the editor is reachable from the map surface', () {
     late String shell;
 
     setUpAll(() {
       shell = File('lib/app/shell/shell_screen.dart').readAsStringSync();
     });
 
-    test('the button is gated on plan OR reserve, not plan alone', () {
-      expect(shell, contains('ShellBranch.plan ||'));
+    // #685 put the editor on BOTH map surfaces. #687 then deleted the
+    // Plan tab, so "both" is now one — the assertion follows the
+    // architecture rather than freezing a step of it.
+    test('the button is gated on the hub, the only map surface', () {
       expect(shell, contains('ShellBranch.reserve'));
       expect(shell, contains("ValueKey('shell-editor-button')"));
+      expect(shell, isNot(contains('ShellBranch.plan ||')),
+          reason: 'there is no Plan tab to gate on any more');
     });
 
     test('it stays OWNER-only', () {

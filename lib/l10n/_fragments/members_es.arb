@@ -131,7 +131,7 @@
   "@messagesEmpty": {
     "description": "#687 - messaging centre"
   },
-  "messagesEmptyHint": "Abra el perfil de un miembro para escribirle, o cree un grupo.",
+  "messagesEmptyHint": "Toque el lápiz para escribir a alguien, o cree un grupo.",
   "@messagesEmptyHint": {
     "description": "#687 - messaging centre"
   },
@@ -143,5 +143,57 @@
         "type": "int"
       }
     }
+  },
+  "newConversationTitle": "Nueva conversación",
+  "@newConversationTitle": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationSearch": "Buscar miembros",
+  "@newConversationSearch": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationStart": "Iniciar chat",
+  "@newConversationStart": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationNoMembers": "Aún no hay nadie más.",
+  "@newConversationNoMembers": {
+    "description": "#687 - messaging centre"
+  },
+  "newGroupName": "Nombre del grupo",
+  "@newGroupName": {
+    "description": "#687 - messaging centre"
+  },
+  "newGroupCreate": "Crear grupo",
+  "@newGroupCreate": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationGroupInfo": "Grupo",
+  "@conversationGroupInfo": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationAddPeople": "Añadir miembros",
+  "@conversationAddPeople": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeave": "Salir del grupo",
+  "@conversationLeave": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeaveConfirm": "¿Salir de este grupo? Dejará de recibir sus mensajes; lo que ya envió permanece.",
+  "@conversationLeaveConfirm": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationRemove": "Quitar",
+  "@conversationRemove": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationAdmin": "Admin",
+  "@conversationAdmin": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeft": "Salió",
+  "@conversationLeft": {
+    "description": "#687 - messaging centre"
   }
 }

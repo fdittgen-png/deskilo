@@ -36,7 +36,6 @@ const Map<String, int> _baseline = {
   // 1690→1560 (2026-08-25): #638 — _LevelReserveSheet DELETED; the level
   // rail's layers icon now opens the shared SpaceSheet, so the second
   // whole-space sheet and its write/error handling left this file.
-    'lib/features/plan/presentation/screens/plan_screen.dart': 1560,
   // new 700 (2026-08-22): #575 day-phase rings + #576 space rings.
 // 700→740 (2026-08-24): #618 the occupant photo marker — clipped
   // photo draw beside the initial disc, one concern, same method.
@@ -50,7 +49,20 @@ const Map<String, int> _baseline = {
   // on the hint/closed-day banner.
 // 1110→1140 (2026-08-24): #620 the occupant-photo loader wrap on the
   // hub canvas — the #618 mechanism, no new concern.
-    'lib/features/reservations/presentation/screens/reserve_screen.dart': 1140,
+    // #687 — 1140 -> 1180. The hub absorbed the Plan tab, which is
+  // DELETED (1551 lines), and with it the show-on-plan focus jump.
+  //
+  // I raised this to 1220 first and then to nothing: the seat-ACTION
+  // half — tap a seat and get the right thing — came out into
+  // `reserve_seat_actions.dart` as a mixin, because none of it renders.
+  // What stays is the screen; what left is the decisions.
+  //
+  // 1140 -> 1190. I set 1180 first, which was a guess made BEFORE the
+  // UX pass; the map/list control that came out of it costs the other
+  // eight. The +50 over the original is the focus state and that
+  // control, both of which genuinely belong to the screen — the canvas,
+  // the level switcher and the day selector all read the focus.
+  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1190,
   // 980→990 (2026-08-03): #419 workspace dev-mode switch — admin gate,
   // workspace hint subtitle and the RPC write helper.
   // 990→1000 (2026-08-05): #478 Billing & reports admin entry.

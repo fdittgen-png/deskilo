@@ -178,4 +178,114 @@ void main() {
       expect(schema, contains("(kind = 'direct' and title is null)"));
     });
   });
+
+  group('groups can be started, run and left', () {
+    test('a group needs a name; a one-to-one does not', () {
+      // A direct thread is titled by the other person — a name that is
+      // theirs to change, never ours to snapshot. The schema enforces
+      // it; the sheet only asks once two people are picked.
+      final schema = File('supabase/migrations/0125_conversations.sql')
+          .readAsStringSync();
+      expect(schema, contains("(kind = 'direct' and title is null)"));
+      final sheet = File('lib/features/workspace/presentation/widgets/'
+              'new_conversation_sheet.dart')
+          .readAsStringSync();
+      expect(sheet, contains('bool get _isGroup => _selected.length > 1;'));
+      expect(sheet, contains("if (_isGroup)"),
+          reason: 'the name field appears only once it means something');
+    });
+
+    test('the start button is disabled until the choice is complete', () {
+      // A button that fails on tap teaches nothing about why.
+      final sheet = File('lib/features/workspace/presentation/widgets/'
+              'new_conversation_sheet.dart')
+          .readAsStringSync();
+      expect(sheet, contains('bool get _canStart'));
+      expect(sheet, contains('!_isGroup || _groupName.text.trim().isNotEmpty'));
+    });
+
+    test('neither picker offers a kiosk or yourself', () async {
+      // A kiosk is a shared tablet, not someone to write to; and a
+      // thread with yourself is refused server-side anyway.
+      for (final path in [
+        'lib/features/workspace/presentation/widgets/new_conversation_sheet.dart',
+        'lib/features/workspace/presentation/widgets/group_info_sheet.dart',
+      ]) {
+        final source = File(path).readAsStringSync();
+        expect(source, contains('!m.isKiosk'), reason: path);
+      }
+      final sheet = File('lib/features/workspace/presentation/widgets/'
+              'new_conversation_sheet.dart')
+          .readAsStringSync();
+      expect(sheet, contains('m.id != me?.id'));
+    });
+
+    test('admin-only controls are HIDDEN, not shown-then-refused', () {
+      // Showing a control the server would refuse produces a tap, a
+      // refusal and no explanation. Hiding it is the explanation.
+      final sheet = File('lib/features/workspace/presentation/widgets/'
+              'group_info_sheet.dart')
+          .readAsStringSync();
+      expect(sheet, contains('if (iAmAdmin)'));
+      expect(sheet, contains('iAmAdmin &&'));
+    });
+
+    test('an admin cannot REMOVE themselves — that is leaving', () {
+      // Leaving carries the last-admin rule (0126); removing does not,
+      // so routing self-removal through remove would let the last admin
+      // strand a group nobody can manage.
+      final sheet = File('lib/features/workspace/presentation/widgets/'
+              'group_info_sheet.dart')
+          .readAsStringSync();
+      expect(sheet, contains('p.memberId != myMemberId'));
+      final sql = File('supabase/migrations/0126_conversation_rpcs.sql')
+          .readAsStringSync();
+      expect(sql, contains('use leave_conversation to remove yourself'));
+    });
+
+    test('leaving is confirmed, and says what actually happens', () {
+      // "Leave" alone reads like it might delete the group for everyone.
+      final sheet = File('lib/features/workspace/presentation/widgets/'
+              'group_info_sheet.dart')
+          .readAsStringSync();
+      expect(sheet, contains("ValueKey('group-leave-confirm')"));
+      expect(sheet, contains('conversationLeaveConfirm'));
+    });
+
+    test('someone who left stays LISTED, dimmed and last', () {
+      // Their messages are still in the thread above; a name with no row
+      // is a name nobody can place.
+      final sheet = File('lib/features/workspace/presentation/widgets/'
+              'group_info_sheet.dart')
+          .readAsStringSync();
+      expect(sheet, contains('if (!p.isActive) p,'));
+      expect(sheet, contains('Opacity('));
+    });
+  });
+
+  group('the centre can start what it shows', () {
+    test('there is a compose button ON the screen', () {
+      // Its first empty state pointed at a member profile on ANOTHER
+      // screen — the app telling someone to leave the screen they opened
+      // for exactly this.
+      final screen = File('lib/features/workspace/presentation/screens/'
+              'messages_screen.dart')
+          .readAsStringSync();
+      expect(screen, contains("ValueKey('new-conversation')"));
+      expect(screen, contains('showNewConversationSheet'));
+    });
+
+    test('the group header opens the roster, with a chevron to say so', () {
+      // A tappable subtitle that looks like plain text is a control
+      // nobody finds.
+      final thread = File('lib/features/workspace/presentation/widgets/'
+              'conversation_thread.dart')
+          .readAsStringSync();
+      expect(thread, contains("ValueKey('conversation-header')"));
+      expect(thread, contains('showGroupInfoSheet'));
+      expect(thread, contains('Icons.chevron_right'));
+      // A DIRECT thread has no roster to open.
+      expect(thread, contains('!conversation.isGroup'));
+    });
+  });
 }

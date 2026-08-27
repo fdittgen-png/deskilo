@@ -146,11 +146,13 @@ void main() {
     // confirmation puts the silent path back, and this catches it —
     // it already did once, when the call sites moved to the shared
     // helper and this assertion still named the old symbol.
-    test('the plan and the Reserve hub each announce success AND failure',
-        () {
+    // #687 — plan_screen.dart is DELETED; the hub inherited the whole
+    // booking path, and the seat-ACTION half of it then moved into
+    // ReserveSeatActions. The assertion follows the code: what matters
+    // is that the path which BOOKS also speaks.
+    test('the seat booking path announces success AND failure', () {
       for (final path in [
-        'lib/features/plan/presentation/screens/plan_screen.dart',
-        'lib/features/reservations/presentation/screens/reserve_screen.dart',
+        'lib/features/reservations/presentation/reserve_seat_actions.dart',
       ]) {
         final source = File(path).readAsStringSync();
         // announceBooking is the shared confirmation call — the screens

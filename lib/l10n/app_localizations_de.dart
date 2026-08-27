@@ -3660,7 +3660,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get messagesEmptyHint =>
-      'Öffnen Sie das Profil eines Mitglieds, um zu schreiben, oder erstellen Sie eine Gruppe.';
+      'Tippen Sie auf den Stift, um jemandem zu schreiben, oder erstellen Sie eine Gruppe.';
 
   @override
   String conversationMemberCount(int count) {
@@ -3672,6 +3672,46 @@ class AppLocalizationsDe extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get newConversationTitle => 'Neue Unterhaltung';
+
+  @override
+  String get newConversationSearch => 'Mitglieder suchen';
+
+  @override
+  String get newConversationStart => 'Chat starten';
+
+  @override
+  String get newConversationNoMembers => 'Noch niemand sonst hier.';
+
+  @override
+  String get newGroupName => 'Gruppenname';
+
+  @override
+  String get newGroupCreate => 'Gruppe erstellen';
+
+  @override
+  String get conversationGroupInfo => 'Gruppe';
+
+  @override
+  String get conversationAddPeople => 'Mitglieder hinzufügen';
+
+  @override
+  String get conversationLeave => 'Gruppe verlassen';
+
+  @override
+  String get conversationLeaveConfirm =>
+      'Diese Gruppe verlassen? Sie erhalten keine Nachrichten mehr; Ihre bisherigen bleiben.';
+
+  @override
+  String get conversationRemove => 'Entfernen';
+
+  @override
+  String get conversationAdmin => 'Admin';
+
+  @override
+  String get conversationLeft => 'Ausgetreten';
 
   @override
   String get moneyBaseFee => 'Basis-Abo';

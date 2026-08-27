@@ -17,7 +17,7 @@ DateTime _at(int hour) =>
     DateTime(kTestNow.year, kTestNow.month, kTestNow.day, hour);
 
 FloorPlanPainter _livePainter(WidgetTester tester) => tester
-    .widget<CustomPaint>(find.byKey(const ValueKey('live-plan-canvas')))
+    .widget<CustomPaint>(find.byKey(const ValueKey('reserve-plan-canvas')))
     .painter! as FloorPlanPainter;
 
 void main() {

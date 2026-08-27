@@ -3624,7 +3624,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get messagesEmptyHint =>
-      'Open a member’s profile to write to them, or start a group.';
+      'Tap the pencil to write to someone, or start a group.';
 
   @override
   String conversationMemberCount(int count) {
@@ -3636,6 +3636,46 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get newConversationTitle => 'New conversation';
+
+  @override
+  String get newConversationSearch => 'Search members';
+
+  @override
+  String get newConversationStart => 'Start chat';
+
+  @override
+  String get newConversationNoMembers => 'Nobody else here yet.';
+
+  @override
+  String get newGroupName => 'Group name';
+
+  @override
+  String get newGroupCreate => 'Create group';
+
+  @override
+  String get conversationGroupInfo => 'Group';
+
+  @override
+  String get conversationAddPeople => 'Add people';
+
+  @override
+  String get conversationLeave => 'Leave group';
+
+  @override
+  String get conversationLeaveConfirm =>
+      'Leave this group? You stop receiving its messages; what you already sent stays.';
+
+  @override
+  String get conversationRemove => 'Remove';
+
+  @override
+  String get conversationAdmin => 'Admin';
+
+  @override
+  String get conversationLeft => 'Left';
 
   @override
   String get moneyBaseFee => 'Base subscription';

@@ -52,13 +52,13 @@ void main() {
       const {'moneyTab': false, 'calendarTab': false},
     );
 
-    expect(tabLabels(tester), ['Plan', 'Members']);
+    expect(tabLabels(tester), ['Messages', 'Members']);
   });
 
   testWidgets('all features on keeps the four tabs', (tester) async {
     await pumpWithFlags(tester, const {});
 
-    expect(tabLabels(tester), ['Plan', 'Calendar', 'Members', 'Money']);
+    expect(tabLabels(tester), ['Messages', 'Calendar', 'Members', 'Money']);
   });
 
   testWidgets(
@@ -97,7 +97,7 @@ void main() {
     );
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
-    expect(tabLabels(tester), ['Plan', 'Members']);
+    expect(tabLabels(tester), ['Messages', 'Members']);
     expect(find.byTooltip('Events'), findsNothing);
     // The app boots on the Reserve hub (its branch is never gated).
     final appBarTitle = find.descendant(

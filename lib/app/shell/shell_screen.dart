@@ -21,6 +21,7 @@ import '../../features/reservations/domain/check_in_reminders.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/member_note_refs.dart';
+import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../router.dart';
@@ -71,6 +72,13 @@ final Set<String> _sessionNotifiedNoteIds = <String>{};
 /// Plan · Calendar · Members · Money (spec §13, members since #230).
 /// Settings is not a tab — it is the top-right app-bar action, as in
 /// Sparkilo; the events feed sits behind the app-bar bell beside it.
+/// The Messages destination icon, badged only when there is something to
+/// badge (#687). The count comes from the SAME query the list renders,
+/// so the badge cannot disagree with the screen it points at.
+Widget _messagesIcon(IconData icon, int unread) => unread > 0
+    ? Badge.count(count: unread, child: Icon(icon))
+    : Icon(icon);
+
 class ShellScreen extends ConsumerWidget {
   const ShellScreen({required this.navigationShell, super.key});
 
@@ -205,7 +213,9 @@ class ShellScreen extends ConsumerWidget {
           .rescheduleCheckInReminders(reminders);
     });
     final tabTitles = [
-      l10n?.tabPlan ?? 'Plan',
+      // #687 — the first destination is Messages now; the plan lives on
+      // Réserver, which draws the same canvas.
+      l10n?.messagesTitle ?? 'Messages',
       l10n?.tabCalendar ?? 'Calendar',
       l10n?.directoryTitle ?? 'Members',
       l10n?.tabMoney ?? 'Money',
@@ -217,8 +227,11 @@ class ShellScreen extends ConsumerWidget {
     // Per-workspace feature gating (#146): the router branches stay fixed,
     // but disabled features drop their destination — so the bottom-bar
     // position and the branch index diverge and must be mapped both ways.
-    // Plan (and Settings in the app bar) are core and never gated.
+    // Messages (and Settings in the app bar) are core and never gated —
+    // a workspace with no messaging surface has no way to reach a
+    // conversation someone already sent it.
     final features = ref.watch(enabledFeaturesSyncProvider);
+    final unreadMessages = ref.watch(unreadMessagesProvider);
     final visibleBranches = [
       ShellBranch.plan,
       if (features.contains(WorkspaceFeature.calendarTab))
@@ -249,9 +262,16 @@ class ShellScreen extends ConsumerWidget {
               selectedIcon: const Icon(Icons.account_balance_wallet),
               label: tabTitles[ShellBranch.money],
             ),
+          // #687 — the messaging centre, carrying its own unread count.
+          // The count comes from the SAME query the list renders, so the
+          // badge cannot disagree with the screen it points at.
+          // No unread, NO BADGE WIDGET — not a hidden one. An
+          // always-present badge with isLabelVisible:false renders
+          // nothing and still answers find.byType(Badge), which is a
+          // widget in the tree lying about an empty inbox.
           _ => ShellDestination(
-              icon: const Icon(Icons.grid_view_outlined),
-              selectedIcon: const Icon(Icons.grid_view),
+              icon: _messagesIcon(Icons.forum_outlined, unreadMessages),
+              selectedIcon: _messagesIcon(Icons.forum, unreadMessages),
               label: tabTitles[ShellBranch.plan],
             ),
         };
@@ -265,9 +285,9 @@ class ShellScreen extends ConsumerWidget {
           // so an owner who spots a wrong desk while booking had to
           // leave the hub, switch tab and come back — for the same fix
           // they could make where they saw the problem.
-          if (isOwner &&
-              (navigationShell.currentIndex == ShellBranch.plan ||
-                  navigationShell.currentIndex == ShellBranch.reserve))
+          // #687 — Réserver is the only map surface now, so the editor
+          // sits there and nowhere else.
+          if (isOwner && navigationShell.currentIndex == ShellBranch.reserve)
             IconButton(
               key: const ValueKey('shell-editor-button'),
               icon: const Icon(Icons.design_services_outlined),

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,33 +18,31 @@ import '../../../../core/ui/view_toggle.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../calendar/presentation/widgets/day_timeline.dart';
 import '../../../members/providers/directory_providers.dart';
-import '../../../events/providers/event_providers.dart';
-import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/level.dart';
-import '../../../plan/domain/seat.dart';
 import '../../../plan/presentation/seat_occupancy.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
+import '../reserve_seat_actions.dart';
+import '../space_subjects.dart';
+import '../widgets/seat_list_view.dart';
+import '../../../plan/providers/default_level_controller.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
+import '../../../plan/providers/plan_focus_controller.dart';
 import '../../../plan/presentation/widgets/seat_photos.dart';
 import '../../../profile/domain/profile.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/member.dart';
 import '../../domain/week_tap_window.dart';
-import '../../domain/booking_error_text.dart';
-import '../booking_feedback.dart';
 import '../../../workspace/domain/workspace_availability.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/default_booking_period.dart';
 import '../../domain/reservation.dart';
-import '../../domain/seat_state_logic.dart';
 import '../../providers/default_period_controller.dart';
 import '../../providers/reservation_providers.dart';
 import '../../domain/space_code.dart';
 import '../widgets/booking_controls.dart';
 import '../widgets/booking_sheet.dart';
-import '../widgets/series_result_dialog.dart';
 import '../widgets/space_scan.dart';
 import '../widgets/reservation_detail_sheet.dart';
 import '../widgets/month_grid.dart';
@@ -78,7 +77,11 @@ abstract final class ReserveHubMetrics {
 }
 
 /// The three hub views under the date strip and window chips.
-enum _ReserveView { plan, day, week, month }
+/// #687 — `list` is the plan's SEAT LIST, ported from the deleted Plan
+/// tab. It sits in the main toggle rather than in a second one nested
+/// inside the plan view: two toggles meant two map icons in one toolbar,
+/// which is confusing to look at and ambiguous to tap.
+enum _ReserveView { plan, list, day, week, month }
 
 /// Reserve hub (#208, epic #204): full-screen route pushed by the bottom
 /// bar's raised centre button (#207). Top→bottom: a horizontal date-pill
@@ -102,7 +105,34 @@ class ReserveScreen extends ConsumerStatefulWidget {
   ConsumerState<ReserveScreen> createState() => _ReserveScreenState();
 }
 
-class _ReserveScreenState extends ConsumerState<ReserveScreen> {
+class _ReserveScreenState extends ConsumerState<ReserveScreen>
+    with ReserveSeatActions<ReserveScreen> {
+  // The seat-action half of this screen lives in ReserveSeatActions —
+  // the Plan tab's job, ported when that tab was deleted. These are what
+  // it needs from the hub; the live/browsing distinction above all,
+  // because it changes what a tap MEANS.
+  @override
+  bool get isLive => _isLive;
+
+  @override
+  BookingGranularity get granularity => _granularity;
+
+  @override
+  HalfDayWindow get bookingWindow => _effectiveWindow(_granularity);
+
+  @override
+  bool isWorkspaceOpenAt(DateTime at) => _isWorkspaceOpenAt(at);
+
+  @override
+  DateTime defaultEndFor(DateTime from) => _defaultEndFor(from);
+
+  @override
+  DateTime lastSlotOf(DateTime day) => _lastSlotOf(day);
+
+  @override
+  Future<void> openReservation(Reservation reservation) =>
+      _detailSheet(reservation);
+
   /// Local midnight of the day the hub opened on — the first pill of the
   /// date strip.
   late final DateTime _today;
@@ -122,6 +152,18 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
   /// plan tab's persisted default (DayTimeline pattern, #187).
   String? _levelId;
 
+  /// The seat LIST and the MAP are the same view with two
+  /// presentations, so both render the plan surface below.
+  bool get _seatList => _view == _ReserveView.list;
+
+  // #687 — "Show on plan" (#182/#576) lands HERE now that the hub is the
+  // only map surface. PlanCanvas has always taken these; the hub simply
+  // never passed them, because the Plan tab owned the jump.
+  String? _focusSeatId;
+  String? _focusDeskId;
+  String? _focusOfficeId;
+  bool _focusLevel = false;
+
   @override
   void initState() {
     super.initState();
@@ -129,6 +171,14 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
     // #490 — "today" is the WORKSPACE's date, not the device's.
     _today = WorkspaceTime.dateOf(now);
     _selectedDay = _today;
+    // A focus request may already be pending when this screen is first
+    // built — the ref.listen in build only catches later ones. Post-frame
+    // so applying it never mutates a provider during build.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final pending = ref.read(planFocusControllerProvider);
+      if (pending != null) _applyFocus(pending);
+    });
   }
 
   // ── window derivation (mirrors plan_screen's #184/#201 mechanics) ──
@@ -347,6 +397,110 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
   /// Whether the workspace is open on the local day of [at] (#186).
   /// Unknown (providers still loading or errored) counts as open — the
   /// server guard stays the authority.
+  /// LIVE mode: today, with no hand-picked window (#687).
+  ///
+  /// The same condition the "Now" button offers to restore, and the
+  /// hub's equivalent of the Plan tab's `_browse == null`. It decides
+  /// whether a free-seat tap is a WALK-UP — "I am standing here now" —
+  /// or a reservation for a browsed window. Getting it wrong either
+  /// checks someone in for a slot they are not in yet, or refuses to
+  /// check in someone who is standing at the desk.
+  bool get _isLive =>
+      _selectedDay.isAtSameMomentAs(_today) && _windowStart == null;
+
+  /// Applies a pending "Show on plan" jump (#182/#576).
+  ///
+  /// It lands HERE now that the hub is the only map surface. PlanCanvas
+  /// has always taken the highlight parameters; the hub simply never
+  /// passed them, because the Plan tab owned the jump.
+  void _applyFocus(PlanFocus focus) {
+    setState(() {
+      _view = _ReserveView.plan;
+      _levelId = focus.levelId;
+      _focusSeatId = focus.seatId;
+      _focusDeskId = focus.deskId;
+      _focusOfficeId = focus.officeId;
+      _focusLevel = focus.wholeLevel;
+    });
+    final at = focus.at;
+    // Only a FUTURE instant moves the browsed day: jumping to a booking
+    // that already ended should show WHERE it was, not send the hub back
+    // in time to a day nobody asked for.
+    if (at != null && at.isAfter(ref.read(clockProvider).now())) {
+      setState(() {
+        _selectedDay = WorkspaceTime.dateOf(at);
+        // Provisional (#184): the reservation's own end is not on the
+        // focus, so the window opens at its start with the default stay
+        // and is refined below once the day's bookings resolve.
+        _windowStart = at;
+        _windowEnd = _defaultEndFor(at);
+      });
+      unawaited(_resolveFocusWindow(focus, at));
+    }
+    // Cleared after the frame: mutating the provider inside its own
+    // change notification re-enters the listeners.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      ref.read(planFocusControllerProvider.notifier).clear();
+    });
+  }
+
+  /// #184 — widens the focus window to the jumped-to reservation's own
+  /// `[startsAt, endsAt)` once the day's bookings arrive.
+  ///
+  /// Ported with the Plan tab's job: without it the hub browses a
+  /// default-length window at the right start, so a two-hour booking
+  /// shows as one and the plan disagrees with the sheet that sent you.
+  ///
+  /// Whole-space jumps carry no seat and keep the default window —
+  /// there is no single reservation whose hours to adopt.
+  Future<void> _resolveFocusWindow(PlanFocus focus, DateTime from) async {
+    final seatId = focus.seatId;
+    if (seatId == null) return;
+    final List<Reservation> reservations;
+    try {
+      reservations =
+          await ref.read(reservationsForDayProvider(dayKeyOf(from)).future);
+    } catch (e, st) {
+      debugPrint('focus window resolution failed: $e\n$st');
+      TraceLogger.instance.error(
+        'reservations',
+        'focus window resolution failed',
+        error: e,
+        stackTrace: st,
+      );
+      return;
+    }
+    // They may have moved on while the day was loading.
+    if (!mounted || _windowStart != from) return;
+    final covering = reservations
+        .where((r) => r.seatId == seatId && r.coversInstant(from))
+        .firstOrNull;
+    if (covering == null) return;
+    var end = covering.endsAt;
+    final last = _lastSlotOf(from);
+    if (end.isAfter(last)) end = last;
+    if (!end.isAfter(from)) return;
+    setState(() => _windowEnd = end);
+  }
+
+  /// Drops the jump highlight. Any interaction that changes what is being
+  /// looked at means the question "where is it" has been answered.
+  void _clearFocus() {
+    if (_focusSeatId == null &&
+        _focusDeskId == null &&
+        _focusOfficeId == null &&
+        !_focusLevel) {
+      return;
+    }
+    setState(() {
+      _focusSeatId = null;
+      _focusDeskId = null;
+      _focusOfficeId = null;
+      _focusLevel = false;
+    });
+  }
+
   bool _isWorkspaceOpenAt(DateTime at) {
     final openWeekdays = ref.read(openWeekdaysProvider).value;
     final closures = ref.read(closureDaysProvider).value;
@@ -356,217 +510,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
 
   /// Forward to the shared mapper with this screen's slot size
   /// (maintainability audit: the 42-line switch was pasted per screen).
-  String _errorText(AppLocalizations? l10n, Object error, String fallback) =>
-      bookingErrorText(l10n, error, fallback,
-          stepMinutes: _granularity.stepMinutes);
 
 
   // ── Plan view: seat tap → shared booking sheet (#206) ──
 
-  Future<void> _onSeatTap(
-    FloorPlan plan,
-    Seat seat,
-    List<Reservation> reservations,
-    HalfDayWindow window,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    // Closed day (#186): no sheet at all — the server would reject any
-    // booking touching it (`assert_workspace_open`, migration 0013).
-    if (!_isWorkspaceOpenAt(window.start)) {
-      AppSnack.info(
-        context,
-        l10n?.planClosedDay ?? 'Closed on this day',
-        replace: true,
-      );
-      return;
-    }
-    final myMemberId = ref.read(myMemberProvider).value?.id;
-    final state = seatStateInRange(
-      plan: plan,
-      seat: seat,
-      reservations: reservations,
-      myMemberId: myMemberId,
-      from: window.start,
-      to: window.end,
-    );
-    switch (state) {
-      case SeatState.blocked:
-        // No blocking management here — that stays on the Plan tab (#161).
-        AppSnack.info(
-          context,
-          l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.',
-          replace: true,
-        );
-      case SeatState.free:
-        await _bookingSheet(seat, reservations, window, plan: plan);
-      case SeatState.mine:
-        final mine = reservationOnSeatInRange(
-          plan: plan,
-          seat: seat,
-          reservations: reservations,
-          from: window.start,
-          to: window.end,
-        );
-        // Visibility, not management: the detail sheet (#206) shows where
-        // the seat is; cancelling stays in the existing calendar/plan
-        // flows.
-        if (mine != null) await _detailSheet(mine);
-      case SeatState.reserved:
-      case SeatState.occupied:
-        final other = reservationOnSeatInRange(
-          plan: plan,
-          seat: seat,
-          reservations: reservations,
-          from: window.start,
-          to: window.end,
-        );
-        if (other == null) return;
-        final names = ref.read(memberNamesProvider).value ?? const {};
-        final name = names[other.memberId] ?? '';
-        final template = state == SeatState.occupied
-            ? (l10n?.planOccupiedBy(name) ?? 'Occupied by $name')
-            : (l10n?.planReservedBy(name) ?? 'Reserved by $name');
-        final until =
-            DateFormat.Hm().format(WorkspaceTime.wall(other.endsAt));
-        AppSnack.info(
-          context,
-          '$template · ${l10n?.planUntil(until) ?? 'until $until'}',
-          replace: true,
-        );
-    }
-  }
-
-  /// Punctual reservation over the browsed window via the shared
-  /// [BookingSheet] (#206) — never a walk-up, never a series, never a
-  /// maintenance block (those stay on the Plan tab).
-  /// The plan containing [seatId] — the Day/Week hub surfaces span all
-  /// levels, so a tapped seat's plan is resolved from the loaded plans
-  /// (#452: the next-reservation cap needs it for whole-space rows).
-  FloorPlan? _planContaining(String seatId) {
-    final levels = ref.read(levelsProvider).value ?? const [];
-    for (final level in levels) {
-      final plan = ref.read(floorPlanProvider(level.id)).value;
-      if (plan != null && plan.seats.any((s) => s.id == seatId)) return plan;
-    }
-    return null;
-  }
-
-  Future<void> _bookingSheet(
-    Seat seat,
-    List<Reservation> reservations,
-    HalfDayWindow window, {
-    FloorPlan? plan,
-  }) async {
-    final l10n = AppLocalizations.of(context);
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-    // Defense in depth (#161): the tap handler never routes blocked seats
-    // here, but a stale plan could — the RPCs reject them anyway.
-    if (seat.isBlockedAt(window.start)) {
-      AppSnack.info(
-        context,
-        l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.',
-        replace: true,
-      );
-      return;
-    }
-    final myMemberId = ref.read(myMemberProvider).value?.id;
-    final dayBased = _granularity.isDayBased;
-    // Cap by the next reservation on the seat (plan parity): a
-    // range-filtered free seat cannot be capped below the window, but a
-    // stale plan could.
-    // Whole-space rows need the seat's plan; without one the cap is
-    // skipped — the server re-checks every booking anyway.
-    final seatPlan = plan ?? _planContaining(seat.id);
-    final next = seatPlan == null
-        ? null
-        : nextReservationOnSeat(
-            plan: seatPlan,
-            seat: seat,
-            reservations: reservations,
-            at: window.start,
-          );
-    var end = window.end;
-    var capped = false;
-    if (next != null && next.startsAt.isBefore(end)) {
-      end = next.startsAt;
-      capped = true;
-    }
-
-    final choice = await showModalBottomSheet<BookingChoice>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => BookingSheet(
-        seatId: seat.id,
-        seatName: seat.name,
-        start: window.start,
-        initialEnd: end,
-        cap: next?.startsAt,
-        capped: capped,
-        granularity: _granularity,
-        walkUp: false,
-        fixedEnd: dayBased,
-        members: const [],
-        myMemberId: myMemberId,
-        // Series is available from the hub too now (was Plan-only): the
-        // repeat picker shows when the workspace enables it.
-        allowSeries: ref
-            .read(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.seriesBooking),
-        allowBlocking: false,
-      ),
-    );
-    if (choice == null || !mounted) return;
-
-    try {
-      if (choice.pattern == null) {
-        await ref.read(reservationRepositoryProvider).create(
-              workspaceId: workspace.id,
-              seatId: seat.id,
-              startsAt: choice.start,
-              endsAt: choice.end,
-              checkIn: false,
-            );
-        // #663: the Reserve hub reported every refusal and no success at
-        // all — a booking simply happened, or appeared to. Say which.
-        if (!mounted) return;
-        announceBooking(context, l10n,
-            checkedIn: false,
-            start: choice.start,
-            end: choice.end,
-            spaceName: seat.name);
-      } else {
-        final result =
-            await ref.read(reservationRepositoryProvider).createSeries(
-                  workspaceId: workspace.id,
-                  seatId: seat.id,
-                  firstStart: choice.start,
-                  firstEnd: choice.end,
-                  pattern: choice.pattern!,
-                  until: choice.until!,
-                );
-        if (mounted) await showSeriesResultDialog(context, result);
-      }
-    } catch (e, st) {
-      debugPrint('reserve hub booking failed: $e\n$st');
-      TraceLogger.instance
-          .error('reserve', 'booking failed', error: e, stackTrace: st);
-      if (!mounted) return;
-      AppSnack.error(
-        context,
-        _errorText(
-          l10n,
-          e,
-          l10n?.reserveBookingFailed ??
-              'Could not reserve — the seat may have just been taken.',
-        ),
-        replace: true,
-      );
-      return;
-    }
-    if (!mounted) return;
-    invalidateBookingData(ref);
-  }
 
   /// Detail sheet + "Show on plan" jump — via the shared helper that
   /// owns the popped-target handling (#182/#206/#422).
@@ -577,6 +524,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // #182 — the hub stays alive in the shell's indexed stack, so this
+    // listener survives tab switches.
+    ref.listen(planFocusControllerProvider, (_, focus) {
+      if (focus != null) _applyFocus(focus);
+    });
     final l10n = AppLocalizations.of(context);
     // Watched so the chips swap once the rule resolves (#201) — flexible
     // is also the rule's default, so nothing flashes.
@@ -609,7 +561,16 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               options: [
                 ViewToggleOption(
                   value: _ReserveView.plan,
-                  icon: Icons.map_outlined,
+                  // The Plan TAB's own former icon, now free and already
+                  // meaning "the plan" to anyone who used it.
+                  //
+                  // Not a map icon (the map/list button beside this row
+                  // owns that metaphor) and not a seat icon (the raised
+                  // Reserve button owns THAT). Three collisions in a row
+                  // is a sign the toolbar is icon-dense; each one was a
+                  // real ambiguity a user would meet, not just a finder
+                  // the tests tripped over.
+                  icon: Icons.grid_view_outlined,
                   tooltip: l10n?.tabPlan ?? 'Plan',
                 ),
                 ViewToggleOption(
@@ -660,6 +621,30 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               icon: const Icon(Icons.qr_code_scanner_outlined),
               onPressed: () => scanSpace(context, ref),
             ),
+            // Map <-> list, as ONE button showing the icon of what you
+            // would switch TO.
+            //
+            // It was a fifth segment in the toggle above until the
+            // tap-target guard caught it: five icon segments squeeze to
+            // 45.6dp at phone width, under the 48dp floor. And it never
+            // belonged there anyway — Day/Week/Month are TIME views,
+            // while map and list are two presentations of the same one.
+            // A second two-segment toggle would have shown two map icons
+            // in one row; this shows one, and never the one you are
+            // already looking at.
+            if (_view == _ReserveView.plan || _view == _ReserveView.list)
+              IconButton(
+                key: const ValueKey('reserve-seat-view-switch'),
+                tooltip: _seatList
+                    ? (l10n?.planMapViewTooltip ?? 'Plan view')
+                    : (l10n?.planListViewTooltip ?? 'List view'),
+                icon: Icon(
+                  _seatList ? Icons.map_outlined : Icons.view_list_outlined,
+                ),
+                onPressed: () => setState(() => _view = _seatList
+                    ? _ReserveView.plan
+                    : _ReserveView.list),
+              ),
             // 'Now' returns to today AND to the live window — parity
             // with the Plan tab, which has had it since #184.
             //
@@ -687,7 +672,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
             // filter + booking window) and Day (the window a free-row
             // tap books). Week books per tapped half, Month is an
             // overview — no chips.
-            if (_view == _ReserveView.plan || _view == _ReserveView.day)
+            if (_view != _ReserveView.week && _view != _ReserveView.month)
               Padding(
                 padding: const EdgeInsets.only(left: AppSpacing.xs),
                 child: WindowControls(
@@ -757,7 +742,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                 ),
               ),
               child: switch (_view) {
-                _ReserveView.plan => KeyedSubtree(
+                // Map and list are the same VIEW with two
+                // presentations; _planView picks between them and keys
+                // its own child, so the cross-fade (#209) happens
+                // inside rather than swapping the whole surface.
+                _ReserveView.plan || _ReserveView.list => KeyedSubtree(
                     key: const ValueKey('reserve-plan-view'),
                     child: _planView(l10n, window, dayOpen: dayOpen),
                   ),
@@ -833,7 +822,17 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
       );
     }
     final level =
-        levels.where((l) => l.id == _levelId).firstOrNull ?? levels.first;
+        // #687 — the hub is the only map surface, so the floor it shows
+        // is the member's PERSISTED default (#159), not just this
+        // session's browsing state. `_levelId` still wins while set, so
+        // a "show on plan" jump (#182) stays transient and never
+        // overwrites a floor someone chose deliberately.
+        levels
+                .where((l) =>
+                    l.id ==
+                    (_levelId ?? ref.watch(selectedLevelIdProvider).value))
+                .firstOrNull ??
+            levels.first;
     final planAsync = ref.watch(floorPlanProvider(level.id));
     // The window may straddle TWO device-day keys (a workspace-clock full day
     // starts before the device midnight west of the workspace); reading only
@@ -862,8 +861,35 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
         Positioned.fill(child: Column(
       children: [
         Expanded(
-          child: switch (planAsync) {
+          // #209/#611 — map and list CROSS-FADE rather than swapping
+          // hard. Outside any InteractiveViewer, so pan/zoom is
+          // untouched by the transition.
+          child: AnimatedSwitcher(
+            duration: AppMotion.viewSwitchOf(context),
+            child: switch (planAsync) {
+            // #687 — the list answers "which seat can I take"; the map
+            // answers "where is it". Same data, same tap handler, same
+            // closed-day gate.
+            //
+            // KeyedSubtree so the AnimatedSwitcher above sees a new
+            // child and cross-fades (#209) instead of swapping hard.
+            AsyncData(value: final plan) when _seatList => KeyedSubtree(
+                key: const ValueKey('reserve-list-view'),
+                child: SeatListView(
+                plan: plan,
+                reservations: reservations,
+                names: names,
+                at: window.start,
+                // Live judges at the instant, browsing across the window
+                // — the same split the canvas and the tap handler use.
+                windowEndOrNull: _isLive ? null : window.end,
+                dayOpen: dayOpen,
+                  onSeatTap: (seat) =>
+                      onSeatTap(plan, seat, reservations, window),
+                ),
+              ),
             AsyncData(value: final plan) => SeatPhotoLoader(
+                key: const ValueKey('reserve-canvas-view'),
                 seatUserIds: !photosOn
                     ? const {}
                     : {
@@ -884,6 +910,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                 seatPhotos: seatPhotos,
                 paintKey: const ValueKey('reserve-plan-canvas'),
                 plan: plan,
+                highlightedSeatId: _focusSeatId,
+                highlightedDeskId: _focusDeskId,
+                highlightedOfficeId: _focusOfficeId,
+                highlightLevel: _focusLevel,
                 // Double tap = whole-space reserve / check-in (field
                 // request); only registered while the feature is on.
                 onSpaceDoubleTap: ref
@@ -891,6 +921,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                         .contains(WorkspaceFeature.levelBooking)
                     ? (desk, office) => showSpaceSheet(
                           context,
+                          // #687 — without this the double-tap sheet
+                          // offered no subject picker at all, so a whole
+                          // room or table could only ever be booked for
+                          // yourself.
+                          members: spaceAssignmentCandidates(ref),
                           kind: desk != null
                               ? SpaceKind.desk
                               : office != null
@@ -972,7 +1007,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                   to: window.end,
                 ),
                 onSeatTap: (seat) =>
-                    _onSeatTap(plan, seat, reservations, window),
+                    onSeatTap(plan, seat, reservations, window),
               ),
               ),
             AsyncError() => Center(
@@ -982,7 +1017,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                 ),
               ),
             _ => const LoadingView(),
-          },
+            },
+          ),
         ),
       ],
     )),
@@ -994,7 +1030,20 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
               keyPrefix: 'reserve',
               levels: levels,
               current: level,
-              onSelected: (id) => setState(() => _levelId = id),
+              onSelected: (id) {
+                // Changing floor answers the question the highlight was
+                // asking, so the ring goes with it.
+                _clearFocus();
+                setState(() => _levelId = id);
+                // #687/#159 — and it STICKS. Choosing a floor used to be
+                // browsing-only here because the Plan tab owned the
+                // stored default; with that tab gone, a member who works
+                // on the second floor would have re-picked it on every
+                // launch forever.
+                unawaited(
+                  ref.read(selectedLevelIdProvider.notifier).select(id),
+                );
+              },
               // #466: the whole-level booking button, Plan-tab parity —
               // the hub only had the hidden double-tap path.
               trailing: _levelReserveVisible(level)
@@ -1015,6 +1064,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
                           plan: plan,
                           initialWindow:
                               (start: window.start, end: window.end),
+                          // #687 — the level button is the OWNER's
+                          // assignment path (#638). With no roster it
+                          // silently degraded to "book this floor for
+                          // myself".
+                          members: spaceAssignmentCandidates(ref),
                         );
                       },
                     )
@@ -1056,7 +1110,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
       // renders, and tapping a row's free area books the selected
       // window on that seat (no more look-but-can't-book).
       showFreeSeats: true,
-      onFreeSeatTap: (seat) => _bookingSheet(
+      onFreeSeatTap: (seat) => bookingSheet(
         seat,
         active,
         _effectiveWindow(_granularity),
@@ -1107,7 +1161,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen> {
           current: _effectiveWindow(_granularity),
           defaultEndFor: _defaultEndFor,
         );
-        _bookingSheet(seat, byId.values.toList(), window);
+        bookingSheet(seat, byId.values.toList(), window);
       },
     );
   }

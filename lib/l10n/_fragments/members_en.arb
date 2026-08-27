@@ -164,7 +164,7 @@
   "@messagesEmpty": {
     "description": "#687 - messaging centre"
   },
-  "messagesEmptyHint": "Open a member’s profile to write to them, or start a group.",
+  "messagesEmptyHint": "Tap the pencil to write to someone, or start a group.",
   "@messagesEmptyHint": {
     "description": "#687 - messaging centre"
   },
@@ -176,5 +176,57 @@
         "type": "int"
       }
     }
+  },
+  "newConversationTitle": "New conversation",
+  "@newConversationTitle": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationSearch": "Search members",
+  "@newConversationSearch": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationStart": "Start chat",
+  "@newConversationStart": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationNoMembers": "Nobody else here yet.",
+  "@newConversationNoMembers": {
+    "description": "#687 - messaging centre"
+  },
+  "newGroupName": "Group name",
+  "@newGroupName": {
+    "description": "#687 - messaging centre"
+  },
+  "newGroupCreate": "Create group",
+  "@newGroupCreate": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationGroupInfo": "Group",
+  "@conversationGroupInfo": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationAddPeople": "Add people",
+  "@conversationAddPeople": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeave": "Leave group",
+  "@conversationLeave": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeaveConfirm": "Leave this group? You stop receiving its messages; what you already sent stays.",
+  "@conversationLeaveConfirm": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationRemove": "Remove",
+  "@conversationRemove": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationAdmin": "Admin",
+  "@conversationAdmin": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeft": "Left",
+  "@conversationLeft": {
+    "description": "#687 - messaging centre"
   }
 }

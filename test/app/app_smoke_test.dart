@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../helpers/mock_providers.dart';
 
 void main() {
-  testWidgets('signed-in user boots into the shell on the Plan tab',
+  testWidgets('signed-in user boots into the shell with Messages as the first tab',
       (tester) async {
     await tester.pumpWidget(
       ProviderScope(
@@ -16,7 +16,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Plan'), findsWidgets);
+    // #687 — the first destination is Messages now; the plan moved to
+    // Réserver, which draws the same canvas.
+    expect(find.text('Messages'), findsWidgets);
     expect(
       find.text('The workspace has no floor plan yet.'),
       findsOneWidget,

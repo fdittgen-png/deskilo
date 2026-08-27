@@ -10,6 +10,7 @@ import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/conversation_row.dart';
 import '../widgets/conversation_thread.dart';
+import '../widgets/new_conversation_sheet.dart';
 
 /// THE MESSAGING CENTRE (#687) — every conversation in one list, people
 /// and groups together, newest activity first.
@@ -37,6 +38,18 @@ class MessagesScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n?.messagesTitle ?? 'Messages')),
+      // #687 — the way to START one. Without it the centre could only
+      // show conversations that already existed, and its own empty state
+      // had to send people to a different screen to make the first.
+      floatingActionButton: FloatingActionButton(
+        key: const ValueKey('new-conversation'),
+        tooltip: l10n?.newConversationTitle ?? 'New conversation',
+        onPressed: () async {
+          await showNewConversationSheet(context, ref);
+          ref.invalidate(conversationsProvider);
+        },
+        child: const Icon(Icons.edit_outlined),
+      ),
       body: switch (conversations) {
         AsyncData(value: final list) when list.isEmpty => _empty(context, l10n),
         AsyncData(value: final list) => RefreshIndicator(
@@ -97,9 +110,9 @@ class MessagesScreen extends ConsumerWidget {
               // emptiness leaves someone looking for a button that is on
               // another screen.
               Text(
+                // Points at the button on THIS screen, not another one.
                 l10n?.messagesEmptyHint ??
-                    'Open a member’s profile to write to them, or start a '
-                        'group.',
+                    'Tap the pencil to write to someone, or start a group.',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodySmall,
               ),

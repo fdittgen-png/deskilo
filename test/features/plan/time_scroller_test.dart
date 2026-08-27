@@ -10,7 +10,7 @@ import '../../helpers/test_clock.dart';
 
 import 'plan_screen_test.dart' show foreignReservation, pumpPlan, seatCenter;
 
-/// Taps the header time chip [chipKey] ('plan-from-chip'/'plan-to-chip'),
+/// Taps the header time chip [chipKey] ('reserve-from-chip'/'reserve-to-chip'),
 /// switches the Material time picker to keyboard input mode (the reliable
 /// widget-test path — dragging the clock dial is not) and enters the time.
 /// [hour] is 24-hour; the dialog runs in 12-hour AM/PM mode under
@@ -43,7 +43,7 @@ Future<void> pickChipTime(
 /// The painter of the live plan canvas.
 FloorPlanPainter planPainter(WidgetTester tester) {
   final paint = tester
-      .widget<CustomPaint>(find.byKey(const ValueKey('live-plan-canvas')));
+      .widget<CustomPaint>(find.byKey(const ValueKey('reserve-plan-canvas')));
   return paint.painter! as FloorPlanPainter;
 }
 
@@ -66,9 +66,9 @@ void main() {
 
     // From-chip pick → browse mode; the default 4h window clamps to the
     // day's last slot: 23:00 → 23:45.
-    await pickChipTime(tester, 'plan-from-chip', hour: '23', minute: '00');
-    expect(chipText(tester, 'plan-from-chip'), '23:00');
-    expect(chipText(tester, 'plan-to-chip'), '23:45');
+    await pickChipTime(tester, 'reserve-from-chip', hour: '23', minute: '00');
+    expect(chipText(tester, 'reserve-from-chip'), '23:00');
+    expect(chipText(tester, 'reserve-to-chip'), '23:45');
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
@@ -96,8 +96,8 @@ void main() {
   testWidgets('Now snaps back to live mode', (tester) async {
     await pumpPlan(tester);
 
-    await pickChipTime(tester, 'plan-from-chip', hour: '23', minute: '00');
-    await tester.tap(find.byKey(const ValueKey('plan-now-button')));
+    await pickChipTime(tester, 'reserve-from-chip', hour: '23', minute: '00');
+    await tester.tap(find.byKey(const ValueKey('reserve-now-button')));
     await tester.pumpAndSettle();
 
     await tester.tapAt(seatCenter(tester));
@@ -109,14 +109,14 @@ void main() {
       (tester) async {
     await pumpPlan(tester);
 
-    await pickChipTime(tester, 'plan-to-chip', hour: '23', minute: '45');
+    await pickChipTime(tester, 'reserve-to-chip', hour: '23', minute: '45');
 
     // Browse mode entered: the Now button (now an icon) is tappable again …
     final nowButton = tester.widget<IconButton>(
-      find.byKey(const ValueKey('plan-now-button')),
+      find.byKey(const ValueKey('reserve-now-button')),
     );
     expect(nowButton.onPressed, isNotNull);
-    expect(chipText(tester, 'plan-to-chip'), '23:45');
+    expect(chipText(tester, 'reserve-to-chip'), '23:45');
 
     // … and a seat tap opens a future reservation, not a walk-up.
     await tester.tapAt(seatCenter(tester));
@@ -127,9 +127,9 @@ void main() {
   testWidgets('booking sheet opens on the browsed window end', (tester) async {
     await pumpPlan(tester);
 
-    await pickChipTime(tester, 'plan-from-chip', hour: '9', minute: '00');
-    await pickChipTime(tester, 'plan-to-chip', hour: '12', minute: '00');
-    expect(chipText(tester, 'plan-to-chip'), '12:00');
+    await pickChipTime(tester, 'reserve-from-chip', hour: '9', minute: '00');
+    await pickChipTime(tester, 'reserve-to-chip', hour: '12', minute: '00');
+    expect(chipText(tester, 'reserve-to-chip'), '12:00');
 
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
@@ -152,15 +152,15 @@ void main() {
       (tester) async {
     await pumpPlan(tester);
 
-    await pickChipTime(tester, 'plan-from-chip', hour: '9', minute: '00');
-    expect(chipText(tester, 'plan-to-chip'), '13:00');
+    await pickChipTime(tester, 'reserve-from-chip', hour: '9', minute: '00');
+    expect(chipText(tester, 'reserve-to-chip'), '13:00');
 
-    await pickChipTime(tester, 'plan-to-chip', hour: '8', minute: '00');
+    await pickChipTime(tester, 'reserve-to-chip', hour: '8', minute: '00');
 
     expect(find.text('End must be after start.'), findsOneWidget);
     // The invalid pick did not apply — no silent next-day roll-over.
-    expect(chipText(tester, 'plan-from-chip'), '09:00');
-    expect(chipText(tester, 'plan-to-chip'), '13:00');
+    expect(chipText(tester, 'reserve-from-chip'), '09:00');
+    expect(chipText(tester, 'reserve-to-chip'), '13:00');
   });
 
   testWidgets(
@@ -183,15 +183,15 @@ void main() {
       ),
     );
 
-    await pickChipTime(tester, 'plan-from-chip', hour: '9', minute: '00');
-    await pickChipTime(tester, 'plan-to-chip', hour: '12', minute: '00');
+    await pickChipTime(tester, 'reserve-from-chip', hour: '9', minute: '00');
+    await pickChipTime(tester, 'reserve-to-chip', hour: '12', minute: '00');
     expect(planPainter(tester).seatStates?['seat-4'], SeatState.occupied);
 
     // Window starting exactly at the reservation end → free (end exclusive).
-    await pickChipTime(tester, 'plan-from-chip', hour: '11', minute: '00');
-    await pickChipTime(tester, 'plan-to-chip', hour: '12', minute: '00');
-    expect(chipText(tester, 'plan-from-chip'), '11:00');
-    expect(chipText(tester, 'plan-to-chip'), '12:00');
+    await pickChipTime(tester, 'reserve-from-chip', hour: '11', minute: '00');
+    await pickChipTime(tester, 'reserve-to-chip', hour: '12', minute: '00');
+    expect(chipText(tester, 'reserve-from-chip'), '11:00');
+    expect(chipText(tester, 'reserve-to-chip'), '12:00');
     expect(planPainter(tester).seatStates?['seat-4'], SeatState.free);
   });
 

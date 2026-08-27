@@ -22,6 +22,7 @@ import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
+import '../space_subjects.dart';
 import '../../domain/reservation_repository.dart';
 import '../../domain/booking_error_text.dart';
 import 'booking_sheet.dart';
@@ -112,6 +113,9 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
     desk: desk,
     seat: seat,
     plan: plan,
+    // #687 — an admin who SCANS a room's card gets the same
+    // assignment picker as one who double-taps it on the plan.
+    members: spaceAssignmentCandidates(ref),
   );
 }
 

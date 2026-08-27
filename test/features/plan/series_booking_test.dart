@@ -11,7 +11,7 @@ import 'time_scroller_test.dart' show pickChipTime;
 Future<void> openFutureBookingSheet(WidgetTester tester) async {
   // Browse to 20:00 via the from chip (#184) — the clock-dial picker in
   // keyboard input mode — then open the booking sheet on the seat.
-  await pickChipTime(tester, 'plan-from-chip', hour: '20', minute: '00');
+  await pickChipTime(tester, 'reserve-from-chip', hour: '20', minute: '00');
   await tester.tapAt(seatCenter(tester));
   await tester.pumpAndSettle();
 }

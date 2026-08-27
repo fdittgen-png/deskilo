@@ -157,7 +157,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('conversation-sheet')), findsNothing);
     expect(
-        find.byKey(const ValueKey('plan-canvas-view')), findsOneWidget);
+        find.byKey(const ValueKey('reserve-plan-view')), findsOneWidget);
   });
 
   testWidgets(
