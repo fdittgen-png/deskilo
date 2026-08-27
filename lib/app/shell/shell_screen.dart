@@ -260,8 +260,16 @@ class ShellScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(tabTitles[navigationShell.currentIndex]),
         actions: [
-          if (isOwner && navigationShell.currentIndex == ShellBranch.plan)
+          // The editor sits on BOTH map surfaces (field request). Plan
+          // and Réserver draw the same canvas from the same providers,
+          // so an owner who spots a wrong desk while booking had to
+          // leave the hub, switch tab and come back — for the same fix
+          // they could make where they saw the problem.
+          if (isOwner &&
+              (navigationShell.currentIndex == ShellBranch.plan ||
+                  navigationShell.currentIndex == ShellBranch.reserve))
             IconButton(
+              key: const ValueKey('shell-editor-button'),
               icon: const Icon(Icons.design_services_outlined),
               tooltip: l10n?.editorOpenTooltip ?? 'Edit workspace',
               onPressed: () => context.push('/editor'),
