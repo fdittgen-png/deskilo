@@ -50,6 +50,7 @@ import '../country_names.dart';
 import '../feature_names.dart';
 import '../../../../core/time/clock.dart';
 import '../../../money/presentation/invoice_actions.dart';
+import '../../../money/presentation/batch_cover.dart';
 import '../../../../core/locale/report_language.dart';
 
 /// Owner-only workspace settings: identity (country/currency/time zone,
@@ -526,6 +527,15 @@ class _WorkspaceSettingsScreenState
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
       action: () async {
+        // #671 — the surrounding wording comes from report management;
+        // the cards stay with the renderer. Read FIRST: it needs the
+        // context, and everything below this line is an async gap.
+        final cover = batchCover(context, ref, docId: 'space_codes', data: {
+          'workspace': workspace.name,
+          'issued': DateFormat.yMMMMd(
+            Localizations.localeOf(context).toLanguageTag(),
+          ).format(ref.read(clockProvider).now()),
+        });
         final levels = await ref.read(levelsProvider.future);
         final entries = buildSpaceCodeEntries(
           workspaceId: workspace.id,
@@ -560,6 +570,9 @@ class _WorkspaceSettingsScreenState
           boldFont: pw.Font.ttf(bold),
           size: options.size,
           qrSize: options.qrSize,
+          coverHeader: cover.header,
+          coverBody: cover.body,
+          coverFooter: cover.footer,
         );
         final path = await ref.read(fileSaverProvider)(
           bytes: bytes,

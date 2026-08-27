@@ -2,6 +2,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../../../../core/time/clock.dart';
+import '../../../money/presentation/batch_cover.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -144,6 +148,17 @@ class _BadgeManagerDialogState
       errorText: l10n?.workspaceGenericError ??
           'Something went wrong. Please try again.',
       action: () async {
+        // #671 — the sheet's wording is the workspace's own now, edited
+        // in report management like every other printable.
+        final cover = batchCover(context, ref, docId: 'badges', data: {
+          'workspace': workspaceName,
+          'member': widget.name,
+          'issued': DateFormat.yMMMMd(
+            Localizations.localeOf(context).toLanguageTag(),
+          ).format(ref.read(clockProvider).now()),
+        });
+        // Built BEFORE the awaits: it reads the context, and the font
+        // loads below are async gaps.
         // Embedded Roboto like the bill PDF: accented names must encode.
         final regular =
             await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
@@ -155,6 +170,9 @@ class _BadgeManagerDialogState
           hint: l10n?.kioskPresentBadge ?? 'Present your badge',
           baseFont: pw.Font.ttf(regular),
           boldFont: pw.Font.ttf(bold),
+          coverHeader: cover.header,
+          coverBody: cover.body,
+          coverFooter: cover.footer,
         );
         final safeName = safeFileSlug(widget.name);
         final path = await ref.read(fileSaverProvider)(
