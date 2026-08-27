@@ -1736,6 +1736,18 @@ abstract class AppLocalizations {
   /// **'Allow them under system Settings → Apps → DesKilo → Notifications — the icon badge needs them.'**
   String get notificationsSystemOffHint;
 
+  /// #677 - developer reservation export
+  ///
+  /// In en, this message translates to:
+  /// **'Export reservations'**
+  String get developerExportReservations;
+
+  /// #677 - developer reservation export
+  ///
+  /// In en, this message translates to:
+  /// **'Every booking and check-in — past, present and future, every state — as CSV, for analysis and debugging.'**
+  String get developerExportReservationsHint;
+
   /// Member directory title: bottom-tab label and app-bar title of the Members tab (#230) plus its settings entry (#224), visible to every member. Keep it short — it must fit a bottom-bar tab.
   ///
   /// In en, this message translates to:

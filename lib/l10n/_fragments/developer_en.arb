@@ -55,5 +55,13 @@
   },
   "@notificationsSystemOffHint": {
     "description": "Fix hint under the system-notifications warning (#436)"
+  },
+  "developerExportReservations": "Export reservations",
+  "@developerExportReservations": {
+    "description": "#677 - developer reservation export"
+  },
+  "developerExportReservationsHint": "Every booking and check-in — past, present and future, every state — as CSV, for analysis and debugging.",
+  "@developerExportReservationsHint": {
+    "description": "#677 - developer reservation export"
   }
 }

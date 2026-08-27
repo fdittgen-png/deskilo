@@ -11,6 +11,9 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/time/clock.dart';
+import '../../../reservations/domain/reservation_export.dart';
+import '../../../reservations/providers/reservation_providers.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 
 /// Which trace levels the list shows.
 enum _TraceFilter { all, errors, warnings }
@@ -36,6 +39,11 @@ class DeveloperScreen extends ConsumerStatefulWidget {
 
 class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
   _TraceFilter _filter = _TraceFilter.all;
+
+  /// The reservation dump reads the whole table, which on a busy
+  /// workspace is not instant. Without this the tile looks inert and
+  /// gets tapped again.
+  bool _exporting = false;
 
   Future<void> _export() async {
     final l10n = AppLocalizations.of(context);
@@ -69,6 +77,56 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
     }
   }
 
+  /// #677 — every reservation the workspace holds, past, present and
+  /// future, as raw CSV.
+  ///
+  /// Deliberately separate from the trace export beside it: a trace says
+  /// what the APP did, and most booking bugs are about what the DATA
+  /// says. Having only the first is why "it says the seat is taken and
+  /// it is not" has been unanswerable from a bug report alone.
+  Future<void> _exportReservations() async {
+    final l10n = AppLocalizations.of(context);
+    final logger = ref.read(traceLoggerProvider);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    setState(() => _exporting = true);
+    try {
+      final content = buildReservationExportCsv(
+        reservations: await ref
+            .read(reservationRepositoryProvider)
+            .fetchAllForExport(workspace.id),
+        generatedAt: ref.read(clockProvider).now(),
+        workspaceId: workspace.id,
+      );
+      final stamp =
+          DateFormat('yyyyMMdd-HHmm').format(ref.read(clockProvider).now());
+      final path = await ref.read(fileSaverProvider)(
+        bytes: utf8.encode(content),
+        fileName: 'deskilo-reservations-$stamp.csv',
+      );
+      if (!mounted) return;
+      setState(() => _exporting = false);
+      if (path == null) {
+        AppSnack.error(context, l10n?.commonSaveFailed ?? 'Could not save.');
+      } else {
+        AppSnack.success(
+          context,
+          l10n?.commonSavedTo(path) ?? 'Saved to $path',
+        );
+      }
+    } catch (e, st) {
+      logger.error('developer', 'reservation export failed',
+          error: e, stackTrace: st);
+      if (!mounted) return;
+      setState(() => _exporting = false);
+      AppSnack.error(
+        context,
+        l10n?.workspaceGenericError ??
+            'Something went wrong. Please try again.',
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -92,6 +150,26 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          ListTile(
+            key: const ValueKey('developer-export-reservations'),
+            leading: _exporting
+                ? const SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : const Icon(Icons.table_view_outlined),
+            title: Text(
+              l10n?.developerExportReservations ?? 'Export reservations',
+            ),
+            subtitle: Text(
+              l10n?.developerExportReservationsHint ??
+                  'Every booking and check-in — past, present and future, '
+                      'every state — as CSV, for analysis and debugging.',
+            ),
+            onTap: _exporting ? null : _exportReservations,
+          ),
+          const Divider(height: 1),
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.md,

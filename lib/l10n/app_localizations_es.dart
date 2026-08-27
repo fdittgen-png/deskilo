@@ -946,6 +946,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Permítelas en Ajustes del sistema → Aplicaciones → DesKilo → Notificaciones — la insignia del icono las necesita.';
 
   @override
+  String get developerExportReservations => 'Exportar reservas';
+
+  @override
+  String get developerExportReservationsHint =>
+      'Todas las reservas y entradas — pasadas, presentes y futuras, en cualquier estado — en CSV, para análisis y depuración.';
+
+  @override
   String get directoryTitle => 'Miembros';
 
   @override

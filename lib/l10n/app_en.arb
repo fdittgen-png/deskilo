@@ -1170,6 +1170,14 @@
   "@notificationsSystemOffHint": {
     "description": "Fix hint under the system-notifications warning (#436)"
   },
+  "developerExportReservations": "Export reservations",
+  "@developerExportReservations": {
+    "description": "#677 - developer reservation export"
+  },
+  "developerExportReservationsHint": "Every booking and check-in — past, present and future, every state — as CSV, for analysis and debugging.",
+  "@developerExportReservationsHint": {
+    "description": "#677 - developer reservation export"
+  },
   "directoryTitle": "Members",
   "@directoryTitle": {
     "description": "Member directory title: bottom-tab label and app-bar title of the Members tab (#230) plus its settings entry (#224), visible to every member. Keep it short — it must fit a bottom-bar tab."
