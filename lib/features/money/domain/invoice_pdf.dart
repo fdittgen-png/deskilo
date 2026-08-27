@@ -745,6 +745,18 @@ Future<Uint8List> buildBandedLetterPdf({
 /// Report blocks → pdf widgets (#470). Table rows: the first cell takes
 /// the width, every further cell is right-aligned — the amounts column
 /// convention of the built-in layout.
+///
+/// Public since #671, so the batch prints (badge sheets, space QR
+/// cards) render the SAME markup the report editor edits. A second
+/// renderer for those would drift from this one, and the drift would
+/// show up as the owner's own wording coming out looking different
+/// depending on which button produced the PDF.
+List<pw.Widget> reportBlockWidgets(
+  List<ReportBlock> blocks, {
+  Map<String, Uint8List> images = const {},
+}) =>
+    _reportWidgets(blocks, images: images);
+
 List<pw.Widget> _reportWidgets(
   List<ReportBlock> blocks, {
   Map<String, Uint8List> images = const {},
