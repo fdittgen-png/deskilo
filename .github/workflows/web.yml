@@ -49,7 +49,7 @@ on:
       - pubspec.yaml
 
 env:
-  FLUTTER_VERSION: "3.41.9"
+  FLUTTER_VERSION: "3.44.9"
 
 # Pages needs both: id-token to mint the deployment, pages to publish it.
 permissions:
