@@ -243,6 +243,50 @@
   },
   "billPdfTitle": "Factura mensual",
   "billPdfExport": "Exportar la factura como PDF",
+  "reportCoaTitle": "Plan de cuentas — vista previa",
+  "@reportCoaTitle": {
+    "description": "#672 - report document text (reportCoaTitle)"
+  },
+  "reportCoaIntro": "Una sugerencia, no tu contabilidad. Son las cuentas que un contable de tu país usaría normalmente para un espacio como el tuyo.",
+  "@reportCoaIntro": {
+    "description": "#672 - report document text (reportCoaIntro)"
+  },
+  "reportCoaAccounts": "Cuentas sugeridas",
+  "@reportCoaAccounts": {
+    "description": "#672 - report document text (reportCoaAccounts)"
+  },
+  "reportCoaNumber": "Cuenta",
+  "@reportCoaNumber": {
+    "description": "#672 - report document text (reportCoaNumber)"
+  },
+  "reportCoaLabel": "Nombre",
+  "@reportCoaLabel": {
+    "description": "#672 - report document text (reportCoaLabel)"
+  },
+  "reportCoaDisclaimer": "Solo una vista previa. DesKilo no lleva libro mayor ni hace tu contabilidad — el plan de tu contable siempre manda.",
+  "@reportCoaDisclaimer": {
+    "description": "#672 - report document text (reportCoaDisclaimer)"
+  },
+  "reportBadgesTitle": "Credenciales de los miembros",
+  "@reportBadgesTitle": {
+    "description": "#672 - report document text (reportBadgesTitle)"
+  },
+  "reportBadgesIntro": "Corta por las líneas. Cada tarjeta lleva el código de un miembro — preséntala en el quiosco para registrarte.",
+  "@reportBadgesIntro": {
+    "description": "#672 - report document text (reportBadgesIntro)"
+  },
+  "reportBadgesFooter": "Una credencial perdida se revoca en Miembros y planes, no basta con sustituirla.",
+  "@reportBadgesFooter": {
+    "description": "#672 - report document text (reportBadgesFooter)"
+  },
+  "reportSpaceCodesTitle": "Códigos de los espacios",
+  "@reportSpaceCodesTitle": {
+    "description": "#672 - report document text (reportSpaceCodesTitle)"
+  },
+  "reportSpaceCodesIntro": "Una tarjeta por puesto, mesa, sala y planta. Pega cada tarjeta en su espacio: escanearla abre la misma ficha que el quiosco.",
+  "@reportSpaceCodesIntro": {
+    "description": "#672 - report document text (reportSpaceCodesIntro)"
+  },
   "billingTitle": "Facturación",
   "billingFeeBands": "Tramos de tarifas",
   "billingBandFrom": "desde {from} %",
@@ -2255,6 +2299,14 @@
   "spaceCardInfoLabel": "Información en la tarjeta",
   "spaceCardInfoWorkspace": "Espacio de trabajo",
   "spaceMessageReserver": "Escribir a {name}",
+  "spaceBlockedByYou": "Ya tienes este espacio en ese periodo.",
+  "@spaceBlockedByYou": {
+    "description": "#670 - the whole-space conflict is the caller's OWN booking"
+  },
+  "spaceManageMyBooking": "Gestionar mi reserva",
+  "@spaceManageMyBooking": {
+    "description": "#670 - opens the reservation sheet to cancel/shorten it"
+  },
   "themeTitle": "Tema",
   "themeSystem": "Predeterminado del sistema",
   "themeLight": "Claro",

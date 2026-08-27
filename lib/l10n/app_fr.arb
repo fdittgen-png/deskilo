@@ -243,6 +243,50 @@
   },
   "billPdfTitle": "Facture mensuelle",
   "billPdfExport": "Exporter la facture en PDF",
+  "reportCoaTitle": "Plan comptable — aperçu",
+  "@reportCoaTitle": {
+    "description": "#672 - report document text (reportCoaTitle)"
+  },
+  "reportCoaIntro": "Une suggestion, pas votre comptabilité. Voici les comptes qu'un comptable de votre pays utiliserait habituellement pour un espace comme le vôtre.",
+  "@reportCoaIntro": {
+    "description": "#672 - report document text (reportCoaIntro)"
+  },
+  "reportCoaAccounts": "Comptes suggérés",
+  "@reportCoaAccounts": {
+    "description": "#672 - report document text (reportCoaAccounts)"
+  },
+  "reportCoaNumber": "Compte",
+  "@reportCoaNumber": {
+    "description": "#672 - report document text (reportCoaNumber)"
+  },
+  "reportCoaLabel": "Libellé",
+  "@reportCoaLabel": {
+    "description": "#672 - report document text (reportCoaLabel)"
+  },
+  "reportCoaDisclaimer": "Aperçu seulement. DesKilo ne tient pas de grand livre et ne fait pas votre comptabilité — le plan de votre comptable prime toujours.",
+  "@reportCoaDisclaimer": {
+    "description": "#672 - report document text (reportCoaDisclaimer)"
+  },
+  "reportBadgesTitle": "Badges des membres",
+  "@reportBadgesTitle": {
+    "description": "#672 - report document text (reportBadgesTitle)"
+  },
+  "reportBadgesIntro": "Découpez suivant les traits. Chaque carte porte le code badge d'un membre — à présenter à la borne pour pointer.",
+  "@reportBadgesIntro": {
+    "description": "#672 - report document text (reportBadgesIntro)"
+  },
+  "reportBadgesFooter": "Un badge perdu se révoque dans Membres et forfaits, il ne suffit pas de le remplacer.",
+  "@reportBadgesFooter": {
+    "description": "#672 - report document text (reportBadgesFooter)"
+  },
+  "reportSpaceCodesTitle": "Codes des espaces",
+  "@reportSpaceCodesTitle": {
+    "description": "#672 - report document text (reportSpaceCodesTitle)"
+  },
+  "reportSpaceCodesIntro": "Une carte par place, table, bureau et étage. Collez chaque carte sur son espace : la scanner ouvre la feuille que montre la borne.",
+  "@reportSpaceCodesIntro": {
+    "description": "#672 - report document text (reportSpaceCodesIntro)"
+  },
   "billingTitle": "Facturation",
   "billingFeeBands": "Paliers tarifaires",
   "billingBandFrom": "dès {from} %",
@@ -2255,6 +2299,14 @@
   "spaceCardInfoLabel": "Informations sur la carte",
   "spaceCardInfoWorkspace": "Espace de travail",
   "spaceMessageReserver": "Écrire à {name}",
+  "spaceBlockedByYou": "Vous détenez déjà cet espace sur cette période.",
+  "@spaceBlockedByYou": {
+    "description": "#670 - the whole-space conflict is the caller's OWN booking"
+  },
+  "spaceManageMyBooking": "Gérer ma réservation",
+  "@spaceManageMyBooking": {
+    "description": "#670 - opens the reservation sheet to cancel/shorten it"
+  },
   "themeTitle": "Thème",
   "themeSystem": "Par défaut du système",
   "themeLight": "Clair",

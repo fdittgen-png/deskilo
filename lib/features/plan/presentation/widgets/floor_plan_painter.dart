@@ -3,6 +3,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart' show mapEquals, setEquals;
 import 'package:flutter/material.dart';
+
+import 'plan_paint_helpers.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../../../core/theme/office_colors.dart';
@@ -205,6 +207,7 @@ class FloorPlanPainter extends CustomPainter {
             SeatStateColors.of(overlay.state, brightness: brightness);
         canvas.drawRect(
             rect, Paint()..color = accent.withValues(alpha: 0.20));
+        drawHatch(canvas, rect, accent);
         canvas.drawRect(
           rect,
           Paint()
@@ -212,7 +215,7 @@ class FloorPlanPainter extends CustomPainter {
             ..strokeWidth = 2.5
             ..color = accent.withValues(alpha: 0.9),
         );
-        _label(
+        drawLabel(
           canvas,
           overlay.label.isEmpty
               ? office.name
@@ -220,11 +223,11 @@ class FloorPlanPainter extends CustomPainter {
           rect,
           colorScheme.onSurface,
         );
-        _reservedChip(canvas, rect, overlay.label, accent,
+        drawReservedChip(canvas, rect, overlay.label, accent,
             checkedIn: overlay.state == SeatState.occupied);
       } else {
         canvas.drawRect(rect, officeBorder);
-        _label(canvas, office.name, rect, colorScheme.onSurface);
+        drawLabel(canvas, office.name, rect, colorScheme.onSurface);
       }
     }
 
@@ -246,7 +249,7 @@ class FloorPlanPainter extends CustomPainter {
     for (final desk in plan.desks) {
       final rect = _toPx(desk.rect).deflate(1.5);
       final rrect = RRect.fromRectAndRadius(rect, const Radius.circular(6));
-      _softShadow(canvas, rrect, alpha: deskShadowAlpha);
+      drawSoftShadow(canvas, rrect, alpha: deskShadowAlpha);
       canvas.drawRRect(rrect, deskPaint);
       // Whole-desk reservation (#462): the table itself reads taken —
       // wash + accent border; the seats on it carry the avatars.
@@ -256,6 +259,14 @@ class FloorPlanPainter extends CustomPainter {
             SeatStateColors.of(overlay.state, brightness: brightness);
         canvas.drawRRect(
             rrect, Paint()..color = accent.withValues(alpha: 0.18));
+        // #670 — the same hatch as a booked room, clipped to the desk's
+        // rounded rect. A whole-TABLE booking is the case the field
+        // report named first: six tinted seats look identical to six
+        // individual bookings without it.
+        canvas.save();
+        canvas.clipRRect(rrect);
+        drawHatch(canvas, rect, accent);
+        canvas.restore();
         canvas.drawRRect(
           rrect,
           Paint()
@@ -267,7 +278,7 @@ class FloorPlanPainter extends CustomPainter {
         // one for the same booking — a whole-office/level overlay
         // covers its desks too, and stacked identical chips are noise.
         if (spaceOverlays?[desk.officeId] == null) {
-          _reservedChip(canvas, rect, overlay.label, accent,
+          drawReservedChip(canvas, rect, overlay.label, accent,
               checkedIn: overlay.state == SeatState.occupied);
         }
       } else {
@@ -296,7 +307,7 @@ class FloorPlanPainter extends CustomPainter {
       final radius = (rect.shortestSide * 0.24).clamp(4.0, 10.0);
       final rrect = RRect.fromRectAndRadius(rect, Radius.circular(radius));
 
-      _softShadow(canvas, rrect,
+      drawSoftShadow(canvas, rrect,
           alpha: brightness == Brightness.dark ? 0.30 : 0.12);
       // Calm tint fill: free stays airy, taken seats read a touch fuller.
       // Over a background photo the zone must still read as a status
@@ -355,7 +366,7 @@ class FloorPlanPainter extends CustomPainter {
 
       // State never conveyed by colour alone (spec §11).
       if (state == SeatState.blocked) {
-        _label(canvas, '✕', rect, accent, center: true);
+        drawLabel(canvas, '✕', rect, accent, center: true);
         continue;
       }
       final label = seatLabels?[seat.id] ?? '';
@@ -377,7 +388,7 @@ class FloorPlanPainter extends CustomPainter {
         // Editor mode: name + orientation so the owner can place seats.
         _orientationArrow(canvas, seat, rect, accent);
         if (label.isNotEmpty) {
-          _label(canvas, label, rect, colorScheme.onSurface, center: true);
+          drawLabel(canvas, label, rect, colorScheme.onSurface, center: true);
         }
       }
     }
@@ -464,105 +475,6 @@ class FloorPlanPainter extends CustomPainter {
     }
   }
 
-  void _label(
-    Canvas canvas,
-    String text,
-    Rect rect,
-    Color color, {
-    bool center = false,
-  }) {
-    if (text.isEmpty) return;
-    final painter = TextPainter(
-      text: TextSpan(
-        text: text,
-        style: TextStyle(color: color, fontSize: 11),
-      ),
-      textDirection: TextDirection.ltr,
-      maxLines: 1,
-      ellipsis: '…',
-    )..layout(maxWidth: rect.width - 6);
-    final offset = center
-        ? rect.center - Offset(painter.width / 2, painter.height / 2 - 8)
-        : rect.topLeft + const Offset(4, 3);
-    painter.paint(canvas, offset);
-  }
-
-  /// A soft blurred contact shadow under [rrect] — the depth cue that
-  /// makes seats and desks read as gently lifted, not stamped flat.
-  void _softShadow(Canvas canvas, RRect rrect, {required double alpha}) {
-    canvas.drawRRect(
-      rrect.shift(const Offset(0, 1.5)),
-      Paint()
-        ..color = const Color(0xFF000000).withValues(alpha: alpha)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.5),
-    );
-  }
-
-  /// Occupant chip drawn on a taken seat: a filled disc in the state
-  /// colour with the occupant's initial — the plan's "who's here" glance.
-  /// Unmistakable "reserved" symbol on a whole-space (#464, asked
-  /// repeatedly in the field): a solid state-coloured chip with a lock
-  /// glyph and the occupant's first name, centered on the room/table.
-  /// Every user reads at a glance WHAT is reserved and BY WHOM.
-  void _reservedChip(
-    Canvas canvas,
-    Rect rect,
-    String name,
-    Color accent, {
-    required bool checkedIn,
-  }) {
-    final icon = checkedIn ? Icons.how_to_reg : Icons.lock;
-    final fontSize = (rect.shortestSide * 0.28).clamp(11.0, 15.0);
-    final iconPainter = TextPainter(
-      text: TextSpan(
-        text: String.fromCharCode(icon.codePoint),
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: fontSize + 2,
-          fontFamily: icon.fontFamily,
-          height: 1,
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
-    final textPainter = TextPainter(
-      text: TextSpan(
-        text: name.trim(),
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: fontSize,
-          fontWeight: FontWeight.w600,
-          height: 1,
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-      maxLines: 1,
-      ellipsis: '…',
-    )..layout(maxWidth: (rect.width - iconPainter.width - 26).clamp(0.0, double.infinity));
-    const gap = 5.0;
-    final w = iconPainter.width +
-        (textPainter.width > 0 ? gap + textPainter.width : 0) +
-        16;
-    final h = iconPainter.height + 10;
-    final center = rect.center;
-    final chip = RRect.fromRectAndRadius(
-      Rect.fromCenter(center: center, width: w, height: h),
-      Radius.circular(h / 2),
-    );
-    canvas.drawRRect(
-      chip.inflate(1.2),
-      Paint()..color = Colors.white.withValues(alpha: 0.9),
-    );
-    canvas.drawRRect(chip, Paint()..color = accent);
-    var x = center.dx - (w - 16) / 2;
-    iconPainter.paint(
-        canvas, Offset(x, center.dy - iconPainter.height / 2));
-    x += iconPainter.width + gap;
-    if (textPainter.width > 0) {
-      textPainter.paint(
-          canvas, Offset(x, center.dy - textPainter.height / 2));
-    }
-  }
 
   void _occupantAvatar(
     Canvas canvas,

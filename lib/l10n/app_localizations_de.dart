@@ -493,6 +493,44 @@ class AppLocalizationsDe extends AppLocalizations {
   String get billPdfExport => 'Rechnung als PDF exportieren';
 
   @override
+  String get reportCoaTitle => 'Kontenrahmen — Vorschau';
+
+  @override
+  String get reportCoaIntro =>
+      'Ein Vorschlag, nicht deine Buchhaltung. Das sind die Konten, die eine Buchhalterin in deinem Land für einen Space wie deinen üblicherweise nimmt.';
+
+  @override
+  String get reportCoaAccounts => 'Vorgeschlagene Konten';
+
+  @override
+  String get reportCoaNumber => 'Konto';
+
+  @override
+  String get reportCoaLabel => 'Bezeichnung';
+
+  @override
+  String get reportCoaDisclaimer =>
+      'Nur eine Vorschau. DesKilo führt kein Hauptbuch und macht deine Buchhaltung nicht — der Kontenrahmen deiner Steuerberatung gilt.';
+
+  @override
+  String get reportBadgesTitle => 'Mitglieder-Badges';
+
+  @override
+  String get reportBadgesIntro =>
+      'An den Linien schneiden. Jede Karte trägt den Badge-Code eines Mitglieds — am Kiosk vorzeigen zum Einchecken.';
+
+  @override
+  String get reportBadgesFooter =>
+      'Ein verlorenes Badge wird in Mitglieder & Tarife widerrufen, nicht bloß ersetzt.';
+
+  @override
+  String get reportSpaceCodesTitle => 'Raum-Codes';
+
+  @override
+  String get reportSpaceCodesIntro =>
+      'Eine Karte je Platz, Tisch, Büro und Etage. Jede Karte auf ihren Raum kleben: Scannen öffnet dasselbe Blatt wie der Kiosk.';
+
+  @override
   String get billingTitle => 'Abrechnung';
 
   @override
@@ -4387,6 +4425,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String spaceMessageReserver(String name) {
     return 'Nachricht an $name';
   }
+
+  @override
+  String get spaceBlockedByYou =>
+      'Du hältst diesen Raum in diesem Zeitraum bereits.';
+
+  @override
+  String get spaceManageMyBooking => 'Meine Buchung verwalten';
 
   @override
   String get themeTitle => 'Design';

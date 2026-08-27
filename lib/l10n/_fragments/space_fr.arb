@@ -21,5 +21,13 @@
   "spaceCardSizeLarge": "Grande",
   "spaceCardInfoLabel": "Informations sur la carte",
   "spaceCardInfoWorkspace": "Espace de travail",
-  "spaceMessageReserver": "Écrire à {name}"
+  "spaceMessageReserver": "Écrire à {name}",
+  "spaceBlockedByYou": "Vous détenez déjà cet espace sur cette période.",
+  "@spaceBlockedByYou": {
+    "description": "#670 - the whole-space conflict is the caller's OWN booking"
+  },
+  "spaceManageMyBooking": "Gérer ma réservation",
+  "@spaceManageMyBooking": {
+    "description": "#670 - opens the reservation sheet to cancel/shorten it"
+  }
 }

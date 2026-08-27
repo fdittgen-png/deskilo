@@ -914,6 +914,72 @@ abstract class AppLocalizations {
   /// **'Export bill as PDF'**
   String get billPdfExport;
 
+  /// #672 - report document text (reportCoaTitle)
+  ///
+  /// In en, this message translates to:
+  /// **'Chart of accounts — preview'**
+  String get reportCoaTitle;
+
+  /// #672 - report document text (reportCoaIntro)
+  ///
+  /// In en, this message translates to:
+  /// **'A suggestion, not your accounting. These are the accounts a bookkeeper in your country would usually use for a space like yours.'**
+  String get reportCoaIntro;
+
+  /// #672 - report document text (reportCoaAccounts)
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested accounts'**
+  String get reportCoaAccounts;
+
+  /// #672 - report document text (reportCoaNumber)
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get reportCoaNumber;
+
+  /// #672 - report document text (reportCoaLabel)
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get reportCoaLabel;
+
+  /// #672 - report document text (reportCoaDisclaimer)
+  ///
+  /// In en, this message translates to:
+  /// **'Preview only. DesKilo does not keep a ledger and does not do your accounting — your accountant\'s chart always wins.'**
+  String get reportCoaDisclaimer;
+
+  /// #672 - report document text (reportBadgesTitle)
+  ///
+  /// In en, this message translates to:
+  /// **'Member badges'**
+  String get reportBadgesTitle;
+
+  /// #672 - report document text (reportBadgesIntro)
+  ///
+  /// In en, this message translates to:
+  /// **'Cut along the lines. Each card carries one member\'s badge code — present it at the kiosk to check in.'**
+  String get reportBadgesIntro;
+
+  /// #672 - report document text (reportBadgesFooter)
+  ///
+  /// In en, this message translates to:
+  /// **'A lost badge should be revoked in Members & plans, not just replaced.'**
+  String get reportBadgesFooter;
+
+  /// #672 - report document text (reportSpaceCodesTitle)
+  ///
+  /// In en, this message translates to:
+  /// **'Space codes'**
+  String get reportSpaceCodesTitle;
+
+  /// #672 - report document text (reportSpaceCodesIntro)
+  ///
+  /// In en, this message translates to:
+  /// **'One card per seat, table, room and floor. Stick each card on its space: scanning it opens the same sheet the kiosk shows.'**
+  String get reportSpaceCodesIntro;
+
   /// Owner billing editor (#128): fee bands + subscription levels; screen title and settings entry
   ///
   /// In en, this message translates to:
@@ -7771,6 +7837,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Message {name}'**
   String spaceMessageReserver(String name);
+
+  /// #670 - the whole-space conflict is the caller's OWN booking
+  ///
+  /// In en, this message translates to:
+  /// **'You already hold this space for that period.'**
+  String get spaceBlockedByYou;
+
+  /// #670 - opens the reservation sheet to cancel/shorten it
+  ///
+  /// In en, this message translates to:
+  /// **'Manage my booking'**
+  String get spaceManageMyBooking;
 
   /// Settings entry and dialog title for the in-app theme selection
   ///

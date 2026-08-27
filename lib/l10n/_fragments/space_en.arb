@@ -71,5 +71,13 @@
         "type": "String"
       }
     }
+  },
+  "spaceBlockedByYou": "You already hold this space for that period.",
+  "@spaceBlockedByYou": {
+    "description": "#670 - the whole-space conflict is the caller's OWN booking"
+  },
+  "spaceManageMyBooking": "Manage my booking",
+  "@spaceManageMyBooking": {
+    "description": "#670 - opens the reservation sheet to cancel/shorten it"
   }
 }

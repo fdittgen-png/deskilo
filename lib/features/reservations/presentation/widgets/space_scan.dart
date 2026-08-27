@@ -26,7 +26,7 @@ import '../../domain/reservation.dart';
 import '../../domain/reservation_repository.dart';
 import '../../domain/booking_error_text.dart';
 import 'booking_sheet.dart';
-import 'message_reserver.dart';
+import 'space_conflict_actions.dart';
 import 'series_result_dialog.dart';
 import 'space_act_sheet.dart';
 import '../../domain/space_code.dart';
@@ -867,24 +867,20 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
             if (wholeConflict) ...[
               const SizedBox(height: 8),
               Text(
-                l10n?.levelConflict ??
-                    'The level has reservations in that period.',
+                wholeBlocking.memberId == me?.id
+                    ? (l10n?.spaceBlockedByYou ??
+                        'You already hold this space for that period.')
+                    : (l10n?.levelConflict ??
+                        'The level has reservations in that period.'),
                 key: const ValueKey('space-conflict'),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
-              // #622 — the block names a holder? Offer the message
-              // thread (messaging's own flag gates the affordance).
-              if (canMessageReserver(ref, wholeBlocking)) ...[
-                const SizedBox(height: 8),
-                MessageReserverButton(
-                  widgetKey: const ValueKey('space-conflict-message'),
-                  blocking: wholeBlocking,
-                  name: (ref.watch(memberNamesProvider).value ??
-                          const {})[wholeBlocking.memberId] ??
-                      '',
-                  spaceName: title,
-                ),
-              ],
+              SpaceConflictActions(
+                blocking: wholeBlocking,
+                myMemberId: me?.id,
+                spaceName: title,
+                busy: _busy,
+              ),
             ],
           ] else ...[
             // Permission transparency (field request: "show the
