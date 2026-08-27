@@ -106,9 +106,27 @@ Run tests with `flutter test` — and keep the discipline that already cost this
 once: NEVER pipe it. `flutter test > suite.log 2>&1; echo EXIT=$?` — a pipe masks the exit
 code, and a background wrapper once reported success over a suite with seven failures.
 
-Version note: the pub build (1.1.x) needs **Dart ≥ 3.12** and adds `vm_service` over the
-SDK-bundled build; below that SDK, `dart mcp-server` is the only route and has one tool
-fewer.
+**Verified 2026-08-27 against `dart_mcp_server` 1.1.1 — 14 tools.** Probe the server
+rather than trusting this list or any README: tool sets move between versions, and a doc
+written from release notes is wrong within days. The full set is `analyze_files`, `lsp`,
+`pub`, `pub_dev_search`, `read_package_uris`, `rip_grep_packages`, `roots`, `dtd`,
+`vm_service`, `widget_inspector`, `hot_reload`, `hot_restart`, `get_runtime_errors`,
+`flutter_driver_command`. The `dart-flutter-mcp` skill carries a 30-second stdio snippet
+that asks the server for its own list.
+
+The pub build needs **Dart ≥ 3.12**; below that, `dart mcp-server` is the only route. The
+two differ by exactly ONE tool — the bundled 0.1.4 has the same thirteen minus
+`vm_service`.
+
+**A fresh clone needs one command before this works**, because `.mcp.json` runs a globally
+activated binary rather than a project dependency:
+
+```bash
+dart pub global activate dart_mcp_server
+```
+
+Without it the server simply fails to start. That is the price of the `cli_util` conflict
+above; a dev dependency would have travelled with the repo, and cannot.
 
 **Supabase.** The tracked allow-list holds read-only tools only (`list_migrations`,
 `list_tables`, `get_advisors`, …). `execute_sql`, `apply_migration` and
