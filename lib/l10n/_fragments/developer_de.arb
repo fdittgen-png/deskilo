@@ -13,5 +13,13 @@
   "pushStatusNotConfigured": "Push-Benachrichtigungen sind noch nicht eingerichtet",
   "pushStatusNotConfiguredHint": "Die Inhaberin schließt die Firebase-Einrichtung ab (push-setup-Anleitung).",
   "notificationsSystemOff": "Android blockiert DesKilo-Benachrichtigungen",
-  "notificationsSystemOffHint": "Erlaube sie unter System-Einstellungen → Apps → DesKilo → Benachrichtigungen — das Icon-Badge braucht sie."
+  "notificationsSystemOffHint": "Erlaube sie unter System-Einstellungen → Apps → DesKilo → Benachrichtigungen — das Icon-Badge braucht sie.",
+  "developerExportReservations": "Reservierungen exportieren",
+  "@developerExportReservations": {
+    "description": "#677 - developer reservation export"
+  },
+  "developerExportReservationsHint": "Alle Buchungen und Check-ins — vergangene, laufende und künftige, in jedem Zustand — als CSV, für Analyse und Fehlersuche.",
+  "@developerExportReservationsHint": {
+    "description": "#677 - developer reservation export"
+  }
 }

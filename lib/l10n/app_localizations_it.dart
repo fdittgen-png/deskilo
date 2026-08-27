@@ -949,6 +949,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Consentile in Impostazioni di sistema → App → DesKilo → Notifiche — il badge dell\'icona ne ha bisogno.';
 
   @override
+  String get developerExportReservations => 'Esporta le prenotazioni';
+
+  @override
+  String get developerExportReservationsHint =>
+      'Tutte le prenotazioni e i check-in — passati, presenti e futuri, in ogni stato — in CSV, per analisi e debug.';
+
+  @override
   String get directoryTitle => 'Membri';
 
   @override

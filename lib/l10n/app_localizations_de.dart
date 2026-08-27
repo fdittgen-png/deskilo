@@ -948,6 +948,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Erlaube sie unter System-Einstellungen → Apps → DesKilo → Benachrichtigungen — das Icon-Badge braucht sie.';
 
   @override
+  String get developerExportReservations => 'Reservierungen exportieren';
+
+  @override
+  String get developerExportReservationsHint =>
+      'Alle Buchungen und Check-ins — vergangene, laufende und künftige, in jedem Zustand — als CSV, für Analyse und Fehlersuche.';
+
+  @override
   String get directoryTitle => 'Mitglieder';
 
   @override

@@ -13,5 +13,13 @@
   "pushStatusNotConfigured": "Las notificaciones push aún no están configuradas",
   "pushStatusNotConfiguredHint": "El propietario completa la configuración de Firebase (guía push-setup).",
   "notificationsSystemOff": "Android está bloqueando las notificaciones de DesKilo",
-  "notificationsSystemOffHint": "Permítelas en Ajustes del sistema → Aplicaciones → DesKilo → Notificaciones — la insignia del icono las necesita."
+  "notificationsSystemOffHint": "Permítelas en Ajustes del sistema → Aplicaciones → DesKilo → Notificaciones — la insignia del icono las necesita.",
+  "developerExportReservations": "Exportar reservas",
+  "@developerExportReservations": {
+    "description": "#677 - developer reservation export"
+  },
+  "developerExportReservationsHint": "Todas las reservas y entradas — pasadas, presentes y futuras, en cualquier estado — en CSV, para análisis y depuración.",
+  "@developerExportReservationsHint": {
+    "description": "#677 - developer reservation export"
+  }
 }
