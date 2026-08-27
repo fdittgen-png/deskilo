@@ -438,6 +438,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Désactivé par défaut : un badge qui vous pointe ne vous connecte pas tant que vous ne l’avez pas décidé.';
 
   @override
+  String get badgeAuthNeedsPin =>
+      'Définissez d’abord un code de connexion — un badge seul ne doit jamais suffire.';
+
+  @override
   String billSubscription(int pct) {
     return 'Abonnement $pct %';
   }

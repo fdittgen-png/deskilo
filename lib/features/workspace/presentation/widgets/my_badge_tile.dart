@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../profile/providers/profile_providers.dart';
 import '../../domain/member.dart';
+import '../../../auth/providers/auth_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'badge_manager_dialog.dart';
 
@@ -57,6 +58,17 @@ class MyBadgeTile extends ConsumerWidget {
                 delete: (badgeId) => ref
                     .read(workspaceRepositoryProvider)
                     .deleteRevokedBadge(badgeId),
+                // #662 — passed ONLY here. The admins' badge manager
+                // omits it, and the server refuses it there too ('not
+                // your badge'): an admin who could arm a member's badge
+                // could sign in as them, and every check-in afterwards
+                // would carry that member's name.
+                setAuthEnabled: (badgeId, enabled) => ref
+                    .read(authRepositoryProvider)
+                    .setBadgeAuthEnabled(
+                      badgeId: badgeId,
+                      enabled: enabled,
+                    ),
               ),
             );
           },

@@ -14,7 +14,11 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MemberBadge {
 
- String get id; String get workspaceId; String get memberId; String get label; DateTime get createdAt; DateTime? get revokedAt; BadgeKind get kind;
+ String get id; String get workspaceId; String get memberId; String get label; DateTime get createdAt; DateTime? get revokedAt; BadgeKind get kind;/// #662 — this badge may SIGN ITS OWNER IN, not merely check them
+/// in. Off until the member says otherwise: the card that opens the
+/// door should not become the card that opens the account by
+/// default.
+ bool get authEnabled;
 /// Create a copy of MemberBadge
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +29,16 @@ $MemberBadgeCopyWith<MemberBadge> get copyWith => _$MemberBadgeCopyWithImpl<Memb
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MemberBadge&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.label, label) || other.label == label)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.revokedAt, revokedAt) || other.revokedAt == revokedAt)&&(identical(other.kind, kind) || other.kind == kind));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MemberBadge&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.label, label) || other.label == label)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.revokedAt, revokedAt) || other.revokedAt == revokedAt)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.authEnabled, authEnabled) || other.authEnabled == authEnabled));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,memberId,label,createdAt,revokedAt,kind);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,memberId,label,createdAt,revokedAt,kind,authEnabled);
 
 @override
 String toString() {
-  return 'MemberBadge(id: $id, workspaceId: $workspaceId, memberId: $memberId, label: $label, createdAt: $createdAt, revokedAt: $revokedAt, kind: $kind)';
+  return 'MemberBadge(id: $id, workspaceId: $workspaceId, memberId: $memberId, label: $label, createdAt: $createdAt, revokedAt: $revokedAt, kind: $kind, authEnabled: $authEnabled)';
 }
 
 
@@ -45,7 +49,7 @@ abstract mixin class $MemberBadgeCopyWith<$Res>  {
   factory $MemberBadgeCopyWith(MemberBadge value, $Res Function(MemberBadge) _then) = _$MemberBadgeCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, String memberId, String label, DateTime createdAt, DateTime? revokedAt, BadgeKind kind
+ String id, String workspaceId, String memberId, String label, DateTime createdAt, DateTime? revokedAt, BadgeKind kind, bool authEnabled
 });
 
 
@@ -62,7 +66,7 @@ class _$MemberBadgeCopyWithImpl<$Res>
 
 /// Create a copy of MemberBadge
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? memberId = null,Object? label = null,Object? createdAt = null,Object? revokedAt = freezed,Object? kind = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? memberId = null,Object? label = null,Object? createdAt = null,Object? revokedAt = freezed,Object? kind = null,Object? authEnabled = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -71,7 +75,8 @@ as String,label: null == label ? _self.label : label // ignore: cast_nullable_to
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,revokedAt: freezed == revokedAt ? _self.revokedAt : revokedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
-as BadgeKind,
+as BadgeKind,authEnabled: null == authEnabled ? _self.authEnabled : authEnabled // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -153,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String memberId,  String label,  DateTime createdAt,  DateTime? revokedAt,  BadgeKind kind)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String memberId,  String label,  DateTime createdAt,  DateTime? revokedAt,  BadgeKind kind,  bool authEnabled)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MemberBadge() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.memberId,_that.label,_that.createdAt,_that.revokedAt,_that.kind);case _:
+return $default(_that.id,_that.workspaceId,_that.memberId,_that.label,_that.createdAt,_that.revokedAt,_that.kind,_that.authEnabled);case _:
   return orElse();
 
 }
@@ -174,10 +179,10 @@ return $default(_that.id,_that.workspaceId,_that.memberId,_that.label,_that.crea
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String memberId,  String label,  DateTime createdAt,  DateTime? revokedAt,  BadgeKind kind)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String memberId,  String label,  DateTime createdAt,  DateTime? revokedAt,  BadgeKind kind,  bool authEnabled)  $default,) {final _that = this;
 switch (_that) {
 case _MemberBadge():
-return $default(_that.id,_that.workspaceId,_that.memberId,_that.label,_that.createdAt,_that.revokedAt,_that.kind);}
+return $default(_that.id,_that.workspaceId,_that.memberId,_that.label,_that.createdAt,_that.revokedAt,_that.kind,_that.authEnabled);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -191,10 +196,10 @@ return $default(_that.id,_that.workspaceId,_that.memberId,_that.label,_that.crea
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String memberId,  String label,  DateTime createdAt,  DateTime? revokedAt,  BadgeKind kind)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String memberId,  String label,  DateTime createdAt,  DateTime? revokedAt,  BadgeKind kind,  bool authEnabled)?  $default,) {final _that = this;
 switch (_that) {
 case _MemberBadge() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.memberId,_that.label,_that.createdAt,_that.revokedAt,_that.kind);case _:
+return $default(_that.id,_that.workspaceId,_that.memberId,_that.label,_that.createdAt,_that.revokedAt,_that.kind,_that.authEnabled);case _:
   return null;
 
 }
@@ -206,7 +211,7 @@ return $default(_that.id,_that.workspaceId,_that.memberId,_that.label,_that.crea
 
 
 class _MemberBadge extends MemberBadge {
-  const _MemberBadge({required this.id, required this.workspaceId, required this.memberId, required this.label, required this.createdAt, this.revokedAt, this.kind = BadgeKind.qr}): super._();
+  const _MemberBadge({required this.id, required this.workspaceId, required this.memberId, required this.label, required this.createdAt, this.revokedAt, this.kind = BadgeKind.qr, this.authEnabled = false}): super._();
   
 
 @override final  String id;
@@ -216,6 +221,11 @@ class _MemberBadge extends MemberBadge {
 @override final  DateTime createdAt;
 @override final  DateTime? revokedAt;
 @override@JsonKey() final  BadgeKind kind;
+/// #662 — this badge may SIGN ITS OWNER IN, not merely check them
+/// in. Off until the member says otherwise: the card that opens the
+/// door should not become the card that opens the account by
+/// default.
+@override@JsonKey() final  bool authEnabled;
 
 /// Create a copy of MemberBadge
 /// with the given fields replaced by the non-null parameter values.
@@ -227,16 +237,16 @@ _$MemberBadgeCopyWith<_MemberBadge> get copyWith => __$MemberBadgeCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MemberBadge&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.label, label) || other.label == label)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.revokedAt, revokedAt) || other.revokedAt == revokedAt)&&(identical(other.kind, kind) || other.kind == kind));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MemberBadge&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.label, label) || other.label == label)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.revokedAt, revokedAt) || other.revokedAt == revokedAt)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.authEnabled, authEnabled) || other.authEnabled == authEnabled));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,workspaceId,memberId,label,createdAt,revokedAt,kind);
+int get hashCode => Object.hash(runtimeType,id,workspaceId,memberId,label,createdAt,revokedAt,kind,authEnabled);
 
 @override
 String toString() {
-  return 'MemberBadge(id: $id, workspaceId: $workspaceId, memberId: $memberId, label: $label, createdAt: $createdAt, revokedAt: $revokedAt, kind: $kind)';
+  return 'MemberBadge(id: $id, workspaceId: $workspaceId, memberId: $memberId, label: $label, createdAt: $createdAt, revokedAt: $revokedAt, kind: $kind, authEnabled: $authEnabled)';
 }
 
 
@@ -247,7 +257,7 @@ abstract mixin class _$MemberBadgeCopyWith<$Res> implements $MemberBadgeCopyWith
   factory _$MemberBadgeCopyWith(_MemberBadge value, $Res Function(_MemberBadge) _then) = __$MemberBadgeCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, String memberId, String label, DateTime createdAt, DateTime? revokedAt, BadgeKind kind
+ String id, String workspaceId, String memberId, String label, DateTime createdAt, DateTime? revokedAt, BadgeKind kind, bool authEnabled
 });
 
 
@@ -264,7 +274,7 @@ class __$MemberBadgeCopyWithImpl<$Res>
 
 /// Create a copy of MemberBadge
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? memberId = null,Object? label = null,Object? createdAt = null,Object? revokedAt = freezed,Object? kind = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? memberId = null,Object? label = null,Object? createdAt = null,Object? revokedAt = freezed,Object? kind = null,Object? authEnabled = null,}) {
   return _then(_MemberBadge(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -273,7 +283,8 @@ as String,label: null == label ? _self.label : label // ignore: cast_nullable_to
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,revokedAt: freezed == revokedAt ? _self.revokedAt : revokedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
-as BadgeKind,
+as BadgeKind,authEnabled: null == authEnabled ? _self.authEnabled : authEnabled // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

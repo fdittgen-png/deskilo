@@ -117,5 +117,9 @@
   "badgeAuthEnabledHint": "Off by default: a badge that checks you in does not log you in until you say so.",
   "@badgeAuthEnabledHint": {
     "description": "#662 - badge sign-in"
+  },
+  "badgeAuthNeedsPin": "Set a sign-in PIN first — a badge alone must never be enough.",
+  "@badgeAuthNeedsPin": {
+    "description": "#662 - badge sign-in"
   }
 }

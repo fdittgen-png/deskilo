@@ -437,6 +437,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Disattivo per impostazione predefinita: un badge che registra la tua entrata non ti fa accedere finché non lo decidi tu.';
 
   @override
+  String get badgeAuthNeedsPin =>
+      'Imposta prima un PIN di accesso — il badge da solo non deve mai bastare.';
+
+  @override
   String billSubscription(int pct) {
     return 'Abbonamento $pct %';
   }

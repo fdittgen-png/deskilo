@@ -830,6 +830,12 @@ abstract class AppLocalizations {
   /// **'Off by default: a badge that checks you in does not log you in until you say so.'**
   String get badgeAuthEnabledHint;
 
+  /// #662 - badge sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Set a sign-in PIN first — a badge alone must never be enough.'**
+  String get badgeAuthNeedsPin;
+
   /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount
   ///
   /// In en, this message translates to:

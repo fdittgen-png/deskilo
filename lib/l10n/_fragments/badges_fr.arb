@@ -117,5 +117,9 @@
   "badgeAuthEnabledHint": "Désactivé par défaut : un badge qui vous pointe ne vous connecte pas tant que vous ne l’avez pas décidé.",
   "@badgeAuthEnabledHint": {
     "description": "#662 - badge sign-in"
+  },
+  "badgeAuthNeedsPin": "Définissez d’abord un code de connexion — un badge seul ne doit jamais suffire.",
+  "@badgeAuthNeedsPin": {
+    "description": "#662 - badge sign-in"
   }
 }

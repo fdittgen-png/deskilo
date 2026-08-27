@@ -33,6 +33,12 @@ sealed class MemberBadge with _$MemberBadge {
     required DateTime createdAt,
     DateTime? revokedAt,
     @Default(BadgeKind.qr) BadgeKind kind,
+
+    /// #662 — this badge may SIGN ITS OWNER IN, not merely check them
+    /// in. Off until the member says otherwise: the card that opens the
+    /// door should not become the card that opens the account by
+    /// default.
+    @Default(false) bool authEnabled,
   }) = _MemberBadge;
 
   factory MemberBadge.fromRow(Map<String, dynamic> row) => MemberBadge(
@@ -41,6 +47,8 @@ sealed class MemberBadge with _$MemberBadge {
         memberId: row['member_id'] as String,
         label: row['label'] as String? ?? '',
         createdAt: DateTime.parse(row['created_at'] as String),
+        // Absent on pre-0123 rows, which is correctly read as off.
+        authEnabled: row['auth_enabled'] == true,
         revokedAt: row['revoked_at'] == null
             ? null
             : DateTime.parse(row['revoked_at'] as String),

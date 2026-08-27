@@ -434,6 +434,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Off by default: a badge that checks you in does not log you in until you say so.';
 
   @override
+  String get badgeAuthNeedsPin =>
+      'Set a sign-in PIN first — a badge alone must never be enough.';
+
+  @override
   String billSubscription(int pct) {
     return 'Subscription $pct%';
   }

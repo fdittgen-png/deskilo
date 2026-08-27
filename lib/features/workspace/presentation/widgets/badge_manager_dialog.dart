@@ -2,6 +2,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
+import 'nfc_tap_dialog.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/time/clock.dart';
@@ -41,6 +43,7 @@ class BadgeManagerDialog extends ConsumerStatefulWidget {
     required this.registerNfc,
     required this.revoke,
     required this.delete,
+    this.setAuthEnabled,
   });
 
   final String workspaceId;
@@ -61,6 +64,15 @@ class BadgeManagerDialog extends ConsumerStatefulWidget {
   /// of the pile a badge history leaves behind.
   final Future<void> Function(String badgeId) delete;
 
+  /// #662 — arms or disarms ONE badge for sign-in.
+  ///
+  /// Null hides the control entirely, which is how an ADMIN opening
+  /// someone else's badges sees no toggle. That is not a UI nicety: the
+  /// server refuses it too ('not your badge'), because an admin who
+  /// could arm a member's badge could sign in as them, and every
+  /// check-in after would carry that member's name.
+  final Future<void> Function(String badgeId, bool enabled)? setAuthEnabled;
+
   @override
   ConsumerState<BadgeManagerDialog> createState() =>
       _BadgeManagerDialogState();
@@ -75,6 +87,11 @@ class _BadgeManagerDialogState
 
   /// Whether this device can read an RFID/NFC tap (Android + NFC on).
   bool _nfcAvailable = false;
+
+  /// #662 — a badge arm/disarm is in flight. Without it a double tap
+  /// sends two opposite writes and the switch settles on whichever
+  /// landed second.
+  bool _busy = false;
 
   @override
   void initState() {
@@ -299,6 +316,31 @@ class _BadgeManagerDialogState
     );
   }
 
+  /// #662 — arm or disarm this badge for sign-in.
+  ///
+  /// The server refuses to arm a badge before its owner has a PIN, and
+  /// that refusal is SURFACED rather than swallowed: without it the
+  /// switch would flick back with no explanation, and the member has no
+  /// way to guess that a PIN is the missing piece.
+  Future<void> _setAuth(
+    MemberBadge badge,
+    bool enabled,
+    Future<void> Function(String badgeId, bool enabled) arm,
+  ) async {
+    if (_busy) return;
+    setState(() => _busy = true);
+    final l10n = widget.l10n;
+    await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'badge auth toggle failed',
+      errorText: l10n?.badgeAuthNeedsPin ??
+          'Set a sign-in PIN first — a badge alone must never be enough.',
+      action: () => arm(badge.id, enabled),
+    );
+    if (mounted) setState(() => _busy = false);
+  }
+
   /// One badge row: live badges keep the Revoke button; revoked ones
   /// are swiped RIGHT to delete for good (field request — a badge
   /// history piles up otherwise).
@@ -329,7 +371,26 @@ class _BadgeManagerDialogState
             )
           : null,
     );
-    if (badge.isActive) return row;
+    if (badge.isActive) {
+      final arm = widget.setAuthEnabled;
+      if (arm == null) return row;
+      return Column(mainAxisSize: MainAxisSize.min, children: [
+        row,
+        SwitchListTile(
+          key: ValueKey('badge-auth-${badge.id}'),
+          contentPadding: EdgeInsets.zero,
+          value: badge.authEnabled,
+          title: Text(l10n?.badgeAuthEnabledLabel ?? 'Signs me in'),
+          subtitle: Text(
+            l10n?.badgeAuthEnabledHint ??
+                'Off by default: a badge that checks you in does not log '
+                    'you in until you say so.',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          onChanged: _busy ? null : (value) => _setAuth(badge, value, arm),
+        ),
+      ]);
+    }
     return Dismissible(
       key: ValueKey('badge-dismiss-${badge.id}'),
       direction: DismissDirection.startToEnd,
@@ -480,67 +541,3 @@ class _BadgeManagerDialogState
 
 /// "Tap the card" prompt (0046): starts an NFC read session and pops with
 /// the first tag's normalized UID. Owns the session lifecycle so it is
-/// always stopped, whether the user taps a card or cancels.
-class NfcTapDialog extends StatefulWidget {
-  const NfcTapDialog({super.key, required this.reader, required this.l10n});
-
-  final NfcUidReader reader;
-  final AppLocalizations? l10n;
-
-  @override
-  State<NfcTapDialog> createState() => _NfcTapDialogState();
-}
-
-class _NfcTapDialogState extends State<NfcTapDialog> {
-  bool _done = false;
-
-  @override
-  void initState() {
-    super.initState();
-    unawaited(
-      widget.reader.startRead(
-        onUid: (uid) {
-          if (_done || !mounted) return;
-          _done = true;
-          Navigator.of(context).pop(uid);
-        },
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    unawaited(widget.reader.stop());
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = widget.l10n;
-    return AlertDialog(
-      title: Text(l10n?.badgeTapCardTitle ?? 'Register a card'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 12),
-            child: Icon(Icons.contactless_outlined, size: 56),
-          ),
-          Text(
-            l10n?.badgeTapCardHint ??
-                'Hold the RFID/NFC card to the back of the device.',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ],
-      ),
-      actions: [
-        TextButton(
-          key: const ValueKey('nfc-tap-cancel'),
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
-        ),
-      ],
-    );
-  }
-}

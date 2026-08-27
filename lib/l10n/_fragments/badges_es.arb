@@ -117,5 +117,9 @@
   "badgeAuthEnabledHint": "Desactivado por defecto: una credencial que le registra la entrada no inicia su sesión hasta que usted lo decida.",
   "@badgeAuthEnabledHint": {
     "description": "#662 - badge sign-in"
+  },
+  "badgeAuthNeedsPin": "Defina primero un PIN de acceso — una credencial sola nunca debe bastar.",
+  "@badgeAuthNeedsPin": {
+    "description": "#662 - badge sign-in"
   }
 }

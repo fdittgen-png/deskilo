@@ -455,6 +455,10 @@
   "@badgeAuthEnabledHint": {
     "description": "#662 - badge sign-in"
   },
+  "badgeAuthNeedsPin": "Set a sign-in PIN first — a badge alone must never be enough.",
+  "@badgeAuthNeedsPin": {
+    "description": "#662 - badge sign-in"
+  },
   "billSubscription": "Subscription {pct}%",
   "@billSubscription": {
     "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount",
