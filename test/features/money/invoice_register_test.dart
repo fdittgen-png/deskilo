@@ -137,9 +137,16 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('invoice-accounting-export')));
     await tester.pumpAndSettle();
-    // The fake workspace is DE: no FEC to choose, so the sheet is skipped
-    // and SAF-T is produced straight away.
+    // The fake workspace is DE. Since #669 the sheet always opens and
+    // offers what THIS country can use: DATEV for a German
+    // Steuerberater, never France's FEC.
     expect(find.byKey(const ValueKey('accounting-export-fec')), findsNothing);
+    expect(find.byKey(const ValueKey('accounting-export-datev')),
+        findsOneWidget,
+        reason: 'a German workspace must be offered the file its '
+            'accountant actually imports');
+    await tester.tap(find.byKey(const ValueKey('accounting-export-saft')));
+    await tester.pumpAndSettle();
 
     final file = saved.single;
     expect(file.name, contains('saf-t'));

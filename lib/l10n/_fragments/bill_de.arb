@@ -95,5 +95,69 @@
   "accountImputationHint": "Dein Guthaben kann offene Rechnungen begleichen — der Space rechnet es beim Zuordnen der Zahlungen an.",
   "@accountImputationHint": {
     "description": "Account card hint shown when credit and open invoices coexist (#512)"
+  },
+  "invoiceExportSafTPt": "SAF-T (Portugal)",
+  "@invoiceExportSafTPt": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportDatev": "DATEV (Buchungsstapel)",
+  "@invoiceExportDatev": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportSage": "Sage 50 (Audit-Journal)",
+  "@invoiceExportSage": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportAccountantCsv": "Buchhaltungs-CSV",
+  "@invoiceExportAccountantCsv": {
+    "description": "#669 - accounting export formats"
+  },
+  "invoiceExportAuditTrail": "Prüfpfad",
+  "@invoiceExportAuditTrail": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportClaimRegulatory": "Das Format, das Ihr Finanzamt verlangt.",
+  "@exportClaimRegulatory": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportClaimExchange": "Für Ihre Steuerberatung zum Importieren und Prüfen — keine Meldung an eine Behörde.",
+  "@exportClaimExchange": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportClaimSubset": "Nur Rechnungen und Zahlungen, kein Hauptbuch. Die Datei sagt das in ihrem Kopf.",
+  "@exportClaimSubset": {
+    "description": "#669 - accounting export formats"
+  },
+  "exportUncertifiedSoftware": "Nach der veröffentlichten Spezifikation erstellt, aber DesKilo ist in diesem Land keine zertifizierte Software — klären Sie mit Ihrer Steuerberatung, ob das für Sie Pflicht ist.",
+  "@exportUncertifiedSoftware": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevAccountsTitle": "DATEV-Export",
+  "@datevAccountsTitle": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevAccountsIntro": "Berater- und Mandantennummer bekommen Sie von Ihrer Steuerberatung. DATEV lehnt eine Datei mit abweichenden Nummern ab — genau das hält sie aus den Büchern der falschen Firma heraus.",
+  "@datevAccountsIntro": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevConsultantNumber": "Beraternummer",
+  "@datevConsultantNumber": {
+    "description": "#669 - accounting export formats"
+  },
+  "datevClientNumber": "Mandantennummer",
+  "@datevClientNumber": {
+    "description": "#669 - accounting export formats"
+  },
+  "sageAccountsTitle": "Sage-Export",
+  "@sageAccountsTitle": {
+    "description": "#669 - accounting export formats"
+  },
+  "sageAccountsIntro": "Die Vorgaben sind Sages eigene Sachkonten. Der Steuerschlüssel entscheidet, auf welcher Umsatzsteuervoranmeldung die Buchungen landen — prüfen Sie ihn, wenn Sie nicht dem Regelsatz unterliegen.",
+  "@sageAccountsIntro": {
+    "description": "#669 - accounting export formats"
+  },
+  "sageTaxCode": "Steuerschlüssel (T1 / T0 / T9)",
+  "@sageTaxCode": {
+    "description": "#669 - accounting export formats"
   }
 }

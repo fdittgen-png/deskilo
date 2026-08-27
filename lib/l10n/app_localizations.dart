@@ -1064,6 +1064,102 @@ abstract class AppLocalizations {
   /// **'Your credit can settle open invoices — the workspace applies it when matching payments.'**
   String get accountImputationHint;
 
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'SAF-T (Portugal)'**
+  String get invoiceExportSafTPt;
+
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'DATEV (Buchungsstapel)'**
+  String get invoiceExportDatev;
+
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'Sage 50 (audit trail)'**
+  String get invoiceExportSage;
+
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting CSV'**
+  String get invoiceExportAccountantCsv;
+
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'Audit trail'**
+  String get invoiceExportAuditTrail;
+
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'The format your tax authority asks for.'**
+  String get exportClaimRegulatory;
+
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'For your accountant to import and review — not a filing.'**
+  String get exportClaimExchange;
+
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices and payments only; no general ledger. The file says so in its header.'**
+  String get exportClaimSubset;
+
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'Built to the published spec, but DesKilo is not certified software in this country — check with your accountant whether that is required of you.'**
+  String get exportUncertifiedSoftware;
+
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'DATEV export'**
+  String get datevAccountsTitle;
+
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'Your accountant gives you the consultant and client numbers. DATEV refuses a file whose numbers do not match — which is what keeps it out of the wrong company’s books.'**
+  String get datevAccountsIntro;
+
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'Beraternummer'**
+  String get datevConsultantNumber;
+
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'Mandantennummer'**
+  String get datevClientNumber;
+
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'Sage export'**
+  String get sageAccountsTitle;
+
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'The defaults are Sage’s own shipped nominal codes. The tax code decides which VAT return these land on, so check it with your accountant if you are not on the standard rate.'**
+  String get sageAccountsIntro;
+
+  /// #669 - accounting export formats
+  ///
+  /// In en, this message translates to:
+  /// **'VAT code (T1 / T0 / T9)'**
+  String get sageTaxCode;
+
   /// Document title on the exported bill PDF (#133)
   ///
   /// In en, this message translates to:

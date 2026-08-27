@@ -32,6 +32,31 @@ const String safTSoftwareVersion = '1.0.0';
 /// Line amounts are tax-EXCLUSIVE, as SAF-T defines them — with DesKilo's
 /// VAT-inclusive prices that means the extracted net, and the tax sits
 /// beside it in `TaxInformation` (0072).
+/// Which national declaration the file makes about itself (#669).
+///
+/// One tree, two headers. Every SAF-T variant is a restriction of the
+/// same OECD structure, so a second builder would be a second place for
+/// the invoice mapping to drift — and the mapping is the part that has
+/// to agree with the document the customer holds.
+enum SafTProfile {
+  /// The OECD tree with `GeneralLedgerEntries` omitted, saying so in its
+  /// own HeaderComment. Claims nothing national.
+  generic,
+
+  /// Portugal, `TaxAccountingBasis = 'F'` — faturação.
+  ///
+  /// This is NOT a partial version of the accounting variant. Portugal
+  /// defines 'F' for systems that issue invoices and keep no books, and
+  /// under 'F' the ledger sections are not merely tolerated as absent —
+  /// they are not part of the declaration at all.
+  ///
+  /// What this file does NOT do is make its producer certified software.
+  /// `SoftwareCertificateNumber` is written as 0, the defined value for
+  /// uncertified, and the export sheet tells the owner what that means
+  /// for them. See `accounting_format.dart`.
+  portugal,
+}
+
 String buildSafTFile({
   required List<Invoice> invoices,
   required Map<String, InvoiceMatch> matches,
@@ -42,6 +67,7 @@ String buildSafTFile({
   required String Function(InvoiceLine line) lineText,
   /// The word for a position with no better description.
   String fallbackDescription = 'Coworking',
+  SafTProfile profile = SafTProfile.generic,
 }) {
   String amount(int cents) => (cents / 100).toStringAsFixed(2);
   String day(DateTime date) => date.toIso8601String().split('T').first;
@@ -78,7 +104,11 @@ String buildSafTFile({
   final builder = XmlBuilder();
   builder.processing('xml', 'version="1.0" encoding="UTF-8"');
   builder.element('AuditFile', nest: () {
-    builder.namespace('urn:OECD:StandardAuditFile-Tax:2.00');
+    // The PT variant has its own namespace and version; an importer
+    // keys on these before it reads a single element.
+    builder.namespace(profile == SafTProfile.portugal
+        ? 'urn:OECD:StandardAuditFile-Tax:PT_1.04_01'
+        : 'urn:OECD:StandardAuditFile-Tax:2.00');
 
     void tag(String name, String text) {
       builder.element(name, nest: () => builder.text(text));
@@ -96,38 +126,83 @@ String buildSafTFile({
     }
 
     // ── Header: who, when, in what currency, over which period ─────────
-    builder.element('Header', nest: () {
-      tag('AuditFileVersion', '2.00');
-      tag('AuditFileCountry', company.country.toUpperCase());
-      tag('AuditFileDateCreated', day(createdAt));
-      tag('SoftwareCompanyName', 'DesKilo');
-      tag('SoftwareID', 'DesKilo');
-      tag('SoftwareVersion', softwareVersion);
-      builder.element('Company', nest: () {
-        if (company.legalId.isNotEmpty) {
-          tag('RegistrationNumber', company.legalId);
-        }
-        tag('Name', company.name);
-        address(company);
-        if (company.vatId.isNotEmpty) {
-          builder.element('TaxRegistration', nest: () {
-            tag('TaxRegistrationNumber', company.vatId);
-          });
-        }
+    //
+    // Portugal's header is a different declaration, not a decorated one:
+    // its element ORDER is fixed by the schema, several elements are
+    // mandatory that the generic tree does not carry, and
+    // TaxAccountingBasis is the field that says what kind of file this
+    // is at all. So it is built separately rather than patched.
+    if (profile == SafTProfile.portugal) {
+      builder.element('Header', nest: () {
+        tag('AuditFileVersion', '1.04_01');
+        // The NIF, digits only — the schema rejects anything else.
+        tag('CompanyID', _digits(company.legalId));
+        tag('TaxRegistrationNumber', _digits(company.vatId.isEmpty
+            ? company.legalId
+            : company.vatId));
+        // 'F' = faturação. The whole reason this file can be produced
+        // honestly by an app that keeps no ledger.
+        tag('TaxAccountingBasis', 'F');
+        tag('CompanyName', company.name);
+        builder.element('CompanyAddress', nest: () {
+          if (company.street.isNotEmpty) {
+            tag('AddressDetail', company.street.replaceAll('\n', ', '));
+          }
+          if (company.city.isNotEmpty) tag('City', company.city);
+          if (company.postalCode.isNotEmpty) {
+            tag('PostalCode', company.postalCode);
+          }
+          tag('Country', company.country.toUpperCase());
+        });
+        tag('FiscalYear', '${from.year}');
+        tag('StartDate', day(from));
+        tag('EndDate', day(to));
+        tag('CurrencyCode', currency);
+        tag('DateCreated', day(createdAt));
+        // 'Global' — the whole entity, not a branch.
+        tag('TaxEntity', 'Global');
+        tag('ProductCompanyTaxID', _digits(company.legalId));
+        // 0 is the DEFINED value for software that is not certified in
+        // Portugal, and DesKilo is not. Writing a plausible-looking
+        // number here would be a false statement about the producer.
+        tag('SoftwareCertificateNumber', '0');
+        tag('ProductID', 'DesKilo/DesKilo');
+        tag('ProductVersion', softwareVersion);
       });
-      tag('DefaultCurrencyCode', currency);
-      builder.element('SelectionCriteria', nest: () {
-        tag('SelectionStartDate', day(from));
-        tag('SelectionEndDate', day(to));
+    } else {
+      builder.element('Header', nest: () {
+        tag('AuditFileVersion', '2.00');
+        tag('AuditFileCountry', company.country.toUpperCase());
+        tag('AuditFileDateCreated', day(createdAt));
+        tag('SoftwareCompanyName', 'DesKilo');
+        tag('SoftwareID', 'DesKilo');
+        tag('SoftwareVersion', softwareVersion);
+        builder.element('Company', nest: () {
+          if (company.legalId.isNotEmpty) {
+            tag('RegistrationNumber', company.legalId);
+          }
+          tag('Name', company.name);
+          address(company);
+          if (company.vatId.isNotEmpty) {
+            builder.element('TaxRegistration', nest: () {
+              tag('TaxRegistrationNumber', company.vatId);
+            });
+          }
+        });
+        tag('DefaultCurrencyCode', currency);
+        builder.element('SelectionCriteria', nest: () {
+          tag('SelectionStartDate', day(from));
+          tag('SelectionEndDate', day(to));
+        });
+        // Says out loud what this file is and is not.
+        tag(
+          'HeaderComment',
+          'Invoicing subset: Header, MasterFiles and SourceDocuments. '
+              'GeneralLedgerEntries and customer account numbers are omitted '
+              'on purpose — the chart of accounts belongs to the accountant.',
+        );
       });
-      // Says out loud what this file is and is not.
-      tag(
-        'HeaderComment',
-        'Invoicing subset: Header, MasterFiles and SourceDocuments. '
-            'GeneralLedgerEntries and customer account numbers are omitted '
-            'on purpose — the chart of accounts belongs to the accountant.',
-      );
-    });
+    }
 
     // ── Master files: the parties and the tax treatment ────────────────
     builder.element('MasterFiles', nest: () {
@@ -290,3 +365,8 @@ String buildSafTFile({
 String _percent(double percent) => percent == percent.roundToDouble()
     ? percent.toStringAsFixed(0)
     : percent.toString();
+
+/// Digits only. Portuguese identifiers are numeric in the schema, and a
+/// space or a country prefix that a user typed into the field is a
+/// validation failure rather than a cosmetic difference.
+String _digits(String value) => value.replaceAll(RegExp('[^0-9]'), '');

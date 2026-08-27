@@ -576,6 +576,59 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your credit can settle open invoices — the workspace applies it when matching payments.';
 
   @override
+  String get invoiceExportSafTPt => 'SAF-T (Portugal)';
+
+  @override
+  String get invoiceExportDatev => 'DATEV (Buchungsstapel)';
+
+  @override
+  String get invoiceExportSage => 'Sage 50 (audit trail)';
+
+  @override
+  String get invoiceExportAccountantCsv => 'Accounting CSV';
+
+  @override
+  String get invoiceExportAuditTrail => 'Audit trail';
+
+  @override
+  String get exportClaimRegulatory => 'The format your tax authority asks for.';
+
+  @override
+  String get exportClaimExchange =>
+      'For your accountant to import and review — not a filing.';
+
+  @override
+  String get exportClaimSubset =>
+      'Invoices and payments only; no general ledger. The file says so in its header.';
+
+  @override
+  String get exportUncertifiedSoftware =>
+      'Built to the published spec, but DesKilo is not certified software in this country — check with your accountant whether that is required of you.';
+
+  @override
+  String get datevAccountsTitle => 'DATEV export';
+
+  @override
+  String get datevAccountsIntro =>
+      'Your accountant gives you the consultant and client numbers. DATEV refuses a file whose numbers do not match — which is what keeps it out of the wrong company’s books.';
+
+  @override
+  String get datevConsultantNumber => 'Beraternummer';
+
+  @override
+  String get datevClientNumber => 'Mandantennummer';
+
+  @override
+  String get sageAccountsTitle => 'Sage export';
+
+  @override
+  String get sageAccountsIntro =>
+      'The defaults are Sage’s own shipped nominal codes. The tax code decides which VAT return these land on, so check it with your accountant if you are not on the standard rate.';
+
+  @override
+  String get sageTaxCode => 'VAT code (T1 / T0 / T9)';
+
+  @override
   String get billPdfTitle => 'Monthly bill';
 
   @override
