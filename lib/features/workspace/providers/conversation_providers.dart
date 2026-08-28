@@ -2,7 +2,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/time/clock.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/traced.dart';
 import '../domain/conversation.dart';
 import '../domain/member_note.dart';
 import 'workspace_providers.dart';
@@ -18,32 +18,13 @@ part 'conversation_providers.g.dart';
 Future<List<Conversation>> conversations(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return _traced(
+  return traced(
+    'messaging',
     'conversations',
     () => ref.watch(workspaceRepositoryProvider).fetchConversations(
           workspace.id,
         ),
   );
-}
-
-/// Runs [body] and TRACES anything it throws before rethrowing (#692).
-///
-/// A Riverpod provider that fails lands in `AsyncError`, the screen
-/// renders its generic line, and nothing is written down. The first beta
-/// build did exactly that: the conversation list said "an error
-/// occurred" and the device trace — the one thing that could have named
-/// the cause — had no entry for it at all.
-///
-/// Rethrows, so the UI still shows its own error state. This adds the
-/// record, it does not swallow the failure.
-Future<T> _traced<T>(String what, Future<T> Function() body) async {
-  try {
-    return await body();
-  } catch (e, st) {
-    TraceLogger.instance
-        .error('messaging', '$what failed', error: e, stackTrace: st);
-    rethrow;
-  }
 }
 
 /// Total unread across every conversation — the badge on the Messages
@@ -64,7 +45,8 @@ Future<List<MemberNote>> conversationMessages(
   Ref ref,
   String conversationId,
 ) =>
-    _traced(
+    traced(
+      'messaging',
       'conversation messages',
       () => ref
           .watch(workspaceRepositoryProvider)
@@ -77,7 +59,8 @@ Future<List<ConversationParticipant>> conversationParticipants(
   Ref ref,
   String conversationId,
 ) =>
-    _traced(
+    traced(
+      'messaging',
       'participants',
       () => ref
           .watch(workspaceRepositoryProvider)
@@ -96,7 +79,8 @@ Future<List<ConversationParticipant>> conversationParticipants(
 Future<String?> directConversationId(Ref ref, String memberId) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return null;
-  return _traced(
+  return traced(
+    'messaging',
     'direct conversation',
     () => ref.watch(workspaceRepositoryProvider).openDirectConversation(
           workspace.id,
@@ -113,7 +97,8 @@ Future<String?> directConversationId(Ref ref, String memberId) async {
 Future<List<MemberNote>> messageSearch(Ref ref, String query) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return _traced(
+  return traced(
+    'messaging',
     'message search',
     () => ref.watch(workspaceRepositoryProvider).searchMessages(
           workspace.id,

@@ -315,5 +315,9 @@
         "type": "String"
       }
     }
+  },
+  "memberMoneyUnavailable": "Money could not be loaded. Pull to refresh.",
+  "@memberMoneyUnavailable": {
+    "description": "#709 - the money section of a profile could not be read"
   }
 }

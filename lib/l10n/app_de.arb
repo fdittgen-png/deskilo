@@ -2237,6 +2237,10 @@
       }
     }
   },
+  "memberMoneyUnavailable": "Finanzen konnten nicht geladen werden. Zum Aktualisieren ziehen.",
+  "@memberMoneyUnavailable": {
+    "description": "#709 - the money section of a profile could not be read"
+  },
   "moneyBaseFee": "Basis-Abo",
   "moneyUsage": "{used} von {included} halben Tagen genutzt",
   "moneyUsageUnlimited": "{used} halbe Tage genutzt",

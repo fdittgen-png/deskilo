@@ -64,7 +64,7 @@ final class ConversationsProvider
   }
 }
 
-String _$conversationsHash() => r'65305a8ce697e27f48561b5b93ba71c7ec5f1848';
+String _$conversationsHash() => r'4f5affdd222338a94218d44caadc5a104dbf398b';
 
 /// Total unread across every conversation — the badge on the Messages
 /// destination.
@@ -187,7 +187,7 @@ final class ConversationMessagesProvider
 }
 
 String _$conversationMessagesHash() =>
-    r'2fb490a27ae57a9668eef8e53265b4d9f9196ab5';
+    r'd84b38e6bd9ce6c257c6b63bf0716a7ecf4e2cb2';
 
 /// The messages of one conversation, oldest first.
 
@@ -275,7 +275,7 @@ final class ConversationParticipantsProvider
 }
 
 String _$conversationParticipantsHash() =>
-    r'75bf3306e7ff0aaf37233f54e78d30d0898ec05f';
+    r'0e664b8435bbae535dfb4f19f7f5319d7b8c7a32';
 
 /// The roster of one conversation.
 
@@ -379,7 +379,7 @@ final class DirectConversationIdProvider
 }
 
 String _$directConversationIdHash() =>
-    r'85be189fcdf7fc0692ca69584c1f24d7910c9528';
+    r'832725b05b28aca0d4daaf360c5dd3dd471dfd68';
 
 /// The direct conversation with one member, resolved by the server
 /// (#702) — `direct_conversation` returns the existing thread or opens
@@ -486,7 +486,7 @@ final class MessageSearchProvider
   }
 }
 
-String _$messageSearchHash() => r'ecfa1edb0c0efc473cd5844329ed1b9de9d11dd3';
+String _$messageSearchHash() => r'af34178ba7aee43a3318b66bf0423d2d9bd6c8ad';
 
 /// Full-text search over messages I can see (#687).
 ///

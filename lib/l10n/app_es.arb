@@ -2237,6 +2237,10 @@
       }
     }
   },
+  "memberMoneyUnavailable": "No se pudieron cargar las finanzas. Tire para actualizar.",
+  "@memberMoneyUnavailable": {
+    "description": "#709 - the money section of a profile could not be read"
+  },
   "moneyBaseFee": "Suscripción base",
   "moneyUsage": "{used} de {included} medias jornadas usadas",
   "moneyUsageUnlimited": "{used} medias jornadas usadas",

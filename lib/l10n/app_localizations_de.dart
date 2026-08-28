@@ -3798,6 +3798,10 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get memberMoneyUnavailable =>
+      'Finanzen konnten nicht geladen werden. Zum Aktualisieren ziehen.';
+
+  @override
   String get moneyBaseFee => 'Basis-Abo';
 
   @override

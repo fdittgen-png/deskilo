@@ -261,7 +261,7 @@ final class MemberAccountProvider
   }
 }
 
-String _$memberAccountHash() => r'341564fa7bab4185a7eaedf7a55a1ebe3be512a5';
+String _$memberAccountHash() => r'6648d9551147885df9234afcd7ead96e8b9031f6';
 
 /// ONE MEMBER's money, for the dossier on their profile (#704).
 ///
@@ -358,7 +358,7 @@ final class MemberStatementProvider
   }
 }
 
-String _$memberStatementHash() => r'edee213ee80f5ad9ca46d57bbf352953feedd86e';
+String _$memberStatementHash() => r'c9368c9fa0535c9a3e6da2f83baf2520ab71512f';
 
 /// One member's statement for a period ('yyyy-MM').
 
@@ -444,7 +444,7 @@ final class MemberLedgerProvider
   }
 }
 
-String _$memberLedgerHash() => r'3e18f1c521dd0a00de1f9aad711d79e9b161440f';
+String _$memberLedgerHash() => r'7e74db83ecdc24dab5bcdaaa739b186d8fb44be6';
 
 /// One member's ledger, newest first — where their PAYMENTS are.
 

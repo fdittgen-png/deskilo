@@ -4327,6 +4327,10 @@
       }
     }
   },
+  "memberMoneyUnavailable": "Money could not be loaded. Pull to refresh.",
+  "@memberMoneyUnavailable": {
+    "description": "#709 - the money section of a profile could not be read"
+  },
   "moneyBaseFee": "Base subscription",
   "@moneyBaseFee": {
     "description": "Statement line for the plan's monthly fee"

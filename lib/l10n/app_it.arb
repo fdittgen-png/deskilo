@@ -2237,6 +2237,10 @@
       }
     }
   },
+  "memberMoneyUnavailable": "Impossibile caricare le finanze. Trascina per aggiornare.",
+  "@memberMoneyUnavailable": {
+    "description": "#709 - the money section of a profile could not be read"
+  },
   "moneyBaseFee": "Abbonamento base",
   "moneyUsage": "{used} mezze giornate usate su {included}",
   "moneyUsageUnlimited": "{used} mezze giornate usate",

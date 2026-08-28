@@ -282,5 +282,9 @@
         "type": "String"
       }
     }
+  },
+  "memberMoneyUnavailable": "Impossible de charger les finances. Tirez pour actualiser.",
+  "@memberMoneyUnavailable": {
+    "description": "#709 - the money section of a profile could not be read"
   }
 }

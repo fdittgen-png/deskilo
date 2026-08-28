@@ -640,8 +640,14 @@ class FakeMoneyRepository implements MoneyRepository {
   /// member_statement does from the member's joined_at.
   String? memberJoinedPeriod;
 
+  /// When set, [fetchMemberAccount] throws it — models a refused RPC
+  /// (`not your account`) or a dead network, so a screen's error state
+  /// can be exercised.
+  Object? accountFailure;
+
   @override
   Future<MemberAccount> fetchMemberAccount(String memberId) async {
+    if (accountFailure != null) throw accountFailure!;
     // Mirrors the member_account RPC over the fake stores.
     bool consumed(LedgerEntry e) => consumedPaymentIds.contains(e.id) ||
         invoiceMatchesStore.values.any((m) => m.paymentLedgerId == e.id);

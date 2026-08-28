@@ -3761,6 +3761,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get memberMoneyUnavailable =>
+      'Money could not be loaded. Pull to refresh.';
+
+  @override
   String get moneyBaseFee => 'Base subscription';
 
   @override

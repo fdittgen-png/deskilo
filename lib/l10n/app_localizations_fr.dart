@@ -3802,6 +3802,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get memberMoneyUnavailable =>
+      'Impossible de charger les finances. Tirez pour actualiser.';
+
+  @override
   String get moneyBaseFee => 'Abonnement de base';
 
   @override

@@ -2,6 +2,8 @@
 import 'dart:typed_data';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/trace/traced.dart';
+
 import '../domain/invoice.dart';
 import '../domain/dunning.dart';
 import '../domain/invoice_pdf_template.dart';
@@ -56,8 +58,11 @@ Future<List<LedgerEntry>> myLedger(Ref ref) async {
 /// providers add no authority of their own. The UI gate that hides the
 /// card is a courtesy, not the boundary.
 @riverpod
-Future<MemberAccount> memberAccount(Ref ref, String memberId) async =>
-    ref.read(moneyRepositoryProvider).fetchMemberAccount(memberId);
+Future<MemberAccount> memberAccount(Ref ref, String memberId) => traced(
+      'money',
+      'member account',
+      () => ref.read(moneyRepositoryProvider).fetchMemberAccount(memberId),
+    );
 
 /// One member's statement for a period ('yyyy-MM').
 @riverpod
@@ -65,13 +70,20 @@ Future<Statement?> memberStatement(
   Ref ref,
   String memberId,
   String period,
-) async =>
-    ref.read(moneyRepositoryProvider).fetchStatement(memberId, period);
+) =>
+    traced(
+      'money',
+      'member statement',
+      () => ref.read(moneyRepositoryProvider).fetchStatement(memberId, period),
+    );
 
 /// One member's ledger, newest first — where their PAYMENTS are.
 @riverpod
-Future<List<LedgerEntry>> memberLedger(Ref ref, String memberId) async =>
-    ref.read(moneyRepositoryProvider).fetchLedger(memberId);
+Future<List<LedgerEntry>> memberLedger(Ref ref, String memberId) => traced(
+      'money',
+      'member ledger',
+      () => ref.read(moneyRepositoryProvider).fetchLedger(memberId),
+    );
 
 /// One member's invoices, newest first.
 ///

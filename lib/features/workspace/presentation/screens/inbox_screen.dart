@@ -88,7 +88,14 @@ class _InboxScreenState extends ConsumerState<InboxScreen>
           }
         });
     } else if (_controller!.index != index) {
-      _controller!.index = index;
+      // Off the build path (#709): setting the index notifies the
+      // TabBar, which marks itself dirty — during build that is a
+      // setState-in-build, tolerated today and an assertion tomorrow.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted && _controller!.index != index) {
+          _controller!.index = index;
+        }
+      });
     }
   }
 
