@@ -81,7 +81,7 @@ Réserver depuis le plan :
 
 ## 4. Réservations (hub Réserver)
 
-Ouvrez le hub **Réserver** (bouton central). En haut : les quatre **boutons de vue**, la **puce de date**, le bouton **scan QR** (dessous, §4a), les **puces de moment** (matin / après-midi / journée) et les **puces d'étage** (*Tous les étages*, ou un par niveau). Puis quatre vues :
+Ouvrez le hub **Réserver** (bouton central). En haut : deux rangées de commandes. La première dit **ce que** vous regardez : les quatre **boutons de vue** et, sur le plan, le sélecteur **plan / liste**. La seconde dit **quand** : la **puce de date**, un bouton **Maintenant** dès que vous avez quitté aujourd'hui, et les **puces de moment** (matin / après-midi / journée). Les **puces d'étage** (*Tous les étages*, ou un par niveau) sont sur le plan lui-même, et le bouton **scan QR** (§4a) est dans la barre d'app, à côté de l'éditeur et de la cloche. Puis quatre vues :
 
 - **Plan** — le plan filtré sur votre fenêtre ; touchez une place libre pour réserver.
 - **Jour** — chaque place en ligne de chronologie pour le jour choisi (08:00 → 17:00 ou vos horaires, la ligne rouge marquant *maintenant*) ; touchez un créneau libre pour réserver, votre propre bloc pour ses détails.

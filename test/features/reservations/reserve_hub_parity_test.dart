@@ -89,8 +89,15 @@ void main() {
     });
 
     test('scan, date and the four views survive', () {
+      // #699 — the scan button still exists, but in the shell's app bar
+      // (with its key unchanged), so it is checked there. It left the
+      // control rows because its width was what pushed the window chips
+      // onto a third one.
+      expect(
+        File('lib/app/shell/shell_screen.dart').readAsStringSync(),
+        contains("ValueKey('reserve-scan-button')"),
+      );
       for (final key in [
-        'reserve-scan-button',
         'reserve-date-button',
         'reserve-plan-view',
         'reserve-day-view',

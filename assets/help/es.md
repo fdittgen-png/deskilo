@@ -81,7 +81,7 @@ Reservar desde el plano:
 
 ## 4. Reservas (hub Reservar)
 
-Abre el hub **Reservar** (botón central). A lo largo del borde superior: los cuatro **botones de vista**, el **chip de fecha**, el **botón de escaneo QR** (abajo, §4a), los **chips de franja** (mañana / tarde / día completo) y los **chips de planta** (*Todas las plantas*, o uno por planta). Después, cuatro vistas:
+Abre el hub **Reservar** (botón central). A lo largo del borde superior: dos filas de controles. La primera dice **qué** está mirando: los cuatro **botones de vista** y, en el plano, el selector **plano / lista**. La segunda dice **cuándo**: el **chip de fecha**, un botón **Ahora** en cuanto se aleja de hoy, y los **chips de franja** (mañana / tarde / día completo). Los **chips de planta** (*Todas las plantas*, o uno por planta) están sobre el propio plano, y el **botón de escaneo QR** (§4a) está en la barra superior, junto al editor y la campana. Después, cuatro vistas:
 
 - **Plano** — el plano filtrado a tu ventana elegida; toca un puesto libre para reservarlo.
 - **Día** — cada puesto como fila de cronología del día elegido (08:00 → 17:00 o el horario de tu espacio, la línea roja marca *ahora*); toca un tramo libre para reservar, tu propio bloque para ver sus detalles.
