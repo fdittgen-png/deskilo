@@ -78,6 +78,13 @@ concurrency:
   group: ios-testflight
   cancel-in-progress: false
 
+env:
+  # Every other workflow reads its Flutter version from here; this one
+  # spelled the literal at the use site, so a version bump touched seven
+  # files and silently left the EIGHTH — the iOS release leg — behind.
+  # The odd one out is always the one that gets missed.
+  FLUTTER_VERSION: "3.44.9"
+
 jobs:
   build-and-upload:
     # Pinned like tankstellen: macos-latest migrates under our feet.
@@ -107,7 +114,7 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.44.9"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
 
