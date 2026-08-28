@@ -9,6 +9,7 @@ import '../../../reservations/providers/reservation_providers.dart';
 import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/conversation_row.dart';
+import 'message_search_screen.dart';
 import '../widgets/conversation_thread.dart';
 import '../widgets/new_conversation_sheet.dart';
 
@@ -37,7 +38,21 @@ class MessagesScreen extends ConsumerWidget {
     final now = ref.watch(conversationNowProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.messagesTitle ?? 'Messages')),
+      appBar: AppBar(
+        title: Text(l10n?.messagesTitle ?? 'Messages'),
+        actions: [
+          IconButton(
+            key: const ValueKey('messages-search'),
+            tooltip: l10n?.messageSearchTitle ?? 'Search',
+            icon: const Icon(Icons.search),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => const MessageSearchScreen(),
+              ),
+            ),
+          ),
+        ],
+      ),
       // #687 — the way to START one. Without it the centre could only
       // show conversations that already existed, and its own empty state
       // had to send people to a different screen to make the first.

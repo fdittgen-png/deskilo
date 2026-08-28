@@ -1121,8 +1121,28 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       conversationMessages[conversationId] ?? const [];
 
   @override
-  Future<void> markConversationRead(String conversationId) async =>
-      readConversations.add(conversationId);
+  Future<void> markConversationRead(String conversationId) async {
+    readConversations.add(conversationId);
+    // Mirrors mark_conversation_read (0126): messages addressed TO me
+    // get their receipt, and only once — re-opening must not move a
+    // stamp that already exists, or the sender watches the read time
+    // drift every time the reader glances at the thread.
+    for (var i = 0; i < memberNotes.length; i++) {
+      final n = memberNotes[i];
+      if (n.toMemberId == 'member-1' && n.readAt == null) {
+        memberNotes[i] = MemberNote(
+          id: n.id,
+          workspaceId: n.workspaceId,
+          fromMemberId: n.fromMemberId,
+          toMemberId: n.toMemberId,
+          body: n.body,
+          createdAt: n.createdAt,
+          readAt: DateTime.utc(2026, 5, 12, 10),
+          conversationId: n.conversationId,
+        );
+      }
+    }
+  }
 
   @override
   Future<List<MemberNote>> searchMessages(

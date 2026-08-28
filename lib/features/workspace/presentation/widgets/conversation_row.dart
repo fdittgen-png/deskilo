@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../../../l10n/app_localizations.dart';
 
 import '../../domain/conversation.dart';
+import '../../domain/member_note_refs.dart';
 import 'conversation_avatar.dart';
 
 /// One row of the conversation list (#687) — the WhatsApp shape the
@@ -99,7 +100,10 @@ class ConversationRow extends ConsumerWidget {
           ),
         Expanded(
           child: Text(
-            conversation.lastBody,
+            // LABELS, never raw tokens. `[res:res-1|Desk A1]` in a list
+            // row is markup leaking into someone's inbox — the old
+            // events inbox already stripped it and the new row must too.
+            notePlainText(conversation.lastBody),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: theme.textTheme.bodySmall,

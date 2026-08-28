@@ -9,6 +9,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/conversation_sheet.dart';
+import '../widgets/conversation_thread.dart';
 
 /// Deep-link target `/msg/:id` (0106): the WhatsApp mirror of a message
 /// ends with a link here — the app opens DIRECTLY on the conversation
@@ -31,16 +32,25 @@ class MessageLinkScreen extends ConsumerWidget {
       return const Scaffold(body: LoadingView());
     }
     final note = notes.where((n) => n.id == noteId).firstOrNull;
+    // #687 — the CONVERSATION is what a message belongs to now, and it
+    // is the only thing that works for a group: resolving a "partner"
+    // has no answer when eight people are in the thread.
+    //
+    // Falls back to the partner for a pre-0125 note, which has no
+    // conversation and never will.
+    final conversationId = note?.conversationId;
     final partner = note == null || note.isBroadcast
         ? null
         : (note.fromMemberId == me?.id
             ? note.toMemberId
             : note.fromMemberId);
-    if (note == null || partner == null) {
-      // Gone or a broadcast: the inbox is the right landing spot.
+    if (note == null || (conversationId == null && partner == null)) {
+      // Gone or a broadcast: the MESSAGING CENTRE is the right landing
+      // spot now, not the events inbox — messages left that feed in
+      // #687.
       return Scaffold(
         appBar: AppBar(
-          leading: BackButton(onPressed: () => context.go('/events')),
+          leading: BackButton(onPressed: () => context.go('/messages')),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -52,8 +62,8 @@ class MessageLinkScreen extends ConsumerWidget {
             ),
             FilledButton(
               key: const ValueKey('message-link-inbox'),
-              onPressed: () => context.go('/events'),
-              child: Text(l10n?.eventsMessagesHeader ?? 'Messages'),
+              onPressed: () => context.go('/messages'),
+              child: Text(l10n?.messagesTitle ?? 'Messages'),
             ),
           ],
         ),
@@ -61,14 +71,18 @@ class MessageLinkScreen extends ConsumerWidget {
     }
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(onPressed: () => context.go('/events')),
-        title: Text(names[partner] ?? ''),
+        leading: BackButton(onPressed: () => context.go('/messages')),
+        title: Text(
+          conversationId != null ? '' : (names[partner] ?? ''),
+        ),
       ),
       // The same thread every other surface opens — full height here.
-      body: ConversationSheet(
-        otherMemberId: partner,
-        otherName: names[partner] ?? '',
-      ),
+      body: conversationId != null
+          ? ConversationThread(conversationId: conversationId)
+          : ConversationSheet(
+              otherMemberId: partner!,
+              otherName: names[partner] ?? '',
+            ),
     );
   }
 }

@@ -3678,6 +3678,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get conversationLeft => 'Left';
 
   @override
+  String get messageSearchHint => 'People, groups, messages';
+
+  @override
+  String get messageSearchPrompt => 'Search people, groups and what was said.';
+
+  @override
+  String get messageSearchNothing => 'Nothing matched.';
+
+  @override
+  String get messageSearchPeople => 'People';
+
+  @override
+  String get messageSearchGroups => 'Groups';
+
+  @override
+  String get messageSearchMessages => 'Messages';
+
+  @override
+  String get messageSearchTitle => 'Search';
+
+  @override
   String get moneyBaseFee => 'Base subscription';
 
   @override

@@ -2126,6 +2126,34 @@
   "@conversationLeft": {
     "description": "#687 - messaging centre"
   },
+  "messageSearchHint": "Membri, gruppi, messaggi",
+  "@messageSearchHint": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchPrompt": "Cerca membri, gruppi e ciò che è stato detto.",
+  "@messageSearchPrompt": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchNothing": "Nessun risultato.",
+  "@messageSearchNothing": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchPeople": "Membri",
+  "@messageSearchPeople": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchGroups": "Gruppi",
+  "@messageSearchGroups": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchMessages": "Messaggi",
+  "@messageSearchMessages": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchTitle": "Cerca",
+  "@messageSearchTitle": {
+    "description": "#687 - messaging search"
+  },
   "moneyBaseFee": "Abbonamento base",
   "moneyUsage": "{used} mezze giornate usate su {included}",
   "moneyUsageUnlimited": "{used} mezze giornate usate",

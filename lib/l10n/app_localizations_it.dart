@@ -3713,6 +3713,28 @@ class AppLocalizationsIt extends AppLocalizations {
   String get conversationLeft => 'Uscito';
 
   @override
+  String get messageSearchHint => 'Membri, gruppi, messaggi';
+
+  @override
+  String get messageSearchPrompt =>
+      'Cerca membri, gruppi e ciò che è stato detto.';
+
+  @override
+  String get messageSearchNothing => 'Nessun risultato.';
+
+  @override
+  String get messageSearchPeople => 'Membri';
+
+  @override
+  String get messageSearchGroups => 'Gruppi';
+
+  @override
+  String get messageSearchMessages => 'Messaggi';
+
+  @override
+  String get messageSearchTitle => 'Cerca';
+
+  @override
   String get moneyBaseFee => 'Abbonamento base';
 
   @override

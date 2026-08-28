@@ -11,6 +11,7 @@ class MemberNote {
     required this.body,
     required this.createdAt,
     this.readAt,
+    this.conversationId,
   });
 
   factory MemberNote.fromRow(Map<String, dynamic> row) => MemberNote(
@@ -23,6 +24,7 @@ class MemberNote {
         readAt: row['read_at'] == null
             ? null
             : DateTime.parse(row['read_at'] as String).toUtc(),
+        conversationId: row['conversation_id'] as String?,
       );
 
   final String id;
@@ -35,6 +37,14 @@ class MemberNote {
   /// When the DIRECT recipient read it (0105); null = delivered only.
   /// Broadcasts have many readers and never carry a read stamp.
   final DateTime? readAt;
+
+  /// The thread this belongs to (#687, migration 0125).
+  ///
+  /// Null on two kinds of row and both are real: every pre-0125 note,
+  /// and the admin BROADCAST, which is a fan-out to whoever is an admin
+  /// at read time rather than a conversation. Neither has a thread to
+  /// open, so a search result for one must not offer to.
+  final String? conversationId;
 
   bool get isBroadcast => toMemberId == null;
 }

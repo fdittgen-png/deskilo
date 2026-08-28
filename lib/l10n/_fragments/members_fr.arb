@@ -195,5 +195,33 @@
   "conversationLeft": "Parti",
   "@conversationLeft": {
     "description": "#687 - messaging centre"
+  },
+  "messageSearchHint": "Membres, groupes, messages",
+  "@messageSearchHint": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchPrompt": "Recherchez des membres, des groupes et ce qui a été dit.",
+  "@messageSearchPrompt": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchNothing": "Aucun résultat.",
+  "@messageSearchNothing": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchPeople": "Membres",
+  "@messageSearchPeople": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchGroups": "Groupes",
+  "@messageSearchGroups": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchMessages": "Messages",
+  "@messageSearchMessages": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchTitle": "Rechercher",
+  "@messageSearchTitle": {
+    "description": "#687 - messaging search"
   }
 }

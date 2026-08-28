@@ -6578,6 +6578,48 @@ abstract class AppLocalizations {
   /// **'Left'**
   String get conversationLeft;
 
+  /// #687 - messaging search
+  ///
+  /// In en, this message translates to:
+  /// **'People, groups, messages'**
+  String get messageSearchHint;
+
+  /// #687 - messaging search
+  ///
+  /// In en, this message translates to:
+  /// **'Search people, groups and what was said.'**
+  String get messageSearchPrompt;
+
+  /// #687 - messaging search
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matched.'**
+  String get messageSearchNothing;
+
+  /// #687 - messaging search
+  ///
+  /// In en, this message translates to:
+  /// **'People'**
+  String get messageSearchPeople;
+
+  /// #687 - messaging search
+  ///
+  /// In en, this message translates to:
+  /// **'Groups'**
+  String get messageSearchGroups;
+
+  /// #687 - messaging search
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get messageSearchMessages;
+
+  /// #687 - messaging search
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get messageSearchTitle;
+
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:

@@ -36,10 +36,12 @@ class _EventsBellIcon extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Pending confirmations + unread member notes (#464): the bell is
-    // the app's one "something needs your eyes" counter.
-    final count = (ref.watch(myPendingEventCountProvider).value ?? 0) +
-        (ref.watch(unreadNoteCountProvider).value ?? 0);
+    // #687 — pending confirmations ONLY. Unread messages moved to the
+    // Messages destination, which is where tapping them leads: a bell
+    // that counted them sent people to a feed to find a conversation
+    // that was one tab away, and counted their OWN sent messages on the
+    // way.
+    final count = ref.watch(myPendingEventCountProvider).value ?? 0;
     const icon = Icon(Icons.notifications_outlined);
     // #611 — a changed count scales in briefly, so "something new needs
     // you" registers peripherally. Keyed per count: 1→2 animates too.

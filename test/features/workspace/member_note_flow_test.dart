@@ -9,6 +9,7 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,6 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 /// Tomorrow 9–11 relative to the standard FixedClock — upcoming, so it
 /// lists in the composer picker and shows Cancel in its detail sheet.
@@ -53,7 +55,28 @@ Future<FakeWorkspaceRepository> _pump(
         status: MemberStatus.active,
       ),
     )
-    ..memberNotes.addAll(notes);
+    ..memberNotes.addAll(notes)
+    // #687 — messages live in a CONVERSATION now. The inbox that used
+    // to list them carries no notes any more, so the thread is reached
+    // through the messaging centre; seed both so the list has a row and
+    // the row has content.
+    ..conversationMessages['conv-ana'] = [...notes]
+    ..conversations.add(Conversation(
+      id: 'conv-ana',
+      kind: ConversationKind.direct,
+      otherMemberId: 'member-2',
+      lastBody: notes.isEmpty ? '' : notes.last.body,
+      lastFromMemberId: notes.isEmpty ? null : notes.last.fromMemberId,
+      lastAt: notes.isEmpty
+          ? DateTime.utc(2026, 5, 12, 9)
+          : notes.last.createdAt,
+      // Derived the way `my_conversations` derives it: messages from
+      // someone else that I have not read. Seeding 0 would have made
+      // every row look read and hidden the badge these tests check.
+      unread: notes
+          .where((n) => n.fromMemberId != 'member-1' && n.readAt == null)
+          .length,
+    ));
   final plan = FakeFloorPlanRepository()..seedSmallPlan();
   final reservations = FakeReservationRepository()
     ..reservations.add(_myReservation())
@@ -92,32 +115,62 @@ MemberNote _noteFromAna(String body, {String id = 'note-in'}) => MemberNote(
       createdAt: DateTime.utc(2026, 5, 12, 9),
     );
 
+/// Opens the thread with Ana through the MESSAGING CENTRE (#687).
+///
+/// Named for what it does rather than where it goes: these tests are
+/// about the conversation — previews, references, receipts, delete — and
+/// only the route to it changed when messages left the events inbox.
 Future<void> _openEvents(WidgetTester tester) async {
-  await tester.tap(find.byTooltip('Events'));
+  await tapNavIcon(tester, Icons.forum_outlined);
   await tester.pumpAndSettle();
+  final row = find.byKey(const ValueKey('conversation-conv-ana'));
+  if (row.evaluate().isNotEmpty) {
+    await tester.tap(row);
+    await tester.pumpAndSettle();
+  }
 }
 
 void main() {
   testWidgets(
-      'the list shows only the FIRST 64 CHARS; tapping opens the full '
-      'message (#523)', (tester) async {
+      'the row PREVIEWS; the thread has the whole message (#523/#687)',
+      (tester) async {
     const long = 'The projector in the main room keeps dropping the '
         'signal every ten minutes, can someone have a look at the cable?';
     await _pump(tester, notes: [_noteFromAna(long)]);
-    await _openEvents(tester);
-
-    final preview = '${long.substring(0, 64)}…';
-    expect(find.text(preview), findsOneWidget);
-    expect(find.text(long), findsNothing);
-
-    await tester.tap(find.text(preview));
+    await tapNavIcon(tester, Icons.forum_outlined);
     await tester.pumpAndSettle();
-    // The CONVERSATION opens (refactor) and shows the COMPLETE message
-    // as a bubble, with the shared composer ready to reply to Ana.
+
+    // #687 — the row truncates at the width AVAILABLE (maxLines +
+    // ellipsis) rather than at a guessed 64 characters, which is the
+    // better mechanism for the same #523 intent: a preview on the list,
+    // the whole thing in the thread. A hard character count either
+    // wasted a wide row or overflowed a narrow one.
+    final preview = tester.widget<Text>(
+      find.descendant(
+        of: find.byKey(const ValueKey('conversation-conv-ana')),
+        matching: find.text(long),
+      ),
+    );
+    expect(preview.maxLines, 1);
+    expect(preview.overflow, TextOverflow.ellipsis);
+
+    await tester.tap(find.byKey(const ValueKey('conversation-conv-ana')));
+    await tester.pumpAndSettle();
+    // The CONVERSATION opens and shows the COMPLETE message as a
+    // bubble, with the shared composer ready to reply to Ana.
     expect(
-        find.byKey(const ValueKey('conversation-sheet')), findsOneWidget);
-    expect(find.textContaining('have a look at the cable?', findRichText: true),
-        findsOneWidget);
+        find.byKey(const ValueKey('conversation-thread')), findsOneWidget);
+    // Scoped to the THREAD: the list row behind the sheet holds the same
+    // text, truncated — an unscoped finder matches both and proves
+    // nothing about which one is showing the whole message.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('conversation-thread')),
+        matching: find.textContaining('have a look at the cable?',
+            findRichText: true),
+      ),
+      findsOneWidget,
+    );
     expect(find.byKey(const ValueKey('member-note-body')), findsOneWidget);
   });
 
@@ -129,13 +182,22 @@ void main() {
       _noteFromAna('Still need [res:res-link-1|A1 · tomorrow]? '
           'Else I take [space:seat:seat-4|A1] 😀'),
     ]);
-    await _openEvents(tester);
+    await tapNavIcon(tester, Icons.forum_outlined);
+    await tester.pumpAndSettle();
 
-    // The list preview reads labels, never raw tokens.
-    expect(find.textContaining('Still need A1 · tomorrow?'), findsOneWidget);
+    // #687 — the LIST preview reads labels, never raw tokens. Markup
+    // leaking into someone's inbox is what `notePlainText` exists to
+    // prevent, and the new row had to be taught it too.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('conversation-conv-ana')),
+        matching: find.textContaining('Still need A1 · tomorrow?'),
+      ),
+      findsOneWidget,
+    );
     expect(find.textContaining('[res:'), findsNothing);
 
-    await tester.tap(find.textContaining('Still need A1 · tomorrow?'));
+    await tester.tap(find.byKey(const ValueKey('conversation-conv-ana')));
     await tester.pumpAndSettle();
 
     // Links are REAL widgets (field-report fix): plain taps hit them.
@@ -143,7 +205,12 @@ void main() {
     await tester.pumpAndSettle();
     // My own upcoming reservation → its detail sheet with Cancel.
     expect(find.byKey(const ValueKey('reservation-cancel')), findsOneWidget);
-    await tester.tapAt(const Offset(400, 50)); // dismiss the detail sheet
+    // Dismissing by tapping the barrier closes the THREAD underneath
+    // too — one tap, two modal routes. Re-open it rather than hunting
+    // for a pixel that is over one sheet and not the other.
+    await tester.tapAt(const Offset(400, 50));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('conversation-conv-ana')));
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('A1'));
@@ -155,33 +222,39 @@ void main() {
     // including the conversation underneath — and lands on the plan.
     await tester.tap(find.byKey(const ValueKey('space-show-plan')));
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('conversation-sheet')), findsNothing);
+    expect(find.byKey(const ValueKey('conversation-thread')), findsNothing);
     expect(
         find.byKey(const ValueKey('reserve-plan-view')), findsOneWidget);
   });
 
   testWidgets(
-      'swiping LEFT asks for confirmation — cancel keeps the message, '
-      'confirm deletes it (#523)', (tester) async {
+      'a RECEIVED message deletes from the thread — cancel keeps it, '
+      'confirm removes it (#523/#687)', (tester) async {
+    // The swipe-a-row gesture retired with the events inbox that owned
+    // it: the centre lists CONVERSATIONS, and swiping one away would
+    // mean something else entirely. Deleting a message is long-press on
+    // its bubble, which is also WhatsApp's idiom and works on both
+    // sides — RLS allows the sender AND the direct recipient.
     final workspace =
         await _pump(tester, notes: [_noteFromAna('Lamp is on.')]);
     await _openEvents(tester);
 
-    final row = find.byKey(const ValueKey('note-dismiss-note-in'));
-    await tester.drag(row, const Offset(-400, 0));
+    final bubble = find.byKey(const ValueKey('bubble-note-in'));
+    expect(bubble, findsOneWidget);
+
+    await tester.longPress(bubble);
     await tester.pumpAndSettle();
     expect(find.text('Delete this message? This cannot be undone.'),
         findsOneWidget);
     await tester.tap(find.text('Cancel'));
     await tester.pumpAndSettle();
     expect(workspace.memberNotes, hasLength(1));
-    expect(row, findsOneWidget);
+    expect(bubble, findsOneWidget);
 
-    await tester.drag(row, const Offset(-400, 0));
+    await tester.longPress(bubble);
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('note-delete-confirm')));
     await tester.pumpAndSettle();
-    expect(find.text('Message deleted.'), findsOneWidget);
     expect(workspace.memberNotes, isEmpty);
   });
 
@@ -200,15 +273,15 @@ void main() {
       ),
       _noteFromAna('Yes! ☕'),
     ]);
+    // #687 — the thread is reached from the messaging centre; the
+    // inbox row it used to be opened from no longer exists.
     await _openEvents(tester);
-    await tester.tap(find.byKey(const ValueKey('note-dismiss-note-in')));
-    await tester.pumpAndSettle();
 
     // BOTH sides of the exchange read in full.
     expect(
-        find.byKey(const ValueKey('conversation-sheet')), findsOneWidget);
+        find.byKey(const ValueKey('conversation-thread')), findsOneWidget);
     Finder inSheet(String text) => find.descendant(
-        of: find.byKey(const ValueKey('conversation-sheet')),
+        of: find.byKey(const ValueKey('conversation-thread')),
         matching: find.text(text, findRichText: true));
     expect(inSheet('Coffee at ten?'), findsOneWidget);
     expect(inSheet('Yes! ☕'), findsOneWidget);
@@ -289,47 +362,50 @@ void main() {
       // From Ana to me, unread — Events opening must stamp it.
       _noteFromAna('Hello!'),
     ]);
-    await _openEvents(tester);
+    // #687 — the LIST first: opening the messaging centre must not read
+    // anything. Only opening the conversation does. That was #539's
+    // point when the intermediate surface was the events inbox, and it
+    // survives the move — a list you glance at is not a message you
+    // read.
+    await tapNavIcon(tester, Icons.forum_outlined);
+    await tester.pumpAndSettle();
+    expect(
+      workspace.memberNotes.singleWhere((n) => n.id == 'note-in').readAt,
+      isNull,
+    );
+    // The row says so: an unread count, and the name in a heavier weight.
+    expect(find.byKey(const ValueKey('conversation-unread-conv-ana')),
+        findsOneWidget);
 
+    await tester.tap(find.byKey(const ValueKey('conversation-conv-ana')));
+    await tester.pumpAndSettle();
+
+    // In the thread: my delivered bubble grey, my read one blue,
+    // received ones no check at all.
     final grey = tester.widget<Icon>(
         find.byKey(const ValueKey('note-check-note-sent')));
     expect(grey.color, isNot(readBlue));
     final blue = tester.widget<Icon>(
         find.byKey(const ValueKey('note-check-note-read')));
     expect(blue.color, readBlue);
-    // Received notes carry no check at all.
     expect(find.byKey(const ValueKey('note-check-note-in')), findsNothing);
 
-    // #539 — merely OPENING the inbox does not read a direct note…
+    // …and opening it stamped the receipt — Ana's client would now show
+    // her check in blue.
     expect(
-        workspace.memberNotes
-            .singleWhere((n) => n.id == 'note-in')
-            .readAt,
-        isNull);
-    // …its row is visibly unread and the filter can isolate it…
-    expect(find.byKey(const ValueKey('note-unread-note-in')),
-        findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('notes-filter-unread')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('note-dismiss-note-sent')),
-        findsNothing);
-    expect(find.byKey(const ValueKey('note-dismiss-note-in')),
-        findsOneWidget);
-    // …and opening ITS conversation stamps it read — Ana's client
-    // would now show her check in blue.
-    await tester.tap(find.byKey(const ValueKey('note-dismiss-note-in')));
-    await tester.pumpAndSettle();
-    expect(
-        workspace.memberNotes
-            .singleWhere((n) => n.id == 'note-in')
-            .readAt,
-        isNotNull);
+      workspace.memberNotes.singleWhere((n) => n.id == 'note-in').readAt,
+      isNotNull,
+    );
   });
 
   testWidgets(
-      'the bell screen has its own unread filter (#546): the app-bar '
-      'toggle carries the count and narrows everything to unread',
+      'MESSAGES ARE NOT ON THE BELL (#687): the notification screen '
+      'carries events only, and the unread count with them',
       (tester) async {
+    // #546 gave the bell its own unread filter over messages. They left
+    // that feed entirely: a message in two places is one you can mark
+    // read in one and still see unread in the other, and the bell
+    // counted your OWN sent messages on the way.
     await _pump(tester, notes: [
       MemberNote(
         id: 'note-sent',
@@ -341,43 +417,21 @@ void main() {
       ),
       _noteFromAna('Hello!'),
     ]);
-    await _openEvents(tester);
 
-    // The app-bar filter is there, badged with the unread count.
-    final toggle = find.byKey(const ValueKey('events-filter-unread'));
-    expect(toggle, findsOneWidget);
-    expect(
-      find.descendant(of: toggle, matching: find.text('1')),
-      findsOneWidget,
-    );
-
-    await tester.tap(toggle);
+    await tester.tap(find.byTooltip('Events'));
     await tester.pumpAndSettle();
 
-    // Only the unread message remains; my sent note and the audit
-    // feed's type-filter line step aside.
-    expect(find.byKey(const ValueKey('note-dismiss-note-in')),
-        findsOneWidget);
-    expect(find.byKey(const ValueKey('note-dismiss-note-sent')),
-        findsNothing);
-    // #581 — the category chips STAY available in unread mode: read
-    // state and category combine instead of hiding one another.
-    expect(find.text('All'), findsOneWidget);
-    // The chip-line unread chip reflects the same state.
-    expect(
-      tester
-          .widget<FilterChip>(
-              find.byKey(const ValueKey('notes-filter-unread')))
-          .selected,
-      isTrue,
-    );
+    // Neither side of the exchange appears here any more.
+    expect(find.textContaining('Hello!'), findsNothing);
+    expect(find.textContaining('Sent and delivered.'), findsNothing);
 
-    // Toggling back restores the full feed.
-    await tester.tap(toggle);
+    // And they are one tab away, where tapping them leads. Back out of
+    // the pushed Events route first — the bottom bar is not on it.
+    await tester.pageBack();
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('note-dismiss-note-sent')),
-        findsOneWidget);
-    expect(find.text('All'), findsOneWidget);
+    await tapNavIcon(tester, Icons.forum_outlined);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('conversation-conv-ana')), findsOneWidget);
   });
 
   testWidgets(
@@ -431,11 +485,10 @@ void main() {
       'conversation sheet lifts and shrinks with the view inset',
       (tester) async {
     await _pump(tester, notes: [_noteFromAna('Hello!')]);
+    // #687 — reached through the messaging centre now.
     await _openEvents(tester);
-    await tester.tap(find.byKey(const ValueKey('note-dismiss-note-in')));
-    await tester.pumpAndSettle();
     expect(
-        find.byKey(const ValueKey('conversation-sheet')), findsOneWidget);
+        find.byKey(const ValueKey('conversation-thread')), findsOneWidget);
 
     // The keyboard opens: 400 physical px of bottom inset (dpr 1).
     tester.view.viewInsets = const FakeViewPadding(bottom: 400);

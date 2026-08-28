@@ -15,7 +15,6 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
-import '../../../workspace/domain/member_note.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../../money/domain/payment_method.dart';
@@ -26,6 +25,7 @@ import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
 import '../../providers/event_providers.dart';
 import '../../providers/notification_filter_providers.dart';
+import '../feed_notes.dart';
 import '../widgets/note_row.dart';
 
 /// The Events space (spec §8.1): pending confirmations pinned on top,
@@ -357,16 +357,21 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     final currency = NumberFormat.simpleCurrency(
       name: ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR',
     );
-    // Member notes (#460): the push is content-free by design (0012),
-    // so THIS is where the actual text is read — received and sent,
-    // newest first.
+    // #687 — MESSAGES ARE NOT NOTIFICATIONS ANY MORE.
+    //
+    // They were mixed into this feed because there was nowhere else for
+    // them. Now there is a messaging centre, and a message in two places
+    // is a message you can mark read in one and still see unread in the
+    // other. It also counted what YOU sent, which is an inbox reporting
+    // your own outbox.
+    //
+    // #687 — BROADCASTS STAY, the direct exchange left. A broadcast is a
+    // fan-out to whoever is an admin at READ time: no recipient, no
+    // thread, nowhere in the messaging centre to live. Emptying this
+    // list outright would have made it vanish from the app.
     final unreadIds =
         ref.watch(unreadNoteIdsProvider).value ?? const <String>{};
-    final notes = ref
-            .watch(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.memberNotifications)
-        ? ref.watch(myNotesProvider).value ?? const <MemberNote>[]
-        : const <MemberNote>[];
+    final notes = broadcastsForFeed(ref);
     // #581 — the persisted filter and the previous-visit stamp that
     // "new" events are measured against.
     final filter = ref.watch(notificationFilterProvider).value ??
