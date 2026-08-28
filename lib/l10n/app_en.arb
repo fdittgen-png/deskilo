@@ -4244,6 +4244,10 @@
   "@messageSearchTitle": {
     "description": "#687 - messaging search"
   },
+  "newGroupNameTaken": "A group with that name already exists here. Pick another.",
+  "@newGroupNameTaken": {
+    "description": "#694 - group names are unique per workspace"
+  },
   "moneyBaseFee": "Base subscription",
   "@moneyBaseFee": {
     "description": "Statement line for the plan's monthly fee"

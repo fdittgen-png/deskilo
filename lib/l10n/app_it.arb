@@ -2154,6 +2154,10 @@
   "@messageSearchTitle": {
     "description": "#687 - messaging search"
   },
+  "newGroupNameTaken": "Esiste già un gruppo con questo nome. Scegline un altro.",
+  "@newGroupNameTaken": {
+    "description": "#694 - group names are unique per workspace"
+  },
   "moneyBaseFee": "Abbonamento base",
   "moneyUsage": "{used} mezze giornate usate su {included}",
   "moneyUsageUnlimited": "{used} mezze giornate usate",

@@ -223,5 +223,9 @@
   "messageSearchTitle": "Buscar",
   "@messageSearchTitle": {
     "description": "#687 - messaging search"
+  },
+  "newGroupNameTaken": "Ya existe un grupo con ese nombre aquí. Elija otro.",
+  "@newGroupNameTaken": {
+    "description": "#694 - group names are unique per workspace"
   }
 }

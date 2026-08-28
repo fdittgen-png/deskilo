@@ -469,4 +469,83 @@ void main() {
       expect(appBar.substring(0, 200), isNot(contains('messagesTitle')));
     });
   });
+
+  group('a group name is unique, and a group LOOKS like one (#694)', () {
+    late String sql;
+
+    setUpAll(() {
+      sql = File('supabase/migrations/0128_unique_group_names.sql')
+          .readAsStringSync();
+    });
+
+    test('uniqueness ignores case and surrounding space', () {
+      // "Team", "team" and " Team " are the same name to everyone
+      // reading the list; treating them as different is a distinction
+      // only the database can see.
+      expect(sql, contains('lower(btrim(title))'));
+      expect(sql, contains('where kind = \'group\''),
+          reason: 'direct threads have no title and must not be covered');
+    });
+
+    test('existing duplicates are RENAMED, never deleted', () {
+      // A constraint is not a reason to lose a group with real messages
+      // in it. Deterministic by created_at, so whoever is looking at the
+      // older group keeps its name.
+      expect(sql, contains('row_number() over ('));
+      expect(sql, contains('order by created_at, id'));
+      expect(sql, isNot(contains('delete from public.conversations')));
+    });
+
+    test('BOTH paths refuse — creating and renaming', () {
+      // Enforcing on create alone leaves rename as the way around it.
+      final creates = 'a group with that name already exists'
+          .allMatches(sql)
+          .length;
+      expect(creates, greaterThanOrEqualTo(2),
+          reason: 'create_group_conversation AND set_conversation_meta');
+    });
+
+    test('the refusal reaches the user as one word to change', () {
+      // "Something went wrong" for a name that is simply taken is a dead
+      // end; naming it is a correction.
+      final sheet = File('lib/features/workspace/presentation/widgets/'
+              'new_conversation_sheet.dart')
+          .readAsStringSync();
+      expect(sheet, contains("contains('a group with that name already exists')"));
+      expect(sheet, contains('newGroupNameTaken'));
+    });
+
+    test('a group is a different SHAPE, not a different colour', () {
+      // Two beige circles with a letter are indistinguishable at a
+      // glance, and a list is only ever glanced at. Shape survives dark
+      // mode and colour-blindness and needs no legend — the same
+      // argument as the hatch on whole-space bookings.
+      final source = File('lib/features/workspace/presentation/widgets/'
+              'conversation_avatar.dart')
+          .readAsStringSync();
+      // Scoped to the GROUP widget: the member fallback in the same file
+      // is a CircleAvatar and must stay one — that is the contrast.
+      final group = source.substring(
+        source.indexOf('class ConversationAvatar'),
+        source.indexOf('class MemberAvatarByMember'),
+      );
+      expect(group, contains('borderRadius: AppRadius.mdAll'));
+      expect(group, isNot(contains('CircleAvatar')),
+          reason: 'the group avatar must not be a circle — members are');
+      expect(group, contains('Icons.groups_outlined'),
+          reason: 'a group glyph, so two groups starting with the same '
+              'letter are still obviously groups');
+      expect(source, contains('CircleAvatar'),
+          reason: 'the member half must remain circular');
+    });
+
+    test('an empty group still says what it is', () {
+      // With nothing said in it there is no preview to tell it apart.
+      final row = File('lib/features/workspace/presentation/widgets/'
+              'conversation_row.dart')
+          .readAsStringSync();
+      expect(row, contains('conversation.isGroup && conversation.lastBody.isEmpty'));
+      expect(row, contains('conversationMemberCount'));
+    });
+  });
 }

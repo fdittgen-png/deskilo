@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/conversation.dart';
@@ -210,29 +211,46 @@ class _NewConversationSheetState
     if (workspace == null) return;
     setState(() => _busy = true);
     final repo = ref.read(workspaceRepositoryProvider);
-    String? id;
-    final ok = await runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'start conversation failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () async {
-        id = _isGroup
-            ? await repo.createGroupConversation(
-                workspace.id,
-                title: _groupName.text.trim(),
-                memberIds: _selected.toList(),
-              )
-            : await repo.openDirectConversation(
-                workspace.id,
-                otherMemberId: _selected.single,
-              );
-      },
-    );
+    String id;
+    try {
+      id = _isGroup
+          ? await repo.createGroupConversation(
+              workspace.id,
+              title: _groupName.text.trim(),
+              memberIds: _selected.toList(),
+            )
+          : await repo.openDirectConversation(
+              workspace.id,
+              otherMemberId: _selected.single,
+            );
+    } catch (e, st) {
+      TraceLogger.instance.error(
+        'messaging',
+        'start conversation failed',
+        error: e,
+        stackTrace: st,
+      );
+      if (!mounted) return;
+      setState(() => _busy = false);
+      // #694 — a name that is simply TAKEN is not "something went
+      // wrong": it is one word to change, and saying so is the whole
+      // difference between a dead end and a correction. The server pins
+      // the substring; runGuarded could not be used here because it
+      // resolves its message before the action runs.
+      final taken = '$e'.contains('a group with that name already exists');
+      AppSnack.error(
+        context,
+        taken
+            ? (l10n?.newGroupNameTaken ??
+                'A group with that name already exists here. Pick another.')
+            : (l10n?.workspaceGenericError ??
+                'Something went wrong. Please try again.'),
+        replace: true,
+      );
+      return;
+    }
     if (!mounted) return;
     setState(() => _busy = false);
-    if (!ok || id == null) return;
     // The list behind is stale the moment a thread exists.
     ref.invalidate(conversationsProvider);
     Navigator.of(context).pop(id);
