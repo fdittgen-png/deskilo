@@ -44,11 +44,15 @@ class Conversation {
         avatarPath: row['avatar_path'] as String?,
         otherMemberId: row['other_member_id'] as String?,
         lastBody: row['last_body'] as String? ?? '',
-        // A group with no messages yet has no last_at; it still sorts by
-        // when it was created, which the RPC put in last_message_at.
-        lastAt: DateTime.parse(
-          (row['last_at'] ?? row['created_at']) as String,
-        ).toUtc(),
+        // #692 — DEFENSIVE, and it is not belt-and-braces: this exact
+        // parse threw on a message-less group and took the WHOLE list
+        // with it, because one bad row in a `for` inside a list literal
+        // fails the entire collection. The screen said "an error
+        // occurred" and named nothing.
+        //
+        // 0127 makes the server side never-null; this makes a future
+        // null cost one row's ordering instead of everyone's inbox.
+        lastAt: _parseAt(row['last_at']),
         lastFromMemberId: row['last_from_member_id'] as String?,
         unread: (row['unread'] as num?)?.toInt() ?? 0,
         participantCount: (row['participant_count'] as num?)?.toInt() ?? 0,
@@ -120,4 +124,18 @@ class ConversationParticipant {
 /// Shared with `create_group_conversation` (0126); pinned by test.
 abstract final class ConversationRules {
   static const int maxTitleLength = 80;
+}
+
+/// A timestamp that cannot throw.
+///
+/// The epoch is a deliberate choice for the unparseable case: it sorts
+/// the row to the BOTTOM of a newest-first list, where a row the app
+/// does not understand belongs — rather than to the top, where it would
+/// displace whatever someone actually just wrote.
+DateTime _parseAt(Object? value) {
+  if (value is String) {
+    final parsed = DateTime.tryParse(value);
+    if (parsed != null) return parsed.toUtc();
+  }
+  return DateTime.fromMillisecondsSinceEpoch(0, isUtc: true);
 }

@@ -2,6 +2,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/time/clock.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/conversation.dart';
 import '../domain/member_note.dart';
 import 'workspace_providers.dart';
@@ -17,7 +18,32 @@ part 'conversation_providers.g.dart';
 Future<List<Conversation>> conversations(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.watch(workspaceRepositoryProvider).fetchConversations(workspace.id);
+  return _traced(
+    'conversations',
+    () => ref.watch(workspaceRepositoryProvider).fetchConversations(
+          workspace.id,
+        ),
+  );
+}
+
+/// Runs [body] and TRACES anything it throws before rethrowing (#692).
+///
+/// A Riverpod provider that fails lands in `AsyncError`, the screen
+/// renders its generic line, and nothing is written down. The first beta
+/// build did exactly that: the conversation list said "an error
+/// occurred" and the device trace — the one thing that could have named
+/// the cause — had no entry for it at all.
+///
+/// Rethrows, so the UI still shows its own error state. This adds the
+/// record, it does not swallow the failure.
+Future<T> _traced<T>(String what, Future<T> Function() body) async {
+  try {
+    return await body();
+  } catch (e, st) {
+    TraceLogger.instance
+        .error('messaging', '$what failed', error: e, stackTrace: st);
+    rethrow;
+  }
 }
 
 /// Total unread across every conversation — the badge on the Messages
@@ -38,9 +64,12 @@ Future<List<MemberNote>> conversationMessages(
   Ref ref,
   String conversationId,
 ) =>
-    ref
-        .watch(workspaceRepositoryProvider)
-        .fetchConversationMessages(conversationId);
+    _traced(
+      'conversation messages',
+      () => ref
+          .watch(workspaceRepositoryProvider)
+          .fetchConversationMessages(conversationId),
+    );
 
 /// The roster of one conversation.
 @riverpod
@@ -48,7 +77,12 @@ Future<List<ConversationParticipant>> conversationParticipants(
   Ref ref,
   String conversationId,
 ) =>
-    ref.watch(workspaceRepositoryProvider).fetchParticipants(conversationId);
+    _traced(
+      'participants',
+      () => ref
+          .watch(workspaceRepositoryProvider)
+          .fetchParticipants(conversationId),
+    );
 
 /// Full-text search over messages I can see (#687).
 ///
@@ -58,10 +92,13 @@ Future<List<ConversationParticipant>> conversationParticipants(
 Future<List<MemberNote>> messageSearch(Ref ref, String query) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.watch(workspaceRepositoryProvider).searchMessages(
-        workspace.id,
-        query,
-      );
+  return _traced(
+    'message search',
+    () => ref.watch(workspaceRepositoryProvider).searchMessages(
+          workspace.id,
+          query,
+        ),
+  );
 }
 
 /// Re-reads everything a sent or received message can change: the list
