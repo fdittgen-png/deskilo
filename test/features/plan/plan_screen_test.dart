@@ -61,7 +61,7 @@ Offset seatCenter(WidgetTester tester) {
   // the fit scale follows the viewport height (the compact header grew
   // the canvas). Content position = origin + content offset × rendered
   // scale (top-right minus top-left over the content width in px).
-  final finder = find.byKey(const ValueKey('live-plan-canvas'));
+  final finder = find.byKey(const ValueKey('reserve-plan-canvas'));
   final topLeft = tester.getTopLeft(finder);
   final scale = (tester.getTopRight(finder).dx - topLeft.dx) /
       (PlanCanvasMetrics.cells * PlanCanvasMetrics.cellSize);

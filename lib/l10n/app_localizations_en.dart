@@ -3605,6 +3605,100 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notesFilterEmpty => 'No unread messages — all caught up.';
 
   @override
+  String get conversationGroup => 'Group';
+
+  @override
+  String get conversationUnknownMember => 'Member';
+
+  @override
+  String get conversationYesterday => 'Yesterday';
+
+  @override
+  String get conversationYou => 'You';
+
+  @override
+  String get messagesTitle => 'Messages';
+
+  @override
+  String get messagesEmpty => 'No conversations yet.';
+
+  @override
+  String get messagesEmptyHint =>
+      'Tap the pencil to write to someone, or start a group.';
+
+  @override
+  String conversationMemberCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count members',
+      one: '1 member',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newConversationTitle => 'New conversation';
+
+  @override
+  String get newConversationSearch => 'Search members';
+
+  @override
+  String get newConversationStart => 'Start chat';
+
+  @override
+  String get newConversationNoMembers => 'Nobody else here yet.';
+
+  @override
+  String get newGroupName => 'Group name';
+
+  @override
+  String get newGroupCreate => 'Create group';
+
+  @override
+  String get conversationGroupInfo => 'Group';
+
+  @override
+  String get conversationAddPeople => 'Add people';
+
+  @override
+  String get conversationLeave => 'Leave group';
+
+  @override
+  String get conversationLeaveConfirm =>
+      'Leave this group? You stop receiving its messages; what you already sent stays.';
+
+  @override
+  String get conversationRemove => 'Remove';
+
+  @override
+  String get conversationAdmin => 'Admin';
+
+  @override
+  String get conversationLeft => 'Left';
+
+  @override
+  String get messageSearchHint => 'People, groups, messages';
+
+  @override
+  String get messageSearchPrompt => 'Search people, groups and what was said.';
+
+  @override
+  String get messageSearchNothing => 'Nothing matched.';
+
+  @override
+  String get messageSearchPeople => 'People';
+
+  @override
+  String get messageSearchGroups => 'Groups';
+
+  @override
+  String get messageSearchMessages => 'Messages';
+
+  @override
+  String get messageSearchTitle => 'Search';
+
+  @override
   String get moneyBaseFee => 'Base subscription';
 
   @override

@@ -139,5 +139,122 @@
   "notesFilterEmpty": "No unread messages — all caught up.",
   "@notesFilterEmpty": {
     "description": "Empty state of the unread filter (#539)"
+  },
+  "conversationGroup": "Group",
+  "@conversationGroup": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationUnknownMember": "Member",
+  "@conversationUnknownMember": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationYesterday": "Yesterday",
+  "@conversationYesterday": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationYou": "You",
+  "@conversationYou": {
+    "description": "#687 - messaging centre"
+  },
+  "messagesTitle": "Messages",
+  "@messagesTitle": {
+    "description": "#687 - messaging centre"
+  },
+  "messagesEmpty": "No conversations yet.",
+  "@messagesEmpty": {
+    "description": "#687 - messaging centre"
+  },
+  "messagesEmptyHint": "Tap the pencil to write to someone, or start a group.",
+  "@messagesEmptyHint": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationMemberCount": "{count, plural, =1{1 member} other{{count} members}}",
+  "@conversationMemberCount": {
+    "description": "#687 - messaging centre",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "newConversationTitle": "New conversation",
+  "@newConversationTitle": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationSearch": "Search members",
+  "@newConversationSearch": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationStart": "Start chat",
+  "@newConversationStart": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationNoMembers": "Nobody else here yet.",
+  "@newConversationNoMembers": {
+    "description": "#687 - messaging centre"
+  },
+  "newGroupName": "Group name",
+  "@newGroupName": {
+    "description": "#687 - messaging centre"
+  },
+  "newGroupCreate": "Create group",
+  "@newGroupCreate": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationGroupInfo": "Group",
+  "@conversationGroupInfo": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationAddPeople": "Add people",
+  "@conversationAddPeople": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeave": "Leave group",
+  "@conversationLeave": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeaveConfirm": "Leave this group? You stop receiving its messages; what you already sent stays.",
+  "@conversationLeaveConfirm": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationRemove": "Remove",
+  "@conversationRemove": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationAdmin": "Admin",
+  "@conversationAdmin": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeft": "Left",
+  "@conversationLeft": {
+    "description": "#687 - messaging centre"
+  },
+  "messageSearchHint": "People, groups, messages",
+  "@messageSearchHint": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchPrompt": "Search people, groups and what was said.",
+  "@messageSearchPrompt": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchNothing": "Nothing matched.",
+  "@messageSearchNothing": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchPeople": "People",
+  "@messageSearchPeople": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchGroups": "Groups",
+  "@messageSearchGroups": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchMessages": "Messages",
+  "@messageSearchMessages": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchTitle": "Search",
+  "@messageSearchTitle": {
+    "description": "#687 - messaging search"
   }
 }

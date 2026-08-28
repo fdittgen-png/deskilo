@@ -106,5 +106,122 @@
   "notesFilterEmpty": "Aucun message non lu — vous êtes à jour.",
   "@notesFilterEmpty": {
     "description": "Empty state of the unread filter (#539)"
+  },
+  "conversationGroup": "Groupe",
+  "@conversationGroup": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationUnknownMember": "Membre",
+  "@conversationUnknownMember": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationYesterday": "Hier",
+  "@conversationYesterday": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationYou": "Vous",
+  "@conversationYou": {
+    "description": "#687 - messaging centre"
+  },
+  "messagesTitle": "Messages",
+  "@messagesTitle": {
+    "description": "#687 - messaging centre"
+  },
+  "messagesEmpty": "Aucune conversation.",
+  "@messagesEmpty": {
+    "description": "#687 - messaging centre"
+  },
+  "messagesEmptyHint": "Touchez le crayon pour écrire à quelqu’un, ou créez un groupe.",
+  "@messagesEmptyHint": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationMemberCount": "{count, plural, =1{1 membre} other{{count} membres}}",
+  "@conversationMemberCount": {
+    "description": "#687 - messaging centre",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "newConversationTitle": "Nouvelle conversation",
+  "@newConversationTitle": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationSearch": "Rechercher un membre",
+  "@newConversationSearch": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationStart": "Démarrer",
+  "@newConversationStart": {
+    "description": "#687 - messaging centre"
+  },
+  "newConversationNoMembers": "Personne d’autre ici pour l’instant.",
+  "@newConversationNoMembers": {
+    "description": "#687 - messaging centre"
+  },
+  "newGroupName": "Nom du groupe",
+  "@newGroupName": {
+    "description": "#687 - messaging centre"
+  },
+  "newGroupCreate": "Créer le groupe",
+  "@newGroupCreate": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationGroupInfo": "Groupe",
+  "@conversationGroupInfo": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationAddPeople": "Ajouter des membres",
+  "@conversationAddPeople": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeave": "Quitter le groupe",
+  "@conversationLeave": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeaveConfirm": "Quitter ce groupe ? Vous ne recevrez plus ses messages ; ce que vous avez déjà envoyé reste.",
+  "@conversationLeaveConfirm": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationRemove": "Retirer",
+  "@conversationRemove": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationAdmin": "Admin",
+  "@conversationAdmin": {
+    "description": "#687 - messaging centre"
+  },
+  "conversationLeft": "Parti",
+  "@conversationLeft": {
+    "description": "#687 - messaging centre"
+  },
+  "messageSearchHint": "Membres, groupes, messages",
+  "@messageSearchHint": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchPrompt": "Recherchez des membres, des groupes et ce qui a été dit.",
+  "@messageSearchPrompt": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchNothing": "Aucun résultat.",
+  "@messageSearchNothing": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchPeople": "Membres",
+  "@messageSearchPeople": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchGroups": "Groupes",
+  "@messageSearchGroups": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchMessages": "Messages",
+  "@messageSearchMessages": {
+    "description": "#687 - messaging search"
+  },
+  "messageSearchTitle": "Rechercher",
+  "@messageSearchTitle": {
+    "description": "#687 - messaging search"
   }
 }

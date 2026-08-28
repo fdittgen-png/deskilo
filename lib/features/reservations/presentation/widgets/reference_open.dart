@@ -13,6 +13,7 @@ import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/space_code.dart';
 import '../../providers/reservation_providers.dart';
 import 'reservation_detail_sheet.dart';
+import '../space_subjects.dart';
 import 'space_scan.dart';
 
 /// A space fully resolved against the live floor plan — what
@@ -109,6 +110,11 @@ Future<void> openSpaceById(
     desk: resolved.desk,
     seat: resolved.seat,
     plan: resolved.plan,
+    // #687 — the same roster every other whole-space path
+    // offers. Without it, a space reached by REFERENCE could only be
+    // booked for yourself while the same room double-tapped on the
+    // plan could be assigned.
+    members: spaceAssignmentCandidates(ref),
   );
 }
 

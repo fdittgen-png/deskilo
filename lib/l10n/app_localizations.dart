@@ -6452,6 +6452,174 @@ abstract class AppLocalizations {
   /// **'No unread messages — all caught up.'**
   String get notesFilterEmpty;
 
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get conversationGroup;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get conversationUnknownMember;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get conversationYesterday;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get conversationYou;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get messagesTitle;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'No conversations yet.'**
+  String get messagesEmpty;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the pencil to write to someone, or start a group.'**
+  String get messagesEmptyHint;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 member} other{{count} members}}'**
+  String conversationMemberCount(int count);
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'New conversation'**
+  String get newConversationTitle;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Search members'**
+  String get newConversationSearch;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Start chat'**
+  String get newConversationStart;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody else here yet.'**
+  String get newConversationNoMembers;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Group name'**
+  String get newGroupName;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Create group'**
+  String get newGroupCreate;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get conversationGroupInfo;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Add people'**
+  String get conversationAddPeople;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Leave group'**
+  String get conversationLeave;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Leave this group? You stop receiving its messages; what you already sent stays.'**
+  String get conversationLeaveConfirm;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get conversationRemove;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Admin'**
+  String get conversationAdmin;
+
+  /// #687 - messaging centre
+  ///
+  /// In en, this message translates to:
+  /// **'Left'**
+  String get conversationLeft;
+
+  /// #687 - messaging search
+  ///
+  /// In en, this message translates to:
+  /// **'People, groups, messages'**
+  String get messageSearchHint;
+
+  /// #687 - messaging search
+  ///
+  /// In en, this message translates to:
+  /// **'Search people, groups and what was said.'**
+  String get messageSearchPrompt;
+
+  /// #687 - messaging search
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matched.'**
+  String get messageSearchNothing;
+
+  /// #687 - messaging search
+  ///
+  /// In en, this message translates to:
+  /// **'People'**
+  String get messageSearchPeople;
+
+  /// #687 - messaging search
+  ///
+  /// In en, this message translates to:
+  /// **'Groups'**
+  String get messageSearchGroups;
+
+  /// #687 - messaging search
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get messageSearchMessages;
+
+  /// #687 - messaging search
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get messageSearchTitle;
+
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:

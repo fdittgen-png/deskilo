@@ -61,7 +61,7 @@ class PlanCanvas extends StatefulWidget {
   });
 
   /// Key of the [CustomPaint] — the tests' canvas handle
-  /// (`live-plan-canvas` / `reserve-plan-canvas`).
+  /// (`reserve-plan-canvas` on the hub, `kiosk-plan-canvas` at the kiosk).
   final Key paintKey;
 
   final FloorPlan plan;

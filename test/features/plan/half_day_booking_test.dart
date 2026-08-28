@@ -26,11 +26,11 @@ import 'plan_closed_day_test.dart' show ThrowingReservationRepository;
 import 'plan_screen_test.dart' show pumpPlan, seatCenter;
 import 'time_scroller_test.dart' show planPainter;
 
-const _amChip = ValueKey('plan-am-chip');
-const _pmChip = ValueKey('plan-pm-chip');
-const _dayChip = ValueKey('plan-day-chip');
-const _fromChip = ValueKey('plan-from-chip');
-const _toChip = ValueKey('plan-to-chip');
+const _amChip = ValueKey('reserve-am-chip');
+const _pmChip = ValueKey('reserve-pm-chip');
+const _dayChip = ValueKey('reserve-day-chip');
+const _fromChip = ValueKey('reserve-from-chip');
+const _toChip = ValueKey('reserve-to-chip');
 
 /// Pumps the Plan tab with the seeded small plan (one seat 'A1'/seat-4)
 /// on a workspace whose booking granularity is half-day (#201). Open
@@ -96,16 +96,21 @@ void main() {
     expect(find.byKey(_pmChip), findsOneWidget);
     expect(find.byKey(_dayChip), findsOneWidget);
     // Icon chips (UX pass): the localized names live in tooltips.
-    expect(find.byKey(const ValueKey('plan-am-chip')), findsOneWidget);
-    expect(find.byKey(const ValueKey('plan-pm-chip')), findsOneWidget);
-    expect(find.byKey(const ValueKey('plan-day-chip')), findsOneWidget);
+    expect(find.byKey(const ValueKey('reserve-am-chip')), findsOneWidget);
+    expect(find.byKey(const ValueKey('reserve-pm-chip')), findsOneWidget);
+    expect(find.byKey(const ValueKey('reserve-day-chip')), findsOneWidget);
     expect(find.byTooltip('Morning'), findsOneWidget);
     expect(find.byKey(_fromChip), findsNothing);
     expect(find.byKey(_toChip), findsNothing);
-    // Live mode: no window selected yet.
+    // #687 — the hub PRESELLS the member's default period (#586), which
+    // the Plan tab never did: with none set that is the full day, so the
+    // Day chip is selected on arrival rather than nothing being chosen.
+    //
+    // A user-visible change, and the better one: the old screen made
+    // everyone pick a half before it would show them anything.
     expect(chipSelected(tester, _amChip), isFalse);
     expect(chipSelected(tester, _pmChip), isFalse);
-    expect(chipSelected(tester, _dayChip), isFalse);
+    expect(chipSelected(tester, _dayChip), isTrue);
   });
 
   testWidgets(
@@ -227,7 +232,7 @@ void main() {
     // window provably moved; never ambiguous with the header text).
     final now = kTestNow;
     final targetDay = now.day == 15 ? 16 : 15;
-    await tester.tap(find.byKey(const ValueKey('plan-date-button')));
+    await tester.tap(find.byKey(const ValueKey('reserve-date-button')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('$targetDay'));
     await tester.pumpAndSettle();

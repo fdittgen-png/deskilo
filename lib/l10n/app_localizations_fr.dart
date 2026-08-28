@@ -3645,6 +3645,101 @@ class AppLocalizationsFr extends AppLocalizations {
   String get notesFilterEmpty => 'Aucun message non lu — vous êtes à jour.';
 
   @override
+  String get conversationGroup => 'Groupe';
+
+  @override
+  String get conversationUnknownMember => 'Membre';
+
+  @override
+  String get conversationYesterday => 'Hier';
+
+  @override
+  String get conversationYou => 'Vous';
+
+  @override
+  String get messagesTitle => 'Messages';
+
+  @override
+  String get messagesEmpty => 'Aucune conversation.';
+
+  @override
+  String get messagesEmptyHint =>
+      'Touchez le crayon pour écrire à quelqu’un, ou créez un groupe.';
+
+  @override
+  String conversationMemberCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count membres',
+      one: '1 membre',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newConversationTitle => 'Nouvelle conversation';
+
+  @override
+  String get newConversationSearch => 'Rechercher un membre';
+
+  @override
+  String get newConversationStart => 'Démarrer';
+
+  @override
+  String get newConversationNoMembers => 'Personne d’autre ici pour l’instant.';
+
+  @override
+  String get newGroupName => 'Nom du groupe';
+
+  @override
+  String get newGroupCreate => 'Créer le groupe';
+
+  @override
+  String get conversationGroupInfo => 'Groupe';
+
+  @override
+  String get conversationAddPeople => 'Ajouter des membres';
+
+  @override
+  String get conversationLeave => 'Quitter le groupe';
+
+  @override
+  String get conversationLeaveConfirm =>
+      'Quitter ce groupe ? Vous ne recevrez plus ses messages ; ce que vous avez déjà envoyé reste.';
+
+  @override
+  String get conversationRemove => 'Retirer';
+
+  @override
+  String get conversationAdmin => 'Admin';
+
+  @override
+  String get conversationLeft => 'Parti';
+
+  @override
+  String get messageSearchHint => 'Membres, groupes, messages';
+
+  @override
+  String get messageSearchPrompt =>
+      'Recherchez des membres, des groupes et ce qui a été dit.';
+
+  @override
+  String get messageSearchNothing => 'Aucun résultat.';
+
+  @override
+  String get messageSearchPeople => 'Membres';
+
+  @override
+  String get messageSearchGroups => 'Groupes';
+
+  @override
+  String get messageSearchMessages => 'Messages';
+
+  @override
+  String get messageSearchTitle => 'Rechercher';
+
+  @override
   String get moneyBaseFee => 'Abonnement de base';
 
   @override

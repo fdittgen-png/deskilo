@@ -82,8 +82,8 @@ void main() {
     const locale = Locale('de');
     await _pumpApp(tester, locale);
     _expectNoOverflow(tester, locale, 'boot → Reserve hub @1.3×');
-    await tapNavIcon(tester, Icons.grid_view_outlined);
-    _expectNoOverflow(tester, locale, 'Plan @1.3×');
+    await tapNavIcon(tester, Icons.forum_outlined);
+    _expectNoOverflow(tester, locale, 'Messages @1.3×');
     await tapNavIcon(tester, Icons.account_balance_wallet_outlined);
     _expectNoOverflow(tester, locale, 'Money @1.3×');
     await tapAppBarIcon(tester, Icons.settings_outlined);
@@ -109,8 +109,8 @@ void main() {
             'walk in this test so every surface keeps expansion coverage.',
       );
 
-      await tapNavIcon(tester, Icons.grid_view_outlined);
-      _expectNoOverflow(tester, locale, 'Plan');
+      await tapNavIcon(tester, Icons.forum_outlined);
+      _expectNoOverflow(tester, locale, 'Messages');
 
       await tapNavIcon(tester, Icons.calendar_month_outlined);
       _expectNoOverflow(tester, locale, 'Calendar');

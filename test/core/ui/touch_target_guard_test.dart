@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 //
 // #211 (epic #205): touch-target guard for the compact header controls.
-// Each audited surface (Plan tab, Calendar tab incl. the day timeline,
+// Each audited surface (Reserve hub, Calendar tab incl. the day timeline,
 // Reserve hub) is pumped with every chip row visible (two levels +
 // half-day granularity) and every interactive header element is measured.
 //
@@ -27,7 +27,7 @@ import '../../helpers/navigation.dart';
 /// Pragmatic chip floor — see the header comment for the rationale.
 const double _chipFloor = 44;
 
-/// Pumps the app on the Plan tab with two levels (level chips visible)
+/// Pumps the app on the hub with two levels (level chips visible)
 /// and half-day granularity (Morning/Afternoon/Day chips visible), open
 /// every day so no banner shifts the header.
 Future<void> pumpApp(WidgetTester tester) async {
@@ -78,8 +78,10 @@ void expectTouchTargets(WidgetTester tester, {required String surface}) {
 
 void main() {
   testWidgets(
-      'Plan tab: half-day chips, the level picker and the view toggle all '
-      'meet the touch-target floors', (tester) async {
+      // #687 — the Plan TAB is gone; the hub is the only map surface and
+      // carries the same three controls under its own key prefix.
+      'Reserve hub: half-day chips, the level picker and the view toggle '
+      'all meet the touch-target floors', (tester) async {
     await pumpApp(tester);
     await switchToPlanTab(tester);
 
@@ -87,10 +89,10 @@ void main() {
     // floats over the canvas (indoor-maps idiom) — both must be
     // reachable and honestly sized.
     expect(find.byType(ChoiceChip), findsAtLeastNWidgets(3));
-    expect(find.byKey(const ValueKey('plan-view-switch')), findsOneWidget);
-    expect(find.byKey(const ValueKey('plan-level-level-1')), findsOneWidget);
+    expect(find.byKey(const ValueKey('reserve-view-switch')), findsOneWidget);
+    expect(find.byKey(const ValueKey('reserve-level-level-1')), findsOneWidget);
 
-    expectTouchTargets(tester, surface: 'plan');
+    expectTouchTargets(tester, surface: 'reserve hub');
   });
 
   testWidgets(

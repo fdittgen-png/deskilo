@@ -75,7 +75,7 @@ Future<
 /// The converged path: layers icon → the shared whole-space sheet →
 /// its Reserve action → the granularity-aware period picker.
 Future<void> openLevelPeriodPicker(WidgetTester tester) async {
-  await tester.tap(find.byKey(const ValueKey('plan-reserve-level')));
+  await tester.tap(find.byKey(const ValueKey('reserve-reserve-level')));
   await tester.pumpAndSettle();
   await tester.tap(find.byKey(const ValueKey('space-reserve')));
   await tester.pumpAndSettle();
@@ -88,7 +88,7 @@ void main() {
       (tester) async {
     final ctx = await pumpPlan(tester);
 
-    await tester.tap(find.byKey(const ValueKey('plan-reserve-level')));
+    await tester.tap(find.byKey(const ValueKey('reserve-reserve-level')));
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('space-price-line')), findsOneWidget);
@@ -111,20 +111,20 @@ void main() {
   testWidgets('feature OFF hides the affordance entirely', (tester) async {
     await pumpPlan(tester, featureOn: false);
 
-    expect(find.byKey(const ValueKey('plan-reserve-level')), findsNothing);
+    expect(find.byKey(const ValueKey('reserve-reserve-level')), findsNothing);
   });
 
   testWidgets('a non-bookable level shows no affordance', (tester) async {
     await pumpPlan(tester, bookable: false);
 
-    expect(find.byKey(const ValueKey('plan-reserve-level')), findsNothing);
+    expect(find.byKey(const ValueKey('reserve-reserve-level')), findsNothing);
   });
 
   testWidgets('no grant and no assignment right → no affordance',
       (tester) async {
     await pumpPlan(tester, canReserveLevel: false);
 
-    expect(find.byKey(const ValueKey('plan-reserve-level')), findsNothing);
+    expect(find.byKey(const ValueKey('reserve-reserve-level')), findsNothing);
   });
 
   testWidgets(

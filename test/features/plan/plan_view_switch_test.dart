@@ -11,8 +11,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'plan_screen_test.dart' show pumpPlan;
 
-const _canvasKey = ValueKey('plan-canvas-view');
-const _listKey = ValueKey('plan-list-view');
+const _canvasKey = ValueKey('reserve-canvas-view');
+const _listKey = ValueKey('reserve-list-view');
 
 void main() {
   testWidgets(

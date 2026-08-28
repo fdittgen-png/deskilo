@@ -62,7 +62,7 @@ void main() {
       ),
     );
 
-    await pickChipTime(tester, 'plan-from-chip', hour: '23', minute: '00');
+    await pickChipTime(tester, 'reserve-from-chip', hour: '23', minute: '00');
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
 

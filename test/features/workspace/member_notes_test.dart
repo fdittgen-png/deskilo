@@ -9,9 +9,11 @@ import 'dart:io';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:flutter/material.dart';
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 import 'package:deskilo/core/storage/note_seen_store.dart';
 import '../../helpers/fake_notification_service.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -169,24 +171,24 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    // #687 — the ADMIN BROADCAST is the one message kind that is still
+    // a notification: it is a fan-out to whoever is an admin at read
+    // time, not a conversation, so it has no thread to live in and
+    // stays on the bell.
     await tester.tap(find.byTooltip('Events'));
     await tester.pumpAndSettle();
-
-    expect(find.text('Messages'), findsOneWidget);
-    // Received: sender named, text fully readable.
-    expect(find.text('Message from Ana'), findsOneWidget);
-    expect(find.text('Your desk lamp is still on!'), findsOneWidget);
-    // Sent: direction visible, text too — the sender can verify what
-    // went out.
-    expect(find.text('To Ana'), findsOneWidget);
-    expect(find.text('Thanks, turning it off.'), findsOneWidget);
-    expect(find.text('To all admins'), findsOneWidget);
     expect(find.text('Printer is out of toner.'), findsOneWidget);
+
+    // The one-to-one exchange is NOT here any more — neither the
+    // received side nor the sent one. It was the sent side that made
+    // this feed an inbox reporting your own outbox.
+    expect(find.text('Your desk lamp is still on!'), findsNothing);
+    expect(find.text('Thanks, turning it off.'), findsNothing);
   });
 
-  testWidgets('CATCH-UP (#464): a note sent while the app was closed is '
-      'announced on next start — WITH the message text — and counts on '
-      'the bell until Events is opened', (tester) async {
+  testWidgets('CATCH-UP (#464/#687): a note sent while the app was '
+      'closed is announced on next start — WITH the message text — and '
+      'does NOT land on the bell', (tester) async {
     final notifications = FakeNotificationService();
     final noteSeen = InMemoryNoteSeenStore();
     final workspace = FakeWorkspaceRepository.withWorkspace()
@@ -229,45 +231,10 @@ void main() {
     expect(notifications.shown.single.body, 'Your desk lamp is still on!');
     expect(noteSeen.notified, DateTime.utc(2026, 8, 4, 9));
 
-    // The bell counts it as unread…
-    expect(
-      find.descendant(
-        of: find.byTooltip('Events'),
-        matching: find.text('1'),
-      ),
-      findsOneWidget,
-    );
-
-    // …opening Events shows it (and stamps the broadcast-seen store)
-    // but a DIRECT note stays unread until its CONVERSATION opens
-    // (#539) — the bell keeps counting it.
-    await tester.tap(find.byTooltip('Events'));
-    await tester.pumpAndSettle();
-    expect(find.text('Your desk lamp is still on!'), findsOneWidget);
-    expect(noteSeen.seen, DateTime.utc(2026, 8, 4, 9));
-    await tester.pageBack();
-    await tester.pumpAndSettle();
-    expect(
-      find.descendant(
-        of: find.byTooltip('Events'),
-        matching: find.text('1'),
-      ),
-      findsOneWidget,
-    );
-
-    // Opening the conversation reads it — NOW the bell clears.
-    await tester.tap(find.byTooltip('Events'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('note-dismiss-note-offline')));
-    await tester.pumpAndSettle();
-    // Scoped: the events screen's help hint (#606) has an X of its own.
-    await tester.tap(find.descendant(
-      of: find.byKey(const ValueKey('conversation-sheet')),
-      matching: find.byIcon(Icons.close),
-    ));
-    await tester.pumpAndSettle();
-    await tester.pageBack();
-    await tester.pumpAndSettle();
+    // #687 — THE BELL DOES NOT COUNT IT. Messages are not notifications
+    // any more: the count belongs to the Messages destination, which is
+    // where tapping it leads. A bell that counted them sent people to a
+    // feed to find a conversation that was one tab away.
     expect(
       find.descendant(
         of: find.byTooltip('Events'),
@@ -275,12 +242,19 @@ void main() {
       ),
       findsNothing,
     );
-    // And it is never announced twice.
+
+    // The ANNOUNCEMENT is the part that matters and it survives: the
+    // device told them, once, with sender and text. Catch-up on next
+    // start is why #464 exists, and moving the surface must not lose it.
     expect(notifications.shown, hasLength(1));
   });
 
-  testWidgets('SWIPE (#467): left deletes a received note; right opens '
-      'the CONVERSATION with the sender (refactor)', (tester) async {
+  testWidgets('REPLY AND DELETE (#467/#687): the row opens the thread, '
+      'the composer sends, a long-press deletes', (tester) async {
+    // The swipe gestures lived on the events-inbox row and retired with
+    // it: the centre lists CONVERSATIONS, and a swipe there would mean
+    // something else. Both capabilities survive — tapping a row opens
+    // the thread, long-pressing a bubble deletes the message.
     final workspace = FakeWorkspaceRepository.withWorkspace()
       ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
       ..otherMembers.add(
@@ -303,6 +277,18 @@ void main() {
           createdAt: DateTime.utc(2026, 8, 4, 9),
         ),
       );
+    workspace
+      ..conversationMessages['conv-ana'] = [...workspace.memberNotes]
+      ..conversations.add(Conversation(
+        id: 'conv-ana',
+        kind: ConversationKind.direct,
+        otherMemberId: 'member-2',
+        lastBody: 'Lamp is on.',
+        lastFromMemberId: 'member-2',
+        lastAt: DateTime.utc(2026, 8, 4, 9),
+        unread: 1,
+      ));
+
     await tester.pumpWidget(
       ProviderScope(
         overrides: standardTestOverrides(workspace: workspace),
@@ -310,48 +296,27 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.byTooltip('Events'));
+    await tapNavIcon(tester, Icons.forum_outlined);
     await tester.pumpAndSettle();
 
-    // Swipe RIGHT → Ana's CONVERSATION opens; the row never dismisses.
-    await tester.drag(
-      find.byKey(const ValueKey('note-dismiss-note-in')),
-      const Offset(400, 0),
-    );
+    await tester.tap(find.byKey(const ValueKey('conversation-conv-ana')));
     await tester.pumpAndSettle();
-    expect(
-        find.byKey(const ValueKey('conversation-sheet')), findsOneWidget);
-    // Her message reads IN FULL as a bubble of the thread.
-    expect(
-        find.descendant(
-            of: find.byKey(const ValueKey('conversation-sheet')),
-            matching: find.text('Lamp is on.', findRichText: true)),
-        findsOneWidget);
+    expect(find.byKey(const ValueKey('conversation-thread')), findsOneWidget);
+
+    // Reply from the thread's own composer.
     await tester.enterText(
       find.byKey(const ValueKey('member-note-body')),
       'Turning it off now.',
     );
     await tester.tap(find.byKey(const ValueKey('member-note-send')));
     await tester.pumpAndSettle();
-    expect(workspace.memberNotes.last.toMemberId, 'member-2');
-    expect(workspace.memberNotes.last.body, 'Turning it off now.');
-    // Close the thread to get back to the inbox rows. Scoped: the
-    // events screen's help hint (#606) has an X of its own.
-    await tester.tap(find.descendant(
-      of: find.byKey(const ValueKey('conversation-sheet')),
-      matching: find.byIcon(Icons.close),
-    ));
-    await tester.pumpAndSettle();
+    expect(workspace.sentMessages.single.body, 'Turning it off now.');
 
-    // Swipe LEFT → confirmation first (#523), then the note is deleted.
-    await tester.drag(
-      find.byKey(const ValueKey('note-dismiss-note-in')),
-      const Offset(-400, 0),
-    );
+    // And a long-press deletes the received one, confirmed (#523).
+    await tester.longPress(find.byKey(const ValueKey('bubble-note-in')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('note-delete-confirm')));
     await tester.pumpAndSettle();
-    expect(find.text('Message deleted.'), findsOneWidget);
     expect(workspace.memberNotes.where((n) => n.id == 'note-in'), isEmpty);
   });
 

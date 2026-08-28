@@ -1,17 +1,14 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
-import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/member_note.dart';
 import '../../providers/workspace_providers.dart';
 import 'member_note_actions.dart';
-import 'member_note_body.dart';
 import 'member_note_composer.dart';
-import 'note_check.dart';
+import 'conversation_bubble.dart';
 
 /// THE conversation with one member (messaging refactor): every direct
 /// message between me and [otherMemberId], oldest to newest, chat
@@ -132,7 +129,7 @@ class ConversationSheet extends ConsumerWidget {
                           vertical: AppSpacing.sm,
                         ),
                         itemCount: thread.length,
-                        itemBuilder: (context, index) => _Bubble(
+                        itemBuilder: (context, index) => ConversationBubble(
                           note: thread[thread.length - 1 - index],
                           mine:
                               thread[thread.length - 1 - index].fromMemberId ==
@@ -161,83 +158,6 @@ class ConversationSheet extends ConsumerWidget {
                 ),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _Bubble extends ConsumerWidget {
-  const _Bubble({required this.note, required this.mine});
-
-  final MemberNote note;
-  final bool mine;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final when = DateFormat.MMMd().add_Hm().format(note.createdAt.toLocal());
-    return Align(
-      alignment: mine ? Alignment.centerRight : Alignment.centerLeft,
-      child: GestureDetector(
-        key: ValueKey('bubble-${note.id}'),
-        onLongPress: () => deleteMemberNoteGuarded(context, ref, note),
-        child: Container(
-          margin: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.md,
-            vertical: AppSpacing.sm,
-          ),
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.78,
-          ),
-          decoration: BoxDecoration(
-            color: mine
-                ? theme.colorScheme.primaryContainer
-                : theme.colorScheme.surfaceContainerHighest,
-            borderRadius: AppRadius.lgAll,
-          ),
-          // Field report: the DARK theme keeps a LIGHT primaryContainer,
-          // so my bubble must use its on-color for EVERYTHING inside —
-          // body, links, timestamp and the delivery check. Inheriting
-          // the theme's light body color made my own texts unreadable.
-          child: Builder(
-            builder: (context) {
-              final fg = mine
-                  ? theme.colorScheme.onPrimaryContainer
-                  : theme.colorScheme.onSurface;
-              final fgMuted = mine
-                  ? fg.withValues(alpha: .7)
-                  : theme.colorScheme.onSurfaceVariant;
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  MemberNoteBody(
-                    body: note.body,
-                    style: theme.textTheme.bodyMedium?.copyWith(color: fg),
-                    linkColor: mine ? fg : null,
-                  ),
-                  const SizedBox(height: 2),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        when,
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          color: fgMuted,
-                        ),
-                      ),
-                      if (mine) ...[
-                        const SizedBox(width: 4),
-                        NoteCheck(note: note, unreadColor: fgMuted),
-                      ],
-                    ],
-                  ),
-                ],
-              );
-            },
           ),
         ),
       ),

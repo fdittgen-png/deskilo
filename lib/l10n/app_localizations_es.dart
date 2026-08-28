@@ -3635,6 +3635,100 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notesFilterEmpty => 'No hay mensajes sin leer — todo al día.';
 
   @override
+  String get conversationGroup => 'Grupo';
+
+  @override
+  String get conversationUnknownMember => 'Miembro';
+
+  @override
+  String get conversationYesterday => 'Ayer';
+
+  @override
+  String get conversationYou => 'Usted';
+
+  @override
+  String get messagesTitle => 'Mensajes';
+
+  @override
+  String get messagesEmpty => 'Aún no hay conversaciones.';
+
+  @override
+  String get messagesEmptyHint =>
+      'Toque el lápiz para escribir a alguien, o cree un grupo.';
+
+  @override
+  String conversationMemberCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count miembros',
+      one: '1 miembro',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newConversationTitle => 'Nueva conversación';
+
+  @override
+  String get newConversationSearch => 'Buscar miembros';
+
+  @override
+  String get newConversationStart => 'Iniciar chat';
+
+  @override
+  String get newConversationNoMembers => 'Aún no hay nadie más.';
+
+  @override
+  String get newGroupName => 'Nombre del grupo';
+
+  @override
+  String get newGroupCreate => 'Crear grupo';
+
+  @override
+  String get conversationGroupInfo => 'Grupo';
+
+  @override
+  String get conversationAddPeople => 'Añadir miembros';
+
+  @override
+  String get conversationLeave => 'Salir del grupo';
+
+  @override
+  String get conversationLeaveConfirm =>
+      '¿Salir de este grupo? Dejará de recibir sus mensajes; lo que ya envió permanece.';
+
+  @override
+  String get conversationRemove => 'Quitar';
+
+  @override
+  String get conversationAdmin => 'Admin';
+
+  @override
+  String get conversationLeft => 'Salió';
+
+  @override
+  String get messageSearchHint => 'Miembros, grupos, mensajes';
+
+  @override
+  String get messageSearchPrompt => 'Busque miembros, grupos y lo que se dijo.';
+
+  @override
+  String get messageSearchNothing => 'Sin resultados.';
+
+  @override
+  String get messageSearchPeople => 'Miembros';
+
+  @override
+  String get messageSearchGroups => 'Grupos';
+
+  @override
+  String get messageSearchMessages => 'Mensajes';
+
+  @override
+  String get messageSearchTitle => 'Buscar';
+
+  @override
   String get moneyBaseFee => 'Suscripción base';
 
   @override

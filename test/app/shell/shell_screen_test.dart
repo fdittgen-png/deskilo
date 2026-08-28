@@ -24,7 +24,7 @@ void main() {
     expect(find.byType(ShellBottomBar), findsOneWidget);
     // #230: Members took the events feed's slot; Events lives behind the
     // app-bar bell.
-    for (final label in ['Plan', 'Calendar', 'Members', 'Money']) {
+    for (final label in ['Messages', 'Calendar', 'Members', 'Money']) {
       expect(find.text(label), findsWidgets, reason: 'missing tab "$label"');
     }
   });

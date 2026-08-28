@@ -658,7 +658,7 @@ void main() {
     // so this also drives the pending-focus path.
     await tester.tap(find.text('Show on plan'));
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('live-plan-canvas')), findsOneWidget,
+    expect(find.byKey(const ValueKey('reserve-plan-canvas')), findsOneWidget,
         reason: 'landed on the Plan tab, canvas visible');
   });
 
