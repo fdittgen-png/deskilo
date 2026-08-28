@@ -3729,6 +3729,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get messageSearchTitle => 'Buscar';
 
   @override
+  String get newGroupNameTaken =>
+      'Ya existe un grupo con ese nombre aquí. Elija otro.';
+
+  @override
   String get moneyBaseFee => 'Suscripción base';
 
   @override

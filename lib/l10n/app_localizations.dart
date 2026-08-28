@@ -6620,6 +6620,12 @@ abstract class AppLocalizations {
   /// **'Search'**
   String get messageSearchTitle;
 
+  /// #694 - group names are unique per workspace
+  ///
+  /// In en, this message translates to:
+  /// **'A group with that name already exists here. Pick another.'**
+  String get newGroupNameTaken;
+
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:

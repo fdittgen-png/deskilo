@@ -91,6 +91,16 @@ class ConversationRow extends ConsumerWidget {
             : null,
       ),
       subtitle: Row(children: [
+        // #694 — a group with NOTHING said in it has no preview to
+        // distinguish it, so the row says what it is. "3 members" is
+        // also the fact someone wants first when two groups have
+        // similar names.
+        if (conversation.isGroup && conversation.lastBody.isEmpty)
+          Text(
+            l10n?.conversationMemberCount(conversation.participantCount) ??
+                '${conversation.participantCount} members',
+            style: theme.textTheme.bodySmall,
+          ),
         // A group preview says WHO wrote, because "ok" from an unnamed
         // someone in a group of eight is not a preview of anything.
         if (conversation.isGroup && conversation.lastFromMemberId != null)

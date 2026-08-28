@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/theme/app_radius.dart';
+
 import '../../../members/providers/directory_providers.dart';
 import '../../../profile/presentation/widgets/member_avatar.dart';
 import '../../providers/workspace_providers.dart';
@@ -32,13 +34,30 @@ class ConversationAvatar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final initial = title.trim().isEmpty ? '#' : title.trim()[0].toUpperCase();
-    return CircleAvatar(
+    // SHAPE, not colour (#694). A group and a member rendered as two
+    // beige circles with a letter in them are indistinguishable at a
+    // glance — and a list is only ever glanced at. A squircle beside
+    // circles reads instantly, survives dark mode and colour-blindness,
+    // and needs no legend. The same argument as the hatch on whole-space
+    // bookings: hue could not carry that difference either.
+    //
+    // The glyph is a GROUP icon rather than the name's initial, so two
+    // groups whose names start with the same letter are still obviously
+    // groups.
+    return Container(
       key: ValueKey('conversation-avatar-$conversationId'),
-      radius: radius,
-      backgroundColor: theme.colorScheme.secondaryContainer,
-      foregroundColor: theme.colorScheme.onSecondaryContainer,
-      child: Text(initial),
+      width: radius * 2,
+      height: radius * 2,
+      decoration: BoxDecoration(
+        color: theme.colorScheme.secondaryContainer,
+        borderRadius: AppRadius.mdAll,
+      ),
+      alignment: Alignment.center,
+      child: Icon(
+        Icons.groups_outlined,
+        size: radius,
+        color: theme.colorScheme.onSecondaryContainer,
+      ),
     );
   }
 }
