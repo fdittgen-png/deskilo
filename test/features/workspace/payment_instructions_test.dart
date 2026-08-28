@@ -20,10 +20,15 @@ void main() {
       'wero': '+49 170 0000000',
       'lydia': 'deskilo-lydia',
       'wise': '@deskilo',
+      // #711 — the four fields a non-IBAN country needs.
+      'account_number': '',
+      'bank_code': '',
+      'bank_name': '',
+      'bic': '',
     });
   });
 
-  test('fromDb → toDb round-trips all six fields', () {
+  test('fromDb → toDb round-trips all ten fields', () {
     const db = {
       'iban': 'FR76 1234',
       'paypal_me': 'somebody',
@@ -31,6 +36,10 @@ void main() {
       'wero': '+33 6 00 00 00 00',
       'lydia': '+33 6 11 11 11 11',
       'wise': 'https://wise.com/pay/me/somebody',
+      'account_number': '12345678',
+      'bank_code': '40-00-01',
+      'bank_name': 'Barclays',
+      'bic': 'BUKBGB22',
     };
     final instructions = PaymentInstructions.fromDb(db);
     expect(instructions.wero, '+33 6 00 00 00 00');

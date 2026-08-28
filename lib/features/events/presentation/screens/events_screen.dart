@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
@@ -79,12 +80,12 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     WorkspaceEvent event,
     Map<String, String> names,
     Map<String, String> targets,
-    NumberFormat currency,
+    MoneyFormat currency,
   ) {
     final actor = names[event.actorMemberId] ?? '';
     final target = targets[event.payloadTargetId] ?? '';
     final cents = event.payload['amount_cents'] as int?;
-    final amount = cents == null ? '' : currency.format(cents / 100);
+    final amount = cents == null ? '' : currency.formatMinor(cents);
     var line = switch ((event.type, event.action)) {
       (EventType.reservation, EventAction.created) =>
         l10n?.eventReservationCreated(actor, target) ??
@@ -354,9 +355,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         const <String, List<EventDecision>>{};
     final policies =
         ref.watch(validationPoliciesProvider).value ?? const [];
-    final currency = NumberFormat.simpleCurrency(
-      name: ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR',
-    );
+    final currency = moneyFormat(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR');
     // #687 — MESSAGES ARE NOT NOTIFICATIONS ANY MORE.
     //
     // They were mixed into this feed because there was nowhere else for

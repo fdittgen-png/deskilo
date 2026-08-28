@@ -227,6 +227,8 @@ Il proprietario regola tutto questo per **dominio** in **Impostazioni → Regole
 
 Tutta l'amministrazione vive in **Impostazioni → Amministrazione** — *Spazio di coworking* (le impostazioni dello spazio), *ID dello spazio e QR*, *Membri e piani*, *Gestione dei ruoli*, *Disponibilità*, *Fatturazione*, *Istruzioni di pagamento*, *Servizi*, *Regole di validazione*, *Fatturazione e report* (l'hub di fatturazione con l'editor di report e le regole di sollecito nella sua intestazione), *Funzionalità* e le voci legate alle funzionalità (*Accessori*, Pagamenti online, Badge RFID/NFC…). Una sola regola da conoscere: **la voce di impostazioni di una funzionalità appare solo finché quella funzionalità è attiva** — disattiva *Pagamenti online* in **Funzionalità** e la sua schermata di configurazione scompare con essa (e ritorna quando la riattivi). La voce **Funzionalità** è sempre presente, così puoi sempre riattivare un modulo.
 
+**Paese, valuta, fuso orario (#711).** La scelta del paese copre ora i 32 paesi per cui l'app sa dichiarare le imposte (UE-27, Svizzera, Norvegia, Regno Unito, Stati Uniti e Canada). La valuta è un **selettore** dei codici che l'app sa formattare — ognuno con il simbolo e il giusto numero di decimali: lo yen non ne ha, il dinaro ne ha tre, e ogni importo, fattura e pagamento online lo rispetta. Il fuso è un **elenco con ricerca** delle zone IANA che l'orologio sa installare; un refuso non si salva più.
+
 ![](assets/help/images/settings-administration.jpg)
 
 ### L'editor dello spazio
@@ -502,6 +504,8 @@ La tua identità esiste solo per il tempo dell'operazione: la credenziale viene 
 
 *I proprietari emettono le fatture; anche gli admin, quando detengono il permesso **emettere fatture** (Gestione dei ruoli, §8 — o la vecchia delega **Gli admin emettono fatture**). La funzionalità **Fatture** sta sotto Finanze nell'elenco delle funzionalità.*
 
+**Coordinate bancarie senza IBAN (#711).** In *Istruzioni di pagamento*, accanto all'IBAN: nome della banca, numero di conto, un codice di instradamento chiamato come lo chiama il tuo paese — *sort code* nel Regno Unito, *routing number* negli USA, *transito · istituzione* in Canada — e un BIC/SWIFT per i bonifici esteri. Solo i campi compilati compaiono sulla scheda «come pagare».
+
 Una fattura in DesKilo viene generata, mai composta: le sue posizioni sono **derivate esclusivamente dai dati tracciati del mese** — abbonamento, eccedenza, supplementi, servizi, pacchetti — meno i pagamenti e gli accrediti del mese, così la riga finale **è il saldo dovuto**. Ogni documento fotografa gli indirizzi postali dello spazio e del membro (imposta il tuo in **Impostazioni → Indirizzo**; l'indirizzo dello spazio sta nelle impostazioni dello spazio) ed è **firmato digitalmente** all'emissione — dopo non cambia più. Un **allegato dettagliato** (il libro mastro e le presenze del mese) si aggiunge con un interruttore al momento dell'emissione.
 
 Chi emette apre **Finanze → Fatture** e trova un hub a tre schede sotto una striscia di riepilogo in tempo reale (*N da fatturare · N aperte · X in sospeso · N da rimborsare · Y*):
@@ -588,6 +592,8 @@ Variabili di modello (famiglia fatture): `{{ number }}`, `{{ member }}`, `{{ wor
 ## 12. Impostazioni e profilo
 
 La tua schermata personale, dall'alto in basso:
+
+**Regione e formati (#711).** Come *tu* leggi ciò che lo spazio mostra: **numeri e date** nella regione che scegli (`it_CH`, `en_GB`, `de_AT`… indipendente dalla lingua dell'app), l'**orologio** (24 h, 12 h o ciò che fa quella regione) e se gli orari appaiono nel **fuso dello spazio** — quello delle prenotazioni, il predefinito — o **nel tuo**, segnalato dove i due differiscono. Una riga di anteprima mostra la somma delle tre scelte. La valuta resta quella dello spazio; solo la sua scrittura è tua. Salvato sul tuo profilo: ti segue da un dispositivo all'altro.
 
 - **Profili** (§1) e la tua **foto** (tocca per cambiare — scegli o rimuovi).
 - **Membri** — una scorciatoia verso l'elenco; **WhatsApp** — il tuo numero, visibile agli altri membri solo se lo imposti; **Stato** — una riga libera (40 caratteri) mostrata nell'elenco; **Indirizzo** — il tuo indirizzo postale (stampato sulle tue fatture), il paese e la partita IVA facoltativa.

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -58,7 +59,7 @@ Future<void> showInvoiceIssueSheet(
         for (final member in members)
           (id: member.id, name: names[member.id] ?? ''),
       ],
-      currency: NumberFormat.simpleCurrency(name: workspace.currencyCode),
+      currency: moneyFormat(workspace.currencyCode),
       preview: (memberId, period) => repo.previewInvoice(
         workspaceId: workspace.id,
         memberId: memberId,
@@ -123,7 +124,7 @@ class _InvoiceForm extends StatefulWidget {
 
   final AppLocalizations? l10n;
   final List<({String id, String name})> members;
-  final NumberFormat currency;
+  final MoneyFormat currency;
   final Future<({List<InvoiceLine> lines, int totalCents})> Function(
       String memberId, String period) preview;
   final String? initialMemberId;
@@ -316,7 +317,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
                 key: ValueKey('invoice-preview-line-$i'),
                 children: [
                   Expanded(child: Text(invoiceLineText(l10n, line))),
-                  Text(widget.currency.format(line.amountCents / 100)),
+                  Text(widget.currency.formatMinor(line.amountCents)),
                 ],
               ),
             ),
@@ -345,7 +346,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
                     ),
                   ),
                   Text(
-                    widget.currency.format(total.vatCents / 100),
+                    widget.currency.formatMinor(total.vatCents),
                     style: TextStyle(color: Theme.of(context).hintColor),
                   ),
                 ]),
@@ -362,7 +363,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
                 ),
               ),
               Text(
-                widget.currency.format(preview.totalCents / 100),
+                widget.currency.formatMinor(preview.totalCents),
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ],

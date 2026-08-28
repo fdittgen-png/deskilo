@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -57,8 +58,8 @@ class MemberMoneyCard extends ConsumerWidget {
 
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final currencyCode = workspace?.currencyCode ?? 'EUR';
-    final currency = NumberFormat.simpleCurrency(name: currencyCode);
-    String money(int cents) => currency.format(cents / 100);
+    final currency = moneyFormat(currencyCode);
+    String money(int cents) => currency.formatMinor(cents);
 
     final accountAsync = ref.watch(memberAccountProvider(memberId));
     final invoicesAsync = ref.watch(memberInvoicesProvider(memberId));

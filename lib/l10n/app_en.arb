@@ -2089,6 +2089,14 @@
   "@featureBadgeSignInDesc": {
     "description": "#662 - feature registry entry"
   },
+  "featureRegionalFormatsTitle": "Region & formats",
+  "@featureRegionalFormatsTitle": {
+    "description": "#711 - globalization"
+  },
+  "featureRegionalFormatsDesc": "Members choose how numbers, dates, the clock and the time zone are shown to them. Off: everyone reads in the app language's home region, 24-hour, workspace time.",
+  "@featureRegionalFormatsDesc": {
+    "description": "#711 - globalization"
+  },
   "helpTitle": "Help",
   "helpContents": "Contents",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",
@@ -4767,6 +4775,38 @@
   "@reportDesignerZoomFit": {
     "description": "Report page designer: fit-the-width zoom option (#548)"
   },
+  "paymentBankNameLabel": "Bank name",
+  "@paymentBankNameLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentAccountNumberLabel": "Account number",
+  "@paymentAccountNumberLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentSortCodeLabel": "Sort code",
+  "@paymentSortCodeLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentRoutingNumberLabel": "Routing number",
+  "@paymentRoutingNumberLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentTransitNumberLabel": "Transit · institution",
+  "@paymentTransitNumberLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentBankCodeLabel": "Bank code",
+  "@paymentBankCodeLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentBicLabel": "BIC / SWIFT",
+  "@paymentBicLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentCopied": "Copied.",
+  "@paymentCopied": {
+    "description": "#711 - globalization"
+  },
   "planDurationLabel": "Duration",
   "@planDurationLabel": {
     "description": "Booking sheet: grid duration slider label (#574)"
@@ -6329,6 +6369,127 @@
   "permApproveExpenses": "Approve expenses",
   "@permApproveExpenses": {
     "description": "Permission label (#513)"
+  },
+  "regionalFormatsTitle": "Region & formats",
+  "@regionalFormatsTitle": {
+    "description": "#711 - globalization"
+  },
+  "regionalFormatLocale": "Numbers & dates",
+  "@regionalFormatLocale": {
+    "description": "#711 - globalization"
+  },
+  "regionalFormatLocaleAuto": "Follows the app language ({locale})",
+  "@regionalFormatLocaleAuto": {
+    "description": "#711 - globalization",
+    "placeholders": {
+      "locale": {
+        "type": "String"
+      }
+    }
+  },
+  "regionalFollowLanguage": "Automatic",
+  "@regionalFollowLanguage": {
+    "description": "#711 - globalization"
+  },
+  "regionalClock": "Clock",
+  "@regionalClock": {
+    "description": "#711 - globalization"
+  },
+  "regionalClockAuto": "Auto",
+  "@regionalClockAuto": {
+    "description": "#711 - globalization"
+  },
+  "regionalDeviceZone": "Show times in my time zone",
+  "@regionalDeviceZone": {
+    "description": "#711 - globalization"
+  },
+  "regionalDeviceZoneHint": "Off: times show in the workspace's zone, the one bookings are made in. On: your device's, labelled where it differs.",
+  "@regionalDeviceZoneHint": {
+    "description": "#711 - globalization"
+  },
+  "workspaceTimezoneUnknown": "Pick a time zone from the list",
+  "@workspaceTimezoneUnknown": {
+    "description": "#711 - globalization"
+  },
+  "countryNameCY": "Cyprus",
+  "@countryNameCY": {
+    "description": "#711 - globalization"
+  },
+  "countryNameEE": "Estonia",
+  "@countryNameEE": {
+    "description": "#711 - globalization"
+  },
+  "countryNameFI": "Finland",
+  "@countryNameFI": {
+    "description": "#711 - globalization"
+  },
+  "countryNameGR": "Greece",
+  "@countryNameGR": {
+    "description": "#711 - globalization"
+  },
+  "countryNameHR": "Croatia",
+  "@countryNameHR": {
+    "description": "#711 - globalization"
+  },
+  "countryNameIE": "Ireland",
+  "@countryNameIE": {
+    "description": "#711 - globalization"
+  },
+  "countryNameLT": "Lithuania",
+  "@countryNameLT": {
+    "description": "#711 - globalization"
+  },
+  "countryNameLV": "Latvia",
+  "@countryNameLV": {
+    "description": "#711 - globalization"
+  },
+  "countryNameMT": "Malta",
+  "@countryNameMT": {
+    "description": "#711 - globalization"
+  },
+  "countryNameSI": "Slovenia",
+  "@countryNameSI": {
+    "description": "#711 - globalization"
+  },
+  "countryNameSK": "Slovakia",
+  "@countryNameSK": {
+    "description": "#711 - globalization"
+  },
+  "countryNameBG": "Bulgaria",
+  "@countryNameBG": {
+    "description": "#711 - globalization"
+  },
+  "countryNameCZ": "Czechia",
+  "@countryNameCZ": {
+    "description": "#711 - globalization"
+  },
+  "countryNameDK": "Denmark",
+  "@countryNameDK": {
+    "description": "#711 - globalization"
+  },
+  "countryNameHU": "Hungary",
+  "@countryNameHU": {
+    "description": "#711 - globalization"
+  },
+  "countryNamePL": "Poland",
+  "@countryNamePL": {
+    "description": "#711 - globalization"
+  },
+  "countryNameRO": "Romania",
+  "@countryNameRO": {
+    "description": "#711 - globalization"
+  },
+  "countryNameSE": "Sweden",
+  "@countryNameSE": {
+    "description": "#711 - globalization"
+  },
+  "regionalClock24h": "24h",
+  "@regionalClock24h": {
+    "description": "#711 - clock segment"
+  },
+  "regionalClock12h": "12h",
+  "@regionalClock12h": {
+    "description": "#711 - clock segment"
   },
   "workspaceXmlExport": "Export workspace (XML)",
   "@workspaceXmlExport": {

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import '../../../../core/i18n/money_format.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/member_account.dart';
@@ -23,8 +23,8 @@ class AccountCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final currency = NumberFormat.simpleCurrency(name: currencyCode);
-    String money(int cents) => currency.format(cents / 100);
+    final currency = moneyFormat(currencyCode);
+    String money(int cents) => currency.formatMinor(cents);
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final net = account.netPositionCents;

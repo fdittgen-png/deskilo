@@ -111,5 +111,13 @@
   "featureBadgeSignInDesc": "I membri possono accedere scansionando il proprio badge e inserendo il PIN, invece di digitare un'e-mail su un tablet condiviso. Ogni membro imposta il proprio PIN e attiva il proprio badge.",
   "@featureBadgeSignInDesc": {
     "description": "#662 - feature registry entry"
+  },
+  "featureRegionalFormatsTitle": "Regione e formati",
+  "@featureRegionalFormatsTitle": {
+    "description": "#711 - globalization"
+  },
+  "featureRegionalFormatsDesc": "Ogni membro sceglie come vedere numeri, date, orologio e fuso orario. Disattivato: tutti leggono nella regione della lingua dell'app, 24 ore, ora dello spazio.",
+  "@featureRegionalFormatsDesc": {
+    "description": "#711 - globalization"
   }
 }

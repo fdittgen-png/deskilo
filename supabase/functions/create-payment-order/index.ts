@@ -53,7 +53,17 @@ const json = (body: unknown, status = 200) =>
     headers: { "Content-Type": "application/json" },
   });
 
-const major = (cents: number) => (cents / 100).toFixed(2);
+/** Minor digits per ISO 4217 code (#711). The app stores every amount
+ * in MINOR units; PayPal and Mollie want a major-unit decimal string,
+ * and `/ 100` was only ever right for two-decimal currencies — a yen
+ * order came out 100× too small, a dinar one 10×. Stripe takes minor
+ * units directly and needs no conversion. */
+const ZERO_DECIMAL = new Set(["BIF","CLP","DJF","GNF","ISK","JPY","KMF","KRW","PYG","RWF","UGX","VND","VUV","XAF","XOF","XPF"]);
+const THREE_DECIMAL = new Set(["BHD","IQD","JOD","KWD","LYD","OMR","TND"]);
+const minorDigits = (currency: string) =>
+  ZERO_DECIMAL.has(currency.toUpperCase()) ? 0 : THREE_DECIMAL.has(currency.toUpperCase()) ? 3 : 2;
+const major = (minor: number, currency: string) =>
+  (minor / 10 ** minorDigits(currency)).toFixed(minorDigits(currency));
 
 /** The effective config of a provider for a workspace: table row (owner UI)
  * overlaid on env-var fallbacks, per field. */
@@ -115,7 +125,7 @@ async function createPaypalOrder(
     body: JSON.stringify({
       intent: "CAPTURE",
       purchase_units: [{
-        amount: { currency_code: currency, value: major(amountCents) },
+        amount: { currency_code: currency, value: major(amountCents, currency) },
         custom_id: reference,
       }],
       application_context: {
@@ -181,7 +191,7 @@ async function createMolliePayment(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      amount: { currency, value: major(amountCents) },
+      amount: { currency, value: major(amountCents, currency) },
       description: `DesKilo ${reference}`,
       redirectUrl: cfg.return_url,
       metadata: { reference },

@@ -186,6 +186,11 @@ class FeaturesScreen extends ConsumerWidget {
           l10n?.featurePlanMemberPhotosDesc ??
               'Occupied seats on the Plan tab and Reserve hub show the '
                   "occupant's profile photo instead of the initial.",
+        WorkspaceFeature.regionalFormats =>
+          l10n?.featureRegionalFormatsDesc ??
+              'Members choose how numbers, dates, the clock and the time '
+                  'zone are shown to them. Off: everyone reads in the app '
+                  "language's home region, 24-hour, workspace time.",
         WorkspaceFeature.badgeSignIn =>
           l10n?.featureBadgeSignInDesc ??
               'Members can sign in by scanning their badge and entering '

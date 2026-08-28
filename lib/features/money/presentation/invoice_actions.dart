@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:convert' show utf8;
 import 'dart:typed_data';
+import '../../../core/i18n/money_format.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -190,11 +191,11 @@ Map<String, Object?> invoiceReportData(
   Workspace? workspace,
 }) {
   final l10n = AppLocalizations.of(context);
-  final currency = NumberFormat.simpleCurrency(name: invoice.currency);
+  final currency = moneyFormat(invoice.currency);
   final dateFormat = DateFormat.yMMMd(
     Localizations.maybeLocaleOf(context)?.toString(),
   );
-  String money(int cents) => currency.format(cents / 100);
+  String money(int cents) => currency.formatMinor(cents);
   String rate(double percent) =>
       '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
   return <String, Object?>{
@@ -269,8 +270,8 @@ Map<String, Object?> statementReportData(
   Workspace? workspace,
 }) {
   final l10n = AppLocalizations.of(context);
-  final currency = NumberFormat.simpleCurrency(name: currencyCode);
-  String money(int cents) => currency.format(cents / 100);
+  final currency = moneyFormat(currencyCode);
+  String money(int cents) => currency.formatMinor(cents);
   final lines = <Map<String, Object?>>[
     if (statement.feeCents > 0)
       {
@@ -357,8 +358,8 @@ Map<String, Object?> agreementReportData(
   final l10n = l10nOverride ?? AppLocalizations.of(context);
   final workspace = ref.read(currentWorkspaceProvider).value;
   final currency =
-      NumberFormat.simpleCurrency(name: workspace?.currencyCode ?? 'EUR');
-  String money(int cents) => currency.format(cents / 100);
+      moneyFormat(workspace?.currencyCode ?? 'EUR');
+  String money(int cents) => currency.formatMinor(cents);
   final bands = ref.read(feeBandsProvider).value ?? const <FeeBand>[];
   final band = bands
       .where((b) => b.fromPct < subscriptionPct && subscriptionPct <= b.toPct)
@@ -473,8 +474,8 @@ Map<String, Object?> paymentsReportData(
   final workspace = ref.read(currentWorkspaceProvider).value;
   final me = ref.read(myMemberProvider).value;
   final currency =
-      NumberFormat.simpleCurrency(name: workspace?.currencyCode ?? 'EUR');
-  String money(int cents) => currency.format(cents / 100);
+      moneyFormat(workspace?.currencyCode ?? 'EUR');
+  String money(int cents) => currency.formatMinor(cents);
   final dateFormat = DateFormat.yMMMd(
     localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
   );
@@ -548,8 +549,8 @@ Map<String, Object?> workspaceReportData(
   final l10n = l10nOverride ?? AppLocalizations.of(context);
   final workspace = ref.read(currentWorkspaceProvider).value;
   final currency =
-      NumberFormat.simpleCurrency(name: workspace?.currencyCode ?? 'EUR');
-  String money(int cents) => currency.format(cents / 100);
+      moneyFormat(workspace?.currencyCode ?? 'EUR');
+  String money(int cents) => currency.formatMinor(cents);
   final levels = ref.read(levelsProvider).value ?? const <Level>[];
   final plans = [
     for (final level in levels)
@@ -632,7 +633,7 @@ Future<void> settleCreditInvoiceDialog(
   Invoice invoice,
 ) async {
   final l10n = AppLocalizations.of(context);
-  final currency = NumberFormat.simpleCurrency(name: invoice.currency);
+  final currency = moneyFormat(invoice.currency);
   final noteController = TextEditingController();
   final confirmed = await showDialog<bool>(
     context: context,
@@ -900,7 +901,7 @@ Map<String, Object?> reminderReportData(
   AppLocalizations? l10nOverride,
   String? localeName,
 }) {
-  final currency = NumberFormat.simpleCurrency(name: invoice.currency);
+  final currency = moneyFormat(invoice.currency);
   final dateFormat = DateFormat.yMMMd(
     localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
   );
@@ -913,7 +914,7 @@ Map<String, Object?> reminderReportData(
     'member': invoice.memberName,
     'number': invoice.number,
     'issued': dateFormat.format(invoice.issuedAt),
-    'total': currency.format(invoice.totalCents / 100),
+    'total': currency.formatMinor(invoice.totalCents),
     'reminder_level': level,
     'reminder_date': dateFormat.format(now),
     'days_open': now.difference(invoice.issuedAt).inDays,
@@ -941,7 +942,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   Future<Uint8List?> Function(String name)? reportImage,
 }) async {
   final l10n = AppLocalizations.of(context);
-  final currency = NumberFormat.simpleCurrency(name: invoice.currency);
+  final currency = moneyFormat(invoice.currency);
   final dateFormat = DateFormat.yMMMd(
     Localizations.maybeLocaleOf(context)?.toString(),
   );
@@ -1006,7 +1007,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       reserved: l10n?.invoicePdfReserved ?? 'reserved',
       page: l10n?.invoicePdfPage ?? 'Page',
     ),
-    money: (cents) => currency.format(cents / 100),
+    money: (cents) => currency.formatMinor(cents),
     dateLabel: dateLabel,
     // The stored title is the raw period ('2026-07'); the document reads
     // the month like a human would.
@@ -1490,13 +1491,13 @@ Future<void> remindInvoice(
   Invoice invoice,
 ) async {
   final l10n = AppLocalizations.of(context);
-  final currency = NumberFormat.simpleCurrency(name: invoice.currency);
+  final currency = moneyFormat(invoice.currency);
   final message = l10n?.invoiceReminderMessage(
         invoice.number,
-        currency.format(invoice.totalCents / 100),
+        currency.formatMinor(invoice.totalCents),
       ) ??
       'Friendly reminder: invoice ${invoice.number} — balance due '
-          '${currency.format(invoice.totalCents / 100)}.';
+          '${currency.formatMinor(invoice.totalCents)}.';
   // #472: the level of THIS send — one past what was already sent,
   // capped at the configured maximum (extra sends reuse the last
   // letter).
@@ -1701,7 +1702,7 @@ Future<void> matchInvoiceToPayment(
   Invoice invoice,
 ) async {
   final l10n = AppLocalizations.of(context);
-  final currency = NumberFormat.simpleCurrency(name: invoice.currency);
+  final currency = moneyFormat(invoice.currency);
   // 0068 — the candidates: the member's registered payments (incl. settled
   // online payments) not yet consumed by another match.
   final repo = ref.read(moneyRepositoryProvider);
@@ -1787,7 +1788,7 @@ Future<void> issueInvoicesForAll(
   WidgetRef ref,
   List<ToInvoiceEntry> entries,
   String period,
-  NumberFormat currency,
+  MoneyFormat currency,
 ) async {
   final l10n = AppLocalizations.of(context);
   final workspace = ref.read(currentWorkspaceProvider).value;
@@ -1801,11 +1802,11 @@ Future<void> issueInvoicesForAll(
         l10n?.invoiceIssueAllConfirm(
               entries.length,
               monthLabel(context, period),
-              currency.format(total / 100),
+              currency.formatMinor(total),
             ) ??
             'Issue ${entries.length} invoices for '
                 '${monthLabel(context, period)}, '
-                '${currency.format(total / 100)} in total? An issued '
+                '${currency.formatMinor(total)} in total? An issued '
                 'invoice can no longer be edited.',
       ),
       actions: [

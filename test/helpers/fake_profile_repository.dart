@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'dart:typed_data';
 
 import 'package:deskilo/features/profile/domain/profile.dart';
@@ -91,6 +92,18 @@ class FakeProfileRepository implements ProfileRepository {
   @override
   Future<void> setPreferredLocale(String locale) async {
     preferredLocale = locale;
+  }
+
+  /// #711 — the last saved format preferences, for assertions.
+  FormatPrefs formatPrefs = FormatPrefs.defaults;
+
+  @override
+  Future<void> setFormatPrefs(FormatPrefs prefs) async {
+    formatPrefs = prefs;
+    final updated = [for (final p in profiles) p.copyWith(formatPrefs: prefs)];
+    profiles
+      ..clear()
+      ..addAll(updated);
   }
 
   @override

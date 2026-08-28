@@ -225,6 +225,8 @@ Die Inhaberin justiert das je **Domäne** unter **Einstellungen → Validierungs
 
 Alle Administration wohnt unter **Einstellungen → Administration** — *Workspace* (die Workspace-Einstellungen), *Workspace-ID & QR*, *Mitglieder & Tarife*, *Rollenverwaltung*, *Verfügbarkeit*, *Abrechnung*, *Zahlungshinweise*, *Leistungen*, *Validierungsregeln*, *Abrechnung & Berichte* (der Rechnungs-Hub mit Report-Editor und Mahnregeln in der Kopfzeile), *Funktionen* und die feature-abhängigen Einträge (*Zubehör*, Online-Zahlungen, RFID-/NFC-Badges…). Eine Regel: **der Einstellungs-Eintrag einer Funktion erscheint nur, solange sie aktiviert ist** — *Online-Zahlungen* in **Funktionen** aus, und ihr Konfigurationsbildschirm verschwindet (und kommt beim Reaktivieren zurück). **Funktionen** selbst ist immer da.
 
+**Land, Währung, Zeitzone (#711).** Die Länderauswahl deckt jetzt die 32 Länder ab, für die die App Steuern erklären kann (EU-27, Schweiz, Norwegen, Vereinigtes Königreich, USA, Kanada). Die Währung ist eine **Auswahl** der Codes, die die App formatieren kann — jede mit Symbol und der richtigen Zahl Nachkommastellen: der Yen hat keine, der Dinar drei, und jeder Betrag, jede Rechnung und jede Online-Zahlung hält sich daran. Die Zeitzone ist eine **durchsuchbare Liste** der IANA-Zonen, die die Uhr installieren kann; ein Tippfehler lässt sich nicht mehr speichern.
+
 ![](assets/help/images/settings-administration.jpg)
 
 ### Der Space-Editor
@@ -481,6 +483,8 @@ Deine Identität existiert nur für den Moment der Operation: die Kennung geht *
 
 *Inhaber stellen Rechnungen aus; Admins auch, sobald sie die Berechtigung **Rechnungen ausstellen & Zahlungen zuordnen** halten (Rollenverwaltung, §8 — oder die alte Delegation **Admins stellen Rechnungen aus**). Die Funktion **Rechnungen** wohnt unter Finanzen.*
 
+**Bankdaten für Länder ohne IBAN (#711).** Unter *Zahlungshinweise*, neben der IBAN: Bankname, Kontonummer, ein Routing-Code so benannt, wie dein Land ihn nennt — *sort code* im UK, *routing number* in den USA, *transit · institution* in Kanada — und ein BIC/SWIFT für Auslandsüberweisungen. Nur gefüllte Felder erscheinen auf der Karte „So bezahlst du“.
+
 Eine DesKilo-Rechnung wird generiert, nie komponiert: ihre Positionen sind **ausschließlich aus den erfassten Monatsdaten abgeleitet** — Abo, Überziehung, Aufpreise, Services, Pakete — minus Zahlungen und Gutschriften des Monats, sodass die letzte Zeile **der fällige Saldo ist**. Jedes Dokument friert die Postadressen ein (deine unter **Einstellungen → Adresse**) und wird bei Ausstellung **digital signiert** — es ändert sich nie mehr. Ein **detaillierter Anhang** (Bewegungen und Anwesenheiten) hängt per Schalter an.
 
 Aussteller öffnen **Finanzen → Rechnungen**: ein Drei-Tab-Hub unter einem Live-Übersichtsstreifen (*N zu fakturieren · N offen · X ausstehend · N zu erstatten · Y*):
@@ -567,6 +571,8 @@ Variablen (Rechnungsfamilie): `{{ number }}`, `{{ member }}`, `{{ workspace }}`,
 ## 12. Einstellungen & Profil
 
 Dein persönlicher Bildschirm, von oben nach unten:
+
+**Region & Formate (#711).** Wie *du* liest, was der Bereich zeigt: **Zahlen & Daten** in einer Region deiner Wahl (`de_CH`, `en_GB`, `de_AT` … unabhängig von der App-Sprache), die **Uhr** (24 h, 12 h oder was die Region tut) und ob Zeiten in der **Zone des Bereichs** erscheinen — der, in der gebucht wird, und der Standard — oder in **deiner Gerätezone**, gekennzeichnet, wo beide abweichen. Eine Vorschauzeile zeigt, was die drei Wahlen ergeben. Die Währung bleibt die des Bereichs; nur ihre Schreibweise ist deine. Auf deinem Profil gespeichert, also auf jedem Gerät gleich.
 
 - **Profile** (§1) und dein **Foto** (antippen — wählen oder entfernen).
 - **Mitglieder** — Abkürzung ins Verzeichnis; **WhatsApp** — deine Nummer, nur sichtbar, wenn du sie einträgst; **Status** — eine freie Zeile (40 Zeichen) im Verzeichnis; **Adresse** — deine Postadresse (auf deinen Rechnungen), Land und optionale USt-IdNr.

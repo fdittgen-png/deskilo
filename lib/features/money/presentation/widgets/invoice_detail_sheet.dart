@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/i18n/money_format.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
@@ -87,7 +88,7 @@ class _InvoiceDetailBody extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final muted = theme.colorScheme.onSurfaceVariant;
-    final currency = NumberFormat.simpleCurrency(name: invoice.currency);
+    final currency = moneyFormat(invoice.currency);
     final dateFormat = DateFormat.yMMMd(
       Localizations.maybeLocaleOf(context)?.toString(),
     );
@@ -170,7 +171,7 @@ class _InvoiceDetailBody extends StatelessWidget {
                   child: Row(children: [
                     Expanded(child: Text(invoiceLineText(l10n, position))),
                     const SizedBox(width: AppSpacing.sm),
-                    Text(currency.format(position.amountCents / 100)),
+                    Text(currency.formatMinor(position.amountCents)),
                   ]),
                 ),
               const Divider(),
@@ -191,7 +192,7 @@ class _InvoiceDetailBody extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        currency.format(total.vatCents / 100),
+                        currency.formatMinor(total.vatCents),
                         style: TextStyle(color: theme.hintColor),
                       ),
                     ]),
@@ -204,7 +205,7 @@ class _InvoiceDetailBody extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  currency.format(invoice.totalCents / 100),
+                  currency.formatMinor(invoice.totalCents),
                   key: const ValueKey('invoice-detail-total'),
                   style: theme.textTheme.titleMedium
                       ?.copyWith(fontWeight: FontWeight.bold),
@@ -221,10 +222,10 @@ class _InvoiceDetailBody extends StatelessWidget {
                     'Replaced by $replacedByNumber'),
               if (standingMatch != null)
                 line(l10n?.invoiceMatchSummary(
-                      currency.format(standingMatch.paidCents / 100),
+                      currency.formatMinor(standingMatch.paidCents),
                       dateFormat.format(standingMatch.matchedAt),
                     ) ??
-                    'Paid ${currency.format(standingMatch.paidCents / 100)} '
+                    'Paid ${currency.formatMinor(standingMatch.paidCents)} '
                         'on ${dateFormat.format(standingMatch.matchedAt)}'),
               if (standingMatch != null && standingMatch.note.isNotEmpty)
                 line(standingMatch.note),

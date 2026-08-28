@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../../core/country/country_catalog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,6 +27,10 @@ class PaymentMethodsScreen extends ConsumerStatefulWidget {
 class _PaymentMethodsScreenState
     extends ConsumerState<PaymentMethodsScreen> {
   final _iban = TextEditingController();
+  final _accountNumber = TextEditingController();
+  final _bankCode = TextEditingController();
+  final _bankName = TextEditingController();
+  final _bic = TextEditingController();
   final _paypalMe = TextEditingController();
   final _reference = TextEditingController();
   final _wero = TextEditingController();
@@ -37,6 +42,10 @@ class _PaymentMethodsScreenState
   @override
   void dispose() {
     _iban.dispose();
+    _accountNumber.dispose();
+    _bankCode.dispose();
+    _bankName.dispose();
+    _bic.dispose();
     _paypalMe.dispose();
     _reference.dispose();
     _wero.dispose();
@@ -59,6 +68,10 @@ class _PaymentMethodsScreenState
               workspaceId,
               PaymentInstructions(
                 iban: _iban.text,
+                accountNumber: _accountNumber.text,
+                bankCode: _bankCode.text,
+                bankName: _bankName.text,
+                bic: _bic.text,
                 paypalMe: _paypalMe.text,
                 reference: _reference.text,
                 wero: _wero.text,
@@ -95,6 +108,10 @@ class _PaymentMethodsScreenState
       final instructions =
           PaymentInstructions.fromDb(workspace.paymentInstructions);
       _iban.text = instructions.iban;
+      _accountNumber.text = instructions.accountNumber;
+      _bankCode.text = instructions.bankCode;
+      _bankName.text = instructions.bankName;
+      _bic.text = instructions.bic;
       _paypalMe.text = instructions.paypalMe;
       _reference.text = instructions.reference;
       _wero.text = instructions.wero;
@@ -131,6 +148,29 @@ class _PaymentMethodsScreenState
           const SizedBox(height: AppSpacing.lg),
           field('workspaceSettingsIban', _iban,
               l10n?.paymentInstructionsIbanTitle ?? 'IBAN'),
+          // #711 — the fields a non-IBAN country needs, labelled by the
+          // workspace's banking scheme: "Sort code" in London, "Routing
+          // number" in New York, "Transit · institution" in Toronto.
+          // All optional; the how-to-pay card prints what is filled.
+          field('workspaceSettingsBankName', _bankName,
+              l10n?.paymentBankNameLabel ?? 'Bank name'),
+          field('workspaceSettingsAccountNumber', _accountNumber,
+              l10n?.paymentAccountNumberLabel ?? 'Account number'),
+          field(
+              'workspaceSettingsBankCode',
+              _bankCode,
+              bankCodeLabelFor(
+                CountryCatalog.byCode(
+                        ref.watch(currentWorkspaceProvider).value?.countryCode ?? '')
+                    .scheme,
+                sortCode: l10n?.paymentSortCodeLabel ?? 'Sort code',
+                routingNumber: l10n?.paymentRoutingNumberLabel ?? 'Routing number',
+                transitNumber:
+                    l10n?.paymentTransitNumberLabel ?? 'Transit · institution',
+                bankCode: l10n?.paymentBankCodeLabel ?? 'Bank code',
+              )),
+          field('workspaceSettingsBic', _bic,
+              l10n?.paymentBicLabel ?? 'BIC / SWIFT'),
           field('workspaceSettingsPaypalMe', _paypalMe,
               l10n?.paymentInstructionsPaypalLabel ??
                   'PayPal.me link or handle'),

@@ -90,6 +90,9 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureKioskMemberPhotosTitle ?? 'Member photos at the kiosk',
       WorkspaceFeature.planMemberPhotos =>
         l10n?.featurePlanMemberPhotosTitle ?? 'Member photos on the plan',
+
+      WorkspaceFeature.regionalFormats =>
+        l10n?.featureRegionalFormatsTitle ?? 'Region & formats',
       WorkspaceFeature.badgeSignIn =>
         l10n?.featureBadgeSignInTitle ?? 'Sign in with a badge',
     };

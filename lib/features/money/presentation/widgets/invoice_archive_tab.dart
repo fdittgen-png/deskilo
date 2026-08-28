@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -373,7 +374,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
     required String replacedByNumber,
     required DateFormat dateFormat,
   }) {
-    final currency = NumberFormat.simpleCurrency(name: invoice.currency);
+    final currency = moneyFormat(invoice.currency);
     final status = invoiceLifecycleOf(invoice, match);
     return Card(
       child: ListTile(
@@ -409,7 +410,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
         ].join(' · ')),
         trailing: Row(mainAxisSize: MainAxisSize.min, children: [
           Text(
-            currency.format(invoice.totalCents / 100),
+            currency.formatMinor(invoice.totalCents),
             style: Theme.of(context)
                 .textTheme
                 .titleSmall

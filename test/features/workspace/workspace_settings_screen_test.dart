@@ -48,7 +48,7 @@ void main() {
 
     // Seeded from ws-1 (DE / EUR / Europe/Berlin).
     expect(find.text('Test Space'), findsOneWidget);
-    expect(find.text('EUR'), findsOneWidget);
+    expect(find.textContaining('EUR'), findsOneWidget);
     expect(find.text('Europe/Berlin'), findsOneWidget);
 
     // Picking Switzerland re-defaults currency + time zone (spec §3).
@@ -56,7 +56,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Switzerland').last);
     await tester.pumpAndSettle();
-    expect(find.text('CHF'), findsOneWidget);
+    expect(find.textContaining('CHF'), findsOneWidget);
     expect(find.text('Europe/Zurich'), findsOneWidget);
     await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
     await tester.pumpAndSettle();
@@ -140,8 +140,11 @@ void main() {
     await tester.pumpAndSettle();
 
     // Owner overrides the CHF default with EUR before saving.
-    await tester.enterText(
-        find.byKey(const Key('workspaceSettingsCurrency')), 'eur');
+    // #711 — a picker now: the override is a pick, not a keystroke.
+    await tester.tap(find.byKey(const Key('workspaceSettingsCurrency')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.textContaining('EUR ·').last);
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
     await tester.pumpAndSettle();
 
@@ -149,16 +152,21 @@ void main() {
         ['ws-1', 'CH', 'EUR', 'Europe/Zurich']);
   });
 
-  testWidgets('an invalid currency code blocks the save', (tester) async {
+  testWidgets('the currency picker cannot hold a malformed code (#711)',
+      (tester) async {
     final workspace = await pumpWorkspaceSettings(tester);
 
-    await tester.enterText(
-        find.byKey(const Key('workspaceSettingsCurrency')), 'EU');
-    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+    // #711 — the picker cannot hold a malformed code at all: every
+    // option it offers is three capitals and a symbol, and the row
+    // constraint (0132) refuses anything else that reaches it.
+    await tester.tap(find.byKey(const Key('workspaceSettingsCurrency')));
     await tester.pumpAndSettle();
-
+    final offered = find.textContaining(' · ').evaluate()
+        .map((e) => (e.widget as Text).data ?? '')
+        .where((t) => RegExp(r'^[A-Z]{3} · ').hasMatch(t));
+    expect(offered, isNotEmpty);
+    expect(find.text('EU'), findsNothing);
     expect(workspace.lastLocaleUpdate, isNull);
-    expect(find.text('Required'), findsOneWidget);
   });
 
   testWidgets(

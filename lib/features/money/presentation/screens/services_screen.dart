@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -90,9 +90,7 @@ class ServicesScreen extends ConsumerWidget {
         ref.watch(currentWorkspaceProvider).value?.vatRegime ==
             'vat_registered';
     final vatRates = ref.watch(vatRatesProvider).value ?? const <VatRate>[];
-    final currency = NumberFormat.simpleCurrency(
-      name: ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR',
-    );
+    final currency = moneyFormat(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR');
     final inactiveColor = Theme.of(context).disabledColor;
 
     return Scaffold(
@@ -129,7 +127,7 @@ class ServicesScreen extends ConsumerWidget {
                   // workspace default when it has none.
                   subtitle: Builder(builder: (context) {
                     final price =
-                        currency.format(service.priceCents / 100);
+                        currency.formatMinor(service.priceCents);
                     final rate = vatRateSuffix(
                       chargesVat: chargesVat,
                       rates: vatRates,

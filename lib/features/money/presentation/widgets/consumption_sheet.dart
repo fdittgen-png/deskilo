@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -41,7 +41,7 @@ Future<void> showConsumptionSheet(
     return;
   }
 
-  final currency = NumberFormat.simpleCurrency(name: workspace.currencyCode);
+  final currency = moneyFormat(workspace.currencyCode);
   final period = TextEditingController(
     text: currentPeriod(ref.read(clockProvider).now()),
   );
@@ -81,7 +81,7 @@ Future<void> showConsumptionSheet(
                     value: item,
                     child: Text(
                       '${item.name} — '
-                      '${currency.format(item.priceCents / 100)}',
+                      '${currency.formatMinor(item.priceCents)}',
                     ),
                   ),
               ],

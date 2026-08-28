@@ -227,6 +227,8 @@ El propietario afina esto por **dominio** en **Ajustes → Reglas de validación
 
 Toda la administración vive en **Ajustes → Administración** — *Espacio de coworking* (los ajustes del espacio), *ID del espacio y QR*, *Miembros y planes*, *Gestión de roles*, *Disponibilidad*, *Facturación*, *Instrucciones de pago*, *Servicios*, *Reglas de validación*, *Facturación e informes* (el hub de facturación con el editor de informes y las reglas de recordatorio en su cabecera), *Funciones* y las entradas ligadas a funciones (*Accesorios*, Pagos en línea, Credenciales RFID/NFC…). Una regla que conviene conocer: **la entrada de ajustes de una función solo aparece mientras esa función está activada** — desactiva *Pagos en línea* en **Funciones** y su pantalla de configuración desaparece con ella (y vuelve al reactivarla). La entrada **Funciones** siempre está presente, así que siempre puedes volver a activar un módulo.
 
+**País, moneda, zona horaria (#711).** El selector de país cubre ahora los 32 países para los que la app sabe declarar impuestos (UE-27, Suiza, Noruega, Reino Unido, Estados Unidos y Canadá). La moneda es un **selector** de los códigos que la app sabe formatear — cada uno con su símbolo y su número correcto de decimales: el yen no tiene, el dinar tiene tres, y cada importe, factura y pago en línea lo respeta. La zona horaria es una **lista con búsqueda** de las zonas IANA que el reloj puede instalar; una errata ya no se puede guardar.
+
 ![](assets/help/images/settings-administration.jpg)
 
 ### El editor del espacio
@@ -502,6 +504,8 @@ Tu identidad solo existe durante la operación: la credencial se envía **única
 
 *Los propietarios emiten facturas; los admins también cuando tienen el permiso **emitir facturas** (Gestión de roles, §8 — o la antigua delegación de función **Los admins emiten facturas**). La función **Facturas** cuelga de Finanzas en la lista de funciones.*
 
+**Datos bancarios sin IBAN (#711).** En *Instrucciones de pago*, junto al IBAN: nombre del banco, número de cuenta, un código de enrutamiento con el nombre que le da su país — *sort code* en el Reino Unido, *routing number* en EE. UU., *tránsito · institución* en Canadá — y un BIC/SWIFT para transferencias internacionales. Solo los campos rellenados se imprimen en la tarjeta «cómo pagar».
+
 Una factura en DesKilo se genera, nunca se redacta: sus posiciones se **derivan exclusivamente de los datos registrados del mes** — suscripción, exceso, suplementos, servicios, paquetes — menos los pagos y créditos del mes, de modo que la línea final **es el saldo adeudado**. Cada documento captura las direcciones postales del espacio y del miembro (configura la tuya en **Ajustes → Dirección**; la dirección del espacio está en los ajustes del espacio) y se **firma digitalmente** al emitirse — después ya no cambia nunca. Un **anexo detallado** (el libro mayor y la asistencia del mes) puede adjuntarse con un interruptor al emitir.
 
 Quien emite abre **Finanzas → Facturas** y llega a un hub de tres pestañas bajo una franja de resumen en vivo (*N por facturar · N abiertas · X pendiente · N por reembolsar · Y*):
@@ -588,6 +592,8 @@ Variables de plantilla (familia de facturas): `{{ number }}`, `{{ member }}`, `{
 ## 12. Ajustes y perfil
 
 Tu pantalla personal, de arriba abajo:
+
+**Región y formatos (#711).** Cómo lee *usted* lo que muestra el espacio: **números y fechas** en la región que elija (`es_ES`, `en_GB`, `de_AT`… independiente del idioma de la app), el **reloj** (24 h, 12 h o lo que haga esa región) y si las horas se muestran en la **zona del espacio** — la de las reservas, por defecto — o en **la de su dispositivo**, señalada donde difieren. Una línea de vista previa muestra la suma de las tres elecciones. La moneda es siempre la del espacio; solo su escritura es suya. Guardado en su perfil: le sigue entre dispositivos.
 
 - **Perfiles** (§1) y tu **foto** (tócala para cambiarla — elegir o quitar).
 - **Miembros** — un acceso directo al directorio; **WhatsApp** — tu número, visible para los demás miembros solo si lo defines; **Estado** — una línea libre (40 caracteres) mostrada en el directorio; **Dirección** — tu dirección postal (impresa en tus facturas), país y número de IVA opcional.

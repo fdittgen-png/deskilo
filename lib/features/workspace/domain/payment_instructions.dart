@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/country/country_catalog.dart';
 
 /// Per-workspace payment instructions (spec §7, #155): how members are
 /// asked to settle an unpaid statement. Purely informational — the app
@@ -11,7 +12,23 @@ class PaymentInstructions {
     this.wero = '',
     this.lydia = '',
     this.wise = '',
+    this.accountNumber = '',
+    this.bankCode = '',
+    this.bankName = '',
+    this.bic = '',
   });
+
+  /// #711 — for countries that do not bank by IBAN: the account number
+  /// and the code that routes to the bank (a UK sort code, a US ABA
+  /// routing number, a Canadian transit + institution number). [bic]
+  /// is the SWIFT code a cross-border transfer asks for.
+  final String accountNumber;
+  final String bankCode;
+  final String bankName;
+  final String bic;
+
+  bool get hasLocalBankDetails =>
+      accountNumber.trim().isNotEmpty || bankCode.trim().isNotEmpty;
 
   /// The workspace's bank account, e.g. `DE89 3704 0044 0532 0130 00`.
   final String iban;
@@ -64,6 +81,10 @@ class PaymentInstructions {
         wero: db['wero'] as String? ?? '',
         lydia: db['lydia'] as String? ?? '',
         wise: db['wise'] as String? ?? '',
+        accountNumber: db['account_number'] as String? ?? '',
+        bankCode: db['bank_code'] as String? ?? '',
+        bankName: db['bank_name'] as String? ?? '',
+        bic: db['bic'] as String? ?? '',
       );
 
   Map<String, dynamic> toDb() => {
@@ -73,5 +94,26 @@ class PaymentInstructions {
         'wero': wero.trim(),
         'lydia': lydia.trim(),
         'wise': wise.trim(),
+        'account_number': accountNumber.trim(),
+        'bank_code': bankCode.trim(),
+        'bank_name': bankName.trim(),
+        'bic': bic.trim(),
       };
 }
+
+/// What the bank-routing field is CALLED where the workspace banks
+/// (#711): the same number wears a different name in every scheme, and
+/// an owner in Leeds typing into "Routing number" is not sure they are
+/// in the right box.
+String bankCodeLabelFor(BankingScheme scheme, {
+  required String sortCode,
+  required String routingNumber,
+  required String transitNumber,
+  required String bankCode,
+}) =>
+    switch (scheme) {
+      BankingScheme.uk => sortCode,
+      BankingScheme.us => routingNumber,
+      BankingScheme.ca => transitNumber,
+      BankingScheme.sepa => bankCode,
+    };

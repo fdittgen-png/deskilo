@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/i18n/format_prefs.dart';
 import 'dart:typed_data';
 
 import 'profile.dart';
@@ -22,6 +23,9 @@ abstract class ProfileRepository {
 
   /// Writes my preferred DOCUMENT language (0098, #496); '' clears it.
   Future<void> setPreferredLocale(String locale);
+
+  /// #711 — numbers, dates, clock and zone preferences.
+  Future<void> setFormatPrefs(FormatPrefs prefs);
 
   /// Writes my status line (#231), already trimmed + hard-capped by
   /// [normalizeStatusText]; '' clears it. Throws [StateError] signed

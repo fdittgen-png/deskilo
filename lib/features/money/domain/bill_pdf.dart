@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'dart:typed_data';
+import '../../../core/i18n/money_format.dart';
 
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
@@ -104,11 +105,10 @@ Future<Uint8List> buildBillPdf({
   required pw.Font boldFont,
   String? locale,
 }) async {
-  final currency = NumberFormat.simpleCurrency(
-    name: currencyCode,
-    locale: locale,
-  );
-  String money(int cents) => currency.format(cents / 100);
+  // #711 — the DOCUMENT locale, passed explicitly: a PDF is rendered
+  // for its reader, not for whoever pressed the button.
+  final currency = moneyFormat(currencyCode, locale: locale);
+  String money(int cents) => currency.formatMinor(cents);
   String charge(int cents) => '−${money(cents)}';
   String credit(int cents) => '+${money(cents)}';
   final dateFormat = DateFormat.yMMMd(locale);

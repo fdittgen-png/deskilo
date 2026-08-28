@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -60,9 +61,7 @@ class _InvoiceRegisterScreenState
             (me.canAdminister &&
                 features.contains(WorkspaceFeature.adminInvoicing)));
     final showMemberNames = me?.canAdminister ?? false;
-    final currency = NumberFormat.simpleCurrency(
-      name: workspace?.currencyCode ?? 'EUR',
-    );
+    final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
     final dateFormat = DateFormat.yMd(
       Localizations.maybeLocaleOf(context)?.toString(),
     );
@@ -131,7 +130,7 @@ class _InvoiceRegisterScreenState
     required List<int> years,
     required Map<String, InvoiceMatch> matches,
     required Map<String, ({int count, DateTime last})> reminders,
-    required NumberFormat currency,
+    required MoneyFormat currency,
     required DateFormat dateFormat,
     required bool showMemberNames,
     required bool canIssue,
@@ -279,7 +278,7 @@ class _InvoiceRegisterScreenState
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        currency.format(invoice.totalCents / 100),
+                        currency.formatMinor(invoice.totalCents),
                         style: theme.textTheme.bodyMedium
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
@@ -310,7 +309,7 @@ class _InvoiceRegisterScreenState
             ),
           ),
           Text(
-            currency.format(total / 100),
+            currency.formatMinor(total),
             key: const ValueKey('invoice-register-total'),
             style: theme.textTheme.titleSmall
                 ?.copyWith(fontWeight: FontWeight.bold),

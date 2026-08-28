@@ -18,6 +18,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/country/country_catalog.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/i18n/regional_formats_section.dart';
 import '../../../workspace/presentation/country_names.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../../members/providers/directory_providers.dart';
@@ -286,6 +287,11 @@ class SettingsScreen extends ConsumerWidget {
             title: Text(l10n?.directoryTitle ?? 'Members'),
             onTap: () => context.go('/directory'),
           ),
+          // #711 — Region & formats: numbers, dates, clock, zone. Gated by
+          // the regionalFormats feature like every member preference the
+          // owner may switch off.
+          if (features.contains(WorkspaceFeature.regionalFormats))
+            const RegionalFormatsSection(),
           // Opt-in WhatsApp number on my profile (#223): shared with
           // members of my workspaces, consumed by the directory (#224).
           // Rides the whatsappIntegration feature (hierarchy pass).

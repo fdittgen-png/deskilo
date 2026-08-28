@@ -111,5 +111,13 @@
   "featureBadgeSignInDesc": "Los miembros pueden iniciar sesión escaneando su credencial e introduciendo su PIN, en lugar de escribir un correo en una tableta compartida. Cada miembro define su propio PIN y activa su propia credencial.",
   "@featureBadgeSignInDesc": {
     "description": "#662 - feature registry entry"
+  },
+  "featureRegionalFormatsTitle": "Región y formatos",
+  "@featureRegionalFormatsTitle": {
+    "description": "#711 - globalization"
+  },
+  "featureRegionalFormatsDesc": "Cada miembro elige cómo se le muestran los números, las fechas, el reloj y la zona horaria. Desactivado: todos leen en la región del idioma de la app, en 24 h, hora del espacio.",
+  "@featureRegionalFormatsDesc": {
+    "description": "#711 - globalization"
   }
 }

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/trace/guarded.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -90,9 +90,7 @@ class AccessoriesScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final accessoriesAsync =
         ref.watch(accessoriesProvider(includeInactive: true));
-    final currency = NumberFormat.simpleCurrency(
-      name: ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR',
-    );
+    final currency = moneyFormat(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR');
     final inactiveColor = Theme.of(context).disabledColor;
 
     // #537/#542 — each row names the rate ITS supplement carries: the
@@ -106,7 +104,7 @@ class AccessoriesScreen extends ConsumerWidget {
       if (accessory.supplementCents == 0) {
         return l10n?.accessoriesNoSupplement ?? 'No supplement';
       }
-      final amount = currency.format(accessory.supplementCents / 100);
+      final amount = currency.formatMinor(accessory.supplementCents);
       final base =
           l10n?.accessoriesPerHalfDay(amount) ?? '$amount / half-day';
       final vatRate = vatRateSuffix(
