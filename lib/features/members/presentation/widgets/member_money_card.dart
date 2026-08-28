@@ -27,12 +27,14 @@ import '../../../workspace/providers/workspace_providers.dart';
 /// being consumed right now.
 ///
 /// WHO SEES IT. Yourself always — it is your money. Otherwise the
-/// `viewFinances` permission, the same one that gates the Money tab for
-/// somebody else's figures. The gate here is a COURTESY: `member_account`
-/// and `member_statement` both refuse a caller who is neither the member
-/// nor an admin of their workspace, and RLS scopes the ledger and the
-/// invoices the same way. Nothing here is the boundary; it is the part
-/// of the boundary the member can see.
+/// `viewFinances` permission, or `issueInvoices` (the role that bills
+/// reads what it bills from). The gate here is a COURTESY: since 0131
+/// `member_account`, `member_statement` and the row policies on the
+/// ledger and the invoices all ask `may_view_member_finances()`, which
+/// applies EXACTLY this rule. Nothing here is the boundary; it is the
+/// part of the boundary the member can see — and the two agreeing is
+/// what keeps a revoked permission from being enforced by the client
+/// alone (#709).
 class MemberMoneyCard extends ConsumerWidget {
   const MemberMoneyCard({
     super.key,
@@ -47,8 +49,10 @@ class MemberMoneyCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    final permissions = ref.watch(myPermissionsProvider);
     final maySee = isSelf ||
-        ref.watch(myPermissionsProvider).contains(WorkspacePermission.viewFinances);
+        permissions.contains(WorkspacePermission.viewFinances) ||
+        permissions.contains(WorkspacePermission.issueInvoices);
     if (!maySee) return const SizedBox.shrink();
 
     final workspace = ref.watch(currentWorkspaceProvider).value;
@@ -56,14 +60,36 @@ class MemberMoneyCard extends ConsumerWidget {
     final currency = NumberFormat.simpleCurrency(name: currencyCode);
     String money(int cents) => currency.format(cents / 100);
 
-    final account = ref.watch(memberAccountProvider(memberId)).value;
-    final invoices =
-        ref.watch(memberInvoicesProvider(memberId)).value ?? const <Invoice>[];
-    final ledger =
-        ref.watch(memberLedgerProvider(memberId)).value ?? const <LedgerEntry>[];
-    final period = DateFormat('yyyy-MM').format(ref.watch(clockProvider).now());
+    final accountAsync = ref.watch(memberAccountProvider(memberId));
+    final invoicesAsync = ref.watch(memberInvoicesProvider(memberId));
+    final ledgerAsync = ref.watch(memberLedgerProvider(memberId));
+    // The WORKSPACE's period, the same helper the Money tab uses — a
+    // profile that computed "this month" its own way is a profile that
+    // can disagree with the bill.
+    final period = currentPeriod(ref.watch(clockProvider).now());
     final statement =
         ref.watch(memberStatementProvider(memberId, period)).value;
+
+    // A failed read says so (#709). Before, a provider error left every
+    // value null and the card vanished — indistinguishable from "this
+    // member has no money history", which is the one thing an admin
+    // must not conclude from a network blip.
+    if (accountAsync.hasError || invoicesAsync.hasError || ledgerAsync.hasError) {
+      return Padding(
+        padding: const EdgeInsets.only(top: AppSpacing.md),
+        child: Text(
+          l10n?.memberMoneyUnavailable ??
+              'Money could not be loaded. Pull to refresh.',
+          key: const ValueKey('member-money-error'),
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: theme.colorScheme.error,
+          ),
+        ),
+      );
+    }
+    final account = accountAsync.value;
+    final invoices = invoicesAsync.value ?? const <Invoice>[];
+    final ledger = ledgerAsync.value ?? const <LedgerEntry>[];
 
     // Nothing at all to say: no account movement, no document, no
     // payment. A card that renders "0,00 €" three times is noise on a

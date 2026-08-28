@@ -3797,6 +3797,10 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get memberMoneyUnavailable =>
+      'Impossibile caricare le finanze. Trascina per aggiornare.';
+
+  @override
   String get moneyBaseFee => 'Abbonamento base';
 
   @override

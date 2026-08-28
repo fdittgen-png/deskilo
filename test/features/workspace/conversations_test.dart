@@ -455,8 +455,11 @@ void main() {
       final providers = File('lib/features/workspace/providers/'
               'conversation_providers.dart')
           .readAsStringSync();
-      expect(providers, contains('TraceLogger.instance'));
-      expect(providers, contains('rethrow'),
+      // #709 — the wrapper moved to core/trace so every feature traces
+      // the same way; the providers keep calling it.
+      final helper = File('lib/core/trace/traced.dart').readAsStringSync();
+      expect(helper, contains('TraceLogger.instance'));
+      expect(helper, contains('rethrow'),
           reason: 'tracing must not swallow — the UI still needs its '
               'error state');
       // All four, not just the one that broke.

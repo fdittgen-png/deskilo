@@ -282,5 +282,9 @@
         "type": "String"
       }
     }
+  },
+  "memberMoneyUnavailable": "Impossibile caricare le finanze. Trascina per aggiornare.",
+  "@memberMoneyUnavailable": {
+    "description": "#709 - the money section of a profile could not be read"
   }
 }

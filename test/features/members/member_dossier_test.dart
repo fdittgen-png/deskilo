@@ -8,6 +8,8 @@
 // different things to three viewers, and the interesting cases are the
 // ones where it must show LESS: a plain member looking at a colleague
 // must not learn what that colleague owes.
+import 'dart:io';
+
 import 'package:deskilo/features/members/presentation/widgets/member_contact_card.dart';
 import 'package:deskilo/features/members/presentation/widgets/member_money_card.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
@@ -131,6 +133,67 @@ void main() {
 
     expect(find.byKey(const ValueKey('member-money')), findsOneWidget);
     expect(find.byKey(const ValueKey('member-invoice-inv-1')), findsOneWidget);
+  });
+
+  testWidgets('a failed read SAYS so — it does not pose as "nothing owed"',
+      (tester) async {
+    // A refused RPC or a dead network used to leave every value null,
+    // and the card simply vanished: indistinguishable from a member
+    // with no money history, which is the one conclusion an admin must
+    // not draw from a network blip.
+    final money = FakeMoneyRepository()
+      ..accountFailure = StateError('not your account');
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(money: money, workspace: workspace),
+        child: const MaterialApp(
+          home: Scaffold(
+            body: MemberMoneyCard(memberId: 'member-2', isSelf: true),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('member-money-error')), findsOneWidget);
+    expect(find.byKey(const ValueKey('member-money-settled')), findsNothing);
+  });
+
+  group('the server applies the SAME rule (#709)', () {
+    // The card's gate is a courtesy. What makes it safe to hide a
+    // revoked permission's data is that the server refuses the read
+    // too — with the same permission, not with a different rule.
+    final sql = File('supabase/migrations/0131_finance_permission_gates.sql')
+        .readAsStringSync();
+
+    test('one helper, self or viewFinances or issueInvoices', () {
+      expect(sql, contains('function public.may_view_member_finances'));
+      expect(sql, contains("has_permission(m.workspace_id, 'viewFinances')"));
+      expect(sql, contains("has_permission(m.workspace_id, 'issueInvoices')"));
+      expect(sql, contains('m.user_id = auth.uid()'));
+    });
+
+    test('both RPCs and both row policies ask it', () {
+      expect(sql, contains("'public.member_account(uuid)'::regprocedure"));
+      expect(sql, contains("'public.member_statement(uuid, text)'::regprocedure"));
+      expect(sql, contains('alter policy ledger_select on public.ledger_entries'));
+      expect(sql, contains('alter policy invoices_select on public.invoices'));
+      // A drifted body fails LOUDLY rather than keeping the old guard.
+      expect(sql, contains('guard not found — body drifted'));
+    });
+
+    test('e-mail follows manageMembers, as the client already does', () {
+      expect(sql, contains("has_permission(p_workspace_id, 'manageMembers')"));
+    });
+
+    test('the card gates on exactly the permissions the helper names', () {
+      final card = File('lib/features/members/presentation/widgets/'
+              'member_money_card.dart')
+          .readAsStringSync();
+      expect(card, contains('WorkspacePermission.viewFinances'));
+      expect(card, contains('WorkspacePermission.issueInvoices'));
+    });
   });
 
   testWidgets('a settled member gets a sentence, not three zeroes',

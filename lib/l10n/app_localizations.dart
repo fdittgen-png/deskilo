@@ -6722,6 +6722,12 @@ abstract class AppLocalizations {
   /// **'Plan {pct}%'**
   String memberPlanShare(String pct);
 
+  /// #709 - the money section of a profile could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Money could not be loaded. Pull to refresh.'**
+  String get memberMoneyUnavailable;
+
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:

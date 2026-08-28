@@ -282,5 +282,9 @@
         "type": "String"
       }
     }
+  },
+  "memberMoneyUnavailable": "Finanzen konnten nicht geladen werden. Zum Aktualisieren ziehen.",
+  "@memberMoneyUnavailable": {
+    "description": "#709 - the money section of a profile could not be read"
   }
 }
