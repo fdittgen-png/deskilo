@@ -336,18 +336,22 @@ void main() {
   });
 
   group('messages are not notifications any more', () {
-    test('there is no bell — the inbox carries both counts (#702)', () {
-      // #687 took messages off the bell so they had one home. #702
-      // finished the thought from the other side: the ALERTS had two
-      // homes of their own the moment the feed became a tab, so the
-      // bell went and its count moved onto the destination that already
-      // carried the unread messages it always sat beside.
+    test('the bell is a SHORTCUT onto the alerts face, not a screen (#707)',
+        () {
+      // #687 took messages off the bell so they had one home. The bell
+      // itself came back in #707 — but as a pointer to the inbox's
+      // Événements face, never a second surface: it navigates, it does
+      // not push. Its count is the pending confirmations; the Messages
+      // badge is the unread conversations. Two numbers, two meanings.
       final shell =
           File('lib/app/shell/shell_screen.dart').readAsStringSync();
       expect(shell, isNot(contains("push('/events')")),
-          reason: 'the bell is gone, not merely relabelled');
+          reason: 'a pushed feed would be a second home for the alerts');
+      expect(shell, contains("go('/events')"));
       expect(shell, contains('myPendingEventCountProvider'));
       expect(shell, contains('unreadMessagesProvider'));
+      expect(shell, isNot(contains('unreadMessagesProvider) +')),
+          reason: 'the two counts are not summed');
     });
 
     test('the feed carries BROADCASTS only', () {

@@ -49,20 +49,27 @@ Future<void> pumpApp(
 }
 
 void main() {
-  testWidgets('the pending count badges the inbox destination and its tab',
+  testWidgets('the pending count badges the bell and the alerts tab',
       (tester) async {
     final events = FakeEventRepository()
       ..events.addAll([pendingForMe('e1'), pendingForMe('e2')]);
     await pumpApp(tester, events: events);
 
-    // On the DESTINATION, so it is visible from every other tab — the
-    // one job the bell did that a tab cannot.
+    // On the BELL, so it is visible from every tab (#707) — and NOT on
+    // the Messages destination, whose badge is unread conversations.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('shell-events-bell')),
+        matching: find.text('2'),
+      ),
+      findsOneWidget,
+    );
     expect(
       find.descendant(
         of: find.byType(ShellBottomBar),
         matching: find.text('2'),
       ),
-      findsOneWidget,
+      findsNothing,
     );
     // And on the face responsible for it, so the inbox does not make you
     // open all three to find the one with something in it.
@@ -85,11 +92,12 @@ void main() {
     expect(find.byType(Badge), findsNothing);
   });
 
-  testWidgets('the Alerts tab shows the feed WITHOUT leaving the shell',
+  testWidgets('the bell opens the Alerts face WITHOUT leaving the shell',
       (tester) async {
     await pumpApp(tester);
 
-    await openAlertsTab(tester);
+    await tester.tap(find.byKey(const ValueKey('shell-events-bell')));
+    await tester.pumpAndSettle();
 
     // The bell pushed a root-level route that covered the bottom bar;
     // the tab does not. You can still reach anywhere else in one tap.
@@ -102,7 +110,7 @@ void main() {
     await pumpApp(tester, featureFlags: const {'eventsTab': false});
 
     expect(find.byKey(const ValueKey('inbox-tab-alerts')), findsNothing);
-    expect(find.byIcon(Icons.notifications_outlined), findsNothing);
+    expect(find.byKey(const ValueKey('shell-events-bell')), findsNothing);
     // The settings gear stays — only the feed is gated.
     expect(find.byIcon(Icons.settings_outlined), findsOneWidget);
   });

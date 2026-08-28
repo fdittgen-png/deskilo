@@ -8,7 +8,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/mock_providers.dart';
-import '../../helpers/navigation.dart';
 
 Future<void> pumpWithFlags(
   WidgetTester tester,
@@ -53,27 +52,19 @@ void main() {
       const {'moneyTab': false, 'calendarTab': false},
     );
 
-    // #702 — Members is a face of the inbox, not a tab, so gating the
-    // other two leaves the inbox alone on the bar.
-    expect(tabLabels(tester), ['Messages']);
+    expect(tabLabels(tester), ['Messages', 'Members']);
   });
 
-  testWidgets('all features on keeps the three tabs', (tester) async {
+  testWidgets('all features on keeps the four tabs', (tester) async {
     await pumpWithFlags(tester, const {});
 
-    expect(tabLabels(tester), ['Messages', 'Calendar', 'Money']);
+    expect(tabLabels(tester), ['Messages', 'Calendar', 'Members', 'Money']);
   });
 
-  testWidgets('membersDirectory OFF drops the inbox face, not a tab',
-      (tester) async {
+  testWidgets('membersDirectory OFF drops the Members tab', (tester) async {
     await pumpWithFlags(tester, const {'membersDirectory': false});
 
-    // The bar is untouched...
     expect(tabLabels(tester), ['Messages', 'Calendar', 'Money']);
-    await openAlertsTab(tester);
-    // ...and the directory is simply not one of the inbox's faces.
-    expect(find.byKey(const ValueKey('inbox-tab-members')), findsNothing);
-    expect(find.byKey(const ValueKey('inbox-tab-alerts')), findsOneWidget);
   });
 
   testWidgets(
@@ -83,17 +74,18 @@ void main() {
       ..events.addAll([pendingForMe('e1'), pendingForMe('e2')]);
     await pumpWithFlags(tester, const {'calendarTab': false}, events: events);
 
-    // The badge renders on the inbox destination, whatever else is gated.
+    // #707 — the badge renders on the BELL, whatever else is gated.
     expect(
       find.descendant(
-        of: find.byType(ShellBottomBar),
+        of: find.byKey(const ValueKey('shell-events-bell')),
         matching: find.text('2'),
       ),
       findsOneWidget,
     );
 
-    await openAlertsTab(tester);
-    // The feed itself, with the two pending confirmations on it.
+    await tester.tap(find.byKey(const ValueKey('shell-events-bell')));
+    await tester.pumpAndSettle();
+    // ...and lands INSIDE the shell, on the inbox's alerts face.
     expect(find.byKey(const ValueKey('inbox-tab-alerts')), findsOneWidget);
     expect(find.byType(ShellBottomBar), findsOneWidget);
   });
@@ -107,7 +99,7 @@ void main() {
     );
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
-    expect(tabLabels(tester), ['Messages']);
+    expect(tabLabels(tester), ['Messages', 'Members']);
     expect(find.byTooltip('Events'), findsNothing);
     // The app boots on the Reserve hub (its branch is never gated).
     final appBarTitle = find.descendant(

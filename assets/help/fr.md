@@ -25,7 +25,7 @@ Un compte peut appartenir à plusieurs espaces. **Réglages → Profils** les li
 
 ### S'orienter
 
-L'app a jusqu'à quatre destinations en bas : **Messages** (§16), **Calendrier** (§5), le grand bouton central **Réserver** (§4) et **Finances** (§9). Messages et Réserver sont toujours là ; Calendrier et Finances vont et viennent avec leur fonctionnalité (§8). **Messages est la boîte de réception** : les conversations, le fil des événements et confirmations (§7) et l'annuaire des membres (§6) en sont les trois faces, chacune à une touche sur la barre d'onglets, et son compteur additionne tout ce qui vous attend dans les trois. L'**engrenage** qui ouvre les **Réglages** (§12) est, lui, dans chaque en-tête. En paysage et sur tablette, la plupart des écrans passent en **vue scindée** — les commandes dans un panneau latéral, le contenu remplissant le reste.
+L'app a jusqu'à cinq destinations en bas : **Messages** (§16), **Calendrier** (§5), le grand bouton central **Réserver** (§4), **Membres** (§6) et **Finances** (§9). Messages et Réserver sont toujours là ; Calendrier, Membres et Finances vont et viennent avec leur fonctionnalité (§8). **Messages est la boîte de réception** : vos conversations et le fil des événements et confirmations (§7) en sont les deux faces, et la **cloche** de la barre d'app mène directement à la seconde, avec le compteur de ce qui vous attend. L'**engrenage** qui ouvre les **Réglages** (§12) est, lui, dans chaque en-tête. En paysage et sur tablette, la plupart des écrans passent en **vue scindée** — les commandes dans un panneau latéral, le contenu remplissant le reste.
 
 **Tout reste en direct.** Tout changement — une réservation, un nouveau membre, un réglage — est poussé vers chaque appareil connecté en quelques secondes, y compris celui qui l'a fait. Pas de redémarrage, pas de tirer-pour-rafraîchir.
 
@@ -187,9 +187,8 @@ Le mois d'un coup d'œil, avec deux portées et deux formes :
 - Les **puces d'étage** (*Tous les étages* / par niveau) filtrent la **vue chronologique**.
 - Touchez un jour de la grille pour le charger dessous. En paysage, calendrier et détail passent en vue scindée.
 
-## 6. Annuaire des membres (Messages → Membres)
+## 6. Annuaire des membres (onglet Membres)
 
-**Où il se trouve (#702).** L'annuaire est la troisième face de l'onglet **Messages**, à côté de vos conversations et des alertes — les personnes dont les deux parlent. C'était une destination de la barre du bas jusque-là.
 
 **Touchez un membre pour son profil (#704).** Sa photo, son rôle et son statut ; ce qu'il a réservé et s'il est pointé en ce moment ; et **Contact** — le numéro WhatsApp partagé volontairement pour tous, l'**adresse e-mail et le forfait pour les admins**. Là où vous avez le droit de voir les chiffres — **les vôtres toujours, ceux d'un autre avec la permission *Voir les finances*** — le profil porte aussi **Finances** : la position nette (qui doit quoi à qui), les factures ouvertes avec ce qu'il reste sur chacune, les paiements déjà rentrés, et le mois en cours de consommation. La même carte que l'onglet Finances, pour que les deux ne puissent pas se contredire.
 
@@ -204,7 +203,7 @@ Voyez qui fait partie de votre communauté :
 
 ## 7. Événements et confirmations (Messages → Alertes)
 
-**Où il se trouve (#702).** Le flux est la deuxième face de l'onglet **Messages**. Il était derrière une cloche dans la barre d'app jusque-là — une alerte qu'on pouvait ouvrir d'un côté et retrouver en attente de l'autre.
+**Où il se trouve.** Le flux est la deuxième face de l'onglet **Messages**, et la **cloche** de chaque barre d'app y mène directement, avec le compteur de ce qui vous attend. Un seul endroit tient les alertes : en lire une là, c'est l'avoir lue partout.
 
 Le fil des événements est la piste d'audit de votre espace : réservations créées/modifiées/annulées, paiements enregistrés, factures payées, dépenses soumises, demandes de demi-journées, changements de rôle, demandes de suppression. Les membres voient leurs propres événements ; admins et propriétaires voient tout. Les **puces de filtre** (Tous · Réservation · Paiement · Dépense · …) resserrent la liste — votre choix est mémorisé — et un menu **Grouper par** replie le fil en groupes par type, jour ou membre (toucher le symbole du groupe ramène à la liste plate) ; chaque ligne porte son icône d'état — un **sablier** en attente, une **coche verte** une fois confirmé — et les événements d'argent affichent *qui a validé et quand* sur la ligne même.
 

@@ -69,13 +69,7 @@ Future<void> openAlertsTab(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
-/// Opens the inbox's MEMBERS face (#702) — the directory, which was a
-/// bottom-bar destination until it became the inbox's third face.
-Future<void> openMembersTab(WidgetTester tester) async {
-  const tab = ValueKey('inbox-tab-members');
-  if (find.byKey(tab).evaluate().isEmpty) {
-    await tapNavIcon(tester, Icons.forum_outlined);
-  }
-  await tester.tap(find.byKey(tab));
-  await tester.pumpAndSettle();
-}
+/// Opens the member directory (#707) — a bottom-bar destination again,
+/// after a brief life as the inbox's third face in #702.
+Future<void> openMembersTab(WidgetTester tester) =>
+    tapNavIcon(tester, Icons.people_outline);

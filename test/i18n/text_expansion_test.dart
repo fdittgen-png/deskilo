@@ -104,10 +104,7 @@ void main() {
           of: find.byType(ShellBottomBar),
           matching: find.byType(InkWell),
         ),
-        // #702 — three destinations plus the raised centre button. The
-        // fourth was Members, now a face of the inbox: covered by the
-        // openMembersTab step below, not by a bar tap.
-        findsNWidgets(4),
+        findsNWidgets(5),
         reason: 'The shell bar gained or lost a destination — update the '
             'walk in this test so every surface keeps expansion coverage.',
       );
@@ -124,9 +121,9 @@ void main() {
       await tapNavIcon(tester, Icons.account_balance_wallet_outlined);
       _expectNoOverflow(tester, locale, 'Money (bill)');
 
-      // #702 — the feed is the inbox's second face, not a pushed route
-      // behind a bell, so there is nothing to come back FROM.
-      await openAlertsTab(tester);
+      // #707 — the bell is a shortcut onto the inbox's alerts face: no
+      // pushed route, nothing to come back FROM.
+      await tapAppBarIcon(tester, Icons.notifications_outlined);
       _expectNoOverflow(tester, locale, 'Events');
 
       await tapAppBarIcon(tester, Icons.settings_outlined);

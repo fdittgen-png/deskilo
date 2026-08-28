@@ -7,7 +7,6 @@ import '../../../../core/motion/motion.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/presentation/screens/events_screen.dart';
 import '../../../events/providers/event_providers.dart';
-import '../../../members/presentation/screens/directory_screen.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
@@ -15,8 +14,10 @@ import 'messages_screen.dart';
 
 part 'inbox_screen.g.dart';
 
-/// The three faces of the inbox (#702).
-enum InboxTab { chats, alerts, members }
+/// The two faces of the inbox (#702; Members left again in #707 for
+/// its own bottom-bar destination — a roster is consulted, not
+/// received, and an inbox tab put it behind the wrong door).
+enum InboxTab { chats, alerts }
 
 /// Which face is showing — a provider rather than local state so a deep
 /// link (a notification tap, `/events`, "see who is in today") can put
@@ -34,25 +35,20 @@ class InboxTabController extends _$InboxTabController {
 }
 
 /// THE INBOX (#702) — everything addressed to you, in one place:
-/// conversations, workspace alerts, and the people both are about.
+/// conversations and workspace alerts.
 ///
-/// WHY THESE THREE TOGETHER. They were three destinations that all
-/// answered the same question — "what is happening with the people
-/// here?" — from three different corners of the app: the Messages tab,
-/// the app-bar bell, and the Members tab. Reaching a person from an
-/// alert, or an alert about the person you were just messaging, meant
-/// leaving one surface for another and losing your place in both.
+/// They were two destinations answering the same question — "is there
+/// anything for me?" — from two corners of the app: the Messages tab and
+/// the app-bar bell. ONE HOME EACH is the rule this inherits from #687:
+/// a thing that lives in two places is a thing you can mark read in one
+/// and still see unread in the other. The bell survives (#707) as a
+/// SHORTCUT onto the Événements face — same tab, same read state — so
+/// the pending count stays visible from every screen without the alerts
+/// living anywhere else.
 ///
-/// ONE HOME EACH is the rule this inherits from #687: a thing that lives
-/// in two places is a thing you can mark read in one and still see
-/// unread in the other. So the bell is gone from the app bar and the
-/// Members tab is gone from the bottom bar — not duplicated here.
-///
-/// GATED, NOT INVENTED. Alerts ride the existing `eventsTab` feature and
-/// Members the existing `membersDirectory` one, exactly as the bell and
-/// the tab did. A workspace that turned either off sees the tab bar
-/// shrink; with only Chats left there is no tab bar at all, because a
-/// one-tab bar is chrome that says nothing.
+/// GATED, NOT INVENTED. Alerts ride the existing `eventsTab` feature,
+/// exactly as the bell does. A workspace that turned it off sees no tab
+/// bar at all, because a one-tab bar is chrome that says nothing.
 ///
 /// An [IndexedStack], not a [TabBarView]: each face keeps its scroll
 /// position, its filter chips and its search box while you look at
@@ -73,8 +69,6 @@ class _InboxScreenState extends ConsumerState<InboxScreen>
   List<InboxTab> _tabsFor(Set<WorkspaceFeature> features) => [
         InboxTab.chats,
         if (features.contains(WorkspaceFeature.eventsTab)) InboxTab.alerts,
-        if (features.contains(WorkspaceFeature.membersDirectory))
-          InboxTab.members,
       ];
 
   void _syncController(List<InboxTab> tabs, InboxTab selected) {
@@ -139,8 +133,6 @@ class _InboxScreenState extends ConsumerState<InboxScreen>
                           InboxTab.chats =>
                             l10n?.inboxChatsTab ?? 'Chats',
                           InboxTab.alerts => l10n?.tabEvents ?? 'Events',
-                          InboxTab.members =>
-                            l10n?.directoryTitle ?? 'Members',
                         },
                         // The count each face is responsible for, on the
                         // face itself: an inbox that only badges its
@@ -149,7 +141,6 @@ class _InboxScreenState extends ConsumerState<InboxScreen>
                         count: switch (tab) {
                           InboxTab.chats => unread,
                           InboxTab.alerts => pending,
-                          InboxTab.members => 0,
                         },
                       ),
                     ),
@@ -167,7 +158,6 @@ class _InboxScreenState extends ConsumerState<InboxScreen>
             switch (tab) {
               InboxTab.chats => const MessagesScreen(),
               InboxTab.alerts => const EventsScreen(),
-              InboxTab.members => const DirectoryScreen(),
             },
         ],
         ),

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: 0BSD
 //
-// THE INBOX (#702): conversations, alerts and members — three faces of
-// one destination, where they used to be a tab, an app-bar bell and
-// another tab.
+// THE INBOX (#702): conversations and alerts — two faces of one
+// destination, where they used to be a tab and an app-bar bell. (Members
+// was a third face for one release and went back to the bar in #707.)
 //
 // What is worth pinning here is not that three widgets render. It is the
 // rule they were merged under: ONE HOME EACH. A thing reachable from two
@@ -48,10 +48,10 @@ Future<FakeWorkspaceRepository> pumpInbox(
 }
 
 void main() {
-  testWidgets('three faces, and the chats one is showing', (tester) async {
+  testWidgets('two faces, and the chats one is showing', (tester) async {
     await pumpInbox(tester);
 
-    for (final tab in ['chats', 'alerts', 'members']) {
+    for (final tab in ['chats', 'alerts']) {
       expect(find.byKey(ValueKey('inbox-tab-$tab')), findsOneWidget,
           reason: 'the $tab face is missing');
     }
@@ -85,7 +85,7 @@ void main() {
       (tester) async {
     await pumpInbox(tester);
 
-    for (final tab in ['alerts', 'members', 'chats']) {
+    for (final tab in ['alerts', 'chats']) {
       await tester.tap(find.byKey(ValueKey('inbox-tab-$tab')));
       await tester.pumpAndSettle();
       expect(find.byType(ShellBottomBar), findsOneWidget,
@@ -94,10 +94,7 @@ void main() {
   });
 
   testWidgets('one face left is no tab bar at all', (tester) async {
-    await pumpInbox(tester, featureFlags: const {
-      'eventsTab': false,
-      'membersDirectory': false,
-    });
+    await pumpInbox(tester, featureFlags: const {'eventsTab': false});
 
     expect(find.byKey(const ValueKey('inbox-tabs')), findsNothing);
     // The conversations are still there — it is the CHROME that goes.
@@ -113,24 +110,6 @@ void main() {
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
     expect(find.text('No events yet.'), findsOneWidget);
-  });
-
-  testWidgets('/directory lands on the Members face', (tester) async {
-    await pumpInbox(tester);
-    final context = tester.element(find.byType(ShellBottomBar));
-    GoRouter.of(context).go('/directory');
-    await tester.pumpAndSettle();
-
-    expect(find.byType(ShellBottomBar), findsOneWidget);
-    // The face is showing — the directory's own content depends on
-    // seeded members, which this pump deliberately does not have.
-    expect(
-      tester
-          .widget<TabBar>(find.byKey(const ValueKey('inbox-tabs')))
-          .controller!
-          .index,
-      2,
-    );
   });
 
   group('the pieces the widget tree cannot show', () {

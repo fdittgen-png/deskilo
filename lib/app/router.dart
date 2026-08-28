@@ -220,21 +220,14 @@ GoRouter router(Ref ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                // Member directory (#224, tab since #230, a face of the
-                // inbox since #702). The branch stays so the path keeps
-                // resolving; it redirects to the inbox, on the tab the
-                // directory now lives in.
+                // Member directory (#224, tab since #230; briefly an
+                // inbox face in #702, a tab again in #707) — gated by
+                // the membersDirectory feature.
                 path: '/directory',
-                redirect: (context, state) {
-                  if (featureEnabled(WorkspaceFeature.membersDirectory)) {
-                    Future.microtask(
-                      () => ref
-                          .read(inboxTabControllerProvider.notifier)
-                          .show(InboxTab.members),
-                    );
-                  }
-                  return '/messages';
-                },
+                redirect: (context, state) =>
+                    featureEnabled(WorkspaceFeature.membersDirectory)
+                        ? null
+                        : '/messages',
                 builder: (context, state) => const DirectoryScreen(),
               ),
             ],

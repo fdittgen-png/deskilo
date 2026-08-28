@@ -25,7 +25,7 @@ One account can belong to several workspaces. **Settings → Profiles** lists th
 
 ### Finding your way around
 
-The app has up to four destinations along the bottom: **Messages** (§16), **Calendar** (§5), the big central **Reserve** button (§4) and **Money** (§9). Messages and Reserve are always there; Calendar and Money come and go with their feature (§8). **Messages is the inbox**: conversations, the events & confirmations feed (§7) and the member directory (§6) are three faces of it, each one a tap on the tab strip, and its badge counts everything waiting for you across them. The **gear** that opens **Settings** (§12) is in every header. On phones held sideways and on tablets, most screens switch to a **split layout** — controls in a side panel, content filling the rest.
+The app has up to five destinations along the bottom: **Messages** (§16), **Calendar** (§5), the big central **Reserve** button (§4), **Members** (§6) and **Money** (§9). Messages and Reserve are always there; Calendar, Members and Money come and go with their feature (§8). **Messages is the inbox**: your conversations and the events & confirmations feed (§7) are its two faces, and the **bell** in the app bar jumps straight to the second with a count of what awaits you. The **gear** that opens **Settings** (§12) is in every header. On phones held sideways and on tablets, most screens switch to a **split layout** — controls in a side panel, content filling the rest.
 
 **Everything stays live.** Whatever anyone changes — a booking, a new member, a setting — is pushed to every connected device within seconds, including the one that made the change. No restart, no pull-to-refresh.
 
@@ -187,9 +187,8 @@ The month at a glance, with two scopes and two shapes:
 - The **floor chips** (*All floors* / per level) filter the **timeline**.
 - Tap a day in the month grid to load it below. In landscape the calendar and the detail use the split layout.
 
-## 6. Members directory (Messages → Members)
+## 6. Members directory (Members tab)
 
-**Where it lives (#702).** The directory is the third face of the **Messages** tab, beside your conversations and the alerts — the people both are about. It was its own bottom-bar destination until then.
 
 **Tap a member for their profile (#704).** Their photo, role and status; what they have booked and whether they are checked in right now; and **Contact** — the opt-in WhatsApp number for everyone, the **e-mail address and plan share for admins**. Where you may see the figures — **your own always, somebody else's with the *View finances* permission** — the profile also carries **Money**: the net position (who owes whom), the open invoices with what is left on each, the payments already in, and the month being consumed right now. The same card the Money tab shows, so the two can never disagree.
 
@@ -204,7 +203,7 @@ See who's part of your community:
 
 ## 7. Events & confirmations (Messages → Events)
 
-**Where it lives (#702).** The feed is the second face of the **Messages** tab. It was behind a bell in the app bar until then — an alert you could open from one place and still find waiting in another.
+**Where it lives.** The feed is the second face of the **Messages** tab, and the **bell** in every app bar is a shortcut straight onto it, carrying the count of what awaits you. One place holds the alerts, so reading one there is reading it everywhere.
 
 The events feed is the audit trail of your workspace: reservations created/changed/cancelled, payments recorded, invoices paid, expenses submitted, extra-days requests, role changes, deletion requests. Members see their own events; admins and owners see everyone's. **Filter chips** (All · Reservation · Payment · Expense · …) narrow the list — your choice is remembered — and a **Group by** menu folds the feed into groups by type, day or member (tap the group symbol to return to the flat list); each row carries its status icon — an **hourglass** while pending, a **green check** once confirmed — and money events show *who validated them and when* right on the row.
 
