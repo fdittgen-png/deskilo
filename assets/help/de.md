@@ -191,6 +191,8 @@ Der Monat auf einen Blick, mit zwei Reichweiten und zwei Formen:
 
 **Wo es liegt (#702).** Das Verzeichnis ist die dritte Fläche des Tabs **Nachrichten**, neben deinen Unterhaltungen und den Ereignissen — die Menschen, um die es in beiden geht. Bis dahin war es ein eigenes Ziel in der unteren Leiste.
 
+**Tippe ein Mitglied für sein Profil an (#704).** Foto, Rolle und Status; was es gebucht hat und ob es gerade eingecheckt ist; und **Kontakt** — die freiwillig geteilte WhatsApp-Nummer für alle, die **E-Mail-Adresse und der Tarifanteil für Admins**. Wo du die Zahlen sehen darfst — **deine eigenen immer, fremde mit der Berechtigung *Finanzen sehen*** — trägt das Profil außerdem **Finanzen**: die Nettoposition (wer wem was schuldet), die offenen Rechnungen mit dem jeweiligen Rest, die eingegangenen Zahlungen und den gerade laufenden Monat. Dieselbe Karte wie im Finanzen-Tab, damit beide sich nicht widersprechen können.
+
 Sieh, wer zur Community gehört:
 
 - Jede Karte zeigt **Foto** (oder Initiale), **Rollen-Chip**, **Status** („bis Freitag in Berlin…"), einen **online / zuletzt gesehen**-Indikator (*Online*, *10 min*, *2 T*) und einen **Reservierungs-Chip**: eingecheckter Platz, *Jetzt reserviert* oder nächste Buchung.

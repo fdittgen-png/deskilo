@@ -6668,6 +6668,60 @@ abstract class AppLocalizations {
   /// **'Chats'**
   String get inboxChatsTab;
 
+  /// #704 - the money section of a member profile
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing outstanding.'**
+  String get memberMoneySettled;
+
+  /// #704 - the money section of a member profile
+  ///
+  /// In en, this message translates to:
+  /// **'+{count} more'**
+  String memberMoreInvoices(int count);
+
+  /// #704 - the money section of a member profile
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get memberMonthInProgress;
+
+  /// #704 - the money section of a member profile
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get memberPayments;
+
+  /// #704 - the money section of a member profile
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} open'**
+  String memberInvoiceOpen(String amount);
+
+  /// #704 - the money section of a member profile
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get memberInvoicePaid;
+
+  /// #704 - the money section of a member profile
+  ///
+  /// In en, this message translates to:
+  /// **'Voided'**
+  String get memberInvoiceVoided;
+
+  /// #704 - the contact section of a member profile
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get memberContactHeading;
+
+  /// #704 - the contact section of a member profile
+  ///
+  /// In en, this message translates to:
+  /// **'Plan {pct}%'**
+  String memberPlanShare(String pct);
+
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:

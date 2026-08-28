@@ -191,6 +191,8 @@ Le mois d'un coup d'œil, avec deux portées et deux formes :
 
 **Où il se trouve (#702).** L'annuaire est la troisième face de l'onglet **Messages**, à côté de vos conversations et des alertes — les personnes dont les deux parlent. C'était une destination de la barre du bas jusque-là.
 
+**Touchez un membre pour son profil (#704).** Sa photo, son rôle et son statut ; ce qu'il a réservé et s'il est pointé en ce moment ; et **Contact** — le numéro WhatsApp partagé volontairement pour tous, l'**adresse e-mail et le forfait pour les admins**. Là où vous avez le droit de voir les chiffres — **les vôtres toujours, ceux d'un autre avec la permission *Voir les finances*** — le profil porte aussi **Finances** : la position nette (qui doit quoi à qui), les factures ouvertes avec ce qu'il reste sur chacune, les paiements déjà rentrés, et le mois en cours de consommation. La même carte que l'onglet Finances, pour que les deux ne puissent pas se contredire.
+
 Voyez qui fait partie de votre communauté :
 
 - Chaque carte montre la **photo** (ou l'initiale), la **puce de rôle** (Admin, Propriétaire), le **statut personnalisé** (« à Berlin jusqu'à vendredi… »), un indicateur **en ligne / vu il y a** (*En ligne*, *10 min*, *2 j*) et une **puce de réservation** : place pointée, *Réservé maintenant*, ou prochaine réservation.

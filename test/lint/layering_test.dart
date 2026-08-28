@@ -38,6 +38,11 @@ const Set<String> _knownPairs = {
   'editor -> plan',
   'editor -> workspace',
   'events -> money',
+  // #704 — a member's profile shows where they stand: the account, the
+  // invoices, the payments. The figures come from money's own providers
+  // and its shared AccountCard, so the profile cannot compute a position
+  // that disagrees with the Money tab.
+  'members -> money',
   'events -> plan',
   'events -> reservations',
   'events -> workspace',

@@ -191,6 +191,8 @@ El mes de un vistazo, con dos alcances y dos formas:
 
 **Dónde vive (#702).** El directorio es la tercera cara de la pestaña **Mensajes**, junto a sus conversaciones y las alertas — las personas de las que ambas hablan. Hasta entonces era un destino propio de la barra inferior.
 
+**Toque un miembro para su perfil (#704).** Su foto, su rol y su estado; qué ha reservado y si ha registrado su entrada ahora mismo; y **Contacto** — el número de WhatsApp compartido voluntariamente para todos, la **dirección de correo y el plan para los admins**. Donde tenga derecho a ver las cifras — **las suyas siempre, las de otro con el permiso *Ver finanzas*** — el perfil lleva además **Finanzas**: la posición neta (quién debe a quién), las facturas abiertas con lo que queda en cada una, los pagos ya recibidos y el mes que se está consumiendo. La misma tarjeta que muestra la pestaña Finanzas, para que las dos no puedan contradecirse.
+
 Mira quién forma tu comunidad:
 
 - Cada tarjeta de miembro muestra su **foto** (o inicial), su **chip de rol** (Admin, Propietario), su **estado personalizado** («en Berlín hasta el viernes…»), un indicador **en línea / visto por última vez** (*En línea*, *10 min*, *2 d*) y un **chip de reserva**: puesto registrado, *Reservado ahora*, o la próxima reserva.

@@ -3728,6 +3728,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inboxChatsTab => 'Chats';
 
   @override
+  String get memberMoneySettled => 'Nothing outstanding.';
+
+  @override
+  String memberMoreInvoices(int count) {
+    return '+$count more';
+  }
+
+  @override
+  String get memberMonthInProgress => 'This month';
+
+  @override
+  String get memberPayments => 'Payments';
+
+  @override
+  String memberInvoiceOpen(String amount) {
+    return '$amount open';
+  }
+
+  @override
+  String get memberInvoicePaid => 'Paid';
+
+  @override
+  String get memberInvoiceVoided => 'Voided';
+
+  @override
+  String get memberContactHeading => 'Contact';
+
+  @override
+  String memberPlanShare(String pct) {
+    return 'Plan $pct%';
+  }
+
+  @override
   String get moneyBaseFee => 'Base subscription';
 
   @override
