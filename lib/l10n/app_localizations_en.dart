@@ -3725,6 +3725,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get conversationSeeProfile => 'See profile';
 
   @override
+  String get inboxChatsTab => 'Chats';
+
+  @override
   String get moneyBaseFee => 'Base subscription';
 
   @override

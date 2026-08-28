@@ -25,7 +25,7 @@ Ein Konto kann mehreren Workspaces angehören. **Einstellungen → Profile** lis
 
 ### Orientierung
 
-Die App hat bis zu fünf Ziele am unteren Rand: **Plan** (§3), **Kalender** (§5), den großen zentralen **Reservieren**-Knopf (§4), **Mitglieder** (§6) und **Finanzen** (§9). Immer da sind nur Plan und Reservieren — Kalender, Mitglieder und Finanzen kommen und gehen mit ihrer Funktion (§8), und ebenso die **Glocke**, die den Ereignis- und Bestätigungs-Feed öffnet (§7, mit Zähler). Das **Zahnrad** zu den **Einstellungen** (§12) steht in jeder Kopfzeile. Quer gehalten und auf Tablets wechseln die meisten Bildschirme in eine **geteilte Ansicht** — Bedienelemente im Seitenpanel, Inhalt füllt den Rest.
+Die App hat bis zu vier Ziele am unteren Rand: **Nachrichten** (§16), **Kalender** (§5), den großen zentralen **Reservieren**-Knopf (§4) und **Finanzen** (§9). Nachrichten und Reservieren sind immer da; Kalender und Finanzen kommen und gehen mit ihrer Funktion (§8). **Nachrichten ist der Posteingang**: Unterhaltungen, der Ereignis- und Bestätigungs-Feed (§7) und das Mitgliederverzeichnis (§6) sind seine drei Flächen, jede einen Tipp auf der Tab-Leiste entfernt, und sein Zähler summiert, was in allen dreien auf dich wartet. Das **Zahnrad** zu den **Einstellungen** (§12) steht in jeder Kopfzeile. Quer gehalten und auf Tablets wechseln die meisten Bildschirme in eine **geteilte Ansicht** — Bedienelemente im Seitenpanel, Inhalt füllt den Rest.
 
 **Alles bleibt live.** Was irgendjemand ändert — eine Buchung, ein neues Mitglied, eine Einstellung — wird binnen Sekunden auf jedes verbundene Gerät geschoben, auch auf das, das die Änderung machte. Kein Neustart, kein Ziehen zum Aktualisieren.
 
@@ -187,7 +187,9 @@ Der Monat auf einen Blick, mit zwei Reichweiten und zwei Formen:
 - Die **Etagen-Chips** filtern die **Zeitleiste**.
 - Einen Tag antippen lädt ihn unten. Im Querformat geteilte Ansicht.
 
-## 6. Mitgliederverzeichnis (Mitglieder-Tab)
+## 6. Mitgliederverzeichnis (Nachrichten → Mitglieder)
+
+**Wo es liegt (#702).** Das Verzeichnis ist die dritte Fläche des Tabs **Nachrichten**, neben deinen Unterhaltungen und den Ereignissen — die Menschen, um die es in beiden geht. Bis dahin war es ein eigenes Ziel in der unteren Leiste.
 
 Sieh, wer zur Community gehört:
 
@@ -198,13 +200,15 @@ Sieh, wer zur Community gehört:
 - Eigenes Foto, Status und Nummern-Sichtbarkeit in den **Einstellungen** (§12).
 - Admins und Inhaber sehen zusätzlich die **E-Mail** jedes Mitglieds — einfache Mitglieder nicht: Kontakt bleibt die Opt-in-WhatsApp-Nummer.
 
-## 7. Ereignisse & Bestätigungen (Glocke)
+## 7. Ereignisse & Bestätigungen (Nachrichten → Ereignisse)
+
+**Wo es liegt (#702).** Der Feed ist die zweite Fläche des Tabs **Nachrichten**. Bis dahin lag er hinter einer Glocke in der Kopfzeile — eine Meldung, die man an einer Stelle öffnen und an der anderen weiter wartend vorfinden konnte.
 
 Der Ereignis-Feed ist die Prüfspur deines Space: Buchungen erstellt/geändert/storniert, Zahlungen erfasst, Rechnungen bezahlt, Ausgaben eingereicht, Extratage-Anträge, Rollenwechsel, Löschanträge. Mitglieder sehen ihre eigenen Ereignisse; Admins und Inhaber alles. **Filter-Chips** (Alle · Reservierung · Zahlung · Ausgabe · …) engen die Liste ein — deine Wahl wird gemerkt — und ein **Gruppieren nach**-Menü faltet den Feed in Gruppen nach Typ, Tag oder Mitglied (das Gruppensymbol antippen führt zur flachen Liste zurück); jede Zeile trägt ihr Status-Icon — **Sanduhr** wartend, **grünes Häkchen** bestätigt — und Geld-Ereignisse zeigen *wer wann validierte* direkt auf der Zeile.
 
 **Wartet auf deine Bestätigung:** Handelt ein Admin *für jemand anderen* — bucht dir einen Platz, erfasst deine Zahlung, stuft einen Admin zurück — bleibt es **bis zur Bestätigung offen**. Offenes ist oben angepinnt mit rotem ✕ und grünem **Annehmen**, plus Benachrichtigung. Eigene Aktionen auf dich selbst brauchen nie eine Bestätigung.
 
-**Nachrichten sind umgezogen.** Mitgliedernachrichten leben jetzt in einem eigenen Tab **Nachrichten** (§16), nicht mehr hier — eine Nachricht an zwei Orten ist eine, die man an einem als gelesen markiert und am anderen weiter ungelesen sieht. Die Glocke behält die eine Art ohne eigene Unterhaltung: eine **Rundnachricht an alle Admins**.
+**Nachrichten sind umgezogen.** Mitgliedernachrichten leben jetzt in einem eigenen Tab **Nachrichten** (§16), nicht mehr hier — eine Nachricht an zwei Orten ist eine, die man an einem als gelesen markiert und am anderen weiter ungelesen sieht. Dieser Feed behält die eine Art ohne eigene Unterhaltung: eine **Rundnachricht an alle Admins**.
 
 **Validierungsquorum:** für Geld und Rollen definiert die Inhaberin, *wer* zustimmen muss und *wie viele*. **Niemand validiert das eigene Ereignis** — nur eine andere Person (eine von der Inhaberin konfigurierte Ausnahme für Reservierungslöschungen, unten); ohne anderen Validierer wartet der Antrag. Bleibt eine Anfrage 7 Tage unbeantwortet, hängt der Ausgang davon ab, in welche Richtung sie zielt. Was **du selbst eingereicht** hast — eine Löschung, zusätzliche halbe Tage, eine Restbetrag-Stornierung — **verfällt**: nichts Teures wird still gewährt. Was ein Admin **für dich getan** hat — eine Buchung angelegt oder geändert, eine Zahlung erfasst — **bestätigt sich dagegen automatisch**, denn es ist bereits geschehen und der Feed bat dich nur um Kenntnisnahme; eine Buchung, die ein Admin für dich anlegte, gilt dann als gewährt und verbraucht dein Kontingent.
 

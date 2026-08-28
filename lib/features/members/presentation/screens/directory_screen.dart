@@ -24,7 +24,7 @@ import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/presentation/widgets/conversation_sheet.dart';
+import '../../../workspace/presentation/widgets/open_conversation.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/directory_status.dart';
 import '../../providers/directory_providers.dart';
@@ -229,11 +229,10 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
                       // conversation thread as everywhere else — read
                       // AND send in one place.
                       onNotify: notesOn && member.id != myMemberId
-                          ? () => showConversationSheet(
+                          ? () => openDirectConversation(
                                 context,
                                 ref,
-                                otherMemberId: member.id,
-                                otherName: names[member.id] ?? '',
+                                memberId: member.id,
                               )
                           : null,
                     ),

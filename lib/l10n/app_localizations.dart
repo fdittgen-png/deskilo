@@ -6662,6 +6662,12 @@ abstract class AppLocalizations {
   /// **'See profile'**
   String get conversationSeeProfile;
 
+  /// #702 - the inbox tab that holds conversations
+  ///
+  /// In en, this message translates to:
+  /// **'Chats'**
+  String get inboxChatsTab;
+
   /// Statement line for the plan's monthly fee
   ///
   /// In en, this message translates to:

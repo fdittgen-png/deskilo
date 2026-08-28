@@ -227,5 +227,9 @@
   "conversationSeeProfile": "Vedi profilo",
   "@conversationSeeProfile": {
     "description": "#695 - profile from a conversation"
+  },
+  "inboxChatsTab": "Chat",
+  "@inboxChatsTab": {
+    "description": "#702 - the inbox tab that holds conversations"
   }
 }

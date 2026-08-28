@@ -8,7 +8,7 @@ import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/member_note.dart';
 import 'member_note_body.dart';
-import 'conversation_sheet.dart';
+import 'open_conversation.dart';
 
 /// The FULL message (#523): the list shows only the first 64
 /// characters — tapping a row opens this sheet with the complete text,
@@ -64,11 +64,10 @@ Future<void> showMemberNoteSheet(
                         Navigator.of(sheetContext).pop();
                         // Replying = the conversation (refactor): the
                         // whole exchange with the sender in one thread.
-                        await showConversationSheet(
+                        await openDirectConversation(
                           context,
                           ref,
-                          otherMemberId: replyToMemberId,
-                          otherName: replyToName,
+                          memberId: replyToMemberId,
                         );
                       },
                     ),

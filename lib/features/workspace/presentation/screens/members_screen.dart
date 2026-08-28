@@ -19,7 +19,7 @@ import '../../domain/member.dart';
 import '../../domain/overage_policy.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
-import '../widgets/conversation_sheet.dart';
+import '../widgets/open_conversation.dart';
 import '../widgets/member_note_dialog.dart';
 import '../widgets/badge_manager_dialog.dart';
 import '../../../events/providers/event_providers.dart';
@@ -275,11 +275,10 @@ class MembersScreen extends ConsumerWidget {
           context,
           icon: Icons.chat_outlined,
           label: l10n?.memberMessagesAction ?? 'Messages',
-          onTap: () => showConversationSheet(
+          onTap: () => openDirectConversation(
             context,
             ref,
-            otherMemberId: member.id,
-            otherName: name,
+            memberId: member.id,
           ),
         ),
       // New-member validation (0052): a pending membership offers the

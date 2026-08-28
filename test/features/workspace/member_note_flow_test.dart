@@ -418,18 +418,15 @@ void main() {
       _noteFromAna('Hello!'),
     ]);
 
-    await tester.tap(find.byTooltip('Events'));
-    await tester.pumpAndSettle();
+    await openAlertsTab(tester);
 
     // Neither side of the exchange appears here any more.
     expect(find.textContaining('Hello!'), findsNothing);
     expect(find.textContaining('Sent and delivered.'), findsNothing);
 
-    // And they are one tab away, where tapping them leads. Back out of
-    // the pushed Events route first — the bottom bar is not on it.
-    await tester.pageBack();
-    await tester.pumpAndSettle();
-    await tapNavIcon(tester, Icons.forum_outlined);
+    // And they are one TAB away — the same screen since #702, so there
+    // is nothing to back out of any more.
+    await tester.tap(find.byKey(const ValueKey('inbox-tab-chats')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('conversation-conv-ana')), findsOneWidget);
   });

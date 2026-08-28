@@ -596,6 +596,24 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                               value ? ReadFilter.read : ReadFilter.all,
                             ),
                       ),
+                      const Spacer(),
+                      // #581 — flip the date sort; the choice persists
+                      // like the rest of the filter. It sat in an app
+                      // bar this screen no longer has (#702), and it
+                      // reads better here anyway: every other control
+                      // that shapes the list is on these two lines.
+                      IconButton(
+                        key: const ValueKey('events-sort-toggle'),
+                        tooltip: l10n?.notifSortByDate ?? 'Sort by date',
+                        onPressed: () => ref
+                            .read(notificationFilterProvider.notifier)
+                            .toggleSort(),
+                        icon: Icon(
+                          filter.sort == FeedSort.newestFirst
+                              ? Icons.arrow_downward
+                              : Icons.arrow_upward,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -747,54 +765,21 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         ),
       _ => const LoadingView(),
     };
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n?.tabEvents ?? 'Events'),
-        actions: [
-          // #581 — flip the date sort; the choice persists like the
-          // rest of the filter.
-          IconButton(
-            key: const ValueKey('events-sort-toggle'),
-            tooltip: l10n?.notifSortByDate ?? 'Sort by date',
-            onPressed: () => ref
-                .read(notificationFilterProvider.notifier)
-                .toggleSort(),
-            icon: Icon(
-              filter.sort == FeedSort.newestFirst
-                  ? Icons.arrow_downward
-                  : Icons.arrow_upward,
-            ),
-          ),
-          // #546 — the same unread filter as the chip line, but
-          // reachable the moment the bell lands you here, badge and
-          // all, even when the chips are scrolled away.
-          IconButton(
-            key: const ValueKey('events-filter-unread'),
-            tooltip: l10n?.notesFilterUnread ?? 'Unread',
-            isSelected: unreadOnly,
-            onPressed: () => ref
-                .read(notificationFilterProvider.notifier)
-                .setRead(
-                  unreadOnly ? ReadFilter.all : ReadFilter.unread,
-                ),
-            icon: Badge.count(
-              count: unreadIds.length,
-              isLabelVisible: unreadIds.isNotEmpty,
-              child: Icon(
-                unreadOnly
-                    ? Icons.mark_email_unread
-                    : Icons.mark_email_unread_outlined,
-              ),
-            ),
-          ),
-        ],
-      ),
-      // #606 — the feed's contextual how-to; gated inside the widget.
-      body: Column(children: [
-        const HelpHint(HelpHintId.events),
-        Expanded(child: body),
-      ]),
-    );
+    // NO SCAFFOLD, no app bar of its own (#702): the feed is one face
+    // of the inbox, which owns the bar above it — the same arrangement
+    // the member directory has had since #230.
+    //
+    // Its two app-bar actions went with it. The sort toggle moved down
+    // to the read-state line, beside the chips it belongs with; the
+    // unread action was a DUPLICATE of the chip sitting inches away —
+    // it existed because the bell used to land you here with the chips
+    // possibly scrolled off, and the bell is gone.
+    //
+    // #606 — the feed's contextual how-to; gated inside the widget.
+    return Column(children: [
+      const HelpHint(HelpHintId.events),
+      Expanded(child: body),
+    ]);
   }
 }
 

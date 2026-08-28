@@ -38,7 +38,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-        find.byKey(const ValueKey('conversation-sheet')), findsOneWidget);
+        find.byKey(const ValueKey('conversation-thread')), findsOneWidget);
     final composer = tester.widget<TextField>(
       find.byKey(const ValueKey('member-note-body')),
     );
@@ -85,7 +85,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-        find.byKey(const ValueKey('conversation-sheet')), findsOneWidget);
+        find.byKey(const ValueKey('conversation-thread')), findsOneWidget);
     final composer = tester.widget<TextField>(
       find.byKey(const ValueKey('member-note-body')),
     );

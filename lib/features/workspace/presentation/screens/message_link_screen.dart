@@ -7,8 +7,8 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
-import '../widgets/conversation_sheet.dart';
 import '../widgets/conversation_thread.dart';
 
 /// Deep-link target `/msg/:id` (0106): the WhatsApp mirror of a message
@@ -77,12 +77,22 @@ class MessageLinkScreen extends ConsumerWidget {
         ),
       ),
       // The same thread every other surface opens — full height here.
+      // #702 — ONE thread. A pre-0125 note carries no conversation id,
+      // so the partner is resolved into one rather than rendering a
+      // second, different thread widget beside the real one.
       body: conversationId != null
           ? ConversationThread(conversationId: conversationId)
-          : ConversationSheet(
-              otherMemberId: partner!,
-              otherName: names[partner] ?? '',
-            ),
+          : switch (ref.watch(directConversationIdProvider(partner!))) {
+              AsyncData(value: final id?) =>
+                ConversationThread(conversationId: id),
+              AsyncError() => Center(
+                  child: Text(
+                    l10n?.workspaceGenericError ??
+                        'Something went wrong. Please try again.',
+                  ),
+                ),
+              _ => const LoadingView(),
+            },
     );
   }
 }

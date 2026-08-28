@@ -17,6 +17,7 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 import '../plan/plan_closed_day_test.dart'
     show ThrowingReservationRepository, pumpAvailabilityPlan;
 import '../plan/plan_screen_test.dart' show seatCenter;
@@ -91,8 +92,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.byIcon(Icons.notifications_outlined));
-    await tester.pumpAndSettle();
+    await openAlertsTab(tester);
 
     expect(
       find.textContaining('Flo requests 4 extra half-days for 2026-07'),

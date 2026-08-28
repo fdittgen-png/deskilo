@@ -25,7 +25,7 @@ Un account può appartenere a più spazi. **Impostazioni → Profili** li elenca
 
 ### Orientarsi
 
-L'app ha fino a cinque destinazioni lungo il bordo inferiore: **Piantina** (§3), **Calendario** (§5), il grande pulsante centrale **Prenota** (§4), **Membri** (§6) e **Finanze** (§9). Solo Piantina e Prenota ci sono sempre — Calendario, Membri e Finanze vanno e vengono con la loro funzionalità (§8), e così anche la **campanella** che apre il flusso di eventi e conferme (§7, con un contatore di ciò che ti attende). L'**ingranaggio** che apre le **Impostazioni** (§12) è invece in ogni intestazione. Sui telefoni in orizzontale e sui tablet la maggior parte delle schermate passa a un **layout diviso** — i controlli in un pannello laterale, il contenuto a riempire il resto.
+L'app ha fino a quattro destinazioni lungo il bordo inferiore: **Messaggi** (§16), **Calendario** (§5), il grande pulsante centrale **Prenota** (§4) e **Finanze** (§9). Messaggi e Prenota ci sono sempre; Calendario e Finanze vanno e vengono con la loro funzionalità (§8). **Messaggi è la casella**: le conversazioni, il flusso di eventi e conferme (§7) e l'elenco dei membri (§6) sono le sue tre facce, ognuna a un tocco sulla striscia delle schede, e il suo contatore somma tutto ciò che ti aspetta nelle tre. L'**ingranaggio** che apre le **Impostazioni** (§12) è invece in ogni intestazione. Sui telefoni in orizzontale e sui tablet la maggior parte delle schermate passa a un **layout diviso** — i controlli in un pannello laterale, il contenuto a riempire il resto.
 
 **Tutto resta dal vivo.** Qualunque cosa qualcuno cambi — una prenotazione, un nuovo membro, un'impostazione — viene inviata in pochi secondi a ogni dispositivo connesso, compreso quello che ha fatto la modifica. Nessun riavvio, nessun trascinare-per-aggiornare.
 
@@ -187,7 +187,9 @@ Il mese a colpo d'occhio, con due ambiti e due forme:
 - I **chip di piano** (*Tutti i piani* / per livello) filtrano la **cronologia**.
 - Tocca un giorno nella griglia del mese per caricarlo sotto. In orizzontale, calendario e dettaglio usano il layout diviso.
 
-## 6. Elenco dei membri (scheda Membri)
+## 6. Elenco dei membri (Messaggi → Membri)
+
+**Dove si trova (#702).** L'elenco è la terza faccia della scheda **Messaggi**, accanto alle tue conversazioni e agli avvisi — le persone di cui entrambi parlano. Fino ad allora era una destinazione propria della barra in basso.
 
 Guarda chi fa parte della tua comunità:
 
@@ -198,13 +200,15 @@ Guarda chi fa parte della tua comunità:
 - Imposta la tua foto, il tuo stato e la visibilità del telefono in **Impostazioni** (§12).
 - Gli admin e i proprietari vedono in più l'**email** di ogni membro sotto il nome — i membri normali no: il contatto tra membri resta il numero WhatsApp condiviso volontariamente.
 
-## 7. Eventi e conferme (icona campanella)
+## 7. Eventi e conferme (Messaggi → Eventi)
+
+**Dove si trova (#702).** Il flusso è la seconda faccia della scheda **Messaggi**. Fino ad allora stava dietro una campanella nella barra dell'app — un avviso che potevi aprire da una parte e ritrovare in attesa dall'altra.
 
 Il flusso eventi è la traccia di controllo del tuo spazio: prenotazioni create/modificate/cancellate, pagamenti registrati, fatture pagate, spese presentate, richieste di giorni extra, cambi di ruolo, richieste di eliminazione. I membri vedono i propri eventi; admin e proprietari vedono quelli di tutti. I **chip di filtro** (Tutti · Prenotazione · Pagamento · Spesa · …) restringono l'elenco — la tua scelta viene ricordata — e un menu **Raggruppa per** ripiega il feed in gruppi per tipo, giorno o membro (toccare il simbolo del gruppo riporta all'elenco piatto); ogni riga porta la sua icona di stato — una **clessidra** finché in sospeso, una **spunta verde** una volta confermata — e gli eventi di denaro mostrano *chi li ha validati e quando* direttamente sulla riga.
 
 **In attesa della tua conferma:** ogni volta che un admin fa qualcosa *per qualcun altro* — ti prenota un posto, registra il tuo pagamento, retrocede un admin — resta **in sospeso finché non viene confermato**. Le voci in sospeso sono fissate in alto con una ✕ rossa e un pulsante verde **Accetta**, e ricevi una notifica. Le azioni che compi su te stesso non richiedono mai conferma.
 
-**I messaggi si sono spostati.** I messaggi tra membri vivono ora in una scheda **Messaggi** dedicata (§16), non più qui — un messaggio in due posti è uno che puoi segnare come letto in uno e vedere ancora non letto nell'altro. La campanella tiene l'unico tipo che non ha una conversazione in cui stare: una **diffusione a tutti gli amministratori**.
+**I messaggi si sono spostati.** I messaggi tra membri vivono ora in una scheda **Messaggi** dedicata (§16), non più qui — un messaggio in due posti è uno che puoi segnare come letto in uno e vedere ancora non letto nell'altro. Questo flusso tiene l'unico tipo che non ha una conversazione in cui stare: una **diffusione a tutti gli amministratori**.
 
 **Quorum di validazione:** per le questioni di denaro e i cambi di ruolo il proprietario definisce *chi* deve approvare e *quante* approvazioni servono. **Nessuno valida il proprio evento** — solo un'altra persona può (un'eccezione, configurata dal proprietario, per le eliminazioni di prenotazione, più sotto); dove non esiste un altro validatore, la richiesta semplicemente attende. Dopo 7 giorni senza risposta, ciò che accade dipende da come è rivolta la richiesta. Una richiesta **che hai presentato tu** per te stesso — un'eliminazione, mezze giornate extra, l'annullamento di un saldo — **scade**: nulla di costoso viene mai concesso in silenzio. Qualcosa che un admin **ha fatto per te** — una prenotazione creata o modificata, un pagamento registrato — **si conferma da sé**, perché è già avvenuto e il flusso ti chiedeva solo di prenderne atto; una prenotazione che un admin ha fatto per te viene allora concessa e consuma la tua quota.
 

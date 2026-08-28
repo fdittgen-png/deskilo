@@ -606,7 +606,7 @@ void main() {
 
     // THE conversation thread, composer pre-seeded with the reference.
     expect(
-        find.byKey(const ValueKey('conversation-sheet')), findsOneWidget);
+        find.byKey(const ValueKey('conversation-thread')), findsOneWidget);
     final composer = tester.widget<TextField>(
       find.byKey(const ValueKey('member-note-body')),
     );

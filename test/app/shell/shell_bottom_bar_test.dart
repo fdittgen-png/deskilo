@@ -57,29 +57,31 @@ void main() {
     expect(ShellBarMetrics.notchRadius, 56 / 2 + 6);
   });
 
-  testWidgets('four tabs split 2+2 around the raised Reserve button (#230)',
+  testWidgets('three tabs split 2+1 around the raised Reserve button',
       (tester) async {
     await pumpApp(tester);
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
     final (left, right) = splitAroundButton(tester);
+    // #702 — Members left the bar for the inbox's third face, so the
+    // four-tab 2+2 split is a three-tab 2+1 one.
     expect(left, ['Messages', 'Calendar']);
-    expect(right, ['Members', 'Money']);
+    expect(right, ['Money']);
   });
 
-  testWidgets('three visible tabs split 2+1 (index halving)', (tester) async {
+  testWidgets('two visible tabs split 1+1 (index halving)', (tester) async {
     await pumpApp(tester, featureFlags: const {'moneyTab': false});
 
     final (left, right) = splitAroundButton(tester);
-    expect(left, ['Messages', 'Calendar']);
-    expect(right, ['Members']);
+    expect(left, ['Messages']);
+    expect(right, ['Calendar']);
   });
 
   testWidgets('a feature-disabled workspace still hides its tab',
       (tester) async {
     await pumpApp(tester, featureFlags: const {'calendarTab': false});
 
-    expect(tabLabels(tester), ['Messages', 'Members', 'Money']);
+    expect(tabLabels(tester), ['Messages', 'Money']);
   });
 
   testWidgets(
@@ -153,14 +155,14 @@ void main() {
       (tester) async {
     await pumpApp(tester, featureFlags: const {'calendarTab': false});
 
-    // 'Members' is at visible position 1 but branch index 2 — the tap must
-    // land on the directory branch, not Calendar.
-    await tester.tap(find.text('Members'));
+    // 'Money' is at visible position 1 but branch index 3 — the tap must
+    // land on the money branch, not Calendar.
+    await tester.tap(find.text('Money'));
     await tester.pumpAndSettle();
 
     final appBarTitle = find.descendant(
       of: find.byType(AppBar),
-      matching: find.text('Members'),
+      matching: find.text('Money'),
     );
     expect(appBarTitle, findsOneWidget);
   });

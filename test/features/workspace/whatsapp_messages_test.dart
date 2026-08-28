@@ -128,7 +128,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-        find.byKey(const ValueKey('conversation-sheet')), findsOneWidget);
+        find.byKey(const ValueKey('conversation-thread')), findsOneWidget);
     expect(find.text('See you at ten!', findRichText: true), findsOneWidget);
   });
 

@@ -3766,6 +3766,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get conversationSeeProfile => 'Voir le profil';
 
   @override
+  String get inboxChatsTab => 'Discussions';
+
+  @override
   String get moneyBaseFee => 'Abonnement de base';
 
   @override

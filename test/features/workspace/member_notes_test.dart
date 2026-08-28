@@ -88,7 +88,7 @@ void main() {
     await tester.tap(find.text('Messages'));
     await tester.pumpAndSettle();
     expect(
-        find.byKey(const ValueKey('conversation-sheet')), findsOneWidget);
+        find.byKey(const ValueKey('conversation-thread')), findsOneWidget);
 
     await tester.enterText(
       find.byKey(const ValueKey('member-note-body')),
@@ -100,7 +100,7 @@ void main() {
     expect(workspace.memberNotes.single.toMemberId, 'member-2');
     expect(workspace.memberNotes.single.body, 'Your desk lamp is still on!');
     // The message lands as a bubble in the open thread.
-    expect(find.byKey(const ValueKey('bubble-note-1')), findsOneWidget);
+    expect(find.byKey(const ValueKey('bubble-msg-1')), findsOneWidget);
   });
 
   testWidgets('the app bar broadcast sends to ALL admins (null recipient) '
@@ -175,8 +175,7 @@ void main() {
     // a notification: it is a fan-out to whoever is an admin at read
     // time, not a conversation, so it has no thread to live in and
     // stays on the bell.
-    await tester.tap(find.byTooltip('Events'));
-    await tester.pumpAndSettle();
+    await openAlertsTab(tester);
     expect(find.text('Printer is out of toner.'), findsOneWidget);
 
     // The one-to-one exchange is NOT here any more — neither the

@@ -84,6 +84,27 @@ Future<List<ConversationParticipant>> conversationParticipants(
           .fetchParticipants(conversationId),
     );
 
+/// The direct conversation with one member, resolved by the server
+/// (#702) — `direct_conversation` returns the existing thread or opens
+/// one on first use.
+///
+/// A read that can WRITE, deliberately: "the conversation with Ana" has
+/// to name a row before a thread can render, and a pair who have never
+/// spoken has no row yet. The alternative is a screen that shows an
+/// empty thread with no id and cannot send anything from it.
+@riverpod
+Future<String?> directConversationId(Ref ref, String memberId) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return null;
+  return _traced(
+    'direct conversation',
+    () => ref.watch(workspaceRepositoryProvider).openDirectConversation(
+          workspace.id,
+          otherMemberId: memberId,
+        ),
+  );
+}
+
 /// Full-text search over messages I can see (#687).
 ///
 /// Keyed by the query string, so Riverpod caches per term and typing

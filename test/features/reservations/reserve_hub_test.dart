@@ -317,8 +317,9 @@ void main() {
     expect(find.byType(ShellBottomBar), findsOneWidget);
     expect(find.byTooltip('Reserve'), findsOneWidget);
 
-    // Bar destinations keep working from the hub…
-    await tester.tap(find.text('Members'));
+    // Bar destinations keep working from the hub… (#702 — Members is a
+    // face of the inbox now, so the inbox is the destination tapped.)
+    await tester.tap(find.text('Messages'));
     await tester.pumpAndSettle();
     expect(find.byKey(_canvasKey), findsNothing);
 

@@ -104,7 +104,10 @@ void main() {
           of: find.byType(ShellBottomBar),
           matching: find.byType(InkWell),
         ),
-        findsNWidgets(5),
+        // #702 — three destinations plus the raised centre button. The
+        // fourth was Members, now a face of the inbox: covered by the
+        // openMembersTab step below, not by a bar tap.
+        findsNWidgets(4),
         reason: 'The shell bar gained or lost a destination — update the '
             'walk in this test so every surface keeps expansion coverage.',
       );
@@ -115,18 +118,16 @@ void main() {
       await tapNavIcon(tester, Icons.calendar_month_outlined);
       _expectNoOverflow(tester, locale, 'Calendar');
 
-      await tapNavIcon(tester, Icons.people_outline);
+      await openMembersTab(tester);
       _expectNoOverflow(tester, locale, 'Members');
 
       await tapNavIcon(tester, Icons.account_balance_wallet_outlined);
       _expectNoOverflow(tester, locale, 'Money (bill)');
 
-      await tapAppBarIcon(tester, Icons.notifications_outlined);
+      // #702 — the feed is the inbox's second face, not a pushed route
+      // behind a bell, so there is nothing to come back FROM.
+      await openAlertsTab(tester);
       _expectNoOverflow(tester, locale, 'Events');
-      // Not pageBack(): it matches the "Back" TOOLTIP, which is localized
-      // — the very thing this test varies. The widget type is not.
-      await tester.tap(find.byType(BackButton));
-      await tester.pumpAndSettle();
 
       await tapAppBarIcon(tester, Icons.settings_outlined);
       _expectNoOverflow(tester, locale, 'Settings');

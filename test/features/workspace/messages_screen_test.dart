@@ -143,19 +143,36 @@ void main() {
       expect(source, isNot(contains('.sort(')));
     });
 
-    test('one bubble renderer serves both thread kinds', () {
-      // Two renderers is how a group message ends up looking subtly
-      // unlike a direct one — different padding, a reference link that
-      // resolves in one and not the other.
+    test('ONE thread serves every surface (#702)', () {
+      // There were two: this one, by conversation id, and an older sheet
+      // that rebuilt a 1:1 thread by filtering every note the viewer
+      // could see. They did not just look different — they marked READ
+      // by different mechanisms, so a conversation read from a member's
+      // profile stayed bold in the inbox with its badge intact.
+      expect(
+        File('lib/features/workspace/presentation/widgets/'
+                'conversation_sheet.dart')
+            .existsSync(),
+        isFalse,
+        reason: 'the second thread implementation is gone, not just unused',
+      );
       final thread = File('lib/features/workspace/presentation/widgets/'
               'conversation_thread.dart')
           .readAsStringSync();
-      final sheet = File('lib/features/workspace/presentation/widgets/'
-              'conversation_sheet.dart')
-          .readAsStringSync();
       expect(thread, contains('ConversationBubble('));
-      expect(sheet, contains('ConversationBubble('));
-      expect(sheet, isNot(contains('class _Bubble')));
+      // Every entry point that used to open the old sheet now resolves a
+      // conversation id first.
+      for (final path in const [
+        'lib/features/members/presentation/screens/directory_screen.dart',
+        'lib/features/events/presentation/widgets/note_row.dart',
+        'lib/features/workspace/presentation/screens/members_screen.dart',
+        'lib/features/workspace/presentation/widgets/member_note_sheet.dart',
+        'lib/features/reservations/presentation/widgets/message_reserver.dart',
+      ]) {
+        final source = File(path).readAsStringSync();
+        expect(source, contains('openDirectConversation('), reason: path);
+        expect(source, isNot(contains('showConversationSheet(')), reason: path);
+      }
     });
 
     test('opening a conversation marks it read BEFORE the sheet shows', () {

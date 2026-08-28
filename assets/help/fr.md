@@ -25,7 +25,7 @@ Un compte peut appartenir à plusieurs espaces. **Réglages → Profils** les li
 
 ### S'orienter
 
-L'app a jusqu'à cinq destinations en bas : **Plan** (§3), **Calendrier** (§5), le grand bouton central **Réserver** (§4), **Membres** (§6) et **Finances** (§9). Seuls Plan et Réserver sont toujours là — Calendrier, Membres et Finances vont et viennent avec leur fonctionnalité (§8), et la **cloche** qui ouvre le fil des événements et confirmations aussi (§7, avec un compteur de ce qui vous attend). L'**engrenage** qui ouvre les **Réglages** (§12) est, lui, dans chaque en-tête. En paysage et sur tablette, la plupart des écrans passent en **vue scindée** — les commandes dans un panneau latéral, le contenu remplissant le reste.
+L'app a jusqu'à quatre destinations en bas : **Messages** (§16), **Calendrier** (§5), le grand bouton central **Réserver** (§4) et **Finances** (§9). Messages et Réserver sont toujours là ; Calendrier et Finances vont et viennent avec leur fonctionnalité (§8). **Messages est la boîte de réception** : les conversations, le fil des événements et confirmations (§7) et l'annuaire des membres (§6) en sont les trois faces, chacune à une touche sur la barre d'onglets, et son compteur additionne tout ce qui vous attend dans les trois. L'**engrenage** qui ouvre les **Réglages** (§12) est, lui, dans chaque en-tête. En paysage et sur tablette, la plupart des écrans passent en **vue scindée** — les commandes dans un panneau latéral, le contenu remplissant le reste.
 
 **Tout reste en direct.** Tout changement — une réservation, un nouveau membre, un réglage — est poussé vers chaque appareil connecté en quelques secondes, y compris celui qui l'a fait. Pas de redémarrage, pas de tirer-pour-rafraîchir.
 
@@ -187,7 +187,9 @@ Le mois d'un coup d'œil, avec deux portées et deux formes :
 - Les **puces d'étage** (*Tous les étages* / par niveau) filtrent la **vue chronologique**.
 - Touchez un jour de la grille pour le charger dessous. En paysage, calendrier et détail passent en vue scindée.
 
-## 6. Annuaire des membres (onglet Membres)
+## 6. Annuaire des membres (Messages → Membres)
+
+**Où il se trouve (#702).** L'annuaire est la troisième face de l'onglet **Messages**, à côté de vos conversations et des alertes — les personnes dont les deux parlent. C'était une destination de la barre du bas jusque-là.
 
 Voyez qui fait partie de votre communauté :
 
@@ -198,13 +200,15 @@ Voyez qui fait partie de votre communauté :
 - Réglez votre photo, votre statut et la visibilité de votre numéro dans les **Réglages** (§12).
 - Admins et propriétaires voient en plus l'**e-mail** de chaque membre sous son nom — pas les simples membres : le contact membre-à-membre reste le numéro WhatsApp opt-in.
 
-## 7. Événements et confirmations (cloche)
+## 7. Événements et confirmations (Messages → Alertes)
+
+**Où il se trouve (#702).** Le flux est la deuxième face de l'onglet **Messages**. Il était derrière une cloche dans la barre d'app jusque-là — une alerte qu'on pouvait ouvrir d'un côté et retrouver en attente de l'autre.
 
 Le fil des événements est la piste d'audit de votre espace : réservations créées/modifiées/annulées, paiements enregistrés, factures payées, dépenses soumises, demandes de demi-journées, changements de rôle, demandes de suppression. Les membres voient leurs propres événements ; admins et propriétaires voient tout. Les **puces de filtre** (Tous · Réservation · Paiement · Dépense · …) resserrent la liste — votre choix est mémorisé — et un menu **Grouper par** replie le fil en groupes par type, jour ou membre (toucher le symbole du groupe ramène à la liste plate) ; chaque ligne porte son icône d'état — un **sablier** en attente, une **coche verte** une fois confirmé — et les événements d'argent affichent *qui a validé et quand* sur la ligne même.
 
 **En attente de votre confirmation :** dès qu'un admin agit *pour quelqu'un d'autre* — réserve une place pour vous, enregistre votre paiement, rétrograde un admin — cela reste **en attente jusqu'à confirmation**. Les éléments en attente sont épinglés en haut avec un ✕ rouge et un bouton **Accepter** vert, et vous êtes notifié. Vos propres actions sur vous-même ne demandent jamais confirmation.
 
-**Les messages ont déménagé.** Les messages entre membres vivent désormais dans leur propre onglet **Messages** (§16), plus ici — un message présent à deux endroits est un message qu'on peut marquer lu d'un côté et voir non lu de l'autre. La cloche garde le seul type qui n'a pas de conversation où vivre : une **diffusion à tous les administrateurs**.
+**Les messages ont déménagé.** Les messages entre membres vivent désormais dans leur propre onglet **Messages** (§16), plus ici — un message présent à deux endroits est un message qu'on peut marquer lu d'un côté et voir non lu de l'autre. Ce flux garde le seul type qui n'a pas de conversation où vivre : une **diffusion à tous les administrateurs**.
 
 **Quorum de validation :** pour l'argent et les rôles, le propriétaire définit *qui* doit approuver et *combien* d'approbations il faut. **Personne ne valide son propre événement** — seule une autre personne le peut (une exception, configurée par le propriétaire, pour les suppressions de réservation, ci-dessous) ; sans autre validateur, la demande attend. Au bout de 7 jours sans réponse, la suite dépend du sens de la demande. Une demande **que vous avez soumise** pour vous-même — une suppression, des demi-journées supplémentaires, une annulation de solde — **expire** : rien de coûteux n'est accordé en silence. Ce qu'un admin a **fait pour vous** — créer ou modifier une réservation, enregistrer un paiement — se **confirme automatiquement** au contraire, puisque c'est déjà arrivé et que le fil vous demandait seulement d'en prendre acte ; une réservation faite pour vous est alors accordée et consomme votre quota.
 

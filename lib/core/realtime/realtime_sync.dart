@@ -36,6 +36,8 @@ const realtimeTables = [
   'events',
   'event_decisions',
   'member_notes',
+  'conversations',
+  'conversation_participants',
   'ledger_entries',
   'payment_intents',
   'invoices',

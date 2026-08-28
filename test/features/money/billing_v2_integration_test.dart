@@ -27,6 +27,7 @@ import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_realtime_sync.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 /// The band whose `(fromPct, toPct]` interval contains [pct] — the same
 /// inclusive-upper lookup the statement SQL uses to pick a member's fee.
@@ -394,8 +395,7 @@ void main() {
 
       // #434: the reporter NEVER validates their own charge — no Accept
       // for them, even as the solo owner (the old #107 hatch is gone).
-      await tester.tap(find.byTooltip('Events'));
-      await tester.pumpAndSettle();
+      await openAlertsTab(tester);
       expect(find.text('Coffee ×2 — €3.00 for Flo'), findsOneWidget);
       expect(find.text('Accept'), findsNothing);
 
@@ -410,7 +410,8 @@ void main() {
           .pump(kRealtimeDebounce + const Duration(milliseconds: 50));
       await tester.pumpAndSettle();
       expect(events.events.single.status, EventStatus.confirmed);
-      await tester.pageBack();
+      // #702 — the alerts feed is a TAB, not a pushed route: nothing to
+      // pop, and the bottom bar was never covered.
       await tester.pumpAndSettle();
 
       // Confirmation posts the ledger charge (the SQL trigger's job —

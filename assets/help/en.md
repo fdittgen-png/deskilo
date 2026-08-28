@@ -25,7 +25,7 @@ One account can belong to several workspaces. **Settings → Profiles** lists th
 
 ### Finding your way around
 
-The app has up to five destinations along the bottom: **Plan** (§3), **Calendar** (§5), the big central **Reserve** button (§4), **Members** (§6) and **Money** (§9). Only Plan and Reserve are always there — Calendar, Members and Money each come and go with their feature (§8), and so does the **bell** that opens the events & confirmations feed (§7, with a badge counting what awaits you). The **gear** that opens **Settings** (§12) is in every header. On phones held sideways and on tablets, most screens switch to a **split layout** — controls in a side panel, content filling the rest.
+The app has up to four destinations along the bottom: **Messages** (§16), **Calendar** (§5), the big central **Reserve** button (§4) and **Money** (§9). Messages and Reserve are always there; Calendar and Money come and go with their feature (§8). **Messages is the inbox**: conversations, the events & confirmations feed (§7) and the member directory (§6) are three faces of it, each one a tap on the tab strip, and its badge counts everything waiting for you across them. The **gear** that opens **Settings** (§12) is in every header. On phones held sideways and on tablets, most screens switch to a **split layout** — controls in a side panel, content filling the rest.
 
 **Everything stays live.** Whatever anyone changes — a booking, a new member, a setting — is pushed to every connected device within seconds, including the one that made the change. No restart, no pull-to-refresh.
 
@@ -187,7 +187,9 @@ The month at a glance, with two scopes and two shapes:
 - The **floor chips** (*All floors* / per level) filter the **timeline**.
 - Tap a day in the month grid to load it below. In landscape the calendar and the detail use the split layout.
 
-## 6. Members directory (Members tab)
+## 6. Members directory (Messages → Members)
+
+**Where it lives (#702).** The directory is the third face of the **Messages** tab, beside your conversations and the alerts — the people both are about. It was its own bottom-bar destination until then.
 
 See who's part of your community:
 
@@ -198,13 +200,15 @@ See who's part of your community:
 - Set your own photo, status, and phone visibility in **Settings** (§12).
 - Admins and owners additionally see each member's **email** under the name — plain members don't: member-to-member contact stays the opt-in WhatsApp number.
 
-## 7. Events & confirmations (bell icon)
+## 7. Events & confirmations (Messages → Events)
+
+**Where it lives (#702).** The feed is the second face of the **Messages** tab. It was behind a bell in the app bar until then — an alert you could open from one place and still find waiting in another.
 
 The events feed is the audit trail of your workspace: reservations created/changed/cancelled, payments recorded, invoices paid, expenses submitted, extra-days requests, role changes, deletion requests. Members see their own events; admins and owners see everyone's. **Filter chips** (All · Reservation · Payment · Expense · …) narrow the list — your choice is remembered — and a **Group by** menu folds the feed into groups by type, day or member (tap the group symbol to return to the flat list); each row carries its status icon — an **hourglass** while pending, a **green check** once confirmed — and money events show *who validated them and when* right on the row.
 
 **Waiting for your confirmation:** whenever an admin does something *for somebody else* — books a seat for you, records your payment, demotes an admin — it stays **pending until confirmed**. Pending items are pinned on top with a red ✕ and a green **Accept** button, and you get a notification. Actions you take on yourself never need confirmation.
 
-**Messages moved.** Member messages now live in their own **Messages** tab (§16), not here — a message in two places is one you can mark read in one and still see unread in the other. The bell keeps the one message kind that has no conversation to live in: a **broadcast to all admins**.
+**Messages moved.** Member messages now live in their own **Messages** tab (§16), not here — a message in two places is one you can mark read in one and still see unread in the other. This feed keeps the one message kind that has no conversation to live in: a **broadcast to all admins**.
 
 **Validation quorum:** for money matters and role changes the owner defines *who* must approve and *how many* approvals are needed. **Nobody validates their own event** — only another person can (one owner-configured exception, for reservation deletions, below); where no other validator exists, the request simply waits. After 7 days without an answer, what happens depends on which way the request cuts. A request **you submitted** for yourself — a deletion, extra half-days, an invoice write-off — **expires**: nothing costly is ever granted silently. Something an admin **did for you** — created or modified a booking, recorded a payment — **auto-confirms** instead, because it already happened and the feed only asked you to acknowledge it; a booking an admin made for you is then granted and consumes your quota.
 
