@@ -148,12 +148,33 @@ jobs:
       - name: Upload to Play Store
         id: upload
         if: ${{ env.HAS_PLAY_SA == 'true' }}
+        # Release notes ride an ENV VAR, never string interpolation into
+        # the command. Two reasons, one of which bit:
+        #
+        #  1. `format('--release-notes "{0}"', inputs.release_notes)`
+        #     spliced the text inside double quotes, so a single quote
+        #     ANYWHERE in the notes closed the string early and the rest
+        #     became stray arguments — `error: unrecognized arguments`.
+        #     Notes are free prose; quotes and newlines are normal.
+        #  2. `${{ inputs.… }}` inside a `run:` block is a script
+        #     INJECTION: whoever dispatches the workflow controls the
+        #     text, and the runner executes it. An env var is expanded by
+        #     the shell as data, not parsed as script.
+        #
+        # ios-testflight.yml already did it this way (TESTFLIGHT_CHANGELOG);
+        # this leg was the odd one out.
+        env:
+          PLAY_RELEASE_NOTES: ${{ inputs.release_notes }}
         run: |
+          notes_arg=()
+          if [ -n "$PLAY_RELEASE_NOTES" ]; then
+            notes_arg=(--release-notes "$PLAY_RELEASE_NOTES")
+          fi
           python tools/upload_to_play.py \
             --aab build/app/outputs/bundle/release/app-release.aab \
             --key "$PLAY_KEY_PATH" \
             --track "${{ inputs.track || 'internal' }}" \
-            ${{ inputs.release_notes && format('--release-notes "{0}"', inputs.release_notes) || '' }}
+            "${notes_arg[@]}"
 
       - name: Clean up service-account key
         if: always()
