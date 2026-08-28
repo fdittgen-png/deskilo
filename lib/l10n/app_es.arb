@@ -931,6 +931,30 @@
   },
   "helpTitle": "Ayuda",
   "helpContents": "Índice",
+  "helpHintMessages": "Todas las conversaciones en una lista, la más reciente arriba. Toque el lápiz para escribir a alguien o crear un grupo.",
+  "@helpHintMessages": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTopic": "Mensajes",
+  "@helpHintMessagesTopic": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip2": "Elija una persona para un chat privado, o varias para crear un grupo — el campo del nombre aparece a partir de dos, y ese nombre es único aquí: nadie tiene que adivinar a qué «Equipo» escribe.",
+  "@helpHintMessagesTip2": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip3": "Toque un nombre en la parte superior de un chat para ver su perfil: la reserva de hoy, si ha registrado su entrada, y cómo contactarle.",
+  "@helpHintMessagesTip3": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip4": "La búsqueda encuentra miembros, grupos y las palabras dentro de los mensajes — un resultado le lleva directamente allí.",
+  "@helpHintMessagesTip4": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip5": "Enlace una reserva o un espacio en el mensaje en vez de describirlo; quien lo lea lo toca y llega al correcto.",
+  "@helpHintMessagesTip5": {
+    "description": "#695 - messaging help hints"
+  },
   "helpHintLearnMore": "Más información",
   "helpHintDismiss": "Ocultar consejo",
   "helpHintPrevTip": "Consejo anterior",
@@ -947,7 +971,7 @@
   "helpHintReserveTip5": "Define tu periodo de reserva por defecto en Ajustes: el hub lo preselecciona en cada visita.",
   "helpHintReserveTip5Topic": "Ajustes y perfil",
   "helpHintPlan": "El plano en vivo: toca un asiento libre para reservar, toca tu reserva para registrar tu llegada.",
-  "helpHintPlanTopic": "pestaña Plano",
+  "helpHintPlanTopic": "El plano",
   "helpHintPlanTip2": "¿Estás ante un asiento libre? Tócalo: la ficha propone desde ahora hasta el cierre, y al confirmar quedas registrado al instante.",
   "helpHintPlanTip3": "Recorre otro momento con el chip de fecha y el selector de hora: el plano muestra quién ocupa qué en cualquier instante futuro.",
   "helpHintPlanTip4": "Toca dos veces un escritorio, una sala o la planta entera —o el icono de capas de la barra de niveles— para reservar todo el espacio de una vez.",
@@ -2061,10 +2085,6 @@
   "@messagesEmpty": {
     "description": "#687 - messaging centre"
   },
-  "messagesEmptyHint": "Toque el lápiz para escribir a alguien, o cree un grupo.",
-  "@messagesEmptyHint": {
-    "description": "#687 - messaging centre"
-  },
   "conversationMemberCount": "{count, plural, =1{1 miembro} other{{count} miembros}}",
   "@conversationMemberCount": {
     "description": "#687 - messaging centre",
@@ -2157,6 +2177,10 @@
   "newGroupNameTaken": "Ya existe un grupo con ese nombre aquí. Elija otro.",
   "@newGroupNameTaken": {
     "description": "#694 - group names are unique per workspace"
+  },
+  "conversationSeeProfile": "Ver perfil",
+  "@conversationSeeProfile": {
+    "description": "#695 - profile from a conversation"
   },
   "moneyBaseFee": "Suscripción base",
   "moneyUsage": "{used} de {included} medias jornadas usadas",

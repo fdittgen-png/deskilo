@@ -57,7 +57,7 @@ Der QR codiert einen Link, der die vergebene Rolle nennt (`deskilo://join?role=�
 
 **Per Nachricht einladen** (*Jemanden einladen*): jeder WhatsApp/SMS/Teilen-Versand prägt seinen eigenen persönlichen Einmal-Code und baut eine fertige Nachricht in der Sprache des Eingeladenen. Der Empfänger kann die ganze Nachricht kopieren und ins Beitrittsfeld der App einfügen — der Code wird automatisch erkannt.
 
-## 3. Der Grundriss (Plan-Tab)
+## 3. Der Grundriss (im Reservieren-Hub)
 
 Der Plan zeigt die aktive Ebene deines Space: Büros, Tische und Plätze, farbcodiert — **frei**, **reserviert**, **besetzt**, **meiner**, **gesperrt**. Er öffnet **sofort mit den letzten bekannten Daten** und aktualisiert im Hintergrund — bei wackligem WLAN siehst du den letzten Stand statt eines leeren Bildschirms. Ein besetzter Platz zeigt, wer da ist — als **Initiale**, oder als **Foto**, sobald die Person eines hinterlegt hat und die Inhaberin *Mitgliederfotos auf dem Plan* aktiviert hat —, dazu ein **Häkchen-Badge** nach dem Einchecken und einen **grünen Punkt**, wenn die Person gerade online ist. Ganze Vornamen erscheinen dort, wo Platz für sie ist: auf dem Schloss-Chip einer Ganzraum-Buchung und in der Listenansicht. Ist ein **ganzer Tisch, Raum oder eine Etage** reserviert, sagt es der Raum selbst — farbige Fläche, kräftiger Rand und ein **Schloss-Chip mit dem Namen** in der Mitte; das Raumlabel liest *Bureau 2 · Florian*. Jeder sieht es: auf dem Plan, im Reservieren-Hub, am Kiosk.
 
@@ -156,7 +156,7 @@ Diese Ausnahme ist der Sinn des Standards: sie unterbindet „nur außerhalb der
 | Einen freien Raum | der Check-in bucht ihn implizit, auf den Slot eingerastet wie jeder Spontan-Check-in |
 | Einen Raum, den die Buchung eines anderen blockiert | nennt den Inhaber und bietet **Nachricht schreiben** — das Gespräch öffnet sich mit der blockierenden Buchung als Referenz |
 
-Dieselbe Aktion *dem Inhaber schreiben* liegt im **Plan-Tab**, wenn du einen von jemand anderem belegten Platz antippst. Am Kiosk nennt stattdessen die Quittung den Inhaber und verweist auf die App: ein Wandgerät schreibt nie Nachrichten für dich.
+Dieselbe Aktion *dem Inhaber schreiben* liegt auf dem **Plan**, wenn du einen von jemand anderem belegten Platz antippst. Am Kiosk nennt stattdessen die Quittung den Inhaber und verweist auf die App: ein Wandgerät schreibt nie Nachrichten für dich.
 
 **Einchecken.** Bei Halbtagen, ganzen Tagen und echten Uhrzeiten öffnet das Fenster für den **ganzen gebuchten Tag**: um 10:00 kannst du schon auf deinen 12:00-Nachmittag einchecken, denn der Slot *ist* der Arbeitstag. Auf einem Minutenraster öffnet es **15 Minuten vor** deinem Start — oder einen **Rasterschritt** früher, wo dieser länger ist, sodass 5-, 15- und 30-Minuten-Raster die 15 Minuten behalten und ein Stundenraster eine volle Stunde früher öffnet. Das Blatt liest immer die echte Uhr, ein Blick auf ein künftiges Datum verdeckt also nie den heutigen Check-in auf deine eigene Buchung. Einchecken an einem anderen Tag („die Buchung von morgen heute"), nach dem Ende der Reservierung, doppelt oder an einem Schließtag wird mit Grund abgelehnt. Bist du noch **woanders** eingecheckt: eine noch laufende Buchung blockiert ihn, sobald dein Kontingent erreicht ist (1 standardmäßig, die erste laufende Buchung blockiert also schon — *dort erst auschecken*); eine bereits abgelaufene schließt sich still — gestempelt auf ihr eigenes Ende — und der neue Check-in geht durch. Ein Admin kann ein Mitglied einchecken, solange *Für andere buchen* aktiv ist (§8 Funktionen).
 
@@ -182,7 +182,7 @@ Dieselbe Aktion *dem Inhaber schreiben* liegt im **Plan-Tab**, wenn du einen von
 
 Der Monat auf einen Blick, mit zwei Reichweiten und zwei Formen:
 
-- **Meine / Alle** — deine eigenen Buchungen oder die der ganzen Community; **jedes Mitglied** hat diesen Umschalter, denn Plan-Tab und Wochenraster des Reservieren-Hubs zeigen die Belegung aller ohnehin. Die Punkte unter einem Tag sagen alles auf einen Blick: **rot** = du hast eine Buchung, **blau** = andere Mitglieder haben eine, **beide Punkte** = beides. Heute ist umringt.
+- **Meine / Alle** — deine eigenen Buchungen oder die der ganzen Community; **jedes Mitglied** hat diesen Umschalter, denn Plan und Wochenraster des Reservieren-Hubs zeigen die Belegung aller ohnehin. Die Punkte unter einem Tag sagen alles auf einen Blick: **rot** = du hast eine Buchung, **blau** = andere Mitglieder haben eine, **beide Punkte** = beides. Heute ist umringt.
 - Der **Form-Umschalter** daneben wechselt die untere Hälfte zwischen **Listenansicht** (jede Reservierung als Karte: Zeitfenster, Mitglied, Raum) und **Zeitleistenansicht** (Plätze × die Stunden des gewählten Tages). Das Wochenraster Plätze × *Tage* wohnt im Reservieren-Hub (§4), nicht hier.
 - Die **Etagen-Chips** filtern die **Zeitleiste**.
 - Einen Tag antippen lädt ihn unten. Im Querformat geteilte Ansicht.
@@ -204,7 +204,7 @@ Der Ereignis-Feed ist die Prüfspur deines Space: Buchungen erstellt/geändert/s
 
 **Wartet auf deine Bestätigung:** Handelt ein Admin *für jemand anderen* — bucht dir einen Platz, erfasst deine Zahlung, stuft einen Admin zurück — bleibt es **bis zur Bestätigung offen**. Offenes ist oben angepinnt mit rotem ✕ und grünem **Annehmen**, plus Benachrichtigung. Eigene Aktionen auf dich selbst brauchen nie eine Bestätigung.
 
-**Nachrichten:** die Glocke sammelt auch deine Mitglieder-Nachrichten (§6) — empfangen und gesendet, neueste zuerst. Die Liste zeigt nur die **ersten 64 Zeichen**; **antippen** (oder **nach rechts wischen**) öffnet die **Unterhaltung** mit diesem Mitglied — der ganze Austausch als Sprechblasen, Emojis und Referenz-Links aktiv (ein Reservierungs-Link öffnet diese Reservierung, ein Raum-Link das Buchungsblatt — beide mit einem *Auf dem Plan zeigen*-Sprung), der Verfasser direkt darunter; ein Broadcast öffnet als einzelne Nachricht. **Nach links wischen** = löschen (langes Drücken einer Sprechblase löscht auch im Thread) — Löschen fragt immer erst **zur Bestätigung** (ein empfangener Alle-Admins-Broadcast lässt sich nicht löschen — er verschwände für alle).  **Ungelesene Nachrichten sind fett mit Punkt**; der **Ungelesen**-Chip — oder der Badge-Schalter oben im Glocken-Screen, der alles andere beiseitestellt — filtert die Liste, und gelesen ist eine Nachricht erst, wenn ihre **Unterhaltung** geöffnet wird — der Blick auf den Posteingang zählt nicht. Eigene Nachrichten tragen neben der Zeit ein kleines Häkchen: **grau = zugestellt**, **blau = gelesen** (ein Broadcast an alle Admins bleibt grau — er hat viele Leser). Ungelesene zählen auf Glocke und App-Icon.
+**Nachrichten sind umgezogen.** Mitgliedernachrichten leben jetzt in einem eigenen Tab **Nachrichten** (§16), nicht mehr hier — eine Nachricht an zwei Orten ist eine, die man an einem als gelesen markiert und am anderen weiter ungelesen sieht. Die Glocke behält die eine Art ohne eigene Unterhaltung: eine **Rundnachricht an alle Admins**.
 
 **Validierungsquorum:** für Geld und Rollen definiert die Inhaberin, *wer* zustimmen muss und *wie viele*. **Niemand validiert das eigene Ereignis** — nur eine andere Person (eine von der Inhaberin konfigurierte Ausnahme für Reservierungslöschungen, unten); ohne anderen Validierer wartet der Antrag. Bleibt eine Anfrage 7 Tage unbeantwortet, hängt der Ausgang davon ab, in welche Richtung sie zielt. Was **du selbst eingereicht** hast — eine Löschung, zusätzliche halbe Tage, eine Restbetrag-Stornierung — **verfällt**: nichts Teures wird still gewährt. Was ein Admin **für dich getan** hat — eine Buchung angelegt oder geändert, eine Zahlung erfasst — **bestätigt sich dagegen automatisch**, denn es ist bereits geschehen und der Feed bat dich nur um Kenntnisnahme; eine Buchung, die ein Admin für dich anlegte, gilt dann als gewährt und verbraucht dein Kontingent.
 
@@ -224,7 +224,7 @@ Alle Administration wohnt unter **Einstellungen → Administration** — *Worksp
 
 ### Der Space-Editor
 
-Den **Editor** öffnest du aus der Kopfzeile des Plan-Tabs. Der **Space-Editor** listet die Etagen — ziehen zum Umordnen, das **Ebenen-Icon** markiert eine Etage *als Ganzes buchbar*, das **⋮**-Menü benennt um oder löscht, **+ Etage hinzufügen** erweitert. Eine Etage öffnen und mit der Werkzeugleiste zeichnen — **Auswahl · Büro · Tisch · Platz · Bild · Löschen**:
+Den **Editor** öffnest du aus der Kopfzeile des Reservieren-Hubs. Der **Space-Editor** listet die Etagen — ziehen zum Umordnen, das **Ebenen-Icon** markiert eine Etage *als Ganzes buchbar*, das **⋮**-Menü benennt um oder löscht, **+ Etage hinzufügen** erweitert. Eine Etage öffnen und mit der Werkzeugleiste zeichnen — **Auswahl · Büro · Tisch · Platz · Bild · Löschen**:
 
 - Ein **Büro** bekommt Namen, *als Ganzes buchbar* und einen **Preis je Halbtag**.
 - Ein **Tisch** bekommt Namen, dieselbe Ganztisch-Option und einen eigenen **Preis je Halbtag**.
@@ -584,3 +584,20 @@ Minimale Daten: Name, E-Mail, Plan, Buchungen, Konto. Du kontrollierst Foto, Sta
 Android (Google Play), iPhone/iPad, Desktop — **macOS** (DMG: DesKilo in Programme ziehen) und **Windows** (MSI-Installer) aus jedem Release — und der **Browser**: dieselbe App, nichts zu installieren. Deine Daten folgen deinem Konto.
 
 Der Browser kann mehr, als man erwartet: **Web NFC funktioniert** in Chromium-Browsern unter Android über HTTPS — so lässt sich ein Stuhl-Tag vom Telefon-Browser aus einrichten — die installierten **Android- und iPhone-Apps lesen Tags direkt**, meist der bequemere Weg. Was er nicht kann, ist wie der Kiosk per Kamera einen QR-Code scannen. Alles andere — Plan, Buchungen, Mitglieder, Geld, Rechnungen, PDFs — ist dieselbe App. Beim ersten Start des macOS-DMG: Rechtsklick → *Öffnen* (die Build ist noch nicht von Apple notariell beglaubigt).
+
+## 16. Nachrichten
+Der Tab **Nachrichten** ist die Messaging-Zentrale Ihres Bereichs: alle Unterhaltungen in einer Liste, die neueste oben, Personen und Gruppen gemeinsam. Eine Zeile zeigt die letzte Nachricht, die Uhrzeit und die Anzahl ungelesener. Tippen Sie auf den **Stift**, um eine neue zu beginnen.
+
+**Person oder Gruppe, ein Blatt.** Wählen Sie eine Person für einen privaten Chat; wählen Sie zwei oder mehr und ein **Namensfeld erscheint** — das ist eine Gruppe. Der Name ist **in Ihrem Bereich eindeutig**, niemand muss raten, welchem *Team* er schreibt; ist er vergeben, sagt die App es und Sie ändern ein Wort.
+
+**Auf einen Blick unterscheidbar.** Eine Person zeigt ihr Foto im Kreis. Eine Gruppe zeigt ein **eckiges Abzeichen** mit Gruppensymbol und — solange niemand geschrieben hat — ihre Mitgliederzahl.
+
+**In einer Unterhaltung.** Nachrichten stehen von alt nach neu als Sprechblasen, mit Emojis und aktiven **Verweisen**: ein Reservierungslink öffnet die Reservierung, ein Bereichslink dessen Buchungsblatt, jeweils mit *Auf dem Plan zeigen*. Das Eingabefeld sitzt darunter. **Lange auf eine Blase tippen, um sie zu löschen**, mit Rückfrage. Ihre eigenen Nachrichten tragen einen Haken: **grau = zugestellt**, **blau = gelesen**.
+
+**Tippen Sie oben auf den Namen.** In einem privaten Chat öffnet das **Profil** der Person — die heutige Buchung, ob sie eingecheckt ist, ihr Status und wie man sie erreicht. In einer Gruppe öffnet es die **Mitgliederliste**, in der ein Gruppen-Admin Personen hinzufügt oder entfernt und jeder austreten kann. Ein Austritt lässt eine Gruppe nie ohne Admin zurück.
+
+**Die Suche** (die Lupe) sucht an drei Stellen: **Personen**, **Gruppen** und die **Wörter in Nachrichten**. Ein Treffer bringt Sie direkt zur Person, zur Gruppe oder zur Nachricht.
+
+**Keine Fotos, keine Dateien.** Nachrichten tragen Text, dazu Verweise auf eine Reservierung oder einen Bereich. Das ist Absicht: eine Coworking-App ist kein Dateispeicher.
+
+**Benachrichtigungen.** Eine *empfangene* Nachricht meldet sich und zählt auf dem Tab **Nachrichten**; das Öffnen der Unterhaltung setzt den Zähler zurück. Nachrichten erscheinen nicht mehr in der Glocke — die ist für Bestätigungen und Ereignisse. Einzige Ausnahme: eine **Rundnachricht an alle Admins**, die keine Unterhaltung hat und dort bleibt.

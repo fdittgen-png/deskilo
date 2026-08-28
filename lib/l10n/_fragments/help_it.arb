@@ -1,4 +1,28 @@
 {
   "helpTitle": "Aiuto",
-  "helpContents": "Indice"
+  "helpContents": "Indice",
+  "helpHintMessages": "Tutte le conversazioni in un elenco, la più recente in alto. Tocca la matita per scrivere a qualcuno o creare un gruppo.",
+  "@helpHintMessages": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTopic": "Messaggi",
+  "@helpHintMessagesTopic": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip2": "Scegli una persona per una chat privata, o più per creare un gruppo — il campo del nome compare da due in poi, e quel nome è unico qui: nessuno deve indovinare a quale «Team» sta scrivendo.",
+  "@helpHintMessagesTip2": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip3": "Tocca un nome in cima a una chat per vedere il profilo: la prenotazione di oggi, se ha fatto il check-in e come raggiungerlo.",
+  "@helpHintMessagesTip3": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip4": "La ricerca trova membri, gruppi e le parole nei messaggi — un risultato ti porta direttamente lì.",
+  "@helpHintMessagesTip4": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip5": "Inserisci una prenotazione o uno spazio nel messaggio invece di descriverlo; chi legge lo tocca e arriva a quello giusto.",
+  "@helpHintMessagesTip5": {
+    "description": "#695 - messaging help hints"
+  }
 }

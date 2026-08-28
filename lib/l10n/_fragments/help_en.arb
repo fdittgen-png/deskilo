@@ -1,4 +1,28 @@
 {
   "helpTitle": "Help",
-  "helpContents": "Contents"
+  "helpContents": "Contents",
+  "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",
+  "@helpHintMessages": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTopic": "Messages",
+  "@helpHintMessagesTopic": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip2": "Pick one person for a private chat, or several to make a group — the name field appears once there are two, and a group name is unique here, so nobody has to guess which “Team” they mean.",
+  "@helpHintMessagesTip2": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip3": "Tap a name at the top of a chat to see their profile: today’s booking, whether they are checked in, and how to reach them.",
+  "@helpHintMessagesTip3": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip4": "Search finds people, groups and the words inside messages — a result takes you straight there.",
+  "@helpHintMessagesTip4": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip5": "Link a reservation or a space in a message instead of describing it; the reader taps it and lands on the right one.",
+  "@helpHintMessagesTip5": {
+    "description": "#695 - messaging help hints"
+  }
 }

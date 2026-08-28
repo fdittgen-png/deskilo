@@ -57,7 +57,7 @@ Le QR encode un lien qui nomme le rôle accordé (`deskilo://join?role=…`). Fa
 
 **Inviter par message** (*Inviter quelqu'un*) : chaque envoi WhatsApp/SMS/partage émet son propre code personnel à usage unique et construit un message prêt dans la langue de l'invité. Le destinataire peut copier le message entier et le coller dans le champ de l'app — le code est détecté automatiquement.
 
-## 3. Le plan (onglet Plan)
+## 3. Le plan (dans le hub Réserver)
 
 Le plan montre le niveau actif de votre espace : bureaux, tables et places, codés par couleur — **libre**, **réservé**, **occupé**, **à moi**, **bloqué**. Il s'ouvre **instantanément sur les dernières données connues** et se rafraîchit en arrière-plan — sur un Wi-Fi capricieux vous voyez l'état le plus récent au lieu d'un écran vide. Une place occupée montre qui est là par son **initiale** — ou par sa **photo**, si la personne en a mis une et que le propriétaire a activé *Photos des membres sur le plan* — avec un **badge coche** une fois pointée, et un **point vert** quand elle est en ligne dans l'app. Les prénoms complets apparaissent là où il y a la place : sur la puce cadenas d'une réservation d'espace entier, et dans la vue liste. Quand une **table, un bureau ou un étage entier** est réservé, l'espace le dit lui-même — un voile coloré, une bordure forte, et une **puce cadenas avec le nom de l'occupant** au milieu ; le libellé du bureau lit *Bureau 2 · Florian*. Tout le monde le voit : sur le plan, dans Réserver et sur la borne.
 
@@ -204,7 +204,7 @@ Le fil des événements est la piste d'audit de votre espace : réservations cr�
 
 **En attente de votre confirmation :** dès qu'un admin agit *pour quelqu'un d'autre* — réserve une place pour vous, enregistre votre paiement, rétrograde un admin — cela reste **en attente jusqu'à confirmation**. Les éléments en attente sont épinglés en haut avec un ✕ rouge et un bouton **Accepter** vert, et vous êtes notifié. Vos propres actions sur vous-même ne demandent jamais confirmation.
 
-**Messages :** la cloche collecte aussi vos notifications de membres (§6) — reçues et envoyées, les plus récentes d'abord. La liste n'affiche que les **64 premiers caractères** ; **touchez un message** (ou **balayez à droite**) pour ouvrir la **conversation** avec ce membre — tout l'échange en bulles, émojis et liens de référence actifs (un lien de réservation ouvre cette réservation, un lien d'espace ouvre la feuille de réservation — chacune avec un saut *Voir sur le plan*), avec le composeur juste en dessous ; une diffusion s'ouvre en message unique. **Balayez à gauche** pour supprimer un message (un appui long sur une bulle supprime aussi depuis le fil) — la suppression demande toujours **confirmation** (une diffusion tous-admins reçue ne se supprime pas — elle disparaîtrait pour chaque admin).  **Les messages non lus sont en gras avec un point** ; la puce **Non lus** — ou le bouton à badge en haut de l'écran de la cloche, qui met tout le reste de côté — filtre la liste, et un message compte comme lu quand vous ouvrez sa **conversation** — survoler la boîte de réception n'est pas lire. Vos propres messages portent une petite coche à côté de l'heure : **grise = remis**, **bleue = lu** par le destinataire (une diffusion à tous les admins reste grise — elle a plusieurs lecteurs). Les messages non lus comptent sur la cloche et sur l'icône de l'app jusqu'à ouverture de cet écran.
+**Les messages ont déménagé.** Les messages entre membres vivent désormais dans leur propre onglet **Messages** (§16), plus ici — un message présent à deux endroits est un message qu'on peut marquer lu d'un côté et voir non lu de l'autre. La cloche garde le seul type qui n'a pas de conversation où vivre : une **diffusion à tous les administrateurs**.
 
 **Quorum de validation :** pour l'argent et les rôles, le propriétaire définit *qui* doit approuver et *combien* d'approbations il faut. **Personne ne valide son propre événement** — seule une autre personne le peut (une exception, configurée par le propriétaire, pour les suppressions de réservation, ci-dessous) ; sans autre validateur, la demande attend. Au bout de 7 jours sans réponse, la suite dépend du sens de la demande. Une demande **que vous avez soumise** pour vous-même — une suppression, des demi-journées supplémentaires, une annulation de solde — **expire** : rien de coûteux n'est accordé en silence. Ce qu'un admin a **fait pour vous** — créer ou modifier une réservation, enregistrer un paiement — se **confirme automatiquement** au contraire, puisque c'est déjà arrivé et que le fil vous demandait seulement d'en prendre acte ; une réservation faite pour vous est alors accordée et consomme votre quota.
 
@@ -226,7 +226,7 @@ Toute l'administration vit sous **Réglages → Administration** — *Espace de 
 
 ### L'éditeur d'espace
 
-Ouvrez l'**éditeur** depuis la barre de l'onglet Plan (icône outils croisés). L'écran **Éditeur d'espace** liste vos étages — glissez pour réordonner, l'**icône calques** marque un niveau *Réservable en entier*, le menu **⋮** renomme ou supprime, **+ Ajouter un étage** agrandit le bâtiment. Ouvrez un étage pour le dessiner sur la grille avec la barre d'outils — **Sélection · Bureau · Table · Place · Image · Effacer** :
+Ouvrez l'**éditeur** depuis la barre du hub Réserver (icône outils croisés). L'écran **Éditeur d'espace** liste vos étages — glissez pour réordonner, l'**icône calques** marque un niveau *Réservable en entier*, le menu **⋮** renomme ou supprime, **+ Ajouter un étage** agrandit le bâtiment. Ouvrez un étage pour le dessiner sur la grille avec la barre d'outils — **Sélection · Bureau · Table · Place · Image · Effacer** :
 
 - Un **bureau** reçoit un nom, un interrupteur *Réservable en entier* et un **prix par demi-journée**.
 - Une **table** reçoit un nom, la même option table-entière et son propre **prix par demi-journée**.
@@ -605,3 +605,20 @@ Données minimales : nom, e-mail, forfait, réservations, compte. Vous contrôle
 Android (Google Play), iPhone/iPad, bureau — **macOS** (un DMG : glissez DesKilo dans Applications) et **Windows** (un installeur MSI) construits à chaque version — et le **navigateur** : la même app, rien à installer, à l'adresse publiée par votre espace. Vos données suivent votre compte : une table réservée sur téléphone apparaît dans un onglet de navigateur la seconde d'après.
 
 Le navigateur en fait plus qu'on ne croit : le **Web NFC fonctionne** dans les navigateurs Chromium sur Android en HTTPS — c'est une façon de configurer un tag de chaise depuis le navigateur d'un téléphone — les applications **Android et iPhone installées lisent les tags directement**, ce qui est en général plus simple. Ce qu'il ne sait pas faire, c'est scanner un QR avec la caméra à la manière de la borne. Tout le reste — plan, réservations, membres, argent, factures, PDF — est la même app. Au premier lancement du DMG macOS, clic droit → *Ouvrir* : la build n'est pas encore notariée par Apple, un double-clic simple déclenche l'avertissement Gatekeeper.
+
+## 16. Messages
+L'onglet **Messages** est la messagerie de votre espace : toutes les conversations dans une liste, la plus récente en haut, membres et groupes ensemble. Une ligne montre le dernier message, l'heure et le nombre de non-lus. Touchez le **crayon** pour en commencer une.
+
+**Une personne ou un groupe, une seule feuille.** Choisissez une personne pour une discussion privée ; choisissez-en deux ou plus et un **champ de nom apparaît** — c'est un groupe. Ce nom est **unique dans votre espace**, personne n'a donc à deviner à quelle *Équipe* il écrit ; s'il est pris, l'app le dit et vous changez un mot.
+
+**Les distinguer d'un coup d'œil.** Une personne affiche sa photo dans un cercle. Un groupe affiche un **badge carré** avec un symbole de groupe et — tant que personne n'y a écrit — son nombre de membres.
+
+**Dans une conversation.** Les messages se lisent du plus ancien au plus récent en bulles, émojis et **liens de référence** actifs : un lien de réservation ouvre cette réservation, un lien d'espace ouvre sa feuille de réservation, chacun avec un saut *Voir sur le plan*. Le champ de saisie est en bas. **Appui long sur une bulle pour la supprimer**, avec confirmation. Vos messages portent une coche : **grise = remis**, **bleue = lu**.
+
+**Touchez le nom en haut.** Dans une discussion privée, cela ouvre le **profil** de la personne — sa réservation du jour, sa présence sur place, son statut, et comment la joindre. Dans un groupe, cela ouvre la **liste des membres**, où un administrateur du groupe ajoute ou retire des personnes et où chacun peut partir. Un départ ne laisse jamais un groupe sans administrateur.
+
+**La recherche** (la loupe) cherche à trois endroits : les **membres**, les **groupes** et les **mots dans les messages**. Un résultat vous emmène directement à la personne, au groupe ou au message.
+
+**Ni photos ni fichiers.** Les messages portent du texte, plus des liens vers une réservation ou un espace. C'est volontaire : une app de coworking n'est pas un hébergeur de fichiers.
+
+**Notifications.** Un message *reçu* vous alerte et compte sur l'onglet **Messages** ; ouvrir la conversation efface le compteur. Les messages n'apparaissent plus dans la cloche, réservée aux confirmations et aux événements. Seule exception : une **diffusion à tous les administrateurs**, qui n'a pas de conversation où vivre et y reste.

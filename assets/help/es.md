@@ -57,7 +57,7 @@ El QR codifica un enlace que nombra el rol otorgado (`deskilo://join?role=…`).
 
 **Invitar por mensaje** (*Invitar a alguien*): cada envío por WhatsApp/SMS/compartir emite su propio código personal de un solo uso y compone un mensaje listo en el idioma del invitado. El destinatario puede simplemente copiar el mensaje completo y pegarlo en el campo de unión de la app — el código se detecta automáticamente.
 
-## 3. El plano (pestaña Plano)
+## 3. El plano (en el hub Reservar)
 
 El plano muestra la planta activa de tu espacio: oficinas, mesas y puestos, con código de colores — **libre**, **reservado**, **ocupado**, **mío**, **bloqueado**. Se abre **al instante con los últimos datos conocidos** y se actualiza en segundo plano — con un Wi-Fi inestable sigues viendo el estado más reciente en lugar de una pantalla vacía. Un puesto ocupado muestra a quien está con su **inicial** — o con su **foto**, cuando la ha puesto y el propietario activó *Fotos de los miembros en el plano* —, con una **insignia de registro** cuando ha hecho check-in y un **punto verde** cuando está en línea en la app en ese momento. Los nombres de pila aparecen donde hay sitio para ellos: en la ficha con candado de una reserva de espacio entero y en la vista de lista. Cuando una **mesa, sala o planta entera** está reservada, el propio espacio lo dice — un lavado de color, un borde marcado y una **ficha con candado y el nombre del ocupante** en el centro (un glifo de registro cuando ya está allí); la etiqueta de la sala se lee *Bureau 2 · Florian*. Lo ven todos los usuarios, en el plano, en el hub Reservar y en el quiosco.
 
@@ -204,7 +204,7 @@ El hilo de eventos es la pista de auditoría de tu espacio: reservas creadas/cam
 
 **A la espera de tu confirmación:** siempre que un admin hace algo *por otra persona* — te reserva un puesto, registra tu pago, degrada a un admin — queda **pendiente hasta que se confirme**. Lo pendiente se fija arriba con una ✕ roja y un botón verde **Aceptar**, y recibes una notificación. Lo que haces sobre ti mismo nunca requiere confirmación.
 
-**Mensajes:** la campana también reúne tus notificaciones entre miembros (§6) — recibidas y enviadas, las más recientes primero. La lista muestra solo los **primeros 64 caracteres**; **toca un mensaje** (o **desliza a la derecha**) para abrir la **conversación** con ese miembro — todo el intercambio en burbujas, emojis y enlaces de referencia activos (un enlace de reserva abre esa reserva, un enlace de espacio abre la hoja de reserva — ambas con un salto *Ver en el plano*), con el redactor justo debajo; una difusión se abre como mensaje único. **Desliza a la izquierda** para borrar un mensaje (una pulsación larga en una burbuja también borra desde el hilo) — borrar siempre **pide confirmación** (una difusión recibida a todos los admins no se puede borrar — desaparecería para todos los admins).  **Los mensajes sin leer van en negrita con un punto**; el chip **No leídos** — o el botón con insignia arriba en la pantalla de la campana, que aparta todo lo demás — filtra la lista, y un mensaje cuenta como leído al abrir su **conversación** — mirar la bandeja no es leer. Tus propios mensajes llevan una pequeña marca junto a la hora: **gris = entregado**, **azul = leído** por el destinatario (una difusión a todos los admins queda gris — tiene muchos lectores). Los mensajes sin leer cuentan en la campana y en el icono de la app hasta que abres esta pantalla.
+**Los mensajes se han mudado.** Los mensajes entre miembros viven ahora en su propia pestaña **Mensajes** (§16), no aquí — un mensaje en dos sitios es uno que puede marcar como leído en uno y seguir viendo sin leer en el otro. La campana conserva el único tipo que no tiene conversación donde vivir: una **difusión a todos los administradores**.
 
 **Quórum de validación:** para asuntos de dinero y cambios de rol, el propietario define *quién* debe aprobar y *cuántas* aprobaciones hacen falta. **Nadie valida su propio evento** — solo otra persona puede (una excepción, que configura el propietario, para las eliminaciones de reserva, más abajo); donde no existe otro validador, la solicitud simplemente espera. Pasados 7 días sin respuesta, lo que ocurre depende de hacia dónde apunta la solicitud. Lo que **tú mismo pediste** para ti — una eliminación, medias jornadas extra, la anulación del saldo de una factura — **caduca**: nada costoso se concede jamás en silencio. En cambio, lo que un admin **hizo por ti** — crear o modificar una reserva, registrar un pago — **se confirma solo**, porque ya ocurrió y el hilo solo te pedía darte por enterado; una reserva que un admin te hizo queda entonces concedida y consume tu cuota.
 
@@ -226,7 +226,7 @@ Toda la administración vive en **Ajustes → Administración** — *Espacio de 
 
 ### El editor del espacio
 
-Abre el **editor** desde la barra de la pestaña Plano (icono de herramientas cruzadas). La pantalla **Editor del espacio** lista tus plantas — arrastra para reordenar, el **icono de capas** marca una planta *Reservable en su totalidad*, el **menú ⋮** renombra o elimina, **+ Añadir planta** amplía el edificio. Abre una planta para dibujarla sobre la cuadrícula con la barra inferior — **Seleccionar · Oficina · Mesa · Puesto · Imagen · Borrar**:
+Abre el **editor** desde la barra del hub Reservar (icono de herramientas cruzadas). La pantalla **Editor del espacio** lista tus plantas — arrastra para reordenar, el **icono de capas** marca una planta *Reservable en su totalidad*, el **menú ⋮** renombra o elimina, **+ Añadir planta** amplía el edificio. Abre una planta para dibujarla sobre la cuadrícula con la barra inferior — **Seleccionar · Oficina · Mesa · Puesto · Imagen · Borrar**:
 
 - Una **oficina** recibe un nombre, un interruptor opcional *Reservable en su totalidad* y un **precio por media jornada**.
 - Una **mesa** recibe un nombre, la misma opción de mesa entera y su propio **precio por media jornada**.
@@ -605,3 +605,20 @@ Datos mínimos: nombre, correo, plan, reservas, cuenta. Tú controlas tu foto, t
 Android (Google Play), iPhone/iPad, escritorio — **macOS** (un DMG: arrastra DesKilo a Aplicaciones) y **Windows** (un instalador MSI) generados en cada versión — y el **navegador**: la misma app, sin instalar nada, en la dirección que publique tu espacio. Tus datos siguen a tu cuenta, así que un puesto reservado en el móvil aparece un segundo después en una pestaña del navegador.
 
 El navegador hace más de lo que cabría esperar: **la Web NFC funciona** en navegadores Chromium sobre Android y por HTTPS, que es una forma de configurar desde el navegador de un teléfono la etiqueta de una silla — las apps instaladas de **Android e iPhone leen las etiquetas directamente**, que suele ser más cómodo. Lo que no puede hacer es escanear un QR con la cámara como hace el quiosco. Todo lo demás — plano, reservas, miembros, dinero, facturas, descargas de PDF — es la misma app. Al abrir el DMG de macOS por primera vez, haz clic derecho sobre la app y elige *Abrir*: la compilación aún no está notarizada por Apple, así que un doble clic normal muestra un aviso de Gatekeeper.
+
+## 16. Mensajes
+La pestaña **Mensajes** es el centro de mensajería de su espacio: todas las conversaciones en una lista, la más reciente arriba, personas y grupos juntos. Una fila muestra el último mensaje, la hora y cuántos no ha leído. Toque el **lápiz** para empezar una.
+
+**Una persona o un grupo, una sola hoja.** Elija una persona para un chat privado; elija dos o más y **aparece un campo de nombre** — eso es un grupo. El nombre es **único en su espacio**, así nadie tiene que adivinar a qué *Equipo* escribe; si está ocupado, la app lo dice y usted cambia una palabra.
+
+**Distinguirlos de un vistazo.** Una persona muestra su foto en un círculo. Un grupo muestra una **insignia cuadrada** con un símbolo de grupo y — mientras nadie haya escrito — cuántos miembros tiene.
+
+**Dentro de una conversación.** Los mensajes se leen de antiguo a reciente en burbujas, con emojis y **enlaces de referencia** activos: un enlace de reserva abre esa reserva, uno de espacio abre su hoja de reserva, cada uno con *Ver en el plano*. El campo de escritura está debajo. **Mantenga pulsada una burbuja para eliminarla**, con confirmación. Sus mensajes llevan una marca: **gris = entregado**, **azul = leído**.
+
+**Toque el nombre de arriba.** En un chat privado abre el **perfil** de la persona — la reserva de hoy, si ha registrado su entrada, su estado y cómo contactarla. En un grupo abre la **lista de miembros**, donde un administrador del grupo añade o quita personas y cualquiera puede salir. Salir nunca deja un grupo sin administrador.
+
+**La búsqueda** (la lupa) mira en tres sitios: **personas**, **grupos** y las **palabras dentro de los mensajes**. Un resultado le lleva directamente a la persona, al grupo o al mensaje.
+
+**Ni fotos ni archivos.** Los mensajes llevan texto, más enlaces a una reserva o un espacio. Es deliberado: una app de coworking no es un alojamiento de archivos.
+
+**Notificaciones.** Un mensaje *recibido* le avisa y cuenta en la pestaña **Mensajes**; abrir la conversación lo borra. Los mensajes ya no aparecen en la campana, reservada a confirmaciones y eventos. Única excepción: una **difusión a todos los administradores**, que no tiene conversación donde vivir y permanece allí.

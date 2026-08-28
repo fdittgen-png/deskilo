@@ -1,4 +1,28 @@
 {
   "helpTitle": "Aide",
-  "helpContents": "Sommaire"
+  "helpContents": "Sommaire",
+  "helpHintMessages": "Toutes vos conversations dans une liste, la plus récente en haut. Touchez le crayon pour écrire à quelqu’un ou créer un groupe.",
+  "@helpHintMessages": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTopic": "Messages",
+  "@helpHintMessagesTopic": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip2": "Choisissez une personne pour une discussion privée, ou plusieurs pour créer un groupe — le champ du nom apparaît dès qu’il y en a deux, et ce nom est unique ici : personne n’a à deviner à quelle « Équipe » il écrit.",
+  "@helpHintMessagesTip2": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip3": "Touchez un nom en haut d’une discussion pour voir son profil : la réservation du jour, la présence sur place, et comment le joindre.",
+  "@helpHintMessagesTip3": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip4": "La recherche trouve les membres, les groupes et les mots dans les messages — un résultat vous y emmène directement.",
+  "@helpHintMessagesTip4": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip5": "Insérez une réservation ou un espace dans un message plutôt que de le décrire ; le lecteur le touche et arrive au bon endroit.",
+  "@helpHintMessagesTip5": {
+    "description": "#695 - messaging help hints"
+  }
 }

@@ -421,7 +421,15 @@ Widget? _roleBadge(
 /// the automatic reservation + presence chips (#237), the self-set
 /// status line (#231) and the WhatsApp contact button when the member
 /// shared a number (#223).
-Future<void> _showMemberSheet(
+/// #695 — PUBLIC so the messaging centre opens the SAME profile the
+/// directory does, rather than growing a second one that drifts.
+///
+/// It stays in this file because three of its parts — the presence
+/// chip, the reservation chip and the reservation tile — are shared with
+/// the directory rows above. Moving the sheet alone would have split a
+/// widget from its own pieces; moving all four would have moved half the
+/// screen. [openMemberProfile] below is the door for other features.
+Future<void> showMemberProfileSheet(
   BuildContext context, {
   required Member member,
   required String name,
@@ -765,7 +773,7 @@ class _MemberRow extends StatelessWidget {
               tooltip: l10n?.directoryWhatsapp ?? 'Chat on WhatsApp',
               onPressed: () => onWhatsapp(whatsappUri),
             ),
-      onTap: () => _showMemberSheet(
+      onTap: () => showMemberProfileSheet(
         context,
         member: member,
         name: name,

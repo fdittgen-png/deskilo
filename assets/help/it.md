@@ -57,7 +57,7 @@ Il QR codifica un link che nomina il ruolo concesso (`deskilo://join?role=…`).
 
 **Invitare via messaggio** (*Invita qualcuno*): ogni invio WhatsApp/SMS/condivisione emette il proprio codice personale monouso e compone un messaggio pronto nella lingua dell'invitato. Il destinatario può semplicemente copiare l'intero messaggio e incollarlo nel campo di adesione dell'app — il codice viene rilevato automaticamente.
 
-## 3. La piantina (scheda Piantina)
+## 3. La piantina (nell'hub Prenota)
 
 La piantina mostra il livello attivo del tuo spazio: uffici, tavoli e posti, con codice colore — **libero**, **prenotato**, **occupato**, **mio**, **bloccato**. Si apre **all'istante dagli ultimi dati noti** e si aggiorna in background — con un Wi-Fi instabile vedi comunque lo stato più recente invece di una schermata vuota. Un posto occupato mostra chi c'è con la sua **iniziale** — o con la sua **foto**, se l'ha impostata e il proprietario ha attivato *Foto dei membri sulla piantina* — più un **badge di check-in** quando è arrivato e un **punto verde** quando è online nell'app in questo momento. I nomi per esteso compaiono dove c'è spazio: sul chip con lucchetto di una prenotazione di spazio intero e nella vista a elenco. Quando un **tavolo, una sala o un piano intero** è prenotato, lo dice lo spazio stesso — una velatura colorata, un bordo marcato e un **chip con lucchetto e il nome dell'occupante** al centro (un glifo di check-in quando è arrivato); l'etichetta della sala recita *Bureau 2 · Florian*. Lo vedono tutti gli utenti, sulla piantina, nell'hub Prenota e sul chiosco.
 
@@ -81,7 +81,7 @@ Prenotare dalla piantina:
 
 ## 4. Prenotazioni (hub Prenota)
 
-Apri l'hub **Prenota** (pulsante centrale). In alto: i quattro **pulsanti di vista**, il **chip della data**, il pulsante di **scansione QR** (sotto, §4a), gli stessi controlli della finestra legati alla granularità della scheda Piantina (§3 — chip di fascia oraria, un chip *Giornata intera*, oppure da → a) e i **chip di piano** (*Tutti i piani*, o uno per livello). Poi quattro viste:
+Apri l'hub **Prenota** (pulsante centrale). In alto: i quattro **pulsanti di vista**, il **chip della data**, il pulsante di **scansione QR** (sotto, §4a), gli stessi controlli della finestra legati alla granularità della piantina stessa (§3 — chip di fascia oraria, un chip *Giornata intera*, oppure da → a) e i **chip di piano** (*Tutti i piani*, o uno per livello). Poi quattro viste:
 
 - **Piantina** — la piantina filtrata sulla finestra scelta; tocca un posto libero per prenotarlo.
 - **Giorno** — ogni posto come riga temporale del giorno selezionato (08:00 → 17:00 o l'orario del tuo spazio, la linea rossa segna *adesso*); tocca un tratto libero per prenotare, tocca il tuo blocco per vederne i dettagli.
@@ -204,7 +204,7 @@ Il flusso eventi è la traccia di controllo del tuo spazio: prenotazioni create/
 
 **In attesa della tua conferma:** ogni volta che un admin fa qualcosa *per qualcun altro* — ti prenota un posto, registra il tuo pagamento, retrocede un admin — resta **in sospeso finché non viene confermato**. Le voci in sospeso sono fissate in alto con una ✕ rossa e un pulsante verde **Accetta**, e ricevi una notifica. Le azioni che compi su te stesso non richiedono mai conferma.
 
-**Messaggi:** la campanella raccoglie anche le tue notifiche tra membri (§6) — ricevute e inviate, le più recenti in alto. L'elenco mostra solo i **primi 64 caratteri**; **tocca un messaggio** (o **scorri a destra**) per aprire la **conversazione** con quel membro — tutto lo scambio a fumetti, emoji e link di riferimento attivi (un link di prenotazione apre quella prenotazione, un link di spazio apre la scheda di prenotazione — entrambe con un salto *Mostra sulla pianta*), con il compositore subito sotto; una diffusione si apre come messaggio singolo. **Scorri a sinistra** per eliminare un messaggio (anche una pressione lunga su un fumetto elimina dal filo) — l'eliminazione chiede sempre **conferma** (una diffusione ricevuta a tutti gli admin non si può eliminare — sparirebbe per ogni admin).  **I messaggi non letti sono in grassetto con un puntino**; il chip **Non letti** — o il pulsante con badge in alto nella schermata della campanella, che mette da parte tutto il resto — filtra l'elenco, e un messaggio conta come letto quando apri la sua **conversazione** — dare un'occhiata alla casella non è leggere. I tuoi messaggi portano una piccola spunta accanto all'ora: **grigia = consegnato**, **blu = letto** dal destinatario (una diffusione a tutti gli admin resta grigia — ha molti lettori). I messaggi non letti contano sulla campanella e sull'icona dell'app finché non apri questa schermata.
+**I messaggi si sono spostati.** I messaggi tra membri vivono ora in una scheda **Messaggi** dedicata (§16), non più qui — un messaggio in due posti è uno che puoi segnare come letto in uno e vedere ancora non letto nell'altro. La campanella tiene l'unico tipo che non ha una conversazione in cui stare: una **diffusione a tutti gli amministratori**.
 
 **Quorum di validazione:** per le questioni di denaro e i cambi di ruolo il proprietario definisce *chi* deve approvare e *quante* approvazioni servono. **Nessuno valida il proprio evento** — solo un'altra persona può (un'eccezione, configurata dal proprietario, per le eliminazioni di prenotazione, più sotto); dove non esiste un altro validatore, la richiesta semplicemente attende. Dopo 7 giorni senza risposta, ciò che accade dipende da come è rivolta la richiesta. Una richiesta **che hai presentato tu** per te stesso — un'eliminazione, mezze giornate extra, l'annullamento di un saldo — **scade**: nulla di costoso viene mai concesso in silenzio. Qualcosa che un admin **ha fatto per te** — una prenotazione creata o modificata, un pagamento registrato — **si conferma da sé**, perché è già avvenuto e il flusso ti chiedeva solo di prenderne atto; una prenotazione che un admin ha fatto per te viene allora concessa e consuma la tua quota.
 
@@ -226,7 +226,7 @@ Tutta l'amministrazione vive in **Impostazioni → Amministrazione** — *Spazio
 
 ### L'editor dello spazio
 
-Apri l'**editor** dalla barra dell'app della scheda Piantina (icona attrezzi incrociati). La schermata **Editor dello spazio** elenca i tuoi piani — trascina per riordinare, l'**icona livelli** marca un livello *Prenotabile per intero*, il **menu ⋮** rinomina o elimina, **+ Aggiungi un piano** estende l'edificio. Apri un piano per disegnarlo sulla griglia con la barra strumenti in basso — **Seleziona · Ufficio · Tavolo · Posto · Immagine · Cancella**:
+Apri l'**editor** dalla barra dell'app dell'hub Prenota (icona attrezzi incrociati). La schermata **Editor dello spazio** elenca i tuoi piani — trascina per riordinare, l'**icona livelli** marca un livello *Prenotabile per intero*, il **menu ⋮** rinomina o elimina, **+ Aggiungi un piano** estende l'edificio. Apri un piano per disegnarlo sulla griglia con la barra strumenti in basso — **Seleziona · Ufficio · Tavolo · Posto · Immagine · Cancella**:
 
 - Un **ufficio** riceve un nome, un interruttore facoltativo *Prenotabile per intero* e un **prezzo per mezza giornata**.
 - Un **tavolo** riceve un nome, la stessa opzione tavolo-intero e un proprio **prezzo per mezza giornata**.
@@ -605,3 +605,20 @@ Dati minimi: nome, email, piano, prenotazioni, conto. Controlli tu la foto, lo s
 Android (Google Play), iPhone/iPad, desktop — **macOS** (un DMG: trascina DesKilo in Applicazioni) e **Windows** (un installer MSI) prodotti a ogni release — e il **browser**: la stessa app, niente da installare, all'indirizzo che il tuo spazio pubblica. I tuoi dati seguono il tuo account: una postazione prenotata dal telefono compare un secondo dopo in una scheda del browser.
 
 Il browser fa più di quanto ti aspetteresti: **il Web NFC funziona** nei browser Chromium su Android in HTTPS, ed è un modo per configurare da un telefono il tag di una sedia — le app installate per **Android e iPhone leggono i tag direttamente**, di solito la via più comoda. Ciò che non può fare è scansionare un QR con la fotocamera come fa il chiosco. Tutto il resto — piantina, prenotazioni, membri, finanze, fatture, download dei PDF — è la stessa app. Al primo avvio del DMG macOS fai clic destro sull'app e scegli *Apri*: la build non è ancora notarizzata da Apple, quindi un doppio clic mostra un avviso di Gatekeeper.
+
+## 16. Messaggi
+La scheda **Messaggi** è il centro di messaggistica del tuo spazio: tutte le conversazioni in un elenco, la più recente in alto, persone e gruppi insieme. Una riga mostra l'ultimo messaggio, l'ora e quanti non hai letto. Tocca la **matita** per iniziarne una.
+
+**Una persona o un gruppo, un solo foglio.** Scegli una persona per una chat privata; scegline due o più e **compare un campo per il nome** — quello è un gruppo. Il nome è **unico nel tuo spazio**, così nessuno deve indovinare a quale *Team* sta scrivendo; se è già preso l'app lo dice e cambi una parola.
+
+**Distinguerli a colpo d'occhio.** Una persona mostra la sua foto in un cerchio. Un gruppo mostra un **distintivo quadrato** con un simbolo di gruppo e — finché nessuno ha scritto — quanti membri ha.
+
+**Dentro una conversazione.** I messaggi si leggono dal più vecchio al più recente in fumetti, con emoji e **collegamenti** attivi: un link a una prenotazione apre quella prenotazione, uno a uno spazio apre il suo foglio di prenotazione, ciascuno con *Mostra sulla piantina*. Il campo di scrittura sta sotto. **Tieni premuto un fumetto per eliminarlo**, con conferma. I tuoi messaggi portano una spunta: **grigia = consegnato**, **blu = letto**.
+
+**Tocca il nome in alto.** In una chat privata apre il **profilo** della persona — la prenotazione di oggi, se ha fatto il check-in, il suo stato e come raggiungerla. In un gruppo apre l'**elenco dei membri**, dove un amministratore del gruppo aggiunge o rimuove persone e chiunque può uscire. Uscire non lascia mai un gruppo senza amministratore.
+
+**La ricerca** (la lente) guarda in tre posti: **persone**, **gruppi** e le **parole dentro i messaggi**. Un risultato ti porta direttamente alla persona, al gruppo o al messaggio.
+
+**Niente foto né file.** I messaggi portano testo, più collegamenti a una prenotazione o a uno spazio. È voluto: un'app di coworking non è un servizio di file.
+
+**Notifiche.** Un messaggio *ricevuto* ti avvisa e conta sulla scheda **Messaggi**; aprire la conversazione azzera il contatore. I messaggi non compaiono più nella campana, riservata a conferme ed eventi. Unica eccezione: una **diffusione a tutti gli amministratori**, che non ha una conversazione in cui stare e resta lì.

@@ -8,6 +8,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/conversation.dart';
 import '../../domain/member.dart';
+import '../../../members/presentation/member_profile_link.dart';
 import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'conversation_avatar.dart';
@@ -121,6 +122,14 @@ class _GroupInfoSheet extends ConsumerWidget {
                     leading:
                         MemberAvatarByMember(memberId: p.memberId, name: name),
                     title: Text(name),
+                    // #695 — the roster is a list of people, so tapping
+                    // one shows the person: their reservations, whether
+                    // they are checked in right now, how to reach them.
+                    onTap: () => openMemberProfile(
+                      context,
+                      ref,
+                      memberId: p.memberId,
+                    ),
                     subtitle: !p.isActive
                         ? Text(l10n?.conversationLeft ?? 'Left')
                         : p.isAdmin

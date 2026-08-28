@@ -931,6 +931,30 @@
   },
   "helpTitle": "Hilfe",
   "helpContents": "Inhalt",
+  "helpHintMessages": "Alle Unterhaltungen in einer Liste, die neueste oben. Tippen Sie auf den Stift, um jemandem zu schreiben oder eine Gruppe zu erstellen.",
+  "@helpHintMessages": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTopic": "Nachrichten",
+  "@helpHintMessagesTopic": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip2": "Wählen Sie eine Person für einen privaten Chat oder mehrere für eine Gruppe — das Namensfeld erscheint ab zwei, und der Gruppenname ist hier eindeutig: niemand muss raten, welches „Team“ gemeint ist.",
+  "@helpHintMessagesTip2": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip3": "Tippen Sie oben in einem Chat auf den Namen, um das Profil zu sehen: die heutige Buchung, ob jemand eingecheckt ist, und wie man ihn erreicht.",
+  "@helpHintMessagesTip3": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip4": "Die Suche findet Mitglieder, Gruppen und Wörter in Nachrichten — ein Treffer bringt Sie direkt dorthin.",
+  "@helpHintMessagesTip4": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip5": "Verlinken Sie eine Reservierung oder einen Bereich, statt ihn zu beschreiben; ein Tippen führt zum richtigen.",
+  "@helpHintMessagesTip5": {
+    "description": "#695 - messaging help hints"
+  },
   "helpHintLearnMore": "Mehr erfahren",
   "helpHintDismiss": "Hinweis ausblenden",
   "helpHintPrevTip": "Vorheriger Tipp",
@@ -2061,10 +2085,6 @@
   "@messagesEmpty": {
     "description": "#687 - messaging centre"
   },
-  "messagesEmptyHint": "Tippen Sie auf den Stift, um jemandem zu schreiben, oder erstellen Sie eine Gruppe.",
-  "@messagesEmptyHint": {
-    "description": "#687 - messaging centre"
-  },
   "conversationMemberCount": "{count, plural, =1{1 Mitglied} other{{count} Mitglieder}}",
   "@conversationMemberCount": {
     "description": "#687 - messaging centre",
@@ -2157,6 +2177,10 @@
   "newGroupNameTaken": "Eine Gruppe mit diesem Namen gibt es hier schon. Wählen Sie einen anderen.",
   "@newGroupNameTaken": {
     "description": "#694 - group names are unique per workspace"
+  },
+  "conversationSeeProfile": "Profil ansehen",
+  "@conversationSeeProfile": {
+    "description": "#695 - profile from a conversation"
   },
   "moneyBaseFee": "Basis-Abo",
   "moneyUsage": "{used} von {included} halben Tagen genutzt",
