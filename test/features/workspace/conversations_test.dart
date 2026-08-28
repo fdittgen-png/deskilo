@@ -386,4 +386,87 @@ void main() {
       expect(link, isNot(contains("context.go('/events')")));
     });
   });
+
+  group('the first beta build broke here (#692)', () {
+    test('a message-less group does NOT kill the list', () {
+      // `my_conversations` returned last_at NULL for a group nobody had
+      // written in, and the parser fell back to a `created_at` column
+      // that RPC does not return. DateTime.parse(null) threw — and
+      // because the rows are built in a `for` inside a list literal, one
+      // bad row failed the WHOLE collection. The screen said "an error
+      // occurred" and named nothing.
+      final row = <String, dynamic>{
+        'id': 'c1',
+        'kind': 'group',
+        'title': 'Coworking 2026',
+        'last_body': null,
+        'last_at': null,
+        'unread': 0,
+        'participant_count': 3,
+      };
+      late Conversation parsed;
+      expect(() => parsed = Conversation.fromRow(row), returnsNormally);
+      // Sorted to the BOTTOM of a newest-first list, where a row the app
+      // did not understand belongs — not the top, where it would
+      // displace what someone just wrote.
+      expect(parsed.lastAt.millisecondsSinceEpoch, 0);
+    });
+
+    test('the server no longer sends a null anyway', () {
+      final sql = File('supabase/migrations/0127_conversations_last_at.sql')
+          .readAsStringSync();
+      expect(sql, contains('coalesce(last.created_at, c.last_message_at)'));
+    });
+
+    test('an EMPTY DIRECT thread is visible', () {
+      // It was filtered out — fine when the only way to make one was
+      // opening a profile, wrong once "Démarrer" creates one on purpose.
+      // Hiding it made starting a chat look like it did nothing.
+      final sql = File('supabase/migrations/0127_conversations_last_at.sql')
+          .readAsStringSync();
+      expect(sql, isNot(contains("c.kind = 'group' or last.created_at")));
+    });
+
+    test('starting a conversation OPENS it', () {
+      final sheet = File('lib/features/workspace/presentation/widgets/'
+              'new_conversation_sheet.dart')
+          .readAsStringSync();
+      expect(sheet, contains('Future<String?> showNewConversationSheet'));
+      final screen = File('lib/features/workspace/presentation/screens/'
+              'messages_screen.dart')
+          .readAsStringSync();
+      expect(screen, contains('if (id != null && context.mounted)'));
+    });
+
+    test('every provider failure is TRACED, not just rendered', () {
+      // The device trace had no entry for the crash at all: a Riverpod
+      // provider that throws lands in AsyncError, the screen shows its
+      // generic line, and nothing is written down.
+      final providers = File('lib/features/workspace/providers/'
+              'conversation_providers.dart')
+          .readAsStringSync();
+      expect(providers, contains('TraceLogger.instance'));
+      expect(providers, contains('rethrow'),
+          reason: 'tracing must not swallow — the UI still needs its '
+              'error state');
+      // All four, not just the one that broke.
+      for (final what in [
+        "'conversations'",
+        "'conversation messages'",
+        "'participants'",
+        "'message search'",
+      ]) {
+        expect(providers, contains(what), reason: '$what is untraced');
+      }
+    });
+
+    test('the screen does not repeat the shell\'s title', () {
+      // "Messages" appeared twice, stacked — the app talking to itself.
+      final screen = File('lib/features/workspace/presentation/screens/'
+              'messages_screen.dart')
+          .readAsStringSync();
+      final appBar = screen.substring(screen.indexOf('appBar: AppBar('));
+      expect(appBar.substring(0, 200), isNot(contains('messagesTitle')));
+    });
+  });
 }

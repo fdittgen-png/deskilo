@@ -23,8 +23,17 @@ import 'conversation_avatar.dart';
 /// a group. WhatsApp splits these into two entries — here they are one
 /// list with a checkbox, which is fewer taps for the common case and
 /// still obvious for the rarer one.
-Future<void> showNewConversationSheet(BuildContext context, WidgetRef ref) =>
-    showModalBottomSheet<void>(
+/// Returns the conversation that was started, or null if nothing was.
+///
+/// The caller OPENS it. Closing the sheet and leaving someone on the
+/// list is what made "Démarrer" look like it had done nothing — a
+/// message-less thread has nothing to show on a row, so the only
+/// evidence of success was invisible.
+Future<String?> showNewConversationSheet(
+  BuildContext context,
+  WidgetRef ref,
+) =>
+    showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
       builder: (_) => const _NewConversationSheet(),

@@ -38,8 +38,11 @@ class MessagesScreen extends ConsumerWidget {
     final now = ref.watch(conversationNowProvider);
 
     return Scaffold(
+      // No title here: the shell's app bar above already says
+      // "Messages" (it names the active destination). Two identical
+      // headings stacked was the app talking to itself.
       appBar: AppBar(
-        title: Text(l10n?.messagesTitle ?? 'Messages'),
+        toolbarHeight: 48,
         actions: [
           IconButton(
             key: const ValueKey('messages-search'),
@@ -60,8 +63,14 @@ class MessagesScreen extends ConsumerWidget {
         key: const ValueKey('new-conversation'),
         tooltip: l10n?.newConversationTitle ?? 'New conversation',
         onPressed: () async {
-          await showNewConversationSheet(context, ref);
+          final id = await showNewConversationSheet(context, ref);
           ref.invalidate(conversationsProvider);
+          // Straight into it. Starting a conversation and being left on
+          // the list reads as failure, because a thread with nothing in
+          // it has nothing to show on a row.
+          if (id != null && context.mounted) {
+            await _open(context, ref, id);
+          }
         },
         child: const Icon(Icons.edit_outlined),
       ),
