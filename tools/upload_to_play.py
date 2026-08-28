@@ -445,7 +445,16 @@ def main() -> int:
 
     _gh_output("uploaded", "true")
     print(f"\nSUCCESS: versionCode {version_code} published to track '{args.track}'")
-    print(f"https://play.google.com/console/u/0/developers/5325652654414690657/app/4973487066249778216/tracks/open-testing")
+    # DesKilo's own app (4972789796909667632). This used to print the id
+    # of a DIFFERENT app on the same developer account, alongside a track
+    # the upload may not have touched — a link that opens the wrong
+    # release page reads as "it went somewhere else", which is exactly
+    # the doubt a success line exists to remove. The overview page is
+    # track-agnostic and always the right first stop.
+    print(
+        "https://play.google.com/console/u/0/developers/5325652654414690657"
+        "/app/4972789796909667632/releases/overview"
+    )
     return 0
 
 
