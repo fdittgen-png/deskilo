@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 Future<void> pumpApp(WidgetTester tester) async {
   await tester.pumpWidget(
@@ -18,29 +19,35 @@ Future<void> pumpApp(WidgetTester tester) async {
 }
 
 void main() {
-  testWidgets('shell shows the four localized destinations', (tester) async {
+  testWidgets('shell shows the three localized destinations', (tester) async {
     await pumpApp(tester);
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
-    // #230: Members took the events feed's slot; Events lives behind the
-    // app-bar bell.
-    for (final label in ['Messages', 'Calendar', 'Members', 'Money']) {
+    // #702: Members left the bar for the inbox's third face, the same
+    // way Events left it for the app-bar bell in #230 and then for the
+    // inbox's second face.
+    for (final label in ['Messages', 'Calendar', 'Money']) {
       expect(find.text(label), findsWidgets, reason: 'missing tab "$label"');
     }
+    expect(
+      find.descendant(
+        of: find.byType(ShellBottomBar),
+        matching: find.text('Members'),
+      ),
+      findsNothing,
+    );
   });
 
-  testWidgets('tapping Members switches to the directory branch (#230)',
+  testWidgets('the directory is one tap into the inbox (#702)',
       (tester) async {
     await pumpApp(tester);
 
-    await tester.tap(find.text('Members'));
-    await tester.pumpAndSettle();
+    await openMembersTab(tester);
 
-    final appBarTitle = find.descendant(
-      of: find.byType(AppBar),
-      matching: find.text('Members'),
-    );
-    expect(appBarTitle, findsOneWidget);
+    // The bottom bar is still there — the directory did not become a
+    // pushed route, it became a face of a destination.
+    expect(find.byType(ShellBottomBar), findsOneWidget);
+    expect(find.byKey(const ValueKey('inbox-tab-members')), findsOneWidget);
   });
 
   testWidgets('tapping a destination switches the branch and app-bar title',

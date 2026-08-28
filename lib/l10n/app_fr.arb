@@ -2182,6 +2182,10 @@
   "@conversationSeeProfile": {
     "description": "#695 - profile from a conversation"
   },
+  "inboxChatsTab": "Discussions",
+  "@inboxChatsTab": {
+    "description": "#702 - the inbox tab that holds conversations"
+  },
   "moneyBaseFee": "Abonnement de base",
   "moneyUsage": "{used} demi-journées utilisées sur {included}",
   "moneyUsageUnlimited": "{used} demi-journées utilisées",

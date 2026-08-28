@@ -13,6 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 WorkspaceEvent event({
   String id = 'evt-1',
@@ -121,8 +122,7 @@ Future<FakeEventRepository> pumpEvents(
   );
   await tester.pumpAndSettle();
   // #230: the events feed is behind the app-bar bell, no longer a tab.
-  await tester.tap(find.byTooltip('Events'));
-  await tester.pumpAndSettle();
+  await openAlertsTab(tester);
   return events;
 }
 
@@ -165,8 +165,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.byTooltip('Events'));
-    await tester.pumpAndSettle();
+    await openAlertsTab(tester);
 
     expect(find.text('Waiting for your confirmation'), findsNothing);
     expect(find.text('Accept'), findsNothing);
@@ -193,8 +192,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.byTooltip('Events'));
-    await tester.pumpAndSettle();
+    await openAlertsTab(tester);
 
     expect(find.text('Accept'), findsNothing,
         reason: 'only another person validates — the event stays '
@@ -304,8 +302,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.byTooltip('Events'));
-    await tester.pumpAndSettle();
+    await openAlertsTab(tester);
 
     expect(find.text('Waiting for your confirmation'), findsNothing);
     expect(find.text('Accept'), findsNothing);

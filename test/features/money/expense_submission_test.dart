@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 import 'money_screen_test.dart' show pumpMoney;
 
 void main() {
@@ -83,8 +84,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     // #230: the events feed is behind the app-bar bell, no longer a tab.
-    await tester.tap(find.byTooltip('Events'));
-    await tester.pumpAndSettle();
+    await openAlertsTab(tester);
 
     expect(
       find.textContaining('Flo recorded a payment of'),

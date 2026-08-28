@@ -6,6 +6,7 @@ import '../../features/members/providers/directory_providers.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
+import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 
 /// THE table → cached-providers map (#577). Both freshness paths read it:
@@ -42,6 +43,8 @@ const mappedTables = [
   'profiles',
   'levels',
   'member_notes',
+  'conversations',
+  'conversation_participants',
   'events',
   'ledger_entries',
   'invoices',
@@ -112,7 +115,24 @@ TableInvalidation invalidationFor(String table) => switch (table) {
       'seats' ||
       'plan_images' =>
         TableInvalidation([levelsProvider, floorPlanProvider]),
-      'member_notes' => TableInvalidation([myNotesProvider]),
+      // #702 — a MESSAGE lands live, or it does not land at all until
+      // someone pulls to refresh. This mapped only the old bell feed:
+      // the messaging centre's list, its unread badge and any open
+      // thread all sat on caches nothing refreshed, so an incoming
+      // message was invisible until the screen was rebuilt by hand.
+      // That is the one thing a messenger may not do.
+      'member_notes' => TableInvalidation([
+          myNotesProvider,
+          conversationsProvider,
+          // The family, so whichever thread is open repaints too.
+          conversationMessagesProvider,
+        ]),
+      // A conversation you were just added to, and the roster of one you
+      // are in: both arrive as rows on tables the client never watched.
+      'conversations' || 'conversation_participants' => TableInvalidation([
+          conversationsProvider,
+          conversationParticipantsProvider,
+        ]),
       'events' || 'event_decisions' => TableInvalidation([
           eventsProvider,
           eventDecisionsProvider,

@@ -8,7 +8,7 @@ import '../../../../core/theme/status_colors.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member_note.dart';
 import '../../../workspace/domain/member_note_refs.dart';
-import '../../../workspace/presentation/widgets/conversation_sheet.dart';
+import '../../../workspace/presentation/widgets/open_conversation.dart';
 import '../../../workspace/presentation/widgets/member_note_actions.dart';
 import '../../../workspace/presentation/widgets/member_note_sheet.dart';
 import '../../../workspace/presentation/widgets/note_check.dart';
@@ -117,12 +117,7 @@ class NoteRow extends ConsumerWidget {
       onTap: () {
         final partner = _counterpartId(sentByMe);
         if (!note.isBroadcast && partner != null) {
-          showConversationSheet(
-            context,
-            ref,
-            otherMemberId: partner,
-            otherName: names[partner] ?? '',
-          );
+          openDirectConversation(context, ref, memberId: partner);
           return;
         }
         showMemberNoteSheet(
@@ -154,12 +149,7 @@ class NoteRow extends ConsumerWidget {
           // exchange in view beats a blank dialog.
           final partner = _counterpartId(sentByMe);
           if (canReply && partner != null) {
-            await showConversationSheet(
-              context,
-              ref,
-              otherMemberId: partner,
-              otherName: names[partner] ?? '',
-            );
+            await openDirectConversation(context, ref, memberId: partner);
           }
         } else if (canDelete) {
           await deleteMemberNoteGuarded(context, ref, note);

@@ -64,7 +64,7 @@ final class ConversationsProvider
   }
 }
 
-String _$conversationsHash() => r'c2d1f1ea93b13526fad941fc17ea362f6edc5248';
+String _$conversationsHash() => r'65305a8ce697e27f48561b5b93ba71c7ec5f1848';
 
 /// Total unread across every conversation — the badge on the Messages
 /// destination.
@@ -187,7 +187,7 @@ final class ConversationMessagesProvider
 }
 
 String _$conversationMessagesHash() =>
-    r'8ead431e0bb68cde0c04f19122d655d44e5fe1e9';
+    r'2fb490a27ae57a9668eef8e53265b4d9f9196ab5';
 
 /// The messages of one conversation, oldest first.
 
@@ -275,7 +275,7 @@ final class ConversationParticipantsProvider
 }
 
 String _$conversationParticipantsHash() =>
-    r'b62197a4d796071cc52572743a708469586a82ec';
+    r'75bf3306e7ff0aaf37233f54e78d30d0898ec05f';
 
 /// The roster of one conversation.
 
@@ -301,6 +301,120 @@ final class ConversationParticipantsFamily extends $Family
 
   @override
   String toString() => r'conversationParticipantsProvider';
+}
+
+/// The direct conversation with one member, resolved by the server
+/// (#702) — `direct_conversation` returns the existing thread or opens
+/// one on first use.
+///
+/// A read that can WRITE, deliberately: "the conversation with Ana" has
+/// to name a row before a thread can render, and a pair who have never
+/// spoken has no row yet. The alternative is a screen that shows an
+/// empty thread with no id and cannot send anything from it.
+
+@ProviderFor(directConversationId)
+final directConversationIdProvider = DirectConversationIdFamily._();
+
+/// The direct conversation with one member, resolved by the server
+/// (#702) — `direct_conversation` returns the existing thread or opens
+/// one on first use.
+///
+/// A read that can WRITE, deliberately: "the conversation with Ana" has
+/// to name a row before a thread can render, and a pair who have never
+/// spoken has no row yet. The alternative is a screen that shows an
+/// empty thread with no id and cannot send anything from it.
+
+final class DirectConversationIdProvider
+    extends $FunctionalProvider<AsyncValue<String?>, String?, FutureOr<String?>>
+    with $FutureModifier<String?>, $FutureProvider<String?> {
+  /// The direct conversation with one member, resolved by the server
+  /// (#702) — `direct_conversation` returns the existing thread or opens
+  /// one on first use.
+  ///
+  /// A read that can WRITE, deliberately: "the conversation with Ana" has
+  /// to name a row before a thread can render, and a pair who have never
+  /// spoken has no row yet. The alternative is a screen that shows an
+  /// empty thread with no id and cannot send anything from it.
+  DirectConversationIdProvider._({
+    required DirectConversationIdFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'directConversationIdProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$directConversationIdHash();
+
+  @override
+  String toString() {
+    return r'directConversationIdProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<String?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<String?> create(Ref ref) {
+    final argument = this.argument as String;
+    return directConversationId(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is DirectConversationIdProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$directConversationIdHash() =>
+    r'85be189fcdf7fc0692ca69584c1f24d7910c9528';
+
+/// The direct conversation with one member, resolved by the server
+/// (#702) — `direct_conversation` returns the existing thread or opens
+/// one on first use.
+///
+/// A read that can WRITE, deliberately: "the conversation with Ana" has
+/// to name a row before a thread can render, and a pair who have never
+/// spoken has no row yet. The alternative is a screen that shows an
+/// empty thread with no id and cannot send anything from it.
+
+final class DirectConversationIdFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<String?>, String> {
+  DirectConversationIdFamily._()
+    : super(
+        retry: null,
+        name: r'directConversationIdProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The direct conversation with one member, resolved by the server
+  /// (#702) — `direct_conversation` returns the existing thread or opens
+  /// one on first use.
+  ///
+  /// A read that can WRITE, deliberately: "the conversation with Ana" has
+  /// to name a row before a thread can render, and a pair who have never
+  /// spoken has no row yet. The alternative is a screen that shows an
+  /// empty thread with no id and cannot send anything from it.
+
+  DirectConversationIdProvider call(String memberId) =>
+      DirectConversationIdProvider._(argument: memberId, from: this);
+
+  @override
+  String toString() => r'directConversationIdProvider';
 }
 
 /// Full-text search over messages I can see (#687).
@@ -372,7 +486,7 @@ final class MessageSearchProvider
   }
 }
 
-String _$messageSearchHash() => r'88d5a9e7bd8b7870703adfae6d30c50b3af36fde';
+String _$messageSearchHash() => r'ecfa1edb0c0efc473cd5844329ed1b9de9d11dd3';
 
 /// Full-text search over messages I can see (#687).
 ///

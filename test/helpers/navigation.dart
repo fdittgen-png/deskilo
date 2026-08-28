@@ -52,3 +52,30 @@ Future<void> tapAppBarIcon(WidgetTester tester, IconData icon) async {
   );
   await tester.pumpAndSettle();
 }
+
+/// Opens the inbox's ALERTS face (#702) — where the app-bar bell used to
+/// lead before the events feed became a tab of the inbox.
+///
+/// Kept as a helper for the same reason as [switchToPlanTab]: nine test
+/// files mean "show me the feed", and that is still exactly what this
+/// does. It works whether or not the inbox is already the showing
+/// destination.
+Future<void> openAlertsTab(WidgetTester tester) async {
+  const tab = ValueKey('inbox-tab-alerts');
+  if (find.byKey(tab).evaluate().isEmpty) {
+    await tapNavIcon(tester, Icons.forum_outlined);
+  }
+  await tester.tap(find.byKey(tab));
+  await tester.pumpAndSettle();
+}
+
+/// Opens the inbox's MEMBERS face (#702) — the directory, which was a
+/// bottom-bar destination until it became the inbox's third face.
+Future<void> openMembersTab(WidgetTester tester) async {
+  const tab = ValueKey('inbox-tab-members');
+  if (find.byKey(tab).evaluate().isEmpty) {
+    await tapNavIcon(tester, Icons.forum_outlined);
+  }
+  await tester.tap(find.byKey(tab));
+  await tester.pumpAndSettle();
+}

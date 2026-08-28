@@ -16,7 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/fake_realtime_sync.dart';
 import '../helpers/mock_providers.dart';
-import 'package:deskilo/app/shell/shell_bottom_bar.dart';
+import '../helpers/navigation.dart';
 
 void main() {
   testWidgets(
@@ -35,9 +35,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.descendant(
-        of: find.byType(ShellBottomBar), matching: find.text('Members')));
-    await tester.pumpAndSettle();
+    await openMembersTab(tester);
 
     expect(find.text('Ana Lima'), findsNothing);
     expect(realtime.watched, contains('ws-1'),
@@ -78,9 +76,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.descendant(
-        of: find.byType(ShellBottomBar), matching: find.text('Members')));
-    await tester.pumpAndSettle();
+    await openMembersTab(tester);
 
     workspace.memberNames = {'member-1': 'Florian'};
     realtime.emit('profiles');
@@ -106,9 +102,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.descendant(
-        of: find.byType(ShellBottomBar), matching: find.text('Members')));
-    await tester.pumpAndSettle();
+    await openMembersTab(tester);
     expect(find.text('Ana Lima'), findsNothing);
 
     // Ana joined while the socket was down: NO members event was ever

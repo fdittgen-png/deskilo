@@ -16,6 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 WorkspaceEvent _event(
   String id, {
@@ -69,8 +70,7 @@ Future<InMemoryNotificationFilterStore> pumpFeed(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byTooltip('Events'));
-  await tester.pumpAndSettle();
+  await openAlertsTab(tester);
   return filters;
 }
 

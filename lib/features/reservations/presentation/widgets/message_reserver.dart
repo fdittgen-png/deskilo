@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/presentation/widgets/conversation_sheet.dart';
+import '../../../workspace/presentation/widgets/open_conversation.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
 
@@ -58,11 +58,10 @@ Future<void> messageReserver(
       localeName: localeName,
     ),
   );
-  return showConversationSheet(
+  return openDirectConversation(
     context,
     ref,
-    otherMemberId: blocking.memberId,
-    otherName: name,
+    memberId: blocking.memberId,
     seedBody: '$token ',
   );
 }

@@ -25,7 +25,7 @@ Una cuenta puede pertenecer a varios espacios. **Ajustes → Perfiles** los list
 
 ### Orientarse
 
-La app tiene hasta cinco destinos en la barra inferior: **Plano** (§3), **Calendario** (§5), el gran botón central **Reservar** (§4), **Miembros** (§6) y **Finanzas** (§9). Solo Plano y Reservar están siempre: Calendario, Miembros y Finanzas van y vienen con su función (§8), y lo mismo la **campana** que abre el hilo de eventos y confirmaciones (§7, con una insignia que cuenta lo que te espera). El **engranaje** que abre los **Ajustes** (§12) sí está en todas las cabeceras. Con el teléfono en horizontal y en tabletas, la mayoría de las pantallas pasan a un **diseño dividido** — controles en un panel lateral, contenido llenando el resto.
+La app tiene hasta cuatro destinos en la barra inferior: **Mensajes** (§16), **Calendario** (§5), el gran botón central **Reservar** (§4) y **Finanzas** (§9). Mensajes y Reservar están siempre; Calendario y Finanzas van y vienen con su función (§8). **Mensajes es la bandeja de entrada**: las conversaciones, el hilo de eventos y confirmaciones (§7) y el directorio de miembros (§6) son sus tres caras, cada una a un toque en la tira de pestañas, y su insignia suma todo lo que te espera en las tres. El **engranaje** que abre los **Ajustes** (§12) sí está en todas las cabeceras. Con el teléfono en horizontal y en tabletas, la mayoría de las pantallas pasan a un **diseño dividido** — controles en un panel lateral, contenido llenando el resto.
 
 **Todo se mantiene en vivo.** Lo que cualquiera cambie — una reserva, un miembro nuevo, un ajuste — se envía en segundos a cada dispositivo conectado, incluido el que hizo el cambio. Sin reiniciar, sin tirar para actualizar.
 
@@ -187,7 +187,9 @@ El mes de un vistazo, con dos alcances y dos formas:
 - Los **chips de planta** (*Todas las plantas* / por planta) filtran la **cronología**.
 - Toca un día en la cuadrícula mensual para cargarlo abajo. En horizontal, el calendario y el detalle usan el diseño dividido.
 
-## 6. Directorio de miembros (pestaña Miembros)
+## 6. Directorio de miembros (Mensajes → Miembros)
+
+**Dónde vive (#702).** El directorio es la tercera cara de la pestaña **Mensajes**, junto a sus conversaciones y las alertas — las personas de las que ambas hablan. Hasta entonces era un destino propio de la barra inferior.
 
 Mira quién forma tu comunidad:
 
@@ -198,13 +200,15 @@ Mira quién forma tu comunidad:
 - Define tu propia foto, tu estado y la visibilidad de tu teléfono en **Ajustes** (§12).
 - Los admins y propietarios ven además el **correo** de cada miembro bajo el nombre — los miembros normales no: el contacto entre miembros sigue siendo el número de WhatsApp compartido voluntariamente.
 
-## 7. Eventos y confirmaciones (icono de campana)
+## 7. Eventos y confirmaciones (Mensajes → Eventos)
+
+**Dónde vive (#702).** El flujo es la segunda cara de la pestaña **Mensajes**. Hasta entonces estaba detrás de una campana en la barra superior — un aviso que podía abrir en un sitio y seguir encontrando en espera en otro.
 
 El hilo de eventos es la pista de auditoría de tu espacio: reservas creadas/cambiadas/canceladas, pagos registrados, facturas pagadas, gastos presentados, solicitudes de días extra, cambios de rol, solicitudes de eliminación. Los miembros ven sus propios eventos; los admins y propietarios ven los de todos. Los **chips de filtro** (Todo · Reserva · Pago · Gasto · …) acotan la lista — tu elección se recuerda — y un menú **Agrupar por** pliega el hilo en grupos por tipo, día o miembro (tocar el símbolo del grupo vuelve a la lista plana); cada fila lleva su icono de estado — un **reloj de arena** mientras está pendiente, una **marca verde** una vez confirmado — y los eventos de dinero muestran *quién los validó y cuándo* directamente en la fila.
 
 **A la espera de tu confirmación:** siempre que un admin hace algo *por otra persona* — te reserva un puesto, registra tu pago, degrada a un admin — queda **pendiente hasta que se confirme**. Lo pendiente se fija arriba con una ✕ roja y un botón verde **Aceptar**, y recibes una notificación. Lo que haces sobre ti mismo nunca requiere confirmación.
 
-**Los mensajes se han mudado.** Los mensajes entre miembros viven ahora en su propia pestaña **Mensajes** (§16), no aquí — un mensaje en dos sitios es uno que puede marcar como leído en uno y seguir viendo sin leer en el otro. La campana conserva el único tipo que no tiene conversación donde vivir: una **difusión a todos los administradores**.
+**Los mensajes se han mudado.** Los mensajes entre miembros viven ahora en su propia pestaña **Mensajes** (§16), no aquí — un mensaje en dos sitios es uno que puede marcar como leído en uno y seguir viendo sin leer en el otro. Este flujo conserva el único tipo que no tiene conversación donde vivir: una **difusión a todos los administradores**.
 
 **Quórum de validación:** para asuntos de dinero y cambios de rol, el propietario define *quién* debe aprobar y *cuántas* aprobaciones hacen falta. **Nadie valida su propio evento** — solo otra persona puede (una excepción, que configura el propietario, para las eliminaciones de reserva, más abajo); donde no existe otro validador, la solicitud simplemente espera. Pasados 7 días sin respuesta, lo que ocurre depende de hacia dónde apunta la solicitud. Lo que **tú mismo pediste** para ti — una eliminación, medias jornadas extra, la anulación del saldo de una factura — **caduca**: nada costoso se concede jamás en silencio. En cambio, lo que un admin **hizo por ti** — crear o modificar una reserva, registrar un pago — **se confirma solo**, porque ya ocurrió y el hilo solo te pedía darte por enterado; una reserva que un admin te hizo queda entonces concedida y consume tu cuota.
 

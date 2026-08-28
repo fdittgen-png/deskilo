@@ -29,43 +29,6 @@ import '../router.dart';
 import 'shell_bottom_bar.dart';
 import '../../core/time/clock.dart';
 
-/// App-bar events bell with the pending-confirmation badge (spec §8.1).
-/// #230 moved the events feed off the bottom bar; the badge that used to
-/// decorate the Events tab now decorates this bell on every tab.
-class _EventsBellIcon extends ConsumerWidget {
-  const _EventsBellIcon();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // #687 — pending confirmations ONLY. Unread messages moved to the
-    // Messages destination, which is where tapping them leads: a bell
-    // that counted them sent people to a feed to find a conversation
-    // that was one tab away, and counted their OWN sent messages on the
-    // way.
-    final count = ref.watch(myPendingEventCountProvider).value ?? 0;
-    const icon = Icon(Icons.notifications_outlined);
-    // #611 — a changed count scales in briefly, so "something new needs
-    // you" registers peripherally. Keyed per count: 1→2 animates too.
-    return AnimatedSwitcher(
-      duration: motionDuration(context, MotionTokens.quick),
-      switchInCurve: MotionTokens.enter,
-      switchOutCurve: MotionTokens.ease,
-      transitionBuilder: (child, animation) => ScaleTransition(
-        scale: animation,
-        child: FadeTransition(opacity: animation, child: child),
-      ),
-      child: count == 0
-          ? const KeyedSubtree(
-              key: ValueKey('events-bell-plain'), child: icon)
-          : Badge.count(
-              key: ValueKey('events-bell-$count'),
-              count: count,
-              child: icon,
-            ),
-    );
-  }
-}
-
 /// Note ids already announced THIS SESSION — belt to the persisted
 /// NOTIFIED stamp's braces: two racing provider refreshes must not
 /// announce the same note twice before the stamp lands.
@@ -234,16 +197,18 @@ class ShellScreen extends ConsumerWidget {
     // a workspace with no messaging surface has no way to reach a
     // conversation someone already sent it.
     final features = ref.watch(enabledFeaturesSyncProvider);
-    final unreadMessages = ref.watch(unreadMessagesProvider);
+    // #702 — one destination, one badge, both counts: unread messages
+    // plus the confirmations that used to badge the bell. Two badges for
+    // one tab would have been two answers to "is there anything for me".
+    final unreadMessages = ref.watch(unreadMessagesProvider) +
+        (ref.watch(myPendingEventCountProvider).value ?? 0);
     final visibleBranches = [
       ShellBranch.plan,
       if (features.contains(WorkspaceFeature.calendarTab))
         ShellBranch.calendar,
-      // The member directory tab is feature-gated since the hierarchy
-      // pass (membersDirectory, default ON); the eventsTab feature gates
-      // the app-bar bell.
-      if (features.contains(WorkspaceFeature.membersDirectory))
-        ShellBranch.directory,
+      // #702 — NO MEMBERS TAB. The directory is the inbox's third face:
+      // the people the conversations and the alerts are about. The
+      // membersDirectory feature still gates it, one level in.
       if (features.contains(WorkspaceFeature.moneyTab)) ShellBranch.money,
     ];
     final selectedPosition =
@@ -313,15 +278,12 @@ class ShellScreen extends ConsumerWidget {
               tooltip: l10n?.editorOpenTooltip ?? 'Edit workspace',
               onPressed: () => context.push('/editor'),
             ),
-          // Events bell (#230): pushes the feed that used to be a tab,
-          // carrying its pending-count badge. Hidden entirely when the
-          // workspace gated the events feature off.
-          if (features.contains(WorkspaceFeature.eventsTab))
-            IconButton(
-              icon: const _EventsBellIcon(),
-              tooltip: l10n?.tabEvents ?? 'Events',
-              onPressed: () => context.push('/events'),
-            ),
+          // #702 — NO BELL. The events feed is a face of the inbox, and
+          // an alert reachable from two places is an alert you can read
+          // in one and still see waiting in the other (the #687 rule
+          // that moved messages off this bar in the first place). The
+          // count it carried now rides the inbox destination below,
+          // beside the unread messages it always sat next to.
           IconButton(
             icon: const Icon(Icons.settings_outlined),
             tooltip: l10n?.settingsTitle ?? 'Settings',
@@ -337,11 +299,19 @@ class ShellScreen extends ConsumerWidget {
         changeKey: navigationShell.currentIndex,
         child: navigationShell,
       ),
-      // The bar needs at least two destinations to flank the notch. Since
-      // #230 the ungated Members tab guarantees Plan + Members even with
-      // everything gated off; the guard stays as a safety net should a
-      // branch ever become gated again.
-      bottomNavigationBar: visibleBranches.length < 2
+      // ONE destination is enough (#702).
+      //
+      // The old guard hid the whole bar below two, on the reasoning that
+      // a notch wants a tab on either side. It was safe while the
+      // ungated Members tab guaranteed a second one — and #702 moved
+      // Members into the inbox, so a workspace with Calendar and Money
+      // both off is down to the inbox alone. Hiding the bar there takes
+      // the RAISED RESERVE BUTTON with it: the app's core action, on the
+      // one surface that has no other way to reach it.
+      //
+      // The bar lays a single tab out on the leading side and leaves the
+      // other blank, which looks sparse and works.
+      bottomNavigationBar: visibleBranches.isEmpty
           ? null
           : ShellBottomBar(
               // -1 when no side tab matches the active branch — on the

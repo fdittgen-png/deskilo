@@ -1027,6 +1027,21 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       lastAt: DateTime.utc(2026, 8, 27),
     );
     conversations.add(created);
+    // #702 / migration 0130 — the thread INHERITS the pair's existing
+    // notes. On the server those notes were written before conversations
+    // existed and the backfill stamps them into this one; a fake that
+    // hands back an empty thread instead would let the app lose every
+    // message older than 0125 without a single test noticing.
+    conversationMessages.putIfAbsent(
+      created.id,
+      () => memberNotes
+          .where((n) =>
+              !n.isBroadcast &&
+              (n.fromMemberId == otherMemberId ||
+                  n.toMemberId == otherMemberId))
+          .toList()
+        ..sort((a, b) => a.createdAt.compareTo(b.createdAt)),
+    );
     return created.id;
   }
 
@@ -1104,14 +1119,25 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     String body,
   ) async {
     sentMessages.add((conversationId: conversationId, body: body));
-    conversationMessages.putIfAbsent(conversationId, () => []).add(MemberNote(
-          id: 'msg-${sentMessages.length}',
-          workspaceId: 'workspace-1',
-          fromMemberId: 'member-1',
-          toMemberId: null,
-          body: body,
-          createdAt: DateTime.utc(2026, 8, 27, 12, sentMessages.length),
-        ));
+    // #702 — a conversation message IS a member note, as it is on the
+    // server: `send_conversation_message` inserts into `member_notes`
+    // with the conversation stamped on it. The fake used to write only
+    // into its own thread map, so a caller that checked what was SENT
+    // saw nothing — and the direct thread's recipient was lost, which
+    // is the one field a 1:1 message is about.
+    final direct = conversations
+        .where((c) => c.id == conversationId && !c.isGroup)
+        .firstOrNull;
+    final note = MemberNote(
+      id: 'msg-${sentMessages.length}',
+      workspaceId: 'workspace-1',
+      fromMemberId: 'member-1',
+      toMemberId: direct?.otherMemberId,
+      body: body,
+      createdAt: DateTime.utc(2026, 8, 27, 12, sentMessages.length),
+    );
+    memberNotes.add(note);
+    conversationMessages.putIfAbsent(conversationId, () => []).add(note);
   }
 
   @override

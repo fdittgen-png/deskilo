@@ -336,15 +336,18 @@ void main() {
   });
 
   group('messages are not notifications any more', () {
-    test('the bell counts pending confirmations ONLY', () {
-      // It used to count unread messages too — and sent them to a feed
-      // to find a conversation that was one tab away.
+    test('there is no bell — the inbox carries both counts (#702)', () {
+      // #687 took messages off the bell so they had one home. #702
+      // finished the thought from the other side: the ALERTS had two
+      // homes of their own the moment the feed became a tab, so the
+      // bell went and its count moved onto the destination that already
+      // carried the unread messages it always sat beside.
       final shell =
           File('lib/app/shell/shell_screen.dart').readAsStringSync();
+      expect(shell, isNot(contains("push('/events')")),
+          reason: 'the bell is gone, not merely relabelled');
       expect(shell, contains('myPendingEventCountProvider'));
-      // The bell's count line must not add anything to it.
-      expect(shell, isNot(contains('+\n        (ref.watch(unreadNoteCountProvider)')));
-      expect(shell, contains('Unread messages moved to the'));
+      expect(shell, contains('unreadMessagesProvider'));
     });
 
     test('the feed carries BROADCASTS only', () {

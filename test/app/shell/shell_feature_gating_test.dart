@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 Future<void> pumpWithFlags(
   WidgetTester tester,
@@ -52,52 +53,61 @@ void main() {
       const {'moneyTab': false, 'calendarTab': false},
     );
 
-    expect(tabLabels(tester), ['Messages', 'Members']);
+    // #702 — Members is a face of the inbox, not a tab, so gating the
+    // other two leaves the inbox alone on the bar.
+    expect(tabLabels(tester), ['Messages']);
   });
 
-  testWidgets('all features on keeps the four tabs', (tester) async {
+  testWidgets('all features on keeps the three tabs', (tester) async {
     await pumpWithFlags(tester, const {});
 
-    expect(tabLabels(tester), ['Messages', 'Calendar', 'Members', 'Money']);
+    expect(tabLabels(tester), ['Messages', 'Calendar', 'Money']);
+  });
+
+  testWidgets('membersDirectory OFF drops the inbox face, not a tab',
+      (tester) async {
+    await pumpWithFlags(tester, const {'membersDirectory': false});
+
+    // The bar is untouched...
+    expect(tabLabels(tester), ['Messages', 'Calendar', 'Money']);
+    await openAlertsTab(tester);
+    // ...and the directory is simply not one of the inbox's faces.
+    expect(find.byKey(const ValueKey('inbox-tab-members')), findsNothing);
+    expect(find.byKey(const ValueKey('inbox-tab-alerts')), findsOneWidget);
   });
 
   testWidgets(
-      'with Calendar disabled the pending badge still lands on the '
-      'app-bar bell and tapping it opens the events feed (#230)',
-      (tester) async {
+      'with Calendar disabled the pending badge still lands on the inbox '
+      'and its Alerts face still opens (#702)', (tester) async {
     final events = FakeEventRepository()
       ..events.addAll([pendingForMe('e1'), pendingForMe('e2')]);
     await pumpWithFlags(tester, const {'calendarTab': false}, events: events);
 
-    // The badge renders inside the bell action, not a neighbor.
+    // The badge renders on the inbox destination, whatever else is gated.
     expect(
       find.descendant(
-        of: find.byTooltip('Events'),
+        of: find.byType(ShellBottomBar),
         matching: find.text('2'),
       ),
       findsOneWidget,
     );
 
-    await tester.tap(find.byTooltip('Events'));
-    await tester.pumpAndSettle();
-
-    final appBarTitle = find.descendant(
-      of: find.byType(AppBar),
-      matching: find.text('Events'),
-    );
-    expect(appBarTitle, findsOneWidget);
+    await openAlertsTab(tester);
+    // The feed itself, with the two pending confirmations on it.
+    expect(find.byKey(const ValueKey('inbox-tab-alerts')), findsOneWidget);
+    expect(find.byType(ShellBottomBar), findsOneWidget);
   });
 
   testWidgets(
-      'everything gated off keeps Plan and the ungated Members tab — the '
-      'bar stays, the bell goes (#230)', (tester) async {
+      'everything gated off keeps the inbox — the bar stays, the alerts '
+      'face goes (#702)', (tester) async {
     await pumpWithFlags(
       tester,
       const {'calendarTab': false, 'eventsTab': false, 'moneyTab': false},
     );
 
     expect(find.byType(ShellBottomBar), findsOneWidget);
-    expect(tabLabels(tester), ['Messages', 'Members']);
+    expect(tabLabels(tester), ['Messages']);
     expect(find.byTooltip('Events'), findsNothing);
     // The app boots on the Reserve hub (its branch is never gated).
     final appBarTitle = find.descendant(

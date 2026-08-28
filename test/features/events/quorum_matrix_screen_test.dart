@@ -15,6 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 WorkspaceEvent expenseEvent({
   String id = 'evt-exp',
@@ -96,8 +97,7 @@ Future<FakeEventRepository> pumpEvents(
   );
   await tester.pumpAndSettle();
   // #230: the events feed is behind the app-bar bell, no longer a tab.
-  await tester.tap(find.byTooltip('Events'));
-  await tester.pumpAndSettle();
+  await openAlertsTab(tester);
   return events;
 }
 

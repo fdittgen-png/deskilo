@@ -9,7 +9,6 @@ import '../features/calendar/presentation/screens/calendar_screen.dart';
 import '../features/editor/presentation/screens/editor_screen.dart';
 import '../features/members/presentation/screens/directory_screen.dart';
 import '../features/editor/presentation/screens/level_canvas_screen.dart';
-import '../features/events/presentation/screens/events_screen.dart';
 import '../features/events/presentation/screens/validation_settings_screen.dart';
 import '../features/money/presentation/screens/billing_screen.dart';
 import '../features/money/presentation/screens/money_screen.dart';
@@ -30,7 +29,7 @@ import '../features/plan/presentation/screens/accessories_screen.dart';
 import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
-import '../features/workspace/presentation/screens/messages_screen.dart';
+import '../features/workspace/presentation/screens/inbox_screen.dart';
 import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
 import '../features/reservations/presentation/screens/reserve_screen.dart';
@@ -200,7 +199,9 @@ GoRouter router(Ref ref) {
             routes: [
               GoRoute(
                 path: '/messages',
-                builder: (context, state) => const MessagesScreen(),
+                // #702 — the inbox: chats, alerts and members, one
+                // destination. `MessagesScreen` is now its first face.
+                builder: (context, state) => const InboxScreen(),
               ),
             ],
           ),
@@ -219,13 +220,21 @@ GoRouter router(Ref ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                // Member directory (#224, tab since #230) — gated by the
-                // membersDirectory feature since the hierarchy pass.
+                // Member directory (#224, tab since #230, a face of the
+                // inbox since #702). The branch stays so the path keeps
+                // resolving; it redirects to the inbox, on the tab the
+                // directory now lives in.
                 path: '/directory',
-                redirect: (context, state) =>
-                    featureEnabled(WorkspaceFeature.membersDirectory)
-                        ? null
-                        : '/messages',
+                redirect: (context, state) {
+                  if (featureEnabled(WorkspaceFeature.membersDirectory)) {
+                    Future.microtask(
+                      () => ref
+                          .read(inboxTabControllerProvider.notifier)
+                          .show(InboxTab.members),
+                    );
+                  }
+                  return '/messages';
+                },
                 builder: (context, state) => const DirectoryScreen(),
               ),
             ],
@@ -283,13 +292,24 @@ GoRouter router(Ref ref) {
         builder: (context, state) => const LinkedAccountsScreen(),
       ),
       GoRoute(
-        // Events feed (#230): moved off the bottom bar — the app-bar bell
-        // pushes it over the shell like /settings. The feature redirect
-        // keeps deep links of gated workspaces safe.
+        // Events feed (#230, a tab before that): since #702 it is the
+        // inbox's Alerts face, so this path REDIRECTS there rather than
+        // opening a second copy over the shell. Kept, not deleted —
+        // notification taps, stored shortcuts and links already point
+        // at it, and a dead path is a worse answer than the feed they
+        // were asking for.
         path: '/events',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.eventsTab) ? null : '/messages',
-        builder: (context, state) => const EventsScreen(),
+        redirect: (context, state) {
+          if (!featureEnabled(WorkspaceFeature.eventsTab)) return '/messages';
+          // Off the routing frame: setting a provider mid-redirect is
+          // modifying state while the tree is building.
+          Future.microtask(
+            () => ref
+                .read(inboxTabControllerProvider.notifier)
+                .show(InboxTab.alerts),
+          );
+          return '/messages';
+        },
       ),
       // #687 — /plan outlived its tab. Kept as a REDIRECT rather than
       // deleted: "Show on plan" (#182/#576), any stored shortcut and any

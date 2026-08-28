@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: 0BSD
 //
-// The app-bar events bell (#230): the events feed left the bottom bar, so
-// the pending-confirmation badge now decorates the bell beside the
-// settings gear, tapping the bell pushes the feed over the shell, and the
-// eventsTab feature flag hides the bell entirely.
+// Where the pending-confirmation count lives (#230, moved again by
+// #702). The feed left the bottom bar for an app-bar bell, and left the
+// bell for the inbox's Alerts tab: the count now rides the inbox
+// destination — beside the unread messages it always sat next to — and
+// the Alerts tab carries its own. The eventsTab flag still hides the
+// whole thing, one level in.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
@@ -13,6 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 WorkspaceEvent pendingForMe(String id) => WorkspaceEvent(
       id: id,
@@ -46,55 +49,61 @@ Future<void> pumpApp(
 }
 
 void main() {
-  testWidgets('the app-bar bell shows a badge with my pending count',
+  testWidgets('the pending count badges the inbox destination and its tab',
       (tester) async {
     final events = FakeEventRepository()
       ..events.addAll([pendingForMe('e1'), pendingForMe('e2')]);
     await pumpApp(tester, events: events);
 
-    // The count decorates the bell itself, not a neighbouring action.
+    // On the DESTINATION, so it is visible from every other tab — the
+    // one job the bell did that a tab cannot.
     expect(
       find.descendant(
-        of: find.byTooltip('Events'),
+        of: find.byType(ShellBottomBar),
         matching: find.text('2'),
       ),
       findsOneWidget,
     );
-    expect(find.byType(Badge), findsWidgets);
+    // And on the face responsible for it, so the inbox does not make you
+    // open all three to find the one with something in it.
+    await openAlertsTab(tester);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('inbox-tab-alerts')),
+        matching: find.text('2'),
+      ),
+      findsOneWidget,
+    );
   });
 
   testWidgets('no badge without pending confirmations', (tester) async {
     await pumpApp(tester);
+    expect(find.byType(Badge), findsNothing);
 
-    expect(find.byTooltip('Events'), findsOneWidget);
+    await openAlertsTab(tester);
+    expect(find.byKey(const ValueKey('inbox-tab-alerts')), findsOneWidget);
     expect(find.byType(Badge), findsNothing);
   });
 
-  testWidgets('tapping the bell pushes the events feed over the shell',
+  testWidgets('the Alerts tab shows the feed WITHOUT leaving the shell',
       (tester) async {
     await pumpApp(tester);
 
-    await tester.tap(find.byTooltip('Events'));
-    await tester.pumpAndSettle();
+    await openAlertsTab(tester);
 
-    // Root-level route like /settings: the feed covers the bottom bar and
-    // brings its own app bar.
-    expect(find.byType(ShellBottomBar), findsNothing);
-    final appBarTitle = find.descendant(
-      of: find.byType(AppBar),
-      matching: find.text('Events'),
-    );
-    expect(appBarTitle, findsOneWidget);
+    // The bell pushed a root-level route that covered the bottom bar;
+    // the tab does not. You can still reach anywhere else in one tap.
+    expect(find.byType(ShellBottomBar), findsOneWidget);
     expect(find.text('No events yet.'), findsOneWidget);
   });
 
-  testWidgets('the bell is hidden when the events feature is disabled',
+  testWidgets('the Alerts tab is hidden when the events feature is disabled',
       (tester) async {
     await pumpApp(tester, featureFlags: const {'eventsTab': false});
 
-    expect(find.byTooltip('Events'), findsNothing);
+    expect(find.byKey(const ValueKey('inbox-tab-alerts')), findsNothing);
     expect(find.byIcon(Icons.notifications_outlined), findsNothing);
-    // The settings gear stays — only the bell is gated.
+    // The settings gear stays — only the feed is gated.
     expect(find.byIcon(Icons.settings_outlined), findsOneWidget);
   });
 }
