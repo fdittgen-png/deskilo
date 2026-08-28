@@ -2186,6 +2186,57 @@
   "@inboxChatsTab": {
     "description": "#702 - the inbox tab that holds conversations"
   },
+  "memberMoneySettled": "Nichts offen.",
+  "@memberMoneySettled": {
+    "description": "#704 - the money section of a member profile"
+  },
+  "memberMoreInvoices": "+{count} weitere",
+  "@memberMoreInvoices": {
+    "description": "#704 - the money section of a member profile",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "memberMonthInProgress": "Dieser Monat",
+  "@memberMonthInProgress": {
+    "description": "#704 - the money section of a member profile"
+  },
+  "memberPayments": "Zahlungen",
+  "@memberPayments": {
+    "description": "#704 - the money section of a member profile"
+  },
+  "memberInvoiceOpen": "{amount} offen",
+  "@memberInvoiceOpen": {
+    "description": "#704 - the money section of a member profile",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "memberInvoicePaid": "Bezahlt",
+  "@memberInvoicePaid": {
+    "description": "#704 - the money section of a member profile"
+  },
+  "memberInvoiceVoided": "Storniert",
+  "@memberInvoiceVoided": {
+    "description": "#704 - the money section of a member profile"
+  },
+  "memberContactHeading": "Kontakt",
+  "@memberContactHeading": {
+    "description": "#704 - the contact section of a member profile"
+  },
+  "memberPlanShare": "Tarif {pct} %",
+  "@memberPlanShare": {
+    "description": "#704 - the contact section of a member profile",
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
   "moneyBaseFee": "Basis-Abo",
   "moneyUsage": "{used} von {included} halben Tagen genutzt",
   "moneyUsageUnlimited": "{used} halbe Tage genutzt",

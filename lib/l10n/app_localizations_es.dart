@@ -3758,6 +3758,39 @@ class AppLocalizationsEs extends AppLocalizations {
   String get inboxChatsTab => 'Chats';
 
   @override
+  String get memberMoneySettled => 'Nada pendiente.';
+
+  @override
+  String memberMoreInvoices(int count) {
+    return '+$count más';
+  }
+
+  @override
+  String get memberMonthInProgress => 'Este mes';
+
+  @override
+  String get memberPayments => 'Pagos';
+
+  @override
+  String memberInvoiceOpen(String amount) {
+    return '$amount pendientes';
+  }
+
+  @override
+  String get memberInvoicePaid => 'Pagada';
+
+  @override
+  String get memberInvoiceVoided => 'Anulada';
+
+  @override
+  String get memberContactHeading => 'Contacto';
+
+  @override
+  String memberPlanShare(String pct) {
+    return 'Plan $pct %';
+  }
+
+  @override
   String get moneyBaseFee => 'Suscripción base';
 
   @override

@@ -16,6 +16,8 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../widgets/member_contact_card.dart';
+import '../widgets/member_money_card.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../profile/domain/profile.dart';
 import '../../../profile/presentation/widgets/member_avatar.dart';
@@ -554,6 +556,12 @@ Future<void> showMemberProfileSheet(
                       onOpenReservation(reservation);
                     },
                   ),
+              // #704 — contact, then money, on the profile of the
+              // person they belong to. Each is role-gated INSIDE its own
+              // widget: this sheet opens from four places, and a gate
+              // repeated four times is one that gets forgotten once.
+              MemberContactCard(member: member, isSelf: isSelf),
+              MemberMoneyCard(memberId: member.id, isSelf: isSelf),
               const SizedBox(height: AppSpacing.lg),
               if (onNotify != null) ...[
                 FilledButton.icon(

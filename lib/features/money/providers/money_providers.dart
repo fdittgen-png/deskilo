@@ -47,6 +47,46 @@ Future<List<LedgerEntry>> myLedger(Ref ref) async {
   return ref.watch(moneyRepositoryProvider).fetchLedger(member.id);
 }
 
+/// ONE MEMBER's money, for the dossier on their profile (#704).
+///
+/// The `my*` providers above answer "mine"; these answer "theirs", and
+/// the server decides whether the asker may know. `member_account`,
+/// `member_statement` and the RLS on `ledger_entries` / `invoices` all
+/// apply the same rule — self, or an admin of that workspace — so these
+/// providers add no authority of their own. The UI gate that hides the
+/// card is a courtesy, not the boundary.
+@riverpod
+Future<MemberAccount> memberAccount(Ref ref, String memberId) async =>
+    ref.read(moneyRepositoryProvider).fetchMemberAccount(memberId);
+
+/// One member's statement for a period ('yyyy-MM').
+@riverpod
+Future<Statement?> memberStatement(
+  Ref ref,
+  String memberId,
+  String period,
+) async =>
+    ref.read(moneyRepositoryProvider).fetchStatement(memberId, period);
+
+/// One member's ledger, newest first — where their PAYMENTS are.
+@riverpod
+Future<List<LedgerEntry>> memberLedger(Ref ref, String memberId) async =>
+    ref.read(moneyRepositoryProvider).fetchLedger(memberId);
+
+/// One member's invoices, newest first.
+///
+/// Filtered from the workspace list rather than fetched per member: an
+/// admin already holds all of them, and a plain member's copy already
+/// contains only their own — RLS saw to that before it arrived.
+@riverpod
+Future<List<Invoice>> memberInvoices(Ref ref, String memberId) async {
+  final all = await ref.watch(invoicesProvider.future);
+  return [
+    for (final invoice in all)
+      if (invoice.memberId == memberId) invoice,
+  ]..sort((a, b) => b.issuedAt.compareTo(a.issuedAt));
+}
+
 /// Fee bands of the current workspace, ordered by from_pct (#128).
 @Riverpod(keepAlive: true)
 Future<List<FeeBand>> feeBands(Ref ref) async {

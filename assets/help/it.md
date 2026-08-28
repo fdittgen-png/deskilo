@@ -191,6 +191,8 @@ Il mese a colpo d'occhio, con due ambiti e due forme:
 
 **Dove si trova (#702).** L'elenco è la terza faccia della scheda **Messaggi**, accanto alle tue conversazioni e agli avvisi — le persone di cui entrambi parlano. Fino ad allora era una destinazione propria della barra in basso.
 
+**Tocca un membro per il suo profilo (#704).** Foto, ruolo e stato; che cosa ha prenotato e se ha fatto il check-in in questo momento; e **Contatti** — il numero WhatsApp condiviso volontariamente per tutti, l'**indirizzo e-mail e la quota di piano per gli admin**. Dove hai il diritto di vedere le cifre — **le tue sempre, quelle di un altro con il permesso *Vedere le finanze*** — il profilo porta anche **Finanze**: la posizione netta (chi deve che cosa a chi), le fatture aperte con quanto resta su ciascuna, i pagamenti già arrivati e il mese in corso. La stessa scheda della scheda Finanze, così le due non possono contraddirsi.
+
 Guarda chi fa parte della tua comunità:
 
 - Ogni scheda membro mostra la **foto** (o l'iniziale), il **chip di ruolo** (Admin, Proprietario), lo **stato personalizzato** («a Berlino fino a venerdì…»), un indicatore **online / ultimo accesso** (*Online*, *10 min*, *2 g*) e un **chip di prenotazione**: posto con check-in, *Prenotato adesso*, o la prossima prenotazione in arrivo.

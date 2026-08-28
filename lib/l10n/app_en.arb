@@ -4276,6 +4276,57 @@
   "@inboxChatsTab": {
     "description": "#702 - the inbox tab that holds conversations"
   },
+  "memberMoneySettled": "Nothing outstanding.",
+  "@memberMoneySettled": {
+    "description": "#704 - the money section of a member profile"
+  },
+  "memberMoreInvoices": "+{count} more",
+  "@memberMoreInvoices": {
+    "description": "#704 - the money section of a member profile",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "memberMonthInProgress": "This month",
+  "@memberMonthInProgress": {
+    "description": "#704 - the money section of a member profile"
+  },
+  "memberPayments": "Payments",
+  "@memberPayments": {
+    "description": "#704 - the money section of a member profile"
+  },
+  "memberInvoiceOpen": "{amount} open",
+  "@memberInvoiceOpen": {
+    "description": "#704 - the money section of a member profile",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "memberInvoicePaid": "Paid",
+  "@memberInvoicePaid": {
+    "description": "#704 - the money section of a member profile"
+  },
+  "memberInvoiceVoided": "Voided",
+  "@memberInvoiceVoided": {
+    "description": "#704 - the money section of a member profile"
+  },
+  "memberContactHeading": "Contact",
+  "@memberContactHeading": {
+    "description": "#704 - the contact section of a member profile"
+  },
+  "memberPlanShare": "Plan {pct}%",
+  "@memberPlanShare": {
+    "description": "#704 - the contact section of a member profile",
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
   "moneyBaseFee": "Base subscription",
   "@moneyBaseFee": {
     "description": "Statement line for the plan's monthly fee"

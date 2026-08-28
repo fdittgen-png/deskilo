@@ -2186,6 +2186,57 @@
   "@inboxChatsTab": {
     "description": "#702 - the inbox tab that holds conversations"
   },
+  "memberMoneySettled": "Nada pendiente.",
+  "@memberMoneySettled": {
+    "description": "#704 - the money section of a member profile"
+  },
+  "memberMoreInvoices": "+{count} más",
+  "@memberMoreInvoices": {
+    "description": "#704 - the money section of a member profile",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "memberMonthInProgress": "Este mes",
+  "@memberMonthInProgress": {
+    "description": "#704 - the money section of a member profile"
+  },
+  "memberPayments": "Pagos",
+  "@memberPayments": {
+    "description": "#704 - the money section of a member profile"
+  },
+  "memberInvoiceOpen": "{amount} pendientes",
+  "@memberInvoiceOpen": {
+    "description": "#704 - the money section of a member profile",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "memberInvoicePaid": "Pagada",
+  "@memberInvoicePaid": {
+    "description": "#704 - the money section of a member profile"
+  },
+  "memberInvoiceVoided": "Anulada",
+  "@memberInvoiceVoided": {
+    "description": "#704 - the money section of a member profile"
+  },
+  "memberContactHeading": "Contacto",
+  "@memberContactHeading": {
+    "description": "#704 - the contact section of a member profile"
+  },
+  "memberPlanShare": "Plan {pct} %",
+  "@memberPlanShare": {
+    "description": "#704 - the contact section of a member profile",
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
   "moneyBaseFee": "Suscripción base",
   "moneyUsage": "{used} de {included} medias jornadas usadas",
   "moneyUsageUnlimited": "{used} medias jornadas usadas",

@@ -180,6 +180,398 @@ final class MyLedgerProvider
 
 String _$myLedgerHash() => r'5d8925eeb1aa748d7505849799c742c10e7e11d8';
 
+/// ONE MEMBER's money, for the dossier on their profile (#704).
+///
+/// The `my*` providers above answer "mine"; these answer "theirs", and
+/// the server decides whether the asker may know. `member_account`,
+/// `member_statement` and the RLS on `ledger_entries` / `invoices` all
+/// apply the same rule — self, or an admin of that workspace — so these
+/// providers add no authority of their own. The UI gate that hides the
+/// card is a courtesy, not the boundary.
+
+@ProviderFor(memberAccount)
+final memberAccountProvider = MemberAccountFamily._();
+
+/// ONE MEMBER's money, for the dossier on their profile (#704).
+///
+/// The `my*` providers above answer "mine"; these answer "theirs", and
+/// the server decides whether the asker may know. `member_account`,
+/// `member_statement` and the RLS on `ledger_entries` / `invoices` all
+/// apply the same rule — self, or an admin of that workspace — so these
+/// providers add no authority of their own. The UI gate that hides the
+/// card is a courtesy, not the boundary.
+
+final class MemberAccountProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<MemberAccount>,
+          MemberAccount,
+          FutureOr<MemberAccount>
+        >
+    with $FutureModifier<MemberAccount>, $FutureProvider<MemberAccount> {
+  /// ONE MEMBER's money, for the dossier on their profile (#704).
+  ///
+  /// The `my*` providers above answer "mine"; these answer "theirs", and
+  /// the server decides whether the asker may know. `member_account`,
+  /// `member_statement` and the RLS on `ledger_entries` / `invoices` all
+  /// apply the same rule — self, or an admin of that workspace — so these
+  /// providers add no authority of their own. The UI gate that hides the
+  /// card is a courtesy, not the boundary.
+  MemberAccountProvider._({
+    required MemberAccountFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'memberAccountProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$memberAccountHash();
+
+  @override
+  String toString() {
+    return r'memberAccountProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<MemberAccount> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<MemberAccount> create(Ref ref) {
+    final argument = this.argument as String;
+    return memberAccount(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is MemberAccountProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$memberAccountHash() => r'341564fa7bab4185a7eaedf7a55a1ebe3be512a5';
+
+/// ONE MEMBER's money, for the dossier on their profile (#704).
+///
+/// The `my*` providers above answer "mine"; these answer "theirs", and
+/// the server decides whether the asker may know. `member_account`,
+/// `member_statement` and the RLS on `ledger_entries` / `invoices` all
+/// apply the same rule — self, or an admin of that workspace — so these
+/// providers add no authority of their own. The UI gate that hides the
+/// card is a courtesy, not the boundary.
+
+final class MemberAccountFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<MemberAccount>, String> {
+  MemberAccountFamily._()
+    : super(
+        retry: null,
+        name: r'memberAccountProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// ONE MEMBER's money, for the dossier on their profile (#704).
+  ///
+  /// The `my*` providers above answer "mine"; these answer "theirs", and
+  /// the server decides whether the asker may know. `member_account`,
+  /// `member_statement` and the RLS on `ledger_entries` / `invoices` all
+  /// apply the same rule — self, or an admin of that workspace — so these
+  /// providers add no authority of their own. The UI gate that hides the
+  /// card is a courtesy, not the boundary.
+
+  MemberAccountProvider call(String memberId) =>
+      MemberAccountProvider._(argument: memberId, from: this);
+
+  @override
+  String toString() => r'memberAccountProvider';
+}
+
+/// One member's statement for a period ('yyyy-MM').
+
+@ProviderFor(memberStatement)
+final memberStatementProvider = MemberStatementFamily._();
+
+/// One member's statement for a period ('yyyy-MM').
+
+final class MemberStatementProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Statement?>,
+          Statement?,
+          FutureOr<Statement?>
+        >
+    with $FutureModifier<Statement?>, $FutureProvider<Statement?> {
+  /// One member's statement for a period ('yyyy-MM').
+  MemberStatementProvider._({
+    required MemberStatementFamily super.from,
+    required (String, String) super.argument,
+  }) : super(
+         retry: null,
+         name: r'memberStatementProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$memberStatementHash();
+
+  @override
+  String toString() {
+    return r'memberStatementProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<Statement?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Statement?> create(Ref ref) {
+    final argument = this.argument as (String, String);
+    return memberStatement(ref, argument.$1, argument.$2);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is MemberStatementProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$memberStatementHash() => r'edee213ee80f5ad9ca46d57bbf352953feedd86e';
+
+/// One member's statement for a period ('yyyy-MM').
+
+final class MemberStatementFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<Statement?>, (String, String)> {
+  MemberStatementFamily._()
+    : super(
+        retry: null,
+        name: r'memberStatementProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// One member's statement for a period ('yyyy-MM').
+
+  MemberStatementProvider call(String memberId, String period) =>
+      MemberStatementProvider._(argument: (memberId, period), from: this);
+
+  @override
+  String toString() => r'memberStatementProvider';
+}
+
+/// One member's ledger, newest first — where their PAYMENTS are.
+
+@ProviderFor(memberLedger)
+final memberLedgerProvider = MemberLedgerFamily._();
+
+/// One member's ledger, newest first — where their PAYMENTS are.
+
+final class MemberLedgerProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<LedgerEntry>>,
+          List<LedgerEntry>,
+          FutureOr<List<LedgerEntry>>
+        >
+    with
+        $FutureModifier<List<LedgerEntry>>,
+        $FutureProvider<List<LedgerEntry>> {
+  /// One member's ledger, newest first — where their PAYMENTS are.
+  MemberLedgerProvider._({
+    required MemberLedgerFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'memberLedgerProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$memberLedgerHash();
+
+  @override
+  String toString() {
+    return r'memberLedgerProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<LedgerEntry>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<LedgerEntry>> create(Ref ref) {
+    final argument = this.argument as String;
+    return memberLedger(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is MemberLedgerProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$memberLedgerHash() => r'3e18f1c521dd0a00de1f9aad711d79e9b161440f';
+
+/// One member's ledger, newest first — where their PAYMENTS are.
+
+final class MemberLedgerFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<LedgerEntry>>, String> {
+  MemberLedgerFamily._()
+    : super(
+        retry: null,
+        name: r'memberLedgerProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// One member's ledger, newest first — where their PAYMENTS are.
+
+  MemberLedgerProvider call(String memberId) =>
+      MemberLedgerProvider._(argument: memberId, from: this);
+
+  @override
+  String toString() => r'memberLedgerProvider';
+}
+
+/// One member's invoices, newest first.
+///
+/// Filtered from the workspace list rather than fetched per member: an
+/// admin already holds all of them, and a plain member's copy already
+/// contains only their own — RLS saw to that before it arrived.
+
+@ProviderFor(memberInvoices)
+final memberInvoicesProvider = MemberInvoicesFamily._();
+
+/// One member's invoices, newest first.
+///
+/// Filtered from the workspace list rather than fetched per member: an
+/// admin already holds all of them, and a plain member's copy already
+/// contains only their own — RLS saw to that before it arrived.
+
+final class MemberInvoicesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Invoice>>,
+          List<Invoice>,
+          FutureOr<List<Invoice>>
+        >
+    with $FutureModifier<List<Invoice>>, $FutureProvider<List<Invoice>> {
+  /// One member's invoices, newest first.
+  ///
+  /// Filtered from the workspace list rather than fetched per member: an
+  /// admin already holds all of them, and a plain member's copy already
+  /// contains only their own — RLS saw to that before it arrived.
+  MemberInvoicesProvider._({
+    required MemberInvoicesFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'memberInvoicesProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$memberInvoicesHash();
+
+  @override
+  String toString() {
+    return r'memberInvoicesProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Invoice>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Invoice>> create(Ref ref) {
+    final argument = this.argument as String;
+    return memberInvoices(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is MemberInvoicesProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$memberInvoicesHash() => r'bec838c23641a5703b8eda87491646ea0b92ea1c';
+
+/// One member's invoices, newest first.
+///
+/// Filtered from the workspace list rather than fetched per member: an
+/// admin already holds all of them, and a plain member's copy already
+/// contains only their own — RLS saw to that before it arrived.
+
+final class MemberInvoicesFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<Invoice>>, String> {
+  MemberInvoicesFamily._()
+    : super(
+        retry: null,
+        name: r'memberInvoicesProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// One member's invoices, newest first.
+  ///
+  /// Filtered from the workspace list rather than fetched per member: an
+  /// admin already holds all of them, and a plain member's copy already
+  /// contains only their own — RLS saw to that before it arrived.
+
+  MemberInvoicesProvider call(String memberId) =>
+      MemberInvoicesProvider._(argument: memberId, from: this);
+
+  @override
+  String toString() => r'memberInvoicesProvider';
+}
+
 /// Fee bands of the current workspace, ordered by from_pct (#128).
 
 @ProviderFor(feeBands)

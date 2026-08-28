@@ -3765,6 +3765,39 @@ class AppLocalizationsDe extends AppLocalizations {
   String get inboxChatsTab => 'Chats';
 
   @override
+  String get memberMoneySettled => 'Nichts offen.';
+
+  @override
+  String memberMoreInvoices(int count) {
+    return '+$count weitere';
+  }
+
+  @override
+  String get memberMonthInProgress => 'Dieser Monat';
+
+  @override
+  String get memberPayments => 'Zahlungen';
+
+  @override
+  String memberInvoiceOpen(String amount) {
+    return '$amount offen';
+  }
+
+  @override
+  String get memberInvoicePaid => 'Bezahlt';
+
+  @override
+  String get memberInvoiceVoided => 'Storniert';
+
+  @override
+  String get memberContactHeading => 'Kontakt';
+
+  @override
+  String memberPlanShare(String pct) {
+    return 'Tarif $pct %';
+  }
+
+  @override
   String get moneyBaseFee => 'Basis-Abo';
 
   @override
