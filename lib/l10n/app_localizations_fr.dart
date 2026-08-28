@@ -1759,6 +1759,29 @@ class AppLocalizationsFr extends AppLocalizations {
   String get helpContents => 'Sommaire';
 
   @override
+  String get helpHintMessages =>
+      'Toutes vos conversations dans une liste, la plus récente en haut. Touchez le crayon pour écrire à quelqu’un ou créer un groupe.';
+
+  @override
+  String get helpHintMessagesTopic => 'Messages';
+
+  @override
+  String get helpHintMessagesTip2 =>
+      'Choisissez une personne pour une discussion privée, ou plusieurs pour créer un groupe — le champ du nom apparaît dès qu’il y en a deux, et ce nom est unique ici : personne n’a à deviner à quelle « Équipe » il écrit.';
+
+  @override
+  String get helpHintMessagesTip3 =>
+      'Touchez un nom en haut d’une discussion pour voir son profil : la réservation du jour, la présence sur place, et comment le joindre.';
+
+  @override
+  String get helpHintMessagesTip4 =>
+      'La recherche trouve les membres, les groupes et les mots dans les messages — un résultat vous y emmène directement.';
+
+  @override
+  String get helpHintMessagesTip5 =>
+      'Insérez une réservation ou un espace dans un message plutôt que de le décrire ; le lecteur le touche et arrive au bon endroit.';
+
+  @override
   String get helpHintLearnMore => 'En savoir plus';
 
   @override
@@ -1814,7 +1837,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le plan en direct : touchez une place libre pour réserver, touchez votre réservation pour pointer votre arrivée.';
 
   @override
-  String get helpHintPlanTopic => 'onglet Plan';
+  String get helpHintPlanTopic => 'Le plan';
 
   @override
   String get helpHintPlanTip2 =>
@@ -3663,10 +3686,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get messagesEmpty => 'Aucune conversation.';
 
   @override
-  String get messagesEmptyHint =>
-      'Touchez le crayon pour écrire à quelqu’un, ou créez un groupe.';
-
-  @override
   String conversationMemberCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -3742,6 +3761,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get newGroupNameTaken =>
       'Un groupe porte déjà ce nom ici. Choisissez-en un autre.';
+
+  @override
+  String get conversationSeeProfile => 'Voir le profil';
 
   @override
   String get moneyBaseFee => 'Abonnement de base';

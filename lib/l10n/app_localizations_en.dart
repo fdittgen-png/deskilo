@@ -1740,6 +1740,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpContents => 'Contents';
 
   @override
+  String get helpHintMessages =>
+      'Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.';
+
+  @override
+  String get helpHintMessagesTopic => 'Messages';
+
+  @override
+  String get helpHintMessagesTip2 =>
+      'Pick one person for a private chat, or several to make a group — the name field appears once there are two, and a group name is unique here, so nobody has to guess which “Team” they mean.';
+
+  @override
+  String get helpHintMessagesTip3 =>
+      'Tap a name at the top of a chat to see their profile: today’s booking, whether they are checked in, and how to reach them.';
+
+  @override
+  String get helpHintMessagesTip4 =>
+      'Search finds people, groups and the words inside messages — a result takes you straight there.';
+
+  @override
+  String get helpHintMessagesTip5 =>
+      'Link a reservation or a space in a message instead of describing it; the reader taps it and lands on the right one.';
+
+  @override
   String get helpHintLearnMore => 'Learn more';
 
   @override
@@ -3623,10 +3646,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get messagesEmpty => 'No conversations yet.';
 
   @override
-  String get messagesEmptyHint =>
-      'Tap the pencil to write to someone, or start a group.';
-
-  @override
   String conversationMemberCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -3701,6 +3720,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get newGroupNameTaken =>
       'A group with that name already exists here. Pick another.';
+
+  @override
+  String get conversationSeeProfile => 'See profile';
 
   @override
   String get moneyBaseFee => 'Base subscription';

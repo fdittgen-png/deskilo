@@ -1757,6 +1757,29 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpContents => 'Indice';
 
   @override
+  String get helpHintMessages =>
+      'Tutte le conversazioni in un elenco, la più recente in alto. Tocca la matita per scrivere a qualcuno o creare un gruppo.';
+
+  @override
+  String get helpHintMessagesTopic => 'Messaggi';
+
+  @override
+  String get helpHintMessagesTip2 =>
+      'Scegli una persona per una chat privata, o più per creare un gruppo — il campo del nome compare da due in poi, e quel nome è unico qui: nessuno deve indovinare a quale «Team» sta scrivendo.';
+
+  @override
+  String get helpHintMessagesTip3 =>
+      'Tocca un nome in cima a una chat per vedere il profilo: la prenotazione di oggi, se ha fatto il check-in e come raggiungerlo.';
+
+  @override
+  String get helpHintMessagesTip4 =>
+      'La ricerca trova membri, gruppi e le parole nei messaggi — un risultato ti porta direttamente lì.';
+
+  @override
+  String get helpHintMessagesTip5 =>
+      'Inserisci una prenotazione o uno spazio nel messaggio invece di descriverlo; chi legge lo tocca e arriva a quello giusto.';
+
+  @override
   String get helpHintLearnMore => 'Scopri di più';
 
   @override
@@ -3658,10 +3681,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get messagesEmpty => 'Ancora nessuna conversazione.';
 
   @override
-  String get messagesEmptyHint =>
-      'Tocca la matita per scrivere a qualcuno, oppure crea un gruppo.';
-
-  @override
   String conversationMemberCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -3737,6 +3756,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get newGroupNameTaken =>
       'Esiste già un gruppo con questo nome. Scegline un altro.';
+
+  @override
+  String get conversationSeeProfile => 'Vedi profilo';
 
   @override
   String get moneyBaseFee => 'Abbonamento base';

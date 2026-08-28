@@ -3158,6 +3158,42 @@ abstract class AppLocalizations {
   /// **'Contents'**
   String get helpContents;
 
+  /// #695 - messaging help hints
+  ///
+  /// In en, this message translates to:
+  /// **'Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.'**
+  String get helpHintMessages;
+
+  /// #695 - messaging help hints
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get helpHintMessagesTopic;
+
+  /// #695 - messaging help hints
+  ///
+  /// In en, this message translates to:
+  /// **'Pick one person for a private chat, or several to make a group — the name field appears once there are two, and a group name is unique here, so nobody has to guess which “Team” they mean.'**
+  String get helpHintMessagesTip2;
+
+  /// #695 - messaging help hints
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a name at the top of a chat to see their profile: today’s booking, whether they are checked in, and how to reach them.'**
+  String get helpHintMessagesTip3;
+
+  /// #695 - messaging help hints
+  ///
+  /// In en, this message translates to:
+  /// **'Search finds people, groups and the words inside messages — a result takes you straight there.'**
+  String get helpHintMessagesTip4;
+
+  /// #695 - messaging help hints
+  ///
+  /// In en, this message translates to:
+  /// **'Link a reservation or a space in a message instead of describing it; the reader taps it and lands on the right one.'**
+  String get helpHintMessagesTip5;
+
   /// No description provided for @helpHintLearnMore.
   ///
   /// In en, this message translates to:
@@ -6491,12 +6527,6 @@ abstract class AppLocalizations {
   /// #687 - messaging centre
   ///
   /// In en, this message translates to:
-  /// **'Tap the pencil to write to someone, or start a group.'**
-  String get messagesEmptyHint;
-
-  /// #687 - messaging centre
-  ///
-  /// In en, this message translates to:
   /// **'{count, plural, =1{1 member} other{{count} members}}'**
   String conversationMemberCount(int count);
 
@@ -6625,6 +6655,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A group with that name already exists here. Pick another.'**
   String get newGroupNameTaken;
+
+  /// #695 - profile from a conversation
+  ///
+  /// In en, this message translates to:
+  /// **'See profile'**
+  String get conversationSeeProfile;
 
   /// Statement line for the plan's monthly fee
   ///

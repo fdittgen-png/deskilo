@@ -110,7 +110,7 @@ void main() {
         reason: 'a read thread carries no badge at all');
   });
 
-  testWidgets('an empty centre says where to START one', (tester) async {
+  testWidgets('an empty centre OFFERS the first conversation', (tester) async {
     // An empty state that only reports emptiness leaves someone hunting
     // for a button that lives on another screen.
     await pump(tester, const []);
@@ -118,10 +118,16 @@ void main() {
       find.byKey(const ValueKey('conversation-list-empty')),
       findsOneWidget,
     );
-    // UX: it points at the button on THIS screen. The first version sent
-    // people to a member's profile on another screen to start the thing
-    // they had just opened the messaging centre to start.
-    expect(find.textContaining('pencil'), findsOneWidget);
+    // It does not DESCRIBE the pencil — the help hint above already says
+    // that sentence, and the same instruction twice on one screen was
+    // the app repeating itself (#696). The empty centre carries the
+    // action itself instead.
+    expect(find.textContaining('pencil'), findsOneWidget,
+        reason: 'once, in the help hint — not again below it');
+    expect(
+      find.byKey(const ValueKey('conversation-list-empty-compose')),
+      findsOneWidget,
+    );
     expect(find.byKey(const ValueKey('new-conversation')), findsOneWidget);
   });
 

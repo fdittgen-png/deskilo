@@ -17,6 +17,7 @@ enum HelpHintId {
   validation,
   workspaceSettings,
   badges,
+  messages,
 }
 
 /// One tip of a surface's carousel (#610): its sentence and, when a more
@@ -74,6 +75,10 @@ String helpHintText(AppLocalizations? l10n, HelpHintId id) => switch (id) {
     l10n?.helpHintWorkspace ??
         'Country, currency, language and billing details — '
             'documents and taxes follow these settings.',
+  HelpHintId.messages =>
+    l10n?.helpHintMessages ??
+        'Every conversation in one list, newest first. Tap the pencil to '
+            'write to someone or start a group.',
   HelpHintId.badges =>
     l10n?.helpHintBadges ??
         'Issue a printable QR badge or register an NFC card; revoke '
@@ -97,6 +102,7 @@ String helpHintTopic(AppLocalizations? l10n, HelpHintId id) => switch (id) {
   HelpHintId.workspaceSettings =>
     l10n?.helpHintWorkspaceTopic ?? 'Workspace settings',
   HelpHintId.badges => l10n?.helpHintBadgesTopic ?? 'NFC badges',
+  HelpHintId.messages => l10n?.helpHintMessagesTopic ?? 'Messages',
 };
 
 /// The surface's carousel (#610): tip 1 is the #606 how-to, the rest
@@ -353,6 +359,33 @@ List<HelpTip> helpHintTips(AppLocalizations? l10n, HelpHintId id) =>
               'Reset the workspace wipes reservations, accounting and '
                   'the floor plan — settings and members survive, and '
                   'a typed confirmation guards it.',
+        ),
+      ],
+      HelpHintId.messages => [
+        HelpTip(helpHintText(l10n, id)),
+        HelpTip(
+          l10n?.helpHintMessagesTip2 ??
+              'Pick one person for a private chat, or several to make a '
+                  'group — the name field appears once there are two, '
+                  'and a group name is unique here, so nobody has to '
+                  'guess which "Team" they mean.',
+        ),
+        HelpTip(
+          l10n?.helpHintMessagesTip3 ??
+              'Tap a name at the top of a chat to see their profile: '
+                  'today\'s booking, whether they are checked in, and '
+                  'how to reach them.',
+        ),
+        HelpTip(
+          l10n?.helpHintMessagesTip4 ??
+              'Search finds people, groups and the words inside '
+                  'messages — a result takes you straight there.',
+        ),
+        HelpTip(
+          l10n?.helpHintMessagesTip5 ??
+              'Link a reservation or a space in a message instead of '
+                  'describing it; the reader taps it and lands on the '
+                  'right one.',
         ),
       ],
       HelpHintId.badges => [

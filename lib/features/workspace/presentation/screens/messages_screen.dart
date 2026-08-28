@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/help/help_hint.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -62,20 +63,17 @@ class MessagesScreen extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         key: const ValueKey('new-conversation'),
         tooltip: l10n?.newConversationTitle ?? 'New conversation',
-        onPressed: () async {
-          final id = await showNewConversationSheet(context, ref);
-          ref.invalidate(conversationsProvider);
-          // Straight into it. Starting a conversation and being left on
-          // the list reads as failure, because a thread with nothing in
-          // it has nothing to show on a row.
-          if (id != null && context.mounted) {
-            await _open(context, ref, id);
-          }
-        },
+        onPressed: () => _compose(context, ref),
         child: const Icon(Icons.edit_outlined),
       ),
-      body: switch (conversations) {
-        AsyncData(value: final list) when list.isEmpty => _empty(context, l10n),
+      // #695 — the same contextual help every other surface carries
+      // (#606/#610), gated inside the widget so a workspace that turned
+      // hints off never sees it.
+      body: Column(children: [
+        const HelpHint(HelpHintId.messages),
+        Expanded(child: switch (conversations) {
+        AsyncData(value: final list) when list.isEmpty =>
+          _empty(context, ref, l10n),
         AsyncData(value: final list) => RefreshIndicator(
             onRefresh: () async => ref.invalidate(conversationsProvider),
             child: ListView.separated(
@@ -108,11 +106,23 @@ class MessagesScreen extends ConsumerWidget {
             ),
           ),
         _ => const LoadingView(),
-      },
+        }),
+      ]),
     );
   }
 
-  Widget _empty(BuildContext context, AppLocalizations? l10n) => Center(
+  /// An empty state that only reports emptiness leaves someone hunting
+  /// for the button. It used to point at the pencil in words — but the
+  /// help hint above says exactly that too, and the same sentence twice
+  /// on one screen was the app repeating itself (#696). So the empty
+  /// centre stopped DESCRIBING the action and became it: one button,
+  /// doing what the pencil does.
+  Widget _empty(BuildContext context, WidgetRef ref, AppLocalizations? l10n) =>
+      // SCROLLABLE, not just centred: the hint card above it eats real
+      // height, and at a 1.3× text scale in German the icon, the line
+      // and the button stopped fitting the remainder by 3 pixels. A
+      // centred column has nowhere to put those pixels; this does.
+      SingleChildScrollView(
         child: Padding(
           padding: AppSpacing.lgAll,
           child: Column(
@@ -128,22 +138,32 @@ class MessagesScreen extends ConsumerWidget {
                 l10n?.messagesEmpty ?? 'No conversations yet.',
                 key: const ValueKey('conversation-list-empty'),
                 style: Theme.of(context).textTheme.titleSmall,
-              ),
-              const SizedBox(height: AppSpacing.xs),
-              // Says where to START one. An empty state that only reports
-              // emptiness leaves someone looking for a button that is on
-              // another screen.
-              Text(
-                // Points at the button on THIS screen, not another one.
-                l10n?.messagesEmptyHint ??
-                    'Tap the pencil to write to someone, or start a group.',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              const SizedBox(height: AppSpacing.md),
+              FilledButton.tonalIcon(
+                key: const ValueKey('conversation-list-empty-compose'),
+                onPressed: () => _compose(context, ref),
+                icon: const Icon(Icons.edit_outlined),
+                label: Text(l10n?.newConversationTitle ?? 'New conversation'),
               ),
             ],
           ),
         ),
       );
+
+  /// The pencil's action, shared with the empty state's button so the two
+  /// entry points can never drift apart.
+  Future<void> _compose(BuildContext context, WidgetRef ref) async {
+    final id = await showNewConversationSheet(context, ref);
+    ref.invalidate(conversationsProvider);
+    // Straight into it. Starting a conversation and being left on the
+    // list reads as failure, because a thread with nothing in it has
+    // nothing to show on a row.
+    if (id != null && context.mounted) {
+      await _open(context, ref, id);
+    }
+  }
 
   /// Opening marks it read server-side, then refreshes the list so the
   /// badge and the row weight settle without a manual pull.

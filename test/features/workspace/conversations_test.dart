@@ -284,8 +284,11 @@ void main() {
       expect(thread, contains("ValueKey('conversation-header')"));
       expect(thread, contains('showGroupInfoSheet'));
       expect(thread, contains('Icons.chevron_right'));
-      // A DIRECT thread has no roster to open.
-      expect(thread, contains('!conversation.isGroup'));
+      // #695 — a DIRECT header opens the PERSON rather than nothing:
+      // same gesture, and what is behind the name is what you want
+      // either way.
+      expect(thread, contains('openMemberProfile('));
+      expect(thread, contains('conversationSeeProfile'));
     });
   });
 

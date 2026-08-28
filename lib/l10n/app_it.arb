@@ -1010,6 +1010,30 @@
   "helpHintBadgesTip4": "Revoca un badge perso in qualsiasi momento; scorri un badge revocato verso destra per eliminarlo definitivamente.",
   "helpTitle": "Aiuto",
   "helpContents": "Indice",
+  "helpHintMessages": "Tutte le conversazioni in un elenco, la più recente in alto. Tocca la matita per scrivere a qualcuno o creare un gruppo.",
+  "@helpHintMessages": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTopic": "Messaggi",
+  "@helpHintMessagesTopic": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip2": "Scegli una persona per una chat privata, o più per creare un gruppo — il campo del nome compare da due in poi, e quel nome è unico qui: nessuno deve indovinare a quale «Team» sta scrivendo.",
+  "@helpHintMessagesTip2": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip3": "Tocca un nome in cima a una chat per vedere il profilo: la prenotazione di oggi, se ha fatto il check-in e come raggiungerlo.",
+  "@helpHintMessagesTip3": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip4": "La ricerca trova membri, gruppi e le parole nei messaggi — un risultato ti porta direttamente lì.",
+  "@helpHintMessagesTip4": {
+    "description": "#695 - messaging help hints"
+  },
+  "helpHintMessagesTip5": "Inserisci una prenotazione o uno spazio nel messaggio invece di descriverlo; chi legge lo tocca e arriva a quello giusto.",
+  "@helpHintMessagesTip5": {
+    "description": "#695 - messaging help hints"
+  },
   "inviteSectionTitle": "Invita qualcuno",
   "inviteViaWhatsapp": "WhatsApp",
   "inviteViaSms": "SMS",
@@ -2061,10 +2085,6 @@
   "@messagesEmpty": {
     "description": "#687 - messaging centre"
   },
-  "messagesEmptyHint": "Tocca la matita per scrivere a qualcuno, oppure crea un gruppo.",
-  "@messagesEmptyHint": {
-    "description": "#687 - messaging centre"
-  },
   "conversationMemberCount": "{count, plural, =1{1 membro} other{{count} membri}}",
   "@conversationMemberCount": {
     "description": "#687 - messaging centre",
@@ -2157,6 +2177,10 @@
   "newGroupNameTaken": "Esiste già un gruppo con questo nome. Scegline un altro.",
   "@newGroupNameTaken": {
     "description": "#694 - group names are unique per workspace"
+  },
+  "conversationSeeProfile": "Vedi profilo",
+  "@conversationSeeProfile": {
+    "description": "#695 - profile from a conversation"
   },
   "moneyBaseFee": "Abbonamento base",
   "moneyUsage": "{used} mezze giornate usate su {included}",

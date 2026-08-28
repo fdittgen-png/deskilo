@@ -164,10 +164,6 @@
   "@messagesEmpty": {
     "description": "#687 - messaging centre"
   },
-  "messagesEmptyHint": "Tap the pencil to write to someone, or start a group.",
-  "@messagesEmptyHint": {
-    "description": "#687 - messaging centre"
-  },
   "conversationMemberCount": "{count, plural, =1{1 member} other{{count} members}}",
   "@conversationMemberCount": {
     "description": "#687 - messaging centre",
@@ -260,5 +256,9 @@
   "newGroupNameTaken": "A group with that name already exists here. Pick another.",
   "@newGroupNameTaken": {
     "description": "#694 - group names are unique per workspace"
+  },
+  "conversationSeeProfile": "See profile",
+  "@conversationSeeProfile": {
+    "description": "#695 - profile from a conversation"
   }
 }

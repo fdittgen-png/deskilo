@@ -1753,6 +1753,29 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpContents => 'Inhalt';
 
   @override
+  String get helpHintMessages =>
+      'Alle Unterhaltungen in einer Liste, die neueste oben. Tippen Sie auf den Stift, um jemandem zu schreiben oder eine Gruppe zu erstellen.';
+
+  @override
+  String get helpHintMessagesTopic => 'Nachrichten';
+
+  @override
+  String get helpHintMessagesTip2 =>
+      'Wählen Sie eine Person für einen privaten Chat oder mehrere für eine Gruppe — das Namensfeld erscheint ab zwei, und der Gruppenname ist hier eindeutig: niemand muss raten, welches „Team“ gemeint ist.';
+
+  @override
+  String get helpHintMessagesTip3 =>
+      'Tippen Sie oben in einem Chat auf den Namen, um das Profil zu sehen: die heutige Buchung, ob jemand eingecheckt ist, und wie man ihn erreicht.';
+
+  @override
+  String get helpHintMessagesTip4 =>
+      'Die Suche findet Mitglieder, Gruppen und Wörter in Nachrichten — ein Treffer bringt Sie direkt dorthin.';
+
+  @override
+  String get helpHintMessagesTip5 =>
+      'Verlinken Sie eine Reservierung oder einen Bereich, statt ihn zu beschreiben; ein Tippen führt zum richtigen.';
+
+  @override
   String get helpHintLearnMore => 'Mehr erfahren';
 
   @override
@@ -3659,10 +3682,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get messagesEmpty => 'Noch keine Unterhaltungen.';
 
   @override
-  String get messagesEmptyHint =>
-      'Tippen Sie auf den Stift, um jemandem zu schreiben, oder erstellen Sie eine Gruppe.';
-
-  @override
   String conversationMemberCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -3738,6 +3757,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get newGroupNameTaken =>
       'Eine Gruppe mit diesem Namen gibt es hier schon. Wählen Sie einen anderen.';
+
+  @override
+  String get conversationSeeProfile => 'Profil ansehen';
 
   @override
   String get moneyBaseFee => 'Basis-Abo';

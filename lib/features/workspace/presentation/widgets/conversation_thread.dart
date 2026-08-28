@@ -7,6 +7,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/member_note.dart';
+import '../../../members/presentation/member_profile_link.dart';
 import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'conversation_bubble.dart';
@@ -115,13 +116,24 @@ class ConversationThread extends ConsumerWidget {
                   // guess.
                   child: InkWell(
                     key: const ValueKey('conversation-header'),
-                    onTap: conversation == null || !conversation.isGroup
+                    // A GROUP header opens its roster; a DIRECT one
+                    // opens the person — same gesture, and the thing
+                    // behind the name is what you want either way.
+                    onTap: conversation == null
                         ? null
-                        : () => showGroupInfoSheet(
-                              context,
-                              ref,
-                              conversation: conversation,
-                            ),
+                        : conversation.isGroup
+                            ? () => showGroupInfoSheet(
+                                  context,
+                                  ref,
+                                  conversation: conversation,
+                                )
+                            : (conversation.otherMemberId == null
+                                ? null
+                                : () => openMemberProfile(
+                                      context,
+                                      ref,
+                                      memberId: conversation.otherMemberId!,
+                                    )),
                     child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -131,6 +143,18 @@ class ConversationThread extends ConsumerWidget {
                         style: theme.textTheme.titleMedium,
                         overflow: TextOverflow.ellipsis,
                       ),
+                      if (!(conversation?.isGroup ?? true))
+                        Row(mainAxisSize: MainAxisSize.min, children: [
+                          Text(
+                            l10n?.conversationSeeProfile ?? 'See profile',
+                            style: theme.textTheme.bodySmall,
+                          ),
+                          Icon(
+                            Icons.chevron_right,
+                            size: 16,
+                            color: theme.textTheme.bodySmall?.color,
+                          ),
+                        ]),
                       if (conversation?.isGroup ?? false)
                         Row(mainAxisSize: MainAxisSize.min, children: [
                           Text(

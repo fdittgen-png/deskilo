@@ -1756,6 +1756,29 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpContents => 'Índice';
 
   @override
+  String get helpHintMessages =>
+      'Todas las conversaciones en una lista, la más reciente arriba. Toque el lápiz para escribir a alguien o crear un grupo.';
+
+  @override
+  String get helpHintMessagesTopic => 'Mensajes';
+
+  @override
+  String get helpHintMessagesTip2 =>
+      'Elija una persona para un chat privado, o varias para crear un grupo — el campo del nombre aparece a partir de dos, y ese nombre es único aquí: nadie tiene que adivinar a qué «Equipo» escribe.';
+
+  @override
+  String get helpHintMessagesTip3 =>
+      'Toque un nombre en la parte superior de un chat para ver su perfil: la reserva de hoy, si ha registrado su entrada, y cómo contactarle.';
+
+  @override
+  String get helpHintMessagesTip4 =>
+      'La búsqueda encuentra miembros, grupos y las palabras dentro de los mensajes — un resultado le lleva directamente allí.';
+
+  @override
+  String get helpHintMessagesTip5 =>
+      'Enlace una reserva o un espacio en el mensaje en vez de describirlo; quien lo lea lo toca y llega al correcto.';
+
+  @override
   String get helpHintLearnMore => 'Más información';
 
   @override
@@ -1810,7 +1833,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'El plano en vivo: toca un asiento libre para reservar, toca tu reserva para registrar tu llegada.';
 
   @override
-  String get helpHintPlanTopic => 'pestaña Plano';
+  String get helpHintPlanTopic => 'El plano';
 
   @override
   String get helpHintPlanTip2 =>
@@ -3653,10 +3676,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get messagesEmpty => 'Aún no hay conversaciones.';
 
   @override
-  String get messagesEmptyHint =>
-      'Toque el lápiz para escribir a alguien, o cree un grupo.';
-
-  @override
   String conversationMemberCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -3731,6 +3750,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get newGroupNameTaken =>
       'Ya existe un grupo con ese nombre aquí. Elija otro.';
+
+  @override
+  String get conversationSeeProfile => 'Ver perfil';
 
   @override
   String get moneyBaseFee => 'Suscripción base';
