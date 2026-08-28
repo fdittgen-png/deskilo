@@ -25,7 +25,7 @@ Un account può appartenere a più spazi. **Impostazioni → Profili** li elenca
 
 ### Orientarsi
 
-L'app ha fino a quattro destinazioni lungo il bordo inferiore: **Messaggi** (§16), **Calendario** (§5), il grande pulsante centrale **Prenota** (§4) e **Finanze** (§9). Messaggi e Prenota ci sono sempre; Calendario e Finanze vanno e vengono con la loro funzionalità (§8). **Messaggi è la casella**: le conversazioni, il flusso di eventi e conferme (§7) e l'elenco dei membri (§6) sono le sue tre facce, ognuna a un tocco sulla striscia delle schede, e il suo contatore somma tutto ciò che ti aspetta nelle tre. L'**ingranaggio** che apre le **Impostazioni** (§12) è invece in ogni intestazione. Sui telefoni in orizzontale e sui tablet la maggior parte delle schermate passa a un **layout diviso** — i controlli in un pannello laterale, il contenuto a riempire il resto.
+L'app ha fino a cinque destinazioni lungo il bordo inferiore: **Messaggi** (§16), **Calendario** (§5), il grande pulsante centrale **Prenota** (§4), **Membri** (§6) e **Finanze** (§9). Messaggi e Prenota ci sono sempre; Calendario, Membri e Finanze vanno e vengono con la loro funzionalità (§8). **Messaggi è la casella**: le tue conversazioni e il flusso di eventi e conferme (§7) sono le sue due facce, e la **campanella** nella barra dell'app salta dritta alla seconda, con il conteggio di ciò che ti aspetta. L'**ingranaggio** che apre le **Impostazioni** (§12) è invece in ogni intestazione. Sui telefoni in orizzontale e sui tablet la maggior parte delle schermate passa a un **layout diviso** — i controlli in un pannello laterale, il contenuto a riempire il resto.
 
 **Tutto resta dal vivo.** Qualunque cosa qualcuno cambi — una prenotazione, un nuovo membro, un'impostazione — viene inviata in pochi secondi a ogni dispositivo connesso, compreso quello che ha fatto la modifica. Nessun riavvio, nessun trascinare-per-aggiornare.
 
@@ -187,9 +187,8 @@ Il mese a colpo d'occhio, con due ambiti e due forme:
 - I **chip di piano** (*Tutti i piani* / per livello) filtrano la **cronologia**.
 - Tocca un giorno nella griglia del mese per caricarlo sotto. In orizzontale, calendario e dettaglio usano il layout diviso.
 
-## 6. Elenco dei membri (Messaggi → Membri)
+## 6. Elenco dei membri (scheda Membri)
 
-**Dove si trova (#702).** L'elenco è la terza faccia della scheda **Messaggi**, accanto alle tue conversazioni e agli avvisi — le persone di cui entrambi parlano. Fino ad allora era una destinazione propria della barra in basso.
 
 **Tocca un membro per il suo profilo (#704).** Foto, ruolo e stato; che cosa ha prenotato e se ha fatto il check-in in questo momento; e **Contatti** — il numero WhatsApp condiviso volontariamente per tutti, l'**indirizzo e-mail e la quota di piano per gli admin**. Dove hai il diritto di vedere le cifre — **le tue sempre, quelle di un altro con il permesso *Vedere le finanze*** — il profilo porta anche **Finanze**: la posizione netta (chi deve che cosa a chi), le fatture aperte con quanto resta su ciascuna, i pagamenti già arrivati e il mese in corso. La stessa scheda della scheda Finanze, così le due non possono contraddirsi.
 
@@ -204,7 +203,7 @@ Guarda chi fa parte della tua comunità:
 
 ## 7. Eventi e conferme (Messaggi → Eventi)
 
-**Dove si trova (#702).** Il flusso è la seconda faccia della scheda **Messaggi**. Fino ad allora stava dietro una campanella nella barra dell'app — un avviso che potevi aprire da una parte e ritrovare in attesa dall'altra.
+**Dove si trova.** Il flusso è la seconda faccia della scheda **Messaggi**, e la **campanella** in ogni barra dell'app porta dritto lì, con il conteggio di ciò che ti aspetta. Un solo posto tiene gli avvisi: leggerne uno lì è averlo letto ovunque.
 
 Il flusso eventi è la traccia di controllo del tuo spazio: prenotazioni create/modificate/cancellate, pagamenti registrati, fatture pagate, spese presentate, richieste di giorni extra, cambi di ruolo, richieste di eliminazione. I membri vedono i propri eventi; admin e proprietari vedono quelli di tutti. I **chip di filtro** (Tutti · Prenotazione · Pagamento · Spesa · …) restringono l'elenco — la tua scelta viene ricordata — e un menu **Raggruppa per** ripiega il feed in gruppi per tipo, giorno o membro (toccare il simbolo del gruppo riporta all'elenco piatto); ogni riga porta la sua icona di stato — una **clessidra** finché in sospeso, una **spunta verde** una volta confermata — e gli eventi di denaro mostrano *chi li ha validati e quando* direttamente sulla riga.
 

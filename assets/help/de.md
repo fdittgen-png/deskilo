@@ -25,7 +25,7 @@ Ein Konto kann mehreren Workspaces angehören. **Einstellungen → Profile** lis
 
 ### Orientierung
 
-Die App hat bis zu vier Ziele am unteren Rand: **Nachrichten** (§16), **Kalender** (§5), den großen zentralen **Reservieren**-Knopf (§4) und **Finanzen** (§9). Nachrichten und Reservieren sind immer da; Kalender und Finanzen kommen und gehen mit ihrer Funktion (§8). **Nachrichten ist der Posteingang**: Unterhaltungen, der Ereignis- und Bestätigungs-Feed (§7) und das Mitgliederverzeichnis (§6) sind seine drei Flächen, jede einen Tipp auf der Tab-Leiste entfernt, und sein Zähler summiert, was in allen dreien auf dich wartet. Das **Zahnrad** zu den **Einstellungen** (§12) steht in jeder Kopfzeile. Quer gehalten und auf Tablets wechseln die meisten Bildschirme in eine **geteilte Ansicht** — Bedienelemente im Seitenpanel, Inhalt füllt den Rest.
+Die App hat bis zu fünf Ziele am unteren Rand: **Nachrichten** (§16), **Kalender** (§5), den großen zentralen **Reservieren**-Knopf (§4), **Mitglieder** (§6) und **Finanzen** (§9). Nachrichten und Reservieren sind immer da; Kalender, Mitglieder und Finanzen kommen und gehen mit ihrer Funktion (§8). **Nachrichten ist der Posteingang**: deine Unterhaltungen und der Ereignis- und Bestätigungs-Feed (§7) sind seine zwei Flächen, und die **Glocke** in der Kopfzeile springt direkt zur zweiten, mit dem Zähler dessen, was auf dich wartet. Das **Zahnrad** zu den **Einstellungen** (§12) steht in jeder Kopfzeile. Quer gehalten und auf Tablets wechseln die meisten Bildschirme in eine **geteilte Ansicht** — Bedienelemente im Seitenpanel, Inhalt füllt den Rest.
 
 **Alles bleibt live.** Was irgendjemand ändert — eine Buchung, ein neues Mitglied, eine Einstellung — wird binnen Sekunden auf jedes verbundene Gerät geschoben, auch auf das, das die Änderung machte. Kein Neustart, kein Ziehen zum Aktualisieren.
 
@@ -187,9 +187,8 @@ Der Monat auf einen Blick, mit zwei Reichweiten und zwei Formen:
 - Die **Etagen-Chips** filtern die **Zeitleiste**.
 - Einen Tag antippen lädt ihn unten. Im Querformat geteilte Ansicht.
 
-## 6. Mitgliederverzeichnis (Nachrichten → Mitglieder)
+## 6. Mitgliederverzeichnis (Mitglieder-Tab)
 
-**Wo es liegt (#702).** Das Verzeichnis ist die dritte Fläche des Tabs **Nachrichten**, neben deinen Unterhaltungen und den Ereignissen — die Menschen, um die es in beiden geht. Bis dahin war es ein eigenes Ziel in der unteren Leiste.
 
 **Tippe ein Mitglied für sein Profil an (#704).** Foto, Rolle und Status; was es gebucht hat und ob es gerade eingecheckt ist; und **Kontakt** — die freiwillig geteilte WhatsApp-Nummer für alle, die **E-Mail-Adresse und der Tarifanteil für Admins**. Wo du die Zahlen sehen darfst — **deine eigenen immer, fremde mit der Berechtigung *Finanzen sehen*** — trägt das Profil außerdem **Finanzen**: die Nettoposition (wer wem was schuldet), die offenen Rechnungen mit dem jeweiligen Rest, die eingegangenen Zahlungen und den gerade laufenden Monat. Dieselbe Karte wie im Finanzen-Tab, damit beide sich nicht widersprechen können.
 
@@ -204,7 +203,7 @@ Sieh, wer zur Community gehört:
 
 ## 7. Ereignisse & Bestätigungen (Nachrichten → Ereignisse)
 
-**Wo es liegt (#702).** Der Feed ist die zweite Fläche des Tabs **Nachrichten**. Bis dahin lag er hinter einer Glocke in der Kopfzeile — eine Meldung, die man an einer Stelle öffnen und an der anderen weiter wartend vorfinden konnte.
+**Wo es liegt.** Der Feed ist die zweite Fläche des Tabs **Nachrichten**, und die **Glocke** in jeder Kopfzeile führt direkt dorthin, mit dem Zähler dessen, was auf dich wartet. Ein Ort hält die Meldungen — dort eine lesen heißt, sie überall gelesen zu haben.
 
 Der Ereignis-Feed ist die Prüfspur deines Space: Buchungen erstellt/geändert/storniert, Zahlungen erfasst, Rechnungen bezahlt, Ausgaben eingereicht, Extratage-Anträge, Rollenwechsel, Löschanträge. Mitglieder sehen ihre eigenen Ereignisse; Admins und Inhaber alles. **Filter-Chips** (Alle · Reservierung · Zahlung · Ausgabe · …) engen die Liste ein — deine Wahl wird gemerkt — und ein **Gruppieren nach**-Menü faltet den Feed in Gruppen nach Typ, Tag oder Mitglied (das Gruppensymbol antippen führt zur flachen Liste zurück); jede Zeile trägt ihr Status-Icon — **Sanduhr** wartend, **grünes Häkchen** bestätigt — und Geld-Ereignisse zeigen *wer wann validierte* direkt auf der Zeile.
 

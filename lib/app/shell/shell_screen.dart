@@ -197,18 +197,22 @@ class ShellScreen extends ConsumerWidget {
     // a workspace with no messaging surface has no way to reach a
     // conversation someone already sent it.
     final features = ref.watch(enabledFeaturesSyncProvider);
-    // #702 — one destination, one badge, both counts: unread messages
-    // plus the confirmations that used to badge the bell. Two badges for
-    // one tab would have been two answers to "is there anything for me".
-    final unreadMessages = ref.watch(unreadMessagesProvider) +
-        (ref.watch(myPendingEventCountProvider).value ?? 0);
+    // #707 — the two counts SEPARATE again. The Messages badge counts
+    // unread conversations; the bell counts pending confirmations. #702
+    // had summed them onto one destination, and one number for two
+    // different kinds of "something needs you" told nobody which.
+    final unreadMessages = ref.watch(unreadMessagesProvider);
+    final pendingEvents = ref.watch(myPendingEventCountProvider).value ?? 0;
     final visibleBranches = [
       ShellBranch.plan,
       if (features.contains(WorkspaceFeature.calendarTab))
         ShellBranch.calendar,
-      // #702 — NO MEMBERS TAB. The directory is the inbox's third face:
-      // the people the conversations and the alerts are about. The
-      // membersDirectory feature still gates it, one level in.
+      // #707 — Members is a bottom-bar destination again, left of
+      // Finances (owner's call, on seeing it as an inbox face). The
+      // directory is a roster you consult, not a thing that arrives —
+      // an inbox tab put it behind the wrong door.
+      if (features.contains(WorkspaceFeature.membersDirectory))
+        ShellBranch.directory,
       if (features.contains(WorkspaceFeature.moneyTab)) ShellBranch.money,
     ];
     final selectedPosition =
@@ -278,12 +282,25 @@ class ShellScreen extends ConsumerWidget {
               tooltip: l10n?.editorOpenTooltip ?? 'Edit workspace',
               onPressed: () => context.push('/editor'),
             ),
-          // #702 — NO BELL. The events feed is a face of the inbox, and
-          // an alert reachable from two places is an alert you can read
-          // in one and still see waiting in the other (the #687 rule
-          // that moved messages off this bar in the first place). The
-          // count it carried now rides the inbox destination below,
-          // beside the unread messages it always sat next to.
+          // #707 — the bell is back, as a SHORTCUT: it opens the inbox
+          // on its Événements face rather than a screen of its own. That
+          // keeps the #687 rule intact — one place holds the alerts, so
+          // reading one there is reading it everywhere — while the count
+          // stays visible from every tab, which a tab inside the inbox
+          // could not offer. Hidden when the workspace gated events off.
+          if (features.contains(WorkspaceFeature.eventsTab))
+            IconButton(
+              key: const ValueKey('shell-events-bell'),
+              icon: pendingEvents == 0
+                  ? const Icon(Icons.notifications_outlined)
+                  : Badge.count(
+                      count: pendingEvents,
+                      child: const Icon(Icons.notifications_outlined),
+                    ),
+              tooltip: l10n?.tabEvents ?? 'Events',
+              // The /events path already lands on the alerts face.
+              onPressed: () => context.go('/events'),
+            ),
           IconButton(
             icon: const Icon(Icons.settings_outlined),
             tooltip: l10n?.settingsTitle ?? 'Settings',

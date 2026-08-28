@@ -25,7 +25,7 @@ Una cuenta puede pertenecer a varios espacios. **Ajustes → Perfiles** los list
 
 ### Orientarse
 
-La app tiene hasta cuatro destinos en la barra inferior: **Mensajes** (§16), **Calendario** (§5), el gran botón central **Reservar** (§4) y **Finanzas** (§9). Mensajes y Reservar están siempre; Calendario y Finanzas van y vienen con su función (§8). **Mensajes es la bandeja de entrada**: las conversaciones, el hilo de eventos y confirmaciones (§7) y el directorio de miembros (§6) son sus tres caras, cada una a un toque en la tira de pestañas, y su insignia suma todo lo que te espera en las tres. El **engranaje** que abre los **Ajustes** (§12) sí está en todas las cabeceras. Con el teléfono en horizontal y en tabletas, la mayoría de las pantallas pasan a un **diseño dividido** — controles en un panel lateral, contenido llenando el resto.
+La app tiene hasta cinco destinos en la barra inferior: **Mensajes** (§16), **Calendario** (§5), el gran botón central **Reservar** (§4), **Miembros** (§6) y **Finanzas** (§9). Mensajes y Reservar están siempre; Calendario, Miembros y Finanzas van y vienen con su función (§8). **Mensajes es la bandeja de entrada**: sus conversaciones y el hilo de eventos y confirmaciones (§7) son sus dos caras, y la **campana** de la barra superior salta directamente a la segunda, con el recuento de lo que le espera. El **engranaje** que abre los **Ajustes** (§12) sí está en todas las cabeceras. Con el teléfono en horizontal y en tabletas, la mayoría de las pantallas pasan a un **diseño dividido** — controles en un panel lateral, contenido llenando el resto.
 
 **Todo se mantiene en vivo.** Lo que cualquiera cambie — una reserva, un miembro nuevo, un ajuste — se envía en segundos a cada dispositivo conectado, incluido el que hizo el cambio. Sin reiniciar, sin tirar para actualizar.
 
@@ -187,9 +187,8 @@ El mes de un vistazo, con dos alcances y dos formas:
 - Los **chips de planta** (*Todas las plantas* / por planta) filtran la **cronología**.
 - Toca un día en la cuadrícula mensual para cargarlo abajo. En horizontal, el calendario y el detalle usan el diseño dividido.
 
-## 6. Directorio de miembros (Mensajes → Miembros)
+## 6. Directorio de miembros (pestaña Miembros)
 
-**Dónde vive (#702).** El directorio es la tercera cara de la pestaña **Mensajes**, junto a sus conversaciones y las alertas — las personas de las que ambas hablan. Hasta entonces era un destino propio de la barra inferior.
 
 **Toque un miembro para su perfil (#704).** Su foto, su rol y su estado; qué ha reservado y si ha registrado su entrada ahora mismo; y **Contacto** — el número de WhatsApp compartido voluntariamente para todos, la **dirección de correo y el plan para los admins**. Donde tenga derecho a ver las cifras — **las suyas siempre, las de otro con el permiso *Ver finanzas*** — el perfil lleva además **Finanzas**: la posición neta (quién debe a quién), las facturas abiertas con lo que queda en cada una, los pagos ya recibidos y el mes que se está consumiendo. La misma tarjeta que muestra la pestaña Finanzas, para que las dos no puedan contradecirse.
 
@@ -204,7 +203,7 @@ Mira quién forma tu comunidad:
 
 ## 7. Eventos y confirmaciones (Mensajes → Eventos)
 
-**Dónde vive (#702).** El flujo es la segunda cara de la pestaña **Mensajes**. Hasta entonces estaba detrás de una campana en la barra superior — un aviso que podía abrir en un sitio y seguir encontrando en espera en otro.
+**Dónde vive.** El flujo es la segunda cara de la pestaña **Mensajes**, y la **campana** de cada barra superior lleva directamente a ella, con el recuento de lo que le espera. Un solo sitio guarda los avisos: leer uno allí es haberlo leído en todas partes.
 
 El hilo de eventos es la pista de auditoría de tu espacio: reservas creadas/cambiadas/canceladas, pagos registrados, facturas pagadas, gastos presentados, solicitudes de días extra, cambios de rol, solicitudes de eliminación. Los miembros ven sus propios eventos; los admins y propietarios ven los de todos. Los **chips de filtro** (Todo · Reserva · Pago · Gasto · …) acotan la lista — tu elección se recuerda — y un menú **Agrupar por** pliega el hilo en grupos por tipo, día o miembro (tocar el símbolo del grupo vuelve a la lista plana); cada fila lleva su icono de estado — un **reloj de arena** mientras está pendiente, una **marca verde** una vez confirmado — y los eventos de dinero muestran *quién los validó y cuándo* directamente en la fila.
 
