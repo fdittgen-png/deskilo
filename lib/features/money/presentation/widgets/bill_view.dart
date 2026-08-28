@@ -2,7 +2,6 @@
 import '../../../../core/i18n/money_format.dart';
 import 'how_to_pay_tiles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -235,7 +234,7 @@ class _InvoiceCard extends StatelessWidget {
 /// Public since #711 so the bank-scheme labelling can be tested on its
 /// own; the bill composes it, nothing else constructs it.
 class HowToPayCard extends ConsumerWidget {
-  const HowToPayCard({required this.instructions, this.onPayOnline});
+  const HowToPayCard({super.key, required this.instructions, this.onPayOnline});
 
   final PaymentInstructions instructions;
 
