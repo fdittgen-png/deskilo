@@ -81,7 +81,7 @@ Vom Plan aus buchen:
 
 ## 4. Reservierungen (Reservieren-Hub)
 
-Öffne den **Reservieren**-Hub (Mittelknopf). Oben: die vier **Ansichts-Knöpfe**, der **Datums-Chip**, der **QR-Scan** (darunter, §4a), die **Tageszeit-Chips** und die **Etagen-Chips** (*Alle Etagen* oder eine je Ebene). Dann vier Ansichten:
+Öffne den **Reservieren**-Hub (Mittelknopf). Oben: zwei Reihen von Bedienelementen. Die erste sagt, **was** du siehst: die vier **Ansichts-Knöpfe** und, auf dem Plan, der Umschalter **Plan / Liste**. Die zweite sagt **wann**: der **Datums-Chip**, ein **Jetzt**-Knopf, sobald du von heute weggeblättert hast, und die **Tageszeit-Chips**. Die **Etagen-Chips** (*Alle Etagen* oder eine je Ebene) sitzen auf dem Plan selbst, der **QR-Scan** (§4a) in der Kopfzeile, neben Editor und Glocke. Dann vier Ansichten:
 
 - **Plan** — der Grundriss, gefiltert auf dein Fenster; freien Platz antippen und buchen.
 - **Tag** — jeder Platz als Zeitleisten-Zeile für den gewählten Tag (08:00 → 17:00 oder deine Zeiten, die rote Linie ist *jetzt*); freie Strecke antippen zum Buchen, den eigenen Block für Details.

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/level.dart';
@@ -66,17 +67,27 @@ class WindowControls extends StatelessWidget {
       HalfDayWindow Function(DateTime day) windowOf,
     ) {
       final window = windowOf(day);
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 2),
-        child: Tooltip(
-          message: name,
-          child: ChoiceChip(
-            key: ValueKey('$keyPrefix-$keySuffix'),
-            label: Icon(icon, size: 18, semanticLabel: name),
-            selected: isSelected(window),
-            materialTapTargetSize: MaterialTapTargetSize.padded,
-            onSelected: (_) => onPickWindow(window),
-          ),
+      return Tooltip(
+        message: name,
+        child: ChoiceChip(
+          key: ValueKey('$keyPrefix-$keySuffix'),
+          label: Icon(icon, size: 18, semanticLabel: name),
+          selected: isSelected(window),
+          materialTapTargetSize: MaterialTapTargetSize.padded,
+          // #699 — SQUARE, 48dp, not the default chip's ~58dp text box.
+          // An icon-only chip carries Material's label padding for a
+          // label it does not have; three of them cost 42dp of header
+          // width, which is the difference between the hub's controls
+          // taking two rows and taking three. The 48 is the tap target
+          // itself, so this shrinks the padding, never the target.
+          labelPadding: EdgeInsets.zero,
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+          // No checkmark: it is drawn INSIDE the chip, beside an icon
+          // that is already the label, so a selected chip grew by 18dp
+          // and read as two symbols meaning one thing. The fill says
+          // selected on its own.
+          showCheckmark: false,
+          onSelected: (_) => onPickWindow(window),
         ),
       );
     }
@@ -93,6 +104,10 @@ class WindowControls extends StatelessWidget {
     // BOTH families render: the window chips as shortcuts next to the
     // free from→to clock buttons.
     return Wrap(
+      // Tight, because these chips are ONE group: 2dp reads as a
+      // segmented control, the header's spacing between separate
+      // controls stays at 4.
+      spacing: 2,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         if (granularity.offersDayWindows) ...[
@@ -147,6 +162,41 @@ class WindowControls extends StatelessWidget {
       ],
     );
   }
+}
+
+/// One row of the Reserve hub's header (#699).
+///
+/// THE HEADER IS TWO ROWS, and the split means something: row one is
+/// WHAT you are looking at (the four views, map-or-list), row two is
+/// WHEN — the date, the way back to now, the window chips. One Wrap
+/// holding all of them flowed onto THREE lines at phone width, which is
+/// a lot of chrome above a screen whose job is the canvas below it.
+///
+/// A Wrap, never a scroll: every control stays visible at any width, and
+/// at a large text scale a row flows rather than overflows. Fitting the
+/// two rows at the default scale took the width back from the padding —
+/// hence [AppSpacing.sm] insets rather than the screen gutter, which is
+/// what lets row two hold date + now + chips at 360dp in German, the
+/// widest of the five languages.
+class HeaderControlRow extends StatelessWidget {
+  const HeaderControlRow({super.key, required this.children});
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(
+          left: AppSpacing.sm,
+          right: AppSpacing.sm,
+          bottom: AppSpacing.xs,
+        ),
+        child: Wrap(
+          spacing: AppSpacing.xs,
+          runSpacing: AppSpacing.xs,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: children,
+        ),
+      );
 }
 
 /// Floor switcher ON the plan (UX pass): a small vertical stack of

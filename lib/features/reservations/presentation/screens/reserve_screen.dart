@@ -555,7 +555,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     // segment keeps its 48dp target (#284 idiom). Two header rows total
     // instead of four; the view below gets the difference.
     Widget header() {
-      final controls = <Widget>[
+      // ROW 1 — what you are looking at.
+      final viewControls = <Widget>[
               ViewToggle<_ReserveView>(
               key: const ValueKey('reserve-view-switch'),
               options: [
@@ -594,33 +595,18 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
               // derives its week from the selected day on every build.
               onChanged: (view) => setState(() => _view = view),
             ),
-            // One date affordance (UX pass): the 7-day pill strip was
-            // redundant with the calendar picker — a chip naming the
-            // selected day opens it.
-            Padding(
-              padding: const EdgeInsets.only(left: AppSpacing.xs),
-              child: TextButton(
-                key: const ValueKey('reserve-date-button'),
-                onPressed: _pickDate,
-                child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  const Icon(Icons.calendar_month_outlined, size: 18),
-                  const SizedBox(width: 4),
-                  Text(DateFormat.MMMd().format(_selectedDay)),
-                ]),
-              ),
-            ),
-            // Space QR scan (field request): a desk/office/level card
-            // opens that space's permitted actions. Feature-gated since
-            // the hierarchy pass.
-            if (ref
-                .watch(enabledFeaturesSyncProvider)
-                .contains(WorkspaceFeature.spaceQrCodes))
-            IconButton(
-              key: const ValueKey('reserve-scan-button'),
-              tooltip: l10n?.spaceScanTitle ?? 'Scan a space code',
-              icon: const Icon(Icons.qr_code_scanner_outlined),
-              onPressed: () => scanSpace(context, ref),
-            ),
+            // 'Now' returns to today AND to the live window — parity
+            // with the Plan tab, which has had it since #184.
+            //
+            // Shown only while browsing, like Plan's: an always-visible
+            // disabled button is header noise. Without it, getting back
+            // from a browsed date meant opening the picker and hunting
+            // for today, on the surface people book from most.
+            //
+            // It clears the WINDOW too, not just the day. Leaving a
+            // hand-picked window on today reads as live while showing a
+            // slot that may already be past.
+            //
             // Map <-> list, as ONE button showing the icon of what you
             // would switch TO.
             //
@@ -645,17 +631,42 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                     ? _ReserveView.plan
                     : _ReserveView.list),
               ),
-            // 'Now' returns to today AND to the live window — parity
-            // with the Plan tab, which has had it since #184.
-            //
-            // Shown only while browsing, like Plan's: an always-visible
-            // disabled button is header noise. Without it, getting back
-            // from a browsed date meant opening the picker and hunting
-            // for today, on the surface people book from most.
-            //
-            // It clears the WINDOW too, not just the day. Leaving a
-            // hand-picked window on today reads as live while showing a
-            // slot that may already be past.
+      ];
+      // ROW 2 — WHEN you are looking at it, plus how the plan draws.
+      final whenControls = <Widget>[
+            // One date affordance (UX pass): the 7-day pill strip was
+            // redundant with the calendar picker — a chip naming the
+            // selected day opens it.
+            TextButton(
+              key: const ValueKey('reserve-date-button'),
+              // #699 — the default TextButton carries 16dp of padding a
+              // side for a two-word label. Trimmed to 8, with the 48dp
+              // minimum kept explicitly so the target never follows the
+              // padding down.
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
+                minimumSize: const Size(0, kMinInteractiveDimension),
+              ),
+              onPressed: _pickDate,
+              child: Row(mainAxisSize: MainAxisSize.min, children: [
+                const Icon(Icons.calendar_month_outlined, size: 18),
+                const SizedBox(width: 4),
+                // The APP's locale, not intl's default. Bare
+                // `DateFormat.MMMd()` formats in en_US whatever the app
+                // is showing — which is why a French hub read "Aug 28".
+                // GlobalMaterialLocalizations has already initialized
+                // the symbols for the locale it loaded.
+                Text(DateFormat.MMMd(
+                  Localizations.localeOf(context).toLanguageTag(),
+                ).format(_selectedDay)),
+              ]),
+            ),
+            // 'Now' returns to today AND to the live window (#184
+            // parity). Shown only while browsing — an always-visible
+            // disabled button is header noise — and sitting HERE, beside
+            // the date and chips it undoes. It clears the WINDOW too:
+            // a hand-picked window left on today reads as live while
+            // showing a slot that may already be past.
             if (!_selectedDay.isAtSameMomentAs(_today) ||
                 _windowStart != null)
               IconButton(
@@ -705,21 +716,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                     key: ValueKey('reserve-open-day'))
                 : _closedDayBanner(l10n),
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: AppSpacing.lg,
-              right: AppSpacing.lg,
-              bottom: AppSpacing.xs,
-            ),
-            // A Wrap, never a scroll: every control stays visible at
-            // any width; narrow phones flow onto a second line.
-            child: Wrap(
-              spacing: AppSpacing.xs,
-              runSpacing: AppSpacing.xs,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: controls,
-            ),
-          ),
+          // Two rows, and the split means something — HeaderControlRow
+          // carries the why and the metrics (#699).
+          HeaderControlRow(children: viewControls),
+          HeaderControlRow(children: whenControls),
         ],
       );
     }

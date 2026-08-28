@@ -18,6 +18,7 @@ import '../../core/time/workspace_time.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/domain/check_in_reminders.dart';
+import '../../features/reservations/presentation/widgets/space_scan.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/member_note_refs.dart';
@@ -289,6 +290,22 @@ class ShellScreen extends ConsumerWidget {
           // they could make where they saw the problem.
           // #687 — Réserver is the only map surface now, so the editor
           // sits there and nowhere else.
+          // Space QR scan (field request): a desk/office/level card opens
+          // that space's permitted actions.
+          //
+          // #699 — it used to sit in the hub's control rows, where it
+          // cost the width that pushed the window chips onto a third
+          // line. It reads better here anyway: scanning a card is an
+          // action ON the whole surface, like opening the editor beside
+          // it, not a control that changes what the plan below shows.
+          if (navigationShell.currentIndex == ShellBranch.reserve &&
+              features.contains(WorkspaceFeature.spaceQrCodes))
+            IconButton(
+              key: const ValueKey('reserve-scan-button'),
+              icon: const Icon(Icons.qr_code_scanner_outlined),
+              tooltip: l10n?.spaceScanTitle ?? 'Scan a space code',
+              onPressed: () => scanSpace(context, ref),
+            ),
           if (isOwner && navigationShell.currentIndex == ShellBranch.reserve)
             IconButton(
               key: const ValueKey('shell-editor-button'),
