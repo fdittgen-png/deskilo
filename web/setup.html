@@ -110,11 +110,15 @@ const FEATURES=[
  ['formHelpHints','Aides contextuelles','Un encart d\'aide sur chaque écran principal : le mode d\'emploi du formulaire, masquable, avec lien vers l\'aide complète ; réactivable dans les réglages.',1],
  ['kioskMemberPhotos','Photos des membres à la borne','Le reçu de la borne montre la photo de profil du membre reconnu.',1],
  ['planMemberPhotos','Photos des membres sur le plan','La photo de profil de l\'occupant sur les places du plan et de l\'onglet Réserver, borne ou non.',1],
+ ['regionalFormats','Région et formats','Chaque membre choisit l\'affichage de ses nombres, dates, horloge et fuseau. Désactivé : région de la langue de l\'app, 24 h, heure de l\'espace.',1],
  ['uiAnimations','Animations de l\'interface','Transitions et retours animés dans toute l\'app ; désactivé, tout devient instantané. Le réglage d\'accessibilité « animations réduites » du système prime de toute façon.',1],
 ];
 const PERMS=[['manageRoles','Gérer les rôles et permissions'],['manageMembers','Gérer les membres'],['manageValidation','Configurer les règles de validation'],['workspaceSettings',"Modifier les réglages de l'espace"],['issueInvoices','Émettre les factures et rapprocher les paiements'],['viewFinances',"Consulter les finances de l'espace"],['manageDocuments','Gérer la bibliothèque de documents'],['manageServices','Gérer les services et forfaits'],['approveExpenses','Approuver les dépenses']];
 const PERM_DEFAULTS={co_owner:PERMS.map(p=>p[0]),admin:['manageMembers','manageDocuments','manageServices','approveExpenses','viewFinances'],member:[]};
-const COUNTRIES=[['FR','France','EUR','Europe/Paris'],['DE','Allemagne','EUR','Europe/Berlin'],['BE','Belgique','EUR','Europe/Brussels'],['ES','Espagne','EUR','Europe/Madrid'],['IT','Italie','EUR','Europe/Rome'],['LU','Luxembourg','EUR','Europe/Luxembourg'],['CH','Suisse','CHF','Europe/Zurich'],['AT','Autriche','EUR','Europe/Vienna'],['NL','Pays-Bas','EUR','Europe/Amsterdam'],['PT','Portugal','EUR','Europe/Lisbon'],['GB','Royaume-Uni','GBP','Europe/London'],['NO','Norvège','NOK','Europe/Oslo'],['US','États-Unis','USD','America/New_York'],['CA','Canada','CAD','America/Toronto']];
+const COUNTRIES=[['AT','Autriche','EUR','Europe/Vienna','sepa'],['BE','Belgique','EUR','Europe/Brussels','sepa'],['CY','Chypre','EUR','Asia/Nicosia','sepa'],['DE','Allemagne','EUR','Europe/Berlin','sepa'],['EE','Estonie','EUR','Europe/Tallinn','sepa'],['ES','Espagne','EUR','Europe/Madrid','sepa'],['FI','Finlande','EUR','Europe/Helsinki','sepa'],['FR','France','EUR','Europe/Paris','sepa'],['GR','Grèce','EUR','Europe/Athens','sepa'],['HR','Croatie','EUR','Europe/Zagreb','sepa'],['IE','Irlande','EUR','Europe/Dublin','sepa'],['IT','Italie','EUR','Europe/Rome','sepa'],['LT','Lituanie','EUR','Europe/Vilnius','sepa'],['LU','Luxembourg','EUR','Europe/Luxembourg','sepa'],['LV','Lettonie','EUR','Europe/Riga','sepa'],['MT','Malte','EUR','Europe/Malta','sepa'],['NL','Pays-Bas','EUR','Europe/Amsterdam','sepa'],['PT','Portugal','EUR','Europe/Lisbon','sepa'],['SI','Slovénie','EUR','Europe/Ljubljana','sepa'],['SK','Slovaquie','EUR','Europe/Bratislava','sepa'],['BG','Bulgarie','BGN','Europe/Sofia','sepa'],['CZ','Tchéquie','CZK','Europe/Prague','sepa'],['DK','Danemark','DKK','Europe/Copenhagen','sepa'],['HU','Hongrie','HUF','Europe/Budapest','sepa'],['PL','Pologne','PLN','Europe/Warsaw','sepa'],['RO','Roumanie','RON','Europe/Bucharest','sepa'],['SE','Suède','SEK','Europe/Stockholm','sepa'],['CH','Suisse','CHF','Europe/Zurich','sepa'],['NO','Norvège','NOK','Europe/Oslo','sepa'],['GB','Royaume-Uni','GBP','Europe/London','uk'],['US','États-Unis','USD','America/New_York','us'],['CA','Canada','CAD','America/Toronto','ca']];
+// #711 — les devises que l'app sait formater (chiffres après la virgule inclus) et les fuseaux des pays du catalogue.
+const CURRENCIES=['AUD','BGN','BRL','CAD','CHF','CNY','CZK','DKK','EUR','GBP','HKD','HRK','HUF','ILS','INR','ISK','JPY','KRW','MXN','NOK','NZD','PLN','RON','SEK','SGD','TRY','USD','ZAR'];
+const TIMEZONES=[...new Set(COUNTRIES.map(c=>c[3]).concat(['America/Los_Angeles','America/Chicago','America/Denver','America/Vancouver','America/Montreal','Australia/Sydney','Asia/Tokyo','Asia/Singapore','Europe/Dublin','Atlantic/Canary','UTC']))].sort();
 const VAT_RATES={
  FR:[['Standard 20 %',20],['Intermédiaire 10 %',10],['Réduit 5,5 %',5.5],['Particulier 2,1 %',2.1]],
  DE:[['Regelsatz 19 %',19],['Ermäßigt 7 %',7]],
@@ -167,7 +171,7 @@ const DEFAULTS={
  features:Object.fromEntries(FEATURES.map(f=>[f[0],!!f[3]])),
  levels:[{name:'1er étage',offices:[{name:'Bureau 1',bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]}]}],
  accessories:[],services:[],tiers:[{from:0,to:100,fee:'',over:''}],subLevels:['25','50','75','100'],freeLevel:false,packages:[],
- pay:{iban:'',paypal_me:'',wero:'',lydia:'',wise:'',reference:''},
+ pay:{iban:'',paypal_me:'',wero:'',lydia:'',wise:'',reference:'',bank_name:'',account_number:'',bank_code:'',bic:''},
  org:'association',vatRegime:'not_subject',regNumber:'',vatId:'',exemption:'',street:'',postal:'',city:'',vatRates:[],
  mentions:{legalForm:'',register:'',terms:'',penalty:'',recovery:'',escompte:'',insurance:'',special:''},
  reminders:{levels:2,firstDays:14,betweenDays:14},
@@ -223,7 +227,7 @@ function render(){
  F.append(section("1 · Identité de l'espace",
   h('div',{class:'row'},input("Nom de l'espace *",'name','Le nom affiché partout.'),
    selectEl('Pays','country',COUNTRIES.map(c=>[c[0],c[1]]),'Détermine la devise proposée.',v=>{const c=COUNTRIES.find(x=>x[0]===v);if(c){S.currency=c[2];S.timezone=c[3];save();render()}})),
-  h('div',{class:'row'},input('Devise','currency','Code ISO, ex. EUR.'),input('Fuseau horaire','timezone','Ex. Europe/Paris.')),
+  h('div',{class:'row'},selectEl('Devise','currency',CURRENCIES.map(c=>[c,c]),"Code ISO 4217. L'app connaît le nombre de décimales de chacune (le yen n'en a pas, le dinar en a trois)."),selectEl('Fuseau horaire','timezone',TIMEZONES.map(t=>[t,t]),"Nom IANA. Tous les créneaux de réservation s'y ancrent.")),
   selectEl("Langue de l'espace",'language',LANGS,'Les invitations et rapports y sont rédigés par défaut.'),
   input('Adresse postale','address','Imprimée sur les factures.','text','12 rue Exemple, 34120 Pézenas'),
   input('Lien du groupe WhatsApp','whatsapp','Facultatif — https://chat.whatsapp.com/…'),
@@ -331,7 +335,7 @@ function render(){
  // 7 payments
  F.append(section('7 · Instructions de paiement',
   h('p',{class:'hint'},'Affichées aux membres sur un relevé impayé. Laissez vide pour ne rien afficher.'),
-  input('IBAN','pay.iban',''),input('Lien ou identifiant PayPal.me','pay.paypal_me',''),
+  input('IBAN','pay.iban',''),input('Nom de la banque','pay.bank_name','Facultatif.'),input('Numéro de compte','pay.account_number','Pays sans IBAN : Royaume-Uni, États-Unis, Canada.'),input('Code banque','pay.bank_code','Sort code (UK), routing number (US), transit + institution (CA).'),input('BIC / SWIFT','pay.bic','Virements internationaux.'),input('Lien ou identifiant PayPal.me','pay.paypal_me',''),
   h('div',{class:'row'},input('Numéro Wero','pay.wero',''),input('Numéro ou identifiant Lydia','pay.lydia','')),
   h('div',{class:'row'},input('Wisetag / lien Wise','pay.wise',''),input('Indication de référence','pay.reference',''))));
  // 8 legal

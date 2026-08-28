@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_radius.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -35,13 +35,13 @@ class SeatAccessoryRow extends ConsumerWidget {
   /// workspace currency) when supplements are billed and one is set.
   String _label(
     Accessory accessory,
-    NumberFormat currency, {
+    MoneyFormat currency, {
     required bool showSupplements,
   }) {
     if (!showSupplements || accessory.supplementCents <= 0) {
       return accessory.name;
     }
-    final supplement = currency.format(accessory.supplementCents / 100);
+    final supplement = currency.formatMinor(accessory.supplementCents);
     return '${accessory.name} (+$supplement)';
   }
 
@@ -68,9 +68,7 @@ class SeatAccessoryRow extends ConsumerWidget {
     final showSupplements = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.accessorySupplements);
-    final currency = NumberFormat.simpleCurrency(
-      name: ref.watch(currentWorkspaceProvider).value?.currencyCode,
-    );
+    final currency = moneyFormat(ref.watch(currentWorkspaceProvider).value?.currencyCode);
     final anyPriced = showSupplements &&
         accessories.any((accessory) => accessory.supplementCents > 0);
 

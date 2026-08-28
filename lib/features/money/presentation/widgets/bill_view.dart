@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../../core/i18n/money_format.dart';
+import 'how_to_pay_tiles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_radius.dart';
-import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../workspace/domain/overage_policy.dart';
@@ -34,6 +34,7 @@ class BillView extends StatelessWidget {
     this.onPayOnline,
     this.settlement,
   });
+
 
   final Statement statement;
   final List<LedgerEntry> ledger;
@@ -70,8 +71,8 @@ class BillView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currency = NumberFormat.simpleCurrency(name: currencyCode);
-    String money(int cents) => currency.format(cents / 100);
+    final currency = moneyFormat(currencyCode);
+    String money(int cents) => currency.formatMinor(cents);
 
     final sections = buildBillSections(
       period: statement.period,
@@ -123,7 +124,7 @@ class BillView extends StatelessWidget {
             (!paymentInstructions.isEmpty ||
                 (onlinePaymentsEnabled && onPayOnline != null))) ...[
           const SizedBox(height: 8),
-          _HowToPayCard(
+          HowToPayCard(
             instructions: paymentInstructions,
             onPayOnline: onlinePaymentsEnabled && onPayOnline != null
                 ? () => onPayOnline!(_owedCents)
@@ -230,8 +231,10 @@ class _InvoiceCard extends StatelessWidget {
 /// clipboard, the PayPal.me link opens externally, the reference hint is
 /// plain text. Purely informational — recording a payment stays the
 /// separate spec §8 confirmation flow.
-class _HowToPayCard extends ConsumerWidget {
-  const _HowToPayCard({required this.instructions, this.onPayOnline});
+/// Public since #711 so the bank-scheme labelling can be tested on its
+/// own; the bill composes it, nothing else constructs it.
+class HowToPayCard extends ConsumerWidget {
+  const HowToPayCard({super.key, required this.instructions, this.onPayOnline});
 
   final PaymentInstructions instructions;
 
@@ -287,8 +290,11 @@ class _HowToPayCard extends ConsumerWidget {
                   label: Text(l10n?.payOnlineButton ?? 'Pay online'),
                 ),
               ),
+            // #711 — bank details for countries without IBAN, labelled
+            // by the workspace's banking scheme.
+            BankDetailTiles(instructions: instructions),
             if (instructions.iban.trim().isNotEmpty)
-              _CopyTile(
+              CopyTile(
                 key: const Key('howToPayIban'),
                 icon: Icons.account_balance_outlined,
                 // IBAN is a language-neutral banking acronym — the key
@@ -313,7 +319,7 @@ class _HowToPayCard extends ConsumerWidget {
             // the titles reuse the #154 method labels (brand names).
             for (final (keySuffix, value, icon, title) in copyMethods)
               if (value.isNotEmpty)
-                _CopyTile(
+                CopyTile(
                   key: Key('howToPay$keySuffix'),
                   icon: icon,
                   title: title,
@@ -338,37 +344,6 @@ class _HowToPayCard extends ConsumerWidget {
   }
 }
 
-/// A how-to-pay row whose value copies to the clipboard on tap (#155
-/// IBAN pattern, shared with the #192 Wero/Lydia/Wise rows).
-class _CopyTile extends StatelessWidget {
-  const _CopyTile({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.value,
-    required this.copiedMessage,
-  });
-
-  final IconData icon;
-  final String title;
-  final String value;
-  final String copiedMessage;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon),
-      title: Text(title),
-      subtitle: Text(value),
-      trailing: const Icon(Icons.copy_outlined, size: 18),
-      onTap: () async {
-        await Clipboard.setData(ClipboardData(text: value));
-        if (!context.mounted) return;
-        AppSnack.success(context, copiedMessage);
-      },
-    );
-  }
-}
 
 /// The prominent "this month" usage card: the days included in the
 /// subscription, how many are used, and how many are left — plus a

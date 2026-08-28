@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:file_selector/file_selector.dart';
+import '../../../../core/i18n/money_format.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
@@ -443,9 +443,9 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
 
   /// Chip label: accessory name, plus its per-half-day supplement (in the
   /// workspace currency) when one is set.
-  String _accessoryLabel(Accessory accessory, NumberFormat currency) {
+  String _accessoryLabel(Accessory accessory, MoneyFormat currency) {
     if (accessory.supplementCents <= 0) return accessory.name;
-    final supplement = currency.format(accessory.supplementCents / 100);
+    final supplement = currency.formatMinor(accessory.supplementCents);
     return '${accessory.name} (+$supplement)';
   }
 
@@ -460,7 +460,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     final initialAccessories = assignments[seat.id] ?? const <String>{};
     final selectedAccessories = {...initialAccessories};
     final currency =
-        NumberFormat.simpleCurrency(name: workspace?.currencyCode);
+        moneyFormat(workspace?.currencyCode);
 
     final name = TextEditingController(text: seat.name);
     final chair = TextEditingController(text: seat.chair);

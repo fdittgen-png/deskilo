@@ -248,5 +248,37 @@
   "reportDesignerZoomFit": "Ajustar al ancho",
   "@reportDesignerZoomFit": {
     "description": "Report page designer: fit-the-width zoom option (#548)"
+  },
+  "paymentBankNameLabel": "Nombre del banco",
+  "@paymentBankNameLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentAccountNumberLabel": "Número de cuenta",
+  "@paymentAccountNumberLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentSortCodeLabel": "Sort code",
+  "@paymentSortCodeLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentRoutingNumberLabel": "Routing number",
+  "@paymentRoutingNumberLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentTransitNumberLabel": "Tránsito · institución",
+  "@paymentTransitNumberLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentBankCodeLabel": "Código bancario",
+  "@paymentBankCodeLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentBicLabel": "BIC / SWIFT",
+  "@paymentBicLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentCopied": "Copiado.",
+  "@paymentCopied": {
+    "description": "#711 - globalization"
   }
 }

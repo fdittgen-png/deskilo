@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/i18n/format_prefs.dart';
 
 /// Rules for the self-set status line (#231). The cap is enforced three
 /// times with this single constant: the editor's `maxLength`, the
@@ -25,6 +26,7 @@ class Profile {
     this.lastSeenAt,
     this.avatarPath,
     this.preferredLocale = '',
+    this.formatPrefs = FormatPrefs.defaults,
   });
 
   /// auth.users id (uuid).
@@ -68,6 +70,9 @@ class Profile {
   /// letters print in it; '' = unset → the workspace language chain.
   final String preferredLocale;
 
+  /// How this member reads numbers, dates, the clock and the zone (#711).
+  final FormatPrefs formatPrefs;
+
   bool get hasAvatar => avatarPath != null && avatarPath!.isNotEmpty;
 
   bool get sharesWhatsapp => whatsapp.isNotEmpty;
@@ -94,6 +99,7 @@ class Profile {
             : DateTime.parse(db['last_seen_at'] as String).toUtc(),
         avatarPath: db['avatar_path'] as String?,
         preferredLocale: db['preferred_locale'] as String? ?? '',
+        formatPrefs: FormatPrefs.fromDb(db),
       );
 
   Map<String, dynamic> toDb() => {
@@ -119,6 +125,8 @@ class Profile {
     String? vatId,
     DateTime? lastSeenAt,
     String? avatarPath,
+    String? preferredLocale,
+    FormatPrefs? formatPrefs,
   }) =>
       Profile(
         id: id,
@@ -131,6 +139,10 @@ class Profile {
         vatId: vatId ?? this.vatId,
         lastSeenAt: lastSeenAt ?? this.lastSeenAt,
         avatarPath: avatarPath ?? this.avatarPath,
+        // copyWith used to DROP these two: a status edit reset the
+        // document language. Carried now (#711).
+        preferredLocale: preferredLocale ?? this.preferredLocale,
+        formatPrefs: formatPrefs ?? this.formatPrefs,
       );
 }
 

@@ -227,6 +227,8 @@ The owner tunes this per **domain** in **Settings → Validation rules** — thi
 
 All administration lives under **Settings → Administration** — *Workspace* (the workspace settings), *Workspace ID & QR*, *Members & plans*, *Role management*, *Availability*, *Billing*, *Payment instructions*, *Services*, *Validation rules*, *Billing & reports* (the invoicing hub with the report editor and reminder rules in its header), *Features*, and the feature-gated entries (*Accessories*, Online payments, RFID/NFC badges…). One rule to know: **a feature's settings entry only appears while that feature is enabled** — switch *Online payments* off in **Features** and its configuration screen disappears with it (and comes back when you re-enable it). The **Features** entry itself is always there, so you can always switch a module back on.
 
+**Country, currency, time zone (#711).** The country picker now covers the 32 countries the app can declare tax in (EU-27, Switzerland, Norway, the UK, the US and Canada). Currency is a **picker** of the codes the app can format — each with its symbol, and each with the right number of decimals: a yen has none, a dinar has three, and every amount, invoice and online payment respects that. Time zone is a **searchable list** of the IANA zones the clock can actually install; a typo can no longer save.
+
 ![](assets/help/images/settings-administration.jpg)
 
 ### The space editor
@@ -502,6 +504,8 @@ Your identity exists only for the moment of the operation: the credential is sen
 
 *Owners issue invoices; admins too once they hold the **issue invoices** permission (Role management, §8 — or the legacy **Admins issue invoices** feature delegation). The **Invoices** feature sits under Finances in the feature list.*
 
+**Bank details for countries without IBAN (#711).** Under *Payment instructions*, beside the IBAN: bank name, account number, a routing code named the way your country names it — *sort code* in the UK, *routing number* in the US, *transit · institution* in Canada — and a BIC/SWIFT for cross-border transfers. Only filled fields print on the how-to-pay card.
+
 An invoice in DesKilo is generated, never composed: its positions are **derived exclusively from the month's tracked data** — subscription, overage, supplements, services, packages — minus the month's payments and credits, so the bottom line **is the balance due**. Each document snapshots the workspace's and the member's postal addresses (set yours in **Settings → Address**; the workspace address is in the workspace settings) and is **digitally signed** at issue — it never changes afterwards. A **detailed annex** (the month's ledger and attendance) can be attached with one switch when issuing.
 
 Issuers open **Finances → Invoices** and land on a three-tab hub under a live summary strip (*N to invoice · N open · X outstanding · N to refund · Y*):
@@ -588,6 +592,8 @@ Template variables (invoice family): `{{ number }}`, `{{ member }}`, `{{ workspa
 ## 12. Settings & profile
 
 Your personal screen, top to bottom:
+
+**Region & formats (#711).** How *you* read what the workspace shows: **numbers & dates** in a region of your choice (`fr_CH`, `en_GB`, `de_AT` … independent of the app language), the **clock** (24h, 12h, or whatever that region does), and whether times show in the **workspace's zone** — the one bookings are made in, and the default — or **your device's**, labelled wherever the two differ. A preview line shows the three choices added up. The currency is always the workspace's; only its spelling is yours. Stored on your profile, so it follows you across devices.
 
 - **Profiles** (§1) and your **photo** (tap to change — pick or remove).
 - **Members** — a shortcut into the directory; **WhatsApp** — your number, visible to fellow members only if you set it; **Status** — a free line (40 characters) shown in the directory; **Address** — your postal address (printed on your invoices), country and optional VAT number.

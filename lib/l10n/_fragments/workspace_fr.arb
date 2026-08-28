@@ -269,5 +269,126 @@
   "permApproveExpenses": "Approuver les dépenses",
   "@permApproveExpenses": {
     "description": "Permission label (#513)"
+  },
+  "regionalFormatsTitle": "Région et formats",
+  "@regionalFormatsTitle": {
+    "description": "#711 - globalization"
+  },
+  "regionalFormatLocale": "Nombres et dates",
+  "@regionalFormatLocale": {
+    "description": "#711 - globalization"
+  },
+  "regionalFormatLocaleAuto": "Suit la langue de l'app ({locale})",
+  "@regionalFormatLocaleAuto": {
+    "description": "#711 - globalization",
+    "placeholders": {
+      "locale": {
+        "type": "String"
+      }
+    }
+  },
+  "regionalFollowLanguage": "Automatique",
+  "@regionalFollowLanguage": {
+    "description": "#711 - globalization"
+  },
+  "regionalClock": "Horloge",
+  "@regionalClock": {
+    "description": "#711 - globalization"
+  },
+  "regionalClockAuto": "Auto",
+  "@regionalClockAuto": {
+    "description": "#711 - globalization"
+  },
+  "regionalDeviceZone": "Afficher les heures dans mon fuseau",
+  "@regionalDeviceZone": {
+    "description": "#711 - globalization"
+  },
+  "regionalDeviceZoneHint": "Désactivé : les heures s'affichent dans le fuseau de l'espace, celui des réservations. Activé : celui de votre appareil, signalé quand il diffère.",
+  "@regionalDeviceZoneHint": {
+    "description": "#711 - globalization"
+  },
+  "workspaceTimezoneUnknown": "Choisissez un fuseau dans la liste",
+  "@workspaceTimezoneUnknown": {
+    "description": "#711 - globalization"
+  },
+  "countryNameCY": "Chypre",
+  "@countryNameCY": {
+    "description": "#711 - globalization"
+  },
+  "countryNameEE": "Estonie",
+  "@countryNameEE": {
+    "description": "#711 - globalization"
+  },
+  "countryNameFI": "Finlande",
+  "@countryNameFI": {
+    "description": "#711 - globalization"
+  },
+  "countryNameGR": "Grèce",
+  "@countryNameGR": {
+    "description": "#711 - globalization"
+  },
+  "countryNameHR": "Croatie",
+  "@countryNameHR": {
+    "description": "#711 - globalization"
+  },
+  "countryNameIE": "Irlande",
+  "@countryNameIE": {
+    "description": "#711 - globalization"
+  },
+  "countryNameLT": "Lituanie",
+  "@countryNameLT": {
+    "description": "#711 - globalization"
+  },
+  "countryNameLV": "Lettonie",
+  "@countryNameLV": {
+    "description": "#711 - globalization"
+  },
+  "countryNameMT": "Malte",
+  "@countryNameMT": {
+    "description": "#711 - globalization"
+  },
+  "countryNameSI": "Slovénie",
+  "@countryNameSI": {
+    "description": "#711 - globalization"
+  },
+  "countryNameSK": "Slovaquie",
+  "@countryNameSK": {
+    "description": "#711 - globalization"
+  },
+  "countryNameBG": "Bulgarie",
+  "@countryNameBG": {
+    "description": "#711 - globalization"
+  },
+  "countryNameCZ": "Tchéquie",
+  "@countryNameCZ": {
+    "description": "#711 - globalization"
+  },
+  "countryNameDK": "Danemark",
+  "@countryNameDK": {
+    "description": "#711 - globalization"
+  },
+  "countryNameHU": "Hongrie",
+  "@countryNameHU": {
+    "description": "#711 - globalization"
+  },
+  "countryNamePL": "Pologne",
+  "@countryNamePL": {
+    "description": "#711 - globalization"
+  },
+  "countryNameRO": "Roumanie",
+  "@countryNameRO": {
+    "description": "#711 - globalization"
+  },
+  "countryNameSE": "Suède",
+  "@countryNameSE": {
+    "description": "#711 - globalization"
+  },
+  "regionalClock24h": "24h",
+  "@regionalClock24h": {
+    "description": "#711 - clock segment"
+  },
+  "regionalClock12h": "12h",
+  "@regionalClock12h": {
+    "description": "#711 - clock segment"
   }
 }

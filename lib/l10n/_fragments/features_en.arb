@@ -236,5 +236,13 @@
   "featureBadgeSignInDesc": "Members can sign in by scanning their badge and entering their PIN, instead of typing an e-mail on a shared tablet. Each member sets their own PIN and arms their own badge.",
   "@featureBadgeSignInDesc": {
     "description": "#662 - feature registry entry"
+  },
+  "featureRegionalFormatsTitle": "Region & formats",
+  "@featureRegionalFormatsTitle": {
+    "description": "#711 - globalization"
+  },
+  "featureRegionalFormatsDesc": "Members choose how numbers, dates, the clock and the time zone are shown to them. Off: everyone reads in the app language's home region, 24-hour, workspace time.",
+  "@featureRegionalFormatsDesc": {
+    "description": "#711 - globalization"
   }
 }

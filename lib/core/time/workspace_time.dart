@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: 0BSD
-import 'package:timezone/data/latest.dart' as tzdata;
+// #711 — latest_ALL, links included. The trimmed database dropped every
+// zone tzdata 2022b turned into a link — Europe/Amsterdam, Luxembourg,
+// Copenhagen, Stockholm, Oslo among them — so a workspace in any of
+// those silently kept time on the device clock.
+import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
+
+import '../i18n/format_prefs.dart';
 
 import '../trace/trace_logger.dart';
 
@@ -83,8 +89,27 @@ abstract final class WorkspaceTime {
   /// — a "Morning until 13:00" says 13:00 on a device hours away — and
   /// pass through; bare instants (UTC reservation rows, device-built
   /// flexible windows) convert to device-local as before.
-  static DateTime display(DateTime instant) =>
-      instant is tz.TZDateTime ? instant : instant.toLocal();
+  static DateTime display(DateTime instant) {
+    if (instant is tz.TZDateTime) return instant;
+    // #711 — the member reads bare instants in the WORKSPACE's clock
+    // unless they asked for their own. With no zone installed (tests,
+    // pre-connect boot) there is no workspace clock to read, and the
+    // device's is the honest answer — asking [wall] here would loop.
+    final location = _location;
+    if (displayMode == TimeZoneMode.workspace && location != null) {
+      final local = tz.TZDateTime.from(instant, location);
+      return DateTime(local.year, local.month, local.day, local.hour,
+          local.minute, local.second);
+    }
+    return instant.toLocal();
+  }
+
+  /// Which clock [display] renders a bare instant in (#711). Set by the
+  /// format controller from the member's profile; workspace by default,
+  /// which is the pre-#711 behaviour for every screen that already
+  /// called [wall] and a CHANGE for the ones that called `toLocal()`
+  /// directly — those now agree with the booking grid.
+  static TimeZoneMode displayMode = TimeZoneMode.workspace;
 
   /// The instant as the WORKSPACE's naive wall-clock time (#490) — the
   /// anchor every day-grid position and time label must use: a device

@@ -111,5 +111,13 @@
   "featureBadgeSignInDesc": "Les membres peuvent se connecter en scannant leur badge puis en saisissant leur code, au lieu de taper une adresse e-mail sur une tablette partagée. Chaque membre définit son propre code et active son propre badge.",
   "@featureBadgeSignInDesc": {
     "description": "#662 - feature registry entry"
+  },
+  "featureRegionalFormatsTitle": "Région et formats",
+  "@featureRegionalFormatsTitle": {
+    "description": "#711 - globalization"
+  },
+  "featureRegionalFormatsDesc": "Chaque membre choisit l'affichage des nombres, des dates, de l'horloge et du fuseau. Désactivé : tout le monde lit dans la région de la langue de l'app, en 24 h, à l'heure de l'espace.",
+  "@featureRegionalFormatsDesc": {
+    "description": "#711 - globalization"
   }
 }

@@ -651,14 +651,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
               child: Row(mainAxisSize: MainAxisSize.min, children: [
                 const Icon(Icons.calendar_month_outlined, size: 18),
                 const SizedBox(width: 4),
-                // The APP's locale, not intl's default. Bare
-                // `DateFormat.MMMd()` formats in en_US whatever the app
-                // is showing — which is why a French hub read "Aug 28".
-                // GlobalMaterialLocalizations has already initialized
-                // the symbols for the locale it loaded.
-                Text(DateFormat.MMMd(
-                  Localizations.localeOf(context).toLanguageTag(),
-                ).format(_selectedDay)),
+                // #711 — intl's default locale IS the member's format
+                // locale now (set by appFormatProvider), so the bare
+                // call is the right one; a per-site locale would
+                // disagree with every other date on screen.
+                Text(DateFormat.MMMd().format(_selectedDay)),
               ]),
             ),
             // 'Now' returns to today AND to the live window (#184

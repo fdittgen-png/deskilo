@@ -111,5 +111,13 @@
   "featureBadgeSignInDesc": "Mitglieder melden sich an, indem sie ihren Ausweis scannen und ihre PIN eingeben, statt eine E-Mail-Adresse auf einem gemeinsam genutzten Tablet zu tippen. Jedes Mitglied setzt seine eigene PIN und aktiviert seinen eigenen Ausweis.",
   "@featureBadgeSignInDesc": {
     "description": "#662 - feature registry entry"
+  },
+  "featureRegionalFormatsTitle": "Region & Formate",
+  "@featureRegionalFormatsTitle": {
+    "description": "#711 - globalization"
+  },
+  "featureRegionalFormatsDesc": "Mitglieder wählen, wie Zahlen, Daten, Uhr und Zeitzone ihnen angezeigt werden. Aus: alle lesen in der Heimatregion der App-Sprache, 24-Stunden, Bereichszeit.",
+  "@featureRegionalFormatsDesc": {
+    "description": "#711 - globalization"
   }
 }

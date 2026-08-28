@@ -25,7 +25,8 @@ Future<void> pumpSettingsAs(
   // 1800→1900 (#513): the Role management admin entry added one.
   // 1900→2000 (#552): the owner WhatsApp-channel tile added one.
   // 2000→2700 (#560): the About section (7 tiles + support block).
-  tester.view.physicalSize = const Size(800, 2700);
+  // #711 added the Region & formats tile; 2700 no longer reached Sign out.
+  tester.view.physicalSize = const Size(800, 2900);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final workspace = FakeWorkspaceRepository.withWorkspace(

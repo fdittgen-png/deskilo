@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -30,7 +31,7 @@ const _overdueDays = 30;
 class InvoicingSummaryBar extends ConsumerWidget {
   const InvoicingSummaryBar({super.key, required this.currency});
 
-  final NumberFormat currency;
+  final MoneyFormat currency;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -159,7 +160,7 @@ class ToInvoiceTab extends ConsumerWidget {
     required this.onProforma,
   });
 
-  final NumberFormat currency;
+  final MoneyFormat currency;
   final void Function(String memberId, String period) onIssue;
 
   /// Shares the month as a PROFORMA — what the member will owe, before
@@ -255,7 +256,7 @@ class OpenInvoicesTab extends ConsumerWidget {
     required this.onProforma,
   });
 
-  final NumberFormat currency;
+  final MoneyFormat currency;
 
   /// Reading the document: the same detail sheet the archive opens.
   final void Function(OpenInvoiceEntry entry) onOpen;
@@ -632,7 +633,7 @@ class MatchInvoiceDialog extends StatefulWidget {
   });
 
   final int dueCents;
-  final NumberFormat currency;
+  final MoneyFormat currency;
 
   /// The member's not-yet-consumed registered payments.
   final List<LedgerEntry> payments;

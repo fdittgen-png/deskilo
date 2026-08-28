@@ -170,9 +170,7 @@ class _BadgeManagerDialogState
         final cover = batchCover(context, ref, docId: 'badges', data: {
           'workspace': workspaceName,
           'member': widget.name,
-          'issued': DateFormat.yMMMMd(
-            Localizations.localeOf(context).toLanguageTag(),
-          ).format(ref.read(clockProvider).now()),
+          'issued': DateFormat.yMMMMd().format(ref.read(clockProvider).now()),
         });
         // Built BEFORE the awaits: it reads the context, and the font
         // loads below are async gaps.

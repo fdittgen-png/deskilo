@@ -227,6 +227,8 @@ Le propriétaire ajuste cela par **domaine** dans **Réglages → Règles de val
 
 Toute l'administration vit sous **Réglages → Administration** — *Espace de coworking* (les réglages de l'espace), *ID de l'espace et QR*, *Membres et forfaits*, *Gestion des rôles*, *Disponibilité*, *Facturation*, *Instructions de paiement*, *Services*, *Règles de validation*, *Facturation & rapports* (le hub de facturation avec l'éditeur de rapports et les règles de relance dans son en-tête), *Fonctionnalités*, et les entrées conditionnées par leur fonctionnalité (*Accessoires*, Paiements en ligne, Badges RFID/NFC…). Une règle à connaître : **l'entrée de réglages d'une fonctionnalité n'apparaît que si la fonctionnalité est activée** — coupez *Paiements en ligne* dans **Fonctionnalités** et son écran disparaît (et revient à la réactivation). L'entrée **Fonctionnalités** reste toujours là.
 
+**Pays, devise, fuseau (#711).** Le choix du pays couvre désormais les 32 pays pour lesquels l'app sait déclarer la TVA (UE-27, Suisse, Norvège, Royaume-Uni, États-Unis, Canada). La devise est un **sélecteur** des codes que l'app sait formater — chacun avec son symbole et son bon nombre de décimales : le yen n'en a pas, le dinar en a trois, et chaque montant, facture et paiement en ligne le respecte. Le fuseau est une **liste avec recherche** des zones IANA que l'horloge sait installer ; une faute de frappe ne peut plus être enregistrée.
+
 ![](assets/help/images/settings-administration.jpg)
 
 ### L'éditeur d'espace
@@ -502,6 +504,8 @@ Votre identité n'existe que le temps de l'opération : le justificatif ne part 
 
 *Les propriétaires émettent les factures ; les admins aussi dès qu'ils détiennent la permission **émettre les factures et rapprocher les paiements** (Gestion des rôles, §8 — ou l'ancienne délégation **Les admins émettent des factures**). La fonctionnalité **Factures** vit sous Finances dans la liste des fonctionnalités.*
 
+**Coordonnées bancaires hors IBAN (#711).** Dans *Instructions de paiement*, à côté de l'IBAN : nom de la banque, numéro de compte, un code de routage nommé comme votre pays le nomme — *sort code* au Royaume-Uni, *routing number* aux États-Unis, *transit · institution* au Canada — et un BIC/SWIFT pour les virements internationaux. Seuls les champs remplis s'impriment sur la carte « comment payer ».
+
 Une facture DesKilo est générée, jamais composée : ses positions sont **dérivées exclusivement des données suivies du mois** — abonnement, dépassement, suppléments, services, forfaits — moins les paiements et crédits du mois, si bien que la dernière ligne **est le solde dû**. Chaque document fige l'adresse postale de l'espace et du membre (la vôtre dans **Réglages → Adresse** ; celle de l'espace dans ses réglages) et est **signé numériquement** à l'émission — il ne change plus jamais. Une **annexe détaillée** (mouvements et présences du mois) s'attache d'un interrupteur à l'émission.
 
 Les émetteurs ouvrent **Finances → Factures** et arrivent sur un hub à trois onglets sous un bandeau de synthèse en direct (*N à facturer · N en cours · X dus · N à rembourser · Y*) :
@@ -588,6 +592,8 @@ Variables (famille facture) : `{{ number }}`, `{{ member }}`, `{{ workspace }}`,
 ## 12. Réglages et profil
 
 Votre écran personnel, de haut en bas :
+
+**Région et formats (#711).** Comment *vous* lisez ce que l'espace affiche : **nombres et dates** dans la région de votre choix (`fr_CH`, `en_GB`, `de_AT`… indépendante de la langue de l'app), l'**horloge** (24 h, 12 h, ou ce que fait cette région), et si les heures s'affichent dans le **fuseau de l'espace** — celui des réservations, par défaut — ou **celui de votre appareil**, signalé là où les deux diffèrent. Une ligne d'aperçu montre le résultat des trois choix. La devise reste celle de l'espace ; seule son écriture est la vôtre. Enregistré sur votre profil : il vous suit d'un appareil à l'autre.
 
 - **Profils** (§1) et votre **photo** (touchez pour changer — choisir ou supprimer).
 - **Membres** — raccourci vers l'annuaire ; **WhatsApp** — votre numéro, visible des autres membres seulement si vous le renseignez ; **Statut** — une ligne libre (40 caractères) affichée dans l'annuaire ; **Adresse** — votre adresse postale (imprimée sur vos factures), pays et numéro de TVA optionnel.

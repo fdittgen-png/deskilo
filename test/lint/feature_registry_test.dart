@@ -42,7 +42,9 @@ import 'package:flutter_test/flutter_test.dart';
 //   badge issuance, or it offers a credential nobody can hold).
 // 42→43 (2026-08-24): #620 planMemberPhotos (occupant photos on the
 // Plan tab and Reserve hub maps; standalone, kiosk not required).
-const int _expectedFeatureCount = 44;
+// 44→45 (2026-08-28): #711 regionalFormats (member format locale, clock,
+// time-zone mode; Settings → Region & formats).
+const int _expectedFeatureCount = 45;
 
 void main() {
   test('every functionality is registered — the pin', () {

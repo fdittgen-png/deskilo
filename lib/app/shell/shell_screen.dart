@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/badge/app_badge.dart';
+import '../../core/i18n/format_controller.dart';
 import '../../core/motion/motion.dart';
 import '../../core/realtime/realtime_providers.dart';
 import '../../core/notifications/notification_providers.dart';
@@ -54,6 +55,12 @@ class ShellScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final isOwner = ref.watch(myMemberProvider).value?.actsAsOwner ?? false;
+
+    // #711 — resolve the member's format locale, clock and zone for
+    // every screen under the shell. Watching it here is what sets
+    // Intl.defaultLocale (#701) and WorkspaceTime.displayMode; nothing
+    // below has to know.
+    ref.watch(appFormatProvider);
 
     // Fire-and-forget push start (#72); no-op while Firebase is unconfigured.
     ref.watch(pushBootstrapProvider);

@@ -49,7 +49,8 @@ enum WorkspaceFeature {
   formHelpHints,
   uiAnimations,
   planMemberPhotos,
-  badgeSignIn;
+  badgeSignIn,
+  regionalFormats;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -267,6 +268,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // maps, kiosk or not.
   WorkspaceFeature.planMemberPhotos:
       FeatureManifestEntry(feature: WorkspaceFeature.planMemberPhotos),
+  // #711 — a member's own numbers, dates, clock and zone. Default ON;
+  // OFF makes every member read as the app always did (the UI
+  // language's home region, 24-hour clock, workspace zone) and hides
+  // the Settings section.
+  WorkspaceFeature.regionalFormats:
+      FeatureManifestEntry(feature: WorkspaceFeature.regionalFormats),
   // #662 — signing IN by scanning a badge, then a PIN. Under nfcBadges
   // rather than kioskMode: it needs badges to EXIST, and turning badge
   // issuance off must take the login button with it, or the button

@@ -16,7 +16,7 @@ import 'package:deskilo/core/trace/trace_logger.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:timezone/data/latest.dart' as tzdata;
+import 'package:timezone/data/latest_all.dart' as tzdata;
 
 ReminderRequest _reminder(String id) => ReminderRequest(
       reservationId: id,

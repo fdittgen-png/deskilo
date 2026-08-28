@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -51,9 +51,7 @@ class InvoicesScreen extends ConsumerWidget {
             .watch(myPermissionsProvider)
             .contains(WorkspacePermission.issueInvoices);
     final showMemberNames = me?.canAdminister ?? false;
-    final currency = NumberFormat.simpleCurrency(
-      name: workspace?.currencyCode ?? 'EUR',
-    );
+    final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
 
     final archive = InvoiceArchiveTab(
       canIssue: canIssue,

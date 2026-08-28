@@ -435,5 +435,37 @@
   "reportDesignerZoomFit": "Fit width",
   "@reportDesignerZoomFit": {
     "description": "Report page designer: fit-the-width zoom option (#548)"
+  },
+  "paymentBankNameLabel": "Bank name",
+  "@paymentBankNameLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentAccountNumberLabel": "Account number",
+  "@paymentAccountNumberLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentSortCodeLabel": "Sort code",
+  "@paymentSortCodeLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentRoutingNumberLabel": "Routing number",
+  "@paymentRoutingNumberLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentTransitNumberLabel": "Transit · institution",
+  "@paymentTransitNumberLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentBankCodeLabel": "Bank code",
+  "@paymentBankCodeLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentBicLabel": "BIC / SWIFT",
+  "@paymentBicLabel": {
+    "description": "#711 - globalization"
+  },
+  "paymentCopied": "Copied.",
+  "@paymentCopied": {
+    "description": "#711 - globalization"
   }
 }

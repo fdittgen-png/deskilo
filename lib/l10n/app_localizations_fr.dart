@@ -1753,6 +1753,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les membres peuvent se connecter en scannant leur badge puis en saisissant leur code, au lieu de taper une adresse e-mail sur une tablette partagée. Chaque membre définit son propre code et active son propre badge.';
 
   @override
+  String get featureRegionalFormatsTitle => 'Région et formats';
+
+  @override
+  String get featureRegionalFormatsDesc =>
+      'Chaque membre choisit l\'affichage des nombres, des dates, de l\'horloge et du fuseau. Désactivé : tout le monde lit dans la région de la langue de l\'app, en 24 h, à l\'heure de l\'espace.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override
@@ -4126,6 +4133,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reportDesignerZoomFit => 'Ajuster à la largeur';
 
   @override
+  String get paymentBankNameLabel => 'Nom de la banque';
+
+  @override
+  String get paymentAccountNumberLabel => 'Numéro de compte';
+
+  @override
+  String get paymentSortCodeLabel => 'Sort code';
+
+  @override
+  String get paymentRoutingNumberLabel => 'Routing number';
+
+  @override
+  String get paymentTransitNumberLabel => 'Transit · institution';
+
+  @override
+  String get paymentBankCodeLabel => 'Code banque';
+
+  @override
+  String get paymentBicLabel => 'BIC / SWIFT';
+
+  @override
+  String get paymentCopied => 'Copié.';
+
+  @override
   String get planDurationLabel => 'Durée';
 
   @override
@@ -5371,6 +5402,96 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get permApproveExpenses => 'Approuver les dépenses';
+
+  @override
+  String get regionalFormatsTitle => 'Région et formats';
+
+  @override
+  String get regionalFormatLocale => 'Nombres et dates';
+
+  @override
+  String regionalFormatLocaleAuto(String locale) {
+    return 'Suit la langue de l\'app ($locale)';
+  }
+
+  @override
+  String get regionalFollowLanguage => 'Automatique';
+
+  @override
+  String get regionalClock => 'Horloge';
+
+  @override
+  String get regionalClockAuto => 'Auto';
+
+  @override
+  String get regionalDeviceZone => 'Afficher les heures dans mon fuseau';
+
+  @override
+  String get regionalDeviceZoneHint =>
+      'Désactivé : les heures s\'affichent dans le fuseau de l\'espace, celui des réservations. Activé : celui de votre appareil, signalé quand il diffère.';
+
+  @override
+  String get workspaceTimezoneUnknown => 'Choisissez un fuseau dans la liste';
+
+  @override
+  String get countryNameCY => 'Chypre';
+
+  @override
+  String get countryNameEE => 'Estonie';
+
+  @override
+  String get countryNameFI => 'Finlande';
+
+  @override
+  String get countryNameGR => 'Grèce';
+
+  @override
+  String get countryNameHR => 'Croatie';
+
+  @override
+  String get countryNameIE => 'Irlande';
+
+  @override
+  String get countryNameLT => 'Lituanie';
+
+  @override
+  String get countryNameLV => 'Lettonie';
+
+  @override
+  String get countryNameMT => 'Malte';
+
+  @override
+  String get countryNameSI => 'Slovénie';
+
+  @override
+  String get countryNameSK => 'Slovaquie';
+
+  @override
+  String get countryNameBG => 'Bulgarie';
+
+  @override
+  String get countryNameCZ => 'Tchéquie';
+
+  @override
+  String get countryNameDK => 'Danemark';
+
+  @override
+  String get countryNameHU => 'Hongrie';
+
+  @override
+  String get countryNamePL => 'Pologne';
+
+  @override
+  String get countryNameRO => 'Roumanie';
+
+  @override
+  String get countryNameSE => 'Suède';
+
+  @override
+  String get regionalClock24h => '24h';
+
+  @override
+  String get regionalClock12h => '12h';
 
   @override
   String get workspaceXmlExport => 'Exporter l\'espace (XML)';

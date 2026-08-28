@@ -11,6 +11,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../../core/country/country_catalog.dart';
+import '../../../../core/i18n/workspace_locale_fields.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/files/file_picker.dart';
@@ -532,9 +533,7 @@ class _WorkspaceSettingsScreenState
         // context, and everything below this line is an async gap.
         final cover = batchCover(context, ref, docId: 'space_codes', data: {
           'workspace': workspace.name,
-          'issued': DateFormat.yMMMMd(
-            Localizations.localeOf(context).toLanguageTag(),
-          ).format(ref.read(clockProvider).now()),
+          'issued': DateFormat.yMMMMd().format(ref.read(clockProvider).now()),
         });
         final levels = await ref.read(levelsProvider.future);
         final entries = buildSpaceCodeEntries(
@@ -897,37 +896,14 @@ class _WorkspaceSettingsScreenState
                     onChanged: _busy ? null : _onCountryPicked,
                   ),
                   const SizedBox(height: 12),
-                  TextFormField(
-                    key: const Key('workspaceSettingsCurrency'),
-                    controller: _currency,
+                  // #711 — currency picker and time-zone search, in
+                  // core/i18n so the onboarding form can reuse them.
+                  WorkspaceLocaleFields(
+                    currency: _currency,
+                    timezone: _timezone,
                     enabled: !_busy,
-                    textCapitalization: TextCapitalization.characters,
-                    decoration: InputDecoration(
-                      labelText: l10n?.workspaceCurrencyLabel ?? 'Currency',
-                      helperText: l10n?.workspaceSettingsCurrencyHelper ??
-                          'Defaults from the country — override if your '
-                              'community bills in another currency.',
-                    ),
-                    // Same 3-letter shape check (and shared "Required"
-                    // copy) as the onboarding form; the 0001 column check
-                    // re-validates server-side.
-                    validator: (value) =>
-                        RegExp(r'^[A-Za-z]{3}$').hasMatch(value?.trim() ?? '')
-                            ? null
-                            : (l10n?.authFieldRequired ?? 'Required'),
-                  ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    key: const Key('workspaceSettingsTimezone'),
-                    controller: _timezone,
-                    enabled: !_busy,
-                    decoration: InputDecoration(
-                      labelText: l10n?.workspaceTimezoneLabel ?? 'Time zone',
-                    ),
-                    validator: (value) =>
-                        (value?.trim().isNotEmpty ?? false)
-                            ? null
-                            : (l10n?.authFieldRequired ?? 'Required'),
+                    onTimezonePicked: (zone) =>
+                        setState(() => _timezone.text = zone),
                   ),
                   const SizedBox(height: 12),
                   // #486 — the workspace's own language: invitations

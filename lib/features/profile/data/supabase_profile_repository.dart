@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: 0BSD
+import '../../../core/i18n/format_prefs.dart';
 import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -111,6 +112,13 @@ class SupabaseProfileRepository implements ProfileRepository {
     await _client
         .from('profiles')
         .update({'preferred_locale': locale}).eq('id', userId);
+  }
+
+  @override
+  Future<void> setFormatPrefs(FormatPrefs prefs) async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) throw StateError('not signed in');
+    await _client.from('profiles').update(prefs.toDb()).eq('id', userId);
   }
 
   @override

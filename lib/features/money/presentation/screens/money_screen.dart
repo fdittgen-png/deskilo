@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
+import '../../../../core/i18n/money_format.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -282,7 +283,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     );
   }
 
-  Future<void> _recordPaymentSheet(NumberFormat currency) async {
+  Future<void> _recordPaymentSheet(MoneyFormat currency) async {
     final context = this.context;
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
@@ -452,7 +453,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     ref.invalidate(eventsProvider);
   }
 
-  Future<void> _submitExpenseSheet(NumberFormat currency) async {
+  Future<void> _submitExpenseSheet(MoneyFormat currency) async {
     final context = this.context;
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
@@ -620,7 +621,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
 
   /// Self-serve package purchase (0042): pick an owner-defined package; the
   /// cap rises immediately and the price posts to this month's bill.
-  Future<void> _buyPackageSheet(NumberFormat currency) async {
+  Future<void> _buyPackageSheet(MoneyFormat currency) async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
@@ -648,7 +649,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                     l10n?.buyPackageDays(package.days) ??
                         '${package.days} days',
                   ),
-                  trailing: Text(currency.format(package.priceCents / 100)),
+                  trailing: Text(currency.formatMinor(package.priceCents)),
                   onTap: () => Navigator.of(context).pop(package),
                 ),
               ),
@@ -899,7 +900,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final ledger = ref.watch(myLedgerProvider).value ?? const <LedgerEntry>[];
     final pendingEvents = ref.watch(eventsProvider).value ?? const [];
     final currencyCode = workspace?.currencyCode ?? 'EUR';
-    final currency = NumberFormat.simpleCurrency(name: currencyCode);
+    final currency = moneyFormat(currencyCode);
     final monthLabel = DateFormat.yMMMM(
       Localizations.maybeLocaleOf(context)?.toString(),
     ).format(_month);
@@ -1109,7 +1110,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                     ),
                   ),
                   Text(
-                    currency.format(balanceCents / 100),
+                    currency.formatMinor(balanceCents),
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium

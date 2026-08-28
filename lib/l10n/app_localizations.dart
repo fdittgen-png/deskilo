@@ -3146,6 +3146,18 @@ abstract class AppLocalizations {
   /// **'Members can sign in by scanning their badge and entering their PIN, instead of typing an e-mail on a shared tablet. Each member sets their own PIN and arms their own badge.'**
   String get featureBadgeSignInDesc;
 
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Region & formats'**
+  String get featureRegionalFormatsTitle;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Members choose how numbers, dates, the clock and the time zone are shown to them. Off: everyone reads in the app language\'s home region, 24-hour, workspace time.'**
+  String get featureRegionalFormatsDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -7310,6 +7322,54 @@ abstract class AppLocalizations {
   /// **'Fit width'**
   String get reportDesignerZoomFit;
 
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Bank name'**
+  String get paymentBankNameLabel;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Account number'**
+  String get paymentAccountNumberLabel;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Sort code'**
+  String get paymentSortCodeLabel;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Routing number'**
+  String get paymentRoutingNumberLabel;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Transit · institution'**
+  String get paymentTransitNumberLabel;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Bank code'**
+  String get paymentBankCodeLabel;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'BIC / SWIFT'**
+  String get paymentBicLabel;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Copied.'**
+  String get paymentCopied;
+
   /// Booking sheet: grid duration slider label (#574)
   ///
   /// In en, this message translates to:
@@ -9529,6 +9589,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Approve expenses'**
   String get permApproveExpenses;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Region & formats'**
+  String get regionalFormatsTitle;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Numbers & dates'**
+  String get regionalFormatLocale;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Follows the app language ({locale})'**
+  String regionalFormatLocaleAuto(String locale);
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic'**
+  String get regionalFollowLanguage;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Clock'**
+  String get regionalClock;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Auto'**
+  String get regionalClockAuto;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Show times in my time zone'**
+  String get regionalDeviceZone;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Off: times show in the workspace\'s zone, the one bookings are made in. On: your device\'s, labelled where it differs.'**
+  String get regionalDeviceZoneHint;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a time zone from the list'**
+  String get workspaceTimezoneUnknown;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Cyprus'**
+  String get countryNameCY;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Estonia'**
+  String get countryNameEE;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Finland'**
+  String get countryNameFI;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Greece'**
+  String get countryNameGR;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Croatia'**
+  String get countryNameHR;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Ireland'**
+  String get countryNameIE;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Lithuania'**
+  String get countryNameLT;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Latvia'**
+  String get countryNameLV;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Malta'**
+  String get countryNameMT;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Slovenia'**
+  String get countryNameSI;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Slovakia'**
+  String get countryNameSK;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Bulgaria'**
+  String get countryNameBG;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Czechia'**
+  String get countryNameCZ;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Denmark'**
+  String get countryNameDK;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Hungary'**
+  String get countryNameHU;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Poland'**
+  String get countryNamePL;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Romania'**
+  String get countryNameRO;
+
+  /// #711 - globalization
+  ///
+  /// In en, this message translates to:
+  /// **'Sweden'**
+  String get countryNameSE;
+
+  /// #711 - clock segment
+  ///
+  /// In en, this message translates to:
+  /// **'24h'**
+  String get regionalClock24h;
+
+  /// #711 - clock segment
+  ///
+  /// In en, this message translates to:
+  /// **'12h'**
+  String get regionalClock12h;
 
   /// Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)
   ///

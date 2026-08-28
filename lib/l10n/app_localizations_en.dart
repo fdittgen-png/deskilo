@@ -1734,6 +1734,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Members can sign in by scanning their badge and entering their PIN, instead of typing an e-mail on a shared tablet. Each member sets their own PIN and arms their own badge.';
 
   @override
+  String get featureRegionalFormatsTitle => 'Region & formats';
+
+  @override
+  String get featureRegionalFormatsDesc =>
+      'Members choose how numbers, dates, the clock and the time zone are shown to them. Off: everyone reads in the app language\'s home region, 24-hour, workspace time.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
@@ -4084,6 +4091,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportDesignerZoomFit => 'Fit width';
 
   @override
+  String get paymentBankNameLabel => 'Bank name';
+
+  @override
+  String get paymentAccountNumberLabel => 'Account number';
+
+  @override
+  String get paymentSortCodeLabel => 'Sort code';
+
+  @override
+  String get paymentRoutingNumberLabel => 'Routing number';
+
+  @override
+  String get paymentTransitNumberLabel => 'Transit · institution';
+
+  @override
+  String get paymentBankCodeLabel => 'Bank code';
+
+  @override
+  String get paymentBicLabel => 'BIC / SWIFT';
+
+  @override
+  String get paymentCopied => 'Copied.';
+
+  @override
   String get planDurationLabel => 'Duration';
 
   @override
@@ -5315,6 +5346,96 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get permApproveExpenses => 'Approve expenses';
+
+  @override
+  String get regionalFormatsTitle => 'Region & formats';
+
+  @override
+  String get regionalFormatLocale => 'Numbers & dates';
+
+  @override
+  String regionalFormatLocaleAuto(String locale) {
+    return 'Follows the app language ($locale)';
+  }
+
+  @override
+  String get regionalFollowLanguage => 'Automatic';
+
+  @override
+  String get regionalClock => 'Clock';
+
+  @override
+  String get regionalClockAuto => 'Auto';
+
+  @override
+  String get regionalDeviceZone => 'Show times in my time zone';
+
+  @override
+  String get regionalDeviceZoneHint =>
+      'Off: times show in the workspace\'s zone, the one bookings are made in. On: your device\'s, labelled where it differs.';
+
+  @override
+  String get workspaceTimezoneUnknown => 'Pick a time zone from the list';
+
+  @override
+  String get countryNameCY => 'Cyprus';
+
+  @override
+  String get countryNameEE => 'Estonia';
+
+  @override
+  String get countryNameFI => 'Finland';
+
+  @override
+  String get countryNameGR => 'Greece';
+
+  @override
+  String get countryNameHR => 'Croatia';
+
+  @override
+  String get countryNameIE => 'Ireland';
+
+  @override
+  String get countryNameLT => 'Lithuania';
+
+  @override
+  String get countryNameLV => 'Latvia';
+
+  @override
+  String get countryNameMT => 'Malta';
+
+  @override
+  String get countryNameSI => 'Slovenia';
+
+  @override
+  String get countryNameSK => 'Slovakia';
+
+  @override
+  String get countryNameBG => 'Bulgaria';
+
+  @override
+  String get countryNameCZ => 'Czechia';
+
+  @override
+  String get countryNameDK => 'Denmark';
+
+  @override
+  String get countryNameHU => 'Hungary';
+
+  @override
+  String get countryNamePL => 'Poland';
+
+  @override
+  String get countryNameRO => 'Romania';
+
+  @override
+  String get countryNameSE => 'Sweden';
+
+  @override
+  String get regionalClock24h => '24h';
+
+  @override
+  String get regionalClock12h => '12h';
 
   @override
   String get workspaceXmlExport => 'Export workspace (XML)';

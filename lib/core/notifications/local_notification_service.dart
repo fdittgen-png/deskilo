@@ -2,7 +2,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/data/latest.dart' as tzdata;
+// #711 — latest_ALL, links included. The trimmed database dropped every
+// zone tzdata 2022b turned into a link — Europe/Amsterdam, Luxembourg,
+// Copenhagen, Stockholm, Oslo among them — so a workspace in any of
+// those silently kept time on the device clock.
+import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
 import '../trace/trace_logger.dart';
