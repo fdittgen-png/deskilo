@@ -8,6 +8,7 @@ import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:deskilo/features/money/presentation/widgets/bill_view.dart';
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
 import 'package:deskilo/core/country/country_catalog.dart';
+import 'package:deskilo/core/i18n/app_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -58,6 +59,26 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('regional-device-zone')));
     await tester.pumpAndSettle();
     expect(r.profile.formatPrefs.timeZoneMode, TimeZoneMode.device);
+  });
+
+  testWidgets('#734 — the format picker is a list with a check mark, full '
+      'width, and the choice lands in the profile', (tester) async {
+    final r = await pumpSettings(tester);
+    final tile = find.byKey(const ValueKey('regional-formats'));
+    await tester.scrollUntilVisible(tile, 200,
+        scrollable: find.byType(Scrollable).first);
+    await tester.tap(tile);
+    await tester.pumpAndSettle();
+    // A screen with its own app bar — nothing under the status bar.
+    expect(find.widgetWithText(AppBar, 'Region & formats'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('regional-locale')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('regional-locale-option-auto')),
+        findsOneWidget);
+    final tag = kFormatLocales.first;
+    await tester.tap(find.byKey(ValueKey('regional-locale-option-$tag')));
+    await tester.pumpAndSettle();
+    expect(r.profile.formatPrefs.formatLocale, tag);
   });
 
   testWidgets('the section is gone when the owner turned the feature off',

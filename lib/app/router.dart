@@ -30,6 +30,7 @@ import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/workspace/presentation/screens/inbox_screen.dart';
+import '../core/i18n/regional_formats_section.dart';
 import '../features/profile/presentation/screens/privacy_screen.dart';
 import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
@@ -287,6 +288,11 @@ GoRouter router(Ref ref) {
         // erasure, the policy. Every member; the tools inside are gated.
         path: '/privacy',
         builder: (context, state) => const PrivacyScreen(),
+      ),
+      GoRoute(
+        // #734 — Region & formats as a screen of its own.
+        path: '/formats',
+        builder: (context, state) => const RegionalFormatsScreen(),
       ),
       GoRoute(
         // Linked accounts (0051): the signed-in user's own identities.
