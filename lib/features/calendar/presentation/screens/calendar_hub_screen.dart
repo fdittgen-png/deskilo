@@ -25,7 +25,6 @@ import '../../../workspace/presentation/widgets/conversation_avatar.dart';
 import '../../../workspace/presentation/widgets/conversation_thread.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/calendar_providers.dart';
-import '../widgets/access_sheet.dart';
 import '../widgets/calendar_item_row.dart';
 
 /// THE CALENDAR HUB (#718): the dated view of everything.
@@ -159,18 +158,6 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     final page = ref.watch(calendarItemsProvider(_query));
 
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 48,
-        actions: [
-          // ⓘ — who can see what, and who did (#719).
-          IconButton(
-            key: const ValueKey('calendar-access-info'),
-            tooltip: l10n?.calendarWhoCanSee ?? 'Who can see this',
-            icon: const Icon(Icons.shield_outlined),
-            onPressed: () => showAccessSheet(context, ref),
-          ),
-        ],
-      ),
       body: Column(children: [
         const HelpHint(HelpHintId.calendar),
         // ── the selector ──────────────────────────────────────────

@@ -223,5 +223,14 @@
         "type": "String"
       }
     }
-  }
+  },
+  "calendarEventActionCreated": "created",
+  "calendarEventActionModified": "changed",
+  "calendarEventActionCancelled": "cancelled",
+  "calendarEventActionSubmitted": "submitted",
+  "calendarEventActionApproved": "approved",
+  "calendarEventActionRejected": "rejected",
+  "calendarEventStatusPending": "awaiting confirmation",
+  "calendarEventStatusRejected": "rejected",
+  "calendarEventStatusExpired": "expired"
 }

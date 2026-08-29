@@ -159,5 +159,14 @@
         "type": "String"
       }
     }
-  }
+  },
+  "calendarEventActionCreated": "angelegt",
+  "calendarEventActionModified": "geändert",
+  "calendarEventActionCancelled": "storniert",
+  "calendarEventActionSubmitted": "eingereicht",
+  "calendarEventActionApproved": "genehmigt",
+  "calendarEventActionRejected": "abgelehnt",
+  "calendarEventStatusPending": "wartet auf Bestätigung",
+  "calendarEventStatusRejected": "abgelehnt",
+  "calendarEventStatusExpired": "abgelaufen"
 }
