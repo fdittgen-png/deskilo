@@ -34,6 +34,9 @@ alter table public.validation_policies
     check (validator_scope in ('admins','listed','members'));
 
 -- ---------------------------------------------------------------- expense v2
+-- The 0009 four-argument overload must go: with p_supply defaulted, a
+-- four-argument RPC call would match both and PostgREST refuses to pick.
+drop function if exists public.submit_expense(uuid, int, text, text);
 create or replace function public.submit_expense(
   p_workspace_id uuid,
   p_amount_cents int,
