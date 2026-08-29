@@ -3213,6 +3213,86 @@
   "@regionalClock12h": {
     "description": "#711 - clock segment"
   },
+  "countryNameMX": "Mexiko",
+  "@countryNameMX": {
+    "description": "#713 - region name in the format picker"
+  },
+  "countryNameAU": "Australien",
+  "@countryNameAU": {
+    "description": "#713 - region name in the format picker"
+  },
+  "countryNameJP": "Japan",
+  "@countryNameJP": {
+    "description": "#713 - region name in the format picker"
+  },
+  "languageNameDE": "Deutsch",
+  "@languageNameDE": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameEN": "Englisch",
+  "@languageNameEN": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameES": "Spanisch",
+  "@languageNameES": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameFR": "Französisch",
+  "@languageNameFR": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameIT": "Italienisch",
+  "@languageNameIT": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameNL": "Niederländisch",
+  "@languageNameNL": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNamePT": "Portugiesisch",
+  "@languageNamePT": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNamePL": "Polnisch",
+  "@languageNamePL": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameSV": "Schwedisch",
+  "@languageNameSV": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameDA": "Dänisch",
+  "@languageNameDA": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameNB": "Norwegisch",
+  "@languageNameNB": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameFI": "Finnisch",
+  "@languageNameFI": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameCS": "Tschechisch",
+  "@languageNameCS": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameHU": "Ungarisch",
+  "@languageNameHU": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameRO": "Rumänisch",
+  "@languageNameRO": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameEL": "Griechisch",
+  "@languageNameEL": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameJA": "Japanisch",
+  "@languageNameJA": {
+    "description": "#713 - language name in the format picker"
+  },
   "workspaceXmlExport": "Workspace exportieren (XML)",
   "workspaceXmlExportSubtitle": "Einstellungen und Raumplan als teilbare Datei. Ohne Mitglieder, Buchungen oder Finanzdaten.",
   "workspaceXmlImport": "Workspace importieren (XML)",

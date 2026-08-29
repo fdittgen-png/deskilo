@@ -9764,6 +9764,126 @@ abstract class AppLocalizations {
   /// **'12h'**
   String get regionalClock12h;
 
+  /// #713 - region name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Mexico'**
+  String get countryNameMX;
+
+  /// #713 - region name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Australia'**
+  String get countryNameAU;
+
+  /// #713 - region name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Japan'**
+  String get countryNameJP;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'German'**
+  String get languageNameDE;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageNameEN;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Spanish'**
+  String get languageNameES;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'French'**
+  String get languageNameFR;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Italian'**
+  String get languageNameIT;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Dutch'**
+  String get languageNameNL;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Portuguese'**
+  String get languageNamePT;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Polish'**
+  String get languageNamePL;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Swedish'**
+  String get languageNameSV;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Danish'**
+  String get languageNameDA;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Norwegian'**
+  String get languageNameNB;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Finnish'**
+  String get languageNameFI;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Czech'**
+  String get languageNameCS;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Hungarian'**
+  String get languageNameHU;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Romanian'**
+  String get languageNameRO;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Greek'**
+  String get languageNameEL;
+
+  /// #713 - language name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Japanese'**
+  String get languageNameJA;
+
   /// Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)
   ///
   /// In en, this message translates to:

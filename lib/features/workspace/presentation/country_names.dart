@@ -7,6 +7,9 @@ import '../../../l10n/app_localizations.dart';
 String localizedCountryName(AppLocalizations? l10n, String code) {
   return switch (code) {
     'DE' => l10n?.countryNameDE ?? 'Germany',
+    'MX' => l10n?.countryNameMX ?? 'Mexico',
+    'AU' => l10n?.countryNameAU ?? 'Australia',
+    'JP' => l10n?.countryNameJP ?? 'Japan',
     'CY' => l10n?.countryNameCY ?? 'Cyprus',
     'EE' => l10n?.countryNameEE ?? 'Estonia',
     'FI' => l10n?.countryNameFI ?? 'Finland',
@@ -39,3 +42,28 @@ String localizedCountryName(AppLocalizations? l10n, String code) {
     _ => code,
   };
 }
+
+/// The language half of a format-locale label (#713): `fr` → « Français »
+/// in the reader's own UI language. The 17 languages `kFormatLocales`
+/// pairs with a region.
+String localizedLanguageName(AppLocalizations? l10n, String code) =>
+    switch (code) {
+      'de' => l10n?.languageNameDE ?? 'German',
+      'en' => l10n?.languageNameEN ?? 'English',
+      'es' => l10n?.languageNameES ?? 'Spanish',
+      'fr' => l10n?.languageNameFR ?? 'French',
+      'it' => l10n?.languageNameIT ?? 'Italian',
+      'nl' => l10n?.languageNameNL ?? 'Dutch',
+      'pt' => l10n?.languageNamePT ?? 'Portuguese',
+      'pl' => l10n?.languageNamePL ?? 'Polish',
+      'sv' => l10n?.languageNameSV ?? 'Swedish',
+      'da' => l10n?.languageNameDA ?? 'Danish',
+      'nb' => l10n?.languageNameNB ?? 'Norwegian',
+      'fi' => l10n?.languageNameFI ?? 'Finnish',
+      'cs' => l10n?.languageNameCS ?? 'Czech',
+      'hu' => l10n?.languageNameHU ?? 'Hungarian',
+      'ro' => l10n?.languageNameRO ?? 'Romanian',
+      'el' => l10n?.languageNameEL ?? 'Greek',
+      'ja' => l10n?.languageNameJA ?? 'Japanese',
+      _ => code,
+    };

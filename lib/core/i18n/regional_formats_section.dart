@@ -10,6 +10,7 @@ import '../trace/guarded.dart';
 import 'app_format.dart';
 import 'format_controller.dart';
 import 'format_prefs.dart';
+import 'locale_names.dart';
 
 /// Settings → Region & formats (#711): how THIS member reads numbers,
 /// dates, the clock and the zone. Three controls and a live preview
@@ -101,9 +102,10 @@ class _RegionalFormatsSheet extends ConsumerWidget {
           title: Text(l10n?.regionalFormatLocale ?? 'Numbers & dates'),
           subtitle: Text(
             prefs.formatLocale.isEmpty
-                ? (l10n?.regionalFormatLocaleAuto(format.locale) ??
+                ? (l10n?.regionalFormatLocaleAuto(
+                        formatLocaleLabel(l10n, format.locale)) ??
                     'Follows the app language (${format.locale})')
-                : prefs.formatLocale,
+                : formatLocaleLabel(l10n, prefs.formatLocale),
           ),
           trailing: DropdownButton<String>(
             value: prefs.formatLocale.isEmpty ? '' : prefs.formatLocale,
@@ -113,8 +115,12 @@ class _RegionalFormatsSheet extends ConsumerWidget {
                 value: '',
                 child: Text(l10n?.regionalFollowLanguage ?? 'Automatic'),
               ),
+              // #713 — words, not tags: « Français (Suisse) · 1'234.56 ».
               for (final tag in kFormatLocales)
-                DropdownMenuItem(value: tag, child: Text(tag)),
+                DropdownMenuItem(
+                  value: tag,
+                  child: Text(formatLocaleLabel(l10n, tag)),
+                ),
             ],
             onChanged: (tag) =>
                 save(prefs.copyWith(formatLocale: tag ?? '')),

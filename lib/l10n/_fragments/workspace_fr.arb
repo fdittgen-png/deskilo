@@ -390,5 +390,85 @@
   "regionalClock12h": "12h",
   "@regionalClock12h": {
     "description": "#711 - clock segment"
+  },
+  "countryNameMX": "Mexique",
+  "@countryNameMX": {
+    "description": "#713 - region name in the format picker"
+  },
+  "countryNameAU": "Australie",
+  "@countryNameAU": {
+    "description": "#713 - region name in the format picker"
+  },
+  "countryNameJP": "Japon",
+  "@countryNameJP": {
+    "description": "#713 - region name in the format picker"
+  },
+  "languageNameDE": "Allemand",
+  "@languageNameDE": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameEN": "Anglais",
+  "@languageNameEN": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameES": "Espagnol",
+  "@languageNameES": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameFR": "Français",
+  "@languageNameFR": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameIT": "Italien",
+  "@languageNameIT": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameNL": "Néerlandais",
+  "@languageNameNL": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNamePT": "Portugais",
+  "@languageNamePT": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNamePL": "Polonais",
+  "@languageNamePL": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameSV": "Suédois",
+  "@languageNameSV": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameDA": "Danois",
+  "@languageNameDA": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameNB": "Norvégien",
+  "@languageNameNB": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameFI": "Finnois",
+  "@languageNameFI": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameCS": "Tchèque",
+  "@languageNameCS": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameHU": "Hongrois",
+  "@languageNameHU": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameRO": "Roumain",
+  "@languageNameRO": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameEL": "Grec",
+  "@languageNameEL": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameJA": "Japonais",
+  "@languageNameJA": {
+    "description": "#713 - language name in the format picker"
   }
 }

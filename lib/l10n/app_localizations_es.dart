@@ -5480,6 +5480,66 @@ class AppLocalizationsEs extends AppLocalizations {
   String get regionalClock12h => '12h';
 
   @override
+  String get countryNameMX => 'México';
+
+  @override
+  String get countryNameAU => 'Australia';
+
+  @override
+  String get countryNameJP => 'Japón';
+
+  @override
+  String get languageNameDE => 'Alemán';
+
+  @override
+  String get languageNameEN => 'Inglés';
+
+  @override
+  String get languageNameES => 'Español';
+
+  @override
+  String get languageNameFR => 'Francés';
+
+  @override
+  String get languageNameIT => 'Italiano';
+
+  @override
+  String get languageNameNL => 'Neerlandés';
+
+  @override
+  String get languageNamePT => 'Portugués';
+
+  @override
+  String get languageNamePL => 'Polaco';
+
+  @override
+  String get languageNameSV => 'Sueco';
+
+  @override
+  String get languageNameDA => 'Danés';
+
+  @override
+  String get languageNameNB => 'Noruego';
+
+  @override
+  String get languageNameFI => 'Finés';
+
+  @override
+  String get languageNameCS => 'Checo';
+
+  @override
+  String get languageNameHU => 'Húngaro';
+
+  @override
+  String get languageNameRO => 'Rumano';
+
+  @override
+  String get languageNameEL => 'Griego';
+
+  @override
+  String get languageNameJA => 'Japonés';
+
+  @override
   String get workspaceXmlExport => 'Exportar el espacio (XML)';
 
   @override
