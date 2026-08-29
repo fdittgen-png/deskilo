@@ -2918,6 +2918,42 @@ abstract class AppLocalizations {
   /// **'Ungroup'**
   String get notifUngroup;
 
+  /// No description provided for @validationScopeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Who validates'**
+  String get validationScopeLabel;
+
+  /// No description provided for @validationScopeAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Admins'**
+  String get validationScopeAdmins;
+
+  /// No description provided for @validationScopeListed.
+  ///
+  /// In en, this message translates to:
+  /// **'Listed persons'**
+  String get validationScopeListed;
+
+  /// No description provided for @validationScopeMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'All members'**
+  String get validationScopeMembers;
+
+  /// No description provided for @validationScopeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The owner always may. Admins: every admin, or the ones you list. Listed: exactly these people, whatever their role. All members: anyone active.'**
+  String get validationScopeHint;
+
+  /// No description provided for @validationPickPersons.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the persons'**
+  String get validationPickPersons;
+
   /// App-bar title of the owner feature-management screen and its settings tile
   ///
   /// In en, this message translates to:
@@ -3445,6 +3481,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open invoices past the configured term get their reminder levels automatically — an alert in the member\'s feed and a push, once a day. Off: reminders stay a manual action.'**
   String get featurePaymentRemindersDesc;
+
+  /// No description provided for @featureSupplyExpensesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplies from expenses'**
+  String get featureSupplyExpensesTitle;
+
+  /// No description provided for @featureSupplyExpensesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'An expense can be a supply for the space (coffee capsules, vacuum bags…): once validated it restocks or creates a consumable service with a unit price, and consumptions count the stock down.'**
+  String get featureSupplyExpensesDesc;
+
+  /// No description provided for @featureValidationScopesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Validators by role or person'**
+  String get featureValidationScopesTitle;
+
+  /// No description provided for @featureValidationScopesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Each validation rule names who validates: the admins, listed persons of any role, or every member — plus how many. Off: owner and admins as before.'**
+  String get featureValidationScopesDesc;
 
   /// No description provided for @helpTitle.
   ///
@@ -4105,6 +4165,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My conditions is your standing financial agreement — plan, rate, extras — rendered as a document you can keep.'**
   String get helpHintMoneyDocumentsTip3;
+
+  /// No description provided for @helpHintValidationTipScopes.
+  ///
+  /// In en, this message translates to:
+  /// **'Who validates is the rule\'s scope: the admins, listed persons of any role, or every member — and how many. The owner always may; nobody validates their own event.'**
+  String get helpHintValidationTipScopes;
+
+  /// No description provided for @helpHintValidationTipScopesTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Role management'**
+  String get helpHintValidationTipScopesTopic;
+
+  /// No description provided for @helpHintMoneyPaymentsTipSupply.
+  ///
+  /// In en, this message translates to:
+  /// **'Bought capsules or vacuum bags for the space? Submit the expense as a supply: validated, it goes on the shelf as a consumable that others pay for, and you are reimbursed.'**
+  String get helpHintMoneyPaymentsTipSupply;
+
+  /// No description provided for @helpHintMoneyPaymentsTipSupplyTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Services and Accessories'**
+  String get helpHintMoneyPaymentsTipSupplyTopic;
 
   /// No description provided for @inviteSectionTitle.
   ///
@@ -7909,6 +7993,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reminded ×{count}'**
   String moneyRemindedTimes(int count);
+
+  /// No description provided for @expenseSupplyToggle.
+  ///
+  /// In en, this message translates to:
+  /// **'This is a supply for the space'**
+  String get expenseSupplyToggle;
+
+  /// No description provided for @expenseSupplyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Coffee capsules, vacuum bags… Once validated, the item goes on the shelf as a consumable service: members who use it pay for it.'**
+  String get expenseSupplyHint;
+
+  /// No description provided for @expenseSupplyItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get expenseSupplyItem;
+
+  /// No description provided for @expenseSupplyNewItem.
+  ///
+  /// In en, this message translates to:
+  /// **'New item'**
+  String get expenseSupplyNewItem;
+
+  /// No description provided for @expenseSupplyQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get expenseSupplyQuantity;
+
+  /// No description provided for @expenseSupplyUnitPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit price (what a consumption costs)'**
+  String get expenseSupplyUnitPrice;
+
+  /// No description provided for @expenseSupplyUnitPriceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Prefilled from amount ÷ quantity; round up if you like.'**
+  String get expenseSupplyUnitPriceHint;
+
+  /// No description provided for @serviceStockCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} in stock'**
+  String serviceStockCount(int count);
+
+  /// No description provided for @serviceOutOfStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of stock'**
+  String get serviceOutOfStock;
+
+  /// No description provided for @serviceOutOfStockHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing left on the shelf — the next supply restocks it.'**
+  String get serviceOutOfStockHint;
 
   /// Booking sheet: grid duration slider label (#574)
   ///

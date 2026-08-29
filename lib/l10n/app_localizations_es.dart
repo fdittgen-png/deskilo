@@ -1608,6 +1608,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notifUngroup => 'Desagrupar';
 
   @override
+  String get validationScopeLabel => 'Quién valida';
+
+  @override
+  String get validationScopeAdmins => 'Los admins';
+
+  @override
+  String get validationScopeListed => 'Personas designadas';
+
+  @override
+  String get validationScopeMembers => 'Todos los miembros';
+
+  @override
+  String get validationScopeHint =>
+      'El propietario siempre puede. Admins: todos los admins, o los que listes. Designadas: exactamente estas personas, sea cual sea su rol. Todos los miembros: cualquiera activo.';
+
+  @override
+  String get validationPickPersons => 'Elige las personas';
+
+  @override
   String get featuresTitle => 'Funciones';
 
   @override
@@ -1918,6 +1937,20 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featurePaymentRemindersDesc =>
       'Las facturas abiertas más allá del plazo configurado reciben sus niveles de recordatorio automáticamente — un aviso en el feed del miembro y una notificación, una vez al día. Desactivado: recordar sigue siendo una acción manual.';
+
+  @override
+  String get featureSupplyExpensesTitle => 'Suministros desde gastos';
+
+  @override
+  String get featureSupplyExpensesDesc =>
+      'Un gasto puede ser un suministro para el espacio (cápsulas de café, bolsas de aspiradora…): validado, repone o crea un servicio consumible con precio unitario, y los consumos descuentan el stock.';
+
+  @override
+  String get featureValidationScopesTitle => 'Validadores por rol o persona';
+
+  @override
+  String get featureValidationScopesDesc =>
+      'Cada regla de validación nombra quién valida: los admins, personas designadas de cualquier rol, o todos los miembros — y cuántos. Desactivado: propietario y admins como antes.';
 
   @override
   String get helpTitle => 'Ayuda';
@@ -2318,6 +2351,20 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get helpHintMoneyDocumentsTip3 =>
       'Mis condiciones es tu acuerdo financiero vigente — plan, tarifa, extras — como documento para conservar.';
+
+  @override
+  String get helpHintValidationTipScopes =>
+      'Quién valida es el alcance de la regla: los admins, personas designadas de cualquier rol, o todos los miembros — y cuántos. El propietario siempre puede; nadie valida su propio evento.';
+
+  @override
+  String get helpHintValidationTipScopesTopic => 'Gestión de roles';
+
+  @override
+  String get helpHintMoneyPaymentsTipSupply =>
+      '¿Compraste cápsulas o bolsas de aspiradora para el espacio? Envía el gasto como suministro: validado, pasa al estante como consumible que los demás pagan, y a ti te lo reembolsan.';
+
+  @override
+  String get helpHintMoneyPaymentsTipSupplyTopic => 'Servicios y Accesorios';
 
   @override
   String get inviteSectionTitle => 'Invitar a alguien';
@@ -4460,6 +4507,42 @@ class AppLocalizationsEs extends AppLocalizations {
   String moneyRemindedTimes(int count) {
     return 'Recordada ×$count';
   }
+
+  @override
+  String get expenseSupplyToggle => 'Es un suministro para el espacio';
+
+  @override
+  String get expenseSupplyHint =>
+      'Cápsulas de café, bolsas de aspiradora… Una vez validado, el artículo pasa al estante como servicio consumible: quien lo usa lo paga.';
+
+  @override
+  String get expenseSupplyItem => 'Artículo';
+
+  @override
+  String get expenseSupplyNewItem => 'Artículo nuevo';
+
+  @override
+  String get expenseSupplyQuantity => 'Cantidad';
+
+  @override
+  String get expenseSupplyUnitPrice =>
+      'Precio unitario (lo que cuesta un consumo)';
+
+  @override
+  String get expenseSupplyUnitPriceHint =>
+      'Prellenado con importe ÷ cantidad; redondea si quieres.';
+
+  @override
+  String serviceStockCount(int count) {
+    return '$count en stock';
+  }
+
+  @override
+  String get serviceOutOfStock => 'Agotado';
+
+  @override
+  String get serviceOutOfStockHint =>
+      'No queda nada en el estante — el próximo suministro lo repone.';
 
   @override
   String get planDurationLabel => 'Duración';

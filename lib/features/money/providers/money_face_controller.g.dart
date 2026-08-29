@@ -54,7 +54,7 @@ final class MoneyFaceControllerProvider
 }
 
 String _$moneyFaceControllerHash() =>
-    r'5b23924b0a40919c50ba9f3a36b525c55734f35b';
+    r'23dbde1ec4e6d708dbce73b7fbdee1700bf79f74';
 
 /// Which face of the Finances tab is showing (#720). Kept alive so a
 /// deep link (the calendar hub landing on a payment, an invoice row)

@@ -1109,8 +1109,12 @@ class FakeMoneyRepository implements MoneyRepository {
     }
   }
 
-  final submittedExpenses =
-      <({int amountCents, String category, String description})>[];
+  final submittedExpenses = <({
+    int amountCents,
+    String category,
+    String description,
+    Map<String, Object?>? supply,
+  })>[];
 
   @override
   Future<String> submitExpense({
@@ -1118,12 +1122,14 @@ class FakeMoneyRepository implements MoneyRepository {
     required int amountCents,
     required String category,
     String description = '',
+    Map<String, Object?>? supply,
   }) async {
     submittedExpenses.add(
       (
         amountCents: amountCents,
         category: category,
         description: description,
+        supply: supply,
       ),
     );
     return 'evt-expense-${submittedExpenses.length}';

@@ -130,5 +130,9 @@
   "helpHintMoneyInvoicesTip2Topic": "Automatic payment reminders",
   "helpHintMoneyDocuments": "Your paperwork: your conditions, the payments report, the month's statement as PDF, the document library.",
   "helpHintMoneyDocumentsTopic": "The Documents face",
-  "helpHintMoneyDocumentsTip3": "My conditions is your standing financial agreement — plan, rate, extras — rendered as a document you can keep."
+  "helpHintMoneyDocumentsTip3": "My conditions is your standing financial agreement — plan, rate, extras — rendered as a document you can keep.",
+  "helpHintValidationTipScopes": "Who validates is the rule's scope: the admins, listed persons of any role, or every member — and how many. The owner always may; nobody validates their own event.",
+  "helpHintValidationTipScopesTopic": "Role management",
+  "helpHintMoneyPaymentsTipSupply": "Bought capsules or vacuum bags for the space? Submit the expense as a supply: validated, it goes on the shelf as a consumable that others pay for, and you are reimbursed.",
+  "helpHintMoneyPaymentsTipSupplyTopic": "Services and Accessories"
 }

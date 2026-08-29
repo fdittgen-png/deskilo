@@ -71,6 +71,8 @@ Future<void> showConsumptionSheet(
             ),
             const SizedBox(height: 12),
             DropdownButtonFormField<ServiceItem>(
+              // #731 — labels grew a stock suffix; never let them clip.
+              isExpanded: true,
               initialValue: service,
               decoration: InputDecoration(
                 labelText: l10n?.consumptionService ?? 'Service',
@@ -79,9 +81,13 @@ Future<void> showConsumptionSheet(
                 for (final item in services)
                   DropdownMenuItem(
                     value: item,
+                    // #731 — an empty shelf cannot be consumed.
+                    enabled: item.stock != 0,
                     child: Text(
                       '${item.name} — '
-                      '${currency.formatMinor(item.priceCents)}',
+                      '${currency.formatMinor(item.priceCents)}'
+                      '${item.stock == null ? '' : item.stock == 0 ? ' · ${l10n?.serviceOutOfStock ?? 'Out of stock'}' : ' · ${l10n?.serviceStockCount(item.stock!) ?? '${item.stock} in stock'}'}',
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
               ],
@@ -121,7 +127,10 @@ Future<void> showConsumptionSheet(
             ),
             const SizedBox(height: 16),
             FilledButton(
-              onPressed: () => Navigator.of(context).pop(true),
+              key: const ValueKey('consumption-submit'),
+              onPressed: service.stock != null && service.stock! < quantity
+                  ? null
+                  : () => Navigator.of(context).pop(true),
               child: Text(
                 l10n?.moneySubmitPayment ?? 'Submit for confirmation',
               ),

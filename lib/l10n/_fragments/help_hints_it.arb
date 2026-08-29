@@ -130,5 +130,9 @@
   "helpHintMoneyInvoicesTip2Topic": "Solleciti di pagamento automatici",
   "helpHintMoneyDocuments": "Le tue carte: le tue condizioni, il report dei pagamenti, l'estratto del mese in PDF, la libreria dei documenti.",
   "helpHintMoneyDocumentsTopic": "La vista Documenti",
-  "helpHintMoneyDocumentsTip3": "Le mie condizioni è il tuo accordo finanziario in vigore — piano, tariffa, extra — reso come documento da conservare."
+  "helpHintMoneyDocumentsTip3": "Le mie condizioni è il tuo accordo finanziario in vigore — piano, tariffa, extra — reso come documento da conservare.",
+  "helpHintValidationTipScopes": "Chi convalida è l'ambito della regola: gli admin, persone designate di qualsiasi ruolo, o tutti i membri — e quanti. Il proprietario può sempre; nessuno convalida il proprio evento.",
+  "helpHintValidationTipScopesTopic": "Gestione dei ruoli",
+  "helpHintMoneyPaymentsTipSupply": "Hai comprato capsule o sacchetti per aspirapolvere per lo spazio? Invia la spesa come scorta: convalidata, va sullo scaffale come consumabile che gli altri pagano, e tu vieni rimborsato.",
+  "helpHintMoneyPaymentsTipSupplyTopic": "Servizi e Accessori"
 }

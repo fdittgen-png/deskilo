@@ -147,5 +147,9 @@
   "featureFinanceFacesTitle": "Finances en trois volets",
   "featureFinanceFacesDesc": "L'onglet Finances se lit en trois volets — Paiements, Consommation, Factures — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.",
   "featurePaymentRemindersTitle": "Relances de paiement automatiques",
-  "featurePaymentRemindersDesc": "Les factures ouvertes au-delà du délai configuré reçoivent leurs niveaux de relance automatiquement — une alerte dans le fil du membre et une notification, une fois par jour. Désactivé : la relance reste un geste manuel."
+  "featurePaymentRemindersDesc": "Les factures ouvertes au-delà du délai configuré reçoivent leurs niveaux de relance automatiquement — une alerte dans le fil du membre et une notification, une fois par jour. Désactivé : la relance reste un geste manuel.",
+  "featureSupplyExpensesTitle": "Fournitures via les dépenses",
+  "featureSupplyExpensesDesc": "Une dépense peut être une fourniture pour l'espace (capsules, sacs d'aspirateur…) : validée, elle réapprovisionne ou crée un service consommable avec un prix unitaire ; les consommations décomptent le stock.",
+  "featureValidationScopesTitle": "Validateurs par rôle ou par personne",
+  "featureValidationScopesDesc": "Chaque règle de validation nomme qui valide : les admins, des personnes désignées quel que soit leur rôle, ou tous les membres — et combien. Désactivé : propriétaire et admins comme avant."
 }

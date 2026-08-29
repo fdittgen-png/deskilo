@@ -79,5 +79,11 @@
   "notifGroupByType": "Type",
   "notifGroupByDate": "Date",
   "notifGroupByUser": "Membre",
-  "notifUngroup": "Dégrouper"
+  "notifUngroup": "Dégrouper",
+  "validationScopeLabel": "Qui valide",
+  "validationScopeAdmins": "Les admins",
+  "validationScopeListed": "Personnes désignées",
+  "validationScopeMembers": "Tous les membres",
+  "validationScopeHint": "Le propriétaire peut toujours. Admins : tous les admins, ou ceux que vous listez. Désignées : exactement ces personnes, quel que soit leur rôle. Tous les membres : quiconque est actif.",
+  "validationPickPersons": "Choisissez les personnes"
 }

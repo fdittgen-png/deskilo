@@ -1609,6 +1609,25 @@ class AppLocalizationsDe extends AppLocalizations {
   String get notifUngroup => 'Gruppierung aufheben';
 
   @override
+  String get validationScopeLabel => 'Wer prüft';
+
+  @override
+  String get validationScopeAdmins => 'Admins';
+
+  @override
+  String get validationScopeListed => 'Benannte Personen';
+
+  @override
+  String get validationScopeMembers => 'Alle Mitglieder';
+
+  @override
+  String get validationScopeHint =>
+      'Der Inhaber darf immer. Admins: alle Admins oder die aufgeführten. Benannte: genau diese Personen, gleich welcher Rolle. Alle Mitglieder: jede aktive Person.';
+
+  @override
+  String get validationPickPersons => 'Personen wählen';
+
+  @override
   String get featuresTitle => 'Funktionen';
 
   @override
@@ -1915,6 +1934,20 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featurePaymentRemindersDesc =>
       'Offene Rechnungen nach Ablauf der eingestellten Frist erhalten ihre Mahnstufen automatisch — ein Hinweis im Feed des Mitglieds und eine Push-Nachricht, einmal täglich. Aus: Mahnen bleibt ein manueller Schritt.';
+
+  @override
+  String get featureSupplyExpensesTitle => 'Vorräte aus Ausgaben';
+
+  @override
+  String get featureSupplyExpensesDesc =>
+      'Eine Ausgabe kann ein Vorrat für den Raum sein (Kaffeekapseln, Staubsaugerbeutel…): genehmigt, füllt sie eine verbrauchbare Leistung mit Stückpreis auf oder legt sie an; Verbräuche zählen den Bestand herunter.';
+
+  @override
+  String get featureValidationScopesTitle => 'Prüfer nach Rolle oder Person';
+
+  @override
+  String get featureValidationScopesDesc =>
+      'Jede Prüfregel nennt, wer prüft: die Admins, benannte Personen jeder Rolle oder alle Mitglieder — und wie viele. Aus: Inhaber und Admins wie bisher.';
 
   @override
   String get helpTitle => 'Hilfe';
@@ -2315,6 +2348,20 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get helpHintMoneyDocumentsTip3 =>
       'Meine Konditionen ist Ihre geltende Finanzvereinbarung — Tarif, Satz, Extras — als Dokument zum Aufbewahren.';
+
+  @override
+  String get helpHintValidationTipScopes =>
+      'Wer prüft, ist der Geltungsbereich der Regel: die Admins, benannte Personen jeder Rolle oder alle Mitglieder — und wie viele. Der Inhaber darf immer; niemand prüft das eigene Ereignis.';
+
+  @override
+  String get helpHintValidationTipScopesTopic => 'Rollenverwaltung';
+
+  @override
+  String get helpHintMoneyPaymentsTipSupply =>
+      'Kapseln oder Staubsaugerbeutel für den Raum gekauft? Reichen Sie die Ausgabe als Vorrat ein: genehmigt, steht sie als Verbrauchsartikel im Regal, den andere bezahlen, und Sie werden erstattet.';
+
+  @override
+  String get helpHintMoneyPaymentsTipSupplyTopic => 'Services und Zubehör';
 
   @override
   String get inviteSectionTitle => 'Jemanden einladen';
@@ -4469,6 +4516,41 @@ class AppLocalizationsDe extends AppLocalizations {
   String moneyRemindedTimes(int count) {
     return 'Gemahnt ×$count';
   }
+
+  @override
+  String get expenseSupplyToggle => 'Das ist ein Vorrat für den Raum';
+
+  @override
+  String get expenseSupplyHint =>
+      'Kaffeekapseln, Staubsaugerbeutel… Nach der Genehmigung steht der Artikel als verbrauchbare Leistung im Regal: wer ihn nutzt, zahlt dafür.';
+
+  @override
+  String get expenseSupplyItem => 'Artikel';
+
+  @override
+  String get expenseSupplyNewItem => 'Neuer Artikel';
+
+  @override
+  String get expenseSupplyQuantity => 'Menge';
+
+  @override
+  String get expenseSupplyUnitPrice => 'Stückpreis (was ein Verbrauch kostet)';
+
+  @override
+  String get expenseSupplyUnitPriceHint =>
+      'Vorbelegt mit Betrag ÷ Menge; runden Sie nach Belieben.';
+
+  @override
+  String serviceStockCount(int count) {
+    return '$count auf Lager';
+  }
+
+  @override
+  String get serviceOutOfStock => 'Ausverkauft';
+
+  @override
+  String get serviceOutOfStockHint =>
+      'Nichts mehr im Regal — der nächste Vorrat füllt es auf.';
 
   @override
   String get planDurationLabel => 'Dauer';

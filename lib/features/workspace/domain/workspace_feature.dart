@@ -55,7 +55,9 @@ enum WorkspaceFeature {
   dataAccessLog,
   memberDataExport,
   financeFaces,
-  paymentReminders;
+  paymentReminders,
+  supplyExpenses,
+  validationScopes;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -305,6 +307,16 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.paymentReminders,
     requires: WorkspaceFeature.dunning,
   ),
+  // #731 — an expense can be a SUPPLY: validated, it restocks (or
+  // creates) a consumable service with a unit price and a stock count.
+  WorkspaceFeature.supplyExpenses: FeatureManifestEntry(
+    feature: WorkspaceFeature.supplyExpenses,
+    requires: WorkspaceFeature.services,
+  ),
+  // #732 — a validation rule names its scope: admins, listed persons of
+  // any role, or every member. Off: owner + admins as before.
+  WorkspaceFeature.validationScopes:
+      FeatureManifestEntry(feature: WorkspaceFeature.validationScopes),
   // #662 — signing IN by scanning a badge, then a PIN. Under nfcBadges
   // rather than kioskMode: it needs badges to EXIST, and turning badge
   // issuance off must take the login button with it, or the button

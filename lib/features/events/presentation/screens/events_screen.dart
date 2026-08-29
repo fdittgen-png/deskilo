@@ -100,9 +100,13 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       (EventType.payment, _) =>
         l10n?.eventPaymentSubmitted(actor, amount) ??
             '$actor recorded a payment of $amount',
-      (EventType.expense, _) =>
-        l10n?.eventExpenseSubmitted(actor, amount) ??
-            '$actor submitted an expense of $amount',
+      (EventType.expense, _) => (l10n?.eventExpenseSubmitted(actor, amount) ??
+              '$actor submitted an expense of $amount') +
+          // #731 — a supply says what lands on the shelf.
+          (event.payload['supply'] is Map
+              ? ' · ${(event.payload['supply'] as Map)['quantity']}× '
+                  '${(event.payload['supply'] as Map)['name']}'
+              : ''),
       (EventType.serviceCharge, _) => l10n?.eventServiceChargeTitle(
             event.payload['name'] as String? ?? '',
             (event.payload['quantity'] as num?)?.toInt() ?? 0,

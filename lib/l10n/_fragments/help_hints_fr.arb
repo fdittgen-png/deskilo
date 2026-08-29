@@ -130,5 +130,9 @@
   "helpHintMoneyInvoicesTip2Topic": "Relances de paiement automatiques",
   "helpHintMoneyDocuments": "Vos documents : vos conditions, le rapport des paiements, le relevé du mois en PDF, la bibliothèque de documents.",
   "helpHintMoneyDocumentsTopic": "Le volet Documents",
-  "helpHintMoneyDocumentsTip3": "Mes conditions est votre accord financier en vigueur — formule, tarif, extras — rendu en document à conserver."
+  "helpHintMoneyDocumentsTip3": "Mes conditions est votre accord financier en vigueur — formule, tarif, extras — rendu en document à conserver.",
+  "helpHintValidationTipScopes": "Qui valide, c'est la portée de la règle : les admins, des personnes désignées quel que soit leur rôle, ou tous les membres — et combien. Le propriétaire peut toujours ; personne ne valide son propre événement.",
+  "helpHintValidationTipScopesTopic": "Gestion des rôles",
+  "helpHintMoneyPaymentsTipSupply": "Vous avez acheté des capsules ou des sacs d'aspirateur pour l'espace ? Soumettez la dépense comme fourniture : validée, elle va sur l'étagère comme consommable que les autres paient, et vous êtes remboursé.",
+  "helpHintMoneyPaymentsTipSupplyTopic": "Services et Accessoires"
 }

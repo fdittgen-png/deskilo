@@ -137,8 +137,18 @@ class ServicesScreen extends ConsumerWidget {
                         ? null
                         : (l10n?.priceVatIncluded(rate) ??
                             'incl. VAT $rate');
-                    return Text(
-                        vatLabel == null ? price : '$price · $vatLabel');
+                    // #731 — the shelf count for a supply.
+                    final stock = service.stock == null
+                        ? null
+                        : service.stock == 0
+                            ? (l10n?.serviceOutOfStock ?? 'Out of stock')
+                            : (l10n?.serviceStockCount(service.stock!) ??
+                                '${service.stock} in stock');
+                    return Text([
+                      price,
+                      ?vatLabel,
+                      ?stock,
+                    ].join(' · '));
                   }),
                   trailing: service.active
                       ? null

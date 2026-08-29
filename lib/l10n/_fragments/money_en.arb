@@ -487,5 +487,16 @@
   "@moneyOpenInvoicesSummary": {"placeholders": {"count": {"type": "int"}, "amount": {"type": "String"}}},
   "@moneyDueIn": {"placeholders": {"days": {"type": "int"}}},
   "@moneyOverdueBy": {"placeholders": {"days": {"type": "int"}}},
-  "@moneyRemindedTimes": {"placeholders": {"count": {"type": "int"}}}
+  "@moneyRemindedTimes": {"placeholders": {"count": {"type": "int"}}},
+  "expenseSupplyToggle": "This is a supply for the space",
+  "expenseSupplyHint": "Coffee capsules, vacuum bags… Once validated, the item goes on the shelf as a consumable service: members who use it pay for it.",
+  "expenseSupplyItem": "Item",
+  "expenseSupplyNewItem": "New item",
+  "expenseSupplyQuantity": "Quantity",
+  "expenseSupplyUnitPrice": "Unit price (what a consumption costs)",
+  "expenseSupplyUnitPriceHint": "Prefilled from amount ÷ quantity; round up if you like.",
+  "serviceStockCount": "{count} in stock",
+  "serviceOutOfStock": "Out of stock",
+  "serviceOutOfStockHint": "Nothing left on the shelf — the next supply restocks it.",
+  "@serviceStockCount": {"placeholders": {"count": {"type": "int"}}}
 }

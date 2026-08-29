@@ -200,6 +200,12 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.paymentReminders =>
           l10n?.featurePaymentRemindersDesc ??
               'Open invoices past the configured term get their reminder levels automatically — an alert in the member\'s feed and a push, once a day. Off: reminders stay a manual action.',
+        WorkspaceFeature.supplyExpenses =>
+          l10n?.featureSupplyExpensesDesc ??
+              'An expense can be a supply for the space (coffee capsules, vacuum bags…): once validated it restocks or creates a consumable service with a unit price, and consumptions count the stock down.',
+        WorkspaceFeature.validationScopes =>
+          l10n?.featureValidationScopesDesc ??
+              'Each validation rule names who validates: the admins, listed persons of any role, or every member — plus how many. Off: owner and admins as before.',
         WorkspaceFeature.dataAccessLog =>
           l10n?.featureDataAccessLogDesc ??
               'Members see who looked at their finances and when (written by the server, never skippable). Off hides the row; the log is still kept.',

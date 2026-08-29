@@ -130,5 +130,9 @@
   "helpHintMoneyInvoicesTip2Topic": "Recordatorios de pago automáticos",
   "helpHintMoneyDocuments": "Tu papeleo: tus condiciones, el informe de pagos, el extracto del mes en PDF, la biblioteca de documentos.",
   "helpHintMoneyDocumentsTopic": "La vista Documentos",
-  "helpHintMoneyDocumentsTip3": "Mis condiciones es tu acuerdo financiero vigente — plan, tarifa, extras — como documento para conservar."
+  "helpHintMoneyDocumentsTip3": "Mis condiciones es tu acuerdo financiero vigente — plan, tarifa, extras — como documento para conservar.",
+  "helpHintValidationTipScopes": "Quién valida es el alcance de la regla: los admins, personas designadas de cualquier rol, o todos los miembros — y cuántos. El propietario siempre puede; nadie valida su propio evento.",
+  "helpHintValidationTipScopesTopic": "Gestión de roles",
+  "helpHintMoneyPaymentsTipSupply": "¿Compraste cápsulas o bolsas de aspiradora para el espacio? Envía el gasto como suministro: validado, pasa al estante como consumible que los demás pagan, y a ti te lo reembolsan.",
+  "helpHintMoneyPaymentsTipSupplyTopic": "Servicios y Accesorios"
 }

@@ -79,5 +79,11 @@
   "notifGroupByType": "Tipo",
   "notifGroupByDate": "Data",
   "notifGroupByUser": "Membro",
-  "notifUngroup": "Rimuovi raggruppamento"
+  "notifUngroup": "Rimuovi raggruppamento",
+  "validationScopeLabel": "Chi convalida",
+  "validationScopeAdmins": "Gli admin",
+  "validationScopeListed": "Persone designate",
+  "validationScopeMembers": "Tutti i membri",
+  "validationScopeHint": "Il proprietario può sempre. Admin: tutti gli admin, o quelli elencati. Designate: esattamente queste persone, qualunque sia il ruolo. Tutti i membri: chiunque sia attivo.",
+  "validationPickPersons": "Scegli le persone"
 }

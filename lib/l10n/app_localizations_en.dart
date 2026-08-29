@@ -1597,6 +1597,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifUngroup => 'Ungroup';
 
   @override
+  String get validationScopeLabel => 'Who validates';
+
+  @override
+  String get validationScopeAdmins => 'Admins';
+
+  @override
+  String get validationScopeListed => 'Listed persons';
+
+  @override
+  String get validationScopeMembers => 'All members';
+
+  @override
+  String get validationScopeHint =>
+      'The owner always may. Admins: every admin, or the ones you list. Listed: exactly these people, whatever their role. All members: anyone active.';
+
+  @override
+  String get validationPickPersons => 'Pick the persons';
+
+  @override
   String get featuresTitle => 'Features';
 
   @override
@@ -1900,6 +1919,20 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featurePaymentRemindersDesc =>
       'Open invoices past the configured term get their reminder levels automatically — an alert in the member\'s feed and a push, once a day. Off: reminders stay a manual action.';
+
+  @override
+  String get featureSupplyExpensesTitle => 'Supplies from expenses';
+
+  @override
+  String get featureSupplyExpensesDesc =>
+      'An expense can be a supply for the space (coffee capsules, vacuum bags…): once validated it restocks or creates a consumable service with a unit price, and consumptions count the stock down.';
+
+  @override
+  String get featureValidationScopesTitle => 'Validators by role or person';
+
+  @override
+  String get featureValidationScopesDesc =>
+      'Each validation rule names who validates: the admins, listed persons of any role, or every member — plus how many. Off: owner and admins as before.';
 
   @override
   String get helpTitle => 'Help';
@@ -2299,6 +2332,20 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get helpHintMoneyDocumentsTip3 =>
       'My conditions is your standing financial agreement — plan, rate, extras — rendered as a document you can keep.';
+
+  @override
+  String get helpHintValidationTipScopes =>
+      'Who validates is the rule\'s scope: the admins, listed persons of any role, or every member — and how many. The owner always may; nobody validates their own event.';
+
+  @override
+  String get helpHintValidationTipScopesTopic => 'Role management';
+
+  @override
+  String get helpHintMoneyPaymentsTipSupply =>
+      'Bought capsules or vacuum bags for the space? Submit the expense as a supply: validated, it goes on the shelf as a consumable that others pay for, and you are reimbursed.';
+
+  @override
+  String get helpHintMoneyPaymentsTipSupplyTopic => 'Services and Accessories';
 
   @override
   String get inviteSectionTitle => 'Invite someone';
@@ -4428,6 +4475,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String moneyRemindedTimes(int count) {
     return 'Reminded ×$count';
   }
+
+  @override
+  String get expenseSupplyToggle => 'This is a supply for the space';
+
+  @override
+  String get expenseSupplyHint =>
+      'Coffee capsules, vacuum bags… Once validated, the item goes on the shelf as a consumable service: members who use it pay for it.';
+
+  @override
+  String get expenseSupplyItem => 'Item';
+
+  @override
+  String get expenseSupplyNewItem => 'New item';
+
+  @override
+  String get expenseSupplyQuantity => 'Quantity';
+
+  @override
+  String get expenseSupplyUnitPrice => 'Unit price (what a consumption costs)';
+
+  @override
+  String get expenseSupplyUnitPriceHint =>
+      'Prefilled from amount ÷ quantity; round up if you like.';
+
+  @override
+  String serviceStockCount(int count) {
+    return '$count in stock';
+  }
+
+  @override
+  String get serviceOutOfStock => 'Out of stock';
+
+  @override
+  String get serviceOutOfStockHint =>
+      'Nothing left on the shelf — the next supply restocks it.';
 
   @override
   String get planDurationLabel => 'Duration';

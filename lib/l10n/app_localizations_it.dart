@@ -1610,6 +1610,25 @@ class AppLocalizationsIt extends AppLocalizations {
   String get notifUngroup => 'Rimuovi raggruppamento';
 
   @override
+  String get validationScopeLabel => 'Chi convalida';
+
+  @override
+  String get validationScopeAdmins => 'Gli admin';
+
+  @override
+  String get validationScopeListed => 'Persone designate';
+
+  @override
+  String get validationScopeMembers => 'Tutti i membri';
+
+  @override
+  String get validationScopeHint =>
+      'Il proprietario può sempre. Admin: tutti gli admin, o quelli elencati. Designate: esattamente queste persone, qualunque sia il ruolo. Tutti i membri: chiunque sia attivo.';
+
+  @override
+  String get validationPickPersons => 'Scegli le persone';
+
+  @override
   String get featuresTitle => 'Funzionalità';
 
   @override
@@ -1918,6 +1937,21 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featurePaymentRemindersDesc =>
       'Le fatture aperte oltre il termine configurato ricevono i livelli di sollecito automaticamente — un avviso nel feed del membro e una notifica, una volta al giorno. Disattivato: sollecitare resta un gesto manuale.';
+
+  @override
+  String get featureSupplyExpensesTitle => 'Scorte dalle spese';
+
+  @override
+  String get featureSupplyExpensesDesc =>
+      'Una spesa può essere una scorta per lo spazio (capsule di caffè, sacchetti per aspirapolvere…): convalidata, rifornisce o crea un servizio consumabile con prezzo unitario, e i consumi scalano la scorta.';
+
+  @override
+  String get featureValidationScopesTitle =>
+      'Convalidatori per ruolo o persona';
+
+  @override
+  String get featureValidationScopesDesc =>
+      'Ogni regola di convalida indica chi convalida: gli admin, persone designate di qualsiasi ruolo, o tutti i membri — e quanti. Disattivato: proprietario e admin come prima.';
 
   @override
   String get helpTitle => 'Aiuto';
@@ -2320,6 +2354,20 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get helpHintMoneyDocumentsTip3 =>
       'Le mie condizioni è il tuo accordo finanziario in vigore — piano, tariffa, extra — reso come documento da conservare.';
+
+  @override
+  String get helpHintValidationTipScopes =>
+      'Chi convalida è l\'ambito della regola: gli admin, persone designate di qualsiasi ruolo, o tutti i membri — e quanti. Il proprietario può sempre; nessuno convalida il proprio evento.';
+
+  @override
+  String get helpHintValidationTipScopesTopic => 'Gestione dei ruoli';
+
+  @override
+  String get helpHintMoneyPaymentsTipSupply =>
+      'Hai comprato capsule o sacchetti per aspirapolvere per lo spazio? Invia la spesa come scorta: convalidata, va sullo scaffale come consumabile che gli altri pagano, e tu vieni rimborsato.';
+
+  @override
+  String get helpHintMoneyPaymentsTipSupplyTopic => 'Servizi e Accessori';
 
   @override
   String get inviteSectionTitle => 'Invita qualcuno';
@@ -4468,6 +4516,42 @@ class AppLocalizationsIt extends AppLocalizations {
   String moneyRemindedTimes(int count) {
     return 'Sollecitata ×$count';
   }
+
+  @override
+  String get expenseSupplyToggle => 'È una scorta per lo spazio';
+
+  @override
+  String get expenseSupplyHint =>
+      'Capsule di caffè, sacchetti per aspirapolvere… Una volta convalidato, l\'articolo va sullo scaffale come servizio consumabile: chi lo usa lo paga.';
+
+  @override
+  String get expenseSupplyItem => 'Articolo';
+
+  @override
+  String get expenseSupplyNewItem => 'Nuovo articolo';
+
+  @override
+  String get expenseSupplyQuantity => 'Quantità';
+
+  @override
+  String get expenseSupplyUnitPrice =>
+      'Prezzo unitario (quanto costa un consumo)';
+
+  @override
+  String get expenseSupplyUnitPriceHint =>
+      'Precompilato con importo ÷ quantità; arrotonda se vuoi.';
+
+  @override
+  String serviceStockCount(int count) {
+    return '$count in scorta';
+  }
+
+  @override
+  String get serviceOutOfStock => 'Esaurito';
+
+  @override
+  String get serviceOutOfStockHint =>
+      'Niente più sullo scaffale — la prossima scorta lo rifornisce.';
 
   @override
   String get planDurationLabel => 'Durata';

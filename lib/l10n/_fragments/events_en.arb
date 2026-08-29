@@ -181,5 +181,11 @@
   "notifGroupByType": "Type",
   "notifGroupByDate": "Date",
   "notifGroupByUser": "Member",
-  "notifUngroup": "Ungroup"
+  "notifUngroup": "Ungroup",
+  "validationScopeLabel": "Who validates",
+  "validationScopeAdmins": "Admins",
+  "validationScopeListed": "Listed persons",
+  "validationScopeMembers": "All members",
+  "validationScopeHint": "The owner always may. Admins: every admin, or the ones you list. Listed: exactly these people, whatever their role. All members: anyone active.",
+  "validationPickPersons": "Pick the persons"
 }
