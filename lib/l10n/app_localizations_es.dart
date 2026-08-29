@@ -1116,6 +1116,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Todas las reservas y entradas — pasadas, presentes y futuras, en cualquier estado — en CSV, para análisis y depuración.';
 
   @override
+  String get pushStatusNoTransport =>
+      'Esta versión no tiene notificaciones push';
+
+  @override
+  String get pushStatusNoTransportHint =>
+      'Las notificaciones llegan en la app y como notificaciones locales en este dispositivo.';
+
+  @override
   String get directoryTitle => 'Miembros';
 
   @override

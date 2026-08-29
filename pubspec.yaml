@@ -42,12 +42,13 @@ dependencies:
   flutter_zxing: ^2.3.0
   shared_preferences: ^2.5.5
   share_plus: ^13.2.0
-  # First-class push (#426/#428, ADR 0011): FCM on Android/iOS/web/
-  # macOS. Dart-only init from firebase_options.dart — the committed
-  # stub disables it until the owner runs `flutterfire configure`
-  # (docs/guides/push-setup.md).
-  firebase_core: ^4.1.0
-  firebase_messaging: ^16.0.1
+  # The push transport (#426/#428, ADR 0011; packaged in #716 / ADR
+  # 0012). STORE builds use packages/deskilo_push (Firebase Cloud
+  # Messaging). F-Droid's recipe rewrites this ONE line to
+  # packages/deskilo_push_foss — same name, same API, no Google
+  # services. The app never imports Firebase directly.
+  deskilo_push:
+    path: packages/deskilo_push
   # App-icon badge counter (#426): pending confirmations on the launcher
   # icon (Android launchers, iOS, macOS).
   app_badge_plus: ^1.2.4

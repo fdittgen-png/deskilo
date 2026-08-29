@@ -1,6 +1,6 @@
 # Push setup — the owner's one-time Firebase checklist (#426, ADR 0011)
 
-The FCM stack ships DISABLED: `lib/core/push/firebase_options.dart` is a
+The FCM stack ships DISABLED: `packages/deskilo_push/lib/src/firebase_options.dart` is a
 stub returning null, so the app stays local-notifications-only and
 everything builds and runs. These steps light FCM up on Android, iOS, web and
 macOS. Nothing here can be automated — every step needs the owner's
@@ -14,7 +14,7 @@ Google/Apple accounts.
 3. In the repo root: `flutterfire configure` — select the project and
    the android/ios/web/macos platforms. This writes
    `lib/firebase_options.dart` and the native config files.
-4. Edit `lib/core/push/firebase_options.dart`: import the generated
+4. Edit `packages/deskilo_push/lib/src/firebase_options.dart`: import the generated
    file and change the getter to
    `DefaultFirebaseOptions.currentPlatform`.
 

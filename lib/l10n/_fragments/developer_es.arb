@@ -21,5 +21,13 @@
   "developerExportReservationsHint": "Todas las reservas y entradas — pasadas, presentes y futuras, en cualquier estado — en CSV, para análisis y depuración.",
   "@developerExportReservationsHint": {
     "description": "#677 - developer reservation export"
+  },
+  "pushStatusNoTransport": "Esta versión no tiene notificaciones push",
+  "@pushStatusNoTransport": {
+    "description": "#716 - F-Droid build without a push transport"
+  },
+  "pushStatusNoTransportHint": "Las notificaciones llegan en la app y como notificaciones locales en este dispositivo.",
+  "@pushStatusNoTransportHint": {
+    "description": "#716 - F-Droid build without a push transport"
   }
 }

@@ -1,0 +1,71 @@
+# fdroiddata metadata for DesKilo (#716) — the file to submit as
+# metadata/de.deskilo.app.yml in a merge request to
+# https://gitlab.com/fdroid/fdroiddata.
+#
+# HOW THE BUILD STAYS GOOGLE-FREE. The app's push transport is the local
+# package `deskilo_push`, which exists twice in the repo with the same
+# name and API: packages/deskilo_push (Firebase, what the stores ship)
+# and packages/deskilo_push_foss (no transport). `prebuild` rewrites the
+# one pubspec line that picks between them. Nothing else differs.
+#
+# pubspec.lock is KEPT: `flutter pub get` re-resolves only the swapped
+# path dependency and leaves every other version pinned — deleting the
+# lock would build against whatever is newest that day.
+#
+# Versions: `--build-number` pins the versionCode F-Droid expects; the
+# store trains use a wall-clock number, so F-Droid's is its own series.
+Categories:
+  - Office
+License: 0BSD
+AuthorName: Florian DITTGEN
+SourceCode: https://github.com/fdittgen-png/deskilo
+IssueTracker: https://github.com/fdittgen-png/deskilo/issues
+Changelog: https://github.com/fdittgen-png/deskilo/releases
+
+AutoName: DesKilo
+Summary: Coworking space booking, check-in, members and billing
+Description: |-
+  Book a seat on the floor plan, check in with a QR or NFC badge, see
+  who is in today, message members and groups, and — for owners — run
+  the community's billing: invoices, payments, VAT declarations and
+  e-invoicing. Multi-workspace, five languages, and each member reads
+  amounts, dates and the clock in their own region.
+
+  The F-Droid build carries no push transport (no Google services):
+  notifications arrive as local notifications and in the in-app inbox.
+
+  The app talks to the community's own Supabase backend (open source,
+  self-hostable); the workspace owner chooses the instance.
+
+AntiFeatures: {}
+
+RepoType: git
+Repo: https://github.com/fdittgen-png/deskilo.git
+
+Builds:
+  - versionName: 1.0.0
+    versionCode: 100000
+    commit: v1.0.0-fdroid.1
+    submodules: true
+    sudo:
+      - apt-get update
+      - apt-get install -y --no-install-recommends cmake ninja-build
+    output: build/app/outputs/flutter-apk/app-release.apk
+    srclibs:
+      - flutter@3.44.9
+    prebuild:
+      - sed -i 's|    path: packages/deskilo_push$|    path: packages/deskilo_push_foss|' pubspec.yaml
+    build:
+      - export PUB_CACHE=$(pwd)/.pub-cache
+      - $$flutter$$/bin/flutter config --no-analytics
+      - $$flutter$$/bin/flutter pub get
+      - $$flutter$$/bin/dart run build_runner build --delete-conflicting-outputs
+      - $$flutter$$/bin/flutter gen-l10n
+      - $$flutter$$/bin/flutter build apk --release --build-number=100000
+    scandelete:
+      - .pub-cache
+
+AutoUpdateMode: None
+UpdateCheckMode: Tags ^v[0-9.]+-fdroid\.[0-9]+$
+CurrentVersion: 1.0.0
+CurrentVersionCode: 100000

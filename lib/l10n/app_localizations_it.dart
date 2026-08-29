@@ -1119,6 +1119,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Tutte le prenotazioni e i check-in — passati, presenti e futuri, in ogni stato — in CSV, per analisi e debug.';
 
   @override
+  String get pushStatusNoTransport => 'Questa versione non ha notifiche push';
+
+  @override
+  String get pushStatusNoTransportHint =>
+      'Le notifiche arrivano nell\'app e come notifiche locali su questo dispositivo.';
+
+  @override
   String get directoryTitle => 'Membri';
 
   @override

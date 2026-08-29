@@ -1111,6 +1111,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Every booking and check-in — past, present and future, every state — as CSV, for analysis and debugging.';
 
   @override
+  String get pushStatusNoTransport => 'This build has no push notifications';
+
+  @override
+  String get pushStatusNoTransportHint =>
+      'Notifications arrive in the app and as local notifications on this device.';
+
+  @override
   String get directoryTitle => 'Members';
 
   @override
