@@ -182,6 +182,8 @@ La même action *écrire au détenteur* figure sur l'onglet **Plan** quand vous 
 
 Le mois d'un coup d'œil, avec deux portées et deux formes :
 
+**Le calendrier est un sélecteur, pas une scène (#718).** Choisissez un **jour** ou une **période** ; vous voyez un seul fil de tout ce qui est daté et que vous avez le droit de voir — réservations, pointages et départs, alertes, messages, factures, paiements, consommations, rappels — groupé par jour, filtré par type avec les puces, et **chaque ligne ouvre sa source** (la réservation, la conversation, l'alerte, la facture, le mois dans Finances). Un membre avec la permission finances ou administration des membres peut regarder un autre membre ; les types que le serveur n'autorise pas pour ce membre apparaissent **verrouillés**, jamais comme un jour vide. Le bouclier ouvre *Qui peut voir ceci*, avec le journal des accès.
+
 - **Les miennes / Tout le monde** — vos propres réservations, ou celles de toute la communauté ; chaque membre dispose de cette bascule, puisque le plan et la grille de semaine du hub Réserver montrent déjà l'occupation de tous. Les points sous un jour disent tout d'un coup d'œil : **rouge** = vous avez une réservation, **bleu** = d'autres membres en ont, **les deux points** = les deux. Aujourd'hui est cerclé.
 - La **bascule de forme** à côté commute la moitié basse entre une **vue liste** (chaque réservation en carte : fenêtre horaire, membre, espace) et une **vue chronologique** (les places × les heures du jour choisi). La grille places × *jours* de la semaine, elle, vit dans le hub Réserver (§4), pas ici.
 - Les **puces d'étage** (*Tous les étages* / par niveau) filtrent la **vue chronologique**.
@@ -593,6 +595,8 @@ Variables (famille facture) : `{{ number }}`, `{{ member }}`, `{{ workspace }}`,
 
 Votre écran personnel, de haut en bas :
 
+**Confidentialité et données (#719)** — qui peut voir vos données, qui l'a fait, export, effacement, la politique. Voir §14.
+
 **Région et formats (#711).** Comment *vous* lisez ce que l'espace affiche : **nombres et dates** dans la région de votre choix (`fr_CH`, `en_GB`, `de_AT`… indépendante de la langue de l'app), l'**horloge** (24 h, 12 h, ou ce que fait cette région), et si les heures s'affichent dans le **fuseau de l'espace** — celui des réservations, par défaut — ou **celui de votre appareil**, signalé là où les deux diffèrent. Une ligne d'aperçu montre le résultat des trois choix. La devise reste celle de l'espace ; seule son écriture est la vôtre. Enregistré sur votre profil : il vous suit d'un appareil à l'autre.
 
 - **Profils** (§1) et votre **photo** (touchez pour changer — choisir ou supprimer).
@@ -610,6 +614,8 @@ Rappels de pointage, confirmations en attente, décisions de dépense — et qua
 ## 14. Confidentialité
 
 Données minimales : nom, e-mail, forfait, réservations, compte. Vous contrôlez votre photo, votre statut et la visibilité de votre numéro ; sur le plan, une de vos places affiche une initiale, ou votre photo là où le propriétaire a activé les photos des membres. Les badges ne sont stockés qu'en hachés — un badge perdu se révoque, ne se devine pas. Pas de pistage, pas d'analytique tierce. L'historique financier est anonymisé, pas supprimé, à l'effacement du compte (rétention comptable).
+
+**RGPD (#719).** DesKilo est conçu pour le Règlement général sur la protection des données : données hébergées dans l'UE, ni traçage ni analytique, accès limité par rôle et appliqué côté serveur, et quatre droits que vous exercez vous-même dans **Réglages → Confidentialité et données** : **qui peut voir mes données** (la règle par catégorie et les personnes qu'elle désigne), **qui a consulté mes données** (un journal écrit par le serveur de chaque lecture de vos finances ou messages par quelqu'un d'autre — jamais contournable), **exporter mes données** (un fichier JSON, art. 20) et **partir avec effacement** (art. 17 : réservations annulées, messages vidés, profil effacé ; les pièces comptables sont conservées pendant la durée légale nommée dans la politique, référencées par un identifiant, pas un nom). Les messages ne sont lisibles que par les personnes de la conversation, quel que soit leur rôle ; factures et paiements seulement par vous et les titulaires de la permission finances.
 
 ## 15. Plateformes
 

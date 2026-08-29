@@ -25,5 +25,139 @@
   "calendarAllLevels": "Tutti i piani",
   "calendarTimelineAllEmpty": "Nessuna prenotazione su nessun piano in questo giorno.",
   "calendarLevelCollapsed": "{level}, compresso",
-  "calendarLevelExpanded": "{level}, espanso"
+  "calendarLevelExpanded": "{level}, espanso",
+  "calendarWhoCanSee": "Chi può vedere questo",
+  "@calendarWhoCanSee": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarPrevious": "Precedente",
+  "@calendarPrevious": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarNext": "Successivo",
+  "@calendarNext": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarDay": "Giorno",
+  "@calendarDay": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarRange": "Periodo",
+  "@calendarRange": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarMemberMe": "Io",
+  "@calendarMemberMe": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarNothingHere": "Niente in queste date.",
+  "@calendarNothingHere": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarLockedKinds": "Non visibile per questo membro: {kinds}",
+  "@calendarLockedKinds": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "kinds": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarEventTitle": "Avviso: {label}",
+  "@calendarEventTitle": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarKindReservation": "Prenotazioni",
+  "@calendarKindReservation": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindCheckIn": "Check-in",
+  "@calendarKindCheckIn": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindCheckOut": "Check-out",
+  "@calendarKindCheckOut": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindEvent": "Avvisi",
+  "@calendarKindEvent": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindMessage": "Messaggi",
+  "@calendarKindMessage": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindInvoice": "Fatture",
+  "@calendarKindInvoice": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindPayment": "Pagamenti",
+  "@calendarKindPayment": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindConsumption": "Consumi",
+  "@calendarKindConsumption": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindReminder": "Promemoria",
+  "@calendarKindReminder": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessNobodyElse": "nessun altro",
+  "@accessNobodyElse": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleReservations": "Ogni membro dello spazio — la piantina mostra l'occupazione a tutti.",
+  "@accessRuleReservations": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleEvents": "Tu, il membro che ha agito e gli admin.",
+  "@accessRuleEvents": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleMessages": "Solo le persone nella conversazione — nessun ruolo può leggere una conversazione di cui non fa parte.",
+  "@accessRuleMessages": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleFinances": "Tu e chi ha il permesso finanze: {people}.",
+  "@accessRuleFinances": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "people": {
+        "type": "String"
+      }
+    }
+  },
+  "accessRuleReminders": "Solo tu.",
+  "@accessRuleReminders": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessLogTitle": "Chi ha consultato i tuoi dati",
+  "@accessLogTitle": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessLogEmpty": "Nessuno ha consultato le tue finanze o i tuoi messaggi.",
+  "@accessLogEmpty": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessLogRow": "{actor} ha consultato {category} di {subject}",
+  "@accessLogRow": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      },
+      "subject": {
+        "type": "String"
+      }
+    }
+  }
 }

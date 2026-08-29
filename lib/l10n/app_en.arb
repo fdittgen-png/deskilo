@@ -1138,6 +1138,140 @@
       }
     }
   },
+  "calendarWhoCanSee": "Who can see this",
+  "@calendarWhoCanSee": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarPrevious": "Previous",
+  "@calendarPrevious": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarNext": "Next",
+  "@calendarNext": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarDay": "Day",
+  "@calendarDay": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarRange": "Range",
+  "@calendarRange": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarMemberMe": "Me",
+  "@calendarMemberMe": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarNothingHere": "Nothing on these dates.",
+  "@calendarNothingHere": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarLockedKinds": "Not visible to you for this member: {kinds}",
+  "@calendarLockedKinds": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "kinds": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarEventTitle": "Alert: {label}",
+  "@calendarEventTitle": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarKindReservation": "Bookings",
+  "@calendarKindReservation": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindCheckIn": "Check-ins",
+  "@calendarKindCheckIn": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindCheckOut": "Check-outs",
+  "@calendarKindCheckOut": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindEvent": "Alerts",
+  "@calendarKindEvent": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindMessage": "Messages",
+  "@calendarKindMessage": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindInvoice": "Invoices",
+  "@calendarKindInvoice": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindPayment": "Payments",
+  "@calendarKindPayment": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindConsumption": "Consumption",
+  "@calendarKindConsumption": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindReminder": "Reminders",
+  "@calendarKindReminder": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessNobodyElse": "nobody else",
+  "@accessNobodyElse": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleReservations": "Every member of the workspace — the floor plan shows occupancy to everyone.",
+  "@accessRuleReservations": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleEvents": "You, the member who acted, and the admins.",
+  "@accessRuleEvents": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleMessages": "Only the people in the conversation — no role can read a conversation it is not part of.",
+  "@accessRuleMessages": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleFinances": "You, and those with the finance permission: {people}.",
+  "@accessRuleFinances": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "people": {
+        "type": "String"
+      }
+    }
+  },
+  "accessRuleReminders": "Only you.",
+  "@accessRuleReminders": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessLogTitle": "Who accessed your data",
+  "@accessLogTitle": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessLogEmpty": "Nobody has looked at your finances or messages.",
+  "@accessLogEmpty": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessLogRow": "{actor} read {category} of {subject}",
+  "@accessLogRow": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      },
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
   "appTitle": "DesKilo",
   "@appTitle": {
     "description": "Application name shown in the task switcher and app bar. Brand name — identical in all locales."
@@ -2105,6 +2239,30 @@
   "@featureRegionalFormatsDesc": {
     "description": "#711 - globalization"
   },
+  "featureCalendarHubTitle": "Calendar hub",
+  "@featureCalendarHubTitle": {
+    "description": "#718/#719"
+  },
+  "featureCalendarHubDesc": "The calendar shows everything dated — bookings, check-ins, alerts, messages, invoices, payments, consumption, reminders — for a day or a range, each row opening its source. Off: reservations only.",
+  "@featureCalendarHubDesc": {
+    "description": "#718/#719"
+  },
+  "featureDataAccessLogTitle": "Data access log",
+  "@featureDataAccessLogTitle": {
+    "description": "#718/#719"
+  },
+  "featureDataAccessLogDesc": "Members see who looked at their finances and when (written by the server, never skippable). Off hides the row; the log is still kept.",
+  "@featureDataAccessLogDesc": {
+    "description": "#718/#719"
+  },
+  "featureMemberDataExportTitle": "Export & erasure",
+  "@featureMemberDataExportTitle": {
+    "description": "#718/#719"
+  },
+  "featureMemberDataExportDesc": "Every member can export their data as one file (GDPR art. 20) and leave the workspace with their personal data cleared (art. 17) from Settings → Privacy & data.",
+  "@featureMemberDataExportDesc": {
+    "description": "#718/#719"
+  },
   "helpTitle": "Help",
   "helpContents": "Contents",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",
@@ -2153,11 +2311,11 @@
   "helpHintPlanTip4": "Double-tap a desk, a room or the floor itself — or tap the layers icon on the level rail — to reserve the whole space at once.",
   "helpHintPlanTip5": "Tap your own seat for its sheet: check in from 15 minutes before your start, check out when you leave.",
   "helpHintPlanTip5Topic": "How booking behaves",
-  "helpHintCalendar": "Browse bookings by month; tap a day to see and manage its reservations.",
+  "helpHintCalendar": "Pick a day or a range: everything dated that you may see, in one list, each row opening its source.",
   "helpHintCalendarTopic": "Calendar",
-  "helpHintCalendarTip2": "The Mine / Everyone toggle shows just your bookings or the whole community's — red dots are yours, blue ones are other members'.",
-  "helpHintCalendarTip3": "The shape toggle switches the lower half between the week grid and the agenda list; the floor chips filter both.",
-  "helpHintCalendarTip4": "Cancelling one occurrence of a series offers \"this and following\" — checked-in and completed occurrences keep their history.",
+  "helpHintCalendarTip2": "Switch Day to Range to see a whole week or month at once — the arrows step by the size of your selection.",
+  "helpHintCalendarTip3": "Tap a kind chip to see only that: bookings, alerts, messages, invoices, payments, consumption, reminders.",
+  "helpHintCalendarTip4": "Every row opens its source — the booking, the conversation, the alert, the invoice, or that month on Finances.",
   "helpHintCalendarTip4Topic": "How booking behaves",
   "helpHintEvents": "Everything that happened, in one feed. Decisions waiting for you sit on top; the chips filter the rest.",
   "helpHintEventsTopic": "confirmations",
@@ -2210,6 +2368,42 @@
   "helpHintBadgesTip2": "Register a card by holding it to the device — any readable chip works, and the dialog names the workspace it joins.",
   "helpHintBadgesTip3": "Save a QR badge as PDF to print ten credit-card copies on one A4 page — spares included.",
   "helpHintBadgesTip4": "Revoke a lost badge any time; swipe a revoked badge to the right to delete it for good.",
+  "@helpHintCalendar": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip2": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip3": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip4": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintCalendarTip5": "The shield shows who can see each kind, and who actually looked at your finances.",
+  "@helpHintCalendarTip5": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintCalendarTip5Topic": "Privacy",
+  "@helpHintCalendarTip5Topic": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacy": "See who can read your data and who did, export everything as one file, or leave with your personal data erased.",
+  "@helpHintPrivacy": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTopic": "Privacy",
+  "@helpHintPrivacyTopic": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTip2": "Messages are readable only by the people in the conversation, whatever their role; money only by you and the finance permission.",
+  "@helpHintPrivacyTip2": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTip3": "Every read of your finances by someone else is logged by the server — the log cannot be skipped or edited.",
+  "@helpHintPrivacyTip3": {
+    "description": "#718/#719 - help hints"
+  },
   "inviteSectionTitle": "Invite someone",
   "inviteViaWhatsapp": "WhatsApp",
   "inviteViaSms": "SMS",
@@ -5240,6 +5434,71 @@
   },
   "defaultPeriodTitle": "Default booking period",
   "defaultPeriodNone": "No preference (full day)",
+  "privacyTitle": "Privacy & data",
+  "@privacyTitle": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyIntro": "Your data stays in the EU, is never tracked or sold, and is readable only by the roles the rules below name. These are your rights under the GDPR — each one is a button.",
+  "@privacyIntro": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyWhoCanSee": "Who can see my data",
+  "@privacyWhoCanSee": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyWhoCanSeeHint": "The rule per category, the people it names today, and who actually looked.",
+  "@privacyWhoCanSeeHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExport": "Export my data",
+  "@privacyExport": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExportHint": "Everything you are the subject of, as one JSON file (art. 20).",
+  "@privacyExportHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExportShareText": "My DesKilo data export",
+  "@privacyExportShareText": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyErase": "Leave this workspace and erase my data",
+  "@privacyErase": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseHint": "Cancels your bookings, blanks your messages, clears your profile. Accounting records stay under the legal retention, by id, not by name (art. 17).",
+  "@privacyEraseHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseOwner": "An owner hands the workspace over first (Members & plans → Co-ownership).",
+  "@privacyEraseOwner": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseConfirmPhrase": "ERASE",
+  "@privacyEraseConfirmPhrase": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseConfirmHint": "This cannot be undone. Type {phrase} to confirm.",
+  "@privacyEraseConfirmHint": {
+    "description": "#719 - privacy & data",
+    "placeholders": {
+      "phrase": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyEraseConfirmButton": "Erase",
+  "@privacyEraseConfirmButton": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyErased": "Your data has been erased.",
+  "@privacyErased": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyPolicy": "Privacy policy",
+  "@privacyPolicy": {
+    "description": "#719 - privacy & data"
+  },
   "profilesDefault": "Default at startup",
   "profilesMakeDefault": "Use as default at startup",
   "eventTypeRoleChange": "Role change",

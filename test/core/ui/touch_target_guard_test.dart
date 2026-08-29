@@ -30,10 +30,13 @@ const double _chipFloor = 44;
 /// Pumps the app on the hub with two levels (level chips visible)
 /// and half-day granularity (Morning/Afternoon/Day chips visible), open
 /// every day so no banner shifts the header.
-Future<void> pumpApp(WidgetTester tester) async {
+Future<void> pumpApp(
+  WidgetTester tester, {
+  Map<String, dynamic> flags = const {'calendarHub': false},
+}) async {
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   addSecondLevel(plans);
-  final workspace = FakeWorkspaceRepository.withWorkspace()
+  final workspace = FakeWorkspaceRepository.withWorkspace(featureFlags: flags)
     ..openWeekdays['ws-1'] = const [1, 2, 3, 4, 5, 6, 7]
     ..bookingGranularities['ws-1'] = BookingGranularity.halfDay;
   await tester.pumpWidget(
@@ -135,5 +138,14 @@ void main() {
     expect(find.byKey(const ValueKey('reserve-view-switch')), findsOneWidget);
 
     expectTouchTargets(tester, surface: 'reserve hub');
+  });
+
+  testWidgets(
+      'Calendar hub (#718): the selector, the kind chips and the shield '
+      'meet the touch-target floors', (tester) async {
+    await pumpApp(tester, flags: const {});
+    await tapNavIcon(tester, Icons.calendar_month_outlined);
+    expect(find.byKey(const ValueKey('calendar-date-button')), findsOneWidget);
+    expectTouchTargets(tester, surface: 'calendar hub');
   });
 }

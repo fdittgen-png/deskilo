@@ -27,7 +27,11 @@ Future<void> bootAs(
   required bool isAdmin,
   required bool isOwner,
 }) async {
-  final workspace = FakeWorkspaceRepository.withWorkspace()
+  // #718 — the 'Everyone' toggle is the CLASSIC calendar's; the hub has
+  // its own tests and no such toggle.
+  final workspace = FakeWorkspaceRepository.withWorkspace(
+    featureFlags: const {'calendarHub': false},
+  )
     ..myMember = member(isAdmin: isAdmin, isOwner: isOwner);
   // The settings list grew (Help + Linked accounts, 0051): a taller view
   // keeps the admin entries built in the lazy list.

@@ -936,6 +936,98 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get calendarWhoCanSee => 'Quién puede ver esto';
+
+  @override
+  String get calendarPrevious => 'Anterior';
+
+  @override
+  String get calendarNext => 'Siguiente';
+
+  @override
+  String get calendarDay => 'Día';
+
+  @override
+  String get calendarRange => 'Periodo';
+
+  @override
+  String get calendarMemberMe => 'Yo';
+
+  @override
+  String get calendarNothingHere => 'Nada en estas fechas.';
+
+  @override
+  String calendarLockedKinds(String kinds) {
+    return 'No visible para usted para este miembro: $kinds';
+  }
+
+  @override
+  String calendarEventTitle(String label) {
+    return 'Aviso: $label';
+  }
+
+  @override
+  String get calendarKindReservation => 'Reservas';
+
+  @override
+  String get calendarKindCheckIn => 'Registros';
+
+  @override
+  String get calendarKindCheckOut => 'Salidas';
+
+  @override
+  String get calendarKindEvent => 'Avisos';
+
+  @override
+  String get calendarKindMessage => 'Mensajes';
+
+  @override
+  String get calendarKindInvoice => 'Facturas';
+
+  @override
+  String get calendarKindPayment => 'Pagos';
+
+  @override
+  String get calendarKindConsumption => 'Consumos';
+
+  @override
+  String get calendarKindReminder => 'Recordatorios';
+
+  @override
+  String get accessNobodyElse => 'nadie más';
+
+  @override
+  String get accessRuleReservations =>
+      'Todos los miembros del espacio — el plano muestra la ocupación a todos.';
+
+  @override
+  String get accessRuleEvents => 'Usted, el miembro que actuó y los admins.';
+
+  @override
+  String get accessRuleMessages =>
+      'Solo las personas de la conversación — ningún rol puede leer una conversación de la que no forma parte.';
+
+  @override
+  String accessRuleFinances(String people) {
+    return 'Usted y quienes tienen el permiso de finanzas: $people.';
+  }
+
+  @override
+  String get accessRuleReminders => 'Solo usted.';
+
+  @override
+  String get accessLogTitle => 'Quién accedió a sus datos';
+
+  @override
+  String get accessLogEmpty =>
+      'Nadie ha consultado sus finanzas ni sus mensajes.';
+
+  @override
+  String accessLogRow(String actor, String category, String subject) {
+    return '$actor consultó $category de $subject';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -1765,6 +1857,27 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cada miembro elige cómo se le muestran los números, las fechas, el reloj y la zona horaria. Desactivado: todos leen en la región del idioma de la app, en 24 h, hora del espacio.';
 
   @override
+  String get featureCalendarHubTitle => 'Calendario central';
+
+  @override
+  String get featureCalendarHubDesc =>
+      'El calendario muestra todo lo fechado — reservas, registros, avisos, mensajes, facturas, pagos, consumos, recordatorios — para un día o un periodo, cada fila abre su origen. Desactivado: solo reservas.';
+
+  @override
+  String get featureDataAccessLogTitle => 'Registro de accesos a datos';
+
+  @override
+  String get featureDataAccessLogDesc =>
+      'Cada miembro ve quién consultó sus finanzas y cuándo (lo escribe el servidor, nunca se omite). Desactivado: la fila se oculta, el registro se conserva.';
+
+  @override
+  String get featureMemberDataExportTitle => 'Exportación y borrado';
+
+  @override
+  String get featureMemberDataExportDesc =>
+      'Cada miembro puede exportar sus datos en un archivo (RGPD art. 20) y abandonar el espacio con sus datos personales borrados (art. 17) desde Ajustes → Privacidad y datos.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override
@@ -1871,22 +1984,22 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get helpHintCalendar =>
-      'Recorre las reservas mes a mes; toca un día para ver y gestionar sus reservas.';
+      'Elija un día o un periodo: todo lo fechado que puede ver, en una lista, cada fila abre su origen.';
 
   @override
   String get helpHintCalendarTopic => 'Calendario';
 
   @override
   String get helpHintCalendarTip2 =>
-      'El conmutador Mías / Todos muestra solo tus reservas o las de toda la comunidad: los puntos rojos son tuyos, los azules de los demás.';
+      'Cambie de Día a Periodo para ver una semana o un mes de golpe — las flechas avanzan el tamaño de su selección.';
 
   @override
   String get helpHintCalendarTip3 =>
-      'El conmutador de vista cambia la mitad inferior entre la cuadrícula semanal y la lista de agenda; los chips de planta filtran ambas.';
+      'Toque un chip de tipo para ver solo eso: reservas, avisos, mensajes, facturas, pagos, consumos, recordatorios.';
 
   @override
   String get helpHintCalendarTip4 =>
-      'Cancelar una ocurrencia de una serie ofrece «esta y las siguientes»: las ocurrencias registradas o completadas conservan su historial.';
+      'Cada fila abre su origen — la reserva, la conversación, el aviso, la factura o ese mes en Finanzas.';
 
   @override
   String get helpHintCalendarTip4Topic => 'Cómo se comporta la reserva';
@@ -2079,6 +2192,28 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get helpHintBadgesTip4 =>
       'Revoca una credencial perdida en cualquier momento; desliza una credencial revocada hacia la derecha para eliminarla definitivamente.';
+
+  @override
+  String get helpHintCalendarTip5 =>
+      'El escudo muestra quién puede ver cada tipo y quién miró realmente sus finanzas.';
+
+  @override
+  String get helpHintCalendarTip5Topic => 'Privacidad';
+
+  @override
+  String get helpHintPrivacy =>
+      'Vea quién puede leer sus datos y quién lo hizo, exporte todo en un archivo o salga con sus datos personales borrados.';
+
+  @override
+  String get helpHintPrivacyTopic => 'Privacidad';
+
+  @override
+  String get helpHintPrivacyTip2 =>
+      'Los mensajes solo los leen las personas de la conversación, sea cual sea su rol; el dinero solo usted y el permiso de finanzas.';
+
+  @override
+  String get helpHintPrivacyTip3 =>
+      'Cada lectura de sus finanzas por otra persona la registra el servidor — el registro no se puede omitir ni editar.';
 
   @override
   String get inviteSectionTitle => 'Invitar a alguien';
@@ -4462,6 +4597,58 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get defaultPeriodNone => 'Sin preferencia (día completo)';
+
+  @override
+  String get privacyTitle => 'Privacidad y datos';
+
+  @override
+  String get privacyIntro =>
+      'Sus datos permanecen en la UE, nunca se rastrean ni se venden, y solo los leen los roles que nombran las reglas de abajo. Estos son sus derechos según el RGPD — cada uno es un botón.';
+
+  @override
+  String get privacyWhoCanSee => 'Quién puede ver mis datos';
+
+  @override
+  String get privacyWhoCanSeeHint =>
+      'La regla por categoría, las personas que nombra hoy y quién miró realmente.';
+
+  @override
+  String get privacyExport => 'Exportar mis datos';
+
+  @override
+  String get privacyExportHint =>
+      'Todo aquello de lo que usted es el sujeto, en un archivo JSON (art. 20).';
+
+  @override
+  String get privacyExportShareText => 'Mi exportación de datos DesKilo';
+
+  @override
+  String get privacyErase => 'Abandonar este espacio y borrar mis datos';
+
+  @override
+  String get privacyEraseHint =>
+      'Cancela sus reservas, vacía sus mensajes, borra su perfil. Los registros contables se conservan durante la retención legal, por id, no por nombre (art. 17).';
+
+  @override
+  String get privacyEraseOwner =>
+      'Un propietario transfiere primero el espacio (Miembros y planes → Copropiedad).';
+
+  @override
+  String get privacyEraseConfirmPhrase => 'BORRAR';
+
+  @override
+  String privacyEraseConfirmHint(String phrase) {
+    return 'No se puede deshacer. Escriba $phrase para confirmar.';
+  }
+
+  @override
+  String get privacyEraseConfirmButton => 'Borrar';
+
+  @override
+  String get privacyErased => 'Sus datos han sido borrados.';
+
+  @override
+  String get privacyPolicy => 'Política de privacidad';
 
   @override
   String get profilesDefault => 'Predeterminado al iniciar';

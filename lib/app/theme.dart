@@ -5,6 +5,8 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../core/theme/contrast.dart';
+
 import '../core/theme/app_radius.dart';
 
 /// DesKilo brand palette — muted burnt orange (spec §14, decided 2026-07-07).
@@ -45,8 +47,31 @@ const FlexSubThemesData _subThemes = FlexSubThemesData(
 /// cards sit flat on tonal surfaces (depth comes from [AppElevation]
 /// where it means something, not from Material's default drop shadow).
 ThemeData _finish(ThemeData base, {required bool animations}) {
-  final scheme = base.colorScheme;
+  final raw = base.colorScheme;
+  // #721 — the pairs the app reads most, guaranteed rather than hoped:
+  // the audit test (test/lint/contrast_test.dart) measures exactly these
+  // and found the dark primary's label at 3.2:1, the light outline at
+  // 2.9:1, dark error text at 4.2:1. Each is nudged in lightness only.
+  final scheme = raw.copyWith(
+    onPrimary: Contrast.ensure(raw.onPrimary, raw.primary),
+    onSecondaryContainer:
+        Contrast.ensure(raw.onSecondaryContainer, raw.secondaryContainer),
+    onPrimaryContainer:
+        Contrast.ensure(raw.onPrimaryContainer, raw.primaryContainer),
+    onError: Contrast.ensure(raw.onError, raw.error),
+    onErrorContainer: Contrast.ensure(raw.onErrorContainer, raw.errorContainer),
+    onSecondary: Contrast.ensure(raw.onSecondary, raw.secondary),
+    onTertiary: Contrast.ensure(raw.onTertiary, raw.tertiary),
+    error: Contrast.ensure(raw.error, raw.surfaceContainerHighest),
+    primary: Contrast.ensure(raw.primary, raw.surfaceContainerHighest),
+    onSurfaceVariant:
+        Contrast.ensure(raw.onSurfaceVariant, raw.surfaceContainerHighest),
+    // Against the container the outline sits on most and contrasts with
+    // least — the highest tint — so every lighter surface passes too.
+    outline: Contrast.ensure(raw.outline, raw.surfaceContainerHighest, floor: 3.0),
+  );
   return base.copyWith(
+    colorScheme: scheme,
     pageTransitionsTheme: _pageTransitions(animations: animations),
     textTheme: base.textTheme.copyWith(
       // The app-bar title: confident, a touch tighter — personality

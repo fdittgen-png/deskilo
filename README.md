@@ -21,6 +21,26 @@
 
 > **Not yet on the public stores.** Android is in **closed testing** and iPhone on **TestFlight** — the two buttons above are how you get in, and both were checked live. A Google Play *store* badge would 404 today, so there is not one; it goes here the day the listing is public.
 
+## Data protection (GDPR)
+
+DesKilo is built for the EU General Data Protection Regulation, and the store
+listings say so.
+
+- **Where:** Supabase, EU region (eu-central-1). No tracking, analytics or ad SDK
+  in any flavour; the F-Droid build carries no Google services at all.
+- **Who may read what** is enforced on the server (row-level security and
+  `has_permission()`), never only in the app: reservations are visible inside a
+  workspace; alerts to the people involved and the admins; **messages only to the
+  participants of a conversation, whatever their role**; **invoices and payments
+  only to the member and holders of the finance permission**.
+- **Access log:** every read of a member's finances by someone else is written by
+  the server (`data_access_log`, migration 0133) and shown to the subject.
+- **Your rights, as buttons** — Settings → Privacy & data: who can see my data,
+  who accessed it, export everything (art. 20), leave with erasure (art. 17).
+- **Retention:** accounting records (ledger, invoices) stay for the statutory
+  period, referenced by id, not by name.
+- Policy: https://fdittgen-png.github.io/deskilo/privacy.html
+
 ## The leitmotiv
 
 Every feature must serve at least one of:

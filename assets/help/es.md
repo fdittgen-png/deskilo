@@ -182,6 +182,8 @@ La misma acción *escribir al titular* está en la pestaña **Plano** cuando toc
 
 El mes de un vistazo, con dos alcances y dos formas:
 
+**El calendario es un selector, no un escenario (#718).** Elija un **día** o un **periodo**; lo que ve es un único flujo de todo lo fechado que puede ver — reservas, registros y salidas, avisos, mensajes, facturas, pagos, consumos, recordatorios — agrupado por día, filtrado por tipo con los chips, y **cada fila abre su origen** (la reserva, la conversación, el aviso, la factura, el mes en Finanzas). Un miembro con el permiso de finanzas o de administración de miembros puede mirar a otro miembro; los tipos que el servidor no permite para ese miembro aparecen **bloqueados**, nunca como un día vacío. El escudo abre *Quién puede ver esto*, con el registro de accesos.
+
 - **Mías / Todos** — tus propias reservas, o las de toda la comunidad; el conmutador lo tiene **cada miembro**, ya que el plano y la cuadrícula semanal del hub Reservar muestran de todos modos la ocupación de todo el mundo. Los puntos bajo un día lo dicen de un vistazo: **rojo** = tienes una reserva, **azul** = otros miembros la tienen, **ambos puntos** = ambas cosas. Hoy va rodeado.
 - El **conmutador de forma** a su lado cambia la mitad inferior entre una **lista de agenda** (cada reserva como tarjeta: ventana horaria, miembro, espacio) y una **cronología del día** (puestos × las horas del día elegido). La cuadrícula puestos × *días* de la semana vive en el hub Reservar (§4), no aquí.
 - Los **chips de planta** (*Todas las plantas* / por planta) filtran la **cronología**.
@@ -593,6 +595,8 @@ Variables de plantilla (familia de facturas): `{{ number }}`, `{{ member }}`, `{
 
 Tu pantalla personal, de arriba abajo:
 
+**Privacidad y datos (#719)** — quién puede ver sus datos, quién lo hizo, exportación, borrado, la política. Véase §14.
+
 **Región y formatos (#711).** Cómo lee *usted* lo que muestra el espacio: **números y fechas** en la región que elija (`es_ES`, `en_GB`, `de_AT`… independiente del idioma de la app), el **reloj** (24 h, 12 h o lo que haga esa región) y si las horas se muestran en la **zona del espacio** — la de las reservas, por defecto — o en **la de su dispositivo**, señalada donde difieren. Una línea de vista previa muestra la suma de las tres elecciones. La moneda es siempre la del espacio; solo su escritura es suya. Guardado en su perfil: le sigue entre dispositivos.
 
 - **Perfiles** (§1) y tu **foto** (tócala para cambiarla — elegir o quitar).
@@ -610,6 +614,8 @@ Recordatorios de registro, confirmaciones pendientes, decisiones de gastos — y
 ## 14. Privacidad
 
 Datos mínimos: nombre, correo, plan, reservas, cuenta. Tú controlas tu foto, tu estado y si tu número de teléfono es visible en el directorio; en el plano, un puesto tuyo muestra una inicial, o tu foto donde el propietario activó las fotos de los miembros. Las credenciales de quiosco se guardan solo como hash — una credencial perdida se revoca, no se adivina. Sin rastreo, sin analítica de terceros. El historial financiero se anonimiza, no se borra, al eliminar la cuenta (retención contable).
+
+**RGPD (#719).** DesKilo está construida para el Reglamento General de Protección de Datos: datos alojados en la UE, sin rastreo ni analítica, acceso limitado por rol y aplicado en el servidor, y cuatro derechos que ejerce usted mismo en **Ajustes → Privacidad y datos**: **quién puede ver mis datos** (la regla por categoría y las personas que nombra), **quién accedió a mis datos** (un registro escrito por el servidor de cada lectura de sus finanzas o mensajes por otra persona — nunca omitible), **exportar mis datos** (un archivo JSON, art. 20) y **salir con borrado** (art. 17: reservas canceladas, mensajes vaciados, perfil borrado; los registros contables se conservan durante la retención legal indicada en la política, referenciados por un id, no un nombre). Los mensajes solo los leen las personas de la conversación, sea cual sea su rol; facturas y pagos solo usted y quienes tienen el permiso de finanzas.
 
 ## 15. Plataformas
 

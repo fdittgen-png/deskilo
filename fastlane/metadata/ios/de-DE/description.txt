@@ -32,3 +32,5 @@ Dasselbe Konto auf Android, iPhone, iPad, Mac, Windows und im Browser. Ein am Ha
 
 DATENSCHUTZ
 Kein Tracking, keine Analyse, keine Werbung, kein Drittanbieter-SDK. Das Backend ist Supabase in der EU und selbst hostbar. DesKilo ist quelloffen unter 0BSD — alles oben Genannte steht im Code.
+
+DSGVO: Daten in der EU, kein Tracking, keine Analytik, Zugriff nach Rolle und serverseitig durchgesetzt. Deine Rechte sind Knöpfe unter Einstellungen → Datenschutz & Daten: wer deine Daten sehen kann, wer zugegriffen hat, Export, Löschung.

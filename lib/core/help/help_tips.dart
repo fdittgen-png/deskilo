@@ -18,6 +18,7 @@ enum HelpHintId {
   workspaceSettings,
   badges,
   messages,
+  privacy,
 }
 
 /// One tip of a surface's carousel (#610): its sentence and, when a more
@@ -41,8 +42,8 @@ String helpHintText(AppLocalizations? l10n, HelpHintId id) => switch (id) {
             'own booking to check in.',
   HelpHintId.calendar =>
     l10n?.helpHintCalendar ??
-        'Browse bookings by month; tap a day to see and manage its '
-            'reservations.',
+        'Pick a day or a range: everything dated that you may see, in '
+            'one list, each row opening its source.',
   HelpHintId.events =>
     l10n?.helpHintEvents ??
         'Everything that happened, in one feed. Decisions waiting '
@@ -79,6 +80,10 @@ String helpHintText(AppLocalizations? l10n, HelpHintId id) => switch (id) {
     l10n?.helpHintMessages ??
         'Every conversation in one list, newest first. Tap the pencil to '
             'write to someone or start a group.',
+  HelpHintId.privacy =>
+    l10n?.helpHintPrivacy ??
+        'See who can read your data and who did, export everything as '
+            'one file, or leave with your personal data erased.',
   HelpHintId.badges =>
     l10n?.helpHintBadges ??
         'Issue a printable QR badge or register an NFC card; revoke '
@@ -103,6 +108,7 @@ String helpHintTopic(AppLocalizations? l10n, HelpHintId id) => switch (id) {
     l10n?.helpHintWorkspaceTopic ?? 'Workspace settings',
   HelpHintId.badges => l10n?.helpHintBadgesTopic ?? 'NFC badges',
   HelpHintId.messages => l10n?.helpHintMessagesTopic ?? 'Messages',
+  HelpHintId.privacy => l10n?.helpHintPrivacyTopic ?? 'Privacy',
 };
 
 /// The surface's carousel (#610): tip 1 is the #606 how-to, the rest
@@ -171,22 +177,24 @@ List<HelpTip> helpHintTips(AppLocalizations? l10n, HelpHintId id) =>
         HelpTip(helpHintText(l10n, id)),
         HelpTip(
           l10n?.helpHintCalendarTip2 ??
-              'The Mine / Everyone toggle shows just your bookings or '
-                  'the whole community\'s — red dots are yours, blue '
-                  'ones are other members\'.',
+              'Switch Day to Range to see a whole week or month at once — '
+                  'the arrows step by the size of your selection.',
         ),
         HelpTip(
           l10n?.helpHintCalendarTip3 ??
-              'The shape toggle switches the lower half between the '
-                  'week grid and the agenda list; the floor chips '
-                  'filter both.',
+              'Tap a kind chip to see only that: bookings, alerts, '
+                  'messages, invoices, payments, consumption, reminders.',
         ),
         HelpTip(
           l10n?.helpHintCalendarTip4 ??
-              'Cancelling one occurrence of a series offers "this '
-                  'and following" — checked-in and completed '
-                  'occurrences keep their history.',
-          topic: l10n?.helpHintCalendarTip4Topic ?? 'How booking behaves',
+              'Every row opens its source — the booking, the conversation, '
+                  'the alert, the invoice, or that month on Finances.',
+        ),
+        HelpTip(
+          l10n?.helpHintCalendarTip5 ??
+              'The shield shows who can see each kind, and who actually '
+                  'looked at your finances.',
+          topic: l10n?.helpHintCalendarTip5Topic ?? 'Privacy',
         ),
       ],
       HelpHintId.events => [
@@ -386,6 +394,20 @@ List<HelpTip> helpHintTips(AppLocalizations? l10n, HelpHintId id) =>
               'Link a reservation or a space in a message instead of '
                   'describing it; the reader taps it and lands on the '
                   'right one.',
+        ),
+      ],
+      HelpHintId.privacy => [
+        HelpTip(helpHintText(l10n, id)),
+        HelpTip(
+          l10n?.helpHintPrivacyTip2 ??
+              'Messages are readable only by the people in the conversation, '
+                  'whatever their role; money only by you and the finance '
+                  'permission.',
+        ),
+        HelpTip(
+          l10n?.helpHintPrivacyTip3 ??
+              'Every read of your finances by someone else is logged by '
+                  'the server — the log cannot be skipped or edited.',
         ),
       ],
       HelpHintId.badges => [

@@ -50,7 +50,10 @@ enum WorkspaceFeature {
   uiAnimations,
   planMemberPhotos,
   badgeSignIn,
-  regionalFormats;
+  regionalFormats,
+  calendarHub,
+  dataAccessLog,
+  memberDataExport;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -274,6 +277,21 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // the Settings section.
   WorkspaceFeature.regionalFormats:
       FeatureManifestEntry(feature: WorkspaceFeature.regionalFormats),
+  // #718 — the calendar as the dated view of everything: one feed of
+  // reservations, check-ins, alerts, messages, money and reminders for
+  // a day or a range, each row linking to its source. OFF: the calendar
+  // shows reservations only, as it did before.
+  WorkspaceFeature.calendarHub:
+      FeatureManifestEntry(feature: WorkspaceFeature.calendarHub),
+  // #719 — "who accessed my data": the server-written log of reads of
+  // another member's finances, shown to the subject. OFF hides the row;
+  // the log is still written, because the record is not optional.
+  WorkspaceFeature.dataAccessLog:
+      FeatureManifestEntry(feature: WorkspaceFeature.dataAccessLog),
+  // #719 — export my data (art. 20) and leave with erasure (art. 17)
+  // from Settings → Privacy & data.
+  WorkspaceFeature.memberDataExport:
+      FeatureManifestEntry(feature: WorkspaceFeature.memberDataExport),
   // #662 — signing IN by scanning a badge, then a PIN. Under nfcBadges
   // rather than kioskMode: it needs badges to EXIST, and turning badge
   // issuance off must take the login button with it, or the button

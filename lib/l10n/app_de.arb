@@ -572,6 +572,140 @@
   "calendarTimelineAllEmpty": "Auf keiner Etage gibt es an diesem Tag Reservierungen.",
   "calendarLevelCollapsed": "{level}, eingeklappt",
   "calendarLevelExpanded": "{level}, ausgeklappt",
+  "calendarWhoCanSee": "Wer sieht das",
+  "@calendarWhoCanSee": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarPrevious": "Zurück",
+  "@calendarPrevious": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarNext": "Weiter",
+  "@calendarNext": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarDay": "Tag",
+  "@calendarDay": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarRange": "Zeitraum",
+  "@calendarRange": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarMemberMe": "Ich",
+  "@calendarMemberMe": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarNothingHere": "Nichts an diesen Tagen.",
+  "@calendarNothingHere": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarLockedKinds": "Für dieses Mitglied nicht sichtbar: {kinds}",
+  "@calendarLockedKinds": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "kinds": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarEventTitle": "Meldung: {label}",
+  "@calendarEventTitle": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarKindReservation": "Buchungen",
+  "@calendarKindReservation": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindCheckIn": "Check-ins",
+  "@calendarKindCheckIn": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindCheckOut": "Check-outs",
+  "@calendarKindCheckOut": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindEvent": "Meldungen",
+  "@calendarKindEvent": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindMessage": "Nachrichten",
+  "@calendarKindMessage": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindInvoice": "Rechnungen",
+  "@calendarKindInvoice": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindPayment": "Zahlungen",
+  "@calendarKindPayment": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindConsumption": "Verbrauch",
+  "@calendarKindConsumption": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindReminder": "Erinnerungen",
+  "@calendarKindReminder": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessNobodyElse": "niemand sonst",
+  "@accessNobodyElse": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleReservations": "Jedes Mitglied des Bereichs — der Plan zeigt allen die Belegung.",
+  "@accessRuleReservations": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleEvents": "Du, das handelnde Mitglied und die Admins.",
+  "@accessRuleEvents": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleMessages": "Nur die Personen in der Unterhaltung — keine Rolle liest eine Unterhaltung, an der sie nicht teilnimmt.",
+  "@accessRuleMessages": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleFinances": "Du und die mit der Finanz-Berechtigung: {people}.",
+  "@accessRuleFinances": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "people": {
+        "type": "String"
+      }
+    }
+  },
+  "accessRuleReminders": "Nur du.",
+  "@accessRuleReminders": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessLogTitle": "Wer auf deine Daten zugegriffen hat",
+  "@accessLogTitle": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessLogEmpty": "Niemand hat deine Finanzen oder Nachrichten eingesehen.",
+  "@accessLogEmpty": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessLogRow": "{actor} hat {category} von {subject} eingesehen",
+  "@accessLogRow": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      },
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
   "appTitle": "DesKilo",
   "tabPlan": "Plan",
   "tabCalendar": "Kalender",
@@ -945,6 +1079,30 @@
   "@featureRegionalFormatsDesc": {
     "description": "#711 - globalization"
   },
+  "featureCalendarHubTitle": "Kalender-Hub",
+  "@featureCalendarHubTitle": {
+    "description": "#718/#719"
+  },
+  "featureCalendarHubDesc": "Der Kalender zeigt alles Datierte — Buchungen, Check-ins, Meldungen, Nachrichten, Rechnungen, Zahlungen, Verbrauch, Erinnerungen — für einen Tag oder Zeitraum, jede Zeile öffnet ihre Quelle. Aus: nur Reservierungen.",
+  "@featureCalendarHubDesc": {
+    "description": "#718/#719"
+  },
+  "featureDataAccessLogTitle": "Datenzugriffsprotokoll",
+  "@featureDataAccessLogTitle": {
+    "description": "#718/#719"
+  },
+  "featureDataAccessLogDesc": "Mitglieder sehen, wer wann ihre Finanzen eingesehen hat (vom Server geschrieben, nie umgehbar). Aus: die Zeile ist verborgen, das Protokoll bleibt.",
+  "@featureDataAccessLogDesc": {
+    "description": "#718/#719"
+  },
+  "featureMemberDataExportTitle": "Export & Löschung",
+  "@featureMemberDataExportTitle": {
+    "description": "#718/#719"
+  },
+  "featureMemberDataExportDesc": "Jedes Mitglied kann seine Daten als eine Datei exportieren (DSGVO Art. 20) und den Bereich mit gelöschten persönlichen Daten verlassen (Art. 17), unter Einstellungen → Datenschutz & Daten.",
+  "@featureMemberDataExportDesc": {
+    "description": "#718/#719"
+  },
   "helpTitle": "Hilfe",
   "helpContents": "Inhalt",
   "helpHintMessages": "Alle Unterhaltungen in einer Liste, die neueste oben. Tippen Sie auf den Stift, um jemandem zu schreiben oder eine Gruppe zu erstellen.",
@@ -993,11 +1151,11 @@
   "helpHintPlanTip4": "Einen Schreibtisch, einen Raum oder die Etage doppelt antippen — oder das Ebenen-Symbol der Etagenleiste — und den ganzen Bereich auf einmal reservieren.",
   "helpHintPlanTip5": "Den eigenen Platz antippen für sein Blatt: Einchecken ab 15 Minuten vor dem Start, Auschecken beim Gehen.",
   "helpHintPlanTip5Topic": "Wie sich Buchungen verhalten",
-  "helpHintCalendar": "Buchungen monatsweise durchblättern; einen Tag antippen, um seine Reservierungen zu sehen und zu verwalten.",
+  "helpHintCalendar": "Wähle einen Tag oder Zeitraum: alles Datierte, das du sehen darfst, in einer Liste, jede Zeile öffnet ihre Quelle.",
   "helpHintCalendarTopic": "Kalender",
-  "helpHintCalendarTip2": "Der Schalter Meine / Alle zeigt nur die eigenen Buchungen oder die der ganzen Community — rote Punkte sind die eigenen, blaue die der anderen.",
-  "helpHintCalendarTip3": "Der Ansichtsschalter wechselt die untere Hälfte zwischen Wochenraster und Agenda-Liste; die Etagen-Chips filtern beide.",
-  "helpHintCalendarTip4": "Beim Stornieren einer Serien-Buchung gibt es „diese und folgende“ — eingecheckte und abgeschlossene Termine behalten ihre Historie.",
+  "helpHintCalendarTip2": "Wechsle von Tag zu Zeitraum für eine ganze Woche oder einen Monat — die Pfeile springen um die Größe deiner Auswahl.",
+  "helpHintCalendarTip3": "Tippe einen Art-Chip, um nur das zu sehen: Buchungen, Meldungen, Nachrichten, Rechnungen, Zahlungen, Verbrauch, Erinnerungen.",
+  "helpHintCalendarTip4": "Jede Zeile öffnet ihre Quelle — die Buchung, die Unterhaltung, die Meldung, die Rechnung oder den Monat in Finanzen.",
   "helpHintCalendarTip4Topic": "Wie sich Buchungen verhalten",
   "helpHintEvents": "Alles, was passiert ist, in einem Feed. Ausstehende Entscheidungen stehen oben; die Chips filtern den Rest.",
   "helpHintEventsTopic": "Ereignisse",
@@ -1050,6 +1208,42 @@
   "helpHintBadgesTip2": "Eine Karte registrieren, indem man sie ans Gerät hält — jeder lesbare Chip funktioniert, und der Dialog nennt den Workspace, für den sie gilt.",
   "helpHintBadgesTip3": "Ein QR-Badge als PDF speichern und zehn Exemplare im Scheckkartenformat auf einer A4-Seite drucken — Ersatz inklusive.",
   "helpHintBadgesTip4": "Ein verlorenes Badge jederzeit sperren; ein gesperrtes Badge nach rechts wischen, um es endgültig zu löschen.",
+  "@helpHintCalendar": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip2": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip3": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip4": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintCalendarTip5": "Der Schild zeigt, wer jede Art sehen kann und wer tatsächlich deine Finanzen eingesehen hat.",
+  "@helpHintCalendarTip5": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintCalendarTip5Topic": "Datenschutz",
+  "@helpHintCalendarTip5Topic": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacy": "Sieh, wer deine Daten lesen kann und wer es tat, exportiere alles als eine Datei oder verlasse den Bereich mit gelöschten persönlichen Daten.",
+  "@helpHintPrivacy": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTopic": "Datenschutz",
+  "@helpHintPrivacyTopic": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTip2": "Nachrichten lesen nur die Personen der Unterhaltung, unabhängig von der Rolle; Geld nur du und die Finanz-Berechtigung.",
+  "@helpHintPrivacyTip2": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTip3": "Jede Einsicht in deine Finanzen durch andere wird vom Server protokolliert — das Protokoll lässt sich weder umgehen noch ändern.",
+  "@helpHintPrivacyTip3": {
+    "description": "#718/#719 - help hints"
+  },
   "inviteSectionTitle": "Jemanden einladen",
   "inviteViaWhatsapp": "WhatsApp",
   "inviteViaSms": "SMS",
@@ -2639,6 +2833,71 @@
   "settingsBillingReports": "Abrechnung & Berichte",
   "defaultPeriodTitle": "Standard-Buchungszeitraum",
   "defaultPeriodNone": "Keine Präferenz (ganzer Tag)",
+  "privacyTitle": "Datenschutz & Daten",
+  "@privacyTitle": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyIntro": "Deine Daten bleiben in der EU, werden nie getrackt oder verkauft und sind nur für die Rollen lesbar, die die Regeln unten nennen. Das sind deine Rechte nach der DSGVO — jedes ist ein Knopf.",
+  "@privacyIntro": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyWhoCanSee": "Wer meine Daten sehen kann",
+  "@privacyWhoCanSee": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyWhoCanSeeHint": "Die Regel je Kategorie, die Personen, die sie heute nennt, und wer tatsächlich hingesehen hat.",
+  "@privacyWhoCanSeeHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExport": "Meine Daten exportieren",
+  "@privacyExport": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExportHint": "Alles, dessen Betroffener du bist, als eine JSON-Datei (Art. 20).",
+  "@privacyExportHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExportShareText": "Mein DesKilo-Datenexport",
+  "@privacyExportShareText": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyErase": "Diesen Bereich verlassen und meine Daten löschen",
+  "@privacyErase": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseHint": "Storniert deine Buchungen, leert deine Nachrichten, löscht dein Profil. Buchhaltungsbelege bleiben für die gesetzliche Frist, per ID, nicht per Name (Art. 17).",
+  "@privacyEraseHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseOwner": "Ein Eigentümer übergibt den Bereich zuerst (Mitglieder & Tarife → Miteigentum).",
+  "@privacyEraseOwner": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseConfirmPhrase": "LÖSCHEN",
+  "@privacyEraseConfirmPhrase": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseConfirmHint": "Nicht rückgängig zu machen. Tippe {phrase} zur Bestätigung.",
+  "@privacyEraseConfirmHint": {
+    "description": "#719 - privacy & data",
+    "placeholders": {
+      "phrase": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyEraseConfirmButton": "Löschen",
+  "@privacyEraseConfirmButton": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyErased": "Deine Daten wurden gelöscht.",
+  "@privacyErased": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyPolicy": "Datenschutzerklärung",
+  "@privacyPolicy": {
+    "description": "#719 - privacy & data"
+  },
   "profilesDefault": "Standard beim Start",
   "profilesMakeDefault": "Beim Start als Standard verwenden",
   "eventTypeRoleChange": "Rollenwechsel",

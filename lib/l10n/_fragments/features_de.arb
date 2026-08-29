@@ -119,5 +119,29 @@
   "featureRegionalFormatsDesc": "Mitglieder wählen, wie Zahlen, Daten, Uhr und Zeitzone ihnen angezeigt werden. Aus: alle lesen in der Heimatregion der App-Sprache, 24-Stunden, Bereichszeit.",
   "@featureRegionalFormatsDesc": {
     "description": "#711 - globalization"
+  },
+  "featureCalendarHubTitle": "Kalender-Hub",
+  "@featureCalendarHubTitle": {
+    "description": "#718/#719"
+  },
+  "featureCalendarHubDesc": "Der Kalender zeigt alles Datierte — Buchungen, Check-ins, Meldungen, Nachrichten, Rechnungen, Zahlungen, Verbrauch, Erinnerungen — für einen Tag oder Zeitraum, jede Zeile öffnet ihre Quelle. Aus: nur Reservierungen.",
+  "@featureCalendarHubDesc": {
+    "description": "#718/#719"
+  },
+  "featureDataAccessLogTitle": "Datenzugriffsprotokoll",
+  "@featureDataAccessLogTitle": {
+    "description": "#718/#719"
+  },
+  "featureDataAccessLogDesc": "Mitglieder sehen, wer wann ihre Finanzen eingesehen hat (vom Server geschrieben, nie umgehbar). Aus: die Zeile ist verborgen, das Protokoll bleibt.",
+  "@featureDataAccessLogDesc": {
+    "description": "#718/#719"
+  },
+  "featureMemberDataExportTitle": "Export & Löschung",
+  "@featureMemberDataExportTitle": {
+    "description": "#718/#719"
+  },
+  "featureMemberDataExportDesc": "Jedes Mitglied kann seine Daten als eine Datei exportieren (DSGVO Art. 20) und den Bereich mit gelöschten persönlichen Daten verlassen (Art. 17), unter Einstellungen → Datenschutz & Daten.",
+  "@featureMemberDataExportDesc": {
+    "description": "#718/#719"
   }
 }

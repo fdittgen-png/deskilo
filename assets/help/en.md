@@ -182,6 +182,8 @@ The same *message the holder* action sits on the **plan** when you tap a seat so
 
 The month at a glance, with two scopes and two shapes:
 
+**The calendar is a selector, not a stage (#718).** Pick a **day** or a **range**; what you see is one feed of everything dated that you may see — bookings, check-ins and check-outs, alerts, messages, invoices, payments, consumption, reminders — grouped by day, filtered by kind with the chips, and **every row opens its source** (the booking, the conversation, the alert, the invoice, the month on Finances). A member with the finance or member-administration permission can look at another member; kinds the server does not allow for that member show as **locked**, never as an empty day. The shield opens *Who can see this*, with the access log.
+
 - **Mine / Everyone** — your own bookings, or the whole community's; every member has this toggle, since the plan and the Reserve hub's week grid already show everybody's occupancy. The dots under a day tell you at a glance: **red** = you have a booking, **blue** = other members do, **both dots** = both. Today is ringed.
 - The **shape toggle** beside it switches the lower half between an **agenda list** (each reservation as a card: time window, member, space) and a **day timeline** (seats × the hours of the selected day). The seats × *days* week grid lives in the Reserve hub (§4), not here.
 - The **floor chips** (*All floors* / per level) filter the **timeline**.
@@ -593,6 +595,8 @@ Template variables (invoice family): `{{ number }}`, `{{ member }}`, `{{ workspa
 
 Your personal screen, top to bottom:
 
+**Privacy & data (#719)** — who can see your data, who did, export, erasure, the policy. See §14.
+
 **Region & formats (#711).** How *you* read what the workspace shows: **numbers & dates** in a region of your choice (`fr_CH`, `en_GB`, `de_AT` … independent of the app language), the **clock** (24h, 12h, or whatever that region does), and whether times show in the **workspace's zone** — the one bookings are made in, and the default — or **your device's**, labelled wherever the two differ. A preview line shows the three choices added up. The currency is always the workspace's; only its spelling is yours. Stored on your profile, so it follows you across devices.
 
 - **Profiles** (§1) and your **photo** (tap to change — pick or remove).
@@ -610,6 +614,8 @@ Check-in reminders, pending confirmations, expense decisions — and when an adm
 ## 14. Privacy
 
 Minimal data: name, email, plan, bookings, ledger. You control your photo, your status and whether your phone number is visible in the directory; on the plan a seat of yours shows an initial, or your photo where the owner enabled member photos. Kiosk badges are stored only as hashes — a lost badge is revoked, not guessed. No tracking, no third-party analytics. Financial history is anonymized, not deleted, on account erasure (bookkeeping retention).
+
+**GDPR (#719).** DesKilo is built for the EU General Data Protection Regulation: EU-hosted data, no tracking or analytics, access limited by role and enforced on the server, and four rights you exercise yourself in **Settings → Privacy & data**: **who can see my data** (the rule per category and the people it currently names), **who accessed my data** (a server-written log of every read of your finances or messages by someone else — never skippable), **export my data** (one JSON file, art. 20) and **leave with erasure** (art. 17: your bookings are cancelled, your messages blanked, your profile cleared; accounting records are kept under the legal retention named in the policy, referenced by an id, not a name). Messages are readable only by the people in the conversation, whatever their role; invoices and payments only by you and those with the finance permission.
 
 ## 15. Platforms
 

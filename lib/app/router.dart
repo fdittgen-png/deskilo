@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../features/auth/presentation/screens/auth_screen.dart';
 import '../features/auth/providers/auth_providers.dart';
-import '../features/calendar/presentation/screens/calendar_screen.dart';
+import '../features/calendar/presentation/screens/calendar_branch.dart';
 import '../features/editor/presentation/screens/editor_screen.dart';
 import '../features/members/presentation/screens/directory_screen.dart';
 import '../features/editor/presentation/screens/level_canvas_screen.dart';
@@ -30,6 +30,7 @@ import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/workspace/presentation/screens/inbox_screen.dart';
+import '../features/profile/presentation/screens/privacy_screen.dart';
 import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
 import '../features/reservations/presentation/screens/reserve_screen.dart';
@@ -213,7 +214,9 @@ GoRouter router(Ref ref) {
                     featureEnabled(WorkspaceFeature.calendarTab)
                         ? null
                         : '/messages',
-                builder: (context, state) => const CalendarScreen(),
+                // #718 — the hub when the feature is on, the classic
+                // reservations calendar when it is off; picked per build.
+                builder: (context, state) => const CalendarBranch(),
               ),
             ],
           ),
@@ -278,6 +281,12 @@ GoRouter router(Ref ref) {
         path: '/help',
         builder: (context, state) =>
             HelpScreen(topic: state.uri.queryParameters['topic']),
+      ),
+      GoRoute(
+        // #719 — Privacy & data: who can see my data, who did, export,
+        // erasure, the policy. Every member; the tools inside are gated.
+        path: '/privacy',
+        builder: (context, state) => const PrivacyScreen(),
       ),
       GoRoute(
         // Linked accounts (0051): the signed-in user's own identities.

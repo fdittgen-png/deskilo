@@ -29,6 +29,15 @@ abstract final class AppStatusColors {
   /// ~7:1 on [successDark]).
   static const Color onSuccessDark = Color(0xFF0D2B10);
 
+  // #721 — success as TEXT on a surface needs 4.5:1 (the fill green sits
+  // at 4.47 on the warm scheme); as a FILL or a dot it needs 3:1 and the
+  // brighter green reads better. Two tokens, one meaning each.
+  static const Color successText = Color(0xFF276B2B);
+  static const Color successTextDark = Color(0xFF81C784);
+
+  static Color successTextOf(Brightness brightness) =>
+      brightness == Brightness.dark ? successTextDark : successText;
+
   static Color successOf(Brightness brightness) =>
       brightness == Brightness.dark ? successDark : success;
 

@@ -119,5 +119,29 @@
   "featureRegionalFormatsDesc": "Chaque membre choisit l'affichage des nombres, des dates, de l'horloge et du fuseau. Désactivé : tout le monde lit dans la région de la langue de l'app, en 24 h, à l'heure de l'espace.",
   "@featureRegionalFormatsDesc": {
     "description": "#711 - globalization"
+  },
+  "featureCalendarHubTitle": "Calendrier central",
+  "@featureCalendarHubTitle": {
+    "description": "#718/#719"
+  },
+  "featureCalendarHubDesc": "Le calendrier montre tout ce qui est daté — réservations, pointages, alertes, messages, factures, paiements, consommations, rappels — pour un jour ou une période, chaque ligne ouvrant sa source. Désactivé : réservations seulement.",
+  "@featureCalendarHubDesc": {
+    "description": "#718/#719"
+  },
+  "featureDataAccessLogTitle": "Journal des accès aux données",
+  "@featureDataAccessLogTitle": {
+    "description": "#718/#719"
+  },
+  "featureDataAccessLogDesc": "Chaque membre voit qui a consulté ses finances et quand (écrit par le serveur, jamais contournable). Désactivé : la ligne est masquée, le journal est conservé.",
+  "@featureDataAccessLogDesc": {
+    "description": "#718/#719"
+  },
+  "featureMemberDataExportTitle": "Export et effacement",
+  "@featureMemberDataExportTitle": {
+    "description": "#718/#719"
+  },
+  "featureMemberDataExportDesc": "Chaque membre peut exporter ses données en un fichier (RGPD art. 20) et quitter l'espace avec ses données personnelles effacées (art. 17) depuis Réglages → Confidentialité et données.",
+  "@featureMemberDataExportDesc": {
+    "description": "#718/#719"
   }
 }

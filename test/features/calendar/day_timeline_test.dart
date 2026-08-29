@@ -103,7 +103,10 @@ Future<FakeReservationRepository> pumpTimeline(
   if (twoLevels) addSecondLevel(plans);
   mutatePlans?.call(plans);
   final reservations = FakeReservationRepository()..reservations.addAll(seed);
-  final workspace = FakeWorkspaceRepository.withWorkspace()
+  final workspace = FakeWorkspaceRepository.withWorkspace(
+      // #718 — these test the CLASSIC calendar; the hub has its own file.
+      featureFlags: const {'calendarHub': false},
+    )
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'};
   await tester.pumpWidget(
     ProviderScope(

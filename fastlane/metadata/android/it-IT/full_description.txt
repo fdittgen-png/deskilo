@@ -9,3 +9,5 @@ DesKilo è un'app libera e rispettosa della privacy per piccole community di cow
 • Tutto ciò che un admin fa per te richiede la tua conferma
 
 Nessun servizio Google, nessun tracciamento, nessuna pubblicità. Backend self-hostable. Licenza 0BSD (permissiva).
+
+GDPR: dati ospitati nell'UE, nessun tracciamento né analitica, accesso limitato per ruolo e applicato dal server. I tuoi diritti sono pulsanti in Impostazioni → Privacy e dati: chi può vedere i tuoi dati, chi ha avuto accesso, esportazione, cancellazione.

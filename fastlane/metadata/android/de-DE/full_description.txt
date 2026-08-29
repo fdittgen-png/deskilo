@@ -9,3 +9,5 @@ DesKilo ist eine freie, datenschutzfreundliche App für kleine selbstorganisiert
 • Alles, was ein Admin für dich tut, braucht deine Bestätigung
 
 Keine Google-Dienste, kein Tracking, keine Werbung. Selbst hostbares Backend. 0BSD-lizenziert (permissiv).
+
+DSGVO: Daten in der EU, kein Tracking, keine Analytik, Zugriff nach Rolle und serverseitig durchgesetzt. Deine Rechte sind Knöpfe unter Einstellungen → Datenschutz & Daten: wer deine Daten sehen kann, wer zugegriffen hat, Export, Löschung.

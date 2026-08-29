@@ -939,6 +939,98 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get calendarWhoCanSee => 'Chi può vedere questo';
+
+  @override
+  String get calendarPrevious => 'Precedente';
+
+  @override
+  String get calendarNext => 'Successivo';
+
+  @override
+  String get calendarDay => 'Giorno';
+
+  @override
+  String get calendarRange => 'Periodo';
+
+  @override
+  String get calendarMemberMe => 'Io';
+
+  @override
+  String get calendarNothingHere => 'Niente in queste date.';
+
+  @override
+  String calendarLockedKinds(String kinds) {
+    return 'Non visibile per questo membro: $kinds';
+  }
+
+  @override
+  String calendarEventTitle(String label) {
+    return 'Avviso: $label';
+  }
+
+  @override
+  String get calendarKindReservation => 'Prenotazioni';
+
+  @override
+  String get calendarKindCheckIn => 'Check-in';
+
+  @override
+  String get calendarKindCheckOut => 'Check-out';
+
+  @override
+  String get calendarKindEvent => 'Avvisi';
+
+  @override
+  String get calendarKindMessage => 'Messaggi';
+
+  @override
+  String get calendarKindInvoice => 'Fatture';
+
+  @override
+  String get calendarKindPayment => 'Pagamenti';
+
+  @override
+  String get calendarKindConsumption => 'Consumi';
+
+  @override
+  String get calendarKindReminder => 'Promemoria';
+
+  @override
+  String get accessNobodyElse => 'nessun altro';
+
+  @override
+  String get accessRuleReservations =>
+      'Ogni membro dello spazio — la piantina mostra l\'occupazione a tutti.';
+
+  @override
+  String get accessRuleEvents => 'Tu, il membro che ha agito e gli admin.';
+
+  @override
+  String get accessRuleMessages =>
+      'Solo le persone nella conversazione — nessun ruolo può leggere una conversazione di cui non fa parte.';
+
+  @override
+  String accessRuleFinances(String people) {
+    return 'Tu e chi ha il permesso finanze: $people.';
+  }
+
+  @override
+  String get accessRuleReminders => 'Solo tu.';
+
+  @override
+  String get accessLogTitle => 'Chi ha consultato i tuoi dati';
+
+  @override
+  String get accessLogEmpty =>
+      'Nessuno ha consultato le tue finanze o i tuoi messaggi.';
+
+  @override
+  String accessLogRow(String actor, String category, String subject) {
+    return '$actor ha consultato $category di $subject';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -1765,6 +1857,27 @@ class AppLocalizationsIt extends AppLocalizations {
       'Ogni membro sceglie come vedere numeri, date, orologio e fuso orario. Disattivato: tutti leggono nella regione della lingua dell\'app, 24 ore, ora dello spazio.';
 
   @override
+  String get featureCalendarHubTitle => 'Calendario centrale';
+
+  @override
+  String get featureCalendarHubDesc =>
+      'Il calendario mostra tutto ciò che ha una data — prenotazioni, check-in, avvisi, messaggi, fatture, pagamenti, consumi, promemoria — per un giorno o un periodo, ogni riga apre la sua origine. Disattivato: solo prenotazioni.';
+
+  @override
+  String get featureDataAccessLogTitle => 'Registro degli accessi ai dati';
+
+  @override
+  String get featureDataAccessLogDesc =>
+      'Ogni membro vede chi ha consultato le sue finanze e quando (scritto dal server, mai aggirabile). Disattivato: la riga è nascosta, il registro resta.';
+
+  @override
+  String get featureMemberDataExportTitle => 'Esportazione e cancellazione';
+
+  @override
+  String get featureMemberDataExportDesc =>
+      'Ogni membro può esportare i propri dati in un file (GDPR art. 20) e lasciare lo spazio con i dati personali cancellati (art. 17) da Impostazioni → Privacy e dati.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override
@@ -1872,22 +1985,22 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get helpHintCalendar =>
-      'Sfoglia le prenotazioni mese per mese; tocca un giorno per vedere e gestire le sue prenotazioni.';
+      'Scegli un giorno o un periodo: tutto ciò che ha una data e che puoi vedere, in un elenco, ogni riga apre la sua origine.';
 
   @override
   String get helpHintCalendarTopic => 'Calendario';
 
   @override
   String get helpHintCalendarTip2 =>
-      'L\'interruttore Mie / Tutti mostra solo le tue prenotazioni o quelle di tutta la comunità: i punti rossi sono i tuoi, i blu degli altri.';
+      'Passa da Giorno a Periodo per vedere una settimana o un mese intero — le frecce avanzano della dimensione della selezione.';
 
   @override
   String get helpHintCalendarTip3 =>
-      'L\'interruttore di vista alterna la metà inferiore tra la griglia settimanale e l\'elenco agenda; i chip dei piani filtrano entrambe.';
+      'Tocca un chip di tipo per vedere solo quello: prenotazioni, avvisi, messaggi, fatture, pagamenti, consumi, promemoria.';
 
   @override
   String get helpHintCalendarTip4 =>
-      'Annullare un\'occorrenza di una serie offre «questa e le successive»: le occorrenze con check-in o completate conservano la loro storia.';
+      'Ogni riga apre la sua origine — la prenotazione, la conversazione, l\'avviso, la fattura o quel mese in Finanze.';
 
   @override
   String get helpHintCalendarTip4Topic => 'Come si comporta la prenotazione';
@@ -2080,6 +2193,28 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get helpHintBadgesTip4 =>
       'Revoca un badge perso in qualsiasi momento; scorri un badge revocato verso destra per eliminarlo definitivamente.';
+
+  @override
+  String get helpHintCalendarTip5 =>
+      'Lo scudo mostra chi può vedere ogni tipo e chi ha davvero consultato le tue finanze.';
+
+  @override
+  String get helpHintCalendarTip5Topic => 'Privacy';
+
+  @override
+  String get helpHintPrivacy =>
+      'Vedi chi può leggere i tuoi dati e chi l\'ha fatto, esporta tutto in un file o esci con i dati personali cancellati.';
+
+  @override
+  String get helpHintPrivacyTopic => 'Privacy';
+
+  @override
+  String get helpHintPrivacyTip2 =>
+      'I messaggi li leggono solo le persone della conversazione, qualunque sia il ruolo; il denaro solo tu e il permesso finanze.';
+
+  @override
+  String get helpHintPrivacyTip3 =>
+      'Ogni lettura delle tue finanze da parte di altri è registrata dal server — il registro non si può aggirare né modificare.';
 
   @override
   String get inviteSectionTitle => 'Invita qualcuno';
@@ -4469,6 +4604,58 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get defaultPeriodNone => 'Nessuna preferenza (giornata intera)';
+
+  @override
+  String get privacyTitle => 'Privacy e dati';
+
+  @override
+  String get privacyIntro =>
+      'I tuoi dati restano nell\'UE, non vengono mai tracciati né venduti e sono leggibili solo dai ruoli indicati dalle regole qui sotto. Questi sono i tuoi diritti secondo il GDPR — ognuno è un pulsante.';
+
+  @override
+  String get privacyWhoCanSee => 'Chi può vedere i miei dati';
+
+  @override
+  String get privacyWhoCanSeeHint =>
+      'La regola per categoria, le persone che nomina oggi e chi ha guardato davvero.';
+
+  @override
+  String get privacyExport => 'Esporta i miei dati';
+
+  @override
+  String get privacyExportHint =>
+      'Tutto ciò di cui sei l\'interessato, in un file JSON (art. 20).';
+
+  @override
+  String get privacyExportShareText => 'La mia esportazione dati DesKilo';
+
+  @override
+  String get privacyErase => 'Lasciare questo spazio e cancellare i miei dati';
+
+  @override
+  String get privacyEraseHint =>
+      'Annulla le tue prenotazioni, svuota i tuoi messaggi, cancella il tuo profilo. I documenti contabili restano per la conservazione legale, per id, non per nome (art. 17).';
+
+  @override
+  String get privacyEraseOwner =>
+      'Un proprietario prima cede lo spazio (Membri e piani → Comproprietà).';
+
+  @override
+  String get privacyEraseConfirmPhrase => 'CANCELLA';
+
+  @override
+  String privacyEraseConfirmHint(String phrase) {
+    return 'Non si può annullare. Digita $phrase per confermare.';
+  }
+
+  @override
+  String get privacyEraseConfirmButton => 'Cancella';
+
+  @override
+  String get privacyErased => 'I tuoi dati sono stati cancellati.';
+
+  @override
+  String get privacyPolicy => 'Informativa sulla privacy';
 
   @override
   String get profilesDefault => 'Predefinito all\'avvio';

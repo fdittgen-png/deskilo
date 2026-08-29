@@ -21,11 +21,11 @@
   "helpHintPlanTip4": "Einen Schreibtisch, einen Raum oder die Etage doppelt antippen — oder das Ebenen-Symbol der Etagenleiste — und den ganzen Bereich auf einmal reservieren.",
   "helpHintPlanTip5": "Den eigenen Platz antippen für sein Blatt: Einchecken ab 15 Minuten vor dem Start, Auschecken beim Gehen.",
   "helpHintPlanTip5Topic": "Wie sich Buchungen verhalten",
-  "helpHintCalendar": "Buchungen monatsweise durchblättern; einen Tag antippen, um seine Reservierungen zu sehen und zu verwalten.",
+  "helpHintCalendar": "Wähle einen Tag oder Zeitraum: alles Datierte, das du sehen darfst, in einer Liste, jede Zeile öffnet ihre Quelle.",
   "helpHintCalendarTopic": "Kalender",
-  "helpHintCalendarTip2": "Der Schalter Meine / Alle zeigt nur die eigenen Buchungen oder die der ganzen Community — rote Punkte sind die eigenen, blaue die der anderen.",
-  "helpHintCalendarTip3": "Der Ansichtsschalter wechselt die untere Hälfte zwischen Wochenraster und Agenda-Liste; die Etagen-Chips filtern beide.",
-  "helpHintCalendarTip4": "Beim Stornieren einer Serien-Buchung gibt es „diese und folgende“ — eingecheckte und abgeschlossene Termine behalten ihre Historie.",
+  "helpHintCalendarTip2": "Wechsle von Tag zu Zeitraum für eine ganze Woche oder einen Monat — die Pfeile springen um die Größe deiner Auswahl.",
+  "helpHintCalendarTip3": "Tippe einen Art-Chip, um nur das zu sehen: Buchungen, Meldungen, Nachrichten, Rechnungen, Zahlungen, Verbrauch, Erinnerungen.",
+  "helpHintCalendarTip4": "Jede Zeile öffnet ihre Quelle — die Buchung, die Unterhaltung, die Meldung, die Rechnung oder den Monat in Finanzen.",
   "helpHintCalendarTip4Topic": "Wie sich Buchungen verhalten",
   "helpHintEvents": "Alles, was passiert ist, in einem Feed. Ausstehende Entscheidungen stehen oben; die Chips filtern den Rest.",
   "helpHintEventsTopic": "Ereignisse",
@@ -77,5 +77,41 @@
   "helpHintBadgesTopic": "NFC-Badges",
   "helpHintBadgesTip2": "Eine Karte registrieren, indem man sie ans Gerät hält — jeder lesbare Chip funktioniert, und der Dialog nennt den Workspace, für den sie gilt.",
   "helpHintBadgesTip3": "Ein QR-Badge als PDF speichern und zehn Exemplare im Scheckkartenformat auf einer A4-Seite drucken — Ersatz inklusive.",
-  "helpHintBadgesTip4": "Ein verlorenes Badge jederzeit sperren; ein gesperrtes Badge nach rechts wischen, um es endgültig zu löschen."
+  "helpHintBadgesTip4": "Ein verlorenes Badge jederzeit sperren; ein gesperrtes Badge nach rechts wischen, um es endgültig zu löschen.",
+  "@helpHintCalendar": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip2": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip3": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip4": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintCalendarTip5": "Der Schild zeigt, wer jede Art sehen kann und wer tatsächlich deine Finanzen eingesehen hat.",
+  "@helpHintCalendarTip5": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintCalendarTip5Topic": "Datenschutz",
+  "@helpHintCalendarTip5Topic": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacy": "Sieh, wer deine Daten lesen kann und wer es tat, exportiere alles als eine Datei oder verlasse den Bereich mit gelöschten persönlichen Daten.",
+  "@helpHintPrivacy": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTopic": "Datenschutz",
+  "@helpHintPrivacyTopic": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTip2": "Nachrichten lesen nur die Personen der Unterhaltung, unabhängig von der Rolle; Geld nur du und die Finanz-Berechtigung.",
+  "@helpHintPrivacyTip2": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTip3": "Jede Einsicht in deine Finanzen durch andere wird vom Server protokolliert — das Protokoll lässt sich weder umgehen noch ändern.",
+  "@helpHintPrivacyTip3": {
+    "description": "#718/#719 - help hints"
+  }
 }
