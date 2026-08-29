@@ -1125,11 +1125,11 @@
   "helpHintPlanTip4": "Tocca due volte una scrivania, una stanza o l'intero piano — o l'icona dei livelli sulla barra dei piani — per prenotare tutto lo spazio in una volta.",
   "helpHintPlanTip5": "Tocca il tuo posto per aprire la sua scheda: check-in da 15 minuti prima dell'inizio, check-out quando vai via.",
   "helpHintPlanTip5Topic": "Come si comporta la prenotazione",
-  "helpHintCalendar": "Sfoglia le prenotazioni mese per mese; tocca un giorno per vedere e gestire le sue prenotazioni.",
+  "helpHintCalendar": "Scegli un giorno o un periodo: tutto ciò che ha una data e che puoi vedere, in un elenco, ogni riga apre la sua origine.",
   "helpHintCalendarTopic": "Calendario",
-  "helpHintCalendarTip2": "L'interruttore Mie / Tutti mostra solo le tue prenotazioni o quelle di tutta la comunità: i punti rossi sono i tuoi, i blu degli altri.",
-  "helpHintCalendarTip3": "L'interruttore di vista alterna la metà inferiore tra la griglia settimanale e l'elenco agenda; i chip dei piani filtrano entrambe.",
-  "helpHintCalendarTip4": "Annullare un'occorrenza di una serie offre «questa e le successive»: le occorrenze con check-in o completate conservano la loro storia.",
+  "helpHintCalendarTip2": "Passa da Giorno a Periodo per vedere una settimana o un mese intero — le frecce avanzano della dimensione della selezione.",
+  "helpHintCalendarTip3": "Tocca un chip di tipo per vedere solo quello: prenotazioni, avvisi, messaggi, fatture, pagamenti, consumi, promemoria.",
+  "helpHintCalendarTip4": "Ogni riga apre la sua origine — la prenotazione, la conversazione, l'avviso, la fattura o quel mese in Finanze.",
   "helpHintCalendarTip4Topic": "Come si comporta la prenotazione",
   "helpHintEvents": "Tutto quello che è successo, in un unico feed. Le decisioni in attesa stanno in alto; i filtri restringono il resto.",
   "helpHintEventsTopic": "Eventi",
@@ -1182,6 +1182,42 @@
   "helpHintBadgesTip2": "Registra una tessera avvicinandola al dispositivo: qualsiasi chip leggibile funziona, e la finestra indica lo spazio a cui si associa.",
   "helpHintBadgesTip3": "Salva un badge QR come PDF per stampare dieci copie formato carta di credito su una pagina A4, scorte comprese.",
   "helpHintBadgesTip4": "Revoca un badge perso in qualsiasi momento; scorri un badge revocato verso destra per eliminarlo definitivamente.",
+  "@helpHintCalendar": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip2": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip3": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip4": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintCalendarTip5": "Lo scudo mostra chi può vedere ogni tipo e chi ha davvero consultato le tue finanze.",
+  "@helpHintCalendarTip5": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintCalendarTip5Topic": "Privacy",
+  "@helpHintCalendarTip5Topic": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacy": "Vedi chi può leggere i tuoi dati e chi l'ha fatto, esporta tutto in un file o esci con i dati personali cancellati.",
+  "@helpHintPrivacy": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTopic": "Privacy",
+  "@helpHintPrivacyTopic": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTip2": "I messaggi li leggono solo le persone della conversazione, qualunque sia il ruolo; il denaro solo tu e il permesso finanze.",
+  "@helpHintPrivacyTip2": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTip3": "Ogni lettura delle tue finanze da parte di altri è registrata dal server — il registro non si può aggirare né modificare.",
+  "@helpHintPrivacyTip3": {
+    "description": "#718/#719 - help hints"
+  },
   "helpTitle": "Aiuto",
   "helpContents": "Indice",
   "helpHintMessages": "Tutte le conversazioni in un elenco, la più recente in alto. Tocca la matita per scrivere a qualcuno o creare un gruppo.",
@@ -2797,6 +2833,71 @@
   "settingsBillingReports": "Fatturazione e report",
   "defaultPeriodTitle": "Periodo di prenotazione predefinito",
   "defaultPeriodNone": "Nessuna preferenza (giornata intera)",
+  "privacyTitle": "Privacy e dati",
+  "@privacyTitle": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyIntro": "I tuoi dati restano nell'UE, non vengono mai tracciati né venduti e sono leggibili solo dai ruoli indicati dalle regole qui sotto. Questi sono i tuoi diritti secondo il GDPR — ognuno è un pulsante.",
+  "@privacyIntro": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyWhoCanSee": "Chi può vedere i miei dati",
+  "@privacyWhoCanSee": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyWhoCanSeeHint": "La regola per categoria, le persone che nomina oggi e chi ha guardato davvero.",
+  "@privacyWhoCanSeeHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExport": "Esporta i miei dati",
+  "@privacyExport": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExportHint": "Tutto ciò di cui sei l'interessato, in un file JSON (art. 20).",
+  "@privacyExportHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExportShareText": "La mia esportazione dati DesKilo",
+  "@privacyExportShareText": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyErase": "Lasciare questo spazio e cancellare i miei dati",
+  "@privacyErase": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseHint": "Annulla le tue prenotazioni, svuota i tuoi messaggi, cancella il tuo profilo. I documenti contabili restano per la conservazione legale, per id, non per nome (art. 17).",
+  "@privacyEraseHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseOwner": "Un proprietario prima cede lo spazio (Membri e piani → Comproprietà).",
+  "@privacyEraseOwner": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseConfirmPhrase": "CANCELLA",
+  "@privacyEraseConfirmPhrase": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseConfirmHint": "Non si può annullare. Digita {phrase} per confermare.",
+  "@privacyEraseConfirmHint": {
+    "description": "#719 - privacy & data",
+    "placeholders": {
+      "phrase": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyEraseConfirmButton": "Cancella",
+  "@privacyEraseConfirmButton": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyErased": "I tuoi dati sono stati cancellati.",
+  "@privacyErased": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyPolicy": "Informativa sulla privacy",
+  "@privacyPolicy": {
+    "description": "#719 - privacy & data"
+  },
   "profilesDefault": "Predefinito all'avvio",
   "profilesMakeDefault": "Usa come predefinito all'avvio",
   "eventTypeRoleChange": "Cambio di ruolo",

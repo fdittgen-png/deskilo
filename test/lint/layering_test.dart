@@ -31,6 +31,9 @@ import 'lint_sources.dart';
 /// deliberately not tracked — they churn on every refactor and would
 /// turn this file into a conflict magnet.
 const Set<String> _knownPairs = {
+  // #718 — the calendar hub opens invoices and the Money month from a
+  // dated row: money's own sheet and its focus controller, not a copy.
+  'calendar -> money',
   'calendar -> events',
   'calendar -> plan',
   'calendar -> reservations',
@@ -43,6 +46,11 @@ const Set<String> _knownPairs = {
   // and its shared AccountCard, so the profile cannot compute a position
   // that disagrees with the Money tab.
   'members -> money',
+  // #719 — Settings → Privacy & data exercises the GDPR rights through the
+  // calendar feature's repository (the RPCs live with the hub they serve)
+  // and opens its access sheet: one implementation of "who can see my
+  // data", not a second.
+  'profile -> calendar',
   'events -> plan',
   'events -> reservations',
   'events -> workspace',

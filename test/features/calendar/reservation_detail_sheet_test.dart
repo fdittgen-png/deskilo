@@ -59,6 +59,10 @@ Future<InMemoryDefaultLevelStore> pumpCalendarApp(
   await tester.pumpWidget(
     ProviderScope(
       overrides: standardTestOverrides(
+        // #718 — the CLASSIC calendar is under test here.
+        workspace: FakeWorkspaceRepository.withWorkspace(
+          featureFlags: const {'calendarHub': false},
+        ),
         floorPlan: plans,
         reservations: FakeReservationRepository()..reservations.addAll(seed),
         accessories: accessories ?? FakeAccessoryRepository(),

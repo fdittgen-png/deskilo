@@ -3548,10 +3548,10 @@ abstract class AppLocalizations {
   /// **'How booking behaves'**
   String get helpHintPlanTip5Topic;
 
-  /// No description provided for @helpHintCalendar.
+  /// #718/#719 - help hints
   ///
   /// In en, this message translates to:
-  /// **'Browse bookings by month; tap a day to see and manage its reservations.'**
+  /// **'Pick a day or a range: everything dated that you may see, in one list, each row opening its source.'**
   String get helpHintCalendar;
 
   /// No description provided for @helpHintCalendarTopic.
@@ -3560,22 +3560,22 @@ abstract class AppLocalizations {
   /// **'Calendar'**
   String get helpHintCalendarTopic;
 
-  /// No description provided for @helpHintCalendarTip2.
+  /// #718/#719 - help hints
   ///
   /// In en, this message translates to:
-  /// **'The Mine / Everyone toggle shows just your bookings or the whole community\'s — red dots are yours, blue ones are other members\'.'**
+  /// **'Switch Day to Range to see a whole week or month at once — the arrows step by the size of your selection.'**
   String get helpHintCalendarTip2;
 
-  /// No description provided for @helpHintCalendarTip3.
+  /// #718/#719 - help hints
   ///
   /// In en, this message translates to:
-  /// **'The shape toggle switches the lower half between the week grid and the agenda list; the floor chips filter both.'**
+  /// **'Tap a kind chip to see only that: bookings, alerts, messages, invoices, payments, consumption, reminders.'**
   String get helpHintCalendarTip3;
 
-  /// No description provided for @helpHintCalendarTip4.
+  /// #718/#719 - help hints
   ///
   /// In en, this message translates to:
-  /// **'Cancelling one occurrence of a series offers \"this and following\" — checked-in and completed occurrences keep their history.'**
+  /// **'Every row opens its source — the booking, the conversation, the alert, the invoice, or that month on Finances.'**
   String get helpHintCalendarTip4;
 
   /// No description provided for @helpHintCalendarTip4Topic.
@@ -3889,6 +3889,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Revoke a lost badge any time; swipe a revoked badge to the right to delete it for good.'**
   String get helpHintBadgesTip4;
+
+  /// #718/#719 - help hints
+  ///
+  /// In en, this message translates to:
+  /// **'The shield shows who can see each kind, and who actually looked at your finances.'**
+  String get helpHintCalendarTip5;
+
+  /// #718/#719 - help hints
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get helpHintCalendarTip5Topic;
+
+  /// #718/#719 - help hints
+  ///
+  /// In en, this message translates to:
+  /// **'See who can read your data and who did, export everything as one file, or leave with your personal data erased.'**
+  String get helpHintPrivacy;
+
+  /// #718/#719 - help hints
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get helpHintPrivacyTopic;
+
+  /// #718/#719 - help hints
+  ///
+  /// In en, this message translates to:
+  /// **'Messages are readable only by the people in the conversation, whatever their role; money only by you and the finance permission.'**
+  String get helpHintPrivacyTip2;
+
+  /// #718/#719 - help hints
+  ///
+  /// In en, this message translates to:
+  /// **'Every read of your finances by someone else is logged by the server — the log cannot be skipped or edited.'**
+  String get helpHintPrivacyTip3;
 
   /// No description provided for @inviteSectionTitle.
   ///
@@ -8125,6 +8161,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No preference (full day)'**
   String get defaultPeriodNone;
+
+  /// #719 - privacy & data
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy & data'**
+  String get privacyTitle;
+
+  /// #719 - privacy & data
+  ///
+  /// In en, this message translates to:
+  /// **'Your data stays in the EU, is never tracked or sold, and is readable only by the roles the rules below name. These are your rights under the GDPR — each one is a button.'**
+  String get privacyIntro;
+
+  /// #719 - privacy & data
+  ///
+  /// In en, this message translates to:
+  /// **'Who can see my data'**
+  String get privacyWhoCanSee;
+
+  /// #719 - privacy & data
+  ///
+  /// In en, this message translates to:
+  /// **'The rule per category, the people it names today, and who actually looked.'**
+  String get privacyWhoCanSeeHint;
+
+  /// #719 - privacy & data
+  ///
+  /// In en, this message translates to:
+  /// **'Export my data'**
+  String get privacyExport;
+
+  /// #719 - privacy & data
+  ///
+  /// In en, this message translates to:
+  /// **'Everything you are the subject of, as one JSON file (art. 20).'**
+  String get privacyExportHint;
+
+  /// #719 - privacy & data
+  ///
+  /// In en, this message translates to:
+  /// **'My DesKilo data export'**
+  String get privacyExportShareText;
+
+  /// #719 - privacy & data
+  ///
+  /// In en, this message translates to:
+  /// **'Leave this workspace and erase my data'**
+  String get privacyErase;
+
+  /// #719 - privacy & data
+  ///
+  /// In en, this message translates to:
+  /// **'Cancels your bookings, blanks your messages, clears your profile. Accounting records stay under the legal retention, by id, not by name (art. 17).'**
+  String get privacyEraseHint;
+
+  /// #719 - privacy & data
+  ///
+  /// In en, this message translates to:
+  /// **'An owner hands the workspace over first (Members & plans → Co-ownership).'**
+  String get privacyEraseOwner;
+
+  /// #719 - privacy & data
+  ///
+  /// In en, this message translates to:
+  /// **'ERASE'**
+  String get privacyEraseConfirmPhrase;
+
+  /// #719 - privacy & data
+  ///
+  /// In en, this message translates to:
+  /// **'This cannot be undone. Type {phrase} to confirm.'**
+  String privacyEraseConfirmHint(String phrase);
+
+  /// #719 - privacy & data
+  ///
+  /// In en, this message translates to:
+  /// **'Erase'**
+  String get privacyEraseConfirmButton;
+
+  /// #719 - privacy & data
+  ///
+  /// In en, this message translates to:
+  /// **'Your data has been erased.'**
+  String get privacyErased;
+
+  /// #719 - privacy & data
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get privacyPolicy;
 
   /// No description provided for @profilesDefault.
   ///

@@ -1151,11 +1151,11 @@
   "helpHintPlanTip4": "Touchez deux fois un bureau, une salle ou l'étage — ou l'icône calques de la barre des niveaux — pour réserver l'espace entier d'un coup.",
   "helpHintPlanTip5": "Touchez votre propre place pour sa fiche : pointez votre arrivée dès 15 minutes avant le début, votre départ quand vous partez.",
   "helpHintPlanTip5Topic": "Comment la réservation se comporte",
-  "helpHintCalendar": "Parcourez les réservations mois par mois ; touchez un jour pour voir et gérer ses réservations.",
+  "helpHintCalendar": "Choisissez un jour ou une période : tout ce qui est daté et que vous pouvez voir, en une liste, chaque ligne ouvrant sa source.",
   "helpHintCalendarTopic": "Calendrier",
-  "helpHintCalendarTip2": "Le bouton Moi / Tous montre vos seules réservations ou celles de toute la communauté — les points rouges sont à vous, les bleus aux autres.",
-  "helpHintCalendarTip3": "Le bouton d'affichage bascule le bas entre la grille semaine et la liste agenda ; les puces d'étage filtrent les deux.",
-  "helpHintCalendarTip4": "Annuler une occurrence d'une série propose « celle-ci et les suivantes » — les occurrences pointées ou terminées gardent leur historique.",
+  "helpHintCalendarTip2": "Passez de Jour à Période pour voir une semaine ou un mois d'un coup — les flèches avancent de la taille de votre sélection.",
+  "helpHintCalendarTip3": "Touchez une puce de type pour ne voir que cela : réservations, alertes, messages, factures, paiements, consommations, rappels.",
+  "helpHintCalendarTip4": "Chaque ligne ouvre sa source — la réservation, la conversation, l'alerte, la facture, ou ce mois dans Finances.",
   "helpHintCalendarTip4Topic": "Comment la réservation se comporte",
   "helpHintEvents": "Tout ce qui s'est passé, dans un seul fil. Les décisions qui vous attendent sont en haut ; les filtres affinent le reste.",
   "helpHintEventsTopic": "Événements",
@@ -1208,6 +1208,42 @@
   "helpHintBadgesTip2": "Enregistrez une carte en l'approchant de l'appareil — toute puce lisible convient, et la boîte de dialogue nomme l'espace concerné.",
   "helpHintBadgesTip3": "Enregistrez un badge QR en PDF pour imprimer dix exemplaires format carte bancaire sur une page A4 — avec des exemplaires de rechange.",
   "helpHintBadgesTip4": "Révoquez un badge perdu à tout moment ; glissez un badge révoqué vers la droite pour le supprimer définitivement.",
+  "@helpHintCalendar": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip2": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip3": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip4": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintCalendarTip5": "Le bouclier montre qui peut voir chaque type, et qui a réellement consulté vos finances.",
+  "@helpHintCalendarTip5": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintCalendarTip5Topic": "Confidentialité",
+  "@helpHintCalendarTip5Topic": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacy": "Voyez qui peut lire vos données et qui l'a fait, exportez tout en un fichier, ou partez avec vos données personnelles effacées.",
+  "@helpHintPrivacy": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTopic": "Confidentialité",
+  "@helpHintPrivacyTopic": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTip2": "Les messages ne sont lisibles que par les personnes de la conversation, quel que soit leur rôle ; l'argent seulement par vous et la permission finances.",
+  "@helpHintPrivacyTip2": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTip3": "Chaque lecture de vos finances par quelqu'un d'autre est journalisée par le serveur — le journal ne peut être ni contourné ni modifié.",
+  "@helpHintPrivacyTip3": {
+    "description": "#718/#719 - help hints"
+  },
   "inviteSectionTitle": "Inviter quelqu'un",
   "inviteViaWhatsapp": "WhatsApp",
   "inviteViaSms": "SMS",
@@ -2797,6 +2833,71 @@
   "settingsBillingReports": "Facturation & rapports",
   "defaultPeriodTitle": "Période de réservation par défaut",
   "defaultPeriodNone": "Sans préférence (journée complète)",
+  "privacyTitle": "Confidentialité et données",
+  "@privacyTitle": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyIntro": "Vos données restent dans l'UE, ne sont ni tracées ni vendues, et ne sont lisibles que par les rôles que les règles ci-dessous nomment. Voici vos droits au titre du RGPD — chacun est un bouton.",
+  "@privacyIntro": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyWhoCanSee": "Qui peut voir mes données",
+  "@privacyWhoCanSee": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyWhoCanSeeHint": "La règle par catégorie, les personnes qu'elle désigne aujourd'hui, et qui a réellement consulté.",
+  "@privacyWhoCanSeeHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExport": "Exporter mes données",
+  "@privacyExport": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExportHint": "Tout ce dont vous êtes l'objet, en un fichier JSON (art. 20).",
+  "@privacyExportHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExportShareText": "Mon export de données DesKilo",
+  "@privacyExportShareText": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyErase": "Quitter cet espace et effacer mes données",
+  "@privacyErase": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseHint": "Annule vos réservations, vide vos messages, efface votre profil. Les pièces comptables restent pendant la durée légale, par identifiant, pas par nom (art. 17).",
+  "@privacyEraseHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseOwner": "Un propriétaire transmet d'abord l'espace (Membres et forfaits → Copropriété).",
+  "@privacyEraseOwner": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseConfirmPhrase": "EFFACER",
+  "@privacyEraseConfirmPhrase": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseConfirmHint": "Irréversible. Tapez {phrase} pour confirmer.",
+  "@privacyEraseConfirmHint": {
+    "description": "#719 - privacy & data",
+    "placeholders": {
+      "phrase": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyEraseConfirmButton": "Effacer",
+  "@privacyEraseConfirmButton": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyErased": "Vos données ont été effacées.",
+  "@privacyErased": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyPolicy": "Politique de confidentialité",
+  "@privacyPolicy": {
+    "description": "#719 - privacy & data"
+  },
   "profilesDefault": "Profil par défaut au démarrage",
   "profilesMakeDefault": "Utiliser par défaut au démarrage",
   "eventTypeRoleChange": "Changement de rôle",

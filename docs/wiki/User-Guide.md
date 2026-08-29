@@ -556,6 +556,8 @@ Check-in reminders, pending confirmations, expense decisions — and when an adm
 
 Minimal data: name, email, plan, bookings, ledger. You control your photo, your status and whether your phone number is visible in the directory; on the plan a seat of yours shows an initial, or your photo where the owner enabled member photos. Kiosk badges are stored only as hashes — a lost badge is revoked, not guessed. No tracking, no third-party analytics. Financial history is anonymized, not deleted, on account erasure (bookkeeping retention).
 
+**GDPR (#719).** EU-hosted data, no tracking or analytics, access limited by role and enforced on the server, and four rights you exercise yourself in **Settings → Privacy & data**: who can see my data, who accessed it (a server-written log), export my data (art. 20), leave with erasure (art. 17). Messages are readable only by the people in the conversation, whatever their role; invoices and payments only by you and holders of the finance permission.
+
 ## 15. Platforms
 
 Android (Google Play), iPhone/iPad, desktop — **macOS** (a DMG: drag DesKilo into Applications) and **Windows** (an MSI installer) built from every release — and the **browser**: the same app, nothing to install, at the address your workspace publishes. Your data follows your account, so a desk booked on a phone shows up in a browser tab a second later.

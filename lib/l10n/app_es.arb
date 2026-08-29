@@ -1151,11 +1151,11 @@
   "helpHintPlanTip4": "Toca dos veces un escritorio, una sala o la planta entera —o el icono de capas de la barra de niveles— para reservar todo el espacio de una vez.",
   "helpHintPlanTip5": "Toca tu propio asiento para abrir su ficha: registra tu llegada desde 15 minutos antes del inicio y tu salida al marcharte.",
   "helpHintPlanTip5Topic": "Cómo se comporta la reserva",
-  "helpHintCalendar": "Recorre las reservas mes a mes; toca un día para ver y gestionar sus reservas.",
+  "helpHintCalendar": "Elija un día o un periodo: todo lo fechado que puede ver, en una lista, cada fila abre su origen.",
   "helpHintCalendarTopic": "Calendario",
-  "helpHintCalendarTip2": "El conmutador Mías / Todos muestra solo tus reservas o las de toda la comunidad: los puntos rojos son tuyos, los azules de los demás.",
-  "helpHintCalendarTip3": "El conmutador de vista cambia la mitad inferior entre la cuadrícula semanal y la lista de agenda; los chips de planta filtran ambas.",
-  "helpHintCalendarTip4": "Cancelar una ocurrencia de una serie ofrece «esta y las siguientes»: las ocurrencias registradas o completadas conservan su historial.",
+  "helpHintCalendarTip2": "Cambie de Día a Periodo para ver una semana o un mes de golpe — las flechas avanzan el tamaño de su selección.",
+  "helpHintCalendarTip3": "Toque un chip de tipo para ver solo eso: reservas, avisos, mensajes, facturas, pagos, consumos, recordatorios.",
+  "helpHintCalendarTip4": "Cada fila abre su origen — la reserva, la conversación, el aviso, la factura o ese mes en Finanzas.",
   "helpHintCalendarTip4Topic": "Cómo se comporta la reserva",
   "helpHintEvents": "Todo lo ocurrido, en un solo hilo. Las decisiones que te esperan van arriba; los filtros acotan el resto.",
   "helpHintEventsTopic": "Eventos",
@@ -1208,6 +1208,42 @@
   "helpHintBadgesTip2": "Registra una tarjeta acercándola al dispositivo: cualquier chip legible sirve, y el diálogo indica a qué espacio se asocia.",
   "helpHintBadgesTip3": "Guarda una credencial QR como PDF para imprimir diez copias tamaño tarjeta en una página A4, con repuestos incluidos.",
   "helpHintBadgesTip4": "Revoca una credencial perdida en cualquier momento; desliza una credencial revocada hacia la derecha para eliminarla definitivamente.",
+  "@helpHintCalendar": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip2": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip3": {
+    "description": "#718/#719 - help hints"
+  },
+  "@helpHintCalendarTip4": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintCalendarTip5": "El escudo muestra quién puede ver cada tipo y quién miró realmente sus finanzas.",
+  "@helpHintCalendarTip5": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintCalendarTip5Topic": "Privacidad",
+  "@helpHintCalendarTip5Topic": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacy": "Vea quién puede leer sus datos y quién lo hizo, exporte todo en un archivo o salga con sus datos personales borrados.",
+  "@helpHintPrivacy": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTopic": "Privacidad",
+  "@helpHintPrivacyTopic": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTip2": "Los mensajes solo los leen las personas de la conversación, sea cual sea su rol; el dinero solo usted y el permiso de finanzas.",
+  "@helpHintPrivacyTip2": {
+    "description": "#718/#719 - help hints"
+  },
+  "helpHintPrivacyTip3": "Cada lectura de sus finanzas por otra persona la registra el servidor — el registro no se puede omitir ni editar.",
+  "@helpHintPrivacyTip3": {
+    "description": "#718/#719 - help hints"
+  },
   "inviteSectionTitle": "Invitar a alguien",
   "inviteViaWhatsapp": "WhatsApp",
   "inviteViaSms": "SMS",
@@ -2797,6 +2833,71 @@
   "settingsBillingReports": "Facturación e informes",
   "defaultPeriodTitle": "Período de reserva predeterminado",
   "defaultPeriodNone": "Sin preferencia (día completo)",
+  "privacyTitle": "Privacidad y datos",
+  "@privacyTitle": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyIntro": "Sus datos permanecen en la UE, nunca se rastrean ni se venden, y solo los leen los roles que nombran las reglas de abajo. Estos son sus derechos según el RGPD — cada uno es un botón.",
+  "@privacyIntro": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyWhoCanSee": "Quién puede ver mis datos",
+  "@privacyWhoCanSee": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyWhoCanSeeHint": "La regla por categoría, las personas que nombra hoy y quién miró realmente.",
+  "@privacyWhoCanSeeHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExport": "Exportar mis datos",
+  "@privacyExport": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExportHint": "Todo aquello de lo que usted es el sujeto, en un archivo JSON (art. 20).",
+  "@privacyExportHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExportShareText": "Mi exportación de datos DesKilo",
+  "@privacyExportShareText": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyErase": "Abandonar este espacio y borrar mis datos",
+  "@privacyErase": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseHint": "Cancela sus reservas, vacía sus mensajes, borra su perfil. Los registros contables se conservan durante la retención legal, por id, no por nombre (art. 17).",
+  "@privacyEraseHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseOwner": "Un propietario transfiere primero el espacio (Miembros y planes → Copropiedad).",
+  "@privacyEraseOwner": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseConfirmPhrase": "BORRAR",
+  "@privacyEraseConfirmPhrase": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseConfirmHint": "No se puede deshacer. Escriba {phrase} para confirmar.",
+  "@privacyEraseConfirmHint": {
+    "description": "#719 - privacy & data",
+    "placeholders": {
+      "phrase": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyEraseConfirmButton": "Borrar",
+  "@privacyEraseConfirmButton": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyErased": "Sus datos han sido borrados.",
+  "@privacyErased": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyPolicy": "Política de privacidad",
+  "@privacyPolicy": {
+    "description": "#719 - privacy & data"
+  },
   "profilesDefault": "Predeterminado al iniciar",
   "profilesMakeDefault": "Usar como predeterminado al iniciar",
   "eventTypeRoleChange": "Cambio de rol",

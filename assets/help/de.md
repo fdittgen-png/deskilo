@@ -182,6 +182,8 @@ Dieselbe Aktion *dem Inhaber schreiben* liegt auf dem **Plan**, wenn du einen vo
 
 Der Monat auf einen Blick, mit zwei Reichweiten und zwei Formen:
 
+**Der Kalender ist ein Wähler, keine Bühne (#718).** Wähle einen **Tag** oder einen **Zeitraum**; du siehst einen einzigen Feed von allem Datierten, das du sehen darfst — Buchungen, Check-ins und Check-outs, Meldungen, Nachrichten, Rechnungen, Zahlungen, Verbrauch, Erinnerungen — nach Tag gruppiert, per Chip nach Art gefiltert, und **jede Zeile öffnet ihre Quelle** (die Buchung, die Unterhaltung, die Meldung, die Rechnung, den Monat in Finanzen). Wer die Finanz- oder Mitglieder-Berechtigung hat, kann ein anderes Mitglied ansehen; Arten, die der Server für dieses Mitglied nicht erlaubt, erscheinen **gesperrt**, nie als leerer Tag. Der Schild öffnet *Wer sieht das*, mit dem Zugriffsprotokoll.
+
 - **Meine / Alle** — deine eigenen Buchungen oder die der ganzen Community; **jedes Mitglied** hat diesen Umschalter, denn Plan und Wochenraster des Reservieren-Hubs zeigen die Belegung aller ohnehin. Die Punkte unter einem Tag sagen alles auf einen Blick: **rot** = du hast eine Buchung, **blau** = andere Mitglieder haben eine, **beide Punkte** = beides. Heute ist umringt.
 - Der **Form-Umschalter** daneben wechselt die untere Hälfte zwischen **Listenansicht** (jede Reservierung als Karte: Zeitfenster, Mitglied, Raum) und **Zeitleistenansicht** (Plätze × die Stunden des gewählten Tages). Das Wochenraster Plätze × *Tage* wohnt im Reservieren-Hub (§4), nicht hier.
 - Die **Etagen-Chips** filtern die **Zeitleiste**.
@@ -572,6 +574,8 @@ Variablen (Rechnungsfamilie): `{{ number }}`, `{{ member }}`, `{{ workspace }}`,
 
 Dein persönlicher Bildschirm, von oben nach unten:
 
+**Datenschutz & Daten (#719)** — wer deine Daten sehen kann, wer es tat, Export, Löschung, die Richtlinie. Siehe §14.
+
 **Region & Formate (#711).** Wie *du* liest, was der Bereich zeigt: **Zahlen & Daten** in einer Region deiner Wahl (`de_CH`, `en_GB`, `de_AT` … unabhängig von der App-Sprache), die **Uhr** (24 h, 12 h oder was die Region tut) und ob Zeiten in der **Zone des Bereichs** erscheinen — der, in der gebucht wird, und der Standard — oder in **deiner Gerätezone**, gekennzeichnet, wo beide abweichen. Eine Vorschauzeile zeigt, was die drei Wahlen ergeben. Die Währung bleibt die des Bereichs; nur ihre Schreibweise ist deine. Auf deinem Profil gespeichert, also auf jedem Gerät gleich.
 
 - **Profile** (§1) und dein **Foto** (antippen — wählen oder entfernen).
@@ -589,6 +593,8 @@ Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheidungen — und we
 ## 14. Datenschutz
 
 Minimale Daten: Name, E-Mail, Plan, Buchungen, Konto. Du kontrollierst Foto, Status und Nummern-Sichtbarkeit; auf dem Plan zeigt ein Platz von dir eine Initiale oder dein Foto, wo die Inhaberin Mitgliederfotos aktiviert hat. Badges liegen nur als Hashes — ein verlorenes wird widerrufen, nicht erraten. Kein Tracking, keine Fremd-Analytik. Finanzhistorie wird bei Kontolöschung anonymisiert, nicht gelöscht (Aufbewahrungspflicht).
+
+**DSGVO (#719).** DesKilo ist für die Datenschutz-Grundverordnung gebaut: Daten in der EU, kein Tracking, keine Analytik, Zugriff nach Rolle und serverseitig durchgesetzt, und vier Rechte, die du selbst unter **Einstellungen → Datenschutz & Daten** ausübst: **wer meine Daten sehen kann** (die Regel je Kategorie und die Personen, die sie gerade nennt), **wer auf meine Daten zugegriffen hat** (ein vom Server geschriebenes Protokoll jeder Einsicht in deine Finanzen oder Nachrichten durch andere — nie umgehbar), **meine Daten exportieren** (eine JSON-Datei, Art. 20) und **mit Löschung austreten** (Art. 17: Buchungen storniert, Nachrichten geleert, Profil gelöscht; Buchhaltungsbelege bleiben für die in der Richtlinie genannte gesetzliche Frist, referenziert über eine ID, nicht einen Namen). Nachrichten lesen nur die Personen der Unterhaltung, unabhängig von der Rolle; Rechnungen und Zahlungen nur du und Inhaber der Finanz-Berechtigung.
 
 ## 15. Plattformen
 

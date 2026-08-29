@@ -1988,22 +1988,22 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get helpHintCalendar =>
-      'Parcourez les réservations mois par mois ; touchez un jour pour voir et gérer ses réservations.';
+      'Choisissez un jour ou une période : tout ce qui est daté et que vous pouvez voir, en une liste, chaque ligne ouvrant sa source.';
 
   @override
   String get helpHintCalendarTopic => 'Calendrier';
 
   @override
   String get helpHintCalendarTip2 =>
-      'Le bouton Moi / Tous montre vos seules réservations ou celles de toute la communauté — les points rouges sont à vous, les bleus aux autres.';
+      'Passez de Jour à Période pour voir une semaine ou un mois d\'un coup — les flèches avancent de la taille de votre sélection.';
 
   @override
   String get helpHintCalendarTip3 =>
-      'Le bouton d\'affichage bascule le bas entre la grille semaine et la liste agenda ; les puces d\'étage filtrent les deux.';
+      'Touchez une puce de type pour ne voir que cela : réservations, alertes, messages, factures, paiements, consommations, rappels.';
 
   @override
   String get helpHintCalendarTip4 =>
-      'Annuler une occurrence d\'une série propose « celle-ci et les suivantes » — les occurrences pointées ou terminées gardent leur historique.';
+      'Chaque ligne ouvre sa source — la réservation, la conversation, l\'alerte, la facture, ou ce mois dans Finances.';
 
   @override
   String get helpHintCalendarTip4Topic => 'Comment la réservation se comporte';
@@ -2196,6 +2196,28 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get helpHintBadgesTip4 =>
       'Révoquez un badge perdu à tout moment ; glissez un badge révoqué vers la droite pour le supprimer définitivement.';
+
+  @override
+  String get helpHintCalendarTip5 =>
+      'Le bouclier montre qui peut voir chaque type, et qui a réellement consulté vos finances.';
+
+  @override
+  String get helpHintCalendarTip5Topic => 'Confidentialité';
+
+  @override
+  String get helpHintPrivacy =>
+      'Voyez qui peut lire vos données et qui l\'a fait, exportez tout en un fichier, ou partez avec vos données personnelles effacées.';
+
+  @override
+  String get helpHintPrivacyTopic => 'Confidentialité';
+
+  @override
+  String get helpHintPrivacyTip2 =>
+      'Les messages ne sont lisibles que par les personnes de la conversation, quel que soit leur rôle ; l\'argent seulement par vous et la permission finances.';
+
+  @override
+  String get helpHintPrivacyTip3 =>
+      'Chaque lecture de vos finances par quelqu\'un d\'autre est journalisée par le serveur — le journal ne peut être ni contourné ni modifié.';
 
   @override
   String get inviteSectionTitle => 'Inviter quelqu\'un';
@@ -4589,6 +4611,58 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get defaultPeriodNone => 'Sans préférence (journée complète)';
+
+  @override
+  String get privacyTitle => 'Confidentialité et données';
+
+  @override
+  String get privacyIntro =>
+      'Vos données restent dans l\'UE, ne sont ni tracées ni vendues, et ne sont lisibles que par les rôles que les règles ci-dessous nomment. Voici vos droits au titre du RGPD — chacun est un bouton.';
+
+  @override
+  String get privacyWhoCanSee => 'Qui peut voir mes données';
+
+  @override
+  String get privacyWhoCanSeeHint =>
+      'La règle par catégorie, les personnes qu\'elle désigne aujourd\'hui, et qui a réellement consulté.';
+
+  @override
+  String get privacyExport => 'Exporter mes données';
+
+  @override
+  String get privacyExportHint =>
+      'Tout ce dont vous êtes l\'objet, en un fichier JSON (art. 20).';
+
+  @override
+  String get privacyExportShareText => 'Mon export de données DesKilo';
+
+  @override
+  String get privacyErase => 'Quitter cet espace et effacer mes données';
+
+  @override
+  String get privacyEraseHint =>
+      'Annule vos réservations, vide vos messages, efface votre profil. Les pièces comptables restent pendant la durée légale, par identifiant, pas par nom (art. 17).';
+
+  @override
+  String get privacyEraseOwner =>
+      'Un propriétaire transmet d\'abord l\'espace (Membres et forfaits → Copropriété).';
+
+  @override
+  String get privacyEraseConfirmPhrase => 'EFFACER';
+
+  @override
+  String privacyEraseConfirmHint(String phrase) {
+    return 'Irréversible. Tapez $phrase pour confirmer.';
+  }
+
+  @override
+  String get privacyEraseConfirmButton => 'Effacer';
+
+  @override
+  String get privacyErased => 'Vos données ont été effacées.';
+
+  @override
+  String get privacyPolicy => 'Politique de confidentialité';
 
   @override
   String get profilesDefault => 'Profil par défaut au démarrage';

@@ -32,3 +32,5 @@ La misma cuenta en Android, iPhone, iPad, Mac, Windows y en el navegador. Un pue
 
 PRIVACIDAD
 Sin rastreo, sin analítica, sin publicidad, sin SDK de terceros. El backend es Supabase en la UE y puedes alojarlo tú. DesKilo es código abierto con licencia 0BSD: todo lo anterior se puede leer en el código.
+
+RGPD: datos alojados en la UE, sin rastreo ni analítica, acceso limitado por rol y aplicado en el servidor. Sus derechos son botones en Ajustes → Privacidad y datos: quién puede ver sus datos, quién accedió, exportación, borrado.

@@ -64,6 +64,13 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
   @override
   void initState() {
     super.initState();
+    // #718 — a focus request made BEFORE this branch was built (the
+    // calendar hub sets it, then switches) is already there when the
+    // listener in build subscribes, and a listener only sees changes.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _applyFocus(ref.read(moneyFocusControllerProvider));
+    });
     final now = ref.read(clockProvider).now();
     _month = DateTime(now.year, now.month);
   }
@@ -74,6 +81,15 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
   String get _nowPeriod => currentPeriod(ref.read(clockProvider).now());
 
   bool get _isCurrentPeriod => _period == _nowPeriod;
+
+  void _applyFocus(String? period) {
+    if (period == null) return;
+    final parts = period.split('-');
+    if (parts.length == 2) {
+      setState(() => _month = DateTime(int.parse(parts[0]), int.parse(parts[1])));
+    }
+    ref.read(moneyFocusControllerProvider.notifier).clear();
+  }
 
   void _shiftMonth(int delta) {
     setState(() => _month = DateTime(_month.year, _month.month + delta));
@@ -886,14 +902,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
   @override
   Widget build(BuildContext context) {
     // #718 — the calendar hub asks for a month; consume it once.
-    ref.listen(moneyFocusControllerProvider, (_, period) {
-      if (period == null) return;
-      final parts = period.split('-');
-      if (parts.length == 2) {
-        setState(() => _month = DateTime(int.parse(parts[0]), int.parse(parts[1])));
-      }
-      ref.read(moneyFocusControllerProvider.notifier).clear();
-    });
+    ref.listen(moneyFocusControllerProvider, (_, period) => _applyFocus(period));
     final l10n = AppLocalizations.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final member = ref.watch(myMemberProvider).value;

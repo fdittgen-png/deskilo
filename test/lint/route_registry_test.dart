@@ -32,7 +32,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 42→43 (2026-08-27): #687 /messages — the messaging centre, on its
 //   own route before it becomes a bottom-bar destination.
 // 41→42 (2026-08-11): #534 /vat-declarations (owner+feature-gated).
-const int _expectedRouteCount = 43;
+// 43→44 (2026-08-29): #719 /privacy.
+const int _expectedRouteCount = 44;
 
 void main() {
   test('router carries exactly $_expectedRouteCount GoRoutes', () {

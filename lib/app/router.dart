@@ -30,6 +30,7 @@ import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/workspace/presentation/screens/inbox_screen.dart';
+import '../features/profile/presentation/screens/privacy_screen.dart';
 import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
 import '../features/reservations/presentation/screens/reserve_screen.dart';
@@ -280,6 +281,12 @@ GoRouter router(Ref ref) {
         path: '/help',
         builder: (context, state) =>
             HelpScreen(topic: state.uri.queryParameters['topic']),
+      ),
+      GoRoute(
+        // #719 — Privacy & data: who can see my data, who did, export,
+        // erasure, the policy. Every member; the tools inside are gated.
+        path: '/privacy',
+        builder: (context, state) => const PrivacyScreen(),
       ),
       GoRoute(
         // Linked accounts (0051): the signed-in user's own identities.

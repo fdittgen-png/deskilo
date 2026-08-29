@@ -25,5 +25,70 @@
   "profilePhotoFileType": "Immagine",
   "settingsBillingReports": "Fatturazione e report",
   "defaultPeriodTitle": "Periodo di prenotazione predefinito",
-  "defaultPeriodNone": "Nessuna preferenza (giornata intera)"
+  "defaultPeriodNone": "Nessuna preferenza (giornata intera)",
+  "privacyTitle": "Privacy e dati",
+  "@privacyTitle": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyIntro": "I tuoi dati restano nell'UE, non vengono mai tracciati né venduti e sono leggibili solo dai ruoli indicati dalle regole qui sotto. Questi sono i tuoi diritti secondo il GDPR — ognuno è un pulsante.",
+  "@privacyIntro": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyWhoCanSee": "Chi può vedere i miei dati",
+  "@privacyWhoCanSee": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyWhoCanSeeHint": "La regola per categoria, le persone che nomina oggi e chi ha guardato davvero.",
+  "@privacyWhoCanSeeHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExport": "Esporta i miei dati",
+  "@privacyExport": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExportHint": "Tutto ciò di cui sei l'interessato, in un file JSON (art. 20).",
+  "@privacyExportHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExportShareText": "La mia esportazione dati DesKilo",
+  "@privacyExportShareText": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyErase": "Lasciare questo spazio e cancellare i miei dati",
+  "@privacyErase": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseHint": "Annulla le tue prenotazioni, svuota i tuoi messaggi, cancella il tuo profilo. I documenti contabili restano per la conservazione legale, per id, non per nome (art. 17).",
+  "@privacyEraseHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseOwner": "Un proprietario prima cede lo spazio (Membri e piani → Comproprietà).",
+  "@privacyEraseOwner": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseConfirmPhrase": "CANCELLA",
+  "@privacyEraseConfirmPhrase": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseConfirmHint": "Non si può annullare. Digita {phrase} per confermare.",
+  "@privacyEraseConfirmHint": {
+    "description": "#719 - privacy & data",
+    "placeholders": {
+      "phrase": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyEraseConfirmButton": "Cancella",
+  "@privacyEraseConfirmButton": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyErased": "I tuoi dati sono stati cancellati.",
+  "@privacyErased": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyPolicy": "Informativa sulla privacy",
+  "@privacyPolicy": {
+    "description": "#719 - privacy & data"
+  }
 }

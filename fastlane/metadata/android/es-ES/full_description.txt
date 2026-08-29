@@ -9,3 +9,5 @@ DesKilo es una aplicación libre y respetuosa con la privacidad para pequeñas c
 • Todo lo que un admin hace por ti requiere tu confirmación
 
 Sin servicios de Google, sin rastreo, sin publicidad. Backend autoalojable. Licencia 0BSD (permisiva).
+
+RGPD: datos alojados en la UE, sin rastreo ni analítica, acceso limitado por rol y aplicado en el servidor. Sus derechos son botones en Ajustes → Privacidad y datos: quién puede ver sus datos, quién accedió, exportación, borrado.

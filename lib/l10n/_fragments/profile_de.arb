@@ -25,5 +25,70 @@
   "profilePhotoFileType": "Bild",
   "settingsBillingReports": "Abrechnung & Berichte",
   "defaultPeriodTitle": "Standard-Buchungszeitraum",
-  "defaultPeriodNone": "Keine Präferenz (ganzer Tag)"
+  "defaultPeriodNone": "Keine Präferenz (ganzer Tag)",
+  "privacyTitle": "Datenschutz & Daten",
+  "@privacyTitle": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyIntro": "Deine Daten bleiben in der EU, werden nie getrackt oder verkauft und sind nur für die Rollen lesbar, die die Regeln unten nennen. Das sind deine Rechte nach der DSGVO — jedes ist ein Knopf.",
+  "@privacyIntro": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyWhoCanSee": "Wer meine Daten sehen kann",
+  "@privacyWhoCanSee": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyWhoCanSeeHint": "Die Regel je Kategorie, die Personen, die sie heute nennt, und wer tatsächlich hingesehen hat.",
+  "@privacyWhoCanSeeHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExport": "Meine Daten exportieren",
+  "@privacyExport": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExportHint": "Alles, dessen Betroffener du bist, als eine JSON-Datei (Art. 20).",
+  "@privacyExportHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyExportShareText": "Mein DesKilo-Datenexport",
+  "@privacyExportShareText": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyErase": "Diesen Bereich verlassen und meine Daten löschen",
+  "@privacyErase": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseHint": "Storniert deine Buchungen, leert deine Nachrichten, löscht dein Profil. Buchhaltungsbelege bleiben für die gesetzliche Frist, per ID, nicht per Name (Art. 17).",
+  "@privacyEraseHint": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseOwner": "Ein Eigentümer übergibt den Bereich zuerst (Mitglieder & Tarife → Miteigentum).",
+  "@privacyEraseOwner": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseConfirmPhrase": "LÖSCHEN",
+  "@privacyEraseConfirmPhrase": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyEraseConfirmHint": "Nicht rückgängig zu machen. Tippe {phrase} zur Bestätigung.",
+  "@privacyEraseConfirmHint": {
+    "description": "#719 - privacy & data",
+    "placeholders": {
+      "phrase": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyEraseConfirmButton": "Löschen",
+  "@privacyEraseConfirmButton": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyErased": "Deine Daten wurden gelöscht.",
+  "@privacyErased": {
+    "description": "#719 - privacy & data"
+  },
+  "privacyPolicy": "Datenschutzerklärung",
+  "@privacyPolicy": {
+    "description": "#719 - privacy & data"
+  }
 }

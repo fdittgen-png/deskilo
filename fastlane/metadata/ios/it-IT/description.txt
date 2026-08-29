@@ -32,3 +32,5 @@ Lo stesso account su Android, iPhone, iPad, Mac, Windows e nel browser. Una post
 
 PRIVACY
 Nessun tracciamento, nessuna analisi, nessuna pubblicità, nessun SDK di terze parti. Il backend è Supabase nell'UE e puoi ospitarlo tu. DesKilo è open source con licenza 0BSD: tutto quanto sopra si legge nel codice.
+
+GDPR: dati ospitati nell'UE, nessun tracciamento né analitica, accesso limitato per ruolo e applicato dal server. I tuoi diritti sono pulsanti in Impostazioni → Privacy e dati: chi può vedere i tuoi dati, chi ha avuto accesso, esportazione, cancellazione.

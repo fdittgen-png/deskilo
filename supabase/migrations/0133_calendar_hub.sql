@@ -64,7 +64,9 @@ create or replace function public.calendar_items(
   p_to timestamptz,
   p_kinds text[] default null,
   p_member_id uuid default null
-) returns jsonb language plpgsql stable security definer
+) returns jsonb language plpgsql volatile security definer
+-- VOLATILE, not stable: it WRITES the access log. A stable function
+-- may not insert, and the rehearsal on the live database said so.
 set search_path = public as $$
 declare
   v_me public.members;
@@ -141,7 +143,7 @@ begin
          and r.starts_at - interval '15 minutes' < p_to;
       v_items := v_items || v_rows;
     else
-      v_locked := v_locked || 'reminder';
+      v_locked := array_append(v_locked, 'reminder');
     end if;
   end if;
 
@@ -195,7 +197,7 @@ begin
          and n.conversation_id is not null
          and public.in_conversation(n.conversation_id);
       v_items := v_items || v_rows;
-      if jsonb_array_length(v_rows) = 0 then v_locked := v_locked || 'message'; end if;
+      if jsonb_array_length(v_rows) = 0 then v_locked := array_append(v_locked, 'message'); end if;
     end if;
   end if;
 
@@ -310,7 +312,7 @@ $$;
 -- ---------------------------------------------------------------- 5
 -- Art. 17 — erasure, within what the books may keep. The member row
 -- leaves the workspace (status exited), open reservations are cancelled,
--- messages they sent are blanked, and the profile's personal fields are
+-- messages they sent are deleted, and the profile's personal fields are
 -- cleared. Ledger and invoices stay: they are the workspace's accounting
 -- records, kept under the legal retention the policy names, and they
 -- reference the member id, which is a key, not a name.
@@ -327,8 +329,10 @@ begin
   end if;
   update public.reservations set status = 'cancelled'
    where member_id = v_me.id and status in ('reserved', 'checked_in');
-  update public.member_notes set body = ''
-   where from_member_id = v_me.id;
+  -- DELETED, not blanked: member_notes.body has a non-empty check (0089),
+  -- and a placeholder would be one more string to localise. Erasure is
+  -- erasure; the conversation itself stays for the other participants.
+  delete from public.member_notes where from_member_id = v_me.id;
   update public.members set status = 'exited', is_admin = false
    where id = v_me.id;
   -- The profile is shared across workspaces; only clear it when this

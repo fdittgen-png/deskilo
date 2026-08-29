@@ -17,7 +17,8 @@ void main() {
       'the About section names the author, licence and privacy policy, '
       'and the support tiles open PayPal/Revolut through the launcher',
       (tester) async {
-    tester.view.physicalSize = const Size(800, 2700);
+    // #719 added the Privacy & data tile; 2700 no longer reached Revolut.
+    tester.view.physicalSize = const Size(800, 2900);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     final launched = <Uri>[];

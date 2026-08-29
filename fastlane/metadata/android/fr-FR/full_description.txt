@@ -9,3 +9,5 @@ DesKilo est une application libre et respectueuse de la vie privée pour les pet
 • Tout ce qu'un admin fait pour vous demande votre confirmation
 
 Pas de services Google, pas de pistage, pas de pub. Backend auto-hébergeable. Licence 0BSD (permissive).
+
+RGPD : données hébergées dans l'UE, ni traçage ni analytique, accès limité par rôle et appliqué côté serveur. Vos droits sont des boutons dans Réglages → Confidentialité et données : qui peut voir vos données, qui les a consultées, export, effacement.

@@ -31,7 +31,7 @@ Future<FakeWorkspaceRepository> pumpFeatures(
 }) async {
   // Ten manifest features no longer fit the default 800×600 surface and
   // the lazy list drops off-screen tiles; keep every switch mounted.
-  tester.view.physicalSize = const Size(800, 4600);
+  tester.view.physicalSize = const Size(800, 5200);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final workspace =

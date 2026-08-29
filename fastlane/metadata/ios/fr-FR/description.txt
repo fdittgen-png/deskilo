@@ -32,3 +32,5 @@ Le même compte sur Android, iPhone, iPad, Mac, Windows et dans un navigateur. U
 
 CONFIDENTIALITÉ
 Aucun traçage, aucune analyse d'audience, aucune publicité, aucun SDK tiers. Le backend est Supabase dans l'UE, et vous pouvez l'héberger vous-même. DesKilo est libre sous licence 0BSD — tout ce qui précède se vérifie dans le code.
+
+RGPD : données hébergées dans l'UE, ni traçage ni analytique, accès limité par rôle et appliqué côté serveur. Vos droits sont des boutons dans Réglages → Confidentialité et données : qui peut voir vos données, qui les a consultées, export, effacement.

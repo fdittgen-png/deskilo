@@ -1967,22 +1967,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpHintCalendar =>
-      'Browse bookings by month; tap a day to see and manage its reservations.';
+      'Pick a day or a range: everything dated that you may see, in one list, each row opening its source.';
 
   @override
   String get helpHintCalendarTopic => 'Calendar';
 
   @override
   String get helpHintCalendarTip2 =>
-      'The Mine / Everyone toggle shows just your bookings or the whole community\'s — red dots are yours, blue ones are other members\'.';
+      'Switch Day to Range to see a whole week or month at once — the arrows step by the size of your selection.';
 
   @override
   String get helpHintCalendarTip3 =>
-      'The shape toggle switches the lower half between the week grid and the agenda list; the floor chips filter both.';
+      'Tap a kind chip to see only that: bookings, alerts, messages, invoices, payments, consumption, reminders.';
 
   @override
   String get helpHintCalendarTip4 =>
-      'Cancelling one occurrence of a series offers \"this and following\" — checked-in and completed occurrences keep their history.';
+      'Every row opens its source — the booking, the conversation, the alert, the invoice, or that month on Finances.';
 
   @override
   String get helpHintCalendarTip4Topic => 'How booking behaves';
@@ -2175,6 +2175,28 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get helpHintBadgesTip4 =>
       'Revoke a lost badge any time; swipe a revoked badge to the right to delete it for good.';
+
+  @override
+  String get helpHintCalendarTip5 =>
+      'The shield shows who can see each kind, and who actually looked at your finances.';
+
+  @override
+  String get helpHintCalendarTip5Topic => 'Privacy';
+
+  @override
+  String get helpHintPrivacy =>
+      'See who can read your data and who did, export everything as one file, or leave with your personal data erased.';
+
+  @override
+  String get helpHintPrivacyTopic => 'Privacy';
+
+  @override
+  String get helpHintPrivacyTip2 =>
+      'Messages are readable only by the people in the conversation, whatever their role; money only by you and the finance permission.';
+
+  @override
+  String get helpHintPrivacyTip3 =>
+      'Every read of your finances by someone else is logged by the server — the log cannot be skipped or edited.';
 
   @override
   String get inviteSectionTitle => 'Invite someone';
@@ -4543,6 +4565,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get defaultPeriodNone => 'No preference (full day)';
+
+  @override
+  String get privacyTitle => 'Privacy & data';
+
+  @override
+  String get privacyIntro =>
+      'Your data stays in the EU, is never tracked or sold, and is readable only by the roles the rules below name. These are your rights under the GDPR — each one is a button.';
+
+  @override
+  String get privacyWhoCanSee => 'Who can see my data';
+
+  @override
+  String get privacyWhoCanSeeHint =>
+      'The rule per category, the people it names today, and who actually looked.';
+
+  @override
+  String get privacyExport => 'Export my data';
+
+  @override
+  String get privacyExportHint =>
+      'Everything you are the subject of, as one JSON file (art. 20).';
+
+  @override
+  String get privacyExportShareText => 'My DesKilo data export';
+
+  @override
+  String get privacyErase => 'Leave this workspace and erase my data';
+
+  @override
+  String get privacyEraseHint =>
+      'Cancels your bookings, blanks your messages, clears your profile. Accounting records stay under the legal retention, by id, not by name (art. 17).';
+
+  @override
+  String get privacyEraseOwner =>
+      'An owner hands the workspace over first (Members & plans → Co-ownership).';
+
+  @override
+  String get privacyEraseConfirmPhrase => 'ERASE';
+
+  @override
+  String privacyEraseConfirmHint(String phrase) {
+    return 'This cannot be undone. Type $phrase to confirm.';
+  }
+
+  @override
+  String get privacyEraseConfirmButton => 'Erase';
+
+  @override
+  String get privacyErased => 'Your data has been erased.';
+
+  @override
+  String get privacyPolicy => 'Privacy policy';
 
   @override
   String get profilesDefault => 'Default at startup';

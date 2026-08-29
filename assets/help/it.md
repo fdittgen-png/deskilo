@@ -182,6 +182,8 @@ La stessa azione *scrivere al titolare* si trova nella scheda **Piantina** quand
 
 Il mese a colpo d'occhio, con due ambiti e due forme:
 
+**Il calendario è un selettore, non un palcoscenico (#718).** Scegli un **giorno** o un **periodo**; vedi un unico flusso di tutto ciò che ha una data e che puoi vedere — prenotazioni, check-in e check-out, avvisi, messaggi, fatture, pagamenti, consumi, promemoria — raggruppato per giorno, filtrato per tipo con i chip, e **ogni riga apre la sua origine** (la prenotazione, la conversazione, l'avviso, la fattura, il mese in Finanze). Chi ha il permesso finanze o amministrazione membri può guardare un altro membro; i tipi che il server non consente per quel membro appaiono **bloccati**, mai come un giorno vuoto. Lo scudo apre *Chi può vedere questo*, con il registro degli accessi.
+
 - **Le mie / Tutti** — le tue prenotazioni, o quelle dell'intera comunità; l'interruttore ce l'ha ogni membro, dato che la piantina e la griglia settimanale dell'hub Prenota mostrano già l'occupazione di tutti. I puntini sotto un giorno dicono tutto a colpo d'occhio: **rosso** = hai una prenotazione, **blu** = ce l'hanno altri membri, **entrambi i puntini** = tutte e due. Oggi è cerchiato.
 - L'**interruttore di forma** accanto commuta la metà inferiore tra una **vista elenco** (ogni prenotazione come scheda: finestra oraria, membro, spazio) e una **vista cronologia** (posti × le ore del giorno selezionato). La griglia posti × *giorni* della settimana vive nell'hub Prenota (§4), non qui.
 - I **chip di piano** (*Tutti i piani* / per livello) filtrano la **cronologia**.
@@ -593,6 +595,8 @@ Variabili di modello (famiglia fatture): `{{ number }}`, `{{ member }}`, `{{ wor
 
 La tua schermata personale, dall'alto in basso:
 
+**Privacy e dati (#719)** — chi può vedere i tuoi dati, chi l'ha fatto, esportazione, cancellazione, la politica. Vedi §14.
+
 **Regione e formati (#711).** Come *tu* leggi ciò che lo spazio mostra: **numeri e date** nella regione che scegli (`it_CH`, `en_GB`, `de_AT`… indipendente dalla lingua dell'app), l'**orologio** (24 h, 12 h o ciò che fa quella regione) e se gli orari appaiono nel **fuso dello spazio** — quello delle prenotazioni, il predefinito — o **nel tuo**, segnalato dove i due differiscono. Una riga di anteprima mostra la somma delle tre scelte. La valuta resta quella dello spazio; solo la sua scrittura è tua. Salvato sul tuo profilo: ti segue da un dispositivo all'altro.
 
 - **Profili** (§1) e la tua **foto** (tocca per cambiare — scegli o rimuovi).
@@ -610,6 +614,8 @@ Promemoria di check-in, conferme in sospeso, decisioni sulle spese — e quando 
 ## 14. Privacy
 
 Dati minimi: nome, email, piano, prenotazioni, conto. Controlli tu la foto, lo stato e se il tuo numero di telefono è visibile nell'elenco; sulla piantina un tuo posto mostra un'iniziale, o la tua foto dove il proprietario ha attivato le foto dei membri. I badge del chiosco sono salvati solo come hash — un badge perso si revoca, non si indovina. Nessun tracciamento, nessuna analitica di terze parti. Lo storico finanziario viene anonimizzato, non cancellato, all'eliminazione dell'account (obblighi di conservazione contabile).
+
+**GDPR (#719).** DesKilo è costruita per il Regolamento generale sulla protezione dei dati: dati ospitati nell'UE, nessun tracciamento né analitica, accesso limitato per ruolo e applicato dal server, e quattro diritti che eserciti tu stesso in **Impostazioni → Privacy e dati**: **chi può vedere i miei dati** (la regola per categoria e le persone che nomina), **chi ha consultato i miei dati** (un registro scritto dal server di ogni lettura delle tue finanze o messaggi da parte di altri — mai aggirabile), **esportare i miei dati** (un file JSON, art. 20) e **uscire con cancellazione** (art. 17: prenotazioni annullate, messaggi svuotati, profilo cancellato; i documenti contabili restano per la conservazione legale indicata nella politica, riferiti a un id, non a un nome). I messaggi li leggono solo le persone della conversazione, qualunque sia il ruolo; fatture e pagamenti solo tu e chi ha il permesso finanze.
 
 ## 15. Piattaforme
 
