@@ -19,9 +19,9 @@ import 'push_connector.dart';
 /// OS displays the function's generic English text (never personal
 /// data, 0012 doctrine).
 class FirebasePushConnector implements PushConnector {
-  FirebasePushConnector({PushWarn? onWarn}) : _onWarn = onWarn;
+  FirebasePushConnector({this.onWarn});
 
-  final PushWarn? _onWarn;
+  final PushWarn? onWarn;
   void Function(String url)? _onNewEndpoint;
 
   @override
@@ -46,7 +46,7 @@ class FirebasePushConnector implements PushConnector {
       // Best-effort (#86 boot doctrine): a broken Firebase setup must
       // never disturb the app.
       debugPrint('Firebase init failed: \$e\n\$st');
-      _onWarn?.call('Firebase init failed', e, st);
+      onWarn?.call('Firebase init failed', e, st);
       return false;
     }
   }
