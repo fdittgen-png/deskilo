@@ -33,7 +33,8 @@ import 'package:flutter_test/flutter_test.dart';
 //   own route before it becomes a bottom-bar destination.
 // 41→42 (2026-08-11): #534 /vat-declarations (owner+feature-gated).
 // 43→44 (2026-08-29): #719 /privacy.
-const int _expectedRouteCount = 44;
+// 44→45 (2026-08-29): #734 /formats.
+const int _expectedRouteCount = 45;
 
 void main() {
   test('router carries exactly $_expectedRouteCount GoRoutes', () {

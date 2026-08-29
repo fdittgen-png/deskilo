@@ -520,6 +520,72 @@ const STEPS=[
   if(!ms.length)f.push(F.warn('Aucun membre à inviter : vous les inviterez depuis l\'app.','members'));else f.push(F.ok(ms.length+' membre(s) à inviter, dont '+ms.filter(m=>m.role==='admin').length+' admin(s).'));
   if(on('whatsappIntegration')&&S.whatsapp.trim()&&!/^https:\/\/chat\.whatsapp\.com\//.test(S.whatsapp.trim()))f.push(F.warn('Le lien WhatsApp ne ressemble pas à un lien de groupe.','members'));return f}},
 
+{id:'summary',title:'Résumé des fonctionnalités',why:"Ce que l'app activera et comment vos réponses le configurent. Décochez ce dont vous ne voulez pas : la fonctionnalité part désactivée et sa configuration n'est ni exportée ni proposée dans l'app — vous pourrez toujours l'activer plus tard dans Réglages → Fonctionnalités.",
+ build(){const money=v=>(parseFloat(v)||0).toFixed(2)+' '+S.currency;const n=x=>x.filter(r=>String(r.name||r.label||'').trim()).length;
+  const cfg={
+   calendarTab:()=>'Vue mensuelle des réservations.',
+   eventsTab:()=>'Fil des événements et confirmations ; règle par défaut : '+S.validation.required+' validation(s)'+(S.validation.ownerSignOff?' + signature du propriétaire':'')+', '+Object.values(S.domains).filter(d=>d.on).length+' règle(s) par domaine.',
+   moneyTab:()=>{const t=S.tiers.filter(x=>x.fee!=='');return (t.length?t.length+' palier(s) tarifaire(s) ('+t.map(x=>x.from+'–'+x.to+' % : '+money(x.fee)+'/mois').join(', ')+')':'aucun palier')+' ; niveaux '+(S.subLevels.join(', ')||'—')+' %'+(S.freeLevel?' + valeur libre':'')+' ; '+n(S.packages)+' forfait(s) de jours.'},
+   services:()=>n(S.services)+' service(s)'+(n(S.services)?' : '+S.services.filter(x=>x.name.trim()).map(x=>x.name+' '+money(x.price)).join(', '):'')+'.',
+   accessorySupplements:()=>n(S.accessories)+' accessoire(s)'+(n(S.accessories)?' : '+S.accessories.filter(x=>x.name.trim()).map(x=>x.name+' '+money(x.supp)+'/demi-j.').join(', '):'')+'.',
+   onlinePayments:()=>'PayPal / Stripe / Mollie / Wero — les clés se saisissent dans l\'app (Réglages → Paiements en ligne).',
+   invoicing:()=>({not_subject:'Hors du champ de la TVA',exempt:'Franchise / exonéré',registered:'Assujetti à la TVA'})[S.vatRegime]+(S.regNumber?' · n° '+S.regNumber:'')+(S.street||S.city?' · '+[S.street,S.postal,S.city].filter(Boolean).join(' '):'')+(isEU()?(S.einvoice.url?' · plateforme e-facture configurée':' · plateforme e-facture à configurer dans l\'app'):' · hors UE, PDF signé').replace(/^/,''),
+   adminInvoicing:()=>'Les admins peuvent émettre et rapprocher.',
+   pdfExport:()=>'Relevé mensuel exportable en PDF.',
+   seriesBooking:()=>'Réservations quotidiennes, hebdomadaires ou jours ouvrés.',
+   bookForOthers:()=>'Les admins réservent pour les membres.',
+   pushNotifications:()=>'Confirmations poussées sur les appareils (Firebase à configurer côté serveur).',
+   adminSeatBlocking:()=>'Les admins bloquent des places (maintenance).',
+   levelBooking:()=>{const o=S.levels.flatMap(l=>l.offices).filter(x=>x.bookable);return o.length+' bureau(x) réservable(s) en entier'+(o.length?' : '+o.map(x=>x.name+' '+money(x.price)+'/demi-j.').join(', '):'')+'.'},
+   adminLevelAssign:()=>'Les admins attribuent des niveaux.',
+   kioskMode:()=>'Tablette murale verrouillée'+(on('nfcBadges')?' · badges NFC/RFID':'')+(on('qrBadges')?' · badges QR':'')+(on('badgeSignIn')?' · connexion par badge':'')+'.',
+   nfcBadges:()=>'Pointage par carte NFC/RFID à la borne.',qrBadges:()=>'Cartes badge QR imprimables.',badgeSignIn:()=>'Connexion par badge + code personnel (chaque membre active le sien).',kioskMemberPhotos:()=>'Photo du membre sur le reçu de la borne.',
+   membersDirectory:()=>'Annuaire, statuts, présence'+(on('whatsappIntegration')&&S.whatsapp?' · groupe WhatsApp lié':'')+'.',
+   whatsappIntegration:()=>S.whatsapp?'Groupe : '+S.whatsapp:'Lien du groupe à renseigner (étape Membres) ou dans l\'app.',
+   spaceQrCodes:()=>'Cartes QR imprimables par espace.',
+   coOwner:()=>'Copropriétaires : '+(S.perms.co_owner||[]).length+' permission(s).',
+   autoCheckInOut:()=>'Clôture automatique des réservations oubliées.',
+   dataExport:()=>'Classeur Excel complet.',
+   workingHours:()=>(GRAN.find(g=>g[0]===S.granularity)||[])[1]+' · '+S.dayStart+'–'+S.dayEnd+(S.granularity==='hours'?' · demi-journée = '+S.halfDayHours+' h, journée = '+S.fullDayHours+' h':'')+'.',
+   invoicePdfTemplate:()=>'Éditeur de rapports pour les factures et documents.',
+   memberNotifications:()=>'Notes courtes entre membres.',
+   documents:()=>'Bibliothèque de liens Drive/OneDrive/SharePoint… par rôle.',
+   dunning:()=>S.reminders.levels+' niveau(x), 1re relance après '+S.reminders.firstDays+' j (= délai de paiement), puis tous les '+S.reminders.betweenDays+' j.',
+   paymentReminders:()=>S.reminders.automatic===false?'Relances manuelles (interrupteur décoché).':'Relances automatiques chaque matin et à l\'ouverture de Finances par un admin.',
+   memberReports:()=>'Accord financier et rapport des paiements en libre-service.',
+   deletionRequests:()=>'Suppressions de réservations validées'+(S.autoValidate.owner||S.autoValidate.admin?' · auto-validation : '+[S.autoValidate.owner?'propriétaires':null,S.autoValidate.admin?'admins':null].filter(Boolean).join(', '):'')+'.',
+   roleManagement:()=>'Copropriétaire '+(S.perms.co_owner||[]).length+' · admin '+(S.perms.admin||[]).length+' · membre '+(S.perms.member||[]).length+' permission(s).',
+   vatManagement:()=>registered()?n(S.vatRates)+' taux ('+S.vatRates.filter(r=>String(r.label).trim()).map(r=>r.percent+' %').join(', ')+'), le premier par défaut.':'Sans objet tant que l\'espace n\'est pas assujetti.',
+   vatDeclarations:()=>registered()?'Déclaration '+(S.vatPeriod==='month'?'mensuelle':'trimestrielle')+'.':'Sans objet tant que l\'espace n\'est pas assujetti.',
+   einvoiceCustomerDelivery:()=>S.einvoice.customerUrl?'Service client : '+S.einvoice.customerUrl:'Service de remise au client à configurer dans l\'app.',
+   planObjectDelete:()=>'Suppression d\'objets du plan encore référencés (substitution d\'audit).',
+   notificationGrouping:()=>'Fil groupable par type, jour ou membre.',
+   bookingPolicies:()=>'Hors heures : '+((OUTSIDE.find(o=>o[0]===S.policies.outsideHours)||[])[1]||'').split(' — ')[0]+' · '+(S.policies.simultaneous||1)+' réservation(s) simultanée(s)'+(S.policies.allowPast?' · réservations passées autorisées':'')+(S.policies.adminCheckout?' · check-out par un admin':'')+'.',
+   nfcSeatTags:()=>'Tags NFC/RFID des chaises (se configurent dans l\'éditeur).',
+   formHelpHints:()=>'Encarts d\'aide et carrousels d\'astuces sur chaque écran.',
+   planMemberPhotos:()=>'Photos des occupants sur le plan.',
+   regionalFormats:()=>'Chaque membre choisit nombres, dates, horloge et fuseau ; espace : '+S.currency+', '+S.timezone+'.',
+   calendarHub:()=>'Le calendrier montre tout ce qui est daté, avec les règles d\'accès par catégorie.',
+   dataAccessLog:()=>'Chaque membre voit qui a consulté ses finances.',
+   memberDataExport:()=>'Export RGPD (art. 20) et départ avec effacement (art. 17).',
+   financeFaces:()=>'Finances en quatre volets : Relevé, Paiements, Factures, Documents.',
+   supplyExpenses:()=>'Une dépense peut être une fourniture : validée, elle réapprovisionne un service consommable.',
+   validationScopes:()=>'Portée des règles : '+Object.entries(S.domains).filter(([,d])=>d.on&&d.validators&&d.validators!=='admins').map(([k,d])=>(DOMAINS.find(x=>x[0]===k)||[k,k])[1]+' → '+(d.validators==='members'?'tous les membres':'personnes désignées')).join(', ')+(Object.values(S.domains).some(d=>d.on&&d.validators&&d.validators!=='admins')?'.':'admins partout (personnes désignées dans l\'app).'),
+   uiAnimations:()=>'Transitions animées (le réglage système « animations réduites » prime).',
+  };
+  const active=FEATURES.filter(([k])=>on(k)),inactive=FEATURES.filter(([k])=>!on(k));
+  const children=k=>Object.entries(REQUIRES).filter(([,p])=>p===k).map(([c])=>c).filter(c=>on(c));
+  const k=[help('features'),h('p',{class:'hint'},active.length+' fonctionnalité(s) seront activées, '+inactive.length+' resteront désactivées. Tout reste modifiable ensuite dans l\'app.')];
+  for(const[key,t,d]of active){let conf='';try{conf=cfg[key]?cfg[key]():''}catch(e){conf=''}
+   const kids=children(key);
+   const c=h('input',{type:'checkbox'});c.checked=true;c.onchange=()=>{S.features[key]=false;for(const[ch,pp]of Object.entries(REQUIRES))if(!on(ch))S.features[ch]=false;save();render()};
+   k.push(h('div',{class:'card'},h('label',{class:'check',style:'margin:0'},c,h('span',{},h('b',{},t),h('div',{class:'d'},d),conf?h('div',{class:'d',style:'margin-top:4px;color:var(--ink)'},'Configuré : '+conf):null,
+     kids.length?h('div',{class:'d',style:'margin-top:4px'},'Décocher désactive aussi : '+kids.map(featureTitle).join(', ')+'.'):null))))}
+  if(inactive.length)k.push(h('details',{},h('summary',{},'Fonctionnalités non activées ('+inactive.length+')'),
+   ...inactive.map(([key,t,d])=>{const parent=REQUIRES[key];const avail=!parent||on(parent);
+    return checkbox(t,avail?d:d+' — nécessite « '+featureTitle(parent)+' ».',false,v=>{if(avail){S.features[key]=v;save()}},avail?'':'off')})));
+  return k},
+ check(){const active=FEATURES.filter(([k])=>on(k)).length;return[F.ok(active+' fonctionnalité(s) activées, '+(FEATURES.length-active)+' désactivées — chacune avec sa configuration.')]}},
 {id:'review',title:'Vérification et export',why:"Tout ce que l'assistant a vérifié, étape par étape. Les points bloquants sont à corriger ; les avertissements sont des choix à confirmer.",
  build(){const all=findings();const c={ok:0,warn:0,err:0};all.forEach(x=>c[x.lvl]++);
   const k=[h('div',{class:'summary'},h('b',{class:'ok'},'✓ '+c.ok+' vérifié(s)'),h('b',{class:'warn'},'⚠ '+c.warn+' avertissement(s)'),h('b',{class:'err'},'✕ '+c.err+' bloquant(s)'))];
@@ -575,7 +641,7 @@ function exportXml(){
  push('  </settings>');
  // accessories — app-importable
  push('  <accessories>');
- S.accessories.filter(a=>a.name.trim()).forEach((a,i)=>push(`    <accessory name="${esc(a.name.trim())}" supplement-cents="${Math.round((parseFloat(a.supp)||0)*100)}" active="true" sort-order="${i}"/>`));
+ if(on('accessorySupplements'))S.accessories.filter(a=>a.name.trim()).forEach((a,i)=>push(`    <accessory name="${esc(a.name.trim())}" supplement-cents="${Math.round((parseFloat(a.supp)||0)*100)}" active="true" sort-order="${i}"/>`));
  push('  </accessories>');
  // floor plan — app-importable, auto-layout (seat footprint 6x4, ADR 0005)
  push('  <floor-plan>');
@@ -600,11 +666,11 @@ function exportXml(){
  push('  </floor-plan>');
  // setup extension — ignored by the app importer, read by the configurator
  push('  <setup>');
- push(`    <availability granularity="${S.granularity}" day-start="${S.dayStart}" half-boundary="${S.boundary}" day-end="${S.dayEnd}" open-weekdays="${S.weekdays.join(',')}" allow-past-bookings="${!!S.policies.allowPast}" outside-hours-mode="${S.policies.outsideHours||'charged'}" simultaneous-reservations="${S.policies.simultaneous||'1'}" admin-check-out="${!!S.policies.adminCheckout}" advance-horizon-days="${S.horizonDays}" min-duration-minutes="${S.minDuration}" max-duration-minutes="${S.maxDuration}">`);
+ push(`    <availability granularity="${S.granularity}" day-start="${S.dayStart}" half-boundary="${S.boundary}" day-end="${S.dayEnd}" open-weekdays="${S.weekdays.join(',')}" allow-past-bookings="${on('bookingPolicies')&&!!S.policies.allowPast}" outside-hours-mode="${on('bookingPolicies')?(S.policies.outsideHours||'charged'):'charged'}" simultaneous-reservations="${on('bookingPolicies')?(S.policies.simultaneous||'1'):'1'}" admin-check-out="${on('bookingPolicies')&&!!S.policies.adminCheckout}" advance-horizon-days="${S.horizonDays}" min-duration-minutes="${S.minDuration}" max-duration-minutes="${S.maxDuration}">`);
  S.closures.filter(Boolean).forEach(c=>push(`      <closure day="${esc(c)}"/>`));
  if(S.granularity==='hours')push(`      <hour-equivalents half-day="${S.halfDayHours}" full-day="${S.fullDayHours}"/>`);
  push('    </availability>');
- push(`    <identity language="${esc(S.language)}" address="${esc(S.address)}" whatsapp-group="${esc(S.whatsapp)}" desk-opacity="${S.deskOpacity}">`);
+ push(`    <identity language="${esc(S.language)}" address="${esc(S.address)}" whatsapp-group="${on('whatsappIntegration')?esc(S.whatsapp):''}" desk-opacity="${S.deskOpacity}">`);
  for(const[k,v]of Object.entries(S.invites))if(String(v).trim())push(`      <invitation lang="${k}" text="${esc(v.trim())}"/>`);
  push('    </identity>');
  push('    <billing>');
@@ -613,19 +679,19 @@ function exportXml(){
  S.packages.filter(p=>p.name.trim()).forEach(p=>push(`      <package name="${esc(p.name)}" days="${p.days||0}" price-cents="${Math.round((parseFloat(p.price)||0)*100)}"/>`));
  push('    </billing>');
  push('    <services>');
- S.services.filter(s=>s.name.trim()).forEach(s=>push(`      <service name="${esc(s.name)}" price-cents="${Math.round((parseFloat(s.price)||0)*100)}"${s.vat!==''&&s.vat!=null?` vat-percent="${s.vat}"`:''}/>`));
+ if(on('services'))S.services.filter(s=>s.name.trim()).forEach(s=>push(`      <service name="${esc(s.name)}" price-cents="${Math.round((parseFloat(s.price)||0)*100)}"${s.vat!==''&&s.vat!=null?` vat-percent="${s.vat}"`:''}/>`));
  push('    </services>');
  push(`    <legal organization="${S.org}" vat-regime="${S.vatRegime}" registration="${esc(S.regNumber)}" vat-id="${esc(S.vatId)}" exemption-reason="${esc(S.exemption)}" street="${esc(S.street)}" postal-code="${esc(S.postal)}" city="${esc(S.city)}">`);
- S.vatRates.filter(r=>String(r.label).trim()&&r.percent!==''&&r.percent!=null).forEach((r,i)=>push(`      <vat-rate label="${esc(r.label)}" percent="${r.percent}" default="${i===0}"/>`));
+ if(on('vatManagement')&&registered())S.vatRates.filter(r=>String(r.label).trim()&&r.percent!==''&&r.percent!=null).forEach((r,i)=>push(`      <vat-rate label="${esc(r.label)}" percent="${r.percent}" default="${i===0}"/>`));
  for(const[k,v]of Object.entries(S.mentions))if(String(v).trim())push(`      <mention key="${k}" value="${esc(v.trim())}"/>`);
- push(`      <reminders levels="${S.reminders.levels}" first-days="${S.reminders.firstDays}" between-days="${S.reminders.betweenDays}" automatic="${S.reminders.automatic!==false}"/>`);
- push(`      <vat-declaration period="${S.vatPeriod}"/>`);
+ if(on('dunning'))push(`      <reminders levels="${S.reminders.levels}" first-days="${S.reminders.firstDays}" between-days="${S.reminders.betweenDays}" automatic="${on('paymentReminders')&&S.reminders.automatic!==false}"/>`);
+ if(on('vatDeclarations')&&registered())push(`      <vat-declaration period="${S.vatPeriod}"/>`);
  const ei=S.einvoice;
- if(Object.values(ei).some(v=>String(v).trim()))
+ if(on('invoicing')&&isEU()&&Object.values(ei).some(v=>String(v).trim()))
   push(`      <einvoice url="${esc(ei.url)}" token="${esc(ei.token)}" auth-header="${esc(ei.header)}" file-field="${esc(ei.field)}" uat-url="${esc(ei.uatUrl)}" uat-token="${esc(ei.uatToken)}" dev-url="${esc(ei.devUrl)}" dev-token="${esc(ei.devToken)}" customer-url="${esc(ei.customerUrl)}" customer-token="${esc(ei.customerToken)}" customer-auth-header="${esc(ei.customerHeader)}" customer-file-field="${esc(ei.customerField)}"/>`);
  push('    </legal>');
  push('    <roles>');
- for(const[role,list]of Object.entries(S.perms))push(`      <role name="${role}" permissions="${list.join(',')}"/>`);
+ if(on('roleManagement'))for(const[role,list]of Object.entries(S.perms))push(`      <role name="${role}" permissions="${list.join(',')}"/>`);
  push(`      <validation required="${S.validation.required}" owner-sign-off="${S.validation.ownerSignOff}">`);
  for(const[k]of DOMAINS){const d=S.domains[k];if(d&&d.on)
   push(`        <domain event-type="${k}" required="${d.required}" owner-sign-off="${d.ownerSignOff}"${d.validators&&d.validators!=='admins'?` validators="${d.validators}"`:''}${k==='reservation_delete'?` auto-validate-admin="${!!S.autoValidate.admin}" auto-validate-owner="${!!S.autoValidate.owner}"`:''}/>`)}
