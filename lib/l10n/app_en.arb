@@ -6571,6 +6571,14 @@
   "@languageNameJA": {
     "description": "#713 - language name in the format picker"
   },
+  "countryNameCA": "Canada",
+  "@countryNameCA": {
+    "description": "#713 - region name in the format picker"
+  },
+  "countryNameNO": "Norway",
+  "@countryNameNO": {
+    "description": "#713 - region name in the format picker"
+  },
   "workspaceXmlExport": "Export workspace (XML)",
   "@workspaceXmlExport": {
     "description": "Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)"

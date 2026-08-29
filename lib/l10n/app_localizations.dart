@@ -9884,6 +9884,18 @@ abstract class AppLocalizations {
   /// **'Japanese'**
   String get languageNameJA;
 
+  /// #713 - region name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Canada'**
+  String get countryNameCA;
+
+  /// #713 - region name in the format picker
+  ///
+  /// In en, this message translates to:
+  /// **'Norway'**
+  String get countryNameNO;
+
   /// Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)
   ///
   /// In en, this message translates to:

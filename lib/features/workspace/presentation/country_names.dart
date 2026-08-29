@@ -7,6 +7,8 @@ import '../../../l10n/app_localizations.dart';
 String localizedCountryName(AppLocalizations? l10n, String code) {
   return switch (code) {
     'DE' => l10n?.countryNameDE ?? 'Germany',
+    'CA' => l10n?.countryNameCA ?? 'Canada',
+    'NO' => l10n?.countryNameNO ?? 'Norway',
     'MX' => l10n?.countryNameMX ?? 'Mexico',
     'AU' => l10n?.countryNameAU ?? 'Australia',
     'JP' => l10n?.countryNameJP ?? 'Japan',

@@ -470,5 +470,13 @@
   "languageNameJA": "Japonés",
   "@languageNameJA": {
     "description": "#713 - language name in the format picker"
+  },
+  "countryNameCA": "Canadá",
+  "@countryNameCA": {
+    "description": "#713 - region name in the format picker"
+  },
+  "countryNameNO": "Noruega",
+  "@countryNameNO": {
+    "description": "#713 - region name in the format picker"
   }
 }

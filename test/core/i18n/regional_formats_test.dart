@@ -47,12 +47,14 @@ void main() {
     expect(preview, findsOneWidget);
 
     // 12-hour clock: the preview flips, and the profile carries it.
+    await tester.ensureVisible(find.text('12h'));
     await tester.tap(find.text('12h'));
     await tester.pumpAndSettle();
     expect(r.profile.formatPrefs.clock, ClockPref.h12);
     expect(tester.widget<Text>(preview).data, anyOf(contains('AM'), contains('PM')));
 
     // Device zone: stored, not merely toggled.
+    await tester.ensureVisible(find.byKey(const ValueKey('regional-device-zone')));
     await tester.tap(find.byKey(const ValueKey('regional-device-zone')));
     await tester.pumpAndSettle();
     expect(r.profile.formatPrefs.timeZoneMode, TimeZoneMode.device);

@@ -3293,6 +3293,14 @@
   "@languageNameJA": {
     "description": "#713 - language name in the format picker"
   },
+  "countryNameCA": "Canada",
+  "@countryNameCA": {
+    "description": "#713 - region name in the format picker"
+  },
+  "countryNameNO": "Norvegia",
+  "@countryNameNO": {
+    "description": "#713 - region name in the format picker"
+  },
   "workspaceXmlExport": "Esporta lo spazio (XML)",
   "workspaceXmlExportSubtitle": "Impostazioni e planimetria in un file condivisibile. Senza membri, prenotazioni o dati finanziari.",
   "workspaceXmlImport": "Importa lo spazio (XML)",

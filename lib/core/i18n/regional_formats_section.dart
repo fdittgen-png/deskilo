@@ -68,6 +68,7 @@ class _RegionalFormatsSheet extends ConsumerWidget {
         ).then((_) => ref.invalidate(myProfileProvider));
 
     return SafeArea(
+      child: SingleChildScrollView(
       child: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -168,6 +169,7 @@ class _RegionalFormatsSheet extends ConsumerWidget {
           )),
         ),
       ],
+      ),
       ),
     );
   }

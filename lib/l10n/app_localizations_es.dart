@@ -5540,6 +5540,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get languageNameJA => 'Japonés';
 
   @override
+  String get countryNameCA => 'Canadá';
+
+  @override
+  String get countryNameNO => 'Noruega';
+
+  @override
   String get workspaceXmlExport => 'Exportar el espacio (XML)';
 
   @override
