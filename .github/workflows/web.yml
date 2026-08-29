@@ -57,8 +57,13 @@ permissions:
   pages: write
   id-token: write
 
+# One group per ref AND per purpose: a superseded PR push still cancels
+# its predecessor, but the release train's web leg (deploy=false, called
+# on master) and a standalone `-f deploy=true` dispatch on the same ref
+# no longer cancel each other — that collision is what left the train's
+# web leg 'cancelled' in #715 and swallowed two Pages deploys on 08-29.
 concurrency:
-  group: web-${{ github.ref }}
+  group: web-${{ github.ref }}-${{ github.event_name }}-${{ inputs.deploy == true }}
   cancel-in-progress: true
 
 jobs:
