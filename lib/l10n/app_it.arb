@@ -1103,6 +1103,8 @@
   "@featureMemberDataExportDesc": {
     "description": "#718/#719"
   },
+  "featureFinanceFacesTitle": "Finanze in tre viste",
+  "featureFinanceFacesDesc": "La scheda Finanze mostra tre viste — Pagamenti, Consumo, Fatture — sotto un unico selettore di mese, ciascuna con il proprio aiuto. Disattivata: una sola colonna.",
   "helpHintLearnMore": "Scopri di più",
   "helpHintDismiss": "Nascondi suggerimento",
   "helpHintPrevTip": "Suggerimento precedente",
@@ -1218,6 +1220,18 @@
   "@helpHintPrivacyTip3": {
     "description": "#718/#719 - help hints"
   },
+  "helpHintMoneyPayments": "Ciò che devi e ciò che hai pagato: posizioni aperte, crediti, il saldo e come regolarlo. Registra un pagamento qui.",
+  "helpHintMoneyPaymentsTopic": "La vista Pagamenti",
+  "helpHintMoneyPaymentsTip2": "Registra un pagamento con la data del movimento e il mese che salda — l'altra parte conferma.",
+  "helpHintMoneyPaymentsTip3": "Pagare online salda il dovuto subito; la scheda istruzioni mostra la via manuale con il riferimento da indicare.",
+  "helpHintMoneyPaymentsTip3Topic": "pagamenti online",
+  "helpHintMoneyConsumption": "Ciò che hai usato questo mese: giorni, abbonamento, servizi e pacchetti — e le richieste che si aggiungono.",
+  "helpHintMoneyConsumptionTopic": "La vista Consumo",
+  "helpHintMoneyConsumptionTip2": "Una mattina prenotata conta mezza giornata; i giorni fuori orario seguono la politica fuori-orario dello spazio.",
+  "helpHintMoneyConsumptionTip2Topic": "Come si comporta la prenotazione",
+  "helpHintMoneyConsumptionTip3": "Giorni finiti? Chiedi mezze giornate extra, compra un pacchetto o continua a prenotare a consumo — secondo il tuo piano.",
+  "helpHintMoneyInvoices": "I tuoi documenti: la fattura del mese, ogni fattura che ti è stata emessa e le tue condizioni.",
+  "helpHintMoneyInvoicesTopic": "La vista Fatture",
   "helpTitle": "Aiuto",
   "helpContents": "Indice",
   "helpHintMessages": "Tutte le conversazioni in un elenco, la più recente in alto. Tocca la matita per scrivere a qualcuno o creare un gruppo.",
@@ -2732,6 +2746,10 @@
   "@paymentCopied": {
     "description": "#711 - globalization"
   },
+  "moneyFacePayments": "Pagamenti",
+  "moneyFaceConsumption": "Consumo",
+  "moneyFaceInvoices": "Fatture",
+  "moneyNoInvoicesYet": "Nessuna fattura ancora — lo spazio fattura il mese una volta chiuso.",
   "planDurationLabel": "Durata",
   "@planDurationLabel": {
     "description": "Booking sheet: grid duration slider label (#574)"

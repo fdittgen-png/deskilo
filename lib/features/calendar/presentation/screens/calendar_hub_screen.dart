@@ -14,6 +14,8 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../money/domain/invoice_ubl.dart';
 import '../../../money/presentation/widgets/invoice_detail_sheet.dart';
+import '../../../money/domain/money_face.dart';
+import '../../../money/providers/money_face_controller.dart';
 import '../../../money/providers/money_focus_controller.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -119,6 +121,8 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         openInbox(ref, InboxTab.alerts);
         context.go('/messages');
       case LedgerLink(:final period):
+        // #720 — a payment lands on the Payments face of that month.
+        ref.read(moneyFaceControllerProvider.notifier).show(MoneyFace.payments);
         ref.read(moneyFocusControllerProvider.notifier).setPeriod(period);
         context.go('/money');
       case InvoiceLink(:final id):

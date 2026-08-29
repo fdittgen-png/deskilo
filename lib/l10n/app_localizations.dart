@@ -3368,6 +3368,18 @@ abstract class AppLocalizations {
   /// **'Every member can export their data as one file (GDPR art. 20) and leave the workspace with their personal data cleared (art. 17) from Settings → Privacy & data.'**
   String get featureMemberDataExportDesc;
 
+  /// No description provided for @featureFinanceFacesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Finance faces'**
+  String get featureFinanceFacesTitle;
+
+  /// No description provided for @featureFinanceFacesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The Finances tab shows three faces — Payments, Consumption, Invoices — under one month chooser, each with its own help. Off: one column.'**
+  String get featureFinanceFacesDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -3925,6 +3937,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Every read of your finances by someone else is logged by the server — the log cannot be skipped or edited.'**
   String get helpHintPrivacyTip3;
+
+  /// No description provided for @helpHintMoneyPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'What you owe and what you paid: open positions, credits, the balance and how to pay it. Record a payment here.'**
+  String get helpHintMoneyPayments;
+
+  /// No description provided for @helpHintMoneyPaymentsTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'The Payments face'**
+  String get helpHintMoneyPaymentsTopic;
+
+  /// No description provided for @helpHintMoneyPaymentsTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Record a payment with the date the money moved and the month it settles — the other side confirms it.'**
+  String get helpHintMoneyPaymentsTip2;
+
+  /// No description provided for @helpHintMoneyPaymentsTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay online settles what is owed right away; the instructions card shows the manual way with the reference to quote.'**
+  String get helpHintMoneyPaymentsTip3;
+
+  /// No description provided for @helpHintMoneyPaymentsTip3Topic.
+  ///
+  /// In en, this message translates to:
+  /// **'online payments'**
+  String get helpHintMoneyPaymentsTip3Topic;
+
+  /// No description provided for @helpHintMoneyConsumption.
+  ///
+  /// In en, this message translates to:
+  /// **'What you used this month: days, subscription, services and packages — and the requests that add to them.'**
+  String get helpHintMoneyConsumption;
+
+  /// No description provided for @helpHintMoneyConsumptionTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'The Consumption face'**
+  String get helpHintMoneyConsumptionTopic;
+
+  /// No description provided for @helpHintMoneyConsumptionTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'A booked morning counts as half a day; days outside the opening hours follow the workspace\'s outside-hours policy.'**
+  String get helpHintMoneyConsumptionTip2;
+
+  /// No description provided for @helpHintMoneyConsumptionTip2Topic.
+  ///
+  /// In en, this message translates to:
+  /// **'How booking behaves'**
+  String get helpHintMoneyConsumptionTip2Topic;
+
+  /// No description provided for @helpHintMoneyConsumptionTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of days? Request extra half-days, buy a package, or keep booking pay-as-you-go — whichever your plan allows.'**
+  String get helpHintMoneyConsumptionTip3;
+
+  /// No description provided for @helpHintMoneyInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Your documents: the month\'s invoice, every invoice you were issued, and your conditions.'**
+  String get helpHintMoneyInvoices;
+
+  /// No description provided for @helpHintMoneyInvoicesTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'The Invoices face'**
+  String get helpHintMoneyInvoicesTopic;
 
   /// No description provided for @inviteSectionTitle.
   ///
@@ -7615,6 +7699,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Copied.'**
   String get paymentCopied;
+
+  /// No description provided for @moneyFacePayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get moneyFacePayments;
+
+  /// No description provided for @moneyFaceConsumption.
+  ///
+  /// In en, this message translates to:
+  /// **'Consumption'**
+  String get moneyFaceConsumption;
+
+  /// No description provided for @moneyFaceInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get moneyFaceInvoices;
+
+  /// No description provided for @moneyNoInvoicesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No invoice yet — the month is invoiced by the workspace once it closes.'**
+  String get moneyNoInvoicesYet;
 
   /// Booking sheet: grid duration slider label (#574)
   ///

@@ -113,5 +113,17 @@
   "helpHintPrivacyTip3": "Every read of your finances by someone else is logged by the server — the log cannot be skipped or edited.",
   "@helpHintPrivacyTip3": {
     "description": "#718/#719 - help hints"
-  }
+  },
+  "helpHintMoneyPayments": "What you owe and what you paid: open positions, credits, the balance and how to pay it. Record a payment here.",
+  "helpHintMoneyPaymentsTopic": "The Payments face",
+  "helpHintMoneyPaymentsTip2": "Record a payment with the date the money moved and the month it settles — the other side confirms it.",
+  "helpHintMoneyPaymentsTip3": "Pay online settles what is owed right away; the instructions card shows the manual way with the reference to quote.",
+  "helpHintMoneyPaymentsTip3Topic": "online payments",
+  "helpHintMoneyConsumption": "What you used this month: days, subscription, services and packages — and the requests that add to them.",
+  "helpHintMoneyConsumptionTopic": "The Consumption face",
+  "helpHintMoneyConsumptionTip2": "A booked morning counts as half a day; days outside the opening hours follow the workspace's outside-hours policy.",
+  "helpHintMoneyConsumptionTip2Topic": "How booking behaves",
+  "helpHintMoneyConsumptionTip3": "Out of days? Request extra half-days, buy a package, or keep booking pay-as-you-go — whichever your plan allows.",
+  "helpHintMoneyInvoices": "Your documents: the month's invoice, every invoice you were issued, and your conditions.",
+  "helpHintMoneyInvoicesTopic": "The Invoices face"
 }

@@ -280,5 +280,9 @@
   "paymentCopied": "Copié.",
   "@paymentCopied": {
     "description": "#711 - globalization"
-  }
+  },
+  "moneyFacePayments": "Paiements",
+  "moneyFaceConsumption": "Consommation",
+  "moneyFaceInvoices": "Factures",
+  "moneyNoInvoicesYet": "Pas encore de facture — l'espace facture le mois une fois clos."
 }

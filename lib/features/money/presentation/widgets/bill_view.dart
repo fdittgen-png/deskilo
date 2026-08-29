@@ -12,6 +12,7 @@ import '../../../events/domain/workspace_event.dart';
 import '../../../workspace/domain/overage_policy.dart';
 import '../../../workspace/domain/payment_instructions.dart';
 import '../../domain/bill_sections.dart';
+import '../../domain/money_face.dart';
 import '../../domain/ledger_entry.dart';
 import '../../domain/statement.dart';
 import '../invoice_status.dart';
@@ -31,6 +32,7 @@ class BillView extends StatelessWidget {
     required this.nowPeriod,
     this.paymentInstructions = const PaymentInstructions(),
     this.onlinePaymentsEnabled = false,
+    this.face,
     this.onPayOnline,
     this.settlement,
   });
@@ -69,6 +71,12 @@ class BillView extends StatelessWidget {
   /// outstanding forever.
   final PeriodSettlement? settlement;
 
+  /// #720 — render only the cards of one face; null keeps the whole bill
+  /// (the flag-off column and the PDF export, which prints everything).
+  final MoneyFace? face;
+
+  bool _shows(MoneyFace f) => face == null || face == f;
+
   @override
   Widget build(BuildContext context) {
     final currency = moneyFormat(currencyCode);
@@ -82,35 +90,28 @@ class BillView extends StatelessWidget {
       nowPeriod: nowPeriod,
     );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
+    // #720 — each card belongs to ONE face; the whole bill is the three
+    // faces in order. The first card of a face carries no top gap.
+    final cards = <Widget>[
+      if (_shows(MoneyFace.consumption)) ...[
         // At-a-glance usage for the current month (days included, used and
         // left) — the member's answer to "how much can I still book?".
         _EntitlementCard(statement: statement, money: money),
-        const SizedBox(height: 8),
         _SubscriptionCard(statement: statement, money: money),
-        if (sections.serviceEntries.isNotEmpty) ...[
-          const SizedBox(height: 8),
+        if (sections.serviceEntries.isNotEmpty)
           _ServicesCard(sections: sections, money: money),
-        ],
-        if (sections.packageEntries.isNotEmpty) ...[
-          const SizedBox(height: 8),
+        if (sections.packageEntries.isNotEmpty)
           _PackagesCard(entries: sections.packageEntries, money: money),
-        ],
-        if (sections.openPositions.isNotEmpty) ...[
-          const SizedBox(height: 8),
+      ],
+      if (_shows(MoneyFace.payments)) ...[
+        if (sections.openPositions.isNotEmpty)
           _OpenPositionsCard(positions: sections.openPositions, money: money),
-        ],
-        if (sections.creditEntries.isNotEmpty) ...[
-          const SizedBox(height: 8),
+        if (sections.creditEntries.isNotEmpty)
           _CreditsCard(entries: sections.creditEntries, money: money),
-        ],
-        if (settlement != null) ...[
-          const SizedBox(height: 8),
-          _InvoiceCard(settlement: settlement!, money: money),
-        ],
-        const SizedBox(height: 8),
+      ],
+      if (_shows(MoneyFace.invoices) && settlement != null)
+        _InvoiceCard(settlement: settlement!, money: money),
+      if (_shows(MoneyFace.payments)) ...[
         _BalanceFooter(
           statement: statement,
           settlement: settlement,
@@ -122,14 +123,21 @@ class BillView extends StatelessWidget {
         // month owes its invoice REMAINDER, not its ledger balance (#510).
         if (_owedCents > 0 &&
             (!paymentInstructions.isEmpty ||
-                (onlinePaymentsEnabled && onPayOnline != null))) ...[
-          const SizedBox(height: 8),
+                (onlinePaymentsEnabled && onPayOnline != null)))
           HowToPayCard(
             instructions: paymentInstructions,
             onPayOnline: onlinePaymentsEnabled && onPayOnline != null
                 ? () => onPayOnline!(_owedCents)
                 : null,
           ),
+      ],
+    ];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (var i = 0; i < cards.length; i++) ...[
+          if (i > 0) const SizedBox(height: 8),
+          cards[i],
         ],
       ],
     );

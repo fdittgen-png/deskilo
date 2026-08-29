@@ -113,5 +113,17 @@
   "helpHintPrivacyTip3": "Jede Einsicht in deine Finanzen durch andere wird vom Server protokolliert — das Protokoll lässt sich weder umgehen noch ändern.",
   "@helpHintPrivacyTip3": {
     "description": "#718/#719 - help hints"
-  }
+  },
+  "helpHintMoneyPayments": "Was Sie schulden und was Sie bezahlt haben: offene Posten, Gutschriften, der Saldo und wie Sie ihn begleichen. Zahlung hier erfassen.",
+  "helpHintMoneyPaymentsTopic": "Die Ansicht Zahlungen",
+  "helpHintMoneyPaymentsTip2": "Erfassen Sie eine Zahlung mit dem Datum der Buchung und dem Monat, den sie ausgleicht — die Gegenseite bestätigt.",
+  "helpHintMoneyPaymentsTip3": "Online zahlen begleicht den offenen Betrag sofort; die Hinweiskarte zeigt den manuellen Weg mit der anzugebenden Referenz.",
+  "helpHintMoneyPaymentsTip3Topic": "Online-Zahlungen",
+  "helpHintMoneyConsumption": "Was Sie diesen Monat genutzt haben: Tage, Abonnement, Leistungen und Pakete — und die Anfragen, die dazukommen.",
+  "helpHintMoneyConsumptionTopic": "Die Ansicht Verbrauch",
+  "helpHintMoneyConsumptionTip2": "Ein gebuchter Vormittag zählt als halber Tag; Tage außerhalb der Öffnungszeiten folgen der Außerhalb-Regel des Workspace.",
+  "helpHintMoneyConsumptionTip2Topic": "Wie sich Buchungen verhalten",
+  "helpHintMoneyConsumptionTip3": "Keine Tage mehr? Halbe Tage anfragen, ein Paket kaufen oder nach Verbrauch weiterbuchen — je nach Tarif.",
+  "helpHintMoneyInvoices": "Ihre Dokumente: die Monatsrechnung, jede an Sie gestellte Rechnung und Ihre Konditionen.",
+  "helpHintMoneyInvoicesTopic": "Die Ansicht Rechnungen"
 }

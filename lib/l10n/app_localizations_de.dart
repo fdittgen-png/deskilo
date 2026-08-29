@@ -1875,6 +1875,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Jedes Mitglied kann seine Daten als eine Datei exportieren (DSGVO Art. 20) und den Bereich mit gelöschten persönlichen Daten verlassen (Art. 17), unter Einstellungen → Datenschutz & Daten.';
 
   @override
+  String get featureFinanceFacesTitle => 'Finanzen in drei Ansichten';
+
+  @override
+  String get featureFinanceFacesDesc =>
+      'Der Finanzen-Tab zeigt drei Ansichten — Zahlungen, Verbrauch, Rechnungen — unter einer Monatsauswahl, jede mit eigener Hilfe. Aus: eine Spalte.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override
@@ -2211,6 +2218,50 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get helpHintPrivacyTip3 =>
       'Jede Einsicht in deine Finanzen durch andere wird vom Server protokolliert — das Protokoll lässt sich weder umgehen noch ändern.';
+
+  @override
+  String get helpHintMoneyPayments =>
+      'Was Sie schulden und was Sie bezahlt haben: offene Posten, Gutschriften, der Saldo und wie Sie ihn begleichen. Zahlung hier erfassen.';
+
+  @override
+  String get helpHintMoneyPaymentsTopic => 'Die Ansicht Zahlungen';
+
+  @override
+  String get helpHintMoneyPaymentsTip2 =>
+      'Erfassen Sie eine Zahlung mit dem Datum der Buchung und dem Monat, den sie ausgleicht — die Gegenseite bestätigt.';
+
+  @override
+  String get helpHintMoneyPaymentsTip3 =>
+      'Online zahlen begleicht den offenen Betrag sofort; die Hinweiskarte zeigt den manuellen Weg mit der anzugebenden Referenz.';
+
+  @override
+  String get helpHintMoneyPaymentsTip3Topic => 'Online-Zahlungen';
+
+  @override
+  String get helpHintMoneyConsumption =>
+      'Was Sie diesen Monat genutzt haben: Tage, Abonnement, Leistungen und Pakete — und die Anfragen, die dazukommen.';
+
+  @override
+  String get helpHintMoneyConsumptionTopic => 'Die Ansicht Verbrauch';
+
+  @override
+  String get helpHintMoneyConsumptionTip2 =>
+      'Ein gebuchter Vormittag zählt als halber Tag; Tage außerhalb der Öffnungszeiten folgen der Außerhalb-Regel des Workspace.';
+
+  @override
+  String get helpHintMoneyConsumptionTip2Topic =>
+      'Wie sich Buchungen verhalten';
+
+  @override
+  String get helpHintMoneyConsumptionTip3 =>
+      'Keine Tage mehr? Halbe Tage anfragen, ein Paket kaufen oder nach Verbrauch weiterbuchen — je nach Tarif.';
+
+  @override
+  String get helpHintMoneyInvoices =>
+      'Ihre Dokumente: die Monatsrechnung, jede an Sie gestellte Rechnung und Ihre Konditionen.';
+
+  @override
+  String get helpHintMoneyInvoicesTopic => 'Die Ansicht Rechnungen';
 
   @override
   String get inviteSectionTitle => 'Jemanden einladen';
@@ -4294,6 +4345,19 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get paymentCopied => 'Kopiert.';
+
+  @override
+  String get moneyFacePayments => 'Zahlungen';
+
+  @override
+  String get moneyFaceConsumption => 'Verbrauch';
+
+  @override
+  String get moneyFaceInvoices => 'Rechnungen';
+
+  @override
+  String get moneyNoInvoicesYet =>
+      'Noch keine Rechnung — der Monat wird nach Abschluss vom Workspace abgerechnet.';
 
   @override
   String get planDurationLabel => 'Dauer';

@@ -1878,6 +1878,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Ogni membro può esportare i propri dati in un file (GDPR art. 20) e lasciare lo spazio con i dati personali cancellati (art. 17) da Impostazioni → Privacy e dati.';
 
   @override
+  String get featureFinanceFacesTitle => 'Finanze in tre viste';
+
+  @override
+  String get featureFinanceFacesDesc =>
+      'La scheda Finanze mostra tre viste — Pagamenti, Consumo, Fatture — sotto un unico selettore di mese, ciascuna con il proprio aiuto. Disattivata: una sola colonna.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override
@@ -2215,6 +2222,50 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get helpHintPrivacyTip3 =>
       'Ogni lettura delle tue finanze da parte di altri è registrata dal server — il registro non si può aggirare né modificare.';
+
+  @override
+  String get helpHintMoneyPayments =>
+      'Ciò che devi e ciò che hai pagato: posizioni aperte, crediti, il saldo e come regolarlo. Registra un pagamento qui.';
+
+  @override
+  String get helpHintMoneyPaymentsTopic => 'La vista Pagamenti';
+
+  @override
+  String get helpHintMoneyPaymentsTip2 =>
+      'Registra un pagamento con la data del movimento e il mese che salda — l\'altra parte conferma.';
+
+  @override
+  String get helpHintMoneyPaymentsTip3 =>
+      'Pagare online salda il dovuto subito; la scheda istruzioni mostra la via manuale con il riferimento da indicare.';
+
+  @override
+  String get helpHintMoneyPaymentsTip3Topic => 'pagamenti online';
+
+  @override
+  String get helpHintMoneyConsumption =>
+      'Ciò che hai usato questo mese: giorni, abbonamento, servizi e pacchetti — e le richieste che si aggiungono.';
+
+  @override
+  String get helpHintMoneyConsumptionTopic => 'La vista Consumo';
+
+  @override
+  String get helpHintMoneyConsumptionTip2 =>
+      'Una mattina prenotata conta mezza giornata; i giorni fuori orario seguono la politica fuori-orario dello spazio.';
+
+  @override
+  String get helpHintMoneyConsumptionTip2Topic =>
+      'Come si comporta la prenotazione';
+
+  @override
+  String get helpHintMoneyConsumptionTip3 =>
+      'Giorni finiti? Chiedi mezze giornate extra, compra un pacchetto o continua a prenotare a consumo — secondo il tuo piano.';
+
+  @override
+  String get helpHintMoneyInvoices =>
+      'I tuoi documenti: la fattura del mese, ogni fattura che ti è stata emessa e le tue condizioni.';
+
+  @override
+  String get helpHintMoneyInvoicesTopic => 'La vista Fatture';
 
   @override
   String get inviteSectionTitle => 'Invita qualcuno';
@@ -4292,6 +4343,19 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get paymentCopied => 'Copiato.';
+
+  @override
+  String get moneyFacePayments => 'Pagamenti';
+
+  @override
+  String get moneyFaceConsumption => 'Consumo';
+
+  @override
+  String get moneyFaceInvoices => 'Fatture';
+
+  @override
+  String get moneyNoInvoicesYet =>
+      'Nessuna fattura ancora — lo spazio fattura il mese una volta chiuso.';
 
   @override
   String get planDurationLabel => 'Durata';

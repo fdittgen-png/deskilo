@@ -113,5 +113,17 @@
   "helpHintPrivacyTip3": "Cada lectura de sus finanzas por otra persona la registra el servidor — el registro no se puede omitir ni editar.",
   "@helpHintPrivacyTip3": {
     "description": "#718/#719 - help hints"
-  }
+  },
+  "helpHintMoneyPayments": "Lo que debes y lo que pagaste: posiciones abiertas, abonos, el saldo y cómo liquidarlo. Registra un pago aquí.",
+  "helpHintMoneyPaymentsTopic": "La vista Pagos",
+  "helpHintMoneyPaymentsTip2": "Registra un pago con la fecha del movimiento y el mes que salda — la otra parte confirma.",
+  "helpHintMoneyPaymentsTip3": "Pagar en línea liquida lo debido al instante; la tarjeta de instrucciones muestra la vía manual con la referencia a indicar.",
+  "helpHintMoneyPaymentsTip3Topic": "pagos en línea",
+  "helpHintMoneyConsumption": "Lo que has usado este mes: días, suscripción, servicios y paquetes — y las solicitudes que se añaden.",
+  "helpHintMoneyConsumptionTopic": "La vista Consumo",
+  "helpHintMoneyConsumptionTip2": "Una mañana reservada cuenta medio día; los días fuera del horario siguen la política de fuera de horario del espacio.",
+  "helpHintMoneyConsumptionTip2Topic": "Cómo se comporta la reserva",
+  "helpHintMoneyConsumptionTip3": "¿Sin días? Pide medios días extra, compra un paquete o sigue reservando por consumo — según tu plan.",
+  "helpHintMoneyInvoices": "Tus documentos: la factura del mes, todas las facturas que te emitieron y tus condiciones.",
+  "helpHintMoneyInvoicesTopic": "La vista Facturas"
 }

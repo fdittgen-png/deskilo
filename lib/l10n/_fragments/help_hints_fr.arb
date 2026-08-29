@@ -113,5 +113,17 @@
   "helpHintPrivacyTip3": "Chaque lecture de vos finances par quelqu'un d'autre est journalisée par le serveur — le journal ne peut être ni contourné ni modifié.",
   "@helpHintPrivacyTip3": {
     "description": "#718/#719 - help hints"
-  }
+  },
+  "helpHintMoneyPayments": "Ce que vous devez et ce que vous avez payé : positions ouvertes, avoirs, le solde et comment le régler. Enregistrez un paiement ici.",
+  "helpHintMoneyPaymentsTopic": "Le volet Paiements",
+  "helpHintMoneyPaymentsTip2": "Enregistrez un paiement avec la date du mouvement et le mois qu'il solde — l'autre partie confirme.",
+  "helpHintMoneyPaymentsTip3": "Payer en ligne règle le dû immédiatement ; la carte des instructions montre la voie manuelle avec la référence à indiquer.",
+  "helpHintMoneyPaymentsTip3Topic": "paiements en ligne",
+  "helpHintMoneyConsumption": "Ce que vous avez consommé ce mois : jours, abonnement, services et forfaits — et les demandes qui s'y ajoutent.",
+  "helpHintMoneyConsumptionTopic": "Le volet Consommation",
+  "helpHintMoneyConsumptionTip2": "Une matinée réservée compte pour une demi-journée ; les jours hors horaires suivent la politique hors-horaires de l'espace.",
+  "helpHintMoneyConsumptionTip2Topic": "Comment la réservation se comporte",
+  "helpHintMoneyConsumptionTip3": "Plus de jours ? Demandez des demi-journées, achetez un forfait ou continuez à la consommation — selon votre formule.",
+  "helpHintMoneyInvoices": "Vos documents : la facture du mois, toutes les factures qui vous ont été émises, et vos conditions.",
+  "helpHintMoneyInvoicesTopic": "Le volet Factures"
 }

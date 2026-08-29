@@ -27,6 +27,13 @@ Future<FakeMoneyRepository> pumpMoney(
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
   money ??= FakeMoneyRepository();
+  // #720 — these tests exercise the CLASSIC column (every card and
+  // button on one page); the faces have their own file.
+  workspace ??= FakeWorkspaceRepository.withWorkspace();
+  final ws = workspace.workspaces.first;
+  workspace.workspaces[0] = ws.copyWith(
+    featureFlags: {...ws.featureFlags, 'financeFaces': false},
+  );
   await tester.pumpWidget(
     ProviderScope(
       overrides: standardTestOverrides(

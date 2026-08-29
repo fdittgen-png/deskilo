@@ -1878,6 +1878,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cada miembro puede exportar sus datos en un archivo (RGPD art. 20) y abandonar el espacio con sus datos personales borrados (art. 17) desde Ajustes → Privacidad y datos.';
 
   @override
+  String get featureFinanceFacesTitle => 'Finanzas en tres vistas';
+
+  @override
+  String get featureFinanceFacesDesc =>
+      'La pestaña Finanzas muestra tres vistas — Pagos, Consumo, Facturas — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override
@@ -2214,6 +2221,49 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get helpHintPrivacyTip3 =>
       'Cada lectura de sus finanzas por otra persona la registra el servidor — el registro no se puede omitir ni editar.';
+
+  @override
+  String get helpHintMoneyPayments =>
+      'Lo que debes y lo que pagaste: posiciones abiertas, abonos, el saldo y cómo liquidarlo. Registra un pago aquí.';
+
+  @override
+  String get helpHintMoneyPaymentsTopic => 'La vista Pagos';
+
+  @override
+  String get helpHintMoneyPaymentsTip2 =>
+      'Registra un pago con la fecha del movimiento y el mes que salda — la otra parte confirma.';
+
+  @override
+  String get helpHintMoneyPaymentsTip3 =>
+      'Pagar en línea liquida lo debido al instante; la tarjeta de instrucciones muestra la vía manual con la referencia a indicar.';
+
+  @override
+  String get helpHintMoneyPaymentsTip3Topic => 'pagos en línea';
+
+  @override
+  String get helpHintMoneyConsumption =>
+      'Lo que has usado este mes: días, suscripción, servicios y paquetes — y las solicitudes que se añaden.';
+
+  @override
+  String get helpHintMoneyConsumptionTopic => 'La vista Consumo';
+
+  @override
+  String get helpHintMoneyConsumptionTip2 =>
+      'Una mañana reservada cuenta medio día; los días fuera del horario siguen la política de fuera de horario del espacio.';
+
+  @override
+  String get helpHintMoneyConsumptionTip2Topic => 'Cómo se comporta la reserva';
+
+  @override
+  String get helpHintMoneyConsumptionTip3 =>
+      '¿Sin días? Pide medios días extra, compra un paquete o sigue reservando por consumo — según tu plan.';
+
+  @override
+  String get helpHintMoneyInvoices =>
+      'Tus documentos: la factura del mes, todas las facturas que te emitieron y tus condiciones.';
+
+  @override
+  String get helpHintMoneyInvoicesTopic => 'La vista Facturas';
 
   @override
   String get inviteSectionTitle => 'Invitar a alguien';
@@ -4285,6 +4335,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get paymentCopied => 'Copiado.';
+
+  @override
+  String get moneyFacePayments => 'Pagos';
+
+  @override
+  String get moneyFaceConsumption => 'Consumo';
+
+  @override
+  String get moneyFaceInvoices => 'Facturas';
+
+  @override
+  String get moneyNoInvoicesYet =>
+      'Aún no hay factura — el espacio factura el mes una vez cerrado.';
 
   @override
   String get planDurationLabel => 'Duración';

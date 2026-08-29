@@ -143,5 +143,7 @@
   "featureMemberDataExportDesc": "Ogni membro può esportare i propri dati in un file (GDPR art. 20) e lasciare lo spazio con i dati personali cancellati (art. 17) da Impostazioni → Privacy e dati.",
   "@featureMemberDataExportDesc": {
     "description": "#718/#719"
-  }
+  },
+  "featureFinanceFacesTitle": "Finanze in tre viste",
+  "featureFinanceFacesDesc": "La scheda Finanze mostra tre viste — Pagamenti, Consumo, Fatture — sotto un unico selettore di mese, ciascuna con il proprio aiuto. Disattivata: una sola colonna."
 }

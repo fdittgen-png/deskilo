@@ -53,7 +53,8 @@ enum WorkspaceFeature {
   regionalFormats,
   calendarHub,
   dataAccessLog,
-  memberDataExport;
+  memberDataExport,
+  financeFaces;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -292,6 +293,10 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // from Settings → Privacy & data.
   WorkspaceFeature.memberDataExport:
       FeatureManifestEntry(feature: WorkspaceFeature.memberDataExport),
+  // #720 — Finances as three faces (Payments · Consumption · Invoices)
+  // under one period chooser. OFF keeps the single column.
+  WorkspaceFeature.financeFaces:
+      FeatureManifestEntry(feature: WorkspaceFeature.financeFaces),
   // #662 — signing IN by scanning a badge, then a PIN. Under nfcBadges
   // rather than kioskMode: it needs badges to EXIST, and turning badge
   // issuance off must take the login button with it, or the button

@@ -59,7 +59,11 @@ Future<FakeMoneyRepository> pumpMoney(
   await tester.pumpWidget(
     ProviderScope(
       overrides:
-          overrides ?? standardTestOverrides(money: money, events: events),
+          overrides ?? standardTestOverrides(
+        // #720 — the wired-fakes flow reads the CLASSIC bill column.
+        workspace: FakeWorkspaceRepository.withWorkspace(
+          featureFlags: const {'financeFaces': false},
+        ),money: money, events: events),
       child: const DeskiloApp(),
     ),
   );
@@ -372,6 +376,10 @@ void main() {
       final money = FakeMoneyRepository(events: events);
       final realtime = FakeRealtimeSync();
       final overrides = standardTestOverrides(
+          // #720 — the classic bill column.
+          workspace: FakeWorkspaceRepository.withWorkspace(
+            featureFlags: const {'financeFaces': false},
+          ),
           money: money, events: events, realtime: realtime);
       await pumpMoney(tester, money: money, overrides: overrides);
 
