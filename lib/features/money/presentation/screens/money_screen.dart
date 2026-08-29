@@ -37,6 +37,7 @@ import '../../domain/package.dart';
 import '../../domain/payment_method.dart';
 import '../../domain/payment_provider.dart';
 import '../../domain/statement.dart';
+import '../../providers/money_focus_controller.dart';
 import '../../providers/money_providers.dart';
 import '../payment_method_labels.dart';
 import '../widgets/account_card.dart';
@@ -884,6 +885,15 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // #718 — the calendar hub asks for a month; consume it once.
+    ref.listen(moneyFocusControllerProvider, (_, period) {
+      if (period == null) return;
+      final parts = period.split('-');
+      if (parts.length == 2) {
+        setState(() => _month = DateTime(int.parse(parts[0]), int.parse(parts[1])));
+      }
+      ref.read(moneyFocusControllerProvider.notifier).clear();
+    });
     final l10n = AppLocalizations.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final member = ref.watch(myMemberProvider).value;

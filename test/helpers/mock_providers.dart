@@ -39,6 +39,8 @@ import 'package:deskilo/core/time/clock.dart';
 import 'fake_realtime_sync.dart';
 import 'test_clock.dart';
 export 'test_clock.dart' show kTestNow, kTestPeriod;
+import 'package:deskilo/features/calendar/domain/calendar_repository.dart';
+import 'package:deskilo/features/calendar/providers/calendar_providers.dart';
 import 'package:deskilo/features/events/domain/event_repository.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
@@ -60,6 +62,7 @@ import 'package:supabase_flutter/supabase_flutter.dart'
     show AuthException, PostgrestException;
 
 import 'fake_accessory_repository.dart';
+import 'fake_calendar_repository.dart';
 import 'fake_event_repository.dart';
 import 'fake_floor_plan_repository.dart';
 import 'fake_money_repository.dart';
@@ -1357,6 +1360,7 @@ List<Override> standardTestOverrides({
   AccessoryRepository? accessories,
   ReservationRepository? reservations,
   EventRepository? events,
+  CalendarRepository? calendar,
   MoneyRepository? money,
   NotificationService? notifications,
   ActiveWorkspaceStore? activeWorkspace,
@@ -1398,6 +1402,8 @@ List<Override> standardTestOverrides({
         .overrideWithValue(reservations ?? FakeReservationRepository()),
     eventRepositoryProvider
         .overrideWithValue(events ?? FakeEventRepository()),
+    calendarRepositoryProvider
+        .overrideWithValue(calendar ?? FakeCalendarRepository()),
     moneyRepositoryProvider
         .overrideWithValue(money ?? FakeMoneyRepository()),
     notificationServiceProvider

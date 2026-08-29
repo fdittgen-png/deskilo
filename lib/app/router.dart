@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../features/auth/presentation/screens/auth_screen.dart';
 import '../features/auth/providers/auth_providers.dart';
-import '../features/calendar/presentation/screens/calendar_screen.dart';
+import '../features/calendar/presentation/screens/calendar_branch.dart';
 import '../features/editor/presentation/screens/editor_screen.dart';
 import '../features/members/presentation/screens/directory_screen.dart';
 import '../features/editor/presentation/screens/level_canvas_screen.dart';
@@ -213,7 +213,9 @@ GoRouter router(Ref ref) {
                     featureEnabled(WorkspaceFeature.calendarTab)
                         ? null
                         : '/messages',
-                builder: (context, state) => const CalendarScreen(),
+                // #718 — the hub when the feature is on, the classic
+                // reservations calendar when it is off; picked per build.
+                builder: (context, state) => const CalendarBranch(),
               ),
             ],
           ),

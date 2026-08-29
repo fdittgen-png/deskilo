@@ -937,6 +937,98 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get calendarWhoCanSee => 'Wer sieht das';
+
+  @override
+  String get calendarPrevious => 'Zurück';
+
+  @override
+  String get calendarNext => 'Weiter';
+
+  @override
+  String get calendarDay => 'Tag';
+
+  @override
+  String get calendarRange => 'Zeitraum';
+
+  @override
+  String get calendarMemberMe => 'Ich';
+
+  @override
+  String get calendarNothingHere => 'Nichts an diesen Tagen.';
+
+  @override
+  String calendarLockedKinds(String kinds) {
+    return 'Für dieses Mitglied nicht sichtbar: $kinds';
+  }
+
+  @override
+  String calendarEventTitle(String label) {
+    return 'Meldung: $label';
+  }
+
+  @override
+  String get calendarKindReservation => 'Buchungen';
+
+  @override
+  String get calendarKindCheckIn => 'Check-ins';
+
+  @override
+  String get calendarKindCheckOut => 'Check-outs';
+
+  @override
+  String get calendarKindEvent => 'Meldungen';
+
+  @override
+  String get calendarKindMessage => 'Nachrichten';
+
+  @override
+  String get calendarKindInvoice => 'Rechnungen';
+
+  @override
+  String get calendarKindPayment => 'Zahlungen';
+
+  @override
+  String get calendarKindConsumption => 'Verbrauch';
+
+  @override
+  String get calendarKindReminder => 'Erinnerungen';
+
+  @override
+  String get accessNobodyElse => 'niemand sonst';
+
+  @override
+  String get accessRuleReservations =>
+      'Jedes Mitglied des Bereichs — der Plan zeigt allen die Belegung.';
+
+  @override
+  String get accessRuleEvents => 'Du, das handelnde Mitglied und die Admins.';
+
+  @override
+  String get accessRuleMessages =>
+      'Nur die Personen in der Unterhaltung — keine Rolle liest eine Unterhaltung, an der sie nicht teilnimmt.';
+
+  @override
+  String accessRuleFinances(String people) {
+    return 'Du und die mit der Finanz-Berechtigung: $people.';
+  }
+
+  @override
+  String get accessRuleReminders => 'Nur du.';
+
+  @override
+  String get accessLogTitle => 'Wer auf deine Daten zugegriffen hat';
+
+  @override
+  String get accessLogEmpty =>
+      'Niemand hat deine Finanzen oder Nachrichten eingesehen.';
+
+  @override
+  String accessLogRow(String actor, String category, String subject) {
+    return '$actor hat $category von $subject eingesehen';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -1760,6 +1852,27 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureRegionalFormatsDesc =>
       'Mitglieder wählen, wie Zahlen, Daten, Uhr und Zeitzone ihnen angezeigt werden. Aus: alle lesen in der Heimatregion der App-Sprache, 24-Stunden, Bereichszeit.';
+
+  @override
+  String get featureCalendarHubTitle => 'Kalender-Hub';
+
+  @override
+  String get featureCalendarHubDesc =>
+      'Der Kalender zeigt alles Datierte — Buchungen, Check-ins, Meldungen, Nachrichten, Rechnungen, Zahlungen, Verbrauch, Erinnerungen — für einen Tag oder Zeitraum, jede Zeile öffnet ihre Quelle. Aus: nur Reservierungen.';
+
+  @override
+  String get featureDataAccessLogTitle => 'Datenzugriffsprotokoll';
+
+  @override
+  String get featureDataAccessLogDesc =>
+      'Mitglieder sehen, wer wann ihre Finanzen eingesehen hat (vom Server geschrieben, nie umgehbar). Aus: die Zeile ist verborgen, das Protokoll bleibt.';
+
+  @override
+  String get featureMemberDataExportTitle => 'Export & Löschung';
+
+  @override
+  String get featureMemberDataExportDesc =>
+      'Jedes Mitglied kann seine Daten als eine Datei exportieren (DSGVO Art. 20) und den Bereich mit gelöschten persönlichen Daten verlassen (Art. 17), unter Einstellungen → Datenschutz & Daten.';
 
   @override
   String get helpTitle => 'Hilfe';

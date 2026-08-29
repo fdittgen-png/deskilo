@@ -44,7 +44,8 @@ import 'package:flutter_test/flutter_test.dart';
 // Plan tab and Reserve hub maps; standalone, kiosk not required).
 // 44→45 (2026-08-28): #711 regionalFormats (member format locale, clock,
 // time-zone mode; Settings → Region & formats).
-const int _expectedFeatureCount = 45;
+// 45→48 (2026-08-29): #718 calendarHub, #719 dataAccessLog + memberDataExport.
+const int _expectedFeatureCount = 48;
 
 void main() {
   test('every functionality is registered — the pin', () {

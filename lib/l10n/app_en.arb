@@ -1138,6 +1138,140 @@
       }
     }
   },
+  "calendarWhoCanSee": "Who can see this",
+  "@calendarWhoCanSee": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarPrevious": "Previous",
+  "@calendarPrevious": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarNext": "Next",
+  "@calendarNext": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarDay": "Day",
+  "@calendarDay": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarRange": "Range",
+  "@calendarRange": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarMemberMe": "Me",
+  "@calendarMemberMe": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarNothingHere": "Nothing on these dates.",
+  "@calendarNothingHere": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarLockedKinds": "Not visible to you for this member: {kinds}",
+  "@calendarLockedKinds": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "kinds": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarEventTitle": "Alert: {label}",
+  "@calendarEventTitle": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarKindReservation": "Bookings",
+  "@calendarKindReservation": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindCheckIn": "Check-ins",
+  "@calendarKindCheckIn": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindCheckOut": "Check-outs",
+  "@calendarKindCheckOut": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindEvent": "Alerts",
+  "@calendarKindEvent": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindMessage": "Messages",
+  "@calendarKindMessage": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindInvoice": "Invoices",
+  "@calendarKindInvoice": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindPayment": "Payments",
+  "@calendarKindPayment": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindConsumption": "Consumption",
+  "@calendarKindConsumption": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindReminder": "Reminders",
+  "@calendarKindReminder": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessNobodyElse": "nobody else",
+  "@accessNobodyElse": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleReservations": "Every member of the workspace — the floor plan shows occupancy to everyone.",
+  "@accessRuleReservations": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleEvents": "You, the member who acted, and the admins.",
+  "@accessRuleEvents": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleMessages": "Only the people in the conversation — no role can read a conversation it is not part of.",
+  "@accessRuleMessages": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleFinances": "You, and those with the finance permission: {people}.",
+  "@accessRuleFinances": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "people": {
+        "type": "String"
+      }
+    }
+  },
+  "accessRuleReminders": "Only you.",
+  "@accessRuleReminders": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessLogTitle": "Who accessed your data",
+  "@accessLogTitle": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessLogEmpty": "Nobody has looked at your finances or messages.",
+  "@accessLogEmpty": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessLogRow": "{actor} read {category} of {subject}",
+  "@accessLogRow": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      },
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
   "appTitle": "DesKilo",
   "@appTitle": {
     "description": "Application name shown in the task switcher and app bar. Brand name — identical in all locales."
@@ -2104,6 +2238,30 @@
   "featureRegionalFormatsDesc": "Members choose how numbers, dates, the clock and the time zone are shown to them. Off: everyone reads in the app language's home region, 24-hour, workspace time.",
   "@featureRegionalFormatsDesc": {
     "description": "#711 - globalization"
+  },
+  "featureCalendarHubTitle": "Calendar hub",
+  "@featureCalendarHubTitle": {
+    "description": "#718/#719"
+  },
+  "featureCalendarHubDesc": "The calendar shows everything dated — bookings, check-ins, alerts, messages, invoices, payments, consumption, reminders — for a day or a range, each row opening its source. Off: reservations only.",
+  "@featureCalendarHubDesc": {
+    "description": "#718/#719"
+  },
+  "featureDataAccessLogTitle": "Data access log",
+  "@featureDataAccessLogTitle": {
+    "description": "#718/#719"
+  },
+  "featureDataAccessLogDesc": "Members see who looked at their finances and when (written by the server, never skippable). Off hides the row; the log is still kept.",
+  "@featureDataAccessLogDesc": {
+    "description": "#718/#719"
+  },
+  "featureMemberDataExportTitle": "Export & erasure",
+  "@featureMemberDataExportTitle": {
+    "description": "#718/#719"
+  },
+  "featureMemberDataExportDesc": "Every member can export their data as one file (GDPR art. 20) and leave the workspace with their personal data cleared (art. 17) from Settings → Privacy & data.",
+  "@featureMemberDataExportDesc": {
+    "description": "#718/#719"
   },
   "helpTitle": "Help",
   "helpContents": "Contents",

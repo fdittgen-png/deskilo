@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter_riverpod/misc.dart' show ProviderOrFamily;
 
+import '../../features/calendar/providers/calendar_providers.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/members/providers/directory_providers.dart';
 import '../../features/money/providers/money_providers.dart';
@@ -67,6 +68,8 @@ const bookingMutationTables = [
 
 TableInvalidation invalidationFor(String table) => switch (table) {
       'reservations' => TableInvalidation([
+          // #718 — the calendar hub renders this table too.
+          calendarItemsProvider,
           reservationsForDayProvider,
           reservationsForMonthProvider,
           myUpcomingReservationsProvider,
@@ -122,6 +125,8 @@ TableInvalidation invalidationFor(String table) => switch (table) {
       // message was invisible until the screen was rebuilt by hand.
       // That is the one thing a messenger may not do.
       'member_notes' => TableInvalidation([
+          // #718 — the calendar hub renders this table too.
+          calendarItemsProvider,
           myNotesProvider,
           conversationsProvider,
           // The family, so whichever thread is open repaints too.
@@ -134,6 +139,8 @@ TableInvalidation invalidationFor(String table) => switch (table) {
           conversationParticipantsProvider,
         ]),
       'events' || 'event_decisions' => TableInvalidation([
+          // #718 — the calendar hub renders this table too.
+          calendarItemsProvider,
           eventsProvider,
           eventDecisionsProvider,
           myPendingEventCountProvider,
@@ -142,12 +149,14 @@ TableInvalidation invalidationFor(String table) => switch (table) {
       'payment_intents' ||
       'quota_extensions' =>
         TableInvalidation([
+          // #718 — the calendar hub renders this table too.
+          calendarItemsProvider,
           myStatementProvider,
           myLedgerProvider,
           // #512 — every money change can move the cross-month position.
           myAccountProvider,
         ]),
-      'invoices' => TableInvalidation([invoicesProvider]),
+      'invoices' => TableInvalidation([invoicesProvider, calendarItemsProvider]),
       'services' => TableInvalidation([
           servicesProvider,
           allServicesProvider,

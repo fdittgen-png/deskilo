@@ -1712,6 +1712,168 @@ abstract class AppLocalizations {
   /// **'{level}, expanded'**
   String calendarLevelExpanded(String level);
 
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Who can see this'**
+  String get calendarWhoCanSee;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get calendarPrevious;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get calendarNext;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get calendarDay;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Range'**
+  String get calendarRange;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Me'**
+  String get calendarMemberMe;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing on these dates.'**
+  String get calendarNothingHere;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Not visible to you for this member: {kinds}'**
+  String calendarLockedKinds(String kinds);
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Alert: {label}'**
+  String calendarEventTitle(String label);
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings'**
+  String get calendarKindReservation;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Check-ins'**
+  String get calendarKindCheckIn;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Check-outs'**
+  String get calendarKindCheckOut;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts'**
+  String get calendarKindEvent;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get calendarKindMessage;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get calendarKindInvoice;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get calendarKindPayment;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Consumption'**
+  String get calendarKindConsumption;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get calendarKindReminder;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'nobody else'**
+  String get accessNobodyElse;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Every member of the workspace — the floor plan shows occupancy to everyone.'**
+  String get accessRuleReservations;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'You, the member who acted, and the admins.'**
+  String get accessRuleEvents;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Only the people in the conversation — no role can read a conversation it is not part of.'**
+  String get accessRuleMessages;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'You, and those with the finance permission: {people}.'**
+  String accessRuleFinances(String people);
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Only you.'**
+  String get accessRuleReminders;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Who accessed your data'**
+  String get accessLogTitle;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody has looked at your finances or messages.'**
+  String get accessLogEmpty;
+
+  /// #718/#719 - calendar hub
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} read {category} of {subject}'**
+  String accessLogRow(String actor, String category, String subject);
+
   /// Application name shown in the task switcher and app bar. Brand name — identical in all locales.
   ///
   /// In en, this message translates to:
@@ -3169,6 +3331,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Members choose how numbers, dates, the clock and the time zone are shown to them. Off: everyone reads in the app language\'s home region, 24-hour, workspace time.'**
   String get featureRegionalFormatsDesc;
+
+  /// #718/#719
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar hub'**
+  String get featureCalendarHubTitle;
+
+  /// #718/#719
+  ///
+  /// In en, this message translates to:
+  /// **'The calendar shows everything dated — bookings, check-ins, alerts, messages, invoices, payments, consumption, reminders — for a day or a range, each row opening its source. Off: reservations only.'**
+  String get featureCalendarHubDesc;
+
+  /// #718/#719
+  ///
+  /// In en, this message translates to:
+  /// **'Data access log'**
+  String get featureDataAccessLogTitle;
+
+  /// #718/#719
+  ///
+  /// In en, this message translates to:
+  /// **'Members see who looked at their finances and when (written by the server, never skippable). Off hides the row; the log is still kept.'**
+  String get featureDataAccessLogDesc;
+
+  /// #718/#719
+  ///
+  /// In en, this message translates to:
+  /// **'Export & erasure'**
+  String get featureMemberDataExportTitle;
+
+  /// #718/#719
+  ///
+  /// In en, this message translates to:
+  /// **'Every member can export their data as one file (GDPR art. 20) and leave the workspace with their personal data cleared (art. 17) from Settings → Privacy & data.'**
+  String get featureMemberDataExportDesc;
 
   /// No description provided for @helpTitle.
   ///

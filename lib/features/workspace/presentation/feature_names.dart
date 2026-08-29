@@ -93,6 +93,18 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
 
       WorkspaceFeature.regionalFormats =>
         l10n?.featureRegionalFormatsTitle ?? 'Region & formats',
+
+
+      WorkspaceFeature.calendarHub =>
+        l10n?.featureCalendarHubTitle ?? 'Calendar hub',
+
+
+      WorkspaceFeature.dataAccessLog =>
+        l10n?.featureDataAccessLogTitle ?? 'Data access log',
+
+
+      WorkspaceFeature.memberDataExport =>
+        l10n?.featureMemberDataExportTitle ?? 'Export & erasure',
       WorkspaceFeature.badgeSignIn =>
         l10n?.featureBadgeSignInTitle ?? 'Sign in with a badge',
     };

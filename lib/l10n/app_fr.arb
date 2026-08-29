@@ -572,6 +572,140 @@
   "calendarTimelineAllEmpty": "Aucune réservation à aucun étage ce jour-là.",
   "calendarLevelCollapsed": "{level}, réduit",
   "calendarLevelExpanded": "{level}, déplié",
+  "calendarWhoCanSee": "Qui peut voir ceci",
+  "@calendarWhoCanSee": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarPrevious": "Précédent",
+  "@calendarPrevious": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarNext": "Suivant",
+  "@calendarNext": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarDay": "Jour",
+  "@calendarDay": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarRange": "Période",
+  "@calendarRange": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarMemberMe": "Moi",
+  "@calendarMemberMe": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarNothingHere": "Rien à ces dates.",
+  "@calendarNothingHere": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarLockedKinds": "Non visible pour vous pour ce membre : {kinds}",
+  "@calendarLockedKinds": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "kinds": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarEventTitle": "Alerte : {label}",
+  "@calendarEventTitle": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarKindReservation": "Réservations",
+  "@calendarKindReservation": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindCheckIn": "Pointages",
+  "@calendarKindCheckIn": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindCheckOut": "Départs",
+  "@calendarKindCheckOut": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindEvent": "Alertes",
+  "@calendarKindEvent": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindMessage": "Messages",
+  "@calendarKindMessage": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindInvoice": "Factures",
+  "@calendarKindInvoice": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindPayment": "Paiements",
+  "@calendarKindPayment": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindConsumption": "Consommations",
+  "@calendarKindConsumption": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "calendarKindReminder": "Rappels",
+  "@calendarKindReminder": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessNobodyElse": "personne d'autre",
+  "@accessNobodyElse": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleReservations": "Tous les membres de l'espace — le plan montre l'occupation à tout le monde.",
+  "@accessRuleReservations": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleEvents": "Vous, le membre qui a agi, et les admins.",
+  "@accessRuleEvents": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleMessages": "Seulement les personnes de la conversation — aucun rôle ne peut lire une conversation dont il ne fait pas partie.",
+  "@accessRuleMessages": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessRuleFinances": "Vous, et ceux qui ont la permission finances : {people}.",
+  "@accessRuleFinances": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "people": {
+        "type": "String"
+      }
+    }
+  },
+  "accessRuleReminders": "Vous seulement.",
+  "@accessRuleReminders": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessLogTitle": "Qui a consulté vos données",
+  "@accessLogTitle": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessLogEmpty": "Personne n'a consulté vos finances ni vos messages.",
+  "@accessLogEmpty": {
+    "description": "#718/#719 - calendar hub"
+  },
+  "accessLogRow": "{actor} a consulté {category} de {subject}",
+  "@accessLogRow": {
+    "description": "#718/#719 - calendar hub",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      },
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
   "appTitle": "DesKilo",
   "tabPlan": "Plan",
   "tabCalendar": "Calendrier",
@@ -944,6 +1078,30 @@
   "featureRegionalFormatsDesc": "Chaque membre choisit l'affichage des nombres, des dates, de l'horloge et du fuseau. Désactivé : tout le monde lit dans la région de la langue de l'app, en 24 h, à l'heure de l'espace.",
   "@featureRegionalFormatsDesc": {
     "description": "#711 - globalization"
+  },
+  "featureCalendarHubTitle": "Calendrier central",
+  "@featureCalendarHubTitle": {
+    "description": "#718/#719"
+  },
+  "featureCalendarHubDesc": "Le calendrier montre tout ce qui est daté — réservations, pointages, alertes, messages, factures, paiements, consommations, rappels — pour un jour ou une période, chaque ligne ouvrant sa source. Désactivé : réservations seulement.",
+  "@featureCalendarHubDesc": {
+    "description": "#718/#719"
+  },
+  "featureDataAccessLogTitle": "Journal des accès aux données",
+  "@featureDataAccessLogTitle": {
+    "description": "#718/#719"
+  },
+  "featureDataAccessLogDesc": "Chaque membre voit qui a consulté ses finances et quand (écrit par le serveur, jamais contournable). Désactivé : la ligne est masquée, le journal est conservé.",
+  "@featureDataAccessLogDesc": {
+    "description": "#718/#719"
+  },
+  "featureMemberDataExportTitle": "Export et effacement",
+  "@featureMemberDataExportTitle": {
+    "description": "#718/#719"
+  },
+  "featureMemberDataExportDesc": "Chaque membre peut exporter ses données en un fichier (RGPD art. 20) et quitter l'espace avec ses données personnelles effacées (art. 17) depuis Réglages → Confidentialité et données.",
+  "@featureMemberDataExportDesc": {
+    "description": "#718/#719"
   },
   "helpTitle": "Aide",
   "helpContents": "Sommaire",

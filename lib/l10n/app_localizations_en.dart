@@ -932,6 +932,98 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get calendarWhoCanSee => 'Who can see this';
+
+  @override
+  String get calendarPrevious => 'Previous';
+
+  @override
+  String get calendarNext => 'Next';
+
+  @override
+  String get calendarDay => 'Day';
+
+  @override
+  String get calendarRange => 'Range';
+
+  @override
+  String get calendarMemberMe => 'Me';
+
+  @override
+  String get calendarNothingHere => 'Nothing on these dates.';
+
+  @override
+  String calendarLockedKinds(String kinds) {
+    return 'Not visible to you for this member: $kinds';
+  }
+
+  @override
+  String calendarEventTitle(String label) {
+    return 'Alert: $label';
+  }
+
+  @override
+  String get calendarKindReservation => 'Bookings';
+
+  @override
+  String get calendarKindCheckIn => 'Check-ins';
+
+  @override
+  String get calendarKindCheckOut => 'Check-outs';
+
+  @override
+  String get calendarKindEvent => 'Alerts';
+
+  @override
+  String get calendarKindMessage => 'Messages';
+
+  @override
+  String get calendarKindInvoice => 'Invoices';
+
+  @override
+  String get calendarKindPayment => 'Payments';
+
+  @override
+  String get calendarKindConsumption => 'Consumption';
+
+  @override
+  String get calendarKindReminder => 'Reminders';
+
+  @override
+  String get accessNobodyElse => 'nobody else';
+
+  @override
+  String get accessRuleReservations =>
+      'Every member of the workspace — the floor plan shows occupancy to everyone.';
+
+  @override
+  String get accessRuleEvents => 'You, the member who acted, and the admins.';
+
+  @override
+  String get accessRuleMessages =>
+      'Only the people in the conversation — no role can read a conversation it is not part of.';
+
+  @override
+  String accessRuleFinances(String people) {
+    return 'You, and those with the finance permission: $people.';
+  }
+
+  @override
+  String get accessRuleReminders => 'Only you.';
+
+  @override
+  String get accessLogTitle => 'Who accessed your data';
+
+  @override
+  String get accessLogEmpty =>
+      'Nobody has looked at your finances or messages.';
+
+  @override
+  String accessLogRow(String actor, String category, String subject) {
+    return '$actor read $category of $subject';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -1746,6 +1838,27 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureRegionalFormatsDesc =>
       'Members choose how numbers, dates, the clock and the time zone are shown to them. Off: everyone reads in the app language\'s home region, 24-hour, workspace time.';
+
+  @override
+  String get featureCalendarHubTitle => 'Calendar hub';
+
+  @override
+  String get featureCalendarHubDesc =>
+      'The calendar shows everything dated — bookings, check-ins, alerts, messages, invoices, payments, consumption, reminders — for a day or a range, each row opening its source. Off: reservations only.';
+
+  @override
+  String get featureDataAccessLogTitle => 'Data access log';
+
+  @override
+  String get featureDataAccessLogDesc =>
+      'Members see who looked at their finances and when (written by the server, never skippable). Off hides the row; the log is still kept.';
+
+  @override
+  String get featureMemberDataExportTitle => 'Export & erasure';
+
+  @override
+  String get featureMemberDataExportDesc =>
+      'Every member can export their data as one file (GDPR art. 20) and leave the workspace with their personal data cleared (art. 17) from Settings → Privacy & data.';
 
   @override
   String get helpTitle => 'Help';

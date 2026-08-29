@@ -119,5 +119,29 @@
   "featureRegionalFormatsDesc": "Cada miembro elige cómo se le muestran los números, las fechas, el reloj y la zona horaria. Desactivado: todos leen en la región del idioma de la app, en 24 h, hora del espacio.",
   "@featureRegionalFormatsDesc": {
     "description": "#711 - globalization"
+  },
+  "featureCalendarHubTitle": "Calendario central",
+  "@featureCalendarHubTitle": {
+    "description": "#718/#719"
+  },
+  "featureCalendarHubDesc": "El calendario muestra todo lo fechado — reservas, registros, avisos, mensajes, facturas, pagos, consumos, recordatorios — para un día o un periodo, cada fila abre su origen. Desactivado: solo reservas.",
+  "@featureCalendarHubDesc": {
+    "description": "#718/#719"
+  },
+  "featureDataAccessLogTitle": "Registro de accesos a datos",
+  "@featureDataAccessLogTitle": {
+    "description": "#718/#719"
+  },
+  "featureDataAccessLogDesc": "Cada miembro ve quién consultó sus finanzas y cuándo (lo escribe el servidor, nunca se omite). Desactivado: la fila se oculta, el registro se conserva.",
+  "@featureDataAccessLogDesc": {
+    "description": "#718/#719"
+  },
+  "featureMemberDataExportTitle": "Exportación y borrado",
+  "@featureMemberDataExportTitle": {
+    "description": "#718/#719"
+  },
+  "featureMemberDataExportDesc": "Cada miembro puede exportar sus datos en un archivo (RGPD art. 20) y abandonar el espacio con sus datos personales borrados (art. 17) desde Ajustes → Privacidad y datos.",
+  "@featureMemberDataExportDesc": {
+    "description": "#718/#719"
   }
 }

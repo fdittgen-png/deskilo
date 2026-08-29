@@ -191,6 +191,15 @@ class FeaturesScreen extends ConsumerWidget {
               'Members choose how numbers, dates, the clock and the time '
                   'zone are shown to them. Off: everyone reads in the app '
                   "language's home region, 24-hour, workspace time.",
+        WorkspaceFeature.calendarHub =>
+          l10n?.featureCalendarHubDesc ??
+              'The calendar shows everything dated — bookings, check-ins, alerts, messages, invoices, payments, consumption, reminders — for a day or a range, each row opening its source. Off: reservations only.',
+        WorkspaceFeature.dataAccessLog =>
+          l10n?.featureDataAccessLogDesc ??
+              'Members see who looked at their finances and when (written by the server, never skippable). Off hides the row; the log is still kept.',
+        WorkspaceFeature.memberDataExport =>
+          l10n?.featureMemberDataExportDesc ??
+              'Every member can export their data as one file (GDPR art. 20) and leave the workspace with their personal data cleared (art. 17) from Settings → Privacy & data.',
         WorkspaceFeature.badgeSignIn =>
           l10n?.featureBadgeSignInDesc ??
               'Members can sign in by scanning their badge and entering '
