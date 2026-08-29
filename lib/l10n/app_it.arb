@@ -706,6 +706,15 @@
       }
     }
   },
+  "calendarEventActionCreated": "creata",
+  "calendarEventActionModified": "modificata",
+  "calendarEventActionCancelled": "annullata",
+  "calendarEventActionSubmitted": "inviata",
+  "calendarEventActionApproved": "approvata",
+  "calendarEventActionRejected": "rifiutata",
+  "calendarEventStatusPending": "in attesa di conferma",
+  "calendarEventStatusRejected": "rifiutato",
+  "calendarEventStatusExpired": "scaduto",
   "appTitle": "DesKilo",
   "tabPlan": "Piantina",
   "tabCalendar": "Calendario",

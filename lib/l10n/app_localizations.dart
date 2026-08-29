@@ -1874,6 +1874,60 @@ abstract class AppLocalizations {
   /// **'{actor} read {category} of {subject}'**
   String accessLogRow(String actor, String category, String subject);
 
+  /// No description provided for @calendarEventActionCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'created'**
+  String get calendarEventActionCreated;
+
+  /// No description provided for @calendarEventActionModified.
+  ///
+  /// In en, this message translates to:
+  /// **'changed'**
+  String get calendarEventActionModified;
+
+  /// No description provided for @calendarEventActionCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'cancelled'**
+  String get calendarEventActionCancelled;
+
+  /// No description provided for @calendarEventActionSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'submitted'**
+  String get calendarEventActionSubmitted;
+
+  /// No description provided for @calendarEventActionApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'approved'**
+  String get calendarEventActionApproved;
+
+  /// No description provided for @calendarEventActionRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'rejected'**
+  String get calendarEventActionRejected;
+
+  /// No description provided for @calendarEventStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'awaiting confirmation'**
+  String get calendarEventStatusPending;
+
+  /// No description provided for @calendarEventStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'rejected'**
+  String get calendarEventStatusRejected;
+
+  /// No description provided for @calendarEventStatusExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'expired'**
+  String get calendarEventStatusExpired;
+
   /// Application name shown in the task switcher and app bar. Brand name — identical in all locales.
   ///
   /// In en, this message translates to:

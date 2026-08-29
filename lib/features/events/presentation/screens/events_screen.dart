@@ -26,6 +26,7 @@ import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
 import '../../providers/event_providers.dart';
 import '../../providers/notification_filter_providers.dart';
+import '../event_labels.dart';
 import '../feed_notes.dart';
 import '../widgets/note_row.dart';
 
@@ -235,29 +236,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     );
   }
 
-  String _typeLabel(AppLocalizations? l10n, EventType type) {
-    return switch (type) {
-      EventType.reservation => l10n?.eventTypeReservation ?? 'Reservation',
-      EventType.payment => l10n?.eventTypePayment ?? 'Payment',
-      EventType.expense => l10n?.eventTypeExpense ?? 'Expense',
-      EventType.adjustment => l10n?.eventTypeAdjustment ?? 'Adjustment',
-      EventType.serviceCharge =>
-        l10n?.eventTypeServiceCharge ?? 'Service',
-      EventType.quota => l10n?.eventTypeQuota ?? 'Extra half-days',
-      EventType.roleChange => l10n?.eventTypeRoleChange ?? 'Role change',
-      EventType.memberJoin => l10n?.eventTypeMemberJoin ?? 'New member',
-      EventType.spaceReservation =>
-        l10n?.eventTypeSpaceReservation ?? 'Whole-space reservations',
-      EventType.invoicePayment =>
-        l10n?.eventTypeInvoicePayment ?? 'Invoice payment',
-      EventType.reservationDelete =>
-        l10n?.eventTypeReservationDelete ?? 'Booking deletion',
-      EventType.invoiceWriteoff =>
-        l10n?.eventTypeInvoiceWriteoff ?? 'Outstanding write-off',
-      EventType.invoiceReminder =>
-        l10n?.eventTypeInvoiceReminder ?? 'Payment reminder',
-    };
-  }
+  String _typeLabel(AppLocalizations? l10n, EventType type) =>
+      eventTypeLabel(l10n, type);
 
   IconData _icon(WorkspaceEvent event) {
     return switch (event.type) {

@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/calendar/calendar_item.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/theme/status_colors.dart';
+import '../../../events/domain/workspace_event.dart';
+import '../../../events/presentation/event_labels.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 
@@ -81,8 +83,7 @@ class CalendarItemRow extends ConsumerWidget {
         [
           time,
           if (memberName.isNotEmpty) memberName,
-          if (item.status.isNotEmpty && item.kind != CalendarKind.reservation)
-            item.status,
+          ?_statusLabel(l10n, item),
         ].join(' · '),
       ),
       trailing: Row(mainAxisSize: MainAxisSize.min, children: [
@@ -94,10 +95,38 @@ class CalendarItemRow extends ConsumerWidget {
     );
   }
 
+  /// `type.action` from the server, read the way the feed reads it: the
+  /// type's own name and a verb — never the wire words.
   String _eventTitle(AppLocalizations? l10n, CalendarItem item) {
-    // `type.action` from the server; the feed's own localized phrasing
-    // lives in the events screen and is the source the row opens.
-    final label = item.title.replaceAll('.', ' · ');
+    final parts = item.title.split('.');
+    final type = EventType.values
+        .where((t) => t.dbName == parts.first)
+        .firstOrNull;
+    final typeLabel =
+        type == null ? parts.first : eventTypeLabel(l10n, type);
+    final action = parts.length > 1 ? parts[1] : '';
+    final actionLabel = switch (action) {
+      'created' => l10n?.calendarEventActionCreated ?? 'created',
+      'modified' => l10n?.calendarEventActionModified ?? 'changed',
+      'cancelled' => l10n?.calendarEventActionCancelled ?? 'cancelled',
+      'submitted' => l10n?.calendarEventActionSubmitted ?? 'submitted',
+      'approved' => l10n?.calendarEventActionApproved ?? 'approved',
+      'rejected' => l10n?.calendarEventActionRejected ?? 'rejected',
+      _ => action,
+    };
+    final label = actionLabel.isEmpty ? typeLabel : '$typeLabel · $actionLabel';
     return l10n?.calendarEventTitle(label) ?? 'Alert: $label';
+  }
+
+  /// A status worth a word: what still waits or was refused. "applied"
+  /// and "confirmed" are the normal course and say nothing.
+  String? _statusLabel(AppLocalizations? l10n, CalendarItem item) {
+    if (item.kind == CalendarKind.reservation) return null;
+    return switch (item.status) {
+      'pending' => l10n?.calendarEventStatusPending ?? 'awaiting confirmation',
+      'rejected' => l10n?.calendarEventStatusRejected ?? 'rejected',
+      'expired' => l10n?.calendarEventStatusExpired ?? 'expired',
+      _ => null,
+    };
   }
 }

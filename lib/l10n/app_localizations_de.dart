@@ -1029,6 +1029,33 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get calendarEventActionCreated => 'angelegt';
+
+  @override
+  String get calendarEventActionModified => 'geändert';
+
+  @override
+  String get calendarEventActionCancelled => 'storniert';
+
+  @override
+  String get calendarEventActionSubmitted => 'eingereicht';
+
+  @override
+  String get calendarEventActionApproved => 'genehmigt';
+
+  @override
+  String get calendarEventActionRejected => 'abgelehnt';
+
+  @override
+  String get calendarEventStatusPending => 'wartet auf Bestätigung';
+
+  @override
+  String get calendarEventStatusRejected => 'abgelehnt';
+
+  @override
+  String get calendarEventStatusExpired => 'abgelaufen';
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override

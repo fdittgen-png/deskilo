@@ -167,7 +167,7 @@ void main() {
     expect(r.calendar.queries.last.memberId, 'member-2');
   });
 
-  testWidgets('the shield opens who-can-see, with the log', (tester) async {
+  testWidgets('the shell shield opens who-can-see, with the log', (tester) async {
     final r = await pumpHub(tester);
     r.calendar.log.add(DataAccessEntry(
       id: 'a1',
@@ -176,7 +176,11 @@ void main() {
       category: 'finances',
       at: kTestNow,
     ));
-    await tester.tap(find.byKey(const ValueKey('calendar-access-info')));
+    // #728 — the shield lives in the shell bar, left of the bell, on
+    // every tab; who-can-see is the first row of Privacy & data.
+    await tester.tap(find.byKey(const ValueKey('shell-privacy')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('privacy-who-can-see')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('access-sheet')), findsOneWidget);
     await tester.scrollUntilVisible(
