@@ -14,6 +14,9 @@ enum HelpHintId {
   features,
   members,
   money,
+  moneyPayments,
+  moneyConsumption,
+  moneyInvoices,
   validation,
   workspaceSettings,
   badges,
@@ -68,6 +71,18 @@ String helpHintText(AppLocalizations? l10n, HelpHintId id) => switch (id) {
     l10n?.helpHintMoney ??
         'Your monthly bill: browse months with the arrows; pay, '
             'export or share from here.',
+  HelpHintId.moneyPayments =>
+    l10n?.helpHintMoneyPayments ??
+        'What you owe and what you paid: open positions, credits, the '
+            'balance and how to pay it. Record a payment here.',
+  HelpHintId.moneyConsumption =>
+    l10n?.helpHintMoneyConsumption ??
+        'What you used this month: days, subscription, services and '
+            'packages — and the requests that add to them.',
+  HelpHintId.moneyInvoices =>
+    l10n?.helpHintMoneyInvoices ??
+        'Your documents: the month\'s invoice, every invoice you were '
+            'issued, and your conditions.',
   HelpHintId.validation =>
     l10n?.helpHintValidation ??
         'Decide which actions need confirmation, who confirms, and '
@@ -103,6 +118,12 @@ String helpHintTopic(AppLocalizations? l10n, HelpHintId id) => switch (id) {
   HelpHintId.features => l10n?.helpHintFeaturesTopic ?? 'Features',
   HelpHintId.members => l10n?.helpHintMembersTopic ?? 'Members & plans',
   HelpHintId.money => l10n?.helpHintMoneyTopic ?? 'Money',
+  HelpHintId.moneyPayments =>
+    l10n?.helpHintMoneyPaymentsTopic ?? 'The Payments face',
+  HelpHintId.moneyConsumption =>
+    l10n?.helpHintMoneyConsumptionTopic ?? 'The Consumption face',
+  HelpHintId.moneyInvoices =>
+    l10n?.helpHintMoneyInvoicesTopic ?? 'The Invoices face',
   HelpHintId.validation => l10n?.helpHintValidationTopic ?? 'confirmations',
   HelpHintId.workspaceSettings =>
     l10n?.helpHintWorkspaceTopic ?? 'Workspace settings',
@@ -330,6 +351,55 @@ List<HelpTip> helpHintTips(AppLocalizations? l10n, HelpHintId id) =>
                   'month reads settled as soon as its invoice is '
                   'paid.',
           topic: l10n?.helpHintMoneyTip4Topic ?? 'the invoice decides',
+        ),
+      ],
+      HelpHintId.moneyPayments => [
+        HelpTip(helpHintText(l10n, id)),
+        HelpTip(
+          l10n?.helpHintMoneyPaymentsTip2 ??
+              'Record a payment with the date the money moved and the '
+                  'month it settles — the other side confirms it.',
+        ),
+        HelpTip(
+          l10n?.helpHintMoneyPaymentsTip3 ??
+              'Pay online settles what is owed right away; the '
+                  'instructions card shows the manual way with the '
+                  'reference to quote.',
+          topic: l10n?.helpHintMoneyPaymentsTip3Topic ?? 'online payments',
+        ),
+      ],
+      HelpHintId.moneyConsumption => [
+        HelpTip(helpHintText(l10n, id)),
+        HelpTip(
+          l10n?.helpHintMoneyConsumptionTip2 ??
+              'A booked morning counts as half a day; days outside the '
+                  'opening hours follow the workspace\'s outside-hours '
+                  'policy.',
+          topic: l10n?.helpHintMoneyConsumptionTip2Topic ??
+              'How booking behaves',
+        ),
+        HelpTip(
+          l10n?.helpHintMoneyConsumptionTip3 ??
+              'Out of days? Request extra half-days, buy a package, or '
+                  'keep booking pay-as-you-go — whichever your plan '
+                  'allows.',
+        ),
+      ],
+      HelpHintId.moneyInvoices => [
+        HelpTip(helpHintText(l10n, id)),
+        HelpTip(
+          l10n?.helpHintMoneyTip4 ??
+              'Once the month is invoiced, the invoice decides: the '
+                  'month reads settled as soon as its invoice is '
+                  'paid.',
+          topic: l10n?.helpHintMoneyTip4Topic ?? 'the invoice decides',
+        ),
+        HelpTip(
+          l10n?.helpHintMoneyTip2 ??
+              'Every document offers the same three actions: quick '
+                  'view on screen, download as PDF, and share to '
+                  'any app.',
+          topic: l10n?.helpHintMoneyTip2Topic ?? 'Quick view, save, share',
         ),
       ],
       HelpHintId.validation => [

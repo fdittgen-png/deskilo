@@ -3,23 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DesKilo — Document de configuration</title>
+<title>DesKilo — Assistant de configuration</title>
 <style>
-:root{--accent:#c1440e;--bg:#faf6f2;--card:#fff;--ink:#241a14;--muted:#7a6f66;--line:#e6ddd4}
+:root{--accent:#c1440e;--bg:#faf6f2;--card:#fff;--ink:#241a14;--muted:#7a6f66;--line:#e6ddd4;--ok:#276b2b;--warn:#8a5a00;--err:#a33}
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
 header{background:var(--accent);color:#fff;padding:20px 16px}
 header h1{margin:0;font-size:1.4rem}
 header p{margin:6px 0 0;opacity:.92;font-size:.9rem;max-width:60rem}
-main{max-width:60rem;margin:0 auto;padding:12px 12px 96px}
+header a{color:#fff}
+main{max-width:60rem;margin:0 auto;padding:12px 12px 120px}
 section{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:14px 0;overflow:hidden}
 section>h2{margin:0;padding:14px 16px;font-size:1.05rem;cursor:pointer;user-select:none;display:flex;justify-content:space-between;align-items:center}
 section>h2::after{content:'▾';color:var(--muted);transition:transform .15s}
 section.closed>h2::after{transform:rotate(-90deg)}
 section.closed>.body{display:none}
 .body{padding:0 16px 16px;border-top:1px solid var(--line)}
+.why{font-size:.88rem;color:var(--muted);margin:10px 0 4px}
 label{display:block;margin:12px 0 4px;font-weight:600;font-size:.92rem}
 .hint{font-size:.8rem;color:var(--muted);margin:2px 0 0}
+.help{display:inline-block;font-size:.76rem;color:var(--accent);text-decoration:none;margin:3px 0 0;border:1px solid var(--line);border-radius:999px;padding:2px 9px}
+.help:hover{background:var(--line)}
+.dep{font-size:.8rem;color:var(--muted);background:#f3ede7;border-left:3px solid var(--line);padding:8px 10px;border-radius:0 8px 8px 0;margin:10px 0}
+.dep a{color:var(--accent)}
 input[type=text],input[type=email],input[type=number],input[type=time],input[type=date],select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:.95rem;background:#fff;color:var(--ink)}
 textarea{min-height:70px}
 .row{display:flex;gap:10px;flex-wrap:wrap}
@@ -30,37 +36,68 @@ textarea{min-height:70px}
 .check{display:flex;gap:10px;align-items:flex-start;margin:10px 0;cursor:pointer}
 .check input{margin-top:3px;accent-color:var(--accent);width:18px;height:18px}
 .check .d{font-size:.8rem;color:var(--muted)}
+.check.child{margin-left:28px}
+.check.off{opacity:.55}
 table{width:100%;border-collapse:collapse;margin-top:8px}
 th{text-align:left;font-size:.8rem;color:var(--muted);padding:4px 6px}
 td{padding:3px 3px;vertical-align:top}
 td input,td select{padding:8px}
 .add{background:none;border:1px dashed var(--accent);color:var(--accent);border-radius:8px;padding:8px 14px;cursor:pointer;margin-top:8px;font-size:.9rem}
-.del{background:none;border:none;color:#a33;cursor:pointer;font-size:1.05rem;padding:6px}
+.del{background:none;border:none;color:var(--err);cursor:pointer;font-size:1.05rem;padding:6px}
 .card{border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0;background:#fdfbf9}
 .matrix{overflow-x:auto}
 .matrix table{min-width:560px}
 .matrix th{padding:6px}
 .matrix td{border-top:1px solid var(--line);padding:6px;font-size:.85rem}
-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:10px 16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+details{margin:10px 0}
+summary{cursor:pointer;font-size:.9rem;color:var(--accent)}
+footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:10px 16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;align-items:center}
 .btn{border:none;border-radius:999px;padding:12px 22px;font-size:.95rem;cursor:pointer}
+.btn:disabled{opacity:.45;cursor:default}
 .primary{background:var(--accent);color:#fff}
 .ghost{background:#fff;border:1px solid var(--accent);color:var(--accent)}
 .saved{font-size:.78rem;color:var(--muted);align-self:center}
-@media(prefers-color-scheme:dark){:root{--bg:#191310;--card:#231b16;--ink:#f2e9e1;--muted:#a89a8e;--line:#3a2f27}.chip,input,select,textarea,td input{background:#2a211b;color:var(--ink)}.card{background:#1f1813}footer{background:#231b16}}
+/* wizard */
+.progress{height:6px;background:var(--line);border-radius:3px;margin:12px 0 4px;overflow:hidden}
+.progress>div{height:100%;background:var(--accent);transition:width .2s}
+.rail{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 4px}
+.step{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 11px;font-size:.8rem;cursor:pointer;display:flex;gap:6px;align-items:center;color:var(--ink)}
+.step.cur{border-color:var(--accent);background:var(--accent);color:#fff}
+.step.na{opacity:.45;text-decoration:line-through}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--line);display:inline-block}
+.dot.ok{background:var(--ok)}.dot.warn{background:var(--warn)}.dot.err{background:var(--err)}
+.step.cur .dot{outline:2px solid #fff}
+.nav{display:flex;justify-content:space-between;gap:10px;margin:10px 0}
+.mode{font-size:.8rem;color:var(--muted);display:flex;gap:8px;align-items:center;justify-content:flex-end;margin:6px 0}
+.mode input{accent-color:var(--accent)}
+.finding{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line);font-size:.9rem}
+.finding:first-child{border-top:none}
+.finding .lvl{font-weight:700;min-width:2em}
+.finding.ok .lvl{color:var(--ok)}.finding.warn .lvl{color:var(--warn)}.finding.err .lvl{color:var(--err)}
+.finding button{margin-left:auto;white-space:nowrap}
+.summary{display:flex;gap:14px;flex-wrap:wrap;font-size:.9rem;margin:8px 0}
+.summary b.ok{color:var(--ok)}.summary b.warn{color:var(--warn)}.summary b.err{color:var(--err)}
+@media(prefers-color-scheme:dark){:root{--bg:#191310;--card:#231b16;--ink:#f2e9e1;--muted:#a89a8e;--line:#3a2f27;--ok:#7fc383;--warn:#e0b25a;--err:#e08585}.chip,input,select,textarea,td input,.step{background:#2a211b;color:var(--ink)}.card{background:#1f1813}footer{background:#231b16}.dep{background:#1f1813}.help:hover{background:#3a2f27}.step.cur{background:var(--accent);color:#fff}}
 </style>
 </head>
 <body>
 <header>
-  <h1>DesKilo — Document de configuration</h1>
-  <p>Répondez aux questions (choix prédéfinis, noms, adresses — rien à interpréter), sur Mac, PC ou téléphone. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. À la fin, <b>Exporter le XML</b> produit le fichier : l'app l'importe (Réglages de l'espace → Importer l'espace) pour créer réglages, accessoires et plan ; la section &lt;setup&gt; du même fichier porte tout le reste — disponibilité et règles de réservation (dont la politique hors heures d'ouverture et les réservations simultanées), facturation, services, identité légale et TVA (régime, taux, périodicité de déclaration, plateforme de facturation électronique et remise au client), rôles, règles de validation par domaine et membres — pour finir la configuration.</p>
+  <h1>DesKilo — Assistant de configuration</h1>
+  <p>Un assistant pas à pas : chaque étape ne pose que les questions que vos réponses précédentes rendent possibles (les fonctionnalités que vous n'activez pas, le régime de TVA que vous n'avez pas, le pays qui ne s'applique pas — rien ne vous est demandé pour rien). Chaque question dit <b>où elle se règle dans l'app</b> et renvoie vers le guide. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. La dernière étape vérifie la cohérence de l'ensemble, puis <b>Exporter le XML</b> produit le fichier : l'app l'importe (Réglages de l'espace → Importer l'espace) pour créer réglages, accessoires et plan ; la section &lt;setup&gt; du même fichier porte tout le reste.</p>
   <p style="margin-top:8px"><b>Ne mettez un jeton ou un identifiant ici que si vous remplissez ce document en privé.</b> Le fichier exporté est du texte clair : pour la facturation électronique et les paiements en ligne, vous pouvez laisser les champs vides et saisir les secrets directement dans l'app, où ils partent côté serveur sans jamais en revenir.</p>
 </header>
-<main id="form"></main>
+<main>
+  <div class="progress"><div id="bar" style="width:0"></div></div>
+  <div class="rail" id="rail"></div>
+  <div class="mode"><label style="margin:0;font-weight:400;display:flex;gap:6px;align-items:center"><input type="checkbox" id="allmode" onchange="setMode(this.checked)"> Tout afficher sur une page (mode expert)</label></div>
+  <div id="form"></div>
+  <div class="nav" id="nav"></div>
+</main>
 <footer>
-  <button class="btn primary" onclick="exportXml()">⬇ Exporter le XML</button>
+  <button class="btn primary" onclick="exportChecked()">⬇ Exporter le XML</button>
   <button class="btn ghost" onclick="document.getElementById('load').click()">Charger un fichier…</button>
   <input type="file" id="load" accept=".xml" style="display:none" onchange="loadFile(this.files[0])">
-  <button class="btn ghost" onclick="if(confirm('Effacer toutes les réponses ?')){localStorage.removeItem(LS);location.reload()}">Réinitialiser</button>
+  <button class="btn ghost" onclick="if(confirm('Effacer toutes les réponses ?')){localStorage.removeItem(LS);localStorage.removeItem(LS+'-step');location.reload()}">Réinitialiser</button>
   <span class="saved" id="saved"></span>
 </footer>
 <script>
@@ -114,6 +151,7 @@ const FEATURES=[
  ['calendarHub','Calendrier central','Le calendrier montre tout ce qui est daté (réservations, pointages, alertes, messages, factures, paiements, consommations, rappels) pour un jour ou une période ; chaque ligne ouvre sa source.',1],
  ['dataAccessLog','Journal des accès aux données','Chaque membre voit qui a consulté ses finances et quand.',1],
  ['memberDataExport','Export et effacement','Export des données (RGPD art. 20) et départ avec effacement (art. 17) depuis Réglages → Confidentialité et données.',1],
+ ['financeFaces','Finances en trois volets','L\'onglet Finances se lit en trois volets — Paiements, Consommation, Factures — sous un même sélecteur de mois, chacun avec son aide.',1],
  ['uiAnimations','Animations de l\'interface','Transitions et retours animés dans toute l\'app ; désactivé, tout devient instantané. Le réglage d\'accessibilité « animations réduites » du système prime de toute façon.',1],
 ];
 const PERMS=[['manageRoles','Gérer les rôles et permissions'],['manageMembers','Gérer les membres'],['manageValidation','Configurer les règles de validation'],['workspaceSettings',"Modifier les réglages de l'espace"],['issueInvoices','Émettre les factures et rapprocher les paiements'],['viewFinances',"Consulter les finances de l'espace"],['manageDocuments','Gérer la bibliothèque de documents'],['manageServices','Gérer les services et forfaits'],['approveExpenses','Approuver les dépenses']];
@@ -212,219 +250,309 @@ if(S.policies.gridHours!==undefined){
 function save(){localStorage.setItem(LS,JSON.stringify(S));document.getElementById('saved').textContent='Enregistré '+new Date().toLocaleTimeString()}
 function set(path,val){const p=path.split('.');let o=S;while(p.length>1)o=o[p.shift()];o[p[0]]=val;save()}
 
+// ------------------------------------------------------------------ dependencies (#723)
+// The feature tree as the app declares it (featureManifest `requires`):
+// a child is only offered while its parent is on, and switching a parent
+// off switches its children off — exactly what effectiveFeatures does.
+const REQUIRES={services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges'};
+const EU=new Set(['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GR','HR','HU','IE','IT','LT','LU','LV','MT','NL','PL','PT','RO','SE','SI','SK']);
+const on=k=>{let f=k;while(f){if(!S.features[f])return false;f=REQUIRES[f]}return true};
+const featureTitle=k=>(FEATURES.find(f=>f[0]===k)||[k,k])[1];
+const country=()=>COUNTRIES.find(c=>c[0]===S.country)||COUNTRIES[0];
+const scheme=()=>country()[4];
+const isEU=()=>EU.has(S.country);
+const registered=()=>S.vatRegime==='registered';
+
+// Where each answer lives in the app, and the guide section that explains it.
+const WIKI='https://github.com/fdittgen-png/deskilo/wiki/User-Guide#';
+const HELP={
+ identity:["Réglages de l'espace → Espace de coworking",'workspace-settings-coworking-space'],
+ region:["Réglages de l'espace (devise, fuseau) · Réglages → Région et formats (chaque membre)",'12-settings--profile'],
+ language:["Réglages de l'espace → Langue de l'espace",'2-roles--invitations'],
+ features:['Réglages → Fonctionnalités','features'],
+ availability:['Réglages → Disponibilité','availability'],
+ booking:['Réglages → Disponibilité → Règles de réservation','4b-how-booking-behaves'],
+ limits:['Réglages → Disponibilité → Limites de réservation','4b-how-booking-behaves'],
+ plan:["Onglet Plan → crayon (éditeur de l'espace)",'the-space-editor'],
+ whole:['Éditeur → Codes QR des espaces et réservations d’espaces entiers','space-qr-codes--whole-space-reservations'],
+ tags:['Éditeur → une place → Tag NFC/RFID','setting-up-rfid--nfc-badges'],
+ billing:['Réglages → Facturation','billing'],
+ packages:['Réglages → Facturation → Forfaits de jours','9d-the-consumption-face'],
+ services:['Réglages → Services et accessoires','services-and-accessories'],
+ pay:["Réglages de l'espace → Instructions de paiement",'9c-the-payments-face'],
+ online:['Réglages → Paiements en ligne','setting-up-online-payments'],
+ legal:['Factures → Identité légale, TVA et mentions','11a-legal-identity-vat--mentions'],
+ vat:['Factures → Identité légale → Taux de TVA · Déclarations de TVA','11a-legal-identity-vat--mentions'],
+ einvoice:['Factures → Identité légale → Plateforme de facturation électronique','11b-where-the-e-invoice-has-to-go-eu'],
+ dunning:['Factures → Relances','11-invoicing-owners--billing-admins'],
+ roles:['Réglages → Gestion des rôles','role-management'],
+ validation:['Réglages → Règles de validation','7-events--confirmations-bell-icon'],
+ members:['Réglages → Membres & formules','members--plans'],
+ invites:['Réglages → Membres & formules → Inviter','2-roles--invitations'],
+ whatsapp:["Réglages → Espace de coworking → Groupe WhatsApp",'6-members-directory-members-tab'],
+ kiosk:['Réglages → Mode borne','10-kiosk-mode-wall-tablet'],
+ privacy:['Réglages → Confidentialité et données','14-privacy'],
+};
+function help(key){if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'help',href:WIKI+anchor,target:'_blank',rel:'noopener'},'ⓘ Dans l’app : '+app+' · guide ↗')}
+// "This question is hidden because…" — the guide's way of saying why,
+// with a jump to the step that would change the answer.
+function dep(text,stepId){const d=h('div',{class:'dep'},text+' ');if(stepId!=null){const a=h('a',{href:'#'},'→ étape '+(STEPS.findIndex(s=>s.id===stepId)+1));a.onclick=e=>{e.preventDefault();go(stepId)};d.append(a)}return d}
+const needs=(k,stepId='features')=>dep('Masqué : nécessite la fonctionnalité « '+featureTitle(k)+' ».',stepId);
+
 // ------------------------------------------------------------------ UI helpers
 const h=(tag,attrs={},...kids)=>{const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='onclick'||k==='oninput'||k==='onchange')e[k]=v;else if(k==='html')e.innerHTML=v;else e.setAttribute(k,v)}for(const k of kids){if(k!=null)e.append(k)}return e};
 function get(path){const p=path.split('.');let o=S;for(const k of p)o=o[k];return o}
-function input(label,path,hint,type='text',ph=''){const i=h('input',{type,placeholder:ph});i.value=get(path)??'';i.oninput=()=>set(path,i.value);const d=h('div',{},h('label',{},label),i);if(hint)d.append(h('p',{class:'hint'},hint));return d}
-function selectEl(label,path,opts,hint,onch){const s=h('select');for(const[v,t]of opts)s.append(h('option',{value:v},t));s.value=get(path);s.onchange=()=>{set(path,s.value);if(onch)onch(s.value)};const d=h('div',{},h('label',{},label),s);if(hint)d.append(h('p',{class:'hint'},hint));return d}
+function input(label,path,hint,type='text',ph='',hk){const i=h('input',{type,placeholder:ph});i.value=get(path)??'';i.oninput=()=>set(path,i.value);const d=h('div',{},h('label',{},label),i);if(hint)d.append(h('p',{class:'hint'},hint));d.append(help(hk));return d}
+function selectEl(label,path,opts,hint,onch,hk){const s=h('select');for(const[v,t]of opts)s.append(h('option',{value:v},t));s.value=get(path);if(s.value!==String(get(path))&&opts.length){s.value=opts[0][0];set(path,opts[0][0])}s.onchange=()=>{set(path,s.value);if(onch)onch(s.value);render()};const d=h('div',{},h('label',{},label),s);if(hint)d.append(h('p',{class:'hint'},hint));d.append(help(hk));return d}
 function chip(text,on,cb){const c=h('button',{class:'chip'+(on?' on':''),type:'button'},text);c.onclick=()=>{cb(!on);render()};return c}
+function checkbox(label,desc,checked,onch,cls=''){const c=h('input',{type:'checkbox'});c.checked=!!checked;c.onchange=()=>{onch(c.checked);render()};return h('label',{class:'check '+cls},c,h('span',{},label,desc?h('div',{class:'d'},desc):null))}
 function section(title,...kids){const s=h('section',{},h('h2',{},title),h('div',{class:'body'},...kids));s.querySelector('h2').onclick=()=>s.classList.toggle('closed');return s}
 function tableRows(cols,rows,make,add,addLabel){const t=h('table',{},h('tr',{},...cols.map(c=>h('th',{},c)),h('th')));rows.forEach((r,i)=>{const tr=h('tr',{},...make(r,i).map(c=>h('td',{},c)),h('td',{},h('button',{class:'del',type:'button',onclick:()=>{rows.splice(i,1);save();render()}},'✕')));t.append(tr)});const w=h('div',{},t,h('button',{class:'add',type:'button',onclick:()=>{rows.push(add());save();render()}},addLabel));return w}
 function cell(path,type='text',ph=''){const i=h('input',{type,placeholder:ph});i.value=get(path)??'';i.oninput=()=>set(path,i.value);return i}
-function bind(obj,key,type='text',ph=''){const i=h('input',{type,placeholder:ph});i.value=obj[key]??'';i.oninput=()=>{obj[key]=type==='number'?i.value:i.value;save()};return i}
+function bind(obj,key,type='text',ph=''){const i=h('input',{type,placeholder:ph});i.value=obj[key]??'';i.oninput=()=>{obj[key]=i.value;save()};return i}
+const num=v=>{const n=parseFloat(v);return isNaN(n)?null:n};
+const mins=t=>{const m=/^(\d{1,2}):(\d{2})$/.exec(t||'');return m?parseInt(m[1])*60+parseInt(m[2]):null};
+const F={ok:(t,step)=>({lvl:'ok',t,step}),warn:(t,step)=>({lvl:'warn',t,step}),err:(t,step)=>({lvl:'err',t,step})};
 
-// ------------------------------------------------------------------ render
-function render(){
- const F=document.getElementById('form');F.textContent='';
- // 1 identity
- F.append(section("1 · Identité de l'espace",
-  h('div',{class:'row'},input("Nom de l'espace *",'name','Le nom affiché partout.'),
-   selectEl('Pays','country',COUNTRIES.map(c=>[c[0],c[1]]),'Détermine la devise proposée.',v=>{const c=COUNTRIES.find(x=>x[0]===v);if(c){S.currency=c[2];S.timezone=c[3];save();render()}})),
-  h('div',{class:'row'},selectEl('Devise','currency',CURRENCIES.map(c=>[c,c]),"Code ISO 4217. L'app connaît le nombre de décimales de chacune (le yen n'en a pas, le dinar en a trois)."),selectEl('Fuseau horaire','timezone',TIMEZONES.map(t=>[t,t]),"Nom IANA. Tous les créneaux de réservation s'y ancrent.")),
-  selectEl("Langue de l'espace",'language',LANGS,'Les invitations et rapports y sont rédigés par défaut.'),
-  input('Adresse postale','address','Imprimée sur les factures.','text','12 rue Exemple, 34120 Pézenas'),
-  input('Lien du groupe WhatsApp','whatsapp','Facultatif — https://chat.whatsapp.com/…'),
-  input('Transparence des tables','deskOpacity','0–100 %. Laisse la photo de fond du niveau transparaître à travers les tables dessinées. 100 = tables opaques.','number','100'),
-  h('label',{},"Message d'invitation, par langue"),
-  h('p',{class:'hint'},"Laissez vide pour utiliser le message traduit intégré. Placeholders disponibles : {firstName}, {workspaceName}, {inviteLink}, {downloadUrl}, {role}. L'invitation part dans la langue choisie à l'envoi, à défaut dans la langue de l'espace ci-dessus."),
-  ...[['fr','Français'],['en','English'],['de','Deutsch'],['es','Español'],['it','Italiano']]
-    .map(([k,t])=>input(t,'invites.'+k,''))));
- // 2 availability
- const wdChips=h('div',{class:'chips'},...WD.map(([v,t])=>chip(t,S.weekdays.includes(v),on=>{S.weekdays=on?[...S.weekdays,v]:S.weekdays.filter(x=>x!==v);save()})));
- F.append(section('2 · Disponibilité',
-  h('label',{},"Jours d'ouverture"),wdChips,
-  selectEl('Granularité des réservations','granularity',GRAN,''),
-  h('div',{class:'row'},input('Début de journée','dayStart','','time'),input('Limite de demi-journée','boundary','','time'),input('Fin de journée','dayEnd','','time')),
-  ...(S.granularity==='hours'?[
-    h('label',{},'Conversion en demi-journées (granularité « heures réelles »)'),
-    h('p',{class:'hint'},"En heures réelles, le temps réservé est converti en équivalents demi-journée pour le quota et la facture. Dites combien d'heures valent une demi-journée et une journée."),
-    h('div',{class:'row'},input('Heures facturées comme une demi-journée','halfDayHours','','number','4'),
-      input('Heures facturées comme une journée','fullDayHours','','number','8'))]:[]),
-  h('label',{},'Jours de fermeture'),
-  tableRows(['Date'],S.closures,(r,i)=>[cell(`closures.${i}`,'date')],()=> '', '+ Ajouter un jour de fermeture'),
-  h('label',{},'Règles de réservation'),
-  h('p',{class:'hint'},'Deux interrupteurs désactivés par défaut, plus deux réglages chiffrés (fonctionnalité « Règles de réservation »). La matrice ci-dessous montre ce qu\'ils changent.'),
-  ...[['allowPast','Autoriser les réservations passées','Les membres peuvent enregistrer après coup une réservation déjà terminée (hier et avant). Réserver plus tôt le même jour reste toujours permis.'],
-      ['adminCheckout','Les admins peuvent faire le check-out des membres','Un admin peut terminer le pointage en cours d\'un membre ; sinon le check-out est strictement personnel.']]
-   .map(([k,t,d])=>{const c=h('input',{type:'checkbox'});c.checked=!!S.policies[k];c.onchange=()=>{S.policies[k]=c.checked;save()};return h('label',{class:'check'},c,h('span',{},t,h('div',{class:'d'},d)))}),
-  selectEl('En dehors des heures d\'ouverture','policies.outsideHours',OUTSIDE,
-   'Une seule question, quatre réponses exclusives, identiques sur toutes les granularités. « Interdit » refuse aussi la fenêtre qui déborde simplement (16–20). « Spontané seulement » laisse passer l\'arrivée impromptue aux deux bords de la journée — 6:00 comme le soir — et refuse la réservation à l\'avance. « Gratuit » autorise sans jamais compter ni facturer. « Facturé » (défaut) compte comme un usage ordinaire, sauf les jours où le membre tient déjà une réservation dans les heures : la part hors heures voyage alors gratuitement, ce qui évite de ne réserver que hors heures pour ne rien payer.'),
-  input('Réservations simultanées par membre','policies.simultaneous','Combien de réservations peuvent se chevaucher dans le temps pour un même membre, pointages compris. 1 par défaut : une place à la fois. Une autorisation personnelle plus élevée se donne membre par membre dans l\'app (« Membres & formules »), jamais à soi-même, et prime sur ce nombre. À ne pas confondre avec la « limite de réservations », qui plafonne le nombre de réservations ouvertes en tout (section 10).'),
-  h('label',{},'Limites de réservation'),
-  h('p',{class:'hint'},"Jusqu'où l'on peut réserver à l'avance, et quelle durée est acceptée. Ces trois règles valent sur toutes les granularités. Le serveur les appliquait depuis toujours ; elles se règlent désormais dans l'app (Disponibilité → Limites de réservation)."),
-  h('div',{class:'row'},
-   selectEl('Horizon de réservation','horizonDays',HORIZON,'Au-delà, la réservation est refusée.'),
-   selectEl('Durée minimale','minDuration',DURATIONS,"C'est pourquoi arriver à 11:45 pour la limite de 12:00 est refusé, trop court."),
-   selectEl('Durée maximale','maxDuration',DURATIONS,'Une réservation se termine le jour où elle commence : la journée entière est le plafond.')),
-  ((parseInt(S.minDuration)||0)>(parseInt(S.maxDuration)||0)
-    ? h('p',{class:'hint',style:'color:#a33'},'Le minimum dépasse le maximum — aucune réservation ne serait acceptée.')
-    : null),
-  h('label',{},'Comment les réservations se comporteront'),
-  h('p',{class:'hint'},'Le résumé du comportement appliqué côté serveur, selon la granularité choisie ci-dessus. Heures données pour la journée par défaut 08:00 / 12:00 / 17:00.'),
-  h('div',{class:'matrix',html:
-   '<table><tr><th>Demande</th><th>Demi-journées</th><th>Journées entières</th><th>Grille de minutes (5/15/30/60)</th><th>Heures réelles / plage libre</th></tr>'+
-   '<tr><td>Matin (8–12) ou après-midi (12–17)</td><td>✅</td><td>❌ journée entière exigée</td><td>✅ si les bords tombent sur la grille</td><td>✅</td></tr>'+
-   '<tr><td>Journée de travail entière (8–17)</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>'+
-   '<tr><td>Fenêtre atypique (9–15)</td><td>❌</td><td>❌</td><td>✅ si sur la grille</td><td>✅</td></tr>'+
-   '<tr><td>Avant l\'ouverture / après les heures (6:00, 17–21)</td><td colspan="4">Réponse donnée par « En dehors des heures d\'ouverture » ci-dessus, identique partout : interdit, spontané seulement, gratuit ou facturé. En demi-journées et journées entières, seule la prolongation spontanée du soir existe de toute façon.</td></tr>'+
-   '<tr><td>Hors grille (10:02)</td><td>—</td><td>—</td><td>❌ le refus nomme la grille</td><td>—</td></tr>'+
-   '<tr><td colspan="5"><b>Et sur toutes les granularités :</b> durée minimale (30 min par défaut) et maximale — une arrivée à 11:45 pour la limite de 12:00 est refusée, trop courte ; <b>une réservation se termine le jour où elle commence</b>, rien ne franchit minuit (la prolongation du soir s\'arrête à minuit, qui est la fin de ce jour-là, pas un franchissement) ; hier et avant ❌ « entièrement dans le passé », sauf avec « Autoriser les réservations passées » — le rattrapage du même jour marche toujours ; un pointage spontané doit commencer aujourd\'hui ; au-delà de l\'horizon que vous avez fixé, jour fermé, place occupée : refus nommé ; et un membre ne tient que le nombre de réservations qui se chevauchent que son autorisation permet.</td></tr>'+
-   '<tr><td colspan="5">Tout cela est appliqué <b>à un seul endroit sur le serveur</b> : le plan, l\'onglet Réserver, un scan QR/NFC et la borne murale proposent exactement ce qui sera accepté, et la borne refuse précisément ce que le plan refuse.</td></tr>'+
-   '</table>'}),
-  h('div',{class:'matrix',html:
-   '<table><tr><th>Check-in / check-out / annulation</th><th>Comportement</th></tr>'+
-   '<tr><td>Arrivée spontanée (place libre, QR/NFC, borne)</td><td>De maintenant jusqu\'à un bord canonique ; en journées, le créneau entier de la fin est réservé (10:00 → « jusqu\'à 12:00 » réserve la matinée 8–12). Si ce créneau élargi est indisponible — réservation d\'un autre, l\'une des vôtres, place bloquée, espace entier pris — la réservation s\'ancre à votre arrivée et garde la fin du créneau. En fin de journée, prolongation jusqu\'à minuit et pas au-delà. Doit commencer aujourd\'hui.</td></tr>'+
-   '<tr><td>Check-in sur réservation</td><td>En demi-journées, journées entières et heures réelles : toute la journée réservée (à 10:00 vous pointez déjà sur votre après-midi de 12:00). Sur une grille de minutes : 15 min avant le début, ou un pas de grille lorsqu\'il est plus long. Autre jour, réservation finie, double pointage, jour fermé : refus. Encore pointé ailleurs : une réservation en cours bloque dès que l\'autorisation est atteinte ; une finie se clôt seule.</td></tr>'+
-   '<tr><td>Check-out</td><td>Avant la fin réservée : la réservation est raccourcie à maintenant, la place se libère. Après la fin : l\'horodatage reste véridique, la fin réservée demeure. Par un admin : seulement avec « Les admins peuvent faire le check-out des membres ».</td></tr>'+
-   '<tr><td>Absence (jamais pointé)</td><td>Reste « réservée » dans l\'historique — ou, avec Arrivée/départ auto, comptée honorée au balayage de fin de journée.</td></tr>'+
-   '<tr><td>Annuler</td><td>Réservation future : un geste. Pointée en cours : pas d\'annulation sèche — « Terminer plus tôt » ramène la fin (limite de demi-journée tant qu\'elle est devant ; sur grille, un sélecteur qui refuse tout ce qui n\'est pas à venir), ou une demande de suppression validée. Passée ou pointée à retirer : demande de suppression validée, sous réserve de la fonctionnalité « Demandes de suppression ». Admin : peut retirer la réservation d\'autrui (notifié au fil des événements).</td></tr>'+
-   '<tr><td>Validation automatique des suppressions</td><td>Deux interrupteurs <b>indépendants</b> dans les règles de validation, désactivés par défaut : les admins et/ou les propriétaires règlent eux-mêmes leur propre demande de suppression. Un propriétaire dépend de l\'interrupteur « propriétaire » et de lui seul, un simple admin de l\'interrupteur « admin ». La suppression ainsi réglée reste marquée « validée automatiquement » au fil des événements.</td></tr>'+
-   '<tr><td>Espaces entiers</td><td>Avec une règle de validation, la réservation bloque l\'espace et attend le quorum ; personne ne valide son propre événement.</td></tr>'+
-   '<tr><td>Badges à la borne</td><td>Deux supports au choix, activables séparément : cartes QR imprimables (« Badges QR ») et cartes NFC/RFID (« Badges RFID / NFC ») — enregistrées en approchant la carte, y compris depuis le navigateur.</td></tr>'+
-   '</table>'})));
- // 3 floor plan
- const planBody=[h('p',{class:'hint'},"Décrivez la structure — l'app génère un plan de départ que vous affinerez dans l'éditeur (photos de fond, positions exactes). Les tags NFC/RFID des chaises se configurent dans l'éditeur de l'app : ouvrez la place et approchez la puce — le champ se remplit tout seul (Android, et navigateur Chrome/Android) ; la saisie en hexadécimal reste possible partout.")];
- S.levels.forEach((lv,li)=>{
-  const offices=[];
-  lv.offices.forEach((of,oi)=>{
-   const desks=tableRows(['Nom de la table','Places','Préfixe des places'],of.desks,(d)=>[bind(d,'name'),bind(d,'seats','number'),bind(d,'prefix')],()=>({name:'Table '+(of.desks.length+1),seats:4,prefix:'Place'}),'+ Ajouter une table');
-   offices.push(h('div',{class:'card'},
-    h('div',{class:'row'},h('div',{},h('label',{},'Nom du bureau'),bind(of,'name')),
-     h('div',{},h('label',{},'Réservable en entier'),(()=>{const s=h('select');s.append(h('option',{value:'no'},'Non'),h('option',{value:'yes'},'Oui'));s.value=of.bookable?'yes':'no';s.onchange=()=>{of.bookable=s.value==='yes';save();render()};return s})()),
-     of.bookable?h('div',{},h('label',{},'Prix / demi-journée (€)'),bind(of,'price','number')):h('div')),
-    desks,
-    h('button',{class:'del',type:'button',onclick:()=>{lv.offices.splice(oi,1);save();render()}},'✕ Supprimer ce bureau')));
-  });
-  planBody.push(h('div',{class:'card'},
-   h('div',{class:'row'},h('div',{},h('label',{},"Nom de l'étage"),bind(lv,'name')),
-    h('div',{},h('label',{},'Étage réservable en entier ?'),(()=>{const s=h('select');s.append(h('option',{value:'no'},'Non'),h('option',{value:'yes'},'Oui'));s.value=lv.bookable?'yes':'no';s.onchange=()=>{lv.bookable=s.value==='yes';save()};return s})())),
-   ...offices,
-   h('button',{class:'add',type:'button',onclick:()=>{lv.offices.push({name:'Bureau '+(lv.offices.length+1),bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]});save();render()}},'+ Ajouter un bureau'),
-   h('button',{class:'del',type:'button',onclick:()=>{S.levels.splice(li,1);save();render()}},'✕ Supprimer cet étage')));
- });
- planBody.push(h('button',{class:'add',type:'button',onclick:()=>{S.levels.push({name:(S.levels.length+1)+'e étage',offices:[{name:'Bureau 1',bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]}]});save();render()}},'+ Ajouter un étage'));
- F.append(section('3 · Plan des locaux',...planBody));
- // 4 features
- F.append(section('4 · Fonctionnalités',
-  h('p',{class:'hint'},'Cochez ce que votre espace utilise — tout reste modifiable ensuite dans l’app.'),
-  ...FEATURES.map(([k,t,d])=>{const c=h('input',{type:'checkbox'});c.checked=!!S.features[k];c.onchange=()=>{S.features[k]=c.checked;save()};return h('label',{class:'check'},c,h('span',{},t,h('div',{class:'d'},d)))})));
- // 5 billing
- F.append(section('5 · Facturation (abonnements)',
-  h('label',{},'Paliers tarifaires'),
-  h('p',{class:'hint'},'Le prix mensuel selon le pourcentage d’abonnement, et le tarif d’une demi-journée de dépassement.'),
-  tableRows(['dès %','jusqu’à %','Tarif €/mois','Dépassement €/demi-j.'],S.tiers,(t)=>[bind(t,'from','number'),bind(t,'to','number'),bind(t,'fee','number'),bind(t,'over','number')],()=>({from:'',to:'',fee:'',over:''}),'+ Ajouter un palier'),
-  h('label',{},"Niveaux d'abonnement proposés (%)"),
-  h('div',{class:'chips'},...['25','50','75','80','100'].map(v=>chip(v+' %',S.subLevels.includes(v),on=>{S.subLevels=on?[...S.subLevels,v]:S.subLevels.filter(x=>x!==v);save()}))),
-  (()=>{const c=h('input',{type:'checkbox'});c.checked=S.freeLevel;c.onchange=()=>{S.freeLevel=c.checked;save()};return h('label',{class:'check'},c,h('span',{},'Autoriser une valeur libre négociée'))})(),
-  h('label',{},'Forfaits de jours'),
-  tableRows(['Nom','Jours','Prix €'],S.packages,(p)=>[bind(p,'name'),bind(p,'days','number'),bind(p,'price','number')],()=>({name:'',days:'',price:''}),'+ Ajouter un forfait')));
- // 6 services + accessories
- F.append(section('6 · Services et accessoires',
-  h('label',{},'Services (casiers, impression…)'),
-  tableRows(['Nom','Prix €','TVA % (vide = défaut)'],S.services,(s)=>[bind(s,'name'),bind(s,'price','number'),bind(s,'vat','number')],()=>({name:'',price:'',vat:''}),'+ Ajouter un service'),
-  h('label',{},'Accessoires de place (écran, bureau debout…)'),
-  h('p',{class:'hint'},'Le supplément se facture par demi-journée réservée. 0 = gratuit.'),
-  tableRows(['Nom','Supplément €/demi-j.'],S.accessories,(a)=>[bind(a,'name'),bind(a,'supp','number')],()=>({name:'',supp:'0'}),'+ Ajouter un accessoire')));
- // 7 payments
- F.append(section('7 · Instructions de paiement',
-  h('p',{class:'hint'},'Affichées aux membres sur un relevé impayé. Laissez vide pour ne rien afficher.'),
-  input('IBAN','pay.iban',''),input('Nom de la banque','pay.bank_name','Facultatif.'),input('Numéro de compte','pay.account_number','Pays sans IBAN : Royaume-Uni, États-Unis, Canada.'),input('Code banque','pay.bank_code','Sort code (UK), routing number (US), transit + institution (CA).'),input('BIC / SWIFT','pay.bic','Virements internationaux.'),input('Lien ou identifiant PayPal.me','pay.paypal_me',''),
-  h('div',{class:'row'},input('Numéro Wero','pay.wero',''),input('Numéro ou identifiant Lydia','pay.lydia','')),
-  h('div',{class:'row'},input('Wisetag / lien Wise','pay.wise',''),input('Indication de référence','pay.reference',''))));
- // 8 legal
- F.append(section('8 · Identité légale et facturation',
-  selectEl("Type d'organisation",'org',[['association','Association (loi 1901)'],['company','Entreprise / société']],''),
-  selectEl('Régime de TVA','vatRegime',[['not_subject','Hors du champ de la TVA'],['exempt','Franchise / exonéré (avec n° de TVA)'],['registered','Assujetti à la TVA (taux sur les prix)']],''),
-  h('div',{class:'row'},input("Numéro d'immatriculation",'regNumber',S.org==='association'?'RNA W… · SIRET si attribué':'RCS / SIREN'),input('Numéro de TVA (si applicable)','vatId','')),
-  input('Motif de non-application de la TVA','exemption','Ex. « TVA non applicable, art. 293 B du CGI » ou « Exonération de TVA, art. 261, 7-1° du CGI ».'),
-  h('label',{},'Taux de TVA (si assujetti — le premier devient le taux par défaut)'),
-  h('p',{class:'hint'},'Point de départ, pas un conseil fiscal : dans l’app, chaque service/forfait peut porter son propre taux, et les déclarations périodiques (CA3, UStVA…) se génèrent depuis les factures.'),
-  ...(VAT_NOTES[S.country]?[h('p',{class:'hint'},VAT_NOTES[S.country])]:[]),
-  tableRows(['Libellé','Taux %'],S.vatRates,(r)=>[bind(r,'label'),bind(r,'percent','number')],()=>({label:'',percent:''}),'+ Ajouter un taux'),
-  (VAT_RATES[S.country]?(()=>{const b=h('button',{class:'chip',type:'button'},'Proposer les taux usuels du pays ('+VAT_RATES[S.country].map(r=>r[1]).join(', ')+' %)');b.onclick=()=>{S.vatRates=VAT_RATES[S.country].map(([label,percent])=>({label,percent}));save();render()};return b})():null),
-  h('div',{class:'row'},input('Rue','street',''),input('Code postal','postal',''),input('Ville','city','')),
-  h('label',{},'Mentions de facturation (vide = formule légale par défaut)'),
-  input('Forme juridique et capital','mentions.legalForm','Ex. Association loi 1901'),
-  input('Modalités de règlement','mentions.terms','Défaut : Règlement à réception.'),
-  h('div',{class:'row'},input('Pénalités de retard','mentions.penalty',''),input('Indemnité de recouvrement','mentions.recovery','')),
-  h('div',{class:'row'},input('Escompte','mentions.escompte',''),input('Assurance professionnelle','mentions.insurance','')),
-  input('Mentions particulières','mentions.special',''),
-  h('label',{},'Règles de relance'),
-  h('div',{class:'row'},input('Niveaux de relance','reminders.levels','','number'),input('Jours avant la 1re relance','reminders.firstDays','','number'),input('Jours entre les relances','reminders.betweenDays','','number')),
-  selectEl('Période de déclaration de TVA','vatPeriod',VATPERIOD,'Seulement si vous êtes assujetti : la périodicité que votre régime impose. La déclaration agrège les factures émises de la période, par taux, et se transmet ou s\'exporte en PDF/XML.'),
-  h('label',{},'Plateforme de facturation électronique'),
-  h('p',{class:'hint'},"Là où DesKilo dépose vos factures : une plateforme agréée, un point d'accès Peppol, une plateforme nationale. Toute plateforme acceptant un envoi avec un jeton fonctionne. Le jeton est stocké côté serveur et n'en ressort jamais — ne le mettez ici que si vous remplissez ce document en privé, sinon laissez vide et saisissez-le dans l'app."),
-  input('URL de dépôt','einvoice.url','','text','https://…'),
-  h('div',{class:'row'},input('Jeton ou identifiant','einvoice.token',''),
-   input("En-tête d'authentification",'einvoice.header','Authorization par défaut.','text','Authorization')),
-  input('Nom du champ fichier','einvoice.field','file par défaut.','text','file'),
-  h('label',{},'Environnements de test (UAT / Dev)'),
-  h('p',{class:'hint'},"Points d'accès et jetons distincts pour les répétitions. Le choix n'apparaît à l'envoi que si le mode développeur de l'espace est actif ; un environnement non configuré refuse au lieu de retomber sur la production."),
-  h('div',{class:'row'},input('URL UAT','einvoice.uatUrl',''),input('Jeton UAT','einvoice.uatToken','')),
-  h('div',{class:'row'},input('URL Dev','einvoice.devUrl',''),input('Jeton Dev','einvoice.devToken','')),
-  h('label',{},'Service de remise au client (seconde destination)'),
-  h('p',{class:'hint'},"Distinct de la plateforme gouvernementale : le point d'accès Peppol du client, son portail ou l'API convenue. Configuré, l'envoi propose les deux destinations, chacune avec son propre historique de transmission. Nécessite la fonctionnalité « Facture électronique au client » (section 4)."),
-  input('URL du service client','einvoice.customerUrl',''),
-  h('div',{class:'row'},input('Jeton client','einvoice.customerToken',''),
-   input("En-tête d'authentification client",'einvoice.customerHeader','','text','Authorization')),
-  input('Nom du champ fichier client','einvoice.customerField','','text','file')));
- // 9 roles + validation
- const permRows=[];
- for(const[role,label]of[['co_owner','Copropriétaire'],['admin','Admin'],['member','Membre']]){
-  permRows.push(h('div',{class:'card'},h('label',{},label),
-   ...PERMS.map(([k,t])=>{const c=h('input',{type:'checkbox'});c.checked=S.perms[role].includes(k);c.onchange=()=>{S.perms[role]=c.checked?[...S.perms[role],k]:S.perms[role].filter(x=>x!==k);save()};return h('label',{class:'check'},c,h('span',{},t))})));
- }
- F.append(section('9 · Rôles et validations',
-  h('p',{class:'hint'},'Le propriétaire détient toujours toutes les permissions. Décidez pour les autres rôles.'),
-  ...permRows,
-  h('label',{},'Règle de validation par défaut'),
-  h('p',{class:'hint'},"Elle s'applique à tous les domaines qui n'ont pas leur propre règle. Rappel : personne ne valide son propre événement — la seule exception est celle que vous activez ci-dessous."),
-  h('div',{class:'row'},input('Validations requises','validation.required','','number'),
-   (()=>{const c=h('input',{type:'checkbox'});c.checked=S.validation.ownerSignOff;c.onchange=()=>{S.validation.ownerSignOff=c.checked;save()};return h('label',{class:'check'},c,h('span',{},'Signature du propriétaire toujours requise'))})()),
-  h('label',{},'Règles par domaine'),
-  h('p',{class:'hint'},"Cochez un domaine pour lui donner sa propre règle ; décoché, il hérite de la règle par défaut. Douze domaines existent à côté de la règle par défaut."),
-  ...DOMAINS.map(([k,t])=>{
-   const d=S.domains[k];
-   const c=h('input',{type:'checkbox'});c.checked=d.on;
-   c.onchange=()=>{d.on=c.checked;save();render()};
-   const head=h('label',{class:'check'},c,h('span',{},t));
-   if(!d.on)return head;
+// ------------------------------------------------------------------ steps
+// Each step: what it asks, why, whether it applies at all given earlier
+// answers, and what it checks. Order IS the dependency order: a later
+// step only reads answers from earlier ones.
+const STEPS=[
+{id:'identity',title:'Identité',why:"Le nom, le pays et la devise déterminent tout ce qui suit : les devises et fuseaux proposés, le format des factures, les moyens de paiement, la TVA.",
+ build(){return[
+  input("Nom de l'espace *",'name','Le nom affiché partout : app, factures, invitations.','text','','identity'),
+  h('div',{class:'row'},selectEl('Pays','country',COUNTRIES.map(c=>[c[0],c[1]]),"Propose la devise, le fuseau et les taux de TVA usuels ; décide de la facture électronique (UE) et des coordonnées bancaires demandées (IBAN, sort code, routing…).",v=>{const c=COUNTRIES.find(x=>x[0]===v);if(c){S.currency=c[2];S.timezone=c[3];save()}},'region'),
+   selectEl('Devise','currency',CURRENCIES.map(c=>[c,c]),"Code ISO 4217. L'app connaît le nombre de décimales de chacune (le yen n'en a pas, le dinar en a trois).",null,'region')),
+  selectEl('Fuseau horaire','timezone',TIMEZONES.map(t=>[t,t]),"Nom IANA. Tous les créneaux de réservation s'y ancrent ; chaque membre peut afficher l'heure dans le sien.",null,'region'),
+  selectEl("Langue de l'espace",'language',LANGS,'Les invitations et rapports y sont rédigés par défaut.',null,'language'),
+  input('Adresse postale','address','Imprimée sur les factures et le reçu de la borne.','text','12 rue Exemple, 34120 Pézenas','identity'),
+ ]},
+ check(){const f=[];if(!S.name.trim())f.push(F.err("Le nom de l'espace manque.",'identity'));else f.push(F.ok('Espace « '+S.name.trim()+' » — '+country()[1]+', '+S.currency+', '+S.timezone));if(S.currency!==country()[2])f.push(F.warn('La devise '+S.currency+' n\'est pas celle du pays ('+country()[2]+') : voulu pour un espace transfrontalier, sinon une erreur.','identity'));return f}},
+
+{id:'features',title:'Fonctionnalités',why:"Cochez ce que votre espace utilise : les étapes suivantes ne poseront que les questions de ces fonctionnalités. Tout reste modifiable ensuite dans l'app (Réglages → Fonctionnalités), et une fonctionnalité désactivée n'efface rien.",
+ build(){const kids=[h('p',{class:'hint'},'Une fonctionnalité en retrait dépend de celle au-dessus : elle n\'est proposée que si son parent est activé.'),help('features')];
+  for(const[k,t,d]of FEATURES){const parent=REQUIRES[k];const avail=!parent||on(parent);
+   kids.push(checkbox(t,avail?d:d+' — nécessite « '+featureTitle(parent)+' ».',avail&&S.features[k],v=>{S.features[k]=v;if(!v)for(const[c,p]of Object.entries(REQUIRES))if(!on(c))S.features[c]=false;save()},(parent?'child':'')+(avail?'':' off')));
+   if(!avail)kids[kids.length-1].querySelector('input').disabled=true}
+  return kids},
+ check(){const f=[];const n=FEATURES.filter(([k])=>on(k)).length;f.push(F.ok(n+' fonctionnalités actives sur '+FEATURES.length+'.'));
+  if(!on('moneyTab'))f.push(F.warn("Onglet Finances désactivé : ni abonnements, ni services, ni factures ne seront demandés.",'features'));
+  if(on('onlinePayments'))f.push(F.warn("Paiements en ligne : les clés PayPal/Stripe/Mollie/Wero se saisissent dans l'app (Réglages → Paiements en ligne), jamais ici.",'features'));
+  if(on('kioskMode')&&!on('nfcBadges')&&!on('qrBadges'))f.push(F.warn('Mode borne sans badge NFC ni QR : les membres se reconnaîtront par e-mail ou code.','features'));
+  return f}},
+
+{id:'availability',title:'Disponibilité',why:"Quand l'espace est ouvert et comment on y réserve. Le serveur applique ces règles partout : plan, onglet Réserver, scan QR/NFC, borne.",
+ build(){const wd=h('div',{class:'chips'},...WD.map(([v,t])=>chip(t,S.weekdays.includes(v),o=>{S.weekdays=o?[...S.weekdays,v]:S.weekdays.filter(x=>x!==v);save()})));
+  const gran=on('workingHours')?GRAN:GRAN.filter(([v])=>v==='half_day'||v==='full_day');
+  const halfUsed=['half_day','hours','flexible'].includes(S.granularity);
+  const k=[h('label',{},"Jours d'ouverture"),wd,help('availability'),
+   selectEl('Granularité des réservations','granularity',gran,on('workingHours')?'':'Sans « Horaires de travail », seules les demi-journées et journées entières existent.',null,'availability'),
+   on('workingHours')?null:needs('workingHours'),
+   h('div',{class:'row'},input('Début de journée','dayStart','','time','','availability'),halfUsed?input('Limite de demi-journée','boundary','Matin avant, après-midi après.','time','','availability'):null,input('Fin de journée','dayEnd','','time','','availability')),
+   ...(S.granularity==='hours'?[h('label',{},'Conversion en demi-journées (granularité « heures réelles »)'),h('p',{class:'hint'},"Le temps réservé est converti en équivalents demi-journée pour le quota et la facture."),
+     h('div',{class:'row'},input('Heures valant une demi-journée','halfDayHours','','number','4','availability'),input('Heures valant une journée','fullDayHours','','number','8','availability'))]:[]),
+   h('label',{},'Jours de fermeture'),tableRows(['Date'],S.closures,(r,i)=>[cell(`closures.${i}`,'date')],()=>'','+ Ajouter un jour de fermeture')];
+  if(on('bookingPolicies')){k.push(h('label',{},'Règles de réservation'),help('booking'),
+   checkbox('Autoriser les réservations passées','Enregistrer après coup une réservation déjà terminée (hier et avant). Réserver plus tôt le même jour reste toujours permis.',S.policies.allowPast,v=>{S.policies.allowPast=v;save()}),
+   checkbox('Les admins peuvent faire le check-out des membres',"Un admin peut terminer le pointage en cours d'un membre ; sinon le check-out est strictement personnel.",S.policies.adminCheckout,v=>{S.policies.adminCheckout=v;save()}),
+   selectEl("En dehors des heures d'ouverture",'policies.outsideHours',OUTSIDE,'« Interdit » refuse aussi la fenêtre qui déborde (16–20). « Spontané seulement » laisse passer l\'arrivée impromptue aux deux bords de la journée et refuse la réservation à l\'avance. « Gratuit » autorise sans compter ni facturer. « Facturé » (défaut) compte comme un usage ordinaire, sauf les jours où le membre tient déjà une réservation dans les heures.',null,'booking'),
+   input('Réservations simultanées par membre','policies.simultaneous',"Combien de réservations peuvent se chevaucher pour un même membre, pointages compris. 1 par défaut. Une autorisation personnelle plus élevée se donne membre par membre (étape Membres) et prime sur ce nombre.",'number','1','booking'))}
+  else k.push(needs('bookingPolicies'),h('p',{class:'hint'},'Sans cette fonctionnalité : pas de réservation passée, check-out personnel, hors heures facturé, une réservation à la fois.'));
+  k.push(h('label',{},'Limites de réservation'),help('limits'),
+   h('div',{class:'row'},selectEl('Horizon de réservation','horizonDays',HORIZON,'Au-delà, la réservation est refusée.',null,'limits'),selectEl('Durée minimale','minDuration',DURATIONS,'Une arrivée à 11:45 pour la limite de 12:00 est refusée, trop courte.',null,'limits'),selectEl('Durée maximale','maxDuration',DURATIONS,'Une réservation se termine le jour où elle commence.',null,'limits')),
+   h('details',{},h('summary',{},'Comment les réservations se comporteront (résumé du serveur)'),
+    h('div',{class:'matrix',html:'<table><tr><th>Demande</th><th>Demi-journées</th><th>Journées entières</th><th>Grille de minutes (5/15/30/60)</th><th>Heures réelles / plage libre</th></tr><tr><td>Matin ou après-midi</td><td>✅</td><td>❌ journée entière exigée</td><td>✅ si les bords tombent sur la grille</td><td>✅</td></tr><tr><td>Journée de travail entière</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr><tr><td>Fenêtre atypique (9–15)</td><td>❌</td><td>❌</td><td>✅ si sur la grille</td><td>✅</td></tr><tr><td>Avant l\'ouverture / après les heures</td><td colspan="4">Réponse de « En dehors des heures d\'ouverture » : interdit, spontané seulement, gratuit ou facturé.</td></tr><tr><td>Hors grille (10:02)</td><td>—</td><td>—</td><td>❌ le refus nomme la grille</td><td>—</td></tr><tr><td colspan="5">Sur toutes les granularités : durée minimale et maximale ; rien ne franchit minuit ; hier et avant ❌ sauf « réservations passées » ; un pointage spontané commence aujourd\'hui ; au-delà de l\'horizon, jour fermé, place occupée : refus nommé ; simultanéité selon l\'autorisation.</td></tr></table>'}),
+    h('div',{class:'matrix',html:'<table><tr><th>Check-in / check-out / annulation</th><th>Comportement</th></tr><tr><td>Arrivée spontanée (place libre, QR/NFC, borne)</td><td>De maintenant jusqu\'à un bord canonique ; si ce créneau élargi est indisponible, la réservation s\'ancre à l\'arrivée. En fin de journée, prolongation jusqu\'à minuit. Doit commencer aujourd\'hui.</td></tr><tr><td>Check-in sur réservation</td><td>Demi-journées, journées, heures réelles : toute la journée réservée. Grille de minutes : 15 min avant le début ou un pas de grille.</td></tr><tr><td>Check-out</td><td>Avant la fin réservée : raccourcie à maintenant. Après : horodatage véridique. Par un admin : seulement avec le réglage dédié.</td></tr><tr><td>Annuler</td><td>Future : un geste. En cours : « Terminer plus tôt » ou demande de suppression validée. Passée : demande de suppression validée (fonctionnalité « Demandes de suppression »).</td></tr></table>'})));
+  return k},
+ check(){const f=[];if(!S.weekdays.length)f.push(F.err("Aucun jour d'ouverture.",'availability'));
+  const a=mins(S.dayStart),b=mins(S.boundary),c=mins(S.dayEnd);
+  if(a==null||c==null||a>=c)f.push(F.err('Début et fin de journée : le début doit précéder la fin.','availability'));
+  else if(['half_day','hours','flexible'].includes(S.granularity)&&(b==null||b<=a||b>=c))f.push(F.err('La limite de demi-journée doit tomber entre le début et la fin.','availability'));
+  else f.push(F.ok('Ouvert '+S.weekdays.length+' j/semaine, '+S.dayStart+'–'+S.dayEnd+', '+(GRAN.find(g=>g[0]===S.granularity)||[])[1]+'.'));
+  if((parseInt(S.minDuration)||0)>(parseInt(S.maxDuration)||0))f.push(F.err('Le minimum dépasse le maximum — aucune réservation ne serait acceptée.','availability'));
+  if(S.granularity==='hours'&&((num(S.halfDayHours)||0)<=0||(num(S.fullDayHours)||0)<=(num(S.halfDayHours)||0)))f.push(F.err('Heures réelles : la journée doit valoir plus d\'heures que la demi-journée, et les deux plus de zéro.','availability'));
+  if(on('bookingPolicies')&&(parseInt(S.policies.simultaneous)||0)<1)f.push(F.err('Réservations simultanées : au moins 1.','availability'));
+  return f}},
+
+{id:'plan',title:'Plan des locaux',why:"Décrivez la structure — l'app génère un plan de départ que vous affinerez dans l'éditeur (photos de fond, positions exactes, tags NFC des chaises).",
+ build(){const body=[help('plan'),input('Transparence des tables','deskOpacity','0–100 %. Laisse la photo de fond du niveau transparaître à travers les tables dessinées. 100 = tables opaques.','number','100','plan')];
+  if(on('nfcSeatTags'))body.push(h('p',{class:'hint'},"Les tags NFC/RFID des chaises se configurent dans l'éditeur : ouvrez la place et approchez la puce — le champ se remplit tout seul (Android, navigateur Chrome/Android)."),help('tags'));
+  const whole=on('levelBooking');
+  S.levels.forEach((lv,li)=>{const offices=[];
+   lv.offices.forEach((of,oi)=>{const desks=tableRows(['Nom de la table','Places','Préfixe des places'],of.desks,(d)=>[bind(d,'name'),bind(d,'seats','number'),bind(d,'prefix')],()=>({name:'Table '+(of.desks.length+1),seats:4,prefix:'Place'}),'+ Ajouter une table');
+    offices.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},h('label',{},'Nom du bureau'),bind(of,'name')),
+     whole?h('div',{},h('label',{},'Réservable en entier'),(()=>{const s=h('select');s.append(h('option',{value:'no'},'Non'),h('option',{value:'yes'},'Oui'));s.value=of.bookable?'yes':'no';s.onchange=()=>{of.bookable=s.value==='yes';save();render()};return s})()):null,
+     whole&&of.bookable?h('div',{},h('label',{},'Prix / demi-journée ('+S.currency+')'),bind(of,'price','number')):h('div')),desks,
+     h('button',{class:'del',type:'button',onclick:()=>{lv.offices.splice(oi,1);save();render()}},'✕ Supprimer ce bureau')))});
+   body.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},h('label',{},"Nom de l'étage"),bind(lv,'name')),
+    whole?h('div',{},h('label',{},'Étage réservable en entier ?'),(()=>{const s=h('select');s.append(h('option',{value:'no'},'Non'),h('option',{value:'yes'},'Oui'));s.value=lv.bookable?'yes':'no';s.onchange=()=>{lv.bookable=s.value==='yes';save()};return s})()):null),
+    ...offices,h('button',{class:'add',type:'button',onclick:()=>{lv.offices.push({name:'Bureau '+(lv.offices.length+1),bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]});save();render()}},'+ Ajouter un bureau'),
+    h('button',{class:'del',type:'button',onclick:()=>{S.levels.splice(li,1);save();render()}},'✕ Supprimer cet étage')))});
+  body.push(h('button',{class:'add',type:'button',onclick:()=>{S.levels.push({name:(S.levels.length+1)+'e étage',offices:[{name:'Bureau 1',bookable:false,price:'',desks:[{name:'Table 1',seats:4,prefix:'Place'}]}]});save();render()}},'+ Ajouter un étage'));
+  if(!whole)body.push(needs('levelBooking'),h('p',{class:'hint'},'Bureaux et étages ne seront pas réservables en entier ; les tables et places, si.'),help('whole'));
+  return body},
+ check(){const seats=S.levels.reduce((n,lv)=>n+lv.offices.reduce((m,of)=>m+of.desks.reduce((k,d)=>k+(parseInt(d.seats)||0),0),0),0);
+  const f=[];if(!S.levels.length||seats===0)f.push(F.err('Le plan n\'a aucune place.','plan'));else f.push(F.ok(S.levels.length+' étage(s), '+seats+' places.'));
+  if(on('levelBooking'))S.levels.forEach(lv=>lv.offices.forEach(of=>{if(of.bookable&&!(num(of.price)>=0))f.push(F.warn('Bureau « '+of.name+' » réservable en entier sans prix : il sera gratuit.','plan'))}));
+  return f}},
+
+{id:'billing',title:'Abonnements',why:"Ce que coûte un abonnement selon son pourcentage, le tarif d'une demi-journée au-delà, et les forfaits de jours que les membres pourront acheter.",applies(){return on('moneyTab')},
+ build(){return[help('billing'),h('label',{},'Paliers tarifaires'),h('p',{class:'hint'},'Le prix mensuel selon le pourcentage d’abonnement, et le tarif d’une demi-journée de dépassement. Les paliers doivent couvrir 0–100 % sans trou.'),
+  tableRows(['dès %','jusqu’à %','Tarif '+S.currency+'/mois','Dépassement '+S.currency+'/demi-j.'],S.tiers,(t)=>[bind(t,'from','number'),bind(t,'to','number'),bind(t,'fee','number'),bind(t,'over','number')],()=>({from:'',to:'',fee:'',over:''}),'+ Ajouter un palier'),
+  h('label',{},"Niveaux d'abonnement proposés (%)"),h('div',{class:'chips'},...['25','50','75','80','100'].map(v=>chip(v+' %',S.subLevels.includes(v),o=>{S.subLevels=o?[...S.subLevels,v]:S.subLevels.filter(x=>x!==v);save()}))),
+  checkbox('Autoriser une valeur libre négociée','',S.freeLevel,v=>{S.freeLevel=v;save()}),
+  h('label',{},'Forfaits de jours'),h('p',{class:'hint'},"Des packs de jours à acheter (onglet Finances → Consommation). Sans forfait, l'option « Forfaits » de l'étape Membres n'est pas proposée."),help('packages'),
+  tableRows(['Nom','Jours','Prix '+S.currency],S.packages,(p)=>[bind(p,'name'),bind(p,'days','number'),bind(p,'price','number')],()=>({name:'',days:'',price:''}),'+ Ajouter un forfait')]},
+ check(){const f=[];const tiers=S.tiers.filter(t=>t.fee!=='').map(t=>({from:num(t.from)||0,to:num(t.to)??100,fee:num(t.fee),over:num(t.over)})).sort((a,b)=>a.from-b.from);
+  if(!tiers.length)f.push(F.warn('Aucun palier tarifaire : les abonnements seront gratuits jusqu\'à ce que vous en ajoutiez dans l\'app.','billing'));
+  else{let cover=0,gap=false;for(const t of tiers){if(t.from>cover)gap=true;cover=Math.max(cover,t.to)}if(gap||cover<100)f.push(F.err('Les paliers ne couvrent pas 0–100 % sans trou.','billing'));else f.push(F.ok(tiers.length+' palier(s) couvrant 0–100 %.'));
+   for(const lv of S.subLevels){const p=parseInt(lv);if(!tiers.some(t=>p>t.from&&p<=t.to))f.push(F.err('Le niveau '+p+' % ne tombe dans aucun palier.','billing'))}}
+  if(!S.subLevels.length&&!S.freeLevel)f.push(F.err("Aucun niveau d'abonnement proposé.",'billing'));
+  S.packages.filter(p=>p.name.trim()).forEach(p=>{if(!(num(p.days)>0)||!(num(p.price)>=0))f.push(F.err('Forfait « '+p.name+' » : jours et prix requis.','billing'))});
+  return f}},
+
+{id:'legal',title:'Identité légale et TVA',why:"Ce qui figure sur vos factures et ce que l'administration attend : forme, immatriculation, régime de TVA, taux, déclarations, plateforme de facturation électronique.",applies(){return on('invoicing')},
+ build(){const k=[help('legal'),selectEl("Type d'organisation",'org',[['association','Association (loi 1901)'],['company','Entreprise / société']],'',null,'legal'),
+  selectEl('Régime de TVA','vatRegime',[['not_subject','Hors du champ de la TVA'],['exempt','Franchise / exonéré (avec n° de TVA)'],['registered','Assujetti à la TVA (taux sur les prix)']],"Décide des questions suivantes : taux, périodicité de déclaration, motif d'exonération.",null,'vat'),
+  h('div',{class:'row'},input("Numéro d'immatriculation",'regNumber',S.org==='association'?'RNA W… · SIRET si attribué':'RCS / SIREN','text','','legal'),S.vatRegime!=='not_subject'?input('Numéro de TVA','vatId','','text','','vat'):null),
+  !registered()?input('Motif de non-application de la TVA','exemption','Ex. « TVA non applicable, art. 293 B du CGI » ou « Exonération de TVA, art. 261, 7-1° du CGI ». Imprimé sur chaque facture.','text','','vat'):null];
+  if(registered()){if(on('vatManagement')){k.push(h('label',{},'Taux de TVA (le premier devient le taux par défaut)'),h('p',{class:'hint'},'Point de départ, pas un conseil fiscal : dans l’app, chaque service/forfait/accessoire peut porter son propre taux.'),help('vat'),
+    ...(VAT_NOTES[S.country]?[h('p',{class:'hint'},VAT_NOTES[S.country])]:[]),
+    tableRows(['Libellé','Taux %'],S.vatRates,(r)=>[bind(r,'label'),bind(r,'percent','number')],()=>({label:'',percent:''}),'+ Ajouter un taux'),
+    VAT_RATES[S.country]?(()=>{const b=h('button',{class:'chip',type:'button'},'Proposer les taux usuels : '+country()[1]+' ('+VAT_RATES[S.country].map(r=>r[1]).join(', ')+' %)');b.onclick=()=>{S.vatRates=VAT_RATES[S.country].map(([label,percent])=>({label,percent}));save();render()};return b})():null)}
+   else k.push(needs('vatManagement'),h('p',{class:'hint'},'Assujetti sans « Gestion de la TVA » : les factures partiront sans taux. Activez la fonctionnalité pour saisir vos taux.'));
+   if(on('vatDeclarations'))k.push(selectEl('Période de déclaration de TVA','vatPeriod',VATPERIOD,'La périodicité que votre régime impose. La déclaration agrège les factures émises de la période, par taux (CA3, UStVA…), et se transmet ou s\'exporte en PDF/XML.',null,'vat'));else k.push(needs('vatDeclarations'))}
+  k.push(h('label',{},'Adresse de facturation'),h('div',{class:'row'},input('Rue','street','','text','','legal'),input('Code postal','postal','','text','','legal'),input('Ville','city','','text','','legal')),
+   h('label',{},'Mentions de facturation (vide = formule légale par défaut)'),help('legal'),
+   input('Forme juridique et capital','mentions.legalForm','Ex. Association loi 1901'),input('Modalités de règlement','mentions.terms','Défaut : Règlement à réception.'),
+   h('div',{class:'row'},input('Pénalités de retard','mentions.penalty',''),input('Indemnité de recouvrement','mentions.recovery','')),
+   h('div',{class:'row'},input('Escompte','mentions.escompte',''),input('Assurance professionnelle','mentions.insurance','')),input('Mentions particulières','mentions.special',''));
+  if(on('dunning'))k.push(h('label',{},'Règles de relance'),help('dunning'),h('div',{class:'row'},input('Niveaux de relance','reminders.levels','','number'),input('Jours avant la 1re relance','reminders.firstDays','','number'),input('Jours entre les relances','reminders.betweenDays','','number')));else k.push(needs('dunning'));
+  if(isEU()){k.push(h('label',{},'Plateforme de facturation électronique'),help('einvoice'),h('p',{class:'hint'},"Là où DesKilo dépose vos factures EN 16931 : une plateforme agréée, un point d'accès Peppol, une plateforme nationale. Le jeton est stocké côté serveur et n'en ressort jamais — ne le mettez ici que si vous remplissez ce document en privé."),
+    input('URL de dépôt','einvoice.url','','text','https://…'),h('div',{class:'row'},input('Jeton ou identifiant','einvoice.token',''),input("En-tête d'authentification",'einvoice.header','Authorization par défaut.','text','Authorization')),input('Nom du champ fichier','einvoice.field','file par défaut.','text','file'),
+    h('details',{},h('summary',{},'Environnements de test (UAT / Dev)'),h('p',{class:'hint'},"Points d'accès et jetons distincts pour les répétitions ; le choix n'apparaît à l'envoi que si le mode développeur de l'espace est actif."),h('div',{class:'row'},input('URL UAT','einvoice.uatUrl',''),input('Jeton UAT','einvoice.uatToken','')),h('div',{class:'row'},input('URL Dev','einvoice.devUrl',''),input('Jeton Dev','einvoice.devToken',''))));
+   if(on('einvoiceCustomerDelivery'))k.push(h('label',{},'Service de remise au client (seconde destination)'),h('p',{class:'hint'},"Distinct de la plateforme gouvernementale : le point d'accès Peppol du client, son portail ou l'API convenue."),input('URL du service client','einvoice.customerUrl',''),h('div',{class:'row'},input('Jeton client','einvoice.customerToken',''),input("En-tête d'authentification client",'einvoice.customerHeader','','text','Authorization')),input('Nom du champ fichier client','einvoice.customerField','','text','file'));else k.push(needs('einvoiceCustomerDelivery'))}
+  else k.push(dep('Hors Union européenne ('+country()[1]+') : pas de facture électronique EN 16931, la facture PDF signée suffit.','identity'),help('einvoice'));
+  return k},
+ check(){const f=[];if(!S.regNumber.trim())f.push(F.warn("Pas de numéro d'immatriculation : les factures en manqueront.",'legal'));
+  if(S.vatRegime!=='not_subject'&&!S.vatId.trim())f.push(F.err('Régime '+(registered()?'assujetti':'en franchise')+' sans numéro de TVA.','legal'));
+  if(!registered()&&!S.exemption.trim())f.push(F.warn("Pas de motif de non-application de la TVA : la formule légale par défaut sera imprimée.",'legal'));
+  if(registered()&&on('vatManagement')&&!S.vatRates.some(r=>String(r.label).trim()&&r.percent!==''))f.push(F.err('Assujetti sans aucun taux de TVA.','legal'));
+  if(!S.street.trim()||!S.postal.trim()||!S.city.trim())f.push(F.err('Adresse de facturation incomplète (rue, code postal, ville).','legal'));
+  const ei=S.einvoice;if(isEU()&&ei.url.trim()&&!ei.token.trim())f.push(F.warn("Plateforme de facturation électronique sans jeton : saisissez-le dans l'app.",'legal'));
+  if(on('einvoiceCustomerDelivery')&&ei.customerUrl.trim()&&!ei.customerToken.trim())f.push(F.warn('Service client sans jeton.','legal'));
+  if(on('dunning')&&((parseInt(S.reminders.levels)||0)<1||(parseInt(S.reminders.firstDays)||0)<1))f.push(F.err('Relances : au moins un niveau et un délai.','legal'));
+  if(!f.some(x=>x.lvl==='err'))f.unshift(F.ok((S.org==='association'?'Association':'Société')+', '+({not_subject:'hors TVA',exempt:'franchise',registered:'assujetti'})[S.vatRegime]+(isEU()?', facture électronique UE':'')+'.'));
+  return f}},
+
+{id:'services',title:'Services et accessoires',why:"Ce que les membres consomment en plus de leur place : services à l'unité (casiers, impression…) et suppléments d'accessoires par demi-journée.",applies(){return on('services')||on('accessorySupplements')},
+ build(){const k=[help('services')];const vatCol=registered()&&on('vatManagement');
+  if(on('services'))k.push(h('label',{},'Services (casiers, impression…)'),tableRows(['Nom','Prix '+S.currency,...(vatCol?['TVA % (vide = défaut)']:[])],S.services,(s)=>[bind(s,'name'),bind(s,'price','number'),...(vatCol?[bind(s,'vat','number')]:[])],()=>({name:'',price:'',vat:''}),'+ Ajouter un service'));else k.push(needs('services'));
+  if(on('accessorySupplements'))k.push(h('label',{},'Accessoires de place (écran, bureau debout…)'),h('p',{class:'hint'},'Le supplément se facture par demi-journée réservée. 0 = gratuit.'),tableRows(['Nom','Supplément '+S.currency+'/demi-j.'],S.accessories,(a)=>[bind(a,'name'),bind(a,'supp','number')],()=>({name:'',supp:'0'}),'+ Ajouter un accessoire'));else k.push(needs('accessorySupplements'));
+  if(!vatCol&&on('services'))k.push(dep(registered()?'Colonne TVA masquée : nécessite « Gestion de la TVA ».':'Colonne TVA masquée : l\'espace n\'est pas assujetti.',registered()?'features':'legal'));
+  return k},
+ check(){const f=[];if(on('services')){const n=S.services.filter(s=>s.name.trim()).length;if(!n)f.push(F.warn('Services activés mais aucun défini.','services'));else f.push(F.ok(n+' service(s).'));S.services.filter(s=>s.name.trim()&&!(num(s.price)>=0)).forEach(s=>f.push(F.err('Service « '+s.name+' » sans prix.','services')))}
+  if(on('accessorySupplements')){const n=S.accessories.filter(a=>a.name.trim()).length;if(!n)f.push(F.warn('Suppléments d\'accessoires activés mais aucun accessoire.','services'));else f.push(F.ok(n+' accessoire(s).'))}return f}},
+
+{id:'pay',title:'Instructions de paiement',why:"Ce que voit un membre sur un relevé impayé : comment vous régler. Les champs demandés suivent le système bancaire du pays.",applies(){return on('moneyTab')},
+ build(){const sc=scheme();const k=[help('pay'),h('p',{class:'hint'},'Laissez vide pour ne rien afficher. La référence est rappelée au membre pour que le virement se rapproche tout seul.')];
+  if(sc==='sepa')k.push(h('div',{class:'row'},input('IBAN','pay.iban',''),input('BIC / SWIFT','pay.bic','Virements hors zone SEPA.')),input('Nom de la banque','pay.bank_name','Facultatif.'));
+  if(sc==='uk')k.push(h('div',{class:'row'},input('Account number','pay.account_number',''),input('Sort code','pay.bank_code','')),input('Nom de la banque','pay.bank_name',''),input('IBAN (international)','pay.iban','Facultatif.'));
+  if(sc==='us')k.push(h('div',{class:'row'},input('Account number','pay.account_number',''),input('Routing number (ABA)','pay.bank_code','')),input('Nom de la banque','pay.bank_name',''));
+  if(sc==='ca')k.push(h('div',{class:'row'},input('Account number','pay.account_number',''),input('Transit + institution','pay.bank_code','5 chiffres + 3 chiffres.')),input('Nom de la banque','pay.bank_name',''));
+  k.push(h('label',{},'Moyens mobiles'),h('div',{class:'row'},input('Lien ou identifiant PayPal.me','pay.paypal_me',''),isEU()?input('Numéro Wero','pay.wero','Wero fonctionne dans les pays de la zone euro qui l\'ont rejoint.'):null),
+   h('div',{class:'row'},S.country==='FR'?input('Numéro ou identifiant Lydia','pay.lydia',''):null,input('Wisetag / lien Wise','pay.wise','')),input('Indication de référence','pay.reference','Ex. « Nom + mois ».'));
+  if(on('onlinePayments'))k.push(dep("Paiements en ligne activés : les clés PayPal, Stripe, Mollie ou Wero se configurent dans l'app, côté serveur — jamais dans ce document.",'features'),help('online'));
+  return k},
+ check(){const any=Object.values(S.pay).some(v=>String(v).trim());const f=[];if(!any&&!on('onlinePayments'))f.push(F.warn('Aucune instruction de paiement et pas de paiement en ligne : les membres ne sauront pas comment régler.','pay'));else f.push(F.ok(any?'Instructions de paiement renseignées.':'Paiement en ligne uniquement.'));
+  if(scheme()==='sepa'&&S.pay.iban.trim()&&!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(S.pay.iban.replace(/\s+/g,'').toUpperCase()))f.push(F.err('IBAN mal formé.','pay'));return f}},
+
+{id:'roles',title:'Rôles et validations',why:"Qui peut faire quoi, et quelles actions attendent une confirmation avant de compter. Le propriétaire détient toujours toutes les permissions.",
+ build(){const k=[];
+  if(on('roleManagement')){k.push(help('roles'));for(const[role,label]of[['co_owner','Copropriétaire'],['admin','Admin'],['member','Membre']]){if(role==='co_owner'&&!on('coOwner'))continue;
+    k.push(h('div',{class:'card'},h('label',{},label),...PERMS.filter(([p])=>p!=='issueInvoices'||on('invoicing')).filter(([p])=>p!=='manageServices'||on('services')).filter(([p])=>p!=='manageDocuments'||on('documents')).map(([p,t])=>checkbox(t,'',S.perms[role].includes(p),v=>{S.perms[role]=v?[...S.perms[role],p]:S.perms[role].filter(x=>x!==p);save()}))))}}
+  else k.push(needs('roleManagement'),h('p',{class:'hint'},'Sans gestion des rôles, la matrice par défaut s\'applique : les admins gèrent membres, documents, services, dépenses et consultent les finances ; les copropriétaires ont tout.'),help('roles'));
+  if(on('adminInvoicing'))k.push(dep('« Les admins émettent des factures » est activé : la permission d\'émission est déléguée aux admins par la fonctionnalité elle-même.','features'));
+  k.push(h('label',{},'Règle de validation par défaut'),help('validation'),h('p',{class:'hint'},"Elle s'applique à tous les domaines sans règle propre. Personne ne valide son propre événement."),
+   h('div',{class:'row'},input('Validations requises','validation.required','','number'),checkbox('Signature du propriétaire toujours requise','',S.validation.ownerSignOff,v=>{S.validation.ownerSignOff=v;save()})),
+   h('label',{},'Règles par domaine'),h('p',{class:'hint'},"Cochez un domaine pour lui donner sa propre règle ; décoché, il hérite de la règle par défaut. Seuls les domaines de vos fonctionnalités sont proposés."));
+  const gate={service:'services',reservation_delete:'deletionRequests',space_reservation:'levelBooking',invoice_payment:'invoicing',invoice_writeoff:'invoicing',payment:'moneyTab',expense:'moneyTab',adjustment:'moneyTab'};
+  for(const[dk,t]of DOMAINS){const g=gate[dk];if(g&&!on(g)){S.domains[dk].on=false;continue}const d=S.domains[dk];
+   const head=checkbox(t,'',d.on,v=>{d.on=v;save()});if(!d.on){k.push(head);continue}
    const req=h('input',{type:'number'});req.value=d.required;req.oninput=()=>{d.required=req.value;save()};
-   const so=h('input',{type:'checkbox'});so.checked=d.ownerSignOff;so.onchange=()=>{d.ownerSignOff=so.checked;save()};
-   return h('div',{class:'card'},head,
-    h('div',{class:'row'},h('div',{},h('label',{},'Validations requises'),req),
-     h('div',{},h('label',{},' '),h('label',{class:'check'},so,h('span',{},'Signature du propriétaire')))));
-  }),
-  h('label',{},'Exception : validation automatique des suppressions'),
-  h('p',{class:'hint'},"La seule entorse, délibérée, à « personne ne valide son propre événement » — et elle ne concerne QUE les suppressions de réservation. Les deux interrupteurs sont indépendants : un propriétaire dépend de celui du propriétaire et de lui seul, un simple admin de celui des admins (tout propriétaire étant aussi admin, les confondre reviendrait à n'en avoir qu'un). Une suppression ainsi réglée naît déjà confirmée et reste marquée « auto-validée » au fil des événements. Désactivés par défaut."),
-  ...[['owner','Les propriétaires suppriment sans validation'],['admin','Les admins suppriment sans validation']]
-   .map(([k,t])=>{const c=h('input',{type:'checkbox'});c.checked=S.autoValidate[k];
-    c.onchange=()=>{S.autoValidate[k]=c.checked;save()};
-    return h('label',{class:'check'},c,h('span',{},t))})));
- // 10 members
- F.append(section('10 · Membres à inviter',
-  h('p',{class:'hint'},"Les quatre dernières colonnes sont les réglages par membre de « Membres & formules ». **Quand les jours sont épuisés** : bloqué (défaut), paiement à l'usage, ou forfaits de jours. **Espaces entiers** : le droit de réserver une table, un bureau ou un niveau entier — les propriétaires et admins l'ont déjà sans l'interrupteur. **Simultanées** : l'autorisation personnelle de chevauchement, qui prime sur le nombre de la section 2 (vide = le nombre de l'espace). **Limite** : le plafond de réservations ouvertes en tout, une autre notion (vide = pas de plafond)."),
-  tableRows(['Nom','E-mail','Rôle','Abonnement %','Jours épuisés','Espaces entiers','Simultanées','Limite'],S.members,
-   (m)=>[bind(m,'name'),bind(m,'email','email'),
+   k.push(h('div',{class:'card'},head,h('div',{class:'row'},h('div',{},h('label',{},'Validations requises'),req),h('div',{},h('label',{},' '),checkbox('Signature du propriétaire','',d.ownerSignOff,v=>{d.ownerSignOff=v;save()})))))}
+  if(on('deletionRequests'))k.push(h('label',{},'Exception : validation automatique des suppressions'),h('p',{class:'hint'},"La seule entorse à « personne ne valide son propre événement », limitée aux suppressions de réservation. Deux interrupteurs indépendants, désactivés par défaut."),
+   checkbox('Les propriétaires suppriment sans validation','',S.autoValidate.owner,v=>{S.autoValidate.owner=v;save()}),checkbox('Les admins suppriment sans validation','',S.autoValidate.admin,v=>{S.autoValidate.admin=v;save()}));
+  else{S.autoValidate={admin:false,owner:false};k.push(needs('deletionRequests'))}
+  return k},
+ check(){const f=[];if((parseInt(S.validation.required)||0)<1)f.push(F.err('La règle par défaut exige au moins une validation.','roles'));
+  for(const[dk,t]of DOMAINS){const d=S.domains[dk];if(d.on&&(parseInt(d.required)||0)<1)f.push(F.err('Domaine « '+t+' » : au moins une validation.','roles'))}
+  const admins=S.members.filter(m=>m.role==='admin').length;if((parseInt(S.validation.required)||0)>1+admins)f.push(F.warn((S.validation.required)+' validations requises mais seulement '+(1+admins)+' validateur(s) possible(s) (propriétaire + admins invités).','members'));
+  if(!f.length)f.push(F.ok('Validation par défaut : '+S.validation.required+' confirmation(s)'+(S.validation.ownerSignOff?' + signature du propriétaire':'')+'.'));return f}},
+
+{id:'members',title:'Membres et invitations',why:"Qui invite-t-on au départ, avec quelle formule — et le message qu'ils recevront.",
+ build(){const pk=S.packages.some(p=>p.name.trim());const whole=on('levelBooking');const sim=on('bookingPolicies');
+  const cols=['Nom','E-mail','Rôle','Abonnement %','Jours épuisés',...(whole?['Espaces entiers']:[]),...(sim?['Simultanées']:[]),'Limite'];
+  const k=[help('members'),h('p',{class:'hint'},"**Jours épuisés** : bloqué (défaut), paiement à l'usage"+(pk?', ou forfaits de jours':'')+". **Limite** : le plafond de réservations ouvertes en tout (vide = pas de plafond)."+(whole?" **Espaces entiers** : le droit de réserver une table, un bureau ou un niveau entier.":'')+(sim?" **Simultanées** : l'autorisation personnelle de chevauchement, qui prime sur le nombre de l'étape Disponibilité.":'')),
+   tableRows(cols,S.members,(m)=>[bind(m,'name'),bind(m,'email','email'),
     (()=>{const s=h('select');s.append(h('option',{value:'member'},'Membre'),h('option',{value:'admin'},'Admin'));s.value=m.role||'member';s.onchange=()=>{m.role=s.value;save()};return s})(),
-    bind(m,'pct','number'),
-    (()=>{const s=h('select');s.append(h('option',{value:'blocked'},'Bloqué'),h('option',{value:'payg'},"À l'usage"),h('option',{value:'packages'},'Forfaits'));s.value=m.overage||'blocked';s.onchange=()=>{m.overage=s.value;save()};return s})(),
-    (()=>{const c=h('input',{type:'checkbox'});c.checked=!!m.wholeSpaces;c.onchange=()=>{m.wholeSpaces=c.checked;save()};return c})(),
-    bind(m,'simultaneous','number'),bind(m,'limit','number')],
-   ()=>({name:'',email:'',role:'member',pct:'100',overage:'blocked',wholeSpaces:false,simultaneous:'',limit:''}),
-   '+ Ajouter un membre')));
+    (()=>{const s=h('select');(S.freeLevel?['25','50','75','80','100']:S.subLevels.length?S.subLevels:['100']).forEach(v=>s.append(h('option',{value:v},v+' %')));if(S.freeLevel){s.remove();return bind(m,'pct','number')}s.value=m.pct||'100';if(![...s.options].some(o=>o.value===s.value)){s.value=s.options[0].value;m.pct=s.value}s.onchange=()=>{m.pct=s.value;save()};return s})(),
+    (()=>{const s=h('select');s.append(h('option',{value:'blocked'},'Bloqué'),h('option',{value:'payg'},"À l'usage"));if(pk)s.append(h('option',{value:'packages'},'Forfaits'));s.value=m.overage||'blocked';if(s.value==='packages'&&!pk){s.value='blocked';m.overage='blocked'}s.onchange=()=>{m.overage=s.value;save()};return s})(),
+    ...(whole?[(()=>{const c=h('input',{type:'checkbox'});c.checked=!!m.wholeSpaces;c.onchange=()=>{m.wholeSpaces=c.checked;save()};return c})()]:[]),
+    ...(sim?[bind(m,'simultaneous','number')]:[]),bind(m,'limit','number')],
+    ()=>({name:'',email:'',role:'member',pct:S.subLevels[0]||'100',overage:'blocked',wholeSpaces:false,simultaneous:'',limit:''}),'+ Ajouter un membre'),
+   !pk&&on('moneyTab')?dep('Option « Forfaits » masquée : aucun forfait de jours défini.','billing'):null,
+   h('label',{},"Message d'invitation, par langue"),help('invites'),h('p',{class:'hint'},"Laissez vide pour utiliser le message traduit intégré. Placeholders : {firstName}, {workspaceName}, {inviteLink}, {downloadUrl}, {role}. L'invitation part dans la langue choisie à l'envoi, à défaut dans la langue de l'espace."),
+   ...[['fr','Français'],['en','English'],['de','Deutsch'],['es','Español'],['it','Italiano']].map(([c,t])=>input(t,'invites.'+c,''))];
+  if(on('whatsappIntegration'))k.push(input('Lien du groupe WhatsApp','whatsapp','Facultatif — https://chat.whatsapp.com/…','text','','whatsapp'));else k.push(needs('whatsappIntegration'));
+  return k},
+ check(){const f=[];const ms=S.members.filter(m=>m.email.trim());const seen=new Set();
+  ms.forEach(m=>{const e=m.email.trim().toLowerCase();if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e))f.push(F.err('E-mail invalide : '+m.email,'members'));if(seen.has(e))f.push(F.err('E-mail en double : '+m.email,'members'));seen.add(e);
+   if(!S.freeLevel&&S.subLevels.length&&!S.subLevels.includes(String(m.pct)))f.push(F.err((m.name||m.email)+' : abonnement '+m.pct+' % hors des niveaux proposés.','members'))});
+  if(!ms.length)f.push(F.warn('Aucun membre à inviter : vous les inviterez depuis l\'app.','members'));else f.push(F.ok(ms.length+' membre(s) à inviter, dont '+ms.filter(m=>m.role==='admin').length+' admin(s).'));
+  if(on('whatsappIntegration')&&S.whatsapp.trim()&&!/^https:\/\/chat\.whatsapp\.com\//.test(S.whatsapp.trim()))f.push(F.warn('Le lien WhatsApp ne ressemble pas à un lien de groupe.','members'));return f}},
+
+{id:'review',title:'Vérification et export',why:"Tout ce que l'assistant a vérifié, étape par étape. Les points bloquants sont à corriger ; les avertissements sont des choix à confirmer.",
+ build(){const all=findings();const c={ok:0,warn:0,err:0};all.forEach(x=>c[x.lvl]++);
+  const k=[h('div',{class:'summary'},h('b',{class:'ok'},'✓ '+c.ok+' vérifié(s)'),h('b',{class:'warn'},'⚠ '+c.warn+' avertissement(s)'),h('b',{class:'err'},'✕ '+c.err+' bloquant(s)'))];
+  for(const st of STEPS){if(st.id==='review')continue;const rows=all.filter(x=>x.from===st.id);if(!rows.length)continue;
+   k.push(h('div',{class:'card'},h('label',{},(STEPS.indexOf(st)+1)+' · '+st.title+(st.applies&&!st.applies()?' — sans objet':'')),...rows.map(x=>h('div',{class:'finding '+x.lvl},h('span',{class:'lvl'},x.lvl==='ok'?'✓':x.lvl==='warn'?'⚠':'✕'),h('span',{},x.t),x.lvl!=='ok'&&x.step?h('button',{class:'chip',type:'button',onclick:()=>go(x.step)},'Corriger'):null))))}
+  k.push(h('p',{class:'hint'},c.err?'Corrigez les points bloquants, puis exportez. (Vous pouvez exporter quand même : l\'app refusera ce qui est incohérent.)':'Configuration complète et cohérente : exportez le XML, puis importez-le dans l\'app (Réglages de l\'espace → Importer l\'espace).'),help('identity'));
+  return k},check(){return[]}},
+];
+function findings(){const out=[];for(const st of STEPS){if(st.id==='review')continue;if(st.applies&&!st.applies()){continue}for(const x of st.check())out.push({...x,from:st.id})}return out}
+function stepStatus(st){if(st.applies&&!st.applies())return 'na';if(st.id==='review')return '';const f=st.check();if(f.some(x=>x.lvl==='err'))return 'err';if(f.some(x=>x.lvl==='warn'))return 'warn';return 'ok'}
+
+// ------------------------------------------------------------------ wizard chrome
+// ?step=<id>&mode=all — a link straight to one step (the guide, a
+// colleague), and the whole page for review or print.
+const Q=new URLSearchParams(location.search);
+let mode=Q.get('mode')||localStorage.getItem(LS+'-mode')||'wizard';
+let cur=Q.get('step')||localStorage.getItem(LS+'-step')||STEPS[0].id;
+function setMode(all){mode=all?'all':'wizard';localStorage.setItem(LS+'-mode',mode);render()}
+function go(id){cur=id;localStorage.setItem(LS+'-step',id);render();window.scrollTo({top:0,behavior:'smooth'})}
+function applicable(){return STEPS.filter(s=>!s.applies||s.applies())}
+function render(){
+ // keep the tree consistent: a child never outlives its parent
+ for(const[c]of Object.entries(REQUIRES))if(!on(c)&&S.features[c])S.features[c]=false;
+ const F_=document.getElementById('form');F_.textContent='';
+ const list=applicable();if(!list.some(s=>s.id===cur))cur=list[0].id;
+ const idx=list.findIndex(s=>s.id===cur);
+ document.getElementById('bar').style.width=Math.round((idx)/(list.length-1)*100)+'%';
+ const rail=document.getElementById('rail');rail.textContent='';
+ STEPS.forEach((st,i)=>{const s=stepStatus(st);const b=h('button',{class:'step'+(st.id===cur&&mode==='wizard'?' cur':'')+(s==='na'?' na':''),type:'button',onclick:()=>{if(s!=='na')go(st.id)}},h('span',{class:'dot '+s}),(i+1)+' · '+st.title);rail.append(b)});
+ document.getElementById('allmode').checked=mode==='all';
+ const show=mode==='all'?list:[list[idx]];
+ for(const st of show){const n=STEPS.indexOf(st)+1;F_.append(section(n+' · '+st.title,h('p',{class:'why'},st.why),...st.build()))}
+ const nav=document.getElementById('nav');nav.textContent='';
+ if(mode==='wizard'){const prev=list[idx-1],next=list[idx+1];
+  nav.append(h('button',{class:'btn ghost',type:'button',onclick:()=>prev&&go(prev.id)},'‹ '+(prev?prev.title:'Début')),
+   h('button',{class:'btn primary',type:'button',onclick:()=>next?go(next.id):exportChecked()},next?next.title+' ›':'⬇ Exporter le XML'));
+  nav.firstChild.disabled=!prev}
  save();
 }
+function exportChecked(){const errs=findings().filter(x=>x.lvl==='err');if(errs.length&&!confirm(errs.length+' point(s) bloquant(s) restent :\n\n'+errs.map(e=>'• '+e.t).join('\n')+'\n\nExporter quand même ?'))return;exportXml()}
 
 // ------------------------------------------------------------------ XML export
 const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');

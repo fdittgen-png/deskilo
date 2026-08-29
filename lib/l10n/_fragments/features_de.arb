@@ -143,5 +143,7 @@
   "featureMemberDataExportDesc": "Jedes Mitglied kann seine Daten als eine Datei exportieren (DSGVO Art. 20) und den Bereich mit gelöschten persönlichen Daten verlassen (Art. 17), unter Einstellungen → Datenschutz & Daten.",
   "@featureMemberDataExportDesc": {
     "description": "#718/#719"
-  }
+  },
+  "featureFinanceFacesTitle": "Finanzen in drei Ansichten",
+  "featureFinanceFacesDesc": "Der Finanzen-Tab zeigt drei Ansichten — Zahlungen, Verbrauch, Rechnungen — unter einer Monatsauswahl, jede mit eigener Hilfe. Aus: eine Spalte."
 }

@@ -143,5 +143,7 @@
   "featureMemberDataExportDesc": "Cada miembro puede exportar sus datos en un archivo (RGPD art. 20) y abandonar el espacio con sus datos personales borrados (art. 17) desde Ajustes → Privacidad y datos.",
   "@featureMemberDataExportDesc": {
     "description": "#718/#719"
-  }
+  },
+  "featureFinanceFacesTitle": "Finanzas en tres vistas",
+  "featureFinanceFacesDesc": "La pestaña Finanzas muestra tres vistas — Pagos, Consumo, Facturas — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna."
 }

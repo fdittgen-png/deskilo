@@ -194,6 +194,9 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.calendarHub =>
           l10n?.featureCalendarHubDesc ??
               'The calendar shows everything dated — bookings, check-ins, alerts, messages, invoices, payments, consumption, reminders — for a day or a range, each row opening its source. Off: reservations only.',
+        WorkspaceFeature.financeFaces =>
+          l10n?.featureFinanceFacesDesc ??
+              'The Finances tab shows three faces — Payments, Consumption, Invoices — under one month chooser, each with its own help. Off: one column.',
         WorkspaceFeature.dataAccessLog =>
           l10n?.featureDataAccessLogDesc ??
               'Members see who looked at their finances and when (written by the server, never skippable). Off hides the row; the log is still kept.',

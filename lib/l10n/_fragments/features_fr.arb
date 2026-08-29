@@ -143,5 +143,7 @@
   "featureMemberDataExportDesc": "Chaque membre peut exporter ses données en un fichier (RGPD art. 20) et quitter l'espace avec ses données personnelles effacées (art. 17) depuis Réglages → Confidentialité et données.",
   "@featureMemberDataExportDesc": {
     "description": "#718/#719"
-  }
+  },
+  "featureFinanceFacesTitle": "Finances en trois volets",
+  "featureFinanceFacesDesc": "L'onglet Finances se lit en trois volets — Paiements, Consommation, Factures — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne."
 }

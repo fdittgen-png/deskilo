@@ -268,5 +268,7 @@
   "featureMemberDataExportDesc": "Every member can export their data as one file (GDPR art. 20) and leave the workspace with their personal data cleared (art. 17) from Settings → Privacy & data.",
   "@featureMemberDataExportDesc": {
     "description": "#718/#719"
-  }
+  },
+  "featureFinanceFacesTitle": "Finance faces",
+  "featureFinanceFacesDesc": "The Finances tab shows three faces — Payments, Consumption, Invoices — under one month chooser, each with its own help. Off: one column."
 }

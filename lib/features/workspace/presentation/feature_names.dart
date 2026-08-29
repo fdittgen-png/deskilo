@@ -97,6 +97,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
 
       WorkspaceFeature.calendarHub =>
         l10n?.featureCalendarHubTitle ?? 'Calendar hub',
+      WorkspaceFeature.financeFaces =>
+        l10n?.featureFinanceFacesTitle ?? 'Finance faces',
 
 
       WorkspaceFeature.dataAccessLog =>

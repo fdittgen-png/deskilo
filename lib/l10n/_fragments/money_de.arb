@@ -280,5 +280,9 @@
   "paymentCopied": "Kopiert.",
   "@paymentCopied": {
     "description": "#711 - globalization"
-  }
+  },
+  "moneyFacePayments": "Zahlungen",
+  "moneyFaceConsumption": "Verbrauch",
+  "moneyFaceInvoices": "Rechnungen",
+  "moneyNoInvoicesYet": "Noch keine Rechnung — der Monat wird nach Abschluss vom Workspace abgerechnet."
 }

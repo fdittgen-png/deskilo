@@ -1881,6 +1881,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Chaque membre peut exporter ses données en un fichier (RGPD art. 20) et quitter l\'espace avec ses données personnelles effacées (art. 17) depuis Réglages → Confidentialité et données.';
 
   @override
+  String get featureFinanceFacesTitle => 'Finances en trois volets';
+
+  @override
+  String get featureFinanceFacesDesc =>
+      'L\'onglet Finances se lit en trois volets — Paiements, Consommation, Factures — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override
@@ -2218,6 +2225,50 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get helpHintPrivacyTip3 =>
       'Chaque lecture de vos finances par quelqu\'un d\'autre est journalisée par le serveur — le journal ne peut être ni contourné ni modifié.';
+
+  @override
+  String get helpHintMoneyPayments =>
+      'Ce que vous devez et ce que vous avez payé : positions ouvertes, avoirs, le solde et comment le régler. Enregistrez un paiement ici.';
+
+  @override
+  String get helpHintMoneyPaymentsTopic => 'Le volet Paiements';
+
+  @override
+  String get helpHintMoneyPaymentsTip2 =>
+      'Enregistrez un paiement avec la date du mouvement et le mois qu\'il solde — l\'autre partie confirme.';
+
+  @override
+  String get helpHintMoneyPaymentsTip3 =>
+      'Payer en ligne règle le dû immédiatement ; la carte des instructions montre la voie manuelle avec la référence à indiquer.';
+
+  @override
+  String get helpHintMoneyPaymentsTip3Topic => 'paiements en ligne';
+
+  @override
+  String get helpHintMoneyConsumption =>
+      'Ce que vous avez consommé ce mois : jours, abonnement, services et forfaits — et les demandes qui s\'y ajoutent.';
+
+  @override
+  String get helpHintMoneyConsumptionTopic => 'Le volet Consommation';
+
+  @override
+  String get helpHintMoneyConsumptionTip2 =>
+      'Une matinée réservée compte pour une demi-journée ; les jours hors horaires suivent la politique hors-horaires de l\'espace.';
+
+  @override
+  String get helpHintMoneyConsumptionTip2Topic =>
+      'Comment la réservation se comporte';
+
+  @override
+  String get helpHintMoneyConsumptionTip3 =>
+      'Plus de jours ? Demandez des demi-journées, achetez un forfait ou continuez à la consommation — selon votre formule.';
+
+  @override
+  String get helpHintMoneyInvoices =>
+      'Vos documents : la facture du mois, toutes les factures qui vous ont été émises, et vos conditions.';
+
+  @override
+  String get helpHintMoneyInvoicesTopic => 'Le volet Factures';
 
   @override
   String get inviteSectionTitle => 'Inviter quelqu\'un';
@@ -4298,6 +4349,19 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get paymentCopied => 'Copié.';
+
+  @override
+  String get moneyFacePayments => 'Paiements';
+
+  @override
+  String get moneyFaceConsumption => 'Consommation';
+
+  @override
+  String get moneyFaceInvoices => 'Factures';
+
+  @override
+  String get moneyNoInvoicesYet =>
+      'Pas encore de facture — l\'espace facture le mois une fois clos.';
 
   @override
   String get planDurationLabel => 'Durée';

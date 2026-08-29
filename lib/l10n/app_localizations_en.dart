@@ -1861,6 +1861,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Every member can export their data as one file (GDPR art. 20) and leave the workspace with their personal data cleared (art. 17) from Settings → Privacy & data.';
 
   @override
+  String get featureFinanceFacesTitle => 'Finance faces';
+
+  @override
+  String get featureFinanceFacesDesc =>
+      'The Finances tab shows three faces — Payments, Consumption, Invoices — under one month chooser, each with its own help. Off: one column.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
@@ -2197,6 +2204,49 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get helpHintPrivacyTip3 =>
       'Every read of your finances by someone else is logged by the server — the log cannot be skipped or edited.';
+
+  @override
+  String get helpHintMoneyPayments =>
+      'What you owe and what you paid: open positions, credits, the balance and how to pay it. Record a payment here.';
+
+  @override
+  String get helpHintMoneyPaymentsTopic => 'The Payments face';
+
+  @override
+  String get helpHintMoneyPaymentsTip2 =>
+      'Record a payment with the date the money moved and the month it settles — the other side confirms it.';
+
+  @override
+  String get helpHintMoneyPaymentsTip3 =>
+      'Pay online settles what is owed right away; the instructions card shows the manual way with the reference to quote.';
+
+  @override
+  String get helpHintMoneyPaymentsTip3Topic => 'online payments';
+
+  @override
+  String get helpHintMoneyConsumption =>
+      'What you used this month: days, subscription, services and packages — and the requests that add to them.';
+
+  @override
+  String get helpHintMoneyConsumptionTopic => 'The Consumption face';
+
+  @override
+  String get helpHintMoneyConsumptionTip2 =>
+      'A booked morning counts as half a day; days outside the opening hours follow the workspace\'s outside-hours policy.';
+
+  @override
+  String get helpHintMoneyConsumptionTip2Topic => 'How booking behaves';
+
+  @override
+  String get helpHintMoneyConsumptionTip3 =>
+      'Out of days? Request extra half-days, buy a package, or keep booking pay-as-you-go — whichever your plan allows.';
+
+  @override
+  String get helpHintMoneyInvoices =>
+      'Your documents: the month\'s invoice, every invoice you were issued, and your conditions.';
+
+  @override
+  String get helpHintMoneyInvoicesTopic => 'The Invoices face';
 
   @override
   String get inviteSectionTitle => 'Invite someone';
@@ -4255,6 +4305,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paymentCopied => 'Copied.';
+
+  @override
+  String get moneyFacePayments => 'Payments';
+
+  @override
+  String get moneyFaceConsumption => 'Consumption';
+
+  @override
+  String get moneyFaceInvoices => 'Invoices';
+
+  @override
+  String get moneyNoInvoicesYet =>
+      'No invoice yet — the month is invoiced by the workspace once it closes.';
 
   @override
   String get planDurationLabel => 'Duration';

@@ -45,7 +45,8 @@ import 'package:flutter_test/flutter_test.dart';
 // 44→45 (2026-08-28): #711 regionalFormats (member format locale, clock,
 // time-zone mode; Settings → Region & formats).
 // 45→48 (2026-08-29): #718 calendarHub, #719 dataAccessLog + memberDataExport.
-const int _expectedFeatureCount = 48;
+// 48→49 (2026-08-29): #720 financeFaces.
+const int _expectedFeatureCount = 49;
 
 void main() {
   test('every functionality is registered — the pin', () {

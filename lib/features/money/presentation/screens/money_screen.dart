@@ -32,6 +32,7 @@ import '../report_actions.dart';
 import '../invoice_status.dart';
 import '../report_defaults.dart';
 import '../../domain/bill_sections.dart';
+import '../../domain/money_face.dart';
 import '../../domain/ledger_entry.dart';
 import '../../domain/package.dart';
 import '../../domain/payment_method.dart';
@@ -42,6 +43,8 @@ import '../../providers/money_providers.dart';
 import '../payment_method_labels.dart';
 import '../widgets/account_card.dart';
 import '../widgets/bill_view.dart';
+import '../widgets/money_faces_view.dart';
+import '../widgets/my_invoices_list.dart';
 import '../widgets/consumption_sheet.dart';
 import '../../../profile/providers/profile_providers.dart';
 import '../../../../core/locale/report_language.dart';
@@ -959,157 +962,158 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     // rest of the screen — same layout family as Plan/Reserve/Calendar.
     // #512 — the REAL cross-month position, above the per-month bill.
     final account = ref.watch(myAccountProvider).value;
+    // #720 — one bill builder: the whole bill (face null) for the
+    // classic column and the PDF, one face at a time for the faces.
+    Widget bill(MoneyFace? face) => BillView(
+          statement: visibleStatement!,
+          ledger: ledger,
+          pendingMoneyEvents: pendingEvents,
+          currencyCode: currencyCode,
+          memberId: member?.id ?? '',
+          nowPeriod: _nowPeriod,
+          // #155 — how-to-pay card on an outstanding balance.
+          paymentInstructions: PaymentInstructions.fromDb(
+            workspace?.paymentInstructions ?? const {},
+          ),
+          // 0043 — online-payment button, gated by the feature flag.
+          onlinePaymentsEnabled:
+              features.contains(WorkspaceFeature.onlinePayments),
+          onPayOnline: _payOnline,
+          settlement: settlement,
+          face: face,
+        );
     final billChildren = <Widget>[
       if (account != null && account.isNotable) ...[
         AccountCard(account: account, currencyCode: currencyCode),
         const SizedBox(height: 8),
       ],
-            if (visibleStatement != null)
-              BillView(
-                statement: visibleStatement,
-                ledger: ledger,
-                pendingMoneyEvents: pendingEvents,
-                currencyCode: currencyCode,
-                memberId: member?.id ?? '',
-                nowPeriod: _nowPeriod,
-                // #155 — how-to-pay card on an outstanding balance.
-                paymentInstructions: PaymentInstructions.fromDb(
-                  workspace?.paymentInstructions ?? const {},
-                ),
-                // 0043 — online-payment button, gated by the feature flag.
-                onlinePaymentsEnabled:
-                    features.contains(WorkspaceFeature.onlinePayments),
-                onPayOnline: _payOnline,
-                settlement: settlement,
-              ),
+      if (visibleStatement != null) bill(null),
     ];
     // #486 UX — actions grouped by MEANING: what pays, what asks, what
     // documents. The arrangement itself explains payment vs invoicing.
-    Widget sectionLabel(String text) => Padding(
-          padding: const EdgeInsets.only(top: 12, bottom: 4),
-          child: Text(
-            text.toUpperCase(),
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  letterSpacing: 1.1,
-                ),
-          ),
-        );
+    // #720 — the same partition IS the three faces; each button is built
+    // once and placed by whichever layout is on.
+    Widget sectionLabel(String text) => moneySectionLabel(context, text);
+    Widget fitted(String text) => fittedLabel(text);
+    final recordPayment = FilledButton.icon(
+      onPressed: () => _recordPaymentSheet(currency),
+      icon: const Icon(Icons.payments_outlined),
+      label: Text(l10n?.moneyRecordPayment ?? 'Record a payment'),
+    );
+    // Buy-a-package entry point (0042): only for members the owner
+    // put on the package plan — it PAYS, so it lives here.
+    final buyPackage = member?.overagePolicy == OveragePolicy.package
+        ? FilledButton.tonalIcon(
+            key: const ValueKey('buy-package-button'),
+            onPressed: () => _buyPackageSheet(currency),
+            icon: const Icon(Icons.shopping_bag_outlined),
+            label: Text(l10n?.buyPackageButton ?? 'Buy a package'),
+          )
+        : null;
+    final submitExpense = OutlinedButton.icon(
+      onPressed: () => _submitExpenseSheet(currency),
+      icon: const Icon(Icons.receipt_long_outlined),
+      label: fitted(l10n?.moneySubmitExpense ?? 'Submit an expense'),
+    );
+    final requestQuota = OutlinedButton.icon(
+      key: const ValueKey('quota-request-button'),
+      onPressed: _requestQuotaSheet,
+      icon: const Icon(Icons.hourglass_top_outlined),
+      label: fitted(l10n?.quotaRequestButton ?? 'Request extra half-days'),
+    );
+    // Consumption follows the services feature (#146).
+    final addConsumption = features.contains(WorkspaceFeature.services)
+        ? OutlinedButton.icon(
+            onPressed: () {
+              final me = ref.read(myMemberProvider).value;
+              if (me == null) return;
+              showConsumptionSheet(context, ref, subjectMemberId: me.id);
+            },
+            icon: const Icon(Icons.room_service_outlined),
+            label: fitted(l10n?.consumptionAdd ?? 'Add consumption'),
+          )
+        : null;
+    final invoicesButton = features.contains(WorkspaceFeature.invoicing)
+        ? OutlinedButton.icon(
+            key: const ValueKey('invoices-button'),
+            onPressed: () => context.push('/invoices'),
+            icon: const Icon(Icons.receipt_long_outlined),
+            label: Text(l10n?.invoicesTitle ?? 'Invoices'),
+          )
+        : null;
+    // #494 — member self-service reports: the standing financial
+    // agreement and the month's payments, viewable/downloadable/
+    // shareable without asking anyone. Gated by memberReports (#502).
+    final reportsOn = features.contains(WorkspaceFeature.memberReports);
+    final agreementButton = OutlinedButton.icon(
+      key: const ValueKey('agreement-report-button'),
+      onPressed: () => _memberDoc('agreement'),
+      icon: const Icon(Icons.handshake_outlined),
+      label: fitted(l10n?.moneyMyAgreement ?? 'My conditions'),
+    );
+    final paymentsReportButton = OutlinedButton.icon(
+      key: const ValueKey('payments-report-button'),
+      onPressed: () => _memberDoc('payments'),
+      icon: const Icon(Icons.summarize_outlined),
+      label: fitted(l10n?.reportDocPayments ?? 'Payments report'),
+    );
+    Widget grid(List<Widget> buttons) => MoneyActionGrid(buttons);
+    final requestButtons = [
+      submitExpense,
+      requestQuota,
+      ?addConsumption,
+    ];
     final actionChildren = <Widget>[
       sectionLabel(l10n?.moneySectionPay ?? 'Pay'),
-      FilledButton.icon(
-        onPressed: () => _recordPaymentSheet(currency),
-        icon: const Icon(Icons.payments_outlined),
-        label: Text(l10n?.moneyRecordPayment ?? 'Record a payment'),
-      ),
-      // Buy-a-package entry point (0042): only for members the owner
-      // put on the package plan — it PAYS, so it lives here.
-      if (member?.overagePolicy == OveragePolicy.package) ...[
-        const SizedBox(height: 8),
-        FilledButton.tonalIcon(
-          key: const ValueKey('buy-package-button'),
-          onPressed: () => _buyPackageSheet(currency),
-          icon: const Icon(Icons.shopping_bag_outlined),
-          label: Text(l10n?.buyPackageButton ?? 'Buy a package'),
-        ),
-      ],
+      recordPayment,
+      if (buyPackage != null) ...[const SizedBox(height: 8), buyPackage],
       sectionLabel(l10n?.moneySectionRequests ?? 'Requests'),
-      LayoutBuilder(
-        builder: (context, constraints) {
-          final buttonWidth = (constraints.maxWidth - AppSpacing.sm) / 2;
-          Widget cell(Widget child) =>
-              SizedBox(width: buttonWidth, child: child);
-          return Wrap(
-            spacing: AppSpacing.sm,
-            runSpacing: AppSpacing.sm,
-            children: [
-              cell(OutlinedButton.icon(
-                onPressed: () => _submitExpenseSheet(currency),
-                icon: const Icon(Icons.receipt_long_outlined),
-                label: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    l10n?.moneySubmitExpense ?? 'Submit an expense',
-                  ),
-                ),
-              )),
-              cell(OutlinedButton.icon(
-                key: const ValueKey('quota-request-button'),
-                onPressed: _requestQuotaSheet,
-                icon: const Icon(Icons.hourglass_top_outlined),
-                label: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    l10n?.quotaRequestButton ?? 'Request extra half-days',
-                  ),
-                ),
-              )),
-              // Consumption follows the services feature (#146).
-              if (features.contains(WorkspaceFeature.services))
-                cell(OutlinedButton.icon(
-                  onPressed: () {
-                    final me = ref.read(myMemberProvider).value;
-                    if (me == null) return;
-                    showConsumptionSheet(
-                      context,
-                      ref,
-                      subjectMemberId: me.id,
-                    );
-                  },
-                  icon: const Icon(Icons.room_service_outlined),
-                  label: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      l10n?.consumptionAdd ?? 'Add consumption',
-                    ),
-                  ),
-                )),
-            ],
-          );
-        },
-      ),
+      grid(requestButtons),
       sectionLabel(l10n?.moneySectionDocuments ?? 'Documents'),
-      if (features.contains(WorkspaceFeature.invoicing)) ...[
-        OutlinedButton.icon(
-          key: const ValueKey('invoices-button'),
-          onPressed: () => context.push('/invoices'),
-          icon: const Icon(Icons.receipt_long_outlined),
-          label: Text(l10n?.invoicesTitle ?? 'Invoices'),
-        ),
-        const SizedBox(height: 8),
-      ],
-      // #494 — member self-service reports: the standing financial
-      // agreement and the month's payments, viewable/downloadable/
-      // shareable without asking anyone. Gated by memberReports (#502).
-      if (features.contains(WorkspaceFeature.memberReports))
-      Row(children: [
-        Expanded(
-          child: OutlinedButton.icon(
-            key: const ValueKey('agreement-report-button'),
-            onPressed: () => _memberDoc('agreement'),
-            icon: const Icon(Icons.handshake_outlined),
-            label: FittedBox(
-              fit: BoxFit.scaleDown,
-              child:
-                  Text(l10n?.moneyMyAgreement ?? 'My conditions'),
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.sm),
-        Expanded(
-          child: OutlinedButton.icon(
-            key: const ValueKey('payments-report-button'),
-            onPressed: () => _memberDoc('payments'),
-            icon: const Icon(Icons.summarize_outlined),
-            label: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                  l10n?.reportDocPayments ?? 'Payments report'),
-            ),
-          ),
-        ),
-      ]),
+      if (invoicesButton != null) ...[invoicesButton, const SizedBox(height: 8)],
+      if (reportsOn)
+        Row(children: [
+          Expanded(child: agreementButton),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(child: paymentsReportButton),
+        ]),
     ];
+    // #720 — the faces. Cards come from the same BillView, one face at a
+    // time; the Invoices face adds MY documents as a list.
+    final facesOn = features.contains(WorkspaceFeature.financeFaces);
+    final faceCards = <MoneyFace, List<Widget>>{
+      MoneyFace.payments: [
+        if (account != null && account.isNotable) ...[
+          AccountCard(account: account, currencyCode: currencyCode),
+          const SizedBox(height: 8),
+        ],
+        if (visibleStatement != null) bill(MoneyFace.payments),
+      ],
+      MoneyFace.consumption: [
+        if (visibleStatement != null) bill(MoneyFace.consumption),
+      ],
+      MoneyFace.invoices: [
+        if (visibleStatement != null) bill(MoneyFace.invoices),
+        if (features.contains(WorkspaceFeature.invoicing)) ...[
+          const SizedBox(height: 8),
+          MyInvoicesList(memberId: member?.id ?? ''),
+        ],
+      ],
+    };
+    final faceActions = <MoneyFace, List<Widget>>{
+      MoneyFace.payments: [
+        const SizedBox(height: 8),
+        recordPayment,
+        if (buyPackage != null) ...[const SizedBox(height: 8), buyPackage],
+        if (reportsOn) ...[const SizedBox(height: 8), paymentsReportButton],
+      ],
+      MoneyFace.consumption: [const SizedBox(height: 8), grid(requestButtons)],
+      MoneyFace.invoices: [
+        const SizedBox(height: 8),
+        if (invoicesButton != null) ...[invoicesButton, const SizedBox(height: 8)],
+        if (reportsOn) agreementButton,
+      ],
+    };
     // #486 — the landscape side panel leads with the month's BOTTOM
     // LINE so the split reads: my balance and what I can do, left; the
     // detail, right.
@@ -1146,6 +1150,12 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           );
 
     return switch (statementAsync) {
+      AsyncData() when facesOn => MoneyFacesView(
+          periodHeader: periodHeader,
+          balanceCard: balanceCard,
+          cards: faceCards,
+          actions: faceActions,
+        ),
       AsyncData() => LayoutBuilder(
           builder: (context, constraints) {
             if (constraints.maxWidth > constraints.maxHeight) {

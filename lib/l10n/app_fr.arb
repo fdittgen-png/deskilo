@@ -1103,6 +1103,8 @@
   "@featureMemberDataExportDesc": {
     "description": "#718/#719"
   },
+  "featureFinanceFacesTitle": "Finances en trois volets",
+  "featureFinanceFacesDesc": "L'onglet Finances se lit en trois volets — Paiements, Consommation, Factures — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.",
   "helpTitle": "Aide",
   "helpContents": "Sommaire",
   "helpHintMessages": "Toutes vos conversations dans une liste, la plus récente en haut. Touchez le crayon pour écrire à quelqu’un ou créer un groupe.",
@@ -1244,6 +1246,18 @@
   "@helpHintPrivacyTip3": {
     "description": "#718/#719 - help hints"
   },
+  "helpHintMoneyPayments": "Ce que vous devez et ce que vous avez payé : positions ouvertes, avoirs, le solde et comment le régler. Enregistrez un paiement ici.",
+  "helpHintMoneyPaymentsTopic": "Le volet Paiements",
+  "helpHintMoneyPaymentsTip2": "Enregistrez un paiement avec la date du mouvement et le mois qu'il solde — l'autre partie confirme.",
+  "helpHintMoneyPaymentsTip3": "Payer en ligne règle le dû immédiatement ; la carte des instructions montre la voie manuelle avec la référence à indiquer.",
+  "helpHintMoneyPaymentsTip3Topic": "paiements en ligne",
+  "helpHintMoneyConsumption": "Ce que vous avez consommé ce mois : jours, abonnement, services et forfaits — et les demandes qui s'y ajoutent.",
+  "helpHintMoneyConsumptionTopic": "Le volet Consommation",
+  "helpHintMoneyConsumptionTip2": "Une matinée réservée compte pour une demi-journée ; les jours hors horaires suivent la politique hors-horaires de l'espace.",
+  "helpHintMoneyConsumptionTip2Topic": "Comment la réservation se comporte",
+  "helpHintMoneyConsumptionTip3": "Plus de jours ? Demandez des demi-journées, achetez un forfait ou continuez à la consommation — selon votre formule.",
+  "helpHintMoneyInvoices": "Vos documents : la facture du mois, toutes les factures qui vous ont été émises, et vos conditions.",
+  "helpHintMoneyInvoicesTopic": "Le volet Factures",
   "inviteSectionTitle": "Inviter quelqu'un",
   "inviteViaWhatsapp": "WhatsApp",
   "inviteViaSms": "SMS",
@@ -2732,6 +2746,10 @@
   "@paymentCopied": {
     "description": "#711 - globalization"
   },
+  "moneyFacePayments": "Paiements",
+  "moneyFaceConsumption": "Consommation",
+  "moneyFaceInvoices": "Factures",
+  "moneyNoInvoicesYet": "Pas encore de facture — l'espace facture le mois une fois clos.",
   "planDurationLabel": "Durée",
   "@planDurationLabel": {
     "description": "Booking sheet: grid duration slider label (#574)"

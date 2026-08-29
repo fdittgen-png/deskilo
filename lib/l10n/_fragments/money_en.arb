@@ -467,5 +467,9 @@
   "paymentCopied": "Copied.",
   "@paymentCopied": {
     "description": "#711 - globalization"
-  }
+  },
+  "moneyFacePayments": "Payments",
+  "moneyFaceConsumption": "Consumption",
+  "moneyFaceInvoices": "Invoices",
+  "moneyNoInvoicesYet": "No invoice yet — the month is invoiced by the workspace once it closes."
 }
