@@ -270,5 +270,7 @@
     "description": "#718/#719"
   },
   "featureFinanceFacesTitle": "Finance faces",
-  "featureFinanceFacesDesc": "The Finances tab shows three faces — Payments, Consumption, Invoices — under one month chooser, each with its own help. Off: one column."
+  "featureFinanceFacesDesc": "The Finances tab shows three faces — Payments, Consumption, Invoices — under one month chooser, each with its own help. Off: one column.",
+  "featurePaymentRemindersTitle": "Automatic payment reminders",
+  "featurePaymentRemindersDesc": "Open invoices past the configured term get their reminder levels automatically — an alert in the member's feed and a push, once a day. Off: reminders stay a manual action."
 }

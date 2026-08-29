@@ -537,13 +537,6 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l10n?.documentsTitle ?? 'Documents'),
               onTap: () => context.push('/documents'),
             ),
-          // #719 — the GDPR rights, as buttons. Every member.
-          ListTile(
-            key: const ValueKey('settings-privacy'),
-            leading: const Icon(Icons.shield_outlined),
-            title: Text(l10n?.privacyTitle ?? 'Privacy & data'),
-            onTap: () => context.push('/privacy'),
-          ),
           if (showAdminSection) ...[
             const Divider(),
             _SectionHeader(

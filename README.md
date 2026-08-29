@@ -35,7 +35,7 @@ listings say so.
   only to the member and holders of the finance permission**.
 - **Access log:** every read of a member's finances by someone else is written by
   the server (`data_access_log`, migration 0133) and shown to the subject.
-- **Your rights, as buttons** — Settings → Privacy & data: who can see my data,
+- **Your rights, as buttons** — the shield button in the top bar (Privacy & data): who can see my data,
   who accessed it, export everything (art. 20), leave with erasure (art. 17).
 - **Retention:** accounting records (ledger, invoices) stay for the statutory
   period, referenced by id, not by name.

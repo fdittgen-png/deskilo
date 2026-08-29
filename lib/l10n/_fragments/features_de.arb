@@ -145,5 +145,7 @@
     "description": "#718/#719"
   },
   "featureFinanceFacesTitle": "Finanzen in drei Ansichten",
-  "featureFinanceFacesDesc": "Der Finanzen-Tab zeigt drei Ansichten — Zahlungen, Verbrauch, Rechnungen — unter einer Monatsauswahl, jede mit eigener Hilfe. Aus: eine Spalte."
+  "featureFinanceFacesDesc": "Der Finanzen-Tab zeigt drei Ansichten — Zahlungen, Verbrauch, Rechnungen — unter einer Monatsauswahl, jede mit eigener Hilfe. Aus: eine Spalte.",
+  "featurePaymentRemindersTitle": "Automatische Zahlungserinnerungen",
+  "featurePaymentRemindersDesc": "Offene Rechnungen nach Ablauf der eingestellten Frist erhalten ihre Mahnstufen automatisch — ein Hinweis im Feed des Mitglieds und eine Push-Nachricht, einmal täglich. Aus: Mahnen bleibt ein manueller Schritt."
 }

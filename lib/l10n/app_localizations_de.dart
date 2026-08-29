@@ -1882,6 +1882,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Finanzen-Tab zeigt drei Ansichten — Zahlungen, Verbrauch, Rechnungen — unter einer Monatsauswahl, jede mit eigener Hilfe. Aus: eine Spalte.';
 
   @override
+  String get featurePaymentRemindersTitle =>
+      'Automatische Zahlungserinnerungen';
+
+  @override
+  String get featurePaymentRemindersDesc =>
+      'Offene Rechnungen nach Ablauf der eingestellten Frist erhalten ihre Mahnstufen automatisch — ein Hinweis im Feed des Mitglieds und eine Push-Nachricht, einmal täglich. Aus: Mahnen bleibt ein manueller Schritt.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override
@@ -2221,7 +2229,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get helpHintMoneyPayments =>
-      'Was Sie schulden und was Sie bezahlt haben: offene Posten, Gutschriften, der Saldo und wie Sie ihn begleichen. Zahlung hier erfassen.';
+      'Begleichen und anfragen: der Saldo, wie Sie ihn begleichen oder online zahlen, eine Zahlung erfassen — und eine Ausgabe einreichen, halbe Tage anfragen oder einen Verbrauch hinzufügen.';
 
   @override
   String get helpHintMoneyPaymentsTopic => 'Die Ansicht Zahlungen';
@@ -2238,30 +2246,48 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpHintMoneyPaymentsTip3Topic => 'Online-Zahlungen';
 
   @override
-  String get helpHintMoneyConsumption =>
-      'Was Sie diesen Monat genutzt haben: Tage, Abonnement, Leistungen und Pakete — und die Anfragen, die dazukommen.';
+  String get helpHintMoneyStatement =>
+      'Der Monat, wie er steht: Ihr Konto, genutzte und verbleibende Tage, Abonnement, Leistungen, Pakete, offene Posten, Gutschriften und der Saldo. Monate mit den Pfeilen durchblättern.';
 
   @override
-  String get helpHintMoneyConsumptionTopic => 'Die Ansicht Verbrauch';
+  String get helpHintMoneyStatementTopic => 'Die Ansicht Abrechnung';
 
   @override
-  String get helpHintMoneyConsumptionTip2 =>
+  String get helpHintMoneyStatementTip2 =>
       'Ein gebuchter Vormittag zählt als halber Tag; Tage außerhalb der Öffnungszeiten folgen der Außerhalb-Regel des Workspace.';
 
   @override
-  String get helpHintMoneyConsumptionTip2Topic =>
-      'Wie sich Buchungen verhalten';
+  String get helpHintMoneyStatementTip2Topic => 'Wie sich Buchungen verhalten';
 
   @override
-  String get helpHintMoneyConsumptionTip3 =>
+  String get helpHintMoneyStatementTip3 =>
       'Keine Tage mehr? Halbe Tage anfragen, ein Paket kaufen oder nach Verbrauch weiterbuchen — je nach Tarif.';
 
   @override
   String get helpHintMoneyInvoices =>
-      'Ihre Dokumente: die Monatsrechnung, jede an Sie gestellte Rechnung und Ihre Konditionen.';
+      'Ihre Rechnungen: was offen ist und bis wann, jede an Sie gestellte Rechnung mit Status, ein Tipp zum Detail und zum Bezahlen.';
 
   @override
   String get helpHintMoneyInvoicesTopic => 'Die Ansicht Rechnungen';
+
+  @override
+  String get helpHintMoneyInvoicesTip2 =>
+      'Nach Ablauf der Zahlungsfrist des Workspace liest sich eine offene Rechnung hier als überfällig, und die vom Inhaber eingestellten Mahnstufen kommen von selbst — im Feed und als Push.';
+
+  @override
+  String get helpHintMoneyInvoicesTip2Topic =>
+      'Automatische Zahlungserinnerungen';
+
+  @override
+  String get helpHintMoneyDocuments =>
+      'Ihre Unterlagen: Ihre Konditionen, der Zahlungsbericht, die Monatsabrechnung als PDF, die Dokumentbibliothek.';
+
+  @override
+  String get helpHintMoneyDocumentsTopic => 'Die Ansicht Dokumente';
+
+  @override
+  String get helpHintMoneyDocumentsTip3 =>
+      'Meine Konditionen ist Ihre geltende Finanzvereinbarung — Tarif, Satz, Extras — als Dokument zum Aufbewahren.';
 
   @override
   String get inviteSectionTitle => 'Jemanden einladen';
@@ -3373,6 +3399,21 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get eventTypeInvoiceReminder => 'Zahlungserinnerung';
+
+  @override
+  String eventInvoiceReminderLine(String number, int level, String amount) {
+    return 'Mahnstufe $level: Rechnung $number — $amount noch offen';
+  }
+
+  @override
+  String get dunningAutomatic => 'Automatische Mahnungen';
+
+  @override
+  String get dunningAutomaticHint =>
+      'Einmal täglich erhalten offene Rechnungen nach Ablauf der Frist von selbst ihre nächste Mahnstufe — ein Hinweis im Feed des Mitglieds und eine Push-Nachricht. Aus: Sie senden jede Mahnung selbst.';
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override
@@ -4350,14 +4391,57 @@ class AppLocalizationsDe extends AppLocalizations {
   String get moneyFacePayments => 'Zahlungen';
 
   @override
-  String get moneyFaceConsumption => 'Verbrauch';
-
-  @override
   String get moneyFaceInvoices => 'Rechnungen';
 
   @override
   String get moneyNoInvoicesYet =>
       'Noch keine Rechnung — der Monat wird nach Abschluss vom Workspace abgerechnet.';
+
+  @override
+  String get moneyFaceStatement => 'Abrechnung';
+
+  @override
+  String get moneyFaceDocuments => 'Dokumente';
+
+  @override
+  String moneyOverdueBanner(int count, String amount) {
+    return '$count überfällig — $amount zu begleichen';
+  }
+
+  @override
+  String get moneyPayNow => 'Jetzt zahlen';
+
+  @override
+  String get moneyOpenInvoicesTitle => 'Offene Rechnungen';
+
+  @override
+  String moneyOpenInvoicesSummary(int count, String amount) {
+    return '$count offen · $amount fällig';
+  }
+
+  @override
+  String moneyDueIn(int days) {
+    return 'Fällig in $days Tagen';
+  }
+
+  @override
+  String moneyOverdueBy(int days) {
+    return 'Überfällig seit $days Tagen';
+  }
+
+  @override
+  String get moneyNothingOpen => 'Nichts offen — Sie sind auf dem Laufenden.';
+
+  @override
+  String get moneyDocumentLibrary => 'Dokumentbibliothek';
+
+  @override
+  String get moneyStatementPdf => 'Monatsabrechnung (PDF)';
+
+  @override
+  String moneyRemindedTimes(int count) {
+    return 'Gemahnt ×$count';
+  }
 
   @override
   String get planDurationLabel => 'Dauer';

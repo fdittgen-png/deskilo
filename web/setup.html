@@ -152,6 +152,7 @@ const FEATURES=[
  ['dataAccessLog','Journal des accès aux données','Chaque membre voit qui a consulté ses finances et quand.',1],
  ['memberDataExport','Export et effacement','Export des données (RGPD art. 20) et départ avec effacement (art. 17) depuis Réglages → Confidentialité et données.',1],
  ['financeFaces','Finances en trois volets','L\'onglet Finances se lit en trois volets — Paiements, Consommation, Factures — sous un même sélecteur de mois, chacun avec son aide.',1],
+ ['paymentReminders','Relances de paiement automatiques','Les factures ouvertes au-delà du délai configuré reçoivent leurs niveaux de relance automatiquement — une alerte dans le fil du membre et une notification, une fois par jour. Nécessite « Relances de paiement ».',1],
  ['uiAnimations','Animations de l\'interface','Transitions et retours animés dans toute l\'app ; désactivé, tout devient instantané. Le réglage d\'accessibilité « animations réduites » du système prime de toute façon.',1],
 ];
 const PERMS=[['manageRoles','Gérer les rôles et permissions'],['manageMembers','Gérer les membres'],['manageValidation','Configurer les règles de validation'],['workspaceSettings',"Modifier les réglages de l'espace"],['issueInvoices','Émettre les factures et rapprocher les paiements'],['viewFinances',"Consulter les finances de l'espace"],['manageDocuments','Gérer la bibliothèque de documents'],['manageServices','Gérer les services et forfaits'],['approveExpenses','Approuver les dépenses']];
@@ -215,7 +216,7 @@ const DEFAULTS={
  pay:{iban:'',paypal_me:'',wero:'',lydia:'',wise:'',reference:'',bank_name:'',account_number:'',bank_code:'',bic:''},
  org:'association',vatRegime:'not_subject',regNumber:'',vatId:'',exemption:'',street:'',postal:'',city:'',vatRates:[],
  mentions:{legalForm:'',register:'',terms:'',penalty:'',recovery:'',escompte:'',insurance:'',special:''},
- reminders:{levels:2,firstDays:14,betweenDays:14},
+ reminders:{levels:2,firstDays:14,betweenDays:14,automatic:true},
  perms:JSON.parse(JSON.stringify(PERM_DEFAULTS)),
  validation:{required:1,ownerSignOff:false},
  domains:Object.fromEntries(DOMAINS.map(d=>[d[0],{on:false,required:1,ownerSignOff:false}])),
@@ -291,7 +292,7 @@ const HELP={
  invites:['Réglages → Membres & formules → Inviter','2-roles--invitations'],
  whatsapp:["Réglages → Espace de coworking → Groupe WhatsApp",'6-members-directory-members-tab'],
  kiosk:['Réglages → Mode borne','10-kiosk-mode-wall-tablet'],
- privacy:['Réglages → Confidentialité et données','14-privacy'],
+ privacy:["Le bouclier en haut de l'écran (Confidentialité et données)",'14-privacy'],
 };
 function help(key){if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'help',href:WIKI+anchor,target:'_blank',rel:'noopener'},'ⓘ Dans l’app : '+app+' · guide ↗')}
 // "This question is hidden because…" — the guide's way of saying why,
@@ -428,7 +429,9 @@ const STEPS=[
    input('Forme juridique et capital','mentions.legalForm','Ex. Association loi 1901'),input('Modalités de règlement','mentions.terms','Défaut : Règlement à réception.'),
    h('div',{class:'row'},input('Pénalités de retard','mentions.penalty',''),input('Indemnité de recouvrement','mentions.recovery','')),
    h('div',{class:'row'},input('Escompte','mentions.escompte',''),input('Assurance professionnelle','mentions.insurance','')),input('Mentions particulières','mentions.special',''));
-  if(on('dunning'))k.push(h('label',{},'Règles de relance'),help('dunning'),h('div',{class:'row'},input('Niveaux de relance','reminders.levels','','number'),input('Jours avant la 1re relance','reminders.firstDays','','number'),input('Jours entre les relances','reminders.betweenDays','','number')));else k.push(needs('dunning'));
+  if(on('dunning')){k.push(h('label',{},'Règles de relance'),help('dunning'),h('p',{class:'hint'},'Le délai avant la première relance est aussi le délai de paiement : passé ce délai, une facture ouverte se lit « en retard » dans l\'app.'),h('div',{class:'row'},input('Niveaux de relance','reminders.levels','','number'),input('Jours avant la 1re relance (délai de paiement)','reminders.firstDays','','number'),input('Jours entre les relances','reminders.betweenDays','','number')));
+   if(on('paymentReminders'))k.push(checkbox('Relances automatiques','Chaque matin — et dès qu\'un propriétaire ou admin ouvre Finances — les factures ouvertes au-delà du délai reçoivent leur niveau de relance suivant : alerte dans le fil du membre et notification. Décoché : la relance reste un geste manuel.',S.reminders.automatic!==false,v=>{S.reminders.automatic=v;save()}));else k.push(needs('paymentReminders'))}
+  else k.push(needs('dunning'));
   if(isEU()){k.push(h('label',{},'Plateforme de facturation électronique'),help('einvoice'),h('p',{class:'hint'},"Là où DesKilo dépose vos factures EN 16931 : une plateforme agréée, un point d'accès Peppol, une plateforme nationale. Le jeton est stocké côté serveur et n'en ressort jamais — ne le mettez ici que si vous remplissez ce document en privé."),
     input('URL de dépôt','einvoice.url','','text','https://…'),h('div',{class:'row'},input('Jeton ou identifiant','einvoice.token',''),input("En-tête d'authentification",'einvoice.header','Authorization par défaut.','text','Authorization')),input('Nom du champ fichier','einvoice.field','file par défaut.','text','file'),
     h('details',{},h('summary',{},'Environnements de test (UAT / Dev)'),h('p',{class:'hint'},"Points d'accès et jetons distincts pour les répétitions ; le choix n'apparaît à l'envoi que si le mode développeur de l'espace est actif."),h('div',{class:'row'},input('URL UAT','einvoice.uatUrl',''),input('Jeton UAT','einvoice.uatToken','')),h('div',{class:'row'},input('URL Dev','einvoice.devUrl',''),input('Jeton Dev','einvoice.devToken',''))));
@@ -611,7 +614,7 @@ function exportXml(){
  push(`    <legal organization="${S.org}" vat-regime="${S.vatRegime}" registration="${esc(S.regNumber)}" vat-id="${esc(S.vatId)}" exemption-reason="${esc(S.exemption)}" street="${esc(S.street)}" postal-code="${esc(S.postal)}" city="${esc(S.city)}">`);
  S.vatRates.filter(r=>String(r.label).trim()&&r.percent!==''&&r.percent!=null).forEach((r,i)=>push(`      <vat-rate label="${esc(r.label)}" percent="${r.percent}" default="${i===0}"/>`));
  for(const[k,v]of Object.entries(S.mentions))if(String(v).trim())push(`      <mention key="${k}" value="${esc(v.trim())}"/>`);
- push(`      <reminders levels="${S.reminders.levels}" first-days="${S.reminders.firstDays}" between-days="${S.reminders.betweenDays}"/>`);
+ push(`      <reminders levels="${S.reminders.levels}" first-days="${S.reminders.firstDays}" between-days="${S.reminders.betweenDays}" automatic="${S.reminders.automatic!==false}"/>`);
  push(`      <vat-declaration period="${S.vatPeriod}"/>`);
  const ei=S.einvoice;
  if(Object.values(ei).some(v=>String(v).trim()))
@@ -657,7 +660,7 @@ function parseBack(text){
   Object.keys(S.invites).forEach(k=>S.invites[k]='');id.querySelectorAll('invitation').forEach(iv=>{const k=iv.getAttribute('lang');if(k in S.invites)S.invites[k]=iv.getAttribute('text')||''})}
  const bi=su.querySelector('billing');if(bi){S.tiers=[...bi.querySelectorAll('tier')].map(t=>({from:t.getAttribute('from-pct'),to:t.getAttribute('to-pct'),fee:String((parseInt(t.getAttribute('fee-cents'))||0)/100),over:String((parseInt(t.getAttribute('overage-cents'))||0)/100)}));const sl=bi.querySelector('subscription-levels');if(sl){S.subLevels=(sl.getAttribute('values')||'').split(',').filter(Boolean);S.freeLevel=sl.getAttribute('free-value')==='true'}S.packages=[...bi.querySelectorAll('package')].map(p=>({name:p.getAttribute('name'),days:p.getAttribute('days'),price:String((parseInt(p.getAttribute('price-cents'))||0)/100)}))}
  S.services=[...su.querySelectorAll('services > service')].map(s=>({name:s.getAttribute('name'),price:String((parseInt(s.getAttribute('price-cents'))||0)/100),vat:s.getAttribute('vat-percent')??''}));
- const le=su.querySelector('legal');if(le){S.org=le.getAttribute('organization')||S.org;S.vatRegime=le.getAttribute('vat-regime')||S.vatRegime;S.regNumber=le.getAttribute('registration')||'';S.vatId=le.getAttribute('vat-id')||'';S.exemption=le.getAttribute('exemption-reason')||'';S.street=le.getAttribute('street')||'';S.postal=le.getAttribute('postal-code')||'';S.city=le.getAttribute('city')||'';S.vatRates=[...le.querySelectorAll('vat-rate')].map(r=>({label:r.getAttribute('label')||'',percent:r.getAttribute('percent')||''}));le.querySelectorAll('mention').forEach(m=>S.mentions[m.getAttribute('key')]=m.getAttribute('value')||'');const rm=le.querySelector('reminders');if(rm){S.reminders={levels:rm.getAttribute('levels'),firstDays:rm.getAttribute('first-days'),betweenDays:rm.getAttribute('between-days')}}
+ const le=su.querySelector('legal');if(le){S.org=le.getAttribute('organization')||S.org;S.vatRegime=le.getAttribute('vat-regime')||S.vatRegime;S.regNumber=le.getAttribute('registration')||'';S.vatId=le.getAttribute('vat-id')||'';S.exemption=le.getAttribute('exemption-reason')||'';S.street=le.getAttribute('street')||'';S.postal=le.getAttribute('postal-code')||'';S.city=le.getAttribute('city')||'';S.vatRates=[...le.querySelectorAll('vat-rate')].map(r=>({label:r.getAttribute('label')||'',percent:r.getAttribute('percent')||''}));le.querySelectorAll('mention').forEach(m=>S.mentions[m.getAttribute('key')]=m.getAttribute('value')||'');const rm=le.querySelector('reminders');if(rm){S.reminders={levels:rm.getAttribute('levels'),firstDays:rm.getAttribute('first-days'),betweenDays:rm.getAttribute('between-days'),automatic:rm.getAttribute('automatic')!=='false'}}
   const vd=le.querySelector('vat-declaration');if(vd)S.vatPeriod=vd.getAttribute('period')||S.vatPeriod;
   const ei=le.querySelector('einvoice');if(ei)S.einvoice={url:ei.getAttribute('url')||'',token:ei.getAttribute('token')||'',header:ei.getAttribute('auth-header')||'',field:ei.getAttribute('file-field')||'',uatUrl:ei.getAttribute('uat-url')||'',uatToken:ei.getAttribute('uat-token')||'',devUrl:ei.getAttribute('dev-url')||'',devToken:ei.getAttribute('dev-token')||'',customerUrl:ei.getAttribute('customer-url')||'',customerToken:ei.getAttribute('customer-token')||'',customerHeader:ei.getAttribute('customer-auth-header')||'',customerField:ei.getAttribute('customer-file-field')||''}}
  su.querySelectorAll('roles > role').forEach(r=>S.perms[r.getAttribute('name')]=(r.getAttribute('permissions')||'').split(',').filter(Boolean));

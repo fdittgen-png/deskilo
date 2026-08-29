@@ -1868,6 +1868,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'The Finances tab shows three faces — Payments, Consumption, Invoices — under one month chooser, each with its own help. Off: one column.';
 
   @override
+  String get featurePaymentRemindersTitle => 'Automatic payment reminders';
+
+  @override
+  String get featurePaymentRemindersDesc =>
+      'Open invoices past the configured term get their reminder levels automatically — an alert in the member\'s feed and a push, once a day. Off: reminders stay a manual action.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
@@ -2207,7 +2214,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpHintMoneyPayments =>
-      'What you owe and what you paid: open positions, credits, the balance and how to pay it. Record a payment here.';
+      'Settle and ask: the balance, how to pay it or pay online, record a payment — and submit an expense, request half-days or add a consumption.';
 
   @override
   String get helpHintMoneyPaymentsTopic => 'The Payments face';
@@ -2224,29 +2231,47 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpHintMoneyPaymentsTip3Topic => 'online payments';
 
   @override
-  String get helpHintMoneyConsumption =>
-      'What you used this month: days, subscription, services and packages — and the requests that add to them.';
+  String get helpHintMoneyStatement =>
+      'The month as it stands: your account, days used and left, subscription, services, packages, open positions, credits and the balance. Browse months with the arrows.';
 
   @override
-  String get helpHintMoneyConsumptionTopic => 'The Consumption face';
+  String get helpHintMoneyStatementTopic => 'The Statement face';
 
   @override
-  String get helpHintMoneyConsumptionTip2 =>
+  String get helpHintMoneyStatementTip2 =>
       'A booked morning counts as half a day; days outside the opening hours follow the workspace\'s outside-hours policy.';
 
   @override
-  String get helpHintMoneyConsumptionTip2Topic => 'How booking behaves';
+  String get helpHintMoneyStatementTip2Topic => 'How booking behaves';
 
   @override
-  String get helpHintMoneyConsumptionTip3 =>
+  String get helpHintMoneyStatementTip3 =>
       'Out of days? Request extra half-days, buy a package, or keep booking pay-as-you-go — whichever your plan allows.';
 
   @override
   String get helpHintMoneyInvoices =>
-      'Your documents: the month\'s invoice, every invoice you were issued, and your conditions.';
+      'Your invoices: what is open and when it is due, every invoice issued to you with its status, one tap to the detail and to paying it.';
 
   @override
   String get helpHintMoneyInvoicesTopic => 'The Invoices face';
+
+  @override
+  String get helpHintMoneyInvoicesTip2 =>
+      'Past the workspace\'s payment term an open invoice reads overdue here, and the reminder levels the owner configured arrive by themselves — in your feed and as a push.';
+
+  @override
+  String get helpHintMoneyInvoicesTip2Topic => 'Automatic payment reminders';
+
+  @override
+  String get helpHintMoneyDocuments =>
+      'Your paperwork: your conditions, the payments report, the month\'s statement as PDF, the document library.';
+
+  @override
+  String get helpHintMoneyDocumentsTopic => 'The Documents face';
+
+  @override
+  String get helpHintMoneyDocumentsTip3 =>
+      'My conditions is your standing financial agreement — plan, rate, extras — rendered as a document you can keep.';
 
   @override
   String get inviteSectionTitle => 'Invite someone';
@@ -3347,6 +3372,21 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get eventTypeInvoiceReminder => 'Payment reminder';
+
+  @override
+  String eventInvoiceReminderLine(String number, int level, String amount) {
+    return 'Reminder $level: invoice $number — $amount still due';
+  }
+
+  @override
+  String get dunningAutomatic => 'Automatic reminders';
+
+  @override
+  String get dunningAutomaticHint =>
+      'Once a day, open invoices past the term get their next reminder level by themselves — an alert in the member\'s feed and a push. Off: you send each reminder yourself.';
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override
@@ -4310,14 +4350,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moneyFacePayments => 'Payments';
 
   @override
-  String get moneyFaceConsumption => 'Consumption';
-
-  @override
   String get moneyFaceInvoices => 'Invoices';
 
   @override
   String get moneyNoInvoicesYet =>
       'No invoice yet — the month is invoiced by the workspace once it closes.';
+
+  @override
+  String get moneyFaceStatement => 'Statement';
+
+  @override
+  String get moneyFaceDocuments => 'Documents';
+
+  @override
+  String moneyOverdueBanner(int count, String amount) {
+    return '$count overdue — $amount to settle';
+  }
+
+  @override
+  String get moneyPayNow => 'Pay now';
+
+  @override
+  String get moneyOpenInvoicesTitle => 'Open invoices';
+
+  @override
+  String moneyOpenInvoicesSummary(int count, String amount) {
+    return '$count open · $amount due';
+  }
+
+  @override
+  String moneyDueIn(int days) {
+    return 'Due in $days days';
+  }
+
+  @override
+  String moneyOverdueBy(int days) {
+    return 'Overdue by $days days';
+  }
+
+  @override
+  String get moneyNothingOpen => 'Nothing open — you are up to date.';
+
+  @override
+  String get moneyDocumentLibrary => 'Document library';
+
+  @override
+  String get moneyStatementPdf => 'This month\'s statement (PDF)';
+
+  @override
+  String moneyRemindedTimes(int count) {
+    return 'Reminded ×$count';
+  }
 
   @override
   String get planDurationLabel => 'Duration';

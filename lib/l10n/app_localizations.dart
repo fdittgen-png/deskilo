@@ -3380,6 +3380,18 @@ abstract class AppLocalizations {
   /// **'The Finances tab shows three faces — Payments, Consumption, Invoices — under one month chooser, each with its own help. Off: one column.'**
   String get featureFinanceFacesDesc;
 
+  /// No description provided for @featurePaymentRemindersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic payment reminders'**
+  String get featurePaymentRemindersTitle;
+
+  /// No description provided for @featurePaymentRemindersDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Open invoices past the configured term get their reminder levels automatically — an alert in the member\'s feed and a push, once a day. Off: reminders stay a manual action.'**
+  String get featurePaymentRemindersDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -3941,7 +3953,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpHintMoneyPayments.
   ///
   /// In en, this message translates to:
-  /// **'What you owe and what you paid: open positions, credits, the balance and how to pay it. Record a payment here.'**
+  /// **'Settle and ask: the balance, how to pay it or pay online, record a payment — and submit an expense, request half-days or add a consumption.'**
   String get helpHintMoneyPayments;
 
   /// No description provided for @helpHintMoneyPaymentsTopic.
@@ -3968,40 +3980,40 @@ abstract class AppLocalizations {
   /// **'online payments'**
   String get helpHintMoneyPaymentsTip3Topic;
 
-  /// No description provided for @helpHintMoneyConsumption.
+  /// No description provided for @helpHintMoneyStatement.
   ///
   /// In en, this message translates to:
-  /// **'What you used this month: days, subscription, services and packages — and the requests that add to them.'**
-  String get helpHintMoneyConsumption;
+  /// **'The month as it stands: your account, days used and left, subscription, services, packages, open positions, credits and the balance. Browse months with the arrows.'**
+  String get helpHintMoneyStatement;
 
-  /// No description provided for @helpHintMoneyConsumptionTopic.
+  /// No description provided for @helpHintMoneyStatementTopic.
   ///
   /// In en, this message translates to:
-  /// **'The Consumption face'**
-  String get helpHintMoneyConsumptionTopic;
+  /// **'The Statement face'**
+  String get helpHintMoneyStatementTopic;
 
-  /// No description provided for @helpHintMoneyConsumptionTip2.
+  /// No description provided for @helpHintMoneyStatementTip2.
   ///
   /// In en, this message translates to:
   /// **'A booked morning counts as half a day; days outside the opening hours follow the workspace\'s outside-hours policy.'**
-  String get helpHintMoneyConsumptionTip2;
+  String get helpHintMoneyStatementTip2;
 
-  /// No description provided for @helpHintMoneyConsumptionTip2Topic.
+  /// No description provided for @helpHintMoneyStatementTip2Topic.
   ///
   /// In en, this message translates to:
   /// **'How booking behaves'**
-  String get helpHintMoneyConsumptionTip2Topic;
+  String get helpHintMoneyStatementTip2Topic;
 
-  /// No description provided for @helpHintMoneyConsumptionTip3.
+  /// No description provided for @helpHintMoneyStatementTip3.
   ///
   /// In en, this message translates to:
   /// **'Out of days? Request extra half-days, buy a package, or keep booking pay-as-you-go — whichever your plan allows.'**
-  String get helpHintMoneyConsumptionTip3;
+  String get helpHintMoneyStatementTip3;
 
   /// No description provided for @helpHintMoneyInvoices.
   ///
   /// In en, this message translates to:
-  /// **'Your documents: the month\'s invoice, every invoice you were issued, and your conditions.'**
+  /// **'Your invoices: what is open and when it is due, every invoice issued to you with its status, one tap to the detail and to paying it.'**
   String get helpHintMoneyInvoices;
 
   /// No description provided for @helpHintMoneyInvoicesTopic.
@@ -4009,6 +4021,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The Invoices face'**
   String get helpHintMoneyInvoicesTopic;
+
+  /// No description provided for @helpHintMoneyInvoicesTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Past the workspace\'s payment term an open invoice reads overdue here, and the reminder levels the owner configured arrive by themselves — in your feed and as a push.'**
+  String get helpHintMoneyInvoicesTip2;
+
+  /// No description provided for @helpHintMoneyInvoicesTip2Topic.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic payment reminders'**
+  String get helpHintMoneyInvoicesTip2Topic;
+
+  /// No description provided for @helpHintMoneyDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Your paperwork: your conditions, the payments report, the month\'s statement as PDF, the document library.'**
+  String get helpHintMoneyDocuments;
+
+  /// No description provided for @helpHintMoneyDocumentsTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'The Documents face'**
+  String get helpHintMoneyDocumentsTopic;
+
+  /// No description provided for @helpHintMoneyDocumentsTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'My conditions is your standing financial agreement — plan, rate, extras — rendered as a document you can keep.'**
+  String get helpHintMoneyDocumentsTip3;
 
   /// No description provided for @inviteSectionTitle.
   ///
@@ -5960,6 +6002,30 @@ abstract class AppLocalizations {
   /// **'{count} to refund · {amount}'**
   String invoiceSummaryToRefund(int count, String amount);
 
+  /// No description provided for @eventTypeInvoiceReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment reminder'**
+  String get eventTypeInvoiceReminder;
+
+  /// No description provided for @eventInvoiceReminderLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder {level}: invoice {number} — {amount} still due'**
+  String eventInvoiceReminderLine(String number, int level, String amount);
+
+  /// No description provided for @dunningAutomatic.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic reminders'**
+  String get dunningAutomatic;
+
+  /// No description provided for @dunningAutomaticHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Once a day, open invoices past the term get their next reminder level by themselves — an alert in the member\'s feed and a push. Off: you send each reminder yourself.'**
+  String get dunningAutomaticHint;
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:
@@ -7706,12 +7772,6 @@ abstract class AppLocalizations {
   /// **'Payments'**
   String get moneyFacePayments;
 
-  /// No description provided for @moneyFaceConsumption.
-  ///
-  /// In en, this message translates to:
-  /// **'Consumption'**
-  String get moneyFaceConsumption;
-
   /// No description provided for @moneyFaceInvoices.
   ///
   /// In en, this message translates to:
@@ -7723,6 +7783,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No invoice yet — the month is invoiced by the workspace once it closes.'**
   String get moneyNoInvoicesYet;
+
+  /// No description provided for @moneyFaceStatement.
+  ///
+  /// In en, this message translates to:
+  /// **'Statement'**
+  String get moneyFaceStatement;
+
+  /// No description provided for @moneyFaceDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get moneyFaceDocuments;
+
+  /// No description provided for @moneyOverdueBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} overdue — {amount} to settle'**
+  String moneyOverdueBanner(int count, String amount);
+
+  /// No description provided for @moneyPayNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay now'**
+  String get moneyPayNow;
+
+  /// No description provided for @moneyOpenInvoicesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open invoices'**
+  String get moneyOpenInvoicesTitle;
+
+  /// No description provided for @moneyOpenInvoicesSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} open · {amount} due'**
+  String moneyOpenInvoicesSummary(int count, String amount);
+
+  /// No description provided for @moneyDueIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Due in {days} days'**
+  String moneyDueIn(int days);
+
+  /// No description provided for @moneyOverdueBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue by {days} days'**
+  String moneyOverdueBy(int days);
+
+  /// No description provided for @moneyNothingOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing open — you are up to date.'**
+  String get moneyNothingOpen;
+
+  /// No description provided for @moneyDocumentLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Document library'**
+  String get moneyDocumentLibrary;
+
+  /// No description provided for @moneyStatementPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'This month\'s statement (PDF)'**
+  String get moneyStatementPdf;
+
+  /// No description provided for @moneyRemindedTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminded ×{count}'**
+  String moneyRemindedTimes(int count);
 
   /// Booking sheet: grid duration slider label (#574)
   ///

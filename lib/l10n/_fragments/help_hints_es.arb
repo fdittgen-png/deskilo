@@ -114,16 +114,21 @@
   "@helpHintPrivacyTip3": {
     "description": "#718/#719 - help hints"
   },
-  "helpHintMoneyPayments": "Lo que debes y lo que pagaste: posiciones abiertas, abonos, el saldo y cómo liquidarlo. Registra un pago aquí.",
+  "helpHintMoneyPayments": "Liquidar y pedir: el saldo, cómo pagarlo o pagar en línea, registrar un pago — y enviar un gasto, pedir medios días o añadir un consumo.",
   "helpHintMoneyPaymentsTopic": "La vista Pagos",
   "helpHintMoneyPaymentsTip2": "Registra un pago con la fecha del movimiento y el mes que salda — la otra parte confirma.",
   "helpHintMoneyPaymentsTip3": "Pagar en línea liquida lo debido al instante; la tarjeta de instrucciones muestra la vía manual con la referencia a indicar.",
   "helpHintMoneyPaymentsTip3Topic": "pagos en línea",
-  "helpHintMoneyConsumption": "Lo que has usado este mes: días, suscripción, servicios y paquetes — y las solicitudes que se añaden.",
-  "helpHintMoneyConsumptionTopic": "La vista Consumo",
-  "helpHintMoneyConsumptionTip2": "Una mañana reservada cuenta medio día; los días fuera del horario siguen la política de fuera de horario del espacio.",
-  "helpHintMoneyConsumptionTip2Topic": "Cómo se comporta la reserva",
-  "helpHintMoneyConsumptionTip3": "¿Sin días? Pide medios días extra, compra un paquete o sigue reservando por consumo — según tu plan.",
-  "helpHintMoneyInvoices": "Tus documentos: la factura del mes, todas las facturas que te emitieron y tus condiciones.",
-  "helpHintMoneyInvoicesTopic": "La vista Facturas"
+  "helpHintMoneyStatement": "El mes tal como está: tu cuenta, días usados y restantes, suscripción, servicios, paquetes, posiciones abiertas, abonos y el saldo. Recorre los meses con las flechas.",
+  "helpHintMoneyStatementTopic": "La vista Extracto",
+  "helpHintMoneyStatementTip2": "Una mañana reservada cuenta medio día; los días fuera del horario siguen la política de fuera de horario del espacio.",
+  "helpHintMoneyStatementTip2Topic": "Cómo se comporta la reserva",
+  "helpHintMoneyStatementTip3": "¿Sin días? Pide medios días extra, compra un paquete o sigue reservando por consumo — según tu plan.",
+  "helpHintMoneyInvoices": "Tus facturas: lo que está abierto y para cuándo, cada factura que te emitieron con su estado, un toque al detalle y al pago.",
+  "helpHintMoneyInvoicesTopic": "La vista Facturas",
+  "helpHintMoneyInvoicesTip2": "Pasado el plazo de pago del espacio, una factura abierta se lee aquí como vencida, y los niveles de recordatorio configurados por el propietario llegan solos — en tu feed y como notificación.",
+  "helpHintMoneyInvoicesTip2Topic": "Recordatorios de pago automáticos",
+  "helpHintMoneyDocuments": "Tu papeleo: tus condiciones, el informe de pagos, el extracto del mes en PDF, la biblioteca de documentos.",
+  "helpHintMoneyDocumentsTopic": "La vista Documentos",
+  "helpHintMoneyDocumentsTip3": "Mis condiciones es tu acuerdo financiero vigente — plan, tarifa, extras — como documento para conservar."
 }

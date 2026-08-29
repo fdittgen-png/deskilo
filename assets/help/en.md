@@ -486,19 +486,21 @@ Every report in the app — the bill, invoices, proformas, credit notes, your se
 
 **Reports speak the reader's language:** a document prints in the **member's** language when a template exists for it, otherwise in the **workspace language**, and failing both in the **language of the workspace's country** (§11 templates per language). Where that country has no single language, the app does not guess — it refuses and asks you to *set the workspace language first*.
 
-### 9c. The Payments face
+### 9c. The Statement face
 
-With **Finance faces** on (the default), the Finances tab reads as three faces under one **‹ month ›** chooser — the same idiom as the messenger's chats and alerts. Each face answers one question and carries its own help bubble.
+**The month as it stands.** Your account (the real cross-month position), the **This month** card (days included, used, left), the **subscription** card, **consumed services**, **accessory and space supplements**, **day packages**, **open positions** still awaiting validation, **payments & credits**, the month's **invoice card** once invoiced (§9a) and the **balance**. Read-only: nothing to press here except the **‹ month ›** chooser, shared by all faces.
 
-**What do I owe, what did I pay?** Your account (the real cross-month position), the **open positions** still awaiting validation, **payments & credits**, the **balance**, and — while something is owed — the **payment instructions** and **Pay online**. The actions: **Record a payment**, **Buy a package** (package plans), the **monthly payments report**.
+### 9d. The Payments face
 
-### 9d. The Consumption face
-
-**What did I use this month?** The **This month** card (days included, used, left), the **subscription** card, **consumed services**, **accessory and space supplements**, **day packages**. The actions that add to it: **Submit an expense**, **Request extra half-days**, **Add a consumption**.
+**Settle and ask.** An **overdue strip** when an invoice is past the workspace's payment term (§11e), the **balance**, the **payment instructions** and **Pay online** while something is owed, then the actions: **Record a payment**, **Buy a package** (package plans), **Submit an expense**, **Request extra half-days**, **Add a consumption**.
 
 ### 9e. The Invoices face
 
-**What was I invoiced?** The month's **invoice card** once the month is invoiced (§9a), then **every invoice issued to you**, newest first — tap one for the detail sheet with quick view, PDF and share — and **My conditions** (your financial agreement). Issuers find the **Invoices** button to the register (§11). Switch the faces off in Features → *Finance faces* to get the single column back.
+**What was I invoiced?** A headline card — *nothing open, you are up to date*, or *N open · amount due*, with overdue count — then **every invoice issued to you**, newest first, each with its status chip, **due in N days** or **overdue by N days**, how often it was reminded, and a **pay** button that jumps to the Payments face; tap a row for the detail sheet with quick view, PDF and share. Issuers find the **Invoices** button to the register (§11).
+
+### 9f. The Documents face
+
+**The rest of the paperwork:** **My conditions** (your financial agreement), the **monthly payments report**, **this month's statement as PDF**, and the **document library** when the workspace uses one (§11d). Switch the faces off in Features → *Finance faces* to get the single column back.
 
 ## 10. Kiosk mode (wall tablet)
 
@@ -605,6 +607,10 @@ Template variables (invoice family): `{{ number }}`, `{{ member }}`, `{{ workspa
 - **Workspace report** — identity, floor-plan counts, availability, features and prices: *Workspace settings → Workspace report*.
 - **Document library** — *Settings → Documents*: the workspace's statutes, user guides, financial statements and meeting minutes, LINKED from whatever system you already use — Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud or any https link (the drive keeps managing its own access; the app never stores foreign credentials). Every entry has a **visibility role**: every member, admins and owners, or owners only — enforced server-side, so a member never even downloads a list containing board documents. Admins and owners curate with the + button; a *Document library* feature toggle gates the whole thing.
 
+### 11e. Automatic payment reminders
+
+With **Automatic payment reminders** on (Features, child of *Payment reminders*) and the switch **Automatic reminders** in the reminder rules (Invoices → Reminder rules), the dunning levels apply themselves: every morning — and whenever an owner or admin opens Finances — an **open** invoice whose waiting period has run (the *days until the first reminder* from its issue date, then the *days between reminders* after the previous one) gets its next level recorded. The member sees a **Payment reminder** alert in Événements ("Reminder 2: invoice X — amount still due") and receives a push; their Invoices face reads *overdue by N days*. Levels never exceed the configured count; a matched invoice is never reminded; switching the rule off leaves reminders a manual action, one tap per invoice as before.
+
 ## 12. Settings & profile
 
 Your personal screen, top to bottom:
@@ -629,7 +635,7 @@ Check-in reminders, pending confirmations, expense decisions — and when an adm
 
 Minimal data: name, email, plan, bookings, ledger. You control your photo, your status and whether your phone number is visible in the directory; on the plan a seat of yours shows an initial, or your photo where the owner enabled member photos. Kiosk badges are stored only as hashes — a lost badge is revoked, not guessed. No tracking, no third-party analytics. Financial history is anonymized, not deleted, on account erasure (bookkeeping retention).
 
-**GDPR (#719).** DesKilo is built for the EU General Data Protection Regulation: EU-hosted data, no tracking or analytics, access limited by role and enforced on the server, and four rights you exercise yourself in **Settings → Privacy & data**: **who can see my data** (the rule per category and the people it currently names), **who accessed my data** (a server-written log of every read of your finances or messages by someone else — never skippable), **export my data** (one JSON file, art. 20) and **leave with erasure** (art. 17: your bookings are cancelled, your messages blanked, your profile cleared; accounting records are kept under the legal retention named in the policy, referenced by an id, not a name). Messages are readable only by the people in the conversation, whatever their role; invoices and payments only by you and those with the finance permission.
+**GDPR (#719).** DesKilo is built for the EU General Data Protection Regulation: EU-hosted data, no tracking or analytics, access limited by role and enforced on the server, and four rights you exercise yourself in **the shield button in the top bar (Privacy & data)**: **who can see my data** (the rule per category and the people it currently names), **who accessed my data** (a server-written log of every read of your finances or messages by someone else — never skippable), **export my data** (one JSON file, art. 20) and **leave with erasure** (art. 17: your bookings are cancelled, your messages blanked, your profile cleared; accounting records are kept under the legal retention named in the policy, referenced by an id, not a name). Messages are readable only by the people in the conversation, whatever their role; invoices and payments only by you and those with the finance permission.
 
 ## 15. Platforms
 

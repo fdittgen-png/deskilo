@@ -465,19 +465,21 @@ Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine
 
 **Berichte sprechen die Sprache des Lesers:** ein Dokument druckt in der Sprache des **Mitglieds**, wenn dafür eine Vorlage existiert, sonst in der **Sprache des Arbeitsbereichs** und, wenn auch die fehlt, in der **Sprache des Landes** des Space (§11, Vorlagen je Sprache). Hat dieses Land keine eindeutige Sprache, rät die App nicht — sie verweigert und bittet darum, *erst die Sprache des Arbeitsbereichs zu setzen*.
 
-### 9c. Die Ansicht Zahlungen
+### 9c. Die Ansicht Abrechnung
 
-Mit **Finanzen in drei Ansichten** (Standard) liest sich der Finanzen-Tab als drei Ansichten unter einer **‹ Monat ›**-Auswahl — dasselbe Muster wie Chats und Hinweise im Messenger. Jede Ansicht beantwortet eine Frage und trägt ihre eigene Hilfeblase.
+**Der Monat, wie er steht.** Ihr Konto (die echte monatsübergreifende Position), die Karte **Dieser Monat** (enthaltene, genutzte, verbleibende Tage), die **Abonnement**-Karte, **genutzte Leistungen**, **Zubehör- und Raumzuschläge**, **Tagespakete**, **offene Posten** in Prüfung, **Zahlungen & Gutschriften**, die **Rechnungskarte** des Monats, sobald er fakturiert ist (§9a), und der **Saldo**. Nur lesen: nichts zu drücken außer der **‹ Monat ›**-Auswahl, die alle Ansichten teilen.
 
-**Was schulde ich, was habe ich bezahlt?** Ihr Konto (die echte monatsübergreifende Position), die **offenen Posten** in Prüfung, **Zahlungen & Gutschriften**, der **Saldo** und — solange etwas offen ist — die **Zahlungshinweise** und **Online zahlen**. Die Aktionen: **Zahlung erfassen**, **Paket kaufen** (Pakettarife), der **monatliche Zahlungsbericht**.
+### 9d. Die Ansicht Zahlungen
 
-### 9d. Die Ansicht Verbrauch
-
-**Was habe ich diesen Monat genutzt?** Die Karte **Dieser Monat** (enthaltene, genutzte, verbleibende Tage), die **Abonnement**-Karte, **genutzte Leistungen**, **Zubehör- und Raumzuschläge**, **Tagespakete**. Die Aktionen, die dazukommen: **Ausgabe einreichen**, **Halbe Tage anfragen**, **Verbrauch hinzufügen**.
+**Begleichen und anfragen.** Ein **Überfällig-Streifen**, wenn eine Rechnung die Zahlungsfrist des Workspace überschritten hat (§11e), der **Saldo**, die **Zahlungshinweise** und **Online zahlen**, solange etwas offen ist, dann die Aktionen: **Zahlung erfassen**, **Paket kaufen** (Pakettarife), **Ausgabe einreichen**, **Halbe Tage anfragen**, **Verbrauch hinzufügen**.
 
 ### 9e. Die Ansicht Rechnungen
 
-**Was wurde mir in Rechnung gestellt?** Die **Rechnungskarte** des Monats, sobald er fakturiert ist (§9a), dann **jede an Sie gestellte Rechnung**, neueste zuerst — antippen für das Detailblatt mit Schnellansicht, PDF und Teilen — und **Meine Konditionen** (Ihre Finanzvereinbarung). Rechnungssteller finden den Button **Rechnungen** zum Register (§11). In Funktionen → *Finanzen in drei Ansichten* lässt sich die einspaltige Ansicht zurückholen.
+**Was wurde mir in Rechnung gestellt?** Eine Kopfkarte — *nichts offen, Sie sind auf dem Laufenden*, oder *N offen · fälliger Betrag*, mit der Zahl der überfälligen — dann **jede an Sie gestellte Rechnung**, neueste zuerst, je mit Status-Chip, **fällig in N Tagen** oder **überfällig seit N Tagen**, Zahl der Mahnungen und einem **Zahlen**-Knopf, der zur Ansicht Zahlungen springt; Zeile antippen für das Detailblatt mit Schnellansicht, PDF und Teilen. Rechnungssteller finden den Button **Rechnungen** zum Register (§11).
+
+### 9f. Die Ansicht Dokumente
+
+**Der Rest der Unterlagen:** **Meine Konditionen** (Ihre Finanzvereinbarung), der **monatliche Zahlungsbericht**, **die Monatsabrechnung als PDF** und die **Dokumentbibliothek**, wenn der Workspace eine führt (§11d). In Funktionen → *Finanzen in drei Ansichten* lässt sich die einspaltige Ansicht zurückholen.
 
 ## 10. Kiosk-Modus (Wandtablet)
 
@@ -584,6 +586,10 @@ Variablen (Rechnungsfamilie): `{{ number }}`, `{{ member }}`, `{{ workspace }}`,
 - **Space-Bericht** — Identität, Plan-Zählungen, Verfügbarkeit, Funktionen und Preise: *Workspace-Einstellungen → Space-Bericht*.
 - **Dokumentbibliothek** — *Einstellungen → Dokumente*: Satzung, Leitfäden, Abschlüsse, Protokolle — VERLINKT aus dem System, das du schon nutzt: Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud oder jeder https-Link (der Drive verwaltet seine Zugriffe; die App speichert nie fremde Zugangsdaten). Jeder Eintrag hat eine **Sichtbarkeitsrolle**: jedes Mitglied, Admins & Inhaber, nur Inhaber — serverseitig erzwungen. Kuratiert per + ; die Funktion *Dokumentbibliothek* schaltet alles.
 
+### 11e. Automatische Zahlungserinnerungen
+
+Mit **Automatische Zahlungserinnerungen** (Funktionen, Kind von *Zahlungserinnerungen*) und dem Schalter **Automatische Mahnungen** in den Mahnregeln (Rechnungen → Mahnregeln) wenden sich die Mahnstufen von selbst an: jeden Morgen — und immer, wenn ein Inhaber oder Admin Finanzen öffnet — erhält eine **offene** Rechnung, deren Wartezeit abgelaufen ist (die *Tage bis zur ersten Mahnung* ab Ausstellung, dann die *Tage zwischen Mahnungen* nach der vorigen), ihre nächste Stufe. Das Mitglied sieht einen Hinweis **Zahlungserinnerung** unter Ereignisse („Mahnstufe 2: Rechnung X — Betrag noch offen“) und bekommt eine Push-Nachricht; seine Ansicht Rechnungen liest *überfällig seit N Tagen*. Stufen überschreiten nie die eingestellte Zahl; eine zugeordnete Rechnung wird nie gemahnt; Schalter aus, bleibt Mahnen ein manueller Schritt wie bisher.
+
 ## 12. Einstellungen & Profil
 
 Dein persönlicher Bildschirm, von oben nach unten:
@@ -608,7 +614,7 @@ Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheidungen — und we
 
 Minimale Daten: Name, E-Mail, Plan, Buchungen, Konto. Du kontrollierst Foto, Status und Nummern-Sichtbarkeit; auf dem Plan zeigt ein Platz von dir eine Initiale oder dein Foto, wo die Inhaberin Mitgliederfotos aktiviert hat. Badges liegen nur als Hashes — ein verlorenes wird widerrufen, nicht erraten. Kein Tracking, keine Fremd-Analytik. Finanzhistorie wird bei Kontolöschung anonymisiert, nicht gelöscht (Aufbewahrungspflicht).
 
-**DSGVO (#719).** DesKilo ist für die Datenschutz-Grundverordnung gebaut: Daten in der EU, kein Tracking, keine Analytik, Zugriff nach Rolle und serverseitig durchgesetzt, und vier Rechte, die du selbst unter **Einstellungen → Datenschutz & Daten** ausübst: **wer meine Daten sehen kann** (die Regel je Kategorie und die Personen, die sie gerade nennt), **wer auf meine Daten zugegriffen hat** (ein vom Server geschriebenes Protokoll jeder Einsicht in deine Finanzen oder Nachrichten durch andere — nie umgehbar), **meine Daten exportieren** (eine JSON-Datei, Art. 20) und **mit Löschung austreten** (Art. 17: Buchungen storniert, Nachrichten geleert, Profil gelöscht; Buchhaltungsbelege bleiben für die in der Richtlinie genannte gesetzliche Frist, referenziert über eine ID, nicht einen Namen). Nachrichten lesen nur die Personen der Unterhaltung, unabhängig von der Rolle; Rechnungen und Zahlungen nur du und Inhaber der Finanz-Berechtigung.
+**DSGVO (#719).** DesKilo ist für die Datenschutz-Grundverordnung gebaut: Daten in der EU, kein Tracking, keine Analytik, Zugriff nach Rolle und serverseitig durchgesetzt, und vier Rechte, die du selbst unter **das Schild-Symbol oben in der Leiste (Datenschutz & Daten)** ausübst: **wer meine Daten sehen kann** (die Regel je Kategorie und die Personen, die sie gerade nennt), **wer auf meine Daten zugegriffen hat** (ein vom Server geschriebenes Protokoll jeder Einsicht in deine Finanzen oder Nachrichten durch andere — nie umgehbar), **meine Daten exportieren** (eine JSON-Datei, Art. 20) und **mit Löschung austreten** (Art. 17: Buchungen storniert, Nachrichten geleert, Profil gelöscht; Buchhaltungsbelege bleiben für die in der Richtlinie genannte gesetzliche Frist, referenziert über eine ID, nicht einen Namen). Nachrichten lesen nur die Personen der Unterhaltung, unabhängig von der Rolle; Rechnungen und Zahlungen nur du und Inhaber der Finanz-Berechtigung.
 
 ## 15. Plattformen
 

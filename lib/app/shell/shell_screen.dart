@@ -295,6 +295,14 @@ class ShellScreen extends ConsumerWidget {
           // reading one there is reading it everywhere — while the count
           // stays visible from every tab, which a tab inside the inbox
           // could not offer. Hidden when the workspace gated events off.
+          // #719 → the GDPR rights, one tap from every tab: who can see
+          // my data, export, erase, the policy.
+          IconButton(
+            key: const ValueKey('shell-privacy'),
+            icon: const Icon(Icons.shield_outlined),
+            tooltip: l10n?.privacyTitle ?? 'Privacy & data',
+            onPressed: () => context.push('/privacy'),
+          ),
           if (features.contains(WorkspaceFeature.eventsTab))
             IconButton(
               key: const ValueKey('shell-events-bell'),

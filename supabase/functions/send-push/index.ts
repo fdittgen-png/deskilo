@@ -35,6 +35,11 @@ const TEXTS: Record<string, { title: string; body: string }> = {
     title: "DesKilo",
     body: "You have a new message.",
   },
+  // #726 — automatic dunning: the subject member, nobody else.
+  invoice_reminder: {
+    title: "DesKilo",
+    body: "A payment reminder is waiting for you.",
+  },
 };
 
 async function fcmAccessToken(sa: {
@@ -126,6 +131,8 @@ Deno.serve(async (req) => {
       ? "pending_request"
       : event.type === "reservation" && event.action === "cancelled"
       ? "reservation_cancelled"
+      : event.type === "invoice_reminder"
+      ? "invoice_reminder"
       : null;
     if (!eventKind) return Response.json({ skipped: "kind not pushed" });
     kind = eventKind;
@@ -142,6 +149,11 @@ Deno.serve(async (req) => {
         ? m.id === event.subject_member_id || m.is_admin || m.is_owner
         : m.id === event.subject_member_id
     );
+    // The sweep acts AS the owner; a reminder for the owner's own
+    // invoice must still reach them.
+    if (kind === "invoice_reminder" && recipients.length === 0) {
+      recipients = [{ id: event.subject_member_id }];
+    }
   }
   if (recipients.length === 0) return Response.json({ sent: 0 });
 

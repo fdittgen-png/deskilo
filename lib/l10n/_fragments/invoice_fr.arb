@@ -755,5 +755,9 @@
         "type": "String"
       }
     }
-  }
+  },
+  "eventTypeInvoiceReminder": "Rappel de paiement",
+  "eventInvoiceReminderLine": "Relance {level} : facture {number} — {amount} restent dus",
+  "dunningAutomatic": "Relances automatiques",
+  "dunningAutomaticHint": "Une fois par jour, les factures ouvertes au-delà du délai reçoivent d'elles-mêmes leur niveau de relance suivant — une alerte dans le fil du membre et une notification. Désactivé : vous envoyez chaque relance vous-même."
 }

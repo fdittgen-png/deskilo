@@ -54,7 +54,8 @@ enum WorkspaceFeature {
   calendarHub,
   dataAccessLog,
   memberDataExport,
-  financeFaces;
+  financeFaces,
+  paymentReminders;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -297,6 +298,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // under one period chooser. OFF keeps the single column.
   WorkspaceFeature.financeFaces:
       FeatureManifestEntry(feature: WorkspaceFeature.financeFaces),
+  // #726 — automatic payment reminders: the dunning levels applied by a
+  // daily sweep (or by an admin opening Finances), each one an event in
+  // the member's feed and a push. Child of dunning.
+  WorkspaceFeature.paymentReminders: FeatureManifestEntry(
+    feature: WorkspaceFeature.paymentReminders,
+    requires: WorkspaceFeature.dunning,
+  ),
   // #662 — signing IN by scanning a badge, then a PIN. Under nfcBadges
   // rather than kioskMode: it needs badges to EXIST, and turning badge
   // issuance off must take the login button with it, or the button

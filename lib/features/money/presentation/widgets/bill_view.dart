@@ -75,7 +75,6 @@ class BillView extends StatelessWidget {
   /// (the flag-off column and the PDF export, which prints everything).
   final MoneyFace? face;
 
-  bool _shows(MoneyFace f) => face == null || face == f;
 
   @override
   Widget build(BuildContext context) {
@@ -90,10 +89,13 @@ class BillView extends StatelessWidget {
       nowPeriod: nowPeriod,
     );
 
-    // #720 — each card belongs to ONE face; the whole bill is the three
-    // faces in order. The first card of a face carries no top gap.
+    // #720 — the STATEMENT face is the whole bill as it stands; the
+    // PAYMENTS face carries the balance and how to settle it. The
+    // whole bill (face null) is both, for the classic column and the PDF.
+    final showStatement = face == null || face == MoneyFace.statement;
+    final showPayments = face == null || face == MoneyFace.payments;
     final cards = <Widget>[
-      if (_shows(MoneyFace.consumption)) ...[
+      if (showStatement) ...[
         // At-a-glance usage for the current month (days included, used and
         // left) — the member's answer to "how much can I still book?".
         _EntitlementCard(statement: statement, money: money),
@@ -102,35 +104,33 @@ class BillView extends StatelessWidget {
           _ServicesCard(sections: sections, money: money),
         if (sections.packageEntries.isNotEmpty)
           _PackagesCard(entries: sections.packageEntries, money: money),
-      ],
-      if (_shows(MoneyFace.payments)) ...[
         if (sections.openPositions.isNotEmpty)
           _OpenPositionsCard(positions: sections.openPositions, money: money),
         if (sections.creditEntries.isNotEmpty)
           _CreditsCard(entries: sections.creditEntries, money: money),
+        if (settlement != null)
+          _InvoiceCard(settlement: settlement!, money: money),
       ],
-      if (_shows(MoneyFace.invoices) && settlement != null)
-        _InvoiceCard(settlement: settlement!, money: money),
-      if (_shows(MoneyFace.payments)) ...[
+      if (showStatement || showPayments)
         _BalanceFooter(
           statement: statement,
           settlement: settlement,
           money: money,
         ),
-        // #155 — how to pay, only while something is owed (spec §7:
-        // "shown on unpaid statements") and only when the owner configured
-        // manual instructions or enabled online payments. An invoiced
-        // month owes its invoice REMAINDER, not its ledger balance (#510).
-        if (_owedCents > 0 &&
-            (!paymentInstructions.isEmpty ||
-                (onlinePaymentsEnabled && onPayOnline != null)))
-          HowToPayCard(
-            instructions: paymentInstructions,
-            onPayOnline: onlinePaymentsEnabled && onPayOnline != null
-                ? () => onPayOnline!(_owedCents)
-                : null,
-          ),
-      ],
+      if (showPayments &&
+          // #155 — how to pay, only while something is owed (spec §7:
+          // "shown on unpaid statements") and only when the owner configured
+          // manual instructions or enabled online payments. An invoiced
+          // month owes its invoice REMAINDER, not its ledger balance (#510).
+          _owedCents > 0 &&
+          (!paymentInstructions.isEmpty ||
+              (onlinePaymentsEnabled && onPayOnline != null)))
+        HowToPayCard(
+          instructions: paymentInstructions,
+          onPayOnline: onlinePaymentsEnabled && onPayOnline != null
+              ? () => onPayOnline!(_owedCents)
+              : null,
+        ),
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -633,6 +633,7 @@ class _OpenPositionsCard extends StatelessWidget {
       case EventType.quota:
         return l10n?.eventTypeQuota ?? 'Extra half-days';
       case EventType.invoiceWriteoff:
+      case EventType.invoiceReminder:
       case EventType.reservationDelete:
       case EventType.roleChange:
       case EventType.memberJoin:

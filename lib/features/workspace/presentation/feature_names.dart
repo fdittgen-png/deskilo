@@ -99,6 +99,8 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureCalendarHubTitle ?? 'Calendar hub',
       WorkspaceFeature.financeFaces =>
         l10n?.featureFinanceFacesTitle ?? 'Finance faces',
+      WorkspaceFeature.paymentReminders =>
+        l10n?.featurePaymentRemindersTitle ?? 'Automatic payment reminders',
 
 
       WorkspaceFeature.dataAccessLog =>

@@ -103,6 +103,10 @@ abstract class MoneyRepository {
   /// The workspace's dunning policy (#472, 0093); defaults when unset.
   Future<DunningRules> fetchDunningRules(String workspaceId);
 
+  /// #726 — apply the dunning rules now (idempotent: the rules decide).
+  /// Returns how many reminders were recorded. Admins only.
+  Future<int> sweepPaymentReminders(String workspaceId);
+
   /// Owner-only: persist the dunning policy.
   Future<void> setDunningRules(String workspaceId, DunningRules rules);
 

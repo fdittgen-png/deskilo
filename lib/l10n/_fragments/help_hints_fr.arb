@@ -114,16 +114,21 @@
   "@helpHintPrivacyTip3": {
     "description": "#718/#719 - help hints"
   },
-  "helpHintMoneyPayments": "Ce que vous devez et ce que vous avez payé : positions ouvertes, avoirs, le solde et comment le régler. Enregistrez un paiement ici.",
+  "helpHintMoneyPayments": "Régler et demander : le solde, comment le régler ou payer en ligne, enregistrer un paiement — et soumettre une dépense, demander des demi-journées ou ajouter une consommation.",
   "helpHintMoneyPaymentsTopic": "Le volet Paiements",
   "helpHintMoneyPaymentsTip2": "Enregistrez un paiement avec la date du mouvement et le mois qu'il solde — l'autre partie confirme.",
   "helpHintMoneyPaymentsTip3": "Payer en ligne règle le dû immédiatement ; la carte des instructions montre la voie manuelle avec la référence à indiquer.",
   "helpHintMoneyPaymentsTip3Topic": "paiements en ligne",
-  "helpHintMoneyConsumption": "Ce que vous avez consommé ce mois : jours, abonnement, services et forfaits — et les demandes qui s'y ajoutent.",
-  "helpHintMoneyConsumptionTopic": "Le volet Consommation",
-  "helpHintMoneyConsumptionTip2": "Une matinée réservée compte pour une demi-journée ; les jours hors horaires suivent la politique hors-horaires de l'espace.",
-  "helpHintMoneyConsumptionTip2Topic": "Comment la réservation se comporte",
-  "helpHintMoneyConsumptionTip3": "Plus de jours ? Demandez des demi-journées, achetez un forfait ou continuez à la consommation — selon votre formule.",
-  "helpHintMoneyInvoices": "Vos documents : la facture du mois, toutes les factures qui vous ont été émises, et vos conditions.",
-  "helpHintMoneyInvoicesTopic": "Le volet Factures"
+  "helpHintMoneyStatement": "Le mois tel qu'il est : votre compte, jours utilisés et restants, abonnement, services, forfaits, positions ouvertes, avoirs et le solde. Parcourez les mois avec les flèches.",
+  "helpHintMoneyStatementTopic": "Le volet Relevé",
+  "helpHintMoneyStatementTip2": "Une matinée réservée compte pour une demi-journée ; les jours hors horaires suivent la politique hors-horaires de l'espace.",
+  "helpHintMoneyStatementTip2Topic": "Comment la réservation se comporte",
+  "helpHintMoneyStatementTip3": "Plus de jours ? Demandez des demi-journées, achetez un forfait ou continuez à la consommation — selon votre formule.",
+  "helpHintMoneyInvoices": "Vos factures : ce qui est ouvert et pour quand, chaque facture qui vous a été émise avec son état, un geste vers le détail et vers le paiement.",
+  "helpHintMoneyInvoicesTopic": "Le volet Factures",
+  "helpHintMoneyInvoicesTip2": "Passé le délai de paiement de l'espace, une facture ouverte se lit ici en retard, et les niveaux de relance configurés par le propriétaire arrivent d'eux-mêmes — dans votre fil et en notification.",
+  "helpHintMoneyInvoicesTip2Topic": "Relances de paiement automatiques",
+  "helpHintMoneyDocuments": "Vos documents : vos conditions, le rapport des paiements, le relevé du mois en PDF, la bibliothèque de documents.",
+  "helpHintMoneyDocumentsTopic": "Le volet Documents",
+  "helpHintMoneyDocumentsTip3": "Mes conditions est votre accord financier en vigueur — formule, tarif, extras — rendu en document à conserver."
 }

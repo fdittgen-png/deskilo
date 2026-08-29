@@ -145,5 +145,7 @@
     "description": "#718/#719"
   },
   "featureFinanceFacesTitle": "Finances en trois volets",
-  "featureFinanceFacesDesc": "L'onglet Finances se lit en trois volets — Paiements, Consommation, Factures — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne."
+  "featureFinanceFacesDesc": "L'onglet Finances se lit en trois volets — Paiements, Consommation, Factures — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.",
+  "featurePaymentRemindersTitle": "Relances de paiement automatiques",
+  "featurePaymentRemindersDesc": "Les factures ouvertes au-delà du délai configuré reçoivent leurs niveaux de relance automatiquement — une alerte dans le fil du membre et une notification, une fois par jour. Désactivé : la relance reste un geste manuel."
 }

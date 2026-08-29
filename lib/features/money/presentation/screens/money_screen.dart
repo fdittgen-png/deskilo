@@ -39,10 +39,13 @@ import '../../domain/payment_method.dart';
 import '../../domain/payment_provider.dart';
 import '../../domain/statement.dart';
 import '../../providers/money_focus_controller.dart';
+import '../../providers/payment_reminder_sweep.dart';
 import '../../providers/money_providers.dart';
 import '../payment_method_labels.dart';
 import '../widgets/account_card.dart';
 import '../widgets/bill_view.dart';
+import '../widgets/documents_face.dart';
+import '../widgets/invoice_overview.dart';
 import '../widgets/money_faces_view.dart';
 import '../widgets/my_invoices_list.dart';
 import '../widgets/consumption_sheet.dart';
@@ -73,6 +76,13 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       _applyFocus(ref.read(moneyFocusControllerProvider));
+    });
+    // #726 — an admin opening Finances is one of the two clocks that
+    // apply the dunning rules (the other is the morning cron).
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final ws = ref.read(currentWorkspaceProvider).value;
+      if (ws != null) ref.read(paymentReminderSweepProvider(ws.id));
     });
     final now = ref.read(clockProvider).now();
     _month = DateTime(now.year, now.month);
@@ -1045,18 +1055,6 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     // agreement and the month's payments, viewable/downloadable/
     // shareable without asking anyone. Gated by memberReports (#502).
     final reportsOn = features.contains(WorkspaceFeature.memberReports);
-    final agreementButton = OutlinedButton.icon(
-      key: const ValueKey('agreement-report-button'),
-      onPressed: () => _memberDoc('agreement'),
-      icon: const Icon(Icons.handshake_outlined),
-      label: fitted(l10n?.moneyMyAgreement ?? 'My conditions'),
-    );
-    final paymentsReportButton = OutlinedButton.icon(
-      key: const ValueKey('payments-report-button'),
-      onPressed: () => _memberDoc('payments'),
-      icon: const Icon(Icons.summarize_outlined),
-      label: fitted(l10n?.reportDocPayments ?? 'Payments report'),
-    );
     Widget grid(List<Widget> buttons) => MoneyActionGrid(buttons);
     final requestButtons = [
       submitExpense,
@@ -1072,82 +1070,76 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       sectionLabel(l10n?.moneySectionDocuments ?? 'Documents'),
       if (invoicesButton != null) ...[invoicesButton, const SizedBox(height: 8)],
       if (reportsOn)
-        Row(children: [
-          Expanded(child: agreementButton),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(child: paymentsReportButton),
-        ]),
+        DocumentsFaceActions(
+          onAgreement: () => _memberDoc('agreement'),
+          onPaymentsReport: () => _memberDoc('payments'),
+          onStatementPdf: null,
+          showDocumentLibrary: false,
+        ),
     ];
     // #720 — the faces. Cards come from the same BillView, one face at a
     // time; the Invoices face adds MY documents as a list.
     final facesOn = features.contains(WorkspaceFeature.financeFaces);
+    // #726 — what is open and overdue across MY invoices, judged by the
+    // workspace's own payment term.
+    final exposure = watchExposure(ref, member?.id ?? '', currencyCode);
+    final overdueBanner = exposure == null || exposure.overdue.isEmpty
+        ? null
+        : OverdueBanner(exposure: exposure);
     final faceCards = <MoneyFace, List<Widget>>{
-      MoneyFace.payments: [
+      MoneyFace.statement: [
         if (account != null && account.isNotable) ...[
           AccountCard(account: account, currencyCode: currencyCode),
           const SizedBox(height: 8),
         ],
+        if (visibleStatement != null) bill(MoneyFace.statement),
+      ],
+      MoneyFace.payments: [
+        if (overdueBanner != null) ...[overdueBanner, const SizedBox(height: 8)],
         if (visibleStatement != null) bill(MoneyFace.payments),
       ],
-      MoneyFace.consumption: [
-        if (visibleStatement != null) bill(MoneyFace.consumption),
-      ],
       MoneyFace.invoices: [
-        if (visibleStatement != null) bill(MoneyFace.invoices),
-        if (features.contains(WorkspaceFeature.invoicing)) ...[
+        if (overdueBanner != null) ...[overdueBanner, const SizedBox(height: 8)],
+        if (exposure != null) ...[
+          InvoiceSummaryCard(exposure: exposure),
           const SizedBox(height: 8),
-          MyInvoicesList(memberId: member?.id ?? ''),
+          MyInvoicesList(memberId: member?.id ?? '', exposure: exposure),
         ],
       ],
+      MoneyFace.documents: const [],
     };
+    final documentsOn = features.contains(WorkspaceFeature.documents);
     final faceActions = <MoneyFace, List<Widget>>{
+      MoneyFace.statement: const [],
       MoneyFace.payments: [
         const SizedBox(height: 8),
         recordPayment,
         if (buyPackage != null) ...[const SizedBox(height: 8), buyPackage],
-        if (reportsOn) ...[const SizedBox(height: 8), paymentsReportButton],
-      ],
-      MoneyFace.consumption: [const SizedBox(height: 8), grid(requestButtons)],
-      MoneyFace.invoices: [
         const SizedBox(height: 8),
-        if (invoicesButton != null) ...[invoicesButton, const SizedBox(height: 8)],
-        if (reportsOn) agreementButton,
+        grid(requestButtons),
+      ],
+      MoneyFace.invoices: [
+        if (invoicesButton != null) ...[const SizedBox(height: 8), invoicesButton],
+      ],
+      MoneyFace.documents: [
+        DocumentsFaceActions(
+          onAgreement: reportsOn ? () => _memberDoc('agreement') : null,
+          onPaymentsReport: reportsOn ? () => _memberDoc('payments') : null,
+          onStatementPdf: features.contains(WorkspaceFeature.pdfExport) &&
+                  visibleStatement != null
+              ? () => _exportPdf(visibleStatement)
+              : null,
+          showDocumentLibrary: documentsOn,
+        ),
       ],
     };
     // #486 — the landscape side panel leads with the month's BOTTOM
     // LINE so the split reads: my balance and what I can do, left; the
     // detail, right.
-    final balanceCents = visibleStatement?.balanceCents;
-    final balanceCard = balanceCents == null
-        ? const SizedBox.shrink()
-        : Card(
-            key: const ValueKey('money-balance-card'),
-            child: Padding(
-              padding: AppSpacing.mdAll,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      l10n?.billBalance ?? 'Balance',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ),
-                  Text(
-                    currency.formatMinor(balanceCents),
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: balanceCents < 0
-                              ? Theme.of(context).colorScheme.error
-                              : null,
-                        ),
-                  ),
-                ],
-              ),
-            ),
-          );
+    final balanceCard = MoneyBalanceCard(
+      balanceCents: visibleStatement?.balanceCents,
+      currency: currency,
+    );
 
     return switch (statementAsync) {
       AsyncData() when facesOn => MoneyFacesView(

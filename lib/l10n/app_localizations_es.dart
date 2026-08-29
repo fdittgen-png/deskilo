@@ -1885,6 +1885,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'La pestaña Finanzas muestra tres vistas — Pagos, Consumo, Facturas — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.';
 
   @override
+  String get featurePaymentRemindersTitle =>
+      'Recordatorios de pago automáticos';
+
+  @override
+  String get featurePaymentRemindersDesc =>
+      'Las facturas abiertas más allá del plazo configurado reciben sus niveles de recordatorio automáticamente — un aviso en el feed del miembro y una notificación, una vez al día. Desactivado: recordar sigue siendo una acción manual.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override
@@ -2224,7 +2232,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get helpHintMoneyPayments =>
-      'Lo que debes y lo que pagaste: posiciones abiertas, abonos, el saldo y cómo liquidarlo. Registra un pago aquí.';
+      'Liquidar y pedir: el saldo, cómo pagarlo o pagar en línea, registrar un pago — y enviar un gasto, pedir medios días o añadir un consumo.';
 
   @override
   String get helpHintMoneyPaymentsTopic => 'La vista Pagos';
@@ -2241,29 +2249,48 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpHintMoneyPaymentsTip3Topic => 'pagos en línea';
 
   @override
-  String get helpHintMoneyConsumption =>
-      'Lo que has usado este mes: días, suscripción, servicios y paquetes — y las solicitudes que se añaden.';
+  String get helpHintMoneyStatement =>
+      'El mes tal como está: tu cuenta, días usados y restantes, suscripción, servicios, paquetes, posiciones abiertas, abonos y el saldo. Recorre los meses con las flechas.';
 
   @override
-  String get helpHintMoneyConsumptionTopic => 'La vista Consumo';
+  String get helpHintMoneyStatementTopic => 'La vista Extracto';
 
   @override
-  String get helpHintMoneyConsumptionTip2 =>
+  String get helpHintMoneyStatementTip2 =>
       'Una mañana reservada cuenta medio día; los días fuera del horario siguen la política de fuera de horario del espacio.';
 
   @override
-  String get helpHintMoneyConsumptionTip2Topic => 'Cómo se comporta la reserva';
+  String get helpHintMoneyStatementTip2Topic => 'Cómo se comporta la reserva';
 
   @override
-  String get helpHintMoneyConsumptionTip3 =>
+  String get helpHintMoneyStatementTip3 =>
       '¿Sin días? Pide medios días extra, compra un paquete o sigue reservando por consumo — según tu plan.';
 
   @override
   String get helpHintMoneyInvoices =>
-      'Tus documentos: la factura del mes, todas las facturas que te emitieron y tus condiciones.';
+      'Tus facturas: lo que está abierto y para cuándo, cada factura que te emitieron con su estado, un toque al detalle y al pago.';
 
   @override
   String get helpHintMoneyInvoicesTopic => 'La vista Facturas';
+
+  @override
+  String get helpHintMoneyInvoicesTip2 =>
+      'Pasado el plazo de pago del espacio, una factura abierta se lee aquí como vencida, y los niveles de recordatorio configurados por el propietario llegan solos — en tu feed y como notificación.';
+
+  @override
+  String get helpHintMoneyInvoicesTip2Topic =>
+      'Recordatorios de pago automáticos';
+
+  @override
+  String get helpHintMoneyDocuments =>
+      'Tu papeleo: tus condiciones, el informe de pagos, el extracto del mes en PDF, la biblioteca de documentos.';
+
+  @override
+  String get helpHintMoneyDocumentsTopic => 'La vista Documentos';
+
+  @override
+  String get helpHintMoneyDocumentsTip3 =>
+      'Mis condiciones es tu acuerdo financiero vigente — plan, tarifa, extras — como documento para conservar.';
 
   @override
   String get inviteSectionTitle => 'Invitar a alguien';
@@ -3371,6 +3398,21 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get eventTypeInvoiceReminder => 'Recordatorio de pago';
+
+  @override
+  String eventInvoiceReminderLine(String number, int level, String amount) {
+    return 'Recordatorio $level: factura $number — $amount pendientes';
+  }
+
+  @override
+  String get dunningAutomatic => 'Recordatorios automáticos';
+
+  @override
+  String get dunningAutomaticHint =>
+      'Una vez al día, las facturas abiertas más allá del plazo reciben solas su siguiente nivel de recordatorio — un aviso en el feed del miembro y una notificación. Desactivado: envías cada recordatorio tú mismo.';
+
+  @override
   String get eventTypeMemberJoin => 'Nuevo miembro';
 
   @override
@@ -4340,14 +4382,57 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moneyFacePayments => 'Pagos';
 
   @override
-  String get moneyFaceConsumption => 'Consumo';
-
-  @override
   String get moneyFaceInvoices => 'Facturas';
 
   @override
   String get moneyNoInvoicesYet =>
       'Aún no hay factura — el espacio factura el mes una vez cerrado.';
+
+  @override
+  String get moneyFaceStatement => 'Extracto';
+
+  @override
+  String get moneyFaceDocuments => 'Documentos';
+
+  @override
+  String moneyOverdueBanner(int count, String amount) {
+    return '$count vencidas — $amount por liquidar';
+  }
+
+  @override
+  String get moneyPayNow => 'Pagar ahora';
+
+  @override
+  String get moneyOpenInvoicesTitle => 'Facturas abiertas';
+
+  @override
+  String moneyOpenInvoicesSummary(int count, String amount) {
+    return '$count abiertas · $amount pendientes';
+  }
+
+  @override
+  String moneyDueIn(int days) {
+    return 'Vence en $days días';
+  }
+
+  @override
+  String moneyOverdueBy(int days) {
+    return 'Vencida hace $days días';
+  }
+
+  @override
+  String get moneyNothingOpen => 'Nada abierto — estás al día.';
+
+  @override
+  String get moneyDocumentLibrary => 'Biblioteca de documentos';
+
+  @override
+  String get moneyStatementPdf => 'Extracto del mes (PDF)';
+
+  @override
+  String moneyRemindedTimes(int count) {
+    return 'Recordada ×$count';
+  }
 
   @override
   String get planDurationLabel => 'Duración';

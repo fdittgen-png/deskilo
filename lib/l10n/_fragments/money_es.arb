@@ -282,7 +282,18 @@
     "description": "#711 - globalization"
   },
   "moneyFacePayments": "Pagos",
-  "moneyFaceConsumption": "Consumo",
   "moneyFaceInvoices": "Facturas",
-  "moneyNoInvoicesYet": "Aún no hay factura — el espacio factura el mes una vez cerrado."
+  "moneyNoInvoicesYet": "Aún no hay factura — el espacio factura el mes una vez cerrado.",
+  "moneyFaceStatement": "Extracto",
+  "moneyFaceDocuments": "Documentos",
+  "moneyOverdueBanner": "{count} vencidas — {amount} por liquidar",
+  "moneyPayNow": "Pagar ahora",
+  "moneyOpenInvoicesTitle": "Facturas abiertas",
+  "moneyOpenInvoicesSummary": "{count} abiertas · {amount} pendientes",
+  "moneyDueIn": "Vence en {days} días",
+  "moneyOverdueBy": "Vencida hace {days} días",
+  "moneyNothingOpen": "Nada abierto — estás al día.",
+  "moneyDocumentLibrary": "Biblioteca de documentos",
+  "moneyStatementPdf": "Extracto del mes (PDF)",
+  "moneyRemindedTimes": "Recordada ×{count}"
 }

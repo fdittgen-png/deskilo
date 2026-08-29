@@ -9,6 +9,7 @@ class DunningRules {
     this.levels = 3,
     this.firstAfterDays = 14,
     this.betweenDays = 14,
+    this.automatic = true,
   });
 
   factory DunningRules.fromJson(Map<String, dynamic> json) {
@@ -21,6 +22,7 @@ class DunningRules {
       levels: read(keyLevels, 3, max: 9),
       firstAfterDays: read(keyFirstAfterDays, 14),
       betweenDays: read(keyBetweenDays, 14),
+      automatic: json[keyAutomatic] != false,
     );
   }
 
@@ -35,27 +37,35 @@ class DunningRules {
   /// suggested.
   final int betweenDays;
 
+  /// #726 — the daily sweep applies the levels by itself; off, the
+  /// rules stay a policy the owner applies one tap at a time.
+  final bool automatic;
+
   static const String keyLevels = 'levels';
   static const String keyFirstAfterDays = 'first_after_days';
   static const String keyBetweenDays = 'between_days';
+  static const String keyAutomatic = 'automatic';
 
   static const DunningRules defaults = DunningRules();
 
-  Map<String, int> toJson() => {
+  Map<String, Object> toJson() => {
         keyLevels: levels,
         keyFirstAfterDays: firstAfterDays,
         keyBetweenDays: betweenDays,
+        keyAutomatic: automatic,
       };
 
   DunningRules copyWith({
     int? levels,
     int? firstAfterDays,
     int? betweenDays,
+    bool? automatic,
   }) =>
       DunningRules(
         levels: levels ?? this.levels,
         firstAfterDays: firstAfterDays ?? this.firstAfterDays,
         betweenDays: betweenDays ?? this.betweenDays,
+        automatic: automatic ?? this.automatic,
       );
 
   @override
@@ -66,7 +76,8 @@ class DunningRules {
       other.betweenDays == betweenDays;
 
   @override
-  int get hashCode => Object.hash(levels, firstAfterDays, betweenDays);
+  int get hashCode =>
+      Object.hash(levels, firstAfterDays, betweenDays, automatic);
 }
 
 /// The reminder level DUE for an open invoice under [rules], or null

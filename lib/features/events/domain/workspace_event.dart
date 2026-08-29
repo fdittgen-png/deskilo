@@ -42,6 +42,9 @@ enum EventType {
   /// #492): confirm cancels it (unused), reject keeps it on the record
   /// (the check-in was merely forgotten). Always another person decides.
   reservationDelete('reservation_delete'),
+  /// #726 — an automatic payment reminder (dunning level N) for the
+  /// subject's open invoice; applied, never pending.
+  invoiceReminder('invoice_reminder'),
 
   /// Cancelling the outstanding remainder of a PARTIALLY PAID invoice
   /// (0100, #504): confirm writes the remainder off and archives the
