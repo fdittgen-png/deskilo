@@ -101,6 +101,10 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureFinanceFacesTitle ?? 'Finance faces',
       WorkspaceFeature.paymentReminders =>
         l10n?.featurePaymentRemindersTitle ?? 'Automatic payment reminders',
+      WorkspaceFeature.supplyExpenses =>
+        l10n?.featureSupplyExpensesTitle ?? 'Supplies from expenses',
+      WorkspaceFeature.validationScopes =>
+        l10n?.featureValidationScopesTitle ?? 'Validators by role or person',
 
 
       WorkspaceFeature.dataAccessLog =>

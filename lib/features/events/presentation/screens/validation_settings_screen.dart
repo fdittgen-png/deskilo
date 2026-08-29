@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: 0BSD
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../widgets/validation_scope_picker.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -127,6 +129,15 @@ class ValidationSettingsScreen extends ConsumerWidget {
     final ownerCount = members
         .where((m) => m.isOwner && m.status == MemberStatus.active)
         .length;
+    // #732 — every active non-owner is a candidate for a LISTED rule.
+    final people = <_AdminChoice>[
+      for (final m in members)
+        if (!m.isOwner && m.status == MemberStatus.active)
+          (id: m.id, name: names[m.id] ?? m.id),
+    ];
+    final scopesOn = ref
+        .read(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.validationScopes);
 
     final result = await showModalBottomSheet<ValidationPolicy>(
       context: context,
@@ -135,7 +146,9 @@ class ValidationSettingsScreen extends ConsumerWidget {
         title: label,
         initial: draft,
         admins: admins,
+        people: people,
         ownerCount: ownerCount,
+        scopesOn: scopesOn,
       ),
     );
     if (result == null || !context.mounted) return;
@@ -285,13 +298,19 @@ class _PolicyEditorSheet extends StatefulWidget {
     required this.title,
     required this.initial,
     required this.admins,
+    required this.people,
     required this.ownerCount,
+    required this.scopesOn,
   });
 
   final String title;
   final ValidationPolicy initial;
   final List<_AdminChoice> admins;
+
+  /// #732 — every active non-owner, for the LISTED scope.
+  final List<_AdminChoice> people;
   final int ownerCount;
+  final bool scopesOn;
 
   @override
   State<_PolicyEditorSheet> createState() => _PolicyEditorSheetState();
@@ -303,6 +322,15 @@ class _PolicyEditorSheetState extends State<_PolicyEditorSheet> {
   late int _requiredCount = widget.initial.requiredCount.clamp(1, _maxRequired);
   late bool _adminsMayValidate = widget.initial.adminsMayValidate;
   late bool _ownerRequired = widget.initial.ownerRequired;
+
+  /// #732 — 'admins' | 'listed' | 'members'; without the feature the
+  /// rule reads as 'admins' whatever is stored.
+  late String _scope =
+      widget.scopesOn ? widget.initial.validatorScope : 'admins';
+  late final Set<String> _selectedPeople = {
+    for (final id in widget.initial.eligibleAdminIds)
+      if (widget.people.any((a) => a.id == id)) id,
+  };
 
   /// #629 — only the reservation_delete row offers these.
   late bool _autoValidateAdmin = widget.initial.autoValidateAdmin;
@@ -326,11 +354,15 @@ class _PolicyEditorSheetState extends State<_PolicyEditorSheet> {
   /// switches (mirrors respond_to_event eligibility, migration 0017).
   int get _poolSize =>
       widget.ownerCount +
-      (!_adminsMayValidate
-          ? 0
-          : _selectedAdminIds.isEmpty
-              ? widget.admins.length
-              : _selectedAdminIds.length);
+      switch (_scope) {
+        'members' => widget.people.length,
+        'listed' => _selectedPeople.length,
+        _ => !_adminsMayValidate
+            ? 0
+            : _selectedAdminIds.isEmpty
+                ? widget.admins.length
+                : _selectedAdminIds.length,
+      };
 
   void _save() {
     // +1: on admin-initiated events the subject's accept counts too.
@@ -342,8 +374,14 @@ class _PolicyEditorSheetState extends State<_PolicyEditorSheet> {
       widget.initial.copyWith(
         requiredCount: _requiredCount,
         adminsMayValidate: _adminsMayValidate,
-        eligibleAdminIds:
-            _adminsMayValidate ? (_selectedAdminIds.toList()..sort()) : const [],
+        eligibleAdminIds: switch (_scope) {
+          'listed' => _selectedPeople.toList()..sort(),
+          'members' => const [],
+          _ => _adminsMayValidate
+              ? (_selectedAdminIds.toList()..sort())
+              : const [],
+        },
+        validatorScope: _scope,
         ownerRequired: _ownerRequired,
         autoValidateAdmin: _offersAutoValidation && _autoValidateAdmin,
         autoValidateOwner: _offersAutoValidation && _autoValidateOwner,
@@ -404,6 +442,22 @@ class _PolicyEditorSheetState extends State<_PolicyEditorSheet> {
                   ],
                 ),
               ),
+              // #732 — who validates: the scope, then the persons.
+              if (widget.scopesOn)
+                ValidationScopePicker(
+                  scope: _scope,
+                  people: [for (final p in widget.people) (id: p.id, name: p.name)],
+                  selected: _selectedPeople,
+                  onScope: (v) => setState(() {
+                    _scope = v;
+                    _notEnough = false;
+                  }),
+                  onToggle: (id, selected) => setState(() {
+                    selected ? _selectedPeople.add(id) : _selectedPeople.remove(id);
+                    _notEnough = false;
+                  }),
+                ),
+              if (_scope == 'admins')
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 title: Text(
@@ -418,7 +472,7 @@ class _PolicyEditorSheetState extends State<_PolicyEditorSheet> {
                   _notEnough = false;
                 }),
               ),
-              if (_adminsMayValidate)
+              if (_scope == 'admins' && _adminsMayValidate)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
                   child: Wrap(

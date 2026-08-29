@@ -327,6 +327,8 @@ I cataloghi dietro il §9 — extra definiti dal proprietario (armadietti, stamp
 
 ![](assets/help/images/accessories-catalog.jpg)
 
+**Scorta (#731).** Un servizio nato da una scorta mostra *N in scorta* / *Esaurito*; un consumo superiore allo scaffale viene rifiutato.
+
 ### Impostazioni dello spazio (Spazio di coworking)
 
 La schermata propria dello spazio, dall'alto in basso:
@@ -368,6 +370,8 @@ Una matrice centrale decide **quale ruolo detiene quale permesso** — gestire i
 - Chi detiene *Gestire ruoli e permessi* modifica le altre righe. Un **comproprietario** parte con tutto («un comproprietario può averne meno» — il proprietario toglie ciò che vuole); un **admin** parte con le capacità admin di oggi; un **membro** con nessuna.
 - Chiunque altro con un permesso qualsiasi vede la matrice **in sola lettura**, con il proprio ruolo evidenziato.
 - Una matrice mai toccata significa i valori predefiniti — nulla cambia finché il proprietario non la modifica. Il vecchio interruttore *gli admin emettono fatture* continua a concedere la fatturazione agli admin per compatibilità. Il server applica la stessa matrice nelle RPC di fatturazione (`has_permission`), così l'interfaccia e il database non possono mai essere in disaccordo.
+
+**Chi convalida (#732).** Una regola indica il suo **ambito**: *Gli admin* (il proprietario e tutti gli admin, o quelli elencati), *Persone designate* (il proprietario ed esattamente le persone scelte — anche un semplice membro può convalidare), o *Tutti i membri*. Numero e firma del proprietario mantengono il loro senso, e nessuno convalida mai il proprio evento. Funzionalità *Convalidatori per ruolo o persona*.
 
 ### Configurare i pagamenti online
 
@@ -493,6 +497,8 @@ Ogni report dell'app — l'estratto, le fatture, le proforma, le note di credito
 ### 9d. La vista Pagamenti
 
 **Regolare e chiedere.** Una **striscia di scaduto** quando una fattura supera il termine di pagamento dello spazio (§11e), il **saldo**, le **istruzioni di pagamento** e **Paga online** finché qualcosa è dovuto, poi le azioni: **Registra un pagamento**, **Compra un pacchetto** (piani a pacchetti), **Invia una spesa**, **Chiedi mezze giornate extra**, **Aggiungi un consumo**.
+
+**Scorte (#731).** Hai comprato capsule di caffè o sacchetti per aspirapolvere per lo spazio? In **Invia una spesa**, attiva *È una scorta per lo spazio*, indica l'articolo (o scegline uno esistente), la quantità e quanto costerà un consumo (precompilato con importo ÷ quantità). Convalidata la spesa, vieni rimborsato come sempre **e** l'articolo va sullo scaffale come servizio consumabile con quella scorta; chi lo usa aggiunge un consumo e lo paga, la scorta scende, e a zero l'articolo non si può consumare fino alla prossima scorta. Funzionalità *Scorte dalle spese* (richiede Servizi).
 
 ### 9e. La vista Fatture
 

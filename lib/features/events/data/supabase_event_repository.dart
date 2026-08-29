@@ -123,6 +123,7 @@ class SupabaseEventRepository implements EventRepository {
         // #629 — reservation_delete only; false everywhere else.
         'auto_validate_admin': policy.autoValidateAdmin,
         'auto_validate_owner': policy.autoValidateOwner,
+        'validator_scope': policy.validatorScope,
       },
       onConflict: 'workspace_id,event_type',
     );
@@ -165,5 +166,6 @@ class SupabaseEventRepository implements EventRepository {
         ownerRequired: row['owner_required'] as bool,
         autoValidateAdmin: row['auto_validate_admin'] as bool? ?? false,
         autoValidateOwner: row['auto_validate_owner'] as bool? ?? false,
+        validatorScope: row['validator_scope'] as String? ?? 'admins',
       );
 }

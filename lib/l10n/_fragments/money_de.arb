@@ -295,5 +295,15 @@
   "moneyNothingOpen": "Nichts offen — Sie sind auf dem Laufenden.",
   "moneyDocumentLibrary": "Dokumentbibliothek",
   "moneyStatementPdf": "Monatsabrechnung (PDF)",
-  "moneyRemindedTimes": "Gemahnt ×{count}"
+  "moneyRemindedTimes": "Gemahnt ×{count}",
+  "expenseSupplyToggle": "Das ist ein Vorrat für den Raum",
+  "expenseSupplyHint": "Kaffeekapseln, Staubsaugerbeutel… Nach der Genehmigung steht der Artikel als verbrauchbare Leistung im Regal: wer ihn nutzt, zahlt dafür.",
+  "expenseSupplyItem": "Artikel",
+  "expenseSupplyNewItem": "Neuer Artikel",
+  "expenseSupplyQuantity": "Menge",
+  "expenseSupplyUnitPrice": "Stückpreis (was ein Verbrauch kostet)",
+  "expenseSupplyUnitPriceHint": "Vorbelegt mit Betrag ÷ Menge; runden Sie nach Belieben.",
+  "serviceStockCount": "{count} auf Lager",
+  "serviceOutOfStock": "Ausverkauft",
+  "serviceOutOfStockHint": "Nichts mehr im Regal — der nächste Vorrat füllt es auf."
 }

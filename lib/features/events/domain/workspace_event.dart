@@ -122,11 +122,16 @@ sealed class WorkspaceEvent with _$WorkspaceEvent {
     // (a) subject of an admin-initiated event.
     if (!needsAdminDecider && subjectMemberId == me.id) return true;
     // (b) owners always, (c) admins per policy.
-    final eligibleAdmin = me.isAdmin &&
-        policy.adminsMayValidate &&
-        (policy.eligibleAdminIds.isEmpty ||
-            policy.eligibleAdminIds.contains(me.id));
-    if (!me.isOwner && !eligibleAdmin) return false;
+    // #732 — the rule's SCOPE (mirrors respond_to_event, 0135).
+    final inScope = switch (policy.validatorScope) {
+      'members' => true,
+      'listed' => policy.eligibleAdminIds.contains(me.id),
+      _ => me.isAdmin &&
+          policy.adminsMayValidate &&
+          (policy.eligibleAdminIds.isEmpty ||
+              policy.eligibleAdminIds.contains(me.id)),
+    };
+    if (!me.isOwner && !inScope) return false;
     // The subject never validates what someone else did to them (their
     // say is rule (a) above, when they have one).
     if (me.id == subjectMemberId && me.id != actorMemberId) return false;

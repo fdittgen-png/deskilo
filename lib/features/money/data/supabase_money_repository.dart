@@ -472,12 +472,15 @@ class SupabaseMoneyRepository implements MoneyRepository {
     required int amountCents,
     required String category,
     String description = '',
+    Map<String, Object?>? supply,
   }) async {
     final result = await _client.rpc<dynamic>('submit_expense', params: {
       'p_workspace_id': workspaceId,
       'p_amount_cents': amountCents,
       'p_category': category,
       'p_description': description,
+      // #731 — a supply: {name | service_id, quantity, unit_price_cents}.
+      'p_supply': supply,
     });
     return result as String;
   }
@@ -556,6 +559,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
         priceCents: row['price_cents'] as int,
         active: row['active'] as bool,
         vatRateId: row['vat_rate_id'] as String? ?? '',
+        stock: row['stock'] as int?,
       );
 
   // ── VAT rates (0072) ────────────────────────────────────────────────

@@ -366,6 +366,15 @@ List<HelpTip> helpHintTips(AppLocalizations? l10n, HelpHintId id) =>
       HelpHintId.moneyPayments => [
         HelpTip(helpHintText(l10n, id)),
         HelpTip(
+          l10n?.helpHintMoneyPaymentsTipSupply ??
+              'Bought capsules or vacuum bags for the space? Submit the '
+                  'expense as a supply: validated, it goes on the shelf '
+                  'as a consumable that others pay for, and you are '
+                  'reimbursed.',
+          topic: l10n?.helpHintMoneyPaymentsTipSupplyTopic ??
+              'Services and Accessories',
+        ),
+        HelpTip(
           l10n?.helpHintMoneyPaymentsTip2 ??
               'Record a payment with the date the money moved and the '
                   'month it settles — the other side confirms it.',
@@ -438,6 +447,13 @@ List<HelpTip> helpHintTips(AppLocalizations? l10n, HelpHintId id) =>
       ],
       HelpHintId.validation => [
         HelpTip(helpHintText(l10n, id)),
+        HelpTip(
+          l10n?.helpHintValidationTipScopes ??
+              'Who validates is the rule\'s scope: the admins, listed '
+                  'persons of any role, or every member — and how many. '
+                  'The owner always may; nobody validates their own event.',
+          topic: l10n?.helpHintValidationTipScopesTopic ?? 'Role management',
+        ),
         HelpTip(
           l10n?.helpHintValidationTip2 ??
               'One card per event type, each inheriting from the '

@@ -79,5 +79,11 @@
   "notifGroupByType": "Typ",
   "notifGroupByDate": "Datum",
   "notifGroupByUser": "Mitglied",
-  "notifUngroup": "Gruppierung aufheben"
+  "notifUngroup": "Gruppierung aufheben",
+  "validationScopeLabel": "Wer prüft",
+  "validationScopeAdmins": "Admins",
+  "validationScopeListed": "Benannte Personen",
+  "validationScopeMembers": "Alle Mitglieder",
+  "validationScopeHint": "Der Inhaber darf immer. Admins: alle Admins oder die aufgeführten. Benannte: genau diese Personen, gleich welcher Rolle. Alle Mitglieder: jede aktive Person.",
+  "validationPickPersons": "Personen wählen"
 }

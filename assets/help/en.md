@@ -327,6 +327,8 @@ The catalogs behind §9 — owner-defined extras (lockers, printing…, each wit
 
 ![](assets/help/images/accessories-catalog.jpg)
 
+**Stock (#731).** A service that came from a supply shows *N in stock* / *Out of stock*; a consumption larger than the shelf is refused.
+
 ### Workspace settings (Coworking space)
 
 The workspace's own screen, top to bottom:
@@ -368,6 +370,8 @@ One central matrix decides **which role holds which permission** — manage role
 - Whoever holds *Manage roles & permissions* edits the other rows. A **co-owner** starts with everything ("co-owner can have less" — the owner removes what they want); an **admin** starts with today's admin abilities; a **member** with none.
 - Everyone else with any permission sees the matrix **read-only**, their own role highlighted.
 - An untouched matrix means the defaults — nothing changes until the owner edits it. The legacy *admin invoicing* feature flag keeps granting invoicing to admins for compatibility. The server enforces the same matrix in the invoicing RPCs (`has_permission`), so the UI and the database can never disagree.
+
+**Who validates (#732).** A rule names its **scope**: *Admins* (the owner and every admin, or the ones you list), *Listed persons* (the owner and exactly the people you pick — a plain member can be a validator), or *All members*. The count and the owner sign-off keep their meaning, and nobody ever validates their own event. Feature *Validators by role or person*.
 
 ### Setting up online payments
 
@@ -493,6 +497,8 @@ Every report in the app — the bill, invoices, proformas, credit notes, your se
 ### 9d. The Payments face
 
 **Settle and ask.** An **overdue strip** when an invoice is past the workspace's payment term (§11e), the **balance**, the **payment instructions** and **Pay online** while something is owed, then the actions: **Record a payment**, **Buy a package** (package plans), **Submit an expense**, **Request extra half-days**, **Add a consumption**.
+
+**Supplies (#731).** Bought coffee capsules or vacuum bags for the space? In **Submit an expense**, switch on *This is a supply for the space*, name the item (or pick an existing one), the quantity and what one consumption will cost (prefilled from amount ÷ quantity). Once the expense is validated you are reimbursed as usual **and** the item goes on the shelf as a consumable service with that stock; members who use it add a consumption and pay for it, the stock counts down, and at zero the item cannot be consumed until the next supply. Feature *Supplies from expenses* (needs Services).
 
 ### 9e. The Invoices face
 

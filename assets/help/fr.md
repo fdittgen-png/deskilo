@@ -327,6 +327,8 @@ Les catalogues derrière le §9 — extras définis par le propriétaire (casier
 
 ![](assets/help/images/accessories-catalog.jpg)
 
+**Stock (#731).** Un service issu d'une fourniture affiche *N en stock* / *Épuisé* ; une consommation supérieure au stock est refusée.
+
 ### Réglages de l'espace (Espace de coworking)
 
 L'écran de l'espace, de haut en bas :
@@ -368,6 +370,8 @@ Une matrice centrale décide **quelle permission revient à quel rôle** — gé
 - Qui détient *Gérer les rôles et permissions* modifie les autres lignes. Un **copropriétaire** démarre avec tout (« il peut en avoir moins » — le propriétaire retire ce qu'il veut) ; un **admin** avec les capacités d'admin actuelles ; un **membre** sans rien.
 - Toute autre personne disposant d'une permission voit la matrice **en lecture seule** — l'écran l'annonce : *« Lecture seule : voici les permissions de chaque rôle. Votre rôle est mis en évidence »* — avec la puce **Votre rôle** sur sa carte.
 - Une matrice jamais touchée = les valeurs par défaut — rien ne change tant que le propriétaire ne l'édite pas. Le serveur applique la même matrice dans les RPC de facturation (`has_permission`) : l'interface et la base ne peuvent pas diverger.
+
+**Qui valide (#732).** Une règle nomme sa **portée** : *Les admins* (le propriétaire et tous les admins, ou ceux que vous listez), *Personnes désignées* (le propriétaire et exactement les personnes choisies — un simple membre peut être validateur), ou *Tous les membres*. Le nombre et la signature du propriétaire gardent leur sens, et personne ne valide jamais son propre événement. Fonctionnalité *Validateurs par rôle ou par personne*.
 
 ### Configurer les paiements en ligne
 
@@ -493,6 +497,8 @@ Chaque rapport de l'application — relevé, factures, proformas, avoirs, vos do
 ### 9d. Le volet Paiements
 
 **Régler et demander.** Un **bandeau de retard** quand une facture dépasse le délai de paiement de l'espace (§11e), le **solde**, les **instructions de paiement** et **Payer en ligne** tant qu'un montant est dû, puis les actions : **Enregistrer un paiement**, **Acheter un forfait** (formules à forfaits), **Soumettre une dépense**, **Demander des demi-journées**, **Ajouter une consommation**.
+
+**Fournitures (#731).** Vous avez acheté des capsules de café ou des sacs d'aspirateur pour l'espace ? Dans **Soumettre une dépense**, activez *C'est une fourniture pour l'espace*, nommez l'article (ou choisissez-en un existant), la quantité et ce que coûtera une consommation (prérempli avec montant ÷ quantité). Une fois la dépense validée, vous êtes remboursé comme d'habitude **et** l'article va sur l'étagère comme service consommable avec ce stock ; ceux qui l'utilisent ajoutent une consommation et le paient, le stock décroît, et à zéro l'article ne peut plus être consommé jusqu'à la prochaine fourniture. Fonctionnalité *Fournitures via les dépenses* (nécessite Services).
 
 ### 9e. Le volet Factures
 

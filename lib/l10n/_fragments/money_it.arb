@@ -295,5 +295,15 @@
   "moneyNothingOpen": "Niente di aperto — sei in regola.",
   "moneyDocumentLibrary": "Libreria dei documenti",
   "moneyStatementPdf": "Estratto del mese (PDF)",
-  "moneyRemindedTimes": "Sollecitata ×{count}"
+  "moneyRemindedTimes": "Sollecitata ×{count}",
+  "expenseSupplyToggle": "È una scorta per lo spazio",
+  "expenseSupplyHint": "Capsule di caffè, sacchetti per aspirapolvere… Una volta convalidato, l'articolo va sullo scaffale come servizio consumabile: chi lo usa lo paga.",
+  "expenseSupplyItem": "Articolo",
+  "expenseSupplyNewItem": "Nuovo articolo",
+  "expenseSupplyQuantity": "Quantità",
+  "expenseSupplyUnitPrice": "Prezzo unitario (quanto costa un consumo)",
+  "expenseSupplyUnitPriceHint": "Precompilato con importo ÷ quantità; arrotonda se vuoi.",
+  "serviceStockCount": "{count} in scorta",
+  "serviceOutOfStock": "Esaurito",
+  "serviceOutOfStockHint": "Niente più sullo scaffale — la prossima scorta lo rifornisce."
 }

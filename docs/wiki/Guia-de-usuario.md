@@ -282,6 +282,8 @@ Los catálogos detrás del §9 — extras definidos por el propietario (taquilla
 
 <p><img src="images/billing-bands-levels-packages.jpg" width="220"> <img src="images/services-catalog.jpg" width="220"> <img src="images/services-new-service.jpg" width="220"> <img src="images/accessories-catalog.jpg" width="220"></p>
 
+**Stock (#731).** Un servicio nacido de un suministro muestra *N en stock* / *Agotado*; un consumo mayor que el estante se rechaza.
+
 ### Ajustes del espacio (Espacio de coworking)
 
 La pantalla propia del espacio, de arriba abajo:
@@ -323,6 +325,8 @@ Una matriz central decide **qué rol tiene qué permiso** — gestionar roles, g
 - Quien tenga *Gestionar roles y permisos* edita las demás filas. Un **copropietario** empieza con todo («un copropietario puede tener menos» — el propietario quita lo que quiera); un **admin** empieza con las capacidades de admin de hoy; un **miembro**, sin ninguna.
 - Todos los demás con algún permiso ven la matriz en **solo lectura**, con su propio rol resaltado.
 - Una matriz sin tocar significa los valores por defecto — nada cambia hasta que el propietario la edita. El antiguo interruptor de función *los admins emiten facturas* sigue concediendo la facturación a los admins por compatibilidad. El servidor aplica la misma matriz en las RPC de facturación (`has_permission`), de modo que la interfaz y la base de datos nunca pueden discrepar.
+
+**Quién valida (#732).** Una regla nombra su **alcance**: *Los admins* (el propietario y todos los admins, o los que listes), *Personas designadas* (el propietario y exactamente las personas elegidas — un miembro normal puede ser validador), o *Todos los miembros*. El número y la firma del propietario conservan su sentido, y nadie valida nunca su propio evento. Función *Validadores por rol o persona*.
 
 ### Configurar los pagos en línea
 
@@ -440,6 +444,8 @@ Cada informe de la app — la factura mensual, las facturas, los proformas, las 
 ### 9d. La vista Pagos
 
 **Liquidar y pedir.** Una **franja de vencido** cuando una factura supera el plazo de pago del espacio (§11e), el **saldo**, las **instrucciones de pago** y **Pagar en línea** mientras se deba algo, y las acciones: **Registrar un pago**, **Comprar un paquete** (planes por paquetes), **Enviar un gasto**, **Pedir medios días extra**, **Añadir un consumo**.
+
+**Suministros (#731).** ¿Compraste cápsulas de café o bolsas de aspiradora para el espacio? En **Enviar un gasto**, activa *Es un suministro para el espacio*, nombra el artículo (o elige uno existente), la cantidad y lo que costará un consumo (prellenado con importe ÷ cantidad). Validado el gasto, te reembolsan como siempre **y** el artículo pasa al estante como servicio consumible con ese stock; quien lo usa añade un consumo y lo paga, el stock baja, y a cero el artículo no puede consumirse hasta el próximo suministro. Función *Suministros desde gastos* (necesita Servicios).
 
 ### 9e. La vista Facturas
 

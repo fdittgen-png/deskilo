@@ -153,6 +153,8 @@ const FEATURES=[
  ['memberDataExport','Export et effacement','Export des données (RGPD art. 20) et départ avec effacement (art. 17) depuis Réglages → Confidentialité et données.',1],
  ['financeFaces','Finances en trois volets','L\'onglet Finances se lit en trois volets — Paiements, Consommation, Factures — sous un même sélecteur de mois, chacun avec son aide.',1],
  ['paymentReminders','Relances de paiement automatiques','Les factures ouvertes au-delà du délai configuré reçoivent leurs niveaux de relance automatiquement — une alerte dans le fil du membre et une notification, une fois par jour. Nécessite « Relances de paiement ».',1],
+ ['supplyExpenses','Fournitures via les dépenses','Une dépense peut être une fourniture pour l\'espace (capsules, sacs d\'aspirateur…) : validée, elle réapprovisionne ou crée un service consommable avec un prix unitaire ; les consommations décomptent le stock. Nécessite « Services ».',1],
+ ['validationScopes','Validateurs par rôle ou par personne','Chaque règle de validation nomme qui valide : les admins, des personnes désignées quel que soit leur rôle, ou tous les membres — et combien. Désactivé : propriétaire et admins comme avant.',1],
  ['uiAnimations','Animations de l\'interface','Transitions et retours animés dans toute l\'app ; désactivé, tout devient instantané. Le réglage d\'accessibilité « animations réduites » du système prime de toute façon.',1],
 ];
 const PERMS=[['manageRoles','Gérer les rôles et permissions'],['manageMembers','Gérer les membres'],['manageValidation','Configurer les règles de validation'],['workspaceSettings',"Modifier les réglages de l'espace"],['issueInvoices','Émettre les factures et rapprocher les paiements'],['viewFinances',"Consulter les finances de l'espace"],['manageDocuments','Gérer la bibliothèque de documents'],['manageServices','Gérer les services et forfaits'],['approveExpenses','Approuver les dépenses']];
@@ -484,7 +486,9 @@ const STEPS=[
   for(const[dk,t]of DOMAINS){const g=gate[dk];if(g&&!on(g)){S.domains[dk].on=false;continue}const d=S.domains[dk];
    const head=checkbox(t,'',d.on,v=>{d.on=v;save()});if(!d.on){k.push(head);continue}
    const req=h('input',{type:'number'});req.value=d.required;req.oninput=()=>{d.required=req.value;save()};
-   k.push(h('div',{class:'card'},head,h('div',{class:'row'},h('div',{},h('label',{},'Validations requises'),req),h('div',{},h('label',{},' '),checkbox('Signature du propriétaire','',d.ownerSignOff,v=>{d.ownerSignOff=v;save()})))))}
+   const row=[h('div',{},h('label',{},'Validations requises'),req),h('div',{},h('label',{},' '),checkbox('Signature du propriétaire','',d.ownerSignOff,v=>{d.ownerSignOff=v;save()}))];
+   if(on('validationScopes')){const sc=h('select');for(const[v,t]of[['admins','Les admins (propriétaire compris)'],['members','Tous les membres']])sc.append(h('option',{value:v},t));sc.value=d.validators||'admins';sc.onchange=()=>{d.validators=sc.value;save()};row.unshift(h('div',{},h('label',{},'Qui valide'),sc,h('p',{class:'hint'},'Les personnes désignées se choisissent dans l\'app, une fois les membres invités (Réglages → Règles de validation).')))}
+   k.push(h('div',{class:'card'},head,h('div',{class:'row'},...row)))}
   if(on('deletionRequests'))k.push(h('label',{},'Exception : validation automatique des suppressions'),h('p',{class:'hint'},"La seule entorse à « personne ne valide son propre événement », limitée aux suppressions de réservation. Deux interrupteurs indépendants, désactivés par défaut."),
    checkbox('Les propriétaires suppriment sans validation','',S.autoValidate.owner,v=>{S.autoValidate.owner=v;save()}),checkbox('Les admins suppriment sans validation','',S.autoValidate.admin,v=>{S.autoValidate.admin=v;save()}));
   else{S.autoValidate={admin:false,owner:false};k.push(needs('deletionRequests'))}
@@ -624,7 +628,7 @@ function exportXml(){
  for(const[role,list]of Object.entries(S.perms))push(`      <role name="${role}" permissions="${list.join(',')}"/>`);
  push(`      <validation required="${S.validation.required}" owner-sign-off="${S.validation.ownerSignOff}">`);
  for(const[k]of DOMAINS){const d=S.domains[k];if(d&&d.on)
-  push(`        <domain event-type="${k}" required="${d.required}" owner-sign-off="${d.ownerSignOff}"${k==='reservation_delete'?` auto-validate-admin="${!!S.autoValidate.admin}" auto-validate-owner="${!!S.autoValidate.owner}"`:''}/>`)}
+  push(`        <domain event-type="${k}" required="${d.required}" owner-sign-off="${d.ownerSignOff}"${d.validators&&d.validators!=='admins'?` validators="${d.validators}"`:''}${k==='reservation_delete'?` auto-validate-admin="${!!S.autoValidate.admin}" auto-validate-owner="${!!S.autoValidate.owner}"`:''}/>`)}
  if(!S.domains.reservation_delete.on&&(S.autoValidate.admin||S.autoValidate.owner))
   push(`        <domain event-type="reservation_delete" auto-validate-admin="${!!S.autoValidate.admin}" auto-validate-owner="${!!S.autoValidate.owner}"/>`);
  push('      </validation>');
@@ -668,7 +672,7 @@ function parseBack(text){
   DOMAINS.forEach(([k])=>{S.domains[k]={on:false,required:1,ownerSignOff:false}});
   S.autoValidate={admin:false,owner:false};
   va.querySelectorAll('domain').forEach(d=>{const k=d.getAttribute('event-type');if(!(k in S.domains))return;
-   if(d.hasAttribute('required'))S.domains[k]={on:true,required:d.getAttribute('required'),ownerSignOff:d.getAttribute('owner-sign-off')==='true'};
+   if(d.hasAttribute('required'))S.domains[k]={on:true,required:d.getAttribute('required'),ownerSignOff:d.getAttribute('owner-sign-off')==='true',validators:d.getAttribute('validators')||'admins'};
    if(k==='reservation_delete'){S.autoValidate={admin:d.getAttribute('auto-validate-admin')==='true',owner:d.getAttribute('auto-validate-owner')==='true'}}})}
  S.members=[...su.querySelectorAll('members > member')].map(m=>({name:m.getAttribute('name'),email:m.getAttribute('email'),role:m.getAttribute('role'),pct:m.getAttribute('subscription-pct'),overage:m.getAttribute('overage-policy')||'blocked',wholeSpaces:m.getAttribute('may-reserve-whole-spaces')==='true',simultaneous:m.getAttribute('simultaneous-reservations')||'',limit:m.getAttribute('reservation-limit')||''}));
 }

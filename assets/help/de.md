@@ -325,6 +325,8 @@ Die Kataloge hinter §9 — Extras der Inhaberin (Schließfächer, Druck…, je 
 
 ![](assets/help/images/accessories-catalog.jpg)
 
+**Bestand (#731).** Eine Leistung aus einem Vorrat zeigt *N auf Lager* / *Ausverkauft*; ein Verbrauch über den Bestand hinaus wird abgelehnt.
+
 ### Workspace-Einstellungen (Coworking-Space)
 
 Der Bildschirm des Space, von oben nach unten:
@@ -364,6 +366,8 @@ Eine zentrale Matrix entscheidet, **welche Rolle welche Berechtigung hält** —
 - Wer *Rollen & Berechtigungen verwalten* hält, bearbeitet die anderen Zeilen. Ein **Co-Inhaber** startet mit allem („kann weniger haben"); ein **Admin** mit den heutigen Admin-Fähigkeiten; ein **Mitglied** ohne alles.
 - Alle anderen mit irgendeiner Berechtigung sehen die Matrix **schreibgeschützt** — der Bildschirm sagt es: *„Nur lesen: das sind die Berechtigungen jeder Rolle. Deine Rolle ist hervorgehoben"* — mit dem Chip **Deine Rolle**.
 - Unberührte Matrix = Standardwerte. Der Server erzwingt dieselbe Matrix in den Rechnungs-RPCs (`has_permission`): UI und Datenbank können nie auseinanderlaufen.
+
+**Wer prüft (#732).** Eine Regel nennt ihren **Geltungsbereich**: *Admins* (der Inhaber und alle Admins oder die aufgeführten), *Benannte Personen* (der Inhaber und genau die gewählten Personen — auch ein einfaches Mitglied kann prüfen) oder *Alle Mitglieder*. Anzahl und Inhaber-Freigabe behalten ihre Bedeutung, und niemand prüft je das eigene Ereignis. Funktion *Prüfer nach Rolle oder Person*.
 
 ### Online-Zahlungen einrichten
 
@@ -472,6 +476,8 @@ Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine
 ### 9d. Die Ansicht Zahlungen
 
 **Begleichen und anfragen.** Ein **Überfällig-Streifen**, wenn eine Rechnung die Zahlungsfrist des Workspace überschritten hat (§11e), der **Saldo**, die **Zahlungshinweise** und **Online zahlen**, solange etwas offen ist, dann die Aktionen: **Zahlung erfassen**, **Paket kaufen** (Pakettarife), **Ausgabe einreichen**, **Halbe Tage anfragen**, **Verbrauch hinzufügen**.
+
+**Vorräte (#731).** Kaffeekapseln oder Staubsaugerbeutel für den Raum gekauft? In **Ausgabe einreichen** schalten Sie *Das ist ein Vorrat für den Raum* ein, benennen den Artikel (oder wählen einen bestehenden), die Menge und was ein Verbrauch kosten soll (vorbelegt mit Betrag ÷ Menge). Nach der Genehmigung werden Sie wie gewohnt erstattet **und** der Artikel steht mit diesem Bestand als verbrauchbare Leistung im Regal; wer ihn nutzt, trägt einen Verbrauch ein und zahlt, der Bestand sinkt, und bei null kann der Artikel bis zum nächsten Vorrat nicht verbraucht werden. Funktion *Vorräte aus Ausgaben* (braucht Leistungen).
 
 ### 9e. Die Ansicht Rechnungen
 

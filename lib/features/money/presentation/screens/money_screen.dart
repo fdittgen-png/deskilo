@@ -45,6 +45,7 @@ import '../payment_method_labels.dart';
 import '../widgets/account_card.dart';
 import '../widgets/bill_view.dart';
 import '../widgets/documents_face.dart';
+import '../widgets/expense_sheet.dart';
 import '../widgets/invoice_overview.dart';
 import '../widgets/money_faces_view.dart';
 import '../widgets/my_invoices_list.dart';
@@ -483,102 +484,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     ref.invalidate(eventsProvider);
   }
 
-  Future<void> _submitExpenseSheet(MoneyFormat currency) async {
-    final context = this.context;
-    final l10n = AppLocalizations.of(context);
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-
-    const categories = ['coffee', 'supplies', 'equipment', 'other'];
-    String categoryLabel(String key) => switch (key) {
-          'coffee' => l10n?.expenseCategoryCoffee ?? 'Coffee & kitchen',
-          'supplies' => l10n?.expenseCategorySupplies ?? 'Supplies',
-          'equipment' => l10n?.expenseCategoryEquipment ?? 'Equipment',
-          _ => l10n?.expenseCategoryOther ?? 'Other',
-        };
-
-    final amount = TextEditingController();
-    final description = TextEditingController();
-    var category = categories.first;
-    final submitted = await showModalBottomSheet<bool>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setSheetState) => SheetShell(
-          title: l10n?.moneySubmitExpense ?? 'Submit an expense',
-          children: [
-              const SizedBox(height: 12),
-              TextField(
-                controller: amount,
-                decoration: InputDecoration(
-                  labelText: l10n?.moneyAmountLabel ?? 'Amount',
-                  suffixText: currency.currencyName,
-                ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                autofocus: true,
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<String>(
-                initialValue: category,
-                decoration: InputDecoration(
-                  labelText: l10n?.moneyExpenseCategoryLabel ?? 'Category',
-                ),
-                items: [
-                  for (final key in categories)
-                    DropdownMenuItem(
-                      value: key,
-                      child: Text(categoryLabel(key)),
-                    ),
-                ],
-                onChanged: (v) =>
-                    setSheetState(() => category = v ?? category),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: description,
-                decoration: InputDecoration(
-                  labelText: l10n?.moneyDescriptionLabel ?? 'Description',
-                ),
-              ),
-              const SizedBox(height: 16),
-              FilledButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: Text(
-                  l10n?.moneySubmitPayment ?? 'Submit for confirmation',
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
-    if (submitted != true || !context.mounted) return;
-
-    final cents = parseCentsInput(amount.text);
-    if (cents == null || cents <= 0) return;
-    if (!await runGuarded(
-      context,
-      domain: 'money',
-      message: 'submit expense failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () => ref.read(moneyRepositoryProvider).submitExpense(
-            workspaceId: workspace.id,
-            amountCents: cents,
-            category: category,
-            description: description.text.trim(),
-          ),
-    )) {
-      return;
-    }
-    if (!context.mounted) return;
-    AppSnack.success(
-      context,
-      l10n?.moneyExpensePending ??
-          'Expense submitted — waiting for approval.',
-    );
-    ref.invalidate(eventsProvider);
-  }
+  Future<void> _submitExpenseSheet(MoneyFormat currency) =>
+      showExpenseSheet(context, ref, currency);
 
   /// Request extra half-days beyond the subscription entitlement (0031):
   /// lands as a pending 'quota' event that owners/admins validate per the

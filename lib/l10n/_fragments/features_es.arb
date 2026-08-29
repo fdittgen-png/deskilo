@@ -147,5 +147,9 @@
   "featureFinanceFacesTitle": "Finanzas en tres vistas",
   "featureFinanceFacesDesc": "La pestaña Finanzas muestra tres vistas — Pagos, Consumo, Facturas — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.",
   "featurePaymentRemindersTitle": "Recordatorios de pago automáticos",
-  "featurePaymentRemindersDesc": "Las facturas abiertas más allá del plazo configurado reciben sus niveles de recordatorio automáticamente — un aviso en el feed del miembro y una notificación, una vez al día. Desactivado: recordar sigue siendo una acción manual."
+  "featurePaymentRemindersDesc": "Las facturas abiertas más allá del plazo configurado reciben sus niveles de recordatorio automáticamente — un aviso en el feed del miembro y una notificación, una vez al día. Desactivado: recordar sigue siendo una acción manual.",
+  "featureSupplyExpensesTitle": "Suministros desde gastos",
+  "featureSupplyExpensesDesc": "Un gasto puede ser un suministro para el espacio (cápsulas de café, bolsas de aspiradora…): validado, repone o crea un servicio consumible con precio unitario, y los consumos descuentan el stock.",
+  "featureValidationScopesTitle": "Validadores por rol o persona",
+  "featureValidationScopesDesc": "Cada regla de validación nombra quién valida: los admins, personas designadas de cualquier rol, o todos los miembros — y cuántos. Desactivado: propietario y admins como antes."
 }

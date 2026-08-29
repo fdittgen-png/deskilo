@@ -268,6 +268,9 @@ abstract class MoneyRepository {
     required int amountCents,
     required String category,
     String description,
+    /// #731 — when the expense is a SUPPLY for the space: name (or
+    /// service_id of an existing item), quantity, unit_price_cents.
+    Map<String, Object?>? supply,
   });
 
   /// Owner-defined day packages (migration 0042). Members read the active

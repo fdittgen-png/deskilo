@@ -1609,6 +1609,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get notifUngroup => 'Dégrouper';
 
   @override
+  String get validationScopeLabel => 'Qui valide';
+
+  @override
+  String get validationScopeAdmins => 'Les admins';
+
+  @override
+  String get validationScopeListed => 'Personnes désignées';
+
+  @override
+  String get validationScopeMembers => 'Tous les membres';
+
+  @override
+  String get validationScopeHint =>
+      'Le propriétaire peut toujours. Admins : tous les admins, ou ceux que vous listez. Désignées : exactement ces personnes, quel que soit leur rôle. Tous les membres : quiconque est actif.';
+
+  @override
+  String get validationPickPersons => 'Choisissez les personnes';
+
+  @override
   String get featuresTitle => 'Fonctionnalités';
 
   @override
@@ -1921,6 +1940,21 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featurePaymentRemindersDesc =>
       'Les factures ouvertes au-delà du délai configuré reçoivent leurs niveaux de relance automatiquement — une alerte dans le fil du membre et une notification, une fois par jour. Désactivé : la relance reste un geste manuel.';
+
+  @override
+  String get featureSupplyExpensesTitle => 'Fournitures via les dépenses';
+
+  @override
+  String get featureSupplyExpensesDesc =>
+      'Une dépense peut être une fourniture pour l\'espace (capsules, sacs d\'aspirateur…) : validée, elle réapprovisionne ou crée un service consommable avec un prix unitaire ; les consommations décomptent le stock.';
+
+  @override
+  String get featureValidationScopesTitle =>
+      'Validateurs par rôle ou par personne';
+
+  @override
+  String get featureValidationScopesDesc =>
+      'Chaque règle de validation nomme qui valide : les admins, des personnes désignées quel que soit leur rôle, ou tous les membres — et combien. Désactivé : propriétaire et admins comme avant.';
 
   @override
   String get helpTitle => 'Aide';
@@ -2323,6 +2357,20 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get helpHintMoneyDocumentsTip3 =>
       'Mes conditions est votre accord financier en vigueur — formule, tarif, extras — rendu en document à conserver.';
+
+  @override
+  String get helpHintValidationTipScopes =>
+      'Qui valide, c\'est la portée de la règle : les admins, des personnes désignées quel que soit leur rôle, ou tous les membres — et combien. Le propriétaire peut toujours ; personne ne valide son propre événement.';
+
+  @override
+  String get helpHintValidationTipScopesTopic => 'Gestion des rôles';
+
+  @override
+  String get helpHintMoneyPaymentsTipSupply =>
+      'Vous avez acheté des capsules ou des sacs d\'aspirateur pour l\'espace ? Soumettez la dépense comme fourniture : validée, elle va sur l\'étagère comme consommable que les autres paient, et vous êtes remboursé.';
+
+  @override
+  String get helpHintMoneyPaymentsTipSupplyTopic => 'Services et Accessoires';
 
   @override
   String get inviteSectionTitle => 'Inviter quelqu\'un';
@@ -4474,6 +4522,42 @@ class AppLocalizationsFr extends AppLocalizations {
   String moneyRemindedTimes(int count) {
     return 'Relancée ×$count';
   }
+
+  @override
+  String get expenseSupplyToggle => 'C\'est une fourniture pour l\'espace';
+
+  @override
+  String get expenseSupplyHint =>
+      'Capsules de café, sacs d\'aspirateur… Une fois validée, l\'article va sur l\'étagère comme service consommable : ceux qui l\'utilisent le paient.';
+
+  @override
+  String get expenseSupplyItem => 'Article';
+
+  @override
+  String get expenseSupplyNewItem => 'Nouvel article';
+
+  @override
+  String get expenseSupplyQuantity => 'Quantité';
+
+  @override
+  String get expenseSupplyUnitPrice =>
+      'Prix unitaire (ce que coûte une consommation)';
+
+  @override
+  String get expenseSupplyUnitPriceHint =>
+      'Prérempli avec montant ÷ quantité ; arrondissez si vous voulez.';
+
+  @override
+  String serviceStockCount(int count) {
+    return '$count en stock';
+  }
+
+  @override
+  String get serviceOutOfStock => 'Épuisé';
+
+  @override
+  String get serviceOutOfStockHint =>
+      'Plus rien sur l\'étagère — la prochaine fourniture le réapprovisionne.';
 
   @override
   String get planDurationLabel => 'Durée';

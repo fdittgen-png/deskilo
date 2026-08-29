@@ -272,5 +272,9 @@
   "featureFinanceFacesTitle": "Finance faces",
   "featureFinanceFacesDesc": "The Finances tab shows three faces — Payments, Consumption, Invoices — under one month chooser, each with its own help. Off: one column.",
   "featurePaymentRemindersTitle": "Automatic payment reminders",
-  "featurePaymentRemindersDesc": "Open invoices past the configured term get their reminder levels automatically — an alert in the member's feed and a push, once a day. Off: reminders stay a manual action."
+  "featurePaymentRemindersDesc": "Open invoices past the configured term get their reminder levels automatically — an alert in the member's feed and a push, once a day. Off: reminders stay a manual action.",
+  "featureSupplyExpensesTitle": "Supplies from expenses",
+  "featureSupplyExpensesDesc": "An expense can be a supply for the space (coffee capsules, vacuum bags…): once validated it restocks or creates a consumable service with a unit price, and consumptions count the stock down.",
+  "featureValidationScopesTitle": "Validators by role or person",
+  "featureValidationScopesDesc": "Each validation rule names who validates: the admins, listed persons of any role, or every member — plus how many. Off: owner and admins as before."
 }

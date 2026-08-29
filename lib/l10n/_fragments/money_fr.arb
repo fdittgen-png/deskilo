@@ -295,5 +295,15 @@
   "moneyNothingOpen": "Rien d'ouvert — vous êtes à jour.",
   "moneyDocumentLibrary": "Bibliothèque de documents",
   "moneyStatementPdf": "Relevé du mois (PDF)",
-  "moneyRemindedTimes": "Relancée ×{count}"
+  "moneyRemindedTimes": "Relancée ×{count}",
+  "expenseSupplyToggle": "C'est une fourniture pour l'espace",
+  "expenseSupplyHint": "Capsules de café, sacs d'aspirateur… Une fois validée, l'article va sur l'étagère comme service consommable : ceux qui l'utilisent le paient.",
+  "expenseSupplyItem": "Article",
+  "expenseSupplyNewItem": "Nouvel article",
+  "expenseSupplyQuantity": "Quantité",
+  "expenseSupplyUnitPrice": "Prix unitaire (ce que coûte une consommation)",
+  "expenseSupplyUnitPriceHint": "Prérempli avec montant ÷ quantité ; arrondissez si vous voulez.",
+  "serviceStockCount": "{count} en stock",
+  "serviceOutOfStock": "Épuisé",
+  "serviceOutOfStockHint": "Plus rien sur l'étagère — la prochaine fourniture le réapprovisionne."
 }

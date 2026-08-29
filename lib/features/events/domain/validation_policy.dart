@@ -31,6 +31,10 @@ sealed class ValidationPolicy with _$ValidationPolicy {
     /// feed and the audit can tell it from a peer review.
     @Default(false) bool autoValidateAdmin,
     @Default(false) bool autoValidateOwner,
+    /// #732 — who validates: 'admins' (owner + admins, optionally the
+    /// listed subset), 'listed' (owner + exactly the listed persons, any
+    /// role) or 'members' (owner + every active member).
+    @Default('admins') String validatorScope,
   }) = _ValidationPolicy;
 
   /// Pre-quorum behavior for workspaces/types without a stored row:
