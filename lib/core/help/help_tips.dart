@@ -14,9 +14,10 @@ enum HelpHintId {
   features,
   members,
   money,
+  moneyStatement,
   moneyPayments,
-  moneyConsumption,
   moneyInvoices,
+  moneyDocuments,
   validation,
   workspaceSettings,
   badges,
@@ -71,18 +72,25 @@ String helpHintText(AppLocalizations? l10n, HelpHintId id) => switch (id) {
     l10n?.helpHintMoney ??
         'Your monthly bill: browse months with the arrows; pay, '
             'export or share from here.',
+  HelpHintId.moneyStatement =>
+    l10n?.helpHintMoneyStatement ??
+        'The month as it stands: your account, days used and left, '
+            'subscription, services, packages, open positions, credits '
+            'and the balance. Browse months with the arrows.',
   HelpHintId.moneyPayments =>
     l10n?.helpHintMoneyPayments ??
-        'What you owe and what you paid: open positions, credits, the '
-            'balance and how to pay it. Record a payment here.',
-  HelpHintId.moneyConsumption =>
-    l10n?.helpHintMoneyConsumption ??
-        'What you used this month: days, subscription, services and '
-            'packages — and the requests that add to them.',
+        'Settle and ask: the balance, how to pay it or pay online, '
+            'record a payment — and submit an expense, request '
+            'half-days or add a consumption.',
   HelpHintId.moneyInvoices =>
     l10n?.helpHintMoneyInvoices ??
-        'Your documents: the month\'s invoice, every invoice you were '
-            'issued, and your conditions.',
+        'Your invoices: what is open and when it is due, every invoice '
+            'issued to you with its status, one tap to the detail and '
+            'to paying it.',
+  HelpHintId.moneyDocuments =>
+    l10n?.helpHintMoneyDocuments ??
+        'Your paperwork: your conditions, the payments report, the '
+            'month\'s statement as PDF, the document library.',
   HelpHintId.validation =>
     l10n?.helpHintValidation ??
         'Decide which actions need confirmation, who confirms, and '
@@ -118,12 +126,14 @@ String helpHintTopic(AppLocalizations? l10n, HelpHintId id) => switch (id) {
   HelpHintId.features => l10n?.helpHintFeaturesTopic ?? 'Features',
   HelpHintId.members => l10n?.helpHintMembersTopic ?? 'Members & plans',
   HelpHintId.money => l10n?.helpHintMoneyTopic ?? 'Money',
+  HelpHintId.moneyStatement =>
+    l10n?.helpHintMoneyStatementTopic ?? 'The Statement face',
   HelpHintId.moneyPayments =>
     l10n?.helpHintMoneyPaymentsTopic ?? 'The Payments face',
-  HelpHintId.moneyConsumption =>
-    l10n?.helpHintMoneyConsumptionTopic ?? 'The Consumption face',
   HelpHintId.moneyInvoices =>
     l10n?.helpHintMoneyInvoicesTopic ?? 'The Invoices face',
+  HelpHintId.moneyDocuments =>
+    l10n?.helpHintMoneyDocumentsTopic ?? 'The Documents face',
   HelpHintId.validation => l10n?.helpHintValidationTopic ?? 'confirmations',
   HelpHintId.workspaceSettings =>
     l10n?.helpHintWorkspaceTopic ?? 'Workspace settings',
@@ -368,18 +378,18 @@ List<HelpTip> helpHintTips(AppLocalizations? l10n, HelpHintId id) =>
           topic: l10n?.helpHintMoneyPaymentsTip3Topic ?? 'online payments',
         ),
       ],
-      HelpHintId.moneyConsumption => [
+      HelpHintId.moneyStatement => [
         HelpTip(helpHintText(l10n, id)),
         HelpTip(
-          l10n?.helpHintMoneyConsumptionTip2 ??
+          l10n?.helpHintMoneyStatementTip2 ??
               'A booked morning counts as half a day; days outside the '
                   'opening hours follow the workspace\'s outside-hours '
                   'policy.',
-          topic: l10n?.helpHintMoneyConsumptionTip2Topic ??
+          topic: l10n?.helpHintMoneyStatementTip2Topic ??
               'How booking behaves',
         ),
         HelpTip(
-          l10n?.helpHintMoneyConsumptionTip3 ??
+          l10n?.helpHintMoneyStatementTip3 ??
               'Out of days? Request extra half-days, buy a package, or '
                   'keep booking pay-as-you-go — whichever your plan '
                   'allows.',
@@ -387,6 +397,15 @@ List<HelpTip> helpHintTips(AppLocalizations? l10n, HelpHintId id) =>
       ],
       HelpHintId.moneyInvoices => [
         HelpTip(helpHintText(l10n, id)),
+        HelpTip(
+          l10n?.helpHintMoneyInvoicesTip2 ??
+              'Past the workspace\'s payment term an open invoice reads '
+                  'overdue here, and the reminder levels the owner '
+                  'configured arrive by themselves — in your feed and as '
+                  'a push.',
+          topic: l10n?.helpHintMoneyInvoicesTip2Topic ??
+              'Automatic payment reminders',
+        ),
         HelpTip(
           l10n?.helpHintMoneyTip4 ??
               'Once the month is invoiced, the invoice decides: the '
@@ -400,6 +419,21 @@ List<HelpTip> helpHintTips(AppLocalizations? l10n, HelpHintId id) =>
                   'view on screen, download as PDF, and share to '
                   'any app.',
           topic: l10n?.helpHintMoneyTip2Topic ?? 'Quick view, save, share',
+        ),
+      ],
+      HelpHintId.moneyDocuments => [
+        HelpTip(helpHintText(l10n, id)),
+        HelpTip(
+          l10n?.helpHintMoneyTip2 ??
+              'Every document offers the same three actions: quick '
+                  'view on screen, download as PDF, and share to '
+                  'any app.',
+          topic: l10n?.helpHintMoneyTip2Topic ?? 'Quick view, save, share',
+        ),
+        HelpTip(
+          l10n?.helpHintMoneyDocumentsTip3 ??
+              'My conditions is your standing financial agreement — plan, '
+                  'rate, extras — rendered as a document you can keep.',
         ),
       ],
       HelpHintId.validation => [

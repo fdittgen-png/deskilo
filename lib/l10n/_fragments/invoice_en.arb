@@ -1408,5 +1408,10 @@
         "type": "String"
       }
     }
-  }
+  },
+  "eventTypeInvoiceReminder": "Payment reminder",
+  "eventInvoiceReminderLine": "Reminder {level}: invoice {number} — {amount} still due",
+  "dunningAutomatic": "Automatic reminders",
+  "dunningAutomaticHint": "Once a day, open invoices past the term get their next reminder level by themselves — an alert in the member's feed and a push. Off: you send each reminder yourself.",
+  "@eventInvoiceReminderLine": {"placeholders": {"number": {"type": "String"}, "level": {"type": "int"}, "amount": {"type": "String"}}}
 }

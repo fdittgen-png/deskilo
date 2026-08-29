@@ -486,19 +486,21 @@ Cada informe de la app — la factura mensual, las facturas, los proformas, las 
 
 **Los informes hablan el idioma de quien los lee:** un documento se imprime en el idioma **del miembro** cuando existe una plantilla para él, si no en el **idioma del espacio**, y a falta de ambos en el **idioma del país del espacio** (§11, plantillas por idioma). Cuando ese país tiene varios idiomas, la app no adivina: se niega y te pide *definir primero el idioma del espacio*.
 
-### 9c. La vista Pagos
+### 9c. La vista Extracto
 
-Con **Finanzas en tres vistas** activado (por defecto), la pestaña Finanzas se lee en tres vistas bajo un mismo selector **‹ mes ›** — el mismo patrón que los chats y avisos del mensajero. Cada vista responde a una pregunta y lleva su propia burbuja de ayuda.
+**El mes tal como está.** Tu cuenta (la posición real entre meses), la tarjeta **Este mes** (días incluidos, usados, restantes), la tarjeta de **suscripción**, **servicios consumidos**, **suplementos de accesorios y espacios**, **paquetes de días**, **posiciones abiertas** pendientes de validación, **pagos y abonos**, la **tarjeta de factura** del mes en cuanto se factura (§9a) y el **saldo**. Solo lectura: nada que pulsar salvo el selector **‹ mes ›**, común a todas las vistas.
 
-**¿Qué debo, qué pagué?** Tu cuenta (la posición real entre meses), las **posiciones abiertas** pendientes de validación, **pagos y abonos**, el **saldo** y — mientras se deba algo — las **instrucciones de pago** y **Pagar en línea**. Las acciones: **Registrar un pago**, **Comprar un paquete** (planes por paquetes), el **informe mensual de pagos**.
+### 9d. La vista Pagos
 
-### 9d. La vista Consumo
-
-**¿Qué usé este mes?** La tarjeta **Este mes** (días incluidos, usados, restantes), la tarjeta de **suscripción**, **servicios consumidos**, **suplementos de accesorios y espacios**, **paquetes de días**. Las acciones que se añaden: **Enviar un gasto**, **Pedir medios días extra**, **Añadir un consumo**.
+**Liquidar y pedir.** Una **franja de vencido** cuando una factura supera el plazo de pago del espacio (§11e), el **saldo**, las **instrucciones de pago** y **Pagar en línea** mientras se deba algo, y las acciones: **Registrar un pago**, **Comprar un paquete** (planes por paquetes), **Enviar un gasto**, **Pedir medios días extra**, **Añadir un consumo**.
 
 ### 9e. La vista Facturas
 
-**¿Qué me facturaron?** La **tarjeta de factura** del mes en cuanto se factura (§9a), luego **todas las facturas que te emitieron**, la más reciente primero — toca una para la ficha de detalle con vista rápida, PDF y compartir — y **Mis condiciones** (tu acuerdo financiero). Quienes emiten encuentran el botón **Facturas** hacia el registro (§11). Desactiva las vistas en Funciones → *Finanzas en tres vistas* para volver a la columna única.
+**¿Qué me facturaron?** Una tarjeta de cabecera — *nada abierto, estás al día*, o *N abiertas · importe pendiente*, con el número de vencidas — y luego **todas las facturas que te emitieron**, la más reciente primero, cada una con su chip de estado, **vence en N días** o **vencida hace N días**, cuántas veces se recordó, y un botón **pagar** que salta a la vista Pagos; toca una fila para la ficha de detalle con vista rápida, PDF y compartir. Quienes emiten encuentran el botón **Facturas** hacia el registro (§11).
+
+### 9f. La vista Documentos
+
+**El resto del papeleo:** **Mis condiciones** (tu acuerdo financiero), el **informe mensual de pagos**, **el extracto del mes en PDF** y la **biblioteca de documentos** cuando el espacio usa una (§11d). Desactiva las vistas en Funciones → *Finanzas en tres vistas* para volver a la columna única.
 
 ## 10. Modo quiosco (tableta de pared)
 
@@ -605,6 +607,10 @@ Variables de plantilla (familia de facturas): `{{ number }}`, `{{ member }}`, `{
 - **Informe del espacio** — identidad, recuentos del plano, disponibilidad, funciones y precios: *Ajustes del espacio → Informe del espacio*.
 - **Biblioteca de documentos** — *Ajustes → Documentos*: los estatutos, guías de usuario, estados financieros y actas del espacio, ENLAZADOS desde el sistema que ya uses — Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud o cualquier enlace https (el drive sigue gestionando sus propios accesos; la app nunca guarda credenciales ajenas). Cada entrada tiene un **rol de visibilidad**: todos los miembros, admins y propietarios, o solo propietarios — aplicado en el servidor, de modo que un miembro ni siquiera descarga una lista que contenga documentos de la junta. Los admins y propietarios la gestionan con el botón +; un interruptor de función *Biblioteca de documentos* activa todo el conjunto.
 
+### 11e. Recordatorios de pago automáticos
+
+Con **Recordatorios de pago automáticos** activado (Funciones, hijo de *Recordatorios de pago*) y el interruptor **Recordatorios automáticos** en las reglas de recordatorio (Facturas → Reglas de recordatorio), los niveles se aplican solos: cada mañana — y siempre que un propietario o admin abre Finanzas — una factura **abierta** cuyo plazo ha vencido (los *días hasta el primer recordatorio* desde su emisión, luego los *días entre recordatorios* tras el anterior) recibe su siguiente nivel. El miembro ve un aviso **Recordatorio de pago** en Eventos («Recordatorio 2: factura X — importe pendiente») y recibe una notificación; su vista Facturas lee *vencida hace N días*. Los niveles nunca superan el número configurado; una factura conciliada nunca se recuerda; con el interruptor apagado, recordar sigue siendo manual, una factura cada vez como antes.
+
 ## 12. Ajustes y perfil
 
 Tu pantalla personal, de arriba abajo:
@@ -629,7 +635,7 @@ Recordatorios de registro, confirmaciones pendientes, decisiones de gastos — y
 
 Datos mínimos: nombre, correo, plan, reservas, cuenta. Tú controlas tu foto, tu estado y si tu número de teléfono es visible en el directorio; en el plano, un puesto tuyo muestra una inicial, o tu foto donde el propietario activó las fotos de los miembros. Las credenciales de quiosco se guardan solo como hash — una credencial perdida se revoca, no se adivina. Sin rastreo, sin analítica de terceros. El historial financiero se anonimiza, no se borra, al eliminar la cuenta (retención contable).
 
-**RGPD (#719).** DesKilo está construida para el Reglamento General de Protección de Datos: datos alojados en la UE, sin rastreo ni analítica, acceso limitado por rol y aplicado en el servidor, y cuatro derechos que ejerce usted mismo en **Ajustes → Privacidad y datos**: **quién puede ver mis datos** (la regla por categoría y las personas que nombra), **quién accedió a mis datos** (un registro escrito por el servidor de cada lectura de sus finanzas o mensajes por otra persona — nunca omitible), **exportar mis datos** (un archivo JSON, art. 20) y **salir con borrado** (art. 17: reservas canceladas, mensajes vaciados, perfil borrado; los registros contables se conservan durante la retención legal indicada en la política, referenciados por un id, no un nombre). Los mensajes solo los leen las personas de la conversación, sea cual sea su rol; facturas y pagos solo usted y quienes tienen el permiso de finanzas.
+**RGPD (#719).** DesKilo está construida para el Reglamento General de Protección de Datos: datos alojados en la UE, sin rastreo ni analítica, acceso limitado por rol y aplicado en el servidor, y cuatro derechos que ejerce usted mismo en **el escudo de la barra superior (Privacidad y datos)**: **quién puede ver mis datos** (la regla por categoría y las personas que nombra), **quién accedió a mis datos** (un registro escrito por el servidor de cada lectura de sus finanzas o mensajes por otra persona — nunca omitible), **exportar mis datos** (un archivo JSON, art. 20) y **salir con borrado** (art. 17: reservas canceladas, mensajes vaciados, perfil borrado; los registros contables se conservan durante la retención legal indicada en la política, referenciados por un id, no un nombre). Los mensajes solo los leen las personas de la conversación, sea cual sea su rol; facturas y pagos solo usted y quienes tienen el permiso de finanzas.
 
 ## 15. Plataformas
 

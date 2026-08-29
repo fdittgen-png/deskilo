@@ -486,19 +486,21 @@ Ogni report dell'app — l'estratto, le fatture, le proforma, le note di credito
 
 **I report parlano la lingua di chi legge:** un documento viene stampato nella lingua del **membro** quando per essa esiste un modello, altrimenti nella **lingua dello spazio**, e in mancanza di entrambe nella **lingua del paese dello spazio** (§11 modelli per lingua). Dove quel paese non ha una lingua unica, l'app non tira a indovinare: rifiuta e ti chiede di *impostare prima la lingua dello spazio*.
 
-### 9c. La vista Pagamenti
+### 9c. La vista Estratto
 
-Con **Finanze in tre viste** attivo (predefinito), la scheda Finanze si legge in tre viste sotto un unico selettore **‹ mese ›** — lo stesso schema di chat e avvisi del messenger. Ogni vista risponde a una domanda e porta la propria bolla di aiuto.
+**Il mese così com'è.** Il tuo conto (la posizione reale su più mesi), la scheda **Questo mese** (giorni inclusi, usati, rimasti), la scheda **abbonamento**, **servizi consumati**, **supplementi di accessori e spazi**, **pacchetti di giorni**, **posizioni aperte** in attesa di convalida, **pagamenti e crediti**, la **scheda fattura** del mese appena è fatturato (§9a) e il **saldo**. Sola lettura: nulla da premere tranne il selettore **‹ mese ›**, comune a tutte le viste.
 
-**Cosa devo, cosa ho pagato?** Il tuo conto (la posizione reale su più mesi), le **posizioni aperte** in attesa di convalida, **pagamenti e crediti**, il **saldo** e — finché qualcosa è dovuto — le **istruzioni di pagamento** e **Paga online**. Le azioni: **Registra un pagamento**, **Compra un pacchetto** (piani a pacchetti), il **report mensile dei pagamenti**.
+### 9d. La vista Pagamenti
 
-### 9d. La vista Consumo
-
-**Cosa ho usato questo mese?** La scheda **Questo mese** (giorni inclusi, usati, rimasti), la scheda **abbonamento**, **servizi consumati**, **supplementi di accessori e spazi**, **pacchetti di giorni**. Le azioni che si aggiungono: **Invia una spesa**, **Chiedi mezze giornate extra**, **Aggiungi un consumo**.
+**Regolare e chiedere.** Una **striscia di scaduto** quando una fattura supera il termine di pagamento dello spazio (§11e), il **saldo**, le **istruzioni di pagamento** e **Paga online** finché qualcosa è dovuto, poi le azioni: **Registra un pagamento**, **Compra un pacchetto** (piani a pacchetti), **Invia una spesa**, **Chiedi mezze giornate extra**, **Aggiungi un consumo**.
 
 ### 9e. La vista Fatture
 
-**Cosa mi è stato fatturato?** La **scheda fattura** del mese appena è fatturato (§9a), poi **ogni fattura emessa a tuo nome**, dalla più recente — tocca una per la scheda di dettaglio con anteprima, PDF e condivisione — e **Le mie condizioni** (il tuo accordo finanziario). Chi emette trova il pulsante **Fatture** verso il registro (§11). Disattiva le viste in Funzionalità → *Finanze in tre viste* per tornare alla colonna unica.
+**Cosa mi è stato fatturato?** Una scheda di testa — *niente di aperto, sei in regola*, o *N aperte · importo dovuto*, con il numero delle scadute — poi **ogni fattura emessa a tuo nome**, dalla più recente, ciascuna con il suo chip di stato, **scade tra N giorni** o **scaduta da N giorni**, quante volte è stata sollecitata, e un pulsante **paga** che salta alla vista Pagamenti; tocca una riga per la scheda di dettaglio con anteprima, PDF e condivisione. Chi emette trova il pulsante **Fatture** verso il registro (§11).
+
+### 9f. La vista Documenti
+
+**Il resto delle carte:** **Le mie condizioni** (il tuo accordo finanziario), il **report mensile dei pagamenti**, **l'estratto del mese in PDF** e la **libreria dei documenti** quando lo spazio ne usa una (§11d). Disattiva le viste in Funzionalità → *Finanze in tre viste* per tornare alla colonna unica.
 
 ## 10. Modalità chiosco (tablet a parete)
 
@@ -605,6 +607,10 @@ Variabili di modello (famiglia fatture): `{{ number }}`, `{{ member }}`, `{{ wor
 - **Report dello spazio** — identità, conteggi della piantina, disponibilità, funzionalità e prezzi: *Impostazioni dello spazio → Report dello spazio*.
 - **Biblioteca documenti** — *Impostazioni → Documenti*: lo statuto dello spazio, le guide, i bilanci e i verbali, COLLEGATI dal sistema che già usi — Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud o qualsiasi link https (il drive continua a gestire i propri permessi; l'app non conserva mai credenziali altrui). Ogni voce ha un **ruolo di visibilità**: tutti i membri, admin e proprietari, o solo proprietari — applicato lato server, così un membro non scarica nemmeno un elenco che contiene documenti del consiglio. Admin e proprietari curano con il pulsante +; l'interruttore della funzionalità *Biblioteca documenti* attiva il tutto.
 
+### 11e. Solleciti di pagamento automatici
+
+Con **Solleciti di pagamento automatici** attivo (Funzionalità, figlio di *Solleciti di pagamento*) e l'interruttore **Solleciti automatici** nelle regole di sollecito (Fatture → Regole di sollecito), i livelli si applicano da soli: ogni mattina — e ogni volta che un proprietario o un admin apre Finanze — una fattura **aperta** il cui termine è trascorso (i *giorni prima del primo sollecito* dall'emissione, poi i *giorni tra i solleciti* dopo il precedente) riceve il livello successivo. Il membro vede un avviso **Promemoria di pagamento** in Eventi («Sollecito 2: fattura X — importo ancora dovuto») e riceve una notifica; la sua vista Fatture legge *scaduta da N giorni*. I livelli non superano mai il numero configurato; una fattura riconciliata non è mai sollecitata; con l'interruttore spento, sollecitare resta manuale, una fattura alla volta come prima.
+
 ## 12. Impostazioni e profilo
 
 La tua schermata personale, dall'alto in basso:
@@ -629,7 +635,7 @@ Promemoria di check-in, conferme in sospeso, decisioni sulle spese — e quando 
 
 Dati minimi: nome, email, piano, prenotazioni, conto. Controlli tu la foto, lo stato e se il tuo numero di telefono è visibile nell'elenco; sulla piantina un tuo posto mostra un'iniziale, o la tua foto dove il proprietario ha attivato le foto dei membri. I badge del chiosco sono salvati solo come hash — un badge perso si revoca, non si indovina. Nessun tracciamento, nessuna analitica di terze parti. Lo storico finanziario viene anonimizzato, non cancellato, all'eliminazione dell'account (obblighi di conservazione contabile).
 
-**GDPR (#719).** DesKilo è costruita per il Regolamento generale sulla protezione dei dati: dati ospitati nell'UE, nessun tracciamento né analitica, accesso limitato per ruolo e applicato dal server, e quattro diritti che eserciti tu stesso in **Impostazioni → Privacy e dati**: **chi può vedere i miei dati** (la regola per categoria e le persone che nomina), **chi ha consultato i miei dati** (un registro scritto dal server di ogni lettura delle tue finanze o messaggi da parte di altri — mai aggirabile), **esportare i miei dati** (un file JSON, art. 20) e **uscire con cancellazione** (art. 17: prenotazioni annullate, messaggi svuotati, profilo cancellato; i documenti contabili restano per la conservazione legale indicata nella politica, riferiti a un id, non a un nome). I messaggi li leggono solo le persone della conversazione, qualunque sia il ruolo; fatture e pagamenti solo tu e chi ha il permesso finanze.
+**GDPR (#719).** DesKilo è costruita per il Regolamento generale sulla protezione dei dati: dati ospitati nell'UE, nessun tracciamento né analitica, accesso limitato per ruolo e applicato dal server, e quattro diritti che eserciti tu stesso in **lo scudo nella barra in alto (Privacy e dati)**: **chi può vedere i miei dati** (la regola per categoria e le persone che nomina), **chi ha consultato i miei dati** (un registro scritto dal server di ogni lettura delle tue finanze o messaggi da parte di altri — mai aggirabile), **esportare i miei dati** (un file JSON, art. 20) e **uscire con cancellazione** (art. 17: prenotazioni annullate, messaggi svuotati, profilo cancellato; i documenti contabili restano per la conservazione legale indicata nella politica, riferiti a un id, non a un nome). I messaggi li leggono solo le persone della conversazione, qualunque sia il ruolo; fatture e pagamenti solo tu e chi ha il permesso finanze.
 
 ## 15. Piattaforme
 

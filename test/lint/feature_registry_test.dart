@@ -46,7 +46,8 @@ import 'package:flutter_test/flutter_test.dart';
 // time-zone mode; Settings → Region & formats).
 // 45→48 (2026-08-29): #718 calendarHub, #719 dataAccessLog + memberDataExport.
 // 48→49 (2026-08-29): #720 financeFaces.
-const int _expectedFeatureCount = 49;
+// 49→50 (2026-08-29): #726 paymentReminders.
+const int _expectedFeatureCount = 50;
 
 void main() {
   test('every functionality is registered — the pin', () {

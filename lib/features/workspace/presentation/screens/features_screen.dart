@@ -197,6 +197,9 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.financeFaces =>
           l10n?.featureFinanceFacesDesc ??
               'The Finances tab shows three faces — Payments, Consumption, Invoices — under one month chooser, each with its own help. Off: one column.',
+        WorkspaceFeature.paymentReminders =>
+          l10n?.featurePaymentRemindersDesc ??
+              'Open invoices past the configured term get their reminder levels automatically — an alert in the member\'s feed and a push, once a day. Off: reminders stay a manual action.',
         WorkspaceFeature.dataAccessLog =>
           l10n?.featureDataAccessLogDesc ??
               'Members see who looked at their finances and when (written by the server, never skippable). Off hides the row; the log is still kept.',

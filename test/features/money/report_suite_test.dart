@@ -168,18 +168,13 @@ void main() {
     await tester.pageBack();
     await tester.pumpAndSettle();
 
-    // #720 — the payments report lives on the Payments face, the
-    // agreement on the Invoices face (pumpInvoices left us there).
-    await tester.tap(find.byKey(const ValueKey('money-face-payments')));
+    // #720 — the reports live on the Documents face.
+    await tester.tap(find.byKey(const ValueKey('money-face-documents')));
     await tester.pumpAndSettle();
     await tester.ensureVisible(
         find.byKey(const ValueKey('payments-report-button')));
     expect(find.byKey(const ValueKey('payments-report-button')),
         findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('money-face-invoices')));
-    await tester.pumpAndSettle();
-    await tester.ensureVisible(
-        find.byKey(const ValueKey('agreement-report-button')));
     expect(find.byKey(const ValueKey('agreement-report-button')),
         findsOneWidget);
 

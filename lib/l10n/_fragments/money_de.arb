@@ -282,7 +282,18 @@
     "description": "#711 - globalization"
   },
   "moneyFacePayments": "Zahlungen",
-  "moneyFaceConsumption": "Verbrauch",
   "moneyFaceInvoices": "Rechnungen",
-  "moneyNoInvoicesYet": "Noch keine Rechnung — der Monat wird nach Abschluss vom Workspace abgerechnet."
+  "moneyNoInvoicesYet": "Noch keine Rechnung — der Monat wird nach Abschluss vom Workspace abgerechnet.",
+  "moneyFaceStatement": "Abrechnung",
+  "moneyFaceDocuments": "Dokumente",
+  "moneyOverdueBanner": "{count} überfällig — {amount} zu begleichen",
+  "moneyPayNow": "Jetzt zahlen",
+  "moneyOpenInvoicesTitle": "Offene Rechnungen",
+  "moneyOpenInvoicesSummary": "{count} offen · {amount} fällig",
+  "moneyDueIn": "Fällig in {days} Tagen",
+  "moneyOverdueBy": "Überfällig seit {days} Tagen",
+  "moneyNothingOpen": "Nichts offen — Sie sind auf dem Laufenden.",
+  "moneyDocumentLibrary": "Dokumentbibliothek",
+  "moneyStatementPdf": "Monatsabrechnung (PDF)",
+  "moneyRemindedTimes": "Gemahnt ×{count}"
 }

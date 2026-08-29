@@ -145,5 +145,7 @@
     "description": "#718/#719"
   },
   "featureFinanceFacesTitle": "Finanzas en tres vistas",
-  "featureFinanceFacesDesc": "La pestaña Finanzas muestra tres vistas — Pagos, Consumo, Facturas — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna."
+  "featureFinanceFacesDesc": "La pestaña Finanzas muestra tres vistas — Pagos, Consumo, Facturas — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.",
+  "featurePaymentRemindersTitle": "Recordatorios de pago automáticos",
+  "featurePaymentRemindersDesc": "Las facturas abiertas más allá del plazo configurado reciben sus niveles de recordatorio automáticamente — un aviso en el feed del miembro y una notificación, una vez al día. Desactivado: recordar sigue siendo una acción manual."
 }

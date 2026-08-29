@@ -44,6 +44,9 @@ void main() {
     expect(button, findsOneWidget);
 
     // #514 — the export opens the triad sheet; Download builds the PDF.
+    // #720 — the faces' tab bar pushes the header lower on a short
+    // viewport; scroll it in before tapping.
+    await tester.ensureVisible(button);
     await tester.tap(button);
     await tester.pumpAndSettle();
     // Font assets and PDF assembly need real async to complete.
@@ -68,6 +71,7 @@ void main() {
           throw Exception('disk full'),
     );
 
+    await tester.ensureVisible(find.byIcon(Icons.picture_as_pdf_outlined));
     await tester.tap(find.byIcon(Icons.picture_as_pdf_outlined));
     await tester.pumpAndSettle();
     await tester.runAsync(() async {

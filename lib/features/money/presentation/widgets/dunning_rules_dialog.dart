@@ -124,6 +124,20 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
             onChanged: (v) =>
                 setState(() => _rules = _rules.copyWith(betweenDays: v)),
           ),
+          // #726 — the sweep applies the levels by itself.
+          SwitchListTile(
+            key: const ValueKey('dunning-automatic'),
+            contentPadding: EdgeInsets.zero,
+            title: Text(l10n?.dunningAutomatic ?? 'Automatic reminders'),
+            subtitle: Text(l10n?.dunningAutomaticHint ??
+                'Once a day, open invoices past the term get their next '
+                    'reminder level by themselves — an alert in the '
+                    'member\'s feed and a push. Off: you send each '
+                    'reminder yourself.'),
+            value: _rules.automatic,
+            onChanged: (v) =>
+                setState(() => _rules = _rules.copyWith(automatic: v)),
+          ),
         ],
       ),
       actions: [

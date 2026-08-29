@@ -114,16 +114,21 @@
   "@helpHintPrivacyTip3": {
     "description": "#718/#719 - help hints"
   },
-  "helpHintMoneyPayments": "What you owe and what you paid: open positions, credits, the balance and how to pay it. Record a payment here.",
+  "helpHintMoneyPayments": "Settle and ask: the balance, how to pay it or pay online, record a payment — and submit an expense, request half-days or add a consumption.",
   "helpHintMoneyPaymentsTopic": "The Payments face",
   "helpHintMoneyPaymentsTip2": "Record a payment with the date the money moved and the month it settles — the other side confirms it.",
   "helpHintMoneyPaymentsTip3": "Pay online settles what is owed right away; the instructions card shows the manual way with the reference to quote.",
   "helpHintMoneyPaymentsTip3Topic": "online payments",
-  "helpHintMoneyConsumption": "What you used this month: days, subscription, services and packages — and the requests that add to them.",
-  "helpHintMoneyConsumptionTopic": "The Consumption face",
-  "helpHintMoneyConsumptionTip2": "A booked morning counts as half a day; days outside the opening hours follow the workspace's outside-hours policy.",
-  "helpHintMoneyConsumptionTip2Topic": "How booking behaves",
-  "helpHintMoneyConsumptionTip3": "Out of days? Request extra half-days, buy a package, or keep booking pay-as-you-go — whichever your plan allows.",
-  "helpHintMoneyInvoices": "Your documents: the month's invoice, every invoice you were issued, and your conditions.",
-  "helpHintMoneyInvoicesTopic": "The Invoices face"
+  "helpHintMoneyStatement": "The month as it stands: your account, days used and left, subscription, services, packages, open positions, credits and the balance. Browse months with the arrows.",
+  "helpHintMoneyStatementTopic": "The Statement face",
+  "helpHintMoneyStatementTip2": "A booked morning counts as half a day; days outside the opening hours follow the workspace's outside-hours policy.",
+  "helpHintMoneyStatementTip2Topic": "How booking behaves",
+  "helpHintMoneyStatementTip3": "Out of days? Request extra half-days, buy a package, or keep booking pay-as-you-go — whichever your plan allows.",
+  "helpHintMoneyInvoices": "Your invoices: what is open and when it is due, every invoice issued to you with its status, one tap to the detail and to paying it.",
+  "helpHintMoneyInvoicesTopic": "The Invoices face",
+  "helpHintMoneyInvoicesTip2": "Past the workspace's payment term an open invoice reads overdue here, and the reminder levels the owner configured arrive by themselves — in your feed and as a push.",
+  "helpHintMoneyInvoicesTip2Topic": "Automatic payment reminders",
+  "helpHintMoneyDocuments": "Your paperwork: your conditions, the payments report, the month's statement as PDF, the document library.",
+  "helpHintMoneyDocumentsTopic": "The Documents face",
+  "helpHintMoneyDocumentsTip3": "My conditions is your standing financial agreement — plan, rate, extras — rendered as a document you can keep."
 }

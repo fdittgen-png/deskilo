@@ -145,5 +145,7 @@
     "description": "#718/#719"
   },
   "featureFinanceFacesTitle": "Finanze in tre viste",
-  "featureFinanceFacesDesc": "La scheda Finanze mostra tre viste — Pagamenti, Consumo, Fatture — sotto un unico selettore di mese, ciascuna con il proprio aiuto. Disattivata: una sola colonna."
+  "featureFinanceFacesDesc": "La scheda Finanze mostra tre viste — Pagamenti, Consumo, Fatture — sotto un unico selettore di mese, ciascuna con il proprio aiuto. Disattivata: una sola colonna.",
+  "featurePaymentRemindersTitle": "Solleciti di pagamento automatici",
+  "featurePaymentRemindersDesc": "Le fatture aperte oltre il termine configurato ricevono i livelli di sollecito automaticamente — un avviso nel feed del membro e una notifica, una volta al giorno. Disattivato: sollecitare resta un gesto manuale."
 }

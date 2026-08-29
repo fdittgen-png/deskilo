@@ -1885,6 +1885,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'La scheda Finanze mostra tre viste — Pagamenti, Consumo, Fatture — sotto un unico selettore di mese, ciascuna con il proprio aiuto. Disattivata: una sola colonna.';
 
   @override
+  String get featurePaymentRemindersTitle =>
+      'Solleciti di pagamento automatici';
+
+  @override
+  String get featurePaymentRemindersDesc =>
+      'Le fatture aperte oltre il termine configurato ricevono i livelli di sollecito automaticamente — un avviso nel feed del membro e una notifica, una volta al giorno. Disattivato: sollecitare resta un gesto manuale.';
+
+  @override
   String get helpTitle => 'Aiuto';
 
   @override
@@ -2225,7 +2233,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get helpHintMoneyPayments =>
-      'Ciò che devi e ciò che hai pagato: posizioni aperte, crediti, il saldo e come regolarlo. Registra un pagamento qui.';
+      'Regolare e chiedere: il saldo, come regolarlo o pagare online, registrare un pagamento — e inviare una spesa, chiedere mezze giornate o aggiungere un consumo.';
 
   @override
   String get helpHintMoneyPaymentsTopic => 'La vista Pagamenti';
@@ -2242,30 +2250,49 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpHintMoneyPaymentsTip3Topic => 'pagamenti online';
 
   @override
-  String get helpHintMoneyConsumption =>
-      'Ciò che hai usato questo mese: giorni, abbonamento, servizi e pacchetti — e le richieste che si aggiungono.';
+  String get helpHintMoneyStatement =>
+      'Il mese così com\'è: il tuo conto, giorni usati e rimasti, abbonamento, servizi, pacchetti, posizioni aperte, crediti e il saldo. Scorri i mesi con le frecce.';
 
   @override
-  String get helpHintMoneyConsumptionTopic => 'La vista Consumo';
+  String get helpHintMoneyStatementTopic => 'La vista Estratto';
 
   @override
-  String get helpHintMoneyConsumptionTip2 =>
+  String get helpHintMoneyStatementTip2 =>
       'Una mattina prenotata conta mezza giornata; i giorni fuori orario seguono la politica fuori-orario dello spazio.';
 
   @override
-  String get helpHintMoneyConsumptionTip2Topic =>
+  String get helpHintMoneyStatementTip2Topic =>
       'Come si comporta la prenotazione';
 
   @override
-  String get helpHintMoneyConsumptionTip3 =>
+  String get helpHintMoneyStatementTip3 =>
       'Giorni finiti? Chiedi mezze giornate extra, compra un pacchetto o continua a prenotare a consumo — secondo il tuo piano.';
 
   @override
   String get helpHintMoneyInvoices =>
-      'I tuoi documenti: la fattura del mese, ogni fattura che ti è stata emessa e le tue condizioni.';
+      'Le tue fatture: cosa è aperto e per quando, ogni fattura emessa a tuo nome con il suo stato, un tocco al dettaglio e al pagamento.';
 
   @override
   String get helpHintMoneyInvoicesTopic => 'La vista Fatture';
+
+  @override
+  String get helpHintMoneyInvoicesTip2 =>
+      'Oltre il termine di pagamento dello spazio, una fattura aperta si legge qui come scaduta, e i livelli di sollecito configurati dal proprietario arrivano da soli — nel feed e come notifica.';
+
+  @override
+  String get helpHintMoneyInvoicesTip2Topic =>
+      'Solleciti di pagamento automatici';
+
+  @override
+  String get helpHintMoneyDocuments =>
+      'Le tue carte: le tue condizioni, il report dei pagamenti, l\'estratto del mese in PDF, la libreria dei documenti.';
+
+  @override
+  String get helpHintMoneyDocumentsTopic => 'La vista Documenti';
+
+  @override
+  String get helpHintMoneyDocumentsTip3 =>
+      'Le mie condizioni è il tuo accordo finanziario in vigore — piano, tariffa, extra — reso come documento da conservare.';
 
   @override
   String get inviteSectionTitle => 'Invita qualcuno';
@@ -3375,6 +3402,21 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get eventTypeInvoiceReminder => 'Promemoria di pagamento';
+
+  @override
+  String eventInvoiceReminderLine(String number, int level, String amount) {
+    return 'Sollecito $level: fattura $number — $amount ancora dovuti';
+  }
+
+  @override
+  String get dunningAutomatic => 'Solleciti automatici';
+
+  @override
+  String get dunningAutomaticHint =>
+      'Una volta al giorno, le fatture aperte oltre il termine ricevono da sole il livello di sollecito successivo — un avviso nel feed del membro e una notifica. Disattivato: invii ogni sollecito tu stesso.';
+
+  @override
   String get eventTypeMemberJoin => 'Nuovo membro';
 
   @override
@@ -4348,14 +4390,57 @@ class AppLocalizationsIt extends AppLocalizations {
   String get moneyFacePayments => 'Pagamenti';
 
   @override
-  String get moneyFaceConsumption => 'Consumo';
-
-  @override
   String get moneyFaceInvoices => 'Fatture';
 
   @override
   String get moneyNoInvoicesYet =>
       'Nessuna fattura ancora — lo spazio fattura il mese una volta chiuso.';
+
+  @override
+  String get moneyFaceStatement => 'Estratto';
+
+  @override
+  String get moneyFaceDocuments => 'Documenti';
+
+  @override
+  String moneyOverdueBanner(int count, String amount) {
+    return '$count scadute — $amount da regolare';
+  }
+
+  @override
+  String get moneyPayNow => 'Paga ora';
+
+  @override
+  String get moneyOpenInvoicesTitle => 'Fatture aperte';
+
+  @override
+  String moneyOpenInvoicesSummary(int count, String amount) {
+    return '$count aperte · $amount dovuti';
+  }
+
+  @override
+  String moneyDueIn(int days) {
+    return 'Scade tra $days giorni';
+  }
+
+  @override
+  String moneyOverdueBy(int days) {
+    return 'Scaduta da $days giorni';
+  }
+
+  @override
+  String get moneyNothingOpen => 'Niente di aperto — sei in regola.';
+
+  @override
+  String get moneyDocumentLibrary => 'Libreria dei documenti';
+
+  @override
+  String get moneyStatementPdf => 'Estratto del mese (PDF)';
+
+  @override
+  String moneyRemindedTimes(int count) {
+    return 'Sollecitata ×$count';
+  }
 
   @override
   String get planDurationLabel => 'Durata';

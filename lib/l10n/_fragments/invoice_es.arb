@@ -755,5 +755,9 @@
         "type": "String"
       }
     }
-  }
+  },
+  "eventTypeInvoiceReminder": "Recordatorio de pago",
+  "eventInvoiceReminderLine": "Recordatorio {level}: factura {number} — {amount} pendientes",
+  "dunningAutomatic": "Recordatorios automáticos",
+  "dunningAutomaticHint": "Una vez al día, las facturas abiertas más allá del plazo reciben solas su siguiente nivel de recordatorio — un aviso en el feed del miembro y una notificación. Desactivado: envías cada recordatorio tú mismo."
 }

@@ -273,6 +273,7 @@ String _openPositionLabel(BillPdfStrings strings, WorkspaceEvent event) {
     // positions — the fallback label keeps the switch exhaustive.
     case EventType.quota:
     case EventType.invoiceWriteoff:
+      case EventType.invoiceReminder:
     case EventType.reservationDelete:
     case EventType.roleChange:
     case EventType.memberJoin:

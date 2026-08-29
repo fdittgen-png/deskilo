@@ -469,7 +469,23 @@
     "description": "#711 - globalization"
   },
   "moneyFacePayments": "Payments",
-  "moneyFaceConsumption": "Consumption",
   "moneyFaceInvoices": "Invoices",
-  "moneyNoInvoicesYet": "No invoice yet — the month is invoiced by the workspace once it closes."
+  "moneyNoInvoicesYet": "No invoice yet — the month is invoiced by the workspace once it closes.",
+  "moneyFaceStatement": "Statement",
+  "moneyFaceDocuments": "Documents",
+  "moneyOverdueBanner": "{count} overdue — {amount} to settle",
+  "moneyPayNow": "Pay now",
+  "moneyOpenInvoicesTitle": "Open invoices",
+  "moneyOpenInvoicesSummary": "{count} open · {amount} due",
+  "moneyDueIn": "Due in {days} days",
+  "moneyOverdueBy": "Overdue by {days} days",
+  "moneyNothingOpen": "Nothing open — you are up to date.",
+  "moneyDocumentLibrary": "Document library",
+  "moneyStatementPdf": "This month's statement (PDF)",
+  "moneyRemindedTimes": "Reminded ×{count}",
+  "@moneyOverdueBanner": {"placeholders": {"count": {"type": "int"}, "amount": {"type": "String"}}},
+  "@moneyOpenInvoicesSummary": {"placeholders": {"count": {"type": "int"}, "amount": {"type": "String"}}},
+  "@moneyDueIn": {"placeholders": {"days": {"type": "int"}}},
+  "@moneyOverdueBy": {"placeholders": {"days": {"type": "int"}}},
+  "@moneyRemindedTimes": {"placeholders": {"count": {"type": "int"}}}
 }

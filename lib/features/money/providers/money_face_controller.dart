@@ -12,7 +12,7 @@ part 'money_face_controller.g.dart';
 @Riverpod(keepAlive: true)
 class MoneyFaceController extends _$MoneyFaceController {
   @override
-  MoneyFace build() => MoneyFace.payments;
+  MoneyFace build() => MoneyFace.statement;
 
   void show(MoneyFace face) => state = face;
 }

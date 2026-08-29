@@ -144,6 +144,13 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
             amount,
           ) ??
           'Invoice ${event.payload['number']} paid — $amount',
+      (EventType.invoiceReminder, _) => l10n?.eventInvoiceReminderLine(
+            event.payload['number'] as String? ?? '',
+            (event.payload['level'] as num?)?.toInt() ?? 1,
+            amount,
+          ) ??
+          'Reminder ${event.payload['level']}: invoice '
+              '${event.payload['number']} — $amount still due',
       _ => '${_typeLabel(l10n, event.type)} · ${event.action.name}',
     };
     // Service charges name no actor in the title, so always say whose bill
@@ -247,6 +254,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         l10n?.eventTypeReservationDelete ?? 'Booking deletion',
       EventType.invoiceWriteoff =>
         l10n?.eventTypeInvoiceWriteoff ?? 'Outstanding write-off',
+      EventType.invoiceReminder =>
+        l10n?.eventTypeInvoiceReminder ?? 'Payment reminder',
     };
   }
 
@@ -266,6 +275,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.invoicePayment => Icons.price_check_outlined,
       EventType.reservationDelete => Icons.delete_outline,
       EventType.invoiceWriteoff => Icons.money_off_csred_outlined,
+      EventType.invoiceReminder => Icons.notification_important_outlined,
     };
   }
 

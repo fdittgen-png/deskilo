@@ -177,6 +177,14 @@ class FakeMoneyRepository implements MoneyRepository {
   /// #472 — per-workspace dunning policy.
   DunningRules dunningRules = DunningRules.defaults;
 
+  int sweeps = 0;
+
+  @override
+  Future<int> sweepPaymentReminders(String workspaceId) async {
+    sweeps++;
+    return 0;
+  }
+
   @override
   Future<DunningRules> fetchDunningRules(String workspaceId) async =>
       dunningRules;

@@ -222,6 +222,15 @@ class SupabaseMoneyRepository implements MoneyRepository {
   }
 
   @override
+  Future<int> sweepPaymentReminders(String workspaceId) async {
+    final n = await _client.rpc<Object?>(
+      'sweep_payment_reminders',
+      params: {'p_workspace_id': workspaceId},
+    );
+    return (n as num?)?.toInt() ?? 0;
+  }
+
+  @override
   Future<void> setDunningRules(
     String workspaceId,
     DunningRules rules,

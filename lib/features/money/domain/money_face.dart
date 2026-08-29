@@ -1,20 +1,27 @@
 // SPDX-License-Identifier: 0BSD
 
-/// #720 — the three faces of the Finances tab, like the inbox's chats
-/// and alerts: what I PAY, what I CONSUME, what I am INVOICED. One
-/// question per face, so a member never scans a bill to find a button.
+/// #720 — the four faces of the Finances tab, like the inbox's chats
+/// and alerts: the month's STATEMENT, what I PAY (and ask for), what I
+/// am INVOICED, and my DOCUMENTS. One question per face, so a member
+/// never scans a bill to find a button.
 enum MoneyFace {
-  /// Position, open positions, credits, balance, how to pay, record a
-  /// payment, buy a package, the monthly payments report.
+  /// The month as it stands: account position, days, subscription,
+  /// services, packages, open positions, credits, the invoice card, the
+  /// balance. Read-only.
+  statement,
+
+  /// Settle and ask: overdue notice, balance, how to pay / pay online,
+  /// record a payment, buy a package, submit an expense, request
+  /// half-days, add a consumption.
   payments,
 
-  /// This month's entitlement, subscription, services, packages; the
-  /// requests that add to them (expense, extra half-days, consumption).
-  consumption,
+  /// Invoicing only: what is open and due, every invoice issued to me,
+  /// the register for issuers.
+  invoices,
 
-  /// The month's invoice, my invoices, my conditions, the register for
-  /// those allowed to issue.
-  invoices;
+  /// The rest of the paperwork: my conditions, the payments report, the
+  /// month's statement as PDF, the document library.
+  documents;
 
   static MoneyFace? fromWire(String? name) =>
       name == null ? null : values.where((f) => f.name == name).firstOrNull;

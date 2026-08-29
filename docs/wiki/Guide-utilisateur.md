@@ -433,19 +433,21 @@ Chaque rapport de l'application — relevé, factures, proformas, avoirs, vos do
 
 **Les rapports parlent la langue du lecteur :** un document s'imprime dans la langue du **membre** si un modèle existe pour elle, sinon dans la **langue de l'espace**, et à défaut des deux dans la **langue du pays de l'espace** (§11, modèles par langue). Si ce pays n'a pas de langue unique, l'app ne devine pas — elle refuse et vous demande de *définir d'abord la langue de l'espace*.
 
-### 9c. Le volet Paiements
+### 9c. Le volet Relevé
 
-Avec **Finances en trois volets** activé (par défaut), l'onglet Finances se lit en trois volets sous un même sélecteur **‹ mois ›** — l'idiome de la messagerie (discussions et alertes). Chaque volet répond à une question et porte sa propre bulle d'aide.
+**Le mois tel qu'il est.** Votre compte (la position réelle sur plusieurs mois), la carte **Ce mois-ci** (jours inclus, utilisés, restants), la carte **abonnement**, les **services consommés**, les **suppléments d'accessoires et d'espaces**, les **forfaits de jours**, les **positions ouvertes** en attente de validation, **paiements et avoirs**, la **carte de facture** du mois dès qu'il est facturé (§9a) et le **solde**. En lecture seule : rien à presser ici sauf le sélecteur **‹ mois ›**, commun à tous les volets.
 
-**Que dois-je, qu'ai-je payé ?** Votre compte (la position réelle sur plusieurs mois), les **positions ouvertes** en attente de validation, **paiements et avoirs**, le **solde**, et — tant qu'un montant est dû — les **instructions de paiement** et **Payer en ligne**. Les actions : **Enregistrer un paiement**, **Acheter un forfait** (formules à forfaits), le **rapport mensuel des paiements**.
+### 9d. Le volet Paiements
 
-### 9d. Le volet Consommation
-
-**Qu'ai-je consommé ce mois ?** La carte **Ce mois-ci** (jours inclus, utilisés, restants), la carte **abonnement**, les **services consommés**, les **suppléments d'accessoires et d'espaces**, les **forfaits de jours**. Les actions qui s'y ajoutent : **Soumettre une dépense**, **Demander des demi-journées**, **Ajouter une consommation**.
+**Régler et demander.** Un **bandeau de retard** quand une facture dépasse le délai de paiement de l'espace (§11e), le **solde**, les **instructions de paiement** et **Payer en ligne** tant qu'un montant est dû, puis les actions : **Enregistrer un paiement**, **Acheter un forfait** (formules à forfaits), **Soumettre une dépense**, **Demander des demi-journées**, **Ajouter une consommation**.
 
 ### 9e. Le volet Factures
 
-**Qu'est-ce qui m'a été facturé ?** La **carte de facture** du mois dès qu'il est facturé (§9a), puis **toutes les factures qui vous ont été émises**, de la plus récente à la plus ancienne — touchez-en une pour la fiche détaillée avec aperçu, PDF et partage — et **Mes conditions** (votre accord financier). Les émetteurs trouvent le bouton **Factures** vers le registre (§11). Désactivez les volets dans Fonctionnalités → *Finances en trois volets* pour retrouver la colonne unique.
+**Qu'est-ce qui m'a été facturé ?** Une carte de tête — *rien d'ouvert, vous êtes à jour*, ou *N ouvertes · montant dû*, avec le nombre en retard — puis **toutes les factures qui vous ont été émises**, de la plus récente à la plus ancienne, chacune avec sa puce d'état, **échéance dans N jours** ou **en retard de N jours**, le nombre de relances, et un bouton **payer** qui saute au volet Paiements ; touchez une ligne pour la fiche détaillée avec aperçu, PDF et partage. Les émetteurs trouvent le bouton **Factures** vers le registre (§11).
+
+### 9f. Le volet Documents
+
+**Le reste des papiers :** **Mes conditions** (votre accord financier), le **rapport mensuel des paiements**, **le relevé du mois en PDF**, et la **bibliothèque de documents** quand l'espace en a une (§11d). Désactivez les volets dans Fonctionnalités → *Finances en trois volets* pour retrouver la colonne unique.
 
 ## 10. Mode borne (tablette murale)
 
@@ -550,6 +552,10 @@ Variables (famille facture) : `{{ number }}`, `{{ member }}`, `{{ workspace }}`,
 - **Rapport de l'espace** — identité, comptages du plan, disponibilité, fonctionnalités et prix : *Réglages de l'espace → Rapport de l'espace*.
 - **Bibliothèque de documents** — *Réglages → Documents* : statuts, guides, états financiers et comptes rendus de l'espace, LIÉS depuis le système que vous utilisez déjà — Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud ou tout lien https (le drive garde la main sur ses accès ; l'app ne stocke jamais d'identifiants étrangers). Chaque entrée a un **rôle de visibilité** : tout membre, admins et propriétaires, ou propriétaires seuls — appliqué côté serveur. Admins et propriétaires alimentent au bouton + ; la fonctionnalité *Bibliothèque de documents* conditionne le tout.
 
+### 11e. Relances de paiement automatiques
+
+Avec **Relances de paiement automatiques** activé (Fonctionnalités, enfant de *Relances de paiement*) et l'interrupteur **Relances automatiques** dans les règles de relance (Factures → Règles de relance), les niveaux de relance s'appliquent d'eux-mêmes : chaque matin — et dès qu'un propriétaire ou un admin ouvre Finances — une facture **ouverte** dont le délai est écoulé (les *jours avant la première relance* depuis son émission, puis les *jours entre les relances* après la précédente) reçoit son niveau suivant. Le membre voit une alerte **Rappel de paiement** dans Événements (« Relance 2 : facture X — montant restant dû ») et reçoit une notification ; son volet Factures lit *en retard de N jours*. Les niveaux ne dépassent jamais le nombre configuré ; une facture rapprochée n'est jamais relancée ; interrupteur désactivé, la relance reste un geste manuel, une facture à la fois comme avant.
+
 ## 12. Réglages et profil
 
 Votre écran personnel, de haut en bas :
@@ -569,6 +575,8 @@ Rappels de pointage, confirmations en attente, décisions de dépense — et qua
 ## 14. Confidentialité
 
 Données minimales : nom, e-mail, forfait, réservations, compte. Vous contrôlez votre photo, votre statut et la visibilité de votre numéro ; sur le plan, une de vos places affiche une initiale, ou votre photo là où le propriétaire a activé les photos des membres. Les badges ne sont stockés qu'en hachés — un badge perdu se révoque, ne se devine pas. Pas de pistage, pas d'analytique tierce. L'historique financier est anonymisé, pas supprimé, à l'effacement du compte (rétention comptable).
+
+**RGPD (#719).** DesKilo est conçu pour le Règlement général sur la protection des données : données hébergées dans l'UE, ni traçage ni analytique, accès limité par rôle et appliqué côté serveur, et quatre droits que vous exercez vous-même dans **le bouclier en haut de l'écran (Confidentialité et données)** : **qui peut voir mes données** (la règle par catégorie et les personnes qu'elle désigne), **qui a consulté mes données** (un journal écrit par le serveur de chaque lecture de vos finances ou messages par quelqu'un d'autre — jamais contournable), **exporter mes données** (un fichier JSON, art. 20) et **partir avec effacement** (art. 17 : réservations annulées, messages vidés, profil effacé ; les pièces comptables sont conservées pendant la durée légale nommée dans la politique, référencées par un identifiant, pas un nom). Les messages ne sont lisibles que par les personnes de la conversation, quel que soit leur rôle ; factures et paiements seulement par vous et les titulaires de la permission finances.
 
 ## 15. Plateformes
 

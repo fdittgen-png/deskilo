@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/money_face.dart';
@@ -10,9 +11,10 @@ import '../../providers/money_face_controller.dart';
 
 /// The label of a face, as the tab and the help hint call it.
 String moneyFaceLabel(AppLocalizations? l10n, MoneyFace face) => switch (face) {
+      MoneyFace.statement => l10n?.moneyFaceStatement ?? 'Statement',
       MoneyFace.payments => l10n?.moneyFacePayments ?? 'Payments',
-      MoneyFace.consumption => l10n?.moneyFaceConsumption ?? 'Consumption',
       MoneyFace.invoices => l10n?.moneyFaceInvoices ?? 'Invoices',
+      MoneyFace.documents => l10n?.moneyFaceDocuments ?? 'Documents',
     };
 
 /// The #486 section label of the classic column: small caps, muted.
@@ -51,10 +53,51 @@ class MoneyActionGrid extends StatelessWidget {
       );
 }
 
+/// #486 — the month's BOTTOM LINE, leading the landscape side panel and
+/// the Payments face: the balance, red when owed.
+class MoneyBalanceCard extends StatelessWidget {
+  const MoneyBalanceCard({
+    super.key,
+    required this.balanceCents,
+    required this.currency,
+  });
+
+  final int? balanceCents;
+  final MoneyFormat currency;
+
+  @override
+  Widget build(BuildContext context) {
+    final cents = balanceCents;
+    if (cents == null) return const SizedBox.shrink();
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return Card(
+      key: const ValueKey('money-balance-card'),
+      child: Padding(
+        padding: AppSpacing.mdAll,
+        child: Row(children: [
+          Expanded(
+            child: Text(l10n?.billBalance ?? 'Balance',
+                style: theme.textTheme.titleMedium),
+          ),
+          Text(
+            currency.formatMinor(cents),
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: cents < 0 ? theme.colorScheme.error : null,
+            ),
+          ),
+        ]),
+      ),
+    );
+  }
+}
+
 HelpHintId moneyFaceHint(MoneyFace face) => switch (face) {
+      MoneyFace.statement => HelpHintId.moneyStatement,
       MoneyFace.payments => HelpHintId.moneyPayments,
-      MoneyFace.consumption => HelpHintId.moneyConsumption,
       MoneyFace.invoices => HelpHintId.moneyInvoices,
+      MoneyFace.documents => HelpHintId.moneyDocuments,
     };
 
 /// #720 — the Finances tab as three faces under one shared period
@@ -125,11 +168,19 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
     final tabs = TabBar(
       key: const ValueKey('money-faces'),
       controller: _controller,
+      // Four short labels fit a phone; a long locale wraps to two lines
+      // rather than clipping.
+      labelPadding: const EdgeInsets.symmetric(horizontal: 4),
       tabs: [
         for (final f in MoneyFace.values)
           Tab(
             key: ValueKey('money-face-${f.name}'),
-            text: moneyFaceLabel(l10n, f),
+            child: Text(
+              moneyFaceLabel(l10n, f),
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
       ],
     );
