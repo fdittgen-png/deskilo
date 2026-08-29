@@ -37,6 +37,10 @@ Description: |-
   The app talks to the community's own Supabase backend (open source,
   self-hostable); the workspace owner chooses the instance.
 
+  GDPR: EU-hosted data, no tracking or analytics, access limited by
+  role and enforced on the server; who-can-see, access log, export and
+  erasure are buttons in Settings → Privacy & data.
+
 AntiFeatures: {}
 
 RepoType: git

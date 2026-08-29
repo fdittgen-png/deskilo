@@ -30,7 +30,13 @@ void main() {
     test('brand primary is the burnt-orange ramp', () {
       final light = DeskiloTheme.light();
       expect(light.colorScheme.brightness, Brightness.light);
-      expect(light.colorScheme.primary, const Color(0xFFC2410C));
+      // #721 — the brand HUE, deep enough to read as text on every
+      // surface: Contrast.ensure may darken the burnt orange a step, and
+      // a step darker is still the brand. Exact hex is not the contract.
+      final brand = HSLColor.fromColor(const Color(0xFFC2410C));
+      final primary = HSLColor.fromColor(light.colorScheme.primary);
+      expect((primary.hue - brand.hue).abs(), lessThan(2));
+      expect(primary.lightness, lessThanOrEqualTo(brand.lightness + 0.001));
 
       final dark = DeskiloTheme.dark();
       expect(dark.colorScheme.brightness, Brightness.dark);

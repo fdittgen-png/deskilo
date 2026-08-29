@@ -71,7 +71,7 @@ class CalendarItemRow extends ConsumerWidget {
     final amountColor = item.amountCents == null
         ? null
         : item.amountCents! >= 0
-            ? AppStatusColors.successOf(brightness)
+            ? AppStatusColors.successTextOf(brightness)
             : theme.colorScheme.error;
     return ListTile(
       key: ValueKey('calendar-item-${item.id}'),
