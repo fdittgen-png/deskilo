@@ -1,0 +1,77 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: 0BSD
+
+name: fdroid-foss
+
+# #716 — the F-Droid flavour stays buildable and Google-free. Does what
+# fdroiddata's recipe does (swap the push package, build a release APK)
+# and then asserts the one thing F-Droid's scanner will check: no
+# Google Play Services and no Firebase class in the dex.
+
+on:
+  pull_request:
+    paths:
+      - 'packages/**'
+      - 'pubspec.yaml'
+      - 'lib/core/push/**'
+      - 'fdroid/**'
+      - '.github/workflows/fdroid-foss.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'packages/**'
+      - 'pubspec.yaml'
+      - 'lib/core/push/**'
+  workflow_dispatch:
+
+env:
+  FLUTTER_VERSION: "3.44.9"
+
+jobs:
+  foss-apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Swap in the FOSS push package (what fdroiddata's prebuild does)
+        run: |
+          sed -i 's|    path: packages/deskilo_push$|    path: packages/deskilo_push_foss|' pubspec.yaml
+          grep -n 'deskilo_push_foss' pubspec.yaml
+          flutter pub get
+
+      - name: Analyze and test under the FOSS flavour
+        run: |
+          dart run build_runner build --delete-conflicting-outputs
+          flutter gen-l10n
+          flutter analyze --fatal-infos lib test
+          flutter test
+
+      - name: Build the release APK
+        run: flutter build apk --release --build-number=100000
+
+      - name: Assert no Google Play Services or Firebase in the dex
+        run: |
+          APK=build/app/outputs/flutter-apk/app-release.apk
+          mkdir -p dex && unzip -o -q "$APK" 'classes*.dex' -d dex
+          hits=$(cat dex/classes*.dex | grep -a -c -E 'com/google/android/gms|com/google/firebase' || true)
+          echo "gms/firebase references in dex: $hits"
+          if [ "$hits" != "0" ]; then
+            echo "::error::the FOSS APK still references Google services"; exit 1
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deskilo-foss-apk
+          path: build/app/outputs/flutter-apk/app-release.apk

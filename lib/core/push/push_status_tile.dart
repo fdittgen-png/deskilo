@@ -6,6 +6,7 @@ import '../../l10n/app_localizations.dart';
 import '../notifications/notification_providers.dart';
 import 'push_providers.dart';
 import 'push_service.dart';
+import 'push_connector.dart';
 
 /// Push pipeline status line for Settings (#424/#428): FCM registered,
 /// or not-configured with the owner-facing fix — the field had ZERO
@@ -39,6 +40,17 @@ class PushStatusTile extends ConsumerWidget {
             leading: const Icon(Icons.notifications_active_outlined),
             title: Text(l10n?.pushStatusRegistered ??
                 'Push notifications are active'),
+          ),
+        // #716 — an F-Droid build has NO transport to configure; telling
+        // its owner to finish the Firebase setup would send them on an
+        // errand that cannot succeed.
+        PushStatus.notConfigured when !kPushTransportAvailable => ListTile(
+            leading: const Icon(Icons.notifications_off_outlined),
+            title: Text(l10n?.pushStatusNoTransport ??
+                'This build has no push notifications'),
+            subtitle: Text(l10n?.pushStatusNoTransportHint ??
+                'Notifications arrive in the app and as local '
+                    'notifications on this device.'),
           ),
         PushStatus.notConfigured => ListTile(
             leading: const Icon(Icons.notifications_off_outlined),

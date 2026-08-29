@@ -8,18 +8,23 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../notifications/notification_providers.dart';
 import '../trace/trace_logger.dart';
-import 'firebase_push_connector.dart';
-import 'push_connector.dart';
+import 'package:deskilo_push/deskilo_push.dart';
+
 import 'push_endpoint_repository.dart';
 import 'push_service.dart';
 
 part 'push_providers.g.dart';
 
 @Riverpod(keepAlive: true)
-// FCM only since #428 (the F-Droid-era UnifiedPush fallback is gone).
-// The committed firebase_options stub keeps it off until the owner runs
-// `flutterfire configure`.
-PushConnector pushConnector(Ref ref) => FirebasePushConnector();
+// Whatever transport this BUILD ships (#716): FCM from
+// packages/deskilo_push on the stores, none from deskilo_push_foss on
+// F-Droid. The committed firebase_options stub keeps FCM off until the
+// owner runs `flutterfire configure`; either way an unavailable
+// transport answers false from initialize and the app stays local-only.
+PushConnector pushConnector(Ref ref) => createPushConnector(
+      onWarn: (message, error, stackTrace) => TraceLogger.instance
+          .warn('push', message, error: error, stackTrace: stackTrace),
+    );
 
 @Riverpod(keepAlive: true)
 PushEndpointRepository pushEndpointRepository(Ref ref) =>

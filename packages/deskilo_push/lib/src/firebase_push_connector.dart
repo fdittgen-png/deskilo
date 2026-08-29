@@ -5,7 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 
-import '../trace/trace_logger.dart';
 import 'firebase_options.dart';
 import 'push_connector.dart';
 
@@ -20,6 +19,9 @@ import 'push_connector.dart';
 /// OS displays the function's generic English text (never personal
 /// data, 0012 doctrine).
 class FirebasePushConnector implements PushConnector {
+  FirebasePushConnector({this.onWarn});
+
+  final PushWarn? onWarn;
   void Function(String url)? _onNewEndpoint;
 
   @override
@@ -44,8 +46,7 @@ class FirebasePushConnector implements PushConnector {
       // Best-effort (#86 boot doctrine): a broken Firebase setup must
       // never disturb the app.
       debugPrint('Firebase init failed: \$e\n\$st');
-      TraceLogger.instance
-          .warn('push', 'Firebase init failed', error: e, stackTrace: st);
+      onWarn?.call('Firebase init failed', e, st);
       return false;
     }
   }

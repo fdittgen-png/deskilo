@@ -2036,6 +2036,18 @@ abstract class AppLocalizations {
   /// **'Every booking and check-in — past, present and future, every state — as CSV, for analysis and debugging.'**
   String get developerExportReservationsHint;
 
+  /// #716 - F-Droid build without a push transport
+  ///
+  /// In en, this message translates to:
+  /// **'This build has no push notifications'**
+  String get pushStatusNoTransport;
+
+  /// #716 - F-Droid build without a push transport
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications arrive in the app and as local notifications on this device.'**
+  String get pushStatusNoTransportHint;
+
   /// Member directory title: bottom-tab label and app-bar title of the Members tab (#230) plus its settings entry (#224), visible to every member. Keep it short — it must fit a bottom-bar tab.
   ///
   /// In en, this message translates to:

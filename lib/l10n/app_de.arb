@@ -661,6 +661,14 @@
   "@developerExportReservationsHint": {
     "description": "#677 - developer reservation export"
   },
+  "pushStatusNoTransport": "Diese Version hat keine Push-Benachrichtigungen",
+  "@pushStatusNoTransport": {
+    "description": "#716 - F-Droid build without a push transport"
+  },
+  "pushStatusNoTransportHint": "Benachrichtigungen kommen in der App und als lokale Benachrichtigungen auf diesem Gerät an.",
+  "@pushStatusNoTransportHint": {
+    "description": "#716 - F-Droid build without a push transport"
+  },
   "directoryTitle": "Mitglieder",
   "directoryEmpty": "Noch keine Mitglieder.",
   "directoryCheckedIn": "Eingecheckt",

@@ -1,0 +1,18 @@
+name: deskilo_push
+description: DesKilo's push transport — Firebase Cloud Messaging (store builds).
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+  flutter: ">=3.44.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # First-class push (#426/#428, ADR 0011): FCM on Android/iOS/web/
+  # macOS. Dart-only init from firebase_options.dart — the committed
+  # stub disables it until the owner runs `flutterfire configure`
+  # (docs/guides/push-setup.md).
+  firebase_core: ^4.1.0
+  firebase_messaging: ^16.0.1

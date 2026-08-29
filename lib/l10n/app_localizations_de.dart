@@ -1117,6 +1117,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Alle Buchungen und Check-ins — vergangene, laufende und künftige, in jedem Zustand — als CSV, für Analyse und Fehlersuche.';
 
   @override
+  String get pushStatusNoTransport =>
+      'Diese Version hat keine Push-Benachrichtigungen';
+
+  @override
+  String get pushStatusNoTransportHint =>
+      'Benachrichtigungen kommen in der App und als lokale Benachrichtigungen auf diesem Gerät an.';
+
+  @override
   String get directoryTitle => 'Mitglieder';
 
   @override
