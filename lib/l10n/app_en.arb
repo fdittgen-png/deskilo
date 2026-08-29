@@ -6491,6 +6491,94 @@
   "@regionalClock12h": {
     "description": "#711 - clock segment"
   },
+  "countryNameMX": "Mexico",
+  "@countryNameMX": {
+    "description": "#713 - region name in the format picker"
+  },
+  "countryNameAU": "Australia",
+  "@countryNameAU": {
+    "description": "#713 - region name in the format picker"
+  },
+  "countryNameJP": "Japan",
+  "@countryNameJP": {
+    "description": "#713 - region name in the format picker"
+  },
+  "languageNameDE": "German",
+  "@languageNameDE": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameEN": "English",
+  "@languageNameEN": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameES": "Spanish",
+  "@languageNameES": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameFR": "French",
+  "@languageNameFR": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameIT": "Italian",
+  "@languageNameIT": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameNL": "Dutch",
+  "@languageNameNL": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNamePT": "Portuguese",
+  "@languageNamePT": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNamePL": "Polish",
+  "@languageNamePL": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameSV": "Swedish",
+  "@languageNameSV": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameDA": "Danish",
+  "@languageNameDA": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameNB": "Norwegian",
+  "@languageNameNB": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameFI": "Finnish",
+  "@languageNameFI": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameCS": "Czech",
+  "@languageNameCS": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameHU": "Hungarian",
+  "@languageNameHU": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameRO": "Romanian",
+  "@languageNameRO": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameEL": "Greek",
+  "@languageNameEL": {
+    "description": "#713 - language name in the format picker"
+  },
+  "languageNameJA": "Japanese",
+  "@languageNameJA": {
+    "description": "#713 - language name in the format picker"
+  },
+  "countryNameCA": "Canada",
+  "@countryNameCA": {
+    "description": "#713 - region name in the format picker"
+  },
+  "countryNameNO": "Norway",
+  "@countryNameNO": {
+    "description": "#713 - region name in the format picker"
+  },
   "workspaceXmlExport": "Export workspace (XML)",
   "@workspaceXmlExport": {
     "description": "Owner settings tile exporting the workspace settings + floor plan as a versioned XML file via the share sheet (#164)"
