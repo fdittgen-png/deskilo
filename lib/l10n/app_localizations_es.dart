@@ -1807,14 +1807,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureMemberNotificationsDesc =>
-      'Envía una notificación corta a otro miembro; los admins pueden notificar a todos los admins, incluido el propietario.';
+      'Mensajería entre miembros: conversaciones privadas y de grupo, confirmaciones de lectura, enlaces a una reserva o un espacio; los admins pueden notificar a todos los admins, propietario incluido.';
 
   @override
   String get featureDunning => 'Recordatorios de pago (Mahnwesen)';
 
   @override
   String get featureDunningDesc =>
-      'Reglas de recordatorio configurables y avisos «Recordatorio pendiente» en facturas vencidas. Nunca se envía nada automáticamente.';
+      'Niveles y plazos de recordatorio configurables, una carta por nivel y avisos «Recordatorio pendiente» en las facturas atrasadas. El envío sigue siendo manual, salvo con los Recordatorios de pago automáticos.';
 
   @override
   String get featureMemberReports => 'Informes de miembros';
@@ -1932,11 +1932,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cada miembro puede exportar sus datos en un archivo (RGPD art. 20) y abandonar el espacio con sus datos personales borrados (art. 17) desde Ajustes → Privacidad y datos.';
 
   @override
-  String get featureFinanceFacesTitle => 'Finanzas en tres vistas';
+  String get featureFinanceFacesTitle => 'Finanzas en cuatro vistas';
 
   @override
   String get featureFinanceFacesDesc =>
-      'La pestaña Finanzas muestra tres vistas — Pagos, Consumo, Facturas — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.';
+      'La pestaña Finanzas se lee en cuatro vistas — Extracto, Pagos, Facturas, Documentos — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.';
 
   @override
   String get featurePaymentRemindersTitle =>
@@ -1965,7 +1965,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featurePriceNegotiationsDesc =>
-      'La tarifa es el valor por defecto; un miembro puede tener sus propias condiciones (cuota mensual, tarifa de exceso, descuento en suplementos), propuestas por el propietario o un admin de finanzas y validadas según las reglas. Las ven el miembro, los propietarios y los admins de finanzas; cada lectura queda registrada.';
+      'La tarifa es el valor por defecto; un miembro puede tener sus propias condiciones — cuota mensual, tarifa de exceso, descuento en suplementos, precios unitarios por servicio y paquete, porcentaje de ocupación — propuestas por quien tiene «Gestionar los acuerdos comerciales» y validadas según las reglas. Las ven el miembro, los propietarios y quienes tienen «Consultar los acuerdos comerciales»; cada consulta queda registrada.';
 
   @override
   String get helpTitle => 'Ayuda';

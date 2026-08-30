@@ -1025,12 +1025,12 @@
   "featureInvoicePdfTemplate": "Plantilla del PDF de factura",
   "featureInvoicePdfTemplateDesc": "Introducción y pie escritos por el propietario en el PDF de la factura. Nunca toca el XML de la factura electrónica.",
   "featureMemberNotifications": "Notificaciones entre miembros",
-  "featureMemberNotificationsDesc": "Envía una notificación corta a otro miembro; los admins pueden notificar a todos los admins, incluido el propietario.",
+  "featureMemberNotificationsDesc": "Mensajería entre miembros: conversaciones privadas y de grupo, confirmaciones de lectura, enlaces a una reserva o un espacio; los admins pueden notificar a todos los admins, propietario incluido.",
   "featureDunning": "Recordatorios de pago (Mahnwesen)",
   "@featureDunning": {
     "description": "Feature-registry completeness (#502)"
   },
-  "featureDunningDesc": "Reglas de recordatorio configurables y avisos «Recordatorio pendiente» en facturas vencidas. Nunca se envía nada automáticamente.",
+  "featureDunningDesc": "Niveles y plazos de recordatorio configurables, una carta por nivel y avisos «Recordatorio pendiente» en las facturas atrasadas. El envío sigue siendo manual, salvo con los Recordatorios de pago automáticos.",
   "@featureDunningDesc": {
     "description": "Feature-registry completeness (#502)"
   },
@@ -1120,8 +1120,8 @@
   "@featureMemberDataExportDesc": {
     "description": "#718/#719"
   },
-  "featureFinanceFacesTitle": "Finanzas en tres vistas",
-  "featureFinanceFacesDesc": "La pestaña Finanzas muestra tres vistas — Pagos, Consumo, Facturas — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.",
+  "featureFinanceFacesTitle": "Finanzas en cuatro vistas",
+  "featureFinanceFacesDesc": "La pestaña Finanzas se lee en cuatro vistas — Extracto, Pagos, Facturas, Documentos — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.",
   "featurePaymentRemindersTitle": "Recordatorios de pago automáticos",
   "featurePaymentRemindersDesc": "Las facturas abiertas más allá del plazo configurado reciben sus niveles de recordatorio automáticamente — un aviso en el feed del miembro y una notificación, una vez al día. Desactivado: recordar sigue siendo una acción manual.",
   "featureSupplyExpensesTitle": "Suministros desde gastos",
@@ -1129,7 +1129,7 @@
   "featureValidationScopesTitle": "Validadores por rol o persona",
   "featureValidationScopesDesc": "Cada regla de validación nombra quién valida: los admins, personas designadas de cualquier rol, o todos los miembros — y cuántos. Desactivado: propietario y admins como antes.",
   "featurePriceNegotiationsTitle": "Negociaciones de precios",
-  "featurePriceNegotiationsDesc": "La tarifa es el valor por defecto; un miembro puede tener sus propias condiciones (cuota mensual, tarifa de exceso, descuento en suplementos), propuestas por el propietario o un admin de finanzas y validadas según las reglas. Las ven el miembro, los propietarios y los admins de finanzas; cada lectura queda registrada.",
+  "featurePriceNegotiationsDesc": "La tarifa es el valor por defecto; un miembro puede tener sus propias condiciones — cuota mensual, tarifa de exceso, descuento en suplementos, precios unitarios por servicio y paquete, porcentaje de ocupación — propuestas por quien tiene «Gestionar los acuerdos comerciales» y validadas según las reglas. Las ven el miembro, los propietarios y quienes tienen «Consultar los acuerdos comerciales»; cada consulta queda registrada.",
   "helpTitle": "Ayuda",
   "helpContents": "Índice",
   "helpHintMessages": "Todas las conversaciones en una lista, la más reciente arriba. Toque el lápiz para escribir a alguien o crear un grupo.",

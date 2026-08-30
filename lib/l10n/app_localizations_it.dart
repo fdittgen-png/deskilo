@@ -1808,14 +1808,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureMemberNotificationsDesc =>
-      'Invia una breve notifica a un altro membro; gli admin possono notificare tutti gli admin, proprietario incluso.';
+      'Messaggistica tra membri: conversazioni private e di gruppo, conferme di lettura, link a una prenotazione o a uno spazio; gli admin possono notificare tutti gli admin, proprietario incluso.';
 
   @override
   String get featureDunning => 'Solleciti di pagamento (Mahnwesen)';
 
   @override
   String get featureDunningDesc =>
-      'Regole di sollecito configurabili e avvisi «Sollecito dovuto» sulle fatture scadute. Nulla viene mai inviato automaticamente.';
+      'Livelli e scadenze di sollecito configurabili, una lettera per livello e avvisi «Sollecito dovuto» sulle fatture in ritardo. L\'invio resta manuale, salvo con i Solleciti di pagamento automatici.';
 
   @override
   String get featureMemberReports => 'Report dei membri';
@@ -1932,11 +1932,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Ogni membro può esportare i propri dati in un file (GDPR art. 20) e lasciare lo spazio con i dati personali cancellati (art. 17) da Impostazioni → Privacy e dati.';
 
   @override
-  String get featureFinanceFacesTitle => 'Finanze in tre viste';
+  String get featureFinanceFacesTitle => 'Finanze in quattro viste';
 
   @override
   String get featureFinanceFacesDesc =>
-      'La scheda Finanze mostra tre viste — Pagamenti, Consumo, Fatture — sotto un unico selettore di mese, ciascuna con il proprio aiuto. Disattivata: una sola colonna.';
+      'La scheda Finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna.';
 
   @override
   String get featurePaymentRemindersTitle =>
@@ -1966,7 +1966,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featurePriceNegotiationsDesc =>
-      'La tariffa è il valore predefinito; un membro può avere condizioni proprie (quota mensile, tariffa di eccedenza, sconto sui supplementi), proposte dal proprietario o da un admin finanze e convalidate secondo le regole. Le vedono il membro, i proprietari e gli admin finanze; ogni lettura è registrata.';
+      'La tariffa è il valore predefinito; un membro può avere condizioni proprie — canone mensile, tariffa di superamento, sconto sui supplementi, prezzi unitari per servizio e pacchetto, percentuale di occupazione — proposte da chi detiene «Gestire gli accordi commerciali» e validate secondo le regole. Le vedono il membro, i proprietari e chi ha «Consultare gli accordi commerciali»; ogni consultazione è registrata.';
 
   @override
   String get helpTitle => 'Aiuto';

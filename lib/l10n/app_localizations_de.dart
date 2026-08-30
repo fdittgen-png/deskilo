@@ -1806,14 +1806,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureMemberNotificationsDesc =>
-      'Kurze Benachrichtigung an ein anderes Mitglied senden; Admins können alle Admins inkl. Inhaber benachrichtigen.';
+      'Nachrichten zwischen Mitgliedern: private und Gruppenunterhaltungen, Lesebestätigungen, Links zu einer Reservierung oder einem Raum; Admins können alle Admins benachrichtigen, Inhaber eingeschlossen.';
 
   @override
   String get featureDunning => 'Mahnwesen';
 
   @override
   String get featureDunningDesc =>
-      'Parametrierbare Mahnregeln und „Mahnung fällig“-Hinweise auf überfälligen Rechnungen. Nichts wird je automatisch versendet.';
+      'Konfigurierbare Mahnstufen und Fristen, ein Mahnschreiben pro Stufe und „Mahnung fällig“-Hinweise auf verspäteten Rechnungen. Das Senden bleibt ein manueller Tipp, außer mit den Automatischen Zahlungserinnerungen.';
 
   @override
   String get featureMemberReports => 'Mitgliederberichte';
@@ -1929,11 +1929,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Jedes Mitglied kann seine Daten als eine Datei exportieren (DSGVO Art. 20) und den Bereich mit gelöschten persönlichen Daten verlassen (Art. 17), unter Einstellungen → Datenschutz & Daten.';
 
   @override
-  String get featureFinanceFacesTitle => 'Finanzen in drei Ansichten';
+  String get featureFinanceFacesTitle => 'Finanzen in vier Ansichten';
 
   @override
   String get featureFinanceFacesDesc =>
-      'Der Finanzen-Tab zeigt drei Ansichten — Zahlungen, Verbrauch, Rechnungen — unter einer Monatsauswahl, jede mit eigener Hilfe. Aus: eine Spalte.';
+      'Der Finanzen-Tab hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte.';
 
   @override
   String get featurePaymentRemindersTitle =>
@@ -1962,7 +1962,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featurePriceNegotiationsDesc =>
-      'Der Tarif ist der Standard; ein Mitglied kann eigene Konditionen haben (Monatsbeitrag, Überschreitungssatz, Rabatt auf Zuschläge), vom Inhaber oder einem Finanz-Admin vorgeschlagen und nach den Regeln geprüft. Sichtbar für das Mitglied, die Inhaber und Finanz-Admins; jeder Zugriff wird protokolliert.';
+      'Der Tarif ist der Standard; ein Mitglied kann eigene Konditionen haben — Monatsgebühr, Überschreitungssatz, Rabatt auf Zuschläge, Stückpreise je Leistung und Paket, Belegungsprozentsatz —, vorgeschlagen von wer „Geschäftsvereinbarungen verwalten“ hält, und nach den Regeln validiert. Sichtbar für das Mitglied, die Inhaber und die Träger von „Geschäftsvereinbarungen einsehen“; jeder Zugriff wird protokolliert.';
 
   @override
   String get helpTitle => 'Hilfe';

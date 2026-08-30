@@ -1793,14 +1793,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureMemberNotificationsDesc =>
-      'Send a short notification to another member; admins can notify all admins including the owner.';
+      'Messaging between members: private and group conversations, read receipts, links to a reservation or a space; admins can notify all admins, owner included.';
 
   @override
   String get featureDunning => 'Payment reminders (Mahnwesen)';
 
   @override
   String get featureDunningDesc =>
-      'Configurable reminder rules and \"Reminder due\" suggestions on overdue invoices. Nothing is ever sent automatically.';
+      'Configurable reminder levels and delays, a reminder letter per level, and “Reminder due” flags on late invoices. Sending stays a manual tap unless Automatic payment reminders is on.';
 
   @override
   String get featureMemberReports => 'Member reports';
@@ -1915,11 +1915,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Every member can export their data as one file (GDPR art. 20) and leave the workspace with their personal data cleared (art. 17) from Settings → Privacy & data.';
 
   @override
-  String get featureFinanceFacesTitle => 'Finance faces';
+  String get featureFinanceFacesTitle => 'Finances in four faces';
 
   @override
   String get featureFinanceFacesDesc =>
-      'The Finances tab shows three faces — Payments, Consumption, Invoices — under one month chooser, each with its own help. Off: one column.';
+      'The Finances tab reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.';
 
   @override
   String get featurePaymentRemindersTitle => 'Automatic payment reminders';
@@ -1947,7 +1947,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featurePriceNegotiationsDesc =>
-      'The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.';
+      'The tariff is the default; a member can hold their own conditions — monthly fee, overage rate, discount on supplements, unit prices per service and package, the occupation percentage — proposed by whoever holds Manage commercial agreements and validated by the rules. Seen by the member, the owners and the holders of View commercial agreements; every read is logged.';
 
   @override
   String get helpTitle => 'Help';
