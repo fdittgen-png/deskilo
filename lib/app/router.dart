@@ -113,20 +113,22 @@ GoRouter router(Ref ref) {
       if (atAuth) return '/reserve';
 
       // #751 — the GDPR consent gates everything but itself, the help
-      // and the privacy screen, once the profile is known.
-      final profile = ref.read(myProfileProvider).value;
+      // and the privacy screen. Fails CLOSED: once the profile query has
+      // settled, anything but a recorded acceptance of the CURRENT
+      // version (no row, an error, an older version) is the consent.
+      final profileAsync = ref.read(myProfileProvider);
+      final accepted = profileAsync.value?.privacyAcceptedVersion ==
+          kPrivacyPolicyVersion;
       final atConsent = state.matchedLocation == '/consent';
       final consentFree = atConsent ||
           state.matchedLocation == '/help' ||
           state.matchedLocation == '/privacy';
-      if (profile != null &&
-          profile.privacyAcceptedVersion != kPrivacyPolicyVersion &&
-          !consentFree) {
+      if (!profileAsync.isLoading && !accepted && !consentFree) {
         return '/consent';
       }
       if (atConsent &&
           state.uri.queryParameters['review'] != '1' &&
-          profile?.privacyAcceptedVersion == kPrivacyPolicyVersion) {
+          accepted) {
         return '/reserve';
       }
 

@@ -70,6 +70,22 @@ void main() {
     expect(find.byKey(const ValueKey('shell-privacy')), findsOneWidget);
   });
 
+  testWidgets('no profile row at all still gates (fails closed)',
+      (tester) async {
+    tester.view.physicalSize = const Size(800, 1600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(ProviderScope(
+      overrides: standardTestOverrides(
+        profile: FakeProfileRepository(profiles: const [], accepted: false),
+        floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
+      ),
+      child: const DeskiloApp(),
+    ));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('consent-text')), findsOneWidget);
+  });
+
   testWidgets('an older accepted version asks again', (tester) async {
     await pump(tester, version: '2000-01-01');
     expect(find.byKey(const ValueKey('consent-text')), findsOneWidget);
