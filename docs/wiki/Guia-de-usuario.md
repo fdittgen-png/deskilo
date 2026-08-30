@@ -455,6 +455,10 @@ Cada informe de la app — la factura mensual, las facturas, los proformas, las 
 
 **El resto del papeleo:** **Mis condiciones** (tu acuerdo financiero), el **informe mensual de pagos**, **el extracto del mes en PDF** y la **biblioteca de documentos** cuando el espacio usa una (§11d). Desactiva las vistas en Funciones → *Finanzas en tres vistas* para volver a la columna única.
 
+### 9g. Negociaciones de precios
+
+**La tarifa es el valor por defecto; tus condiciones son tuyas.** Un propietario o un admin de finanzas puede proponer una **negociación de precios** para un miembro — cuota mensual, exceso por medio día, descuento en suplementos (accesorios, reservas de espacios enteros) — cada uno opcional, la tarifa si falta. La propuesta llega a Eventos para los validadores de la regla (dominio *Negociación de precios*, o la regla por defecto); confirmada, se aplica desde el mes elegido y sustituye las condiciones anteriores. En tu vista **Extracto**, la tarjeta *Mis precios negociados* muestra la tarifa tachada junto a tus precios, desde cuándo, y **Quién puede verlo**: tú, los propietarios y los admins de finanzas — cada lectura por otra persona queda registrada y listada ahí (§14). Función *Negociaciones de precios*.
+
 ## 10. Modo quiosco (tableta de pared)
 
 Monta una tableta Android o un iPad junto a la puerta y deja que la gente se registre al entrar:

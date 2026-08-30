@@ -305,5 +305,22 @@
   "expenseSupplyUnitPriceHint": "Prellenado con importe ÷ cantidad; redondea si quieres.",
   "serviceStockCount": "{count} en stock",
   "serviceOutOfStock": "Agotado",
-  "serviceOutOfStockHint": "No queda nada en el estante — el próximo suministro lo repone."
+  "serviceOutOfStockHint": "No queda nada en el estante — el próximo suministro lo repone.",
+  "negotiationCardTitle": "Mis precios negociados",
+  "negotiationOnTariff": "Estás en la tarifa del espacio.",
+  "negotiationPending": "Unas condiciones esperan validación.",
+  "negotiationActiveSince": "Tus condiciones se aplican desde {month}.",
+  "negotiationFee": "Cuota mensual",
+  "negotiationOverage": "Exceso por medio día",
+  "negotiationDiscount": "Descuento en suplementos",
+  "negotiationDefaultColumn": "Tarifa",
+  "negotiationMineColumn": "Las mías",
+  "negotiationWhoCanSee": "Quién puede verlo",
+  "negotiationProposeTitle": "Negociación de precios",
+  "negotiationProposeHint": "Deja un campo vacío para mantener la tarifa. Las condiciones pasan por validación antes de aplicarse.",
+  "negotiationNote": "Nota",
+  "negotiationValidFrom": "Se aplica desde",
+  "negotiationSubmit": "Proponer para validación",
+  "negotiationProposed": "Condiciones propuestas — pendientes de validación.",
+  "negotiationPendingBadge": "pendiente de validación"
 }

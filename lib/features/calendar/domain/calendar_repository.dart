@@ -35,15 +35,22 @@ class AccessMap {
   const AccessMap({
     required this.finances,
     required this.membersAdmin,
+    this.negotiations = const [],
   });
 
   final List<String> finances;
   final List<String> membersAdmin;
 
+  /// #739 — who may read my price negotiations besides me.
+  final List<String> negotiations;
+
   factory AccessMap.fromJson(Map<String, dynamic> json) => AccessMap(
         finances: [for (final id in (json['finances'] as List? ?? const [])) id as String],
         membersAdmin: [
           for (final id in (json['members_admin'] as List? ?? const [])) id as String
+        ],
+        negotiations: [
+          for (final id in (json['negotiations'] as List? ?? const [])) id as String
         ],
       );
 

@@ -151,5 +151,7 @@
   "featureSupplyExpensesTitle": "Vorräte aus Ausgaben",
   "featureSupplyExpensesDesc": "Eine Ausgabe kann ein Vorrat für den Raum sein (Kaffeekapseln, Staubsaugerbeutel…): genehmigt, füllt sie eine verbrauchbare Leistung mit Stückpreis auf oder legt sie an; Verbräuche zählen den Bestand herunter.",
   "featureValidationScopesTitle": "Prüfer nach Rolle oder Person",
-  "featureValidationScopesDesc": "Jede Prüfregel nennt, wer prüft: die Admins, benannte Personen jeder Rolle oder alle Mitglieder — und wie viele. Aus: Inhaber und Admins wie bisher."
+  "featureValidationScopesDesc": "Jede Prüfregel nennt, wer prüft: die Admins, benannte Personen jeder Rolle oder alle Mitglieder — und wie viele. Aus: Inhaber und Admins wie bisher.",
+  "featurePriceNegotiationsTitle": "Preisverhandlungen",
+  "featurePriceNegotiationsDesc": "Der Tarif ist der Standard; ein Mitglied kann eigene Konditionen haben (Monatsbeitrag, Überschreitungssatz, Rabatt auf Zuschläge), vom Inhaber oder einem Finanz-Admin vorgeschlagen und nach den Regeln geprüft. Sichtbar für das Mitglied, die Inhaber und Finanz-Admins; jeder Zugriff wird protokolliert."
 }

@@ -1057,6 +1057,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get calendarEventStatusExpired => 'expiré';
 
   @override
+  String get accessKindNegotiations => 'Négociations tarifaires';
+
+  @override
+  String accessRuleNegotiations(String people) {
+    return 'Vous, les propriétaires et les admins finances : $people. Chaque consultation par quelqu\'un d\'autre est journalisée ci-dessous.';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -1957,6 +1965,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Chaque règle de validation nomme qui valide : les admins, des personnes désignées quel que soit leur rôle, ou tous les membres — et combien. Désactivé : propriétaire et admins comme avant.';
 
   @override
+  String get featurePriceNegotiationsTitle => 'Négociations tarifaires';
+
+  @override
+  String get featurePriceNegotiationsDesc =>
+      'Le tarif est la valeur par défaut ; un membre peut avoir ses propres conditions (abonnement, dépassement, remise sur les suppléments), proposées par le propriétaire ou un admin finances et validées selon les règles. Vues par le membre, les propriétaires et les admins finances ; chaque consultation est journalisée.';
+
+  @override
   String get helpTitle => 'Aide';
 
   @override
@@ -2371,6 +2386,21 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get helpHintMoneyPaymentsTipSupplyTopic => 'Services et Accessoires';
+
+  @override
+  String get helpHintMoneyStatementTipNegotiation =>
+      'Des conditions négociées ? La carte montre vos prix à côté du tarif, depuis quand, et qui peut les voir — les propriétaires et les admins finances, chaque consultation journalisée.';
+
+  @override
+  String get helpHintMoneyStatementTipNegotiationTopic =>
+      'Négociations tarifaires';
+
+  @override
+  String get helpHintMembersTipNegotiation =>
+      'Les prix propres d\'un membre : ouvrez sa fiche → Négociation tarifaire, saisissez l\'abonnement, le dépassement ou la remise convenus, et les validateurs de la règle confirment.';
+
+  @override
+  String get helpHintMembersTipNegotiationTopic => 'Négociations tarifaires';
 
   @override
   String get inviteSectionTitle => 'Inviter quelqu\'un';
@@ -3497,6 +3527,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une fois par jour, les factures ouvertes au-delà du délai reçoivent d\'elles-mêmes leur niveau de relance suivant — une alerte dans le fil du membre et une notification. Désactivé : vous envoyez chaque relance vous-même.';
 
   @override
+  String get eventTypePriceNegotiation => 'Négociation tarifaire';
+
+  @override
+  String eventPriceNegotiationLine(String actor, String member, String terms) {
+    return '$actor propose des conditions pour $member : $terms';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'Nouveau membre';
 
   @override
@@ -4515,6 +4553,61 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get serviceOutOfStockHint =>
       'Plus rien sur l\'étagère — la prochaine fourniture le réapprovisionne.';
+
+  @override
+  String get negotiationCardTitle => 'Mes conditions négociées';
+
+  @override
+  String get negotiationOnTariff => 'Vous êtes au tarif de l\'espace.';
+
+  @override
+  String get negotiationPending => 'Des conditions attendent validation.';
+
+  @override
+  String negotiationActiveSince(String month) {
+    return 'Vos conditions s\'appliquent depuis $month.';
+  }
+
+  @override
+  String get negotiationFee => 'Abonnement mensuel';
+
+  @override
+  String get negotiationOverage => 'Dépassement par demi-journée';
+
+  @override
+  String get negotiationDiscount => 'Remise sur les suppléments';
+
+  @override
+  String get negotiationDefaultColumn => 'Tarif';
+
+  @override
+  String get negotiationMineColumn => 'Les miennes';
+
+  @override
+  String get negotiationWhoCanSee => 'Qui peut voir';
+
+  @override
+  String get negotiationProposeTitle => 'Négociation tarifaire';
+
+  @override
+  String get negotiationProposeHint =>
+      'Laissez un champ vide pour garder le tarif. Les conditions passent par la validation avant de s\'appliquer.';
+
+  @override
+  String get negotiationNote => 'Note';
+
+  @override
+  String get negotiationValidFrom => 'Applicable dès';
+
+  @override
+  String get negotiationSubmit => 'Proposer pour validation';
+
+  @override
+  String get negotiationProposed =>
+      'Conditions proposées — en attente de validation.';
+
+  @override
+  String get negotiationPendingBadge => 'en attente de validation';
 
   @override
   String get planDurationLabel => 'Durée';

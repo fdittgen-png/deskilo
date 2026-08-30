@@ -155,7 +155,7 @@ const Map<String, int> _baseline = {
   // 600→630 (2026-08-22): #585 seatIdForNfcUid + the nfc_uid column in
   // the seat row mapping.
   'lib/features/plan/data/supabase_floor_plan_repository.dart': 630,
-  'lib/features/money/data/supabase_money_repository.dart': 1020,
+  'lib/features/money/data/supabase_money_repository.dart': 1040, // 2026-08-30 #739 negotiation RPCs
   // 600→630 (2026-08-11): #537 VAT price transparency — the gross-price
   // hint + per-pack VAT/currency subtitles (labeling, no new concern).
   // 630→660 (2026-08-11): #537 follow-up — live VAT-share helpers under

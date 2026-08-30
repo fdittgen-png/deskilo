@@ -1928,6 +1928,18 @@ abstract class AppLocalizations {
   /// **'expired'**
   String get calendarEventStatusExpired;
 
+  /// No description provided for @accessKindNegotiations.
+  ///
+  /// In en, this message translates to:
+  /// **'Price negotiations'**
+  String get accessKindNegotiations;
+
+  /// No description provided for @accessRuleNegotiations.
+  ///
+  /// In en, this message translates to:
+  /// **'You, the owners and the finance admins: {people}. Every read by someone else is on the record below.'**
+  String accessRuleNegotiations(String people);
+
   /// Application name shown in the task switcher and app bar. Brand name — identical in all locales.
   ///
   /// In en, this message translates to:
@@ -3506,6 +3518,18 @@ abstract class AppLocalizations {
   /// **'Each validation rule names who validates: the admins, listed persons of any role, or every member — plus how many. Off: owner and admins as before.'**
   String get featureValidationScopesDesc;
 
+  /// No description provided for @featurePriceNegotiationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Price negotiations'**
+  String get featurePriceNegotiationsTitle;
+
+  /// No description provided for @featurePriceNegotiationsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.'**
+  String get featurePriceNegotiationsDesc;
+
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
@@ -4189,6 +4213,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Services and Accessories'**
   String get helpHintMoneyPaymentsTipSupplyTopic;
+
+  /// No description provided for @helpHintMoneyStatementTipNegotiation.
+  ///
+  /// In en, this message translates to:
+  /// **'Negotiated a deal? The card shows your prices beside the tariff, since when, and who can see them — the owners and finance admins, every read on the record.'**
+  String get helpHintMoneyStatementTipNegotiation;
+
+  /// No description provided for @helpHintMoneyStatementTipNegotiationTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Price negotiations'**
+  String get helpHintMoneyStatementTipNegotiationTopic;
+
+  /// No description provided for @helpHintMembersTipNegotiation.
+  ///
+  /// In en, this message translates to:
+  /// **'A member\'s own prices: open their sheet → Price negotiation, set the fee, overage or discount you agreed, and the rule\'s validators confirm it.'**
+  String get helpHintMembersTipNegotiation;
+
+  /// No description provided for @helpHintMembersTipNegotiationTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Price negotiations'**
+  String get helpHintMembersTipNegotiationTopic;
 
   /// No description provided for @inviteSectionTitle.
   ///
@@ -6164,6 +6212,18 @@ abstract class AppLocalizations {
   /// **'Once a day, open invoices past the term get their next reminder level by themselves — an alert in the member\'s feed and a push. Off: you send each reminder yourself.'**
   String get dunningAutomaticHint;
 
+  /// No description provided for @eventTypePriceNegotiation.
+  ///
+  /// In en, this message translates to:
+  /// **'Price negotiation'**
+  String get eventTypePriceNegotiation;
+
+  /// No description provided for @eventPriceNegotiationLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} proposes a deal for {member}: {terms}'**
+  String eventPriceNegotiationLine(String actor, String member, String terms);
+
   /// No description provided for @eventTypeMemberJoin.
   ///
   /// In en, this message translates to:
@@ -7981,6 +8041,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing left on the shelf — the next supply restocks it.'**
   String get serviceOutOfStockHint;
+
+  /// No description provided for @negotiationCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My negotiated prices'**
+  String get negotiationCardTitle;
+
+  /// No description provided for @negotiationOnTariff.
+  ///
+  /// In en, this message translates to:
+  /// **'You are on the workspace tariff.'**
+  String get negotiationOnTariff;
+
+  /// No description provided for @negotiationPending.
+  ///
+  /// In en, this message translates to:
+  /// **'A deal is awaiting validation.'**
+  String get negotiationPending;
+
+  /// No description provided for @negotiationActiveSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Your deal applies since {month}.'**
+  String negotiationActiveSince(String month);
+
+  /// No description provided for @negotiationFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly fee'**
+  String get negotiationFee;
+
+  /// No description provided for @negotiationOverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Overage per half-day'**
+  String get negotiationOverage;
+
+  /// No description provided for @negotiationDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount on supplements'**
+  String get negotiationDiscount;
+
+  /// No description provided for @negotiationDefaultColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Tariff'**
+  String get negotiationDefaultColumn;
+
+  /// No description provided for @negotiationMineColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Mine'**
+  String get negotiationMineColumn;
+
+  /// No description provided for @negotiationWhoCanSee.
+  ///
+  /// In en, this message translates to:
+  /// **'Who can see this'**
+  String get negotiationWhoCanSee;
+
+  /// No description provided for @negotiationProposeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Price negotiation'**
+  String get negotiationProposeTitle;
+
+  /// No description provided for @negotiationProposeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave a field empty to keep the tariff. The deal goes through validation before it applies.'**
+  String get negotiationProposeHint;
+
+  /// No description provided for @negotiationNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get negotiationNote;
+
+  /// No description provided for @negotiationValidFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Applies from'**
+  String get negotiationValidFrom;
+
+  /// No description provided for @negotiationSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Propose for validation'**
+  String get negotiationSubmit;
+
+  /// No description provided for @negotiationProposed.
+  ///
+  /// In en, this message translates to:
+  /// **'Deal proposed — waiting for validation.'**
+  String get negotiationProposed;
+
+  /// No description provided for @negotiationPendingBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'awaiting validation'**
+  String get negotiationPendingBadge;
 
   /// Booking sheet: grid duration slider label (#574)
   ///

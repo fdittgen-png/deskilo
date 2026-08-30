@@ -9,6 +9,7 @@ import 'invoice.dart';
 import 'vat_declaration.dart';
 import 'member_account.dart';
 import 'dunning.dart';
+import 'price_negotiation.dart';
 import 'invoice_pdf_template.dart';import 'ledger_entry.dart';
 import 'package.dart';
 import 'payment_intent.dart';
@@ -102,6 +103,21 @@ abstract class MoneyRepository {
 
   /// The workspace's dunning policy (#472, 0093); defaults when unset.
   Future<DunningRules> fetchDunningRules(String workspaceId);
+
+  /// #739 — a member's deal: default, active, pending. Owner, finance
+  /// admins and the member; a read by anyone else than the member is
+  /// logged server-side.
+  Future<PriceNegotiation> fetchPriceNegotiation(String memberId);
+
+  /// #739 — propose a deal for [memberId]; lands pending for validation.
+  Future<void> proposePriceNegotiation({
+    required String memberId,
+    int? feeCents,
+    int? overageFeeCents,
+    double? discountPercent,
+    String note = '',
+    DateTime? validFrom,
+  });
 
   /// #726 — apply the dunning rules now (idempotent: the rules decide).
   /// Returns how many reminders were recorded. Admins only.

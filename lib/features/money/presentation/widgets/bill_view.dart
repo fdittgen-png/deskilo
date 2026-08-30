@@ -634,6 +634,7 @@ class _OpenPositionsCard extends StatelessWidget {
         return l10n?.eventTypeQuota ?? 'Extra half-days';
       case EventType.invoiceWriteoff:
       case EventType.invoiceReminder:
+      case EventType.priceNegotiation:
       case EventType.reservationDelete:
       case EventType.roleChange:
       case EventType.memberJoin:

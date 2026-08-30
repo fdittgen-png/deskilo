@@ -6,6 +6,7 @@ import '../../../core/trace/traced.dart';
 
 import '../domain/invoice.dart';
 import '../domain/dunning.dart';
+import '../domain/price_negotiation.dart';
 import '../domain/invoice_pdf_template.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -409,3 +410,14 @@ Future<InvoicingOverview> invoicingOverview(Ref ref) async {
 
   return (period: period, toInvoice: toInvoice, open: open);
 }
+
+/// #739 — a member's deal (default, active, pending). The server logs
+/// a read by anyone but the member; the provider is per member so the
+/// admin's sheet and the member's own card never share a cache entry.
+@riverpod
+Future<PriceNegotiation> priceNegotiation(Ref ref, String memberId) =>
+    traced(
+      'money',
+      'price negotiation',
+      () => ref.read(moneyRepositoryProvider).fetchPriceNegotiation(memberId),
+    );

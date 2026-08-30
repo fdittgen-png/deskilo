@@ -134,5 +134,9 @@
   "helpHintValidationTipScopes": "Quién valida es el alcance de la regla: los admins, personas designadas de cualquier rol, o todos los miembros — y cuántos. El propietario siempre puede; nadie valida su propio evento.",
   "helpHintValidationTipScopesTopic": "Gestión de roles",
   "helpHintMoneyPaymentsTipSupply": "¿Compraste cápsulas o bolsas de aspiradora para el espacio? Envía el gasto como suministro: validado, pasa al estante como consumible que los demás pagan, y a ti te lo reembolsan.",
-  "helpHintMoneyPaymentsTipSupplyTopic": "Servicios y Accesorios"
+  "helpHintMoneyPaymentsTipSupplyTopic": "Servicios y Accesorios",
+  "helpHintMoneyStatementTipNegotiation": "¿Condiciones negociadas? La tarjeta muestra tus precios junto a la tarifa, desde cuándo, y quién puede verlos — los propietarios y los admins de finanzas, cada lectura registrada.",
+  "helpHintMoneyStatementTipNegotiationTopic": "Negociaciones de precios",
+  "helpHintMembersTipNegotiation": "Los precios propios de un miembro: abre su ficha → Negociación de precios, indica la cuota, el exceso o el descuento acordados, y los validadores de la regla lo confirman.",
+  "helpHintMembersTipNegotiationTopic": "Negociaciones de precios"
 }

@@ -155,6 +155,7 @@ const FEATURES=[
  ['paymentReminders','Relances de paiement automatiques','Les factures ouvertes au-delà du délai configuré reçoivent leurs niveaux de relance automatiquement — une alerte dans le fil du membre et une notification, une fois par jour. Nécessite « Relances de paiement ».',1],
  ['supplyExpenses','Fournitures via les dépenses','Une dépense peut être une fourniture pour l\'espace (capsules, sacs d\'aspirateur…) : validée, elle réapprovisionne ou crée un service consommable avec un prix unitaire ; les consommations décomptent le stock. Nécessite « Services ».',1],
  ['validationScopes','Validateurs par rôle ou par personne','Chaque règle de validation nomme qui valide : les admins, des personnes désignées quel que soit leur rôle, ou tous les membres — et combien. Désactivé : propriétaire et admins comme avant.',1],
+ ['priceNegotiations','Négociations tarifaires','Le tarif est la valeur par défaut ; un membre peut avoir ses propres conditions (abonnement, dépassement, remise sur les suppléments), proposées par le propriétaire ou un admin finances et validées selon les règles. Vues par le membre, les propriétaires et les admins finances ; chaque consultation est journalisée.',1],
  ['uiAnimations','Animations de l\'interface','Transitions et retours animés dans toute l\'app ; désactivé, tout devient instantané. Le réglage d\'accessibilité « animations réduites » du système prime de toute façon.',1],
 ];
 const PERMS=[['manageRoles','Gérer les rôles et permissions'],['manageMembers','Gérer les membres'],['manageValidation','Configurer les règles de validation'],['workspaceSettings',"Modifier les réglages de l'espace"],['issueInvoices','Émettre les factures et rapprocher les paiements'],['viewFinances',"Consulter les finances de l'espace"],['manageDocuments','Gérer la bibliothèque de documents'],['manageServices','Gérer les services et forfaits'],['approveExpenses','Approuver les dépenses']];
@@ -192,7 +193,7 @@ const DOMAINS=[
  ['role_change','Changement de rôle'],['member_join','Nouveau membre'],
  ['reservation','Réservation'],['space_reservation',"Réservations d'espaces entiers"],
  ['invoice_payment','Paiement de facture'],['adjustment','Ajustement'],
- ['invoice_writeoff','Annulation de solde']];
+ ['invoice_writeoff','Annulation de solde'],['price_negotiation','Négociation tarifaire']];
 const HORIZON=[['7','7 jours'],['14','14 jours'],['30','30 jours'],['60','60 jours'],['90','90 jours (défaut)'],['120','120 jours'],['180','180 jours'],['365','1 an'],['730','2 ans']];
 const DURATIONS=[['5','5 minutes'],['10','10 minutes'],['15','15 minutes'],['30','30 minutes (défaut min.)'],['45','45 minutes'],['60','1 heure'],['90','1 h 30'],['120','2 heures'],['180','3 heures'],['240','4 heures'],['300','5 heures'],['360','6 heures'],['480','8 heures'],['600','10 heures'],['720','12 heures'],['1440','24 heures (défaut max.)']];
 const VATPERIOD=[['month','Mensuelle'],['quarter','Trimestrielle']];

@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../money/presentation/widgets/negotiation_card.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -317,6 +318,9 @@ class MembersScreen extends ConsumerWidget {
           label: l10n?.memberSubscriptionLabel ?? 'Subscription',
           onTap: () => _pickSubscription(context, ref, member),
         ),
+      if (!member.isKiosk && active)
+        MemberNegotiationTile(
+            memberId: member.id, memberName: name, isOwner: isOwner),
       if (isOwner && !member.isKiosk && active)
         _sheetAction(
           context,

@@ -4,6 +4,7 @@ import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
+import 'package:deskilo/features/money/domain/price_negotiation.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
@@ -176,6 +177,51 @@ class FakeMoneyRepository implements MoneyRepository {
 
   /// #472 — per-workspace dunning policy.
   DunningRules dunningRules = DunningRules.defaults;
+
+  /// #739 — per member: the deal the fake serves; proposals recorded.
+  final negotiations = <String, PriceNegotiation>{};
+  final proposedNegotiations = <({String memberId, int? feeCents, int? overageFeeCents, double? discountPercent, String note})>[];
+  int negotiationReads = 0;
+
+  @override
+  Future<PriceNegotiation> fetchPriceNegotiation(String memberId) async {
+    negotiationReads++;
+    return negotiations[memberId] ??
+        const PriceNegotiation(
+          defaultFeeCents: 25000,
+          defaultOverageFeeCents: 1200,
+        );
+  }
+
+  @override
+  Future<void> proposePriceNegotiation({
+    required String memberId,
+    int? feeCents,
+    int? overageFeeCents,
+    double? discountPercent,
+    String note = '',
+    DateTime? validFrom,
+  }) async {
+    proposedNegotiations.add((
+      memberId: memberId,
+      feeCents: feeCents,
+      overageFeeCents: overageFeeCents,
+      discountPercent: discountPercent,
+      note: note,
+    ));
+    negotiations[memberId] = (negotiations[memberId] ??
+            const PriceNegotiation(defaultFeeCents: 25000, defaultOverageFeeCents: 1200))
+        .copyWith(
+      pending: NegotiationDeal(
+        feeCents: feeCents,
+        overageFeeCents: overageFeeCents,
+        discountPercent: discountPercent,
+        note: note,
+        validFrom: validFrom ?? kTestNow,
+        status: 'pending',
+      ),
+    );
+  }
 
   int sweeps = 0;
 

@@ -1051,6 +1051,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendarEventStatusExpired => 'expired';
 
   @override
+  String get accessKindNegotiations => 'Price negotiations';
+
+  @override
+  String accessRuleNegotiations(String people) {
+    return 'You, the owners and the finance admins: $people. Every read by someone else is on the record below.';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -1935,6 +1943,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Each validation rule names who validates: the admins, listed persons of any role, or every member — plus how many. Off: owner and admins as before.';
 
   @override
+  String get featurePriceNegotiationsTitle => 'Price negotiations';
+
+  @override
+  String get featurePriceNegotiationsDesc =>
+      'The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.';
+
+  @override
   String get helpTitle => 'Help';
 
   @override
@@ -2346,6 +2361,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpHintMoneyPaymentsTipSupplyTopic => 'Services and Accessories';
+
+  @override
+  String get helpHintMoneyStatementTipNegotiation =>
+      'Negotiated a deal? The card shows your prices beside the tariff, since when, and who can see them — the owners and finance admins, every read on the record.';
+
+  @override
+  String get helpHintMoneyStatementTipNegotiationTopic => 'Price negotiations';
+
+  @override
+  String get helpHintMembersTipNegotiation =>
+      'A member\'s own prices: open their sheet → Price negotiation, set the fee, overage or discount you agreed, and the rule\'s validators confirm it.';
+
+  @override
+  String get helpHintMembersTipNegotiationTopic => 'Price negotiations';
 
   @override
   String get inviteSectionTitle => 'Invite someone';
@@ -3461,6 +3490,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Once a day, open invoices past the term get their next reminder level by themselves — an alert in the member\'s feed and a push. Off: you send each reminder yourself.';
 
   @override
+  String get eventTypePriceNegotiation => 'Price negotiation';
+
+  @override
+  String eventPriceNegotiationLine(String actor, String member, String terms) {
+    return '$actor proposes a deal for $member: $terms';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'New member';
 
   @override
@@ -4470,6 +4507,60 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get serviceOutOfStockHint =>
       'Nothing left on the shelf — the next supply restocks it.';
+
+  @override
+  String get negotiationCardTitle => 'My negotiated prices';
+
+  @override
+  String get negotiationOnTariff => 'You are on the workspace tariff.';
+
+  @override
+  String get negotiationPending => 'A deal is awaiting validation.';
+
+  @override
+  String negotiationActiveSince(String month) {
+    return 'Your deal applies since $month.';
+  }
+
+  @override
+  String get negotiationFee => 'Monthly fee';
+
+  @override
+  String get negotiationOverage => 'Overage per half-day';
+
+  @override
+  String get negotiationDiscount => 'Discount on supplements';
+
+  @override
+  String get negotiationDefaultColumn => 'Tariff';
+
+  @override
+  String get negotiationMineColumn => 'Mine';
+
+  @override
+  String get negotiationWhoCanSee => 'Who can see this';
+
+  @override
+  String get negotiationProposeTitle => 'Price negotiation';
+
+  @override
+  String get negotiationProposeHint =>
+      'Leave a field empty to keep the tariff. The deal goes through validation before it applies.';
+
+  @override
+  String get negotiationNote => 'Note';
+
+  @override
+  String get negotiationValidFrom => 'Applies from';
+
+  @override
+  String get negotiationSubmit => 'Propose for validation';
+
+  @override
+  String get negotiationProposed => 'Deal proposed — waiting for validation.';
+
+  @override
+  String get negotiationPendingBadge => 'awaiting validation';
 
   @override
   String get planDurationLabel => 'Duration';

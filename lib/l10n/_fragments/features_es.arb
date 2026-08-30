@@ -151,5 +151,7 @@
   "featureSupplyExpensesTitle": "Suministros desde gastos",
   "featureSupplyExpensesDesc": "Un gasto puede ser un suministro para el espacio (cápsulas de café, bolsas de aspiradora…): validado, repone o crea un servicio consumible con precio unitario, y los consumos descuentan el stock.",
   "featureValidationScopesTitle": "Validadores por rol o persona",
-  "featureValidationScopesDesc": "Cada regla de validación nombra quién valida: los admins, personas designadas de cualquier rol, o todos los miembros — y cuántos. Desactivado: propietario y admins como antes."
+  "featureValidationScopesDesc": "Cada regla de validación nombra quién valida: los admins, personas designadas de cualquier rol, o todos los miembros — y cuántos. Desactivado: propietario y admins como antes.",
+  "featurePriceNegotiationsTitle": "Negociaciones de precios",
+  "featurePriceNegotiationsDesc": "La tarifa es el valor por defecto; un miembro puede tener sus propias condiciones (cuota mensual, tarifa de exceso, descuento en suplementos), propuestas por el propietario o un admin de finanzas y validadas según las reglas. Las ven el miembro, los propietarios y los admins de finanzas; cada lectura queda registrada."
 }

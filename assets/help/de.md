@@ -487,6 +487,10 @@ Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine
 
 **Der Rest der Unterlagen:** **Meine Konditionen** (Ihre Finanzvereinbarung), der **monatliche Zahlungsbericht**, **die Monatsabrechnung als PDF** und die **Dokumentbibliothek**, wenn der Workspace eine führt (§11d). In Funktionen → *Finanzen in drei Ansichten* lässt sich die einspaltige Ansicht zurückholen.
 
+### 9g. Preisverhandlungen
+
+**Der Tarif ist der Standard; Ihre Konditionen sind Ihre.** Ein Inhaber oder Finanz-Admin kann für ein Mitglied eine **Preisverhandlung** vorschlagen — Monatsbeitrag, Überschreitungssatz je halben Tag, Rabatt auf Zuschläge (Zubehör, Ganzraum-Reservierungen) — je optional, sonst der Tarif. Der Vorschlag landet unter Ereignisse bei den Prüfern der Regel (Domäne *Preisverhandlung* oder Standardregel); bestätigt, gilt er ab dem gewählten Monat und ersetzt die vorigen Konditionen. Auf Ihrer Ansicht **Abrechnung** zeigt die Karte *Meine verhandelten Preise* den durchgestrichenen Tarif neben Ihren Preisen, seit wann, und **Wer das sehen kann**: Sie, die Inhaber und die Finanz-Admins — jeder Zugriff durch andere wird protokolliert und dort aufgeführt (§14). Funktion *Preisverhandlungen*.
+
 ## 10. Kiosk-Modus (Wandtablet)
 
 Ein Android-Tablet oder iPad an die Tür:

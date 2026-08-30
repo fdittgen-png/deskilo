@@ -156,6 +156,19 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
           ) ??
           'Reminder ${event.payload['level']}: invoice '
               '${event.payload['number']} — $amount still due',
+      (EventType.priceNegotiation, _) => l10n?.eventPriceNegotiationLine(
+            actor,
+            names[event.subjectMemberId] ?? '',
+            [
+              if (event.payload['fee_cents'] != null)
+                currency.formatMinor((event.payload['fee_cents'] as num).toInt()),
+              if (event.payload['overage_fee_cents'] != null)
+                '${currency.formatMinor((event.payload['overage_fee_cents'] as num).toInt())}/½',
+              if (event.payload['discount_percent'] != null)
+                '−${event.payload['discount_percent']} %',
+            ].join(' · '),
+          ) ??
+          '$actor proposes a deal for ${names[event.subjectMemberId] ?? ''}',
       _ => '${_typeLabel(l10n, event.type)} · ${event.action.name}',
     };
     // Service charges name no actor in the title, so always say whose bill
@@ -260,6 +273,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.reservationDelete => Icons.delete_outline,
       EventType.invoiceWriteoff => Icons.money_off_csred_outlined,
       EventType.invoiceReminder => Icons.notification_important_outlined,
+      EventType.priceNegotiation => Icons.handshake_outlined,
     };
   }
 

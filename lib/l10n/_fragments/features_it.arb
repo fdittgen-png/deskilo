@@ -151,5 +151,7 @@
   "featureSupplyExpensesTitle": "Scorte dalle spese",
   "featureSupplyExpensesDesc": "Una spesa può essere una scorta per lo spazio (capsule di caffè, sacchetti per aspirapolvere…): convalidata, rifornisce o crea un servizio consumabile con prezzo unitario, e i consumi scalano la scorta.",
   "featureValidationScopesTitle": "Convalidatori per ruolo o persona",
-  "featureValidationScopesDesc": "Ogni regola di convalida indica chi convalida: gli admin, persone designate di qualsiasi ruolo, o tutti i membri — e quanti. Disattivato: proprietario e admin come prima."
+  "featureValidationScopesDesc": "Ogni regola di convalida indica chi convalida: gli admin, persone designate di qualsiasi ruolo, o tutti i membri — e quanti. Disattivato: proprietario e admin come prima.",
+  "featurePriceNegotiationsTitle": "Negoziazioni di prezzo",
+  "featurePriceNegotiationsDesc": "La tariffa è il valore predefinito; un membro può avere condizioni proprie (quota mensile, tariffa di eccedenza, sconto sui supplementi), proposte dal proprietario o da un admin finanze e convalidate secondo le regole. Le vedono il membro, i proprietari e gli admin finanze; ogni lettura è registrata."
 }

@@ -206,6 +206,9 @@ class FeaturesScreen extends ConsumerWidget {
         WorkspaceFeature.validationScopes =>
           l10n?.featureValidationScopesDesc ??
               'Each validation rule names who validates: the admins, listed persons of any role, or every member — plus how many. Off: owner and admins as before.',
+        WorkspaceFeature.priceNegotiations =>
+          l10n?.featurePriceNegotiationsDesc ??
+              'The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.',
         WorkspaceFeature.dataAccessLog =>
           l10n?.featureDataAccessLogDesc ??
               'Members see who looked at their finances and when (written by the server, never skippable). Off hides the row; the log is still kept.',

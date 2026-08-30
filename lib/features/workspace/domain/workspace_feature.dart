@@ -57,7 +57,8 @@ enum WorkspaceFeature {
   financeFaces,
   paymentReminders,
   supplyExpenses,
-  validationScopes;
+  validationScopes,
+  priceNegotiations;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -317,6 +318,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // any role, or every member. Off: owner + admins as before.
   WorkspaceFeature.validationScopes:
       FeatureManifestEntry(feature: WorkspaceFeature.validationScopes),
+  // #739 — the tariff is the default; a member may have their own deal,
+  // proposed by finance admins, validated, seen by the member and them.
+  WorkspaceFeature.priceNegotiations: FeatureManifestEntry(
+    feature: WorkspaceFeature.priceNegotiations,
+    requires: WorkspaceFeature.moneyTab,
+  ),
   // #662 — signing IN by scanning a badge, then a PIN. Under nfcBadges
   // rather than kioskMode: it needs badges to EXIST, and turning badge
   // issuance off must take the login button with it, or the button

@@ -1599,3 +1599,97 @@ final class InvoicingOverviewProvider
 }
 
 String _$invoicingOverviewHash() => r'6f1c3ed961793b215969415162a30e0b2f7951f9';
+
+/// #739 — a member's deal (default, active, pending). The server logs
+/// a read by anyone but the member; the provider is per member so the
+/// admin's sheet and the member's own card never share a cache entry.
+
+@ProviderFor(priceNegotiation)
+final priceNegotiationProvider = PriceNegotiationFamily._();
+
+/// #739 — a member's deal (default, active, pending). The server logs
+/// a read by anyone but the member; the provider is per member so the
+/// admin's sheet and the member's own card never share a cache entry.
+
+final class PriceNegotiationProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<PriceNegotiation>,
+          PriceNegotiation,
+          FutureOr<PriceNegotiation>
+        >
+    with $FutureModifier<PriceNegotiation>, $FutureProvider<PriceNegotiation> {
+  /// #739 — a member's deal (default, active, pending). The server logs
+  /// a read by anyone but the member; the provider is per member so the
+  /// admin's sheet and the member's own card never share a cache entry.
+  PriceNegotiationProvider._({
+    required PriceNegotiationFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'priceNegotiationProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$priceNegotiationHash();
+
+  @override
+  String toString() {
+    return r'priceNegotiationProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<PriceNegotiation> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<PriceNegotiation> create(Ref ref) {
+    final argument = this.argument as String;
+    return priceNegotiation(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is PriceNegotiationProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$priceNegotiationHash() => r'b153021cfee6a8b44f5954ca6355ba4d719fe882';
+
+/// #739 — a member's deal (default, active, pending). The server logs
+/// a read by anyone but the member; the provider is per member so the
+/// admin's sheet and the member's own card never share a cache entry.
+
+final class PriceNegotiationFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<PriceNegotiation>, String> {
+  PriceNegotiationFamily._()
+    : super(
+        retry: null,
+        name: r'priceNegotiationProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #739 — a member's deal (default, active, pending). The server logs
+  /// a read by anyone but the member; the provider is per member so the
+  /// admin's sheet and the member's own card never share a cache entry.
+
+  PriceNegotiationProvider call(String memberId) =>
+      PriceNegotiationProvider._(argument: memberId, from: this);
+
+  @override
+  String toString() => r'priceNegotiationProvider';
+}

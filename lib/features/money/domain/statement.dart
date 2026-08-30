@@ -57,6 +57,11 @@ sealed class Statement with _$Statement {
     /// Half-days still bookable within the cap
     /// (included + granted − used, floored at 0).
     @Default(0) int remainingHalfDays,
+    /// #739 — the member's deal against the default, as the server
+    /// applied it to this month. Null on older servers.
+    NegotiatedTariff? negotiated,
+    /// #739 — the discount the server applied to the supplements.
+    @Default(0) double discountPercent,
   }) = _Statement;
 
   /// Parses the `member_statement` RPC's jsonb result. Tolerant of the
@@ -87,6 +92,11 @@ sealed class Statement with _$Statement {
         grantedHalfDays: (json['granted_half_days'] as num?)?.toInt() ?? 0,
         remainingHalfDays:
             (json['remaining_half_days'] as num?)?.toInt() ?? 0,
+        negotiated: json['negotiated'] is Map
+            ? NegotiatedTariff.fromJson(
+                (json['negotiated'] as Map).cast<String, dynamic>())
+            : null,
+        discountPercent: (json['discount_percent'] as num?)?.toDouble() ?? 0,
       );
 
   bool get isSettled => balanceCents >= 0;
@@ -96,4 +106,39 @@ sealed class Statement with _$Statement {
 
   /// True once the member has consumed their whole cap this month.
   bool get isCapReached => usedHalfDays >= capHalfDays;
+}
+
+/// #739 — default vs negotiated, as the statement reports them.
+class NegotiatedTariff {
+  const NegotiatedTariff({
+    required this.defaultFeeCents,
+    required this.defaultOverageFeeCents,
+    this.feeCents,
+    this.overageFeeCents,
+    this.discountPercent,
+    this.validFrom,
+    this.active = false,
+  });
+
+  factory NegotiatedTariff.fromJson(Map<String, dynamic> json) =>
+      NegotiatedTariff(
+        defaultFeeCents: (json['default_fee_cents'] as num?)?.toInt() ?? 0,
+        defaultOverageFeeCents:
+            (json['default_overage_fee_cents'] as num?)?.toInt() ?? 0,
+        feeCents: (json['fee_cents'] as num?)?.toInt(),
+        overageFeeCents: (json['overage_fee_cents'] as num?)?.toInt(),
+        discountPercent: (json['discount_percent'] as num?)?.toDouble(),
+        validFrom: json['valid_from'] == null
+            ? null
+            : DateTime.tryParse(json['valid_from'] as String),
+        active: json['active'] == true,
+      );
+
+  final int defaultFeeCents;
+  final int defaultOverageFeeCents;
+  final int? feeCents;
+  final int? overageFeeCents;
+  final double? discountPercent;
+  final DateTime? validFrom;
+  final bool active;
 }
