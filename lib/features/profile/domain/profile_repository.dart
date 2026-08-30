@@ -46,6 +46,10 @@ abstract class ProfileRepository {
   /// `touch_last_seen` RPC (0028).
   Future<void> touchLastSeen();
 
+  /// #751 — record the acceptance of the privacy policy [version] on the
+  /// account (server timestamp).
+  Future<void> acceptPrivacyPolicy(String version);
+
   /// Uploads my profile photo to the private `avatars` bucket (0038) and
   /// records its path on my profile row. Throws [StateError] signed out.
   Future<void> setAvatar({

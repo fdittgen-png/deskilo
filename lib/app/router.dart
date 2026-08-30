@@ -30,6 +30,9 @@ import '../features/help/presentation/screens/help_screen.dart';
 import '../features/profile/presentation/screens/developer_screen.dart';
 import '../features/workspace/presentation/screens/inbox_screen.dart';
 import '../core/i18n/regional_formats_section.dart';
+import '../core/privacy/privacy_policy.dart';
+import '../features/profile/presentation/screens/consent_screen.dart';
+import '../features/profile/providers/profile_providers.dart';
 import '../features/profile/presentation/screens/privacy_screen.dart';
 import '../features/profile/presentation/screens/profiles_screen.dart';
 import '../features/profile/presentation/screens/settings_screen.dart';
@@ -85,7 +88,10 @@ GoRouter router(Ref ref) {
     ..listen(myMemberProvider, (_, _) => refresh.value++)
     // Kiosk gate: the accept/reject decision moves the pad between the
     // gate, the locked kiosk view, and the normal app.
-    ..listen(kioskModeProvider, (_, _) => refresh.value++);
+    ..listen(kioskModeProvider, (_, _) => refresh.value++)
+    // #751 — the consent gate reads the profile's accepted policy version:
+    // re-evaluate when the profile resolves, and after an acceptance.
+    ..listen(myProfileProvider, (_, _) => refresh.value++);
 
   /// Whether [feature] is enabled for the active workspace (#146).
   /// Defaults (everything ON) while the workspace is still loading, so
@@ -105,6 +111,24 @@ GoRouter router(Ref ref) {
       final atAuth = state.matchedLocation == '/auth';
       if (!signedIn) return atAuth ? null : '/auth';
       if (atAuth) return '/reserve';
+
+      // #751 — the GDPR consent gates everything but itself, the help
+      // and the privacy screen, once the profile is known.
+      final profile = ref.read(myProfileProvider).value;
+      final atConsent = state.matchedLocation == '/consent';
+      final consentFree = atConsent ||
+          state.matchedLocation == '/help' ||
+          state.matchedLocation == '/privacy';
+      if (profile != null &&
+          profile.privacyAcceptedVersion != kPrivacyPolicyVersion &&
+          !consentFree) {
+        return '/consent';
+      }
+      if (atConsent &&
+          state.uri.queryParameters['review'] != '1' &&
+          profile?.privacyAcceptedVersion == kPrivacyPolicyVersion) {
+        return '/reserve';
+      }
 
       // Signed in: a user without any workspace lands on onboarding. The
       // `first` flag marks the forced first-run visit — only that visit is
@@ -281,6 +305,13 @@ GoRouter router(Ref ref) {
         path: '/help',
         builder: (context, state) =>
             HelpScreen(topic: state.uri.queryParameters['topic']),
+      ),
+      GoRoute(
+        // #751 — the GDPR consent; ?review=1 reads it without the gate.
+        path: '/consent',
+        builder: (context, state) => ConsentScreen(
+          review: state.uri.queryParameters['review'] == '1',
+        ),
       ),
       GoRoute(
         // #719 — Privacy & data: who can see my data, who did, export,

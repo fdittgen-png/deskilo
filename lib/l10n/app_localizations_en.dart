@@ -4955,6 +4955,87 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacyPolicy => 'Privacy policy';
 
   @override
+  String get consentTitle => 'Your data, your rights';
+
+  @override
+  String get consentIntro =>
+      'Before you use DesKilo, here is what the app does with your data, who can see it and what you can do about it. Two minutes; it is all there is.';
+
+  @override
+  String get consentWhatTitle => 'What DesKilo processes';
+
+  @override
+  String get consentWhatBody =>
+      'Your account (e-mail, display name, hashed password), your profile as you fill it (photo, status, address, WhatsApp number — each optional), and what you do in a workspace: reservations and check-ins, messages, expenses and consumptions, your subscription, invoices and payments. Everything is stored in the EU (Supabase, eu-central-1).';
+
+  @override
+  String get consentNotTitle => 'What DesKilo never does';
+
+  @override
+  String get consentNotBody =>
+      'No tracking, no analytics, no advertising, no sale or sharing of data. Push notifications carry no content — only \"you have a new message\"; the app itself writes the text. The F-Droid build has no Google services at all.';
+
+  @override
+  String get consentWhoTitle => 'Who can see what';
+
+  @override
+  String get consentWhoBody =>
+      'Access follows roles and is enforced on the server: bookings are visible to the workspace (the floor plan shows occupancy); messages only to the people in the conversation, whatever their role; your finances and your commercial agreement only to you, the owners and the admins holding the matching permission. Settings → Privacy & data names the people and lists who actually looked.';
+
+  @override
+  String get consentControllerTitle => 'Who is responsible';
+
+  @override
+  String get consentControllerBody =>
+      'Each workspace is operated by its owner — your community — who decides members, prices and payment providers. The app is open source (0BSD) and published by Florian Dittgen (Germany); the backend is Supabase in the EU. Online payments go through the provider the owner enabled (PayPal, Stripe, Mollie, Wero) under that provider\'s terms.';
+
+  @override
+  String get consentRetentionTitle => 'How long';
+
+  @override
+  String get consentRetentionBody =>
+      'As long as you are a member. When you leave and erase, your profile and messages go; accounting records (invoices, payments) stay for the legal retention period, by identifier and not by name.';
+
+  @override
+  String get consentRightsTitle => 'Your rights';
+
+  @override
+  String get consentRightsBody =>
+      'Access, rectification, export (art. 20), erasure (art. 17) and objection — each is a button in Settings → Privacy & data. For anything else: fdittgen@gmail.com. You may withdraw this consent by leaving the workspace and erasing your data at any time.';
+
+  @override
+  String get consentReviewTitle => 'Read it again anytime';
+
+  @override
+  String get consentReviewBody =>
+      'This text stays available in Settings → Privacy & data, in the in-app help (Privacy) and in the project wiki. A change of the text asks for your acceptance again.';
+
+  @override
+  String get consentCheckbox =>
+      'I have read this and I accept how DesKilo handles my data.';
+
+  @override
+  String get consentAccept => 'Accept and continue';
+
+  @override
+  String get consentVersion => 'Version';
+
+  @override
+  String consentAcceptedOn(String date, String version) {
+    return 'Accepted on $date ($version)';
+  }
+
+  @override
+  String get consentReadInHelp => 'Read in the help';
+
+  @override
+  String get consentReadOnWiki => 'Read on the wiki';
+
+  @override
+  String get consentReviewHint =>
+      'The text you accepted, with the date — read it again anytime.';
+
+  @override
   String get profilesDefault => 'Default at startup';
 
   @override

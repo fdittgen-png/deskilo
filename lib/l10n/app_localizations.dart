@@ -8828,6 +8828,144 @@ abstract class AppLocalizations {
   /// **'Privacy policy'**
   String get privacyPolicy;
 
+  /// No description provided for @consentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data, your rights'**
+  String get consentTitle;
+
+  /// No description provided for @consentIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Before you use DesKilo, here is what the app does with your data, who can see it and what you can do about it. Two minutes; it is all there is.'**
+  String get consentIntro;
+
+  /// No description provided for @consentWhatTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What DesKilo processes'**
+  String get consentWhatTitle;
+
+  /// No description provided for @consentWhatBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account (e-mail, display name, hashed password), your profile as you fill it (photo, status, address, WhatsApp number — each optional), and what you do in a workspace: reservations and check-ins, messages, expenses and consumptions, your subscription, invoices and payments. Everything is stored in the EU (Supabase, eu-central-1).'**
+  String get consentWhatBody;
+
+  /// No description provided for @consentNotTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What DesKilo never does'**
+  String get consentNotTitle;
+
+  /// No description provided for @consentNotBody.
+  ///
+  /// In en, this message translates to:
+  /// **'No tracking, no analytics, no advertising, no sale or sharing of data. Push notifications carry no content — only \"you have a new message\"; the app itself writes the text. The F-Droid build has no Google services at all.'**
+  String get consentNotBody;
+
+  /// No description provided for @consentWhoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Who can see what'**
+  String get consentWhoTitle;
+
+  /// No description provided for @consentWhoBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Access follows roles and is enforced on the server: bookings are visible to the workspace (the floor plan shows occupancy); messages only to the people in the conversation, whatever their role; your finances and your commercial agreement only to you, the owners and the admins holding the matching permission. Settings → Privacy & data names the people and lists who actually looked.'**
+  String get consentWhoBody;
+
+  /// No description provided for @consentControllerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Who is responsible'**
+  String get consentControllerTitle;
+
+  /// No description provided for @consentControllerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Each workspace is operated by its owner — your community — who decides members, prices and payment providers. The app is open source (0BSD) and published by Florian Dittgen (Germany); the backend is Supabase in the EU. Online payments go through the provider the owner enabled (PayPal, Stripe, Mollie, Wero) under that provider\'s terms.'**
+  String get consentControllerBody;
+
+  /// No description provided for @consentRetentionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How long'**
+  String get consentRetentionTitle;
+
+  /// No description provided for @consentRetentionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'As long as you are a member. When you leave and erase, your profile and messages go; accounting records (invoices, payments) stay for the legal retention period, by identifier and not by name.'**
+  String get consentRetentionBody;
+
+  /// No description provided for @consentRightsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your rights'**
+  String get consentRightsTitle;
+
+  /// No description provided for @consentRightsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Access, rectification, export (art. 20), erasure (art. 17) and objection — each is a button in Settings → Privacy & data. For anything else: fdittgen@gmail.com. You may withdraw this consent by leaving the workspace and erasing your data at any time.'**
+  String get consentRightsBody;
+
+  /// No description provided for @consentReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Read it again anytime'**
+  String get consentReviewTitle;
+
+  /// No description provided for @consentReviewBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This text stays available in Settings → Privacy & data, in the in-app help (Privacy) and in the project wiki. A change of the text asks for your acceptance again.'**
+  String get consentReviewBody;
+
+  /// No description provided for @consentCheckbox.
+  ///
+  /// In en, this message translates to:
+  /// **'I have read this and I accept how DesKilo handles my data.'**
+  String get consentCheckbox;
+
+  /// No description provided for @consentAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept and continue'**
+  String get consentAccept;
+
+  /// No description provided for @consentVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get consentVersion;
+
+  /// No description provided for @consentAcceptedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted on {date} ({version})'**
+  String consentAcceptedOn(String date, String version);
+
+  /// No description provided for @consentReadInHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Read in the help'**
+  String get consentReadInHelp;
+
+  /// No description provided for @consentReadOnWiki.
+  ///
+  /// In en, this message translates to:
+  /// **'Read on the wiki'**
+  String get consentReadOnWiki;
+
+  /// No description provided for @consentReviewHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The text you accepted, with the date — read it again anytime.'**
+  String get consentReviewHint;
+
   /// No description provided for @profilesDefault.
   ///
   /// In en, this message translates to:

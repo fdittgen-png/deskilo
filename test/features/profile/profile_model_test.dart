@@ -21,6 +21,8 @@ void main() {
         'vat_id': 'FR12812345678',
         'last_seen_at': '2026-07-11T09:30:00.000Z',
         'avatar_path': 'user-1/avatar',
+        'privacy_accepted_version': '2026-08-30',
+        'privacy_accepted_at': '2026-08-30T10:00:00.000Z',
       };
       final profile = Profile.fromDb(db);
 

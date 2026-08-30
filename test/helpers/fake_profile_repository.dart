@@ -2,6 +2,7 @@
 import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/privacy/privacy_policy.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:deskilo/features/profile/domain/profile_repository.dart';
 
@@ -31,9 +32,31 @@ class FakeProfileRepository implements ProfileRepository {
     }
   }
 
-  FakeProfileRepository({List<Profile>? profiles, this.myUserId = 'user-1'})
-      : profiles = profiles ??
-            [const Profile(id: 'user-1', displayName: 'Test User')];
+  /// #751 — every seeded profile counts as having accepted the current
+  /// policy unless [accepted] is false: the consent gate belongs to
+  /// consent_test, not to every other widget test.
+  FakeProfileRepository({
+    List<Profile>? profiles,
+    this.myUserId = 'user-1',
+    bool accepted = true,
+  }) : profiles = (profiles ??
+            [
+              // #751 — accepted, so the consent gate stays out of every
+              // other test's way; consent_test seeds an unaccepted one.
+              Profile(
+                id: 'user-1',
+                displayName: 'Test User',
+                privacyAcceptedVersion: kPrivacyPolicyVersion,
+                privacyAcceptedAt: DateTime.utc(2026, 8, 30),
+              ),
+            ])
+            .map((p) => accepted && p.privacyAcceptedVersion == null
+                ? p.copyWith(
+                    privacyAcceptedVersion: kPrivacyPolicyVersion,
+                    privacyAcceptedAt: DateTime.utc(2026, 8, 30),
+                  )
+                : p)
+            .toList();
 
   final List<Profile> profiles;
   final String myUserId;
@@ -43,6 +66,20 @@ class FakeProfileRepository implements ProfileRepository {
 
   /// Number of [touchLastSeen] calls (heartbeat assertions).
   int touchCount = 0;
+
+  /// #751 — versions accepted through [acceptPrivacyPolicy].
+  final acceptedPolicyVersions = <String>[];
+
+  @override
+  Future<void> acceptPrivacyPolicy(String version) async {
+    if (failing) throw StateError('failing');
+    acceptedPolicyVersions.add(version);
+    final mine = _mine;
+    _replaceMine((mine ?? Profile(id: myUserId)).copyWith(
+      privacyAcceptedVersion: version,
+      privacyAcceptedAt: DateTime.utc(2026, 8, 30, 10),
+    ));
+  }
 
   Profile? get _mine {
     final index = profiles.indexWhere((p) => p.id == myUserId);

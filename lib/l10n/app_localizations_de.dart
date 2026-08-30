@@ -4998,6 +4998,87 @@ class AppLocalizationsDe extends AppLocalizations {
   String get privacyPolicy => 'Datenschutzerklärung';
 
   @override
+  String get consentTitle => 'Ihre Daten, Ihre Rechte';
+
+  @override
+  String get consentIntro =>
+      'Bevor Sie DesKilo nutzen: was die App mit Ihren Daten tut, wer sie sehen kann und was Sie tun können. Zwei Minuten; mehr ist es nicht.';
+
+  @override
+  String get consentWhatTitle => 'Was DesKilo verarbeitet';
+
+  @override
+  String get consentWhatBody =>
+      'Ihr Konto (E-Mail, Anzeigename, gehashtes Passwort), Ihr Profil, wie Sie es ausfüllen (Foto, Status, Adresse, WhatsApp-Nummer — je optional), und was Sie in einem Workspace tun: Reservierungen und Check-ins, Nachrichten, Ausgaben und Verbräuche, Ihr Abonnement, Rechnungen und Zahlungen. Alles liegt in der EU (Supabase, eu-central-1).';
+
+  @override
+  String get consentNotTitle => 'Was DesKilo nie tut';
+
+  @override
+  String get consentNotBody =>
+      'Kein Tracking, keine Analytik, keine Werbung, kein Verkauf oder Teilen von Daten. Push-Nachrichten tragen keinen Inhalt — nur „Sie haben eine neue Nachricht“; die App selbst schreibt den Text. Die F-Droid-Version hat gar keine Google-Dienste.';
+
+  @override
+  String get consentWhoTitle => 'Wer was sehen kann';
+
+  @override
+  String get consentWhoBody =>
+      'Der Zugriff folgt den Rollen und wird serverseitig durchgesetzt: Buchungen sieht der Workspace (der Plan zeigt die Belegung); Nachrichten nur die Personen der Unterhaltung, gleich welcher Rolle; Ihre Finanzen und Ihre Geschäftsvereinbarung nur Sie, die Inhaber und die Admins mit der passenden Berechtigung. Einstellungen → Datenschutz & Daten nennt die Personen und listet, wer tatsächlich nachgesehen hat.';
+
+  @override
+  String get consentControllerTitle => 'Wer verantwortlich ist';
+
+  @override
+  String get consentControllerBody =>
+      'Jeder Workspace wird von seinem Inhaber betrieben — Ihrer Gemeinschaft —, der Mitglieder, Preise und Zahlungsanbieter bestimmt. Die App ist quelloffen (0BSD) und wird von Florian Dittgen (Deutschland) veröffentlicht; das Backend ist Supabase in der EU. Online-Zahlungen laufen über den vom Inhaber aktivierten Anbieter (PayPal, Stripe, Mollie, Wero) zu dessen Bedingungen.';
+
+  @override
+  String get consentRetentionTitle => 'Wie lange';
+
+  @override
+  String get consentRetentionBody =>
+      'Solange Sie Mitglied sind. Wenn Sie gehen und löschen, verschwinden Profil und Nachrichten; Buchhaltungsbelege (Rechnungen, Zahlungen) bleiben für die gesetzliche Aufbewahrungsfrist, nach Kennung und nicht nach Name.';
+
+  @override
+  String get consentRightsTitle => 'Ihre Rechte';
+
+  @override
+  String get consentRightsBody =>
+      'Auskunft, Berichtigung, Export (Art. 20), Löschung (Art. 17) und Widerspruch — jedes ein Knopf in Einstellungen → Datenschutz & Daten. Für alles andere: fdittgen@gmail.com. Sie können diese Einwilligung jederzeit widerrufen, indem Sie den Workspace verlassen und Ihre Daten löschen.';
+
+  @override
+  String get consentReviewTitle => 'Jederzeit nachlesen';
+
+  @override
+  String get consentReviewBody =>
+      'Dieser Text bleibt in Einstellungen → Datenschutz & Daten, in der App-Hilfe (Datenschutz) und im Projekt-Wiki verfügbar. Eine Änderung des Textes fragt erneut nach Ihrer Zustimmung.';
+
+  @override
+  String get consentCheckbox =>
+      'Ich habe das gelesen und akzeptiere, wie DesKilo meine Daten behandelt.';
+
+  @override
+  String get consentAccept => 'Akzeptieren und weiter';
+
+  @override
+  String get consentVersion => 'Version';
+
+  @override
+  String consentAcceptedOn(String date, String version) {
+    return 'Akzeptiert am $date ($version)';
+  }
+
+  @override
+  String get consentReadInHelp => 'In der Hilfe lesen';
+
+  @override
+  String get consentReadOnWiki => 'Im Wiki lesen';
+
+  @override
+  String get consentReviewHint =>
+      'Der Text, den Sie akzeptiert haben, mit Datum — jederzeit nachlesbar.';
+
+  @override
   String get profilesDefault => 'Standard beim Start';
 
   @override
