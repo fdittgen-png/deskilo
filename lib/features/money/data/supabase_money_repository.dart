@@ -7,6 +7,7 @@ import '../domain/invoice.dart';
 import '../domain/vat_declaration.dart';
 import '../domain/member_account.dart';
 import '../domain/dunning.dart';
+import '../domain/price_negotiation.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/einvoice_gateway.dart';
 import '../domain/fee_band.dart';
@@ -220,6 +221,30 @@ class SupabaseMoneyRepository implements MoneyRepository {
       row['dunning_rules'] as Map<String, dynamic>? ?? const {},
     );
   }
+
+  @override
+  Future<PriceNegotiation> fetchPriceNegotiation(String memberId) async =>
+      PriceNegotiation.fromJson(await _client.rpc<dynamic>(
+          'member_price_negotiation',
+          params: {'p_member_id': memberId}) as Map<String, dynamic>);
+
+  @override
+  Future<void> proposePriceNegotiation({
+    required String memberId,
+    int? feeCents,
+    int? overageFeeCents,
+    double? discountPercent,
+    String note = '',
+    DateTime? validFrom,
+  }) =>
+      _client.rpc<void>('propose_price_negotiation', params: {
+        'p_member_id': memberId,
+        'p_fee_cents': feeCents,
+        'p_overage_fee_cents': overageFeeCents,
+        'p_discount_percent': discountPercent,
+        'p_note': note,
+        'p_valid_from': validFrom?.toIso8601String().substring(0, 10),
+      });
 
   @override
   Future<int> sweepPaymentReminders(String workspaceId) async {

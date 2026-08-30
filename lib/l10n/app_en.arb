@@ -1281,6 +1281,15 @@
   "calendarEventStatusPending": "awaiting confirmation",
   "calendarEventStatusRejected": "rejected",
   "calendarEventStatusExpired": "expired",
+  "accessKindNegotiations": "Price negotiations",
+  "accessRuleNegotiations": "You, the owners and the finance admins: {people}. Every read by someone else is on the record below.",
+  "@accessRuleNegotiations": {
+    "placeholders": {
+      "people": {
+        "type": "String"
+      }
+    }
+  },
   "appTitle": "DesKilo",
   "@appTitle": {
     "description": "Application name shown in the task switcher and app bar. Brand name — identical in all locales."
@@ -2286,6 +2295,8 @@
   "featureSupplyExpensesDesc": "An expense can be a supply for the space (coffee capsules, vacuum bags…): once validated it restocks or creates a consumable service with a unit price, and consumptions count the stock down.",
   "featureValidationScopesTitle": "Validators by role or person",
   "featureValidationScopesDesc": "Each validation rule names who validates: the admins, listed persons of any role, or every member — plus how many. Off: owner and admins as before.",
+  "featurePriceNegotiationsTitle": "Price negotiations",
+  "featurePriceNegotiationsDesc": "The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.",
   "helpTitle": "Help",
   "helpContents": "Contents",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",
@@ -2448,6 +2459,10 @@
   "helpHintValidationTipScopesTopic": "Role management",
   "helpHintMoneyPaymentsTipSupply": "Bought capsules or vacuum bags for the space? Submit the expense as a supply: validated, it goes on the shelf as a consumable that others pay for, and you are reimbursed.",
   "helpHintMoneyPaymentsTipSupplyTopic": "Services and Accessories",
+  "helpHintMoneyStatementTipNegotiation": "Negotiated a deal? The card shows your prices beside the tariff, since when, and who can see them — the owners and finance admins, every read on the record.",
+  "helpHintMoneyStatementTipNegotiationTopic": "Price negotiations",
+  "helpHintMembersTipNegotiation": "A member's own prices: open their sheet → Price negotiation, set the fee, overage or discount you agreed, and the rule's validators confirm it.",
+  "helpHintMembersTipNegotiationTopic": "Price negotiations",
   "inviteSectionTitle": "Invite someone",
   "inviteViaWhatsapp": "WhatsApp",
   "inviteViaSms": "SMS",
@@ -3916,6 +3931,21 @@
       }
     }
   },
+  "eventTypePriceNegotiation": "Price negotiation",
+  "eventPriceNegotiationLine": "{actor} proposes a deal for {member}: {terms}",
+  "@eventPriceNegotiationLine": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      },
+      "terms": {
+        "type": "String"
+      }
+    }
+  },
   "eventTypeMemberJoin": "New member",
   "memberStatusPending": "Pending",
   "pendingApprovalTitle": "Awaiting approval",
@@ -5092,6 +5122,30 @@
     "placeholders": {
       "count": {
         "type": "int"
+      }
+    }
+  },
+  "negotiationCardTitle": "My negotiated prices",
+  "negotiationOnTariff": "You are on the workspace tariff.",
+  "negotiationPending": "A deal is awaiting validation.",
+  "negotiationActiveSince": "Your deal applies since {month}.",
+  "negotiationFee": "Monthly fee",
+  "negotiationOverage": "Overage per half-day",
+  "negotiationDiscount": "Discount on supplements",
+  "negotiationDefaultColumn": "Tariff",
+  "negotiationMineColumn": "Mine",
+  "negotiationWhoCanSee": "Who can see this",
+  "negotiationProposeTitle": "Price negotiation",
+  "negotiationProposeHint": "Leave a field empty to keep the tariff. The deal goes through validation before it applies.",
+  "negotiationNote": "Note",
+  "negotiationValidFrom": "Applies from",
+  "negotiationSubmit": "Propose for validation",
+  "negotiationProposed": "Deal proposed — waiting for validation.",
+  "negotiationPendingBadge": "awaiting validation",
+  "@negotiationActiveSince": {
+    "placeholders": {
+      "month": {
+        "type": "String"
       }
     }
   },

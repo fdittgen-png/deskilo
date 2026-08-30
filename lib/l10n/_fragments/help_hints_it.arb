@@ -134,5 +134,9 @@
   "helpHintValidationTipScopes": "Chi convalida è l'ambito della regola: gli admin, persone designate di qualsiasi ruolo, o tutti i membri — e quanti. Il proprietario può sempre; nessuno convalida il proprio evento.",
   "helpHintValidationTipScopesTopic": "Gestione dei ruoli",
   "helpHintMoneyPaymentsTipSupply": "Hai comprato capsule o sacchetti per aspirapolvere per lo spazio? Invia la spesa come scorta: convalidata, va sullo scaffale come consumabile che gli altri pagano, e tu vieni rimborsato.",
-  "helpHintMoneyPaymentsTipSupplyTopic": "Servizi e Accessori"
+  "helpHintMoneyPaymentsTipSupplyTopic": "Servizi e Accessori",
+  "helpHintMoneyStatementTipNegotiation": "Condizioni negoziate? La scheda mostra i tuoi prezzi accanto alla tariffa, da quando, e chi può vederli — i proprietari e gli admin finanze, ogni lettura registrata.",
+  "helpHintMoneyStatementTipNegotiationTopic": "Negoziazioni di prezzo",
+  "helpHintMembersTipNegotiation": "I prezzi propri di un membro: apri la sua scheda → Negoziazione di prezzo, indica quota, eccedenza o sconto concordati, e i convalidatori della regola confermano.",
+  "helpHintMembersTipNegotiationTopic": "Negoziazioni di prezzo"
 }

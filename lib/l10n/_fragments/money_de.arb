@@ -305,5 +305,22 @@
   "expenseSupplyUnitPriceHint": "Vorbelegt mit Betrag ÷ Menge; runden Sie nach Belieben.",
   "serviceStockCount": "{count} auf Lager",
   "serviceOutOfStock": "Ausverkauft",
-  "serviceOutOfStockHint": "Nichts mehr im Regal — der nächste Vorrat füllt es auf."
+  "serviceOutOfStockHint": "Nichts mehr im Regal — der nächste Vorrat füllt es auf.",
+  "negotiationCardTitle": "Meine verhandelten Preise",
+  "negotiationOnTariff": "Sie sind auf dem Tarif des Workspace.",
+  "negotiationPending": "Konditionen warten auf Prüfung.",
+  "negotiationActiveSince": "Ihre Konditionen gelten seit {month}.",
+  "negotiationFee": "Monatsbeitrag",
+  "negotiationOverage": "Überschreitung je halben Tag",
+  "negotiationDiscount": "Rabatt auf Zuschläge",
+  "negotiationDefaultColumn": "Tarif",
+  "negotiationMineColumn": "Meine",
+  "negotiationWhoCanSee": "Wer das sehen kann",
+  "negotiationProposeTitle": "Preisverhandlung",
+  "negotiationProposeHint": "Ein leeres Feld behält den Tarif. Die Konditionen durchlaufen die Prüfung, bevor sie gelten.",
+  "negotiationNote": "Notiz",
+  "negotiationValidFrom": "Gilt ab",
+  "negotiationSubmit": "Zur Prüfung vorschlagen",
+  "negotiationProposed": "Konditionen vorgeschlagen — warten auf Prüfung.",
+  "negotiationPendingBadge": "wartet auf Prüfung"
 }

@@ -137,6 +137,7 @@ NotificationCategory categoryOfEvent(WorkspaceEvent event) {
     case EventType.invoicePayment:
     case EventType.invoiceWriteoff:
     case EventType.invoiceReminder:
+    case EventType.priceNegotiation:
       return NotificationCategory.money;
     case EventType.roleChange:
     case EventType.memberJoin:

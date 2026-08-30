@@ -45,6 +45,9 @@ enum EventType {
   /// #726 — an automatic payment reminder (dunning level N) for the
   /// subject's open invoice; applied, never pending.
   invoiceReminder('invoice_reminder'),
+  /// #739 — a negotiated tariff proposed for a member; pending until the
+  /// rule's validators confirm, then the member's own prices.
+  priceNegotiation('price_negotiation'),
 
   /// Cancelling the outstanding remainder of a PARTIALLY PAID invoice
   /// (0100, #504): confirm writes the remainder off and archives the

@@ -134,5 +134,9 @@
   "helpHintValidationTipScopes": "Qui valide, c'est la portée de la règle : les admins, des personnes désignées quel que soit leur rôle, ou tous les membres — et combien. Le propriétaire peut toujours ; personne ne valide son propre événement.",
   "helpHintValidationTipScopesTopic": "Gestion des rôles",
   "helpHintMoneyPaymentsTipSupply": "Vous avez acheté des capsules ou des sacs d'aspirateur pour l'espace ? Soumettez la dépense comme fourniture : validée, elle va sur l'étagère comme consommable que les autres paient, et vous êtes remboursé.",
-  "helpHintMoneyPaymentsTipSupplyTopic": "Services et Accessoires"
+  "helpHintMoneyPaymentsTipSupplyTopic": "Services et Accessoires",
+  "helpHintMoneyStatementTipNegotiation": "Des conditions négociées ? La carte montre vos prix à côté du tarif, depuis quand, et qui peut les voir — les propriétaires et les admins finances, chaque consultation journalisée.",
+  "helpHintMoneyStatementTipNegotiationTopic": "Négociations tarifaires",
+  "helpHintMembersTipNegotiation": "Les prix propres d'un membre : ouvrez sa fiche → Négociation tarifaire, saisissez l'abonnement, le dépassement ou la remise convenus, et les validateurs de la règle confirment.",
+  "helpHintMembersTipNegotiationTopic": "Négociations tarifaires"
 }

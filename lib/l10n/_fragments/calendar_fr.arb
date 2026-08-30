@@ -168,5 +168,7 @@
   "calendarEventActionRejected": "refusée",
   "calendarEventStatusPending": "en attente de confirmation",
   "calendarEventStatusRejected": "refusé",
-  "calendarEventStatusExpired": "expiré"
+  "calendarEventStatusExpired": "expiré",
+  "accessKindNegotiations": "Négociations tarifaires",
+  "accessRuleNegotiations": "Vous, les propriétaires et les admins finances : {people}. Chaque consultation par quelqu'un d'autre est journalisée ci-dessous."
 }

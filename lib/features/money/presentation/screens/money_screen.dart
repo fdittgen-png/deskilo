@@ -49,6 +49,7 @@ import '../widgets/expense_sheet.dart';
 import '../widgets/invoice_overview.dart';
 import '../widgets/money_faces_view.dart';
 import '../widgets/my_invoices_list.dart';
+import '../widgets/negotiation_card.dart';
 import '../widgets/consumption_sheet.dart';
 import '../../../profile/providers/profile_providers.dart';
 import '../../../../core/locale/report_language.dart';
@@ -997,6 +998,12 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       MoneyFace.statement: [
         if (account != null && account.isNotable) ...[
           AccountCard(account: account, currencyCode: currencyCode),
+          const SizedBox(height: 8),
+        ],
+        // #739 — my prices against the tariff, and who can see them.
+        if (features.contains(WorkspaceFeature.priceNegotiations) &&
+            member != null) ...[
+          NegotiationCard(memberId: member.id, currency: currency),
           const SizedBox(height: 8),
         ],
         if (visibleStatement != null) bill(MoneyFace.statement),

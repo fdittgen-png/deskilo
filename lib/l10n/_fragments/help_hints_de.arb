@@ -134,5 +134,9 @@
   "helpHintValidationTipScopes": "Wer prüft, ist der Geltungsbereich der Regel: die Admins, benannte Personen jeder Rolle oder alle Mitglieder — und wie viele. Der Inhaber darf immer; niemand prüft das eigene Ereignis.",
   "helpHintValidationTipScopesTopic": "Rollenverwaltung",
   "helpHintMoneyPaymentsTipSupply": "Kapseln oder Staubsaugerbeutel für den Raum gekauft? Reichen Sie die Ausgabe als Vorrat ein: genehmigt, steht sie als Verbrauchsartikel im Regal, den andere bezahlen, und Sie werden erstattet.",
-  "helpHintMoneyPaymentsTipSupplyTopic": "Services und Zubehör"
+  "helpHintMoneyPaymentsTipSupplyTopic": "Services und Zubehör",
+  "helpHintMoneyStatementTipNegotiation": "Konditionen verhandelt? Die Karte zeigt Ihre Preise neben dem Tarif, seit wann, und wer sie sehen kann — die Inhaber und Finanz-Admins, jeder Zugriff protokolliert.",
+  "helpHintMoneyStatementTipNegotiationTopic": "Preisverhandlungen",
+  "helpHintMembersTipNegotiation": "Die eigenen Preise eines Mitglieds: sein Blatt öffnen → Preisverhandlung, Beitrag, Überschreitung oder Rabatt eintragen, und die Prüfer der Regel bestätigen.",
+  "helpHintMembersTipNegotiationTopic": "Preisverhandlungen"
 }

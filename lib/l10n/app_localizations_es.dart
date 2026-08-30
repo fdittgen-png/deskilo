@@ -1055,6 +1055,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get calendarEventStatusExpired => 'caducado';
 
   @override
+  String get accessKindNegotiations => 'Negociaciones de precios';
+
+  @override
+  String accessRuleNegotiations(String people) {
+    return 'Tú, los propietarios y los admins de finanzas: $people. Cada lectura por otra persona queda registrada abajo.';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -1953,6 +1961,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cada regla de validación nombra quién valida: los admins, personas designadas de cualquier rol, o todos los miembros — y cuántos. Desactivado: propietario y admins como antes.';
 
   @override
+  String get featurePriceNegotiationsTitle => 'Negociaciones de precios';
+
+  @override
+  String get featurePriceNegotiationsDesc =>
+      'La tarifa es el valor por defecto; un miembro puede tener sus propias condiciones (cuota mensual, tarifa de exceso, descuento en suplementos), propuestas por el propietario o un admin de finanzas y validadas según las reglas. Las ven el miembro, los propietarios y los admins de finanzas; cada lectura queda registrada.';
+
+  @override
   String get helpTitle => 'Ayuda';
 
   @override
@@ -2365,6 +2380,21 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get helpHintMoneyPaymentsTipSupplyTopic => 'Servicios y Accesorios';
+
+  @override
+  String get helpHintMoneyStatementTipNegotiation =>
+      '¿Condiciones negociadas? La tarjeta muestra tus precios junto a la tarifa, desde cuándo, y quién puede verlos — los propietarios y los admins de finanzas, cada lectura registrada.';
+
+  @override
+  String get helpHintMoneyStatementTipNegotiationTopic =>
+      'Negociaciones de precios';
+
+  @override
+  String get helpHintMembersTipNegotiation =>
+      'Los precios propios de un miembro: abre su ficha → Negociación de precios, indica la cuota, el exceso o el descuento acordados, y los validadores de la regla lo confirman.';
+
+  @override
+  String get helpHintMembersTipNegotiationTopic => 'Negociaciones de precios';
 
   @override
   String get inviteSectionTitle => 'Invitar a alguien';
@@ -3487,6 +3517,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Una vez al día, las facturas abiertas más allá del plazo reciben solas su siguiente nivel de recordatorio — un aviso en el feed del miembro y una notificación. Desactivado: envías cada recordatorio tú mismo.';
 
   @override
+  String get eventTypePriceNegotiation => 'Negociación de precios';
+
+  @override
+  String eventPriceNegotiationLine(String actor, String member, String terms) {
+    return '$actor propone condiciones para $member: $terms';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'Nuevo miembro';
 
   @override
@@ -4501,6 +4539,61 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get serviceOutOfStockHint =>
       'No queda nada en el estante — el próximo suministro lo repone.';
+
+  @override
+  String get negotiationCardTitle => 'Mis precios negociados';
+
+  @override
+  String get negotiationOnTariff => 'Estás en la tarifa del espacio.';
+
+  @override
+  String get negotiationPending => 'Unas condiciones esperan validación.';
+
+  @override
+  String negotiationActiveSince(String month) {
+    return 'Tus condiciones se aplican desde $month.';
+  }
+
+  @override
+  String get negotiationFee => 'Cuota mensual';
+
+  @override
+  String get negotiationOverage => 'Exceso por medio día';
+
+  @override
+  String get negotiationDiscount => 'Descuento en suplementos';
+
+  @override
+  String get negotiationDefaultColumn => 'Tarifa';
+
+  @override
+  String get negotiationMineColumn => 'Las mías';
+
+  @override
+  String get negotiationWhoCanSee => 'Quién puede verlo';
+
+  @override
+  String get negotiationProposeTitle => 'Negociación de precios';
+
+  @override
+  String get negotiationProposeHint =>
+      'Deja un campo vacío para mantener la tarifa. Las condiciones pasan por validación antes de aplicarse.';
+
+  @override
+  String get negotiationNote => 'Nota';
+
+  @override
+  String get negotiationValidFrom => 'Se aplica desde';
+
+  @override
+  String get negotiationSubmit => 'Proponer para validación';
+
+  @override
+  String get negotiationProposed =>
+      'Condiciones propuestas — pendientes de validación.';
+
+  @override
+  String get negotiationPendingBadge => 'pendiente de validación';
 
   @override
   String get planDurationLabel => 'Duración';

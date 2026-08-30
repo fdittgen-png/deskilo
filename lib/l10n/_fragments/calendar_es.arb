@@ -168,5 +168,7 @@
   "calendarEventActionRejected": "rechazada",
   "calendarEventStatusPending": "pendiente de confirmación",
   "calendarEventStatusRejected": "rechazado",
-  "calendarEventStatusExpired": "caducado"
+  "calendarEventStatusExpired": "caducado",
+  "accessKindNegotiations": "Negociaciones de precios",
+  "accessRuleNegotiations": "Tú, los propietarios y los admins de finanzas: {people}. Cada lectura por otra persona queda registrada abajo."
 }

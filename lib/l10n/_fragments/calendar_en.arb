@@ -232,5 +232,8 @@
   "calendarEventActionRejected": "rejected",
   "calendarEventStatusPending": "awaiting confirmation",
   "calendarEventStatusRejected": "rejected",
-  "calendarEventStatusExpired": "expired"
+  "calendarEventStatusExpired": "expired",
+  "accessKindNegotiations": "Price negotiations",
+  "accessRuleNegotiations": "You, the owners and the finance admins: {people}. Every read by someone else is on the record below.",
+  "@accessRuleNegotiations": {"placeholders": {"people": {"type": "String"}}}
 }

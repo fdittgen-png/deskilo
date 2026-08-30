@@ -305,5 +305,22 @@
   "expenseSupplyUnitPriceHint": "Precompilato con importo ÷ quantità; arrotonda se vuoi.",
   "serviceStockCount": "{count} in scorta",
   "serviceOutOfStock": "Esaurito",
-  "serviceOutOfStockHint": "Niente più sullo scaffale — la prossima scorta lo rifornisce."
+  "serviceOutOfStockHint": "Niente più sullo scaffale — la prossima scorta lo rifornisce.",
+  "negotiationCardTitle": "I miei prezzi negoziati",
+  "negotiationOnTariff": "Sei alla tariffa dello spazio.",
+  "negotiationPending": "Delle condizioni attendono convalida.",
+  "negotiationActiveSince": "Le tue condizioni si applicano da {month}.",
+  "negotiationFee": "Quota mensile",
+  "negotiationOverage": "Eccedenza per mezza giornata",
+  "negotiationDiscount": "Sconto sui supplementi",
+  "negotiationDefaultColumn": "Tariffa",
+  "negotiationMineColumn": "Le mie",
+  "negotiationWhoCanSee": "Chi può vederlo",
+  "negotiationProposeTitle": "Negoziazione di prezzo",
+  "negotiationProposeHint": "Lascia un campo vuoto per mantenere la tariffa. Le condizioni passano dalla convalida prima di applicarsi.",
+  "negotiationNote": "Nota",
+  "negotiationValidFrom": "Si applica da",
+  "negotiationSubmit": "Proponi per la convalida",
+  "negotiationProposed": "Condizioni proposte — in attesa di convalida.",
+  "negotiationPendingBadge": "in attesa di convalida"
 }

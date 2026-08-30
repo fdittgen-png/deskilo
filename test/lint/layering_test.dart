@@ -34,6 +34,7 @@ const Set<String> _knownPairs = {
   // #718 — the calendar hub opens invoices and the Money month from a
   // dated row: money's own sheet and its focus controller, not a copy.
   'calendar -> money',
+  'money -> calendar',
   'calendar -> events',
   'calendar -> plan',
   'calendar -> reservations',

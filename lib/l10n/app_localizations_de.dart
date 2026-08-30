@@ -1056,6 +1056,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get calendarEventStatusExpired => 'abgelaufen';
 
   @override
+  String get accessKindNegotiations => 'Preisverhandlungen';
+
+  @override
+  String accessRuleNegotiations(String people) {
+    return 'Sie, die Inhaber und die Finanz-Admins: $people. Jeder Zugriff durch jemand anderen steht unten im Protokoll.';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -1950,6 +1958,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Jede Prüfregel nennt, wer prüft: die Admins, benannte Personen jeder Rolle oder alle Mitglieder — und wie viele. Aus: Inhaber und Admins wie bisher.';
 
   @override
+  String get featurePriceNegotiationsTitle => 'Preisverhandlungen';
+
+  @override
+  String get featurePriceNegotiationsDesc =>
+      'Der Tarif ist der Standard; ein Mitglied kann eigene Konditionen haben (Monatsbeitrag, Überschreitungssatz, Rabatt auf Zuschläge), vom Inhaber oder einem Finanz-Admin vorgeschlagen und nach den Regeln geprüft. Sichtbar für das Mitglied, die Inhaber und Finanz-Admins; jeder Zugriff wird protokolliert.';
+
+  @override
   String get helpTitle => 'Hilfe';
 
   @override
@@ -2362,6 +2377,20 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get helpHintMoneyPaymentsTipSupplyTopic => 'Services und Zubehör';
+
+  @override
+  String get helpHintMoneyStatementTipNegotiation =>
+      'Konditionen verhandelt? Die Karte zeigt Ihre Preise neben dem Tarif, seit wann, und wer sie sehen kann — die Inhaber und Finanz-Admins, jeder Zugriff protokolliert.';
+
+  @override
+  String get helpHintMoneyStatementTipNegotiationTopic => 'Preisverhandlungen';
+
+  @override
+  String get helpHintMembersTipNegotiation =>
+      'Die eigenen Preise eines Mitglieds: sein Blatt öffnen → Preisverhandlung, Beitrag, Überschreitung oder Rabatt eintragen, und die Prüfer der Regel bestätigen.';
+
+  @override
+  String get helpHintMembersTipNegotiationTopic => 'Preisverhandlungen';
 
   @override
   String get inviteSectionTitle => 'Jemanden einladen';
@@ -3488,6 +3517,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Einmal täglich erhalten offene Rechnungen nach Ablauf der Frist von selbst ihre nächste Mahnstufe — ein Hinweis im Feed des Mitglieds und eine Push-Nachricht. Aus: Sie senden jede Mahnung selbst.';
 
   @override
+  String get eventTypePriceNegotiation => 'Preisverhandlung';
+
+  @override
+  String eventPriceNegotiationLine(String actor, String member, String terms) {
+    return '$actor schlägt Konditionen für $member vor: $terms';
+  }
+
+  @override
   String get eventTypeMemberJoin => 'Neues Mitglied';
 
   @override
@@ -4509,6 +4546,61 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get serviceOutOfStockHint =>
       'Nichts mehr im Regal — der nächste Vorrat füllt es auf.';
+
+  @override
+  String get negotiationCardTitle => 'Meine verhandelten Preise';
+
+  @override
+  String get negotiationOnTariff => 'Sie sind auf dem Tarif des Workspace.';
+
+  @override
+  String get negotiationPending => 'Konditionen warten auf Prüfung.';
+
+  @override
+  String negotiationActiveSince(String month) {
+    return 'Ihre Konditionen gelten seit $month.';
+  }
+
+  @override
+  String get negotiationFee => 'Monatsbeitrag';
+
+  @override
+  String get negotiationOverage => 'Überschreitung je halben Tag';
+
+  @override
+  String get negotiationDiscount => 'Rabatt auf Zuschläge';
+
+  @override
+  String get negotiationDefaultColumn => 'Tarif';
+
+  @override
+  String get negotiationMineColumn => 'Meine';
+
+  @override
+  String get negotiationWhoCanSee => 'Wer das sehen kann';
+
+  @override
+  String get negotiationProposeTitle => 'Preisverhandlung';
+
+  @override
+  String get negotiationProposeHint =>
+      'Ein leeres Feld behält den Tarif. Die Konditionen durchlaufen die Prüfung, bevor sie gelten.';
+
+  @override
+  String get negotiationNote => 'Notiz';
+
+  @override
+  String get negotiationValidFrom => 'Gilt ab';
+
+  @override
+  String get negotiationSubmit => 'Zur Prüfung vorschlagen';
+
+  @override
+  String get negotiationProposed =>
+      'Konditionen vorgeschlagen — warten auf Prüfung.';
+
+  @override
+  String get negotiationPendingBadge => 'wartet auf Prüfung';
 
   @override
   String get planDurationLabel => 'Dauer';

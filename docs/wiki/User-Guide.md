@@ -455,6 +455,10 @@ Every report in the app — the bill, invoices, proformas, credit notes, your se
 
 **The rest of the paperwork:** **My conditions** (your financial agreement), the **monthly payments report**, **this month's statement as PDF**, and the **document library** when the workspace uses one (§11d). Switch the faces off in Features → *Finance faces* to get the single column back.
 
+### 9g. Price negotiations
+
+**The tariff is the default; your deal is yours.** An owner or a finance admin can propose a **price negotiation** for a member — a monthly fee, an overage rate per half-day, a discount on the supplements (accessories, whole-space reservations) — each optional, the tariff where absent. The proposal lands in Événements for the rule's validators (*Price negotiation* domain, or the default rule); once confirmed it applies from the chosen month and supersedes the previous deal. On your **Relevé** face the card *My negotiated prices* shows the tariff struck through beside your prices, since when, and **Who can see this**: you, the owners and the finance admins — every read by someone else is logged and listed there (§14). Feature *Price negotiations*.
+
 ## 10. Kiosk mode (wall tablet)
 
 Mount an Android tablet or iPad by the door and let people check in as they walk in:

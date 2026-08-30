@@ -305,5 +305,22 @@
   "expenseSupplyUnitPriceHint": "Prérempli avec montant ÷ quantité ; arrondissez si vous voulez.",
   "serviceStockCount": "{count} en stock",
   "serviceOutOfStock": "Épuisé",
-  "serviceOutOfStockHint": "Plus rien sur l'étagère — la prochaine fourniture le réapprovisionne."
+  "serviceOutOfStockHint": "Plus rien sur l'étagère — la prochaine fourniture le réapprovisionne.",
+  "negotiationCardTitle": "Mes conditions négociées",
+  "negotiationOnTariff": "Vous êtes au tarif de l'espace.",
+  "negotiationPending": "Des conditions attendent validation.",
+  "negotiationActiveSince": "Vos conditions s'appliquent depuis {month}.",
+  "negotiationFee": "Abonnement mensuel",
+  "negotiationOverage": "Dépassement par demi-journée",
+  "negotiationDiscount": "Remise sur les suppléments",
+  "negotiationDefaultColumn": "Tarif",
+  "negotiationMineColumn": "Les miennes",
+  "negotiationWhoCanSee": "Qui peut voir",
+  "negotiationProposeTitle": "Négociation tarifaire",
+  "negotiationProposeHint": "Laissez un champ vide pour garder le tarif. Les conditions passent par la validation avant de s'appliquer.",
+  "negotiationNote": "Note",
+  "negotiationValidFrom": "Applicable dès",
+  "negotiationSubmit": "Proposer pour validation",
+  "negotiationProposed": "Conditions proposées — en attente de validation.",
+  "negotiationPendingBadge": "en attente de validation"
 }

@@ -321,6 +321,14 @@ List<HelpTip> helpHintTips(AppLocalizations? l10n, HelpHintId id) =>
       HelpHintId.members => [
         HelpTip(helpHintText(l10n, id)),
         HelpTip(
+          l10n?.helpHintMembersTipNegotiation ??
+              'A member\'s own prices: open their sheet → Price '
+                  'negotiation, set the fee, overage or discount you '
+                  'agreed, and the rule\'s validators confirm it.',
+          topic: l10n?.helpHintMembersTipNegotiationTopic ??
+              'Price negotiations',
+        ),
+        HelpTip(
           l10n?.helpHintMembersTip2 ??
               'Tap a member for their management sheet — '
                   'subscription, reservation limit, badges, services '
@@ -389,6 +397,14 @@ List<HelpTip> helpHintTips(AppLocalizations? l10n, HelpHintId id) =>
       ],
       HelpHintId.moneyStatement => [
         HelpTip(helpHintText(l10n, id)),
+        HelpTip(
+          l10n?.helpHintMoneyStatementTipNegotiation ??
+              'Negotiated a deal? The card shows your prices beside the '
+                  'tariff, since when, and who can see them — the owners '
+                  'and finance admins, every read on the record.',
+          topic: l10n?.helpHintMoneyStatementTipNegotiationTopic ??
+              'Price negotiations',
+        ),
         HelpTip(
           l10n?.helpHintMoneyStatementTip2 ??
               'A booked morning counts as half a day; days outside the '

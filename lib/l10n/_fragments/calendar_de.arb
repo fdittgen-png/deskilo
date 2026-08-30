@@ -168,5 +168,7 @@
   "calendarEventActionRejected": "abgelehnt",
   "calendarEventStatusPending": "wartet auf Bestätigung",
   "calendarEventStatusRejected": "abgelehnt",
-  "calendarEventStatusExpired": "abgelaufen"
+  "calendarEventStatusExpired": "abgelaufen",
+  "accessKindNegotiations": "Preisverhandlungen",
+  "accessRuleNegotiations": "Sie, die Inhaber und die Finanz-Admins: {people}. Jeder Zugriff durch jemand anderen steht unten im Protokoll."
 }

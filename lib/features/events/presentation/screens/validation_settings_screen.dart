@@ -60,6 +60,8 @@ class ValidationSettingsScreen extends ConsumerWidget {
         l10n?.eventTypeInvoiceWriteoff ?? 'Outstanding write-off',
       EventType.invoiceReminder =>
         l10n?.eventTypeInvoiceReminder ?? 'Payment reminder',
+      EventType.priceNegotiation =>
+        l10n?.eventTypePriceNegotiation ?? 'Price negotiation',
       EventType.roleChange => l10n?.eventTypeRoleChange ?? 'Role change',
       EventType.memberJoin => l10n?.eventTypeMemberJoin ?? 'New member',
       EventType.spaceReservation =>

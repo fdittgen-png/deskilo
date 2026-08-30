@@ -151,5 +151,7 @@
   "featureSupplyExpensesTitle": "Fournitures via les dépenses",
   "featureSupplyExpensesDesc": "Une dépense peut être une fourniture pour l'espace (capsules, sacs d'aspirateur…) : validée, elle réapprovisionne ou crée un service consommable avec un prix unitaire ; les consommations décomptent le stock.",
   "featureValidationScopesTitle": "Validateurs par rôle ou par personne",
-  "featureValidationScopesDesc": "Chaque règle de validation nomme qui valide : les admins, des personnes désignées quel que soit leur rôle, ou tous les membres — et combien. Désactivé : propriétaire et admins comme avant."
+  "featureValidationScopesDesc": "Chaque règle de validation nomme qui valide : les admins, des personnes désignées quel que soit leur rôle, ou tous les membres — et combien. Désactivé : propriétaire et admins comme avant.",
+  "featurePriceNegotiationsTitle": "Négociations tarifaires",
+  "featurePriceNegotiationsDesc": "Le tarif est la valeur par défaut ; un membre peut avoir ses propres conditions (abonnement, dépassement, remise sur les suppléments), proposées par le propriétaire ou un admin finances et validées selon les règles. Vues par le membre, les propriétaires et les admins finances ; chaque consultation est journalisée."
 }

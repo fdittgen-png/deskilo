@@ -134,5 +134,9 @@
   "helpHintValidationTipScopes": "Who validates is the rule's scope: the admins, listed persons of any role, or every member — and how many. The owner always may; nobody validates their own event.",
   "helpHintValidationTipScopesTopic": "Role management",
   "helpHintMoneyPaymentsTipSupply": "Bought capsules or vacuum bags for the space? Submit the expense as a supply: validated, it goes on the shelf as a consumable that others pay for, and you are reimbursed.",
-  "helpHintMoneyPaymentsTipSupplyTopic": "Services and Accessories"
+  "helpHintMoneyPaymentsTipSupplyTopic": "Services and Accessories",
+  "helpHintMoneyStatementTipNegotiation": "Negotiated a deal? The card shows your prices beside the tariff, since when, and who can see them — the owners and finance admins, every read on the record.",
+  "helpHintMoneyStatementTipNegotiationTopic": "Price negotiations",
+  "helpHintMembersTipNegotiation": "A member's own prices: open their sheet → Price negotiation, set the fee, overage or discount you agreed, and the rule's validators confirm it.",
+  "helpHintMembersTipNegotiationTopic": "Price negotiations"
 }

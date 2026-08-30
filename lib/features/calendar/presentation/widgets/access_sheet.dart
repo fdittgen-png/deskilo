@@ -37,9 +37,10 @@ class AccessSheet extends ConsumerWidget {
     final access = ref.watch(whoCanAccessMeProvider);
     final log = ref.watch(dataAccessLogProvider);
     final format = ref.watch(appFormatProvider);
-    final logOn = ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.dataAccessLog);
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    final logOn = features.contains(WorkspaceFeature.dataAccessLog);
+    final negotiationsOn =
+        features.contains(WorkspaceFeature.priceNegotiations);
 
     String people(List<String> ids) => ids.isEmpty
         ? (l10n?.accessNobodyElse ?? 'nobody else')
@@ -90,6 +91,20 @@ class AccessSheet extends ConsumerWidget {
                         'You, and those with the finance permission: '
                             '${people(value.finances)}.',
                   ),
+                  if (negotiationsOn)
+                    ListTile(
+                      key: const ValueKey('access-rule-negotiations'),
+                      leading: const Icon(Icons.handshake_outlined),
+                      title: Text(l10n?.accessKindNegotiations ??
+                          'Price negotiations'),
+                      subtitle: Text(
+                        l10n?.accessRuleNegotiations(
+                                people(value.negotiations)) ??
+                            'You, the owners and the finance admins: '
+                                '${people(value.negotiations)}. Every read '
+                                'by someone else is on the record below.',
+                      ),
+                    ),
                   rule(
                     CalendarKind.reminder,
                     l10n?.accessRuleReminders ?? 'Only you.',
@@ -130,7 +145,9 @@ class AccessSheet extends ConsumerWidget {
                         title: Text(
                           l10n?.accessLogRow(
                                 names[e.actorMemberId] ?? '',
-                                e.category,
+                                e.category == 'negotiations'
+                                    ? l10n.accessKindNegotiations
+                                    : e.category,
                                 names[e.subjectMemberId] ?? '',
                               ) ??
                               '${names[e.actorMemberId] ?? ''} read '

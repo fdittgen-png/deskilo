@@ -276,5 +276,7 @@
   "featureSupplyExpensesTitle": "Supplies from expenses",
   "featureSupplyExpensesDesc": "An expense can be a supply for the space (coffee capsules, vacuum bags…): once validated it restocks or creates a consumable service with a unit price, and consumptions count the stock down.",
   "featureValidationScopesTitle": "Validators by role or person",
-  "featureValidationScopesDesc": "Each validation rule names who validates: the admins, listed persons of any role, or every member — plus how many. Off: owner and admins as before."
+  "featureValidationScopesDesc": "Each validation rule names who validates: the admins, listed persons of any role, or every member — plus how many. Off: owner and admins as before.",
+  "featurePriceNegotiationsTitle": "Price negotiations",
+  "featurePriceNegotiationsDesc": "The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record."
 }
